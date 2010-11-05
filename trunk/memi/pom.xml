@@ -33,6 +33,19 @@
 
     <!-- All dependencies are ordered by there scope -->
     <dependencies>
+        <!-- List of dependencies with default scope -->
+        <!-- Spring framework -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring</artifactId>
+            <version>2.5.6</version>
+        </dependency>
+        <!-- Spring MVC framework -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>2.5.6</version>
+        </dependency>
         <!-- List of dependencies with test scope -->
         <dependency>
             <groupId>junit</groupId>
