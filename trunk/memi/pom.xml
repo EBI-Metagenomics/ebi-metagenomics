@@ -101,7 +101,7 @@
                         <version>6.1.14</version>
                         <scope>provided</scope>
                         <!-- If you not exclude these libs, which are specified as dependencies,... -->
-                        <!-- ...then you will not be able to run your web app from command line (mvn jetty:run), because of version exceptions -->
+                        <!-- ...then you will not be able to run your web app from command line (mvn jetty:run), because of version conflicts -->
                         <exclusions>
                             <exclusion>
                                 <groupId>org.mortbay.jetty</groupId>
