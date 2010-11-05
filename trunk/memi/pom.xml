@@ -11,7 +11,9 @@
     <url>http://maven.apache.org</url>
 
     <repositories>
-
+        <!-- TODO: Specify the repository for MEMI, which is also a google code project -->
+        <!-- Google code URL: http://code.google.com/p/ebi-metagenomics/ -->
+        <!--
         <repository>
             <id>google-code-interproscan</id>
             <name>google-code-interproscan</name>
@@ -21,12 +23,6 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
-        <!--
-        <repository>
-            <id>spring-releases</id>
-            <name>Spring Maven RELEASE Repository</name>
-            <url>http://s3.amazonaws.com/maven.springframework.org/release</url>
-        </repository>
         -->
     </repositories>
 
@@ -35,13 +31,37 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <!-- All dependencies are ordered by there scope -->
     <dependencies>
+        <!-- List of dependencies with test scope -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>3.8.1</version>
+            <version>4.8.2</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>net.sourceforge.jwebunit</groupId>
+            <artifactId>jwebunit-htmlunit-plugin</artifactId>
+            <version>2.5</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- Start: These dependencies are needed to build up JUnit tests for JSPs -->
+        <!-- They used for precompilation of JSPs to Java-Servlets -->
+        <!-- For more info of which libs are necessary please take a look at http://permalink.gmane.org/gmane.comp.java.jetty.support/11461 -->
+        <dependency>
+            <groupId>org.mortbay.jetty</groupId>
+            <artifactId>jetty</artifactId>
+            <version>6.1.25</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- Should be defined as default scope, because otherwise the test will not run within IntellJ IDEA -->
+        <dependency>
+            <groupId>org.mortbay.jetty</groupId>
+            <artifactId>jsp-2.1</artifactId>
+            <version>6.1.14</version>
+        </dependency>
+        <!-- End: dependencies for JSP page JUnit tests -->
     </dependencies>
 
     <build>
@@ -68,10 +88,36 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
             </plugin>
+            <!-- For further info on how to config the jetty plugin please visit...-->
+            <!-- http://docs.codehaus.org/display/JETTY/Maven+Jetty+Plugin-->
             <plugin>
                 <groupId>org.mortbay.jetty</groupId>
                 <artifactId>maven-jetty-plugin</artifactId>
                 <version>6.1.10</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.mortbay.jetty</groupId>
+                        <artifactId>jsp-2.1</artifactId>
+                        <version>6.1.14</version>
+                        <scope>provided</scope>
+                        <!-- If you not exclude these libs, which are specified as dependencies,... -->
+                        <!-- ...then you will not be able to run your web app from command line (mvn jetty:run), because of version exceptions -->
+                        <exclusions>
+                            <exclusion>
+                                <groupId>org.mortbay.jetty</groupId>
+                                <artifactId>jsp-api-2.1</artifactId>
+                            </exclusion>
+                            <exclusion>
+                                <groupId>org.mortbay.jetty</groupId>
+                                <artifactId>start</artifactId>
+                            </exclusion>
+                            <exclusion>
+                                <groupId>org.mortbay.jetty</groupId>
+                                <artifactId>jetty-annotations</artifactId>
+                            </exclusion>
+                        </exclusions>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>
