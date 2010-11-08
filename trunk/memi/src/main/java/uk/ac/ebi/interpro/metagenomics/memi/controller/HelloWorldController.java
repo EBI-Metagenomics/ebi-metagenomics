@@ -27,5 +27,5 @@ public class HelloWorldController implements Controller {
         modelAndView.addObject("message", aMessage);
 
         return modelAndView;
-
+    }
 }
