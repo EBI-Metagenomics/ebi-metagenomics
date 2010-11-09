@@ -1,13 +1,11 @@
 package uk.ac.ebi.interpro.metagenomics.memi.controller;
 
-import java.io.IOException;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.Controller;
 
 /**
  * Represents the controller for demo Hello world test. Used the tutorial of the following link:<br>
@@ -17,15 +15,18 @@ import org.springframework.web.servlet.mvc.Controller;
  * @version $Id$
  * @since 1.0-SNAPSHOT
  */
-public class HelloWorldController implements Controller {
-    public ModelAndView handleRequest(HttpServletRequest request,
-                                      HttpServletResponse response) throws ServletException, IOException {
+@Controller
+@RequestMapping("/helloworld")
+public class HelloWorldController {
+    private final static Log log = LogFactory.getLog(HelloWorldController.class);
 
-        String aMessage = "Hello World MVC!";
-
-        ModelAndView modelAndView = new ModelAndView("HelloWorldPage");
-        modelAndView.addObject("message", aMessage);
-
-        return modelAndView;
+    @RequestMapping(method = RequestMethod.GET)
+    public ModelAndView helloWorld() {
+        log.info("Building the hello world model...");
+        ModelAndView mav = new ModelAndView("HelloWorldPage");
+        String msg = "Hello World MVC!";
+        mav.addObject("message", msg);
+        log.info("Finished buildup of model.");
+        return mav;
     }
 }
