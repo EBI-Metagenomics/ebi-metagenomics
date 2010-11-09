@@ -15,13 +15,24 @@
 
     <servlet-mapping>
         <servlet-name>mvc-dispatcher</servlet-name>
-        <url-pattern>*.html</url-pattern>
+        <url-pattern>*.htm</url-pattern>
     </servlet-mapping>
 
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>/WEB-INF/mvc-dispatcher-servlet.xml</param-value>
+    </context-param>
+
+    <listener>
+        <listener-class>
+            org.springframework.web.context.ContextLoaderListener
+        </listener-class>
+    </listener>
+    <!--
     <welcome-file-list>
         <welcome-file>
-            jsp/demo.jsp
+            jsp/HelloWorldPage.jsp
         </welcome-file>
     </welcome-file-list>
-
+    -->
 </web-app>
