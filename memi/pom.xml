@@ -5,7 +5,7 @@
     <groupId>uk.ac.ebi.interpro.metagenomics.memi</groupId>
     <artifactId>memi</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
     <name>memi</name>
     <url>http://maven.apache.org</url>
@@ -29,22 +29,71 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <org.springframework.version>3.0.5.RELEASE</org.springframework.version>
     </properties>
 
     <!-- All dependencies are ordered by there scope -->
     <dependencies>
         <!-- List of dependencies with default scope -->
+        <!-- The following dependencies are used for Spring MVC development, included libs for JSTL-->
         <!-- Spring framework -->
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring</artifactId>
-            <version>2.5.6</version>
+            <artifactId>spring-context</artifactId>
+            <version>${org.springframework.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!-- Spring MVC framework -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
-            <version>2.5.6</version>
+            <version>${org.springframework.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- Spring reference recommends to use SL4j, because the runtime discovery algorithm in commons-logging is problematic! -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>1.5.8</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.5.8</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.5.8</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.14</version>
+            <scope>runtime</scope>
+        </dependency>
+        <!-- JSTL -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>taglibs</groupId>
+            <artifactId>standard</artifactId>
+            <version>1.1.2</version>
         </dependency>
         <!-- List of dependencies with test scope -->
         <dependency>
@@ -54,27 +103,17 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>net.sourceforge.jwebunit</groupId>
-            <artifactId>jwebunit-htmlunit-plugin</artifactId>
-            <version>2.5</version>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${org.springframework.version}</version>
             <scope>test</scope>
         </dependency>
-        <!-- Start: These dependencies are needed to build up JUnit tests for JSPs -->
-        <!-- They used for precompilation of JSPs to Java-Servlets -->
-        <!-- For more info of which libs are necessary please take a look at http://permalink.gmane.org/gmane.comp.java.jetty.support/11461 -->
         <dependency>
-            <groupId>org.mortbay.jetty</groupId>
-            <artifactId>jetty</artifactId>
-            <version>6.1.25</version>
-            <scope>test</scope>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.1.1</version>
+            <scope>compile</scope>
         </dependency>
-        <!-- Should be defined as default scope, because otherwise the test will not run within IntellJ IDEA -->
-        <dependency>
-            <groupId>org.mortbay.jetty</groupId>
-            <artifactId>jsp-2.1</artifactId>
-            <version>6.1.14</version>
-        </dependency>
-        <!-- End: dependencies for JSP page JUnit tests -->
     </dependencies>
 
     <build>
@@ -112,27 +151,14 @@
                         <groupId>org.mortbay.jetty</groupId>
                         <artifactId>jsp-2.1</artifactId>
                         <version>6.1.14</version>
-                        <scope>provided</scope>
-                        <!-- If you not exclude these libs, which are specified as dependencies,... -->
-                        <!-- ...then you will not be able to run your web app from command line (mvn jetty:run), because of version conflicts -->
-                        <exclusions>
-                            <exclusion>
-                                <groupId>org.mortbay.jetty</groupId>
-                                <artifactId>jsp-api-2.1</artifactId>
-                            </exclusion>
-                            <exclusion>
-                                <groupId>org.mortbay.jetty</groupId>
-                                <artifactId>start</artifactId>
-                            </exclusion>
-                            <exclusion>
-                                <groupId>org.mortbay.jetty</groupId>
-                                <artifactId>jetty-annotations</artifactId>
-                            </exclusion>
-                        </exclusions>
+                    </dependency>
+                    <dependency>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging</artifactId>
+                        <version>1.1.1</version>
                     </dependency>
                 </dependencies>
             </plugin>
         </plugins>
     </build>
-
 </project>
