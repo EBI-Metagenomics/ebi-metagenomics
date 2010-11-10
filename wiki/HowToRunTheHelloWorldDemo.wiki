@@ -2,7 +2,7 @@
 
 = 1. Check out the project from subversion =
 
-TODO this, please select the Source tab of this Google Code project site and use the described subversion command. You will need your Google Code password as well. Find it under your profile (right corner at the top of your browser)
+TODO this, please select the Source tab of this Google Code project site and use the described subversion command. Maybe Google Code ask you for our password as well. Find it under your profile (right corner at the top of your browser)
 
 = 2. Run the application using the Maven Jetty Plugin =
 
