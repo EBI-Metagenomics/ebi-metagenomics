@@ -5,11 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.JstlView;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.StudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Study;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +34,7 @@ public class HomePageController {
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView createModel() {
         List<Study> studies = studyDAO.getStudiesByVisibility(true);
-        Map model = new HashMap();
+        Map<String, List<Study>> model = new HashMap<String, List<Study>>();
         model.put("studies", studies);
 //        JstlView view = new JstlView();
 //        view.setUrl("/WEB-INF/jsp/widget_list.jsp");
