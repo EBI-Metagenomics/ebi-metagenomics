@@ -1,0 +1,19 @@
+/* Represents the main CSS file for the MEMI project */
+body {
+    font: 80% arial, helvetica, sans-serif;
+    margin: 0;
+}
+
+h2 {
+    margin-top: 0;
+}
+
+#content {
+    margin: 0 300px 0 100px;
+}
+
+#right_side_navigation {
+    position: absolute;
+    right: 0;
+    width: 300px;
+}
