@@ -6,6 +6,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.ModelAndViewAssert;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
@@ -43,7 +44,7 @@ public class SpringMVCDemoTest {
         ModelAndViewAssert.assertModelAttributeAvailable(mav, "message");
         ModelAndViewAssert.assertAndReturnModelAttributeOfType(mav, "message", String.class);
 //          creates an expected MAV and checks against the actual
-        Map<String, Object> expectedModel = new HashMap<String, Object>();
+        ModelMap expectedModel = new ModelMap();
         expectedModel.put("message", "Hello World MVC!");
         ModelAndViewAssert.assertModelAttributeValues(mav, expectedModel);
         assertTrue(mav.getModel() != null);
