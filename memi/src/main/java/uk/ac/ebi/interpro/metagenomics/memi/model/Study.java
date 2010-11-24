@@ -90,4 +90,17 @@ public class Study implements Serializable {
     public void setPublic(boolean aPublic) {
         isPublic = aPublic;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Study) {
+            return (((Study) obj).getStudyId() == this.getStudyId() && ((Study) obj).getStudyName().equals(this.getStudyName()) && ((Study) obj).getDate().equals(this.getDate()));
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return (getStudyId() + getStudyName()).hashCode();
+    }
 }
