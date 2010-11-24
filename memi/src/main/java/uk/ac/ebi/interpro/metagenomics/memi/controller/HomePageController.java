@@ -2,6 +2,7 @@ package uk.ac.ebi.interpro.metagenomics.memi.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -34,10 +35,8 @@ public class HomePageController {
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView createModel() {
         List<Study> studies = studyDAO.getStudiesByVisibility(true);
-        Map<String, List<Study>> model = new HashMap<String, List<Study>>();
+        ModelMap model = new ModelMap();
         model.put("studies", studies);
-//        JstlView view = new JstlView();
-//        view.setUrl("/WEB-INF/jsp/widget_list.jsp");
         return new ModelAndView("homePage", model);
     }
 }
