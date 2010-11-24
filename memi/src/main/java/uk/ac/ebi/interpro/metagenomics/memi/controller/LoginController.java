@@ -24,7 +24,7 @@ import java.util.Map;
 @RequestMapping("/loginForm")
 public class LoginController {
 
-    @Resource(name="submitterDAO")
+    @Resource(name = "submitterDAO")
     private SubmitterDAO submitterDAO;
 
     @RequestMapping(method = RequestMethod.GET)
@@ -47,22 +47,16 @@ public class LoginController {
             Submitter submitter = submitterDAO.getSubmitterByEmailAddress(emailAddress);
             if (submitter != null) {
                 if (!submitter.getPassword().equals(loginForm.getPassword())) {
-                    result.addError(new FieldError("loginForm", "emailAddress", "Email address and password do not belong together!"));
+                    result.addError(new FieldError("loginForm", "emailAddress", "Incorrect login data!"));
                     return "loginForm";
                 }
             } else {
-                result.addError(new FieldError("loginForm", "emailAddress", "Email address does not exist!"));
+                result.addError(new FieldError("loginForm", "emailAddress", "Incorrect login data!"));
                 return "loginForm";
             }
+        } else {
+            return "errorPage";
         }
-        model.put("loginForm", loginForm);
         return "loginSuccessPage";
     }
-
-
-//    @RequestMapping(method = RequestMethod.POST)
-//    public String onSubmit(@ModelAttribute("user") User user) {
-//        userService.add(user);
-//        return "redirect:userSuccess.htm";
-//    }
 }
