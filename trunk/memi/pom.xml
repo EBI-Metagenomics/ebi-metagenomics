@@ -29,16 +29,10 @@
         <org.springframework.version>3.0.5.RELEASE</org.springframework.version>
     </properties>
 
-    <!-- All dependencies are ordered by there scope -->
+    <!-- Most of the dependencies are ordered by topics (e.g. Spring) or by scope -->
     <dependencies>
-        <!-- List of dependencies with default scope -->
         <!-- The following dependencies are used for Spring MVC development, included libs for JSTL-->
         <!-- Spring framework -->
-        <dependency>
-            <groupId>javax.enterprise</groupId>
-            <artifactId>cdi-api</artifactId>
-            <version>1.0-SP1</version>
-        </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
@@ -62,22 +56,12 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!-- Dependencies for data persistence with Hibernate -->
+        <!-- Package for Spring test integration -->
         <dependency>
-            <groupId>uk.ac.ebi.interpro.scan</groupId>
-            <artifactId>generic-jpa-dao</artifactId>
-            <version>0.1-SNAPSHOT</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <version>4.0.2.GA</version>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${org.springframework.version}</version>
+            <scope>test</scope>
         </dependency>
         <!--
             JDBC Data Access Library (depends on spring-core, spring-beans, spring-context, spring-tx)
@@ -93,6 +77,18 @@
             <artifactId>com.springsource.oracle.jdbc</artifactId>
             <version>10.2.0.2</version>
             <scope>runtime</scope>
+        </dependency>
+        <!-- Dependencies for data persistence with Hibernate -->
+        <dependency>
+            <groupId>uk.ac.ebi.interpro.scan</groupId>
+            <artifactId>generic-jpa-dao</artifactId>
+            <version>0.1-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!-- Spring reference recommends to use SL4j, because the runtime discovery algorithm in commons-logging is problematic! -->
         <dependency>
@@ -118,7 +114,7 @@
             <version>1.2.14</version>
             <scope>runtime</scope>
         </dependency>
-        <!-- JSTL -->
+        <!-- Packages for JSTL support -->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
@@ -129,11 +125,16 @@
             <artifactId>standard</artifactId>
             <version>1.1.2</version>
         </dependency>
-        <!-- Used for user input validation within input forms (like the login or the submit forms) -->
+        <!-- Packages to support user input validation within input forms (like the login or the submit forms) -->
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
             <version>1.0.0.GA</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>4.0.2.GA</version>
         </dependency>
         <!-- List of dependencies with test scope -->
         <dependency>
@@ -142,24 +143,12 @@
             <version>4.8.2</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <version>${org.springframework.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <!-- List of dependencies with test compile scope-->
+        <!-- List of dependencies with compile scope-->
         <dependency>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
             <version>1.1.1</version>
             <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>2.3</version>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -193,15 +182,14 @@
                 <groupId>org.mortbay.jetty</groupId>
                 <artifactId>maven-jetty-plugin</artifactId>
                 <version>6.1.26</version>
-                <!-- Set up the context path and the default port to 9090 -->
+                <!-- Set up the context path and the default port to 8081 -->
                 <configuration>
-                    <scanIntervalSeconds>10</scanIntervalSeconds>
                     <webAppConfig>
                         <contextPath>/memi</contextPath>
                     </webAppConfig>
                     <connectors>
                         <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
-                            <port>9090</port>
+                            <port>8081</port>
                             <maxIdleTime>60000</maxIdleTime>
                         </connector>
                     </connectors>
