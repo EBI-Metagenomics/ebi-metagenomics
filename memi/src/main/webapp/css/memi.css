@@ -8,6 +8,10 @@ h2 {
     margin-top: 0;
 }
 
+td {
+    font: 80% arial, helvetica, sans-serif;
+}
+
 #content {
     margin: 0 300px 0 100px;
 }
