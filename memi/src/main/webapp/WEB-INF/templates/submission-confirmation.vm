@@ -1,0 +1,10 @@
+<html>
+<body>
+<div>
+    Submitter name: Currently N/A (should be the logged in submitter)<br>
+    Submission title: ${subForm.subTitle}<br>
+    Submission explanation: ${subForm.subExplanation}<br>
+    Data description: ${subForm.dataDesc}<br>
+</div>
+</body>
+</html>
