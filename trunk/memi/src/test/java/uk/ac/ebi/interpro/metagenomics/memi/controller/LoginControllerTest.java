@@ -8,6 +8,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.support.SimpleSessionStatus;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.SubmitterDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
@@ -51,7 +52,7 @@ public class LoginControllerTest {
     @Test
     public void testShowForm() {
         ModelMap model = new ModelMap();
-        assertEquals("loginForm", loginController.showForm(model));
+        assertEquals("loginForm", loginController.initForm(model));
         assertEquals(1, model.size());
         assertTrue(model.containsKey("loginForm"));
         assertFalse(model.containsKey("test"));
@@ -70,11 +71,11 @@ public class LoginControllerTest {
         ModelMap model = new ModelMap();
         BindingResult result = new BeanPropertyBindingResult(loginFormBean, "test");
         //1. test case: no login form object provided
-        assertEquals("If the login form bean is not attached at the model something unexpected occurs!", "errorPage", loginController.processForm(loginFormBean, result, model));
+        assertEquals("If the login form bean is not attached at the model something unexpected occurs!", "errorPage", loginController.processSubmit(loginFormBean, result, model, new SimpleSessionStatus()));
         //2. test case: empty values within the login form
         model.put("loginForm", loginFormBean);
         assertEquals(0, result.getErrorCount());
-        assertEquals("loginForm", loginController.processForm(loginFormBean, result, model));
+        assertEquals("loginForm", loginController.processSubmit(loginFormBean, result, model, new SimpleSessionStatus()));
         assertNull("If not specified the content of the email input field should be null!", loginFormBean.getEmailAddress());
         assertNull("If not specified the content of the password input field should be null!", loginFormBean.getPassword());
         assertEquals(1, model.size());
@@ -89,7 +90,7 @@ public class LoginControllerTest {
         model.put("loginForm", loginFormBean);
         result = new BeanPropertyBindingResult(loginFormBean, "test");
         assertEquals(0, result.getErrorCount());
-        assertEquals("loginForm", loginController.processForm(loginFormBean, result, model));
+        assertEquals("loginForm", loginController.processSubmit(loginFormBean, result, model, new SimpleSessionStatus()));
         assertEquals("The content of the email input field should not be null!", wrongEmailStr, loginFormBean.getEmailAddress());
         assertEquals("The content of the password input field should not be null!", pwStr, loginFormBean.getPassword());
         assertEquals(1, model.size());
@@ -104,7 +105,7 @@ public class LoginControllerTest {
         model.put("loginForm", loginFormBean);
         result = new BeanPropertyBindingResult(loginFormBean, "test");
         assertEquals(0, result.getErrorCount());
-        assertEquals("loginSuccessPage", loginController.processForm(loginFormBean, result, model));
+        assertEquals("loginSuccessPage", loginController.processSubmit(loginFormBean, result, model, new SimpleSessionStatus()));
         assertEquals("The content of the email input field should not be null!", emailStr, loginFormBean.getEmailAddress());
         assertEquals("The content of the password input field should not be null!", pwStr, loginFormBean.getPassword());
         assertEquals(1, model.size());
