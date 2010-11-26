@@ -1,20 +1,24 @@
 package uk.ac.ebi.interpro.metagenomics.memi.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.support.SessionStatus;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.SubmitterDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
-import java.util.Map;
 
 /**
- * Represents the controller for the login page.
+ * Represents the controller for the login page. For further information on how to implement
+ * a simple form controller please take a look at (annotated-based implementation):<br>
+ * http://www.mkyong.com/spring-mvc/spring-mvc-form-handling-annotation-example/
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @version $Id$
@@ -28,17 +32,15 @@ public class LoginController {
     private SubmitterDAO submitterDAO;
 
     @RequestMapping(method = RequestMethod.GET)
-    @SuppressWarnings(value = "unchecked")
-    public String showForm(Map model) {
+    public String initForm(ModelMap model) {
         LoginForm loginForm = new LoginForm();
         model.put("loginForm", loginForm);
         return "loginForm";
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    @SuppressWarnings(value = "unchecked")
-    public String processForm(@Valid LoginForm loginForm, BindingResult result,
-                              Map model) {
+    public String processSubmit(@ModelAttribute("loginForm") @Valid LoginForm loginForm, BindingResult result,
+                                ModelMap model, SessionStatus status) {
         if (result.hasErrors())
             return "loginForm";
         loginForm = (LoginForm) model.get("loginForm");
@@ -57,6 +59,8 @@ public class LoginController {
         } else {
             return "errorPage";
         }
+        //clear the command object from the session
+        status.setComplete();
         return "loginSuccessPage";
     }
 }
