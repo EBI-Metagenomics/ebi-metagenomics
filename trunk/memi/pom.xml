@@ -136,6 +136,18 @@
             <artifactId>hibernate-validator</artifactId>
             <version>4.0.2.GA</version>
         </dependency>
+        <!-- Added the package for the creation of emails -->
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4.1</version>
+        </dependency>
+        <!-- This package is a templating system (also for email creation) -->
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity</artifactId>
+            <version>1.6-beta1</version>
+        </dependency>
         <!-- List of dependencies with test scope -->
         <dependency>
             <groupId>junit</groupId>
@@ -184,6 +196,7 @@
                 <version>6.1.26</version>
                 <!-- Set up the context path and the default port to 8081 -->
                 <configuration>
+                    <scanIntervalSeconds>5</scanIntervalSeconds>
                     <webAppConfig>
                         <contextPath>/memi</contextPath>
                     </webAppConfig>
