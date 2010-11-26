@@ -19,8 +19,8 @@
 <div id="right_side_navigation">
     <p><a href="<c:url value="loginForm.htm"/>">Login or register</a></p>
 
-    <p>
-    <table>
+    <h3>Study list</h3>
+    <table border="0" style="border-width: 1px;border-color: #000000;border-style: solid;">
         <c:forEach var="study" items="${studies}">
             <tr>
                 <td><c:out value="${study.dateStringFormatted} - ${study.studyName}"/></td>
@@ -60,6 +60,30 @@
         <li>Login page (you find the link on the right side)</li>
     </ol>
     </p>
+    <table border="0" width="95%" style="border-width: 1px;border-color: #000000;border-style: solid;">
+        <tr>
+            <td width="50%" align="center" valign="middle">
+                <h3>Latest news</h3>
+                <table border="0" style="border-width: 1px;border-color: #000000;border-style: solid;">
+                    <c:forEach var="news" items="${newsList}">
+                        <tr>
+                            <td><c:out value="${news.formattedAnnouncedDate} - ${news.newsHeadline}"/></td>
+                        </tr>
+                    </c:forEach>
+                </table>
+            </td>
+            <td width="50%" align="left" valign="top">
+                <h3>Submission form</h3>
+                <a href="<c:url value="submissionForm.htm"/>">Submit data</a>
+            </td>
+        </tr>
+        <tr>
+            <td width="50%" align="left" valign="top"><a href="<c:url value="installationSitePage.htm"/>">Contact us</a>
+            </td>
+            <td width="50%" align="left" valign="top"><a href="<c:url value="installationSitePage.htm"/>">Analyse
+                data</a></td>
+        </tr>
+    </table>
 </div>
 </body>
 </html>
