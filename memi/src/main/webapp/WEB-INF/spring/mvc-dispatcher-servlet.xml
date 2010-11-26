@@ -35,7 +35,10 @@
     <bean id="submitterDAOId" name="submitterDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.SubmitterDAOImpl">
         <property name="dataSource" ref="dataSource"/>
     </bean>
+
     <bean id="studyDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.StudyDAOImpl"/>
+
+    <bean id="newsDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.NewsDAOImpl"/>
 
 
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
