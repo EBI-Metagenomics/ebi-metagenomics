@@ -11,16 +11,22 @@ import org.hibernate.validator.constraints.NotEmpty;
  */
 public class SubmissionForm {
 
+    /**
+     * Submission title
+     */
     @NotEmpty
-    /* Submission title */
     private String subTitle;
 
+    /**
+     * Submission explanation or message
+     */
     @NotEmpty
-    /* Submission explanation or message */
     private String subExplanation;
 
+    /**
+     * Data description
+     */
     @NotEmpty
-    /* Data description */
     private String dataDesc;
 
     public String getSubTitle() {
