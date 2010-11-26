@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
 
+import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -29,7 +30,7 @@ public class SubmitterDAOImpl implements SubmitterDAO {
 
     private Log log = LogFactory.getLog(SubmitterDAOImpl.class);
 
-    @Autowired
+    @Resource(name="adevDatasource")
     public void setDataSource(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
