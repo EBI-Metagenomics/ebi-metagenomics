@@ -1,7 +1,7 @@
 <%--
   Created by Maxim Scheremetjew, EMBL-EBI, InterPro
   Date: 12-Nov-2010
-  Desc: Represents login page, which inludes
+  Desc: Represents a login form, which inludes
   1. textfield for email address
   2. password field
   3. submit button called Log in
