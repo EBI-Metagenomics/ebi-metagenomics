@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.SubmissionForm;
-import uk.ac.ebi.interpro.metagenomics.memi.services.EmailNotificationService;
+import uk.ac.ebi.interpro.metagenomics.memi.services.NotificationService;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -29,7 +29,7 @@ import java.util.Map;
 public class SubmissionController {
 
     @Resource(name = "emailNotificationService")
-    private EmailNotificationService emailService;
+    private NotificationService emailService;
 
     @Resource(name = "velocityEngine")
     private VelocityEngine velocityEngine;
