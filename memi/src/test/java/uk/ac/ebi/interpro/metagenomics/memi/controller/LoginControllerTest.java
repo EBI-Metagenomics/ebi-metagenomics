@@ -30,6 +30,8 @@ import static org.junit.Assert.*;
  * @version $Id$
  * @since 1.0-SNAPSHOT
  */
+//TODO: Find a way to simulate POST requests. We can not use class MockHttpServletRequest, because our controller uses annotation-based controller implementation instead of the old controller interface.
+//If there is a way you can e.g. test empty input fields
 @RunWith(SpringJUnit4ClassRunner.class)
 @TestExecutionListeners
 public class LoginControllerTest {
@@ -50,7 +52,7 @@ public class LoginControllerTest {
     }
 
     @Test
-    public void testShowForm() {
+    public void testInitForm() {
         ModelMap model = new ModelMap();
         assertEquals("loginForm", loginController.initForm(model));
         assertEquals(1, model.size());
@@ -66,23 +68,13 @@ public class LoginControllerTest {
      *
      */
     @Test
-    public void testProcessForm() {
+    public void testProcessSubmit() {
         LoginForm loginFormBean = new LoginForm();
         ModelMap model = new ModelMap();
-        BindingResult result = new BeanPropertyBindingResult(loginFormBean, "test");
+        BindingResult result = new BeanPropertyBindingResult(loginFormBean, "loginForm");
         //1. test case: no login form object provided
-        assertEquals("If the login form bean is not attached at the model something unexpected occurs!", "errorPage", loginController.processSubmit(loginFormBean, result, model, new SimpleSessionStatus()));
-        //2. test case: empty values within the login form
-        model.put("loginForm", loginFormBean);
-        assertEquals(0, result.getErrorCount());
-        assertEquals("loginForm", loginController.processSubmit(loginFormBean, result, model, new SimpleSessionStatus()));
-        assertNull("If not specified the content of the email input field should be null!", loginFormBean.getEmailAddress());
-        assertNull("If not specified the content of the password input field should be null!", loginFormBean.getPassword());
-        assertEquals(1, model.size());
-        assertTrue(model.containsKey("loginForm"));
-        assertEquals(1, result.getErrorCount());
-        assertEquals("Incorrect login data!", result.getAllErrors().get(0).getDefaultMessage());
-        //3. test case: wrong login data
+        assertEquals("If the submission form bean is not attached at the model a NPE will occur!!", "errorPage", loginController.processSubmit(loginFormBean, result, model, new SimpleSessionStatus()));
+        //2. test case: wrong login data
         String wrongEmailStr = "wrong@email.com";
         String pwStr = "wrongPassword";
         loginFormBean.setEmailAddress(wrongEmailStr);
@@ -97,7 +89,7 @@ public class LoginControllerTest {
         assertTrue(model.containsKey("loginForm"));
         assertEquals(1, result.getErrorCount());
         assertEquals("Incorrect login data!", result.getAllErrors().get(0).getDefaultMessage());
-        //4. test case: correct login data
+        //3. test case: correct login data
         String emailStr = "test@email.com";
         pwStr = "test";
         loginFormBean.setEmailAddress(emailStr);
@@ -106,11 +98,12 @@ public class LoginControllerTest {
         result = new BeanPropertyBindingResult(loginFormBean, "test");
         assertEquals(0, result.getErrorCount());
         assertEquals("loginSuccessPage", loginController.processSubmit(loginFormBean, result, model, new SimpleSessionStatus()));
-        assertEquals("The content of the email input field should not be null!", emailStr, loginFormBean.getEmailAddress());
-        assertEquals("The content of the password input field should not be null!", pwStr, loginFormBean.getPassword());
         assertEquals(1, model.size());
         assertTrue(model.containsKey("loginForm"));
         assertEquals(0, result.getErrorCount());
+        LoginForm modelLoginFormObj = (LoginForm) model.get("loginForm");
+        assertEquals("The content of the email input field should not be null!", emailStr, modelLoginFormObj.getEmailAddress());
+        assertEquals("The content of the password input field should not be null!", pwStr, modelLoginFormObj.getPassword());
     }
 
     class SubmitterDAOTestImpl implements SubmitterDAO {
