@@ -43,7 +43,7 @@ public class EmailNotificationService implements NotificationService {
                 helper.setText("An exception has occured!");
                 helper.setText(exception.getMessage());
             } else {
-                helper.setText(message);
+                helper.setText(message, true);
             }
 
         } catch (MessagingException e) {
