@@ -28,6 +28,6 @@
     </bean>
 
     <!-- Imports user-defined @Controller beans that process client requests -->
-    <import resource="controllers.xml"/>
+    <import resource="controllers-context.xml"/>
 
 </beans>
