@@ -21,13 +21,20 @@
 
     <h3>Study list</h3>
     <table border="0" style="border-width: 1px;border-color: #000000;border-style: solid;">
-        <c:forEach var="study" items="${studies}">
+        <c:forEach var="study" items="${studyList}" varStatus="status">
             <tr>
-                <td><c:out value="${study.dateStringFormatted} - ${study.studyName}"/></td>
+                <c:set var="studyId" value="study${status.index}"/>
+
+                <c:url var="detailedViewUrl" value="/studyOverview.htm">
+                    <c:param name="id" value="${study.studyId}"/>
+                </c:url>
+                <td>
+                    <a href='<c:out value="${detailedViewUrl}"/>'>${study.formattedSubmitDate} - ${study.studyName}</a>
+                </td>
             </tr>
         </c:forEach>
     </table>
-    <a href="<c:url value="installationSitePage.htm"/>">more</a>
+    <a href="<c:url value="listStudies.htm"/>">more</a>
 </div>
 <div id="content">
     <div style="margin-top:60px"></div>
