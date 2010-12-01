@@ -129,6 +129,10 @@ public class LoginControllerTest {
             return null;
         }
 
+        public boolean isDatabaseAlive() {
+            return true;
+        }
+
         @Override
         public List<Submitter> getSubmitters() {
             return null;  //To change body of implemented methods use File | Settings | File Templates.
