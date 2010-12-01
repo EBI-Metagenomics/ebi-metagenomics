@@ -9,6 +9,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -27,9 +28,9 @@ public class SubmitterDAOImpl implements SubmitterDAO {
 
     private JdbcTemplate jdbcTemplate;
 
-    private Log log = LogFactory.getLog(SubmitterDAOImpl.class);
+    private final Log log = LogFactory.getLog(SubmitterDAOImpl.class);
 
-    @Resource(name="adevDatasource")
+    @Resource(name = "adevDatasource")
     public void setDataSource(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
@@ -73,6 +74,16 @@ public class SubmitterDAOImpl implements SubmitterDAO {
                     " or is wrong configured. For more info take a look at the stack trace!", e);
         }
         return submitter;
+    }
+
+    public boolean isDatabaseAlive() {
+        try {
+            Connection con = jdbcTemplate.getDataSource().getConnection();
+            return true;
+        } catch (SQLException e) {
+            log.error("Database is down! Could not perform any SQL query!", e);
+        }
+        return false;
     }
 
     @Override
