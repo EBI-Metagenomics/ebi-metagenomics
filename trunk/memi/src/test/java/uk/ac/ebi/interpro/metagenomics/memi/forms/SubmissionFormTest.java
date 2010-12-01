@@ -41,6 +41,7 @@ public class SubmissionFormTest {
     @Test
     public void testFieldAnnotations() {
         try {
+            //check the annotation of the submission title field
             Field subtitleField = SubmissionForm.class.
                     getDeclaredField("subTitle");
             assertNotNull(subtitleField);
@@ -49,6 +50,20 @@ public class SubmissionFormTest {
             assertNotNull(ann);
             Size sizeAnn = subtitleField.getAnnotation(Size.class);
             assertNull(sizeAnn);
+            //check the annotation of the submission explanation field
+            Field explField = SubmissionForm.class.
+                    getDeclaredField("subExplanation");
+            assertNotNull(explField);
+            explField.setAccessible(true);
+            ann = explField.getAnnotation(NotEmpty.class);
+            assertNotNull(ann);
+            //check the annotation of the data description field
+            Field dataDesc = SubmissionForm.class.
+                    getDeclaredField("dataDesc");
+            assertNotNull(dataDesc);
+            dataDesc.setAccessible(true);
+            ann = dataDesc.getAnnotation(NotEmpty.class);
+            assertNotNull(ann);
         } catch (NoSuchFieldException e) {
             e.printStackTrace();
         }
