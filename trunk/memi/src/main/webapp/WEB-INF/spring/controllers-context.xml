@@ -20,6 +20,8 @@
 
     <bean id="newsDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.NewsDAOImpl"/>
 
+    <bean id="sampleDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.SampleDAOImpl"/>
+
     <!-- Data source for the Oracle ENA database -->
     <bean id="adevDatasourceId" name="adevDatasource"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource">
