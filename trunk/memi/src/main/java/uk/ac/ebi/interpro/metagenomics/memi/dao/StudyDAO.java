@@ -13,15 +13,23 @@ import java.util.List;
  */
 public interface StudyDAO {
 
-    /* Returns all studies which are available from database */
-    public List<Study> getStudies();
+    /**
+     * Returns all studies which are available from database
+     */
+    public List<Study> getAllStudies();
 
-    /* If TRUE specified, then it will return all public available studies, OTHERWISE it will return only private studies */
+    /**
+     * If TRUE specified, then it will return all public available studies, OTHERWISE it will return only private studies
+     */
     public List<Study> getStudiesByVisibility(boolean isPublic);
 
-    /* self-explanatory */
+    /**
+     * self-explanatory
+     */
     public Study getStudyById(long id);
 
-    /* self-explanatory */
+    /**
+     * self-explanatory
+     */
     public void deleteStudy(Study study);
 }
