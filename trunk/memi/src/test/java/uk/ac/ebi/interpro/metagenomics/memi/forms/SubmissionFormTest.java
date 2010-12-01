@@ -1,14 +1,11 @@
 package uk.ac.ebi.interpro.metagenomics.memi.forms;
 
-import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.junit.Before;
 import org.junit.Test;
-import uk.ac.ebi.interpro.metagenomics.memi.controller.LoginController;
 
 import javax.validation.constraints.Size;
 import java.lang.reflect.Field;
-import java.util.EmptyStackException;
 
 import static org.junit.Assert.*;
 
