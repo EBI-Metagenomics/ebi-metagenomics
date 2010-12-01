@@ -27,7 +27,9 @@ public class StudyTest extends TestCase {
     @Test
     public void testInitialization() {
         assertEquals(false, study.isPublic());
-        assertNotNull(study.getDate());
+        assertNotNull(study.getSubmitDate());
+        assertNotNull(study.getReleaseDate());
+        assertNotNull(study.getReleaseDate());
         assertNotNull(study.getSamples());
         assertNull(study.getStudyName());
     }
@@ -38,8 +40,8 @@ public class StudyTest extends TestCase {
     @Test
     public void testSetterAndGetter() {
         Date date = new Date();
-        study.setDate(date);
-        assertEquals(date, study.getDate());
+        study.setSubmitDate(date);
+        assertEquals(date, study.getSubmitDate());
         assertFalse(study.isPublic());
         study.setPublic(true);
         assertTrue(study.isPublic());
@@ -60,13 +62,13 @@ public class StudyTest extends TestCase {
         Study s1 = new Study();
         s1.setStudyId(2);
         s1.setStudyName("test");
-        s1.setDate(date);
+        s1.setSubmitDate(date);
         s1.setPublic(true);
 
         Study s2 = new Study();
         s2.setStudyId(2);
         s2.setStudyName("test");
-        s2.setDate(date);
+        s2.setSubmitDate(date);
         s2.setPublic(true);
 
         Study s3 = new Study();
@@ -74,7 +76,7 @@ public class StudyTest extends TestCase {
 
         assertEquals(s1.getStudyId(), s2.getStudyId());
         assertEquals(s1.getStudyName(), s2.getStudyName());
-        assertEquals(s1.getDate(), s2.getDate());
+        assertEquals(s1.getSubmitDate(), s2.getSubmitDate());
         assertEquals(s1.isPublic(), s2.isPublic());
         assertEquals(s1.getSamples().size(), s2.getSamples().size());
 

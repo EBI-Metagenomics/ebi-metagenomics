@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import uk.ac.ebi.interpro.metagenomics.memi.basic.StudyDAOTestImpl;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.NewsDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.StudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.model.News;
@@ -55,12 +56,12 @@ public class HomePageControllerTest extends TestCase {
 
     @Test
     public void testPopulateStudyList() throws Exception {
-        List<Study> studies = controller.populateStudyList();
+        List<Study> studies = controller.populatePublicStudyList();
         assertNotNull(studies);
         assertEquals(10, studies.size());
         assertEquals("study_1", studies.get(0).getStudyName());
         assertEquals(true, studies.get(0).isPublic());
-        assertEquals("study_10", studies.get(9).getStudyName());
+        assertEquals("study_15", studies.get(9).getStudyName());
         assertEquals(true, studies.get(9).isPublic());
     }
 
@@ -71,61 +72,6 @@ public class HomePageControllerTest extends TestCase {
         assertEquals(10, newsList.size());
         assertEquals("Headline 1", newsList.get(0).getNewsHeadline());
         assertEquals("message", newsList.get(0).getNewsMsg());
-    }
-
-    /**
-     * This DAO implementation should only be used for JUnit test.
-     */
-    class StudyDAOTestImpl implements StudyDAO {
-
-        public StudyDAOTestImpl() {
-        }
-
-        @Override
-        public List<Study> getStudies() {
-            List<Study> result = new ArrayList<Study>();
-            result.add(new Study("study_1", true));
-            result.add(new Study("study_2", true));
-            result.add(new Study("study_3", true));
-            result.add(new Study("study_4", true));
-            result.add(new Study("study_5", true));
-            result.add(new Study("study_6", false));
-            result.add(new Study("study_7", false));
-            result.add(new Study("study_8", false));
-            result.add(new Study("study_9", false));
-            result.add(new Study("study_10", false));
-            return result;
-        }
-
-        @Override
-        public List<Study> getStudiesByVisibility(boolean isPublic) {
-            List<Study> result = new ArrayList<Study>();
-            result.add(new Study("study_1", true));
-            result.add(new Study("study_2", true));
-            result.add(new Study("study_3", true));
-            result.add(new Study("study_4", true));
-            result.add(new Study("study_5", true));
-            result.add(new Study("study_6", true));
-            result.add(new Study("study_7", true));
-            result.add(new Study("study_8", true));
-            result.add(new Study("study_9", true));
-            result.add(new Study("study_10", true));
-            return result;
-        }
-
-//    TODO: Implement
-
-        @Override
-        public Study getStudyById(long id) {
-            return null;  //To change body of implemented methods use File | Settings | File Templates.
-        }
-
-//    TODO: Implement
-
-        @Override
-        public void deleteStudy(Study study) {
-            //To change body of implemented methods use File | Settings | File Templates.
-        }
     }
 
     /**
