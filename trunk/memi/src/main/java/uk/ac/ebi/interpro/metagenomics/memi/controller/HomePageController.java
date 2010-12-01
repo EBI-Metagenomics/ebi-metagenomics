@@ -36,8 +36,8 @@ public class HomePageController {
         return "homePage";
     }
 
-    @ModelAttribute("studies")
-    public List<Study> populateStudyList() {
+    @ModelAttribute("studyList")
+    public List<Study> populatePublicStudyList() {
         List<Study> studies = studyDAO.getStudiesByVisibility(true);
         if (studies == null) {
             studies = new ArrayList<Study>();
