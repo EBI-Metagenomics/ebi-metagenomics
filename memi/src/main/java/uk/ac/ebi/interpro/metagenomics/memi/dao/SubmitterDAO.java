@@ -19,7 +19,10 @@ public interface SubmitterDAO {
 
 //    TODO: Confirm if email addresses are unique (at the moment I do not think so)
 //    Otherwise a list of submitters should be return
+
     public Submitter getSubmitterByEmailAddress(String emailAddress);
 
     public List<Submitter> getSubmitters();
+
+    public boolean isDatabaseAlive();
 }
