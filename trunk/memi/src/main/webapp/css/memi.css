@@ -12,6 +12,10 @@ td {
     font: 80% arial, helvetica, sans-serif;
 }
 
+.error {
+    color: #ff0000;
+}
+
 #content {
     margin: 0 300px 0 100px;
 }
