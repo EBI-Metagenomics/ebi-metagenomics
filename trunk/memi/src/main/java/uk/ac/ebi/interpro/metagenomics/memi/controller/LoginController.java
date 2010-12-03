@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.SubmitterDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
@@ -42,34 +43,49 @@ public class LoginController {
         return "loginForm";
     }
 
+//    @Override
+//  protected ModelAndView onSubmit(Object command) throws ServletException {
+//    Login login = (Login) command;
+//    String name = login.getUsername();
+//    String prestatement = "Hello";
+//
+//    ModelAndView modelAndView = new ModelAndView(getSuccessView());
+//    modelAndView.addObject("name", name);
+//    return modelAndView;
+//
+//    }
+
     @RequestMapping(method = RequestMethod.POST)
-    public String processSubmit(@ModelAttribute("loginForm") @Valid LoginForm loginForm, BindingResult result,
-                                ModelMap model, SessionStatus status) {
+    public ModelAndView processSubmit(@ModelAttribute("loginForm") @Valid LoginForm loginForm, BindingResult result,
+                                      ModelMap model, SessionStatus status) {
         if (result.hasErrors())
-            return "loginForm";
+            return new ModelAndView("loginForm");
         loginForm = (LoginForm) model.get("loginForm");
+        Submitter submitter = null;
         if (loginForm != null) {
             String emailAddress = loginForm.getEmailAddress();
             if (!submitterDAO.isDatabaseAlive()) {
                 result.addError(new FieldError("loginForm", "emailAddress", "Database is down! We are sorry for that."));
-                return "loginForm";
+                return new ModelAndView("loginForm");
             }
-            Submitter submitter = submitterDAO.getSubmitterByEmailAddress(emailAddress);
+            submitter = submitterDAO.getSubmitterByEmailAddress(emailAddress);
             if (submitter != null) {
                 if (!submitter.getPassword().equals(loginForm.getPassword())) {
                     result.addError(new FieldError("loginForm", "emailAddress", "Incorrect login data!"));
-                    return "loginForm";
+                    return new ModelAndView("loginForm");
                 }
             } else {
                 log.warn("Could not find any submitter for the specified email address: " + emailAddress);
                 result.addError(new FieldError("loginForm", "emailAddress", "Incorrect login data!"));
-                return "loginForm";
+                return new ModelAndView("loginForm");
             }
         } else {
-            return "errorPage";
+            return new ModelAndView("errorPage");
         }
         //clear the command object from the session
         status.setComplete();
-        return "loginSuccessPage";
+        ModelAndView resultModel = new ModelAndView("loginSuccessPage");
+        resultModel.addObject("submitter", submitter);
+        return resultModel;
     }
 }

@@ -24,8 +24,8 @@
     <h2>MG Portal Login Success Page</h2>
 
     <div style="margin-top:6px"></div>
-    <p>Welcome test user! You have logged in successfully!<br><a href="<c:url value="loginForm.htm"/>">back to login
-        page</a></p>
+    <p>Welcome <c:out value="${submitter.surname}"/> user! Your Id is <c:out value="${submitter.submitterId}"/>! You
+        have logged in successfully!<br><a href="<c:url value="loginForm.htm"/>">back to login page</a></p>
 </div>
 </body>
 </html>
