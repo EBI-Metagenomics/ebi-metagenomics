@@ -24,7 +24,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
     <!--
     <servlet>
         <servlet-name>controller</servlet-name>
-        <jsp-file>/WEB-INF/pages/homePage.jsp</jsp-file>
+        <jsp-file>/WEB-INF/pages2/homePage.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
         <servlet-name>controller</servlet-name>
