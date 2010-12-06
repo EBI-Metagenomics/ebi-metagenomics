@@ -8,7 +8,8 @@
 <html>
 <head>
     <title>Study overview</title>
-    <link href="css/memi.css" rel="stylesheet" type="text/css" media="all"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link href="../css/memi.css" rel="stylesheet" type="text/css" media="all"/>
 </head>
 <body>
 <div id="right_side_navigation">

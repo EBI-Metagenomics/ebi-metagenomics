@@ -7,12 +7,13 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <title>Overview about all studies</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link href="css/memi.css" rel="stylesheet" type="text/css" media="all"/>
 </head>
 <body>
@@ -38,19 +39,19 @@
                     </tr>
                     <c:forEach var="study" items="${studyList}" varStatus="status">
                         <tr>
-                            <c:set var="studyId" value="study${status.index}"/>
-
-                            <c:url var="detailedViewUrl" value="/studyOverview.htm">
-                                <c:param name="id" value="${study.studyId}"/>
-                            </c:url>
+                            <spring:url var="studyUrl" value="studyOverview/${study.studyId}"/>
 
                             <td>${study.studyId}</td>
-                            <td><a href='<c:out value="${detailedViewUrl}"/>'>${study.studyName}</a></td>
+                            <td>
+                                <a href="<c:url value="${studyUrl}"/>">${study.studyName}</a>
+                            </td>
                             <td>${study.studyType}</td>
                             <td>${study.submitDate}</td>
                             <td>${study.analyseStatus}</td>
                             <td>${study.sampleSize}</td>
-                            <td><a href='<c:out value="${detailedViewUrl}"/>'>Show overview</a></td>
+                            <td>
+                                <a href="<c:url value="${studyUrl}"/>">Show overview</a>
+                            </td>
                         </tr>
                     </c:forEach>
                 </table>
