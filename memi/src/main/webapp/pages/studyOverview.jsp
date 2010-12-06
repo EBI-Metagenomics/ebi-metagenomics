@@ -5,6 +5,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="spring" %>
 <html>
 <head>
     <title>Study overview</title>
@@ -13,11 +14,11 @@
 </head>
 <body>
 <div id="right_side_navigation">
-    <p><a href="<c:url value="homePage.htm"/>">Home</a></p>
+    <p><a href="<c:url value="../homePage.htm"/>">Home</a></p>
 
-    <p><a href="<c:url value="installationSitePage.htm"/>">Export to PDF</a></p>
+    <p><a href="<c:url value="../installationSitePage.htm"/>">Export to PDF</a></p>
 
-    <p><a href="<c:url value="installationSitePage.htm"/>">Associated publications</a></p>
+    <p><a href="<c:url value="../installationSitePage.htm"/>">Associated publications</a></p>
 </div>
 <div id="content">
     <div style="margin-top:60px"></div>
@@ -47,7 +48,12 @@
         </tr>
         <tr>
             <td>Public:</td>
-            <td><c:choose><c:when test="${study.public}">yes</c:when><c:otherwise>no</c:otherwise></c:choose></td>
+            <td>
+                <c:choose>
+                    <c:when test="${study.public}">yes</c:when>
+                    <c:otherwise>no</c:otherwise>
+                </c:choose>
+            </td>
         </tr>
         <tr>
             <td>Release date:</td>
@@ -78,19 +84,19 @@
         </tr>
         <c:forEach var="sample" items="${sampleList}" varStatus="status">
             <tr>
-                <c:set var="sampleId" value="sample${status.index}"/>
-
-                <c:url var="detailedViewUrl" value="/sampleOverview.htm">
-                    <c:param name="id" value="${sample.sampleId}"/>
-                </c:url>
+                <spring:url var="sampleUrl" value="../sampleOverview/${sample.sampleId}"/>
 
                 <td>${sample.sampleId}</td>
-                <td><a href='<c:out value="${detailedViewUrl}"/>'>${sample.sampleName}</a></td>
+                <td>
+                    <a href='<c:out value="${sampleUrl}"/>'>${sample.sampleName}</a>
+                </td>
                 <td>${sample.formattedCollectionDate}</td>
                 <c:forEach var="item" items="${sample.sampleProperties}">
                     <td><c:out value="${item}"/></td>
                 </c:forEach>
-                <td><a href='<c:out value="${detailedViewUrl}"/>'>Show overview</a></td>
+                <td>
+                    <a href='<c:out value="${sampleId}"/>'>Show overview</a>
+                </td>
             </tr>
         </c:forEach>
     </table>
