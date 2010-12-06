@@ -3,7 +3,6 @@ package uk.ac.ebi.interpro.metagenomics.memi.controller;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.ui.ModelMap;
@@ -53,10 +52,8 @@ public class StudyOverviewControllerTest {
 
     @Test
     public void testInitPage() throws Exception {
-        MockHttpServletRequest request = new MockHttpServletRequest();
-        request.setParameter("id", "1");
         ModelMap model = new ModelMap();
-        assertEquals("studyOverview", controller.initPage(model, request));
+        assertEquals("studyOverview", controller.findStudy(1L, model));
         //check model
         assertEquals(1, model.size());
         assertTrue(model.containsKey("study"));
