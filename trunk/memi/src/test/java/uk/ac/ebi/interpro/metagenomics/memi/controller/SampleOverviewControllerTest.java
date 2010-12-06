@@ -42,10 +42,8 @@ public class SampleOverviewControllerTest {
 
     @Test
     public void testInitPage() throws Exception {
-        MockHttpServletRequest request = new MockHttpServletRequest();
-        request.setParameter("id", "1");
         ModelMap model = new ModelMap();
-        assertEquals("sampleOverview", controller.initPage(model, request));
+        assertEquals("sampleOverview", controller.findSample(1L, model));
         //check model
         assertEquals(1, model.size());
         assertTrue(model.containsKey("sample"));
