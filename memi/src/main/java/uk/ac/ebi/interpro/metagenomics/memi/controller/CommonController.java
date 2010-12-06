@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * Represents a common controller, which currently holds request mappings
- * for simple pages that need no own controller class.
+ * for simple pages2 that need no own controller class.
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @version $Id$
