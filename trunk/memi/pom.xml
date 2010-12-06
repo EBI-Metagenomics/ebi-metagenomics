@@ -202,9 +202,8 @@
                 <version>6.1.26</version>
                 <!-- Set up the context path and the default port to 8081 -->
                 <configuration>
-                    <scanIntervalSeconds>5</scanIntervalSeconds>
                     <webAppConfig>
-                        <contextPath>/memi</contextPath>
+                        <contextPath>/</contextPath>
                     </webAppConfig>
                     <connectors>
                         <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
