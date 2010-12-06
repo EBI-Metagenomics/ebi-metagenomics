@@ -10,9 +10,11 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="spring" %>
 <html>
 <head>
     <title>MG Portal home page</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link href="css/memi.css" rel="stylesheet" type="text/css" media="all"/>
 </head>
 <body>
@@ -23,13 +25,15 @@
     <table border="0" style="border-width: 1px;border-color: #000000;border-style: solid;">
         <c:forEach var="study" items="${studyList}" varStatus="status">
             <tr>
-                <c:set var="studyId" value="study${status.index}"/>
+                <%--<c:set var="studyId" value="study${status.index}"/>--%>
 
-                <c:url var="detailedViewUrl" value="/studyOverview.htm">
-                    <c:param name="id" value="${study.studyId}"/>
-                </c:url>
+                <spring:url var="studyUrl" value="studyOverview/${study.studyId}" />
+
+                <%--<c:url var="detailedViewUrl" value="/studyOverview.htm">--%>
+                    <%--<c:param name="id" value="${study.studyId}"/>--%>
+                <%--</c:url>--%>
                 <td>
-                    <a href='<c:out value="${detailedViewUrl}"/>'>${study.formattedSubmitDate} - ${study.studyName}</a>
+                    <a href="${studyUrl}">${study.formattedSubmitDate} - ${study.studyName}</a>
                 </td>
             </tr>
         </c:forEach>
