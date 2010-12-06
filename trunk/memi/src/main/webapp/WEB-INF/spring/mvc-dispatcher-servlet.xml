@@ -19,7 +19,7 @@
     <!-- Forwards requests to the "/" resource to the "welcome" view -->
     <mvc:view-controller path="/" view-name="homePage"/>
 
-    <!-- Resolves JSP pages selected for rendering by @Controllers to .jsp resources in the /pages directory -->
+    <!-- Resolves JSP pages2 selected for rendering by @Controllers to .jsp resources in the /pages2 directory -->
     <bean id="viewResolver"
           class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
