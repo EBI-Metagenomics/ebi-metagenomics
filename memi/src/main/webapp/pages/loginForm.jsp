@@ -22,15 +22,15 @@
 </head>
 <body>
 <div id="right_side_navigation">
-    <p><a href="<c:url value="./homePage.htm"/>">Home</a></p>
-    <p><a href="<c:url value="./installationSitePage.htm"/>">Register</a></p>
+    <p><a href="<c:url value="./homePage"/>">Home</a></p>
+    <p><a href="<c:url value="./installationSitePage"/>">Register</a></p>
 </div>
 <div id="content">
     <div style="margin-top:60px"></div>
     <h2><fmt:message key="label.loginForm.title"/></h2>
 
     <div style="margin-top:6px"></div>
-    <form:form action="loginForm.htm" commandName="loginForm">
+    <form:form action="loginForm" commandName="loginForm">
         <table>
             <tr>
                 <td>E-Mail*:<form:errors cssStyle="color:red;" path="emailAddress"/></td>

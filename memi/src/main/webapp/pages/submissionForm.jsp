@@ -13,18 +13,18 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <title><fmt:message key="label.submission.title"/></title>
-    <link href="css/memi.css" rel="stylesheet" type="text/css" media="all"/>
+    <link href="../css/memi.css" rel="stylesheet" type="text/css" media="all"/>
 </head>
 <body>
 <div id="right_side_navigation">
-    <p><a href="<c:url value="homePage.htm"/>">Home</a></p>
+    <p><a href="<c:url value="./homePage"/>">Home</a></p>
 </div>
 <div id="content">
     <div style="margin-top:60px"></div>
     <h2><fmt:message key="label.submission.title"/></h2>
 
     <div style="margin-top:6px"></div>
-    <form:form action="submissionForm.htm" commandName="subForm">
+    <form:form action="submissionForm" commandName="subForm">
         <table>
             <tr>
                 <td>Submission title*:<form:errors cssStyle="color:red;" path="subTitle"/></td>

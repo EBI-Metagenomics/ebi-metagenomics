@@ -14,11 +14,11 @@
 </head>
 <body>
 <div id="right_side_navigation">
-    <p><a href="<c:url value="../homePage.htm"/>">Home</a></p>
+    <p><a href="<c:url value="../homePage"/>">Home</a></p>
 
-    <p><a href="<c:url value="../installationSitePage.htm"/>">Export to PDF</a></p>
+    <p><a href="<c:url value="../installationSitePage"/>">Export to PDF</a></p>
 
-    <p><a href="<c:url value="../installationSitePage.htm"/>">Associated publications</a></p>
+    <p><a href="<c:url value="../installationSitePage"/>">Associated publications</a></p>
 </div>
 <div id="content">
     <div style="margin-top:60px"></div>
