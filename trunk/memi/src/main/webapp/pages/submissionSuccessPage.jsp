@@ -13,11 +13,11 @@
 <html>
 <head>
     <title>MG Portal Submission Success Page</title>
-    <link href="css/memi.css" rel="stylesheet" type="text/css" media="all"/>
+    <link href="../css/memi.css" rel="stylesheet" type="text/css" media="all"/>
 </head>
 <body>
 <div id="right_side_navigation">
-    <p><a href="<c:url value="homePage.htm"/>">Home</a></p>
+    <p><a href="<c:url value="./homePage"/>">Home</a></p>
 </div>
 <div id="content">
     <div style="margin-top:60px"></div>

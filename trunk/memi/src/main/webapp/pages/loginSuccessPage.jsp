@@ -17,7 +17,7 @@
 </head>
 <body>
 <div id="right_side_navigation">
-    <p><a href="<c:url value="./homePage.htm"/>">Home</a></p>
+    <p><a href="<c:url value="./homePage"/>">Home</a></p>
 </div>
 <div id="content">
     <div style="margin-top:60px"></div>
@@ -25,7 +25,7 @@
 
     <div style="margin-top:6px"></div>
     <p>Welcome <c:out value="${submitter.surname}"/> user! Your Id is <c:out value="${submitter.submitterId}"/>! You
-        have logged in successfully!<br><a href="<c:url value="loginForm.htm"/>">back to login page</a></p>
+        have logged in successfully!<br><a href="<c:url value="./loginForm"/>">back to login page</a></p>
 </div>
 </body>
 </html>

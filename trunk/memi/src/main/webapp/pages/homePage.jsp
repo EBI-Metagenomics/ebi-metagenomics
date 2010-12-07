@@ -15,30 +15,24 @@
 <head>
     <title>MG Portal home page</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link href="css/memi.css" rel="stylesheet" type="text/css" media="all"/>
+    <link href="../css/memi.css" rel="stylesheet" type="text/css" media="all"/>
 </head>
 <body>
 <div id="right_side_navigation">
-    <p><a href="<c:url value="loginForm.htm"/>">Login or register</a></p>
+    <p><a href="<c:url value="./loginForm"/>">Login or register</a></p>
 
     <h3>Study list</h3>
     <table border="0" style="border-width: 1px;border-color: #000000;border-style: solid;">
         <c:forEach var="study" items="${studyList}" varStatus="status">
             <tr>
-                <%--<c:set var="studyId" value="study${status.index}"/>--%>
-
                 <spring:url var="studyUrl" value="studyOverview/${study.studyId}" />
-
-                <%--<c:url var="detailedViewUrl" value="/studyOverview.htm">--%>
-                    <%--<c:param name="id" value="${study.studyId}"/>--%>
-                <%--</c:url>--%>
                 <td>
                     <a href="${studyUrl}">${study.formattedSubmitDate} - ${study.studyName}</a>
                 </td>
             </tr>
         </c:forEach>
     </table>
-    <a href="<c:url value="listStudies.htm"/>">more</a>
+    <a href="<c:url value="./listStudies"/>">more</a>
 </div>
 <div id="content">
     <div style="margin-top:60px"></div>
@@ -50,7 +44,7 @@
     <p>The study of all genomes present in any given environment without the need for prior individual identification or
         amplification is termed metagenomics. For example, in its simplest form a metagenomic study might be the direct
         sequence results of DNA extracted from a bucket of sea water.<br><a
-                href="<c:url value="installationSitePage.htm"/>">more</a></p>
+                href="<c:url value="./installationSitePage"/>">more</a></p>
 
     <div style="margin-top:6px"></div>
     <h3>TODOs</h3>
@@ -85,13 +79,13 @@
             </td>
             <td width="50%" align="left" valign="top">
                 <h3>Submission form</h3>
-                <a href="<c:url value="submissionForm.htm"/>">Submit data</a>
+                <a href="<c:url value="./submissionForm"/>">Submit data</a>
             </td>
         </tr>
         <tr>
-            <td width="50%" align="left" valign="top"><a href="<c:url value="installationSitePage.htm"/>">Contact us</a>
+            <td width="50%" align="left" valign="top"><a href="<c:url value="./installationSitePage"/>">Contact us</a>
             </td>
-            <td width="50%" align="left" valign="top"><a href="<c:url value="installationSitePage.htm"/>">Analyse
+            <td width="50%" align="left" valign="top"><a href="<c:url value="./installationSitePage"/>">Analyse
                 data</a></td>
         </tr>
     </table>
