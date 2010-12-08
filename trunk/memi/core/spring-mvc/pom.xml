@@ -252,17 +252,17 @@
         parameters provided by a Maven profile (specified within the setting.xml file) -->
         <resources>
             <resource>
-                <directory>src/main/webapp</directory>
+                <directory>../../memi-spring-mvc/src/main/webapp</directory>
                 <filtering>true</filtering>
             </resource>
             <resource>
-                <directory>src/main/resources</directory>
+                <directory>../../memi-spring-mvc/src/main/resources</directory>
                 <filtering>true</filtering>
             </resource>
         </resources>
         <testResources>
             <testResource>
-                <directory>src/test/resources</directory>
+                <directory>../../memi-spring-mvc/src/test/resources</directory>
                 <filtering>true</filtering>
             </testResource>
         </testResources>
