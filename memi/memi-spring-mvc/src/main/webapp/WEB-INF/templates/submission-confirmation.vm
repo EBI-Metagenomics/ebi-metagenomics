@@ -3,8 +3,10 @@
 <div>
     Submitter name: Currently N/A (should be the logged in submitter)<br>
     Submission title: ${subForm.subTitle}<br>
-    Submission explanation: ${subForm.subExplanation}<br>
+    Release date: ${subForm.releaseDate}<br>
     Data description: ${subForm.dataDesc}<br>
+    Is analysis required: ${subForm.analysisRequired}<br>
+    Is Human associated: ${subForm.humanAssociated}<br>
 </div>
 </body>
 </html>

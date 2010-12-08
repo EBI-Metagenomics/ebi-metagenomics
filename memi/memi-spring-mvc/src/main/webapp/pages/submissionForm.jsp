@@ -28,23 +28,23 @@
         <table>
             <tr>
                 <td>Submission title*:<form:errors cssStyle="color:red;" path="subTitle"/></td>
-            </tr>
-            <tr>
                 <td><form:input path="subTitle"/></td>
             </tr>
             <tr>
-                <td>Submission explanation:*<form:errors cssStyle="color:red;" path="subExplanation"/></td>
-            </tr>
-            <tr>
-
-                <td><form:textarea path="subExplanation"/></td>
+                <td>Release date:*<form:errors cssStyle="color:red;" path="releaseDate"/></td>
+                <td><form:input path="releaseDate"/></td>
             </tr>
             <tr>
                 <td>Data description:*<form:errors cssStyle="color:red;" path="dataDesc"/></td>
+                <td><form:textarea path="dataDesc"/></td>
             </tr>
             <tr>
-
-                <td><form:textarea path="dataDesc"/></td>
+                <td>Human associated?<form:errors cssStyle="color:red;" path="humanAssociated"/></td>
+                <td><form:checkbox path="humanAssociated"/></td>
+            </tr>
+            <tr>
+                <td>Analysis required?<form:errors cssStyle="color:red;" path="humanAssociated"/></td>
+                <td><form:checkbox path="humanAssociated"/></td>
             </tr>
             <tr>
                 <td><input type="submit" value="Submit"/></td>

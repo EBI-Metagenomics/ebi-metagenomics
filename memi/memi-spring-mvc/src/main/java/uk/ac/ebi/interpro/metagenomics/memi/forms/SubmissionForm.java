@@ -2,6 +2,12 @@ package uk.ac.ebi.interpro.metagenomics.memi.forms;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  * Represents a form for submissions.
  *
@@ -17,17 +23,21 @@ public class SubmissionForm {
     @NotEmpty
     private String subTitle;
 
-    /**
-     * Submission explanation or message
-     */
-    @NotEmpty
-    private String subExplanation;
+    private Date releaseDate;
+
+    private boolean isAnalysisRequired;
+
+    private boolean isHumanAssociated;
 
     /**
      * Data description
      */
     @NotEmpty
     private String dataDesc;
+
+    public SubmissionForm() {
+        releaseDate = Calendar.getInstance().getTime();
+    }
 
     public String getSubTitle() {
         return subTitle;
@@ -37,19 +47,41 @@ public class SubmissionForm {
         this.subTitle = subTitle;
     }
 
-    public String getSubExplanation() {
-        return subExplanation;
-    }
-
-    public void setSubExplanation(String subExplanation) {
-        this.subExplanation = subExplanation;
-    }
-
     public String getDataDesc() {
         return dataDesc;
     }
 
     public void setDataDesc(String dataDesc) {
         this.dataDesc = dataDesc;
+    }
+
+    public String getReleaseDate() {
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        return df.format(releaseDate);
+    }
+
+    public void setReleaseDate(String releaseDate) {
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            this.releaseDate = df.parse(releaseDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean isAnalysisRequired() {
+        return isAnalysisRequired;
+    }
+
+    public void setAnalysisRequired(boolean analysisRequired) {
+        isAnalysisRequired = analysisRequired;
+    }
+
+    public boolean isHumanAssociated() {
+        return isHumanAssociated;
+    }
+
+    public void setHumanAssociated(boolean humanAssociated) {
+        isHumanAssociated = humanAssociated;
     }
 }

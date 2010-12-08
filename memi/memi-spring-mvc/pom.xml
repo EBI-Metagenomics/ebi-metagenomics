@@ -178,29 +178,8 @@
     </dependencies>
 
     <build>
+        <finalName>memi</finalName>
         <plugins>
-            <!-- Use Java 6 language features -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                </configuration>
-            </plugin>
-            <!-- JavaDocs (generate: mvn javadoc:javadoc, package: mvn javadoc:jar) -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <configuration>
-                    <overview/>
-                </configuration>
-            </plugin>
-            <!-- Create JAR of source files (source:jar, source:test-jar) -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-            </plugin>
             <!-- For further info on how to config the jetty plugin please visit...-->
             <!-- http://docs.codehaus.org/display/JETTY/Maven+Jetty+Plugin-->
             <plugin>
@@ -254,21 +233,19 @@
         parameters provided by a Maven profile (specified within the setting.xml file) -->
         <resources>
             <resource>
-                <directory>../../memi-spring-mvc/src/main/webapp</directory>
+                <directory>src/main/webapp</directory>
                 <filtering>true</filtering>
             </resource>
             <resource>
-                <directory>../../memi-spring-mvc/src/main/resources</directory>
+                <directory>src/main/resources</directory>
                 <filtering>true</filtering>
             </resource>
         </resources>
         <testResources>
             <testResource>
-                <directory>../../memi-spring-mvc/src/test/resources</directory>
+                <directory>src/test/resources/</directory>
                 <filtering>true</filtering>
             </testResource>
         </testResources>
-
-        <finalName>memi</finalName>
     </build>
 </project>
