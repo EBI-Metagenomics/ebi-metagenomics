@@ -1,28 +1,33 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>uk.ac.ebi.interpro.metagenomics.memi</groupId>
+        <artifactId>memi</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
     <groupId>uk.ac.ebi.interpro.metagenomics.memi</groupId>
-    <artifactId>memi</artifactId>
+    <artifactId>memi-spring-mvc</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
-    <name>memi</name>
-    <url>http://maven.apache.org</url>
+    <name>MEMI Spring MVC</name>
 
-    <repositories>
-        <!-- TODO: Specify the repository for MEMI, which is also a google code project -->
-        <repository>
-            <id>google-code-interproscan</id>
-            <name>google-code-interproscan</name>
-            <layout>default</layout>
-            <url>http://interproscan.googlecode.com/svn/repository/</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
+    <!--<licenses>-->
+    <!--<license>-->
+    <!--<name>The Apache Software License, Version 2.0</name>-->
+    <!--<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>-->
+    <!--<distribution>repo</distribution>-->
+    <!--</license>-->
+    <!--</licenses>-->
 
+    <organization>
+        <name>EMBL - European Bioinformatics Institute</name>
+        <url>http://www.ebi.ac.uk/</url>
+    </organization>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
