@@ -30,12 +30,18 @@ public class SubmissionFormTest {
         String title = "title";
         form.setSubTitle(title);
         assertEquals(title, form.getSubTitle());
-        String expl = "explanation";
-        form.setSubExplanation(expl);
-        assertEquals(expl, form.getSubExplanation());
+        String releaseDate = "20/12/2010";
+        form.setReleaseDate(releaseDate);
+        assertEquals(releaseDate, form.getReleaseDate());
         String desc = "desc";
         form.setDataDesc(desc);
         assertEquals(desc, form.getDataDesc());
+        boolean isAnalysisRequired = true;
+        form.setAnalysisRequired(isAnalysisRequired);
+        assertEquals(isAnalysisRequired, form.isAnalysisRequired());
+        boolean isHumanAssociated = false;
+        form.setHumanAssociated(isHumanAssociated);
+        assertEquals(isHumanAssociated, form.isHumanAssociated());
     }
 
     @Test
@@ -50,13 +56,6 @@ public class SubmissionFormTest {
             assertNotNull(ann);
             Size sizeAnn = subtitleField.getAnnotation(Size.class);
             assertNull(sizeAnn);
-            //check the annotation of the submission explanation field
-            Field explField = SubmissionForm.class.
-                    getDeclaredField("subExplanation");
-            assertNotNull(explField);
-            explField.setAccessible(true);
-            ann = explField.getAnnotation(NotEmpty.class);
-            assertNotNull(ann);
             //check the annotation of the data description field
             Field dataDesc = SubmissionForm.class.
                     getDeclaredField("dataDesc");

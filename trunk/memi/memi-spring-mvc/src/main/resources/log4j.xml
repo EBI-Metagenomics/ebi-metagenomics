@@ -43,7 +43,7 @@
     <!-- Root Logger -->
     <root>
         <priority value="info"/>
-        <appender-ref ref="fileappender"/>
+        <appender-ref ref="consoleappender"/>
     </root>
 
     <!--<root>-->

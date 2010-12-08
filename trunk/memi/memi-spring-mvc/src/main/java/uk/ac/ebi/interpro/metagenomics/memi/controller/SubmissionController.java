@@ -1,5 +1,7 @@
 package uk.ac.ebi.interpro.metagenomics.memi.controller;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.velocity.app.VelocityEngine;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -28,6 +30,8 @@ import java.util.Map;
 @RequestMapping("/submissionForm")
 public class SubmissionController {
 
+    private final Log log = LogFactory.getLog(SubmissionController.class);
+
     @Resource(name = "emailNotificationService")
     private NotificationService emailService;
 
@@ -44,12 +48,15 @@ public class SubmissionController {
     @RequestMapping(method = RequestMethod.POST)
     public String processSubmit(@ModelAttribute("subForm") @Valid SubmissionForm subForm, BindingResult result,
                                 ModelMap model, SessionStatus status) {
-        if (result.hasErrors())
+        if (result.hasErrors()) {
+            log.info("Submission form still has validation errors!");
             return "submissionForm";
+        }
         subForm = (SubmissionForm) model.get("subForm");
         if (subForm != null) {
             String msg = buildMsg(subForm);
             emailService.sendNotification(msg);
+            log.info("Sent an email with new submission details: " + msg);
             status.setComplete();
         } else {
             return "errorPage";
