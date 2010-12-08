@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>uk.ac.ebi.interpro.metagenomics</groupId>
+    <artifactId>memi</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>memi</name>
+    <!-- URL is not yet specified -->
+    <url>http://maven.apache.org</url>
+
+    <organization>
+        <name>European Bioinformatics Institute</name>
+        <url>http://www.ebi.ac.uk/</url>
+    </organization>
+
+    <!--<repositories>-->
+    <!-- Google code repository is not yet specified -->
+    <!--<repository>-->
+    <!--<id>google-code-interproscan</id>-->
+    <!--<name>google-code-interproscan</name>-->
+    <!--<layout>default</layout>-->
+    <!--<url>http://interproscan.googlecode.com/svn/repository/</url>-->
+    <!--<snapshots>-->
+    <!--<enabled>false</enabled>-->
+    <!--</snapshots>-->
+    <!--</repository>-->
+    <!--</repositories>-->
+
+    <!--<licenses>-->
+    <!--<license>-->
+    <!--<name>The Apache Software License, Version 2.0</name>-->
+    <!--<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>-->
+    <!--<distribution>repo</distribution>-->
+    <!--</license>-->
+    <!--</licenses>-->
+
+    <!--<scm>-->
+    <!--<connection>http://ebi-metagenomics.googlecode.com/svn/</connection>-->
+    <!--<url>http://ebi-metagenomics.googlecode.com/svn/</url>-->
+    <!--</scm>-->
+
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <modules>
+        <module>memi-model</module>
+        <module>memi-business</module>
+        <module>memi-persistence</module>
+    <module>memi-spring-mvc</module>
+  </modules>
+
+    <build>
+        <plugins>
+            <!-- Use Java 6 language features -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+            <!-- JavaDocs (generate: mvn javadoc:javadoc, package: mvn javadoc:jar) -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <configuration>
+                    <overview/>
+                </configuration>
+            </plugin>
+            <!-- Create JAR of source files (source:jar, source:test-jar) -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+            </plugin>
+            <!-- For further info on how to config the jetty plugin please visit...-->
+            <!-- http://docs.codehaus.org/display/JETTY/Maven+Jetty+Plugin-->
+            <plugin>
+                <groupId>org.mortbay.jetty</groupId>
+                <artifactId>maven-jetty-plugin</artifactId>
+                <version>6.1.26</version>
+                <!-- Set up the context path and the default port to 8081 -->
+                <configuration>
+                    <webAppConfig>
+                        <contextPath>/</contextPath>
+                    </webAppConfig>
+                    <connectors>
+                        <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
+                            <port>8081</port>
+                            <maxIdleTime>60000</maxIdleTime>
+                        </connector>
+                    </connectors>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.mortbay.jetty</groupId>
+                        <artifactId>jsp-2.1</artifactId>
+                        <version>6.1.14</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging</artifactId>
+                        <version>1.1.1</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <!-- This plugin ensures that filtering is also work for files within the spring webapp directory -->
+            <!-- Found it on http://stephou.wordpress.com/2010/03/22/filtering-web-inf-files-in-maven-webapp/ -->
+            <!-- For a more detailed description please visit http://maven.apache.org/plugins/maven-war-plugin/examples/adding-filtering-webresources.html-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.1.1</version>
+                <configuration>
+                    <webResources>
+                        <resource>
+                            <directory>${basedir}/src/main/webapp/WEB-INF/spring</directory>
+                            <filtering>true</filtering>
+                            <targetPath>WEB-INF/spring</targetPath>
+                        </resource>
+                    </webResources>
+                </configuration>
+            </plugin>
+        </plugins>
+        <!-- Filtering is activated, because we want to provide jdbc connection
+        parameters provided by a Maven profile (specified within the setting.xml file) -->
+        <resources>
+            <resource>
+                <directory>spring-mvc/src/main/webapp</directory>
+                <filtering>true</filtering>
+            </resource>
+            <resource>
+                <directory>spring-mvc/src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <testResources>
+            <testResource>
+                <directory>spring-mvc/src/test/resources</directory>
+                <filtering>true</filtering>
+            </testResource>
+        </testResources>
+
+        <finalName>memi</finalName>
+    </build>
+</project>
