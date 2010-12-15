@@ -1,0 +1,172 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="uk.ac.ebi.interpro.metagenomics.memi.model.EmgSample" table="EMG_SAMPLE" schema="EMG_USER">
+
+        <id name="sampleId" column="SAMPLE_ID">
+            <generator class="native"/>
+        </id>
+
+        <property name="studyId">
+            <column name="STUDY_ID" sql-type="varchar2" length="9" not-null="true"/>
+        </property>
+        <property name="sampleTitle">
+            <column name="SAMPLE_TITLE" sql-type="varchar2" length="100" not-null="true"/>
+        </property>
+        <property name="sampleDescription">
+            <column name="SAMPLE_DESCRIPTION" sql-type="clob" length="4000" not-null="true"/>
+        </property>
+        <property name="sampleClassification">
+            <column name="SAMPLE_CLASSIFICATION" sql-type="varchar2" length="100" not-null="true"/>
+        </property>
+        <property name="geoLocName">
+            <column name="GEO_LOC_NAME" sql-type="varchar2" length="100" not-null="true"/>
+        </property>
+        <property name="latLon">
+            <column name="LAT_LON" sql-type="varchar2" length="30"/>
+        </property>
+        <property name="collectionDate">
+            <column name="COLLECTION_DATE" sql-type="varchar2" length="30"/>
+        </property>
+        <property name="biome">
+            <column name="BIOME" sql-type="varchar2" length="100"/>
+        </property>
+        <property name="feature">
+            <column name="FEATURE" sql-type="varchar2" length="30"/>
+        </property>
+        <property name="material">
+            <column name="MATERIAL" sql-type="varchar2" length="30"/>
+        </property>
+        <property name="alt">
+            <column name="ALT" sql-type="number" length="22"/>
+        </property>
+        <property name="depth">
+            <column name="DEPTH" sql-type="varchar2" length="30"/>
+        </property>
+        <property name="elevation">
+            <column name="ELEVATION" sql-type="number" length="22"/>
+        </property>
+        <property name="hostTaxid">
+            <column name="HOST_TAXID" sql-type="varchar2" length="30"/>
+        </property>
+        <property name="hostSubjectId">
+            <column name="HOST_SUBJECT_ID" sql-type="varchar2" length="30"/>
+        </property>
+        <property name="sampStoreTemp">
+            <column name="SAMP_STORE_TEMP" sql-type="varchar2" length="30"/>
+        </property>
+        <property name="sampleStoreLocation">
+            <column name="SAMPLE_STORE_LOCATION" sql-type="varchar2" length="30"/>
+        </property>
+        <property name="sampleStoreDuration">
+            <column name="SAMPLE_STORE_DURATION" sql-type="varchar2" length="30"/>
+        </property>
+        <property name="sequencingMethod">
+            <column name="SEQUENCING_METHOD" sql-type="varchar2" length="30"/>
+        </property>
+        <property name="relevantElectronicResources">
+            <column name="RELEVANT_ELECTRONIC_RESOURCES" sql-type="varchar2" length="100"/>
+        </property>
+        <property name="collectionDeviceMethod">
+            <column name="COLLECTION_DEVICE_METHOD" sql-type="varchar2" length="100"/>
+        </property>
+        <property name="amountOrSize">
+            <column name="AMOUNT_OR_SIZE" sql-type="varchar2" length="30"/>
+        </property>
+        <property name="sampleMaterialProcessing">
+            <column name="SAMPLE_MATERIAL_PROCESSING" sql-type="varchar2" length="150"/>
+        </property>
+        <property name="nucleicAcidExtraction">
+            <column name="NUCLEIC_ACID_EXTRACTION" sql-type="varchar2" length="150"/>
+        </property>
+        <property name="nucleicAcidAmplification">
+            <column name="NUCLEIC_ACID_AMPLIFICATION" sql-type="varchar2" length="150"/>
+        </property>
+        <property name="totalDepthOfWater">
+            <column name="TOTAL_DEPTH_OF_WATER" sql-type="varchar2" length="30"/>
+        </property>
+        <property name="temperature">
+            <column name="TEMPERATURE" sql-type="varchar2" length="30"/>
+        </property>
+        <property name="silicate">
+            <column name="SILICATE" sql-type="varchar2" length="30"/>
+        </property>
+        <property name="salinity">
+            <column name="SALINITY" sql-type="varchar2" length="30"/>
+        </property>
+        <property name="phosphate">
+            <column name="PHOSPHATE" sql-type="varchar2" length="30"/>
+        </property>
+        <property name="ph">
+            <column name="PH" sql-type="number" length="3" precision="2"/>
+        </property>
+        <property name="oxygenationStatusOfSample">
+            <column name="OXYGENATION_STATUS_OF_SAMPLE" sql-type="varchar2" length="150"/>
+        </property>
+        <property name="organicNitrogen">
+            <column name="ORGANIC_NITROGEN" sql-type="number" length="10" precision="3"/>
+        </property>
+        <property name="organicCarbon">
+            <column name="ORGANIC_CARBON" sql-type="number" length="10" precision="3"/>
+        </property>
+        <property name="nitrate">
+            <column name="NITRATE" sql-type="number" length="10" precision="3"/>
+        </property>
+        <property name="chlorophyll">
+            <column name="CHLOROPHYLL" sql-type="number" length="10" precision="3"/>
+        </property>
+        <property name="ammonium">
+            <column name="AMMONIUM" sql-type="number" length="10" precision="3"/>
+        </property>
+        <property name="hostSex">
+            <column name="HOST_SEX" sql-type="varchar2" length="6"/>
+        </property>
+        <property name="height">
+            <column name="HEIGHT" sql-type="varchar2" length="30"/>
+        </property>
+        <property name="diet">
+            <column name="DIET" sql-type="varchar2" length="30"/>
+        </property>
+        <property name="lastMeal">
+            <column name="LAST_MEAL" sql-type="varchar2" length="30"/>
+        </property>
+        <property name="familyRelationship">
+            <column name="FAMILY_RELATIONSHIP" sql-type="varchar2" length="30"/>
+        </property>
+        <property name="genotype">
+            <column name="GENOTYPE" sql-type="varchar2" length="30"/>
+        </property>
+        <property name="phenotype">
+            <column name="PHENOTYPE" sql-type="varchar2" length="30"/>
+        </property>
+        <property name="hostBodyTemperature">
+            <column name="HOST_BODY_TEMPERATURE" sql-type="varchar2" length="30"/>
+        </property>
+        <property name="bodyMassIndex">
+            <column name="BODY_MASS_INDEX" sql-type="varchar2" length="30"/>
+        </property>
+        <property name="ihmcEthnicity">
+            <column name="IHMC_ETHNICITY" sql-type="varchar2" length="30"/>
+        </property>
+        <property name="occupation">
+            <column name="OCCUPATION" sql-type="varchar2" length="30"/>
+        </property>
+        <property name="medicalHistoryPerformed">
+            <column name="MEDICAL_HISTORY_PERFORMED" sql-type="varchar2" length="30"/>
+        </property>
+        <property name="pulse">
+            <column name="PULSE" sql-type="varchar2" length="30"/>
+        </property>
+        <property name="perturbation">
+            <column name="PERTURBATION" sql-type="varchar2" length="30"/>
+        </property>
+        <property name="sampleSalinity">
+            <column name="SAMPLE_SALINITY" sql-type="varchar2" length="30"/>
+        </property>
+        <property name="miscParam1">
+            <column name="MISC_PARAM_1" sql-type="varchar2" length="30"/>
+        </property>
+    </class>
+</hibernate-mapping>
