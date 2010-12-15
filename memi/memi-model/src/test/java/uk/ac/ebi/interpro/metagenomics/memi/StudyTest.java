@@ -5,10 +5,6 @@ import org.junit.Before;
 import org.junit.Test;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgStudy;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 /**
  * Test class for {@link uk.ac.ebi.interpro.metagenomics.memi.model.EmgStudy}.
  *
