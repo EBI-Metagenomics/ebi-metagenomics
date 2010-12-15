@@ -1,7 +1,8 @@
-package uk.ac.ebi.interpro.metagenomics.memi.model;
+package uk.ac.ebi.interpro.metagenomics.memi;
 
 import org.junit.Before;
 import org.junit.Test;
+import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
 
 import static org.junit.Assert.assertEquals;
 
