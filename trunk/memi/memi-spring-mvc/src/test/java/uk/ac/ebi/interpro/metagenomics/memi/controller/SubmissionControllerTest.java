@@ -31,10 +31,10 @@ public class SubmissionControllerTest extends TestCase {
 
     private SubmissionController controller;
 
-    @Resource(name = "emailNotificationTestService")
+    @Resource
     private EmailNotificationTestService emailTestService;
 
-    @Resource(name = "velocityTestEngine")
+    @Resource
     private VelocityEngine velocityTestEngine;
 
     @Before

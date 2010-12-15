@@ -1,6 +1,6 @@
 package uk.ac.ebi.interpro.metagenomics.memi.forms;
 
-import uk.ac.ebi.interpro.metagenomics.memi.model.Study;
+import uk.ac.ebi.interpro.metagenomics.memi.model.EmgStudy;
 
 /**
  * Represents a filter form, which is used within the study list page.
@@ -12,23 +12,23 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.Study;
  */
 public class FilterForm {
 
-    private Study.StudyType studyType;
+    private EmgStudy.StudyType studyType;
 
-    private Study.StudyStatus studyStatus;
+    private EmgStudy.StudyStatus studyStatus;
 
-    public Study.StudyType getStudyType() {
+    public EmgStudy.StudyType getStudyType() {
         return studyType;
     }
 
-    public void setStudyType(Study.StudyType studyType) {
+    public void setStudyType(EmgStudy.StudyType studyType) {
         this.studyType = studyType;
     }
 
-    public Study.StudyStatus getStudyStatus() {
+    public EmgStudy.StudyStatus getStudyStatus() {
         return studyStatus;
     }
 
-    public void setStudyStatus(Study.StudyStatus studyStatus) {
+    public void setStudyStatus(EmgStudy.StudyStatus studyStatus) {
         this.studyStatus = studyStatus;
     }
 }

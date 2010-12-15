@@ -9,9 +9,6 @@ import org.springframework.test.web.ModelAndViewAssert;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -25,7 +22,6 @@ import static org.junit.Assert.assertTrue;
  * @since 1.0-SNAPSHOT
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-//@ContextConfiguration
 @TestExecutionListeners
 public class SpringMVCDemoTest {
     private HelloWorldController controller;

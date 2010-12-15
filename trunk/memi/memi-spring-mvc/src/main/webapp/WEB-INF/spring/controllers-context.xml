@@ -3,24 +3,80 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd">
 
     <!-- Scans within the base package of the application for @Components to configure as beans -->
     <context:component-scan base-package="uk.ac.ebi.interpro.metagenomics.memi"/>
 
+    <tx:annotation-driven transaction-manager="txManager"/>
+
+    <bean id="ipDevDatasourceId" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+        <property name="url" value="jdbc:oracle:thin:@muscat.ebi.ac.uk:1531:IPDEV"/>
+        <property name="username" value="emg_user"/>
+        <property name="password" value="emguser_ipdev"/>
+    </bean>
+
+    <bean id="txManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="hibernateSessionFactory"/>
+    </bean>
+
+
+    <!--<bean id="hibernateSessionFactory"-->
+    <!--class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">-->
+    <!--<property name="dataSource" ref="ipDevDatasourceId"/>-->
+    <!--<property name="annotatedClasses">-->
+    <!--<list>-->
+    <!--<value>uk.ac.ebi.interpro.metagenomics.memi.model.EmgStudy</value>-->
+    <!--<value>uk.ac.ebi.interpro.metagenomics.memi.model.EmgSample</value>-->
+    <!--</list>-->
+    <!--</property>-->
+    <!--<property name="hibernateProperties">-->
+    <!--<props>-->
+    <!--<prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>-->
+    <!--&lt;!&ndash;<prop key="hibernate.dialect">org.hibernate.dialect.OracleDialect</prop>&ndash;&gt;-->
+    <!--<prop key="hibernate.show_sql">true</prop>-->
+    <!--<prop key="hibernate.cache.provider_class">org.hibernate.cache.NoCacheProvider</prop>-->
+    <!--<prop key="hibernate.connection.pool_size">20</prop>-->
+    <!--&lt;!&ndash;<prop key="hibernate.current_session_context_class">thread</prop>&ndash;&gt;-->
+    <!--&lt;!&ndash;<prop key="hibernate.transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</prop>&ndash;&gt;-->
+    <!--</props>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+    <bean id="hibernateSessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+        <property name="dataSource" ref="ipDevDatasourceId"/>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.cache.provider_class">org.hibernate.cache.NoCacheProvider</prop>
+                <prop key="hibernate.connection.pool_size">20</prop>
+            </props>
+        </property>
+        <property name="mappingResources">
+            <list>
+                <value>EmgSample.hbm.xml</value>
+                <value>EmgStudy.hbm.xml</value>
+            </list>
+        </property>
+    </bean>
+
+
     <!-- Specification of version of control elements like e.g. data access objects -->
     <!-- List of data access objects -->
+    <bean id="emgStudyDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.EmgStudyDAOImpl"/>
+
+    <bean id="emgSampleDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.EmgSampleDAOImpl"/>
+
     <bean id="submitterDAOId" name="submitterDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.SubmitterDAOImpl">
         <property name="dataSource" ref="adevDatasource"/>
     </bean>
 
-    <bean id="studyDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.StudyDAOImpl"/>
-
     <bean id="newsDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.NewsDAOImpl"/>
-
-    <bean id="sampleDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.SampleDAOImpl"/>
 
     <!-- Data source for the Oracle ENA database -->
     <bean id="adevDatasourceId" name="adevDatasource"
