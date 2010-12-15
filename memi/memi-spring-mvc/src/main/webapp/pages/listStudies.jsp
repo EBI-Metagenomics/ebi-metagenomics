@@ -19,77 +19,74 @@
 <body>
 <div id="right_side_navigation">
     <p><a href="<c:url value="./homePage.htm"/>">Home</a></p>
+    <table border="0" style="border-width: 1px;border-color: #000000;border-style: solid;">
+        <form:form action="listStudies.htm" commandName="filterForm">
+            <tr>
+                <td>Study type:</td>
+                <td>
+                    <form:select path="studyType">
+                        <form:option value="NONE" label="--- Select ---"/>
+                        <form:options items="${studyTypeList}" itemValue="studyTypeId"
+                                      itemLabel="studyTypeName"/>
+                    </form:select>
+                </td>
+                <td><form:errors path="studyType" cssClass="error"/></td>
+            </tr>
+            <tr>
+                <td>Study status:</td>
+                <td><form:select path="studyStatus">
+                    <form:option value="NONE" label="--- Select ---"/>
+                    <form:options items="${studyStatusList}" itemValue="studyStatusId"
+                                  itemLabel="studyStatusName"/>
+                </form:select></td>
+                <td><form:errors path="studyStatus" cssClass="error"/></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td>
+                    <input type="submit" value="Do filter"/>
+                </td>
+            </tr>
+        </form:form>
+    </table>
 </div>
 <div id="content">
     <div style="margin-top:60px"></div>
     <h2>Overview about all studies</h2>
-
-    <table>
+    <table border="1" width="95%">
         <tr>
-            <td width="80%">
-                <table border="1">
-                    <tr>
-                        <th>Study Id</th>
-                        <th>Study name</th>
-                        <th>Study type</th>
-                        <th>Start date</th>
-                        <th>Status</th>
-                        <th>Sample size</th>
-                        <th>Study Overview</th>
-                    </tr>
-                    <c:forEach var="study" items="${studyList}" varStatus="status">
-                        <tr>
-                            <spring:url var="studyUrl" value="studyOverview/${study.studyId}"/>
-
-                            <td>${study.studyId}</td>
-                            <td>
-                                <a href="<c:url value="${studyUrl}"/>">${study.studyName}</a>
-                            </td>
-                            <td>${study.studyType}</td>
-                            <td>${study.submitDate}</td>
-                            <td>${study.analyseStatus}</td>
-                            <td>${study.sampleSize}</td>
-                            <td>
-                                <a href="<c:url value="${studyUrl}"/>">Show overview</a>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                </table>
-            </td>
-            <td width="20%" valign="top">Filter:<br>
-                <table border="0" style="border-width: 1px;border-color: #000000;border-style: solid;">
-                    <form:form action="listStudies.htm" commandName="filterForm">
-                        <tr>
-                            <td>Study type:</td>
-                            <td>
-                                <form:select path="studyType">
-                                    <form:option value="NONE" label="--- Select ---"/>
-                                    <form:options items="${studyTypeList}" itemValue="studyTypeId"
-                                                  itemLabel="studyTypeName"/>
-                                </form:select>
-                            </td>
-                            <td><form:errors path="studyType" cssClass="error"/></td>
-                        </tr>
-                        <tr>
-                            <td>Study status:</td>
-                            <td><form:select path="studyStatus">
-                                <form:option value="NONE" label="--- Select ---"/>
-                                <form:options items="${studyStatusList}" itemValue="studyStatusId"
-                                              itemLabel="studyStatusName"/>
-                            </form:select></td>
-                            <td><form:errors path="studyStatus" cssClass="error"/></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td>
-                                <input type="submit" value="Do filter"/>
-                            </td>
-                        </tr>
-                    </form:form>
-                </table>
-            </td>
+            <th>Study Id</th>
+            <th>Study name</th>
+            <th>Release date</th>
+            <th>NCBI Project Id</th>
+            <th>Public</th>
+            <th>Study type</th>
+            <th>Experimental factor</th>
+            <th>Number of samples</th>
+            <th>Analysis status</th>
+            <th>Overview</th>
         </tr>
+        <c:forEach var="study" items="${studyList}" varStatus="status">
+            <tr>
+                <spring:url var="studyUrl" value="studyOverview/${study.studyId}"/>
+
+                <td>${study.studyId}</td>
+                <td>
+                    <a href="<c:url value="${studyUrl}"/>">${study.studyName}</a>
+                </td>
+                <td>${study.formattedReleaseDate}</td>
+                <td>${study.ncbiProject}</td>
+                <td>${study.submitterId}</td>
+                <td>${study.studyType}</td>
+                <td>${study.experimentalFactor}</td>
+                <td>${study.numberSamples}</td>
+                <td>N/A</td>
+                <td>
+                    <a href="<c:url value="${studyUrl}"/>">Show overview</a>
+                </td>
+            </tr>
+        </c:forEach>
     </table>
 </div>
 </body>

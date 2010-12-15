@@ -1,65 +1,85 @@
 package uk.ac.ebi.interpro.metagenomics.memi.basic;
 
-import uk.ac.ebi.interpro.metagenomics.memi.dao.StudyDAO;
-import uk.ac.ebi.interpro.metagenomics.memi.model.Study;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.EmgStudyDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.model.EmgStudy;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
  * This DAO implementation should only be used for JUnit test.
  */
-public class StudyDAOTestImpl implements StudyDAO {
+public class StudyDAOTestImpl implements EmgStudyDAO {
 
-    private List<Study> studies;
+    private List<EmgStudy> studies;
 
     public StudyDAOTestImpl() {
-        studies = new ArrayList<Study>();
-        studies.add(new Study(1, "study_1", Study.StudyType.ENVIRONMENT, Study.StudyStatus.IN_PROCESS, true));
-        studies.add(new Study(2, "study_2", Study.StudyType.ENVIRONMENT, Study.StudyStatus.QUEUED, false));
-        studies.add(new Study(3, "study_3", Study.StudyType.HUMAN, Study.StudyStatus.FINISHED, true));
-        studies.add(new Study(4, "study_4", Study.StudyType.UNDEFINED, Study.StudyStatus.IN_PROCESS, true));
-        studies.add(new Study(5, "study_5", Study.StudyType.ENVIRONMENT, Study.StudyStatus.QUEUED, true));
-        studies.add(new Study(6, "study_6", Study.StudyType.ENVIRONMENT, Study.StudyStatus.QUEUED, false));
-        studies.add(new Study(7, "study_7", Study.StudyType.UNDEFINED, Study.StudyStatus.FINISHED, false));
-        studies.add(new Study(8, "study_8", Study.StudyType.UNDEFINED, Study.StudyStatus.IN_PROCESS, true));
-        studies.add(new Study(9, "study_9", Study.StudyType.ENVIRONMENT, Study.StudyStatus.FINISHED, false));
-        studies.add(new Study(10, "study_10", Study.StudyType.ENVIRONMENT, Study.StudyStatus.IN_PROCESS, false));
-        studies.add(new Study(11, "study_11", Study.StudyType.HUMAN, Study.StudyStatus.IN_PROCESS, true));
-        studies.add(new Study(12, "study_12", Study.StudyType.ENVIRONMENT, Study.StudyStatus.IN_PROCESS, true));
-        studies.add(new Study(13, "study_13", Study.StudyType.HUMAN, Study.StudyStatus.FINISHED, true));
-        studies.add(new Study(14, "study_14", Study.StudyType.ENVIRONMENT, Study.StudyStatus.FINISHED, true));
-        studies.add(new Study(15, "study_15", Study.StudyType.ENVIRONMENT, Study.StudyStatus.FINISHED, true));
+        studies = new ArrayList<EmgStudy>();
+        studies.add(new EmgStudy("1", "study_1", "Environmental", EmgStudy.StudyStatus.IN_PROCESS));
+        studies.add(new EmgStudy("2", "study_2", "Environmental", EmgStudy.StudyStatus.FINISHED));
+        studies.add(new EmgStudy("3", "study_3", "Environmental", EmgStudy.StudyStatus.FINISHED));
+        studies.add(new EmgStudy("4", "study_4", "Environmental", EmgStudy.StudyStatus.FINISHED));
+        studies.add(new EmgStudy("5", "study_5", "Environmental", EmgStudy.StudyStatus.FINISHED));
+        studies.add(new EmgStudy("6", "study_6", "Environmental", EmgStudy.StudyStatus.FINISHED));
+        studies.add(new EmgStudy("7", "study_7", "Environmental", EmgStudy.StudyStatus.IN_PROCESS));
+        studies.add(new EmgStudy("8", "study_8", "Environmental", EmgStudy.StudyStatus.FINISHED));
+        studies.add(new EmgStudy("9", "study_9", "Environmental", EmgStudy.StudyStatus.FINISHED));
+        studies.add(new EmgStudy("10", "study_10", "Environmental", EmgStudy.StudyStatus.FINISHED));
+        studies.add(new EmgStudy("11", "study_11", "Environmental", EmgStudy.StudyStatus.FINISHED));
+        studies.add(new EmgStudy("12", "study_12", "Environmental", EmgStudy.StudyStatus.FINISHED));
+        studies.add(new EmgStudy("13", "study_13", "Environmental", EmgStudy.StudyStatus.FINISHED));
+        studies.add(new EmgStudy("14", "study_14", "Environmental", EmgStudy.StudyStatus.FINISHED));
+        studies.add(new EmgStudy("15", "study_15", "Environmental", EmgStudy.StudyStatus.FINISHED));
     }
 
     @Override
-    public List<Study> getAllStudies() {
-        return studies;
+    public EmgStudy insert(EmgStudy newInstance) {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override
-    public List<Study> getStudiesByVisibility(boolean isPublic) {
-        List<Study> result = new ArrayList<Study>();
-        for (Study study : studies) {
-            if (study.isPublic()) {
-                result.add(study);
-            }
-        }
-        return result;
+    public Collection<EmgStudy> insert(Collection<EmgStudy> newInstances) {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override
-    public Study getStudyById(long id) {
-        for (Study study : studies) {
-            if (study.getStudyId() == id) {
-                return study;
-            }
-        }
-        return null;
+    public void update(EmgStudy modifiedInstance) {
+        //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override
-    public void deleteStudy(Study study) {
-        studies.remove(study);
+    public EmgStudy read(String id) {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public EmgStudy readDeep(String id, String... deepFields) {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public void delete(EmgStudy persistentObject) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public Long count() {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public List<EmgStudy> retrieveAll() {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public int deleteAll() {
+        return 0;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public Long getMaximumPrimaryKey() {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 }

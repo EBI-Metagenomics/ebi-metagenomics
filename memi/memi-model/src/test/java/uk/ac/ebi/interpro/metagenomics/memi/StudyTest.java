@@ -2,6 +2,7 @@ package uk.ac.ebi.interpro.metagenomics.memi;
 
 import junit.framework.TestCase;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgStudy;
 
@@ -23,6 +24,7 @@ public class StudyTest extends TestCase {
     }
 
     @Test
+    @Ignore
     public void testInitialization() {
 //        assertEquals(false, study.isPublic());
 //        assertNotNull(study.getSubmitDate());
@@ -36,6 +38,7 @@ public class StudyTest extends TestCase {
      * Tests not all but the most important setter and getter methods.
      */
     @Test
+    @Ignore
     public void testSetterAndGetter() {
 //        Date date = new Date();
 //        study.setSubmitDate(date);
@@ -55,6 +58,7 @@ public class StudyTest extends TestCase {
     }
 
     @Test
+    @Ignore
     public void testEquals() throws Exception {
 //        Date date = new Date();
 //        Study s1 = new Study();

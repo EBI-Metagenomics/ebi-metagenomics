@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.StudyDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.EmgStudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.FilterForm;
-import uk.ac.ebi.interpro.metagenomics.memi.model.Study;
+import uk.ac.ebi.interpro.metagenomics.memi.model.EmgStudy;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ import java.util.List;
 public class ListStudiesController {
 
     @Resource
-    private StudyDAO studyDAO;
+    private EmgStudyDAO emgStudyDAO;
 
     @RequestMapping(method = RequestMethod.GET)
     public String initPage(ModelMap model) {
@@ -37,10 +37,10 @@ public class ListStudiesController {
     }
 
     @ModelAttribute("studyList")
-    public List<Study> populateStudyList() {
-        List<Study> result = studyDAO.getAllStudies();
+    public List<EmgStudy> populateStudyList() {
+        List<EmgStudy> result = emgStudyDAO.retrieveAll();
         if (result == null) {
-            result = new ArrayList<Study>();
+            result = new ArrayList<EmgStudy>();
         }
         return result;
     }
@@ -51,12 +51,12 @@ public class ListStudiesController {
     }
 
     @ModelAttribute("studyTypeList")
-    public Study.StudyType[] populateStudyTypes() {
-        return Study.StudyType.values();
+    public EmgStudy.StudyType[] populateStudyTypes() {
+        return EmgStudy.StudyType.values();
     }
 
     @ModelAttribute("studyStatusList")
-    public Study.StudyStatus[] populateStudyStati() {
-        return Study.StudyStatus.values();
+    public EmgStudy.StudyStatus[] populateStudyStati() {
+        return EmgStudy.StudyStatus.values();
     }
 }

@@ -10,7 +10,7 @@
 <html>
 <head>
     <title>Study overview</title>
-    <link href="../css/memi.css" rel="stylesheet" type="text/css" media="all"/>
+    <link href="/css/memi.css" rel="stylesheet" type="text/css" media="all"/>
 </head>
 <body>
 <div id="right_side_navigation">

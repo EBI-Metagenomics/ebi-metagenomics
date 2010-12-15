@@ -23,11 +23,11 @@
 
     <h3>Study list</h3>
     <table border="0" style="border-width: 1px;border-color: #000000;border-style: solid;">
-        <c:forEach var="study" items="${studyList}" varStatus="status">
+        <c:forEach var="emg_study" items="${studyList}" varStatus="status">
             <tr>
-                <spring:url var="studyUrl" value="studyOverview/${study.studyId}" />
+                <spring:url var="studyUrl" value="studyOverview/${emg_study.studyId}" />
                 <td>
-                    <a href="${studyUrl}">${study.formattedSubmitDate} - ${study.studyName}</a>
+                    <a href="${studyUrl}">${emg_study.formattedReleaseDate} - ${emg_study.studyName}</a>
                 </td>
             </tr>
         </c:forEach>

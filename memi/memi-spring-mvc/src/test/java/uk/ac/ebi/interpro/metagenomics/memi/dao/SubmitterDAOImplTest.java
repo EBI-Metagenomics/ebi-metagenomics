@@ -23,7 +23,6 @@ import static org.junit.Assert.*;
 @ContextConfiguration
 public class SubmitterDAOImplTest {
 
-//    @Resource(name = "submitterDAOTest")
     @Resource
     private SubmitterDAO submitterDAO;
 

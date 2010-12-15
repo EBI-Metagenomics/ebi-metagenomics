@@ -4,10 +4,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.EmgSampleDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.EmgStudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.NewsDAO;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.StudyDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.model.EmgStudy;
 import uk.ac.ebi.interpro.metagenomics.memi.model.News;
-import uk.ac.ebi.interpro.metagenomics.memi.model.Study;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -25,7 +26,10 @@ import java.util.List;
 public class HomePageController {
 
     @Resource
-    private StudyDAO studyDAO;
+    private EmgSampleDAO emgSampleDAO;
+
+    @Resource
+    private EmgStudyDAO emgStudyDAO;
 
     @Resource
     private NewsDAO newsDAO;
@@ -37,10 +41,21 @@ public class HomePageController {
     }
 
     @ModelAttribute("studyList")
-    public List<Study> populatePublicStudyList() {
-        List<Study> studies = studyDAO.getStudiesByVisibility(true);
+    public List<EmgStudy> populatePublicStudyList() {
+//        EmgSample sample = null;
+//        if (emgSampleDAO != null) {
+//            sample = emgSampleDAO.read("SRS009922");
+//        }
+        EmgStudy study = null;
+        if (emgStudyDAO != null) {
+            study = emgStudyDAO.read("SRP001709");
+        }
+        List<EmgStudy> studies = null;
+        if (emgStudyDAO != null) {
+            studies = emgStudyDAO.retrieveAll();
+        }
         if (studies == null) {
-            studies = new ArrayList<Study>();
+            studies = new ArrayList<EmgStudy>();
         }
         return studies;
     }
