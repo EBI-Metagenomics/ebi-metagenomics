@@ -45,6 +45,12 @@
         </dependency>
 
         <dependency>
+            <groupId>uk.ac.ebi.interpro.metagenomics</groupId>
+            <artifactId>memi-persistence</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
             <groupId>javassist</groupId>
             <artifactId>javassist</artifactId>
             <version>3.12.1.GA</version>
@@ -74,51 +80,6 @@
                     <artifactId>commons-logging</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
-        <!-- Package for Spring test integration -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <version>${org.springframework.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <!--
-            JDBC Data Access Library (depends on spring-core, spring-beans, spring-context, spring-tx)
-            Define this if you use Spring's JdbcTemplate API (org.springframework.jdbc.*)
-        -->
-        <!--<dependency>-->
-            <!--<groupId>org.springframework</groupId>-->
-            <!--<artifactId>spring-jdbc</artifactId>-->
-            <!--<version>${org.springframework.version}</version>-->
-        <!--</dependency>-->
-        <dependency>
-            <groupId>com.oracle.jdbc</groupId>
-            <artifactId>com.springsource.oracle.jdbc</artifactId>
-            <version>10.2.0.2</version>
-            <scope>runtime</scope>
-        </dependency>
-        <!-- Dependencies for data persistence with Hibernate -->
-        <dependency>
-            <groupId>uk.ac.ebi.interpro.scan</groupId>
-            <artifactId>generic-jpa-dao</artifactId>
-            <version>0.1-SNAPSHOT</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <!-- Packages for Hibernate support -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-hibernate3</artifactId>
-            <version>2.0.8</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-annotations</artifactId>
-            <version>3.4.0.GA</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -188,13 +149,6 @@
             <groupId>org.apache.velocity</groupId>
             <artifactId>velocity</artifactId>
             <version>1.6-beta1</version>
-        </dependency>
-        <!-- List of dependencies with test scope -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.8.2</version>
-            <scope>test</scope>
         </dependency>
         <!-- List of dependencies with compile scope-->
         <dependency>
