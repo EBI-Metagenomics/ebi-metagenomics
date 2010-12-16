@@ -1,5 +1,6 @@
 package uk.ac.ebi.interpro.metagenomics.memi.dao;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -20,7 +21,7 @@ import static org.junit.Assert.*;
  * @since 1.0-SNAPSHOT
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration
+@ContextConfiguration()
 public class SubmitterDAOImplTest {
 
     @Resource
@@ -28,6 +29,7 @@ public class SubmitterDAOImplTest {
 
 
     @Test
+//    @Ignore
     public void testGetSubmitterByEmailAddress() {
         assertNotNull("Something went wrong during the initialization of the data access object for the submitter!" +
                 "Please note, if you run this test outside the EBI, it will fail (then better " +

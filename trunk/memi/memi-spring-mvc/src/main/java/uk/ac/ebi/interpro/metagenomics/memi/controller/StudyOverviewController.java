@@ -2,7 +2,6 @@ package uk.ac.ebi.interpro.metagenomics.memi.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,8 +11,6 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.EmgSample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgStudy;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 

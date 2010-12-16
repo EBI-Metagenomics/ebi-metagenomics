@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Represents the implementation class of {@link NewsDAO}
+ * Represents the implementation class of {@link uk.ac.ebi.interpro.metagenomics.memi.dao.NewsDAO}
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @version $Id$

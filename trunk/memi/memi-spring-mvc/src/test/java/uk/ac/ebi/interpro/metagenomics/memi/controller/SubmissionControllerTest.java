@@ -16,6 +16,8 @@ import uk.ac.ebi.interpro.metagenomics.memi.forms.SubmissionForm;
 import javax.annotation.Resource;
 import java.lang.reflect.Field;
 
+import static org.junit.Assert.*;
+
 /**
  * Represents the unit test for the {@link SubmissionController}.
  *
@@ -27,7 +29,7 @@ import java.lang.reflect.Field;
 //If there is a way you can e.g. test empty input fields
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration
-public class SubmissionControllerTest extends TestCase {
+public class SubmissionControllerTest {
 
     private SubmissionController controller;
 
