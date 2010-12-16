@@ -50,17 +50,44 @@
     </properties>
 
     <dependencies>
+        <!-- JUnit 4 framework - used within model and spring mvc module -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>3.8.1</version>
+            <version>4.8.2</version>
             <scope>test</scope>
         </dependency>
-
+        <!-- Internal dependency - Generic DAO API -->
+        <dependency>
+            <groupId>uk.ac.ebi.interpro.scan</groupId>
+            <artifactId>generic-jpa-dao</artifactId>
+            <version>0.1-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- Spring framework dependencies -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
             <version>${org.springframework.version}</version>
+        </dependency>
+        <!-- Spring test integration -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${org.springframework.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- Contains the Oracle JDBC driver -->
+        <dependency>
+            <groupId>com.oracle.jdbc</groupId>
+            <artifactId>com.springsource.oracle.jdbc</artifactId>
+            <version>10.2.0.2</version>
+            <scope>runtime</scope>
         </dependency>
     </dependencies>
 
