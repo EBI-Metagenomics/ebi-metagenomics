@@ -2,6 +2,7 @@ package uk.ac.ebi.interpro.metagenomics.memi.basic;
 
 import uk.ac.ebi.interpro.metagenomics.memi.dao.EmgSampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgSample;
+import uk.ac.ebi.interpro.scan.genericjpadao.GenericDAO;
 
 import java.util.ArrayList;
 import java.util.Collection;

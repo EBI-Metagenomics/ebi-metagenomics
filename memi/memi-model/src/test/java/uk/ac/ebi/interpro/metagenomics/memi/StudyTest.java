@@ -14,7 +14,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.EmgStudy;
  * @since 1.0-SNAPSHOT
  */
 //TODO: Refactor
-public class StudyTest extends TestCase {
+public class StudyTest {
 
     private EmgStudy study;
 

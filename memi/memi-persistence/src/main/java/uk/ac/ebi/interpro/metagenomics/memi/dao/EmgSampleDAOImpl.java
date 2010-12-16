@@ -11,7 +11,7 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Represents the implementation class of {@link uk.ac.ebi.interpro.metagenomics.memi.dao.EmgSampleDAO}
+ * Represents the implementation class of {@link EmgSampleDAO}
  * TODO: Associate with Hibernate (all methods still return mock-up objects)
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro

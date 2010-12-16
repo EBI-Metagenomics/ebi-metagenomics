@@ -1,6 +1,5 @@
 package uk.ac.ebi.interpro.metagenomics.memi.controller;
 
-import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -17,6 +16,9 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 /**
  * Represents the unit test for the {@link HomePageController}.
  *
@@ -26,7 +28,7 @@ import java.util.List;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @TestExecutionListeners
-public class HomePageControllerTest extends TestCase {
+public class HomePageControllerTest {
 
     private HomePageController controller;
 
