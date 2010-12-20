@@ -56,6 +56,39 @@
             <version>3.12.1.GA</version>
         </dependency>
 
+        <!-- testing -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-hibernate3</artifactId>
+            <version>2.0.8</version>
+        </dependency>
+
+        <!--<dependency>-->
+            <!--<groupId>org.springframework</groupId>-->
+            <!--<artifactId>spring-jdbc</artifactId>-->
+            <!--<version>${org.springframework.version}</version>-->
+        <!--</dependency>-->
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+            <version>${org.springframework.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${org.springframework.version}</version>
+        </dependency>
+
+        <!-- Spring test integration -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${org.springframework.version}</version>
+            <scope>test</scope>
+        </dependency>
+
         <!-- The following dependencies are used for Spring MVC development, included libs for JSTL-->
         <!-- Spring framework -->
         <dependency>
