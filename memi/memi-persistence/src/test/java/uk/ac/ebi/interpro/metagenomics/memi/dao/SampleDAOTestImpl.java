@@ -1,8 +1,6 @@
-package uk.ac.ebi.interpro.metagenomics.memi.basic;
+package uk.ac.ebi.interpro.metagenomics.memi.dao;
 
-import uk.ac.ebi.interpro.metagenomics.memi.dao.EmgSampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgSample;
-import uk.ac.ebi.interpro.scan.genericjpadao.GenericDAO;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -82,6 +80,11 @@ public class SampleDAOTestImpl implements EmgSampleDAO {
 
     @Override
     public Long getMaximumPrimaryKey() {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public List<EmgSample> retrieveSamplesByStudyId(String studyId) {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 }
