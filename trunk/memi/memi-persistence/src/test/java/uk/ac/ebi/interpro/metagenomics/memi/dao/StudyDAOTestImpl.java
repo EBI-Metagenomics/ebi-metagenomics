@@ -1,6 +1,5 @@
-package uk.ac.ebi.interpro.metagenomics.memi.basic;
+package uk.ac.ebi.interpro.metagenomics.memi.dao;
 
-import uk.ac.ebi.interpro.metagenomics.memi.dao.EmgStudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgStudy;
 
 import java.util.ArrayList;
@@ -80,6 +79,11 @@ public class StudyDAOTestImpl implements EmgStudyDAO {
 
     @Override
     public Long getMaximumPrimaryKey() {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public List<EmgStudy> retrieveStudiesLimitedByRows(int rowNumber) {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 }
