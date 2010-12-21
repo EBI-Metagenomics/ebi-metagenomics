@@ -1,5 +1,6 @@
-package uk.ac.ebi.interpro.metagenomics.memi.dao;
+package uk.ac.ebi.interpro.metagenomics.memi.basic;
 
+import uk.ac.ebi.interpro.metagenomics.memi.dao.EmgStudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgStudy;
 
 import java.util.ArrayList;

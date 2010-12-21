@@ -46,29 +46,39 @@
         <h3>Sample list</h3>
         <table border="1">
             <tr>
+                <th>Item no.</th>
                 <th>Sample Id</th>
-                <th>Sample name</th>
-                <th>Sample date</th>
-                <c:forEach var="item" items="${samplePropertyList}">
-                    <th><c:out value="${item}"/></th>
-                </c:forEach>
-                <th>Sample Overview</th>
+                <th>Collection date</th>
+                <th>Sample title</th>
+                <%--<c:forEach var="item" items="${samplePropertyList}">--%>
+                <%--<th><c:out value="${item}"/></th>--%>
+                <%--</c:forEach>--%>
             </tr>
+            <%
+                int i = 1;
+            %>
             <c:forEach var="sample" items="${sampleList}" varStatus="status">
                 <tr>
                     <spring:url var="sampleUrl" value="../sampleOverview/${sample.sampleId}"/>
 
-                    <td>${sample.sampleId}</td>
-                    <td>
-                        <a href='<c:out value="${sampleUrl}"/>'>${sample.sampleName}</a>
+                    <td align="center"><%= i%><% i++;%>
                     </td>
-                    <td>${sample.formattedCollectionDate}</td>
-                    <c:forEach var="item" items="${sample.sampleProperties}">
-                        <td><c:out value="${item}"/></td>
-                    </c:forEach>
-                    <td>
-                        <a href='<c:out value="${sampleId}"/>'>Show overview</a>
+                    <td align="center">${sample.sampleId}</td>
+                    <td align="center">
+                        <c:choose>
+                            <c:when test="${sample.collectionDate!=null}">
+                                ${sample.collectionDate}
+                            </c:when>
+                            <c:otherwise>N/A
+                            </c:otherwise>
+                        </c:choose>
                     </td>
+                    <td align="center">
+                        <a href='<c:out value="${sampleUrl}"/>'>${sample.sampleTitle}</a>
+                    </td>
+                        <%--<c:forEach var="item" items="${sample.propertyMap.values}">--%>
+                        <%--<td><c:out value="${item}"/></td>--%>
+                        <%--</c:forEach>--%>
                 </tr>
             </c:forEach>
         </table>

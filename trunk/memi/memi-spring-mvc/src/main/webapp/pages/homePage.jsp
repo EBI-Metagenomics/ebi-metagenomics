@@ -25,7 +25,7 @@
     <table border="0" style="border-width: 1px;border-color: #000000;border-style: solid;">
         <c:forEach var="emg_study" items="${studyList}" varStatus="status">
             <tr>
-                <spring:url var="studyUrl" value="studyOverview/${emg_study.studyId}" />
+                <spring:url var="studyUrl" value="studyOverview/${emg_study.studyId}"/>
                 <td>
                     <a href="${studyUrl}">${emg_study.formattedReleaseDate} - ${emg_study.studyName}</a>
                 </td>
@@ -33,6 +33,12 @@
         </c:forEach>
     </table>
     <a href="<c:url value="./listStudies"/>">more</a>
+
+    <h3>Other useful links</h3>
+
+    <p><a href="<c:url value="./installationSitePage"/>">Sample list</a></p>
+
+    <p><a href="<c:url value="./installationSitePage"/>">Contact us</a></p>
 </div>
 <div id="content">
     <div style="margin-top:60px"></div>
@@ -44,27 +50,8 @@
     <p>The study of all genomes present in any given environment without the need for prior individual identification or
         amplification is termed metagenomics. For example, in its simplest form a metagenomic study might be the direct
         sequence results of DNA extracted from a bucket of sea water.<br><a
-                href="<c:url value="./installationSitePage"/>">more</a></p>
+                href="<c:url value="./info"/>">more</a></p>
 
-    <div style="margin-top:6px"></div>
-    <h3>TODOs</h3>
-
-    <p>
-    <ul>
-        <li>Short description about what Metagenomics is and what kind of services this portal
-            provides.
-        </li>
-    </ul>
-    </p>
-
-    <div style="margin-top:6px"></div>
-    <h3>Already implemented</h3>
-
-    <p>
-    <ol>
-        <li>Login page (you find the link on the right side)</li>
-    </ol>
-    </p>
     <table border="0" width="95%" style="border-width: 1px;border-color: #000000;border-style: solid;">
         <tr>
             <td width="50%" align="center" valign="middle">
@@ -83,8 +70,7 @@
             </td>
         </tr>
         <tr>
-            <td width="50%" align="left" valign="top"><a href="<c:url value="./installationSitePage"/>">Contact us</a>
-            </td>
+            <td width="50%" align="left" valign="top"/>
             <td width="50%" align="left" valign="top"><a href="<c:url value="./installationSitePage"/>">Analyse
                 data</a></td>
         </tr>

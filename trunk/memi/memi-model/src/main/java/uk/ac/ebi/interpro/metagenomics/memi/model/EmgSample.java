@@ -134,7 +134,14 @@ public class EmgSample {
     @javax.persistence.Column(name = "COLLECTION_DATE", nullable = true, insertable = true, updatable = true, length = 30, precision = 0)
     @javax.persistence.Basic
     public String getCollectionDate() {
-        return (String) propertyMap.get(COLLECTION_DATE);
+        String result = (String) propertyMap.get(COLLECTION_DATE);
+        if (result != null) {
+            int i = result.indexOf(" ");
+            if (i > 1) {
+                result = result.substring(0, i);
+            }
+        }
+        return result;
     }
 
     public void setCollectionDate(String collectionDate) {

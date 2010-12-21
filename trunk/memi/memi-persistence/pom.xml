@@ -22,12 +22,6 @@
             <groupId>uk.ac.ebi.interpro.metagenomics</groupId>
             <artifactId>memi-model</artifactId>
             <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>javax.transaction</groupId>
-            <artifactId>jta</artifactId>
-            <version>1.0.1B</version>
         </dependency>
         <!-- Packages for Hibernate support -->
         <dependency>
