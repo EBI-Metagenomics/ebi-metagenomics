@@ -61,12 +61,18 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-hibernate3</artifactId>
             <version>2.0.8</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.transaction</groupId>
+                    <artifactId>jta</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!--<dependency>-->
-            <!--<groupId>org.springframework</groupId>-->
-            <!--<artifactId>spring-jdbc</artifactId>-->
-            <!--<version>${org.springframework.version}</version>-->
+        <!--<groupId>org.springframework</groupId>-->
+        <!--<artifactId>spring-jdbc</artifactId>-->
+        <!--<version>${org.springframework.version}</version>-->
         <!--</dependency>-->
 
         <dependency>

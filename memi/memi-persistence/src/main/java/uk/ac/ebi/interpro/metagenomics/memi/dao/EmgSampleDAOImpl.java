@@ -2,17 +2,16 @@ package uk.ac.ebi.interpro.metagenomics.memi.dao;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgSample;
-import uk.ac.ebi.interpro.metagenomics.memi.model.EmgStudy;
 
 import java.util.Collection;
 import java.util.List;
 
 /**
  * Represents the implementation class of {@link EmgSampleDAO}
- * TODO: Associate with Hibernate (all methods still return mock-up objects)
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @version $Id$
@@ -72,6 +71,18 @@ public class EmgSampleDAOImpl implements EmgSampleDAO {
         Session session = sessionFactory.getCurrentSession();
         if (session != null) {
             return session.createCriteria(EmgSample.class).list();
+        }
+        return null;
+    }
+
+    /**
+     * @return All samples filtered by the specified study Id.
+     */
+    @Override
+    public List<EmgSample> retrieveSamplesByStudyId(String studyId) {
+        Session session = sessionFactory.getCurrentSession();
+        if (session != null) {
+            return session.createCriteria(EmgSample.class).add(Restrictions.eq("studyId", studyId)).list();
         }
         return null;
     }

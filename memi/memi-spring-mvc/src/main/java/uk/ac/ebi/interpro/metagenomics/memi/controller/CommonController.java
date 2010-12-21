@@ -17,7 +17,11 @@ public class CommonController {
     public void installationSiteHandler() {
     }
 
-//    @RequestMapping("/about.html")
-//    public void aboutHandler() {
-//    }
+    @RequestMapping("/info")
+    public void infoHandler() {
+    }
+
+    @RequestMapping("/about")
+    public void aboutHandler() {
+    }
 }

@@ -34,25 +34,25 @@ public class HomePageController {
     @Resource
     private NewsDAO newsDAO;
 
+    /**
+     * The number of rows, which should be shown on the portal home page.
+     */
+    private final int rowNumber = 10;
+
 
     @RequestMapping(method = RequestMethod.GET)
     public String initPage() {
         return "homePage";
     }
 
+    /**
+     * @return A list of studies limited by a specified number of rows
+     */
     @ModelAttribute("studyList")
     public List<EmgStudy> populatePublicStudyList() {
-//        EmgSample sample = null;
-//        if (emgSampleDAO != null) {
-//            sample = emgSampleDAO.read("SRS009922");
-//        }
-        EmgStudy study = null;
-        if (emgStudyDAO != null) {
-            study = emgStudyDAO.read("SRP001709");
-        }
         List<EmgStudy> studies = null;
         if (emgStudyDAO != null) {
-            studies = emgStudyDAO.retrieveAll();
+            studies = emgStudyDAO.retrieveStudiesLimitedByRows(rowNumber);
         }
         if (studies == null) {
             studies = new ArrayList<EmgStudy>();

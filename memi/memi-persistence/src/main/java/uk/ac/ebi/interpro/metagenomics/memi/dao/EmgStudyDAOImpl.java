@@ -2,6 +2,7 @@ package uk.ac.ebi.interpro.metagenomics.memi.dao;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgStudy;
@@ -72,17 +73,19 @@ public class EmgStudyDAOImpl implements EmgStudyDAO {
     @Override
     public List<EmgStudy> retrieveAll() {
         Session session = sessionFactory.getCurrentSession();
-        List<EmgStudy> test = session.createSQLQuery("SELECT * FROM emg_study").list();
+        if (session != null) {
+            return session.createCriteria(EmgStudy.class).list();
+        }
+        return null;
+    }
 
-//        Transaction tx = session.beginTransaction();
-//        tx.begin();
-//        Criteria crit = session.createCriteria(EmgStudy.class);
-//        List<EmgStudy> test2 = crit.list();
-//        tx.commit();
-
-        List<EmgStudy> test3 = session.createCriteria(EmgStudy.class).list();
-
-        return session.createCriteria(EmgStudy.class).list();
+    @Override
+    public List<EmgStudy> retrieveStudiesLimitedByRows(int rowNumber) {
+        Session session = sessionFactory.getCurrentSession();
+        if (session != null) {
+            return session.createCriteria(EmgStudy.class).setMaxResults(rowNumber).list();
+        }
+        return null;
     }
 
     @Override
