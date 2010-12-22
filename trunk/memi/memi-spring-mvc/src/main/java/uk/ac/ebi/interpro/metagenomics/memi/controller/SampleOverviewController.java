@@ -30,4 +30,12 @@ public class SampleOverviewController {
         model.put("sample", sample);
         return "sampleOverview";
     }
+
+    @RequestMapping(value = "/exportSample/{sampleId}", method = RequestMethod.GET)
+    public String exportSampleHandler(@PathVariable String sampleId, ModelMap model) {
+        EmgSample sample = sampleDAO.read(sampleId);
+        //Add sample to model
+        model.put("sample", sample);
+        return "exportSample";
+    }
 }

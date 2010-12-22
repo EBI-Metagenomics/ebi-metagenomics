@@ -54,6 +54,10 @@
 <div id="content">
     <div style="margin-top:60px"></div>
     <h2>Overview about all studies</h2>
+
+    <spring:url var="exportUrl" value="listStudies/exportStudies"/>
+    <div align="left"><a href="${exportUrl}">Export to CSV</a></div>
+
     <table border="1" width="95%">
         <tr>
             <th>Study Id</th>
@@ -65,7 +69,6 @@
             <th>Experimental factor</th>
             <th>Number of samples</th>
             <th>Analysis status</th>
-            <th>Overview</th>
         </tr>
         <c:forEach var="study" items="${studyList}" varStatus="status">
             <tr>
@@ -82,9 +85,6 @@
                 <td>${study.experimentalFactor}</td>
                 <td>${study.numberSamples}</td>
                 <td>N/A</td>
-                <td>
-                    <a href="<c:url value="${studyUrl}"/>">Show overview</a>
-                </td>
             </tr>
         </c:forEach>
     </table>

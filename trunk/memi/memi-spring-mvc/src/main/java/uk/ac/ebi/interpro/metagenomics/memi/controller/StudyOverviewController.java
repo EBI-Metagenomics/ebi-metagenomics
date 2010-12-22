@@ -15,7 +15,6 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Represents the controller for the study overview page.
@@ -38,12 +37,34 @@ public class StudyOverviewController {
     @RequestMapping(value = "/{studyId}", method = RequestMethod.GET)
     public String findStudy(@PathVariable String studyId, ModelMap model) {
         EmgStudy study = emgStudyDAO.read(studyId);
-        Set<EmgSample> samples = study.getSamples();
         //Add study to model
         model.put("study", study);
         Map<String, Object> studyPropMap = study.getProperties();
         model.put("studyPropertyMap", studyPropMap);
         return "studyOverview";
+    }
+
+    @RequestMapping(value = "/exportSamples/{studyId}", method = RequestMethod.GET)
+    public String exportSamplesHandler(@PathVariable String studyId, ModelMap model) {
+        List<EmgSample> samples = emgSampleDAO.retrieveSamplesByStudyId(studyId);
+        if (samples != null && samples.size() > 0) {
+            //Add samples to model
+            model.put("samples", samples);
+            //Create sample property list and add it to the model
+            addSamplePropertyList(model, samples.get(0));
+        }
+        return "exportSamples";
+    }
+
+    /**
+     * Creates and add a sample property list to the specified model.
+     */
+    private void addSamplePropertyList(ModelMap model, EmgSample sample) {
+        List<String> result = new ArrayList<String>();
+        for (String key : sample.getPropertyMap().keySet()) {
+            result.add(key);
+        }
+        model.put("samplePropertyList", result);
     }
 
     @ModelAttribute(value = "sampleList")
@@ -53,15 +74,5 @@ public class StudyOverviewController {
             samples = new ArrayList<EmgSample>();
         }
         return samples;
-    }
-
-    @ModelAttribute("samplePropertyList")
-    public List<String> populateSamplePropertyList() {
-        EmgSample sample = new EmgSample();
-        List<String> result = new ArrayList<String>();
-        for (String key : sample.getPropertyMap().keySet()) {
-            result.add(key);
-        }
-        return result;
     }
 }

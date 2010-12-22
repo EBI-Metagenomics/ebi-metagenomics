@@ -38,7 +38,8 @@
 
     <p><a href="<c:url value="./installationSitePage"/>">Sample list</a></p>
 
-    <p><a href="<c:url value="./installationSitePage"/>">Contact us</a></p>
+    <p><a href="mailto:maxim@ebi.ac.uk?cc=maxim.scheremetjew@gmail.com&subject=Request from the MG portal">Contact
+        us</a></p>
 </div>
 <div id="content">
     <div style="margin-top:60px"></div>

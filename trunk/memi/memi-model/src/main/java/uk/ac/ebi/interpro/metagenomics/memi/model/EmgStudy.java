@@ -9,13 +9,13 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
- * TODO: Description
+ * Represents an EBI Metagenomics study object.
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @version $Id$
  * @since 1.0-SNAPSHOT
  */
-//@Table(name = "EMG_STUDY", schema = "EMG_USER")
+@Table(name = "EMG_STUDY", schema = "EMG_USER")
 @Entity
 public class EmgStudy {
 
@@ -23,7 +23,7 @@ public class EmgStudy {
      * Maps all properties of this object. Useful if you like to iterate over all properties (used in the studyOverview JSP).
      * Property values are added by setter.
      */
-    private Map<String, Object> propertyMap;
+    private SortedMap<String, Object> propertyMap;
 
     private final String STUDY_ID = "StudyId";
 
@@ -57,12 +57,9 @@ public class EmgStudy {
 
     private final String STUDY_STATUS = "StudyStatus";
 
-    private Set<EmgSample> samples;
-
 
     public EmgStudy() {
-        propertyMap = new HashMap<String, Object>();
-        samples = new HashSet<EmgSample>();
+        propertyMap = new TreeMap<String, Object>();
     }
 
     public EmgStudy(String studyId, String studyName, String studyType, StudyStatus studyStatus) {
@@ -75,23 +72,6 @@ public class EmgStudy {
 
     public Map<String, Object> getProperties() {
         return propertyMap;
-    }
-
-    /**
-     * A unidirectional one to many using a foreign key column in the owned entity is not that common
-     * and not really recommended. We strongly advise you to use a join table for this kind of association
-     * (as explained in the next section).
-     * This kind of association is described through a @JoinColumn.
-     */
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "STUDY_ID")
-//    @Cascade(org.hibernate.annotations.CascadeType.ALL)
-public Set<EmgSample> getSamples() {
-        return samples;
-    }
-
-    public void setSamples(Set<EmgSample> samples) {
-        this.samples = samples;
     }
 
     @Column(name = "STUDY_ID", nullable = false, insertable = true, updatable = true, length = 9, precision = 0)
