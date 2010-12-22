@@ -5,12 +5,10 @@ import org.hibernate.annotations.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.math.BigDecimal;
-import java.sql.Clob;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
- * TODO: Description
+ * Represents an EBI Metagenomics sample object.
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @version $Id$
@@ -24,7 +22,7 @@ public class EmgSample {
      * Maps all properties of this object. Useful if you like to iterate over all properties (used in the studyOverview JSP).
      * Property values are added by setter.
      */
-    private Map<String, Object> propertyMap;
+    private SortedMap<String, Object> propertyMap;
 
     private final String SAMPLE_ID = "SampleId";
 
@@ -46,7 +44,7 @@ public class EmgSample {
 
 
     public EmgSample() {
-        propertyMap = new HashMap<String, Object>();
+        propertyMap = new TreeMap<String, Object>();
     }
 
     public EmgSample(String sampleId, String sampleTitle) {
@@ -158,7 +156,7 @@ public class EmgSample {
         propertyMap.put(BIOME, biome);
     }
 
-    private final String FEATURE = "feature";
+    private final String FEATURE = "Feature";
 
     @javax.persistence.Column(name = "FEATURE", nullable = true, insertable = true, updatable = true, length = 30, precision = 0)
     @javax.persistence.Basic

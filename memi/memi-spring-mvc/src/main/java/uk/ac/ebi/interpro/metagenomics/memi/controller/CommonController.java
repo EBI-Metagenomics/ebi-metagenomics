@@ -1,6 +1,7 @@
 package uk.ac.ebi.interpro.metagenomics.memi.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -23,5 +24,9 @@ public class CommonController {
 
     @RequestMapping("/about")
     public void aboutHandler() {
+    }
+
+    @RequestMapping("/exportStudies")
+    public void exportStudiesHandler() {
     }
 }

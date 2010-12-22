@@ -16,8 +16,6 @@
 <div id="right_side_navigation">
     <p><a href="<c:url value="../homePage"/>">Home</a></p>
 
-    <p><a href="<c:url value="../installationSitePage"/>">Export to PDF</a></p>
-
     <p><a href="<c:url value="../installationSitePage"/>">Associated publications</a></p>
 </div>
 <div id="content">
@@ -42,25 +40,23 @@
             </tr>
         </table>
 
-        <div style="margin-top:60px"></div>
+        <div style="margin-top:60px"/>
         <h3>Sample list</h3>
+
+        <spring:url var="exportUrl" value="exportSamples/${study.studyId}"/>
+        <div align="left"><a href="${exportUrl}">Export to CSV</a></div>
         <table border="1">
             <tr>
                 <th>Item no.</th>
                 <th>Sample Id</th>
                 <th>Collection date</th>
                 <th>Sample title</th>
-                <%--<c:forEach var="item" items="${samplePropertyList}">--%>
-                <%--<th><c:out value="${item}"/></th>--%>
-                <%--</c:forEach>--%>
             </tr>
             <%
                 int i = 1;
             %>
             <c:forEach var="sample" items="${sampleList}" varStatus="status">
                 <tr>
-                    <spring:url var="sampleUrl" value="../sampleOverview/${sample.sampleId}"/>
-
                     <td align="center"><%= i%><% i++;%>
                     </td>
                     <td align="center">${sample.sampleId}</td>
@@ -74,11 +70,9 @@
                         </c:choose>
                     </td>
                     <td align="center">
-                        <a href='<c:out value="${sampleUrl}"/>'>${sample.sampleTitle}</a>
+                        <spring:url var="sampleUrl" value="../sampleOverview/${sample.sampleId}"/>
+                        <a href="${sampleUrl}">${sample.sampleTitle}</a>
                     </td>
-                        <%--<c:forEach var="item" items="${sample.propertyMap.values}">--%>
-                        <%--<td><c:out value="${item}"/></td>--%>
-                        <%--</c:forEach>--%>
                 </tr>
             </c:forEach>
         </table>
