@@ -13,40 +13,28 @@
 
     <tx:annotation-driven transaction-manager="txManager"/>
 
-    <bean id="ipDevDatasourceId" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
-        <property name="url" value="jdbc:oracle:thin:@muscat.ebi.ac.uk:1531:IPDEV"/>
-        <property name="username" value="emg_user"/>
-        <property name="password" value="emguser_ipdev"/>
-    </bean>
-
     <bean id="txManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
         <property name="sessionFactory" ref="hibernateSessionFactory"/>
     </bean>
 
+    <!--Data source for IPDEV-->
+    <bean id="ipDevDatasourceId" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+        <property name="url" value="${jcp.jdbc.oracle.ipdev.url}"/>
+        <property name="username" value="${jcp.jdbc.oracle.ipdev.username}"/>
+        <property name="password" value="${jcp.jdbc.oracle.ipdev.password}"/>
+    </bean>
 
-    <!--<bean id="hibernateSessionFactory"-->
-    <!--class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">-->
-    <!--<property name="dataSource" ref="ipDevDatasourceId"/>-->
-    <!--<property name="annotatedClasses">-->
-    <!--<list>-->
-    <!--<value>uk.ac.ebi.interpro.metagenomics.memi.model.EmgStudy</value>-->
-    <!--<value>uk.ac.ebi.interpro.metagenomics.memi.model.EmgSample</value>-->
-    <!--</list>-->
-    <!--</property>-->
-    <!--<property name="hibernateProperties">-->
-    <!--<props>-->
-    <!--<prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>-->
-    <!--&lt;!&ndash;<prop key="hibernate.dialect">org.hibernate.dialect.OracleDialect</prop>&ndash;&gt;-->
-    <!--<prop key="hibernate.show_sql">true</prop>-->
-    <!--<prop key="hibernate.cache.provider_class">org.hibernate.cache.NoCacheProvider</prop>-->
-    <!--<prop key="hibernate.connection.pool_size">20</prop>-->
-    <!--&lt;!&ndash;<prop key="hibernate.current_session_context_class">thread</prop>&ndash;&gt;-->
-    <!--&lt;!&ndash;<prop key="hibernate.transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</prop>&ndash;&gt;-->
-    <!--</props>-->
-    <!--</property>-->
-    <!--</bean>-->
+    <!--Data source for ADEV-->
+    <bean id="adevDatasourceId" name="adevDatasource"
+          class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+        <property name="url" value="${jcp.jdbc.oracle.adev.url}"/>
+        <property name="username" value="${jcp.jdbc.oracle.adev.username}"/>
+        <property name="password" value="${jcp.jdbc.oracle.adev.password}"/>
+    </bean>
 
+    <!-- Definition of Hibernate session factory including Hibernate Mappings-->
     <bean id="hibernateSessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
         <property name="dataSource" ref="ipDevDatasourceId"/>
         <property name="hibernateProperties">
@@ -65,7 +53,6 @@
         </property>
     </bean>
 
-
     <!-- Specification of version of control elements like e.g. data access objects -->
     <!-- List of data access objects -->
     <bean id="emgStudyDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.EmgStudyDAOImpl"/>
@@ -78,18 +65,11 @@
 
     <bean id="newsDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.NewsDAOImpl"/>
 
-    <!-- Data source for the Oracle ENA database -->
-    <bean id="adevDatasourceId" name="adevDatasource"
-          class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="${jcp.jdbc.oracle.driverClassName}"/>
-        <property name="url" value="${jcp.jdbc.oracle.adev.url}"/>
-        <property name="username" value="${jcp.jdbc.oracle.adev.username}"/>
-        <property name="password" value="${jcp.jdbc.oracle.adev.password}"/>
-    </bean>
-
     <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
         <property name="basename" value="/WEB-INF/resources/messages"/>
     </bean>
+
+    <!--Service-->
 
     <!-- The next 3 beans belong to the email notification service which is currently used in the submission form  -->
     <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
@@ -115,5 +95,4 @@
             <value>/WEB-INF/templates</value>
         </property>
     </bean>
-
 </beans>
