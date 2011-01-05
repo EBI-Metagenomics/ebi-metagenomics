@@ -34,6 +34,7 @@
         <property name="password" value="${jcp.jdbc.oracle.adev.password}"/>
     </bean>
 
+
     <!-- Definition of Hibernate session factory including Hibernate Mappings-->
     <bean id="hibernateSessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
         <property name="dataSource" ref="ipDevDatasourceId"/>
@@ -86,10 +87,12 @@
     <!-- This bean initializes the Velocity engine for templating. -->
     <bean id="velocityEngineId" name="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
         <property name="velocityProperties">
-            <value>
-                resource.loader=class
-                class.resource.loader.class=org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
-            </value>
+            <props>
+                <prop key="resource.loader">class</prop>
+                <prop key="class.resource.loader.class">
+                    org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+                </prop>
+            </props>
         </property>
         <property name="resourceLoaderPath">
             <value>/WEB-INF/templates</value>
