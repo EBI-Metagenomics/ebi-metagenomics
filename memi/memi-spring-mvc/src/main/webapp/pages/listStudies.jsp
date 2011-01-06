@@ -14,11 +14,29 @@
 <head>
     <title>Overview about all studies</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <%-- CSS file sources --%>
+    <%--Link to the CSS file, which includes CSS classes for the EBI main header and footer--%>
+    <%--<link rel="stylesheet" href="http://www.ebi.ac.uk/inc/css/contents.css" type="text/css"/>--%>
+    <link rel="stylesheet" href="http://www.ebi.ac.uk/inc/css/userstyles.css" type="text/css"/>
+    <link rel="stylesheet" href="http://www.ebi.ac.uk/inc/css/sidebars.css" type="text/css"/>
+    <%--Link to the Memi project CSS file--%>
     <link href="../css/memi.css" rel="stylesheet" type="text/css" media="all"/>
+
+    <%-- JavaScript sources --%>
+    <script src="http://www.ebi.ac.uk/inc/js/contents.js" type="text/javascript"></script>
 </head>
-<body>
+<%-- The setting of the onload attribute is necessary to ensure that the EBI main header works in IE--%>
+<%-- For more information on how to create EBI group and project specific pages please read the guideline on
+    http://www.ebi.ac.uk/inc/template/#important--%>
+<body onload="if(navigator.userAgent.indexOf('MSIE') != -1) {document.getElementById('head').allowTransparency = true;}">
+
+<%-- EBI main header--%>
+<div class="headerdiv" id="headerdiv" style="position:absolute; z-index: 1;">
+    <%-- The latest version of the EBI main header can be viewed on http://www.ebi.ac.uk/inc/head.html--%>
+    <%@include file='/inc/head.html' %>
+</div>
 <div id="right_side_navigation">
-    <p><a href="<c:url value="./homePage.htm"/>">Home</a></p>
     <table border="0" style="border-width: 1px;border-color: #000000;border-style: solid;">
         <form:form action="listStudies.htm" commandName="filterForm">
             <tr>
@@ -52,7 +70,8 @@
     </table>
 </div>
 <div id="content">
-    <div style="margin-top:60px"></div>
+    <%--MG portal main menu template--%>
+    <%@include file='/templates/mainMenu.jsp' %>
     <h2>Overview about all studies</h2>
 
     <spring:url var="exportUrl" value="listStudies/exportStudies"/>
@@ -89,5 +108,7 @@
         </c:forEach>
     </table>
 </div>
+<div style="margin-bottom:380px"></div>
+<%@include file='/templates/footer.jsp' %>
 </body>
 </html>

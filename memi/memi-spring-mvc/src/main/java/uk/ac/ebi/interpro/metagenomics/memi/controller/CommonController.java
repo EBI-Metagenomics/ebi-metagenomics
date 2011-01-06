@@ -26,7 +26,7 @@ public class CommonController {
     public void aboutHandler() {
     }
 
-    @RequestMapping("/exportStudies")
-    public void exportStudiesHandler() {
+    @RequestMapping("/errorPage")
+    public void errorPageHandler() {
     }
 }

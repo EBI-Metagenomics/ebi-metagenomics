@@ -10,16 +10,35 @@
 <head>
     <title>Study overview</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link href="/css/memi.css" rel="stylesheet" type="text/css" media="all"/>
-</head>
-<body>
-<div id="right_side_navigation">
-    <p><a href="<c:url value="../homePage"/>">Home</a></p>
 
+    <%-- CSS file sources --%>
+    <%--Link to the CSS file, which includes CSS classes for the EBI main header and footer--%>
+    <%--<link rel="stylesheet" href="http://www.ebi.ac.uk/inc/css/contents.css" type="text/css"/>--%>
+    <link rel="stylesheet" href="http://www.ebi.ac.uk/inc/css/userstyles.css" type="text/css"/>
+    <link rel="stylesheet" href="http://www.ebi.ac.uk/inc/css/sidebars.css" type="text/css"/>
+    <%--Link to the Memi project CSS file--%>
+    <link href="/css/memi.css" rel="stylesheet" type="text/css" media="all"/>
+
+    <%-- JavaScript sources --%>
+    <script src="http://www.ebi.ac.uk/inc/js/contents.js" type="text/javascript"></script>
+</head>
+<body onload="if(navigator.userAgent.indexOf('MSIE') != -1) {document.getElementById('head').allowTransparency = true;}">
+
+<%-- EBI main header--%>
+<div class="headerdiv" id="headerdiv" style="position:absolute; z-index: 1;">
+    <%-- The latest version of the EBI main header can be viewed on http://www.ebi.ac.uk/inc/head.html--%>
+    <%@include file='/inc/head.html' %>
+</div>
+<div id="right_side_navigation">
     <p><a href="<c:url value="../installationSitePage"/>">Associated publications</a></p>
 </div>
 <div id="content">
-    <div style="margin-top:60px"></div>
+    <div style="margin-top:80px"/>
+    <a href="..//homePage" title="Home">Home</a>
+    <a href="../listStudies" title="Search study">Search study</a>
+    <a href="../installationSitePage" title="Help">Help</a>
+
+    <div style="margin-top:60px"/>
     <h2>Study overview - ${study.studyName} (ID ${study.studyId}) </h2>
 
     <div style="margin-top:6px"></div>
@@ -77,5 +96,8 @@
             </c:forEach>
         </table>
     </div>
+</div>
+<div style="margin-bottom:290px"></div>
+<%@include file='/templates/footer.jsp' %>
 </body>
 </html>
