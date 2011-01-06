@@ -19,7 +19,7 @@
     <!-- Forwards requests to the "/" resource to the "welcome" view -->
     <mvc:view-controller path="/" view-name="homePage"/>
 
-    <!-- Resolves JSP pages2 selected for rendering by @Controllers to .jsp resources in the /pages2 directory -->
+    <!-- Resolves JSP pages selected for rendering by @Controllers to .jsp resources in the /pages directory -->
     <bean id="viewResolver"
           class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
@@ -29,4 +29,16 @@
 
     <!-- Imports user-defined @Controller beans that process client requests -->
     <import resource="controllers-context.xml"/>
+
+    <!-- Example of how to create URL mappings alternatively -->
+
+    <!--<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">-->
+    <!--<property name="mappings">-->
+    <!--<props>-->
+    <!--<prop key="download">downloadControl</prop>-->
+    <!--</props>-->
+    <!--</property>-->
+    <!--</bean>-->
+    <!--<bean id="downloadControl" class="uk.ac.ebi.interpro.metagenomics.memi.controller.DownloadController">-->
+    <!--</bean>-->
 </beans>
