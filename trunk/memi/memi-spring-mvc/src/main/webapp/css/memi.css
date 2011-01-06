@@ -16,11 +16,11 @@ td {
     color: #ff0000;
 }
 
-#content {
+div#content {
     margin: 0 300px 0 100px;
 }
 
-#right_side_navigation {
+div#right_side_navigation {
     position: absolute;
     right: 0;
     width: 300px;

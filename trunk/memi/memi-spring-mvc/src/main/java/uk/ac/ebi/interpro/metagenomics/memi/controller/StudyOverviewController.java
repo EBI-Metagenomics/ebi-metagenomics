@@ -1,18 +1,26 @@
 package uk.ac.ebi.interpro.metagenomics.memi.controller;
 
+import org.apache.velocity.app.VelocityEngine;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+import uk.ac.ebi.interpro.metagenomics.memi.basic.VelocityTemplateWriter;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.EmgSampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.EmgStudyDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.files.MemiFileWriter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgSample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgStudy;
+import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +41,11 @@ public class StudyOverviewController {
     @Resource
     private EmgSampleDAO emgSampleDAO;
 
+    @Resource
+    private VelocityEngine velocityEngine;
+
+    @Resource
+    private MemiDownloadService downloadService;
 
     @RequestMapping(value = "/{studyId}", method = RequestMethod.GET)
     public String findStudy(@PathVariable String studyId, ModelMap model) {
@@ -44,27 +57,35 @@ public class StudyOverviewController {
         return "studyOverview";
     }
 
+
     @RequestMapping(value = "/exportSamples/{studyId}", method = RequestMethod.GET)
-    public String exportSamplesHandler(@PathVariable String studyId, ModelMap model) {
-        List<EmgSample> samples = emgSampleDAO.retrieveSamplesByStudyId(studyId);
+    public ModelAndView exportSamplesHandler(ModelMap model, HttpServletResponse response) throws Exception {
+        List<EmgSample> samples = (List<EmgSample>) model.get("sampleList");
         if (samples != null && samples.size() > 0) {
-            //Add samples to model
-            model.put("samples", samples);
-            //Create sample property list and add it to the model
-            addSamplePropertyList(model, samples.get(0));
+            //Create velocity model
+            Map<String, Object> velocityModel = new HashMap<String, Object>();
+            velocityModel.put("samplePropertyList", getSamplePropertyList(samples.get(0)));
+            velocityModel.put("samples", samples);
+            //Create file content
+            String fileContent = VelocityTemplateWriter.createFileContent(velocityEngine, "WEB-INF/templates/exportSamples.vm", velocityModel);
+            File file = MemiFileWriter.writeCSVFile(fileContent);
+            if (file != null && file.canRead()) {
+                downloadService.openDownloadDialog(response, file, "samples.csv");
+            }
         }
-        return "exportSamples";
+        return null;
     }
+
 
     /**
      * Creates and add a sample property list to the specified model.
      */
-    private void addSamplePropertyList(ModelMap model, EmgSample sample) {
+    private List<String> getSamplePropertyList(EmgSample sample) {
         List<String> result = new ArrayList<String>();
         for (String key : sample.getPropertyMap().keySet()) {
             result.add(key);
         }
-        model.put("samplePropertyList", result);
+        return result;
     }
 
     @ModelAttribute(value = "sampleList")
