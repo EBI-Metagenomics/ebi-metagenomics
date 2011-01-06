@@ -18,35 +18,21 @@
     </bean>
 
     <!--Data source for IPDEV-->
-    <!--<bean id="ipDevDatasourceId" class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
-    <!--<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>-->
-    <!--<property name="url" value="${jcp.jdbc.oracle.ipdev.url}"/>-->
-    <!--<property name="username" value="${jcp.jdbc.oracle.ipdev.username}"/>-->
-    <!--<property name="password" value="${jcp.jdbc.oracle.ipdev.password}"/>-->
-    <!--</bean>-->
     <bean id="ipDevDatasourceId" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
-        <property name="url" value="jdbc:oracle:thin:@muscat.ebi.ac.uk:1531:IPDEV"/>
-        <property name="username" value="emg_user"/>
-        <property name="password" value="emguser_ipdev"/>
+        <property name="url" value="${jcp.jdbc.oracle.ipdev.url}"/>
+        <property name="username" value="${jcp.jdbc.oracle.ipdev.username}"/>
+        <property name="password" value="${jcp.jdbc.oracle.ipdev.password}"/>
     </bean>
 
     <!--Data source for ADEV-->
-    <!--<bean id="adevDatasourceId" name="adevDatasource"-->
-    <!--class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
-    <!--<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>-->
-    <!--<property name="url" value="${jcp.jdbc.oracle.adev.url}"/>-->
-    <!--<property name="username" value="${jcp.jdbc.oracle.adev.username}"/>-->
-    <!--<property name="password" value="${jcp.jdbc.oracle.adev.password}"/>-->
-    <!--</bean>-->
     <bean id="adevDatasourceId" name="adevDatasource"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
-        <property name="url" value="jdbc:oracle:thin:@pinga.ebi.ac.uk:1521:ADEV"/>
-        <property name="username" value="spin2006"/>
-        <property name="password" value="spinsub"/>
+        <property name="url" value="${jcp.jdbc.oracle.adev.url}"/>
+        <property name="username" value="${jcp.jdbc.oracle.adev.username}"/>
+        <property name="password" value="${jcp.jdbc.oracle.adev.password}"/>
     </bean>
-
 
     <!-- Definition of Hibernate session factory including Hibernate Mappings-->
     <bean id="hibernateSessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
@@ -113,5 +99,5 @@
     </bean>
 
     <!--This service configures a HTTP response, which opens a download dialog-->
-    <bean id="downloadService" class="uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService" />
+    <bean id="downloadService" class="uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService"/>
 </beans>
