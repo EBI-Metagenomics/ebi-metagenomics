@@ -9,8 +9,9 @@
     <packaging>pom</packaging>
 
     <name>memi</name>
-    <!-- URL is not yet specified -->
+    <!-- URL is not yet specified  -->
     <url>http://maven.apache.org</url>
+    <!-- Sebastian test -->
 
     <organization>
         <name>European Bioinformatics Institute</name>
