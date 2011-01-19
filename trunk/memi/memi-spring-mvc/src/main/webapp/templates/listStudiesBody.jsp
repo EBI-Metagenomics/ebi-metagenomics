@@ -6,13 +6,13 @@
 
     <div align="center">
         <table border="0" style="border-width: 1px;border-color: #000000;border-style: solid;">
-            <form:form action="listStudies.htm" commandName="filterForm">
+            <form:form action="listStudies/doFilter" commandName="filterForm">
                 <tr>
                     <td>Study type:</td>
                     <td>
                         <form:select path="studyType">
                             <form:option value="NONE" label="--- Select ---"/>
-                            <form:options items="${studyTypeList}" itemValue="studyTypeId"
+                            <form:options items="${filterForm.studyTypes}" itemValue="studyTypeId"
                                           itemLabel="studyTypeName"/>
                         </form:select>
                     </td>
@@ -22,7 +22,7 @@
                     <td>Study status:</td>
                     <td><form:select path="studyStatus">
                         <form:option value="NONE" label="--- Select ---"/>
-                        <form:options items="${studyStatusList}" itemValue="studyStatusId"
+                        <form:options items="${filterForm.studyStati}" itemValue="studyStatusId"
                                       itemLabel="studyStatusName"/>
                     </form:select></td>
                     <td><form:errors path="studyStatus" cssClass="error"/></td>
@@ -53,7 +53,7 @@
             <th>Number of samples</th>
             <th>Analysis status</th>
         </tr>
-        <c:forEach var="study" items="${studyList}" varStatus="status">
+        <c:forEach var="study" items="${mgModel.studies}" varStatus="status">
             <tr>
                 <spring:url var="studyUrl" value="studyOverview/${study.studyId}"/>
 

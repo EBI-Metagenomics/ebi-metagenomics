@@ -63,7 +63,7 @@ public class HomePageControllerTest {
     @Test
     @Ignore
     public void testPopulateStudyList() throws Exception {
-        List<EmgStudy> studies = MGModelFactory.getPublicStudiesFromDB(null);
+        List<EmgStudy> studies = MGModelFactory.getLimitedPublicStudiesFromDB(null);
         assertNotNull(studies);
         assertEquals(10, studies.size());
         assertEquals("study_1", studies.get(0).getStudyName());

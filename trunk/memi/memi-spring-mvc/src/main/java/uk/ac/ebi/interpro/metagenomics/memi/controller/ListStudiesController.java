@@ -13,11 +13,19 @@ import uk.ac.ebi.interpro.metagenomics.memi.basic.VelocityTemplateWriter;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.EmgStudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.files.MemiFileWriter;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.FilterForm;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.SubmissionForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgStudy;
 import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ListStudiesPageModel;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModel;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.SubmissionModel;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,10 +40,15 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/listStudies")
-public class ListStudiesController {
+public class ListStudiesController extends LoginController implements IMGController {
 
     /* The maximum allowed number of characters per column within the study list table*/
     private final int MAX_CHARS_PER_COLUMN = 35;
+
+    /**
+     * View name of this controller which is used several times.
+     */
+    private final String VIEW_NAME = "listStudies";
 
     private final String VELOCITY_TEMPLATE_LOCATION_PATH = "WEB-INF/velocity_templates/exportStudies.vm";
 
@@ -45,16 +58,21 @@ public class ListStudiesController {
     private EmgStudyDAO emgStudyDAO;
 
     @Resource
+    private SessionManager sessionManager;
+
+    @Resource
     private VelocityEngine velocityEngine;
 
     @Resource
     private MemiDownloadService downloadService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public String initPage(ModelMap model) {
-        FilterForm filterForm = new FilterForm();
-        model.put("filterForm", filterForm);
-        return "listStudies";
+    public ModelAndView doGet(ModelMap model) {
+        //build and add the page model
+        populateModel(model);
+        model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((ListStudiesPageModel) model.get(MGModel.MODEL_ATTR_NAME)).getLoginForm());
+        model.addAttribute(FilterForm.MODEL_ATTR_NAME, ((ListStudiesPageModel) model.get(MGModel.MODEL_ATTR_NAME)).getFilterForm());
+        return new ModelAndView(VIEW_NAME, model);
     }
 
 
@@ -77,6 +95,32 @@ public class ListStudiesController {
         return null;
     }
 
+    @RequestMapping(method = RequestMethod.POST)
+    public ModelAndView doProcessLogin(@ModelAttribute(LoginForm.MODEL_ATTR_NAME) @Valid LoginForm loginForm, BindingResult result,
+                                       ModelMap model, SessionStatus status) {
+        //process login
+        super.processLogin(loginForm, result, model, status);
+        //create model and view
+        populateModel(model);
+        model.addAttribute(FilterForm.MODEL_ATTR_NAME, ((ListStudiesPageModel) model.get(MGModel.MODEL_ATTR_NAME)).getFilterForm());
+        return new ModelAndView(VIEW_NAME, model);
+    }
+
+    @RequestMapping(value = "doFilter", method = RequestMethod.POST)
+    public ModelAndView doFilter(@ModelAttribute("filterForm") FilterForm filterForm, ModelMap model, SessionStatus status) {
+        populateModel(model);
+        model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((ListStudiesPageModel) model.get(MGModel.MODEL_ATTR_NAME)).getLoginForm());
+        return new ModelAndView(VIEW_NAME, model);
+    }
+
+    /**
+     * Creates the MG model and adds it to the specified model map.
+     */
+    private void populateModel(ModelMap model) {
+        final ListStudiesPageModel subModel = MGModelFactory.getListStudiesPageModel(sessionManager, emgStudyDAO);
+        model.addAttribute(MGModel.MODEL_ATTR_NAME, subModel);
+    }
+
     /**
      * Returns a list of study properties.
      */
@@ -88,35 +132,16 @@ public class ListStudiesController {
         return result;
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public String processSubmit
-            (@ModelAttribute("filterForm") FilterForm
-                    filterForm, ModelMap
-                    model, BindingResult
-                    result, SessionStatus
-                    status) {
-        return "listStudies";
-    }
 
-    @ModelAttribute("studyList")
-    public List<EmgStudy> populateStudyList
-            () {
-        List<EmgStudy> result = emgStudyDAO.retrieveAll();
-        if (result == null) {
-            result = new ArrayList<EmgStudy>();
-        }
-        return result;
-    }
-
-    @ModelAttribute("studyTypeList")
-    public EmgStudy.StudyType[] populateStudyTypes
-            () {
-        return EmgStudy.StudyType.values();
-    }
-
-    @ModelAttribute("studyStatusList")
-    public EmgStudy.StudyStatus[] populateStudyStati
-            () {
-        return EmgStudy.StudyStatus.values();
-    }
+//    @ModelAttribute("studyTypeList")
+//    public EmgStudy.StudyType[] populateStudyTypes
+//            () {
+//        return EmgStudy.StudyType.values();
+//    }
+//
+//    @ModelAttribute("studyStatusList")
+//    public EmgStudy.StudyStatus[] populateStudyStati
+//            () {
+//        return EmgStudy.StudyStatus.values();
+//    }
 }

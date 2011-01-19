@@ -59,7 +59,7 @@ public class HomePageController extends LoginController implements IMGController
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ModelAndView processLoginSubmit(@ModelAttribute(LoginForm.MODEL_ATTR_NAME) @Valid LoginForm loginForm, BindingResult result,
+    public ModelAndView doProcessLogin(@ModelAttribute(LoginForm.MODEL_ATTR_NAME) @Valid LoginForm loginForm, BindingResult result,
                                            ModelMap model, SessionStatus status) {
         //process login        
         super.processLogin(loginForm, result, model, status);
