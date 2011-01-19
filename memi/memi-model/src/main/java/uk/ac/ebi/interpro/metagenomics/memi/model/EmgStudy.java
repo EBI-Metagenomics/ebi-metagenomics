@@ -307,7 +307,7 @@ public class EmgStudy {
 
 
     public enum StudyStatus {
-        QUEUED(1, "Queued"), IN_PROCESS(2, "In process"), FINISHED(3, "Finished");
+        QUEUED(1, "Queued"), IN_PROCESS(2, "In process"), FINISHED(3, "Finished"), NONE(4, "None");
 
         private int studyStatusId;
 
@@ -336,7 +336,7 @@ public class EmgStudy {
     }
 
     public enum StudyType {
-        ENVIRONMENTAL(1, "Environmental"), HOST_ASSOCIATED(2, "Host associated"), UNDEFINED(3, "Undefined");
+        ENVIRONMENTAL(1, "Environmental"), HOST_ASSOCIATED(2, "Host associated"), UNDEFINED(3, "Undefined"), NONE(4, "None");
 
         private int studyTypeId;
 
