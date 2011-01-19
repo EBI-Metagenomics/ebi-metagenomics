@@ -12,6 +12,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.dao.EmgStudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.NewsDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgStudy;
 import uk.ac.ebi.interpro.metagenomics.memi.model.News;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -56,13 +57,13 @@ public class HomePageControllerTest {
     @Test
     public void testInitPage() throws Exception {
         ModelMap model = new ModelMap();
-        assertEquals("homePage", controller.initPage(model));
+        assertEquals("homePage", controller.doGet(model));
     }
 
     @Test
     @Ignore
     public void testPopulateStudyList() throws Exception {
-        List<EmgStudy> studies = controller.populatePublicStudyList();
+        List<EmgStudy> studies = MGModelFactory.getPublicStudiesFromDB(null);
         assertNotNull(studies);
         assertEquals(10, studies.size());
         assertEquals("study_1", studies.get(0).getStudyName());
@@ -73,7 +74,7 @@ public class HomePageControllerTest {
 
     @Test
     public void testPopulateNewsList() throws Exception {
-        List<News> newsList = controller.populateNewsList();
+        List<News> newsList = MGModelFactory.getNewsListFromDB(null);
         assertNotNull(newsList);
         assertEquals(10, newsList.size());
         assertEquals("Headline 1", newsList.get(0).getNewsHeadline());

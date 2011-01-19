@@ -37,7 +37,7 @@ public class ListStudiesController {
     /* The maximum allowed number of characters per column within the study list table*/
     private final int MAX_CHARS_PER_COLUMN = 35;
 
-    private final String VELOCITY_TEMPLATE_LOCATION_PATH = "WEB-INF/templates/exportStudies.vm";
+    private final String VELOCITY_TEMPLATE_LOCATION_PATH = "WEB-INF/velocity_templates/exportStudies.vm";
 
     private final String DOWNLOAD_FILE_NAME = "studies.csv";
 
@@ -62,7 +62,7 @@ public class ListStudiesController {
     public ModelAndView exportStudiesHandler(HttpServletResponse response) {
         List<EmgStudy> studies = emgStudyDAO.retrieveAll();
         if (studies != null && studies.size() > 0) {
-            //Create velocity model
+            //Create velocity spring_model
             Map<String, Object> velocityModel = new HashMap<String, Object>();
             velocityModel.put("studyPropertyList", getStudyPropertyList(studies.get(0)));
             velocityModel.put("studies", studies);

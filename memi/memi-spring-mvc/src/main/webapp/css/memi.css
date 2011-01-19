@@ -16,12 +16,18 @@ td {
     color: #ff0000;
 }
 
+/*.date {*/
+/*}*/
+
+/*div#calendarDiv {*/
+    /*font: 80% arial, helvetica, sans-serif;*/
+/*}*/
+
 div#content {
     margin: 0 300px 0 100px;
 }
 
 div#right_side_navigation {
-    position: absolute;
     right: 0;
     width: 300px;
 }

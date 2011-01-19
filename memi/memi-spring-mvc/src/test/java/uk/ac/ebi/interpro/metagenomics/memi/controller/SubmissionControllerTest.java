@@ -58,7 +58,7 @@ public class SubmissionControllerTest {
     @Test
     public void testInitForm() throws Exception {
         ModelMap model = new ModelMap();
-        assertEquals("submissionForm", controller.initForm(model));
+        assertEquals("submissionForm", controller.doGet(model));
         assertEquals(1, model.size());
         assertTrue(model.containsKey("subForm"));
         assertFalse(model.containsKey("test"));
@@ -77,7 +77,7 @@ public class SubmissionControllerTest {
         ModelMap model = new ModelMap();
         BindingResult result = new BeanPropertyBindingResult(subForm, "subForm");
         //1. test case: no submission form object provided
-        assertEquals("If the submission form bean is not attached at the model a NPE will occur!", "errorPage", controller.processSubmit(subForm, result, model, new SimpleSessionStatus()));
+        assertEquals("If the submission form bean is not attached at the model a NPE will occur!", "errorPage", controller.doPost(subForm, result, model, new SimpleSessionStatus()));
         //2. test case: Input fields contain data
         String testTitle = "test title";
         String testDate = "20/12/2010";
@@ -92,7 +92,7 @@ public class SubmissionControllerTest {
         model.put("subForm", subForm);
         result = new BeanPropertyBindingResult(subForm, "subForm");
         assertEquals(0, result.getErrorCount());
-        assertEquals("submissionSuccessPage", controller.processSubmit(subForm, result, model, new SimpleSessionStatus()));
+        assertEquals("submissionSuccessPage", controller.doPost(subForm, result, model, new SimpleSessionStatus()));
         assertEquals(1, model.size());
         assertTrue(model.containsKey("subForm"));
         assertEquals(0, result.getErrorCount());

@@ -6,10 +6,11 @@
 <html>
 <body>
 <div style="margin-top:80px"/>
-<a href="../memi/homePage" title="Home">Home</a>
-<a href="./listStudies" title="Search study">Search study</a>
-<a href="./installationSitePage" title="Help">Help</a>
-
+<div align="center">
+    <a href="../memi/index" title="Home">Home</a>
+    <a href="./listStudies" title="Search study">Search study</a>
+    <a href="./installationSite" title="Help">Help</a>
+</div>
 <div style="margin-top:60px"/>
 </body>
 </html>

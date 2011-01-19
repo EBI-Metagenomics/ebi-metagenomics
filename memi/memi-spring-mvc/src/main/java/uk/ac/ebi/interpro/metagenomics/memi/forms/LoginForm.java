@@ -8,19 +8,20 @@ import javax.validation.constraints.Size;
  * Represents a customized login form.
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
- * @version $Id$
  * @since 1.0-SNAPSHOT
  */
 public class LoginForm {
 
+    public final static String MODEL_ATTR_NAME = "loginForm";
+
     @NotEmpty
-    @Size(min = 1, max = 30)
+//    @Size(min = 1, max = 30)
 //    @Email
 //    TODO: Reactivate email annotation (deactivate because the test user has an invalid email address)
     private String emailAddress;
 
     @NotEmpty
-    @Size(min = 1, max = 12)
+//    @Size(min = 1, max = 12)
     private String password;
 
     public String getEmailAddress() {

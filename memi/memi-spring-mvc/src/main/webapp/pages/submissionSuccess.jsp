@@ -1,7 +1,7 @@
 <%--
   Created by Maxim Scheremetjew, EMBL-EBI, InterPro
   Date: 25-Nov-2010
-  Desc: Represents a submission form
+  Desc: Represents a submission success page
   --%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
-<tiles:insertDefinition name="submission"/>
+<tiles:insertDefinition name="submissionSuccess"/>

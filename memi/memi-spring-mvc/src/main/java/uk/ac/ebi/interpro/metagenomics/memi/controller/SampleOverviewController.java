@@ -40,7 +40,7 @@ public class SampleOverviewController {
     @RequestMapping(value = "/{sampleId}", method = RequestMethod.GET)
     public String findSample(@PathVariable String sampleId, ModelMap model) {
         EmgSample sample = sampleDAO.read(sampleId);
-        //Add sample to model
+        //Add sample to spring_model
         model.put("sample", sample);
         return "sampleOverview";
     }
@@ -50,11 +50,11 @@ public class SampleOverviewController {
     public ModelAndView exportSampleHandler(@PathVariable String sampleId, HttpServletResponse response) {
         EmgSample sample = sampleDAO.read(sampleId);
         if (sample != null) {
-            //Create velocity model
+            //Create velocity spring_model
             Map<String, Object> velocityModel = new HashMap<String, Object>();
             velocityModel.put("sample", sample);
             //Create file content
-            String fileContent = VelocityTemplateWriter.createFileContent(velocityEngine, "WEB-INF/templates/exportSample.vm", velocityModel);
+            String fileContent = VelocityTemplateWriter.createFileContent(velocityEngine, "WEB-INF/velocity_templates/exportSample.vm", velocityModel);
             File file = MemiFileWriter.writeCSVFile(fileContent);
             if (file != null && file.canRead()) {
                 downloadService.openDownloadDialog(response, file, "sample.csv");
