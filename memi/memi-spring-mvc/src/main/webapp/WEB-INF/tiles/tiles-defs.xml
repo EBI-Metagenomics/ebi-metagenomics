@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+        "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+
+    <!-- Default main template -->
+    <definition name="rootTemplate" template="/templates/rootTemplate.jsp">
+        <!-- Attributes of type string-->
+        <put-attribute name="title" type="string" value="MG portal"/>
+        <!-- Attributes of type template-->
+        <put-attribute name="header" type="template" value="/templates/header.jsp"/>
+        <put-attribute name="mainMenu" type="template" value="/templates/mainMenu.jsp"/>
+        <put-attribute name="footer" type="template" value="/templates/footer.jsp"/>
+        <!-- Attributes of type definition-->
+        <put-attribute name="rightMenu" type="definition" value="rightSideMenu"/>
+    </definition>
+
+    <!--Right side menu (includes login form)-->
+    <definition name="rightSideMenu" template="/templates/rightSideMenu.jsp">
+        <put-attribute name="loginForm" value="/pages/loginForm.jsp"/>
+    </definition>
+
+    <!-- Page bodies-->
+
+    <definition name="home" extends="rootTemplate">
+        <put-attribute name="body" value="/templates/homeBody.jsp"/>
+    </definition>
+
+    <definition name="info" extends="rootTemplate">
+        <put-attribute name="body" value="/templates/infoBody.jsp"/>
+    </definition>
+
+    <definition name="submission" extends="rootTemplate">
+        <put-attribute name="body" value="/templates/submissionBody.jsp"/>
+    </definition>
+
+    <definition name="submissionSuccess" extends="rootTemplate">
+        <put-attribute name="body" value="/templates/submissionSuccessBody.jsp"/>
+    </definition>
+
+    <definition name="installationSite" extends="rootTemplate">
+        <put-attribute name="body" value="/templates/installationSiteBody.jsp"/>
+    </definition>
+
+    <definition name="listStudies" extends="rootTemplate">
+        <put-attribute name="body" value="/templates/listStudiesBody.jsp"/>
+    </definition>
+
+    <definition name="studyOverview" extends="rootTemplate">
+        <put-attribute name="body" value="/templates/studyOverviewBody.jsp"/>
+    </definition>
+
+</tiles-definitions>
