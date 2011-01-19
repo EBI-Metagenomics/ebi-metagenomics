@@ -28,7 +28,6 @@ import java.util.Map;
  * Represents the controller for the study overview page.
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
- * @version $Id$
  * @since 1.0-SNAPSHOT
  */
 @Controller
@@ -50,7 +49,7 @@ public class StudyOverviewController {
     @RequestMapping(value = "/{studyId}", method = RequestMethod.GET)
     public String findStudy(@PathVariable String studyId, ModelMap model) {
         EmgStudy study = emgStudyDAO.read(studyId);
-        //Add study to model
+        //Add study to spring_model
         model.put("study", study);
         Map<String, Object> studyPropMap = study.getProperties();
         model.put("studyPropertyMap", studyPropMap);
@@ -62,12 +61,12 @@ public class StudyOverviewController {
     public ModelAndView exportSamplesHandler(ModelMap model, HttpServletResponse response) throws Exception {
         List<EmgSample> samples = (List<EmgSample>) model.get("sampleList");
         if (samples != null && samples.size() > 0) {
-            //Create velocity model
+            //Create velocity spring_model
             Map<String, Object> velocityModel = new HashMap<String, Object>();
             velocityModel.put("samplePropertyList", getSamplePropertyList(samples.get(0)));
             velocityModel.put("samples", samples);
             //Create file content
-            String fileContent = VelocityTemplateWriter.createFileContent(velocityEngine, "WEB-INF/templates/exportSamples.vm", velocityModel);
+            String fileContent = VelocityTemplateWriter.createFileContent(velocityEngine, "WEB-INF/velocity_templates/exportSamples.vm", velocityModel);
             File file = MemiFileWriter.writeCSVFile(fileContent);
             if (file != null && file.canRead()) {
                 downloadService.openDownloadDialog(response, file, "samples.csv");
@@ -78,7 +77,7 @@ public class StudyOverviewController {
 
 
     /**
-     * Creates and add a sample property list to the specified model.
+     * Creates and add a sample property list to the specified spring_model.
      */
     private List<String> getSamplePropertyList(EmgSample sample) {
         List<String> result = new ArrayList<String>();

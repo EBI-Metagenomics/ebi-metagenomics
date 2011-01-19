@@ -5,121 +5,75 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.EmgSampleDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.EmgStudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.NewsDAO;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.SubmitterDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
-import uk.ac.ebi.interpro.metagenomics.memi.model.EmgStudy;
-import uk.ac.ebi.interpro.metagenomics.memi.model.News;
-import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.HomePageModel;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModel;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Represents the controller for the MG portal home page.
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
- * @version $Id$
  * @since 1.0-SNAPSHOT
  */
 @Controller
-@RequestMapping(value = "/homePage")
-public class HomePageController {
+@RequestMapping(value = "/index")
+public class HomePageController extends LoginController implements IMGController {
 
-    @Resource
-    private EmgSampleDAO emgSampleDAO;
+    private final Log log = LogFactory.getLog(HomePageController.class);
 
-    @Resource(name = "submitterDAO")
-    private SubmitterDAO submitterDAO;
+    /**
+     * View name of this controller which is used several times.
+     */
+    private final String VIEW_NAME = "index";
 
+    //Data access objects
     @Resource
     private EmgStudyDAO emgStudyDAO;
 
     @Resource
     private NewsDAO newsDAO;
 
-    /**
-     * The number of rows, which should be shown on the portal home page.
-     */
-    private final int rowNumber = 10;
-
-    private final Log log = LogFactory.getLog(HomePageController.class);
+    //Other injections
+    @Resource
+    private SessionManager sessionManager;
 
 
     @RequestMapping(method = RequestMethod.GET)
-    public String initPage(ModelMap model) {
-        LoginForm loginForm = new LoginForm();
-        model.put("loginForm", loginForm);
-        return "homePage";
+    public ModelAndView doGet(ModelMap model) {
+        //build and add the page model
+        populateModel(model);
+        model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((MGModel) model.get(MGModel.MODEL_ATTR_NAME)).getLoginForm());
+        return new ModelAndView(VIEW_NAME, model);
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ModelAndView processSubmit(@ModelAttribute("loginForm") @Valid LoginForm loginForm, BindingResult result,
-                                      ModelMap model, SessionStatus status) {
-        if (result.hasErrors()) {
-            return new ModelAndView("homePage");
-        }
-        loginForm = (LoginForm) model.get("loginForm");
-        Submitter submitter = null;
-        if (loginForm != null) {
-            String emailAddress = loginForm.getEmailAddress();
-            if (!submitterDAO.isDatabaseAlive()) {
-                result.addError(new FieldError("loginForm", "emailAddress", "Database is down! We are sorry for that."));
-                return new ModelAndView("homePage");
-            }
-            submitter = submitterDAO.getSubmitterByEmailAddress(emailAddress);
-            if (submitter != null) {
-                if (!submitter.getPassword().equals(loginForm.getPassword())) {
-                    result.addError(new FieldError("loginForm", "emailAddress", "Incorrect login data!"));
-                    return new ModelAndView("homePage");
-                }
-            } else {
-                log.warn("Could not find any submitter for the specified email address: " + emailAddress);
-                result.addError(new FieldError("loginForm", "emailAddress", "Incorrect login data!"));
-                return new ModelAndView("homePage");
-            }
-        } else {
-            return new ModelAndView("errorPage");
-        }
-        //clear the command object from the session
-        status.setComplete();
-        ModelAndView resultModel = new ModelAndView("loginSuccessPage");
-        resultModel.addObject("submitter", submitter);
-        return resultModel;
+    public ModelAndView processLoginSubmit(@ModelAttribute(LoginForm.MODEL_ATTR_NAME) @Valid LoginForm loginForm, BindingResult result,
+                                           ModelMap model, SessionStatus status) {
+        //process login        
+        super.processLogin(loginForm, result, model, status);
+        //create model and view
+        populateModel(model);
+        return new ModelAndView(VIEW_NAME, model);
     }
 
 
     /**
-     * @return A list of studies limited by a specified number of rows
+     * Creates the home page model and adds it to the specified model map.
      */
-    @ModelAttribute("studyList")
-    public List<EmgStudy> populatePublicStudyList() {
-        List<EmgStudy> studies = null;
-        if (emgStudyDAO != null) {
-            studies = emgStudyDAO.retrieveStudiesLimitedByRows(rowNumber);
-        }
-        if (studies == null) {
-            studies = new ArrayList<EmgStudy>();
-        }
-        return studies;
-    }
-
-    @ModelAttribute("newsList")
-    public List<News> populateNewsList() {
-        List<News> newsList = newsDAO.getLatestNews();
-        if (newsList == null) {
-            newsList = new ArrayList<News>();
-        }
-        return newsList;
+    private void populateModel(ModelMap model) {
+        final HomePageModel hpModel = MGModelFactory.getHomePageModel(sessionManager, emgStudyDAO, newsDAO);
+        model.addAttribute(MGModel.MODEL_ATTR_NAME, hpModel);
     }
 }

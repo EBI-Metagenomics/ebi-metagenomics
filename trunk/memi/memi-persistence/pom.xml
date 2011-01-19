@@ -17,7 +17,7 @@
     <url>http://maven.apache.org</url>
 
     <dependencies>
-        <!-- Internal dependency - Memi model module -->
+        <!-- Internal dependency - Memi spring_model module -->
         <dependency>
             <groupId>uk.ac.ebi.interpro.metagenomics</groupId>
             <artifactId>memi-model</artifactId>

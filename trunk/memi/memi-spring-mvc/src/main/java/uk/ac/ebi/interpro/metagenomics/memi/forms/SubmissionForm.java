@@ -16,6 +16,7 @@ import java.util.Date;
  * @since 1.0-SNAPSHOT
  */
 public class SubmissionForm {
+    public final static String MODEL_ATTR_NAME = "subForm";
 
     /**
      * Submission title

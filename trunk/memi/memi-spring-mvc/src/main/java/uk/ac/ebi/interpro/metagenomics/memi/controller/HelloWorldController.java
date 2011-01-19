@@ -12,7 +12,6 @@ import org.springframework.web.servlet.ModelAndView;
  * http://maestric.com/doc/java/spring/hello_world
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
- * @version $Id$
  * @since 1.0-SNAPSHOT
  */
 @Controller
@@ -22,11 +21,11 @@ public class HelloWorldController {
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView helloWorld() {
-        log.info("Building the hello world model...");
+        log.info("Building the hello world spring_model...");
         ModelAndView mav = new ModelAndView("HelloWorldPage");
         String msg = "Hello World MVC!";
         mav.addObject("message", msg);
-        log.info("Finished buildup of model.");
+        log.info("Finished buildup of spring_model.");
         return mav;
     }
 }

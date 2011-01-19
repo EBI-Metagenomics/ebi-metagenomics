@@ -3,10 +3,10 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd">
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
 
     <!-- Scans within the base package of the application for @Components to configure as beans -->
     <context:component-scan base-package="uk.ac.ebi.interpro.metagenomics.memi"/>
@@ -17,21 +17,36 @@
         <property name="sessionFactory" ref="hibernateSessionFactory"/>
     </bean>
 
-    <!--Data source for IPDEV-->
+    <!--&lt;!&ndash;Data source for IPDEV&ndash;&gt;-->
+    <!--<bean id="ipDevDatasourceId" class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
+    <!--<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>-->
+    <!--<property name="url" value="${jcp.jdbc.oracle.ipdev.url}"/>-->
+    <!--<property name="username" value="${jcp.jdbc.oracle.ipdev.username}"/>-->
+    <!--<property name="password" value="${jcp.jdbc.oracle.ipdev.password}"/>-->
+    <!--</bean>-->
+
+    <!--&lt;!&ndash;Data source for ADEV&ndash;&gt;-->
+    <!--<bean id="adevDatasourceId" name="adevDatasource"-->
+    <!--class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
+    <!--<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>-->
+    <!--<property name="url" value="${jcp.jdbc.oracle.adev.url}"/>-->
+    <!--<property name="username" value="${jcp.jdbc.oracle.adev.username}"/>-->
+    <!--<property name="password" value="${jcp.jdbc.oracle.adev.password}"/>-->
+    <!--</bean>-->
+
     <bean id="ipDevDatasourceId" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
-        <property name="url" value="${jcp.jdbc.oracle.ipdev.url}"/>
-        <property name="username" value="${jcp.jdbc.oracle.ipdev.username}"/>
-        <property name="password" value="${jcp.jdbc.oracle.ipdev.password}"/>
+        <property name="url" value="jdbc:oracle:thin:@muscat.ebi.ac.uk:1531:IPDEV"/>
+        <property name="username" value="emg_user"/>
+        <property name="password" value="emguser_ipdev"/>
     </bean>
 
-    <!--Data source for ADEV-->
     <bean id="adevDatasourceId" name="adevDatasource"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
-        <property name="url" value="${jcp.jdbc.oracle.adev.url}"/>
-        <property name="username" value="${jcp.jdbc.oracle.adev.username}"/>
-        <property name="password" value="${jcp.jdbc.oracle.adev.password}"/>
+        <property name="url" value="jdbc:oracle:thin:@pinga.ebi.ac.uk:1521:ADEV"/>
+        <property name="username" value="spin2006"/>
+        <property name="password" value="spinsub"/>
     </bean>
 
     <!-- Definition of Hibernate session factory including Hibernate Mappings-->
@@ -94,10 +109,33 @@
             </props>
         </property>
         <property name="resourceLoaderPath">
-            <value>/WEB-INF/templates</value>
+            <value>/WEB-INF/velocity_templates</value>
         </property>
     </bean>
 
     <!--This service configures a HTTP response, which opens a download dialog-->
     <bean id="downloadService" class="uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService"/>
+
+    <!--<bean id="loginSubmitter" class="uk.ac.ebi.interpro.metagenomics.memi.wrapper.SubmitterWrapper" scope="session">-->
+    <!--<property name="listener"></property>-->
+    <!--</bean>-->
+
+    <!-- an HTTP Session-scoped bean exposed as a proxy -->
+    <!--<bean id="sessionContainerRef" class="uk.ac.ebi.interpro.metagenomics.memi.basic.SessionContainer" scope="session">-->
+        <!--&lt;!&ndash; this next element effects the proxying of the surrounding bean &ndash;&gt;-->
+        <!--<aop:scoped-proxy/>-->
+    <!--</bean>-->
+
+    <!-- an HTTP Session-scoped bean exposed as a proxy -->
+    <bean id="sessionBeanRef" class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionBean" scope="session">
+        <!-- this next element effects the proxying of the surrounding bean -->
+        <aop:scoped-proxy/>
+    </bean>
+
+    <!-- a singleton-scoped bean injected with a proxy to the above bean -->
+    <bean id="sessionManager" class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager">
+        <!-- a reference to the proxied userPreferences bean -->
+        <property name="sessionBean" ref="sessionBeanRef" />
+    </bean>
+
 </beans>
