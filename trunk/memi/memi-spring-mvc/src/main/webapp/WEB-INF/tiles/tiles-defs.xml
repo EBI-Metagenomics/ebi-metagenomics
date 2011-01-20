@@ -52,4 +52,8 @@
         <put-attribute name="body" value="/templates/studyOverviewBody.jsp"/>
     </definition>
 
+    <definition name="sampleOverview" extends="rootTemplate">
+        <put-attribute name="body" value="/templates/sampleOverviewBody.jsp"/>
+    </definition>
+
 </tiles-definitions>

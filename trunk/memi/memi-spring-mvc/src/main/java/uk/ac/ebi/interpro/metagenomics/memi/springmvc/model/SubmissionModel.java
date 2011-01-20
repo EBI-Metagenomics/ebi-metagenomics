@@ -16,8 +16,8 @@ public class SubmissionModel extends MGModel {
 
     private SubmissionForm subForm;
 
-    public SubmissionModel(Submitter submitter, List<EmgStudy> studies) {
-        super(submitter, studies);
+    public SubmissionModel(Submitter submitter) {
+        super(submitter);
         this.subForm = new SubmissionForm();
     }
 

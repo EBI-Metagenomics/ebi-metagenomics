@@ -9,19 +9,23 @@
     <p>The study of all genomes present in any given environment without the need for prior individual identification or
         amplification is termed metagenomics. For example, in its simplest form a metagenomic study might be the direct
         sequence results of DNA extracted from a bucket of sea water.<br><a
-                href="<c:url value="./info"/>">more</a></p>
+                href="<c:url value="${baseURL}/info"/>">more</a></p>
 
     <table border="0" width="95%" style="border-width: 1px;border-color: #000000;border-style: solid;">
         <tr>
             <td width="50%" align="center" valign="middle">
-                <h3>Release news</h3>
+                <h3>Study list</h3>
                 <table border="0" style="border-width: 1px;border-color: #000000;border-style: solid;">
-                    <c:forEach var="news" items="${mgModel.newsList}">
-                        <tr>
-                            <td><c:out value="${news.formattedAnnouncedDate} - ${news.newsHeadline}"/></td>
-                        </tr>
-                    </c:forEach>
+                    <c:forEach var="emg_study" items="${mgModel.studies}" varStatus="status">
+                    <tr>
+                        <td>
+                            <a href="<c:url value="${baseURL}/studyOverview/${emg_study.studyId}"/>">${emg_study.formattedReleaseDate}
+                                - ${emg_study.studyName}</a>
+                        </td>
+                    <tr>
+                        </c:forEach>
                 </table>
+                <a href="<c:url value="${baseURL}/listStudies"/>">more</a>
             </td>
             <td width="50%" align="left" valign="top">
                 <h3>Submission form</h3>
@@ -30,7 +34,7 @@
                         <a href="<c:url value="./index"/>">Submit data</a>
                     </c:when>
                     <c:otherwise>
-                        <a href="<c:url value="./submissionForm"/>">Submit data</a>
+                        <a href="<c:url value="${baseURL}/submissionForm"/>">Submit data</a>
                     </c:otherwise>
                 </c:choose>
             </td>

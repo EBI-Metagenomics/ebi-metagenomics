@@ -43,7 +43,7 @@ public class SampleOverviewControllerTest {
     @Ignore
     public void testInitPage() throws Exception {
         ModelMap model = new ModelMap();
-        assertEquals("sampleOverview", controller.findSample("1", model));
+        assertEquals("sampleOverview", controller.doGetSample("1", model));
         //check model
         assertEquals(1, model.size());
         assertTrue(model.containsKey("sample"));

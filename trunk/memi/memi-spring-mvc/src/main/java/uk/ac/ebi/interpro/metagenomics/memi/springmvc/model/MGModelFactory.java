@@ -1,12 +1,11 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
 
-import org.springframework.web.bind.annotation.ModelAttribute;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.EmgStudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.NewsDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgStudy;
 import uk.ac.ebi.interpro.metagenomics.memi.model.News;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,16 +31,16 @@ public class MGModelFactory {
         return new HomePageModel(getSessionSubmitter(sessionMgr), getLimitedPublicStudiesFromDB(emgStudyDAO), getNewsListFromDB(newsDAO));
     }
 
-    public static MGModel getMGModel(SessionManager sessionMgr, EmgStudyDAO emgStudyDAO) {
-        return new MGModel(getSessionSubmitter(sessionMgr), getLimitedPublicStudiesFromDB(emgStudyDAO));
+    public static MGModel getMGModel(SessionManager sessionMgr) {
+        return new MGModel(getSessionSubmitter(sessionMgr));
     }
 
-    public static SubmissionModel getSubmissionModel(SessionManager sessionMgr, EmgStudyDAO emgStudyDAO) {
-        return new SubmissionModel(getSessionSubmitter(sessionMgr), getLimitedPublicStudiesFromDB(emgStudyDAO));
+    public static SubmissionModel getSubmissionModel(SessionManager sessionMgr) {
+        return new SubmissionModel(getSessionSubmitter(sessionMgr));
     }
 
-    public static ListStudiesPageModel getListStudiesPageModel(SessionManager sessionMgr, EmgStudyDAO emgStudyDAO) {
-        return new ListStudiesPageModel(getSessionSubmitter(sessionMgr), getAllPublicStudiesFromDB(emgStudyDAO));
+    public static ListStudiesModel getListStudiesPageModel(SessionManager sessionMgr, EmgStudyDAO emgStudyDAO) {
+        return new ListStudiesModel(getSessionSubmitter(sessionMgr), getAllPublicStudiesFromDB(emgStudyDAO));
     }
 
     /**

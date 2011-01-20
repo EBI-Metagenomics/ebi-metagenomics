@@ -16,11 +16,27 @@ td {
     color: #ff0000;
 }
 
+table#login {
+    width: 300;
+}
+
+#logout {
+    display: block;
+    visibility: hidden;
+    margin: 0 1px 0 0;
+    padding: 4px 10px;
+    width: 60px;
+    background: #5970B2;
+    color: #FFF;
+    text-align: center;
+    text-decoration: none;
+}
+
 /*.date {*/
 /*}*/
 
 /*div#calendarDiv {*/
-    /*font: 80% arial, helvetica, sans-serif;*/
+/*font: 80% arial, helvetica, sans-serif;*/
 /*}*/
 
 div#content {

@@ -17,10 +17,13 @@ public class HomePageModel extends MGModel {
 
     private List<News> newsList;
 
+    private List<EmgStudy> studies;
+
     public final static String MODEL_ATTR_NAME = "homePageModel";
 
     public HomePageModel(Submitter submitter, List<EmgStudy> studies, List<News> newsList) {
-        super(submitter, studies);
+        super(submitter);
+        this.studies = studies;
         this.newsList = newsList;
     }
 
@@ -30,5 +33,13 @@ public class HomePageModel extends MGModel {
 
     public void setNewsList(List<News> newsList) {
         this.newsList = newsList;
+    }
+
+    public List<EmgStudy> getStudies() {
+        return studies;
+    }
+
+    public void setStudies(List<EmgStudy> studies) {
+        this.studies = studies;
     }
 }
