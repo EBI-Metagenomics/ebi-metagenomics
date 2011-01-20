@@ -14,13 +14,11 @@ import uk.ac.ebi.interpro.metagenomics.memi.dao.EmgStudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.files.MemiFileWriter;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.FilterForm;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
-import uk.ac.ebi.interpro.metagenomics.memi.forms.SubmissionForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgStudy;
 import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ListStudiesPageModel;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ListStudiesModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.SubmissionModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
 
 import javax.annotation.Resource;
@@ -70,8 +68,8 @@ public class ListStudiesController extends LoginController implements IMGControl
     public ModelAndView doGet(ModelMap model) {
         //build and add the page model
         populateModel(model);
-        model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((ListStudiesPageModel) model.get(MGModel.MODEL_ATTR_NAME)).getLoginForm());
-        model.addAttribute(FilterForm.MODEL_ATTR_NAME, ((ListStudiesPageModel) model.get(MGModel.MODEL_ATTR_NAME)).getFilterForm());
+        model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((ListStudiesModel) model.get(MGModel.MODEL_ATTR_NAME)).getLoginForm());
+        model.addAttribute(FilterForm.MODEL_ATTR_NAME, ((ListStudiesModel) model.get(MGModel.MODEL_ATTR_NAME)).getFilterForm());
         return new ModelAndView(VIEW_NAME, model);
     }
 
@@ -95,6 +93,7 @@ public class ListStudiesController extends LoginController implements IMGControl
         return null;
     }
 
+
     @RequestMapping(method = RequestMethod.POST)
     public ModelAndView doProcessLogin(@ModelAttribute(LoginForm.MODEL_ATTR_NAME) @Valid LoginForm loginForm, BindingResult result,
                                        ModelMap model, SessionStatus status) {
@@ -102,14 +101,14 @@ public class ListStudiesController extends LoginController implements IMGControl
         super.processLogin(loginForm, result, model, status);
         //create model and view
         populateModel(model);
-        model.addAttribute(FilterForm.MODEL_ATTR_NAME, ((ListStudiesPageModel) model.get(MGModel.MODEL_ATTR_NAME)).getFilterForm());
+        model.addAttribute(FilterForm.MODEL_ATTR_NAME, ((ListStudiesModel) model.get(MGModel.MODEL_ATTR_NAME)).getFilterForm());
         return new ModelAndView(VIEW_NAME, model);
     }
 
     @RequestMapping(value = "doFilter", method = RequestMethod.POST)
     public ModelAndView doFilter(@ModelAttribute("filterForm") FilterForm filterForm, ModelMap model, SessionStatus status) {
         populateModel(model);
-        model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((ListStudiesPageModel) model.get(MGModel.MODEL_ATTR_NAME)).getLoginForm());
+        model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((ListStudiesModel) model.get(MGModel.MODEL_ATTR_NAME)).getLoginForm());
         return new ModelAndView(VIEW_NAME, model);
     }
 
@@ -117,7 +116,7 @@ public class ListStudiesController extends LoginController implements IMGControl
      * Creates the MG model and adds it to the specified model map.
      */
     private void populateModel(ModelMap model) {
-        final ListStudiesPageModel subModel = MGModelFactory.getListStudiesPageModel(sessionManager, emgStudyDAO);
+        final ListStudiesModel subModel = MGModelFactory.getListStudiesPageModel(sessionManager,emgStudyDAO);
         model.addAttribute(MGModel.MODEL_ATTR_NAME, subModel);
     }
 
@@ -131,17 +130,4 @@ public class ListStudiesController extends LoginController implements IMGControl
         }
         return result;
     }
-
-
-//    @ModelAttribute("studyTypeList")
-//    public EmgStudy.StudyType[] populateStudyTypes
-//            () {
-//        return EmgStudy.StudyType.values();
-//    }
-//
-//    @ModelAttribute("studyStatusList")
-//    public EmgStudy.StudyStatus[] populateStudyStati
-//            () {
-//        return EmgStudy.StudyStatus.values();
-//    }
 }

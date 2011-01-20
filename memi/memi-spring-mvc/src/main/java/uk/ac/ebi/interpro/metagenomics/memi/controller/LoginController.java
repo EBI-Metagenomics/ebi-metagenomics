@@ -22,7 +22,7 @@ import javax.validation.Valid;
  * @since 1.0-SNAPSHOT
  */
 //public abstract class LoginController<T extends MGModel> {
-public abstract class LoginController {
+public abstract class LoginController implements ILoginController {
     private final Log log = LogFactory.getLog(LoginController.class);
 
     @Resource

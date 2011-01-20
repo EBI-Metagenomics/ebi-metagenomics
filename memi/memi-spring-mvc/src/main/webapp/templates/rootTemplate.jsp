@@ -1,4 +1,6 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <html>
 <head>
     <title>MG Portal home page</title>
@@ -15,7 +17,7 @@
     <link rel="stylesheet" href="http://www.ebi.ac.uk/inc/css/userstyles.css" type="text/css"/>
     <link rel="stylesheet" href="http://www.ebi.ac.uk/inc/css/sidebars.css" type="text/css"/>
     <%--Link to the Memi project CSS file--%>
-    <link href="../css/memi.css" rel="stylesheet" type="text/css" media="all"/>
+    <link href="${pageContext.request.contextPath}/css/memi.css" rel="stylesheet" type="text/css" media="all"/>
     <%-- JQuery and JQuery UI source--%>
     <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/ui-lightness/jquery-ui.css"
           type="text/css" media="all"/>
@@ -24,6 +26,7 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" type="text/javascript"></script>
 
     <%--<script src="/js/datepicker.js" type="text/javascript"></script>--%>
+    <script src="/js/login.js" type="text/javascript"></script>
 
     <script>
         $(function() {
@@ -45,7 +48,8 @@
 <%-- For more information on how to create EBI group and project specific pages please read the guideline on
     http://www.ebi.ac.uk/inc/template/#important--%>
 <body onload="if(navigator.userAgent.indexOf('MSIE') != -1) {document.getElementById('head').allowTransparency = true;}">
-<%--<div style="overflow:auto; height:1280px; width:1024px;">--%>
+<%-- The following variable saves and provides the base URL for the whole application --%>
+<c:set var="baseURL" value="${pageContext.request.contextPath}/memi" scope="session"/>
 <table>
     <tr>
         <td colspan="2">
@@ -57,7 +61,7 @@
         <td width="88%">
             <tiles:insertAttribute name="body"/>
         </td>
-        <td width="12%">
+        <td valign="top" width="12%">
             <tiles:insertAttribute name="rightMenu"/>
         </td>
     </tr>

@@ -3,7 +3,7 @@
 <html>
 <head>
     <title>Sample overview</title>
-    <link href="/css/memi.css" rel="stylesheet" type="text/css" media="all"/>
+    <%--<link href="/css/memi.css" rel="stylesheet" type="text/css" media="all"/>--%>
 </head>
 <body>
 <div id="content">
@@ -27,44 +27,43 @@
             </tr>
         </table>
     </div>
-    <%--<div style="margin-top:60px"/>--%>
-    <%--<spring:url>Sample list</spring:url>--%>
+    <div style="margin-top:60px"/>
+    <h3>Sample list</h3>
 
-    <%--<spring:url var="exportUrl" value="exportSamples/${study.studyId}"/>--%>
-
-    <%--<div align="left"><a href="${exportUrl}">Export to CSV</a></div>--%>
-    <%--<table border="1">--%>
-    <%--<tr>--%>
-    <%--<th>Item no.</th>--%>
-    <%--<th>Sample Id</th>--%>
-    <%--<th>Collection date</th>--%>
-    <%--<th>Sample title</th>--%>
-    <%--</tr>--%>
-    <%--<%--%>
-    <%--int i = 1;--%>
-    <%--%>--%>
-    <%--<c:forEach var="sample" items="${sampleList}" varStatus="status">--%>
-    <%--<tr>--%>
-    <%--<td align="center"><%= i%><% i++;%>--%>
-    <%--</td>--%>
-    <%--<td align="center">${sample.sampleId}</td>--%>
-    <%--<td align="center">--%>
-    <%--<c:choose>--%>
-    <%--<c:when test="${sample.collectionDate!=null}">--%>
-    <%--${sample.collectionDate}--%>
-    <%--</c:when>--%>
-    <%--<c:otherwise>N/A--%>
-    <%--</c:otherwise>--%>
-    <%--</c:choose>--%>
-    <%--</td>--%>
-    <%--<td align="center">--%>
-    <%--<spring:url var="sampleUrl" value="../sampleOverview/${sample.sampleId}"/>--%>
-    <%--<a href="${sampleUrl}">${sample.sampleTitle}</a>--%>
-    <%--</td>--%>
-    <%--</tr>--%>
-    <%--</c:forEach>--%>
-    <%--</table>--%>
-    <%--</div>--%>
+    <div align="left">
+        <a href="<c:url value="${baseURL}/studyOverview/exportSamples/${study.studyId}"/>">Export to CSV</a>
+    </div>
+    <table border="1">
+        <tr>
+            <th>Item no.</th>
+            <th>Sample Id</th>
+            <th>Collection date</th>
+            <th>Sample title</th>
+        </tr>
+        <%
+            int i = 1;
+        %>
+        <c:forEach var="sample" items="${samples}" varStatus="status">
+            <tr>
+                <td align="center"><%= i%><% i++;%>
+                </td>
+                <td align="center">${sample.sampleId}</td>
+                <td align="center">
+                    <c:choose>
+                        <c:when test="${sample.collectionDate!=null}">
+                            ${sample.collectionDate}
+                        </c:when>
+                        <c:otherwise>N/A
+                        </c:otherwise>
+                    </c:choose>
+                </td>
+                <td align="center">
+                    <a href="<c:url value="${baseURL}/sampleOverview/${sample.sampleId}"/>">${sample.sampleTitle}</a>
+                </td>
+            </tr>
+        </c:forEach>
+    </table>
+</div>
 </div>
 </body>
 </html>

@@ -16,15 +16,14 @@ public class MGModel {
 
     private Submitter submitter;
 
-    private List<EmgStudy> studies;
-
     private LoginForm loginForm;
+
+    private final String baseURL = "";
 
     public final static String MODEL_ATTR_NAME = "mgModel";
 
-    public MGModel(Submitter submitter, List<EmgStudy> studies) {
+    public MGModel(Submitter submitter) {
         this.submitter = submitter;
-        this.studies = studies;
         this.loginForm = new LoginForm();
     }
 
@@ -34,14 +33,6 @@ public class MGModel {
 
     public void setSubmitter(Submitter submitter) {
         this.submitter = submitter;
-    }
-
-    public List<EmgStudy> getStudies() {
-        return studies;
-    }
-
-    public void setStudies(List<EmgStudy> studies) {
-        this.studies = studies;
     }
 
     public LoginForm getLoginForm() {

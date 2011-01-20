@@ -12,14 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.EmgStudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.SubmissionForm;
 import uk.ac.ebi.interpro.metagenomics.memi.services.NotificationService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.SubmissionModel;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -34,7 +33,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/submissionForm")
-public class SubmissionController extends LoginController implements IMGController {
+public class SubmissionController implements IMGController {
 
     private final Log log = LogFactory.getLog(SubmissionController.class);
 
@@ -51,10 +50,6 @@ public class SubmissionController extends LoginController implements IMGControll
 
     @Resource
     private SessionManager sessionManager;
-
-    //Data access objects
-    @Resource
-    private EmgStudyDAO emgStudyDAO;
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView doGet(ModelMap model) {
@@ -90,7 +85,7 @@ public class SubmissionController extends LoginController implements IMGControll
      * Creates the MG model and adds it to the specified model map.
      */
     private void populateModel(ModelMap model) {
-        final SubmissionModel subModel = MGModelFactory.getSubmissionModel(sessionManager, emgStudyDAO);
+        final SubmissionModel subModel = MGModelFactory.getSubmissionModel(sessionManager);
         model.addAttribute(MGModel.MODEL_ATTR_NAME, subModel);
     }
 

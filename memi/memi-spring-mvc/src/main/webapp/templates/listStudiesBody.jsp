@@ -38,8 +38,9 @@
         </table>
     </div>
     <div style="margin-top:40px"></div>
-    <spring:url var="exportUrl" value="listStudies/exportStudies"/>
-    <div align="left"><a href="${exportUrl}">Export to CSV</a></div>
+    <div align="left">
+        <a href="<c:url value="${baseURL}/listStudies/exportStudies"/>">Export to CSV</a>
+    </div>
 
     <table border="1" width="95%">
         <tr>
@@ -55,11 +56,9 @@
         </tr>
         <c:forEach var="study" items="${mgModel.studies}" varStatus="status">
             <tr>
-                <spring:url var="studyUrl" value="studyOverview/${study.studyId}"/>
-
                 <td>${study.studyId}</td>
                 <td>
-                    <a href="<c:url value="${studyUrl}"/>">${study.studyName}</a>
+                    <a href="<c:url value="${baseURL}/studyOverview/${study.studyId}"/>">${study.studyName}</a>
                 </td>
                 <td>${study.formattedReleaseDate}</td>
                 <td>${study.ncbiProject}</td>
