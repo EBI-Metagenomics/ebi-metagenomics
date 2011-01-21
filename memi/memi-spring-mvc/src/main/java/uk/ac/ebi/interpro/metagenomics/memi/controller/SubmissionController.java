@@ -73,7 +73,7 @@ public class SubmissionController implements IMGController {
         if (subForm != null) {
             String msg = buildMsg(subForm);
             emailService.sendNotification(msg);
-            log.info("Sent an email with new submission details: " + msg);
+            log.info("Sent an email with hibernate submission details: " + msg);
             status.setComplete();
         } else {
             return new ModelAndView("errorPage");

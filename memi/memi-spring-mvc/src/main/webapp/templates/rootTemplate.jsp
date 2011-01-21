@@ -25,24 +25,13 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js" type="text/javascript"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" type="text/javascript"></script>
 
-    <%--<script src="/js/datepicker.js" type="text/javascript"></script>--%>
-    <script src="/js/login.js" type="text/javascript"></script>
-
-    <script>
-        $(function() {
-            $("#datepicker").datepicker({
-                showOn: 'button',
-                buttonText: 'Choose a date',
-                buttonImage: '/images/calendar.gif',
-                buttonImageOnly: false,
-                numberOfMonths: 1,
-                maxDate: '+24m',
-                minDate: '0d',
-                showButtonPanel: true
-            });
-        });
-    </script>
-
+    <%-- The date picker is used within the submission page --%>
+    <script src="/js/datepicker.js" type="text/javascript"></script>
+    <%-- The auto completion is used with the study search page --%>
+    <script src="/js/autocompletion.js" type="text/javascript"></script>
+    <%-- Used within the home page. The dialog message is trigger when someone tries to submit data when he is not logged in--%>
+    <script src="/js/loginmessage.js" type="text/javascript"></script>
+    <%--<script src="/js/login.js" type="text/javascript"></script>--%>
 </head>
 <%-- The setting of the onload attribute is necessary to ensure that the EBI main header works in IE--%>
 <%-- For more information on how to create EBI group and project specific pages please read the guideline on

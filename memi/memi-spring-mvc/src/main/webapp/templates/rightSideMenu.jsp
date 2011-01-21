@@ -16,7 +16,7 @@
         <%--<tr>--%>
         <%--<tr>--%>
             <%--<td><a href="<c:url value=" https://www.ebi.ac.uk/embl/genomes/submission/forgot-passw.jsf?_afPfm=5"/>"--%>
-                   <%--title="Request a new password"> Forgotten your password?</a></td>--%>
+                   <%--title="Request a hibernate password"> Forgotten your password?</a></td>--%>
         <%--</tr>--%>
     </table>
 </div>

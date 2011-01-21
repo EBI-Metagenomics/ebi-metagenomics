@@ -28,6 +28,10 @@ public class CommonController {
     public void aboutHandler() {
     }
 
+    @RequestMapping("/getData")
+    public void getStudyNamesHandler() {
+    }
+
     @RequestMapping("/errorPage")
     public void errorPageHandler() {
     }
