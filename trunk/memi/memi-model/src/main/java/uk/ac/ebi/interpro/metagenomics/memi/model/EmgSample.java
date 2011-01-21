@@ -1,9 +1,9 @@
 package uk.ac.ebi.interpro.metagenomics.memi.model;
 
-import org.hibernate.annotations.Entity;
-
+import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -53,6 +53,7 @@ public class EmgSample {
         propertyMap.put(SAMPLE_TITLE, sampleTitle);
     }
 
+    @Transient
     public Map<String, Object> getPropertyMap() {
         return propertyMap;
     }

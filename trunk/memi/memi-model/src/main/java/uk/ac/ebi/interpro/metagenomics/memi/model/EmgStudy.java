@@ -1,7 +1,6 @@
 package uk.ac.ebi.interpro.metagenomics.memi.model;
 
 
-
 import javax.persistence.*;
 import java.text.Format;
 import java.text.SimpleDateFormat;
@@ -69,6 +68,7 @@ public class EmgStudy {
         propertyMap.put(STUDY_STATUS, studyStatus);
     }
 
+    @Transient
     public Map<String, Object> getProperties() {
         return propertyMap;
     }
