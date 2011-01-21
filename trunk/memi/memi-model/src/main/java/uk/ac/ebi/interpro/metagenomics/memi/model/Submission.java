@@ -3,7 +3,7 @@ package uk.ac.ebi.interpro.metagenomics.memi.model;
 import java.util.Date;
 
 /**
- * Represents a submission for new Metagenomics studies.
+ * Represents a submission for hibernate Metagenomics studies.
  * TODO: Implement the JUni test for this class
  * TODO: Should be equal to the submitter object of the ENA database
  *

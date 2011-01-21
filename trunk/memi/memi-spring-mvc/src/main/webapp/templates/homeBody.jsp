@@ -31,7 +31,9 @@
                 <h3>Submission form</h3>
                 <c:choose>
                     <c:when test="${empty mgModel.submitter}">
-                        <a href="<c:url value="./index"/>">Submit data</a>
+                        <div id="submitdiv">
+                            <a id="submittest" href="#">Submit data</a>
+                        </div>
                     </c:when>
                     <c:otherwise>
                         <a href="<c:url value="${baseURL}/submissionForm"/>">Submit data</a>
@@ -41,3 +43,14 @@
         </tr>
     </table>
 </div>
+<%--<div id="dialog-message" title="Download complete">--%>
+    <%--<p>--%>
+                                <%--<span class="ui-icon ui-icon-circle-check"--%>
+                                      <%--style="float:left; margin:0 7px 50px 0;"></span>--%>
+        <%--Your files have downloaded successfully into the My Downloads folder.--%>
+    <%--</p>--%>
+
+    <%--<p>--%>
+        <%--Currently using <b>36% of your storage space</b>.--%>
+    <%--</p>--%>
+<%--</div>--%>

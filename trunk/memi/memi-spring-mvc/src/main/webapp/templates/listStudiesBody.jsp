@@ -6,13 +6,18 @@
 
     <div align="center">
         <table border="0" style="border-width: 1px;border-color: #000000;border-style: solid;">
-            <form:form action="listStudies/doFilter" commandName="filterForm">
+            <form:form method="POST" action="${baseURL}/listStudies/doSearch" commandName="searchStudiesForm">
+                <tr>
+                    <td>Text:</td>
+                    <td><form:input id="autocomplete" path="searchTerm"/></td>
+                    <td><form:errors path="searchTerm" cssClass="error"/></td>
+                </tr>
                 <tr>
                     <td>Study type:</td>
                     <td>
                         <form:select path="studyType">
-                            <form:option value="NONE" label="--- Select ---"/>
-                            <form:options items="${filterForm.studyTypes}" itemValue="studyTypeId"
+                            <form:option value="All" label="All"/>
+                            <form:options items="${mgModel.studyTypes}" itemValue="studyTypeName"
                                           itemLabel="studyTypeName"/>
                         </form:select>
                     </td>
@@ -20,9 +25,9 @@
                 </tr>
                 <tr>
                     <td>Study status:</td>
-                    <td><form:select path="studyStatus">
-                        <form:option value="NONE" label="--- Select ---"/>
-                        <form:options items="${filterForm.studyStati}" itemValue="studyStatusId"
+                    <td><form:select id="studyStatus" path="studyStatus">
+                        <form:option value="All" label="All"/>
+                        <form:options items="${mgModel.studyStatusList}" itemValue="studyStatusName"
                                       itemLabel="studyStatusName"/>
                     </form:select></td>
                     <td><form:errors path="studyStatus" cssClass="error"/></td>
@@ -31,7 +36,7 @@
                     <td></td>
                     <td></td>
                     <td>
-                        <input type="submit" value="Do filter"/>
+                        <input type="submit" value="Search"/>
                     </td>
                 </tr>
             </form:form>

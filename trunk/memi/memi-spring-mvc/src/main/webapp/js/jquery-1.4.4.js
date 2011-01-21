@@ -238,9 +238,9 @@ jQuery.fn = jQuery.prototype = {
 	},
 
 	// Take an array of elements and push it onto the stack
-	// (returning the new matched element set)
+	// (returning the hibernate matched element set)
 	pushStack: function( elems, name, selector ) {
-		// Build a new jQuery matched element set
+		// Build a hibernate jQuery matched element set
 		var ret = jQuery();
 
 		if ( jQuery.isArray( elems ) ) {
@@ -743,7 +743,7 @@ jQuery.extend({
 		var ret = [], value;
 
 		// Go through the array, translating each of the items to their
-		// new value (or values).
+		// hibernate value (or values).
 		for ( var i = 0, length = elems.length; i < length; i++ ) {
 			value = callback( elems[ i ], i, arg );
 
@@ -1153,7 +1153,7 @@ jQuery.extend({
 			elem[ jQuery.expando ] = id = ++jQuery.uuid;
 		}
 
-		// Avoid generating a new cache unless none exists and we
+		// Avoid generating a hibernate cache unless none exists and we
 		// want to manipulate it.
 		if ( typeof name === "object" ) {
 			if ( isNode ) {
@@ -2393,7 +2393,7 @@ jQuery.removeEvent = document.removeEventListener ?
 	};
 
 jQuery.Event = function( src ) {
-	// Allow instantiation without the 'new' keyword
+	// Allow instantiation without the 'hibernate' keyword
 	if ( !this.preventDefault ) {
 		return new jQuery.Event( src );
 	}
@@ -4945,7 +4945,7 @@ jQuery.fn.extend({
 		if ( this[0] ) {
 			parent = value && value.parentNode;
 
-			// If we're in a fragment, just use that instead of building a new one
+			// If we're in a fragment, just use that instead of building a hibernate one
 			if ( jQuery.support.parentNode && parent && parent.nodeType === 11 && parent.childNodes.length === this.length ) {
 				results = { fragment: parent };
 
@@ -5364,7 +5364,7 @@ jQuery.extend({
 	swap: function( elem, options, callback ) {
 		var old = {};
 
-		// Remember the old values, and insert the new ones
+		// Remember the old values, and insert the hibernate ones
 		for ( var name in options ) {
 			old[ name ] = elem.style[ name ];
 			elem.style[ name ] = options[ name ];
@@ -5509,7 +5509,7 @@ if ( document.documentElement.currentStyle ) {
 			left = style.left;
 			rsLeft = elem.runtimeStyle.left;
 
-			// Put in the new values to get a computed value out
+			// Put in the hibernate values to get a computed value out
 			elem.runtimeStyle.left = elem.currentStyle.left;
 			style.left = name === "fontSize" ? "1em" : (ret || 0);
 			ret = style.pixelLeft + "px";
@@ -5845,7 +5845,7 @@ jQuery.extend({
 			s.url += (rquery.test(s.url) ? "&" : "?") + s.data;
 		}
 
-		// Watch for a new set of requests
+		// Watch for a hibernate set of requests
 		if ( s.global && jQuery.active++ === 0 ) {
 			jQuery.event.trigger( "ajaxStart" );
 		}

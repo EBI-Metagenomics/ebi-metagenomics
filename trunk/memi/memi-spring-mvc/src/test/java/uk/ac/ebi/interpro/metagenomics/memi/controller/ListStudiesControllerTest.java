@@ -9,11 +9,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.ui.ModelMap;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.StudyDAOTestImpl;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.EmgStudyDAO;
-import uk.ac.ebi.interpro.metagenomics.memi.forms.FilterForm;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.StudySearchForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgStudy;
 
 import java.lang.reflect.Field;
-import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -48,12 +47,12 @@ public class ListStudiesControllerTest {
         assertEquals("listStudies", controller.doGet(model));
         //check model
         assertEquals(1, model.size());
-        assertTrue(model.containsKey("filterForm"));
+        assertTrue(model.containsKey("studySearchForm"));
         assertFalse(model.containsKey("test"));
-        FilterForm filterForm = (FilterForm) model.get("filterForm");
-        assertNotNull(filterForm);
-        assertNull("All input and selection fields should be NULL at initialization phase!", filterForm.getStudyStatus());
-        assertNull("All input and selection fields should be NULL at initialization phase!", filterForm.getStudyType());
+        StudySearchForm studySearchForm = (StudySearchForm) model.get("studySearchForm");
+        assertNotNull(studySearchForm);
+        assertNull("All input and selection fields should be NULL at initialization phase!", studySearchForm.getStudyStatus());
+        assertNull("All input and selection fields should be NULL at initialization phase!", studySearchForm.getStudyType());
     }
 
 //    @Test

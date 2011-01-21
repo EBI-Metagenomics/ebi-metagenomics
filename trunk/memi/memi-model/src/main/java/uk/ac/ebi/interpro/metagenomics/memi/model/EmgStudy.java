@@ -1,7 +1,6 @@
 package uk.ac.ebi.interpro.metagenomics.memi.model;
 
 
-import org.hibernate.annotations.Entity;
 
 import javax.persistence.*;
 import java.text.Format;
@@ -307,7 +306,7 @@ public class EmgStudy {
 
 
     public enum StudyStatus {
-        QUEUED(1, "Queued"), IN_PROCESS(2, "In process"), FINISHED(3, "Finished"), NONE(4, "None");
+        QUEUED(1, "Queued"), IN_PROCESS(2, "In process"), FINISHED(3, "Finished"), UNDEFINED(4, "Undefined");
 
         private int studyStatusId;
 
@@ -336,7 +335,7 @@ public class EmgStudy {
     }
 
     public enum StudyType {
-        ENVIRONMENTAL(1, "Environmental"), HOST_ASSOCIATED(2, "Host associated"), UNDEFINED(3, "Undefined"), NONE(4, "None");
+        ENVIRONMENTAL(1, "Environmental"), HOST_ASSOCIATED(2, "Host associated"), UNDEFINED(3, "Undefined");
 
         private int studyTypeId;
 
@@ -346,7 +345,6 @@ public class EmgStudy {
             this.studyTypeId = studyTypeId;
             this.studyTypeName = studyTypeName;
         }
-
 
         public int getStudyTypeId() {
             return studyTypeId;
@@ -363,5 +361,10 @@ public class EmgStudy {
         public void setStudyTypeName(String studyTypeName) {
             this.studyTypeName = studyTypeName;
         }
+
+//        public static getStudyTypeById(int studyTypeId)
+//        {
+//            StudyType.
+//        }
     }
 }

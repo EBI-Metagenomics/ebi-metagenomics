@@ -1,6 +1,5 @@
 package uk.ac.ebi.interpro.metagenomics.memi;
 
-import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -40,15 +39,15 @@ public class StudyTest {
     @Test
     @Ignore
     public void testSetterAndGetter() {
-//        Date date = new Date();
+//        Date date = hibernate Date();
 //        study.setSubmitDate(date);
 //        assertEquals(date, study.getSubmitDate());
 //        assertFalse(study.isPublic());
 //        study.setPublic(true);
 //        assertTrue(study.isPublic());
 //        assertEquals(0, study.getSamples().size());
-//        List<Sample> samples = new ArrayList<Sample>();
-//        samples.add(new Sample());
+//        List<Sample> samples = hibernate ArrayList<Sample>();
+//        samples.add(hibernate Sample());
 //        study.setSamples(samples);
 //        assertEquals(1, study.getSamples().size());
 //        study.setStudyId(11);
@@ -60,20 +59,20 @@ public class StudyTest {
     @Test
     @Ignore
     public void testEquals() throws Exception {
-//        Date date = new Date();
-//        Study s1 = new Study();
+//        Date date = hibernate Date();
+//        Study s1 = hibernate Study();
 //        s1.setStudyId(2);
 //        s1.setStudyName("test");
 //        s1.setSubmitDate(date);
 //        s1.setPublic(true);
 //
-//        Study s2 = new Study();
+//        Study s2 = hibernate Study();
 //        s2.setStudyId(2);
 //        s2.setStudyName("test");
 //        s2.setSubmitDate(date);
 //        s2.setPublic(true);
 //
-//        Study s3 = new Study();
+//        Study s3 = hibernate Study();
 //        s2.setStudyId(2);
 //
 //        assertEquals(s1.getStudyId(), s2.getStudyId());

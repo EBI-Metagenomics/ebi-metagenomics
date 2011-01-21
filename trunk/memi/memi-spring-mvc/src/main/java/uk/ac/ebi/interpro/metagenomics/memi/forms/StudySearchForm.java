@@ -12,17 +12,24 @@ import java.util.List;
  * @version $Id$
  * @since 1.0-SNAPSHOT
  */
-public class FilterForm {
+public class StudySearchForm {
 
-    public final static String MODEL_ATTR_NAME = "filterForm";
+    public final static String MODEL_ATTR_NAME = "searchStudiesForm";
+
+    private String searchTerm;
 
     private EmgStudy.StudyType studyType;
 
     private EmgStudy.StudyStatus studyStatus;
 
-    private List<EmgStudy.StudyType> studyTypes;
 
-    private List<EmgStudy.StudyStatus> studyStati;
+    public String getSearchTerm() {
+        return searchTerm;
+    }
+
+    public void setSearchTerm(String searchTerm) {
+        this.searchTerm = searchTerm;
+    }
 
     public EmgStudy.StudyType getStudyType() {
         return studyType;
@@ -38,21 +45,5 @@ public class FilterForm {
 
     public void setStudyStatus(EmgStudy.StudyStatus studyStatus) {
         this.studyStatus = studyStatus;
-    }
-
-    public List<EmgStudy.StudyType> getStudyTypes() {
-        return studyTypes;
-    }
-
-    public void setStudyTypes(List<EmgStudy.StudyType> studyTypes) {
-        this.studyTypes = studyTypes;
-    }
-
-    public List<EmgStudy.StudyStatus> getStudyStati() {
-        return studyStati;
-    }
-
-    public void setStudyStati(List<EmgStudy.StudyStatus> studyStati) {
-        this.studyStati = studyStati;
     }
 }
