@@ -14,6 +14,7 @@ import java.util.Set;
  * @since 1.0-SNAPSHOT
  */
 @Entity
+@Table(name = "HB_STUDY", schema = "EMG_USER")
 public class Study {
 
     @Id
@@ -32,14 +33,10 @@ public class Study {
     @Column(name = "SUBMITTER_ID")
     private long submitterId;
 
-    @Transient
+    @Column(name = "STUDY_TYPE")
     private StudyType studyType;
 
-    //Only used internal, for saving the enum into the database
-    @Column(name = "STUDY_TYPE", length = 30)
-    private String studyTypeAsString;
-
-    @Transient
+    @Column(name = "STUDY_Status")
     private StudyStatus studyStatus;
 
     @Temporal(TemporalType.DATE)
@@ -65,6 +62,9 @@ public class Study {
 
     @Column(name = "EXPERIMENTAL_FACTOR")
     private String experimentalFactor;
+
+    @Column(name = "IS_PUBLIC")
+    private boolean isPublic;
 
     public Study() {
         publications = new HashSet<Publication>();
@@ -128,7 +128,6 @@ public class Study {
         this.setStudyType(StudyType.valueOf(enumType));
     }
 
-    @Column(name = "STUDY_STATUS")
     public String getStudyStatusAsString() {
         return getStudyStatus().toString();
     }
@@ -211,11 +210,20 @@ public class Study {
         this.experimentalFactor = experimentalFactor;
     }
 
+    public boolean getPublic() {
+        return isPublic;
+    }
+
+    public void setPublic(boolean isPublic) {
+        isPublic = isPublic;
+    }
+
+
     public enum StudyType {
-        ENVIRONMENTAL, HOST_ASSOCIATED;
+        ENVIRONMENTAL, HOST_ASSOCIATED, UNDEFINED;
     }
 
     public enum StudyStatus {
-        SUBMITTED, IN_PROGRESS, FINISHED;
+        QUEUED, IN_PROGRESS, FINISHED, UNDEFINED;
     }
 }

@@ -10,6 +10,7 @@ import java.util.Date;
  * @since 1.0-SNAPSHOT
  */
 @Entity
+@Table(name = "HB_SAMPLE", schema = "EMG_USER")
 public abstract class Sample {
 
     @Id

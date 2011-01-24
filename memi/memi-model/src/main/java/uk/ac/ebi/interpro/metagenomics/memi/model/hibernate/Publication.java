@@ -10,6 +10,7 @@ import javax.persistence.*;
  * @since 1.0-SNAPSHOT
  */
 @Entity
+@Table(name = "HB_PUBLICATION", schema = "EMG_USER")
 public class Publication {
 
     @Id

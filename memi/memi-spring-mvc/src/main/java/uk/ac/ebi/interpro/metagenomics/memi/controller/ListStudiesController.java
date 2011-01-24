@@ -14,11 +14,12 @@ import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.StudyStatusEditor;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.StudyTypeEditor;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.VelocityTemplateWriter;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.EmgStudyDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateStudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.files.MemiFileWriter;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.StudySearchForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgStudy;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ListStudiesModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModel;
@@ -57,7 +58,7 @@ public class ListStudiesController extends LoginController implements IMGControl
     private final String DOWNLOAD_FILE_NAME = "studies.csv";
 
     @Resource
-    private EmgStudyDAO emgStudyDAO;
+    private HibernateStudyDAO studyDAO;
 
     @Resource
     private SessionManager sessionManager;
@@ -85,11 +86,11 @@ public class ListStudiesController extends LoginController implements IMGControl
      */
     @RequestMapping(value = "exportStudies", method = RequestMethod.GET)
     public ModelAndView doExportStudies(HttpServletResponse response) {
-        List<EmgStudy> studies = emgStudyDAO.retrieveAll();
+        List<Study> studies = studyDAO.retrieveAll();
         if (studies != null && studies.size() > 0) {
             //Create velocity spring_model
             Map<String, Object> velocityModel = new HashMap<String, Object>();
-            velocityModel.put("studyPropertyList", getStudyPropertyList(studies.get(0)));
+            //velocityModel.put("studyPropertyList", getStudyPropertyList(studies.get(0)));
             velocityModel.put("studies", studies);
             velocityModel.put("columnLength", MAX_CHARS_PER_COLUMN);
             //Create file content
@@ -131,18 +132,18 @@ public class ListStudiesController extends LoginController implements IMGControl
      * Creates the MG model and adds it to the specified model map.
      */
     private void populateModel(ModelMap model) {
-        final ListStudiesModel subModel = MGModelFactory.getListStudiesPageModel(sessionManager, emgStudyDAO);
+        final ListStudiesModel subModel = MGModelFactory.getListStudiesPageModel(sessionManager, studyDAO);
         model.addAttribute(MGModel.MODEL_ATTR_NAME, subModel);
     }
 
     /**
      * Returns a list of study properties.
      */
-    private List<String> getStudyPropertyList(EmgStudy study) {
-        List<String> result = new ArrayList<String>();
-        for (String key : study.getProperties().keySet()) {
-            result.add(key);
-        }
-        return result;
-    }
+    //private List<String> getStudyPropertyList(Study study) {
+    //  List<String> result = new ArrayList<String>();
+    //for (String key : study.getProperties().keySet()) {
+    //  result.add(key);
+    //}
+    // return result;
+    //}
 }

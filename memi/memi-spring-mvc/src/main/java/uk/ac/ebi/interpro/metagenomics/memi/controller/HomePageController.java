@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.EmgStudyDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateStudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.NewsDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.HomePageModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -40,7 +40,7 @@ public class HomePageController extends LoginController implements IMGController
 
     //Data access objects
     @Resource
-    private EmgStudyDAO emgStudyDAO;
+    private HibernateStudyDAO studyDAO;
 
     @Resource
     private NewsDAO newsDAO;
@@ -73,7 +73,7 @@ public class HomePageController extends LoginController implements IMGController
      * Creates the home page model and adds it to the specified model map.
      */
     private void populateModel(ModelMap model) {
-        final HomePageModel hpModel = MGModelFactory.getHomePageModel(sessionManager, emgStudyDAO, newsDAO);
+        final HomePageModel hpModel = MGModelFactory.getHomePageModel(sessionManager, studyDAO, newsDAO);
         model.addAttribute(MGModel.MODEL_ATTR_NAME, hpModel);
     }
 }
