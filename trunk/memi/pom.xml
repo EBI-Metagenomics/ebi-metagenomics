@@ -18,18 +18,18 @@
         <url>http://www.ebi.ac.uk/</url>
     </organization>
 
-    <!--<repositories>-->
-    <!-- Google code repository is not yet specified -->
-    <!--<repository>-->
-    <!--<id>google-code-interproscan</id>-->
-    <!--<name>google-code-interproscan</name>-->
-    <!--<layout>default</layout>-->
-    <!--<url>http://interproscan.googlecode.com/svn/repository/</url>-->
-    <!--<snapshots>-->
-    <!--<enabled>false</enabled>-->
-    <!--</snapshots>-->
-    <!--</repository>-->
-    <!--</repositories>-->
+    <repositories>
+     <!--Google code repository is not yet specified -->
+    <repository>
+    <id>google-code-interproscan</id>
+    <name>google-code-interproscan</name>
+    <layout>default</layout>
+    <url>http://interproscan.googlecode.com/svn/repository/</url>
+    <snapshots>
+    <enabled>true</enabled>
+    </snapshots>
+    </repository>
+    </repositories>
 
     <!--<licenses>-->
     <!--<license>-->
@@ -107,6 +107,13 @@
             <groupId>com.oracle.jdbc</groupId>
             <artifactId>com.springsource.oracle.jdbc</artifactId>
             <version>10.2.0.2</version>
+            <scope>runtime</scope>
+        </dependency>
+        <!-- MySQL JDBC driver-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.14</version>
             <scope>runtime</scope>
         </dependency>
     </dependencies>

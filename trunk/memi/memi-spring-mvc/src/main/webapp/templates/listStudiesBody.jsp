@@ -24,7 +24,7 @@
                     <td><form:errors path="studyType" cssClass="error"/></td>
                 </tr>
                 <tr>
-                    <td>Study status:</td>
+                    <td>Analysis status:</td>
                     <td><form:select id="studyStatus" path="studyStatus">
                         <form:option value="All" label="All"/>
                         <form:options items="${mgModel.studyStatusList}" itemValue="studyStatusName"
@@ -53,7 +53,7 @@
             <th>Study name</th>
             <th>Release date</th>
             <th>NCBI Project Id</th>
-            <th>Public</th>
+            <th>Visibility</th>
             <th>Study type</th>
             <th>Experimental factor</th>
             <th>Number of samples</th>
@@ -65,13 +65,22 @@
                 <td>
                     <a href="<c:url value="${baseURL}/studyOverview/${study.studyId}"/>">${study.studyName}</a>
                 </td>
-                <td>${study.formattedReleaseDate}</td>
-                <td>${study.ncbiProject}</td>
-                <td>${study.submitterId}</td>
+                <td>${study.publicReleaseDate}</td>
+                <td>${study.ncbiProjectId}</td>
+                <td>
+                <c:choose>
+                    <c:when test="true">
+                        public
+                    </c:when>
+                    <c:otherwise>
+                        private
+                    </c:otherwise>
+                </c:choose>
+                </td>
                 <td>${study.studyType}</td>
                 <td>${study.experimentalFactor}</td>
-                <td>${study.numberSamples}</td>
-                <td>N/A</td>
+                <td>${study.samples}</td>
+                <td>${study.studyStatus}</td>
             </tr>
         </c:forEach>
     </table>

@@ -11,20 +11,22 @@
         sequence results of DNA extracted from a bucket of sea water.<br><a
                 href="<c:url value="${baseURL}/info"/>">more</a></p>
 
-    <table border="0" width="95%" style="border-width: 1px;border-color: #000000;border-style: solid;">
+        <table border="0" width="95%" style="border-width: 1px;border-color: #000000;border-style: solid;">
         <tr>
             <td width="50%" align="center" valign="middle">
                 <h3>Study list</h3>
                 <table border="0" style="border-width: 1px;border-color: #000000;border-style: solid;">
-                    <c:forEach var="emg_study" items="${mgModel.studies}" varStatus="status">
+                    <c:forEach var="study" items="${mgModel.studies}" varStatus="status">
                     <tr>
                         <td>
-                            <a href="<c:url value="${baseURL}/studyOverview/${emg_study.studyId}"/>">${emg_study.formattedReleaseDate}
-                                - ${emg_study.studyName}</a>
+
+                            <a href="<c:url value="${baseURL}/studyOverview/${study.studyId}"/>">${study.publicReleaseDate}
+                                - ${study.studyName}</a>
                         </td>
                     <tr>
-                        </c:forEach>
+                    </c:forEach>
                 </table>
+
                 <a href="<c:url value="${baseURL}/listStudies"/>">more</a>
             </td>
             <td width="50%" align="left" valign="top">
@@ -43,14 +45,3 @@
         </tr>
     </table>
 </div>
-<%--<div id="dialog-message" title="Download complete">--%>
-    <%--<p>--%>
-                                <%--<span class="ui-icon ui-icon-circle-check"--%>
-                                      <%--style="float:left; margin:0 7px 50px 0;"></span>--%>
-        <%--Your files have downloaded successfully into the My Downloads folder.--%>
-    <%--</p>--%>
-
-    <%--<p>--%>
-        <%--Currently using <b>36% of your storage space</b>.--%>
-    <%--</p>--%>
-<%--</div>--%>

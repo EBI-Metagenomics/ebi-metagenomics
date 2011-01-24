@@ -1,10 +1,12 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
 
 import uk.ac.ebi.interpro.metagenomics.memi.dao.EmgStudyDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateStudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.NewsDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgStudy;
 import uk.ac.ebi.interpro.metagenomics.memi.model.News;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
 
 import java.util.ArrayList;
@@ -27,8 +29,8 @@ public class MGModelFactory {
 
     }
 
-    public static HomePageModel getHomePageModel(SessionManager sessionMgr, EmgStudyDAO emgStudyDAO, NewsDAO newsDAO) {
-        return new HomePageModel(getSessionSubmitter(sessionMgr), getLimitedPublicStudiesFromDB(emgStudyDAO), getNewsListFromDB(newsDAO));
+    public static HomePageModel getHomePageModel(SessionManager sessionMgr, HibernateStudyDAO studyDAO, NewsDAO newsDAO) {
+        return new HomePageModel(getSessionSubmitter(sessionMgr), getLimitedPublicStudiesFromDB(studyDAO), getNewsListFromDB(newsDAO));
     }
 
     public static MGModel getMGModel(SessionManager sessionMgr) {
@@ -39,20 +41,20 @@ public class MGModelFactory {
         return new SubmissionModel(getSessionSubmitter(sessionMgr));
     }
 
-    public static ListStudiesModel getListStudiesPageModel(SessionManager sessionMgr, EmgStudyDAO emgStudyDAO) {
-        return new ListStudiesModel(getSessionSubmitter(sessionMgr), getAllPublicStudiesFromDB(emgStudyDAO));
+    public static ListStudiesModel getListStudiesPageModel(SessionManager sessionMgr, HibernateStudyDAO studyDAO) {
+        return new ListStudiesModel(getSessionSubmitter(sessionMgr), getAllPublicStudiesFromDB(studyDAO));
     }
 
     /**
      * Returns a list of public studies limited by a specified number of rows.
      */
-    public static List<EmgStudy> getLimitedPublicStudiesFromDB(EmgStudyDAO emgStudyDAO) {
-        List<EmgStudy> studies = null;
-        if (emgStudyDAO != null) {
-            studies = emgStudyDAO.retrieveStudiesLimitedByRows(rowNumberForStudies);
+    public static List<Study> getLimitedPublicStudiesFromDB(HibernateStudyDAO studyDAO) {
+        List<Study> studies = null;
+        if (studyDAO != null) {
+            studies = studyDAO.retrieveStudiesLimitedByRows(rowNumberForStudies);
         }
         if (studies == null) {
-            studies = new ArrayList<EmgStudy>();
+            studies = new ArrayList<Study>();
         }
         return studies;
     }
@@ -60,10 +62,10 @@ public class MGModelFactory {
     /**
      * Returns a list of all public studies with the MG database.
      */
-    public static List<EmgStudy> getAllPublicStudiesFromDB(EmgStudyDAO emgStudyDAO) {
-        List<EmgStudy> result = emgStudyDAO.retrieveAll();
+    public static List<Study> getAllPublicStudiesFromDB(HibernateStudyDAO studyDAO) {
+        List<Study> result = studyDAO.retrieveAll();
         if (result == null) {
-            result = new ArrayList<EmgStudy>();
+            result = new ArrayList<Study>();
         }
         return result;
     }

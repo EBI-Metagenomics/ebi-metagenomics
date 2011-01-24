@@ -3,6 +3,7 @@ package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.StudySearchForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgStudy;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,14 +19,14 @@ public class ListStudiesModel extends MGModel {
 
     private StudySearchForm studySearchForm;
 
-    private List<EmgStudy> studies;
+    private List<Study> studies;
 
     private List<EmgStudy.StudyType> studyTypes;
 
     private List<EmgStudy.StudyStatus> studyStatusList;
 
 
-    public ListStudiesModel(Submitter submitter, List<EmgStudy> studies) {
+    public ListStudiesModel(Submitter submitter, List<Study> studies) {
         super(submitter);
         this.studySearchForm = new StudySearchForm();
         this.studyTypes = getDefaultStudyTypes();
@@ -41,11 +42,11 @@ public class ListStudiesModel extends MGModel {
         this.studySearchForm = studySearchForm;
     }
 
-    public List<EmgStudy> getStudies() {
+    public List<Study> getStudies() {
         return studies;
     }
 
-    public void setStudies(List<EmgStudy> studies) {
+    public void setStudies(List<Study> studies) {
         this.studies = studies;
     }
 
@@ -68,9 +69,7 @@ public class ListStudiesModel extends MGModel {
     private List<EmgStudy.StudyType> getDefaultStudyTypes() {
         List<EmgStudy.StudyType> result = new ArrayList<EmgStudy.StudyType>();
         for (EmgStudy.StudyType type : EmgStudy.StudyType.values()) {
-            if (!type.equals(EmgStudy.StudyType.UNDEFINED)) {
-                result.add(type);
-            }
+            result.add(type);
         }
         return result;
     }
@@ -78,12 +77,8 @@ public class ListStudiesModel extends MGModel {
     private List<EmgStudy.StudyStatus> getDefaultStudyStati() {
         List<EmgStudy.StudyStatus> result = new ArrayList<EmgStudy.StudyStatus>();
         for (EmgStudy.StudyStatus status : EmgStudy.StudyStatus.values()) {
-            if (!status.equals(EmgStudy.StudyStatus.UNDEFINED)) {
-                result.add(status);
-            }
+            result.add(status);
         }
         return result;
     }
-
-
 }
