@@ -69,7 +69,7 @@ public class ListStudiesController extends LoginController implements IMGControl
     @Resource
     private MemiDownloadService downloadService;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @Override
     public ModelAndView doGet(ModelMap model) {
         //build and add the page model
         populateModel(model);
