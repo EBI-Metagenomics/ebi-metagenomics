@@ -1,48 +1,46 @@
 package uk.ac.ebi.interpro.metagenomics.memi.dao;
 
+import uk.ac.ebi.interpro.metagenomics.memi.model.EmgSample;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.scan.genericjpadao.GenericDAO;
 
 import java.util.List;
 
 /**
- * Represents the data access object interface for studies.
+ * Represents the data access object interface for EMG samples.
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @version $Id$
  * @since 1.0-SNAPSHOT
  */
-public interface HibernateStudyDAO extends GenericDAO<Study, String> {
+public interface HibernateSampleDAO extends GenericDAO<Sample, String> {
+
+    List<Sample> retrieveSamplesByStudyId(String studyId);
 
     /**
-     * Retrieves studies order by the specified property.
-     */
-    List<Study> retrieveStudiesOrderBy(String propertyName, boolean isDescendingOrder);
-
-    /**
-     * Returns an ordered list of studies.
+     * Returns an ordered list of public samples.
      *
      * @param propertyName      Name of the column for which the result should be order by.
      * @param isDescendingOrder Order direction.
      */
-    List<Study> retrieveOrderedPublicStudies(String propertyName, boolean isDescendingOrder);
+    List<Sample> retrieveOrderedPublicSamples(String propertyName, boolean isDescendingOrder);
 
     /**
-     * Returns an ordered list of public studies where the submitter ID IS equal the specified submitter ID.
+     * Returns an ordered list of public samples where the submitter ID IS equal the specified submitter ID.
      *
      * @param submitterId       Submitter ID for the IS equal restriction.
      * @param propertyName      Name of the column for which the result should be order by.
      * @param isDescendingOrder Order direction
      */
-    List<Study> retrieveOrderedStudiesBySubmitter(long submitterId, String propertyName, boolean isDescendingOrder);
+    List<Sample> retrieveOrderedSamplesBySubmitter(long submitterId, String propertyName, boolean isDescendingOrder);
 
     /**
-     * Returns an ordered list of public studies where the submitter ID IS NOT equal the specified submitter ID.
+     * Returns an ordered list of public samples where the submitter ID IS NOT equal the specified submitter ID.
      *
      * @param submitterId       Submitter ID for the NOT equal restriction.
      * @param propertyName      Name of the column for which the result should be order by.
      * @param isDescendingOrder Order direction.
      */
-    List<Study> retrieveOrderedPublicStudiesWithoutSubId(long submitterId, String propertyName, boolean isDescendingOrder);
-
+    List<Sample> retrieveOrderedPublicSamplesWithoutSubId(long submitterId, String propertyName, boolean isDescendingOrder);
 }

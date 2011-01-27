@@ -1,11 +1,11 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
 
-import uk.ac.ebi.interpro.metagenomics.memi.dao.EmgStudyDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateSampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateStudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.NewsDAO;
-import uk.ac.ebi.interpro.metagenomics.memi.model.EmgStudy;
 import uk.ac.ebi.interpro.metagenomics.memi.model.News;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
 
@@ -23,14 +23,23 @@ public class MGModelFactory {
     /**
      * The number studies, which should be shown on the portal home page.
      */
-    private final static int rowNumberForStudies = 10;
+    private final static int maxRowNumber = 5;
 
     private MGModelFactory() {
 
     }
 
-    public static HomePageModel getHomePageModel(SessionManager sessionMgr, HibernateStudyDAO studyDAO, NewsDAO newsDAO) {
-        return new HomePageModel(getSessionSubmitter(sessionMgr), getLimitedPublicStudiesFromDB(studyDAO), getNewsListFromDB(newsDAO));
+    public static HomePageModel getHomePageModel(SessionManager sessionMgr, HibernateStudyDAO studyDAO, HibernateSampleDAO sampleDAO, NewsDAO newsDAO) {
+        Submitter submitter = getSessionSubmitter(sessionMgr);
+        if (submitter == null) {
+            return new HomePageModel(submitter, getOrderedPublicStudies(studyDAO), getOrderedPublicSamples(sampleDAO), getNewsListFromDB(newsDAO));
+        } else {
+            List<Study> myStudies = getOrderedStudiesBySubmitter(submitter.getSubmitterId(), studyDAO);
+            List<Sample> mySamples = getOrderedSamplesBySubmitter(submitter.getSubmitterId(), sampleDAO);
+            List<Study> publicStudies = getOrderedPublicStudiesWithoutSubId(submitter.getSubmitterId(), studyDAO);
+            List<Sample> publicSamples = getOrderedPublicSamplesWithoutSubId(submitter.getSubmitterId(), sampleDAO);
+            return new HomePageModel(submitter, publicStudies, publicSamples, getNewsListFromDB(newsDAO), myStudies, mySamples);
+        }
     }
 
     public static MGModel getMGModel(SessionManager sessionMgr) {
@@ -46,18 +55,108 @@ public class MGModelFactory {
     }
 
     /**
-     * Returns a list of public studies limited by a specified number of rows.
+     * Returns a list of public studies limited by a specified number of rows and order by received date.
      */
-    public static List<Study> getLimitedPublicStudiesFromDB(HibernateStudyDAO studyDAO) {
+    private static List<Study> getOrderedPublicStudies(HibernateStudyDAO studyDAO) {
         List<Study> studies = null;
         if (studyDAO != null) {
-            studies = studyDAO.retrieveStudiesLimitedByRows(rowNumberForStudies);
+            studies = studyDAO.retrieveOrderedPublicStudies("lastMetadataReceived", true);
         }
         if (studies == null) {
             studies = new ArrayList<Study>();
+        } else {
+            if (studies.size() >= maxRowNumber) {
+                studies = studies.subList(0, maxRowNumber);
+            }
         }
         return studies;
     }
+
+    /**
+     * Returns a list of studies for the specified submitter, limited by a specified number of rows and order by received date.
+     */
+    private static List<Study> getOrderedStudiesBySubmitter(long submitterId, HibernateStudyDAO studyDAO) {
+        List<Study> studies = null;
+        if (studyDAO != null) {
+            studies = studyDAO.retrieveOrderedStudiesBySubmitter(submitterId, "lastMetadataReceived", true);
+        }
+        if (studies == null) {
+            studies = new ArrayList<Study>();
+        } else {
+            if (studies.size() >= maxRowNumber) {
+                studies = studies.subList(0, maxRowNumber);
+            }
+        }
+        return studies;
+    }
+
+    private static List<Study> getOrderedPublicStudiesWithoutSubId(long submitterId, HibernateStudyDAO studyDAO) {
+        List<Study> studies = null;
+        if (studyDAO != null) {
+            studies = studyDAO.retrieveOrderedPublicStudiesWithoutSubId(submitterId, "lastMetadataReceived", true);
+        }
+        if (studies == null) {
+            studies = new ArrayList<Study>();
+        } else {
+            if (studies.size() >= maxRowNumber) {
+                studies = studies.subList(0, maxRowNumber);
+            }
+        }
+        return studies;
+    }
+
+    /**
+     * Returns a list of public sample limited by a specified number of rows and order by received date.
+     */
+    public static List<Sample> getOrderedPublicSamples(HibernateSampleDAO sampleDAO) {
+        List<Sample> samples = null;
+        if (sampleDAO != null) {
+            samples = sampleDAO.retrieveOrderedPublicSamples("metadataReceived", true);
+        }
+        if (samples == null) {
+            samples = new ArrayList<Sample>();
+        } else {
+            if (samples.size() >= maxRowNumber) {
+                samples = samples.subList(0, maxRowNumber);
+            }
+        }
+        return samples;
+    }
+
+
+    /**
+     * Returns a list of studies for the specified submitter, limited by a specified number of rows and order by received date.
+     */
+    private static List<Sample> getOrderedSamplesBySubmitter(long submitterId, HibernateSampleDAO sampleDAO) {
+        List<Sample> samples = null;
+        if (sampleDAO != null) {
+            samples = sampleDAO.retrieveOrderedSamplesBySubmitter(submitterId, "metadataReceived", true);
+        }
+        if (samples == null) {
+            samples = new ArrayList<Sample>();
+        } else {
+            if (samples.size() >= maxRowNumber) {
+                samples = samples.subList(0, maxRowNumber);
+            }
+        }
+        return samples;
+    }
+
+    private static List<Sample> getOrderedPublicSamplesWithoutSubId(long submitterId, HibernateSampleDAO sampleDAO) {
+        List<Sample> samples = null;
+        if (sampleDAO != null) {
+            samples = sampleDAO.retrieveOrderedPublicSamplesWithoutSubId(submitterId, "metadataReceived", true);
+        }
+        if (samples == null) {
+            samples = new ArrayList<Sample>();
+        } else {
+            if (samples.size() >= maxRowNumber) {
+                samples = samples.subList(0, maxRowNumber);
+            }
+        }
+        return samples;
+    }
+
 
     /**
      * Returns a list of all public studies with the MG database.

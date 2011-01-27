@@ -13,7 +13,7 @@ import java.util.*;
  * @version $Id$
  * @since 1.0-SNAPSHOT
  */
-@Table(name = "EMG_STUDY", schema = "EMG_USER")
+@Table(name = "EMG_STUDY")
 @Entity
 public class EmgStudy {
 

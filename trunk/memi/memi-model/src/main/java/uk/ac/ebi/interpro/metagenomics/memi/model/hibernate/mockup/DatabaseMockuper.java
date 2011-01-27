@@ -1,14 +1,23 @@
 package uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.mockup;
 
 import au.com.bytecode.opencsv.CSVReader;
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.*;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -23,6 +32,8 @@ public class DatabaseMockuper {
      * @param args
      */
     public static void main(String[] args) {
+        //Instantiate date creator
+        DateCreator dateCreator = new DateCreator();
         //create publications
         List<Publication> pubs = new ArrayList<Publication>();
         Publication p1 = new Publication();
@@ -78,64 +89,103 @@ public class DatabaseMockuper {
             createObject(pub);
         }
 
-        List<Study> studies = parseStudies();
-        for (Study study : studies) {
-            String studyId = study.getStudyId();
+        List<Study> publicStudies = parseStudies("EMG_STUDY.csv");
+        for (Study publicStudy : publicStudies) {
+            String studyId = publicStudy.getStudyId();
             if (studyId.equals("SRP001743")) {
-                study.addPublication(p1);
+                publicStudy.addPublication(p1);
             } else if (studyId.equals("ERP000118")) {
-                study.addPublication(p3);
+                publicStudy.addPublication(p3);
             } else if (studyId.equals("SRP000319")) {
-                study.addPublication(p2);
+                publicStudy.addPublication(p2);
             }
-            createObject(study);
+            publicStudy.setPublic(true);
+            publicStudy.setLastMetadataReceived(dateCreator.getNextDate());
+            createObject(publicStudy);
         }
 
-        Map<String, Set<Sample>> sampleMap = parseSamples();
+        mockupPrivateSamples(dateCreator);
+        mockupPrivateStudies(dateCreator);
+
+        Map<String, Set<Sample>> sampleMap = parseSamples("EMG_SAMPLE.csv");
         for (String studyId : sampleMap.keySet()) {
             for (Sample sample : sampleMap.get(studyId)) {
+                sample.setMetadataReceived(dateCreator.getNextDate());
+                sample.setPublic(true);
                 createObject(sample);
             }
         }
-        for (Study study : studies) {
+
+        for (Study study : publicStudies) {
             Set<Sample> samples = sampleMap.get(study.getStudyId());
             study.setSamples(samples);
             createObject(study);
         }
     }
 
-    private static Map<String, Set<Sample>> parseSamples() {
+    private static void mockupPrivateStudies(DateCreator dateCreator) {
+        List<Study> privateStudies = parseStudies("PRIVATE_STUDIES.csv");
+        for (Study study : privateStudies) {
+            study.setSubmitterId(50);
+            study.setLastMetadataReceived(dateCreator.getNextDate());
+            if (study.getStudyId().equals("SRP001111")) {
+                study.addSample(getSample("SRS009999"));
+                study.setPublic(true);
+            }
+            createObject(study);
+        }
+    }
+
+    private static void mockupPrivateSamples(DateCreator dateCreator) {
+        Map<String, Set<Sample>> sampleMap = parseSamples("PRIVATE_SAMPLES.csv");
+        for (String studyId : sampleMap.keySet()) {
+            for (Sample sample : sampleMap.get(studyId)) {
+                sample.setMetadataReceived(dateCreator.getNextDate());
+                sample.setPublic(false);
+                sample.setSubmitterId(50);
+                createObject(sample);
+            }
+        }
+    }
+
+    private static Map<String, Set<Sample>> parseSamples(String fileName) {
         Map<String, Set<Sample>> result = new HashMap<String, Set<Sample>>();
         try {
-            CSVReader reader = new CSVReader(new FileReader("EMG_SAMPLE.csv"), ',');
-            if (reader != null) {
-                List<String[]> rows = reader.readAll();
-                rows = rows.subList(1, rows.size());
+            URL url = DatabaseMockuper.class.getResource(fileName);
+            URI uri = new URI(url.toString());
 
-                for (String[] row : rows) {
-                    Sample s;
-                    String type = row[3];
-                    String studyId = row[1];
-                    if (type.startsWith("Environmental")) {
-                        s = new EnvironmentSample();
-                        ((EnvironmentSample) s).setLatLon(row[5]);
-                    } else {
-                        s = new HostSample();
-                        ((HostSample) s).setHostSex(row[37]);
-                        ((HostSample) s).setHostTaxonId(Integer.parseInt(row[13]));
+            if (uri != null) {
+
+                CSVReader reader = new CSVReader(new FileReader(new File(uri)), ',');
+                if (reader != null) {
+                    List<String[]> rows = reader.readAll();
+                    rows = rows.subList(1, rows.size());
+
+                    for (String[] row : rows) {
+                        Sample s;
+                        String type = row[3];
+                        String studyId = row[1];
+                        if (type.startsWith("Environmental")) {
+                            s = new EnvironmentSample();
+                            ((EnvironmentSample) s).setLatLon(row[5]);
+                        } else {
+                            s = new HostSample();
+                            ((HostSample) s).setHostSex(row[37]);
+                            ((HostSample) s).setHostTaxonId(Integer.parseInt(row[13]));
+                        }
+                        s.setSampleId(row[0]);
+                        s.setSampleTitle(row[2]);
+                        s.setSampleDescription(row[53]);
+                        s.setSampleClassification(row[3]);
+                        s.setGeoLocName(row[4]);
+                        s.setHabitatType(row[9]);
+                        Set<Sample> samples = result.get(studyId);
+                        if (samples == null) {
+                            samples = new HashSet<Sample>();
+                        }
+                        samples.add(s);
+                        result.put(studyId, samples);
                     }
-                    s.setSampleId(row[0]);
-                    s.setSampleTitle(row[2]);
-                    s.setSampleDescription(row[53]);
-                    s.setSampleClassification(row[3]);
-                    s.setGeoLocName(row[4]);
-                    s.setHabitatType(row[9]);
-                    Set<Sample> samples = result.get(studyId);
-                    if (samples == null) {
-                        samples = new HashSet<Sample>();
-                    }
-                    samples.add(s);
-                    result.put(studyId, samples);
                 }
             }
         } catch (FileNotFoundException e) {
@@ -143,27 +193,36 @@ public class DatabaseMockuper {
         }
         catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        catch (URISyntaxException e) {
+            e.printStackTrace();
         }
         return result;
     }
 
-    private static List<Study> parseStudies() {
+    private static List<Study> parseStudies(String fileName) {
         List<Study> result = new ArrayList<Study>();
         try {
-            CSVReader reader = new CSVReader(new FileReader("EMG_STUDY.csv"), ',');
-            if (reader != null) {
-                List<String[]> rows = reader.readAll();
-                rows = rows.subList(1, rows.size());
+            URL url = DatabaseMockuper.class.getResource(fileName);
+            URI uri = new URI(url.toString());
 
-                for (String[] row : rows) {
-                    Study s = new Study();
-                    s.setStudyId(row[0]);
-                    s.setNcbiProjectId(Integer.parseInt(row[1]));
-                    s.setStudyName(row[2]);
-                    s.setCentreName(row[5]);
-                    s.setExperimentalFactor(row[8]);
-                    s.setStudyAbstract(row[14]);
-                    result.add(s);
+            if (uri != null) {
+
+                CSVReader reader = new CSVReader(new FileReader(new File(uri)), ',');
+                if (reader != null) {
+                    List<String[]> rows = reader.readAll();
+                    rows = rows.subList(1, rows.size());
+
+                    for (String[] row : rows) {
+                        Study s = new Study();
+                        s.setStudyId(row[0]);
+                        s.setNcbiProjectId(Integer.parseInt(row[1]));
+                        s.setStudyName(row[2]);
+                        s.setCentreName(row[5]);
+                        s.setExperimentalFactor(row[8]);
+                        s.setStudyAbstract(row[14]);
+                        result.add(s);
+                    }
                 }
             }
         } catch (FileNotFoundException e) {
@@ -171,6 +230,9 @@ public class DatabaseMockuper {
         }
         catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        catch (URISyntaxException e) {
+            e.printStackTrace();
         }
         return result;
     }
@@ -223,4 +285,55 @@ public class DatabaseMockuper {
         }
     }
 
+    private static Sample getSample(String sampleId) {
+        Transaction tx = null;
+        Session session = SessionFactoryUtil.getInstance().getCurrentSession();
+        try {
+            tx = session.beginTransaction();
+            Criteria crit = session.createCriteria(Sample.class);
+            crit.add(Restrictions.eq("sampleId", sampleId));
+            List<Sample> samples = crit.list();
+            if (samples.size() > 0) {
+                return samples.get(0);
+            }
+        } catch (RuntimeException e) {
+            if (tx != null && tx.isActive()) {
+                try {
+                    tx.rollback();
+                } catch (HibernateException e1) {
+                    e1.printStackTrace();
+                }
+                throw e;
+            }
+        }
+        return null;
+    }
+
+    static class DateCreator {
+        private int counter;
+
+        private final DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+
+        private String[] dates = {"01/01/2012", "02/02/2010", "03/03/2010", "04/04/2010",
+                "01/01/2009", "02/02/2011", "03/03/2009", "04/04/2009"};
+
+        public DateCreator() {
+            this.counter = 0;
+        }
+
+        public Date getNextDate() {
+            if (counter >= dates.length) {
+                //reset counter
+                counter = 0;
+            }
+            Date result = null;
+            try {
+                result = df.parse(dates[counter]);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            counter++;
+            return result;
+        }
+    }
 }

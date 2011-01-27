@@ -2,6 +2,8 @@ package uk.ac.ebi.interpro.metagenomics.memi.model.hibernate;
 
 
 import javax.persistence.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -14,11 +16,16 @@ import java.util.Set;
  * @since 1.0-SNAPSHOT
  */
 @Entity
-@Table(name = "HB_STUDY", schema = "EMG_USER")
+@Table(name = "HB_STUDY")
+@SequenceGenerator(
+        name = "STUDY_SEQ",
+        sequenceName = "STUDY_SEQ",
+        allocationSize = 1
+)
 public class Study {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "STUDY_SEQ")
     private long id;
 
     @Column(name = "STUDY_ID", length = 15)
@@ -44,6 +51,13 @@ public class Study {
     private Date publicReleaseDate;
 
     /**
+     * Date of the last received metadata.
+     */
+    @Temporal(TemporalType.DATE)
+    @Column(name = "LAST_UPDATE")
+    private Date lastMetadataReceived;
+
+    /**
      * Associated publication.
      */
     @ManyToMany
@@ -63,12 +77,22 @@ public class Study {
     @Column(name = "EXPERIMENTAL_FACTOR")
     private String experimentalFactor;
 
+    /**
+     * Default value is private.
+     */
     @Column(name = "IS_PUBLIC")
     private boolean isPublic;
+
+    /**
+     * Holds an optional URL to the users own homepage for their study.
+     */
+    @Column(name = "STUDY_LINKOUT")
+    private String userPageURL;
 
     public Study() {
         publications = new HashSet<Publication>();
         samples = new HashSet<Sample>();
+        this.isPublic = false;
     }
 
 
@@ -210,14 +234,34 @@ public class Study {
         this.experimentalFactor = experimentalFactor;
     }
 
-    public boolean getPublic() {
+    public boolean isPublic() {
         return isPublic;
     }
 
-    public void setPublic(boolean isPublic) {
-        isPublic = isPublic;
+    public void setPublic(boolean aPublic) {
+        isPublic = aPublic;
     }
 
+    public String getUserPageURL() {
+        return userPageURL;
+    }
+
+    public void setUserPageURL(String userPageURL) {
+        this.userPageURL = userPageURL;
+    }
+
+    public Date getLastMetadataReceived() {
+        return lastMetadataReceived;
+    }
+
+    public String getFormattedLastReceived() {
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        return df.format(lastMetadataReceived);
+    }
+
+    public void setLastMetadataReceived(Date lastMetadataReceived) {
+        this.lastMetadataReceived = lastMetadataReceived;
+    }
 
     public enum StudyType {
         ENVIRONMENTAL, HOST_ASSOCIATED, UNDEFINED;

@@ -4,7 +4,7 @@
   Desc: Represents the Metagenomics portal home page, which inludes
   1. a login function
   2. a link to submission form
-  3. a link of public and private (if you logged in) studies
+  3. a link of public and private (if you logged in) publicStudies
   4. a link to study list
   4. info about what Metagenomics is and what kind of services this portal provides
 --%>

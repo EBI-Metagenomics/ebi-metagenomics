@@ -1,6 +1,5 @@
 package uk.ac.ebi.interpro.metagenomics.memi.controller;
 
-import junit.framework.TestCase;
 import org.apache.velocity.app.VelocityEngine;
 import org.junit.Before;
 import org.junit.Test;

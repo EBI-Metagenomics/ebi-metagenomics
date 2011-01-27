@@ -17,9 +17,10 @@
     <url>http://maven.apache.org</url>
 
     <repositories>
+        <!--Specified this Hibernate JBoss repository to resolve the latest version of Hibernate Annotations 3.5.1-->
         <repository>
             <id>JBoss repository</id>
-            <url>https://repository.jboss.org/nexus/</url>
+            <url>https://repository.jboss.org/maven2/</url>
         </repository>
     </repositories>
 
@@ -28,7 +29,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-annotations</artifactId>
-            <version>3.4.0.GA</version>
+            <version>3.5.1-Final</version>
             <scope>compile</scope>
         </dependency>
         <dependency>

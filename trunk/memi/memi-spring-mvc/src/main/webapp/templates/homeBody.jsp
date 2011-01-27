@@ -9,38 +9,116 @@
     <p>The study of all genomes present in any given environment without the need for prior individual identification or
         amplification is termed metagenomics. For example, in its simplest form a metagenomic study might be the direct
         sequence results of DNA extracted from a bucket of sea water.<br><a
-                href="<c:url value="${baseURL}/info"/>">more</a></p>
+                href="<c:url value="${baseURL}/info"/>">more Info</a></p>
 
-        <table border="0" width="95%" style="border-width: 1px;border-color: #000000;border-style: solid;">
+    <div style="margin-top:10px"/>
+    <table frame="box" width="95%">
         <tr>
-            <td width="50%" align="center" valign="middle">
-                <h3>Study list</h3>
-                <table border="0" style="border-width: 1px;border-color: #000000;border-style: solid;">
-                    <c:forEach var="study" items="${mgModel.studies}" varStatus="status">
-                    <tr>
-                        <td>
-
-                            <a href="<c:url value="${baseURL}/studyOverview/${study.studyId}"/>">${study.publicReleaseDate}
-                                - ${study.studyName}</a>
-                        </td>
-                    <tr>
-                    </c:forEach>
-                </table>
-
-                <a href="<c:url value="${baseURL}/listStudies"/>">more</a>
-            </td>
             <td width="50%" align="left" valign="top">
-                <h3>Submission form</h3>
+                <h3>Data submission</h3>
+                Short description of what kind of data you can submit, why and how ...
                 <c:choose>
                     <c:when test="${empty mgModel.submitter}">
                         <div id="submitdiv">
-                            <a id="submittest" href="#">Submit data</a>
+                            <a id="submit" href="#">Submit</a>
                         </div>
                     </c:when>
                     <c:otherwise>
-                        <a href="<c:url value="${baseURL}/submissionForm"/>">Submit data</a>
+                        <br>
+                        <a href="<c:url value="${baseURL}/submissionForm"/>">Submit</a>
                     </c:otherwise>
                 </c:choose>
+            </td>
+        </tr>
+    </table>
+    <div style="margin-top:10px"/>
+    <table frame="box" width="95%">
+        <%-- Show MyStudies and MySamples tables only if a user is logged in--%>
+        <c:if test="${not empty mgModel.submitter}">
+            <tr>
+                <td width="50%" align="left" valign="top">
+                    <h3>My studies</h3>
+                </td>
+                <td width="50%" align="left" valign="top">
+                    <h3>My samples</h3>
+                </td>
+            </tr>
+            <tr>
+                <td width="50%" align="left" valign="top">
+                    <table frame="box">
+                        <c:forEach var="study" items="${mgModel.myStudies}" varStatus="status">
+                        <tr>
+                            <td>
+                                <a href="<c:url value="${baseURL}/studyOverview/${study.studyId}"/>">${study.lastMetadataReceived}
+                                    - ${study.studyName} (${study.public})</a>
+                            </td>
+                        <tr>
+                            </c:forEach>
+                    </table>
+                </td>
+                <td width="50%" align="right" valign="top">
+                    <table frame="box">
+                        <c:forEach var="sample" items="${mgModel.mySamples}" varStatus="status">
+                        <tr>
+                            <td>
+                                <a href="<c:url value="${baseURL}/sampleOverview/${sample.sampleId}"/>">${sample.metadataReceived}
+                                    - ${sample.sampleTitle} (${sample.public})</a>
+                            </td>
+                        <tr>
+                            </c:forEach>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td width="50%" align="right" valign="top">
+                    <a href="<c:url value="${baseURL}/listStudies"/>">View all</a>
+                </td>
+                <td width="50%" align="right" valign="top">
+                    <a href="<c:url value="${baseURL}/listStudies"/>">View all</a>
+                </td>
+            </tr>
+        </c:if>
+        <%-- End of show MyStudies and MySamples tables--%>
+        <tr>
+            <td width="50%" align="left" valign="top">
+                <h3>Public studies</h3>
+            </td>
+            <td width="50%" align="left" valign="top">
+                <h3>Public samples</h3>
+            </td>
+        </tr>
+        <tr>
+            <td width="50%" align="left" valign="top">
+                <table frame="box">
+                    <c:forEach var="study" items="${mgModel.publicStudies}" varStatus="status">
+                    <tr>
+                        <td>
+                            <a href="<c:url value="${baseURL}/studyOverview/${study.studyId}"/>">${study.lastMetadataReceived}
+                                - ${study.studyName} (${study.public})</a>
+                        </td>
+                    <tr>
+                        </c:forEach>
+                </table>
+            </td>
+            <td width="50%" align="right" valign="top">
+                <table frame="box">
+                    <c:forEach var="sample" items="${mgModel.publicSamples}" varStatus="status">
+                    <tr>
+                        <td>
+                            <a href="<c:url value="${baseURL}/sampleOverview/${sample.sampleId}"/>">${sample.metadataReceived}
+                                - ${sample.sampleTitle} (${sample.public})</a>
+                        </td>
+                    <tr>
+                        </c:forEach>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td width="50%" align="right" valign="top">
+                <a href="<c:url value="${baseURL}/listStudies"/>">View all</a>
+            </td>
+            <td width="50%" align="right" valign="top">
+                <a href="<c:url value="${baseURL}/listStudies"/>">View all</a>
             </td>
         </tr>
     </table>

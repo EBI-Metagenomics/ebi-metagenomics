@@ -1,6 +1,6 @@
 ##  Created by Maxim Scheremetjew, EMBL-EBI, InterPro
 ##  Date: 05-Jan-2011
-##  Desc: Velocity template to provide a downloadable semicolon separated file for samples
+##  Desc: Velocity template to provide a downloadable semicolon separated file for publicSamples
 #set( $keySet = $sample.propertyMap.keySet() )
 #set( $propertyMap = $sample.propertyMap )
 #foreach( $key in $keySet )#if( $key != 'SampleDescription')"$key";#end

@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.support.SessionStatus;
+import uk.ac.ebi.interpro.metagenomics.memi.encryption.SHA256;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.SubmitterDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
@@ -50,7 +51,8 @@ public abstract class LoginController implements ILoginController {
             }
             submitter = submitterDAO.getSubmitterByEmailAddress(emailAddress);
             if (submitter != null) {
-                if (!submitter.getPassword().equals(loginForm.getPassword())) {
+                String encryptedPw = SHA256.encrypt(loginForm.getPassword());
+                if (encryptedPw == null || !encryptedPw.equals(submitter.getPassword())) {
                     result.addError(new FieldError("loginForm", "emailAddress", "Incorrect login data!"));
                     return;
                 }
