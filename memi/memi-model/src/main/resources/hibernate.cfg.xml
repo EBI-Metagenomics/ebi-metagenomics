@@ -3,29 +3,30 @@
         "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
         "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
-    <!-- MySQL session factory-->
+    <!-- Oracle session factory-->
     <session-factory>
-            <property name="connection.url">jdbc:mysql://localhost:3306/emg_user</property>
-            <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-            <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
-            <property name="connection.username">root</property>
-            <property name="connection.password">test</property>
-            <property name="transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>
-            <!-- Drop and re-create the database schema on startup -->
-            <property name="hbm2ddl.auto">create</property>
-            <!--  thread is the short name for
-              org.hibernate.context.ThreadLocalSessionContext
-              and let Hibernate bind the session automatically to the thread
-            -->
-            <property name="current_session_context_class">thread</property>
-            <!-- this will show us all sql statements -->
-            <property name="hibernate.show_sql">true</property>
-            <!-- mapping files -->
-            <mapping class="uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study"/>
-            <mapping class="uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Publication"/>
-            <mapping class="uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample" />
-            <mapping class="uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.HostSample" />
-            <mapping class="uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.EnvironmentSample" />
-            <!--<mapping resource="Sample.hbm.xml" />-->
-        </session-factory>
+        <property name="connection.url">jdbc:oracle:thin:@muscat.ebi.ac.uk:1531:IPDEV</property>
+        <property name="connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
+        <property name="dialect">org.hibernate.dialect.Oracle10gDialect</property>
+        <property name="connection.username">emg</property>
+        <property name="connection.password">emg070710</property>
+        <property name="transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>
+        <!-- Drop and re-create the database schema on startup -->
+        <property name="hbm2ddl.auto">update</property>
+        <!--  thread is the short name for
+          org.hibernate.context.ThreadLocalSessionContext
+          and let Hibernate bind the session automatically to the thread
+        -->
+        <property name="current_session_context_class">thread</property>
+        <!-- this will show us all sql statements -->
+        <property name="hibernate.show_sql">true</property>
+        <!-- Setting which indicates whether or not the new IdentifierGenerator implementations are used for AUTO, TABLE and SEQUENCE. Default to false to keep backward compatibility.-->
+        <property name="hibernate.id.new_generator_mappings">true</property>
+        <!-- mapping files -->
+        <mapping class="uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study"/>
+        <mapping class="uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Publication"/>
+        <mapping class="uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample"/>
+        <mapping class="uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.HostSample"/>
+        <mapping class="uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.EnvironmentSample"/>
+    </session-factory>
 </hibernate-configuration>

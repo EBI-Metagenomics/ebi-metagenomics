@@ -3,22 +3,18 @@ package uk.ac.ebi.interpro.metagenomics.memi.dao;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import uk.ac.ebi.interpro.metagenomics.memi.model.EmgStudy;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.ArrayList;
 
 /**
- * Represents the implementation class of {@link uk.ac.ebi.interpro.metagenomics.memi.dao.EmgStudyDAO}
- * TODO: Associate with Hibernate (all methods still return mock-up objects)
+ * Represents the implementation class of {@link uk.ac.ebi.interpro.metagenomics.memi.dao.EmgSampleDAO}
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @version $Id$
@@ -26,48 +22,45 @@ import java.util.ArrayList;
  */
 //@Repository
 @Transactional
-public class HibernateStudyDAOImpl implements HibernateStudyDAO {
+public class HibernateSampleDAOImpl implements HibernateSampleDAO {
 
     @Autowired
     private SessionFactory sessionFactory;
 
-
-    public HibernateStudyDAOImpl() {
+    public HibernateSampleDAOImpl() {
     }
 
-//    public void setSessionFactory(SessionFactory sessionFactory) {
-//        this.sessionFactory = sessionFactory;
-//    }
-
-
     @Override
-    public Study insert(Study newInstance) {
+    public Sample insert(Sample newInstance) {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override
-    public Collection<Study> insert(Collection<Study> newInstances) {
+    public Collection<Sample> insert(Collection<Sample> newInstances) {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override
-    public void update(Study modifiedInstance) {
+    public void update(Sample modifiedInstance) {
         //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override
-    public Study read(String id) {
+    public Sample read(String id) {
         Session session = sessionFactory.getCurrentSession();
-        return (Study) session.get(Study.class, id);
+        if (session != null) {
+            return (Sample) session.get(Sample.class, id);
+        }
+        return null;
     }
 
     @Override
-    public Study readDeep(String id, String... deepFields) {
+    public Sample readDeep(String id, String... deepFields) {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override
-    public void delete(Study persistentObject) {
+    public void delete(Sample persistentObject) {
         //To change body of implemented methods use File | Settings | File Templates.
     }
 
@@ -77,34 +70,32 @@ public class HibernateStudyDAOImpl implements HibernateStudyDAO {
     }
 
     @Override
-    public List<Study> retrieveAll() {
+    public List<Sample> retrieveAll() {
         Session session = sessionFactory.getCurrentSession();
         if (session != null) {
-            return session.createCriteria(Study.class).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
+            return session.createCriteria(Sample.class).list();
+        }
+        return null;
+    }
+
+    /**
+     * @return All samples filtered by the specified study Id.
+     */
+    @Override
+    public List<Sample> retrieveSamplesByStudyId(String studyId) {
+        Session session = sessionFactory.getCurrentSession();
+        if (session != null) {
+            return session.createCriteria(Sample.class).add(Restrictions.eq("studyId", studyId)).list();
         }
         return null;
     }
 
     @Override
-    public List<Study> retrieveStudiesOrderBy(String propertyName, boolean isDescendingOrder) {
-        List<Study> result = new ArrayList<Study>();
+    public List<Sample> retrieveOrderedPublicSamples(String propertyName, boolean isDescendingOrder) {
+        List<Sample> result = new ArrayList<Sample>();
         Session session = sessionFactory.getCurrentSession();
         if (session != null) {
-            if (isDescendingOrder) {
-                result = session.createCriteria(Study.class).addOrder(Order.desc(propertyName)).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
-            } else {
-                result = session.createCriteria(Study.class).addOrder(Order.asc(propertyName)).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public List<Study> retrieveOrderedPublicStudies(String propertyName, boolean isDescendingOrder) {
-        List<Study> result = new ArrayList<Study>();
-        Session session = sessionFactory.getCurrentSession();
-        if (session != null) {
-            Criteria crit = session.createCriteria(Study.class);
+            Criteria crit = session.createCriteria(Sample.class);
             //add ORDER BY clause
             if (isDescendingOrder) {
                 crit.addOrder(Order.desc(propertyName));
@@ -121,11 +112,11 @@ public class HibernateStudyDAOImpl implements HibernateStudyDAO {
     }
 
     @Override
-    public List<Study> retrieveOrderedStudiesBySubmitter(long submitterId, String propertyName, boolean isDescendingOrder) {
-        List<Study> result = new ArrayList<Study>();
+    public List<Sample> retrieveOrderedSamplesBySubmitter(long submitterId, String propertyName, boolean isDescendingOrder) {
+        List<Sample> result = new ArrayList<Sample>();
         Session session = sessionFactory.getCurrentSession();
         if (session != null) {
-            Criteria crit = session.createCriteria(Study.class);
+            Criteria crit = session.createCriteria(Sample.class);
             //add ORDER BY clause
             if (isDescendingOrder) {
                 crit.addOrder(Order.desc(propertyName));
@@ -142,11 +133,11 @@ public class HibernateStudyDAOImpl implements HibernateStudyDAO {
     }
 
     @Override
-    public List<Study> retrieveOrderedPublicStudiesWithoutSubId(long submitterId, String propertyName, boolean isDescendingOrder) {
-        List<Study> result = new ArrayList<Study>();
+    public List<Sample> retrieveOrderedPublicSamplesWithoutSubId(long submitterId, String propertyName, boolean isDescendingOrder) {
+        List<Sample> result = new ArrayList<Sample>();
         Session session = sessionFactory.getCurrentSession();
         if (session != null) {
-            Criteria crit = session.createCriteria(Study.class);
+            Criteria crit = session.createCriteria(Sample.class);
             //add ORDER BY clause
             if (isDescendingOrder) {
                 crit.addOrder(Order.desc(propertyName));
@@ -165,14 +156,12 @@ public class HibernateStudyDAOImpl implements HibernateStudyDAO {
     }
 
     @Override
-    public int deleteAll
-            () {
+    public int deleteAll() {
         return 0;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override
-    public Long getMaximumPrimaryKey
-            () {
+    public Long getMaximumPrimaryKey() {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 }

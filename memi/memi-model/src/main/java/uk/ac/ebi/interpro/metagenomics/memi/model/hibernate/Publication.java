@@ -1,20 +1,25 @@
 package uk.ac.ebi.interpro.metagenomics.memi.model.hibernate;
 
-
 import javax.persistence.*;
 
+
 /**
- * TODO: Description
+ * TODO: Check why SequenceGenerator parameter allocationSize does not work
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @since 1.0-SNAPSHOT
  */
 @Entity
-@Table(name = "HB_PUBLICATION", schema = "EMG_USER")
+@Table(name = "HB_PUBLICATION")
+@SequenceGenerator(
+        name = "PUB_SEQ",
+        sequenceName = "PUBLICATION_SEQ",
+        allocationSize = 1
+)
 public class Publication {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PUB_SEQ")
     @Column(name = "PUB_ID")
     private long pubId;
 

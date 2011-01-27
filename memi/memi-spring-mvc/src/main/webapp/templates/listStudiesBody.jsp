@@ -79,7 +79,7 @@
                 </td>
                 <td>${study.studyType}</td>
                 <td>${study.experimentalFactor}</td>
-                <td>${study.samples}</td>
+                <td>N/A</td>
                 <td>${study.studyStatus}</td>
             </tr>
         </c:forEach>

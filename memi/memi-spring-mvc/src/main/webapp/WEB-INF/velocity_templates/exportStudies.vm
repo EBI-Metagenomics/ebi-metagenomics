@@ -1,9 +1,9 @@
 ##  Created by Maxim Scheremetjew, EMBL-EBI, InterPro
 ##  Date: 05-Jan-2011
-##  Desc: Velocity template to provide a downloadable semicolon separated file for studies
+##  Desc: Velocity template to provide a downloadable semicolon separated file for publicStudies
 #foreach( $property in $studyPropertyList )#if( $property != 'StudyAbstract')"$property";#end#end
 
-#foreach( $study in $studies )
+#foreach( $study in $publicStudies )
     #set( $propertyMap = $study.properties )
     #foreach( $key in $propertyMap.keySet() )
         #if( $key != 'StudyAbstract')

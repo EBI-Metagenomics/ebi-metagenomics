@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateSampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateStudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.NewsDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
@@ -43,6 +44,9 @@ public class HomePageController extends LoginController implements IMGController
     private HibernateStudyDAO studyDAO;
 
     @Resource
+    private HibernateSampleDAO sampleDAO;
+
+    @Resource
     private NewsDAO newsDAO;
 
     //Other injections
@@ -60,7 +64,7 @@ public class HomePageController extends LoginController implements IMGController
 
     @RequestMapping(method = RequestMethod.POST)
     public ModelAndView doProcessLogin(@ModelAttribute(LoginForm.MODEL_ATTR_NAME) @Valid LoginForm loginForm, BindingResult result,
-                                           ModelMap model, SessionStatus status) {
+                                       ModelMap model, SessionStatus status) {
         //process login        
         super.processLogin(loginForm, result, model, status);
         //create model and view
@@ -73,7 +77,7 @@ public class HomePageController extends LoginController implements IMGController
      * Creates the home page model and adds it to the specified model map.
      */
     private void populateModel(ModelMap model) {
-        final HomePageModel hpModel = MGModelFactory.getHomePageModel(sessionManager, studyDAO, newsDAO);
+        final HomePageModel hpModel = MGModelFactory.getHomePageModel(sessionManager, studyDAO, sampleDAO, newsDAO);
         model.addAttribute(MGModel.MODEL_ATTR_NAME, hpModel);
     }
 }

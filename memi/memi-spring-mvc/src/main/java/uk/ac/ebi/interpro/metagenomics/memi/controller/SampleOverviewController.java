@@ -24,9 +24,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -43,7 +41,7 @@ public class SampleOverviewController extends LoginController {
      */
     private final String VIEW_NAME = "sampleOverview";
     @Resource
-    private EmgSampleDAO sampleDAO;
+    private EmgSampleDAO emgSampleDAO;
 
     @Resource
     private VelocityEngine velocityEngine;
@@ -57,7 +55,7 @@ public class SampleOverviewController extends LoginController {
     @RequestMapping(value = "/{sampleId}", method = RequestMethod.GET)
     public ModelAndView doGetSample(@PathVariable String sampleId, ModelMap model) {
         //Add sample to spring mvc model
-//        EmgSample sample = sampleDAO.read(sampleId);
+//        EmgSample sample = emgSampleDAO.read(sampleId);
 //        model.put("sample", sample);
         populateModel(model);
         model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((MGModel) model.get(MGModel.MODEL_ATTR_NAME)).getLoginForm());
@@ -67,7 +65,7 @@ public class SampleOverviewController extends LoginController {
 
     @RequestMapping(value = "/exportSample/{sampleId}", method = RequestMethod.GET)
     public ModelAndView doExportSample(ModelMap model, @PathVariable String sampleId, HttpServletResponse response) {
-        EmgSample sample = sampleDAO.read(sampleId);
+        EmgSample sample = emgSampleDAO.read(sampleId);
         if (sample != null) {
             //Create velocity spring model
             Map<String, Object> velocityModel = new HashMap<String, Object>();
@@ -107,6 +105,6 @@ public class SampleOverviewController extends LoginController {
 
     @ModelAttribute(value = "sample")
     public EmgSample populateSample(@PathVariable String sampleId) {
-        return sampleDAO.read(sampleId);
+        return emgSampleDAO.read(sampleId);
     }
 }
