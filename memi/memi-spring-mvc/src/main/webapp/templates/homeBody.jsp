@@ -19,13 +19,18 @@
                 Short description of what kind of data you can submit, why and how ...
                 <c:choose>
                     <c:when test="${empty mgModel.submitter}">
-                        <div id="submitdiv">
-                            <a id="submit" href="#">Submit</a>
-                        </div>
+                        <p>
+                            <a href="<c:url value="${baseURL}/login"/>">Submit</a>
+                        </p>
+                        <%-- JQuery example--%>
+                        <%--<div id="submitdiv">--%>
+                        <%--<a id="submit" href="#">Submit</a>--%>
+                        <%--</div>--%>
                     </c:when>
                     <c:otherwise>
-                        <br>
-                        <a href="<c:url value="${baseURL}/submissionForm"/>">Submit</a>
+                        <p>
+                            <a href="<c:url value="${baseURL}/submissionForm"/>">Submit</a>
+                        </p>
                     </c:otherwise>
                 </c:choose>
             </td>

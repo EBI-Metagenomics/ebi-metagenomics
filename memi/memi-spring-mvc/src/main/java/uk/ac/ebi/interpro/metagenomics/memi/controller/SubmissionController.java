@@ -51,7 +51,7 @@ public class SubmissionController implements IMGController {
     @Resource
     private SessionManager sessionManager;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @Override
     public ModelAndView doGet(ModelMap model) {
         //build and add the page model
         populateModel(model);

@@ -37,7 +37,10 @@ public class SubmissionForm {
     private String dataDesc;
 
     public SubmissionForm() {
-        releaseDate = Calendar.getInstance().getTime();
+        long time = Calendar.getInstance().getTimeInMillis();
+        //add time to 1 year in advance
+        time = time + 1000L * 60L * 60L * 24L * 365L * 2L;
+        releaseDate = new Date(time);
     }
 
     public String getSubTitle() {

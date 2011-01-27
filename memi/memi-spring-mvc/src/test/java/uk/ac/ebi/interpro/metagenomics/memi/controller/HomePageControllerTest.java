@@ -63,13 +63,13 @@ public class HomePageControllerTest {
     @Test
     @Ignore
     public void testPopulateStudyList() throws Exception {
-        List<EmgStudy> studies = MGModelFactory.getLimitedPublicStudiesFromDB(null);
-        assertNotNull(studies);
-        assertEquals(10, studies.size());
-        assertEquals("study_1", studies.get(0).getStudyName());
-//        assertEquals(true, studies.get(0).isPublic());
-        assertEquals("study_15", studies.get(9).getStudyName());
-//        assertEquals(true, studies.get(9).isPublic());
+//        List<EmgStudy> studies = MGModelFactory.getLimitedPublicStudiesFromDB(null);
+//        assertNotNull(studies);
+//        assertEquals(10, studies.size());
+//        assertEquals("study_1", studies.get(0).getStudyName());
+////        assertEquals(true, studies.get(0).isPublic());
+//        assertEquals("study_15", studies.get(9).getStudyName());
+////        assertEquals(true, studies.get(9).isPublic());
     }
 
     @Test

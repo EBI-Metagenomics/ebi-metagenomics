@@ -54,7 +54,7 @@ public class HomePageController extends LoginController implements IMGController
     private SessionManager sessionManager;
 
 
-    @RequestMapping(method = RequestMethod.GET)
+    @Override
     public ModelAndView doGet(ModelMap model) {
         //build and add the page model
         populateModel(model);
@@ -62,6 +62,7 @@ public class HomePageController extends LoginController implements IMGController
         return new ModelAndView(VIEW_NAME, model);
     }
 
+    @Override
     @RequestMapping(method = RequestMethod.POST)
     public ModelAndView doProcessLogin(@ModelAttribute(LoginForm.MODEL_ATTR_NAME) @Valid LoginForm loginForm, BindingResult result,
                                        ModelMap model, SessionStatus status) {
