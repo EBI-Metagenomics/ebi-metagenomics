@@ -62,16 +62,17 @@ public class HomePageController extends LoginController implements IMGController
         return new ModelAndView(VIEW_NAME, model);
     }
 
-    @Override
-    @RequestMapping(method = RequestMethod.POST)
-    public ModelAndView doProcessLogin(@ModelAttribute(LoginForm.MODEL_ATTR_NAME) @Valid LoginForm loginForm, BindingResult result,
-                                       ModelMap model, SessionStatus status) {
-        //process login        
-        super.processLogin(loginForm, result, model, status);
-        //create model and view
-        populateModel(model);
-        return new ModelAndView(VIEW_NAME, model);
-    }
+
+        @Override
+        @RequestMapping(method = RequestMethod.POST)
+        public ModelAndView doProcessLogin(@ModelAttribute(LoginForm.MODEL_ATTR_NAME) @Valid LoginForm loginForm, BindingResult result,
+                                           ModelMap model, SessionStatus status) {
+            //process login
+            super.processLogin(loginForm, result, model, status);
+            //create model and view
+            populateModel(model);
+            return new ModelAndView(VIEW_NAME, model);
+        }
 
 
     /**

@@ -5,20 +5,17 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import uk.ac.ebi.interpro.metagenomics.memi.model.EmgStudy;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.ArrayList;
 
 /**
- * Represents the implementation class of {@link uk.ac.ebi.interpro.metagenomics.memi.dao.EmgStudyDAO}
- * TODO: Associate with Hibernate (all methods still return mock-up objects)
+ * Represents the implementation class of {@link HibernateStudyDAO}.
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @version $Id$
@@ -80,7 +77,7 @@ public class HibernateStudyDAOImpl implements HibernateStudyDAO {
     public List<Study> retrieveAll() {
         Session session = sessionFactory.getCurrentSession();
         if (session != null) {
-            return session.createCriteria(Study.class).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
+            return session.createCriteria(Study.class).list();
         }
         return null;
     }
@@ -91,9 +88,9 @@ public class HibernateStudyDAOImpl implements HibernateStudyDAO {
         Session session = sessionFactory.getCurrentSession();
         if (session != null) {
             if (isDescendingOrder) {
-                result = session.createCriteria(Study.class).addOrder(Order.desc(propertyName)).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
+                result = session.createCriteria(Study.class).addOrder(Order.desc(propertyName)).list();
             } else {
-                result = session.createCriteria(Study.class).addOrder(Order.asc(propertyName)).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
+                result = session.createCriteria(Study.class).addOrder(Order.asc(propertyName)).list();
             }
         }
         return null;
@@ -113,8 +110,6 @@ public class HibernateStudyDAOImpl implements HibernateStudyDAO {
             }
             //add WHERE clause
             crit.add(Restrictions.eq("isPublic", true));
-            //add distinction clause
-            crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
             result = crit.list();
         }
         return result;
@@ -134,8 +129,6 @@ public class HibernateStudyDAOImpl implements HibernateStudyDAO {
             }
             //add WHERE clause
             crit.add(Restrictions.eq("submitterId", submitterId));
-            //add distinction clause
-            crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
             result = crit.list();
         }
         return result;
@@ -157,11 +150,26 @@ public class HibernateStudyDAOImpl implements HibernateStudyDAO {
             crit.add(Restrictions.eq("isPublic", true));
             //add another WHERE clause
             crit.add(Restrictions.ne("submitterId", submitterId));
-            //add distinction clause
-            crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
             result = crit.list();
         }
         return result;
+    }
+
+    @Override
+    public List<Study> retrieveFilteredStudies(List<Criterion> crits) {
+        Session session = sessionFactory.getCurrentSession();
+        Criteria criteria = null;
+        if (session != null) {
+            criteria = session.createCriteria(Study.class);
+            //add criterions
+            for (Criterion crit : crits) {
+                criteria.add(crit);
+            }
+        }
+        if (criteria != null) {
+            return criteria.list();
+        }
+        return new ArrayList<Study>();
     }
 
     @Override

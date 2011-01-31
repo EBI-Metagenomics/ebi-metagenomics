@@ -104,8 +104,6 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
             }
             //add WHERE clause
             crit.add(Restrictions.eq("isPublic", true));
-            //add distinction clause
-            crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
             result = crit.list();
         }
         return result;
@@ -125,8 +123,6 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
             }
             //add WHERE clause
             crit.add(Restrictions.eq("submitterId", submitterId));
-            //add distinction clause
-            crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
             result = crit.list();
         }
         return result;
@@ -148,8 +144,6 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
             crit.add(Restrictions.eq("isPublic", true));
             //add another WHERE clause
             crit.add(Restrictions.ne("submitterId", submitterId));
-            //add distinction clause
-            crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
             result = crit.list();
         }
         return result;

@@ -98,8 +98,9 @@ public class DatabaseMockuper {
                 publicStudy.addPublication(p3);
             } else if (studyId.equals("SRP000319")) {
                 publicStudy.addPublication(p2);
+            } else if (studyId.equals("study_placeholder1")) {
+                publicStudy.setSubmitterId(50);
             }
-            publicStudy.setPublic(true);
             publicStudy.setLastMetadataReceived(dateCreator.getNextDate());
             createObject(publicStudy);
         }
@@ -110,8 +111,10 @@ public class DatabaseMockuper {
         Map<String, Set<Sample>> sampleMap = parseSamples("EMG_SAMPLE.csv");
         for (String studyId : sampleMap.keySet()) {
             for (Sample sample : sampleMap.get(studyId)) {
-                sample.setMetadataReceived(dateCreator.getNextDate());
-                sample.setPublic(true);
+                String sampleId = sample.getSampleId();
+                if (sampleId.equals("Sample_place_holder1")) {
+                    sample.setSubmitterId(50);
+                }
                 createObject(sample);
             }
         }
@@ -127,6 +130,7 @@ public class DatabaseMockuper {
         List<Study> privateStudies = parseStudies("PRIVATE_STUDIES.csv");
         for (Study study : privateStudies) {
             study.setSubmitterId(50);
+            study.setStudyStatus(getRandomStudyStatus());
             study.setLastMetadataReceived(dateCreator.getNextDate());
             if (study.getStudyId().equals("SRP001111")) {
                 study.addSample(getSample("SRS009999"));
@@ -164,21 +168,55 @@ public class DatabaseMockuper {
                     for (String[] row : rows) {
                         Sample s;
                         String type = row[3];
-                        String studyId = row[1];
                         if (type.startsWith("Environmental")) {
                             s = new EnvironmentSample();
                             ((EnvironmentSample) s).setLatLon(row[5]);
+                            ((EnvironmentSample) s).setEnvironmentalBiome(row[11]);
+                            ((EnvironmentSample) s).setEnvironmentalFeature(row[12]);
+                            ((EnvironmentSample) s).setEnvironmentalMaterial(row[13]);
+
                         } else {
                             s = new HostSample();
-                            ((HostSample) s).setHostSex(row[37]);
-                            ((HostSample) s).setHostTaxonId(Integer.parseInt(row[13]));
                         }
                         s.setSampleId(row[0]);
+                        String studyId = row[1];
                         s.setSampleTitle(row[2]);
-                        s.setSampleDescription(row[53]);
                         s.setSampleClassification(row[3]);
                         s.setGeoLocName(row[4]);
-                        s.setHabitatType(row[9]);
+
+                        //set dates using different date formatters
+                        try {
+                            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                            String collectionDate = row[6];
+                            if (collectionDate != null && collectionDate.startsWith("200")) {
+                                s.setCollectionDate(df.parse(collectionDate));
+                            }
+
+                            df = new SimpleDateFormat("dd/MM/yyyy");
+                            String metaDate = row[7];
+                            if (metaDate != null && metaDate.trim().length() > 0) {
+                                s.setMetadataReceived(df.parse(metaDate));
+                            }
+
+                            String seqReceivedDate = row[8];
+                            if (seqReceivedDate != null && seqReceivedDate.trim().length() > 0) {
+                                s.setSequenceDataReceived(df.parse(seqReceivedDate));
+                            }
+
+                            String seqArchivedDate = row[9];
+                            if (seqArchivedDate != null && seqArchivedDate.trim().length() > 0) {
+                                s.setSequenceDataArchived(df.parse(seqArchivedDate));
+                            }
+
+                            String completeDate = row[10];
+                            if (completeDate != null && completeDate.trim().length() > 0) {
+                                s.setAnalysisCompleted(df.parse(completeDate));
+                            }
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        s.setSampleDescription(row[57]);
+                        s.setPublic((row[58].equals("TRUE") ? true : false));
                         Set<Sample> samples = result.get(studyId);
                         if (samples == null) {
                             samples = new HashSet<Sample>();
@@ -219,8 +257,22 @@ public class DatabaseMockuper {
                         s.setNcbiProjectId(Integer.parseInt(row[1]));
                         s.setStudyName(row[2]);
                         s.setCentreName(row[5]);
+                        setStudyType(row[6], s);
                         s.setExperimentalFactor(row[8]);
+                        //set public release date                        
+                        try {
+                            DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                            String releaseDate = row[11];
+                            if (releaseDate != null && releaseDate.trim().length() > 0) {
+                                s.setPublicReleaseDate(df.parse(releaseDate));
+                            }
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
                         s.setStudyAbstract(row[14]);
+                        s.setPublic((row[15].equals("TRUE") ? true : false));
+                        s.setStudyStatus(getRandomStudyStatus());
+
                         result.add(s);
                     }
                 }
@@ -235,6 +287,30 @@ public class DatabaseMockuper {
             e.printStackTrace();
         }
         return result;
+    }
+
+    private static void setStudyType(String content, Study s) {
+        if (content.startsWith("Environ")) {
+            s.setStudyType(Study.StudyType.ENVIRONMENTAL);
+        } else if (content.startsWith("Host")) {
+            s.setStudyType(Study.StudyType.HOST_ASSOCIATED);
+        } else {
+            s.setStudyType(Study.StudyType.UNDEFINED);
+        }
+    }
+
+    private static Study.StudyStatus getRandomStudyStatus() {
+        int num = new Random().nextInt(3);
+        switch (num) {
+            case 1:
+                return Study.StudyStatus.FINISHED;
+            case 2:
+                return Study.StudyStatus.IN_PROGRESS;
+            case 3:
+                return Study.StudyStatus.QUEUED;
+            default:
+                return Study.StudyStatus.UNDEFINED;
+        }
     }
 
     private static void listStudies() {

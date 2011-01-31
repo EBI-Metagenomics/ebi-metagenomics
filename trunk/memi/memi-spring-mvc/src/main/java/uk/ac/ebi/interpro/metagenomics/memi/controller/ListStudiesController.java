@@ -1,5 +1,7 @@
 package uk.ac.ebi.interpro.metagenomics.memi.controller;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.velocity.app.VelocityEngine;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -13,12 +15,12 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.StudyStatusEditor;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.StudyTypeEditor;
+import uk.ac.ebi.interpro.metagenomics.memi.basic.StudyVisibilityEditor;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.VelocityTemplateWriter;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateStudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.files.MemiFileWriter;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
-import uk.ac.ebi.interpro.metagenomics.memi.forms.StudySearchForm;
-import uk.ac.ebi.interpro.metagenomics.memi.model.EmgStudy;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.StudyFilter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ListStudiesModel;
@@ -27,10 +29,10 @@ import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +46,8 @@ import java.util.Map;
 @Controller
 @RequestMapping("/listStudies")
 public class ListStudiesController extends LoginController implements IMGController {
+
+    private final Log log = LogFactory.getLog(ListStudiesController.class);
 
     /* The maximum allowed number of characters per column within the study list table*/
     private final int MAX_CHARS_PER_COLUMN = 35;
@@ -71,10 +75,11 @@ public class ListStudiesController extends LoginController implements IMGControl
 
     @Override
     public ModelAndView doGet(ModelMap model) {
+        log.info("Requesting doGet...");
         //build and add the page model
-        populateModel(model);
+        populateModel(model, new StudyFilter());
         model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((ListStudiesModel) model.get(MGModel.MODEL_ATTR_NAME)).getLoginForm());
-        model.addAttribute(StudySearchForm.MODEL_ATTR_NAME, ((ListStudiesModel) model.get(MGModel.MODEL_ATTR_NAME)).getFilterForm());
+        model.addAttribute(StudyFilter.MODEL_ATTR_NAME, ((ListStudiesModel) model.get(MGModel.MODEL_ATTR_NAME)).getStudyFilter());
         return new ModelAndView(VIEW_NAME, model);
     }
 
@@ -86,6 +91,7 @@ public class ListStudiesController extends LoginController implements IMGControl
      */
     @RequestMapping(value = "exportStudies", method = RequestMethod.GET)
     public ModelAndView doExportStudies(HttpServletResponse response) {
+        log.info("Requesting exportStudies (GET method)...");
         List<Study> studies = studyDAO.retrieveAll();
         if (studies != null && studies.size() > 0) {
             //Create velocity spring_model
@@ -104,28 +110,36 @@ public class ListStudiesController extends LoginController implements IMGControl
     }
 
 
-    @RequestMapping(method = RequestMethod.POST)
+    @Override
+    @RequestMapping(value = "*/login", method = RequestMethod.POST)
     public ModelAndView doProcessLogin(@ModelAttribute(LoginForm.MODEL_ATTR_NAME) @Valid LoginForm loginForm, BindingResult result,
                                        ModelMap model, SessionStatus status) {
+        log.info("Requesting doProcessLogin (POST method)...");
         //process login
         super.processLogin(loginForm, result, model, status);
         //create model and view
-        populateModel(model);
-        model.addAttribute(StudySearchForm.MODEL_ATTR_NAME, ((ListStudiesModel) model.get(MGModel.MODEL_ATTR_NAME)).getFilterForm());
+        populateModel(model, new StudyFilter());
+        model.addAttribute(StudyFilter.MODEL_ATTR_NAME, ((ListStudiesModel) model.get(MGModel.MODEL_ATTR_NAME)).getStudyFilter());
         return new ModelAndView(VIEW_NAME, model);
     }
 
     @RequestMapping(value = "doSearch", method = RequestMethod.POST)
-    public ModelAndView doSearch(@ModelAttribute(StudySearchForm.MODEL_ATTR_NAME) StudySearchForm studySearchForm, ModelMap model, SessionStatus status) {
-        populateModel(model);
+    public ModelAndView doSearch(HttpServletRequest request, HttpServletResponse response, @ModelAttribute(StudyFilter.MODEL_ATTR_NAME) StudyFilter filter, ModelMap model) {
+        log.info("Requesting doSearch (POST method)...");
+
+
+        String contextPath = request.getServletPath();
+        populateModel(model, filter);
         model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((ListStudiesModel) model.get(MGModel.MODEL_ATTR_NAME)).getLoginForm());
         return new ModelAndView(VIEW_NAME, model);
     }
 
+
     @InitBinder
     public void initBinder(WebDataBinder binder) {
-        binder.registerCustomEditor(EmgStudy.StudyType.class, "studyType", new StudyTypeEditor());
-        binder.registerCustomEditor(EmgStudy.StudyStatus.class, "studyStatus", new StudyStatusEditor());
+        binder.registerCustomEditor(Study.StudyType.class, "studyType", new StudyTypeEditor());
+        binder.registerCustomEditor(Study.StudyStatus.class, "studyStatus", new StudyStatusEditor());
+        binder.registerCustomEditor(StudyFilter.StudyVisibility.class, "studyVisibility", new StudyVisibilityEditor());
     }
 
     /**
@@ -133,6 +147,14 @@ public class ListStudiesController extends LoginController implements IMGControl
      */
     private void populateModel(ModelMap model) {
         final ListStudiesModel subModel = MGModelFactory.getListStudiesPageModel(sessionManager, studyDAO);
+        model.addAttribute(MGModel.MODEL_ATTR_NAME, subModel);
+    }
+
+    /**
+     * Creates the MG model and adds it to the specified model map.
+     */
+    private void populateModel(ModelMap model, StudyFilter filter) {
+        final ListStudiesModel subModel = MGModelFactory.getListStudiesPageModel(sessionManager, studyDAO, filter);
         model.addAttribute(MGModel.MODEL_ATTR_NAME, subModel);
     }
 
