@@ -28,7 +28,7 @@ public class Study {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "STUDY_SEQ")
     private long id;
 
-    @Column(name = "STUDY_ID", length = 15)
+    @Column(name = "STUDY_ID", length = 18)
     private String studyId;
 
     @Column(name = "STUDY_NAME")
@@ -63,8 +63,9 @@ public class Study {
     @ManyToMany
     private Set<Publication> publications;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "Study_ID")
+//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "study")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "study")
+    @Column(name = "Study_ID")
     private Set<Sample> samples;
 
     @Column(name = "CENTRE_NAME")
@@ -84,10 +85,10 @@ public class Study {
     private boolean isPublic;
 
     /**
-     * Holds an optional URL to the users own homepage for their study.
+     * Holds an optional URL to the study's website.
      */
     @Column(name = "STUDY_LINKOUT")
-    private String userPageURL;
+    private String studyPageURL;
 
     public Study() {
         publications = new HashSet<Publication>();
@@ -242,12 +243,19 @@ public class Study {
         isPublic = aPublic;
     }
 
-    public String getUserPageURL() {
-        return userPageURL;
+    public String getPrivacy() {
+        if (isPublic) {
+            return "public";
+        }
+        return "private";
     }
 
-    public void setUserPageURL(String userPageURL) {
-        this.userPageURL = userPageURL;
+    public String getStudyPageURL() {
+        return studyPageURL;
+    }
+
+    public void setStudyPageURL(String studyPageURL) {
+        this.studyPageURL = studyPageURL;
     }
 
     public Date getLastMetadataReceived() {

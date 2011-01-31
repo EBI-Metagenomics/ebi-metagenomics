@@ -1,5 +1,6 @@
 package uk.ac.ebi.interpro.metagenomics.memi.dao;
 
+import org.hibernate.criterion.Criterion;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.scan.genericjpadao.GenericDAO;
 
@@ -44,5 +45,7 @@ public interface HibernateStudyDAO extends GenericDAO<Study, String> {
      * @param isDescendingOrder Order direction.
      */
     List<Study> retrieveOrderedPublicStudiesWithoutSubId(long submitterId, String propertyName, boolean isDescendingOrder);
+
+    List<Study> retrieveFilteredStudies(List<Criterion> crits);
 
 }

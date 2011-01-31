@@ -13,25 +13,4 @@ import javax.persistence.Entity;
 @Entity
 public class HostSample extends Sample {
 
-    @Column(name = "HOST_TAXON_ID")
-    private long hostTaxonId;
-
-    @Column(name = "HOST_SEX")
-    private String hostSex;
-
-    public String getHostSex() {
-        return hostSex;
-    }
-
-    public void setHostSex(String hostSex) {
-        this.hostSex = hostSex;
-    }
-
-    public long getHostTaxonId() {
-        return hostTaxonId;
-    }
-
-    public void setHostTaxonId(long hostTaxonId) {
-        this.hostTaxonId = hostTaxonId;
-    }
 }

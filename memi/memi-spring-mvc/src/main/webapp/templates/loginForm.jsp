@@ -5,7 +5,7 @@
 <c:choose>
     <c:when test="${empty mgModel.submitter}">
         <table id="login">
-            <form:form method="POST" action="" commandName="loginForm">
+            <form:form id="test" method="POST" action="" commandName="loginForm">
                 <tr>
                     <td>E-Mail*:<form:errors cssStyle="color:red;" path="emailAddress"/></td>
                 </tr>

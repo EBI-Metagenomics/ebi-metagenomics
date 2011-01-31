@@ -2,6 +2,7 @@ package uk.ac.ebi.interpro.metagenomics.memi.forms;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import javax.persistence.Temporal;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -60,12 +61,12 @@ public class SubmissionForm {
     }
 
     public String getReleaseDate() {
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
         return df.format(releaseDate);
     }
 
     public void setReleaseDate(String releaseDate) {
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
         try {
             this.releaseDate = df.parse(releaseDate);
         } catch (ParseException e) {

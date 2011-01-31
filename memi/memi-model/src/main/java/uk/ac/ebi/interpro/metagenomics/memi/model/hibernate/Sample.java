@@ -2,6 +2,7 @@ package uk.ac.ebi.interpro.metagenomics.memi.model.hibernate;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 /**
  * TODO: Description
@@ -22,7 +23,8 @@ public abstract class Sample {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SAMPLE_SEQ")
     private long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "STUDY_ID", nullable = true)
     private Study study;
 
     @Column(name = "SAMPLE_ID")
@@ -61,9 +63,6 @@ public abstract class Sample {
     @Column(name = "ANALYSIS_COMPLETED")
     private Date analysisCompleted;
 
-    @Column(name = "HABITAT_TYPE")
-    private String habitatType;
-
     /**
      * Single samples of public study could be private. Default value is private.
      */
@@ -72,6 +71,12 @@ public abstract class Sample {
 
     @Column(name = "SUBMITTER_ID")
     private long submitterId;
+
+    /**
+     * Associated publication.
+     */
+    @ManyToMany
+    private Set<Publication> publications;
 
     protected Sample() {
         isPublic = false;
@@ -141,14 +146,6 @@ public abstract class Sample {
         this.collectionDate = collectionDate;
     }
 
-    public String getHabitatType() {
-        return habitatType;
-    }
-
-    public void setHabitatType(String habitatType) {
-        this.habitatType = habitatType;
-    }
-
     public boolean isPublic() {
         return isPublic;
     }
@@ -195,5 +192,13 @@ public abstract class Sample {
 
     public void setSubmitterId(long submitterId) {
         this.submitterId = submitterId;
+    }
+
+    public Set<Publication> getPublications() {
+        return publications;
+    }
+
+    public void setPublications(Set<Publication> publications) {
+        this.publications = publications;
     }
 }

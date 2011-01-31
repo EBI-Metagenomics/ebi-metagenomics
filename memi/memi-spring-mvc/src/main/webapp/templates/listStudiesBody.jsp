@@ -6,7 +6,7 @@
 
     <div align="center">
         <table border="0" style="border-width: 1px;border-color: #000000;border-style: solid;">
-            <form:form method="POST" action="${baseURL}/listStudies/doSearch" commandName="searchStudiesForm">
+            <form:form method="POST" action="${baseURL}/listStudies/doSearch" commandName="studyFilter">
                 <tr>
                     <td>Text:</td>
                     <td><form:input id="autocomplete" path="searchTerm"/></td>
@@ -17,21 +17,25 @@
                     <td>
                         <form:select path="studyType">
                             <form:option value="All" label="All"/>
-                            <form:options items="${mgModel.studyTypes}" itemValue="studyTypeName"
-                                          itemLabel="studyTypeName"/>
+                            <form:options items="${mgModel.studyTypes}"/>
                         </form:select>
                     </td>
-                    <td><form:errors path="studyType" cssClass="error"/></td>
                 </tr>
                 <tr>
                     <td>Analysis status:</td>
                     <td><form:select id="studyStatus" path="studyStatus">
                         <form:option value="All" label="All"/>
-                        <form:options items="${mgModel.studyStatusList}" itemValue="studyStatusName"
-                                      itemLabel="studyStatusName"/>
+                        <form:options items="${mgModel.studyStatusList}"/>
                     </form:select></td>
-                    <td><form:errors path="studyStatus" cssClass="error"/></td>
                 </tr>
+                <c:if test="${not empty mgModel.submitter}">
+                    <tr>
+                        <td>Privacy:</td>
+                        <td><form:select id="studyVisibility" path="studyVisibility">
+                            <form:options items="${mgModel.studyVisibilityList}"/>
+                        </form:select></td>
+                    </tr>
+                </c:if>
                 <tr>
                     <td></td>
                     <td></td>
@@ -49,38 +53,31 @@
 
     <table border="1" width="95%">
         <tr>
+            <th>Study type</th>
             <th>Study Id</th>
             <th>Study name</th>
-            <th>Release date</th>
-            <th>NCBI Project Id</th>
-            <th>Visibility</th>
-            <th>Study type</th>
-            <th>Experimental factor</th>
-            <th>Number of samples</th>
+            <th>Received date</th>
+            <c:if test="${not empty mgModel.submitter}">
+                <th>Privacy</th>
+            </c:if>
             <th>Analysis status</th>
+            <th>Experimental factor</th>
+            <th>NCBI Project Id</th>
         </tr>
         <c:forEach var="study" items="${mgModel.studies}" varStatus="status">
             <tr>
+                <td>${study.studyType}</td>
                 <td>${study.studyId}</td>
                 <td>
                     <a href="<c:url value="${baseURL}/studyOverview/${study.studyId}"/>">${study.studyName}</a>
                 </td>
-                <td>${study.publicReleaseDate}</td>
-                <td>${study.ncbiProjectId}</td>
-                <td>
-                <c:choose>
-                    <c:when test="true">
-                        public
-                    </c:when>
-                    <c:otherwise>
-                        private
-                    </c:otherwise>
-                </c:choose>
-                </td>
-                <td>${study.studyType}</td>
-                <td>${study.experimentalFactor}</td>
-                <td>N/A</td>
+                <td>${study.formattedLastReceived}</td>
+                <c:if test="${not empty mgModel.submitter}">
+                    <td>${study.privacy}</td>
+                </c:if>
                 <td>${study.studyStatus}</td>
+                <td>${study.experimentalFactor}</td>
+                <td>${study.ncbiProjectId}</td>
             </tr>
         </c:forEach>
     </table>

@@ -2,8 +2,7 @@ package uk.ac.ebi.interpro.metagenomics.memi.basic;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import uk.ac.ebi.interpro.metagenomics.memi.model.EmgStudy;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.StudyFilter;
 
 import java.beans.PropertyEditorSupport;
 
@@ -15,8 +14,8 @@ import java.beans.PropertyEditorSupport;
  * @version $Id$
  * @since 1.0-SNAPSHOT
  */
-public class StudyStatusEditor extends PropertyEditorSupport {
-    private final Log log = LogFactory.getLog(StudyStatusEditor.class);
+public class StudyVisibilityEditor extends PropertyEditorSupport {
+    private final Log log = LogFactory.getLog(StudyVisibilityEditor.class);
 
     @Override
     public void setAsText(String text) {
@@ -25,14 +24,14 @@ public class StudyStatusEditor extends PropertyEditorSupport {
             text = text.toUpperCase();
         }
 
-        Study.StudyStatus status;
+        StudyFilter.StudyVisibility vis;
 
         try {
-            status = Study.StudyStatus.valueOf(text);
-            setValue(status);
+            vis = StudyFilter.StudyVisibility.valueOf(text);
+            setValue(vis);
         }
         catch (Exception e) {
-            log.warn("Could not find any study status value for name: " + text);
+            log.warn("Could not find any study type value for name: " + text);
         }
     }
 

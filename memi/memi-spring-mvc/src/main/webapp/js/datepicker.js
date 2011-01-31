@@ -7,6 +7,7 @@ $(function() {
         numberOfMonths: 1,
         maxDate: '+24m',
         minDate: '0d',
-        showButtonPanel: true
+        showButtonPanel: true,
+        format: 'd-m-Y'
     });
 });

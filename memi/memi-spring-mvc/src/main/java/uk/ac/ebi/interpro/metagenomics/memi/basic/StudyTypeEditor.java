@@ -3,6 +3,7 @@ package uk.ac.ebi.interpro.metagenomics.memi.basic;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgStudy;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 
 import java.beans.PropertyEditorSupport;
 
@@ -24,10 +25,10 @@ public class StudyTypeEditor extends PropertyEditorSupport {
             text = text.toUpperCase();
         }
 
-        EmgStudy.StudyType type;
+        Study.StudyType type;
 
         try {
-            type = EmgStudy.StudyType.valueOf(text);
+            type = Study.StudyType.valueOf(text);
             setValue(type);
         }
         catch (Exception e) {
@@ -40,6 +41,9 @@ public class StudyTypeEditor extends PropertyEditorSupport {
         if (getValue() instanceof String) {
             return (String) getValue();
         }
-        return ("" + getValue());
+        //make first char capital and the other lower case
+        String result = ("" + getValue());
+        result = result.substring(0, 1) + result.substring(1, result.length()).toLowerCase();
+        return result;
     }
 }

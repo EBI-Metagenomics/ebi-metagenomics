@@ -1,8 +1,12 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
 
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Restrictions;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateSampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateStudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.NewsDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.StudyFilter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.News;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
@@ -52,6 +56,10 @@ public class MGModelFactory {
 
     public static ListStudiesModel getListStudiesPageModel(SessionManager sessionMgr, HibernateStudyDAO studyDAO) {
         return new ListStudiesModel(getSessionSubmitter(sessionMgr), getAllPublicStudiesFromDB(studyDAO));
+    }
+
+    public static ListStudiesModel getListStudiesPageModel(SessionManager sessionMgr, HibernateStudyDAO studyDAO, StudyFilter filter) {
+        return new ListStudiesModel(getSessionSubmitter(sessionMgr), getFilteredStudiesFrom(studyDAO, filter));
     }
 
     /**
@@ -168,6 +176,45 @@ public class MGModelFactory {
         }
         return result;
     }
+
+    public static List<Study> getFilteredStudiesFrom(HibernateStudyDAO studyDAO, StudyFilter filter) {
+        List<Study> result = studyDAO.retrieveFilteredStudies(buildFilterCriteria(filter));
+        if (result == null) {
+            result = new ArrayList<Study>();
+        }
+        return result;
+    }
+
+    private static List<Criterion> buildFilterCriteria(StudyFilter filter) {
+        String searchText = filter.getSearchTerm();
+        Study.StudyType type = filter.getStudyType();
+        Study.StudyStatus studyStatus = filter.getStudyStatus();
+        StudyFilter.StudyVisibility visibility = filter.getStudyVisibility();
+
+        List<Criterion> crits = new ArrayList<Criterion>();
+        if (searchText != null && searchText.trim().length() > 0) {
+            crits.add(Restrictions.or(Restrictions.like("studyId", searchText, MatchMode.ANYWHERE), Restrictions.like("studyName", searchText, MatchMode.ANYWHERE)));
+        }
+        //add study type criterion
+        if (type != null) {
+            crits.add(Restrictions.eq("studyType", type));
+        }
+        //add study status criterion
+        if (studyStatus != null) {
+            crits.add(Restrictions.eq("studyStatus", studyStatus));
+        }
+        //add is public criterion
+        if (!visibility.equals(StudyFilter.StudyVisibility.ALL)) {
+            if (visibility.equals(StudyFilter.StudyVisibility.PRIVATE)) {
+                crits.add(Restrictions.eq("isPublic", false));
+            } else if (visibility.equals(StudyFilter.StudyVisibility.PUBLIC)) {
+                crits.add(Restrictions.eq("isPublic", true));
+            }
+        }
+
+        return crits;
+    }
+
 
     public static List<News> getNewsListFromDB(NewsDAO newsDAO) {
         List<News> newsList = newsDAO.getLatestNews();

@@ -7,18 +7,18 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.EmgStudy;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Represents the JUnit test for {@link StudySearchForm}
+ * Represents the JUnit test for {@link StudyFilter}
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @version $Id$
  * @since 1.0-SNAPSHOT
  */
 public class FilterFormTest {
-    private StudySearchForm form;
+    private StudyFilter form;
 
     @Before
     public void setUp() throws Exception {
-        form = new StudySearchForm();
+        form = new StudyFilter();
     }
 
     @Test
