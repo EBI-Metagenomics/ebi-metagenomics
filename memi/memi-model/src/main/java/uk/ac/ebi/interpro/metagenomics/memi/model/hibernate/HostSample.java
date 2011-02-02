@@ -26,7 +26,7 @@ public class HostSample extends Sample {
     private HostSex hostSex;
 
     public enum HostSex {
-        FEMAL, MALE;
+        FEMALE, MALE;
     }
 
     public String getPhenotype() {

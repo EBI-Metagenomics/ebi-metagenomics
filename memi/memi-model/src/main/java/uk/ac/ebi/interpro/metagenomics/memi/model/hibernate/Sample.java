@@ -2,7 +2,9 @@ package uk.ac.ebi.interpro.metagenomics.memi.model.hibernate;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
+import java.util.ArrayList;
 
 /**
  * TODO: Description
@@ -84,6 +86,7 @@ public abstract class Sample {
 
     protected Sample() {
         isPublic = false;
+        publications = new HashSet<Publication>();
     }
 
     public long getId() {
@@ -204,6 +207,15 @@ public abstract class Sample {
 
     public void setPublications(Set<Publication> publications) {
         this.publications = publications;
+    }
+
+    public void addPublication(Publication publication) {
+        if (publication != null) {
+            if (publications == null) {
+                publications = new HashSet<Publication>();
+            }
+            publications.add(publication);
+        }
     }
 
     public String getMiscellaneous() {
