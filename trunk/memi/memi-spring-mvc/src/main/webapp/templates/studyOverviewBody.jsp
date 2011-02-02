@@ -1,34 +1,139 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://java.sun.com/jsp/jstl/core" %>
-<html>
-<head>
-    <title>Sample overview</title>
-    <%--<link href="/css/memi.css" rel="stylesheet" type="text/css" media="all"/>--%>
-</head>
-<body>
+<%--Page variable which is used several time within this page. Used for not specified study attributes.--%>
+<c:set var="notGivenId" value="(not given)"/>
 <div id="content">
-    <h2>Study overview - ${study.studyName} (ID ${study.studyId}) </h2>
+    <h2>Study Overview</h2>
 
     <div style="margin-top:6px"></div>
-    <div>
-        <table border="0" style="border-width: 1px;border-color: #000000;border-style: solid;">
-            <c:forEach var="item" items="${studyPropertyMap}">
-                <tr>
-                    <c:if test="${item.key!='StudyAbstract'}">
-                        <td valign="top"><c:out value="${item.key}:"/></td>
-                        <td align="left"><c:out value="${item.value}"/></td>
-                    </c:if>
-                </tr>
-            </c:forEach>
-            <tr>
-                <td valign="top">Study abstract:</td>
-                <td><textarea name=mytextarea cols=50 rows=5 readonly><c:out
-                        value="${study.studyAbstract}"/></textarea></td>
-            </tr>
-        </table>
-    </div>
-    <div style="margin-top:60px"/>
-    <h3>Sample list</h3>
+    <table frame="box" width="95%">
+        <tr>
+            <td width="50%" align="left" valign="top">
+                <h2>Study ${study.studyId}</h2>
+                ${study.studyName}
+            </td>
+        </tr>
+    </table>
+    <div style="margin-top:10px"></div>
+    <h3>Study Description</h3>
+    <table frame="box" width="95%">
+        <tr>
+            <c:choose>
+                <c:when test="${not empty study.studyAbstract}">
+                    <c:set var="studyAbstract" value="${study.studyAbstract}"/>
+                </c:when>
+                <c:otherwise>
+                    <c:set var="studyAbstract" value="${notGivenId}"/>
+                </c:otherwise>
+            </c:choose>
+            <td valign="top" align="right" width="150"><b>Study abstract:</b></td>
+            <td><textarea name=mytextarea cols=50 rows=5 readonly><c:out
+                    value="${studyAbstract}"/></textarea></td>
+        </tr>
+        <tr>
+            <c:choose>
+                <c:when test="${not empty study.studyType}">
+                    <c:set var="studyType" value="${study.studyType}"/>
+                </c:when>
+                <c:otherwise>
+                    <c:set var="studyType" value="${notGivenId}"/>
+                </c:otherwise>
+            </c:choose>
+            <td valign="top" align="right" width="150"><b>Type of study:</b></td>
+            <td><c:out value="${studyType}"/></td>
+        </tr>
+        <tr>
+            <c:choose>
+                <c:when test="${not empty study.experimentalFactor}">
+                    <c:set var="experimentalFactor" value="${study.experimentalFactor}"/>
+                </c:when>
+                <c:otherwise>
+                    <c:set var="experimentalFactor" value="${notGivenId}"/>
+                </c:otherwise>
+            </c:choose>
+            <td valign="top" align="right" width="150"><b>Experimental factor:</b></td>
+            <td><c:out value="${experimentalFactor}"/></td>
+        </tr>
+        <tr>
+            <td valign="top" align="right" width="150"><b>Publications:</b></td>
+            <td>
+                <c:forEach var="pub" items="${publications}" varStatus="status">
+                    <p><c:out value="${pub.authors}"/> et al. (<c:out value="${pub.year}"/>)<br>
+                        <i>"<c:out value="${pub.pubTitle}"/>"</i><br><c:out value="${pub.volume}"/><br>
+                        <c:if test="${not empty pub.doi}">
+                            <a href="<c:url value="http://dx.doi.org/${pub.doi}"/>">doi:<c:out value="${pub.doi}"/></a>
+                        </c:if>
+                        <c:if test="${not empty pub.pubMedId && pub.pubMedId>0}">
+                            <a href="<c:url value="http://www.ncbi.nlm.nih.gov/pubmed/${pub.pubMedId}"/>">PMID <c:out
+                                    value="${pub.pubMedId}"/></a>
+                        </c:if>
+                    </p>
+                </c:forEach>
+            </td>
+        </tr>
+    </table>
+    <div style="margin-top:10px"></div>
+    <h3>Contact Details:</h3>
+    <table frame="box" width="95%">
+        <tr>
+            <td valign="top" align="right" width="150"><b>Submitter name:</b></td>
+            <td>
+                <c:choose>
+                <c:when test="${study.public}">Public data</c:when>
+                <c:otherwise>(not given)</c:otherwise>
+                </c:choose>
+        </tr>
+        <tr>
+            <td valign="top" align="right" width="150"><b>Contact name:</b></td>
+            <td>(not given)</td>
+        </tr>
+        <tr>
+            <td valign="top" align="right" width="150"><b>Contact email:</b></td>
+            <td>(not given)</td>
+        </tr>
+        <tr>
+            <c:choose>
+                <c:when test="${not empty study.centreName}">
+                    <c:set var="centreName" value="${study.centreName}"/>
+                </c:when>
+                <c:otherwise>
+                    <c:set var="centreName" value="${notGivenId}"/>
+                </c:otherwise>
+            </c:choose>
+            <td valign="top" align="right" width="150"><b>Centre name:</b></td>
+            <td><c:out value="${centreName}"/></td>
+        </tr>
+    </table>
+    <h3>Other Information:</h3>
+    <table frame="box" width="95%">
+        <tr>
+            <c:choose>
+                <c:when test="${not empty study.publicReleaseDate}">
+                    <c:set var="publicReleaseDate" value="${study.publicReleaseDate}"/>
+                </c:when>
+                <c:otherwise>
+                    <c:set var="publicReleaseDate" value="${notGivenId}"/>
+                </c:otherwise>
+            </c:choose>
+            <td valign="top" align="right" width="150"><b>Public release date:</b></td>
+            <td><c:out value="${publicReleaseDate}"/></td>
+        </tr>
+        <tr>
+            <td valign="top" align="right" width="150"><b>BioProject ID:</b></td>
+            <c:choose>
+                <c:when test="${not empty study.ncbiProjectId && study.ncbiProjectId>0}">
+                    <td>
+                        <a href="<c:url value="http://www.ebi.ac.uk/ena/data/view/Project:${study.ncbiProjectId}"/>"><c:out
+                                value="${study.ncbiProjectId}"/></a></td>
+                </c:when>
+                <c:otherwise>
+                    <td><c:out value="${notGivenId}"/></td>
+                </c:otherwise>
+            </c:choose>
+        </tr>
+    </table>
+    <div style="margin-top:10px"/>
+    <h3>Associated Sample(s):</h3>
 
     <div align="left">
         <a href="<c:url value="${baseURL}/studyOverview/exportSamples/${study.studyId}"/>">Export to CSV</a>
@@ -36,9 +141,9 @@
     <table border="1">
         <tr>
             <th>Item no.</th>
-            <th>Sample Id</th>
-            <th>Collection date</th>
-            <th>Sample title</th>
+            <th>Sample ID</th>
+            <th>Collection Date</th>
+            <th>Sample Name</th>
         </tr>
         <%
             int i = 1;
@@ -58,12 +163,9 @@
                     </c:choose>
                 </td>
                 <td align="center">
-                    <a href="<c:url value="${baseURL}/sampleOverview/${sample.sampleId}"/>">${sample.sampleTitle}</a>
+                    <a href="<c:url value="${baseURL}/sampleOverview/${sample.id}"/>">${sample.sampleTitle}</a>
                 </td>
             </tr>
         </c:forEach>
     </table>
 </div>
-</div>
-</body>
-</html>

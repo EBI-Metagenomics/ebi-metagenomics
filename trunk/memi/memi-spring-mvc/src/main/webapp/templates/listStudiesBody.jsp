@@ -69,7 +69,7 @@
                 <td>${study.studyType}</td>
                 <td>${study.studyId}</td>
                 <td>
-                    <a href="<c:url value="${baseURL}/studyOverview/${study.studyId}"/>">${study.studyName}</a>
+                    <a href="<c:url value="${baseURL}/studyOverview/${study.id}"/>">${study.studyName}</a>
                 </td>
                 <td>${study.formattedLastReceived}</td>
                 <c:if test="${not empty mgModel.submitter}">

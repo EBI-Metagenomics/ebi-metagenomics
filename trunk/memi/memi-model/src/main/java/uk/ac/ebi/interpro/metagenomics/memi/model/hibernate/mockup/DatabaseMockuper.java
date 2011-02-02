@@ -36,36 +36,40 @@ public class DatabaseMockuper {
         DateCreator dateCreator = new DateCreator();
         //create publications
         List<Publication> pubs = new ArrayList<Publication>();
+
         Publication p1 = new Publication();
-        p1.setViewType(Publication.ViewType.DOI);
+        p1.setAuthors("Kristen M. DeAngelis, John M. Gladden, Martin Allgaier");
+        p1.setYear(2010);
+        p1.setPubTitle("Strategies for Enhancing the Effectiveness of Metagenomic-based Enzyme Discovery in Lignocellulolytic Microbial Communities");
+        p1.setVolume("BioEnergy Research, Volume 3, Number 2, 146-158");
         p1.setDoi("10.1007/s12155-010-9089-z");
         pubs.add(p1);
 
         Publication p2 = new Publication();
-        p2.setViewType(Publication.ViewType.PMID);
+        p2.setAuthors("Turnbaugh PJ, Hamady M, Yatsunenko T");
+        p2.setYear(2009);
+        p2.setPubTitle("A core gut microbiome in obese and lean twins.");
+        p2.setVolume("Nature. 2009 Jan 22;457(7228):480-4. Epub 2008 Nov 30.");
         p2.setPubMedId(19043404);
+        p2.setDoi("10.1038/nature07540");
         pubs.add(p2);
 
         Publication p3 = new Publication();
-        p3.setViewType(Publication.ViewType.DOI);
-        p3.setAuthors("Folker Meyer, Lynn Schriml, Ian R Joint, Martin Mühling, Dawn Field, Jack A. Gilbert");
-        p3.setPubTitle("Metagenomes and metatranscriptomes from the L4 long-term coastal monitoring station in the Western English Channel");
+        p3.setAuthors("Folker Meyer, Lynn Schriml, Ian R Joint");
         p3.setYear(2010);
-        p3.setVolume("Vol 3, No 2");
+        p3.setPubTitle("Metagenomes and metatranscriptomes from the L4 long-term coastal monitoring station in the Western English Channel");
+        p3.setVolume("Standards in Genomic Sciences, Vol 3, No 2 (2010)");
         p3.setDoi("10.4056/sigs.1202536");
         pubs.add(p3);
 
         Publication p4 = new Publication();
-        p4.setViewType(Publication.ViewType.DOI);
         p4.setPubTitle("The seasonal structure of microbial communities in the Western English Channel");
         p4.setDoi("10.1111/j.1462-2920.2009.02017.x");
-        p4.setAuthors("Jack A. Gilbert, Dawn Field, Paul Swift, Lindsay Newbold, Anna Oliver, " +
-                "Tim Smyth1, Paul J. Somerfield1, Sue Huse, Ian Joint");
+        p4.setAuthors("Jack A. Gilbert, Dawn Field, Paul Swift");
         p4.setYear(2009);
         pubs.add(p4);
 
         Publication p5 = new Publication();
-        p5.setViewType(Publication.ViewType.DOI);
         p5.setPubTitle("Detection of Large Numbers of Novel Sequences in the Metatranscriptomes of Complex Marine Microbial Communities");
         p5.setDoi("10.1371/journal.pone.0003042");
         p5.setAuthors("Jack A. Gilbert");
@@ -73,16 +77,22 @@ public class DatabaseMockuper {
         pubs.add(p5);
 
         Publication p6 = new Publication();
-        p6.setViewType(Publication.ViewType.URL);
         p6.setPubTitle("The Visualization and Analysis of Microbial Population Structures");
         p6.setUrl("http://vamps.mbl.edu");
         pubs.add(p6);
 
         Publication p7 = new Publication();
-        p7.setViewType(Publication.ViewType.URL);
         p7.setPubTitle("INTERNATIONAL CENSUS OF MARINE MICROBES");
         p7.setUrl("http://icomm.mbl.edu");
         pubs.add(p7);
+
+        Publication p8 = new Publication();
+        p8.setAuthors("Carola Simon, Arnim Wiezer, Axel W. Strittmatter");
+        p8.setYear(2009);
+        p8.setPubTitle("Phylogenetic Diversity and Metabolic Potential Revealed in a Glacier Ice Metagenome");
+        p8.setVolume("Nature 457, 480-484");
+        p8.setDoi("10.1128/AEM.00946-09");
+        pubs.add(p8);
 
         //persist publications
         for (Publication pub : pubs) {
@@ -98,6 +108,8 @@ public class DatabaseMockuper {
                 publicStudy.addPublication(p3);
             } else if (studyId.equals("SRP000319")) {
                 publicStudy.addPublication(p2);
+            } else if (studyId.equals("SRP000240")) {
+                publicStudy.addPublication(p8);
             } else if (studyId.equals("study_placeholder1")) {
                 publicStudy.setSubmitterId(50);
             }
@@ -121,8 +133,12 @@ public class DatabaseMockuper {
 
         for (Study study : publicStudies) {
             Set<Sample> samples = sampleMap.get(study.getStudyId());
-            study.setSamples(samples);
-            createObject(study);
+            for (Sample sample : samples) {
+                sample.setStudy(study);
+                createObject(sample);
+            }
+//            study.setSamples(samples);
+//            createObject(study);
         }
     }
 
@@ -152,6 +168,9 @@ public class DatabaseMockuper {
         }
     }
 
+    /**
+     * Returns a map between study id and samples.
+     */
     private static Map<String, Set<Sample>> parseSamples(String fileName) {
         Map<String, Set<Sample>> result = new HashMap<String, Set<Sample>>();
         try {
@@ -177,6 +196,12 @@ public class DatabaseMockuper {
 
                         } else {
                             s = new HostSample();
+                            ((HostSample) s).setHostSex((row[41].equals("femal") ? HostSample.HostSex.FEMAL : HostSample.HostSex.MALE));
+                            String taxonId = row[17];
+                            if (taxonId != null && taxonId.trim().length() > 0) {
+                                ((HostSample) s).setTaxonomyId(Integer.parseInt(taxonId));
+                            }
+                            ((HostSample) s).setPhenotype(row[47]);
                         }
                         s.setSampleId(row[0]);
                         String studyId = row[1];
@@ -215,6 +240,7 @@ public class DatabaseMockuper {
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
+                        s.setMiscellaneous(row[57]);
                         s.setSampleDescription(row[57]);
                         s.setPublic((row[58].equals("TRUE") ? true : false));
                         Set<Sample> samples = result.get(studyId);

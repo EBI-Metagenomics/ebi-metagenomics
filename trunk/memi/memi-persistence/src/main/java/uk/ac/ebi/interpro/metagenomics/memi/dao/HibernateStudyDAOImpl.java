@@ -53,13 +53,14 @@ public class HibernateStudyDAOImpl implements HibernateStudyDAO {
     }
 
     @Override
-    public Study read(String id) {
+    public Study read(Long id) {
         Session session = sessionFactory.getCurrentSession();
         return (Study) session.get(Study.class, id);
     }
 
+
     @Override
-    public Study readDeep(String id, String... deepFields) {
+    public Study readDeep(Long id, String... deepFields) {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 

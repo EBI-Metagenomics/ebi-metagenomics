@@ -35,7 +35,7 @@ public class Publication {
     @Column(name = "ISSUE", length = 55)
     private String issue;
 
-    @Column(name = "YEAR", length = 4)
+    @Column(name = "PUBLISHED_YEAR", length = 4)
     private int year;
 
     @Column(name = "PUB_TITLE", length = 740)
@@ -71,10 +71,6 @@ public class Publication {
     @Column(name = "PUB_ABSTRACT")
     @Lob
     private String pubAbstract;
-
-    @Column(name = "VIEW_TYPE")
-    private ViewType viewType;
-
 
     public long getPubId() {
         return pubId;
@@ -202,17 +198,5 @@ public class Publication {
 
     public void setPubMedCentralId(int pubMedCentralId) {
         this.pubMedCentralId = pubMedCentralId;
-    }
-
-    public ViewType getViewType() {
-        return viewType;
-    }
-
-    public void setViewType(ViewType viewType) {
-        this.viewType = viewType;
-    }
-
-    public enum ViewType {
-        REF_LINE, DOI, URL, PUBMED_ID, PMID, PMC;
     }
 }
