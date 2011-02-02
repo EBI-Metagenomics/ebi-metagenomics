@@ -11,10 +11,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.VelocityTemplateWriter;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.EmgLogFileInfoDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateSampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.files.MemiFileWriter;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.HostSample;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Publication;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
@@ -24,8 +28,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Represents the controller for sample overview page.
@@ -43,6 +46,9 @@ public class SampleOverviewController extends LoginController {
 
     @Resource
     private HibernateSampleDAO sampleDAO;
+
+    @Resource
+    private EmgLogFileInfoDAO fileInfoDAO;
 
     @Resource
     private VelocityEngine velocityEngine;
@@ -107,5 +113,45 @@ public class SampleOverviewController extends LoginController {
     @ModelAttribute(value = "sample")
     public Sample populateSample(@PathVariable Long sampleId) {
         return sampleDAO.read(sampleId);
+    }
+
+    /**
+     * Populates study associated publications.
+     */
+    @ModelAttribute(value = "publications")
+    public Set<Publication> populatePub(@PathVariable Long sampleId) {
+        if (sampleDAO != null) {
+            Sample sample = sampleDAO.read(sampleId);
+            if (sample != null) {
+                Set<Publication> pubs = sample.getPublications();
+                if (pubs != null) {
+                    return pubs;
+                }
+            }
+        }
+        return new HashSet<Publication>();
+    }
+
+    @ModelAttribute(value = "isHostInstance")
+    public boolean populateInstance(@PathVariable Long sampleId) {
+        if (sampleDAO != null) {
+            Sample sample = sampleDAO.read(sampleId);
+            if (sample instanceof HostSample) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @ModelAttribute(value = "archivedSequences")
+    public List<String> populateSeqs(@PathVariable Long sampleId) {
+        List<String> result = null;
+        if (sampleDAO != null && fileInfoDAO != null) {
+            Sample sample = sampleDAO.read(sampleId);
+            if (sample != null) {
+                result = fileInfoDAO.getFileIdsBySampleId(sample.getSampleId());
+            }
+        }
+        return result;
     }
 }

@@ -82,7 +82,7 @@ public class DatabaseMockuper {
         pubs.add(p6);
 
         Publication p7 = new Publication();
-        p7.setPubTitle("INTERNATIONAL CENSUS OF MARINE MICROBES");
+        p7.setPubTitle("International census of marine microbes");
         p7.setUrl("http://icomm.mbl.edu");
         pubs.add(p7);
 
@@ -135,6 +135,11 @@ public class DatabaseMockuper {
             Set<Sample> samples = sampleMap.get(study.getStudyId());
             for (Sample sample : samples) {
                 sample.setStudy(study);
+                if(study.getStudyId().equals("ERP000118"))
+                {
+                    sample.addPublication(p6);
+                    sample.addPublication(p7);
+                }
                 createObject(sample);
             }
 //            study.setSamples(samples);
@@ -196,7 +201,7 @@ public class DatabaseMockuper {
 
                         } else {
                             s = new HostSample();
-                            ((HostSample) s).setHostSex((row[41].equals("femal") ? HostSample.HostSex.FEMAL : HostSample.HostSex.MALE));
+                            ((HostSample) s).setHostSex((row[41].equals("female") ? HostSample.HostSex.FEMALE : HostSample.HostSex.MALE));
                             String taxonId = row[17];
                             if (taxonId != null && taxonId.trim().length() > 0) {
                                 ((HostSample) s).setTaxonomyId(Integer.parseInt(taxonId));
@@ -240,7 +245,7 @@ public class DatabaseMockuper {
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
-                        s.setMiscellaneous(row[57]);
+                        s.setMiscellaneous(row[56]);
                         s.setSampleDescription(row[57]);
                         s.setPublic((row[58].equals("TRUE") ? true : false));
                         Set<Sample> samples = result.get(studyId);

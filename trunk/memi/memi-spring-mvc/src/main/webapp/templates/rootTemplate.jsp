@@ -39,26 +39,28 @@
 <body onload="if(navigator.userAgent.indexOf('MSIE') != -1) {document.getElementById('head').allowTransparency = true;}">
 <%-- The following variable saves and provides the base URL for the whole application --%>
 <c:set var="baseURL" value="${pageContext.request.contextPath}/memi" scope="session"/>
-<table>
-    <tr>
-        <td colspan="2">
-            <tiles:insertAttribute name="header"/>
-            <tiles:insertAttribute name="mainMenu"/>
-        </td>
-    </tr>
-    <tr>
-        <td width="88%">
-            <tiles:insertAttribute name="body"/>
-        </td>
-        <td valign="top" width="12%">
-            <tiles:insertAttribute name="rightMenu"/>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="2">
-            <tiles:insertAttribute name="footer"/>
-        </td>
-    </tr>
-</table>
+<div  style="overflow:auto;width:100%;height:100%;">
+    <table>
+        <tr>
+            <td colspan="2">
+                <tiles:insertAttribute name="header"/>
+                <tiles:insertAttribute name="mainMenu"/>
+            </td>
+        </tr>
+        <tr>
+            <td width="88%">
+                <tiles:insertAttribute name="body"/>
+            </td>
+            <td valign="top" width="12%">
+                <tiles:insertAttribute name="rightMenu"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <tiles:insertAttribute name="footer"/>
+            </td>
+        </tr>
+    </table>
+</div>
 </body>
 </html>

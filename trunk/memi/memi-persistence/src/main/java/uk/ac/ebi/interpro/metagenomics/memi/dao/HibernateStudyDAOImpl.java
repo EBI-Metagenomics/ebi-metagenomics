@@ -111,6 +111,7 @@ public class HibernateStudyDAOImpl implements HibernateStudyDAO {
             }
             //add WHERE clause
             crit.add(Restrictions.eq("isPublic", true));
+            crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
             result = crit.list();
         }
         return result;
