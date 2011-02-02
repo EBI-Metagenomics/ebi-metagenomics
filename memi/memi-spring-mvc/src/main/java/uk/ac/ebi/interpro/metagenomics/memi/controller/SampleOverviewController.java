@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.VelocityTemplateWriter;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.EmgSampleDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateSampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.files.MemiFileWriter;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
-import uk.ac.ebi.interpro.metagenomics.memi.model.EmgSample;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
@@ -40,8 +40,9 @@ public class SampleOverviewController extends LoginController {
      * View name of this controller which is used several times.
      */
     private final String VIEW_NAME = "sampleOverview";
+
     @Resource
-    private EmgSampleDAO emgSampleDAO;
+    private HibernateSampleDAO sampleDAO;
 
     @Resource
     private VelocityEngine velocityEngine;
@@ -55,7 +56,7 @@ public class SampleOverviewController extends LoginController {
     @RequestMapping(value = "/{sampleId}", method = RequestMethod.GET)
     public ModelAndView doGetSample(@PathVariable String sampleId, ModelMap model) {
         //Add sample to spring mvc model
-//        EmgSample sample = emgSampleDAO.read(sampleId);
+//        EmgSample sample = sampleDAO.read(sampleId);
 //        model.put("sample", sample);
         populateModel(model);
         model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((MGModel) model.get(MGModel.MODEL_ATTR_NAME)).getLoginForm());
@@ -64,8 +65,8 @@ public class SampleOverviewController extends LoginController {
 
 
     @RequestMapping(value = "/exportSample/{sampleId}", method = RequestMethod.GET)
-    public ModelAndView doExportSample(ModelMap model, @PathVariable String sampleId, HttpServletResponse response) {
-        EmgSample sample = emgSampleDAO.read(sampleId);
+    public ModelAndView doExportSample(ModelMap model, @PathVariable Long sampleId, HttpServletResponse response) {
+        Sample sample = sampleDAO.read(sampleId);
         if (sample != null) {
             //Create velocity spring model
             Map<String, Object> velocityModel = new HashMap<String, Object>();
@@ -104,7 +105,7 @@ public class SampleOverviewController extends LoginController {
     }
 
     @ModelAttribute(value = "sample")
-    public EmgSample populateSample(@PathVariable String sampleId) {
-        return emgSampleDAO.read(sampleId);
+    public Sample populateSample(@PathVariable Long sampleId) {
+        return sampleDAO.read(sampleId);
     }
 }

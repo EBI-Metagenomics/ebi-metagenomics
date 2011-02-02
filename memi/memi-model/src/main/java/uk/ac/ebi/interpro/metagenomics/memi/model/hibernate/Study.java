@@ -34,6 +34,9 @@ public class Study {
     @Column(name = "STUDY_NAME")
     private String studyName;
 
+    /**
+     * NCBI BioProject ID
+     */
     @Column(name = "NCBI_PROJECT_ID")
     private long ncbiProjectId;
 
@@ -58,9 +61,9 @@ public class Study {
     private Date lastMetadataReceived;
 
     /**
-     * Associated publication.
+     * Associated publication. Deactivated lazy loading.
      */
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Publication> publications;
 
 //    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "study")

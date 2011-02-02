@@ -14,9 +14,9 @@ import java.util.List;
  * @version $Id$
  * @since 1.0-SNAPSHOT
  */
-public interface HibernateSampleDAO extends GenericDAO<Sample, String> {
+public interface HibernateSampleDAO extends GenericDAO<Sample, Long> {
 
-    List<Sample> retrieveSamplesByStudyId(String studyId);
+    List<Sample> retrieveSamplesByStudyId(long studyId);
 
     /**
      * Returns an ordered list of public samples.

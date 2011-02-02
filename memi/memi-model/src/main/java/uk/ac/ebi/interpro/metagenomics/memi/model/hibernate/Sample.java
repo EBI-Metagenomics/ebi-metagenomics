@@ -23,7 +23,7 @@ public abstract class Sample {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SAMPLE_SEQ")
     private long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "STUDY_ID", nullable = true)
     private Study study;
 
@@ -72,10 +72,14 @@ public abstract class Sample {
     @Column(name = "SUBMITTER_ID")
     private long submitterId;
 
+    @Column(name = "MISC")
+    @Lob
+    private String miscellaneous;
+
     /**
-     * Associated publication.
+     * Associated publication. Deactivated lazy loading.
      */
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Publication> publications;
 
     protected Sample() {
@@ -200,5 +204,13 @@ public abstract class Sample {
 
     public void setPublications(Set<Publication> publications) {
         this.publications = publications;
+    }
+
+    public String getMiscellaneous() {
+        return miscellaneous;
+    }
+
+    public void setMiscellaneous(String miscellaneous) {
+        this.miscellaneous = miscellaneous;
     }
 }

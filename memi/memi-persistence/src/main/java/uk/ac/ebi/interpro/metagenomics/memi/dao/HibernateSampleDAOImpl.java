@@ -46,7 +46,7 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
     }
 
     @Override
-    public Sample read(String id) {
+    public Sample read(Long id) {
         Session session = sessionFactory.getCurrentSession();
         if (session != null) {
             return (Sample) session.get(Sample.class, id);
@@ -55,7 +55,7 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
     }
 
     @Override
-    public Sample readDeep(String id, String... deepFields) {
+    public Sample readDeep(Long id, String... deepFields) {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
@@ -82,10 +82,10 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
      * @return All samples filtered by the specified study Id.
      */
     @Override
-    public List<Sample> retrieveSamplesByStudyId(String studyId) {
+    public List<Sample> retrieveSamplesByStudyId(long studyId) {
         Session session = sessionFactory.getCurrentSession();
         if (session != null) {
-            return session.createCriteria(Sample.class).add(Restrictions.eq("studyId", studyId)).list();
+            return session.createCriteria(Sample.class).add(Restrictions.eq("study.id", studyId)).list();
         }
         return null;
     }

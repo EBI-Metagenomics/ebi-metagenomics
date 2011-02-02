@@ -11,12 +11,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.VelocityTemplateWriter;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.EmgSampleDAO;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.EmgStudyDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateSampleDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateStudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.files.MemiFileWriter;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgSample;
-import uk.ac.ebi.interpro.metagenomics.memi.model.EmgStudy;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Publication;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
@@ -26,10 +28,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Represents the controller for the study overview page.
@@ -47,10 +46,10 @@ public class StudyOverviewController extends LoginController {
     private final String VIEW_NAME = "studyOverview";
 
     @Resource
-    private EmgStudyDAO emgStudyDAO;
+    private HibernateStudyDAO studyDAO;
 
     @Resource
-    private EmgSampleDAO emgSampleDAO;
+    private HibernateSampleDAO sampleDAO;
 
     @Resource
     private VelocityEngine velocityEngine;
@@ -64,7 +63,7 @@ public class StudyOverviewController extends LoginController {
     //GET Methods
 
     @RequestMapping(value = "/{studyId}", method = RequestMethod.GET)
-    public ModelAndView doGetStudy(@PathVariable String studyId, ModelMap model) {
+    public ModelAndView doGetStudy(ModelMap model) {
         populateModel(model);
         model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((MGModel) model.get(MGModel.MODEL_ATTR_NAME)).getLoginForm());
         return new ModelAndView(VIEW_NAME, model);
@@ -128,29 +127,49 @@ public class StudyOverviewController extends LoginController {
      * Returns a list of study properties.
      */
     @ModelAttribute(value = "studyPropertyMap")
-    private Map<String, Object> getStudyPropertyMap(@PathVariable String studyId) {
-        EmgStudy study = emgStudyDAO.read(studyId);
-        if (study != null) {
-            return study.getProperties();
-        }
+    private Map<String, Object> getStudyPropertyMap(@PathVariable Long studyId) {
+        Study study = studyDAO.read(studyId);
+//        if (study != null) {
+//            return study.getProperties();
+//        }
         return new HashMap<String, Object>();
     }
 
 
     @ModelAttribute(value = "samples")
-    public List<EmgSample> populateSampleList(@PathVariable String studyId) {
-        List<EmgSample> samples = emgSampleDAO.retrieveSamplesByStudyId(studyId);
+    public List<Sample> populateSampleList(@PathVariable Long studyId) {
+        List<Sample> samples = sampleDAO.retrieveSamplesByStudyId(studyId);
         if (samples == null) {
-            samples = new ArrayList<EmgSample>();
+            samples = new ArrayList<Sample>();
         }
         return samples;
     }
 
+    /**
+     * Populates study for requested study ID.
+     */
     @ModelAttribute(value = "study")
-    public EmgStudy populateStudy(@PathVariable String studyId) {
-        if (emgStudyDAO != null) {
-            return emgStudyDAO.read(studyId);
+    public Study populateStudy(@PathVariable Long studyId) {
+        if (studyDAO != null) {
+            return studyDAO.read(studyId);
         }
         return null;
+    }
+
+    /**
+     * Populates study associated publications.
+     */
+    @ModelAttribute(value = "publications")
+    public Set<Publication> populatePub(@PathVariable Long studyId) {
+        if (studyDAO != null) {
+            Study study = studyDAO.read(studyId);
+            if (study != null) {
+                Set<Publication> pubs = study.getPublications();
+                if (pubs != null) {
+                    return pubs;
+                }
+            }
+        }
+        return new HashSet<Publication>();
     }
 }
