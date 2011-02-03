@@ -89,7 +89,14 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
     public List<Sample> retrieveSamplesByStudyId(long studyId) {
         Session session = sessionFactory.getCurrentSession();
         if (session != null) {
-            return session.createCriteria(Sample.class).add(Restrictions.eq("study.id", studyId)).list();
+            Criteria crit = session.createCriteria(Sample.class);
+            if (crit != null) {
+                //Add where clause
+                crit.add(Restrictions.eq("study.id", studyId));
+                //Add distinct criterion
+                crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+                return crit.list();
+            }
         }
         return null;
     }
@@ -169,6 +176,8 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
             }
         }
         if (criteria != null) {
+            //add distinct criterion
+            criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
             return (List<Sample>) criteria.list();
         }
         return new ArrayList<Sample>();
