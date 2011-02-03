@@ -6,7 +6,7 @@
 
     <div align="center">
         <table border="0" style="border-width: 1px;border-color: #000000;border-style: solid;">
-            <form:form method="POST" action="${baseURL}/listStudies/doSearch" commandName="studyFilter">
+            <form:form method="GET" action="${baseURL}/viewStudies/doSearch" commandName="studyFilter">
                 <tr>
                     <td>Text:</td>
                     <td><form:input id="autocomplete" path="searchTerm"/></td>
@@ -28,19 +28,21 @@
                         <form:options items="${mgModel.studyStatusList}"/>
                     </form:select></td>
                 </tr>
-                <c:if test="${not empty mgModel.submitter}">
-                    <tr>
-                        <td>Privacy:</td>
-                        <td><form:select id="studyVisibility" path="studyVisibility">
-                            <form:options items="${mgModel.studyVisibilityList}"/>
-                        </form:select></td>
-                    </tr>
-                </c:if>
+                <%--<c:if test="${not empty mgModel.submitter}">--%>
+                <tr>
+                    <td>Privacy:</td>
+                    <td><form:select id="studyVisibility" path="studyVisibility">
+                        <form:options items="${mgModel.studyVisibilityList}"/>
+                    </form:select></td>
+                </tr>
+                <%--</c:if>--%>
                 <tr>
                     <td></td>
-                    <td></td>
+                    <td align="right">
+                        <input type="submit" name="clear" value="Clear"/>
+                    </td>
                     <td>
-                        <input type="submit" value="Search"/>
+                        <input type="submit" name="search" value="Search"/>
                     </td>
                 </tr>
             </form:form>
@@ -48,7 +50,7 @@
     </div>
     <div style="margin-top:40px"></div>
     <div align="left">
-        <a href="<c:url value="${baseURL}/listStudies/exportStudies"/>">Export to CSV</a>
+        <a href="<c:url value="${baseURL}/viewStudies/doExport"/>">Export to CSV</a>
     </div>
 
     <table border="1" width="95%">
@@ -57,9 +59,9 @@
             <th>Study Id</th>
             <th>Study name</th>
             <th>Received date</th>
-            <c:if test="${not empty mgModel.submitter}">
-                <th>Privacy</th>
-            </c:if>
+            <%--<c:if test="${not empty mgModel.submitter}">--%>
+            <th>Privacy</th>
+            <%--</c:if>--%>
             <th>Analysis status</th>
             <th>Experimental factor</th>
             <th>NCBI Project Id</th>
@@ -72,9 +74,9 @@
                     <a href="<c:url value="${baseURL}/studyOverview/${study.id}"/>">${study.studyName}</a>
                 </td>
                 <td>${study.formattedLastReceived}</td>
-                <c:if test="${not empty mgModel.submitter}">
-                    <td>${study.privacy}</td>
-                </c:if>
+                    <%--<c:if test="${not empty mgModel.submitter}">--%>
+                <td>${study.privacy}</td>
+                    <%--</c:if>--%>
                 <td>${study.studyStatus}</td>
                 <td>${study.experimentalFactor}</td>
                 <td>${study.ncbiProjectId}</td>

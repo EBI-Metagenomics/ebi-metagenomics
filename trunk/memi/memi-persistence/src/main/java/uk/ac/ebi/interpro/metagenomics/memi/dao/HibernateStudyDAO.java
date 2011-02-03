@@ -46,6 +46,8 @@ public interface HibernateStudyDAO extends GenericDAO<Study, Long> {
      */
     List<Study> retrieveOrderedPublicStudiesWithoutSubId(long submitterId, String propertyName, boolean isDescendingOrder);
 
+    /**
+     * Returns a list of studies by the specified criteria.
+     */
     List<Study> retrieveFilteredStudies(List<Criterion> crits);
-
 }

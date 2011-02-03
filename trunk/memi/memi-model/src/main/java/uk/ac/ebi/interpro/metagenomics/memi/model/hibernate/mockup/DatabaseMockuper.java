@@ -142,9 +142,8 @@ public class DatabaseMockuper {
                 }
                 createObject(sample);
             }
-//            study.setSamples(samples);
-//            createObject(study);
         }
+        SessionFactoryUtil.close();
     }
 
     private static void mockupPrivateStudies(DateCreator dateCreator) {

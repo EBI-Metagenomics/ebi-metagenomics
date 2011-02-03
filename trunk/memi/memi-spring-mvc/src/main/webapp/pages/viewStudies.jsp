@@ -5,4 +5,4 @@
   Example URL: http://www.springbyexample.org/examples/sdms-simple-spring-mvc-web-module.html
   --%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
-<tiles:insertDefinition name="listStudies"/>
+<tiles:insertDefinition name="viewStudies"/>
