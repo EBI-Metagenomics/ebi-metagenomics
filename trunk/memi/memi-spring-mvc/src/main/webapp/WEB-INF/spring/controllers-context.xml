@@ -21,14 +21,20 @@
     <!-- Scans within the base package of the application for @Components to configure as beans -->
     <context:component-scan base-package="uk.ac.ebi.interpro.metagenomics.memi"/>
 
-    <tx:annotation-driven transaction-manager="txManager"/>
-
+    <!-- Transaction manager for the Hibernate SessionFactory -->
     <bean id="txManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
         <property name="sessionFactory" ref="hibernateSessionFactory"/>
     </bean>
 
+    <!-- Allow declarative transaction management using the @Transactional annotation (recommend by Spring (see Spring MVC documentation)-->
+    <!-- Annotation-based configuration (Annotations are specified within DAOImpl classes)-->
+    <tx:annotation-driven transaction-manager="txManager"/>
+
+    <!-- Exception translation bean post processor -->
+    <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
+
     <!--Data source for IPDEV-->
-    <bean id="ipDevDatasourceId" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+    <bean name="ipDevDatasource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
         <property name="url" value="${jcp.jdbc.oracle.ipdev.url}"/>
         <property name="username" value="${jcp.jdbc.oracle.ipdev.username}"/>
@@ -47,15 +53,21 @@
     <!-- Definition of Hibernate session factory including Hibernate Mappings-->
     <bean id="hibernateSessionFactory"
           class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
-        <property name="dataSource" ref="ipDevDatasourceId"/>
+        <!--Database connection settings-->
+        <property name="dataSource" ref="ipDevDatasource"/>
+        <!--Hibernate properties-->
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
                 <prop key="hibernate.show_sql">true</prop>
                 <prop key="hibernate.cache.provider_class">org.hibernate.cache.NoCacheProvider</prop>
                 <prop key="hibernate.cache.use_query_cache">false</prop>
-                <prop key="hibernate.connection.pool_size">20</prop>
-                <!--<prop key="hibernate.hbm2ddl.auto">update</prop>-->
+                <prop key="hibernate.cache.use_second_level_cache">false</prop>
+                <prop key="hibernate.connection.pool_size">1</prop>
+                <!--Enable Hibernate’s automatic session context management-->
+                <prop key="current_session_context_class">thread</prop>
+                <prop key="hibernate.transaction.auto_close_session">true</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
             </props>
         </property>
         <!--<property name="location" value="classpath:resources/hibernate.properties"/>-->
@@ -82,8 +94,12 @@
     <bean id="emgSampleDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.EmgSampleDAOImpl"/>
     <bean id="sampleDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateSampleDAOImpl"/>
 
-    <bean id="submitterDAOId" name="submitterDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.SubmitterDAOImpl">
+    <bean name="submitterDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.SubmitterDAOImpl">
         <property name="dataSource" ref="adevDatasource"/>
+    </bean>
+
+    <bean name="fileInfoDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.EmgLogFileInfoDAOImpl">
+        <property name="dataSource" ref="ipDevDatasource"/>
     </bean>
 
     <bean id="newsDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.NewsDAOImpl"/>
