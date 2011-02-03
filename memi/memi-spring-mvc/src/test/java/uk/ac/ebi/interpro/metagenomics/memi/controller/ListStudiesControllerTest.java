@@ -17,7 +17,7 @@ import java.lang.reflect.Field;
 import static org.junit.Assert.*;
 
 /**
- * Represents the unit test for the {@link uk.ac.ebi.interpro.metagenomics.memi.controller.ListStudiesController}.
+ * Represents the unit test for the {@link ViewStudiesController}.
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @version $Id$
@@ -27,14 +27,14 @@ import static org.junit.Assert.*;
 @TestExecutionListeners
 public class ListStudiesControllerTest {
 
-    private ListStudiesController controller;
+    private ViewStudiesController controller;
 
     @Before
     public void setUp() throws Exception {
-        controller = new ListStudiesController();
+        controller = new ViewStudiesController();
 
         //Replace study DAO for simpler testing
-        Field studyDaoField = ListStudiesController.class.
+        Field studyDaoField = ViewStudiesController.class.
                 getDeclaredField("emgStudyDAO");
         studyDaoField.setAccessible(true);
         EmgStudyDAO newStudyDAO = new StudyDAOTestImpl();

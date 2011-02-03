@@ -14,7 +14,7 @@ import java.util.List;
  * @version $Id$
  * @since 1.0-SNAPSHOT
  */
-public class ListStudiesModel extends MGModel {
+public class ViewStudiesModel extends MGModel {
 
     private StudyFilter studyFilter;
 
@@ -27,11 +27,11 @@ public class ListStudiesModel extends MGModel {
     private List<StudyFilter.StudyVisibility> studyVisibilityList;
 
 
-    public ListStudiesModel(Submitter submitter, List<Study> studies) {
+    public ViewStudiesModel(Submitter submitter, List<Study> studies) {
         this(submitter, studies, new StudyFilter());
     }
 
-    public ListStudiesModel(Submitter submitter, List<Study> studies, StudyFilter filter) {
+    public ViewStudiesModel(Submitter submitter, List<Study> studies, StudyFilter filter) {
         super(submitter);
         this.studyFilter = filter;
         this.studyTypes = getDefaultStudyTypes();

@@ -7,6 +7,7 @@ import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 
@@ -21,8 +22,7 @@ import java.util.List;
  * @version $Id$
  * @since 1.0-SNAPSHOT
  */
-//@Repository
-@Transactional
+@Repository
 public class HibernateStudyDAOImpl implements HibernateStudyDAO {
 
     @Autowired
@@ -31,11 +31,6 @@ public class HibernateStudyDAOImpl implements HibernateStudyDAO {
 
     public HibernateStudyDAOImpl() {
     }
-
-//    public void setSessionFactory(SessionFactory sessionFactory) {
-//        this.sessionFactory = sessionFactory;
-//    }
-
 
     @Override
     public Study insert(Study newInstance) {
@@ -53,6 +48,7 @@ public class HibernateStudyDAOImpl implements HibernateStudyDAO {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Study read(Long id) {
         Session session = sessionFactory.getCurrentSession();
         return (Study) session.get(Study.class, id);
@@ -75,6 +71,7 @@ public class HibernateStudyDAOImpl implements HibernateStudyDAO {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Study> retrieveAll() {
         Session session = sessionFactory.getCurrentSession();
         if (session != null) {
@@ -84,6 +81,7 @@ public class HibernateStudyDAOImpl implements HibernateStudyDAO {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Study> retrieveStudiesOrderBy(String propertyName, boolean isDescendingOrder) {
         List<Study> result = new ArrayList<Study>();
         Session session = sessionFactory.getCurrentSession();
@@ -98,6 +96,7 @@ public class HibernateStudyDAOImpl implements HibernateStudyDAO {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Study> retrieveOrderedPublicStudies(String propertyName, boolean isDescendingOrder) {
         List<Study> result = new ArrayList<Study>();
         Session session = sessionFactory.getCurrentSession();
@@ -118,6 +117,7 @@ public class HibernateStudyDAOImpl implements HibernateStudyDAO {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Study> retrieveOrderedStudiesBySubmitter(long submitterId, String propertyName, boolean isDescendingOrder) {
         List<Study> result = new ArrayList<Study>();
         Session session = sessionFactory.getCurrentSession();
@@ -137,6 +137,7 @@ public class HibernateStudyDAOImpl implements HibernateStudyDAO {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Study> retrieveOrderedPublicStudiesWithoutSubId(long submitterId, String propertyName, boolean isDescendingOrder) {
         List<Study> result = new ArrayList<Study>();
         Session session = sessionFactory.getCurrentSession();
@@ -158,6 +159,7 @@ public class HibernateStudyDAOImpl implements HibernateStudyDAO {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Study> retrieveFilteredStudies(List<Criterion> crits) {
         Session session = sessionFactory.getCurrentSession();
         Criteria criteria = null;
@@ -169,7 +171,7 @@ public class HibernateStudyDAOImpl implements HibernateStudyDAO {
             }
         }
         if (criteria != null) {
-            return criteria.list();
+            return (List<Study>) criteria.list();
         }
         return new ArrayList<Study>();
     }

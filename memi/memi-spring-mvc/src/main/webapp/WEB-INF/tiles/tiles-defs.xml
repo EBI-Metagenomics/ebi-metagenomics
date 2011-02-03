@@ -49,8 +49,12 @@
         <put-attribute name="body" value="/templates/installationSiteBody.jsp"/>
     </definition>
 
-    <definition name="listStudies" extends="rootTemplate">
-        <put-attribute name="body" value="/templates/listStudiesBody.jsp"/>
+    <definition name="viewStudies" extends="rootTemplate">
+        <put-attribute name="body" value="/templates/viewStudiesBody.jsp"/>
+    </definition>
+
+    <definition name="viewSamples" extends="rootTemplate">
+        <put-attribute name="body" value="/templates/viewSamplesBody.jsp"/>
     </definition>
 
     <definition name="studyOverview" extends="rootTemplate">

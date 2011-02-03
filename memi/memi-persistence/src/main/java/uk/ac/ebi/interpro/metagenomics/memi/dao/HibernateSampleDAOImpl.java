@@ -3,9 +3,11 @@ package uk.ac.ebi.interpro.metagenomics.memi.dao;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 
@@ -20,8 +22,7 @@ import java.util.List;
  * @version $Id$
  * @since 1.0-SNAPSHOT
  */
-//@Repository
-@Transactional
+@Repository
 public class HibernateSampleDAOImpl implements HibernateSampleDAO {
 
     @Autowired
@@ -46,6 +47,7 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Sample read(Long id) {
         Session session = sessionFactory.getCurrentSession();
         if (session != null) {
@@ -70,6 +72,7 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Sample> retrieveAll() {
         Session session = sessionFactory.getCurrentSession();
         if (session != null) {
@@ -82,6 +85,7 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
      * @return All samples filtered by the specified study Id.
      */
     @Override
+    @Transactional(readOnly = true)
     public List<Sample> retrieveSamplesByStudyId(long studyId) {
         Session session = sessionFactory.getCurrentSession();
         if (session != null) {
@@ -91,6 +95,7 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Sample> retrieveOrderedPublicSamples(String propertyName, boolean isDescendingOrder) {
         List<Sample> result = new ArrayList<Sample>();
         Session session = sessionFactory.getCurrentSession();
@@ -110,6 +115,7 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Sample> retrieveOrderedSamplesBySubmitter(long submitterId, String propertyName, boolean isDescendingOrder) {
         List<Sample> result = new ArrayList<Sample>();
         Session session = sessionFactory.getCurrentSession();
@@ -129,6 +135,7 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Sample> retrieveOrderedPublicSamplesWithoutSubId(long submitterId, String propertyName, boolean isDescendingOrder) {
         List<Sample> result = new ArrayList<Sample>();
         Session session = sessionFactory.getCurrentSession();
@@ -147,6 +154,24 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
             result = crit.list();
         }
         return result;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Sample> retrieveFilteredSamples(List<Criterion> crits) {
+        Session session = sessionFactory.getCurrentSession();
+        Criteria criteria = null;
+        if (session != null) {
+            criteria = session.createCriteria(Sample.class);
+            //add criterions
+            for (Criterion crit : crits) {
+                criteria.add(crit);
+            }
+        }
+        if (criteria != null) {
+            return (List<Sample>) criteria.list();
+        }
+        return new ArrayList<Sample>();
     }
 
     @Override

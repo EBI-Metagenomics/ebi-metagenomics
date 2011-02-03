@@ -64,7 +64,5 @@ public class StudyFilter {
 
     public enum StudyVisibility {
         ALL, PUBLIC, PRIVATE;
-
-
     }
 }

@@ -1,5 +1,6 @@
 package uk.ac.ebi.interpro.metagenomics.memi.dao;
 
+import org.hibernate.criterion.Criterion;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgSample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
@@ -43,4 +44,9 @@ public interface HibernateSampleDAO extends GenericDAO<Sample, Long> {
      * @param isDescendingOrder Order direction.
      */
     List<Sample> retrieveOrderedPublicSamplesWithoutSubId(long submitterId, String propertyName, boolean isDescendingOrder);
+
+    /**
+     * Returns a list of studies by the specified criteria.
+     */
+    List<Sample> retrieveFilteredSamples(List<Criterion> crits);
 }

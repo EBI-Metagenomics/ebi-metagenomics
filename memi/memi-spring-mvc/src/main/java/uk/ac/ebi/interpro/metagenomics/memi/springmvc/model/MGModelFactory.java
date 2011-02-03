@@ -6,6 +6,7 @@ import org.hibernate.criterion.Restrictions;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateSampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateStudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.NewsDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.SampleFilter;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.StudyFilter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.News;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
@@ -54,12 +55,12 @@ public class MGModelFactory {
         return new SubmissionModel(getSessionSubmitter(sessionMgr));
     }
 
-    public static ListStudiesModel getListStudiesPageModel(SessionManager sessionMgr, HibernateStudyDAO studyDAO) {
-        return new ListStudiesModel(getSessionSubmitter(sessionMgr), getAllPublicStudiesFromDB(studyDAO));
+    public static ViewStudiesModel getListStudiesPageModel(SessionManager sessionMgr, HibernateStudyDAO studyDAO, StudyFilter filter) {
+        return new ViewStudiesModel(getSessionSubmitter(sessionMgr), getFilteredStudies(studyDAO, filter));
     }
 
-    public static ListStudiesModel getListStudiesPageModel(SessionManager sessionMgr, HibernateStudyDAO studyDAO, StudyFilter filter) {
-        return new ListStudiesModel(getSessionSubmitter(sessionMgr), getFilteredStudiesFrom(studyDAO, filter));
+    public static ViewSamplesModel getViewSamplesPageModel(SessionManager sessionMgr, HibernateSampleDAO sampleDAO, SampleFilter filter) {
+        return new ViewSamplesModel(getSessionSubmitter(sessionMgr), getFilteredSamples(sampleDAO, filter));
     }
 
     /**
@@ -165,19 +166,7 @@ public class MGModelFactory {
         return samples;
     }
 
-
-    /**
-     * Returns a list of all public studies with the MG database.
-     */
-    public static List<Study> getAllPublicStudiesFromDB(HibernateStudyDAO studyDAO) {
-        List<Study> result = studyDAO.retrieveAll();
-        if (result == null) {
-            result = new ArrayList<Study>();
-        }
-        return result;
-    }
-
-    public static List<Study> getFilteredStudiesFrom(HibernateStudyDAO studyDAO, StudyFilter filter) {
+    private static List<Study> getFilteredStudies(HibernateStudyDAO studyDAO, StudyFilter filter) {
         List<Study> result = studyDAO.retrieveFilteredStudies(buildFilterCriteria(filter));
         if (result == null) {
             result = new ArrayList<Study>();
@@ -185,6 +174,18 @@ public class MGModelFactory {
         return result;
     }
 
+    private static List<Sample> getFilteredSamples(HibernateSampleDAO sampleDAO, SampleFilter filter) {
+        List<Sample> result = sampleDAO.retrieveFilteredSamples(buildFilterCriteria(filter));
+        if (result == null) {
+            result = new ArrayList<Sample>();
+        }
+        return result;
+    }
+
+    /**
+     * Builds a list of criteria for the specified study filter. These criteria can be used for
+     * a Hibernate query.
+     */
     private static List<Criterion> buildFilterCriteria(StudyFilter filter) {
         String searchText = filter.getSearchTerm();
         Study.StudyType type = filter.getStudyType();
@@ -192,6 +193,7 @@ public class MGModelFactory {
         StudyFilter.StudyVisibility visibility = filter.getStudyVisibility();
 
         List<Criterion> crits = new ArrayList<Criterion>();
+        //add search term criterion
         if (searchText != null && searchText.trim().length() > 0) {
             crits.add(Restrictions.or(Restrictions.like("studyId", searchText, MatchMode.ANYWHERE), Restrictions.like("studyName", searchText, MatchMode.ANYWHERE)));
         }
@@ -212,6 +214,30 @@ public class MGModelFactory {
             }
         }
 
+        return crits;
+    }
+
+    /**
+     * Builds a list of criteria for the specified {@link uk.ac.ebi.interpro.metagenomics.memi.forms.SampleFilter}}.
+     * These criteria can be used for a Hibernate query.
+     */
+    private static List<Criterion> buildFilterCriteria(SampleFilter filter) {
+        String searchText = filter.getSearchTerm();
+        SampleFilter.SampleVisibility visibility = filter.getSampleVisibility();
+
+        List<Criterion> crits = new ArrayList<Criterion>();
+        //add search term criterion
+        if (searchText != null && searchText.trim().length() > 0) {
+            crits.add(Restrictions.or(Restrictions.like("sampleId", searchText, MatchMode.ANYWHERE), Restrictions.like("sampleTitle", searchText, MatchMode.ANYWHERE)));
+        }
+        //add is public criterion
+        if (!visibility.equals(SampleFilter.SampleVisibility.ALL)) {
+            if (visibility.equals(SampleFilter.SampleVisibility.PRIVATE)) {
+                crits.add(Restrictions.eq("isPublic", false));
+            } else if (visibility.equals(SampleFilter.SampleVisibility.PUBLIC)) {
+                crits.add(Restrictions.eq("isPublic", true));
+            }
+        }
         return crits;
     }
 

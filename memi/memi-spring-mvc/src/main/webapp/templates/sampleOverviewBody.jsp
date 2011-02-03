@@ -21,10 +21,10 @@
     </tr>
 </table>
 <div style="margin-top:10px"></div>
+<h3>Sample Description</h3>
 <div align="left">
     <a href="<c:url value="${baseURL}/sampleOverview/exportSample/${sample.sampleId}"/>">Export to CSV</a>
 </div>
-<h3>Sample Description</h3>
 <table frame="box" width="95%">
     <tr>
         <c:choose>
