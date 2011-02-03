@@ -36,6 +36,7 @@
 
     <table border="1" width="95%">
         <tr>
+            <th>No.</th>
             <th>Sample Id</th>
             <%--<c:if test="${not empty mgModel.submitter}">--%>
             <th>Privacy</th>
@@ -47,20 +48,49 @@
             <th>Analysis completed</th>
             <th>Archived in ENA</th>
         </tr>
+        <%
+            int i = 1;
+        %>
         <c:forEach var="sample" items="${mgModel.samples}" varStatus="status">
             <tr>
-                <td>${sample.sampleId}</td>
+                <td align="center"><%= i%><% i++;%></td>
+                <td>
+                    <a href="<c:url value="${baseURL}/sampleOverview/${sample.id}"/>">${sample.sampleId}</a>
+                </td>
                     <%--<c:if test="${not empty mgModel.submitter}">--%>
                 <td>${sample.public}</td>
                     <%--</c:if>--%>
+                <td>${sample.sampleTitle}</td>
                 <td>
-                    <a href="<c:url value="${baseURL}/sampleOverview/${sample.id}"/>">${sample.sampleTitle}</a>
+                    <c:choose>
+                        <c:when test="${empty sample.collectionDate}">N/A</c:when>
+                        <c:otherwise>${sample.collectionDate}</c:otherwise>
+                    </c:choose>
                 </td>
-                <td>${sample.collectionDate}</td>
-                <td>${sample.metadataReceived}</td>
-                <td>${sample.sequenceDataReceived}</td>
-                <td>${sample.analysisCompleted}</td>
-                <td>${sample.sequenceDataArchived}</td>
+                <td>
+                    <c:choose>
+                        <c:when test="${empty sample.metadataReceived}">N/A</c:when>
+                        <c:otherwise>${sample.metadataReceived}</c:otherwise>
+                    </c:choose>
+                </td>
+                <td>
+                    <c:choose>
+                        <c:when test="${empty sample.sequenceDataReceived}">N/A</c:when>
+                        <c:otherwise>${sample.sequenceDataReceived}</c:otherwise>
+                    </c:choose>
+                </td>
+                <td>
+                    <c:choose>
+                        <c:when test="${empty sample.analysisCompleted}">N/A</c:when>
+                        <c:otherwise>${sample.analysisCompleted}</c:otherwise>
+                    </c:choose>
+                </td>
+                <td>
+                    <c:choose>
+                        <c:when test="${empty sample.sequenceDataArchived}">N/A</c:when>
+                        <c:otherwise>${sample.sequenceDataArchived}</c:otherwise>
+                    </c:choose>
+                </td>
             </tr>
         </c:forEach>
     </table>

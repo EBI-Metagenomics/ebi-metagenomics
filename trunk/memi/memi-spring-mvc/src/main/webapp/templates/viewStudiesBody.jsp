@@ -55,9 +55,10 @@
 
     <table border="1" width="95%">
         <tr>
-            <th>Study type</th>
+            <th>No.</th>
             <th>Study Id</th>
             <th>Study name</th>
+            <th>Study type</th>
             <th>Received date</th>
             <%--<c:if test="${not empty mgModel.submitter}">--%>
             <th>Privacy</th>
@@ -66,20 +67,34 @@
             <th>Experimental factor</th>
             <th>NCBI Project Id</th>
         </tr>
+        <%
+            int i = 1;
+        %>
         <c:forEach var="study" items="${mgModel.studies}" varStatus="status">
             <tr>
-                <td>${study.studyType}</td>
-                <td>${study.studyId}</td>
+                <td align="center"><%= i%><% i++;%></td>
                 <td>
-                    <a href="<c:url value="${baseURL}/studyOverview/${study.id}"/>">${study.studyName}</a>
+                    <a href="<c:url value="${baseURL}/studyOverview/${study.id}"/>">${study.studyId}</a>
                 </td>
+                <td>${study.studyName}</td>
+                <td>${study.studyType}</td>
                 <td>${study.formattedLastReceived}</td>
                     <%--<c:if test="${not empty mgModel.submitter}">--%>
                 <td>${study.privacy}</td>
                     <%--</c:if>--%>
                 <td>${study.studyStatus}</td>
-                <td>${study.experimentalFactor}</td>
-                <td>${study.ncbiProjectId}</td>
+                <td>
+                    <c:choose>
+                        <c:when test="${empty study.experimentalFactor}">N/A</c:when>
+                        <c:otherwise>${study.experimentalFactor}</c:otherwise>
+                    </c:choose>
+                </td>
+                <td>
+                    <c:choose>
+                        <c:when test="${study.ncbiProjectId > 0}">${study.ncbiProjectId}</c:when>
+                        <c:otherwise>N/A</c:otherwise>
+                    </c:choose>
+                </td>
             </tr>
         </c:forEach>
     </table>
