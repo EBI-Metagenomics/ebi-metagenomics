@@ -4,9 +4,9 @@ This tutorial should give you an explanation of how to run the latest version of
 
 = Requirements =
 
--Create a Google account
--Install the latest version of Java
--Install Maven on your machine
+  *Create a Google account
+  *Install the latest version of Java
+  *Install Maven on your machine
 
 = 1. Check out the project from subversion =
 
