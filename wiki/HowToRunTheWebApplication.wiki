@@ -1,20 +1,21 @@
 = Introduction =
 
-This tutorial should give you an explanation of how to run the latest version of this web application 
+This tutorial should give you an explanation of how to run the latest version of this web application.
+
+= Requirements =
+
+-Create a Google account
+-Install the latest version of Java
+-Install Maven on your machine
 
 = 1. Check out the project from subversion =
 
+1.1 Please go to the host location of this project (you already found it)
+This project is hosted on Google code. You will find it under:
 http://code.google.com/p/ebi-metagenomics/
 
-TODO this, please select the Source tab of this Google Code project site and use the described subversion command. Maybe Google Code ask you for our password as well. Find it under your profile (right corner at the top of your browser)
+1.2 Create a new directory for your project (e.g. ebi-metagenomics), go into this directory and type the following subversion command:
 
-= 2. Run the application using the Maven Jetty Plugin =
+svn checkout https://ebi-metagenomics.googlecode.com/svn/trunk/ --username Maxim.Scheremetjew@googlemail.com
 
-You should simply run this Hello world application by using the Maven Jetty Plugin. So, go into the checked out project folder, where the POM file exists and a run the following command:
-
-{{{
-mvn jetty:run
-}}}
-
-If the Jetty server successfully started, please click on this link [http://localhost:8080/memi/helloworld.htm].
-Thats' all. This is how it should work.
+If you use this check out command the first time it will ask you for a password
