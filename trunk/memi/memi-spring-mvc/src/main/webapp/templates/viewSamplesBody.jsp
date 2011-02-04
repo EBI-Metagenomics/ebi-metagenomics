@@ -12,12 +12,14 @@
                     <td><form:input path="searchTerm"/></td>
                     <td><form:errors path="searchTerm" cssClass="error"/></td>
                 </tr>
-                <tr>
-                    <td>Privacy:</td>
-                    <td><form:select id="sampleVisibility" path="sampleVisibility">
-                        <form:options items="${mgModel.sampleVisibilityList}"/>
-                    </form:select></td>
-                </tr>
+                <c:if test="${not empty mgModel.submitter}">
+                    <tr>
+                        <td>Privacy:</td>
+                        <td><form:select id="sampleVisibility" path="sampleVisibility">
+                            <form:options items="${mgModel.sampleVisibilityList}"/>
+                        </form:select></td>
+                    </tr>
+                </c:if>
                 <td></td>
                 <td align="right">
                     <input type="submit" name="clear" value="Clear"/>
@@ -38,9 +40,9 @@
         <tr>
             <th>No.</th>
             <th>Sample Id</th>
-            <%--<c:if test="${not empty mgModel.submitter}">--%>
-            <th>Privacy</th>
-            <%--</c:if>--%>
+            <c:if test="${not empty mgModel.submitter}">
+                <th>Privacy</th>
+            </c:if>
             <th>Sample name</th>
             <th>Collection date</th>
             <th>Valid meta data</th>
@@ -57,9 +59,9 @@
                 <td>
                     <a href="<c:url value="${baseURL}/sampleOverview/${sample.id}"/>">${sample.sampleId}</a>
                 </td>
-                    <%--<c:if test="${not empty mgModel.submitter}">--%>
-                <td>${sample.public}</td>
-                    <%--</c:if>--%>
+                <c:if test="${not empty mgModel.submitter}">
+                    <td>${sample.public}</td>
+                </c:if>
                 <td>${sample.sampleTitle}</td>
                 <td>
                     <c:choose>
