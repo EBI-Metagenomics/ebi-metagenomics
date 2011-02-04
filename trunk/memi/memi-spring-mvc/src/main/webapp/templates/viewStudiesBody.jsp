@@ -49,8 +49,10 @@
         </table>
     </div>
     <div style="margin-top:40px"></div>
+    <%--Request the current query string to export only the filtered studies--%>
+    <c:set var="queryString" value="${pageContext.request.queryString}" scope="session"/>
     <div align="left">
-        <a href="<c:url value="${baseURL}/viewStudies/doExport"/>">Export to CSV</a>
+        <a href="<c:url value="${baseURL}/viewStudies/doExport?${queryString}"/>">Export to CSV</a>
     </div>
 
     <table border="1" width="95%">

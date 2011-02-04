@@ -7,7 +7,7 @@ package uk.ac.ebi.interpro.metagenomics.memi.services;
  * @version $Id$
  * @since 1.0-SNAPSHOT
  */
-public interface NotificationService {
+public interface INotificationService {
 
     /* Invoke this method in cases you want to send emails with user submission data */
 

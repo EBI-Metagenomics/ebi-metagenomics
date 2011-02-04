@@ -16,7 +16,7 @@ import javax.mail.internet.MimeMessage;
  * @version $Id$
  * @since 1.0-SNAPSHOT
  */
-public class EmailNotificationService implements NotificationService {
+public class EmailNotificationService implements INotificationService {
 
     private JavaMailSenderImpl mailSender;
 
@@ -36,9 +36,10 @@ public class EmailNotificationService implements NotificationService {
         MimeMessageHelper helper = new MimeMessageHelper(mimeMsg);
         try {
             helper.setTo("maxim@ebi.ac.uk");
-            helper.setFrom("mg.portal.notification.service@ebi.ac.uk");
+            helper.setCc("maxim.scheremetjew@gmail.com");
+            helper.setFrom("metagenomics-notification-service@ebi.ac.uk");
             helper.setSubject("New submission from the MG portal");
-            helper.setText("Thank you for ordering!");
+//            helper.setText("Thank you for ordering!");
             if (exception != null) {
                 helper.setText("An exception has occured!");
                 helper.setText(exception.getMessage());

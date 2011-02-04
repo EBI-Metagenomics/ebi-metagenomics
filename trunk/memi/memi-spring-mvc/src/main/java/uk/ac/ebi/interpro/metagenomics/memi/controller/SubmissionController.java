@@ -14,7 +14,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.SubmissionForm;
-import uk.ac.ebi.interpro.metagenomics.memi.services.NotificationService;
+import uk.ac.ebi.interpro.metagenomics.memi.services.INotificationService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.SubmissionModel;
@@ -43,7 +43,7 @@ public class SubmissionController implements IMGController {
     private final String VIEW_NAME = "submissionForm";
 
     @Resource(name = "emailNotificationService")
-    private NotificationService emailService;
+    private INotificationService emailService;
 
     @Resource(name = "velocityEngine")
     private VelocityEngine velocityEngine;
