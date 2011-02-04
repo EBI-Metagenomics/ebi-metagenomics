@@ -28,14 +28,14 @@
                         <form:options items="${mgModel.studyStatusList}"/>
                     </form:select></td>
                 </tr>
-                <%--<c:if test="${not empty mgModel.submitter}">--%>
-                <tr>
-                    <td>Privacy:</td>
-                    <td><form:select id="studyVisibility" path="studyVisibility">
-                        <form:options items="${mgModel.studyVisibilityList}"/>
-                    </form:select></td>
-                </tr>
-                <%--</c:if>--%>
+                <c:if test="${not empty mgModel.submitter}">
+                    <tr>
+                        <td>Privacy:</td>
+                        <td><form:select id="studyVisibility" path="studyVisibility">
+                            <form:options items="${mgModel.studyVisibilityList}"/>
+                        </form:select></td>
+                    </tr>
+                </c:if>
                 <tr>
                     <td></td>
                     <td align="right">
@@ -62,9 +62,9 @@
             <th>Study name</th>
             <th>Study type</th>
             <th>Received date</th>
-            <%--<c:if test="${not empty mgModel.submitter}">--%>
-            <th>Privacy</th>
-            <%--</c:if>--%>
+            <c:if test="${not empty mgModel.submitter}">
+                <th>Privacy</th>
+            </c:if>
             <th>Analysis status</th>
             <th>Experimental factor</th>
             <th>NCBI Project Id</th>
@@ -81,9 +81,9 @@
                 <td>${study.studyName}</td>
                 <td>${study.studyType}</td>
                 <td>${study.formattedLastReceived}</td>
-                    <%--<c:if test="${not empty mgModel.submitter}">--%>
-                <td>${study.privacy}</td>
-                    <%--</c:if>--%>
+                <c:if test="${not empty mgModel.submitter}">
+                    <td>${study.privacy}</td>
+                </c:if>
                 <td>${study.studyStatus}</td>
                 <td>
                     <c:choose>
