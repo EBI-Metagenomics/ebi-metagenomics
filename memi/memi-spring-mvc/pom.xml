@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
          xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
@@ -25,6 +25,16 @@
     <!--<distribution>repo</distribution>-->
     <!--</license>-->
     <!--</licenses>-->
+
+    <repositories>
+        <!--iText repository-->
+        <repository>
+            <id>itextpdf.com</id>
+            <name>Maven Repository for iText</name>
+            <url>http://maven.itextpdf.com/</url>
+        </repository>
+    </repositories>
+
 
     <organization>
         <name>EMBL - European Bioinformatics Institute</name>
@@ -249,6 +259,13 @@
             <groupId>taglibs</groupId>
             <artifactId>standard</artifactId>
             <version>1.1.2</version>
+        </dependency>
+        <!-- iText dependency-->
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itextpdf</artifactId>
+            <version>5.0.4</version>
+            <scope>compile</scope>
         </dependency>
 
     </dependencies>

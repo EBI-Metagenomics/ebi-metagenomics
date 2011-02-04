@@ -2,7 +2,7 @@ package uk.ac.ebi.interpro.metagenomics.memi.forms;
 
 import org.junit.Before;
 import org.junit.Test;
-import uk.ac.ebi.interpro.metagenomics.memi.model.EmgStudy;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 
 import static org.junit.Assert.assertEquals;
 
@@ -25,7 +25,7 @@ public class FilterFormTest {
     public void testSetterAndGetter() {
 //        form.setStudyStatus(EmgStudy.StudyStatus.FINISHED);
 //        assertEquals(EmgStudy.StudyStatus.FINISHED, form.getStudyStatus());
-        form.setStudyType(EmgStudy.StudyType.ENVIRONMENTAL);
-        assertEquals(EmgStudy.StudyType.ENVIRONMENTAL, form.getStudyType());
+        form.setStudyType(Study.StudyType.ENVIRONMENTAL);
+        assertEquals(Study.StudyType.ENVIRONMENTAL, form.getStudyType());
     }
 }

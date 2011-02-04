@@ -33,9 +33,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.File;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Represents the controller for the list studies page.
@@ -90,13 +88,17 @@ public class ViewStudiesController extends LoginController implements IMGControl
      * download dialog.
      */
     @RequestMapping(value = "doExport", method = RequestMethod.GET)
-    public ModelAndView doExportStudies(HttpServletResponse response, ModelMap model) {
+    public ModelAndView doExportStudies(@ModelAttribute(StudyFilter.MODEL_ATTR_NAME) StudyFilter filter, HttpServletRequest request, HttpServletResponse response) {
         log.info("Requesting exportStudies (GET method)...");
-        List<Study> studies = studyDAO.retrieveAll();
+        ModelMap model = new ModelMap();
+        processRequestParams(request, filter);
+        populateModel(model, filter);
+        List<Study> studies = ((ViewStudiesModel) model.get(MGModel.MODEL_ATTR_NAME)).getStudies();
+
         if (studies != null && studies.size() > 0) {
             //Create velocity spring_model
             Map<String, Object> velocityModel = new HashMap<String, Object>();
-            //velocityModel.put("studyPropertyList", getStudyPropertyList(studies.get(0)));
+            velocityModel.put("studyProperties", getStudyProperties());
             velocityModel.put("studies", studies);
             velocityModel.put("columnLength", MAX_CHARS_PER_COLUMN);
             //Create file content
@@ -123,7 +125,7 @@ public class ViewStudiesController extends LoginController implements IMGControl
         return new ModelAndView(VIEW_NAME, model);
     }
 
-    @RequestMapping(value = "doSearch", method = RequestMethod.GET)
+    @RequestMapping(params = "search", value = "doSearch", method = RequestMethod.GET)
     public ModelAndView doSearch(HttpServletRequest request, @ModelAttribute(StudyFilter.MODEL_ATTR_NAME) StudyFilter filter, ModelMap model) {
         log.info("Requesting doSearch (POST method)...");
         processRequestParams(request, filter);
@@ -217,5 +219,21 @@ public class ViewStudiesController extends LoginController implements IMGControl
     private void populateModel(ModelMap model, StudyFilter filter) {
         final ViewStudiesModel subModel = MGModelFactory.getListStudiesPageModel(sessionManager, studyDAO, filter);
         model.addAttribute(MGModel.MODEL_ATTR_NAME, subModel);
+    }
+
+    private List<String> getStudyProperties() {
+        List<String> result = new ArrayList<String>();
+        result.add("STUDY_ID");
+        result.add("STUDY_NAME");
+        result.add("STUDY_TYPE");
+        result.add("PRIVACY");
+        result.add("ANALYSIS_STATUS");
+        result.add("EXPERIMENTAL_FACTOR");
+        result.add("NCBI_PROJECT_ID");
+        result.add("PUBLIC_RELEASE_DATE");
+        result.add("CENTRE_NAME");
+        result.add("STUDY_LINKOUT");
+
+        return result;
     }
 }

@@ -1,6 +1,6 @@
 package uk.ac.ebi.interpro.metagenomics.memi.controller;
 
-import uk.ac.ebi.interpro.metagenomics.memi.services.NotificationService;
+import uk.ac.ebi.interpro.metagenomics.memi.services.INotificationService;
 
 /**
  * Represents an notification service for unit test.
@@ -9,7 +9,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.services.NotificationService;
  * @version $Id$
  * @since 1.0-SNAPSHOT
  */
-public class EmailNotificationTestService implements NotificationService {
+public class EmailNotificationTestService implements INotificationService {
 
     public void sendNotification(String message) {
         sendNotification(message, null);

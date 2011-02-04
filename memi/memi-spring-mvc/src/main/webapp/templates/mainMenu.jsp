@@ -10,8 +10,8 @@ MG portal main menu template
     <a href="<c:url value="${baseURL}/viewStudies/doSearch?searchTerm=&studyVisibility=PUBLIC&search=Search"/>" title="View studies">View studies</a>
     <a href="<c:url value="${baseURL}/viewSamples/doSearch?searchTerm=&sampleVisibility=PUBLIC&search=Search"/>" title="View samples">View samples</a>
 
-    <a href="#" title="Help">Help</a>
-    <a href="mailto:maxim@ebi.ac.uk?cc=maxim.scheremetjew@gmail.com&subject=Request from the MG portal">Contact
+    <a href="<c:url value="${baseURL}/info"/>" title="About">About</a>
+    <a href="mailto:maxim@ebi.ac.uk?cc=maxim.scheremetjew@googlemail.com&subject=Request from the MG portal">Contact
         us</a>
 </div>
 <div style="margin-top:60px"/>
