@@ -26,7 +26,7 @@ public class StudyFilter {
     private StudyVisibility studyVisibility;
 
     public StudyFilter() {
-        studyVisibility = StudyVisibility.PUBLIC;
+        studyVisibility = StudyVisibility.ALL_PUBLISHED_STUDIES;
     }
 
 
@@ -62,7 +62,14 @@ public class StudyFilter {
         this.studyVisibility = studyVisibility;
     }
 
+    /**
+     * ALL_STUDIES: All published and my pre-published studies
+     * ALL_PUBLISHED_STUDIES: All published studies
+     * MY_STUDIES: All my published and my pre-published studies
+     * MY_PUBLISHED_STUDIES: All my published studies
+     * MY_PRE-PUBLISHED_STUDIES: All my pre-published studies
+     */
     public enum StudyVisibility {
-        ALL, PUBLIC, PRIVATE;
+        ALL_STUDIES, ALL_PUBLISHED_STUDIES, MY_STUDIES, MY_PUBLISHED_STUDIES, MY_PREPUBLISHED_STUDIES;
     }
 }

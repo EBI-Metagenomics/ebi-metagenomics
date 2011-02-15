@@ -143,7 +143,7 @@ public class ViewStudiesController extends LoginController implements IMGControl
         log.info("Requesting doClear (POST method)...");
 
         filter.setSearchTerm("");
-        filter.setStudyVisibility(StudyFilter.StudyVisibility.PUBLIC);
+        filter.setStudyVisibility(StudyFilter.StudyVisibility.ALL_PUBLISHED_STUDIES);
         filter.setStudyStatus(null);
         filter.setStudyType(null);
         populateModel(model, new StudyFilter());
@@ -197,7 +197,7 @@ public class ViewStudiesController extends LoginController implements IMGControl
                 filter.setStudyVisibility(vis);
             }
         } else {
-            filter.setStudyVisibility(StudyFilter.StudyVisibility.PUBLIC);
+            filter.setStudyVisibility(StudyFilter.StudyVisibility.ALL_PUBLISHED_STUDIES);
         }
     }
 
@@ -217,7 +217,7 @@ public class ViewStudiesController extends LoginController implements IMGControl
      * Creates the MG model and adds it to the specified model map.
      */
     private void populateModel(ModelMap model, StudyFilter filter) {
-        final ViewStudiesModel subModel = MGModelFactory.getListStudiesPageModel(sessionManager, studyDAO, filter);
+        final ViewStudiesModel subModel = MGModelFactory.getViewStudiesPageModel(sessionManager, studyDAO, filter);
         model.addAttribute(MGModel.MODEL_ATTR_NAME, subModel);
     }
 
