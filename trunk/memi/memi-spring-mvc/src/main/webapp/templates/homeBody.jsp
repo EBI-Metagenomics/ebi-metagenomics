@@ -94,10 +94,12 @@
             </tr>
             <tr>
                 <td width="50%" align="right" valign="top">
-                    <a href="<c:url value="${baseURL}/viewStudies/doSearch?searchTerm=&studyVisibility=PRIVATE&search=Search"/>">View all</a>
+                    <a href="<c:url value="${baseURL}/viewStudies/doSearch?searchTerm=&studyVisibility=MY_STUDIES&search=Search"/>">View
+                        all</a>
                 </td>
                 <td width="50%" align="right" valign="top">
-                    <a href="<c:url value="${baseURL}/viewSamples/doSearch?searchTerm=&sampleVisibility=PRIVATE&search=Search"/>">View all</a>
+                    <a href="<c:url value="${baseURL}/viewSamples/doSearch?searchTerm=&sampleVisibility=MY_SAMPLES&search=Search"/>">View
+                        all</a>
                 </td>
             </tr>
         </c:if>
@@ -157,10 +159,11 @@
         </tr>
         <tr>
             <td width="50%" align="right" valign="top">
-                <a href="<c:url value="${baseURL}/viewStudies/doSearch?searchTerm=&studyVisibility=PUBLIC&search=Search"/>">View all</a>
+                <a href="<c:url value="${baseURL}/viewStudies/doSearch?searchTerm=&studyVisibility=ALL_PUBLISHED_STUDIES&search=Search"/>">View
+                    all</a>
             </td>
             <td width="50%" align="right" valign="top">
-                <a href="<c:url value="${baseURL}/viewSamples/doSearch?searchTerm=&sampleVisibility=PUBLIC&search=Search"/>">View
+                <a href="<c:url value="${baseURL}/viewSamples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search"/>">View
                     all</a>
             </td>
         </tr>

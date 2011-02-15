@@ -139,7 +139,7 @@ public class ViewSamplesController extends LoginController implements IMGControl
         log.info("Requesting doClear (POST method)...");
 
         filter.setSearchTerm("");
-        filter.setSampleVisibility(SampleFilter.SampleVisibility.PUBLIC);
+        filter.setSampleVisibility(SampleFilter.SampleVisibility.ALL_PUBLISHED_SAMPLES);
         populateModel(model, new SampleFilter());
         model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((ViewSamplesModel) model.get(MGModel.MODEL_ATTR_NAME)).getLoginForm());
         return new ModelAndView(VIEW_NAME, model);
@@ -161,7 +161,7 @@ public class ViewSamplesController extends LoginController implements IMGControl
                 filter.setSampleVisibility(vis);
             }
         } else {
-            filter.setSampleVisibility(SampleFilter.SampleVisibility.PUBLIC);
+            filter.setSampleVisibility(SampleFilter.SampleVisibility.ALL_PUBLISHED_SAMPLES);
         }
     }
 

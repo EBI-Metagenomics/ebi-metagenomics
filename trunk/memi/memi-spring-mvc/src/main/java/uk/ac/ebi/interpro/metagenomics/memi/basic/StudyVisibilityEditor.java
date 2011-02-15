@@ -29,8 +29,7 @@ public class StudyVisibilityEditor extends PropertyEditorSupport {
         try {
             vis = StudyFilter.StudyVisibility.valueOf(text);
             setValue(vis);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             log.warn("Could not find any study type value for name: " + text);
         }
     }
