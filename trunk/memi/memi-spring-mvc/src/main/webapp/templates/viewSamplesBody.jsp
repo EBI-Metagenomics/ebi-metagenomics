@@ -2,7 +2,7 @@
 <%@ taglib prefix="spring" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <div id="content">
-    <h2>Overview about all samples</h2>
+    <h2>${pageTitle}</h2>
 
     <div align="center">
         <table border="0" style="border-width: 1px;border-color: #000000;border-style: solid;">
@@ -11,6 +11,16 @@
                     <td>Text:</td>
                     <td><form:input path="searchTerm"/></td>
                     <td><form:errors path="searchTerm" cssClass="error"/></td>
+                </tr>
+                <%--Used sample type instead of study type to not confuse the user--%>
+                <tr>
+                    <td>Sample type:</td>
+                    <td>
+                        <form:select path="sampleType">
+                            <form:option value="All" label="All"/>
+                            <form:options items="${mgModel.sampleTypes}"/>
+                        </form:select>
+                    </td>
                 </tr>
                 <c:if test="${not empty mgModel.submitter}">
                     <tr>
@@ -22,10 +32,10 @@
                 </c:if>
                 <td></td>
                 <td align="right">
-                    <input type="submit" name="clear" value="Clear"/>
+                    <input type="submit" name="search" value="Search"/>
                 </td>
                 <td>
-                    <input type="submit" name="search" value="Search"/>
+                    <input type="submit" name="clear" value="Clear"/>
                 </td>
                 </tr>
             </form:form>
@@ -33,7 +43,10 @@
     </div>
     <div style="margin-top:40px"></div>
     <div align="left">
-        <a href="<c:url value="${baseURL}/viewSamples/doExport"/>">Export to CSV</a>
+        <a href="<c:url value="${baseURL}/viewSamples/doExport"/>">Export table to CSV</a><br>
+        <c:if test="${not empty sampleFilter.sampleType}">
+            <a href="<c:url value="${baseURL}/viewSamples/doExport"/>">Export more detailed sample info to CSV</a>
+        </c:if>
     </div>
 
     <table border="1" width="95%">
@@ -57,7 +70,7 @@
             <tr>
                 <td align="center"><%= i%><% i++;%></td>
                 <td>
-                    <a href="<c:url value="${baseURL}/sampleOverview/${sample.id}"/>">${sample.sampleId}</a>
+                    <a href="<c:url value="${baseURL}/sampleView/${sample.sampleId}"/>">${sample.sampleId}</a>
                 </td>
                 <c:if test="${not empty mgModel.submitter}">
                     <td>${sample.public}</td>

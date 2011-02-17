@@ -27,7 +27,8 @@
                 <td><form:checkbox path="humanAssociated"/></td>
             </tr>
             <tr>
-                <td><input type="submit" value="Submit"/></td>
+                <td><input type="submit" name="submit" value="Submit"/>
+                    <input type="submit" name="cancel" value="Cancel"/></td>
             </tr>
         </table>
     </form:form>

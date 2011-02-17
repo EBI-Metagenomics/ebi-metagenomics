@@ -61,7 +61,7 @@
         <put-attribute name="body" value="/templates/studyOverviewBody.jsp"/>
     </definition>
 
-    <definition name="sampleOverview" extends="rootTemplate">
+    <definition name="sampleView" extends="rootTemplate">
         <put-attribute name="body" value="/templates/sampleOverviewBody.jsp"/>
     </definition>
 

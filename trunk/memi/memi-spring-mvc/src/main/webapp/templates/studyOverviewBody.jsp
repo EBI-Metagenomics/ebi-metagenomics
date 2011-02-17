@@ -158,7 +158,7 @@
                 <tr>
                     <td align="center"><%= i%><% i++;%></td>
                     <td align="center"><a
-                            href="<c:url value="${baseURL}/sampleOverview/${sample.id}"/>">${sample.sampleId}</a></td>
+                            href="<c:url value="${baseURL}/sampleView/${sample.id}"/>">${sample.sampleId}</a></td>
                     <td align="center">
                         <c:choose>
                             <c:when test="${empty sample.collectionDate}">N/A</c:when>

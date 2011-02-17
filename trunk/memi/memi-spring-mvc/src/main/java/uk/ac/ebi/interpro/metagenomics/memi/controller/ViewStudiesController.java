@@ -33,7 +33,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Represents the controller for the list studies page.
@@ -170,8 +173,7 @@ public class ViewStudiesController extends LoginController implements IMGControl
                 if (type != null) {
                     filter.setStudyType(type);
                 }
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 log.warn("Could not find any study type value for name: " + studyType);
                 filter.setStudyType(null);
             }
@@ -183,8 +185,7 @@ public class ViewStudiesController extends LoginController implements IMGControl
                 if (status != null) {
                     filter.setStudyStatus(status);
                 }
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 log.warn("Could not find any study type value for name: " + studyStatus);
                 filter.setStudyStatus(null);
 
@@ -235,5 +236,27 @@ public class ViewStudiesController extends LoginController implements IMGControl
         result.add("STUDY_LINKOUT");
 
         return result;
+    }
+
+    /**
+     * Generates the page title subject to the value of the study filter.
+     */
+    @ModelAttribute(value = "pageTitle")
+    public String populatePageTitle(@ModelAttribute(StudyFilter.MODEL_ATTR_NAME) StudyFilter filter) {
+        StudyFilter.StudyVisibility vis = filter.getStudyVisibility();
+        if (vis != null) {
+            if (vis.equals(StudyFilter.StudyVisibility.MY_STUDIES)) {
+                return "My studies (published and pre-published)";
+            } else if (vis.equals(StudyFilter.StudyVisibility.MY_PUBLISHED_STUDIES)) {
+                return "My published studies";
+            } else if (vis.equals(StudyFilter.StudyVisibility.MY_PREPUBLISHED_STUDIES)) {
+                return "My pre-published studies";
+            } else if (vis.equals(StudyFilter.StudyVisibility.ALL_PUBLISHED_STUDIES)) {
+                return "All published studies";
+            } else if (vis.equals(StudyFilter.StudyVisibility.ALL_STUDIES)) {
+                return "All published and my pre-published studies";
+            }
+        }
+        return "List of studies";
     }
 }

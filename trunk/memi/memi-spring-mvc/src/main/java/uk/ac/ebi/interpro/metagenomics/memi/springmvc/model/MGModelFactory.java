@@ -10,8 +10,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.forms.SampleFilter;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.StudyFilter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.News;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.*;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
 
 import java.util.ArrayList;
@@ -179,11 +178,25 @@ public class MGModelFactory {
     }
 
     private static List<Sample> getFilteredSamples(HibernateSampleDAO sampleDAO, SampleFilter filter, long submitterId) {
-        List<Sample> result = sampleDAO.retrieveFilteredSamples(buildFilterCriteria(filter, submitterId));
+        List<Sample> result = sampleDAO.retrieveFilteredSamples(buildFilterCriteria(filter, submitterId), getSampleClass(filter.getSampleType()));
         if (result == null) {
             result = new ArrayList<Sample>();
         }
         return result;
+    }
+
+    private static Class<? extends Sample> getSampleClass(Study.StudyType type) {
+        if (type != null) {
+            switch (type) {
+                case ENVIRONMENTAL:
+                    return EnvironmentSample.class;
+                case HOST_ASSOCIATED:
+                    return HostSample.class;
+                default:
+                    return UndefinedSample.class;
+            }
+        }
+        return Sample.class;
     }
 
     /**
@@ -251,7 +264,6 @@ public class MGModelFactory {
         if (searchText != null && searchText.trim().length() > 0) {
             crits.add(Restrictions.or(Restrictions.like("sampleId", searchText, MatchMode.ANYWHERE), Restrictions.like("sampleTitle", searchText, MatchMode.ANYWHERE)));
         }
-        //add is public criterion
         //add is public criterion
         if (submitterId > -1) {
             //SELECT * FROM HB_STUDY where submitter_id=?;

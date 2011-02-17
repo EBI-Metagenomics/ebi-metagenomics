@@ -19,7 +19,8 @@
                 <td><form:password path="password"/></td>
             </tr>
             <tr>
-                <td><input type="submit" value="Submit"/></td>
+                <td><input type="submit" name="login" value="Login"/>
+                    <input type="submit" name="cancel" value="Cancel"/></td>
             </tr>
         </form:form>
         <tr>

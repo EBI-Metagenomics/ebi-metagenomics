@@ -10,15 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
-import uk.ac.ebi.interpro.metagenomics.memi.basic.VelocityTemplateWriter;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.EmgLogFileInfoDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateSampleDAO;
-import uk.ac.ebi.interpro.metagenomics.memi.files.MemiFileWriter;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.HostSample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Publication;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
@@ -27,8 +24,9 @@ import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.io.File;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Represents the controller for sample overview page.
@@ -37,12 +35,12 @@ import java.util.*;
  * @since 1.0-SNAPSHOT
  */
 @Controller
-@RequestMapping("/sampleOverview")
-public class SampleOverviewController extends LoginController {
+@RequestMapping("/sampleView")
+public class SampleViewController extends LoginController {
     /**
      * View name of this controller which is used several times.
      */
-    private final String VIEW_NAME = "sampleOverview";
+    private final String VIEW_NAME = "sampleView";
 
     @Resource
     private HibernateSampleDAO sampleDAO;
@@ -60,29 +58,17 @@ public class SampleOverviewController extends LoginController {
     private SessionManager sessionManager;
 
     @RequestMapping(value = "/{sampleId}", method = RequestMethod.GET)
-    public ModelAndView doGetSample(@PathVariable String sampleId, ModelMap model) {
-        //Add sample to spring mvc model
-//        EmgSample sample = sampleDAO.read(sampleId);
-//        model.put("sample", sample);
+    public ModelAndView doGetSample(ModelMap model) {
         populateModel(model);
         model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((MGModel) model.get(MGModel.MODEL_ATTR_NAME)).getLoginForm());
         return new ModelAndView(VIEW_NAME, model);
     }
 
 
-    @RequestMapping(value = "/exportSample/{sampleId}", method = RequestMethod.GET)
-    public ModelAndView doExportSample(ModelMap model, @PathVariable Long sampleId, HttpServletResponse response) {
-        Sample sample = sampleDAO.read(sampleId);
-        if (sample != null) {
-            //Create velocity spring model
-            Map<String, Object> velocityModel = new HashMap<String, Object>();
-            velocityModel.put("sample", sample);
-            //Create file content
-            String fileContent = VelocityTemplateWriter.createFileContent(velocityEngine, "WEB-INF/velocity_templates/exportSample.vm", velocityModel);
-            File file = MemiFileWriter.writeCSVFile(fileContent);
-            if (file != null && file.canRead()) {
-                downloadService.openDownloadDialog(response, file, "sample.csv");
-            }
+    @RequestMapping(value = "/doExport/{sampleId}", method = RequestMethod.GET)
+    public ModelAndView doExportSample(@PathVariable String sampleId, ModelMap model, HttpServletResponse response) {
+        if (downloadService != null) {
+            downloadService.openDownloadDialog(response, sampleId);
         }
         populateModel(model);
         model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((MGModel) model.get(MGModel.MODEL_ATTR_NAME)).getLoginForm());
@@ -111,17 +97,17 @@ public class SampleOverviewController extends LoginController {
     }
 
     @ModelAttribute(value = "sample")
-    public Sample populateSample(@PathVariable Long sampleId) {
-        return sampleDAO.read(sampleId);
+    public Sample populateSample(@PathVariable String sampleId) {
+        return sampleDAO.readByStringId(sampleId);
     }
 
     /**
      * Populates study associated publications.
      */
     @ModelAttribute(value = "publications")
-    public Set<Publication> populatePub(@PathVariable Long sampleId) {
+    public Set<Publication> populatePub(@PathVariable String sampleId) {
         if (sampleDAO != null) {
-            Sample sample = sampleDAO.read(sampleId);
+            Sample sample = sampleDAO.readByStringId(sampleId);
             if (sample != null) {
                 Set<Publication> pubs = sample.getPublications();
                 if (pubs != null) {
@@ -133,9 +119,9 @@ public class SampleOverviewController extends LoginController {
     }
 
     @ModelAttribute(value = "isHostInstance")
-    public boolean populateInstance(@PathVariable Long sampleId) {
+    public boolean populateInstance(@PathVariable String sampleId) {
         if (sampleDAO != null) {
-            Sample sample = sampleDAO.read(sampleId);
+            Sample sample = sampleDAO.readByStringId(sampleId);
             if (sample instanceof HostSample) {
                 return true;
             }
@@ -144,10 +130,10 @@ public class SampleOverviewController extends LoginController {
     }
 
     @ModelAttribute(value = "archivedSequences")
-    public List<String> populateSeqs(@PathVariable Long sampleId) {
+    public List<String> populateSeqs(@PathVariable String sampleId) {
         List<String> result = null;
         if (sampleDAO != null && fileInfoDAO != null) {
-            Sample sample = sampleDAO.read(sampleId);
+            Sample sample = sampleDAO.readByStringId(sampleId);
             if (sample != null) {
                 result = fileInfoDAO.getFileIdsBySampleId(sample.getSampleId());
             }
