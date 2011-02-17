@@ -1,9 +1,7 @@
 package uk.ac.ebi.interpro.metagenomics.memi.dao;
 
 import org.hibernate.criterion.Criterion;
-import uk.ac.ebi.interpro.metagenomics.memi.model.EmgSample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.scan.genericjpadao.GenericDAO;
 
 import java.util.List;
@@ -46,7 +44,14 @@ public interface HibernateSampleDAO extends GenericDAO<Sample, Long> {
     List<Sample> retrieveOrderedPublicSamplesWithoutSubId(long submitterId, String propertyName, boolean isDescendingOrder);
 
     /**
-     * Returns a list of studies by the specified criteria.
+     * Returns a list of samples by the specified criteria.
+     *
+     * @param crits A list of criteria which should be add to the Hibernate query. Criteria must be
+     *              applicable to the sample class, but not to the sub classes.
+     * @param clazz
+     * @return
      */
-    List<Sample> retrieveFilteredSamples(List<Criterion> crits);
+    List<Sample> retrieveFilteredSamples(List<Criterion> crits, Class<? extends Sample> clazz);
+
+    Sample readByStringId(String sampleId);
 }

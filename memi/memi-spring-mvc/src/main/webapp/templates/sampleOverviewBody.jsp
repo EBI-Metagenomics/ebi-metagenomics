@@ -22,8 +22,9 @@
 </table>
 <div style="margin-top:10px"></div>
 <h3>Sample Description</h3>
+
 <div align="left">
-    <a href="<c:url value="${baseURL}/sampleOverview/exportSample/${sample.sampleId}"/>">Export to CSV</a>
+    <a href="<c:url value="${baseURL}/sampleView/doExport/${sample.sampleId}"/>">Export to CSV</a>
 </div>
 <table frame="box" width="95%">
     <tr>

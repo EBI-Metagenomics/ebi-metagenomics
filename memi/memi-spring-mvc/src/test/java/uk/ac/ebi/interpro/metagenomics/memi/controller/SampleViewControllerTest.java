@@ -16,7 +16,7 @@ import java.lang.reflect.Field;
 import static org.junit.Assert.*;
 
 /**
- * Represents the test for {@link uk.ac.ebi.interpro.metagenomics.memi.controller.SampleOverviewController}
+ * Represents the test for {@link SampleViewController}
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @version $Id$
@@ -24,15 +24,15 @@ import static org.junit.Assert.*;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @TestExecutionListeners
-public class SampleOverviewControllerTest {
+public class SampleViewControllerTest {
 
-    private SampleOverviewController controller;
+    private SampleViewController controller;
 
     @Before
     public void setUp() throws Exception {
-        controller = new SampleOverviewController();
+        controller = new SampleViewController();
         //Replace sample DAO for simpler testing
-        Field sampleDaoField = SampleOverviewController.class.
+        Field sampleDaoField = SampleViewController.class.
                 getDeclaredField("sampleDAO");
         sampleDaoField.setAccessible(true);
         EmgSampleDAO newSampleDAO = new SampleDAOTestImpl();
@@ -43,7 +43,7 @@ public class SampleOverviewControllerTest {
     @Ignore
     public void testInitPage() throws Exception {
         ModelMap model = new ModelMap();
-        assertEquals("sampleOverview", controller.doGetSample("1", model));
+        assertEquals("sampleOverview", controller.doGetSample(model));
         //check model
         assertEquals(1, model.size());
         assertTrue(model.containsKey("sample"));

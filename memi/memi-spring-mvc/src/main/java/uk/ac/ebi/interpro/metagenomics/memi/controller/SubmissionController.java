@@ -14,6 +14,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.SubmissionForm;
+import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.services.INotificationService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
@@ -60,7 +61,7 @@ public class SubmissionController implements IMGController {
         return new ModelAndView(VIEW_NAME, model);
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(params = "submit", method = RequestMethod.POST)
     public ModelAndView doPost(@ModelAttribute("subForm") @Valid SubmissionForm subForm, BindingResult result,
                                ModelMap model, SessionStatus status) {
         populateModel(model);
@@ -81,6 +82,12 @@ public class SubmissionController implements IMGController {
         return new ModelAndView("submissionSuccess");
     }
 
+    @RequestMapping(params = "cancel", method = RequestMethod.POST)
+    public ModelAndView doCancelSubmission(@ModelAttribute(LoginForm.MODEL_ATTR_NAME) @Valid LoginForm loginForm, BindingResult result, ModelMap model, SessionStatus status) {
+        //create model and view
+        return new ModelAndView("redirect:index", model);
+    }
+
     /**
      * Creates the MG model and adds it to the specified model map.
      */
@@ -97,7 +104,12 @@ public class SubmissionController implements IMGController {
      */
     protected String buildMsg(SubmissionForm subForm) {
         Map<String, Object> model = new HashMap<String, Object>();
+        //Add submission form to Velocity model
         model.put("subForm", subForm);
+        //Add logged in user to Velocity model
+        if (sessionManager != null && sessionManager.getSessionBean() != null) {
+            model.put("submitter", sessionManager.getSessionBean().getSubmitter());
+        }
         return VelocityEngineUtils.mergeTemplateIntoString(
                 velocityEngine, "WEB-INF/velocity_templates/submission-confirmation.vm", model);
     }

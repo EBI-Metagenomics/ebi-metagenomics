@@ -84,7 +84,7 @@
                                         <c:set var="mySampleVisibility" value="private"/>
                                     </c:otherwise>
                                 </c:choose>
-                                <a href="<c:url value="${baseURL}/sampleOverview/${sample.id}"/>">${sample.metadataReceived}
+                                <a href="<c:url value="${baseURL}/sampleView/${sample.id}"/>">${sample.metadataReceived}
                                     - ${sample.sampleTitle} (<c:out value="${mySampleVisibility}"/>)</a>
                             </td>
                         <tr>
@@ -95,11 +95,11 @@
             <tr>
                 <td width="50%" align="right" valign="top">
                     <a href="<c:url value="${baseURL}/viewStudies/doSearch?searchTerm=&studyVisibility=MY_STUDIES&search=Search"/>">View
-                        all</a>
+                        my studies</a>
                 </td>
                 <td width="50%" align="right" valign="top">
                     <a href="<c:url value="${baseURL}/viewSamples/doSearch?searchTerm=&sampleVisibility=MY_SAMPLES&search=Search"/>">View
-                        all</a>
+                        my samples</a>
                 </td>
             </tr>
         </c:if>
@@ -149,7 +149,7 @@
                                     <c:set var="publicSampleVisibility" value="private"/>
                                 </c:otherwise>
                             </c:choose>
-                            <a href="<c:url value="${baseURL}/sampleOverview/${sample.id}"/>">${sample.metadataReceived}
+                            <a href="<c:url value="${baseURL}/sampleView/${sample.id}"/>">${sample.metadataReceived}
                                 - ${sample.sampleTitle} (<c:out value="${publicSampleVisibility}"/>)</a>
                         </td>
                     <tr>

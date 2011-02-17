@@ -4,4 +4,4 @@
   Desc: Sample overview page
 --%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
-<tiles:insertDefinition name="sampleOverview"/>
+<tiles:insertDefinition name="sampleView"/>

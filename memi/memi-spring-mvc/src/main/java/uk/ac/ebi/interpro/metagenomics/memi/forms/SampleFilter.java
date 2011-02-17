@@ -1,5 +1,7 @@
 package uk.ac.ebi.interpro.metagenomics.memi.forms;
 
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
+
 /**
  * Represents a filter form, which is used within the study list page.
  * Use this object to filter studies by type or status.
@@ -13,6 +15,8 @@ public class SampleFilter {
     public final static String MODEL_ATTR_NAME = "sampleFilter";
 
     private SampleVisibility sampleVisibility;
+
+    private Study.StudyType sampleType;
 
     private String searchTerm;
 
@@ -34,6 +38,14 @@ public class SampleFilter {
 
     public void setSampleVisibility(SampleVisibility sampleVisibility) {
         this.sampleVisibility = sampleVisibility;
+    }
+
+    public Study.StudyType getSampleType() {
+        return sampleType;
+    }
+
+    public void setSampleType(Study.StudyType sampleType) {
+        this.sampleType = sampleType;
     }
 
     /**

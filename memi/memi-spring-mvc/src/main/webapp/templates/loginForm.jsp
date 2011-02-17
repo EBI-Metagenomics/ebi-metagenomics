@@ -20,7 +20,7 @@
                     <td><form:password path="password"/></td>
                 </tr>
                 <tr>
-                    <td><input type="submit" value="Submit"/></td>
+                    <td><input type="submit" value="Login"/></td>
                 </tr>
             </form:form>
             <tr>

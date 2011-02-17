@@ -6,6 +6,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 import uk.ac.ebi.interpro.metagenomics.memi.encryption.SHA256;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
@@ -17,12 +19,11 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 
 /**
- * Represents the controller for the MG portal home page.
+ * Represents the login controller for the login component on the right hand side, which is display on each page.
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @since 1.0-SNAPSHOT
  */
-//public abstract class LoginController<T extends MGModel> {
 public abstract class LoginController implements ILoginController {
     private final Log log = LogFactory.getLog(LoginController.class);
 

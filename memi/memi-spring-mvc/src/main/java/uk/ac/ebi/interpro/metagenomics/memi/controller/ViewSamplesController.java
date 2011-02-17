@@ -13,13 +13,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
-import uk.ac.ebi.interpro.metagenomics.memi.basic.SampleVisibilityEditor;
-import uk.ac.ebi.interpro.metagenomics.memi.basic.VelocityTemplateWriter;
+import uk.ac.ebi.interpro.metagenomics.memi.basic.*;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateSampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.files.MemiFileWriter;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.SampleFilter;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.StudyFilter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
@@ -83,13 +84,11 @@ public class ViewSamplesController extends LoginController implements IMGControl
 
 
     /**
-     * Handles the export of the study table.
-     * Creates a tab separated file using the Velocity engine and afterwards it is open a
-     * download dialog.
+     * Handles the export of the samples table.
      */
     @RequestMapping(value = "doExport", method = RequestMethod.GET)
-    public ModelAndView doExportStudies(HttpServletResponse response) {
-        log.info("Requesting exportStudies (GET method)...");
+    public ModelAndView doExportSamples(HttpServletResponse response) {
+        log.info("Requesting exportSamples (GET method)...");
         List<Sample> samples = sampleDAO.retrieveAll();
         if (samples != null && samples.size() > 0) {
             //Create velocity spring_model
@@ -140,6 +139,7 @@ public class ViewSamplesController extends LoginController implements IMGControl
 
         filter.setSearchTerm("");
         filter.setSampleVisibility(SampleFilter.SampleVisibility.ALL_PUBLISHED_SAMPLES);
+        filter.setSampleType(null);
         populateModel(model, new SampleFilter());
         model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((ViewSamplesModel) model.get(MGModel.MODEL_ATTR_NAME)).getLoginForm());
         return new ModelAndView(VIEW_NAME, model);
@@ -149,6 +149,20 @@ public class ViewSamplesController extends LoginController implements IMGControl
         //Get URL parameter of GET request
         String sampleVisibility = request.getParameter("sampleVisibility");
         String searchTerm = request.getParameter("searchTerm");
+        String sampleType = request.getParameter("sampleType");
+
+        //Set parameter study type
+        if (sampleType != null && sampleType.trim().length() > 0) {
+            try {
+                Study.StudyType type = Study.StudyType.valueOf(sampleType);
+                if (type != null) {
+                    filter.setSampleType(type);
+                }
+            } catch (Exception e) {
+                log.warn("Could not find any sample type value for name: " + sampleType);
+                filter.setSampleType(null);
+            }
+        }
 
         //Set parameters to the filter
         if (searchTerm != null && searchTerm.trim().length() > 0) {
@@ -168,6 +182,7 @@ public class ViewSamplesController extends LoginController implements IMGControl
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         binder.registerCustomEditor(SampleFilter.SampleVisibility.class, "sampleVisibility", new SampleVisibilityEditor());
+        binder.registerCustomEditor(Study.StudyType.class, "sampleType", new StudyTypeEditor());
     }
 
     /**
@@ -176,5 +191,27 @@ public class ViewSamplesController extends LoginController implements IMGControl
     private void populateModel(ModelMap model, SampleFilter filter) {
         final ViewSamplesModel subModel = MGModelFactory.getViewSamplesPageModel(sessionManager, sampleDAO, filter);
         model.addAttribute(MGModel.MODEL_ATTR_NAME, subModel);
+    }
+
+    /**
+     * Generates the page title subject to the value of the sample filter.
+     */
+    @ModelAttribute(value = "pageTitle")
+    public String getPageTitle(@ModelAttribute(SampleFilter.MODEL_ATTR_NAME) SampleFilter filter) {
+        SampleFilter.SampleVisibility vis = filter.getSampleVisibility();
+        if (vis != null) {
+            if (vis.equals(SampleFilter.SampleVisibility.MY_SAMPLES)) {
+                return "My samples (published and pre-published)";
+            } else if (vis.equals(SampleFilter.SampleVisibility.MY_PUBLISHED_SAMPLES)) {
+                return "My published samples";
+            } else if (vis.equals(SampleFilter.SampleVisibility.MY_PREPUBLISHED_SAMPLES)) {
+                return "My pre-published samples";
+            } else if (vis.equals(SampleFilter.SampleVisibility.ALL_PUBLISHED_SAMPLES)) {
+                return "All published samples";
+            } else if (vis.equals(SampleFilter.SampleVisibility.ALL_SAMPLES)) {
+                return "All published and my pre-published samples";
+            }
+        }
+        return "List of samples";
     }
 }

@@ -9,6 +9,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.HostSample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 
 import java.util.ArrayList;
@@ -52,6 +53,20 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
         Session session = sessionFactory.getCurrentSession();
         if (session != null) {
             return (Sample) session.get(Sample.class, id);
+        }
+        return null;
+    }
+
+    @Transactional(readOnly = true)
+    public Sample readByStringId(String sampleId) {
+        Session session = sessionFactory.getCurrentSession();
+        if (session != null) {
+            Criteria crit = session.createCriteria(Sample.class);
+            crit.add(Restrictions.eq("sampleId", sampleId));
+            List<Sample> samples = crit.list();
+            if (samples != null && samples.size() > 0) {
+                return samples.get(0);
+            }
         }
         return null;
     }
@@ -165,12 +180,12 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Sample> retrieveFilteredSamples(List<Criterion> crits) {
+    public List<Sample> retrieveFilteredSamples(List<Criterion> crits, Class<? extends Sample> clazz) {
         Session session = sessionFactory.getCurrentSession();
         Criteria criteria = null;
         if (session != null) {
-            criteria = session.createCriteria(Sample.class);
-            //add criterions
+            criteria = session.createCriteria(clazz);
+            //add criteria
             for (Criterion crit : crits) {
                 criteria.add(crit);
             }

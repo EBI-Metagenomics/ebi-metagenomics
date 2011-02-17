@@ -3,6 +3,7 @@ package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.SampleFilter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,8 @@ public class ViewSamplesModel extends MGModel {
 
     private List<SampleFilter.SampleVisibility> sampleVisibilityList;
 
+    private List<Study.StudyType> sampleTypes;
+
 
     public ViewSamplesModel(Submitter submitter, List<Sample> samples) {
         this(submitter, samples, new SampleFilter());
@@ -32,6 +35,7 @@ public class ViewSamplesModel extends MGModel {
         this.sampleFilter = filter;
         this.samples = samples;
         this.sampleVisibilityList = getDefaultStudyVisibilityList();
+        this.sampleTypes = getDefaultStudyTypes();
     }
 
     public SampleFilter getSampleFilter() {
@@ -58,10 +62,26 @@ public class ViewSamplesModel extends MGModel {
         this.sampleVisibilityList = sampleVisibilityList;
     }
 
+    public List<Study.StudyType> getSampleTypes() {
+        return sampleTypes;
+    }
+
+    public void setSampleTypes(List<Study.StudyType> sampleTypes) {
+        this.sampleTypes = sampleTypes;
+    }
+
     private List<SampleFilter.SampleVisibility> getDefaultStudyVisibilityList() {
         List<SampleFilter.SampleVisibility> result = new ArrayList<SampleFilter.SampleVisibility>();
         for (SampleFilter.SampleVisibility vis : SampleFilter.SampleVisibility.values()) {
             result.add(vis);
+        }
+        return result;
+    }
+
+    private List<Study.StudyType> getDefaultStudyTypes() {
+        List<Study.StudyType> result = new ArrayList<Study.StudyType>();
+        for (Study.StudyType type : Study.StudyType.values()) {
+            result.add(type);
         }
         return result;
     }

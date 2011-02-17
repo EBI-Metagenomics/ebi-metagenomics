@@ -17,8 +17,8 @@ import javax.validation.Valid;
 
 /**
  * This controller handles the login page in contrast to the login component
- * (which is present on all other pages). This controller is used if somebody who is not
- * logged in wants to submit data.
+ * (please notice, that this is not the controller for the login component on the right hand side).
+ * This controller is used if somebody who is not logged in wants to submit data.
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @version $Id$
@@ -42,9 +42,7 @@ public class LoginPageController extends LoginController implements IMGControlle
         return new ModelAndView(VIEW_NAME, model);
     }
 
-//    @Override
-
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(params = "login", method = RequestMethod.POST)
     public ModelAndView doProcessLogin(@ModelAttribute(LoginForm.MODEL_ATTR_NAME) @Valid LoginForm loginForm, BindingResult result, ModelMap model, SessionStatus status) {
         //process login
         super.processLogin(loginForm, result, model, status);
@@ -54,5 +52,11 @@ public class LoginPageController extends LoginController implements IMGControlle
         }
         //create model and view
         return new ModelAndView(VIEW_NAME, model);
+    }
+
+    @RequestMapping(params = "cancel", method = RequestMethod.POST)
+    public ModelAndView doCancelLoginProcess(@ModelAttribute(LoginForm.MODEL_ATTR_NAME) @Valid LoginForm loginForm, BindingResult result, ModelMap model, SessionStatus status) {
+        //create model and view
+        return new ModelAndView("redirect:index", model);
     }
 }
