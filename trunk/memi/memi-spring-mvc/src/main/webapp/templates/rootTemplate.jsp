@@ -3,64 +3,60 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <html>
 <head>
-    <title>MG Portal home page</title>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" lang="java">
+    <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/images/favicon.ico">
+    <link rel="icon"  type="image/ico" href="${pageContext.request.contextPath}/images/favicon.ico">
+    <title>EBI metagenomics portal</title>
+    <meta name="description" content="EBI Metagenomics is a new web resource targeted at metagenomic researchers"/>
+    <meta name="keywords" content="ebi, EBI, InterPro, interpro, metagenomics, metagenomic, metagenome, metagenomes, DNA, microbiology, microbial, ecology, organisms, microorganism, microorganisms, biodiversity, diversity, gene, genes, genome, genomes, genomic, genomics, ecogenomics, community genomics, genetic, sequencing, sequence, environment, environmental, ecosystem, ecosystems, samples, sample, annotation, protein, research, archive, metabolic, pathways, analysis, function, GAIA, shotgun, pyrosequencing, community, communities, metabolism, cultivation, bioinformatics, bioinformatic, database, metadata, dataset, data, repository,   "/>
 
-    <meta name="keywords" content="ebi,interpro,metagenomics"/>
-    <meta name="description" content="Root template for the EBI MG portal."/>
-    <meta name="author" content="InterPro developer team"/>
-
-
-    <%-- CSS file sources --%>
-    <%--Link to the CSS file, which includes CSS classes for the EBI main header and footer--%>
-    <%--<link rel="stylesheet" href="http://www.ebi.ac.uk/inc/css/contents.css" type="text/css"/>--%>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/default.css" type="text/css" media="all"/>
+                                                    
+    <%--Link to the CSS file, which includes CSS classes for the EBI main header and footer
+   <link rel="stylesheet" href="http://www.ebi.ac.uk/inc/css/contents.css" type="text/css"/>
     <link rel="stylesheet" href="http://www.ebi.ac.uk/inc/css/userstyles.css" type="text/css"/>
-    <link rel="stylesheet" href="http://www.ebi.ac.uk/inc/css/sidebars.css" type="text/css"/>
-    <%--Link to the Memi project CSS file--%>
-    <link href="${pageContext.request.contextPath}/css/memi.css" rel="stylesheet" type="text/css" media="all"/>
+    <link rel="stylesheet" href="http://www.ebi.ac.uk/inc/css/sidebars.css" type="text/css"/> --%>
+
     <%-- JQuery and JQuery UI source--%>
-    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/ui-lightness/jquery-ui.css"
-          type="text/css" media="all"/>
-
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js" type="text/javascript"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" type="text/javascript"></script>
-
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/jquery-ui.css" type="text/css" media="all"/>
+    <script src="${pageContext.request.contextPath}/js/jquery-1.4.4.min.js" type="text/javascript"></script>
+    <script src="${pageContext.request.contextPath}/js/jquery-ui-1.8.8.custom.min.js" type="text/javascript"></script>
     <%-- The date picker is used within the submission page --%>
-    <script src="/js/datepicker.js" type="text/javascript"></script>
+    <script src="${pageContext.request.contextPath}/js/datepicker.js" type="text/javascript"></script>
     <%-- The auto completion is used with the study search page --%>
-    <script src="/js/autocompletion.js" type="text/javascript"></script>
-    <%-- Used within the home page. The dialog message is trigger when someone tries to submit data when he is not logged in--%>
-    <script src="/js/loginmessage.js" type="text/javascript"></script>
-    <%--<script src="/js/login.js" type="text/javascript"></script>--%>
+    <script src="${pageContext.request.contextPath}/js/autocompletion.js" type="text/javascript"></script>
 </head>
-<%-- The setting of the onload attribute is necessary to ensure that the EBI main header works in IE--%>
-<%-- For more information on how to create EBI group and project specific pages please read the guideline on
-    http://www.ebi.ac.uk/inc/template/#important--%>
-<body onload="if(navigator.userAgent.indexOf('MSIE') != -1) {document.getElementById('head').allowTransparency = true;}">
+
 <%-- The following variable saves and provides the base URL for the whole application --%>
-<c:set var="baseURL" value="${pageContext.request.contextPath}/memi" scope="session"/>
-<div  style="overflow:auto;width:100%;height:100%;">
-    <table>
-        <tr>
-            <td colspan="2">
-                <tiles:insertAttribute name="header"/>
-                <tiles:insertAttribute name="mainMenu"/>
-            </td>
-        </tr>
-        <tr>
-            <td width="88%">
-                <tiles:insertAttribute name="body"/>
-            </td>
-            <td valign="top" width="12%">
-                <tiles:insertAttribute name="rightMenu"/>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <tiles:insertAttribute name="footer"/>
-            </td>
-        </tr>
-    </table>
+<c:set var="baseURL" value="${pageContext.request.contextPath}/metagenomics" scope="session"/>
+
+<%-- onload attribute is necessary to ensure that the EBI main header works in IE see  http://www.ebi.ac.uk/inc/template/#important--%>
+<body onload="if(navigator.userAgent.indexOf('MSIE') != -1) {document.getElementById('head').allowTransparency = true;}" id="top">
+
+
+
+<div id="wrapper">
+    <div id ="content">
+
+    <header id="main-header">
+    <tiles:insertAttribute name="header"/>
+    </header>
+
+    <nav>
+    <tiles:insertAttribute name="mainMenu"/> 
+    </nav>
+        
+    <section id="main-content">
+    <tiles:insertAttribute name="body"/>
+    <tiles:insertAttribute name="rightMenu"/>    
+    </section>
+
+    <footer>
+      <tiles:insertAttribute name="footer"/>    
+    </footer>
+       
+        
+</div>
 </div>
 </body>
 </html>
