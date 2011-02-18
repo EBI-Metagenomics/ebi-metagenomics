@@ -1,41 +1,41 @@
 ##  Created by Maxim Scheremetjew, EMBL-EBI, InterPro
 ##  Date: 05-Jan-2011
 ##  Desc: Velocity template to provide a downloadable semicolon separated file for publicStudies
-#foreach( $property in $studyProperties )"$property";#end
+#foreach( $property in $studyProperties )"$property",#end
 
 #foreach( $study in $studies )
     #foreach( $property in $studyProperties )
         #if($property == 'STUDY_ID')
             #if($study.studyId)
-            "$study.studyId";#{else}"N/A";#end
+            "$study.studyId",#{else}"N/A",#end
         #elseif($property == 'STUDY_NAME')
             #if($study.studyName)
-            "$study.studyName";#{else}"N/A";#end
+            "$study.studyName",#{else}"N/A",#end
         #elseif($property == 'STUDY_TYPE')
             #if($study.studyType)
-            "$study.studyType";#{else}"N/A";#end
+            "$study.studyType",#{else}"N/A",#end
         #elseif($property == 'PRIVACY')
             #if($study.public)
-            "$study.public";#{else}"N/A";#end
-        #elseif($property == 'ANALYSIS_Status')
+            "$study.public",#{else}"N/A",#end
+        #elseif($property == 'ANALYSIS_STATUS')
             #if($study.studyStatus)
-            "$study.studyStatus";#{else}"N/A";#end
+            "$study.studyStatus",#{else}"N/A",#end
         #elseif($property == 'EXPERIMENTAL_FACTOR')
             #if($study.experimentalFactor)
-            "$study.experimentalFactor";#{else}"N/A";#end
+            "$study.experimentalFactor",#{else}"N/A",#end
         #elseif($property == 'NCBI_PROJECT_ID')
             #if($study.ncbiProjectId)
-            "$study.ncbiProjectId";#{else}"N/A";#end
+            "$study.ncbiProjectId",#{else}"N/A",#end
         #elseif($property == 'PUBLIC_RELEASE_DATE')
             #if($study.publicReleaseDate)
-            "$study.publicReleaseDate";#{else}"N/A";#end
+            "$study.publicReleaseDate",#{else}"N/A",#end
         #elseif($property == 'CENTRE_NAME')
             #if($study.centreName)
-            "$study.centreName";#{else}"N/A";#end
+            "$study.centreName",#{else}"N/A",#end
         #elseif($property == 'STUDY_LINKOUT')
             #if($study.studyPageURL)
-            "$study.studyPageURL";#{else}"N/A";#end
+            "$study.studyPageURL",#{else}"N/A",#end
         #end
     #end
-    
+
 #end
