@@ -5,11 +5,11 @@
 <hibernate-configuration>
     <!-- Oracle session factory-->
     <session-factory>
-        <property name="connection.url">jdbc:oracle:thin:@muscat.ebi.ac.uk:1531:IPDEV</property>
+        <property name="connection.url">${jcp.jdbc.oracle.ipdev.url}</property>
         <property name="connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
         <property name="dialect">org.hibernate.dialect.Oracle10gDialect</property>
-        <property name="connection.username">emg</property>
-        <property name="connection.password">emg070710</property>
+        <property name="connection.username">${jcp.jdbc.oracle.ipdev.username}</property>
+        <property name="connection.password">${jcp.jdbc.oracle.ipdev.password}</property>
         <property name="transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>
         <!-- Drop and re-create the database schema on startup -->
         <property name="hbm2ddl.auto">update</property>
@@ -28,5 +28,6 @@
         <mapping class="uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample"/>
         <mapping class="uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.HostSample"/>
         <mapping class="uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.EnvironmentSample"/>
+        <mapping class="uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.UndefinedSample"/>
     </session-factory>
 </hibernate-configuration>
