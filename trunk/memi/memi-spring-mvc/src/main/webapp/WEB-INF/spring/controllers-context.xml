@@ -80,6 +80,7 @@
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample</value>
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.EnvironmentSample</value>
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.HostSample</value>
+                <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.UndefinedSample</value>
             </list>
         </property>
 
@@ -88,10 +89,8 @@
 
     <!-- Specification of version of control elements like e.g. data access objects -->
     <!-- List of data access objects -->
-    <bean id="emgStudyDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.EmgStudyDAOImpl"/>
     <bean id="studyDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateStudyDAOImpl"/>
 
-    <bean id="emgSampleDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.EmgSampleDAOImpl"/>
     <bean id="sampleDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateSampleDAOImpl"/>
 
     <bean name="submitterDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.SubmitterDAOImpl">
@@ -101,8 +100,6 @@
     <bean name="fileInfoDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.EmgLogFileInfoDAOImpl">
         <property name="dataSource" ref="ipDevDatasource"/>
     </bean>
-
-    <bean id="newsDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.NewsDAOImpl"/>
 
     <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
         <property name="basename" value="/WEB-INF/resources/messages"/>

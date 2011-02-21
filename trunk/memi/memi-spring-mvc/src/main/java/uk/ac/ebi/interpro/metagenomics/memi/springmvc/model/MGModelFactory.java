@@ -33,16 +33,16 @@ public class MGModelFactory {
 
     }
 
-    public static HomePageModel getHomePageModel(SessionManager sessionMgr, HibernateStudyDAO studyDAO, HibernateSampleDAO sampleDAO, NewsDAO newsDAO) {
+    public static HomePageModel getHomePageModel(SessionManager sessionMgr, HibernateStudyDAO studyDAO, HibernateSampleDAO sampleDAO) {
         Submitter submitter = getSessionSubmitter(sessionMgr);
         if (submitter == null) {
-            return new HomePageModel(submitter, getOrderedPublicStudies(studyDAO), getOrderedPublicSamples(sampleDAO), getNewsListFromDB(newsDAO));
+            return new HomePageModel(submitter, getOrderedPublicStudies(studyDAO), getOrderedPublicSamples(sampleDAO));
         } else {
             List<Study> myStudies = getOrderedStudiesBySubmitter(submitter.getSubmitterId(), studyDAO);
             List<Sample> mySamples = getOrderedSamplesBySubmitter(submitter.getSubmitterId(), sampleDAO);
             List<Study> publicStudies = getOrderedPublicStudiesWithoutSubId(submitter.getSubmitterId(), studyDAO);
             List<Sample> publicSamples = getOrderedPublicSamplesWithoutSubId(submitter.getSubmitterId(), sampleDAO);
-            return new HomePageModel(submitter, publicStudies, publicSamples, getNewsListFromDB(newsDAO), myStudies, mySamples);
+            return new HomePageModel(submitter, publicStudies, publicSamples, myStudies, mySamples);
         }
     }
 
@@ -290,15 +290,6 @@ public class MGModelFactory {
             crits.add(Restrictions.eq("isPublic", true));
         }
         return crits;
-    }
-
-
-    public static List<News> getNewsListFromDB(NewsDAO newsDAO) {
-        List<News> newsList = newsDAO.getLatestNews();
-        if (newsList == null) {
-            newsList = new ArrayList<News>();
-        }
-        return newsList;
     }
 
     private static Submitter getSessionSubmitter(SessionManager sessionMgr) {
