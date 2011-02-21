@@ -13,9 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.EmgLogFileInfoDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateSampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.HostSample;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Publication;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.*;
 import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
@@ -67,16 +65,28 @@ public class SampleViewController extends LoginController {
 
     @RequestMapping(value = "/doExport/{sampleId}", method = RequestMethod.GET)
     public ModelAndView doExportSample(@PathVariable String sampleId, ModelMap model, HttpServletResponse response) {
+        Study.StudyType type = getSampleType(sampleId);
         if (downloadService != null) {
-            downloadService.openDownloadDialog(response, sampleId);
+            downloadService.openDownloadDialog(response, type, sampleId);
         }
         populateModel(model);
         model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((MGModel) model.get(MGModel.MODEL_ATTR_NAME)).getLoginForm());
         return new ModelAndView(VIEW_NAME, model);
     }
 
-    //POST Methods
+    private Study.StudyType getSampleType(String sampleId) {
+        Sample sample = sampleDAO.readByStringId(sampleId);
+        if (sample instanceof HostSample) {
+            return Study.StudyType.HOST_ASSOCIATED;
 
+        } else if (sample instanceof EnvironmentSample) {
+            return Study.StudyType.ENVIRONMENTAL;
+        } else {
+            return Study.StudyType.UNDEFINED;
+        }
+    }
+
+    //POST Methods
     @RequestMapping(method = RequestMethod.POST)
     public ModelAndView doProcessLogin(@ModelAttribute(LoginForm.MODEL_ATTR_NAME) @Valid LoginForm loginForm, BindingResult result,
                                        ModelMap model, SessionStatus status) {

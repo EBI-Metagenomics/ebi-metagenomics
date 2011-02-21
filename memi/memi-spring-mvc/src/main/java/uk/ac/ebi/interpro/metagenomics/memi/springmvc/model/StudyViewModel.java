@@ -12,14 +12,14 @@ import java.util.List;
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @since 1.0-SNAPSHOT
  */
-public class StudyOverviewModel extends MGModel {
+public class StudyViewModel extends MGModel {
     private List<EmgSample> samples;
 
     private EmgStudy study;
 
     private List<String> studyProperties;
 
-    public StudyOverviewModel(Submitter submitter, List<EmgSample> samples, EmgStudy study, List<String> studyProperties) {
+    public StudyViewModel(Submitter submitter, List<EmgSample> samples, EmgStudy study, List<String> studyProperties) {
         super(submitter);
         this.samples = samples;
         this.study = study;

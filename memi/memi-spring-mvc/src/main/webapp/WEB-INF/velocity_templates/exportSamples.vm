@@ -1,14 +1,31 @@
 ##  Created by Maxim Scheremetjew, EMBL-EBI, InterPro
 ##  Date: 05-Jan-2011
-##  Desc: Velocity template to provide a downloadable semicolon separated file for publicSamples
-#foreach( $property in $samplePropertyList )#if( $property != 'SampleDescription')"$property";#end
-#end
+##  Desc: Velocity template to provide a downloadable semicolon separated file for publicStudies
+#foreach( $property in $sampleProperties )"$property",#end
 
-#foreach( $sample in $publicSamples )
-    #set( $propertyMap = $sample.propertyMap )
-    #foreach( $key in $propertyMap.keySet() )
-        #if( $key != 'SampleDescription')
-            #if( !$propertyMap.get($key) )"N/A";#{else}"$propertyMap.get($key)";#end
+#foreach( $sample in $samples )
+    #foreach( $property in $sampleProperties )
+        #if($property == 'SAMPLE_ID')
+            #if($sample.sampleId)
+            "$sample.sampleId",#{else}"N/A",#end
+        #elseif($property == 'SAMPLE_NAME')
+            #if($sample.sampleTitle)
+            "$sample.sampleTitle",#{else}"N/A",#end
+        #elseif($property == 'COLLECTION_DATE')
+            #if($sample.collectionDate)
+            "$sample.collectionDate",#{else}"N/A",#end
+        #elseif($property == 'VALID_METADATA')
+            #if($sample.metadataReceived)
+            "$sample.metadataReceived",#{else}"N/A",#end
+        #elseif($property == 'VALID_RAW_DATA')
+            #if($sample.sequenceDataReceived)
+            "$sample.sequenceDataReceived",#{else}"N/A",#end
+        #elseif($property == 'ANALYSIS_COMPLETED')
+            #if($sample.analysisCompleted)
+            "$sample.analysisCompleted",#{else}"N/A",#end
+        #elseif($property == 'ARCHIVED_IN_ENA')
+            #if($sample.sequenceDataArchived)
+            "$sample.sequenceDataArchived",#{else}"N/A",#end
         #end
     #end
 

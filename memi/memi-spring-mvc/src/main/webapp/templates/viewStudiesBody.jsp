@@ -76,7 +76,7 @@
             <tr>
                 <td align="center"><%= i%><% i++;%></td>
                 <td>
-                    <a href="<c:url value="${baseURL}/studyOverview/${study.id}"/>">${study.studyId}</a>
+                    <a href="<c:url value="${baseURL}/studyView/${study.id}"/>">${study.studyId}</a>
                 </td>
                 <td>${study.studyName}</td>
                 <td>${study.studyType}</td>

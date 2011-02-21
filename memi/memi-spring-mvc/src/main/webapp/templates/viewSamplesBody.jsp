@@ -42,10 +42,13 @@
         </table>
     </div>
     <div style="margin-top:40px"></div>
+    <%--Request the current query string to export only the filtered studies--%>
+    <c:set var="queryString" value="${pageContext.request.queryString}" scope="session"/>
     <div align="left">
-        <a href="<c:url value="${baseURL}/viewSamples/doExport"/>">Export table to CSV</a><br>
+        <a href="<c:url value="${baseURL}/viewSamples/doExportTable?${queryString}"/>">Export table to CSV</a><br>
         <c:if test="${not empty sampleFilter.sampleType}">
-            <a href="<c:url value="${baseURL}/viewSamples/doExport"/>">Export more detailed sample info to CSV</a>
+            <a href="<c:url value="${baseURL}/viewSamples/doExportDetails?${queryString}"/>">Export more detailed sample info to
+                CSV</a>
         </c:if>
     </div>
 

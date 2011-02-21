@@ -138,7 +138,7 @@
 <c:choose>
     <c:when test="${not empty samples}">
         <div align="left">
-            <a href="<c:url value="${baseURL}/studyOverview/exportSamples/${study.studyId}"/>">Export to CSV</a>
+            <a href="<c:url value="${baseURL}/studyView/exportSamples/${study.studyId}"/>">Export to CSV</a>
         </div>
         <table border="1">
             <tr>
@@ -158,7 +158,7 @@
                 <tr>
                     <td align="center"><%= i%><% i++;%></td>
                     <td align="center"><a
-                            href="<c:url value="${baseURL}/sampleView/${sample.id}"/>">${sample.sampleId}</a></td>
+                            href="<c:url value="${baseURL}/sampleView/${sample.sampleId}"/>">${sample.sampleId}</a></td>
                     <td align="center">
                         <c:choose>
                             <c:when test="${empty sample.collectionDate}">N/A</c:when>
