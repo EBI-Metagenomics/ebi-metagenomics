@@ -22,6 +22,9 @@
 </table>
 <div style="margin-top:10px"></div>
 <h3>Sample Description</h3>
+<c:if test="${isDialogOpen==false}">
+    <p><span style="color:red">No export data available for that sample!</span></p>
+</c:if>
 
 <div align="left">
     <a href="<c:url value="${baseURL}/sampleView/doExport/${sample.sampleId}"/>">Export to CSV</a>
@@ -224,36 +227,17 @@
     </tr>
     <tr>
         <td valign="top" align="right" width="150"><b>Raw sequence reads:</b></td>
-        <td><c:forEach var="seqId" items="${archivedSequences}" varStatus="status">
-            <a href="<c:url value="http://www.ebi.ac.uk/ena/data/view/${seqId}"/>"><c:out value="${seqId}"/></a>
-            <br>
-        </c:forEach>
+        <td>
+            <c:choose>
+                <c:when test="${not empty archivedSequences}">
+                    <c:forEach var="seqId" items="${archivedSequences}" varStatus="status">
+                        <a href="<c:url value="http://www.ebi.ac.uk/ena/data/view/${seqId}"/>">
+                            <c:out value="${seqId}"/></a><br>
+                    </c:forEach>
+                </c:when>
+                <c:otherwise>(not given)</c:otherwise>
+            </c:choose>
         </td>
     </tr>
 </table>
-<%--<div style="margin-top:6px"></div>--%>
-<%--&lt;%&ndash; Print out all sample properties into a table &ndash;%&gt;--%>
-<%--&lt;%&ndash; Properties with NULL values are filtered&ndash;%&gt;--%>
-<%--<%--%>
-<%--int i = 1;--%>
-<%--String oddEven;--%>
-<%--%>--%>
-<%--<table border="0" style="border-width: 1px;border-color: #000000;border-style: solid;">--%>
-<%--<c:forEach items="${sample.propertyMap}" var="entry">--%>
-<%--<c:if test="${entry.value!=null}">--%>
-<%--<%--%>
-<%--if (i % 2 == 0) {--%>
-<%--oddEven = "#FFF0F5";--%>
-<%--} else {--%>
-<%--oddEven = "#E6E6FA";--%>
-<%--}--%>
-<%--i++;--%>
-<%--%>--%>
-<%--<tr bgcolor="<%=oddEven%>">--%>
-<%--<td valign="top"><c:out value="${entry.key}:"/></td>--%>
-<%--<td><c:out value="${entry.value}"/></td>--%>
-<%--</tr>--%>
-<%--</c:if>--%>
-<%--</c:forEach>--%>
-<%--</table>--%>
 </div>

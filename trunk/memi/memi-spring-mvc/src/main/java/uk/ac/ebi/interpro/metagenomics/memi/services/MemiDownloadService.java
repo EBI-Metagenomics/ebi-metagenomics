@@ -6,8 +6,6 @@ import org.springframework.util.FileCopyUtils;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.sound.midi.Sequence;
-import javax.swing.plaf.metal.MetalIconFactory;
 import java.io.*;
 
 /**
@@ -51,7 +49,19 @@ public class MemiDownloadService {
         log.info("Opened download dialog successfully.");
     }
 
-    public void openDownloadDialog(HttpServletResponse response, Study.StudyType type, String... sampleIDs) {
+    /**
+     * Opens a download dialog to export more detailed sample info. For each sample was built a CSV file in
+     * advance. If a user wants to download detailed info for more than one sample, then all CSV files will be
+     * assembled to one CSV file containing all sample info.
+     *
+     * @param response  HTTP response.
+     * @param type      Specifies the sample/study type. This is necessary distinguish between two CSV file
+     *                  headers, one header file for Host-associated and another header file
+     *                  for environmental samples.
+     * @param sampleIDs Specifies the name of the CSV file for each sample.
+     * @return TRUE if a downloadable file exists and 'Save to file' dialog could be open.
+     */
+    public boolean openDownloadDialog(HttpServletResponse response, Study.StudyType type, String... sampleIDs) {
         log.info("Trying to open the download dialog to export a CSV file for sample(s) with ID(s)" + sampleIDs + "...");
 
         InputStream sampleFileIS = null;
@@ -82,12 +92,16 @@ public class MemiDownloadService {
                     }
                 }
             }
-            //configure HTTP response
-            response.setContentType("text/html;charset=UTF-8");
-            //response.setContentLength(file.getFile().length);
-            fileName = (sampleIDs.length == 1 ? fileName : "samples") + ".csv";
-            response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
-            FileCopyUtils.copy(sis, response.getOutputStream());
+            if (sis != null) {
+                //configure HTTP response
+                response.setContentType("text/html;charset=UTF-8");
+                //response.setContentLength(file.getFile().length);
+                fileName = (sampleIDs.length == 1 ? fileName : "samples") + ".csv";
+                response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+                FileCopyUtils.copy(sis, response.getOutputStream());
+                log.info("Opened download dialog successfully.");
+                return true;
+            }
         } catch (FileNotFoundException e) {
             log.error("Could not find the specified downloadable file!", e);
         } catch (IOException e) {
@@ -115,20 +129,23 @@ public class MemiDownloadService {
                 }
             }
         }
-        log.info("Opened download dialog successfully.");
+        log.warn("Could not open download dialog!");
+        return false;
     }
 
     /**
      * Creates an input stream from a hard coded file name.
      */
     private InputStream getCSVFileHeaderStream(Study.StudyType type) {
-        File headerFile;
+        File headerFile = null;
         if (type.equals(Study.StudyType.ENVIRONMENTAL)) {
             headerFile = new File(downloadPath + "data_EMG_env_samples.csv");
-        } else {
+        } else if (type.equals(Study.StudyType.HOST_ASSOCIATED)) {
             headerFile = new File(downloadPath + "data_EMG_host_samples.csv");
+        } else {
+            log.warn("Could not set any header file, because an undefined study type was specified!");
         }
-        if (headerFile.canRead()) {
+        if (headerFile != null && headerFile.canRead()) {
             try {
                 return new FileInputStream(headerFile);
             } catch (FileNotFoundException e) {

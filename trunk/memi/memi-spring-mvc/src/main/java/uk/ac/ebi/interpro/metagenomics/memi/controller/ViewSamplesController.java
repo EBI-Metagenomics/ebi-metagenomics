@@ -27,6 +27,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewSamplesModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
+import uk.ac.ebi.interpro.metagenomics.memi.tools.MemiTools;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -107,7 +108,7 @@ public class ViewSamplesController extends LoginController implements IMGControl
                 downloadService.openDownloadDialog(response, file, DOWNLOAD_FILE_NAME);
             }
         }
-        return null;
+        return new ModelAndView(VIEW_NAME, model);
     }
 
     /**
@@ -122,26 +123,18 @@ public class ViewSamplesController extends LoginController implements IMGControl
         populateModel(model, filter);
         List<Sample> samples = ((ViewSamplesModel) model.get(MGModel.MODEL_ATTR_NAME)).getSamples();
         if (samples != null && samples.size() > 0) {
-            String[] samplesIDs = getSampleIds(samples);
+            String[] samplesIDs = MemiTools.getSampleIds(samples);
             if (downloadService != null) {
-                downloadService.openDownloadDialog(response, filter.getSampleType(), samplesIDs);
+                boolean isDialogOpen = downloadService.openDownloadDialog(response, filter.getSampleType(), samplesIDs);
+                model.addAttribute("isDialogOpen", isDialogOpen);
             } else {
                 log.warn("Could not open download dialog to export samples. Download service is null!");
             }
         } else {
             log.info("There are no samples to be exported!");
         }
-        return null;
+        return new ModelAndView(VIEW_NAME, model);
     }
-
-    private String[] getSampleIds(List<Sample> samples) {
-        String[] result = new String[samples.size()];
-        for (int i = 0; i < result.length; i++) {
-            result[i] = samples.get(i).getSampleId();
-        }
-        return result;
-    }
-
 
     @Override
     @RequestMapping(method = RequestMethod.POST)
