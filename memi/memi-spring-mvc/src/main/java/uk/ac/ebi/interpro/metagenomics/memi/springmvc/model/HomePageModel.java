@@ -1,12 +1,11 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
 
-import uk.ac.ebi.interpro.metagenomics.memi.model.News;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents the model for the home page.
@@ -20,8 +19,6 @@ public class HomePageModel extends MGModel {
 
     private List<Sample> publicSamples;
 
-    private List<News> newsList;
-
     private List<Study> myStudies;
 
     private List<Sample> mySamples;
@@ -29,27 +26,18 @@ public class HomePageModel extends MGModel {
     public final static String MODEL_ATTR_NAME = "homePageModel";
 
 
-    public HomePageModel(Submitter submitter, List<Study> publicStudies, List<Sample> publicSamples, List<News> newsList) {
+    public HomePageModel(Submitter submitter, List<Study> publicStudies, List<Sample> publicSamples) {
         super(submitter);
         this.publicStudies = publicStudies;
         this.publicSamples = publicSamples;
-        this.newsList = newsList;
         this.myStudies = new ArrayList<Study>();
         this.mySamples = new ArrayList<Sample>();
     }
 
-    public HomePageModel(Submitter submitter, List<Study> publicStudies, List<Sample> publicSamples, List<News> newsList, List<Study> myStudies, List<Sample> mySamples) {
-        this(submitter, publicStudies, publicSamples, newsList);
+    public HomePageModel(Submitter submitter, List<Study> publicStudies, List<Sample> publicSamples, List<Study> myStudies, List<Sample> mySamples) {
+        this(submitter, publicStudies, publicSamples);
         this.myStudies = myStudies;
         this.mySamples = mySamples;
-    }
-
-    public List<News> getNewsList() {
-        return newsList;
-    }
-
-    public void setNewsList(List<News> newsList) {
-        this.newsList = newsList;
     }
 
     public List<Study> getPublicStudies() {

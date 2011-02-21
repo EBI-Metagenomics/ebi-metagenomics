@@ -46,9 +46,6 @@ public class HomePageController extends LoginController implements IMGController
     @Resource
     private HibernateSampleDAO sampleDAO;
 
-    @Resource
-    private NewsDAO newsDAO;
-
     //Other injections
     @Resource
     private SessionManager sessionManager;
@@ -79,7 +76,7 @@ public class HomePageController extends LoginController implements IMGController
      * Creates the home page model and adds it to the specified model map.
      */
     private void populateModel(ModelMap model) {
-        final HomePageModel hpModel = MGModelFactory.getHomePageModel(sessionManager, studyDAO, sampleDAO, newsDAO);
+        final HomePageModel hpModel = MGModelFactory.getHomePageModel(sessionManager, studyDAO, sampleDAO);
         model.addAttribute(MGModel.MODEL_ATTR_NAME, hpModel);
     }
 }
