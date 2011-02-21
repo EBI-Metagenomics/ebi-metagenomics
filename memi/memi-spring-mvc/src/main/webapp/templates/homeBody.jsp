@@ -84,7 +84,7 @@
                                         <c:set var="mySampleVisibility" value="private"/>
                                     </c:otherwise>
                                 </c:choose>
-                                <a href="<c:url value="${baseURL}/sampleView/${sample.id}"/>">${sample.metadataReceived}
+                                <a href="<c:url value="${baseURL}/sampleView/${sample.sampleId}"/>">${sample.metadataReceived}
                                     - ${sample.sampleTitle} (<c:out value="${mySampleVisibility}"/>)</a>
                             </td>
                         <tr>
@@ -149,7 +149,7 @@
                                     <c:set var="publicSampleVisibility" value="private"/>
                                 </c:otherwise>
                             </c:choose>
-                            <a href="<c:url value="${baseURL}/sampleView/${sample.id}"/>">${sample.metadataReceived}
+                            <a href="<c:url value="${baseURL}/sampleView/${sample.sampleId}"/>">${sample.metadataReceived}
                                 - ${sample.sampleTitle} (<c:out value="${publicSampleVisibility}"/>)</a>
                         </td>
                     <tr>

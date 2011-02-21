@@ -1,5 +1,7 @@
 package uk.ac.ebi.interpro.metagenomics.memi.controller;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.velocity.app.VelocityEngine;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -23,6 +25,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
+import uk.ac.ebi.interpro.metagenomics.memi.tools.MemiTools;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -39,6 +42,8 @@ import java.util.*;
 @Controller
 @RequestMapping("/studyView")
 public class StudyViewController extends LoginController {
+
+    private final Log log = LogFactory.getLog(StudyViewController.class);
 
     /**
      * View name of this controller which is used several times.
@@ -71,20 +76,25 @@ public class StudyViewController extends LoginController {
 
 
     @RequestMapping(value = "/doExport/{studyId}", method = RequestMethod.GET)
-    public ModelAndView doExportSamples(ModelMap model, HttpServletResponse response) throws Exception {
-        List<EmgSample> samples = (List<EmgSample>) model.get("samples");
-        if (samples != null && samples.size() > 0) {
-            //Create velocity spring_model
-            Map<String, Object> velocityModel = new HashMap<String, Object>();
-            velocityModel.put("samplePropertyList", getSamplePropertyList(samples.get(0)));
-            velocityModel.put("samples", samples);
-            //Create file content
-            String fileContent = VelocityTemplateWriter.createFileContent(velocityEngine, "WEB-INF/velocity_templates/exportSamples.vm", velocityModel);
-            File file = MemiFileWriter.writeCSVFile(fileContent);
-            if (file != null && file.canRead()) {
-                downloadService.openDownloadDialog(response, file, "samples.csv");
-            }
+    public ModelAndView doExportSamples(@PathVariable Long studyId, ModelMap model, HttpServletResponse response) throws Exception {
+        Study study = (Study) model.get("study");
+        Study.StudyType type = Study.StudyType.UNDEFINED;
+        if (study != null) {
+            type = study.getStudyType();
         }
+        List<Sample> samples = (List<Sample>) model.get("samples");
+        if (samples != null && samples.size() > 0) {
+            String[] samplesIDs = MemiTools.getSampleIds(samples);
+            if (downloadService != null) {
+                boolean isDialogOpen = downloadService.openDownloadDialog(response, type, samplesIDs);
+                model.addAttribute("isDialogOpen", isDialogOpen);
+            } else {
+                log.warn("Could not open download dialog to export samples. Download service is null!");
+            }
+        } else {
+            log.info("There are no samples to be exported!");
+        }
+
         populateModel(model);
         model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((MGModel) model.get(MGModel.MODEL_ATTR_NAME)).getLoginForm());
         return new ModelAndView(VIEW_NAME, model);

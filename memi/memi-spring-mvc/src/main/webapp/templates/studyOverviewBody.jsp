@@ -137,8 +137,12 @@
 
 <c:choose>
     <c:when test="${not empty samples}">
+        <c:if test="${isDialogOpen==false}">
+            <p><span style="color:red">No export data available for that(these) sample(s)!</span></p>
+        </c:if>
         <div align="left">
-            <a href="<c:url value="${baseURL}/studyView/exportSamples/${study.studyId}"/>">Export to CSV</a>
+            <a href="<c:url value="${baseURL}/studyView/doExport/${study.id}"/>">Export more detailed sample info to
+                CSV</a>
         </div>
         <table border="1">
             <tr>

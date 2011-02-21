@@ -67,7 +67,8 @@ public class SampleViewController extends LoginController {
     public ModelAndView doExportSample(@PathVariable String sampleId, ModelMap model, HttpServletResponse response) {
         Study.StudyType type = getSampleType(sampleId);
         if (downloadService != null) {
-            downloadService.openDownloadDialog(response, type, sampleId);
+            boolean isDialogOpen = downloadService.openDownloadDialog(response, type, sampleId);
+            model.addAttribute("isDialogOpen", isDialogOpen);
         }
         populateModel(model);
         model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((MGModel) model.get(MGModel.MODEL_ATTR_NAME)).getLoginForm());
