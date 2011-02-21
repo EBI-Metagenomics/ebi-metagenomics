@@ -4,4 +4,4 @@
   Desc: Study overview page
 --%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
-<tiles:insertDefinition name="studyOverview"/>
+<tiles:insertDefinition name="studyView"/>

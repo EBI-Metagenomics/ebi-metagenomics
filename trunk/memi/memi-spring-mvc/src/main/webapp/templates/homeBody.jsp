@@ -63,7 +63,7 @@
                                         <c:set var="myStudyVisibility" value="private"/>
                                     </c:otherwise>
                                 </c:choose>
-                                <a href="<c:url value="${baseURL}/studyOverview/${study.id}"/>">${study.lastMetadataReceived}
+                                <a href="<c:url value="${baseURL}/studyView/${study.id}"/>">${study.lastMetadataReceived}
                                     - ${study.studyName} (<c:out value="${myStudyVisibility}"/>)</a>
                             </td>
                         <tr>
@@ -128,7 +128,7 @@
                                     <c:set var="publicStudyVisibility" value="private"/>
                                 </c:otherwise>
                             </c:choose>
-                            <a href="<c:url value="${baseURL}/studyOverview/${study.id}"/>">${study.lastMetadataReceived}
+                            <a href="<c:url value="${baseURL}/studyView/${study.id}"/>">${study.lastMetadataReceived}
                                 - ${study.studyName} (<c:out value="${publicStudyVisibility}"/>)</a>
                         </td>
                     <tr>

@@ -18,7 +18,7 @@ import java.lang.reflect.Field;
 import static org.junit.Assert.*;
 
 /**
- * Represents a test for the {@link uk.ac.ebi.interpro.metagenomics.memi.controller.StudyOverviewController}
+ * Represents a test for the {@link StudyViewController}
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @version $Id$
@@ -26,22 +26,22 @@ import static org.junit.Assert.*;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @TestExecutionListeners
-public class StudyOverviewControllerTest {
-    private StudyOverviewController controller;
+public class StudyViewControllerTest {
+    private StudyViewController controller;
 
     @Before
     public void setUp() throws Exception {
-        controller = new StudyOverviewController();
+        controller = new StudyViewController();
 
         //Replace study DAO for simpler testing
-        Field studyDaoField = StudyOverviewController.class.
+        Field studyDaoField = StudyViewController.class.
                 getDeclaredField("emgStudyDAO");
         studyDaoField.setAccessible(true);
         EmgStudyDAO newStudyDAO = new StudyDAOTestImpl();
         studyDaoField.set(controller, newStudyDAO);
 
         //Replace sample DAO for simpler testing
-        Field sampleDaoField = StudyOverviewController.class.
+        Field sampleDaoField = StudyViewController.class.
                 getDeclaredField("emgSampleDAO");
         sampleDaoField.setAccessible(true);
         EmgSampleDAO newSampleDAO = new SampleDAOTestImpl();
@@ -53,7 +53,7 @@ public class StudyOverviewControllerTest {
     public void testInitPage() throws Exception {
         ModelMap model = new ModelMap();
 //        TODO: Refactor
-        assertEquals("studyOverview", controller.doGetStudy(model));
+        assertEquals("studyView", controller.doGetStudy(model));
         //check model
         assertEquals(1, model.size());
         assertTrue(model.containsKey("study"));

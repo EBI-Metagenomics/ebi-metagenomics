@@ -37,13 +37,13 @@ import java.util.*;
  * @since 1.0-SNAPSHOT
  */
 @Controller
-@RequestMapping("/studyOverview")
-public class StudyOverviewController extends LoginController {
+@RequestMapping("/studyView")
+public class StudyViewController extends LoginController {
 
     /**
      * View name of this controller which is used several times.
      */
-    private final String VIEW_NAME = "studyOverview";
+    private final String VIEW_NAME = "studyView";
 
     @Resource
     private HibernateStudyDAO studyDAO;
@@ -70,7 +70,7 @@ public class StudyOverviewController extends LoginController {
     }
 
 
-    @RequestMapping(value = "/exportSamples/{studyId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/doExport/{studyId}", method = RequestMethod.GET)
     public ModelAndView doExportSamples(ModelMap model, HttpServletResponse response) throws Exception {
         List<EmgSample> samples = (List<EmgSample>) model.get("samples");
         if (samples != null && samples.size() > 0) {

@@ -13,12 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
-import uk.ac.ebi.interpro.metagenomics.memi.basic.*;
+import uk.ac.ebi.interpro.metagenomics.memi.basic.SampleVisibilityEditor;
+import uk.ac.ebi.interpro.metagenomics.memi.basic.StudyTypeEditor;
+import uk.ac.ebi.interpro.metagenomics.memi.basic.VelocityTemplateWriter;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateSampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.files.MemiFileWriter;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.SampleFilter;
-import uk.ac.ebi.interpro.metagenomics.memi.forms.StudyFilter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
@@ -32,9 +33,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.File;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Represents the controller for the list studies page.
@@ -56,7 +55,7 @@ public class ViewSamplesController extends LoginController implements IMGControl
      */
     private final String VIEW_NAME = "viewSamples";
 
-    private final String VELOCITY_TEMPLATE_LOCATION_PATH = "WEB-INF/velocity_templates/exportStudies.vm";
+    private final String VELOCITY_TEMPLATE_LOCATION_PATH = "WEB-INF/velocity_templates/exportSamples.vm";
 
     private final String DOWNLOAD_FILE_NAME = "samples.csv";
 
@@ -86,14 +85,19 @@ public class ViewSamplesController extends LoginController implements IMGControl
     /**
      * Handles the export of the samples table.
      */
-    @RequestMapping(value = "doExport", method = RequestMethod.GET)
-    public ModelAndView doExportSamples(HttpServletResponse response) {
+    @RequestMapping(value = "doExportTable", method = RequestMethod.GET)
+    public ModelAndView doExportSampleTable(HttpServletRequest request, HttpServletResponse response, @ModelAttribute(SampleFilter.MODEL_ATTR_NAME) SampleFilter filter) {
         log.info("Requesting exportSamples (GET method)...");
-        List<Sample> samples = sampleDAO.retrieveAll();
+
+        ModelMap model = new ModelMap();
+        processRequestParams(request, filter);
+        populateModel(model, filter);
+        List<Sample> samples = ((ViewSamplesModel) model.get(MGModel.MODEL_ATTR_NAME)).getSamples();
+
         if (samples != null && samples.size() > 0) {
             //Create velocity spring_model
             Map<String, Object> velocityModel = new HashMap<String, Object>();
-            //velocityModel.put("studyPropertyList", getStudyPropertyList(samples.get(0)));
+            velocityModel.put("sampleProperties", getSampleProperties());
             velocityModel.put("samples", samples);
             velocityModel.put("columnLength", MAX_CHARS_PER_COLUMN);
             //Create file content
@@ -104,6 +108,38 @@ public class ViewSamplesController extends LoginController implements IMGControl
             }
         }
         return null;
+    }
+
+    /**
+     * Handles the export of a more detailed export file.
+     */
+    @RequestMapping(value = "doExportDetails", method = RequestMethod.GET)
+    public ModelAndView doExportDetails(HttpServletRequest request, HttpServletResponse response, @ModelAttribute(SampleFilter.MODEL_ATTR_NAME) SampleFilter filter) {
+        log.info("Requesting exportSamples (GET method)...");
+
+        ModelMap model = new ModelMap();
+        processRequestParams(request, filter);
+        populateModel(model, filter);
+        List<Sample> samples = ((ViewSamplesModel) model.get(MGModel.MODEL_ATTR_NAME)).getSamples();
+        if (samples != null && samples.size() > 0) {
+            String[] samplesIDs = getSampleIds(samples);
+            if (downloadService != null) {
+                downloadService.openDownloadDialog(response, filter.getSampleType(), samplesIDs);
+            } else {
+                log.warn("Could not open download dialog to export samples. Download service is null!");
+            }
+        } else {
+            log.info("There are no samples to be exported!");
+        }
+        return null;
+    }
+
+    private String[] getSampleIds(List<Sample> samples) {
+        String[] result = new String[samples.size()];
+        for (int i = 0; i < result.length; i++) {
+            result[i] = samples.get(i).getSampleId();
+        }
+        return result;
     }
 
 
@@ -191,6 +227,19 @@ public class ViewSamplesController extends LoginController implements IMGControl
     private void populateModel(ModelMap model, SampleFilter filter) {
         final ViewSamplesModel subModel = MGModelFactory.getViewSamplesPageModel(sessionManager, sampleDAO, filter);
         model.addAttribute(MGModel.MODEL_ATTR_NAME, subModel);
+    }
+
+    private List<String> getSampleProperties() {
+        List<String> result = new ArrayList<String>();
+        result.add("SAMPLE_ID");
+        result.add("SAMPLE_NAME");
+        result.add("COLLECTION_DATE");
+        result.add("VALID_METADATA");
+        result.add("VALID_RAW_DATA");
+        result.add("ANALYSIS_COMPLETED");
+        result.add("ARCHIVED_IN_ENA");
+
+        return result;
     }
 
     /**
