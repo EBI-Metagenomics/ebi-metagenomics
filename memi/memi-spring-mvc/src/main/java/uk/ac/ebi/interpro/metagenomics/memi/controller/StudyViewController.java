@@ -40,7 +40,7 @@ import java.util.*;
  * @since 1.0-SNAPSHOT
  */
 @Controller
-@RequestMapping("/studyView")
+@RequestMapping("/studyView/{studyId}")
 public class StudyViewController extends LoginController {
 
     private final Log log = LogFactory.getLog(StudyViewController.class);
@@ -67,7 +67,7 @@ public class StudyViewController extends LoginController {
 
     //GET Methods
 
-    @RequestMapping(value = "/{studyId}", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public ModelAndView doGetStudy(ModelMap model) {
         populateModel(model);
         model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((MGModel) model.get(MGModel.MODEL_ATTR_NAME)).getLoginForm());
@@ -75,7 +75,7 @@ public class StudyViewController extends LoginController {
     }
 
 
-    @RequestMapping(value = "/doExport/{studyId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/doExport", method = RequestMethod.GET)
     public ModelAndView doExportSamples(@PathVariable Long studyId, ModelMap model, HttpServletResponse response) throws Exception {
         Study study = (Study) model.get("study");
         Study.StudyType type = Study.StudyType.UNDEFINED;
@@ -119,30 +119,6 @@ public class StudyViewController extends LoginController {
     private void populateModel(ModelMap model) {
         final MGModel hpModel = MGModelFactory.getMGModel(sessionManager);
         model.addAttribute(MGModel.MODEL_ATTR_NAME, hpModel);
-    }
-
-
-    /**
-     * Returns a list of sample properties.
-     */
-    private List<String> getSamplePropertyList(EmgSample sample) {
-        List<String> result = new ArrayList<String>();
-        for (String key : sample.getPropertyMap().keySet()) {
-            result.add(key);
-        }
-        return result;
-    }
-
-    /**
-     * Returns a list of study properties.
-     */
-    @ModelAttribute(value = "studyPropertyMap")
-    private Map<String, Object> getStudyPropertyMap(@PathVariable Long studyId) {
-        Study study = studyDAO.read(studyId);
-//        if (study != null) {
-//            return study.getProperties();
-//        }
-        return new HashMap<String, Object>();
     }
 
 

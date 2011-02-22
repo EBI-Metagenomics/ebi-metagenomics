@@ -18,17 +18,19 @@ import java.io.*;
 public class MemiDownloadService {
     private static final Log log = LogFactory.getLog(MemiDownloadService.class);
 
-    private final String downloadPath = "/home/maxim/projects/ebi-metagenomics/memi/memi-spring-mvc/src/main/resources/uk/ac/ebi/interpro/metagenomics/memi/services/";
+    public static final String DOWNLOAD_PATH = "/home/maxim/projects/ebi-metagenomics/memi/memi-spring-mvc/src/main/resources/uk/ac/ebi/interpro/metagenomics/memi/services/";
 
     /**
      * Create a HTTP response, which opens a download dialog.
      */
-    public void openDownloadDialog(HttpServletResponse response, File file, String fileName) {
+    public void openDownloadDialog(HttpServletResponse response, File file, String fileName, boolean isDeleteFile) {
         log.info("Trying to open the download dialog for the file with name " + file.getName() + "...");
         InputStream is = null;
         try {
             is = new FileInputStream(file);
-            file.delete();
+            if (isDeleteFile) {
+                file.delete();
+            }
             //configure HTTP response
             response.setContentType("text/html;charset=UTF-8");
             //response.setContentLength(file.getFile().length);
@@ -80,7 +82,7 @@ public class MemiDownloadService {
                 if (sampleIDs.length == 1) {
                     fileName = sampleID;
                 }
-                String pathName = downloadPath + sampleID + ".csv";
+                String pathName = DOWNLOAD_PATH + sampleID + ".csv";
                 File sampleFile = new File(pathName);
                 if (sampleFile.canRead()) {
                     //create a file input stream and concatenate if the previous input stream if exists
@@ -139,9 +141,9 @@ public class MemiDownloadService {
     private InputStream getCSVFileHeaderStream(Study.StudyType type) {
         File headerFile = null;
         if (type.equals(Study.StudyType.ENVIRONMENTAL)) {
-            headerFile = new File(downloadPath + "data_EMG_env_samples.csv");
+            headerFile = new File(DOWNLOAD_PATH + "data_EMG_env_samples.csv");
         } else if (type.equals(Study.StudyType.HOST_ASSOCIATED)) {
-            headerFile = new File(downloadPath + "data_EMG_host_samples.csv");
+            headerFile = new File(DOWNLOAD_PATH + "data_EMG_host_samples.csv");
         } else {
             log.warn("Could not set any header file, because an undefined study type was specified!");
         }
