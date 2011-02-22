@@ -27,7 +27,7 @@
 </c:if>
 
 <div align="left">
-    <a href="<c:url value="${baseURL}/sampleView/doExport/${sample.sampleId}"/>">Export to CSV</a>
+    <a href="<c:url value="${baseURL}/sampleView/${sample.sampleId}/doExportDetails"/>">Export to CSV</a>
 </div>
 <table frame="box" width="95%">
     <tr>
@@ -223,7 +223,14 @@
 <table frame="box" width="95%">
     <tr>
         <td valign="top" align="right" width="150"><b>Analysis results:</b></td>
-        <td>(not given)</td>
+        <td>
+            <a href="<c:url value="${baseURL}/sampleView/${sample.sampleId}/doExportResultFile/${fileName}"/>">
+                <c:out value="${fileName}"/></a><br>
+            <a href="<c:url value="${baseURL}/sampleView/${sample.sampleId}/doExportResultFile/result_orfs.fasta"/>">
+                <c:out value="result_orfs.fasta"/></a><br>
+            <a href="<c:url value="${baseURL}/sampleView/${sample.sampleId}/doExportResultFile/result_stats.txt"/>">
+                <c:out value="result_stats.txt"/></a>
+        </td>
     </tr>
     <tr>
         <td valign="top" align="right" width="150"><b>Raw sequence reads:</b></td>

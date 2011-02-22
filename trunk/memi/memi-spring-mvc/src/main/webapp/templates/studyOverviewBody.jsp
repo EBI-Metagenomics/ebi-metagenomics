@@ -141,7 +141,7 @@
             <p><span style="color:red">No export data available for that(these) sample(s)!</span></p>
         </c:if>
         <div align="left">
-            <a href="<c:url value="${baseURL}/studyView/doExport/${study.id}"/>">Export more detailed sample info to
+            <a href="<c:url value="${baseURL}/studyView/${study.id}/doExport/"/>">Export more detailed sample info to
                 CSV</a>
         </div>
         <table border="1">

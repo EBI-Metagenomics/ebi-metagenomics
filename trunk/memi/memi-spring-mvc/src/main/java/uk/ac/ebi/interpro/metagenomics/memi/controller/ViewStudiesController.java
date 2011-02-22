@@ -108,7 +108,7 @@ public class ViewStudiesController extends LoginController implements IMGControl
             String fileContent = VelocityTemplateWriter.createFileContent(velocityEngine, VELOCITY_TEMPLATE_LOCATION_PATH, velocityModel);
             File file = MemiFileWriter.writeCSVFile(fileContent);
             if (file != null && file.canRead()) {
-                downloadService.openDownloadDialog(response, file, DOWNLOAD_FILE_NAME);
+                downloadService.openDownloadDialog(response, file, DOWNLOAD_FILE_NAME, true);
             }
         }
         return null;

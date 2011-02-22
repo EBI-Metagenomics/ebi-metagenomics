@@ -22,6 +22,8 @@ import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.File;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -33,7 +35,7 @@ import java.util.Set;
  * @since 1.0-SNAPSHOT
  */
 @Controller
-@RequestMapping("/sampleView")
+@RequestMapping("/sampleView/{sampleId}")
 public class SampleViewController extends LoginController {
     /**
      * View name of this controller which is used several times.
@@ -55,7 +57,9 @@ public class SampleViewController extends LoginController {
     @Resource
     private SessionManager sessionManager;
 
-    @RequestMapping(value = "/{sampleId}", method = RequestMethod.GET)
+    //GET request method
+
+    @RequestMapping(method = RequestMethod.GET)
     public ModelAndView doGetSample(ModelMap model) {
         populateModel(model);
         model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((MGModel) model.get(MGModel.MODEL_ATTR_NAME)).getLoginForm());
@@ -63,12 +67,31 @@ public class SampleViewController extends LoginController {
     }
 
 
-    @RequestMapping(value = "/doExport/{sampleId}", method = RequestMethod.GET)
-    public ModelAndView doExportSample(@PathVariable String sampleId, ModelMap model, HttpServletResponse response) {
+    @RequestMapping(value = "/doExportDetails", method = RequestMethod.GET)
+    public ModelAndView doExportDetails(@PathVariable String sampleId, ModelMap model, HttpServletResponse response) {
         Study.StudyType type = getSampleType(sampleId);
         if (downloadService != null) {
             boolean isDialogOpen = downloadService.openDownloadDialog(response, type, sampleId);
             model.addAttribute("isDialogOpen", isDialogOpen);
+        }
+        populateModel(model);
+        model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((MGModel) model.get(MGModel.MODEL_ATTR_NAME)).getLoginForm());
+        return new ModelAndView(VIEW_NAME, model);
+    }
+
+    @RequestMapping(value = "/doExportResultFile/{fileName}", method = RequestMethod.GET)
+    public ModelAndView doExportResultFile(@PathVariable String fileName, ModelMap model, HttpServletResponse response) {
+        //1. Do get file location
+        //TODO: Finish implementation of downloadable result file
+
+        //2. Open file stream and download dialog
+        String fileExtension = ".txt";
+        if (fileName.contains("orfs"))
+            fileExtension = ".fasta";
+        String pathName = MemiDownloadService.DOWNLOAD_PATH + fileName + fileExtension;
+        File file = new File(pathName);
+        if (downloadService != null) {
+            downloadService.openDownloadDialog(response, file, fileName + fileExtension, false);
         }
         populateModel(model);
         model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((MGModel) model.get(MGModel.MODEL_ATTR_NAME)).getLoginForm());
@@ -87,7 +110,7 @@ public class SampleViewController extends LoginController {
         }
     }
 
-    //POST Methods
+    //POST request methods
     @RequestMapping(method = RequestMethod.POST)
     public ModelAndView doProcessLogin(@ModelAttribute(LoginForm.MODEL_ATTR_NAME) @Valid LoginForm loginForm, BindingResult result,
                                        ModelMap model, SessionStatus status) {
@@ -150,5 +173,12 @@ public class SampleViewController extends LoginController {
             }
         }
         return result;
+    }
+
+    @ModelAttribute(value = "fileName")
+    public String populateFileNames() {
+        List<String> result = new ArrayList<String>();
+
+        return "result_interproscan.txt";
     }
 }

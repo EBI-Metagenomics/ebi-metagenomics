@@ -4,6 +4,7 @@ Created by Maxim Scheremetjew, EMBL-EBI, InterPro
 Date: 04-Jan-2011
 MG portal main menu template
 --%>
+<%@include file="loginJQueryTemplate.jsp" %>
 <div style="margin-top:80px"/>
 <div align="center">
     <a href="<c:url value="${baseURL}/index"/>" title="Home">Home</a>
@@ -13,5 +14,6 @@ MG portal main menu template
     <a href="<c:url value="${baseURL}/info"/>" title="About">About</a>
     <a href="mailto:maxim@ebi.ac.uk?cc=maxim.scheremetjew@googlemail.com&subject=Request from the MG portal">Contact
         us</a>
+    <%--<button id="create-user">Login</button>--%>
 </div>
 <div style="margin-top:60px"/>
