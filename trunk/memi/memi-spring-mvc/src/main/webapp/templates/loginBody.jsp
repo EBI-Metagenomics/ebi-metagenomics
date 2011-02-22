@@ -1,22 +1,25 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://java.sun.com/jsp/jstl/core" %>
+<%-- This template is used for the login page --%>
 <div id="content">
     <div style="margin-top:6px"></div>
     <table id="login">
         <form:form method="POST" action="login" commandName="loginForm">
             <tr>
-                <td>E-Mail*:<form:errors cssStyle="color:red;" path="emailAddress"/></td>
+                <td><b>Login</b></td>
             </tr>
             <tr>
-                <td><form:input path="emailAddress"/></td>
+                <td>Login to submit and view your data:<br>
+                    <form:errors cssStyle="color:red;" path="emailAddress"/>
+                    <form:errors cssStyle="color:red;" path="password"/>
+                </td>
             </tr>
             <tr>
-                <td>Password:<form:errors cssStyle="color:red;" path="password"/></td>
+                <td>E-Mail*:<form:input path="emailAddress"/></td>
             </tr>
             <tr>
-
-                <td><form:password path="password"/></td>
+                <td>Password:<form:password path="password"/></td>
             </tr>
             <tr>
                 <td><input type="submit" name="login" value="Login"/>
@@ -35,13 +38,13 @@
         <tr>
             <td>
                 <a href="<c:url value=" https://www.ebi.ac.uk/embl/genomes/submission/registration.jsf"/>"
-                   title="Registration">How to register?</a>
+                   title="Registration">Register</a>
             </td>
         <tr>
         <tr>
             <td>
                 <a href="<c:url value=" https://www.ebi.ac.uk/embl/genomes/submission/forgot-passw.jsf?_afPfm=5"/>"
-                   title="Request a new password"> Forgotten your password?</a></td>
+                   title="Request a new password">Forgotten password</a></td>
         </tr>
     </table>
 </div>

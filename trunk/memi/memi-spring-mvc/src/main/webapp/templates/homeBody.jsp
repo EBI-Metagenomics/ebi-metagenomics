@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <div id="content">
     <h2>EBI Metagenomics Portal</h2>
 
@@ -33,6 +34,9 @@
                         </p>
                     </c:otherwise>
                 </c:choose>
+            </td>
+            <td>
+                <tiles:insertAttribute name="loginForm"/>
             </td>
         </tr>
     </table>

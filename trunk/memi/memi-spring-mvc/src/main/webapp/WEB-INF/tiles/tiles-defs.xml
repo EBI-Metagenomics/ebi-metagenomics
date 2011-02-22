@@ -13,24 +13,17 @@
         <put-attribute name="header" type="template" value="/templates/header.jsp"/>
         <put-attribute name="mainMenu" type="template" value="/templates/mainMenu.jsp"/>
         <put-attribute name="footer" type="template" value="/templates/footer.jsp"/>
-        <!-- Attributes of type definition-->
-        <put-attribute name="rightMenu" type="definition" value="rightSideMenu"/>
-    </definition>
-
-    <!--Right side menu (includes login form)-->
-    <definition name="rightSideMenu" template="/templates/rightSideMenu.jsp">
-        <put-attribute name="loginForm" value="/templates/loginForm.jsp"/>
-    </definition>
-
-    <!--Right side menu (includes login form)-->
-    <definition name="rightSideMenu" template="/templates/rightSideMenu.jsp">
-        <put-attribute name="loginForm" value="/templates/loginForm.jsp"/>
     </definition>
 
     <!-- Page bodies-->
 
     <definition name="home" extends="rootTemplate">
-        <put-attribute name="body" value="/templates/homeBody.jsp"/>
+        <!-- Attributes of type definition-->
+        <put-attribute name="body" type="definition" value="homeDef"/>
+    </definition>
+
+    <definition name="homeDef" template="/templates/homeBody.jsp">
+        <put-attribute name="loginForm" type="template" value="/templates/loginForm.jsp"/>
     </definition>
 
     <definition name="info" extends="rootTemplate">
@@ -65,18 +58,7 @@
         <put-attribute name="body" value="/templates/sampleOverviewBody.jsp"/>
     </definition>
 
-
-    <!-- Login main template -->
-    <definition name="loginTemplate" template="/templates/loginTemplate.jsp">
-        <!-- Attributes of type string-->
-        <put-attribute name="title" type="string" value="MG portal"/>
-        <!-- Attributes of type template-->
-        <put-attribute name="header" type="template" value="/templates/header.jsp"/>
-        <put-attribute name="mainMenu" type="template" value="/templates/mainMenu.jsp"/>
-        <put-attribute name="footer" type="template" value="/templates/footer.jsp"/>
-    </definition>
-
-    <definition name="login" extends="loginTemplate">
+    <definition name="login" extends="rootTemplate">
         <put-attribute name="body" value="/templates/loginBody.jsp"/>
     </definition>
 
