@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="/css/default.css" type="text/css" media="all"/>
 
     <link  href="http://fonts.googleapis.com/css?family=Droid+Sans:regular,bold" rel="stylesheet" type="text/css" >
-    
+
 
     <%-- JQuery and JQuery UI source--%>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/jquery-ui.css" type="text/css" media="all"/>
@@ -65,7 +65,8 @@
 <c:set var="baseURL" value="${pageContext.request.contextPath}/metagenomics" scope="session"/>
 
 <%-- onload attribute is necessary to ensure that the EBI main header works in IE see  http://www.ebi.ac.uk/inc/template/#important style overflow addede because of he bug in the EBI website for the body--%>
-<body onload="if(navigator.userAgent.indexOf('MSIE') != -1) {document.getElementById('head').allowTransparency = true;}" class="grey" style="overflow:visible;">
+<body onload="if(navigator.userAgent.indexOf('MSIE') != -1) {document.getElementById('head').allowTransparency = true;}"
+      class="<tiles:getAsString name='bodyClass'/>" style="overflow:visible;">
 <%-- EBI main header
 <%@include file='../inc/head.html' %>--%>
 
@@ -78,9 +79,9 @@
     <nav>
     <tiles:insertAttribute name="mainMenu"/>
     </nav>
-        
+
     <section id="main-content">
-    <tiles:insertAttribute name="body"/>  
+    <tiles:insertAttribute name="body"/>
     </section>
 
 
