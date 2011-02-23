@@ -23,7 +23,17 @@
     <script src="${pageContext.request.contextPath}/js/datepicker.js" type="text/javascript"></script>
     <%-- The auto completion is used with the study search page --%>
     <script src="${pageContext.request.contextPath}/js/autocompletion.js" type="text/javascript"></script>
-
+     <%-- HTML5 tags working in IE8 by including this JavaScript in the head  --%>
+        <script type="text/javascript">
+     document.createElement('header');
+     document.createElement('hgroup');
+     document.createElement('nav');
+     document.createElement('menu');
+     document.createElement('section');
+     document.createElement('article');
+     document.createElement('aside');
+     document.createElement('footer');
+    </script>
 
      <%-- BEGIN CODE FROM EBI TEMPLATE--%>
     <!--  VERSION 2 MARCH 22 7007 // -->
