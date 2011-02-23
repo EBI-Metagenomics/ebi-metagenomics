@@ -15,7 +15,7 @@
     <li class="greyblue"><a href="<c:url value="${baseURL}/viewSamples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search"/>" title="View samples" >Samples</a></li>
     <li class="green"><a href="<c:url value="${baseURL}/info"/>" title="About us">About</a></li>
     <li class="yellow"><a href="mailto:chrish@ebi.ac.uk?subject=Request from the MG portal" title="Contact us" >Contact us</a></li>
-    <li class="orange"><a href="" title="Help">Help</a></li>
+    <li class="orange"><a href="<c:url value="${baseURL}/help"/>" title="Help">Help</a></li>
     <li class="black">  <c:choose>
         <c:when test="${empty mgModel.submitter}">
             <a href="<c:url value="${baseURL}/index"/>" title="Login">Login</a>

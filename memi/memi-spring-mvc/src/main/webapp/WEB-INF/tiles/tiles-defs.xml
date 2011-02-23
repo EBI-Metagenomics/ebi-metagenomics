@@ -67,6 +67,11 @@
         <put-attribute name="body" value="/templates/sampleOverviewBody.jsp"/>
     </definition>
 
+    <definition name="help" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="orange"/>
+        <put-attribute name="body" value="/templates/helpBody.jsp"/>
+    </definition>
+
     <definition name="login" extends="rootTemplate">
         <put-attribute name="bodyClass" type="string" value="black"/>
         <put-attribute name="body" value="/templates/loginBody.jsp"/>
