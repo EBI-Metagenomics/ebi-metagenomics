@@ -224,12 +224,15 @@
     <tr>
         <td valign="top" align="right" width="150"><b>Analysis results:</b></td>
         <td>
-            <a href="<c:url value="${baseURL}/sampleView/${sample.sampleId}/doExportResultFile/${fileName}"/>">
-                <c:out value="${fileName}"/></a><br>
-            <a href="<c:url value="${baseURL}/sampleView/${sample.sampleId}/doExportResultFile/result_orfs.fasta"/>">
-                <c:out value="result_orfs.fasta"/></a><br>
-            <a href="<c:url value="${baseURL}/sampleView/${sample.sampleId}/doExportResultFile/result_stats.txt"/>">
-                <c:out value="result_stats.txt"/></a>
+            <c:choose>
+                <c:when test="${not empty resultFileNames}">
+                    <c:forEach var="fileName" items="${resultFileNames}" varStatus="status">
+                        <a href="<c:url value="${baseURL}/sampleView/${sample.sampleId}/doExportResultFile/${fileName}"/>">
+                            <c:out value="${fileName}"/></a><br>
+                    </c:forEach>
+                </c:when>
+                <c:otherwise>(not given)</c:otherwise>
+            </c:choose>
         </td>
     </tr>
     <tr>

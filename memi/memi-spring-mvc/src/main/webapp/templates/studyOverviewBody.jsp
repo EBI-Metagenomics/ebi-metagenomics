@@ -173,11 +173,11 @@
                     <td align="center">
                         <c:choose>
                             <c:when test="${empty sample.metadataReceived}">
-                                <img src="/images/error.gif" height="16" width="16" align="absmiddle" alt=""
+                                <img src="/img/error.gif" height="16" width="16" align="absmiddle" alt=""
                                      border="0"/>
                             </c:when>
                             <c:otherwise>
-                                <img src="/images/check.gif" height="16" width="16" align="absmiddle" alt=""
+                                <img src="/img/check.gif" height="16" width="16" align="absmiddle" alt=""
                                      border="0"/>
                             </c:otherwise>
                         </c:choose>
@@ -185,11 +185,11 @@
                     <td align="center">
                         <c:choose>
                             <c:when test="${empty sample.sequenceDataReceived}">
-                                <img src="/images/error.gif" height="16" width="16" align="absmiddle" alt=""
+                                <img src="/img/error.gif" height="16" width="16" align="absmiddle" alt=""
                                      border="0"/>
                             </c:when>
                             <c:otherwise>
-                                <img src="/images/check.gif" height="16" width="16" align="absmiddle" alt=""
+                                <img src="/img/check.gif" height="16" width="16" align="absmiddle" alt=""
                                      border="0"/>
                             </c:otherwise>
                         </c:choose>
@@ -197,11 +197,11 @@
                     <td align="center">
                         <c:choose>
                             <c:when test="${empty sample.analysisCompleted}">
-                                <img src="/images/error.gif" height="16" width="16" align="absmiddle" alt=""
+                                <img src="/img/error.gif" height="16" width="16" align="absmiddle" alt=""
                                      border="0"/>
                             </c:when>
                             <c:otherwise>
-                                <img src="/images/check.gif" height="16" width="16" align="absmiddle" alt=""
+                                <img src="/img/check.gif" height="16" width="16" align="absmiddle" alt=""
                                      border="0"/>
                             </c:otherwise>
                         </c:choose>
@@ -209,11 +209,11 @@
                     <td align="center">
                         <c:choose>
                             <c:when test="${empty sample.sequenceDataArchived}">
-                                <img src="/images/error.gif" height="16" width="16" align="absmiddle" alt=""
+                                <img src="/img/error.gif" height="16" width="16" align="absmiddle" alt=""
                                      border="0"/>
                             </c:when>
                             <c:otherwise>
-                                <img src="/images/check.gif" height="16" width="16" align="absmiddle" alt=""
+                                <img src="/img/check.gif" height="16" width="16" align="absmiddle" alt=""
                                      border="0"/>
                             </c:otherwise>
                         </c:choose>

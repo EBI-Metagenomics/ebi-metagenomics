@@ -18,12 +18,16 @@ import java.io.*;
 public class MemiDownloadService {
     private static final Log log = LogFactory.getLog(MemiDownloadService.class);
 
-    public static final String DOWNLOAD_PATH = "/home/maxim/projects/ebi-metagenomics/memi/memi-spring-mvc/src/main/resources/uk/ac/ebi/interpro/metagenomics/memi/services/";
+//    public static final String DOWNLOAD_PATH = "/home/maxim/projects/ebi-metagenomics/memi/memi-spring-mvc/src/main/resources/uk/ac/ebi/interpro/metagenomics/memi/services/";
+
+    private static final String DOWNLOAD_PATH = "";
 
     /**
-     * Create a HTTP response, which opens a download dialog.
+     * Create a HTTP response, which opens a download dialog with a stream of the specified file.
+     *
+     * @return TRUE if a downloadable file exists and 'Save to file' dialog could be open.
      */
-    public void openDownloadDialog(HttpServletResponse response, File file, String fileName, boolean isDeleteFile) {
+    public boolean openDownloadDialog(HttpServletResponse response, File file, String fileName, boolean isDeleteFile) {
         log.info("Trying to open the download dialog for the file with name " + file.getName() + "...");
         InputStream is = null;
         try {
@@ -33,9 +37,9 @@ public class MemiDownloadService {
             }
             //configure HTTP response
             response.setContentType("text/html;charset=UTF-8");
-            //response.setContentLength(file.getFile().length);
             response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
             FileCopyUtils.copy(is, response.getOutputStream());
+            return true;
         } catch (FileNotFoundException e) {
             log.error("Could not find the specified downloadable file!", e);
         } catch (IOException e) {
@@ -49,12 +53,13 @@ public class MemiDownloadService {
                 }
         }
         log.info("Opened download dialog successfully.");
+        return false;
     }
 
     /**
      * Opens a download dialog to export more detailed sample info. For each sample was built a CSV file in
      * advance. If a user wants to download detailed info for more than one sample, then all CSV files will be
-     * assembled to one CSV file containing all sample info.
+     * assembled to one CSV file containing all sample info. CSV files are stream from project resource package.
      *
      * @param response  HTTP response.
      * @param type      Specifies the sample/study type. This is necessary distinguish between two CSV file
@@ -66,8 +71,8 @@ public class MemiDownloadService {
     public boolean openDownloadDialog(HttpServletResponse response, Study.StudyType type, String... sampleIDs) {
         log.info("Trying to open the download dialog to export a CSV file for sample(s) with ID(s)" + sampleIDs + "...");
 
-        InputStream sampleFileIS = null;
-        InputStream headerFileIS = null;
+        InputStream sampleFileIs = null;
+        InputStream headerFileIs = null;
         //sequences input stream instance
         InputStream sis = null;
         //name of the downloadable file
@@ -75,29 +80,27 @@ public class MemiDownloadService {
         try {
             //create input stream for header file
             if (type != null) {
-                headerFileIS = getCSVFileHeaderStream(type);
+                headerFileIs = getCSVFileHeaderStream(type);
             }
-            //create and stream sample files
+            //create and stream sample files from project resource directory
             for (String sampleID : sampleIDs) {
                 if (sampleIDs.length == 1) {
                     fileName = sampleID;
                 }
+                //create a file input stream and concatenate if the previous input stream if exists
                 String pathName = DOWNLOAD_PATH + sampleID + ".csv";
-                File sampleFile = new File(pathName);
-                if (sampleFile.canRead()) {
-                    //create a file input stream and concatenate if the previous input stream if exists
-                    sampleFileIS = new FileInputStream(sampleFile);
+                sampleFileIs = MemiDownloadService.class.getResourceAsStream(pathName);
+                if (headerFileIs != null & sampleFileIs != null) {
                     if (sis == null) {
-                        sis = new SequenceInputStream(headerFileIS, sampleFileIS);
+                        sis = new SequenceInputStream(headerFileIs, sampleFileIs);
                     } else {
-                        sis = new SequenceInputStream(sis, sampleFileIS);
+                        sis = new SequenceInputStream(sis, sampleFileIs);
                     }
                 }
             }
             if (sis != null) {
                 //configure HTTP response
                 response.setContentType("text/html;charset=UTF-8");
-                //response.setContentLength(file.getFile().length);
                 fileName = (sampleIDs.length == 1 ? fileName : "samples") + ".csv";
                 response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
                 FileCopyUtils.copy(sis, response.getOutputStream());
@@ -109,16 +112,16 @@ public class MemiDownloadService {
         } catch (IOException e) {
             log.error("Could not create input stream for the specified downloadable file!", e);
         } finally {
-            if (sampleFileIS != null) {
+            if (sampleFileIs != null) {
                 try {
-                    sampleFileIS.close();
+                    sampleFileIs.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
-            if (headerFileIS != null) {
+            if (headerFileIs != null) {
                 try {
-                    headerFileIS.close();
+                    headerFileIs.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -139,20 +142,16 @@ public class MemiDownloadService {
      * Creates an input stream from a hard coded file name.
      */
     private InputStream getCSVFileHeaderStream(Study.StudyType type) {
-        File headerFile = null;
+        String headerFileName = null;
         if (type.equals(Study.StudyType.ENVIRONMENTAL)) {
-            headerFile = new File(DOWNLOAD_PATH + "data_EMG_env_samples.csv");
+            headerFileName = DOWNLOAD_PATH + "data_EMG_env_samples.csv";
         } else if (type.equals(Study.StudyType.HOST_ASSOCIATED)) {
-            headerFile = new File(DOWNLOAD_PATH + "data_EMG_host_samples.csv");
+            headerFileName = DOWNLOAD_PATH + "data_EMG_host_samples.csv";
         } else {
-            log.warn("Could not set any header file, because an undefined study type was specified!");
+            log.warn("Could not set any header file name, because an undefined study type was specified!");
         }
-        if (headerFile != null && headerFile.canRead()) {
-            try {
-                return new FileInputStream(headerFile);
-            } catch (FileNotFoundException e) {
-                log.error("Could not build file input steam from the specified header file (" + headerFile.getAbsolutePath() + ")!", e);
-            }
+        if (headerFileName != null) {
+            return MemiDownloadService.class.getResourceAsStream(headerFileName);
         }
         return null;
     }

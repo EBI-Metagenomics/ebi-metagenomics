@@ -47,9 +47,23 @@ public class EmgLogFileInfoDAOImpl implements EmgLogFileInfoDAO {
             for (Map row : rows) {
                 result.add((String) row.get("FILE_ID"));
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             log.warn("Could not query file IDs!", e);
+        }
+        return result;
+    }
+
+    @Override
+    public List<String> getFileNamesBySampleId(String sampleId) {
+        log.info("Querying file IDs by sample ID: " + sampleId + " from table EMGLogFileInfo...");
+        List<String> result = new ArrayList<String>();
+        try {
+            List<Map<String, Object>> rows = this.jdbcTemplate.queryForList("select file_name from emg_log_file_info where sample_id=?", new String[]{sampleId});
+            for (Map row : rows) {
+                result.add((String) row.get("FILE_NAME"));
+            }
+        } catch (Exception e) {
+            log.warn("Could not query file names!", e);
         }
         return result;
     }
