@@ -3,7 +3,15 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <div id="content">
 <section id="submit-data">
-    <div id="submit-data-display"></div>
+    <div id="submit-data-display"><h1>
+      <c:choose>
+                    <c:when test="${empty mgModel.submitter}">
+                            <a href="<c:url value="${baseURL}/login"/>" >Submit your data</a>
+                    </c:when>
+                    <c:otherwise>
+                            <a href="<c:url value="${baseURL}/submissionForm"/>" >Submit your data</a>                      
+                    </c:otherwise>
+                </c:choose></h1></div>
     <div id="submit-data-description">
         <h2>Data Submission</h2>
         <p>Short description of what kind of data you can submit, why and how ... <br/>
@@ -11,13 +19,13 @@
          <c:choose>
                     <c:when test="${empty mgModel.submitter}">
                         <p>
-                            <a href="<c:url value="${baseURL}/login"/>" class="more_desc">Submit your data</a>
+                            <a href="<c:url value="${baseURL}/login"/>" >Submit your data</a>
                         </p>
 
                     </c:when>
                     <c:otherwise>
                         <p>
-                            <a href="<c:url value="${baseURL}/submissionForm"/>" class="more_desc">Submit your data</a>
+                            <a href="<c:url value="${baseURL}/submissionForm"/>" >Submit your data</a>
                         </p>
                     </c:otherwise>
                 </c:choose>
@@ -25,27 +33,34 @@
     <%--  <a href="<c:url value="${baseURL}/info"/>">more Info</a></p>   --%>
 </section>
 
+
+
+
+
 <section id="list-data">
+
 <div id="list-data-study">
-
-        <h2>Study list</h2>
-        <p><span class="list_date">:</span><a href="" class="list_more">erm availability as well as place it within a rich, highly cross-referenced context.</a> <a href="#" class="more_view">view</a></p>
-
-
-
+<h2>Study list</h2>
+<p><span class="list_date">:</span><a href="" class="list_more">erm availability as well as place it within a rich, highly cross-referenced context.</a> <a href="#" class="more_view">view</a></p>
 </div>
 
 <div id="list-data-sample">
+<h2>Sample list</h2>
+<p><span class="list_date">:</span><a href="" class="list_more">erm availability as well as place it within a rich, highly cross-referenced context.</a> <a href="#" class="more_view">view</a></p>
+</div>
+
+</section>
 
 </div>
-</section>
-</div>
+
+
 <div id="sidebar"><tiles:insertAttribute name="loginForm"/></div>
 
-    <div style="margin-top:10px"/>
+
+   <%-- <div style="margin-top:10px"/>
     <table frame="box" width="95%">
         <c:choose>
-        <%-- Show MyStudies and MySamples tables only if a user is logged in--%>
+        &lt;%&ndash; Show MyStudies and MySamples tables only if a user is logged in&ndash;%&gt;
         <c:when test="${not empty mgModel.submitter}">
             <tr>
                 <td width="50%" align="left" valign="top">
@@ -61,7 +76,7 @@
                         <c:forEach var="study" items="${mgModel.myStudies}" varStatus="status">
                         <tr>
                             <td>
-                                    <%--Just to show that the study is public or private--%>
+                                    &lt;%&ndash;Just to show that the study is public or private&ndash;%&gt;
                                 <c:choose>
                                     <c:when test="${study.public}">
                                         <c:set var="myStudyVisibility" value="public"/>
@@ -82,7 +97,7 @@
                         <c:forEach var="sample" items="${mgModel.mySamples}" varStatus="status">
                         <tr>
                             <td>
-                                    <%--Just to show that the sample is public or private--%>
+                                    &lt;%&ndash;Just to show that the sample is public or private&ndash;%&gt;
                                 <c:choose>
                                     <c:when test="${study.public}">
                                         <c:set var="mySampleVisibility" value="public"/>
@@ -110,9 +125,9 @@
                 </td>
             </tr>
         </c:when>
-        <%-- End of show MyStudies and MySamples tables--%>
+        &lt;%&ndash; End of show MyStudies and MySamples tables&ndash;%&gt;
 
-        <%-- Show recent PublicStudies and PublicSamples only when the user is not logged in --%>
+        &lt;%&ndash; Show recent PublicStudies and PublicSamples only when the user is not logged in &ndash;%&gt;
         <c:otherwise>
         <tr>
             <td width="50%" align="left" valign="top">
@@ -128,7 +143,7 @@
                     <c:forEach var="study" items="${mgModel.publicStudies}" varStatus="status">
                     <tr>
                         <td>
-                                <%--Just to show that the study is public or private--%>
+                                &lt;%&ndash;Just to show that the study is public or private&ndash;%&gt;
                             <c:choose>
                                 <c:when test="${study.public}">
                                     <c:set var="publicStudyVisibility" value="public"/>
@@ -149,7 +164,7 @@
                     <c:forEach var="sample" items="${mgModel.publicSamples}" varStatus="status">
                     <tr>
                         <td>
-                                <%--Just to show that the sample is public or private--%>
+                                &lt;%&ndash;Just to show that the sample is public or private&ndash;%&gt;
                             <c:choose>
                                 <c:when test="${sample.public}">
                                     <c:set var="publicSampleVisibility" value="public"/>
@@ -168,9 +183,9 @@
         </tr>
         </c:otherwise>
         </c:choose>
-        <%-- End of show recent PublicStudies and PublicSamples--%>
+        &lt;%&ndash; End of show recent PublicStudies and PublicSamples&ndash;%&gt;
 
-        <%-- Always show links to all PublicStudies and PublicSamples (whether the user is logged in or not) --%>
+        &lt;%&ndash; Always show links to all PublicStudies and PublicSamples (whether the user is logged in or not) &ndash;%&gt;
         <tr>
             <td width="50%" align="right" valign="top">
                 <a href="<c:url value="${baseURL}/viewStudies/doSearch?searchTerm=&studyVisibility=ALL_PUBLISHED_STUDIES&search=Search"/>">View
@@ -181,6 +196,6 @@
                     all public samples</a>
             </td>
         </tr>
-        <%-- End of links to all PublicStudies and PublicSamples --%>
+        &lt;%&ndash; End of links to all PublicStudies and PublicSamples &ndash;%&gt;
 
-    </table>
+    </table>--%>
