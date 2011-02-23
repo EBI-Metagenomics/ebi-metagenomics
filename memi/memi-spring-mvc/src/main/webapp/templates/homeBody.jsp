@@ -36,7 +36,7 @@
 </div>
 
 <div id="list-data-sample">
-   
+
 </div>
 </section>
 </div>
@@ -44,8 +44,9 @@
 
     <div style="margin-top:10px"/>
     <table frame="box" width="95%">
+        <c:choose>
         <%-- Show MyStudies and MySamples tables only if a user is logged in--%>
-        <c:if test="${not empty mgModel.submitter}">
+        <c:when test="${not empty mgModel.submitter}">
             <tr>
                 <td width="50%" align="left" valign="top">
                     <h3>My studies</h3>
@@ -101,16 +102,18 @@
             <tr>
                 <td width="50%" align="right" valign="top">
                     <a href="<c:url value="${baseURL}/viewStudies/doSearch?searchTerm=&studyVisibility=MY_STUDIES&search=Search"/>">View
-                        my studies</a>
+                        all my studies</a>
                 </td>
                 <td width="50%" align="right" valign="top">
                     <a href="<c:url value="${baseURL}/viewSamples/doSearch?searchTerm=&sampleVisibility=MY_SAMPLES&search=Search"/>">View
-                        my samples</a>
+                        all my samples</a>
                 </td>
             </tr>
-        </c:if>
+        </c:when>
         <%-- End of show MyStudies and MySamples tables--%>
-        <%-- Shows PublicStudies and PublicSamples tables at any time--%>
+
+        <%-- Show recent PublicStudies and PublicSamples only when the user is not logged in --%>
+        <c:otherwise>
         <tr>
             <td width="50%" align="left" valign="top">
                 <h3>Public studies</h3>
@@ -163,15 +166,21 @@
                 </table>
             </td>
         </tr>
+        </c:otherwise>
+        </c:choose>
+        <%-- End of show recent PublicStudies and PublicSamples--%>
+
+        <%-- Always show links to all PublicStudies and PublicSamples (whether the user is logged in or not) --%>
         <tr>
             <td width="50%" align="right" valign="top">
                 <a href="<c:url value="${baseURL}/viewStudies/doSearch?searchTerm=&studyVisibility=ALL_PUBLISHED_STUDIES&search=Search"/>">View
-                    all</a>
+                    all public studies</a>
             </td>
             <td width="50%" align="right" valign="top">
                 <a href="<c:url value="${baseURL}/viewSamples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search"/>">View
-                    all</a>
+                    all public samples</a>
             </td>
         </tr>
+        <%-- End of links to all PublicStudies and PublicSamples --%>
+
     </table>
- 
