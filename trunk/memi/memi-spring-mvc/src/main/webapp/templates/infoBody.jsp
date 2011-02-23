@@ -1,4 +1,4 @@
-<div id="content">
+<div id="content-full">
     <h2>About Metagenomics</h2>
 
     <ul>

@@ -1,11 +1,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<div id="content">
+<div id="content-full">
     <h2>${pageTitle}</h2>
 
     <div align="center">
-        <table border="0" style="border-width: 1px;border-color: #000000;border-style: solid;">
+        <table>
             <form:form method="GET" action="${baseURL}/viewSamples/doSearch" commandName="sampleFilter">
                 <tr>
                     <td>Text:</td>
