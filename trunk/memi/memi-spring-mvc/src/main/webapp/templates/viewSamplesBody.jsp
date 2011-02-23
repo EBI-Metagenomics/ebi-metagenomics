@@ -79,7 +79,18 @@
                     <a href="<c:url value="${baseURL}/sampleView/${sample.sampleId}"/>">${sample.sampleId}</a>
                 </td>
                 <c:if test="${not empty mgModel.submitter}">
-                    <td>${sample.public}</td>
+                    <td>
+                        <c:choose>
+                            <c:when test="${sample.public}">
+                                <img src="/img/icon_priv_public.gif" height="16" width="16" align="absmiddle" alt=""
+                                     border="0"/>
+                            </c:when>
+                            <c:otherwise>
+                                <img src="/img/icon_priv_lock.gif" height="16" width="16" align="absmiddle" alt=""
+                                     border="0"/>
+                            </c:otherwise>
+                        </c:choose>
+                    </td>
                 </c:if>
                 <td>${sample.sampleTitle}</td>
                 <td>
@@ -90,26 +101,50 @@
                 </td>
                 <td>
                     <c:choose>
-                        <c:when test="${empty sample.metadataReceived}">N/A</c:when>
-                        <c:otherwise>${sample.metadataReceived}</c:otherwise>
+                        <c:when test="${empty sample.metadataReceived}">
+                            <img src="/img/error.gif" height="16" width="16" align="absmiddle" alt=""
+                                 border="0"/>
+                        </c:when>
+                        <c:otherwise>
+                            <img src="/img/check.gif" height="16" width="16" align="absmiddle" alt=""
+                                 border="0"/>
+                        </c:otherwise>
                     </c:choose>
                 </td>
                 <td>
                     <c:choose>
-                        <c:when test="${empty sample.sequenceDataReceived}">N/A</c:when>
-                        <c:otherwise>${sample.sequenceDataReceived}</c:otherwise>
+                        <c:when test="${empty sample.sequenceDataReceived}">
+                            <img src="/img/error.gif" height="16" width="16" align="absmiddle" alt=""
+                                 border="0"/>
+                        </c:when>
+                        <c:otherwise>
+                            <img src="/img/check.gif" height="16" width="16" align="absmiddle" alt=""
+                                 border="0"/>
+                        </c:otherwise>
                     </c:choose>
                 </td>
                 <td>
                     <c:choose>
-                        <c:when test="${empty sample.analysisCompleted}">N/A</c:when>
-                        <c:otherwise>${sample.analysisCompleted}</c:otherwise>
+                        <c:when test="${empty sample.analysisCompleted}">
+                            <img src="/img/error.gif" height="16" width="16" align="absmiddle" alt=""
+                                 border="0"/>
+                        </c:when>
+                        <c:otherwise>
+                            <img src="/img/check.gif" height="16" width="16" align="absmiddle" alt=""
+                                 border="0"/>
+                        </c:otherwise>
                     </c:choose>
                 </td>
                 <td>
                     <c:choose>
-                        <c:when test="${empty sample.sequenceDataArchived}">N/A</c:when>
-                        <c:otherwise>${sample.sequenceDataArchived}</c:otherwise>
+                        <c:when test="${empty sample.sequenceDataArchived}">
+                            <img src="/img/error.gif" height="16" width="16" align="absmiddle" alt=""
+                                 border="0"/>
+                        </c:when>
+                        <c:otherwise>
+                            <img src="/img/check.gif" height="16" width="16" align="absmiddle" alt=""
+                                 border="0"/>
+                        </c:otherwise>
                     </c:choose>
                 </td>
             </tr>

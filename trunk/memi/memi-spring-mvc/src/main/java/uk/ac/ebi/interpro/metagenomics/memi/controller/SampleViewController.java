@@ -23,6 +23,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.File;
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -82,13 +83,17 @@ public class SampleViewController extends LoginController {
     @RequestMapping(value = "/doExportResultFile/{fileName}", method = RequestMethod.GET)
     public ModelAndView doExportResultFile(@PathVariable String fileName, ModelMap model, HttpServletResponse response) {
         //1. Do get file location
-        //TODO: Finish implementation of downloadable result file
-
+        String downloadPath = "/home/maxim/temp_memi_data/analyses/" + fileName + "/";
+        if (downloadPath.contains("_I5")) {
+            downloadPath = downloadPath.replace("_I5", "");
+        } else {
+            downloadPath = downloadPath.replace("_orf100_200_nameonly", "");
+        }
         //2. Open file stream and download dialog
-        String fileExtension = ".txt";
-        if (fileName.contains("orfs"))
-            fileExtension = ".fasta";
-        String pathName = MemiDownloadService.DOWNLOAD_PATH + fileName + fileExtension;
+        String fileExtension = ".fasta";
+        if (fileName.contains("I5"))
+            fileExtension = ".tsv";
+        String pathName = downloadPath + fileName + fileExtension;
         File file = new File(pathName);
         if (downloadService != null) {
             downloadService.openDownloadDialog(response, file, fileName + fileExtension, false);
@@ -175,10 +180,29 @@ public class SampleViewController extends LoginController {
         return result;
     }
 
-    @ModelAttribute(value = "fileName")
-    public String populateFileNames() {
+    @ModelAttribute(value = "resultFileNames")
+    public List<String> populateFileNames(@PathVariable String sampleId) {
         List<String> result = new ArrayList<String>();
+        List<String> fileNames = fileInfoDAO.getFileNamesBySampleId(sampleId);
+        for (String fileName : fileNames) {
+            fileName = fileName.trim();
+            if (fileName.length() > 0) {
+                fileName = fileName.replace('.', '_').toUpperCase();
 
-        return "result_interproscan.txt";
+                //Check if files exist and show only if they are existing
+                String downloadPath = "/home/maxim/temp_memi_data/analyses/" + fileName + "/";
+                String pathName = downloadPath + fileName + "_I5.tsv";
+                File file = new File(pathName);
+                if (file.exists() && file.canRead()) {
+                    result.add(fileName + "_I5.tsv");
+                }
+                pathName = downloadPath + fileName + "_I5.tsv";
+                file = new File(pathName);
+                if (file.exists() && file.canRead()) {
+                    result.add(fileName + "_orf100_200_nameonly.fasta");
+                }
+            }
+        }
+        return result;
     }
 }

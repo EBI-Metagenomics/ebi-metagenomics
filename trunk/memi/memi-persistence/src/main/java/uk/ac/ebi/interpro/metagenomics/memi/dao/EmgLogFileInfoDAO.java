@@ -12,4 +12,6 @@ import java.util.List;
 public interface EmgLogFileInfoDAO {
 
     public List<String> getFileIdsBySampleId(String sampleId);
+
+    public List<String> getFileNamesBySampleId(String sampleId);
 }
