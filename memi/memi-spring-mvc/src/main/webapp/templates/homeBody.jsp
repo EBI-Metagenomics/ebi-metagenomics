@@ -39,44 +39,13 @@
 
 <section id="list-data">
 
-<div id="list-data-study">
-<h2>Study list</h2>
-<p><span class="list_date">:</span><a href="" class="list_more">erm availability as well as place it within a rich, highly cross-referenced context.</a> <a href="#" class="more_view">view</a></p>
-</div>
-
-<div id="list-data-sample">
-<h2>Sample list</h2>
-<p><span class="list_date">:</span><a href="" class="list_more">erm availability as well as place it within a rich, highly cross-referenced context.</a> <a href="#" class="more_view">view</a></p>
-</div>
-
-</section>
-
-</div>
-
-
-<div id="sidebar"><tiles:insertAttribute name="loginForm"/></div>
-
-
-   <%-- <div style="margin-top:10px"/>
-    <table frame="box" width="95%">
-        <c:choose>
-        &lt;%&ndash; Show MyStudies and MySamples tables only if a user is logged in&ndash;%&gt;
+ <c:choose>
+        <%-- Show MyStudies and MySamples tables only if a user is logged in--%>
         <c:when test="${not empty mgModel.submitter}">
-            <tr>
-                <td width="50%" align="left" valign="top">
-                    <h3>My studies</h3>
-                </td>
-                <td width="50%" align="left" valign="top">
-                    <h3>My samples</h3>
-                </td>
-            </tr>
-            <tr>
-                <td width="50%" align="left" valign="top">
-                    <table frame="box">
-                        <c:forEach var="study" items="${mgModel.myStudies}" varStatus="status">
-                        <tr>
-                            <td>
-                                    &lt;%&ndash;Just to show that the study is public or private&ndash;%&gt;
+            <div id="list-data-study">
+            <h2>My studies</h2>
+              <c:forEach var="study" items="${mgModel.myStudies}" varStatus="status">
+               <%--Just to show that the study is public or private--%>
                                 <c:choose>
                                     <c:when test="${study.public}">
                                         <c:set var="myStudyVisibility" value="public"/>
@@ -85,19 +54,18 @@
                                         <c:set var="myStudyVisibility" value="private"/>
                                     </c:otherwise>
                                 </c:choose>
-                                <a href="<c:url value="${baseURL}/studyView/${study.id}"/>">${study.lastMetadataReceived}
-                                    - ${study.studyName} (<c:out value="${myStudyVisibility}"/>)</a>
-                            </td>
-                        <tr>
-                            </c:forEach>
-                    </table>
-                </td>
-                <td width="50%" align="right" valign="top">
-                    <table frame="box">
-                        <c:forEach var="sample" items="${mgModel.mySamples}" varStatus="status">
-                        <tr>
-                            <td>
-                                    &lt;%&ndash;Just to show that the sample is public or private&ndash;%&gt;
+   <p><span class="list_date">${study.lastMetadataReceived}:</span> <a href="<c:url value="${baseURL}/studyView/${study.id}"/>" class="list_more">${study.studyName} <img alt="<c:out value="${myStudyVisibility}"/>" src="../img/icon_priv_<c:out value="${myStudyVisibility}"/>.gif"></a> <a href="<c:url value="${baseURL}/studyView/${study.id}"/>" class="more_view">view</a></p>
+
+          </c:forEach>
+     <p><a href="<c:url value="${baseURL}/viewStudies/doSearch?searchTerm=&studyVisibility=ALL_PUBLISHED_STUDIES&search=Search"/>" title="View
+                    all public studies">View all public studies</a> |
+     <a href="<c:url value="${baseURL}/viewStudies/doSearch?searchTerm=&studyVisibility=MY_STUDIES&search=Search"/>"  title="View
+                    all my studies">View all my studies</a></p>  
+              </div>
+            <div id="list-data-sample">
+            <h2>My samples</h2>
+              <c:forEach var="sample" items="${mgModel.mySamples}" varStatus="status">
+                      <%--Just to show that the sample is public or private--%>
                                 <c:choose>
                                     <c:when test="${study.public}">
                                         <c:set var="mySampleVisibility" value="public"/>
@@ -106,44 +74,24 @@
                                         <c:set var="mySampleVisibility" value="private"/>
                                     </c:otherwise>
                                 </c:choose>
-                                <a href="<c:url value="${baseURL}/sampleView/${sample.sampleId}"/>">${sample.metadataReceived}
-                                    - ${sample.sampleTitle} (<c:out value="${mySampleVisibility}"/>)</a>
-                            </td>
-                        <tr>
-                            </c:forEach>
-                    </table>
-                </td>
-            </tr>
-            <tr>
-                <td width="50%" align="right" valign="top">
-                    <a href="<c:url value="${baseURL}/viewStudies/doSearch?searchTerm=&studyVisibility=MY_STUDIES&search=Search"/>">View
-                        all my studies</a>
-                </td>
-                <td width="50%" align="right" valign="top">
-                    <a href="<c:url value="${baseURL}/viewSamples/doSearch?searchTerm=&sampleVisibility=MY_SAMPLES&search=Search"/>">View
-                        all my samples</a>
-                </td>
-            </tr>
-        </c:when>
-        &lt;%&ndash; End of show MyStudies and MySamples tables&ndash;%&gt;
+   <p><span class="list_date">${sample.metadataReceived}:</span> <a href="<c:url value="${baseURL}/sampleView/${sample.sampleId}"/>" class="list_more">${sample.sampleTitle} <img alt="<c:out value="${mySampleVisibility}"/>" src="../img/icon_priv_<c:out value="${mySampleVisibility}"/>.gif"></a> <a href="<c:url value="${baseURL}/sampleView/${sample.sampleId}"/>" class="more_view">view</a></p>
 
-        &lt;%&ndash; Show recent PublicStudies and PublicSamples only when the user is not logged in &ndash;%&gt;
+                                       </c:forEach>
+    <p><a href="<c:url value="${baseURL}/viewSamples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search"/>" title="View
+                    all public samples">View all public samples</a> |
+       <a href="<c:url value="${baseURL}/viewSamples/doSearch?searchTerm=&sampleVisibility=MY_SAMPLES&search=Search"/>"  title="View
+                    all My samples">View
+                        all my samples</a> </p>
+              </div>
+            </c:when>
+        <%-- End of show MyStudies and MySamples tables--%>
+
+        <%-- Show recent PublicStudies and PublicSamples only when the user is not logged in --%>
         <c:otherwise>
-        <tr>
-            <td width="50%" align="left" valign="top">
-                <h3>Public studies</h3>
-            </td>
-            <td width="50%" align="left" valign="top">
-                <h3>Public samples</h3>
-            </td>
-        </tr>
-        <tr>
-            <td width="50%" align="left" valign="top">
-                <table frame="box">
-                    <c:forEach var="study" items="${mgModel.publicStudies}" varStatus="status">
-                    <tr>
-                        <td>
-                                &lt;%&ndash;Just to show that the study is public or private&ndash;%&gt;
+             <div id="list-data-study">
+               <h2>Study list</h2>
+                  <c:forEach var="study" items="${mgModel.publicStudies}" varStatus="status">
+                           <%--Just to show that the study is public or private--%>
                             <c:choose>
                                 <c:when test="${study.public}">
                                     <c:set var="publicStudyVisibility" value="public"/>
@@ -152,19 +100,16 @@
                                     <c:set var="publicStudyVisibility" value="private"/>
                                 </c:otherwise>
                             </c:choose>
-                            <a href="<c:url value="${baseURL}/studyView/${study.id}"/>">${study.lastMetadataReceived}
-                                - ${study.studyName} (<c:out value="${publicStudyVisibility}"/>)</a>
-                        </td>
-                    <tr>
-                        </c:forEach>
-                </table>
-            </td>
-            <td width="50%" align="right" valign="top">
-                <table frame="box">
-                    <c:forEach var="sample" items="${mgModel.publicSamples}" varStatus="status">
-                    <tr>
-                        <td>
-                                &lt;%&ndash;Just to show that the sample is public or private&ndash;%&gt;
+  <p><span class="list_date">${study.lastMetadataReceived}:</span> <a href="<c:url value="${baseURL}/studyView/${study.id}"/>" class="list_more">${study.studyName} <img alt="<c:out value="${publicStudyVisibility}"/>" src="../img/icon_priv_<c:out value="${publicStudyVisibility}"/>.gif"></a> <a href="<c:url value="${baseURL}/studyView/${study.id}"/>" class="more_view">view</a></p>
+
+                 </c:forEach>
+              <p><a href="<c:url value="${baseURL}/viewStudies/doSearch?searchTerm=&studyVisibility=ALL_PUBLISHED_STUDIES&search=Search"/>" title="View
+                    all public studies">View all studies</a></p>  
+             </div>
+            <div id="list-data-sample">
+               <h2>Sample list</h2>
+              <c:forEach var="sample" items="${mgModel.publicSamples}" varStatus="status">
+                        <%--Just to show that the sample is public or private--%>
                             <c:choose>
                                 <c:when test="${sample.public}">
                                     <c:set var="publicSampleVisibility" value="public"/>
@@ -173,29 +118,18 @@
                                     <c:set var="publicSampleVisibility" value="private"/>
                                 </c:otherwise>
                             </c:choose>
-                            <a href="<c:url value="${baseURL}/sampleView/${sample.sampleId}"/>">${sample.metadataReceived}
-                                - ${sample.sampleTitle} (<c:out value="${publicSampleVisibility}"/>)</a>
-                        </td>
-                    <tr>
-                        </c:forEach>
-                </table>
-            </td>
-        </tr>
+    <p><span class="list_date">${sample.metadataReceived}:</span> <a href="<c:url value="${baseURL}/sampleView/${sample.sampleId}"/>" class="list_more">${sample.sampleTitle} <img alt="<c:out value="${publicStudyVisibility}"/>" src="../img/icon_priv_<c:out value="${publicSampleVisibility}"/>.gif"></a> <a href="<c:url value="${baseURL}/sampleView/${sample.sampleId}"/>" class="more_view">view</a></p>
+
+                </c:forEach>
+                 <p><a href="<c:url value="${baseURL}/viewSamples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search"/>" title="View
+                    all public samples">View all samples</a> </p>
+              </div>
         </c:otherwise>
         </c:choose>
-        &lt;%&ndash; End of show recent PublicStudies and PublicSamples&ndash;%&gt;
 
-        &lt;%&ndash; Always show links to all PublicStudies and PublicSamples (whether the user is logged in or not) &ndash;%&gt;
-        <tr>
-            <td width="50%" align="right" valign="top">
-                <a href="<c:url value="${baseURL}/viewStudies/doSearch?searchTerm=&studyVisibility=ALL_PUBLISHED_STUDIES&search=Search"/>">View
-                    all public studies</a>
-            </td>
-            <td width="50%" align="right" valign="top">
-                <a href="<c:url value="${baseURL}/viewSamples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search"/>">View
-                    all public samples</a>
-            </td>
-        </tr>
-        &lt;%&ndash; End of links to all PublicStudies and PublicSamples &ndash;%&gt;
+</section>
 
-    </table>--%>
+</div>
+
+
+<div id="sidebar"><tiles:insertAttribute name="loginForm"/></div>
