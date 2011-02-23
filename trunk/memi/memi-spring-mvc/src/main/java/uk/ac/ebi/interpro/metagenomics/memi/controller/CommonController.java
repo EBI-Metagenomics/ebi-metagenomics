@@ -36,6 +36,10 @@ public class CommonController {
     public void aboutHandler() {
     }
 
+    @RequestMapping("/help")
+    public void helpHandler() {
+    }
+
     @RequestMapping("/getData")
     public void getStudyNamesHandler() {
     }
