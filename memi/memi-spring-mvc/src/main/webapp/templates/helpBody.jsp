@@ -1,4 +1,4 @@
-<div id="content">
+<div id="content-full">
     <h2>Help</h2>
 
     <p>

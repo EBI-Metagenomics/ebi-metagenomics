@@ -8,7 +8,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--Page variable which is used several time within this page. Used for not specified study attributes.--%>
 <c:set var="notGivenId" value="(not given)"/>
-<div id="content">
+<div id="content-full">
 <h2>Sample Overview</h2>
 
 <div style="margin-top:6px"></div>
