@@ -79,4 +79,19 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
         <welcome-file>/index.jsp</welcome-file>
     </welcome-file-list>
     -->
+
+    <!-- Error pages -->
+
+    <!-- File not found -->
+    <error-page>
+      <error-code>404</error-code>
+      <location>/pages/errors/404.jsp</location>
+    </error-page>
+
+    <!-- General error page for errors not specifically handled above -->
+    <error-page>
+      <exception-type>java.lang.Exception</exception-type>
+      <location>/pages/errors/exception.jsp</location>
+    </error-page>
+
 </web-app>
