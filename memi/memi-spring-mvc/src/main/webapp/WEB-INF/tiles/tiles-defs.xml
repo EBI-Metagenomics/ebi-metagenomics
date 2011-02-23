@@ -9,7 +9,8 @@
     <definition name="rootTemplate" template="/templates/rootTemplate.jsp">
         <!-- Attributes of type string-->
         <put-attribute name="title" type="string" value="MG portal"/>
-        <!-- Attributes of type template-->
+        <put-attribute name="bodyClass" type="string" value="grey"/>  <!-- Default value if not overridden -->
+                <!-- Attributes of type template-->
         <put-attribute name="header" type="template" value="/templates/header.jsp"/>
         <put-attribute name="mainMenu" type="template" value="/templates/mainMenu.jsp"/>
         <put-attribute name="footer" type="template" value="/templates/footer.jsp"/>
@@ -19,6 +20,7 @@
 
     <definition name="home" extends="rootTemplate">
         <!-- Attributes of type definition-->
+        <put-attribute name="bodyClass" type="string" value="grey"/>
         <put-attribute name="body" type="definition" value="homeDef"/>
     </definition>
 
@@ -27,14 +29,17 @@
     </definition>
 
     <definition name="info" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="green"/>
         <put-attribute name="body" value="/templates/infoBody.jsp"/>
     </definition>
 
     <definition name="submission" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="red"/>
         <put-attribute name="body" value="/templates/submissionBody.jsp"/>
     </definition>
 
     <definition name="submissionSuccess" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="red"/>
         <put-attribute name="body" value="/templates/submissionSuccessBody.jsp"/>
     </definition>
 
@@ -43,22 +48,27 @@
     </definition>
 
     <definition name="viewStudies" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="blue"/>
         <put-attribute name="body" value="/templates/viewStudiesBody.jsp"/>
     </definition>
 
     <definition name="viewSamples" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="greyblue"/>
         <put-attribute name="body" value="/templates/viewSamplesBody.jsp"/>
     </definition>
 
     <definition name="studyView" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="blue"/>
         <put-attribute name="body" value="/templates/studyOverviewBody.jsp"/>
     </definition>
 
     <definition name="sampleView" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="greyblue"/>
         <put-attribute name="body" value="/templates/sampleOverviewBody.jsp"/>
     </definition>
 
     <definition name="login" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="black"/>
         <put-attribute name="body" value="/templates/loginBody.jsp"/>
     </definition>
 
