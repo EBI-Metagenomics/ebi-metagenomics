@@ -28,6 +28,10 @@ font-weight: normal;
 font-style: normal;
 }
 
+img{
+border: none;
+}
+
 a {
 color: #00b4ff;
 text-decoration: none;
@@ -38,7 +42,7 @@ a:hover,  a:focus { color: #006af6;}
 a:active { color: #647685;}
 
 #wrapper {
-border:1px #ccc solid;
+border:0px #ccc solid;
 width: 972px;
 margin: 0px auto;
 text-align: left; /* overrides text-align: center on the body element. */
@@ -120,7 +124,13 @@ div.top-menu ul li a{
 }
 
 div.top-menu ul li a:hover{
-    background:url(../img/arrow_menu_over.png) no-repeat right 10px;
+    /* Arrow style
+    background:url(../img/arrow_menu_over.png) no-repeat right 10px;*/
+    background:url(../img/bgd_black_op20_8.png);
+    -moz-border-radius: 10px 10px 0 0;
+    -khtml-border-radius: 10px 10px 0 0;
+    -webkit-border-radius: 10px 10px 0 0;
+    border-radius:10px 10px 0 0;
 }
 
 
@@ -143,13 +153,17 @@ background: url(../img/bgd_main_grey.jpg) #b5b5b5;
 
 h2 {
 border: solid 0px red;
-padding:20px 0 10px 0;
 font-family: MyriadProRegular, sans-serif;
 color:#003798;
 font-size:200%;
 font-weight:normal;
 margin:0;
 }
+
+#submit-data h2 {
+padding:20px 0 10px 0;
+}
+
 #sidebar h2 {
 padding:0;
 color:#333333;
@@ -261,6 +275,19 @@ text-decoration:underline;
 color:#866d9e ;
 }
 
+a.list_more {
+color:#3e3e3e;
+}
+a.list_more:hover{
+color:#222222 ;
+text-decoration:underline;
+}
+
+.list_date{
+color:#9d9d9d ;
+font-size:90%;
+}
+
 #submit-data, #list-data-study, #list-data-sample {
 background-color: white;
 -moz-border-radius: 0 0 20px 0;
@@ -269,6 +296,19 @@ background-color: white;
 border-radius: 0 0 20px 0;
 }
 
+#list-data-study {
+margin-top:14px;
+width:300px;
+float:left;
+padding:14px;
+}
+
+#list-data-sample {
+margin:14px 0 0 14px;
+width:300px;
+float:right;
+padding:14px;
+}
 #submit-data  {
 width:100%;
 }
@@ -285,8 +325,8 @@ text-indent: -9999px;
 }
 
 #submit-data-display h1 a:hover {
-background: url(../img/button_submit_over.gif) white no-repeat center center;
-
+/*style hand move
+background: url(../img/button_submit_over.gif) white no-repeat center center;*/
 }
 
 .error {
