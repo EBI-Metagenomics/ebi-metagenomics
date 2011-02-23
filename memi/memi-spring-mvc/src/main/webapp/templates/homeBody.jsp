@@ -40,7 +40,7 @@
 </div>
 </section>
 </div>
-<div id="sidebar"> </div>
+<div id="sidebar"><tiles:insertAttribute name="loginForm"/></div>
 
     <div style="margin-top:10px"/>
     <table frame="box" width="95%">
