@@ -1,21 +1,164 @@
-/* Represents the main CSS file for the MEMI project */
 body {
-    font: 80% arial, helvetica, sans-serif;
-    margin: 0;
+    font-family: 'Droid Sans', serif, arial, verdana, Helvetica;
+    font-size: 80%;
+    font-weight: 400;
+    letter-spacing: 0em;
+    word-spacing: 0em;
+    line-height: 1.59;
 }
+
+body.grey,div.top-menu ul li.grey { background: url(../img/bgd_main_grey.jpg) #b5b5b5;}
+body.red, div.top-menu ul li.red { background: url(../img/bgd_main_red.jpg) #ee0836;}
+body.green, div.top-menu ul li.green { background: url(../img/bgd_main_green.jpg) #90cc2d;}
+body.yellow, div.top-menu ul li.yellow { background: url(../img/bgd_main_yellow.jpg) #efd223;}
+body.black, div.top-menu ul li.black { background: url(../img/bgd_main_black.jpg) #202020;}
+body.orange,div.top-menu ul li.orange  { background: url(../img/bgd_main_orange.jpg) #ff8400;}
+body.greyblue, div.top-menu ul li.greyblue { background: url(../img/bgd_main_greyblue.jpg) #7d9ca6;}
+body.pink, div.top-menu ul li.pink { background: url(../img/bgd_main_pink.jpg) #e80767;}
+body.blue, div.top-menu ul li.blue { background: url(../img/bgd_main_blue.jpg) #14c1df;}
+
+@font-face {
+	font-family: 'MyriadProRegular';
+    src: url('../fonts/myriadpro-regular-webfont.eot') format('eot'),
+         url('../fonts/myriadpro-regular-webfont.woff') format('woff'),
+         url('../fonts/myriadpro-regular-webfont.ttf') format('truetype'),
+         url('../fonts/myriadpro-regular-webfont.svg#webfontZPnuZIZf') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+#wrapper {
+border:1px grey dotted;
+width: 972px;
+margin: 0px auto;
+padding:14px;
+}
+
+header, nav { background-color: white;}
+
+ nav { float: left; width:100%;}
+
+footer {  width: 1000px; margin: 0px auto;}
+footer div.linec  { width: 100%; height:4px; background: url(../img/bgd_black_op20_24.png); }
+footer div.lined  { width: 100%; height:8px; background: url(../img/bgd_black_op40_24.png); } 
+
+
+
+div.banner {
+width: 100%;
+height:104px;
+border:0px black solid;
+}
+
+div.banner-logo  {float: left; border:0px black solid;}
+
+div.banner-photo {
+margin:30px 10px 0 0;
+float: right;
+background: url(../img/pict_metagenomics_8.png) no-repeat 0 0;
+width: 385px;
+height: 56px;
+}
+
+div.banner-logo h1 a {
+float: left;
+overflow: hidden;
+background: url(../img/logo_8.png) no-repeat 0 0;
+width: 378px;
+height: 81px;
+text-indent: -9999px;
+}
+
+div.top-menu {
+border:0px red solid;
+float:left;
+width:100%;
+
+}
+
+div.top-menu ul{
+    margin:0;
+    padding:0 0 0 7px;
+}
+
+div.top-menu ul li{
+    border:0px green solid;
+    float:left;
+    width:100px;
+    text-align:left;
+    font-size:120%;
+    line-height:18px;
+    padding:0 1px 0 1px;
+    margin:1px 0 0 0;
+    -moz-border-radius: 10px 10px 0 0;
+    -khtml-border-radius: 10px 10px 0 0;
+    -webkit-border-radius: 10px 10px 0 0;
+    border-radius:10px 10px 0 0;
+    margin-right:7px;
+}
+
+div.top-menu ul li a{
+    border:0px red solid;
+    float:left;
+    display:block;
+    width:86px;
+    padding:7px;
+    position:relative;
+    cursor:pointer;
+    color:white;
+    text-decoration:none;
+}
+
+div.top-menu ul li a:hover{
+    background:url(../img/arrow_menu_over.png) no-repeat right 10px;
+}
+
+
+table {
+background: url(../img/bgd_main_grey.jpg) #b5b5b5;
+border-collapse: collapse;
+border: solid 1px #eaeaea;}
+
+table th {
+background:url(../img/bgd_black_op20_24.png);}
+
+
+
 
 h2 {
-    margin-top: 0;
+font-family: MyriadProRegular, sans-serif;
+color:#003798;
+font-size:200%;
 }
 
-td {
-    font: 80% arial, helvetica, sans-serif;
+section {
+margin:47px 0 0 0;
+border: solid 0px #eaeaea;
 }
+
+#submit-data  {
+background-color: white;
+width:100%;
+-moz-border-radius: 0 0 20px 0;
+-khtml-border-radius: 0 0 20px 0;
+-webkit-border-radius: 0 0 20px 0;
+border-radius: 0 0 20px 0;
+}
+
+#submit-data-display {
+height:284px;
+width:272px;
+margin: 0 14px 0 0;
+float: left;
+background: url(../img/button_submit_off.gif) white no-repeat center center;
+border: solid 0px red;
+}
+
+
 
 .error {
     color: #ff0000;
 }
-
 table#login {
     width: 300;
 }
@@ -30,20 +173,4 @@ table#login {
     color: #FFF;
     text-align: center;
     text-decoration: none;
-}
-
-/*.date {*/
-/*}*/
-
-/*div#calendarDiv {*/
-/*font: 80% arial, helvetica, sans-serif;*/
-/*}*/
-
-/*div#content {*/
-    /*margin: 0 300px 0 100px;*/
-/*}*/
-
-/*div#right_side_navigation {*/
-    /*right: 0;*/
-    /*width: 300px;*/
 }
