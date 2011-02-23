@@ -80,15 +80,15 @@
     <tiles:insertAttribute name="mainMenu"/>
     </nav>
 
-    <section id="main-content">
+    <div id="main-content">
     <tiles:insertAttribute name="body"/>
-    </section>
+    </div>
 
 
 
 </div>
 <footer>
-      <tiles:insertAttribute name="footer"/>
+      <%--<tiles:insertAttribute name="footer"/>--%>
 </footer>
 <script type="text/javascript" src="http://www.ebi.ac.uk/inc/js/newmenu.js"></script>
 <script type="text/javascript">
