@@ -14,8 +14,7 @@
                 </c:choose></h1></div>
     <div id="submit-data-description">
         <h2>Data Submission</h2>
-        <p>Short description of what kind of data you can submit, why and how ... <br/>
-        We offers multiple options for submitting your data. We can also provide assistance in formatting and processing for easy incorporation into our database. By submitting your data to us, you help to ensure its long-term availability as well as place it within a rich, highly cross-referenced context.</p>
+        <p>We offers multiple options for submitting your data. We can also provide assistance in formatting and processing for easy incorporation into our database. By submitting your data to us, you help to ensure its long-term availability as well as place it within a rich, highly cross-referenced context.</p>
          <c:choose>
                     <c:when test="${empty mgModel.submitter}">
                         <p>
@@ -57,6 +56,7 @@
    <p><span class="list_date">${study.lastMetadataReceived}:</span> <a href="<c:url value="${baseURL}/studyView/${study.id}"/>" class="list_more">${study.studyName} <img alt="<c:out value="${myStudyVisibility}"/>" src="../img/icon_priv_<c:out value="${myStudyVisibility}"/>.gif"></a> <a href="<c:url value="${baseURL}/studyView/${study.id}"/>" class="more_view">view</a></p>
 
           </c:forEach>
+                 <br/>
      <p><a href="<c:url value="${baseURL}/viewStudies/doSearch?searchTerm=&studyVisibility=ALL_PUBLISHED_STUDIES&search=Search"/>" title="View
                     all public studies">View all public studies</a> |
      <a href="<c:url value="${baseURL}/viewStudies/doSearch?searchTerm=&studyVisibility=MY_STUDIES&search=Search"/>"  title="View
@@ -77,6 +77,7 @@
    <p><span class="list_date">${sample.metadataReceived}:</span> <a href="<c:url value="${baseURL}/sampleView/${sample.sampleId}"/>" class="list_more">${sample.sampleTitle} <img alt="<c:out value="${mySampleVisibility}"/>" src="../img/icon_priv_<c:out value="${mySampleVisibility}"/>.gif"></a> <a href="<c:url value="${baseURL}/sampleView/${sample.sampleId}"/>" class="more_view">view</a></p>
 
                                        </c:forEach>
+                <br/>
     <p><a href="<c:url value="${baseURL}/viewSamples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search"/>" title="View
                     all public samples">View all public samples</a> |
        <a href="<c:url value="${baseURL}/viewSamples/doSearch?searchTerm=&sampleVisibility=MY_SAMPLES&search=Search"/>"  title="View
@@ -103,6 +104,7 @@
   <p><span class="list_date">${study.lastMetadataReceived}:</span> <a href="<c:url value="${baseURL}/studyView/${study.id}"/>" class="list_more">${study.studyName} <img alt="<c:out value="${publicStudyVisibility}"/>" src="../img/icon_priv_<c:out value="${publicStudyVisibility}"/>.gif"></a> <a href="<c:url value="${baseURL}/studyView/${study.id}"/>" class="more_view">view</a></p>
 
                  </c:forEach>
+                  <br/>
               <p><a href="<c:url value="${baseURL}/viewStudies/doSearch?searchTerm=&studyVisibility=ALL_PUBLISHED_STUDIES&search=Search"/>" title="View
                     all public studies">View all studies</a></p>  
              </div>
@@ -121,6 +123,7 @@
     <p><span class="list_date">${sample.metadataReceived}:</span> <a href="<c:url value="${baseURL}/sampleView/${sample.sampleId}"/>" class="list_more">${sample.sampleTitle} <img alt="<c:out value="${publicStudyVisibility}"/>" src="../img/icon_priv_<c:out value="${publicSampleVisibility}"/>.gif"></a> <a href="<c:url value="${baseURL}/sampleView/${sample.sampleId}"/>" class="more_view">view</a></p>
 
                 </c:forEach>
+                 <br/>
                  <p><a href="<c:url value="${baseURL}/viewSamples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search"/>" title="View
                     all public samples">View all samples</a> </p>
               </div>
