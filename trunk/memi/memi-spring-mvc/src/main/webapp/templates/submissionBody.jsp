@@ -1,6 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<div id="content">
+<div id="content-full">
     <h2><fmt:message key="label.submission.title"/></h2>
 
     <div style="margin-top:6px"></div>
