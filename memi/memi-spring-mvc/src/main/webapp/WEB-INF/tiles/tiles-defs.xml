@@ -34,12 +34,12 @@
     </definition>
 
     <definition name="submission" extends="rootTemplate">
-        <put-attribute name="bodyClass" type="string" value="red"/>
+        <put-attribute name="bodyClass" type="string" value="pink"/>
         <put-attribute name="body" value="/templates/submissionBody.jsp"/>
     </definition>
 
     <definition name="submissionSuccess" extends="rootTemplate">
-        <put-attribute name="bodyClass" type="string" value="red"/>
+        <put-attribute name="bodyClass" type="string" value="pink"/>
         <put-attribute name="body" value="/templates/submissionSuccessBody.jsp"/>
     </definition>
 
@@ -75,6 +75,16 @@
     <definition name="login" extends="rootTemplate">
         <put-attribute name="bodyClass" type="string" value="black"/>
         <put-attribute name="body" value="/templates/loginBody.jsp"/>
+    </definition>
+
+    <definition name="404" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="grey"/>
+        <put-attribute name="body" value="/templates/errors/404Body.jsp"/>
+    </definition>
+
+    <definition name="exception" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="grey"/>
+        <put-attribute name="body" value="/templates/errors/exceptionBody.jsp"/>
     </definition>
 
 </tiles-definitions>
