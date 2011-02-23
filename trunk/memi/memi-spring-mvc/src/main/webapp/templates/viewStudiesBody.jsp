@@ -40,10 +40,10 @@
                 <tr>
                     <td></td>
                     <td align="right">
-                        <input type="submit" name="clear" value="Clear"/>
+                        <input type="submit" name="search" value="Search"/>
                     </td>
                     <td>
-                        <input type="submit" name="search" value="Search"/>
+                        <input type="submit" name="clear" value="Clear"/>
                     </td>
                 </tr>
             </form:form>
@@ -59,13 +59,13 @@
     <table border="1" width="95%">
         <tr>
             <th>No.</th>
+            <c:if test="${not empty mgModel.submitter}">
+                <th>Privacy</th>
+            </c:if>
             <th>Study Id</th>
             <th>Study name</th>
             <th>Study type</th>
             <th>Received date</th>
-            <c:if test="${not empty mgModel.submitter}">
-                <th>Privacy</th>
-            </c:if>
             <th>Analysis status</th>
             <th>Experimental factor</th>
             <th>NCBI Project Id</th>
@@ -76,15 +76,26 @@
         <c:forEach var="study" items="${mgModel.studies}" varStatus="status">
             <tr>
                 <td align="center"><%= i%><% i++;%></td>
+                <c:if test="${not empty mgModel.submitter}">
+                    <td>
+                        <c:choose>
+                            <c:when test="${study.public}">
+                                <img src="/img/icon_priv_public.gif" height="16" width="16" align="absmiddle" alt=""
+                                     border="0"/>
+                            </c:when>
+                            <c:otherwise>
+                                <img src="/img/icon_priv_lock.gif" height="16" width="16" align="absmiddle" alt=""
+                                     border="0"/>
+                            </c:otherwise>
+                        </c:choose>
+                    </td>
+                </c:if>
                 <td>
                     <a href="<c:url value="${baseURL}/studyView/${study.id}"/>">${study.studyId}</a>
                 </td>
                 <td>${study.studyName}</td>
                 <td>${study.studyType}</td>
                 <td>${study.formattedLastReceived}</td>
-                <c:if test="${not empty mgModel.submitter}">
-                    <td>${study.privacy}</td>
-                </c:if>
                 <td>${study.studyStatus}</td>
                 <td>
                     <c:choose>
