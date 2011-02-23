@@ -2,44 +2,46 @@
 <%@ taglib prefix="spring" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <div id="content">
-    <h2>EBI Metagenomics Portal</h2>
-
-    <div style="margin-top:6px"></div>
-    <h3>What's metagenomics?</h3>
-
-    <p>The study of all genomes present in any given environment without the need for prior individual identification or
-        amplification is termed metagenomics. For example, in its simplest form a metagenomic study might be the direct
-        sequence results of DNA extracted from a bucket of sea water.<br><a
-                href="<c:url value="${baseURL}/info"/>">more Info</a></p>
-
-    <div style="margin-top:10px"/>
-    <table frame="box" width="95%">
-        <tr>
-            <td width="50%" align="left" valign="top">
-                <h3>Data submission</h3>
-                Short description of what kind of data you can submit, why and how ...
-                <c:choose>
+<section id="submit-data">
+    <div id="submit-data-display"></div>
+    <div id="submit-data-description">
+        <h2>Data Submission</h2>
+        <p>Short description of what kind of data you can submit, why and how ... <br/>
+        We offers multiple options for submitting your data. We can also provide assistance in formatting and processing for easy incorporation into our database. By submitting your data to us, you help to ensure its long-term availability as well as place it within a rich, highly cross-referenced context.</p>
+         <c:choose>
                     <c:when test="${empty mgModel.submitter}">
                         <p>
-                            <a href="<c:url value="${baseURL}/login"/>">Submit</a>
+                            <a href="<c:url value="${baseURL}/login"/>" class="more_desc">Submit your data</a>
                         </p>
-                        <%-- JQuery example--%>
-                        <%--<div id="submitdiv">--%>
-                        <%--<a id="submit" href="#">Submit</a>--%>
-                        <%--</div>--%>
+
                     </c:when>
                     <c:otherwise>
                         <p>
-                            <a href="<c:url value="${baseURL}/submissionForm"/>">Submit</a>
+                            <a href="<c:url value="${baseURL}/submissionForm"/>" class="more_desc">Submit your data</a>
                         </p>
                     </c:otherwise>
                 </c:choose>
-            </td>
-            <td>
-                <tiles:insertAttribute name="loginForm"/>
-            </td>
-        </tr>
-    </table>
+    </div>
+    <%--  <a href="<c:url value="${baseURL}/info"/>">more Info</a></p>   --%>
+</section>
+
+<section id="list-data">
+<div id="list-data-study">
+
+        <h2>Study list</h2>
+        <p><span class="list_date">:</span><a href="" class="list_more">erm availability as well as place it within a rich, highly cross-referenced context.</a> <a href="#" class="more_view">view</a></p>
+
+
+
+</div>
+
+<div id="list-data-sample">
+   
+</div>
+</section>
+</div>
+<div id="sidebar"> </div>
+
     <div style="margin-top:10px"/>
     <table frame="box" width="95%">
         <%-- Show MyStudies and MySamples tables only if a user is logged in--%>
@@ -172,4 +174,4 @@
             </td>
         </tr>
     </table>
-</div>
+ 
