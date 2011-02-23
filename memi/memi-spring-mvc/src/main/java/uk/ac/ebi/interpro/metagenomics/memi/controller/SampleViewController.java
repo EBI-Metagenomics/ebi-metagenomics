@@ -181,25 +181,41 @@ public class SampleViewController extends LoginController {
     }
 
     @ModelAttribute(value = "resultFileNames")
-    public List<String> populateFileNames(@PathVariable String sampleId) {
+    public List<String> populateI5FileNames(@PathVariable String sampleId) {
         List<String> result = new ArrayList<String>();
-        List<String> fileNames = fileInfoDAO.getFileNamesBySampleId(sampleId);
-        for (String fileName : fileNames) {
-            fileName = fileName.trim();
-            if (fileName.length() > 0) {
-                fileName = fileName.replace('.', '_').toUpperCase();
+        if (sampleId.equals("Sample_place_holder1")) {
+            String fileName = "wheat_rhizosphere_ME.fasta";
+            fileName = fileName.replace('.', '_').toUpperCase();
+            String downloadPath = "/home/maxim/temp_memi_data/analyses/" + fileName + "/";
+            String pathName = downloadPath + fileName + "_I5.tsv";
+            File file = new File(pathName);
+            if (file.exists() && file.canRead()) {
+                result.add(fileName + "_I5.tsv");
+            }
+            pathName = downloadPath + fileName + "_I5.tsv";
+            file = new File(pathName);
+            if (file.exists() && file.canRead()) {
+                result.add(fileName + "_orf100_200_nameonly.fasta");
+            }
+        } else {
+            List<String> fileNames = fileInfoDAO.getFileNamesBySampleId(sampleId);
+            for (String fileName : fileNames) {
+                fileName = fileName.trim();
+                if (fileName.length() > 0) {
+                    fileName = fileName.replace('.', '_').toUpperCase();
 
-                //Check if files exist and show only if they are existing
-                String downloadPath = "/home/maxim/temp_memi_data/analyses/" + fileName + "/";
-                String pathName = downloadPath + fileName + "_I5.tsv";
-                File file = new File(pathName);
-                if (file.exists() && file.canRead()) {
-                    result.add(fileName + "_I5.tsv");
-                }
-                pathName = downloadPath + fileName + "_I5.tsv";
-                file = new File(pathName);
-                if (file.exists() && file.canRead()) {
-                    result.add(fileName + "_orf100_200_nameonly.fasta");
+                    //Check if files exist and show only if they are existing
+                    String downloadPath = "/home/maxim/temp_memi_data/analyses/" + fileName + "/";
+                    String pathName = downloadPath + fileName + "_I5.tsv";
+                    File file = new File(pathName);
+                    if (file.exists() && file.canRead()) {
+                        result.add(fileName + "_I5.tsv");
+                    }
+                    pathName = downloadPath + fileName + "_I5.tsv";
+                    file = new File(pathName);
+                    if (file.exists() && file.canRead()) {
+                        result.add(fileName + "_orf100_200_nameonly.fasta");
+                    }
                 }
             }
         }

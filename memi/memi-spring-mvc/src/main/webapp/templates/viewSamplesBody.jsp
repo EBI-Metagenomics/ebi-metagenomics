@@ -58,10 +58,10 @@
     <table border="1" width="95%">
         <tr>
             <th>No.</th>
-            <th>Sample Id</th>
             <c:if test="${not empty mgModel.submitter}">
                 <th>Privacy</th>
             </c:if>
+            <th>Sample Id</th>
             <th>Sample name</th>
             <th>Collection date</th>
             <th>Valid meta data</th>
@@ -75,9 +75,6 @@
         <c:forEach var="sample" items="${mgModel.samples}" varStatus="status">
             <tr>
                 <td align="center"><%= i%><% i++;%></td>
-                <td>
-                    <a href="<c:url value="${baseURL}/sampleView/${sample.sampleId}"/>">${sample.sampleId}</a>
-                </td>
                 <c:if test="${not empty mgModel.submitter}">
                     <td>
                         <c:choose>
@@ -92,6 +89,9 @@
                         </c:choose>
                     </td>
                 </c:if>
+                <td>
+                    <a href="<c:url value="${baseURL}/sampleView/${sample.sampleId}"/>">${sample.sampleId}</a>
+                </td>
                 <td>${sample.sampleTitle}</td>
                 <td>
                     <c:choose>

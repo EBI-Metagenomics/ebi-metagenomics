@@ -11,8 +11,26 @@
     <a href="<c:url value="${baseURL}/submissionForm"/>" class="more_desc" title="Submit data">Submit data</a>
     </c:otherwise>
     </c:choose></li>
-    <li class="blue"><a href="<c:url value="${baseURL}/viewStudies/doSearch?searchTerm=&studyVisibility=ALL_PUBLISHED_STUDIES&search=Search"/>" title="View studies">Studies</a></li>
-    <li class="greyblue"><a href="<c:url value="${baseURL}/viewSamples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search"/>" title="View samples" >Samples</a></li>
+    <li class="blue">
+        <c:choose>
+            <c:when test="${empty mgModel.submitter}">
+                <a href="<c:url value="${baseURL}/viewStudies/doSearch?searchTerm=&studyVisibility=ALL_PUBLISHED_STUDIES&search=Search"/>" title="View studies">Studies</a>
+            </c:when>
+            <c:otherwise>
+                <a href="<c:url value="${baseURL}/viewStudies/doSearch?searchTerm=&studyVisibility=ALL_STUDIES&search=Search"/>" title="View studies">Studies</a>
+            </c:otherwise>
+        </c:choose>
+    </li>
+    <li class="greyblue">
+        <c:choose>
+            <c:when test="${empty mgModel.submitter}">
+                <a href="<c:url value="${baseURL}/viewSamples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search"/>" title="View samples" >Samples</a>
+            </c:when>
+            <c:otherwise>
+                <a href="<c:url value="${baseURL}/viewSamples/doSearch?searchTerm=&sampleVisibility=ALL_SAMPLES&search=Search"/>" title="View samples" >Samples</a>
+            </c:otherwise>
+        </c:choose>
+    </li>
     <li class="green"><a href="<c:url value="${baseURL}/info"/>" title="About us">About</a></li>
     <li class="yellow"><a href="mailto:chrish@ebi.ac.uk?subject=Request from the MG portal" title="Contact us" >Contact us</a></li>
     <li class="orange"><a href="<c:url value="${baseURL}/help"/>" title="Help">Help</a></li>

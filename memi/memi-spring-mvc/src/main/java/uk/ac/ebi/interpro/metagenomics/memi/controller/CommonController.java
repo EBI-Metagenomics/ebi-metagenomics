@@ -10,6 +10,8 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModel;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
 
 import javax.annotation.Resource;
@@ -37,7 +39,9 @@ public class CommonController {
     }
 
     @RequestMapping("/help")
-    public void helpHandler() {
+    public ModelAndView helpHandler(ModelMap model) {
+        model.addAttribute(MGModel.MODEL_ATTR_NAME, MGModelFactory.getMGModel(sessionManager));
+        return new ModelAndView("help", model);
     }
 
     @RequestMapping("/getData")
