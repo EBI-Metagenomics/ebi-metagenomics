@@ -151,4 +151,10 @@
         <property name="sessionBean" ref="sessionBeanRef"/>
     </bean>
 
+    <!-- The next 3 beans belong to the email notification service which is currently used in the submission form  -->
+    <bean id="propContainer" class="uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer">
+        <property name="classPathToStatsFile" value="${classPathToStatsFile}"/>
+        <property name="classPathToAnalysisDirectory" value="${classPathToAnalysisDirectory}"/>
+    </bean>
+
 </beans>
