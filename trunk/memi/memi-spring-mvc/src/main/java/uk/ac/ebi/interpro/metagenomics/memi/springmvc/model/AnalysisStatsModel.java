@@ -1,7 +1,9 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
 
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
+import uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 
@@ -45,10 +47,13 @@ public class AnalysisStatsModel extends MGModel {
 
     private Set<MatchStatistic> interProMatchStatistics = new TreeSet<MatchStatistic>();
 
+    private final String CLASS_PATH_TO_STATS_FILE;
 
-    AnalysisStatsModel(Submitter submitter, Sample sample) {
+
+    AnalysisStatsModel(Submitter submitter, Sample sample, String classPathToStatsFile) {
         super(submitter);
         this.sample = sample;
+        this.CLASS_PATH_TO_STATS_FILE = classPathToStatsFile;
         // TODO - Niave - just loads the static files for the JI_soil sample.
         if (sample != null && "JI_soil".equals(sample.getSampleTitle())) {
             // Set all that stats stuff.
@@ -73,7 +78,7 @@ public class AnalysisStatsModel extends MGModel {
      * @throws IOException
      */
     private void loadLossStats() throws IOException {
-        Resource resource = new FileSystemResource("/nfs/nobackup/interpro/development/metagenomics/analyses/WHEAT_RHIZOSPHERE_ME_FASTA/WHEAT_RHIZOSPHERE_ME_FASTA_stats");
+        Resource resource = new ClassPathResource(CLASS_PATH_TO_STATS_FILE);
         // Load properties file containing overall match statistics
         Properties overallStats = new Properties();
         BufferedInputStream bis = null;
@@ -95,12 +100,12 @@ public class AnalysisStatsModel extends MGModel {
     }
 
     private void loadIPRStatistics() throws IOException {
-        Resource resource = new FileSystemResource("/nfs/nobackup/interpro/development/metagenomics/analyses/WHEAT_RHIZOSPHERE_ME_FASTA/WHEAT_RHIZOSPHERE_ME_FASTA_entry-stats");
+        Resource resource = new ClassPathResource("/stats/WHEAT_RHIZOSPHERE_ME_FASTA_entry-stats");
         loadStats(interProMatchStatistics, resource);
     }
 
     private void loadGOStatistics() throws IOException {
-        Resource resource = new FileSystemResource("/nfs/nobackup/interpro/development/metagenomics/analyses/WHEAT_RHIZOSPHERE_ME_FASTA/WHEAT_RHIZOSPHERE_ME_FASTA_go-stats");
+        Resource resource = new ClassPathResource("/stats/WHEAT_RHIZOSPHERE_ME_FASTA_go-stats");
         loadStats(goMatchStatistics, resource);
     }
 

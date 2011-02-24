@@ -52,8 +52,8 @@ public class MGModelFactory {
         return new SubmissionModel(getSessionSubmitter(sessionMgr));
     }
 
-    public static AnalysisStatsModel getAnalysisStatsModel(SessionManager sessionManager, Sample sample) {
-        return new AnalysisStatsModel(getSessionSubmitter(sessionManager), sample);
+    public static AnalysisStatsModel getAnalysisStatsModel(SessionManager sessionManager, Sample sample, String classPathToStatsFile) {
+        return new AnalysisStatsModel(getSessionSubmitter(sessionManager), sample, classPathToStatsFile);
     }
 
     public static ViewStudiesModel getViewStudiesPageModel(SessionManager sessionMgr, HibernateStudyDAO studyDAO, StudyFilter filter) {
