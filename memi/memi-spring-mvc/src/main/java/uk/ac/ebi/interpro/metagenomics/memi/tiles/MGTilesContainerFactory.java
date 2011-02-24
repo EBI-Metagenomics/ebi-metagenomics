@@ -7,7 +7,8 @@ import org.apache.tiles.factory.BasicTilesContainerFactory;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents the configuration class for the Tiles framework.
@@ -22,6 +23,7 @@ public class MGTilesContainerFactory extends BasicTilesContainerFactory {
                                       TilesRequestContextFactory contextFactory) {
         List<URL> urls = new ArrayList<URL>();
         try {
+            // TODO - Works OK, but seems to be the wrong path?
             urls.add(applicationContext.getResource("/WEB-INF/tiles-defs.xml"));
         } catch (IOException e) {
             throw new DefinitionsFactoryException(
