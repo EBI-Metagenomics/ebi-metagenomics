@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.EmgLogFileInfoDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateSampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
@@ -49,6 +50,9 @@ public class AnalysisStatsController {
     @Resource
     private SessionManager sessionManager;
 
+    @Resource
+    private MemiPropertyContainer propertyContainer;
+
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView doGetSample(final ModelMap model, @PathVariable final String sampleId) {
         final Sample sample = sampleDAO.readByStringId(sampleId);
@@ -60,7 +64,7 @@ public class AnalysisStatsController {
     @RequestMapping(value = "/doExportResultFile/{fileName}", method = RequestMethod.GET)
     public ModelAndView doExportResultFile(@PathVariable String fileName, ModelMap model, HttpServletResponse response) {
         //1. Do get file location
-        String downloadPath = "/home/maxim/temp_memi_data/analyses/" + fileName + "/";
+        String downloadPath = propertyContainer.getClassPathToAnalysisDirectory() + fileName + "/";
         if (downloadPath.contains("_I5")) {
             downloadPath = downloadPath.replace("_I5", "");
         } else {
@@ -85,7 +89,7 @@ public class AnalysisStatsController {
      * Creates the home page model and adds it to the specified model map.
      */
     private void populateModel(final ModelMap model, final Sample sample) {
-        final AnalysisStatsModel mgModel = MGModelFactory.getAnalysisStatsModel(sessionManager, sample);
+        final AnalysisStatsModel mgModel = MGModelFactory.getAnalysisStatsModel(sessionManager, sample, propertyContainer.getClassPathToStatsFile());
         model.addAttribute(MGModel.MODEL_ATTR_NAME, mgModel);
     }
 
@@ -95,7 +99,7 @@ public class AnalysisStatsController {
         if (sampleId.equals("Sample_place_holder1")) {
             String fileName = "wheat_rhizosphere_ME.fasta";
             fileName = fileName.replace('.', '_').toUpperCase();
-            String downloadPath = "/home/maxim/temp_memi_data/analyses/" + fileName + "/";
+            String downloadPath = propertyContainer.getClassPathToAnalysisDirectory() + fileName + "/";
             String pathName = downloadPath + fileName + "_I5.tsv";
             File file = new File(pathName);
             if (file.exists() && file.canRead()) {
@@ -114,7 +118,7 @@ public class AnalysisStatsController {
                     fileName = fileName.replace('.', '_').toUpperCase();
 
                     //Check if files exist and show only if they are existing
-                    String downloadPath = "/home/maxim/temp_memi_data/analyses/" + fileName + "/";
+                    String downloadPath = propertyContainer.getClassPathToAnalysisDirectory() + fileName + "/";
                     String pathName = downloadPath + fileName + "_I5.tsv";
                     File file = new File(pathName);
                     if (file.exists() && file.canRead()) {

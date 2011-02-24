@@ -21,7 +21,7 @@ Random filler text since if the error page is less 513 bytes then Internet Explo
 
     <p>
         Message:
-        ${exception:message}
+        ${exception.message}
     </p>
 
 
