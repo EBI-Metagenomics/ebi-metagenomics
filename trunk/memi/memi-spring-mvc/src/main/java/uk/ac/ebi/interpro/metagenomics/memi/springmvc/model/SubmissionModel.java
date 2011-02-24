@@ -1,10 +1,7 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
 
 import uk.ac.ebi.interpro.metagenomics.memi.forms.SubmissionForm;
-import uk.ac.ebi.interpro.metagenomics.memi.model.EmgStudy;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
-
-import java.util.List;
 
 /**
  * Represents the model for the submission page.
@@ -16,7 +13,7 @@ public class SubmissionModel extends MGModel {
 
     private SubmissionForm subForm;
 
-    public SubmissionModel(Submitter submitter) {
+    SubmissionModel(Submitter submitter) {
         super(submitter);
         this.subForm = new SubmissionForm();
     }

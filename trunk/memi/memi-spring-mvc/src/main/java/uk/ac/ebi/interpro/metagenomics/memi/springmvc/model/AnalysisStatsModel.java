@@ -27,7 +27,7 @@ import java.util.TreeSet;
  */
 public class AnalysisStatsModel extends MGModel {
 
-    private static final NumberFormat NUMBER_FORMAT = DecimalFormat.getInstance();
+    public static final NumberFormat NUMBER_FORMAT = DecimalFormat.getInstance();
 
     private Sample sample;
 
@@ -46,7 +46,7 @@ public class AnalysisStatsModel extends MGModel {
     private Set<MatchStatistic> interProMatchStatistics = new TreeSet<MatchStatistic>();
 
 
-    public AnalysisStatsModel(Submitter submitter, Sample sample) {
+    AnalysisStatsModel(Submitter submitter, Sample sample) {
         super(submitter);
         this.sample = sample;
         // TODO - Niave - just loads the static files for the JI_soil sample.

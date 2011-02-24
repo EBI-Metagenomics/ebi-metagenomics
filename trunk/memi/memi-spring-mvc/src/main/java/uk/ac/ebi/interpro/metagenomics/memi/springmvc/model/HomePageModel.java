@@ -26,7 +26,7 @@ public class HomePageModel extends MGModel {
     public final static String MODEL_ATTR_NAME = "homePageModel";
 
 
-    public HomePageModel(Submitter submitter, List<Study> publicStudies, List<Sample> publicSamples) {
+    HomePageModel(Submitter submitter, List<Study> publicStudies, List<Sample> publicSamples) {
         super(submitter);
         this.publicStudies = publicStudies;
         this.publicSamples = publicSamples;
@@ -34,7 +34,7 @@ public class HomePageModel extends MGModel {
         this.mySamples = new ArrayList<Sample>();
     }
 
-    public HomePageModel(Submitter submitter, List<Study> publicStudies, List<Sample> publicSamples, List<Study> myStudies, List<Sample> mySamples) {
+    HomePageModel(Submitter submitter, List<Study> publicStudies, List<Sample> publicSamples, List<Study> myStudies, List<Sample> mySamples) {
         this(submitter, publicStudies, publicSamples);
         this.myStudies = myStudies;
         this.mySamples = mySamples;

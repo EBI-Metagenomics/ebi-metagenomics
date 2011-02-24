@@ -4,7 +4,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.forms.StudyFilter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -27,15 +27,15 @@ public class ViewStudiesModel extends MGModel {
     private List<StudyFilter.StudyVisibility> studyVisibilityList;
 
 
-    public ViewStudiesModel(Submitter submitter, List<Study> studies) {
+    ViewStudiesModel(Submitter submitter, List<Study> studies) {
         this(submitter, studies, new StudyFilter());
     }
 
-    public ViewStudiesModel(Submitter submitter, List<Study> studies, StudyFilter filter) {
+    ViewStudiesModel(Submitter submitter, List<Study> studies, StudyFilter filter) {
         super(submitter);
         this.studyFilter = filter;
         this.studyTypes = getDefaultStudyTypes();
-        this.studyStatusList = getDefaultStudyStati();
+        this.studyStatusList = getDefaultStudyStatus();
         this.studyVisibilityList = getDefaultStudyVisibilityList();
         this.studies = studies;
     }
@@ -72,6 +72,11 @@ public class ViewStudiesModel extends MGModel {
         this.studyTypes = studyTypes;
     }
 
+    /**
+     * Getter used by Spring.
+     *
+     * @return
+     */
     public List<StudyFilter.StudyVisibility> getStudyVisibilityList() {
         return studyVisibilityList;
     }
@@ -81,26 +86,14 @@ public class ViewStudiesModel extends MGModel {
     }
 
     private List<Study.StudyType> getDefaultStudyTypes() {
-        List<Study.StudyType> result = new ArrayList<Study.StudyType>();
-        for (Study.StudyType type : Study.StudyType.values()) {
-            result.add(type);
-        }
-        return result;
+        return Arrays.asList(Study.StudyType.values());
     }
 
-    private List<Study.StudyStatus> getDefaultStudyStati() {
-        List<Study.StudyStatus> result = new ArrayList<Study.StudyStatus>();
-        for (Study.StudyStatus status : Study.StudyStatus.values()) {
-            result.add(status);
-        }
-        return result;
+    private List<Study.StudyStatus> getDefaultStudyStatus() {
+        return Arrays.asList(Study.StudyStatus.values());
     }
 
     private List<StudyFilter.StudyVisibility> getDefaultStudyVisibilityList() {
-        List<StudyFilter.StudyVisibility> result = new ArrayList<StudyFilter.StudyVisibility>();
-        for (StudyFilter.StudyVisibility vis : StudyFilter.StudyVisibility.values()) {
-            result.add(vis);
-        }
-        return result;
+        return Arrays.asList(StudyFilter.StudyVisibility.values());
     }
 }

@@ -19,7 +19,7 @@ public class StudyViewModel extends MGModel {
 
     private List<String> studyProperties;
 
-    public StudyViewModel(Submitter submitter, List<EmgSample> samples, EmgStudy study, List<String> studyProperties) {
+    StudyViewModel(Submitter submitter, List<EmgSample> samples, EmgStudy study, List<String> studyProperties) {
         super(submitter);
         this.samples = samples;
         this.study = study;
