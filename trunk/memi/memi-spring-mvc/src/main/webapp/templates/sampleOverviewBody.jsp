@@ -21,6 +21,9 @@
     </tr>
 </table>
 <div style="margin-top:10px"></div>
+<a href="<c:url value="${baseURL}/analysisStatsView/${sample.sampleId}"/>"><h3>Sample Analysis Results and Statistics</h3></a>
+
+
 <h3>Sample Description</h3>
 <c:if test="${isDialogOpen==false}">
     <p><span style="color:red">No export data available for that sample!</span></p>
@@ -219,23 +222,8 @@
     </tr>
 </table>
 <div style="margin-top:10px"/>
-<h3>Associated Data:</h3>
+<h3>Submitted Raw Sequence in ENA</h3>
 <table frame="box" width="95%">
-    <tr>
-        <td valign="top" align="right" width="150"><b>Analysis results:</b></td>
-        <td>
-            <c:choose>
-                <c:when test="${not empty resultFileNames}">
-                    <c:forEach var="fileName" items="${resultFileNames}" varStatus="status">
-                        <a href="<c:url value="${baseURL}/sampleView/${sample.sampleId}/doExportResultFile/${fileName}"/>">
-                            <c:out value="${fileName}"/></a><br>
-                    </c:forEach>
-                </c:when>
-                <c:otherwise>(not given)</c:otherwise>
-            </c:choose>
-        </td>
-
-    </tr>
     <tr>
         <td valign="top" align="right" width="150"><b>Raw sequence reads:</b></td>
         <td>
@@ -250,13 +238,16 @@
             </c:choose>
         </td>
     </tr>
-    <c:if test="${not empty resultFileNames}">
-        <tr>
-            <td valign="top" align="right" width="150"><b>Analysis</b></td>
-            <td>
-                <a href="<c:url value="${baseURL}/analysisStatsView/${sample.id}"/>">Statistics View</a>
-            </td>
-        </tr>
-    </c:if>
+    <%--<c:if test="${not empty resultFileNames}">--%>
+        <%--<tr>--%>
+            <%--<td valign="top" align="right" width="150"><b>Analysis</b></td>--%>
+            <%--<td>--%>
+                <%--<a href="<c:url value="${baseURL}/analysisStatsView/${sample.sampleId}"/>">Statistics View</a>--%>
+            <%--</td>--%>
+        <%--</tr>--%>
+    <%--</c:if>--%>
 </table>
+
+
+
 </div>

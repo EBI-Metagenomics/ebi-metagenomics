@@ -66,7 +66,7 @@
             <th>Collection date</th>
             <th>Valid meta data</th>
             <th>Valid raw data</th>
-            <th>Analysis completed</th>
+            <th>Analysis</th>
             <th>Archived in ENA</th>
         </tr>
         <%
@@ -126,12 +126,15 @@
                 <td>
                     <c:choose>
                         <c:when test="${empty sample.analysisCompleted}">
-                            <img src="/img/error.gif" height="16" width="16" align="absmiddle" alt=""
-                                 border="0"/>
+                            <%--<img src="/img/error.gif" height="16" width="16" align="absmiddle" alt=""--%>
+                                 <%--border="0"/>--%>
+                            In Progress
                         </c:when>
                         <c:otherwise>
-                            <img src="/img/check.gif" height="16" width="16" align="absmiddle" alt=""
-                                 border="0"/>
+                            <%--<img src="/img/check.gif" height="16" width="16" align="absmiddle" alt=""--%>
+                                 <%--border="0"/>--%>
+                            <a href="<c:url value="${baseURL}/analysisStatsView/${sample.sampleId}"/>">Analysis Results</a>
+
                         </c:otherwise>
                     </c:choose>
                 </td>
