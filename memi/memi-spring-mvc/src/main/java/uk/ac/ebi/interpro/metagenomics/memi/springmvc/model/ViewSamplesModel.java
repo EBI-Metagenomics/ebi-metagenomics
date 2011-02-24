@@ -26,11 +26,11 @@ public class ViewSamplesModel extends MGModel {
     private List<Study.StudyType> sampleTypes;
 
 
-    public ViewSamplesModel(Submitter submitter, List<Sample> samples) {
+    ViewSamplesModel(Submitter submitter, List<Sample> samples) {
         this(submitter, samples, new SampleFilter());
     }
 
-    public ViewSamplesModel(Submitter submitter, List<Sample> samples, SampleFilter filter) {
+    ViewSamplesModel(Submitter submitter, List<Sample> samples, SampleFilter filter) {
         super(submitter);
         this.sampleFilter = filter;
         this.samples = samples;

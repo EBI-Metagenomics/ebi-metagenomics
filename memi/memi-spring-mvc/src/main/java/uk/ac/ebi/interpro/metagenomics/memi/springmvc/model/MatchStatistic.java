@@ -17,7 +17,7 @@ public class MatchStatistic implements Comparable<MatchStatistic> {
 
     private int totalMatchCount;
 
-    public MatchStatistic(String[] parts, int totalMatchCount) {
+    MatchStatistic(String[] parts, int totalMatchCount) {
         accession = parts[0];
         term = parts[1];
         count = Integer.parseInt(parts[2]);

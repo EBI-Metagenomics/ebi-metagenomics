@@ -1,10 +1,7 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
 
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
-import uk.ac.ebi.interpro.metagenomics.memi.model.EmgStudy;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
-
-import java.util.List;
 
 /**
  * Represents the root object of the entire Metagenomics model.
@@ -22,7 +19,7 @@ public class MGModel {
 
     public final static String MODEL_ATTR_NAME = "mgModel";
 
-    public MGModel(Submitter submitter) {
+    MGModel(Submitter submitter) {
         this.submitter = submitter;
         this.loginForm = new LoginForm();
     }
