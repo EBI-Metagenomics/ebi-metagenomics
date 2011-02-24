@@ -50,7 +50,7 @@ public class AnalysisStatsController {
     private SessionManager sessionManager;
 
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView doGetSample(ModelMap model, @PathVariable String sampleId) {
+    public ModelAndView doGetSample(final ModelMap model, @PathVariable final String sampleId) {
         final Sample sample = sampleDAO.readByStringId(sampleId);
         populateModel(model, sample);
         model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((MGModel) model.get(MGModel.MODEL_ATTR_NAME)).getLoginForm());
@@ -84,7 +84,7 @@ public class AnalysisStatsController {
     /**
      * Creates the home page model and adds it to the specified model map.
      */
-    private void populateModel(ModelMap model, final Sample sample) {
+    private void populateModel(final ModelMap model, final Sample sample) {
         final AnalysisStatsModel mgModel = MGModelFactory.getAnalysisStatsModel(sessionManager, sample);
         model.addAttribute(MGModel.MODEL_ATTR_NAME, mgModel);
     }
