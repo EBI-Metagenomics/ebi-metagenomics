@@ -234,6 +234,7 @@
                 <c:otherwise>(not given)</c:otherwise>
             </c:choose>
         </td>
+
     </tr>
     <tr>
         <td valign="top" align="right" width="150"><b>Raw sequence reads:</b></td>
@@ -249,5 +250,13 @@
             </c:choose>
         </td>
     </tr>
+    <c:if test="${not empty resultFileNames}">
+        <tr>
+            <td valign="top" align="right" width="150"><b>Analysis</b></td>
+            <td>
+                <a href="<c:url value="${baseURL}/analysisStatsView/${sample.id}"/>">Statistics View</a>
+            </td>
+        </tr>
+    </c:if>
 </table>
 </div>
