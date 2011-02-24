@@ -5,10 +5,8 @@ import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateSampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateStudyDAO;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.NewsDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.SampleFilter;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.StudyFilter;
-import uk.ac.ebi.interpro.metagenomics.memi.model.News;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.*;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
@@ -52,6 +50,10 @@ public class MGModelFactory {
 
     public static SubmissionModel getSubmissionModel(SessionManager sessionMgr) {
         return new SubmissionModel(getSessionSubmitter(sessionMgr));
+    }
+
+    public static AnalysisStatsModel getAnalysisStatsModel(SessionManager sessionManager, Sample sample) {
+        return new AnalysisStatsModel(getSessionSubmitter(sessionManager), sample);
     }
 
     public static ViewStudiesModel getViewStudiesPageModel(SessionManager sessionMgr, HibernateStudyDAO studyDAO, StudyFilter filter) {
