@@ -98,7 +98,9 @@
                 <c:forEach var="goMatch" items="${mgModel.goMatchStatistics}">
                     <tr>
                         <td>
-                                ${goMatch.accession}
+                            <a href="http://www.ebi.ac.uk/QuickGO/GTerm?id=${goMatch.accession}">
+                                    ${goMatch.accession}
+                            </a>
                         </td>
                         <td>
                                 ${goMatch.term}
@@ -111,6 +113,7 @@
             </table>
 
             <a name="Interpro"></a>
+
             <div align="left"><a href="#top">Back to top</a></div>
 
             <h4>InterPro Match Statistics</h4>
@@ -130,7 +133,9 @@
                 <c:forEach var="interProMatch" items="${mgModel.interProMatchStatistics}">
                     <tr>
                         <td>
-                                ${interProMatch.accession}
+                            <a href="http://www.ebi.ac.uk/interpro/ISearch?query=${interProMatch.accession}">
+                                    ${interProMatch.accession}
+                            </a>
                         </td>
                         <td>
                                 ${interProMatch.term}
