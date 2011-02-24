@@ -13,7 +13,7 @@ Random filler text since if the error page is less 513 bytes then Internet Explo
 
 
 <div id="content-full">
-    <h2>An Error Has Occured</h2>
+    <h2>An Error Has Occurred</h2>
 
     <p>
         Sorry, there was a problem with this page/file.
