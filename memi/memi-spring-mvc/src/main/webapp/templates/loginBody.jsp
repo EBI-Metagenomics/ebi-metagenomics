@@ -4,10 +4,10 @@
 <%-- This template is used for the login page --%>
 <div id="content-full">
         <form:form method="POST" action="login" commandName="loginForm">
-
-            <h3>Login</h3><br/>
-             Login to submit and view your data:<br/>
-                <form:errors cssStyle="color:red;" path="emailAddress"/>
+            <h2>Submit data</h2>
+            <p> Login first to submit and view your data.</p>
+            <h3>Login</h3>
+                 <form:errors cssStyle="color:red;" path="emailAddress"/>
                     <form:errors cssStyle="color:red;" path="password"/>
 
             E-Mail*:<form:input path="emailAddress"/><br/>
@@ -17,10 +17,10 @@
             </tr>
         </form:form>
         <%--* A valid login is: E-Mail: TEST; Password:test--%>
-       <br/>
+      <p>
        <a href="<c:url value=" https://www.ebi.ac.uk/embl/genomes/submission/registration.jsf"/>" title="Registration">Register</a>
        <br/>
        <a href="<c:url value=" https://www.ebi.ac.uk/embl/genomes/submission/forgot-passw.jsf?_afPfm=5"/>"
-                   title="Request a new password">Forgotten password</a>
+                   title="Request a new password">Forgotten password</a></p>
         
 </div>
