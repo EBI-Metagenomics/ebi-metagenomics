@@ -81,6 +81,13 @@ public class SampleViewController extends LoginController {
         return new ModelAndView(VIEW_NAME, model);
     }
 
+    /**
+     * TODO - has been moved to analysis controller - not being used here.
+     * @param fileName
+     * @param model
+     * @param response
+     * @return
+     */
     @RequestMapping(value = "/doExportResultFile/{fileName}", method = RequestMethod.GET)
     public ModelAndView doExportResultFile(@PathVariable String fileName, ModelMap model, HttpServletResponse response) {
         //1. Do get file location
@@ -181,6 +188,11 @@ public class SampleViewController extends LoginController {
         return result;
     }
 
+    /**
+     * TODO - has been moved to analysis controller - not being used here.
+     * @param sampleId
+     * @return
+     */
     @ModelAttribute(value = "resultFileNames")
     public List<String> populateI5FileNames(@PathVariable String sampleId) {
         List<String> result = new ArrayList<String>();
