@@ -10,16 +10,13 @@ import org.springframework.ui.ModelMap;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.StudyDAOTestImpl;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.EmgStudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.NewsDAO;
-import uk.ac.ebi.interpro.metagenomics.memi.model.EmgStudy;
 import uk.ac.ebi.interpro.metagenomics.memi.model.News;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 /**
  * Represents the unit test for the {@link HomePageController}.
@@ -72,14 +69,14 @@ public class HomePageControllerTest {
 ////        assertEquals(true, studies.get(9).isPublic());
     }
 
-    @Test
-    public void testPopulateNewsList() throws Exception {
-        List<News> newsList = MGModelFactory.getNewsListFromDB(null);
-        assertNotNull(newsList);
-        assertEquals(10, newsList.size());
-        assertEquals("Headline 1", newsList.get(0).getNewsHeadline());
-        assertEquals("message", newsList.get(0).getNewsMsg());
-    }
+//    @Test
+//    public void testPopulateNewsList() throws Exception {
+//        List<News> newsList = MGModelFactory.getNewsListFromDB(null);
+//        assertNotNull(newsList);
+//        assertEquals(10, newsList.size());
+//        assertEquals("Headline 1", newsList.get(0).getNewsHeadline());
+//        assertEquals("message", newsList.get(0).getNewsMsg());
+//    }
 
     /**
      * This DAO implementation should only be used for JUnit test.
