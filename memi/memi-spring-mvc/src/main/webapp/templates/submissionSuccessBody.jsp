@@ -1,4 +1,4 @@
-<div id="content">
+<div id="content-full">
     <h2>Thank you for your submission</h2>
 
     <div style="margin-top:6px"/>
