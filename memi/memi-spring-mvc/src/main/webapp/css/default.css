@@ -229,8 +229,9 @@ border: solid 0px green;
 margin-top:14px;
 margin-bottom:14px;
 padding:8px 14px 8px 14px;
-width:100%;
 background-color:white;
+min-height:580px;
+width:944px;
 }
 
 #sidebar {
