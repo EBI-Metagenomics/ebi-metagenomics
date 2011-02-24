@@ -5,14 +5,27 @@
     <a name="top"></a>
     <c:choose>
         <c:when test="${not empty mgModel.sample}">
-            <h2>Analysis Statistics for Study ${mgModel.sample.study.studyName}</h2>
 
-            <h3>Sample: <a
+            <h2>Study ${mgModel.sample.study.studyName}</h2>
+            <h4>Analysis of Sample <a
                     href="<c:url value="${baseURL}/sampleView/${mgModel.sample.sampleId}"/>">${mgModel.sample.sampleTitle}</a>
-            </h3>
+            </h4>
 
-            <p>${mgModel.sample.sampleDescription}</p>
 
+            <h3>1. Analysis Results Download</h3>
+            <c:choose>
+                <c:when test="${not empty resultFileNames}">
+                    <ul>
+                        <c:forEach var="fileName" items="${resultFileNames}" varStatus="status">
+                            <li>
+                                <a href="<c:url value="${baseURL}/sampleView/${mgModel.sample.sampleId}/doExportResultFile/${fileName}"/>">
+                                    <c:out value="${fileName}"/></a>
+                            </li>
+                        </c:forEach>
+                    </ul>
+                </c:when>
+                <c:otherwise>(not given)</c:otherwise>
+            </c:choose>
             <!-- Links to detailed results from here. -->
 
         </c:when>
@@ -24,6 +37,8 @@
     </c:choose>
     <c:choose>
         <c:when test="${mgModel.hasStats}">
+
+            <h3>2. Analysis Statistics</h3>
             <ul>
                 <li><a href="#ReadsWithOrfs">Submitted Reads - Proportion with ORFs</a></li>
                 <li><a href="#OrfsWithMatches">Open Reading Frames - Proportion with InterPro Matches</a></li>
@@ -32,7 +47,7 @@
             </ul>
             <a name="ReadsWithOrfs"></a>
 
-            <h3>Submitted Reads from this Sample</h3>
+            <h4>Submitted Reads from this Sample</h4>
 
             <p>
                 The proportion of reads for which open reading frames are predicted
@@ -44,7 +59,7 @@
             <div align="left"><a href="#top">Back to top</a></div>
             <a name="OrfsWithMatches"></a>
 
-            <h3>Predicted Open Reading Frames (ORFs)</h3>
+            <h4>Predicted Open Reading Frames (ORFs)</h4>
 
             <p>
                 The proportion of predicted open reading frames that match InterPro Signatures
@@ -56,7 +71,7 @@
             <div align="left"><a href="#top">Back to top</a></div>
             <a name="GO"></a>
 
-            <h3>Gene Ontology (GO) Matches</h3>
+            <h4>Gene Ontology (GO) Matches</h4>
 
             <p>
                 This statistic is based upon InterProScan matches. Each InterPro entry may be mapped to a GO term. These
@@ -66,7 +81,7 @@
             <img src="${mgModel.goPieChartURL}"/>
 
             <div align="left"><a href="#top">Back to top</a></div>
-            <h3>Gene Ontology Match Statistics</h3>
+            <h4>Gene Ontology Match Statistics</h4>
 
             <table>
                 <tr>
@@ -95,10 +110,10 @@
                 </c:forEach>
             </table>
 
-            <div align="left"><a href="#top">Back to top</a></div>
             <a name="Interpro"></a>
+            <div align="left"><a href="#top">Back to top</a></div>
 
-            <h3>InterPro Match Statistics</h3>
+            <h4>InterPro Match Statistics</h4>
 
             <table>
                 <tr>
