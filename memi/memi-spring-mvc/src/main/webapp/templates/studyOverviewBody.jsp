@@ -196,13 +196,10 @@
                     </td>
                     <td align="center">
                         <c:choose>
-                            <c:when test="${empty sample.analysisCompleted}">
-                                <img src="/img/error.gif" height="16" width="16" align="absmiddle" alt=""
-                                     border="0"/>
-                            </c:when>
+                            <c:when test="${empty sample.analysisCompleted}">In Progress</c:when>
                             <c:otherwise>
-                                <img src="/img/check.gif" height="16" width="16" align="absmiddle" alt=""
-                                     border="0"/>
+                                <a href="<c:url value="${baseURL}/analysisStatsView/${sample.sampleId}"/>">Analysis
+                                    Results</a>
                             </c:otherwise>
                         </c:choose>
                     </td>
