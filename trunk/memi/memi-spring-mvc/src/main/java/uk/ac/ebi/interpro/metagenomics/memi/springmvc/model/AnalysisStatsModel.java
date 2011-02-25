@@ -1,16 +1,9 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
 
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.Resource;
-import uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Properties;
@@ -78,12 +71,14 @@ public class AnalysisStatsModel extends MGModel {
      * @throws IOException
      */
     private void loadLossStats() throws IOException {
-        Resource resource = new ClassPathResource(CLASS_PATH_TO_ANALYSIS_DIRECTORY + "WHEAT_RHIZOSPHERE_ME_FASTA/WHEAT_RHIZOSPHERE_ME_FASTA_entry-stats");
+        File file = new File(CLASS_PATH_TO_ANALYSIS_DIRECTORY + "WHEAT_RHIZOSPHERE_ME_FASTA/WHEAT_RHIZOSPHERE_ME_FASTA_stats");
+        InputStream is = new FileInputStream(file);
+
         // Load properties file containing overall match statistics
         Properties overallStats = new Properties();
         BufferedInputStream bis = null;
         try {
-            bis = new BufferedInputStream(resource.getInputStream());
+            bis = new BufferedInputStream(is);
             overallStats.load(bis);
 
             totalReads = Integer.parseInt(overallStats.getProperty("Total_number_of_reads"));
@@ -100,19 +95,21 @@ public class AnalysisStatsModel extends MGModel {
     }
 
     private void loadIPRStatistics() throws IOException {
-        Resource resource = new ClassPathResource(CLASS_PATH_TO_ANALYSIS_DIRECTORY + "WHEAT_RHIZOSPHERE_ME_FASTA/WHEAT_RHIZOSPHERE_ME_FASTA_entry-stats");
-        loadStats(interProMatchStatistics, resource);
+        File file = new File(CLASS_PATH_TO_ANALYSIS_DIRECTORY + "WHEAT_RHIZOSPHERE_ME_FASTA/WHEAT_RHIZOSPHERE_ME_FASTA_entry-stats");
+        InputStream is = new FileInputStream(file);
+        loadStats(interProMatchStatistics, is, file.getName());
     }
 
     private void loadGOStatistics() throws IOException {
-        Resource resource = new ClassPathResource(CLASS_PATH_TO_ANALYSIS_DIRECTORY + "WHEAT_RHIZOSPHERE_ME_FASTA/WHEAT_RHIZOSPHERE_ME_FASTA_go-stats");
-        loadStats(goMatchStatistics, resource);
+        File file = new File(CLASS_PATH_TO_ANALYSIS_DIRECTORY + "WHEAT_RHIZOSPHERE_ME_FASTA/WHEAT_RHIZOSPHERE_ME_FASTA_go-stats");
+        InputStream is = new FileInputStream(file);
+        loadStats(goMatchStatistics, is, file.getName());
     }
 
-    private void loadStats(Set<MatchStatistic> stats, Resource resource) throws IOException {
+    private void loadStats(Set<MatchStatistic> stats, InputStream is, String fileName) throws IOException {
         BufferedReader reader = null;
         try {
-            reader = new BufferedReader(new InputStreamReader(resource.getInputStream()));
+            reader = new BufferedReader(new InputStreamReader(is));
             String line;
             Integer totalCount = null;
             while ((line = reader.readLine()) != null) {
@@ -121,7 +118,7 @@ public class AnalysisStatsModel extends MGModel {
                     totalCount = new Integer(parts[1].trim());
                 } else if (parts.length == 3) {
                     if (totalCount == null) {
-                        throw new IllegalStateException("The statistics file " + resource.getFilename() + " does not appear to start with a 'Total proteins matched' line.");
+                        throw new IllegalStateException("The statistics file " + fileName + " does not appear to start with a 'Total proteins matched' line.");
                     }
                     stats.add(new MatchStatistic(parts, totalCount));
                 }

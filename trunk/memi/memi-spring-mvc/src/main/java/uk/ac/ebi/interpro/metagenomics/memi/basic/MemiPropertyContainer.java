@@ -1,8 +1,9 @@
 package uk.ac.ebi.interpro.metagenomics.memi.basic;
 
 /**
- * Represents a container class which holds common machine specific variables like class paths to downloadable
- * files.
+ * Represents a container class which holds common machine specific variables like the class paths to
+ * downloadable files. The {@link MemiPropertyContainer} is provided by the bean container and can simple
+ * be used by using the Resource annotation.
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @version $Id$
@@ -10,19 +11,9 @@ package uk.ac.ebi.interpro.metagenomics.memi.basic;
  */
 public class MemiPropertyContainer {
 
-    public String classPathToStatsFile;
-
     public String classPathToAnalysisDirectory;
 
     MemiPropertyContainer() {
-    }
-
-    public String getClassPathToStatsFile() {
-        return classPathToStatsFile;
-    }
-
-    public void setClassPathToStatsFile(String classPathToStatsFile) {
-        this.classPathToStatsFile = classPathToStatsFile;
     }
 
     public String getClassPathToAnalysisDirectory() {
