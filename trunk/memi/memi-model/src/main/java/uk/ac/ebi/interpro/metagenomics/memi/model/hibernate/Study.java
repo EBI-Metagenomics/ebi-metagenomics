@@ -22,7 +22,7 @@ import java.util.Set;
         sequenceName = "STUDY_SEQ",
         allocationSize = 1
 )
-public class Study implements SecureEntity{
+public class Study implements SecureEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "STUDY_SEQ")
@@ -66,7 +66,7 @@ public class Study implements SecureEntity{
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Publication> publications;
 
-//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "study")
+    //    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "study")
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "study")
     @Column(name = "Study_ID")
     private Set<Sample> samples;
@@ -275,7 +275,19 @@ public class Study implements SecureEntity{
     }
 
     public enum StudyType {
-        ENVIRONMENTAL, HOST_ASSOCIATED, UNDEFINED;
+        ENVIRONMENTAL(EnvironmentSample.class),
+        HOST_ASSOCIATED(HostSample.class),
+        UNDEFINED(UndefinedSample.class);
+
+        private Class<? extends Sample> clazz;
+
+        private StudyType(Class<? extends Sample> clazz) {
+            this.clazz = clazz;
+        }
+
+        public Class<? extends Sample> getClazz() {
+            return clazz;
+        }
     }
 
     public enum StudyStatus {

@@ -9,7 +9,6 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.HostSample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 
 import java.util.ArrayList;
@@ -201,11 +200,11 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
 
     @Override
     public int deleteAll() {
-        return 0;  //To change body of implemented methods use File | Settings | File Templates.
+        return 0;
     }
 
     @Override
     public Long getMaximumPrimaryKey() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return null;
     }
 }
