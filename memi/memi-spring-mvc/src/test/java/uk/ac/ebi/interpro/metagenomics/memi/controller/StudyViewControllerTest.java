@@ -49,11 +49,11 @@ public class StudyViewControllerTest {
     }
 
     @Test
-    @Ignore
+    @Ignore("Needs re-writing.  Note the argument '1' to the doGetStudy method is nonsense.")
     public void testInitPage() throws Exception {
         ModelMap model = new ModelMap();
 //        TODO: Refactor
-        assertEquals("study", controller.doGetStudy(model));
+        assertEquals("study", controller.doGetStudy(model, "1"));
         //check model
         assertEquals(1, model.size());
         assertTrue(model.containsKey("study"));
