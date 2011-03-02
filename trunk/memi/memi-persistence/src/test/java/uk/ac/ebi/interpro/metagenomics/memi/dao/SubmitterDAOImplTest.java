@@ -29,7 +29,7 @@ public class SubmitterDAOImplTest {
 
 
     @Test
-//    @Ignore
+    @Ignore("Requires accessible Oracle database.")
     public void testGetSubmitterByEmailAddress() {
         assertNotNull("Something went wrong during the initialization of the data access object for the submitter!" +
                 "Please note, if you run this test outside the EBI, it will fail (then better " +
