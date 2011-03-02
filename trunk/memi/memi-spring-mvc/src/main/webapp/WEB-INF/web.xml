@@ -10,39 +10,16 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
         <listener-class>uk.ac.ebi.interpro.metagenomics.memi.tiles.MGTilesListener</listener-class>
     </listener>
 
-    <!--org.springframework.web.context.request.RequestContextListener-->
-    <!--org.springframework.web.context.ContextLoaderListener-->
     <listener>
         <listener-class>
             org.springframework.web.context.ContextLoaderListener
         </listener-class>
     </listener>
 
-    <!--<servlet>-->
-        <!--<servlet-name>context</servlet-name>-->
-        <!--<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>-->
-        <!--<load-on-startup>1</load-on-startup>-->
-    <!--</servlet>-->
-
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>/WEB-INF/spring/mvc-dispatcher-servlet.xml</param-value>
     </context-param>
-
-    <!--<listener>-->
-    <!--<listener-class>-->
-    <!--org.springframework.web.context.request.RequestContextListener-->
-    <!--</listener-class>-->
-    <!--</listener>-->
-    <!--<filter>-->
-    <!--<filter-name>requestContextFilter</filter-name>-->
-    <!--<filter-class>org.springframework.web.filter.RequestContextFilter</filter-class>-->
-    <!--</filter>-->
-    <!--<filter-mapping>-->
-    <!--<filter-name>requestContextFilter</filter-name>-->
-    <!--<url-pattern>/*</url-pattern>-->
-    <!--</filter-mapping>-->
-
 
     <servlet>
         <servlet-name>memi-mvc-dispatcher</servlet-name>
@@ -59,39 +36,22 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
         <url-pattern>/metagenomics/*</url-pattern>
     </servlet-mapping>
 
-    <!--<servlet>-->
-    <!--<servlet-name>tiles</servlet-name>-->
-    <!--<servlet-class>org.apache.tiles.web.util.TilesDispatchServlet</servlet-class>-->
-    <!--<init-param>-->
-    <!--<param-name>org.apache.tiles.impl.BasicTilesContainer.DEFINITIONS_CONFIG</param-name>-->
-    <!--<param-value>/WEB-INF/tiles/tiles-defs.xml</param-value>-->
-    <!--</init-param>-->
-    <!--<load-on-startup>1</load-on-startup>-->
-    <!--</servlet>-->
-
-    <!--<servlet-mapping>-->
-    <!--<servlet-name>tiles</servlet-name>-->
-    <!--<url-pattern>*.jsp</url-pattern>-->
-    <!--</servlet-mapping>-->
-
-    <!--
-    <welcome-file-list>
-        <welcome-file>/index.jsp</welcome-file>
-    </welcome-file-list>
-    -->
+    <!--<welcome-file-list>-->
+    <!--<welcome-file>index.jsp</welcome-file>-->
+    <!--</welcome-file-list>-->
 
     <!-- Error pages -->
 
     <!-- File not found -->
     <error-page>
-      <error-code>404</error-code>
-      <location>/pages/errors/404.jsp</location>
+        <error-code>404</error-code>
+        <location>/pages/errors/404.jsp</location>
     </error-page>
 
     <!-- General error page for errors not specifically handled above -->
     <error-page>
-      <exception-type>java.lang.Exception</exception-type>
-      <location>/pages/errors/exception.jsp</location>
+        <exception-type>java.lang.Exception</exception-type>
+        <location>/pages/errors/exception.jsp</location>
     </error-page>
 
 </web-app>

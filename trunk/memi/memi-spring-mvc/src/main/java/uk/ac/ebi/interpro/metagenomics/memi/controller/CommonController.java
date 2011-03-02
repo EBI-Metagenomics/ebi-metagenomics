@@ -31,6 +31,8 @@ public class CommonController {
 
     public static final String ACCESS_DENIED_VIEW_NAME = "lostInSpace";
 
+    public static final String HELP_PAGE_VIEW_NAME = "help";
+
     @Resource
     private SessionManager sessionManager;
 
@@ -45,12 +47,12 @@ public class CommonController {
     @RequestMapping("/help")
     public ModelAndView helpHandler(ModelMap model) {
         model.addAttribute(MGModel.MODEL_ATTR_NAME, MGModelFactory.getMGModel(sessionManager));
-        return new ModelAndView("help", model);
+        return new ModelAndView(HELP_PAGE_VIEW_NAME, model);
     }
 
     @RequestMapping("/logout")
     public ModelAndView indexHandler() {
         sessionManager.getSessionBean().removeSubmitter();
-        return new ModelAndView("redirect:index");
+        return new ModelAndView("redirect:" + HomePageController.VIEW_NAME);
     }
 }

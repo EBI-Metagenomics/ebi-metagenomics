@@ -2,7 +2,7 @@
 
 <div class="top-menu">
     <ul>
-        <li class="grey"><a href="<c:url value="${baseURL}/index"/>" title="Home">Home</a></li>
+        <li class="grey"><a href="<c:url value="${baseURL}/"/>" title="Home">Home</a></li>
         <li class="pink"><c:choose>
             <c:when test="${empty model.submitter}">
                 <a href="<c:url value="${baseURL}/login"/>" class="more_desc" title="Submit data">Submit data</a>
@@ -14,11 +14,11 @@
         <li class="blue">
             <c:choose>
                 <c:when test="${empty model.submitter}">
-                    <a href="<c:url value="${baseURL}/viewStudies/doSearch?searchTerm=&studyVisibility=ALL_PUBLISHED_STUDIES&search=Search"/>"
+                    <a href="<c:url value="${baseURL}/studies/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_STUDIES"/>"
                        title="View studies">Studies</a>
                 </c:when>
                 <c:otherwise>
-                    <a href="<c:url value="${baseURL}/viewStudies/doSearch?searchTerm=&studyVisibility=ALL_STUDIES&search=Search"/>"
+                    <a href="<c:url value="${baseURL}/studies/doSearch?search=Search&studyVisibility=ALL_STUDIES"/>"
                        title="View studies">Studies</a>
                 </c:otherwise>
             </c:choose>
@@ -26,11 +26,11 @@
         <li class="greyblue">
             <c:choose>
                 <c:when test="${empty model.submitter}">
-                    <a href="<c:url value="${baseURL}/viewSamples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search"/>"
+                    <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search"/>"
                        title="View samples">Samples</a>
                 </c:when>
                 <c:otherwise>
-                    <a href="<c:url value="${baseURL}/viewSamples/doSearch?searchTerm=&sampleVisibility=ALL_SAMPLES&search=Search"/>"
+                    <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_SAMPLES&search=Search"/>"
                        title="View samples">Samples</a>
                 </c:otherwise>
             </c:choose>
@@ -42,7 +42,7 @@
         <%-- <li class="orange"><a href="<c:url value="${baseURL}/help"/>" title="Help">Help</a></li>--%>
         <li class="black"><c:choose>
             <c:when test="${empty model.submitter}">
-                <a href="<c:url value="${baseURL}/index"/>" title="Login">Login</a>
+                <a href="<c:url value="${baseURL}/"/>" title="Login">Login</a>
             </c:when>
             <c:otherwise>
                 <a href="<c:url value="${baseURL}/logout"/>" title="logout">Logout</a>

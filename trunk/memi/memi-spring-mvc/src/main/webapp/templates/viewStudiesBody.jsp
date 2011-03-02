@@ -7,7 +7,15 @@
 
     <div align="center">
         <table>
-            <form:form method="GET" action="${baseURL}/viewStudies/doSearch" commandName="studyFilter">
+            <c:choose>
+                <c:when test="${empty model.submitter}">
+                    <c:set var="actionUrlParam" value="studyVisibility=ALL_PUBLISHED_STUDIES"/>
+                </c:when>
+                <c:otherwise>
+                    <c:set var="actionUrlParam" value=""/>
+                </c:otherwise>
+            </c:choose>
+            <form:form method="GET" action="${baseURL}/studies/doSearch" commandName="studyFilter">
                 <tr>
                     <td>Text:</td>
                     <td><form:input id="autocomplete" path="searchTerm"/></td>
@@ -17,26 +25,46 @@
                     <td>Study type:</td>
                     <td>
                         <form:select path="studyType">
-                            <form:option value="All" label="All"/>
+                            <form:option value="" label="All"/>
                             <form:options items="${model.studyTypes}"/>
                         </form:select>
                     </td>
                 </tr>
                 <tr>
                     <td>Analysis status:</td>
-                    <td><form:select id="studyStatus" path="studyStatus">
-                        <form:option value="All" label="All"/>
-                        <form:options items="${model.studyStatusList}"/>
-                    </form:select></td>
+                    <td>
+                        <form:select id="studyStatus" path="studyStatus">
+                            <form:option value="" label="All"/>
+                            <form:options items="${model.studyStatusList}"/>
+                        </form:select>
+                    </td>
                 </tr>
                 <c:if test="${not empty model.submitter}">
                     <tr>
                         <td>Privacy:</td>
-                        <td><form:select id="studyVisibility" path="studyVisibility">
-                            <form:options items="${model.studyVisibilityList}"/>
-                        </form:select></td>
+                        <td>
+                            <form:select id="studyVisibility" path="studyVisibility">
+                                <form:options items="${model.studyVisibilityList}"/>
+                            </form:select>
+                        </td>
                     </tr>
                 </c:if>
+                <%--<c:choose>--%>
+                    <%--<c:when test="${empty model.submitter}">--%>
+                        <%--<form:hidden id="studyVisibility" path="studyVisibility"/>--%>
+                            <%--&lt;%&ndash;<form:option id="studyVisibility" value="ALL_PUBLISHED_STUDIES" label=""/>&ndash;%&gt;--%>
+                    <%--</c:when>--%>
+                    <%--<c:otherwise>--%>
+                        <%--<tr>--%>
+                            <%--<td>Privacy:</td>--%>
+                            <%--<td>--%>
+                                <%--<form:select id="studyVisibility" path="studyVisibility">--%>
+                                    <%--<form:options items="${model.studyVisibilityList}"/>--%>
+                                <%--</form:select>--%>
+                            <%--</td>--%>
+                        <%--</tr>--%>
+                    <%--</c:otherwise>--%>
+                <%--</c:choose>--%>
                 <tr>
                     <td></td>
                     <td align="right">
@@ -53,7 +81,7 @@
     <%--Request the current query string to export only the filtered studies--%>
     <c:set var="queryString" value="${pageContext.request.queryString}" scope="session"/>
     <div align="left">
-        <a href="<c:url value="${baseURL}/viewStudies/doExport?${queryString}"/>">Export to CSV</a>
+        <a href="<c:url value="${baseURL}/studies/doExport?${queryString}"/>">Export to CSV</a>
     </div>
 
     <table border="1" width="95%">

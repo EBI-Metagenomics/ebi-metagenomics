@@ -6,7 +6,7 @@
 
     <div align="center">
         <table>
-            <form:form method="GET" action="${baseURL}/viewSamples/doSearch" commandName="sampleFilter">
+            <form:form method="GET" action="${baseURL}/samples/doSearch" commandName="sampleFilter">
                 <tr>
                     <td>Text:</td>
                     <td><form:input path="searchTerm"/></td>
@@ -48,9 +48,9 @@
     <%--Request the current query string to export only the filtered studies--%>
     <c:set var="queryString" value="${pageContext.request.queryString}" scope="session"/>
     <div align="left">
-        <a href="<c:url value="${baseURL}/viewSamples/doExportTable?${queryString}"/>">Export table to CSV</a><br>
+        <a href="<c:url value="${baseURL}/samples/doExportTable?${queryString}"/>">Export table to CSV</a><br>
         <c:if test="${not empty sampleFilter.sampleType}">
-            <a href="<c:url value="${baseURL}/viewSamples/doExportDetails?${queryString}"/>">
+            <a href="<c:url value="${baseURL}/samples/doExportDetails?${queryString}"/>">
                 Export more detailed sample info to CSV</a>
         </c:if>
     </div>

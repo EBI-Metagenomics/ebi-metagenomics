@@ -63,10 +63,10 @@
                     <br/>
 
                     <p>
-                        <a href="<c:url value="${baseURL}/viewStudies/doSearch?searchTerm=&studyVisibility=ALL_PUBLISHED_STUDIES&search=Search"/>"
+                        <a href="<c:url value="${baseURL}/studies/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_STUDIES"/>"
                            title="View
                     all public studies">View all public studies</a> |
-                        <a href="<c:url value="${baseURL}/viewStudies/doSearch?searchTerm=&studyVisibility=MY_STUDIES&search=Search"/>"
+                        <a href="<c:url value="${baseURL}/studies/doSearch?search=Search&studyVisibility=MY_STUDIES"/>"
                            title="View
                     all my studies">View all my studies</a></p>
                 </div>
@@ -94,10 +94,10 @@
                     <br/>
 
                     <p>
-                        <a href="<c:url value="${baseURL}/viewSamples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search"/>"
+                        <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search"/>"
                            title="View
                     all public samples">View all public samples</a> |
-                        <a href="<c:url value="${baseURL}/viewSamples/doSearch?searchTerm=&sampleVisibility=MY_SAMPLES&search=Search"/>"
+                        <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=MY_SAMPLES&search=Search"/>"
                            title="View
                     all My samples">View
                             all my samples</a></p>
@@ -130,7 +130,7 @@
                     <br/>
 
                     <p>
-                        <a href="<c:url value="${baseURL}/viewStudies/doSearch?searchTerm=&studyVisibility=ALL_PUBLISHED_STUDIES&search=Search"/>"
+                        <a href="<c:url value="${baseURL}/studies/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_STUDIES"/>"
                            title="View
                     all public studies">View all studies</a></p>
                 </div>
@@ -158,7 +158,7 @@
                     <br/>
 
                     <p>
-                        <a href="<c:url value="${baseURL}/viewSamples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search"/>"
+                        <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search"/>"
                            title="View
                     all public samples">View all samples</a></p>
                 </div>

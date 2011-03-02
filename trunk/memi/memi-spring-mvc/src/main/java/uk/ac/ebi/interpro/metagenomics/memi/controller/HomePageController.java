@@ -28,8 +28,8 @@ import javax.validation.Valid;
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @since 1.0-SNAPSHOT
  */
-@Controller
-@RequestMapping(value = "/index")
+@Controller(value = "homePageController")
+@RequestMapping(value = "/*")
 public class HomePageController extends LoginController implements IMGController {
 
     private final Log log = LogFactory.getLog(HomePageController.class);
@@ -37,7 +37,7 @@ public class HomePageController extends LoginController implements IMGController
     /**
      * View name of this controller which is used several times.
      */
-    private final String VIEW_NAME = "index";
+    public static final String VIEW_NAME = "index";
 
     //Data access objects
     @Resource
@@ -60,16 +60,16 @@ public class HomePageController extends LoginController implements IMGController
     }
 
 
-        @Override
-        @RequestMapping(method = RequestMethod.POST)
-        public ModelAndView doProcessLogin(@ModelAttribute(LoginForm.MODEL_ATTR_NAME) @Valid LoginForm loginForm, BindingResult result,
-                                           ModelMap model, SessionStatus status) {
-            //process login
-            super.processLogin(loginForm, result, model, status);
-            //create model and view
-            populateModel(model);
-            return new ModelAndView(VIEW_NAME, model);
-        }
+    @Override
+    @RequestMapping(method = RequestMethod.POST)
+    public ModelAndView doProcessLogin(@ModelAttribute(LoginForm.MODEL_ATTR_NAME) @Valid LoginForm loginForm, BindingResult result,
+                                       ModelMap model, SessionStatus status) {
+        //process login
+        super.processLogin(loginForm, result, model, status);
+        //create model and view
+        populateModel(model);
+        return new ModelAndView(VIEW_NAME, model);
+    }
 
 
     /**

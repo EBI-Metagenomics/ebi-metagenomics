@@ -5,13 +5,11 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.velocity.app.VelocityEngine;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.SampleVisibilityEditor;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.StudyTypeEditor;
@@ -32,9 +30,11 @@ import uk.ac.ebi.interpro.metagenomics.memi.tools.MemiTools;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Represents the controller for the list studies page.
@@ -43,8 +43,8 @@ import java.util.*;
  * @since 1.0-SNAPSHOT
  */
 @Controller
-@RequestMapping("/viewSamples")
-public class ViewSamplesController extends LoginController implements IMGController {
+@RequestMapping("/" + ViewSamplesController.VIEW_NAME)
+public class ViewSamplesController implements IMGController {
 
     private final Log log = LogFactory.getLog(ViewSamplesController.class);
 
@@ -54,7 +54,7 @@ public class ViewSamplesController extends LoginController implements IMGControl
     /**
      * View name of this controller which is used several times.
      */
-    private final String VIEW_NAME = "viewSamples";
+    public final static String VIEW_NAME = "samples";
 
     private final String VELOCITY_TEMPLATE_LOCATION_PATH = "WEB-INF/velocity_templates/exportSamples.vm";
 
@@ -136,18 +136,18 @@ public class ViewSamplesController extends LoginController implements IMGControl
         return new ModelAndView(VIEW_NAME, model);
     }
 
-    @Override
-    @RequestMapping(method = RequestMethod.POST)
-    public ModelAndView doProcessLogin(@ModelAttribute(LoginForm.MODEL_ATTR_NAME) @Valid LoginForm loginForm, BindingResult result,
-                                       ModelMap model, SessionStatus status) {
-        log.info("Requesting doProcessLogin (POST method)...");
-        //process login
-        super.processLogin(loginForm, result, model, status);
-        //create model and view
-        populateModel(model, new SampleFilter());
-        model.addAttribute(SampleFilter.MODEL_ATTR_NAME, ((ViewSamplesModel) model.get(MGModel.MODEL_ATTR_NAME)).getSampleFilter());
-        return new ModelAndView(VIEW_NAME, model);
-    }
+//    @Override
+//    @RequestMapping(method = RequestMethod.POST)
+//    public ModelAndView doProcessLogin(@ModelAttribute(LoginForm.MODEL_ATTR_NAME) @Valid LoginForm loginForm, BindingResult result,
+//                                       ModelMap model, SessionStatus status) {
+//        log.info("Requesting doProcessLogin (POST method)...");
+//        //process login
+//        super.processLogin(loginForm, result, model, status);
+//        //create model and view
+//        populateModel(model, new SampleFilter());
+//        model.addAttribute(SampleFilter.MODEL_ATTR_NAME, ((ViewSamplesModel) model.get(MGModel.MODEL_ATTR_NAME)).getSampleFilter());
+//        return new ModelAndView(VIEW_NAME, model);
+//    }
 
     @RequestMapping(params = "search", value = "doSearch", method = RequestMethod.GET)
     public ModelAndView doSearch(HttpServletRequest request, @ModelAttribute(SampleFilter.MODEL_ATTR_NAME) SampleFilter filter, ModelMap model) {
