@@ -18,7 +18,7 @@
                     <ul>
                         <c:forEach var="fileName" items="${resultFileNames}" varStatus="status">
                             <li>
-                                <a href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/doExportResultFile/${fileName}"/>">
+                                <a href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportResultFile/${fileName}"/>">
                                     <c:out value="${fileName}"/></a>
                             </li>
                         </c:forEach>

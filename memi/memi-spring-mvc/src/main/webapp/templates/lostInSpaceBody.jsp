@@ -2,7 +2,7 @@
 <div id="content-full">
     <div>
         <div style="margin-top:6px"/>
-        <p><b>${objectId}</b> is not recognised! Please try <a title="home" href="<c:url value="${baseURL}/index"/>">logging
+        <p><b>${objectId}</b> is not recognised! Please try <a title="home" href="<c:url value="${baseURL}/"/>">logging
             in</a> to access your data.
         </p>
     </div>

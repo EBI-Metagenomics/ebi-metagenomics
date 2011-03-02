@@ -7,10 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.StudyStatusEditor;
@@ -45,10 +42,10 @@ import java.util.Map;
  * @since 1.0-SNAPSHOT
  */
 @Controller
-@RequestMapping("/viewStudies")
-public class ViewStudiesController extends LoginController implements IMGController {
+@RequestMapping("/" + ViewStudiesController.VIEW_NAME)
+public class ViewStudiesController implements IMGController {
 
-    private final Log log = LogFactory.getLog(ViewStudiesController.class);
+    private final static Log log = LogFactory.getLog(ViewStudiesController.class);
 
     /* The maximum allowed number of characters per column within the study list table*/
     private final int MAX_CHARS_PER_COLUMN = 35;
@@ -56,7 +53,7 @@ public class ViewStudiesController extends LoginController implements IMGControl
     /**
      * View name of this controller which is used several times.
      */
-    private final String VIEW_NAME = "viewStudies";
+    public static final String VIEW_NAME = "studies";
 
     private final String VELOCITY_TEMPLATE_LOCATION_PATH = "WEB-INF/velocity_templates/exportStudies.vm";
 
@@ -73,6 +70,8 @@ public class ViewStudiesController extends LoginController implements IMGControl
 
     @Resource
     private MemiDownloadService downloadService;
+
+    //GET request handler methods
 
     @Override
     public ModelAndView doGet(ModelMap model) {
@@ -91,10 +90,12 @@ public class ViewStudiesController extends LoginController implements IMGControl
      * download dialog.
      */
     @RequestMapping(value = "doExport", method = RequestMethod.GET)
-    public ModelAndView doExportStudies(@ModelAttribute(StudyFilter.MODEL_ATTR_NAME) StudyFilter filter, HttpServletRequest request, HttpServletResponse response) {
+    public ModelAndView doExportStudies(@ModelAttribute(StudyFilter.MODEL_ATTR_NAME) StudyFilter filter, HttpServletResponse response,
+                                        @RequestParam(required = false) final String searchTerm, @RequestParam(required = false) final StudyFilter.StudyVisibility studyVisibility,
+                                        @RequestParam(required = false) final Study.StudyType studyType, @RequestParam(required = false) final Study.StudyStatus studyStatus) {
         log.info("Requesting exportStudies (GET method)...");
         ModelMap model = new ModelMap();
-        processRequestParams(request, filter);
+        processRequestParams(filter, searchTerm, studyVisibility, studyType, studyStatus);
         populateModel(model, filter);
         List<Study> studies = ((ViewStudiesModel) model.get(MGModel.MODEL_ATTR_NAME)).getStudies();
 
@@ -114,24 +115,12 @@ public class ViewStudiesController extends LoginController implements IMGControl
         return null;
     }
 
-
-    @Override
-    @RequestMapping(method = RequestMethod.POST)
-    public ModelAndView doProcessLogin(@ModelAttribute(LoginForm.MODEL_ATTR_NAME) @Valid LoginForm loginForm, BindingResult result,
-                                       ModelMap model, SessionStatus status) {
-        log.info("Requesting doProcessLogin (POST method)...");
-        //process login
-        super.processLogin(loginForm, result, model, status);
-        //create model and view
-        populateModel(model, new StudyFilter());
-        model.addAttribute(StudyFilter.MODEL_ATTR_NAME, ((ViewStudiesModel) model.get(MGModel.MODEL_ATTR_NAME)).getStudyFilter());
-        return new ModelAndView(VIEW_NAME, model);
-    }
-
     @RequestMapping(params = "search", value = "doSearch", method = RequestMethod.GET)
-    public ModelAndView doSearch(HttpServletRequest request, @ModelAttribute(StudyFilter.MODEL_ATTR_NAME) StudyFilter filter, ModelMap model) {
+    public ModelAndView doSearch(@ModelAttribute(StudyFilter.MODEL_ATTR_NAME) StudyFilter filter, ModelMap model,
+                                 @RequestParam(required = false) final String searchTerm, @RequestParam(required = false) final StudyFilter.StudyVisibility studyVisibility,
+                                 @RequestParam(required = false) final Study.StudyType studyType, @RequestParam(required = false) final Study.StudyStatus studyStatus) {
         log.info("Requesting doSearch (POST method)...");
-        processRequestParams(request, filter);
+        processRequestParams(filter, searchTerm, studyVisibility, studyType, studyStatus);
         populateModel(model, filter);
         model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((ViewStudiesModel) model.get(MGModel.MODEL_ATTR_NAME)).getLoginForm());
         return new ModelAndView(VIEW_NAME, model);
@@ -154,12 +143,13 @@ public class ViewStudiesController extends LoginController implements IMGControl
         return new ModelAndView(VIEW_NAME, model);
     }
 
-    private void processRequestParams(HttpServletRequest request, StudyFilter filter) {
+    private void processRequestParams(StudyFilter filter, String searchTerm, StudyFilter.StudyVisibility studyVisibility,
+                                      Study.StudyType studyType, Study.StudyStatus studyStatus) {
         //Get URL parameter of GET request
-        String studyVisibility = request.getParameter("studyVisibility");
-        String searchTerm = request.getParameter("searchTerm");
-        String studyType = request.getParameter("studyType");
-        String studyStatus = request.getParameter("studyStatus");
+//        String studyVisibility = request.getParameter("studyVisibility");
+//        String searchTerm = request.getParameter("searchTerm");
+//        String studyType = request.getParameter("studyType");
+//        String studyStatus = request.getParameter("studyStatus");
 
         //Set parameters to the filter
         //Set parameter search term        
@@ -167,36 +157,14 @@ public class ViewStudiesController extends LoginController implements IMGControl
             filter.setSearchTerm(searchTerm);
         }
         //Set parameter study type
-        if (studyType != null && studyType.trim().length() > 0) {
-            try {
-                Study.StudyType type = Study.StudyType.valueOf(studyType);
-                if (type != null) {
-                    filter.setStudyType(type);
-                }
-            } catch (Exception e) {
-                log.warn("Could not find any study type value for name: " + studyType);
-                filter.setStudyType(null);
-            }
-        }
-        //Set parameter study status
-        if (studyStatus != null && studyStatus.trim().length() > 0) {
-            try {
-                Study.StudyStatus status = Study.StudyStatus.valueOf(studyStatus);
-                if (status != null) {
-                    filter.setStudyStatus(status);
-                }
-            } catch (Exception e) {
-                log.warn("Could not find any study type value for name: " + studyStatus);
-                filter.setStudyStatus(null);
+        filter.setStudyType(studyType);
 
-            }
-        }
+        //Set parameter study status
+        filter.setStudyStatus(studyStatus);
+
         //The visibility parameter can only be set if a user is logged in, means a session object exists
-        if (sessionManager.getSessionBean().getSubmitter() != null && studyVisibility != null && studyVisibility.trim().length() > 0) {
-            StudyFilter.StudyVisibility vis = StudyFilter.StudyVisibility.valueOf(studyVisibility);
-            if (vis != null) {
-                filter.setStudyVisibility(vis);
-            }
+        if (sessionManager.getSessionBean().getSubmitter() != null && studyVisibility != null) {
+            filter.setStudyVisibility(studyVisibility);
         } else {
             filter.setStudyVisibility(StudyFilter.StudyVisibility.ALL_PUBLISHED_STUDIES);
         }

@@ -25,14 +25,14 @@ import javax.validation.Valid;
  * @since 1.0-SNAPSHOT
  */
 @Controller
-@RequestMapping(value = "/info")
+@RequestMapping(value = "/" + InfoController.VIEW_NAME)
 public class InfoController extends LoginController implements IMGController {
     private final Log log = LogFactory.getLog(InfoController.class);
 
     /**
      * View name of this controller which is used several times.
      */
-    private final String VIEW_NAME = "info";
+    public static final String VIEW_NAME = "info";
 
     @Resource
     private SessionManager sessionManager;
