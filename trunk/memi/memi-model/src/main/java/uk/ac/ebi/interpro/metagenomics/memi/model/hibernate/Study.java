@@ -22,7 +22,7 @@ import java.util.Set;
         sequenceName = "STUDY_SEQ",
         allocationSize = 1
 )
-public class Study {
+public class Study implements SecureEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "STUDY_SEQ")

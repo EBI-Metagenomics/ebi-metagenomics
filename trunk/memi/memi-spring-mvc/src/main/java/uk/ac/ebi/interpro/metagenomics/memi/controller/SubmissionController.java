@@ -14,7 +14,6 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.SubmissionForm;
-import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.services.INotificationService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
@@ -33,7 +32,7 @@ import java.util.Map;
  * @since 1.0-SNAPSHOT
  */
 @Controller
-@RequestMapping("/submissionForm")
+@RequestMapping('/' + SubmissionController.VIEW_NAME)
 public class SubmissionController implements IMGController {
 
     private final Log log = LogFactory.getLog(SubmissionController.class);
@@ -41,7 +40,9 @@ public class SubmissionController implements IMGController {
     /**
      * View name of this controller which is used several times.
      */
-    private final String VIEW_NAME = "submissionForm";
+    public static final String VIEW_NAME = "submit";
+
+    public static final String SUCCESS_VIEW_NAME = "submitSuccess";
 
     @Resource(name = "emailNotificationService")
     private INotificationService emailService;
@@ -77,9 +78,9 @@ public class SubmissionController implements IMGController {
             log.info("Sent an email with hibernate submission details: " + msg);
             status.setComplete();
         } else {
-            return new ModelAndView("errorPage");
+            return new ModelAndView(CommonController.ERROR_PAGE_VIEW_NAME);
         }
-        return new ModelAndView("submissionSuccess");
+        return new ModelAndView(SUCCESS_VIEW_NAME);
     }
 
     @RequestMapping(params = "cancel", method = RequestMethod.POST)

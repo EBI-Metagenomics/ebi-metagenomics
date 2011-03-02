@@ -19,7 +19,7 @@ import java.util.ArrayList;
         sequenceName = "SAMPLE_SEQ",
         allocationSize = 1
 )
-public abstract class Sample {
+public abstract class Sample implements SecureEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SAMPLE_SEQ")

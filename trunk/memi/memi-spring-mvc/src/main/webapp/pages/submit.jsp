@@ -4,4 +4,4 @@
   Desc: Represents a submission form
   --%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
-<tiles:insertDefinition name="submission"/>
+<tiles:insertDefinition name="submit"/>

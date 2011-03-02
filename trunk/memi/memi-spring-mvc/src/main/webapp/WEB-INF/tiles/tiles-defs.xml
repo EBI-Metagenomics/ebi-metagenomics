@@ -34,14 +34,14 @@
         <put-attribute name="body" value="/templates/infoBody.jsp"/>
     </definition>
 
-    <definition name="submission" extends="rootTemplate">
+    <definition name="submit" extends="rootTemplate">
         <put-attribute name="bodyClass" type="string" value="pink"/>
-        <put-attribute name="body" value="/templates/submissionBody.jsp"/>
+        <put-attribute name="body" value="/templates/submitBody.jsp"/>
     </definition>
 
-    <definition name="submissionSuccess" extends="rootTemplate">
+    <definition name="submitSuccess" extends="rootTemplate">
         <put-attribute name="bodyClass" type="string" value="pink"/>
-        <put-attribute name="body" value="/templates/submissionSuccessBody.jsp"/>
+        <put-attribute name="body" value="/templates/submitSuccessBody.jsp"/>
     </definition>
 
     <definition name="installationSite" extends="rootTemplate">
@@ -60,12 +60,12 @@
 
     <definition name="studyView" extends="rootTemplate">
         <put-attribute name="bodyClass" type="string" value="blue"/>
-        <put-attribute name="body" value="/templates/studyOverviewBody.jsp"/>
+        <put-attribute name="body" value="/templates/studyViewBody.jsp"/>
     </definition>
 
     <definition name="sampleView" extends="rootTemplate">
         <put-attribute name="bodyClass" type="string" value="greyblue"/>
-        <put-attribute name="body" value="/templates/sampleOverviewBody.jsp"/>
+        <put-attribute name="body" value="/templates/sampleViewBody.jsp"/>
     </definition>
 
     <definition name="help" extends="rootTemplate">
@@ -91,6 +91,11 @@
     <definition name="analysisStatsView" extends="rootTemplate">
         <put-attribute name="bodyClass" type="string" value="greyBlue"/>
         <put-attribute name="body" value="/templates/analysisStatsBody.jsp"/>
+    </definition>
+
+    <definition name="lostInSpace" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="grey"/>
+        <put-attribute name="body" value="/templates/lostInSpaceBody.jsp"/>
     </definition>
 
 </tiles-definitions>

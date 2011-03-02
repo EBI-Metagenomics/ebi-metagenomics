@@ -11,16 +11,16 @@ package uk.ac.ebi.interpro.metagenomics.memi.basic;
  */
 public class MemiPropertyContainer {
 
-    public String classPathToAnalysisDirectory;
+    public String pathToAnalysisDirectory;
 
     MemiPropertyContainer() {
     }
 
-    public String getClassPathToAnalysisDirectory() {
-        return classPathToAnalysisDirectory;
+    public String getPathToAnalysisDirectory() {
+        return pathToAnalysisDirectory;
     }
 
-    public void setClassPathToAnalysisDirectory(String classPathToAnalysisDirectory) {
-        this.classPathToAnalysisDirectory = classPathToAnalysisDirectory;
+    public void setPathToAnalysisDirectory(String pathToAnalysisDirectory) {
+        this.pathToAnalysisDirectory = pathToAnalysisDirectory;
     }
 }

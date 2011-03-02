@@ -18,15 +18,15 @@
                     <td>
                         <form:select path="sampleType">
                             <form:option value="All" label="All"/>
-                            <form:options items="${mgModel.sampleTypes}"/>
+                            <form:options items="${model.sampleTypes}"/>
                         </form:select>
                     </td>
                 </tr>
-                <c:if test="${not empty mgModel.submitter}">
+                <c:if test="${not empty model.submitter}">
                     <tr>
                         <td>Privacy:</td>
                         <td><form:select id="sampleVisibility" path="sampleVisibility">
-                            <form:options items="${mgModel.sampleVisibilityList}"/>
+                            <form:options items="${model.sampleVisibilityList}"/>
                         </form:select></td>
                     </tr>
                 </c:if>
@@ -58,7 +58,7 @@
     <table border="1" width="95%">
         <tr>
             <th>No.</th>
-            <c:if test="${not empty mgModel.submitter}">
+            <c:if test="${not empty model.submitter}">
                 <th>Privacy</th>
             </c:if>
             <th>Sample Id</th>
@@ -72,10 +72,10 @@
         <%
             int i = 1;
         %>
-        <c:forEach var="sample" items="${mgModel.samples}" varStatus="status">
+        <c:forEach var="sample" items="${model.samples}" varStatus="status">
             <tr>
                 <td align="center"><%= i%><% i++;%></td>
-                <c:if test="${not empty mgModel.submitter}">
+                <c:if test="${not empty model.submitter}">
                     <td>
                         <c:choose>
                             <c:when test="${sample.public}">
@@ -90,7 +90,7 @@
                     </td>
                 </c:if>
                 <td>
-                    <a href="<c:url value="${baseURL}/sampleView/${sample.sampleId}"/>">${sample.sampleId}</a>
+                    <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>">${sample.sampleId}</a>
                 </td>
                 <td>${sample.sampleTitle}</td>
                 <td>

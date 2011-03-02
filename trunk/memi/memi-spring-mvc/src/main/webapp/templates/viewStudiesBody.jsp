@@ -18,7 +18,7 @@
                     <td>
                         <form:select path="studyType">
                             <form:option value="All" label="All"/>
-                            <form:options items="${mgModel.studyTypes}"/>
+                            <form:options items="${model.studyTypes}"/>
                         </form:select>
                     </td>
                 </tr>
@@ -26,14 +26,14 @@
                     <td>Analysis status:</td>
                     <td><form:select id="studyStatus" path="studyStatus">
                         <form:option value="All" label="All"/>
-                        <form:options items="${mgModel.studyStatusList}"/>
+                        <form:options items="${model.studyStatusList}"/>
                     </form:select></td>
                 </tr>
-                <c:if test="${not empty mgModel.submitter}">
+                <c:if test="${not empty model.submitter}">
                     <tr>
                         <td>Privacy:</td>
                         <td><form:select id="studyVisibility" path="studyVisibility">
-                            <form:options items="${mgModel.studyVisibilityList}"/>
+                            <form:options items="${model.studyVisibilityList}"/>
                         </form:select></td>
                     </tr>
                 </c:if>
@@ -59,7 +59,7 @@
     <table border="1" width="95%">
         <tr>
             <th>No.</th>
-            <c:if test="${not empty mgModel.submitter}">
+            <c:if test="${not empty model.submitter}">
                 <th>Privacy</th>
             </c:if>
             <th>Study Id</th>
@@ -73,10 +73,10 @@
         <%
             int i = 1;
         %>
-        <c:forEach var="study" items="${mgModel.studies}" varStatus="status">
+        <c:forEach var="study" items="${model.studies}" varStatus="status">
             <tr>
                 <td align="center"><%= i%><% i++;%></td>
-                <c:if test="${not empty mgModel.submitter}">
+                <c:if test="${not empty model.submitter}">
                     <td>
                         <c:choose>
                             <c:when test="${study.public}">
@@ -91,7 +91,7 @@
                     </td>
                 </c:if>
                 <td>
-                    <a href="<c:url value="${baseURL}/studyView/${study.id}"/>">${study.studyId}</a>
+                    <a href="<c:url value="${baseURL}/study/${study.studyId}"/>">${study.studyId}</a>
                 </td>
                 <td>${study.studyName}</td>
                 <td>${study.studyType}</td>

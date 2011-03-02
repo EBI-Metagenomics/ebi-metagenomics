@@ -9,8 +9,8 @@
 <table frame="box" width="95%">
     <tr>
         <td width="50%" align="left" valign="top">
-            <h2>Study ${study.studyId}</h2>
-            ${study.studyName}
+            <h2>Study ${model.study.studyId}</h2>
+            ${model.study.studyName}
         </td>
     </tr>
 </table>
@@ -19,11 +19,11 @@
 <table frame="box" width="95%">
     <tr>
         <c:choose>
-            <c:when test="${not empty study.studyAbstract}">
-                <c:set var="studyAbstract" value="${study.studyAbstract}"/>
+            <c:when test="${not empty model.study.studyAbstract}">
+                <c:set var="studyAbstract" value="${model.study.studyAbstract}"/>
             </c:when>
             <c:otherwise>
-                <c:set var="studyAbstract" value="${notGivenId}"/>
+                <c:set var="studyAbstract" value="notGivenId"/>
             </c:otherwise>
         </c:choose>
         <td valign="top" align="right" width="150"><b>Study abstract:</b></td>
@@ -32,8 +32,8 @@
     </tr>
     <tr>
         <c:choose>
-            <c:when test="${not empty study.studyType}">
-                <c:set var="studyType" value="${study.studyType}"/>
+            <c:when test="${not empty model.study.studyType}">
+                <c:set var="studyType" value="${model.study.studyType}"/>
             </c:when>
             <c:otherwise>
                 <c:set var="studyType" value="${notGivenId}"/>
@@ -44,8 +44,8 @@
     </tr>
     <tr>
         <c:choose>
-            <c:when test="${not empty study.experimentalFactor}">
-                <c:set var="experimentalFactor" value="${study.experimentalFactor}"/>
+            <c:when test="${not empty model.study.experimentalFactor}">
+                <c:set var="experimentalFactor" value="${model.study.experimentalFactor}"/>
             </c:when>
             <c:otherwise>
                 <c:set var="experimentalFactor" value="${notGivenId}"/>
@@ -57,7 +57,7 @@
     <tr>
         <td valign="top" align="right" width="150"><b>Publications:</b></td>
         <td>
-            <c:forEach var="pub" items="${publications}" varStatus="status">
+            <c:forEach var="pub" items="${model.study.publications}" varStatus="status">
                 <p><c:out value="${pub.authors}"/> et al. (<c:out value="${pub.year}"/>)<br>
                     <i>"<c:out value="${pub.pubTitle}"/>"</i><br><c:out value="${pub.volume}"/><br>
                     <c:if test="${not empty pub.doi}">
@@ -79,7 +79,7 @@
         <td valign="top" align="right" width="150"><b>Submitter name:</b></td>
         <td>
             <c:choose>
-            <c:when test="${study.public}">Public data</c:when>
+            <c:when test="${model.study.public}">Public data</c:when>
             <c:otherwise>(not given)</c:otherwise>
             </c:choose>
     </tr>
@@ -93,8 +93,8 @@
     </tr>
     <tr>
         <c:choose>
-            <c:when test="${not empty study.centreName}">
-                <c:set var="centreName" value="${study.centreName}"/>
+            <c:when test="${not empty model.study.centreName}">
+                <c:set var="centreName" value="${model.study.centreName}"/>
             </c:when>
             <c:otherwise>
                 <c:set var="centreName" value="${notGivenId}"/>
@@ -108,8 +108,8 @@
 <table frame="box" width="95%">
     <tr>
         <c:choose>
-            <c:when test="${not empty study.publicReleaseDate}">
-                <c:set var="publicReleaseDate" value="${study.publicReleaseDate}"/>
+            <c:when test="${not empty model.study.publicReleaseDate}">
+                <c:set var="publicReleaseDate" value="${model.study.publicReleaseDate}"/>
             </c:when>
             <c:otherwise>
                 <c:set var="publicReleaseDate" value="${notGivenId}"/>
@@ -121,10 +121,10 @@
     <tr>
         <td valign="top" align="right" width="150"><b>BioProject ID:</b></td>
         <c:choose>
-            <c:when test="${not empty study.ncbiProjectId && study.ncbiProjectId>0}">
+            <c:when test="${not empty model.study.ncbiProjectId && model.study.ncbiProjectId>0}">
                 <td>
-                    <a href="<c:url value="http://www.ebi.ac.uk/ena/data/view/Project:${study.ncbiProjectId}"/>"><c:out
-                            value="${study.ncbiProjectId}"/></a></td>
+                    <a href="<c:url value="http://www.ebi.ac.uk/ena/data/view/Project:${model.study.ncbiProjectId}"/>"><c:out
+                            value="${model.study.ncbiProjectId}"/></a></td>
             </c:when>
             <c:otherwise>
                 <td><c:out value="${notGivenId}"/></td>
@@ -136,12 +136,12 @@
 <h3>Associated Sample(s):</h3>
 
 <c:choose>
-    <c:when test="${not empty samples}">
+    <c:when test="${not empty model.samples}">
         <c:if test="${isDialogOpen==false}">
             <p><span style="color:red">No export data available for that(these) sample(s)!</span></p>
         </c:if>
         <div align="left">
-            <a href="<c:url value="${baseURL}/studyView/${study.id}/doExport/"/>">Export more detailed sample info to
+            <a href="<c:url value="${baseURL}/study/${model.study.studyId}/doExport/"/>">Export more detailed sample info to
                 CSV</a>
         </div>
         <table border="1">
@@ -158,11 +158,11 @@
             <%
                 int i = 1;
             %>
-            <c:forEach var="sample" items="${samples}" varStatus="status">
+            <c:forEach var="sample" items="${model.samples}" varStatus="status">
                 <tr>
                     <td align="center"><%= i%><% i++;%></td>
                     <td align="center"><a
-                            href="<c:url value="${baseURL}/sampleView/${sample.sampleId}"/>">${sample.sampleId}</a></td>
+                            href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>">${sample.sampleId}</a></td>
                     <td align="center">
                         <c:choose>
                             <c:when test="${empty sample.collectionDate}">N/A</c:when>

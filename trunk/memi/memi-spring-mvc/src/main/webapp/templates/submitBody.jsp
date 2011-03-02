@@ -4,7 +4,7 @@
     <h2><fmt:message key="label.submission.title"/></h2>
 
     <div style="margin-top:6px"></div>
-    <form:form action="submissionForm" commandName="subForm">
+    <form:form action="submit" commandName="subForm">
         <table>
             <tr>
                 <td>Submission title*:<form:errors cssStyle="color:red;" path="subTitle"/></td>

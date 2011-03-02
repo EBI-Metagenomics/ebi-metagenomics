@@ -17,7 +17,12 @@ public class MGModel {
 
     private final String baseURL = "";
 
-    public final static String MODEL_ATTR_NAME = "mgModel";
+    /**
+     * Please notice to use this name for all the different model types. Otherwise the main menu would not work
+     * fine.
+     */
+    public final static String MODEL_ATTR_NAME = "model";
+
 
     MGModel(Submitter submitter) {
         this.submitter = submitter;

@@ -23,9 +23,6 @@ public class HomePageModel extends MGModel {
 
     private List<Sample> mySamples;
 
-    public final static String MODEL_ATTR_NAME = "homePageModel";
-
-
     HomePageModel(Submitter submitter, List<Study> publicStudies, List<Sample> publicSamples) {
         super(submitter);
         this.publicStudies = publicStudies;

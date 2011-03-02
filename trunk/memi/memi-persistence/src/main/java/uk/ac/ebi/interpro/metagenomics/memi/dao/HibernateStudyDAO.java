@@ -13,7 +13,7 @@ import java.util.List;
  * @version $Id$
  * @since 1.0-SNAPSHOT
  */
-public interface HibernateStudyDAO extends GenericDAO<Study, Long> {
+public interface HibernateStudyDAO extends ISampleStudyDAO<Study> {
 
     /**
      * Retrieves studies order by the specified property.
@@ -50,4 +50,6 @@ public interface HibernateStudyDAO extends GenericDAO<Study, Long> {
      * Returns a list of studies by the specified criteria.
      */
     List<Study> retrieveFilteredStudies(List<Criterion> crits);
+
+    Study readByStringId(String studyId);
 }

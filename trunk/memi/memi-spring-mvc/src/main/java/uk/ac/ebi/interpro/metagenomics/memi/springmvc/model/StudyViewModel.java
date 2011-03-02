@@ -3,6 +3,8 @@ package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgSample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgStudy;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 
 import java.util.List;
 
@@ -13,40 +15,29 @@ import java.util.List;
  * @since 1.0-SNAPSHOT
  */
 public class StudyViewModel extends MGModel {
-    private List<EmgSample> samples;
+    private List<Sample> samples;
 
-    private EmgStudy study;
+    private Study study;
 
-    private List<String> studyProperties;
-
-    StudyViewModel(Submitter submitter, List<EmgSample> samples, EmgStudy study, List<String> studyProperties) {
+    StudyViewModel(Submitter submitter, Study study, List<Sample> samples) {
         super(submitter);
         this.samples = samples;
         this.study = study;
-        this.studyProperties = studyProperties;
     }
 
-    public List<EmgSample> getSamples() {
+    public List<Sample> getSamples() {
         return samples;
     }
 
-    public void setSamples(List<EmgSample> samples) {
+    public void setSamples(List<Sample> samples) {
         this.samples = samples;
     }
 
-    public EmgStudy getStudy() {
+    public Study getStudy() {
         return study;
     }
 
-    public void setStudy(EmgStudy study) {
+    public void setStudy(Study study) {
         this.study = study;
-    }
-
-    public List<String> getStudyProperties() {
-        return studyProperties;
-    }
-
-    public void setStudyProperties(List<String> studyProperties) {
-        this.studyProperties = studyProperties;
     }
 }

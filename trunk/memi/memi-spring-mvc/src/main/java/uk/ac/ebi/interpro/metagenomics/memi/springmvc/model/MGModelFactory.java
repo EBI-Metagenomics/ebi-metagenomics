@@ -56,6 +56,14 @@ public class MGModelFactory {
         return new AnalysisStatsModel(getSessionSubmitter(sessionManager), sample, classPathToStatsFile);
     }
 
+    public static StudyViewModel getStudyViewModel(SessionManager sessionManager, Study study, List<Sample> samples) {
+        return new StudyViewModel(getSessionSubmitter(sessionManager), study, samples);
+    }
+
+    public static SampleViewModel getSampleViewModel(SessionManager sessionManager, Sample sample, List<String> archivedSeqs) {
+        return new SampleViewModel(getSessionSubmitter(sessionManager), sample, archivedSeqs);
+    }
+
     public static ViewStudiesModel getViewStudiesPageModel(SessionManager sessionMgr, HibernateStudyDAO studyDAO, StudyFilter filter) {
         Submitter submitter = getSessionSubmitter(sessionMgr);
         long submitterId = (submitter != null ? submitter.getSubmitterId() : -1L);
@@ -295,6 +303,9 @@ public class MGModelFactory {
     }
 
     private static Submitter getSessionSubmitter(SessionManager sessionMgr) {
-        return sessionMgr.getSessionBean().getSubmitter();
+        if (sessionMgr != null && sessionMgr.getSessionBean() != null) {
+            return sessionMgr.getSessionBean().getSubmitter();
+        }
+        return null;
     }
 }
