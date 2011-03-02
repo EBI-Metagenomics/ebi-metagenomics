@@ -8,7 +8,8 @@ import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateStudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.SampleFilter;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.StudyFilter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.*;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
 
 import java.util.ArrayList;
@@ -197,15 +198,9 @@ public class MGModelFactory {
 
     private static Class<? extends Sample> getSampleClass(Study.StudyType type) {
         if (type != null) {
-            switch (type) {
-                case ENVIRONMENTAL:
-                    return EnvironmentSample.class;
-                case HOST_ASSOCIATED:
-                    return HostSample.class;
-                default:
-                    return UndefinedSample.class;
-            }
+            return type.getClazz();
         }
+        // Without knowing the type, return the superclass.
         return Sample.class;
     }
 

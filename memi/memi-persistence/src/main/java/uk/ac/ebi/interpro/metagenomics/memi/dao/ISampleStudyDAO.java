@@ -11,7 +11,7 @@ import uk.ac.ebi.interpro.scan.genericjpadao.GenericDAO;
  * @version $Id$
  * @since 1.0-SNAPSHOT
  */
-public interface ISampleStudyDAO<T extends SecureEntity> extends GenericDAO<Study, Long> {
+public interface ISampleStudyDAO<T extends SecureEntity> extends GenericDAO<T, Long> {
 
     T readByStringId(String stringId);
 }
