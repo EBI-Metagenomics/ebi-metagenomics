@@ -54,6 +54,21 @@ public class HibernateStudyDAOImpl implements HibernateStudyDAO {
         return (Study) session.get(Study.class, id);
     }
 
+    @Transactional(readOnly = true)
+    public Study readByStringId(String studyId) {
+        Session session = sessionFactory.getCurrentSession();
+        if (session != null) {
+            Criteria crit = session.createCriteria(Study.class);
+            crit.add(Restrictions.eq("studyId", studyId));
+            List<Study> studies = crit.list();
+//            TODO: Log OR print exception if size > 1
+            if (studies != null && studies.size() > 0) {
+                return studies.get(0);
+            }
+        }
+        return null;
+    }
+
 
     @Override
     public Study readDeep(Long id, String... deepFields) {

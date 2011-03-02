@@ -13,7 +13,7 @@ import java.util.List;
  * @version $Id$
  * @since 1.0-SNAPSHOT
  */
-public interface HibernateSampleDAO extends GenericDAO<Sample, Long> {
+public interface HibernateSampleDAO extends ISampleStudyDAO<Sample> {
 
     List<Sample> retrieveSamplesByStudyId(long studyId);
 

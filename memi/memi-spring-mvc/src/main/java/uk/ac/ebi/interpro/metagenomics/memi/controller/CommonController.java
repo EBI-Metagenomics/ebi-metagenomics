@@ -27,6 +27,10 @@ import javax.validation.Valid;
 @Controller
 public class CommonController {
 
+    public static final String ERROR_PAGE_VIEW_NAME = "exception";
+
+    public static final String ACCESS_DENIED_VIEW_NAME = "lostInSpace";
+
     @Resource
     private SessionManager sessionManager;
 
@@ -42,14 +46,6 @@ public class CommonController {
     public ModelAndView helpHandler(ModelMap model) {
         model.addAttribute(MGModel.MODEL_ATTR_NAME, MGModelFactory.getMGModel(sessionManager));
         return new ModelAndView("help", model);
-    }
-
-    @RequestMapping("/getData")
-    public void getStudyNamesHandler() {
-    }
-
-    @RequestMapping("/errorPage")
-    public void errorPageHandler() {
     }
 
     @RequestMapping("/logout")

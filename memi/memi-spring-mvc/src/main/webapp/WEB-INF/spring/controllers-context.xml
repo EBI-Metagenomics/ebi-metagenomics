@@ -151,9 +151,9 @@
         <property name="sessionBean" ref="sessionBeanRef"/>
     </bean>
 
-    <!-- The next 3 beans belong to the email notification service which is currently used in the submission form  -->
+    <!-- Please use this bean to specify the path to the analysis files -->
     <bean id="propContainer" class="uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer">
-        <property name="classPathToAnalysisDirectory" value="${classPathToAnalysisDirectory}"/>
+        <property name="pathToAnalysisDirectory" value="${pathToAnalysisDirectory}"/>
     </bean>
 
 </beans>

@@ -116,6 +116,7 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
         return null;
     }
 
+
     @Override
     @Transactional(readOnly = true)
     public List<Sample> retrieveOrderedPublicSamples(String propertyName, boolean isDescendingOrder) {

@@ -4,11 +4,11 @@
 <div id="content-full">
     <a name="top"></a>
     <c:choose>
-        <c:when test="${not empty mgModel.sample}">
+        <c:when test="${not empty model.sample}">
 
-            <h2>Study ${mgModel.sample.study.studyName}</h2>
+            <h2>Study ${model.sample.study.studyName}</h2>
             <h4>Analysis of Sample <a
-                    href="<c:url value="${baseURL}/sampleView/${mgModel.sample.sampleId}"/>">${mgModel.sample.sampleTitle}</a>
+                    href="<c:url value="${baseURL}/sample/${model.sample.sampleId}"/>">${model.sample.sampleTitle}</a>
             </h4>
 
 
@@ -18,7 +18,7 @@
                     <ul>
                         <c:forEach var="fileName" items="${resultFileNames}" varStatus="status">
                             <li>
-                                <a href="<c:url value="${baseURL}/sampleView/${mgModel.sample.sampleId}/doExportResultFile/${fileName}"/>">
+                                <a href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/doExportResultFile/${fileName}"/>">
                                     <c:out value="${fileName}"/></a>
                             </li>
                         </c:forEach>
@@ -36,7 +36,7 @@
         </c:otherwise>
     </c:choose>
     <c:choose>
-        <c:when test="${mgModel.hasStats}">
+        <c:when test="${model.hasStats}">
 
             <h3>2. Analysis Statistics</h3>
             <ul>
@@ -52,9 +52,9 @@
             <p>
                 The proportion of reads for which open reading frames are predicted
             </p>
-            <img src="${mgModel.submittedReadsPieChartURL}"
-                 alt="${mgModel.totalReads} Reads, of which ${mgModel.readsWithOrfs} have predicted ORFs"
-                 title="${mgModel.totalReads} Reads, of which ${mgModel.readsWithOrfs} have predicted ORFs"/>
+            <img src="${model.submittedReadsPieChartURL}"
+                 alt="${model.totalReads} Reads, of which ${model.readsWithOrfs} have predicted ORFs"
+                 title="${model.totalReads} Reads, of which ${model.readsWithOrfs} have predicted ORFs"/>
 
             <div align="left"><a href="#top">Back to top</a></div>
             <a name="OrfsWithMatches"></a>
@@ -64,9 +64,9 @@
             <p>
                 The proportion of predicted open reading frames that match InterPro Signatures
             </p>
-            <img src="${mgModel.orfPieChartURL}"
-                 alt="${mgModel.totalOrfs} predicted ORFs, of which ${mgModel.orfsWithMatches} having matches to InterPro"
-                 title="${mgModel.totalOrfs} predicted ORFs, of which ${mgModel.orfsWithMatches} having matches to InterPro"/>
+            <img src="${model.orfPieChartURL}"
+                 alt="${model.totalOrfs} predicted ORFs, of which ${model.orfsWithMatches} having matches to InterPro"
+                 title="${model.totalOrfs} predicted ORFs, of which ${model.orfsWithMatches} having matches to InterPro"/>
 
             <div align="left"><a href="#top">Back to top</a></div>
             <a name="GO"></a>
@@ -78,7 +78,7 @@
                 GO terms
                 can then be inferred for the matched protein sequence.
             </p>
-            <img src="${mgModel.goPieChartURL}"/>
+            <img src="${model.goPieChartURL}"/>
 
             <div align="left"><a href="#top">Back to top</a></div>
             <h4>Gene Ontology Match Statistics</h4>
@@ -95,7 +95,7 @@
                         Number of Matching Proteins
                     </th>
                 </tr>
-                <c:forEach var="goMatch" items="${mgModel.goMatchStatistics}">
+                <c:forEach var="goMatch" items="${model.goMatchStatistics}">
                     <tr>
                         <td>
                             <a href="http://www.ebi.ac.uk/QuickGO/GTerm?id=${goMatch.accession}">
@@ -130,7 +130,7 @@
                         Number of Matching Proteins
                     </th>
                 </tr>
-                <c:forEach var="interProMatch" items="${mgModel.interProMatchStatistics}">
+                <c:forEach var="interProMatch" items="${model.interProMatchStatistics}">
                     <tr>
                         <td>
                             <a href="http://www.ebi.ac.uk/interpro/ISearch?query=${interProMatch.accession}">

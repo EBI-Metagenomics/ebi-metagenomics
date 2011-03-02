@@ -48,7 +48,7 @@ public class LoginPageController extends LoginController implements IMGControlle
         super.processLogin(loginForm, result, model, status);
         Submitter submitter = sessionManager.getSessionBean().getSubmitter();
         if (submitter != null) {
-            return new ModelAndView("redirect:submissionForm", model);
+            return new ModelAndView("redirect:submit", model);
         }
         //create model and view
         return new ModelAndView(VIEW_NAME, model);

@@ -15,13 +15,14 @@
 <table frame="box" width="95%">
     <tr>
         <td width="50%" align="left" valign="top">
-            <h2>Sample ${sample.sampleId}</h2>
-            ${sample.sampleTitle}
+            <h2>Sample ${model.sample.sampleId}</h2>
+            ${model.sample.sampleTitle}
         </td>
     </tr>
 </table>
 <div style="margin-top:10px"></div>
-<a href="<c:url value="${baseURL}/analysisStatsView/${sample.sampleId}"/>"><h3>Sample Analysis Results and Statistics</h3></a>
+<a href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}"/>"><h3>Sample Analysis Results and
+    Statistics</h3></a>
 
 
 <h3>Sample Description</h3>
@@ -30,13 +31,13 @@
 </c:if>
 
 <div align="left">
-    <a href="<c:url value="${baseURL}/sampleView/${sample.sampleId}/doExportDetails"/>">Export to CSV</a>
+    <a href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/doExportDetails"/>">Export to CSV</a>
 </div>
 <table frame="box" width="95%">
     <tr>
         <c:choose>
-            <c:when test="${not empty sample.sampleTitle}">
-                <c:set var="sampleTitle" value="${sample.sampleTitle}"/>
+            <c:when test="${not empty model.sample.sampleTitle}">
+                <c:set var="sampleTitle" value="${model.sample.sampleTitle}"/>
             </c:when>
             <c:otherwise>
                 <c:set var="sampleTitle" value="${notGivenId}"/>
@@ -47,8 +48,8 @@
     </tr>
     <tr>
         <c:choose>
-            <c:when test="${not empty sample.sampleDescription}">
-                <c:set var="sampleDescription" value="${sample.sampleDescription}"/>
+            <c:when test="${not empty model.sample.sampleDescription}">
+                <c:set var="sampleDescription" value="${model.sample.sampleDescription}"/>
             </c:when>
             <c:otherwise>
                 <c:set var="sampleDescription" value="${notGivenId}"/>
@@ -59,8 +60,8 @@
     </tr>
     <tr>
         <c:choose>
-            <c:when test="${not empty sample.sampleClassification}">
-                <c:set var="sampleClassification" value="${sample.sampleClassification}"/>
+            <c:when test="${not empty model.sample.sampleClassification}">
+                <c:set var="sampleClassification" value="${model.sample.sampleClassification}"/>
             </c:when>
             <c:otherwise>
                 <c:set var="sampleClassification" value="${notGivenId}"/>
@@ -73,8 +74,8 @@
         <td valign="top" align="right" width="150"><b>Resources:</b></td>
         <td>
             <c:choose>
-                <c:when test="${not empty publications}">
-                    <c:forEach var="pub" items="${publications}" varStatus="status">
+                <c:when test="${not empty model.pubs}">
+                    <c:forEach var="pub" items="${model.pubs}" varStatus="status">
                         <p>
                             <a href="<c:url value="${pub.url}"/>">"<c:out value="${pub.pubTitle}"/>"</a>
                         </p>
@@ -88,11 +89,11 @@
 <div style="margin-top:6px"></div>
 <table frame="box" width="95%">
     <c:choose>
-        <c:when test="${isHostInstance}">
+        <c:when test="${model.hostAssociated}">
             <tr>
                 <c:choose>
-                    <c:when test="${not empty sample.phenotype}">
-                        <c:set var="phenotype" value="${sample.phenotype}"/>
+                    <c:when test="${not empty model.sample.phenotype}">
+                        <c:set var="phenotype" value="${model.sample.phenotype}"/>
                     </c:when>
                     <c:otherwise>
                         <c:set var="phenotype" value="${notGivenId}"/>
@@ -104,10 +105,10 @@
             <tr>
                 <td valign="top" align="right" width="150"><b>Host species:</b></td>
                 <c:choose>
-                    <c:when test="${not empty sample.taxonomyId && sample.taxonomyId>0}">
+                    <c:when test="${not empty model.sample.taxonomyId && model.sample.taxonomyId>0}">
                         <td>Tax Id:
-                            <a href="<c:url value="http://www.ncbi.nlm.nih.gov/taxonomy?Db=taxonomy&Cmd=DetailsSearch&Term=${sample.taxonomyId}[uid]"/>"><c:out
-                                    value="${sample.taxonomyId}"/></a>
+                            <a href="<c:url value="http://www.ncbi.nlm.nih.gov/taxonomy?Db=taxonomy&Cmd=DetailsSearch&Term=${model.sample.taxonomyId}[uid]"/>"><c:out
+                                    value="${model.sample.taxonomyId}"/></a>
                         </td>
                     </c:when>
                     <c:otherwise>
@@ -117,8 +118,8 @@
             </tr>
             <tr>
                 <c:choose>
-                    <c:when test="${not empty sample.hostSex}">
-                        <c:set var="hostSex" value="${sample.hostSex}"/>
+                    <c:when test="${not empty model.sample.hostSex}">
+                        <c:set var="hostSex" value="${model.sample.hostSex}"/>
                     </c:when>
                     <c:otherwise>
                         <c:set var="hostSex" value="${notGivenId}"/>
@@ -131,8 +132,8 @@
         <c:otherwise>
             <tr>
                 <c:choose>
-                    <c:when test="${not empty sample.latLon}">
-                        <c:set var="latLon" value="${sample.latLon}"/>
+                    <c:when test="${not empty model.sample.latLon}">
+                        <c:set var="latLon" value="${model.sample.latLon}"/>
                     </c:when>
                     <c:otherwise>
                         <c:set var="latLon" value="${notGivenId}"/>
@@ -145,8 +146,8 @@
             </tr>
             <tr>
                 <c:choose>
-                    <c:when test="${not empty sample.environmentalBiome}">
-                        <c:set var="environmentalBiome" value="${sample.environmentalBiome}"/>
+                    <c:when test="${not empty model.sample.environmentalBiome}">
+                        <c:set var="environmentalBiome" value="${model.sample.environmentalBiome}"/>
                     </c:when>
                     <c:otherwise>
                         <c:set var="environmentalBiome" value="${notGivenId}"/>
@@ -157,8 +158,8 @@
             </tr>
             <tr>
                 <c:choose>
-                    <c:when test="${not empty sample.environmentalFeature}">
-                        <c:set var="environmentalFeature" value="${sample.environmentalFeature}"/>
+                    <c:when test="${not empty model.sample.environmentalFeature}">
+                        <c:set var="environmentalFeature" value="${model.sample.environmentalFeature}"/>
                     </c:when>
                     <c:otherwise>
                         <c:set var="environmentalFeature" value="${notGivenId}"/>
@@ -169,8 +170,8 @@
             </tr>
             <tr>
                 <c:choose>
-                    <c:when test="${not empty sample.environmentalMaterial}">
-                        <c:set var="environmentalMaterial" value="${sample.environmentalMaterial}"/>
+                    <c:when test="${not empty model.sample.environmentalMaterial}">
+                        <c:set var="environmentalMaterial" value="${model.sample.environmentalMaterial}"/>
                     </c:when>
                     <c:otherwise>
                         <c:set var="environmentalMaterial" value="${notGivenId}"/>
@@ -186,8 +187,8 @@
 <table frame="box" width="95%">
     <tr>
         <c:choose>
-            <c:when test="${not empty sample.geoLocName}">
-                <c:set var="geoLocName" value="${sample.geoLocName}"/>
+            <c:when test="${not empty model.sample.geoLocName}">
+                <c:set var="geoLocName" value="${model.sample.geoLocName}"/>
             </c:when>
             <c:otherwise>
                 <c:set var="geoLocName" value="${notGivenId}"/>
@@ -198,8 +199,8 @@
     </tr>
     <tr>
         <c:choose>
-            <c:when test="${not empty sample.collectionDate}">
-                <c:set var="collectionDate" value="${sample.collectionDate}"/>
+            <c:when test="${not empty model.sample.collectionDate}">
+                <c:set var="collectionDate" value="${model.sample.collectionDate}"/>
             </c:when>
             <c:otherwise>
                 <c:set var="collectionDate" value="${notGivenId}"/>
@@ -210,8 +211,8 @@
     </tr>
     <tr>
         <c:choose>
-            <c:when test="${not empty sample.miscellaneous}">
-                <c:set var="miscellaneous" value="${sample.miscellaneous}"/>
+            <c:when test="${not empty model.sample.miscellaneous}">
+                <c:set var="miscellaneous" value="${model.sample.miscellaneous}"/>
             </c:when>
             <c:otherwise>
                 <c:set var="miscellaneous" value="${notGivenId}"/>
@@ -228,8 +229,8 @@
         <td valign="top" align="right" width="150"><b>Raw sequence reads:</b></td>
         <td>
             <c:choose>
-                <c:when test="${not empty archivedSequences}">
-                    <c:forEach var="seqId" items="${archivedSequences}" varStatus="status">
+                <c:when test="${not empty model.archivedSequences}">
+                    <c:forEach var="seqId" items="${model.archivedSequences}" varStatus="status">
                         <a href="<c:url value="http://www.ebi.ac.uk/ena/data/view/${seqId}"/>">
                             <c:out value="${seqId}"/></a><br>
                     </c:forEach>
@@ -238,16 +239,5 @@
             </c:choose>
         </td>
     </tr>
-    <%--<c:if test="${not empty resultFileNames}">--%>
-        <%--<tr>--%>
-            <%--<td valign="top" align="right" width="150"><b>Analysis</b></td>--%>
-            <%--<td>--%>
-                <%--<a href="<c:url value="${baseURL}/analysisStatsView/${sample.sampleId}"/>">Statistics View</a>--%>
-            <%--</td>--%>
-        <%--</tr>--%>
-    <%--</c:if>--%>
 </table>
-
-
-
 </div>

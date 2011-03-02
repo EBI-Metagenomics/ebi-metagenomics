@@ -40,13 +40,13 @@ public class AnalysisStatsModel extends MGModel {
 
     private Set<MatchStatistic> interProMatchStatistics = new TreeSet<MatchStatistic>();
 
-    private final String CLASS_PATH_TO_ANALYSIS_DIRECTORY;
+    private final String PATH_TO_ANALYSIS_DIRECTORY;
 
 
     AnalysisStatsModel(Submitter submitter, Sample sample, String classPathToAnalysisDirectory) {
         super(submitter);
         this.sample = sample;
-        this.CLASS_PATH_TO_ANALYSIS_DIRECTORY = classPathToAnalysisDirectory;
+        this.PATH_TO_ANALYSIS_DIRECTORY = classPathToAnalysisDirectory;
         // TODO - Niave - just loads the static files for the JI_soil sample.
         if (sample != null && "JI_soil".equals(sample.getSampleTitle())) {
             // Set all that stats stuff.
@@ -71,7 +71,7 @@ public class AnalysisStatsModel extends MGModel {
      * @throws IOException
      */
     private void loadLossStats() throws IOException {
-        File file = new File(CLASS_PATH_TO_ANALYSIS_DIRECTORY + "WHEAT_RHIZOSPHERE_ME_FASTA/WHEAT_RHIZOSPHERE_ME_FASTA_stats");
+        File file = new File(PATH_TO_ANALYSIS_DIRECTORY + "WHEAT_RHIZOSPHERE_ME_FASTA/WHEAT_RHIZOSPHERE_ME_FASTA_stats");
         InputStream is = new FileInputStream(file);
 
         // Load properties file containing overall match statistics
@@ -95,13 +95,13 @@ public class AnalysisStatsModel extends MGModel {
     }
 
     private void loadIPRStatistics() throws IOException {
-        File file = new File(CLASS_PATH_TO_ANALYSIS_DIRECTORY + "WHEAT_RHIZOSPHERE_ME_FASTA/WHEAT_RHIZOSPHERE_ME_FASTA_entry-stats");
+        File file = new File(PATH_TO_ANALYSIS_DIRECTORY + "WHEAT_RHIZOSPHERE_ME_FASTA/WHEAT_RHIZOSPHERE_ME_FASTA_entry-stats");
         InputStream is = new FileInputStream(file);
         loadStats(interProMatchStatistics, is, file.getName());
     }
 
     private void loadGOStatistics() throws IOException {
-        File file = new File(CLASS_PATH_TO_ANALYSIS_DIRECTORY + "WHEAT_RHIZOSPHERE_ME_FASTA/WHEAT_RHIZOSPHERE_ME_FASTA_go-stats");
+        File file = new File(PATH_TO_ANALYSIS_DIRECTORY + "WHEAT_RHIZOSPHERE_ME_FASTA/WHEAT_RHIZOSPHERE_ME_FASTA_go-stats");
         InputStream is = new FileInputStream(file);
         loadStats(goMatchStatistics, is, file.getName());
     }
