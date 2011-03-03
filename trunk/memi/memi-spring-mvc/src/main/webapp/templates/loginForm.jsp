@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://java.sun.com/jsp/jstl/core" %>
 <%-- This template is used within the login page component--%>
-<c:if test="${empty mgModel.submitter}">
+<c:if test="${empty model.submitter}">
 <div id ="sidebar-login">
    
    <form:form  method="POST" action="" commandName="loginForm">
