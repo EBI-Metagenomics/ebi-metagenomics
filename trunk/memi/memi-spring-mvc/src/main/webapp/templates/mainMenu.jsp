@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<div class="top-nav">
 <div class="top-menu">
     <ul>
         <li class="grey"><a href="<c:url value="${baseURL}/"/>" title="Home">Home</a></li>
@@ -35,21 +35,30 @@
                 </c:otherwise>
             </c:choose>
         </li>
-        <li class="green"><a href="<c:url value="${baseURL}/info"/>" title="About us">About</a></li>
-        <li class="yellow"><a href="mailto:chrish@ebi.ac.uk?subject=Request from the MG portal" title="Contact us">Contact
-            us</a></li>
-        <li class="white"></li>
-        <%-- <li class="orange"><a href="<c:url value="${baseURL}/help"/>" title="Help">Help</a></li>--%>
-        <li class="black"><c:choose>
-            <c:when test="${empty model.submitter}">
-                <a href="<c:url value="${baseURL}/"/>" title="Login">Login</a>
-            </c:when>
-            <c:otherwise>
-                <a href="<c:url value="${baseURL}/logout"/>" title="logout">Logout</a>
-            </c:otherwise>
-        </c:choose>
-            <%--<button id="create-user">Login</button>--%></li>
+       
+       
+    <li class="green"><a href="<c:url value="${baseURL}/info"/>" title="About us">About</a></li>
+    <li class="yellow"><a href="mailto:chrish@ebi.ac.uk?subject=Request from the MG portal" title="Contact us" >Contact us</a></li>
+    <li class="white"></li>
+    <%-- <li class="orange"><a href="<c:url value="${baseURL}/help"/>" title="Help">Help</a></li>--%>
+     <%--<li class="black">  <c:choose>
+        <c:when test="${empty model.submitter}">
+            <a href="<c:url value="${baseURL}/index"/>" title="Login">Login</a>
+        </c:when>
+        <c:otherwise>
+            <a href="<c:url value="${baseURL}/logout"/>" title="logout">Logout</a>
+        </c:otherwise>
+    </c:choose>--%>
+    </li>
     </ul>
-
-
+</div>
+<div class="top-login">
+<c:choose>
+        <c:when test="${empty model.submitter}">
+           <span id="login"> Not logged in | <a href="<c:url value="${baseURL}/"/>" title="Login">login</a></span>
+        </c:when>
+        <c:otherwise>
+          <span id="logout"> <c:out value="${model.submitter.firstName} ${model.submitter.surname}"/> | <a href="<c:url value="${baseURL}/logout"/>" title="logout">logout</a></span>
+        </c:otherwise>
+</c:choose></div>
 </div>
