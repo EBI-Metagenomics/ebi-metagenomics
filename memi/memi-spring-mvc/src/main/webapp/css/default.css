@@ -1,3 +1,11 @@
+/* reset.css
+html,body,div,span,applet,object,iframe,,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary,time, mark, audio, video{margin:0;padding:0;border:0;outline:0;font-size:100%;background:transparent;font: inherit; vertical-align: baseline;}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outline:3px solid #0092bf; }ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+ */
+/* reset.css  */
+h1,p,ol,ul,li {margin:0;padding:0;border:0;outline:0;font-size:100%;background:transparent;font: inherit; vertical-align: baseline;}
+
+html, body {height: 100%;}
+
 body {
     margin: 0; padding: 0; /*specified in EBI template.css */
     font-family: 'Droid Sans', serif;
@@ -28,6 +36,31 @@ font-weight: normal;
 font-style: normal;
 }
 
+p { display: block;margin: 1em 0px;}
+
+ul {
+display: block;
+list-style-type: disc;
+-webkit-margin-before: 1em;
+-webkit-margin-after: 1em;
+-webkit-margin-start: 0px;
+-webkit-margin-end: 0px;
+-webkit-padding-start: 0px;
+margin:30px;
+}
+
+#sidebar ul {
+display: block;
+list-style-type: disc;
+-webkit-margin-before: 1em;
+-webkit-margin-after: 1em;
+-webkit-margin-start: 0px;
+-webkit-margin-end: 0px;
+-webkit-padding-start: 0px;
+margin:15px;
+}
+
+
 img{
 border: none;
 }
@@ -42,20 +75,42 @@ a:hover,  a:focus { color: #006af6;}
 a:active { color: #647685;}
 
 #wrapper {
-border:0px #ccc solid;
+overflow:auto; /*  To contain floated elements, apply overflow:auto; to the parent element, or place something to clear the floats at the bottom of the container, such as: <div style="clear:both;"></div>*/
+box-shadow: 0px 0px 70px #696969;
+-moz-box-shadow: 0px 0px 70px #696969;
+-khtml-box-shadow: 0px 0px 70px #696969;
+-webkit-box-shadow: 0px 0px 70px #696969;
 width: 972px;
 margin: 0px auto;
 text-align: left; /* overrides text-align: center on the body element. */
-padding:14px;
+padding:14px 14px 0 14px;
+z-index:20;
+position:relative; /*to make z-index work */
 }
+
+/*#extraDiv1 {
+background: transparent url(../img/bgd_hex_8.png) no-repeat;
+position: absolute;
+bottom: -40px;
+right: 330px;
+width: 153px;
+height: 415px;
+z-index:10;
+}      */
 
 header, nav, .banner  { background-color: white;}
 
 nav { float: left; width:100%;}
 
-footer {  width: 1000px; margin: 0px auto;}
-footer div.linec  { width: 100%; height:4px; background: url(../img/bgd_black_op20_8.png); }
-footer div.lined  { width: 100%; height:8px; background: url(../img/bgd_black_op40_8.png); }
+footer {
+color:#3e3e3e;
+z-index:30;
+border:0px red solid;
+}
+
+footer #footer { width: 100%;  height:60px; background: url(../img/bgd_white_op45_8.png);}
+footer #linec  { width: 100%; height:4px; background: url(../img/bgd_black_op20_8.png);}
+footer #lined  {width: 100%; height:8px;  background: url(../img/bgd_black_op40_8.png); }
 
 div.banner {
 width: 100%;
@@ -63,10 +118,10 @@ height:100px;
 border:0px black solid;
 }
 
-div.banner-logo  {float: left; border:0px black solid; margin-left:20px; margin-top:-10px;}
+div.banner-logo  {float: left; border:0px black solid; margin-left:20px; margin-top:10px;}
 
 div.banner-photo {
-margin:20px 16px 0 0;
+margin:20px 14px 0 0;
 float: right;
 background: url(../img/pict_metagenomics_8.png) no-repeat 0 0;
 width: 385px;
@@ -82,11 +137,20 @@ height: 81px;
 text-indent: -9999px;
 }
 
+div.top-nav {
+border:0px green solid;
+width:100%;
+}
+
+div.top-login {
+border:0px black solid;
+float:right;
+margin:6px 36px 0 0;
+color:#666;
+}
 div.top-menu {
 border:0px red solid;
 float:left;
-width:100%;
-
 }
 
 div.top-menu ul{
@@ -97,13 +161,10 @@ div.top-menu ul{
 div.top-menu ul li{
     list-style-type:none;
     border:0px green solid;
-    float:left;
-    width:100px;
+    float:left; 
     text-align:left;
     font-size:120%;
     line-height:18px;
-    padding:0 1px 0 1px;
-    margin:1px 0 0 0;
     -moz-border-radius: 10px 10px 0 0;
     -khtml-border-radius: 10px 10px 0 0;
     -webkit-border-radius: 10px 10px 0 0;
@@ -111,28 +172,50 @@ div.top-menu ul li{
     margin-right:7px;
 }
 
-div.top-menu ul li a{
+div.top-menu ul li a, div.top-menu ul li a:link, div.top-menu ul li a:focus{
     border:0px red solid;
-    float:left;
     display:block;
-    width:86px;
-    padding:7px;
+   /*width:86px;  only if we want to have the same width for the Tabs on top */
+    padding:7px 14px;
     position:relative;
     cursor:pointer;
     color:white;
     text-decoration:none;
 }
 
-div.top-menu ul li a:hover{
+div.top-menu ul li a:hover, div.top-menu ul li a:link:hover  {
     /* Arrow style
     background:url(../img/arrow_menu_over.png) no-repeat right 10px;*/
     background:url(../img/bgd_black_op20_8.png);
+    color:white;
     -moz-border-radius: 10px 10px 0 0;
     -khtml-border-radius: 10px 10px 0 0;
     -webkit-border-radius: 10px 10px 0 0;
     border-radius:10px 10px 0 0;
 }
 
+#logout a, #logout a:link, #logout a:focus {
+color:#333;
+font-weight:bold;
+background:url(../img/ico_logout.jpg) no-repeat center right;
+padding-right:20px;
+border:0px red solid;
+}
+
+#logout a:hover {
+text-decoration:underline;
+}
+
+#login a, #login a:link, #login a:focus {
+color:#3626fb;
+font-weight:bold;
+background:url(../img/ico_login.jpg) no-repeat center right;
+padding-right:20px;
+}
+
+#login a:hover {
+text-decoration:underline;
+}
 
 table {
 border-collapse: collapse;
@@ -160,9 +243,6 @@ font-weight:normal;
 margin:0;
 }
 
-#submit-data h2 {
-padding:20px 0 10px 0;
-}
 
 #sidebar h2 {
 padding:0;
@@ -171,8 +251,28 @@ font-size:150%;
 }
 
 #submit-data {
-padding:0 0 4px 0;
+width:100%;
+padding:14px 0 14px 0;
+display:block;
 }
+
+#submit-data-display h1 a {
+height:260px;
+width:272px;
+margin-right:14px;
+float: left;
+background: url(../img/button_submit_off.gif) white no-repeat center center;
+border: solid 0px red;
+overflow: hidden;
+text-indent: -9999px;
+}
+
+/*style hand move
+#submit-data-display h1 a:hover {
+background: url(../img/button_submit_over.gif) white no-repeat center center;
+}*/
+
+
 
 #submit-data-description p {
 border: solid 0px red;
@@ -183,12 +283,12 @@ padding:0 24px 0 14px;
 
 
 #submit-data-description  a {
-    margin-left:480px;
+    margin-left:440px;
     padding-top:10px;
     font-size:110%;
     width: 180px;
     height: 41px;
-    border: 0px solid #F6F6F6;
+    border: 0px solid black;
     display: block;
     background: url(../img/arrow_link.jpg) no-repeat right center;
 }
@@ -213,25 +313,28 @@ margin:0;
 }
 
 #main-content {
-border: solid 0px red;
+overflow:auto; /*  To contain floated elements, apply overflow:auto; to the parent element*/
+border: solid 0px black;
 width:100%;
+ /* height:100%;  */
 }
 
 #content {
 float:left;
 border: solid 0px green;
-width:690px;
+width:684px;    /* was 690 reduced because of IE */
+height:auto;
+margin:14px 0 14px 0;
+
 }
 
 #content-full  {
-float:left;
 border: solid 0px green;
-margin-top:14px;
-margin-bottom:14px;
+margin:14px 0 14px 0;
 padding:8px 14px 8px 14px;
 background-color:white;
 min-height:580px;
-width:944px;
+width:auto;
 }
 
 #sidebar {
@@ -240,8 +343,8 @@ width:256px;
 border: solid 0px black;
 margin-top:0;
 background: url(../img/bgd_white_op45_8.png);
-color:#666666;
-/*height:100%;  */
+color:#666;
+height:auto;
 }
 
 #sidebar-login, #sidebar-news, #sidebar-mailing{
@@ -262,10 +365,10 @@ border-radius: 14px;
 -webkit-border-radius: 14px;
 }
 
-#sidebar-news a{
+#sidebar-news a, #footer a{
 color:#3e3e3e;
 }
-#sidebar-news a:hover{
+#sidebar-news a:hover,#footer a:hover {
 color:#222222 ;
 text-decoration:underline;
 }
@@ -298,7 +401,7 @@ border-radius: 0 0 20px 0;
 #list-data-study {
 margin-top:14px;
 overflow:auto;
-height:300px;
+height:340px;
 width:300px;
 float:left;
 padding:14px;
@@ -310,42 +413,15 @@ line-height:1;
 margin:14px 0 0 14px;
 overflow:auto;
 width:300px;
-height:300px;
+height:340px;
 float:right;
 padding:14px;
 }
-#submit-data  {
-width:100%;
-}
 
-#submit-data-display h1 a {
-height:284px;
-width:272px;
-margin: 0 14px 0 0;
-float: left;
-background: url(../img/button_submit_off.gif) white no-repeat center center;
-border: solid 0px red;
-overflow: hidden;
-text-indent: -9999px;
-}
+::-moz-selection{ background: #7d9ca6; color:#fff; text-shadow: none; }
+::selection { background:#7d9ca6; color:#fff; text-shadow: none; }
 
-#submit-data-display h1 a:hover {
-/*style hand move
-background: url(../img/button_submit_over.gif) white no-repeat center center;*/
-}
 
 .error {
     color: #ff0000;
-}
-
-#logout {
-    display: block;
-    visibility: hidden;
-    margin: 0 1px 0 0;
-    padding: 4px 10px;
-    width: 60px;
-    background: #5970B2;
-    color: #FFF;
-    text-align: center;
-    text-decoration: none;
 }
