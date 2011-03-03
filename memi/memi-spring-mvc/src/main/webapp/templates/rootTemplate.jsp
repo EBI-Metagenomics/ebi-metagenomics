@@ -35,7 +35,7 @@
      document.createElement('footer');
     </script>
 
-     <%-- BEGIN CODE FROM EBI TEMPLATE--%>
+    <%-- BEGIN CODE FROM EBI TEMPLATE--%>
     <!--  VERSION 2 MARCH 22 7007 // -->
     <script type="text/javascript">
         <!--
@@ -94,12 +94,13 @@
     <tiles:insertAttribute name="body"/>
     </div>
 
-
-
 </div>
+
 <footer>
-      <%--<tiles:insertAttribute name="footer"/>--%>
+      <tiles:insertAttribute name="footer"/>
 </footer>
+
+ <div id="extraDiv1"></div>
 <script type="text/javascript" src="http://www.ebi.ac.uk/inc/js/newmenu.js"></script>
 <script type="text/javascript">
     <!--
