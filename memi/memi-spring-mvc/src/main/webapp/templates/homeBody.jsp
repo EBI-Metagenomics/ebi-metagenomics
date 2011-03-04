@@ -108,7 +108,7 @@
             <%-- Show recent PublicStudies and PublicSamples only when the user is not logged in --%>
             <c:otherwise>
                 <div id="list-data-study">
-                    <h2>Study list</h2>
+                    <h2>Projects</h2>
                     <c:forEach var="study" items="${model.publicStudies}" varStatus="status">
                         <%--Just to show that the study is public or private--%>
                         <c:choose>
@@ -132,10 +132,10 @@
                     <p>
                         <a href="<c:url value="${baseURL}/studies/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_STUDIES"/>"
                            title="View
-                    all public studies">View all studies</a></p>
+                    all public studies">View all projects</a></p>
                 </div>
                 <div id="list-data-sample">
-                    <h2>Sample list</h2>
+                    <h2>Samples</h2>
                     <c:forEach var="sample" items="${model.publicSamples}" varStatus="status">
                         <%--Just to show that the sample is public or private--%>
                         <c:choose>
