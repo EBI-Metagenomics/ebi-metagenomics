@@ -30,12 +30,28 @@
 
 <div id ="sidebar-news">
 <h2>News and Events</h2>
-<ul>
-    <li><a href="">GSC11 conference- Hinxton, UK.</a> <span class="date">April 4-6th, 2011</span> </li>
-    <li><a href="">Keystone symposium - Microbial Communities as Drivers of Ecosystem Complexity Breckenridge, Colorado, USA.</a> <span class="date">March 25 - 30, 2011</span></li>
-    <li><a href="">Metagenomics: From the Bench to the Data Analysis - Heidelberg, Germany. </a> <span class="date">October 23 - 29, 2011</span></li>
-</ul>
-<%--<p><a href="#">Follow us on Twitter</a></p>--%>
+<c:choose>
+    <c:when test="${empty model.rssItems}">
+        No news
+    </c:when>
+    <c:otherwise>
+        <ul>
+        <c:forEach var="entry" items="${model.rssItems}" varStatus="status">
+            <li><a href="${entry.link}" title="${entry.description.value}">${entry.title}</a></li>
+        </c:forEach>
+        </ul>
+    </c:otherwise>
+</c:choose>
+<div id="rssfeed">
+    <a href="${model.rssUrl}" class="rss" rel="alternate" type="application/rss+xml">RSS feed</a>
+</div>        
+
+<%--<ul>--%>
+    <%--<li><a href="">GSC11 conference- Hinxton, UK.</a> <span class="date">April 4-6th, 2011</span> </li>--%>
+    <%--<li><a href="">Keystone symposium - Microbial Communities as Drivers of Ecosystem Complexity Breckenridge, Colorado, USA.</a> <span class="date">March 25 - 30, 2011</span></li>--%>
+    <%--<li><a href="">Metagenomics: From the Bench to the Data Analysis - Heidelberg, Germany. </a> <span class="date">October 23 - 29, 2011</span></li>--%>
+<%--</ul>--%>
+<%--<p><a href="#">Follow us on Twitter</a></p>--%>    
 </div>
 
 <div id ="sidebar-mailing">

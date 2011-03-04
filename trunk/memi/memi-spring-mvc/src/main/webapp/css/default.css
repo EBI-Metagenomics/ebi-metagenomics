@@ -373,6 +373,11 @@ color:#222222 ;
 text-decoration:underline;
 }
 
+a.rss {
+    padding-left: 22px;
+    background: url(../img/rss.gif) no-repeat;
+}
+
 #sidebar-news .date{
 color:#866d9e ;
 }

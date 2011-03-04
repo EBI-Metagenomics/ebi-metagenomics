@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                           http://www.springframework.org/schema/util 
+                           http://www.springframework.org/schema/util/spring-util.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--Show no more than five news entries-->
+    <bean id="client" class="uk.ac.ebi.interpro.metagenomics.memi.feed.CachingRomeClient">
+        <constructor-arg value="uk/ac/ebi/interpro/metagenomics/memi/feed/google-news.xml"/>
+        <!--<constructor-arg value="http://twitter.com/statuses/user_timeline/257482404.rss"/>-->
+        <constructor-arg value="5"/>
+    </bean>
+
+    <util:list id="expectedTitles">                            
+        <value>Supreme Court rules for anti-gay church - CNN</value>
+        <value>Gaddafi threatens west, says will invite India &amp; China - Hindustan Times</value>
+        <value>Bauer returning to Indy in hopes of meeting Bosma - Houston Chronicle</value>
+        <value>Gadhafi Says Libyan Oil Fields Are Secure - Voice of America</value>
+        <value>Apple faithful await the iPad 2 - San Jose Mercury News</value>        
+    </util:list>
+
+</beans>

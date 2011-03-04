@@ -2,6 +2,7 @@ package uk.ac.ebi.interpro.metagenomics.memi.controller;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -13,6 +14,8 @@ import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateSampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateStudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.NewsDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.feed.CachingRomeClient;
+import uk.ac.ebi.interpro.metagenomics.memi.feed.RomeClient;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.HomePageModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModel;
@@ -50,6 +53,8 @@ public class HomePageController extends LoginController implements IMGController
     @Resource
     private SessionManager sessionManager;
 
+    @Resource
+    RomeClient rssClient;
 
     @Override
     public ModelAndView doGet(ModelMap model) {
@@ -76,7 +81,7 @@ public class HomePageController extends LoginController implements IMGController
      * Creates the home page model and adds it to the specified model map.
      */
     private void populateModel(ModelMap model) {
-        final HomePageModel hpModel = MGModelFactory.getHomePageModel(sessionManager, studyDAO, sampleDAO);
+        final HomePageModel hpModel = MGModelFactory.getHomePageModel(sessionManager, studyDAO, sampleDAO, rssClient);
         model.addAttribute(MGModel.MODEL_ATTR_NAME, hpModel);
     }
 }
