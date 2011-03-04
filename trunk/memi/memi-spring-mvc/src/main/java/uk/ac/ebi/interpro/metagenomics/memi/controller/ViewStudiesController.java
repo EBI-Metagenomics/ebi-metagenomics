@@ -214,17 +214,17 @@ public class ViewStudiesController implements IMGController {
         StudyFilter.StudyVisibility vis = filter.getStudyVisibility();
         if (vis != null) {
             if (vis.equals(StudyFilter.StudyVisibility.MY_STUDIES)) {
-                return "My studies (published and pre-published)";
+                return "My projects (published and pre-published)";
             } else if (vis.equals(StudyFilter.StudyVisibility.MY_PUBLISHED_STUDIES)) {
-                return "My published studies";
+                return "My published projects";
             } else if (vis.equals(StudyFilter.StudyVisibility.MY_PREPUBLISHED_STUDIES)) {
-                return "My pre-published studies";
+                return "My pre-published projects";
             } else if (vis.equals(StudyFilter.StudyVisibility.ALL_PUBLISHED_STUDIES)) {
-                return "All published studies";
+                return "All published projects";
             } else if (vis.equals(StudyFilter.StudyVisibility.ALL_STUDIES)) {
-                return "All published and my pre-published studies";
+                return "All published and my pre-published projects";
             }
         }
-        return "List of studies";
+        return "List of projects";
     }
 }
