@@ -15,7 +15,7 @@
               E-Mail*:<form:input path="emailAddress"/><br/>
               Password:<form:password path="password"/> <br/>
               <input type="submit" name="login" value="Login"/>
-                      <input type="submit" name="cancel" value="Cancel"/>
+               
               </tr>
           </form:form>
           <%--* A valid login is: E-Mail: TEST; Password:test--%>
