@@ -3,19 +3,19 @@
 <%--Page variable which is used several time within this page. Used for not specified study attributes.--%>
 <c:set var="notGivenId" value="(not given)"/>
 <div id="content-full">
-<h2>Study Overview</h2>
+<h2>Project Overview</h2>
 
 <div style="margin-top:6px"></div>
 <table frame="box" width="95%">
     <tr>
         <td width="50%" align="left" valign="top">
-            <h2>Study ${model.study.studyName}</h2>
+            <h2>${model.study.studyName}</h2>
             ${model.study.studyId}
         </td>
     </tr>
 </table>
 <div style="margin-top:10px"></div>
-<h3 id="study_desc">Study Description</h3>
+<h3 id="study_desc">Project description</h3>
 <table frame="box" width="95%">
     <tr>
         <c:choose>
@@ -26,9 +26,9 @@
                 <c:set var="studyAbstract" value="notGivenId"/>
             </c:otherwise>
         </c:choose>
-        <td valign="top" align="right" width="150"><b>Study abstract:</b></td>
-        <td><textarea name=mytextarea cols=50 rows=5 readonly><c:out
-                value="${studyAbstract}"/></textarea></td>
+        <td valign="top" align="right" width="150"><b>Description:</b></td>
+        <td><c:out
+                value="${studyAbstract}"/></td>
     </tr>
     <tr>
         <c:choose>
