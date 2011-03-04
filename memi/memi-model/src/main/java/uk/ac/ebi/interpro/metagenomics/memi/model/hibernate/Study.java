@@ -226,6 +226,14 @@ public class Study implements SecureEntity {
         return studyAbstract;
     }
 
+    @Transient
+    public String getShortStudyAbstract()
+    {
+        if(studyAbstract!=null && studyAbstract.length()>15)
+            return studyAbstract.substring(0,15);
+        return studyAbstract;
+    }
+
     public void setStudyAbstract(String studyAbstract) {
         this.studyAbstract = studyAbstract;
     }
