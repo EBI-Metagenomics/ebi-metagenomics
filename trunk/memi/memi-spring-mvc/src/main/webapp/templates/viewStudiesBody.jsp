@@ -22,13 +22,13 @@
                     <td><form:errors path="searchTerm" cssClass="error"/></td>
                 </tr>
                 <tr>
-                    <td>Study type:</td>
+                    <td>Project type:</td>
                     <td>
                         <form:select path="studyType">
                             <form:option value="" label="All"/>
                             <form:options items="${model.studyTypes}"/>
                         </form:select>
-                    </td>
+                    </td><td></td>
                 </tr>
                 <tr>
                     <td>Analysis status:</td>
@@ -37,7 +37,7 @@
                             <form:option value="" label="All"/>
                             <form:options items="${model.studyStatusList}"/>
                         </form:select>
-                    </td>
+                    </td> <td></td>
                 </tr>
                 <c:if test="${not empty model.submitter}">
                     <tr>
@@ -46,7 +46,7 @@
                             <form:select id="studyVisibility" path="studyVisibility">
                                 <form:options items="${model.studyVisibilityList}"/>
                             </form:select>
-                        </td>
+                        </td><td></td>
                     </tr>
                 </c:if>
                 <%--<c:choose>--%>
@@ -84,15 +84,15 @@
         <a href="<c:url value="${baseURL}/studies/doExport?${queryString}"/>">Export to CSV</a>
     </div>
 
-    <table border="1" width="95%">
+    <table border="1" >
         <tr>
             <th>No.</th>
             <c:if test="${not empty model.submitter}">
                 <th>Privacy</th>
             </c:if>
-            <th>Study Id</th>
-            <th>Study name</th>
-            <th>Study type</th>
+            <th>Project Id</th>
+            <th>Project name</th>
+            <th>Project type</th>
             <th>Received date</th>
             <th>Analysis status</th>
             <th>Experimental factor</th>
