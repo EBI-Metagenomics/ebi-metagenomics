@@ -19,16 +19,12 @@ import java.util.TreeMap;
  */
 public final class HomePageModel extends MGModel {
 
-//    private List<Study> publicStudies;
-
     /**
      * Maps studies and their number of samples.
      */
     private SortedMap<Study, Long> publicStudiesMap;
 
     private List<Sample> publicSamples;
-
-//    private List<Study> myStudies;
 
     /**
      * Maps studies and their number of samples.
@@ -46,8 +42,8 @@ public final class HomePageModel extends MGModel {
         this.publicSamples = publicSamples;
         this.myStudiesMap = new TreeMap<Study, Long>();
         this.mySamples = new ArrayList<Sample>();
-        this.rssUrl     = rssUrl;
-        this.rssItems   = rssItems;
+        this.rssUrl = rssUrl;
+        this.rssItems = rssItems;
     }
 
     HomePageModel(Submitter submitter, SortedMap<Study, Long> publicStudiesMap, List<Sample> publicSamples, String rssUrl, List<SyndEntry> rssItems, SortedMap<Study, Long> myStudiesMap, List<Sample> mySamples) {
@@ -96,5 +92,4 @@ public final class HomePageModel extends MGModel {
     public String getRssUrl() {
         return rssUrl;
     }
-    
 }

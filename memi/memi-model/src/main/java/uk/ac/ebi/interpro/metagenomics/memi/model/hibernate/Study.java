@@ -210,9 +210,9 @@ public class Study implements SecureEntity {
     @Transient
     public String getShortStudyAbstract() {
         if (studyAbstract != null && studyAbstract.length() > 50) {
-            studyAbstract = studyAbstract.substring(0, 50);
-            int index = studyAbstract.lastIndexOf(' ');
-            return studyAbstract.substring(0, index);
+            String shortAbstract = studyAbstract.substring(0, 50);
+            int index = shortAbstract.lastIndexOf(' ');
+            return shortAbstract.substring(0, index);
         }
         return studyAbstract;
     }

@@ -42,25 +42,25 @@
             <%-- Show MyStudies and MySamples tables only if a user is logged in--%>
             <c:when test="${not empty model.submitter}">
                 <div id="list-data-study">
-                    <h2>My projects</h2>
+                    <h2>My Projects</h2>
                     <c:forEach var="entry" items="${model.myStudiesMap}" varStatus="status">
-                        <%--Just to show that the study is public or private--%>
-                        <c:choose>
-                            <c:when test="${entry.key.public}">
-                                <c:set var="myStudyVisibility" value="public"/>
-                            </c:when>
-                            <c:otherwise>
-                                <c:set var="myStudyVisibility" value="private"/>
-                            </c:otherwise>
-                        </c:choose>
-                        <p><span class="list_date">${entry.key.lastMetadataReceived}:</span> <a
-                                href="<c:url value="${baseURL}/study/${entry.key.studyId}"/>"
-                                class="list_more">${entry.key.studyName} <img
-                                alt="<c:out value="${myStudyVisibility}"/>"
-                                src="../img/icon_priv_<c:out value="${myStudyVisibility}"/>.gif"></a>
-                            <a href="<c:url value="${baseURL}/study/${entry.key.studyId}"/>" class="more_view">view</a>
+                        <p>
+                            <a href="<c:url value="${baseURL}/study/${entry.key.studyId}"/>"
+                               class="list_more">${entry.key.studyName}
+                                <c:if test="${!entry.key.public}">
+                                    <img alt="public" src="../img/icon_priv_private.gif">
+                                </c:if>
+                            </a>
+                            </br>
+                            <c:out value="${entry.key.shortStudyAbstract} ..."/>
+                            <a href="<c:url value="${baseURL}/study/${entry.key.studyId}"/>#study_desc"
+                               class="more_view">view</a>
+                            </br>
+                            <a href="<c:url value="${baseURL}/study/${entry.key.studyId}"/>#samples_id"
+                               class="list_more">
+                                <c:out value="(${entry.value} samples)"/>
+                            </a>
                         </p>
-
                     </c:forEach>
                     <br/>
 
@@ -73,25 +73,30 @@
                     all my studies">View all my projects</a></p>
                 </div>
                 <div id="list-data-sample">
-                    <h2>My samples</h2>
+                    <h2>My Samples</h2>
                     <c:forEach var="sample" items="${model.mySamples}" varStatus="status">
                         <%--Just to show that the sample is public or private--%>
-                        <c:choose>
-                            <c:when test="${entry.key.public}">
-                                <c:set var="mySampleVisibility" value="public"/>
-                            </c:when>
-                            <c:otherwise>
-                                <c:set var="mySampleVisibility" value="private"/>
-                            </c:otherwise>
-                        </c:choose>
-                        <p><%--<span class="list_date">${sample.metadataReceived}:</span>--%> <a
-                                href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>"
-                                class="list_more">${sample.sampleTitle} <img
-                                alt="<c:out value="${mySampleVisibility}"/>"
-                                src="../img/icon_priv_<c:out value="${mySampleVisibility}"/>.gif"></a> <a
-                                href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>" class="more_view">view</a>
+                        <p><%--<span class="list_date">${sample.metadataReceived}:</span>--%>
+                            <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>"
+                               class="list_more">${sample.sampleTitle}
+                                <c:if test="${!sample.public}">
+                                    <img alt="private" src="../img/icon_priv_private.gif">
+                                </c:if>
+                            </a>
+                            </br>
+                            <c:out value="${sample.shortSampleDescription} ..."/>
+                            <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>#sample_desc"
+                               class="more_view">view
+                            </a>
+                            </br>
+                            <c:choose>
+                                <c:when test="${empty sample.analysisCompleted}">Analysis in Progress</c:when>
+                                <c:otherwise>
+                                    <a href="<c:url value="${baseURL}/analysisStatsView/${sample.sampleId}"/>">Analysis
+                                        Results</a>
+                                </c:otherwise>
+                            </c:choose>
                         </p>
-
                     </c:forEach>
                     <br/>
 
@@ -119,11 +124,12 @@
                                 <c:if test="${!entry.key.public}">
                                     <img alt="public" src="../img/icon_priv_private.gif">
                                 </c:if>
-                            </a></br>
+                            </a>
+                            </br>
+                            <c:out value="${entry.key.shortStudyAbstract} ..."/>
                             <a href="<c:url value="${baseURL}/study/${entry.key.studyId}"/>#study_desc"
-                               class="list_more">
-                                <c:out value="${entry.key.shortStudyAbstract}... (more)"/>
-                            </a></br>
+                               class="more_view">view</a>
+                            </br>
                             <a href="<c:url value="${baseURL}/study/${entry.key.studyId}"/>#samples_id"
                                class="list_more">
                                 <c:out value="(${entry.value} samples)"/>
@@ -142,21 +148,27 @@
                 <div id="list-data-sample">
                     <h2>Samples</h2>
                     <c:forEach var="sample" items="${model.publicSamples}" varStatus="status">
-                        <%--Just to show that the sample is public or private--%>
-                        <c:choose>
-                            <c:when test="${sample.public}">
-                                <c:set var="publicSampleVisibility" value="public"/>
-                            </c:when>
-                            <c:otherwise>
-                                <c:set var="publicSampleVisibility" value="private"/>
-                            </c:otherwise>
-                        </c:choose>
-                        <p><%--<span class="list_date">${sample.metadataReceived}:</span> --%><a
-                                href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>"
-                                class="list_more">${sample.sampleTitle} </a> <a
-                                href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>" class="more_view">view</a>
+                        <p><%--<span class="list_date">${sample.metadataReceived}:</span>--%>
+                            <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>"
+                               class="list_more">${sample.sampleTitle}
+                                <c:if test="${!sample.public}">
+                                    <img alt="private" src="../img/icon_priv_private.gif">
+                                </c:if>
+                            </a>
+                            </br>
+                            <c:out value="${sample.shortSampleDescription} ..."/>
+                            <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>#sample_desc"
+                               class="more_view">view
+                            </a>
+                            </br>
+                            <c:choose>
+                                <c:when test="${empty sample.analysisCompleted}">Analysis in Progress</c:when>
+                                <c:otherwise>
+                                    <a href="<c:url value="${baseURL}/analysisStatsView/${sample.sampleId}"/>">Analysis
+                                        Results</a>
+                                </c:otherwise>
+                            </c:choose>
                         </p>
-
                     </c:forEach>
                     <br/>
 
