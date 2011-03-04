@@ -43,8 +43,6 @@ public class Study implements SecureEntity {
     @Column(name = "SUBMITTER_ID")
     private long submitterId;
 
-//    @Column(name = "STUDY_TYPE")
-//    private StudyType studyType;
 
     @Column(name = "STUDY_Status")
     private StudyStatus studyStatus;
@@ -138,22 +136,6 @@ public class Study implements SecureEntity {
     public void setSubmitterId(long submitterId) {
         this.submitterId = submitterId;
     }
-
-//    public StudyType getStudyType() {
-//        return studyType;
-//    }
-//
-//    public void setStudyType(StudyType studyType) {
-//        this.studyType = studyType;
-//    }
-
-//    public String getStudyTypeAsString() {
-//        return getStudyType().toString();
-//    }
-//
-//    public void setStudyTypeAsString(String enumType) {
-//        this.setStudyType(StudyType.valueOf(enumType));
-//    }
 
     public String getStudyStatusAsString() {
         return getStudyStatus().toString();
@@ -283,31 +265,16 @@ public class Study implements SecureEntity {
         this.lastMetadataReceived = lastMetadataReceived;
     }
 
-//    public enum StudyType {
-//        ENVIRONMENTAL(EnvironmentSample.class),
-//        HOST_ASSOCIATED(HostSample.class),
-//        UNDEFINED(UndefinedSample.class);
-//
-//        private Class<? extends Sample> clazz;
-//
-//        private StudyType(Class<? extends Sample> clazz) {
-//            this.clazz = clazz;
-//        }
-//
-//        public Class<? extends Sample> getClazz() {
-//            return clazz;
-//        }
-//    }
-
     public enum StudyStatus {
-        IN_PROGRESS("In progress"), FINISHED("Finished"), UNDEFINED("Undefined");
+        IN_PROGRESS("In progress"),
+        FINISHED("Finished"),
+        UNDEFINED("Undefined");
 
         private String status;
 
         private StudyStatus(String status) {
             this.status = status;
         }
-
 
         @Override
         public String toString() {

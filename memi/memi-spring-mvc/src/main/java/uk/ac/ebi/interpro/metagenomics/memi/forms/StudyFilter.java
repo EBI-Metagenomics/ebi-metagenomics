@@ -57,6 +57,21 @@ public class StudyFilter {
      * MY_PRE-PUBLISHED_PROJECTS: All my pre-published studies
      */
     public enum StudyVisibility {
-        ALL_PROJECTS, ALL_PUBLISHED_PROJECTS, MY_PROJECTS, MY_PUBLISHED_PROJECTS, MY_PREPUBLISHED_PROJECTS;
+        ALL_PROJECTS("All projects"),
+        ALL_PUBLISHED_PROJECTS("All published projects"),
+        MY_PROJECTS("My projects"),
+        MY_PUBLISHED_PROJECTS("My published projects"),
+        MY_PREPUBLISHED_PROJECTS("My pre-published projects");
+
+        private String name;
+
+        private StudyVisibility(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String toString() {
+            return name;
+        }
     }
 }

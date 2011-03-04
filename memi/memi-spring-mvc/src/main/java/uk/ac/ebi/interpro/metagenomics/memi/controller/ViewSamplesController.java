@@ -30,10 +30,9 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Represents the controller for the list studies page.
@@ -56,8 +55,6 @@ public class ViewSamplesController implements IMGController {
     public final static String VIEW_NAME = "samples";
 
     private final String VELOCITY_TEMPLATE_LOCATION_PATH = "WEB-INF/velocity_templates/exportSamples.vm";
-
-    private final String DOWNLOAD_FILE_NAME = "mg_samples.csv";
 
     @Resource
     private HibernateSampleDAO sampleDAO;
@@ -103,12 +100,14 @@ public class ViewSamplesController implements IMGController {
             //Create file content
             String fileContent = VelocityTemplateWriter.createFileContent(velocityEngine, VELOCITY_TEMPLATE_LOCATION_PATH, velocityModel);
             File file = MemiFileWriter.writeCSVFile(fileContent);
+            String fileName = MemiTools.createFileName("mg_samples_");
             if (file != null && file.canRead()) {
-                downloadService.openDownloadDialog(response, file, DOWNLOAD_FILE_NAME, true);
+                downloadService.openDownloadDialog(response, file, fileName, true);
             }
         }
         return new ModelAndView(VIEW_NAME, model);
     }
+
 
     /**
      * Handles the export of a more detailed export file.
@@ -223,14 +222,10 @@ public class ViewSamplesController implements IMGController {
 
     private List<String> getSampleProperties() {
         List<String> result = new ArrayList<String>();
-        result.add("SAMPLE_ID");
         result.add("SAMPLE_NAME");
-        result.add("COLLECTION_DATE");
-        result.add("VALID_METADATA");
-        result.add("VALID_RAW_DATA");
-        result.add("ANALYSIS_COMPLETED");
-        result.add("ARCHIVED_IN_ENA");
-
+        result.add("PROJECT_NAME");
+        result.add("SOURCE");
+        result.add("ANALYSIS");
         return result;
     }
 

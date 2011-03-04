@@ -21,6 +21,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewStudiesModel;
+import uk.ac.ebi.interpro.metagenomics.memi.tools.MemiTools;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -48,8 +49,6 @@ public class ViewStudiesController extends AbstractController implements IMGCont
     public static final String VIEW_NAME = "studies";
 
     private final String VELOCITY_TEMPLATE_LOCATION_PATH = "WEB-INF/velocity_templates/exportStudies.vm";
-
-    private final String DOWNLOAD_FILE_NAME = "mg_projects.csv";
 
     @Resource
     private HibernateStudyDAO studyDAO;
@@ -100,8 +99,9 @@ public class ViewStudiesController extends AbstractController implements IMGCont
             //Create file content
             String fileContent = VelocityTemplateWriter.createFileContent(velocityEngine, VELOCITY_TEMPLATE_LOCATION_PATH, velocityModel);
             File file = MemiFileWriter.writeCSVFile(fileContent);
+            String fileName = MemiTools.createFileName("mg_projects_");
             if (file != null && file.canRead()) {
-                downloadService.openDownloadDialog(response, file, DOWNLOAD_FILE_NAME, true);
+                downloadService.openDownloadDialog(response, file, fileName, true);
             }
         }
         return null;
