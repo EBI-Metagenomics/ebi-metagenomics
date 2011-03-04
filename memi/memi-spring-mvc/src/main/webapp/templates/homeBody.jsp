@@ -123,8 +123,8 @@
                                 href="<c:url value="${baseURL}/study/${study.studyId}"/>"
                                 class="list_more">${study.studyName} <img
                                 alt="<c:out value="${publicStudyVisibility}"/>"
-                                src="../img/icon_priv_<c:out value="${publicStudyVisibility}"/>.gif"></a> <a
-                                href="<c:url value="${baseURL}/study/${study.studyId}"/>" class="more_view">view</a></p>
+                                src="../img/icon_priv_<c:out value="${publicStudyVisibility}"/>.gif"></a> <br/>
+                            <c:out value="${study.shortStudyAbstract}"/> <a href="<c:url value="${baseURL}/study/${study.studyId}"/>" class="more_view">view</a></p>
 
                     </c:forEach>
                     <br/>
