@@ -74,7 +74,7 @@
                             </c:if>
                         </td>
                         <td>${sample.study.studyName}</td>
-                        <td>${sample.sampleType.type}</td>
+                        <td>${sample.sampleTypeAString}</td>
                         <td>
                             <c:choose>
                                 <c:when test="${empty sample.analysisCompleted}">In Progress</c:when>

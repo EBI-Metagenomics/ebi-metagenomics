@@ -231,6 +231,11 @@ public abstract class Sample implements SecureEntity {
     @Transient
     public abstract SampleType getSampleType();
 
+    @Transient
+    public String getSampleTypeAString() {
+        return getSampleType().toString();
+    }
+
 
     public enum SampleType {
         ENVIRONMENTAL(EnvironmentSample.class, "Environmental"),
@@ -250,8 +255,10 @@ public abstract class Sample implements SecureEntity {
             return clazz;
         }
 
-        public String getType() {
+        @Override
+        public String toString() {
             return type;
         }
+
     }
 }

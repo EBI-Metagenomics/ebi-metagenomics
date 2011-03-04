@@ -56,6 +56,21 @@ public class SampleFilter {
      * MY_PRE-PUBLISHED_SAMPLES: All my pre-published SAMPLES
      */
     public enum SampleVisibility {
-        ALL_SAMPLES, ALL_PUBLISHED_SAMPLES, MY_SAMPLES, MY_PUBLISHED_SAMPLES, MY_PREPUBLISHED_SAMPLES;
+        ALL_SAMPLES("All samples"),
+        ALL_PUBLISHED_SAMPLES("All published samples"),
+        MY_SAMPLES("My samples"),
+        MY_PUBLISHED_SAMPLES("My published samples"),
+        MY_PREPUBLISHED_SAMPLES("My pre-published samples");
+
+        private String name;
+
+        private SampleVisibility(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String toString() {
+            return name;
+        }
     }
 }

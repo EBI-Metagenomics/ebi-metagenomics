@@ -2,6 +2,9 @@ package uk.ac.ebi.interpro.metagenomics.memi.tools;
 
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -19,5 +22,13 @@ public class MemiTools {
             result[i] = samples.get(i).getSampleId();
         }
         return result;
+    }
+
+    public static String createFileName(final String fileName) {
+        final String suffix = ".csv";
+        Format dateFormatter = new SimpleDateFormat("yyyyMMdd");
+        Date date = new Date();
+        final String infix = dateFormatter.format(date);
+        return fileName + infix + suffix;
     }
 }
