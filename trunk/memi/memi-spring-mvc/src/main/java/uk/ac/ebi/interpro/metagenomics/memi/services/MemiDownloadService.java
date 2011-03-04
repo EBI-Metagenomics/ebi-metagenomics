@@ -5,6 +5,9 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.util.FileCopyUtils;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.EnvironmentSample;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.HostSample;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 
 import javax.servlet.http.HttpServletResponse;
@@ -61,13 +64,13 @@ public class MemiDownloadService {
      * assembled to one CSV file containing all sample info. CSV files are stream from project resource package.
      *
      * @param response  HTTP response.
-     * @param type      Specifies the sample/study type. This is necessary distinguish between two CSV file
+     * @param clazz     Specifies the sample type. This is necessary distinguish between two CSV file
      *                  headers, one header file for Host-associated and another header file
      *                  for environmental samples.
      * @param sampleIDs Specifies the name of the CSV file for each sample.
      * @return TRUE if a downloadable file exists and 'Save to file' dialog could be open.
      */
-    public boolean openDownloadDialog(HttpServletResponse response, Study.StudyType type, String... sampleIDs) {
+    public boolean openDownloadDialog(HttpServletResponse response, Class<? extends Sample> clazz, String... sampleIDs) {
         log.info("Trying to open the download dialog to export a CSV file for sample(s) with ID(s)" + Arrays.toString(sampleIDs) + "...");
 
         InputStream sampleFileIs = null;
@@ -78,8 +81,8 @@ public class MemiDownloadService {
         String fileName = "";
         try {
             //create input stream for header file
-            if (type != null) {
-                Resource headerResource = getCSVFileHeaderStream(type);
+            if (clazz != null) {
+                Resource headerResource = getCSVFileHeaderStream(clazz);
                 if (headerResource != null && headerResource.exists()) {
                     headerFileIs = headerResource.getInputStream();
                 }
@@ -158,11 +161,11 @@ public class MemiDownloadService {
      * Creates a resource to CSV files, which is related to the specified study type. These files contain
      * CSV header information.
      */
-    private Resource getCSVFileHeaderStream(Study.StudyType type) {
+    private Resource getCSVFileHeaderStream(Class<? extends Sample> clazz) {
         String headerFileName = null;
-        if (type.equals(Study.StudyType.ENVIRONMENTAL)) {
+        if (clazz.equals(EnvironmentSample.class)) {
             headerFileName = "data_EMG_env_samples.csv";
-        } else if (type.equals(Study.StudyType.HOST_ASSOCIATED)) {
+        } else if (clazz.equals(HostSample.class)) {
             headerFileName = "data_EMG_host_samples.csv";
         } else {
             log.warn("Could not set any header file name, because an undefined study type was specified!");

@@ -5,6 +5,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -68,6 +69,24 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
             }
         }
         return null;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public long retrieveSampleSizeByStudyId(long studyId) {
+        Session session = sessionFactory.getCurrentSession();
+        if (session != null) {
+            Criteria crit = session.createCriteria(Sample.class);
+            if (crit != null) {
+                crit.setProjection(Projections.rowCount())
+                        .add(Restrictions.eq("study.id", studyId));
+                List<Long> result = crit.list();
+                if (result != null && result.size() > 0) {
+                    return result.get(0);
+                }
+            }
+        }
+        return 0;
     }
 
     @Override

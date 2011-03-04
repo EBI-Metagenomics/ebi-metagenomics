@@ -23,7 +23,7 @@ public class ViewSamplesModel extends MGModel {
 
     private List<SampleFilter.SampleVisibility> sampleVisibilityList;
 
-    private List<Study.StudyType> sampleTypes;
+    private List<Sample.SampleType> sampleTypes;
 
 
     ViewSamplesModel(Submitter submitter, List<Sample> samples) {
@@ -35,7 +35,7 @@ public class ViewSamplesModel extends MGModel {
         this.sampleFilter = filter;
         this.samples = samples;
         this.sampleVisibilityList = getDefaultStudyVisibilityList();
-        this.sampleTypes = getDefaultStudyTypes();
+        this.sampleTypes = getDefaultSampleTypes();
     }
 
     public SampleFilter getSampleFilter() {
@@ -62,11 +62,11 @@ public class ViewSamplesModel extends MGModel {
         this.sampleVisibilityList = sampleVisibilityList;
     }
 
-    public List<Study.StudyType> getSampleTypes() {
+    public List<Sample.SampleType> getSampleTypes() {
         return sampleTypes;
     }
 
-    public void setSampleTypes(List<Study.StudyType> sampleTypes) {
+    public void setSampleTypes(List<Sample.SampleType> sampleTypes) {
         this.sampleTypes = sampleTypes;
     }
 
@@ -78,9 +78,9 @@ public class ViewSamplesModel extends MGModel {
         return result;
     }
 
-    private List<Study.StudyType> getDefaultStudyTypes() {
-        List<Study.StudyType> result = new ArrayList<Study.StudyType>();
-        for (Study.StudyType type : Study.StudyType.values()) {
+    private List<Sample.SampleType> getDefaultSampleTypes() {
+        List<Sample.SampleType> result = new ArrayList<Sample.SampleType>();
+        for (Sample.SampleType type : Sample.SampleType.values()) {
             result.add(type);
         }
         return result;

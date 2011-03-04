@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 
 /**
+ * Hibernate generated publication table.
  * TODO: Check why SequenceGenerator parameter allocationSize does not work
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro

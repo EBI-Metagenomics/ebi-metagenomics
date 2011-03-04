@@ -28,9 +28,6 @@ import java.util.*;
  * @since 1.0-SNAPSHOT
  */
 public class DatabaseMockuper {
-    /**
-     * @param args
-     */
     public static void main(String[] args) {
         //Instantiate date creator
         DateCreator dateCreator = new DateCreator();
@@ -135,8 +132,7 @@ public class DatabaseMockuper {
             Set<Sample> samples = sampleMap.get(study.getStudyId());
             for (Sample sample : samples) {
                 sample.setStudy(study);
-                if(study.getStudyId().equals("ERP000118"))
-                {
+                if (study.getStudyId().equals("ERP000118")) {
                     sample.addPublication(p6);
                     sample.addPublication(p7);
                 }
@@ -258,11 +254,9 @@ public class DatabaseMockuper {
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-        catch (URISyntaxException e) {
+        } catch (URISyntaxException e) {
             e.printStackTrace();
         }
         return result;
@@ -287,7 +281,7 @@ public class DatabaseMockuper {
                         s.setNcbiProjectId(Integer.parseInt(row[1]));
                         s.setStudyName(row[2]);
                         s.setCentreName(row[5]);
-                        setStudyType(row[6], s);
+//                        setStudyType(row[6], s);
                         s.setExperimentalFactor(row[8]);
                         //set public release date                        
                         try {
@@ -309,35 +303,31 @@ public class DatabaseMockuper {
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-        catch (URISyntaxException e) {
+        } catch (URISyntaxException e) {
             e.printStackTrace();
         }
         return result;
     }
 
-    private static void setStudyType(String content, Study s) {
-        if (content.startsWith("Environ")) {
-            s.setStudyType(Study.StudyType.ENVIRONMENTAL);
-        } else if (content.startsWith("Host")) {
-            s.setStudyType(Study.StudyType.HOST_ASSOCIATED);
-        } else {
-            s.setStudyType(Study.StudyType.UNDEFINED);
-        }
-    }
+//    private static void setStudyType(String content, Study s) {
+//        if (content.startsWith("Environ")) {
+//            s.setStudyType(Study.StudyType.ENVIRONMENTAL);
+//        } else if (content.startsWith("Host")) {
+//            s.setStudyType(Study.StudyType.HOST_ASSOCIATED);
+//        } else {
+//            s.setStudyType(Study.StudyType.UNDEFINED);
+//        }
+//    }
 
     private static Study.StudyStatus getRandomStudyStatus() {
-        int num = new Random().nextInt(3);
+        int num = new Random().nextInt(2);
         switch (num) {
             case 1:
                 return Study.StudyStatus.FINISHED;
             case 2:
                 return Study.StudyStatus.IN_PROGRESS;
-            case 3:
-                return Study.StudyStatus.QUEUED;
             default:
                 return Study.StudyStatus.UNDEFINED;
         }

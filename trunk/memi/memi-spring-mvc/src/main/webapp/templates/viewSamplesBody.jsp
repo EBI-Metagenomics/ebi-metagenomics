@@ -42,109 +42,53 @@
         </table>
     </div>
     <div style="margin-top:40px"></div>
-    <c:if test="${isDialogOpen==false}">
-        <p><span style="color:red">No export data available for that(these) sample(s)!</span></p>
-    </c:if>
-    <%--Request the current query string to export only the filtered studies--%>
-    <c:set var="queryString" value="${pageContext.request.queryString}" scope="session"/>
-    <div align="left">
-        <a href="<c:url value="${baseURL}/samples/doExportTable?${queryString}"/>">Export table to CSV</a><br>
-        <c:if test="${not empty sampleFilter.sampleType}">
-            <a href="<c:url value="${baseURL}/samples/doExportDetails?${queryString}"/>">
-                Export more detailed sample info to CSV</a>
-        </c:if>
-    </div>
-
-    <table border="1" width="95%">
-        <tr>
-            <th>No.</th>
-            <c:if test="${not empty model.submitter}">
-                <th>Privacy</th>
+    <c:choose>
+        <c:when test="${not empty model.samples}">
+            <c:if test="${isDialogOpen==false}">
+                <p><span style="color:red">No export data available for that(these) sample(s)!</span></p>
             </c:if>
-            <th>Sample Id</th>
-            <th>Sample name</th>
-            <th>Collection date</th>
-            <th>Valid meta data</th>
-            <th>Valid raw data</th>
-            <th>Analysis</th>
-            <th>Archived in ENA</th>
-        </tr>
-        <%
-            int i = 1;
-        %>
-        <c:forEach var="sample" items="${model.samples}" varStatus="status">
-            <tr>
-                <td align="center"><%= i%><% i++;%></td>
-                <c:if test="${not empty model.submitter}">
-                    <td>
-                        <c:choose>
-                            <c:when test="${sample.public}">
-                                <img src="/img/icon_priv_public.gif" height="16" width="16" align="absmiddle" alt=""
-                                     border="0"/>
-                            </c:when>
-                            <c:otherwise>
+            <%--Request the current query string to export only the filtered studies--%>
+            <c:set var="queryString" value="${pageContext.request.queryString}" scope="session"/>
+            <div align="left">
+                <a href="<c:url value="${baseURL}/samples/doExportTable?${queryString}"/>">Export table to CSV</a><br>
+                <c:if test="${not empty sampleFilter.sampleType}">
+                    <a href="<c:url value="${baseURL}/samples/doExportDetails?${queryString}"/>">
+                        Export more detailed sample info to CSV</a>
+                </c:if>
+            </div>
+
+            <table border="1" width="95%">
+                <tr>
+                    <th>Sample Name</th>
+                    <th>Project Name</th>
+                    <th>Source</th>
+                    <th>Analysis</th>
+                </tr>
+                <c:forEach var="sample" items="${model.samples}" varStatus="status">
+                    <tr>
+                        <td>
+                            <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>">${sample.sampleTitle}</a>
+                            <c:if test="${!sample.public}">
                                 <img src="/img/icon_priv_lock.gif" height="16" width="16" align="absmiddle" alt=""
                                      border="0"/>
-                            </c:otherwise>
-                        </c:choose>
-                    </td>
-                </c:if>
-                <td>
-                    <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>">${sample.sampleId}</a>
-                </td>
-                <td>${sample.sampleTitle}</td>
-                <td>
-                    <c:choose>
-                        <c:when test="${empty sample.collectionDate}">N/A</c:when>
-                        <c:otherwise>${sample.collectionDate}</c:otherwise>
-                    </c:choose>
-                </td>
-                <td>
-                    <c:choose>
-                        <c:when test="${empty sample.metadataReceived}">
-                            <img src="/img/error.gif" height="16" width="16" align="absmiddle" alt=""
-                                 border="0"/>
-                        </c:when>
-                        <c:otherwise>
-                            <img src="/img/check.gif" height="16" width="16" align="absmiddle" alt=""
-                                 border="0"/>
-                        </c:otherwise>
-                    </c:choose>
-                </td>
-                <td>
-                    <c:choose>
-                        <c:when test="${empty sample.sequenceDataReceived}">
-                            <img src="/img/error.gif" height="16" width="16" align="absmiddle" alt=""
-                                 border="0"/>
-                        </c:when>
-                        <c:otherwise>
-                            <img src="/img/check.gif" height="16" width="16" align="absmiddle" alt=""
-                                 border="0"/>
-                        </c:otherwise>
-                    </c:choose>
-                </td>
-                <td>
-                    <c:choose>
-                        <c:when test="${empty sample.analysisCompleted}">In Progress</c:when>
-                        <c:otherwise>
-                            <a href="<c:url value="${baseURL}/analysisStatsView/${sample.sampleId}"/>">Analysis
-                                Results</a>
-                        </c:otherwise>
-                    </c:choose>
-                </td>
-                <td>
-                    <c:choose>
-                        <c:when test="${empty sample.sequenceDataArchived}">
-                            <img src="/img/error.gif" height="16" width="16" align="absmiddle" alt=""
-                                 border="0"/>
-                        </c:when>
-                        <c:otherwise>
-                            <img src="/img/check.gif" height="16" width="16" align="absmiddle" alt=""
-                                 border="0"/>
-                        </c:otherwise>
-                    </c:choose>
-                </td>
-            </tr>
-        </c:forEach>
-    </table>
+                            </c:if>
+                        </td>
+                        <td>${sample.study.studyName}</td>
+                        <td>${sample.sampleType.type}</td>
+                        <td>
+                            <c:choose>
+                                <c:when test="${empty sample.analysisCompleted}">In Progress</c:when>
+                                <c:otherwise>
+                                    <a href="<c:url value="${baseURL}/analysisStatsView/${sample.sampleId}"/>">Results</a>
+                                </c:otherwise>
+                            </c:choose>
+                        </td>
+                    </tr>
+                </c:forEach>
+            </table>
+        </c:when>
+        <c:otherwise>
+            <div align="center"><b>No data to display</b></div>
+        </c:otherwise>
+    </c:choose>
 </div>

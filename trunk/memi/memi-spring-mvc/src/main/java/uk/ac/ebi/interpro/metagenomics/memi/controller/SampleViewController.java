@@ -20,7 +20,6 @@ import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.SampleViewModel;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -35,7 +34,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/" + SampleViewController.VIEW_NAME + "/{sampleId}")
-public class SampleViewController extends AbstractController<Sample> {
+public class SampleViewController extends SecuredAbstractController<Sample> {
     private static final Log log = LogFactory.getLog(SampleViewController.class);
     /**
      * View name of this controller which is used several times.
@@ -53,9 +52,6 @@ public class SampleViewController extends AbstractController<Sample> {
 
     @Resource
     private MemiDownloadService downloadService;
-
-    @Resource
-    private SessionManager sessionManager;
 
     //GET request method
 
@@ -80,9 +76,8 @@ public class SampleViewController extends AbstractController<Sample> {
             public void processModel(ModelMap model, Sample sample) {
                 log.info("Building model...");
                 populateModel(model, sample);
-                Study.StudyType type = getSampleType(sample);
                 if (downloadService != null) {
-                    boolean isDialogOpen = downloadService.openDownloadDialog(response, type, sampleId);
+                    boolean isDialogOpen = downloadService.openDownloadDialog(response, sample.getClazz(), sampleId);
                     model.addAttribute("isDialogOpen", isDialogOpen);
                 }
             }
@@ -90,17 +85,17 @@ public class SampleViewController extends AbstractController<Sample> {
     }
 
 
-    private Study.StudyType getSampleType(Sample sample) {
-        if (sample != null) {
-            if (sample instanceof HostSample) {
-                return Study.StudyType.HOST_ASSOCIATED;
-
-            } else if (sample instanceof EnvironmentSample) {
-                return Study.StudyType.ENVIRONMENTAL;
-            }
-        }
-        return Study.StudyType.UNDEFINED;
-    }
+//    private Study.StudyType getSampleType(Sample sample) {
+//        if (sample != null) {
+//            if (sample instanceof HostSample) {
+//                return Study.StudyType.HOST_ASSOCIATED;
+//
+//            } else if (sample instanceof EnvironmentSample) {
+//                return Study.StudyType.ENVIRONMENTAL;
+//            }
+//        }
+//        return Study.StudyType.UNDEFINED;
+//    }
 
     /**
      * Creates the home page model and adds it to the specified model map.

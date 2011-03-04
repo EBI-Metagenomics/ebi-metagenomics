@@ -4,10 +4,9 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.ArrayList;
 
 /**
- * TODO: Description
+ * Hibernate generated sample table
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @since 1.0-SNAPSHOT
@@ -19,7 +18,7 @@ import java.util.ArrayList;
         sequenceName = "SAMPLE_SEQ",
         allocationSize = 1
 )
-public abstract class Sample implements SecureEntity{
+public abstract class Sample implements SecureEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SAMPLE_SEQ")
@@ -224,5 +223,35 @@ public abstract class Sample implements SecureEntity{
 
     public void setMiscellaneous(String miscellaneous) {
         this.miscellaneous = miscellaneous;
+    }
+
+    @Transient
+    public abstract Class<? extends Sample> getClazz();
+
+    @Transient
+    public abstract SampleType getSampleType();
+
+
+    public enum SampleType {
+        ENVIRONMENTAL(EnvironmentSample.class, "Environmental"),
+        HOST_ASSOCIATED(HostSample.class, "Host associated"),
+        UNDEFINED(UndefinedSample.class, "Undefined");
+
+        private Class<? extends Sample> clazz;
+
+        private String type;
+
+        private SampleType(Class<? extends Sample> clazz, String type) {
+            this.clazz = clazz;
+            this.type = type;
+        }
+
+        public Class<? extends Sample> getClazz() {
+            return clazz;
+        }
+
+        public String getType() {
+            return type;
+        }
     }
 }

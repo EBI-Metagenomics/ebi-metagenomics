@@ -5,6 +5,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -187,6 +188,7 @@ public class HibernateStudyDAOImpl implements HibernateStudyDAO {
             }
         }
         if (criteria != null) {
+            criteria.addOrder(Property.forName("lastMetadataReceived").desc());
             return (List<Study>) criteria.list();
         }
         return new ArrayList<Study>();

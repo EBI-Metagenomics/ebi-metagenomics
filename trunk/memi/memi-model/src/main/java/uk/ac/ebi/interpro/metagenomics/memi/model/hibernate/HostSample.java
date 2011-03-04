@@ -25,6 +25,14 @@ public class HostSample extends Sample {
     @Column(name = "HOST_SEX")
     private HostSex hostSex;
 
+    public Class<? extends Sample> getClazz() {
+        return this.getClass();
+    }
+
+    public SampleType getSampleType() {
+        return Sample.SampleType.HOST_ASSOCIATED;
+    }
+
     public enum HostSex {
         FEMALE, MALE;
     }

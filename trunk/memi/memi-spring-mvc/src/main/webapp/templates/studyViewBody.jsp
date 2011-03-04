@@ -9,13 +9,13 @@
 <table frame="box" width="95%">
     <tr>
         <td width="50%" align="left" valign="top">
-            <h2>Study ${model.study.studyId}</h2>
-            ${model.study.studyName}
+            <h2>Study ${model.study.studyName}</h2>
+            ${model.study.studyId}
         </td>
     </tr>
 </table>
 <div style="margin-top:10px"></div>
-<h3>Study Description</h3>
+<h3 id="study_desc">Study Description</h3>
 <table frame="box" width="95%">
     <tr>
         <c:choose>
@@ -29,18 +29,6 @@
         <td valign="top" align="right" width="150"><b>Study abstract:</b></td>
         <td><textarea name=mytextarea cols=50 rows=5 readonly><c:out
                 value="${studyAbstract}"/></textarea></td>
-    </tr>
-    <tr>
-        <c:choose>
-            <c:when test="${not empty model.study.studyType}">
-                <c:set var="studyType" value="${model.study.studyType}"/>
-            </c:when>
-            <c:otherwise>
-                <c:set var="studyType" value="${notGivenId}"/>
-            </c:otherwise>
-        </c:choose>
-        <td valign="top" align="right" width="150"><b>Type of study:</b></td>
-        <td><c:out value="${studyType}"/></td>
     </tr>
     <tr>
         <c:choose>
@@ -133,7 +121,7 @@
     </tr>
 </table>
 <div style="margin-top:10px"/>
-<h3>Associated Sample(s):</h3>
+<h3 id="samples_id">Associated Sample(s):</h3>
 
 <c:choose>
     <c:when test="${not empty model.samples}">
@@ -141,7 +129,8 @@
             <p><span style="color:red">No export data available for that(these) sample(s)!</span></p>
         </c:if>
         <div align="left">
-            <a href="<c:url value="${baseURL}/study/${model.study.studyId}/doExport/"/>">Export more detailed sample info to
+            <a href="<c:url value="${baseURL}/study/${model.study.studyId}/doExport/"/>">Export more detailed sample
+                info to
                 CSV</a>
         </div>
         <table border="1">

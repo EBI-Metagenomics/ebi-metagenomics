@@ -12,14 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.SampleVisibilityEditor;
-import uk.ac.ebi.interpro.metagenomics.memi.basic.StudyTypeEditor;
+import uk.ac.ebi.interpro.metagenomics.memi.basic.SampleTypeEditor;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.VelocityTemplateWriter;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateSampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.files.MemiFileWriter;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.SampleFilter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
@@ -125,7 +124,7 @@ public class ViewSamplesController implements IMGController {
         if (samples != null && samples.size() > 0) {
             String[] samplesIDs = MemiTools.getSampleIds(samples);
             if (downloadService != null) {
-                boolean isDialogOpen = downloadService.openDownloadDialog(response, filter.getSampleType(), samplesIDs);
+                boolean isDialogOpen = downloadService.openDownloadDialog(response, samples.get(0).getClazz(), samplesIDs);
                 model.addAttribute("isDialogOpen", isDialogOpen);
             } else {
                 log.warn("Could not open download dialog to export samples. Download service is null!");
@@ -183,7 +182,7 @@ public class ViewSamplesController implements IMGController {
         //Set parameter study type
         if (sampleType != null && sampleType.trim().length() > 0) {
             try {
-                Study.StudyType type = Study.StudyType.valueOf(sampleType);
+                Sample.SampleType type = Sample.SampleType.valueOf(sampleType);
                 if (type != null) {
                     filter.setSampleType(type);
                 }
@@ -211,7 +210,7 @@ public class ViewSamplesController implements IMGController {
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         binder.registerCustomEditor(SampleFilter.SampleVisibility.class, "sampleVisibility", new SampleVisibilityEditor());
-        binder.registerCustomEditor(Study.StudyType.class, "sampleType", new StudyTypeEditor());
+        binder.registerCustomEditor(Sample.SampleType.class, "sampleType", new SampleTypeEditor());
     }
 
     /**

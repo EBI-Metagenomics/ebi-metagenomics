@@ -53,7 +53,6 @@ public class ListStudiesControllerTest {
         StudyFilter studySearchForm = (StudyFilter) model.get("studySearchForm");
         assertNotNull(studySearchForm);
         assertNull("All input and selection fields should be NULL at initialization phase!", studySearchForm.getStudyStatus());
-        assertNull("All input and selection fields should be NULL at initialization phase!", studySearchForm.getStudyType());
     }
 
 //    @Test

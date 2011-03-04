@@ -1,9 +1,6 @@
 package uk.ac.ebi.interpro.metagenomics.memi.forms;
 
-import uk.ac.ebi.interpro.metagenomics.memi.model.EmgStudy;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
-
-import java.util.List;
 
 /**
  * Represents a filter form, which is used within the study list page.
@@ -19,14 +16,12 @@ public class StudyFilter {
 
     private String searchTerm;
 
-    private Study.StudyType studyType;
-
     private Study.StudyStatus studyStatus;
 
     private StudyVisibility studyVisibility;
 
     public StudyFilter() {
-        studyVisibility = StudyVisibility.ALL_PUBLISHED_STUDIES;
+        studyVisibility = StudyVisibility.ALL_PUBLISHED_PROJECTS;
     }
 
 
@@ -36,14 +31,6 @@ public class StudyFilter {
 
     public void setSearchTerm(String searchTerm) {
         this.searchTerm = searchTerm;
-    }
-
-    public Study.StudyType getStudyType() {
-        return studyType;
-    }
-
-    public void setStudyType(Study.StudyType studyType) {
-        this.studyType = studyType;
     }
 
     public Study.StudyStatus getStudyStatus() {
@@ -63,13 +50,13 @@ public class StudyFilter {
     }
 
     /**
-     * ALL_STUDIES: All published and my pre-published studies
-     * ALL_PUBLISHED_STUDIES: All published studies
-     * MY_STUDIES: All my published and my pre-published studies
-     * MY_PUBLISHED_STUDIES: All my published studies
-     * MY_PRE-PUBLISHED_STUDIES: All my pre-published studies
+     * ALL_PROJECTS: All published and my pre-published studies
+     * ALL_PUBLISHED_PROJECTS: All published studies
+     * MY_PROJECTS: All my published and my pre-published studies
+     * MY_PUBLISHED_PROJECTS: All my published studies
+     * MY_PRE-PUBLISHED_PROJECTS: All my pre-published studies
      */
     public enum StudyVisibility {
-        ALL_STUDIES, ALL_PUBLISHED_STUDIES, MY_STUDIES, MY_PUBLISHED_STUDIES, MY_PREPUBLISHED_STUDIES;
+        ALL_PROJECTS, ALL_PUBLISHED_PROJECTS, MY_PROJECTS, MY_PUBLISHED_PROJECTS, MY_PREPUBLISHED_PROJECTS;
     }
 }

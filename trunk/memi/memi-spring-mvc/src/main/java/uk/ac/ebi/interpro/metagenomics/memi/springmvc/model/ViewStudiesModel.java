@@ -6,6 +6,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.SortedMap;
 
 /**
  * Represents the model for the list studies page.
@@ -18,26 +19,23 @@ public class ViewStudiesModel extends MGModel {
 
     private StudyFilter studyFilter;
 
-    private List<Study> studies;
-
-    private List<Study.StudyType> studyTypes;
+    private SortedMap<Study, Long> studySampleSizeMap;
 
     private List<Study.StudyStatus> studyStatusList;
 
     private List<StudyFilter.StudyVisibility> studyVisibilityList;
 
 
-    ViewStudiesModel(Submitter submitter, List<Study> studies) {
-        this(submitter, studies, new StudyFilter());
+    ViewStudiesModel(Submitter submitter, SortedMap<Study, Long> studySampleSizeMap) {
+        this(submitter, studySampleSizeMap, new StudyFilter());
     }
 
-    ViewStudiesModel(Submitter submitter, List<Study> studies, StudyFilter filter) {
+    ViewStudiesModel(Submitter submitter, SortedMap<Study, Long> studySampleSizeMap, StudyFilter filter) {
         super(submitter);
         this.studyFilter = filter;
-        this.studyTypes = getDefaultStudyTypes();
         this.studyStatusList = getDefaultStudyStatus();
         this.studyVisibilityList = getDefaultStudyVisibilityList();
-        this.studies = studies;
+        this.studySampleSizeMap = studySampleSizeMap;
     }
 
     public StudyFilter getStudyFilter() {
@@ -48,13 +46,21 @@ public class ViewStudiesModel extends MGModel {
         this.studyFilter = studyFilter;
     }
 
-    public List<Study> getStudies() {
-        return studies;
+    public SortedMap<Study, Long> getStudySampleSizeMap() {
+        return studySampleSizeMap;
     }
 
-    public void setStudies(List<Study> studies) {
-        this.studies = studies;
+    public void setStudySampleSizeMap(SortedMap<Study, Long> studySampleSizeMap) {
+        this.studySampleSizeMap = studySampleSizeMap;
     }
+
+    //    public List<Study> getStudies() {
+//        return studies;
+//    }
+//
+//    public void setStudies(List<Study> studies) {
+//        this.studies = studies;
+//    }
 
     public List<Study.StudyStatus> getStudyStatusList() {
         return studyStatusList;
@@ -62,14 +68,6 @@ public class ViewStudiesModel extends MGModel {
 
     public void setStudyStatusList(List<Study.StudyStatus> studyStatusList) {
         this.studyStatusList = studyStatusList;
-    }
-
-    public List<Study.StudyType> getStudyTypes() {
-        return studyTypes;
-    }
-
-    public void setStudyTypes(List<Study.StudyType> studyTypes) {
-        this.studyTypes = studyTypes;
     }
 
     /**
@@ -83,10 +81,6 @@ public class ViewStudiesModel extends MGModel {
 
     public void setStudyVisibilityList(List<StudyFilter.StudyVisibility> studyVisibilityList) {
         this.studyVisibilityList = studyVisibilityList;
-    }
-
-    private List<Study.StudyType> getDefaultStudyTypes() {
-        return Arrays.asList(Study.StudyType.values());
     }
 
     private List<Study.StudyStatus> getDefaultStudyStatus() {

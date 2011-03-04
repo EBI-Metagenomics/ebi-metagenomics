@@ -57,4 +57,12 @@ public class EnvironmentSample extends Sample {
     public void setEnvironmentalMaterial(String environmentalMaterial) {
         this.environmentalMaterial = environmentalMaterial;
     }
+
+    public Class<? extends Sample> getClazz() {
+        return this.getClass();
+    }
+
+    public SampleType getSampleType() {
+        return Sample.SampleType.ENVIRONMENTAL;
+    }
 }
