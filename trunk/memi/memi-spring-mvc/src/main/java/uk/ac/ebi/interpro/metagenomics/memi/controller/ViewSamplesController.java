@@ -58,7 +58,7 @@ public class ViewSamplesController implements IMGController {
 
     private final String VELOCITY_TEMPLATE_LOCATION_PATH = "WEB-INF/velocity_templates/exportSamples.vm";
 
-    private final String DOWNLOAD_FILE_NAME = "samples.csv";
+    private final String DOWNLOAD_FILE_NAME = "mg_samples.csv";
 
     @Resource
     private HibernateSampleDAO sampleDAO;
