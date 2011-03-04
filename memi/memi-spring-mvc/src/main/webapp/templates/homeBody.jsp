@@ -53,7 +53,7 @@
                                 <c:set var="myStudyVisibility" value="private"/>
                             </c:otherwise>
                         </c:choose>
-                        <p><span class="list_date">${study.lastMetadataReceived}:</span> <a
+                        <p><%--<span class="list_date">${study.lastMetadataReceived}:</span>--%> <a
                                 href="<c:url value="${baseURL}/study/${study.studyId}"/>"
                                 class="list_more">${study.studyName} <img alt="<c:out value="${myStudyVisibility}"/>"
                                                                           src="../img/icon_priv_<c:out value="${myStudyVisibility}"/>.gif"></a>
@@ -82,7 +82,7 @@
                                 <c:set var="mySampleVisibility" value="private"/>
                             </c:otherwise>
                         </c:choose>
-                        <p><span class="list_date">${sample.metadataReceived}:</span> <a
+                        <p><%--<span class="list_date">${sample.metadataReceived}:</span>--%> <a
                                 href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>"
                                 class="list_more">${sample.sampleTitle} <img
                                 alt="<c:out value="${mySampleVisibility}"/>"
@@ -119,11 +119,9 @@
                                 <c:set var="publicStudyVisibility" value="private"/>
                             </c:otherwise>
                         </c:choose>
-                        <p><span class="list_date">${study.lastMetadataReceived}:</span> <a
+                        <p><%--<span class="list_date">${study.lastMetadataReceived}:</span>--%> <a
                                 href="<c:url value="${baseURL}/study/${study.studyId}"/>"
-                                class="list_more">${study.studyName} <img
-                                alt="<c:out value="${publicStudyVisibility}"/>"
-                                src="../img/icon_priv_<c:out value="${publicStudyVisibility}"/>.gif"></a> <br/>
+                                class="list_more">${study.studyName} </a> <br/>
                             <c:out value="${study.shortStudyAbstract}"/> <a href="<c:url value="${baseURL}/study/${study.studyId}"/>" class="more_view">view</a></p>
 
                     </c:forEach>
@@ -146,11 +144,9 @@
                                 <c:set var="publicSampleVisibility" value="private"/>
                             </c:otherwise>
                         </c:choose>
-                        <p><span class="list_date">${sample.metadataReceived}:</span> <a
+                        <p><%--<span class="list_date">${sample.metadataReceived}:</span> --%><a
                                 href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>"
-                                class="list_more">${sample.sampleTitle} <img
-                                alt="<c:out value="${publicStudyVisibility}"/>"
-                                src="../img/icon_priv_<c:out value="${publicSampleVisibility}"/>.gif"></a> <a
+                                class="list_more">${sample.sampleTitle} </a> <a
                                 href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>" class="more_view">view</a>
                         </p>
 
