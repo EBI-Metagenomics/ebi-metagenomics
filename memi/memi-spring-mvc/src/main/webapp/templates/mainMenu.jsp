@@ -15,11 +15,11 @@
             <c:choose>
                 <c:when test="${empty model.submitter}">
                     <a href="<c:url value="${baseURL}/studies/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_STUDIES"/>"
-                       title="View studies">Studies</a>
+                       title="View studies">Projects</a>
                 </c:when>
                 <c:otherwise>
                     <a href="<c:url value="${baseURL}/studies/doSearch?search=Search&studyVisibility=ALL_STUDIES"/>"
-                       title="View studies">Studies</a>
+                       title="View studies">Projects</a>
                 </c:otherwise>
             </c:choose>
         </li>
@@ -38,7 +38,7 @@
        
        
     <li class="green"><a href="<c:url value="${baseURL}/info"/>" title="About us">About</a></li>
-    <li class="yellow"><a href="mailto:chrish@ebi.ac.uk?subject=Request from the MG portal" title="Contact us" >Contact us</a></li>
+    <li class="yellow"><a href="mailto:chrish@ebi.ac.uk?subject=Request from the MG portal" title="Contact us" >Contact</a></li>
     <li class="white"></li>
     <%-- <li class="orange"><a href="<c:url value="${baseURL}/help"/>" title="Help">Help</a></li>--%>
      <%--<li class="black">  <c:choose>
