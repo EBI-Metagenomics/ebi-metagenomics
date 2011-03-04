@@ -54,4 +54,6 @@ public interface HibernateSampleDAO extends ISampleStudyDAO<Sample> {
     List<Sample> retrieveFilteredSamples(List<Criterion> crits, Class<? extends Sample> clazz);
 
     Sample readByStringId(String sampleId);
+
+    long retrieveSampleSizeByStudyId(long studyId);
 }

@@ -12,8 +12,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Represents a Metagenomics model factory. Use this factory if you want to create a {@link MGModel}.
@@ -35,13 +34,18 @@ public class MGModelFactory {
     public static HomePageModel getHomePageModel(SessionManager sessionMgr, HibernateStudyDAO studyDAO, HibernateSampleDAO sampleDAO) {
         Submitter submitter = getSessionSubmitter(sessionMgr);
         if (submitter == null) {
-            return new HomePageModel(submitter, getOrderedPublicStudies(studyDAO), getOrderedPublicSamples(sampleDAO));
+            List<Study> studies = getOrderedPublicStudies(studyDAO);
+            SortedMap<Study, Long> publicStudiesMap = getStudySampleSizeMap(studies, sampleDAO);
+//            TODO: Check the order of the studies (should be solved in Java not with Hibernate)
+            return new HomePageModel(submitter, publicStudiesMap, getOrderedPublicSamples(sampleDAO));
         } else {
             List<Study> myStudies = getOrderedStudiesBySubmitter(submitter.getSubmitterId(), studyDAO);
+            SortedMap<Study, Long> myStudiesMap = getStudySampleSizeMap(myStudies, sampleDAO);
             List<Sample> mySamples = getOrderedSamplesBySubmitter(submitter.getSubmitterId(), sampleDAO);
             List<Study> publicStudies = getOrderedPublicStudiesWithoutSubId(submitter.getSubmitterId(), studyDAO);
+            SortedMap<Study, Long> publicStudiesMap = getStudySampleSizeMap(publicStudies, sampleDAO);
             List<Sample> publicSamples = getOrderedPublicSamplesWithoutSubId(submitter.getSubmitterId(), sampleDAO);
-            return new HomePageModel(submitter, publicStudies, publicSamples, myStudies, mySamples);
+            return new HomePageModel(submitter, publicStudiesMap, publicSamples, myStudiesMap, mySamples);
         }
     }
 
@@ -65,10 +69,11 @@ public class MGModelFactory {
         return new SampleViewModel(getSessionSubmitter(sessionManager), sample, archivedSeqs);
     }
 
-    public static ViewStudiesModel getViewStudiesPageModel(SessionManager sessionMgr, HibernateStudyDAO studyDAO, StudyFilter filter) {
+    public static ViewStudiesModel getViewStudiesPageModel(SessionManager sessionMgr, HibernateStudyDAO studyDAO, HibernateSampleDAO sampleDAO, StudyFilter filter) {
         Submitter submitter = getSessionSubmitter(sessionMgr);
         long submitterId = (submitter != null ? submitter.getSubmitterId() : -1L);
-        return new ViewStudiesModel(submitter, getFilteredStudies(studyDAO, filter, submitterId));
+        List<Study> studies = getFilteredStudies(studyDAO, filter, submitterId);
+        return new ViewStudiesModel(submitter, getStudySampleSizeMap(studies, sampleDAO));
     }
 
     public static ViewSamplesModel getViewSamplesPageModel(SessionManager sessionMgr, HibernateSampleDAO sampleDAO, SampleFilter filter) {
@@ -188,6 +193,16 @@ public class MGModelFactory {
         return result;
     }
 
+    private static SortedMap<Study, Long> getStudySampleSizeMap(List<Study> studies, HibernateSampleDAO sampleDAO) {
+        SortedMap<Study, Long> result = new TreeMap<Study, Long>(new StudyComparator());
+        for (Study study : studies) {
+            if (sampleDAO != null) {
+                result.put(study, sampleDAO.retrieveSampleSizeByStudyId(study.getId()));
+            }
+        }
+        return result;
+    }
+
     private static List<Sample> getFilteredSamples(HibernateSampleDAO sampleDAO, SampleFilter filter, long submitterId) {
         List<Sample> result = sampleDAO.retrieveFilteredSamples(buildFilterCriteria(filter, submitterId), getSampleClass(filter.getSampleType()));
         if (result == null) {
@@ -196,7 +211,7 @@ public class MGModelFactory {
         return result;
     }
 
-    private static Class<? extends Sample> getSampleClass(Study.StudyType type) {
+    private static Class<? extends Sample> getSampleClass(Sample.SampleType type) {
         if (type != null) {
             return type.getClazz();
         }
@@ -210,7 +225,6 @@ public class MGModelFactory {
      */
     private static List<Criterion> buildFilterCriteria(StudyFilter filter, long submitterId) {
         String searchText = filter.getSearchTerm();
-        Study.StudyType type = filter.getStudyType();
         Study.StudyStatus studyStatus = filter.getStudyStatus();
         StudyFilter.StudyVisibility visibility = filter.getStudyVisibility();
 
@@ -219,10 +233,6 @@ public class MGModelFactory {
         if (searchText != null && searchText.trim().length() > 0) {
             crits.add(Restrictions.or(Restrictions.like("studyId", searchText, MatchMode.ANYWHERE), Restrictions.like("studyName", searchText, MatchMode.ANYWHERE)));
         }
-        //add study type criterion
-        if (type != null) {
-            crits.add(Restrictions.eq("studyType", type));
-        }
         //add study status criterion
         if (studyStatus != null) {
             crits.add(Restrictions.eq("studyStatus", studyStatus));
@@ -230,23 +240,23 @@ public class MGModelFactory {
         //add is public criterion
         if (submitterId > -1) {
             //SELECT * FROM HB_STUDY where submitter_id=?;
-            if (visibility.equals(StudyFilter.StudyVisibility.MY_STUDIES)) {
+            if (visibility.equals(StudyFilter.StudyVisibility.MY_PROJECTS)) {
                 crits.add(Restrictions.eq("submitterId", submitterId));
             }
             //select * from hb_study where submitter_id=? and is_public=1;
-            else if (visibility.equals(StudyFilter.StudyVisibility.MY_PUBLISHED_STUDIES)) {
+            else if (visibility.equals(StudyFilter.StudyVisibility.MY_PUBLISHED_PROJECTS)) {
                 crits.add(Restrictions.and(Restrictions.eq("isPublic", true), Restrictions.eq("submitterId", submitterId)));
             }
             //select * from hb_study where submitter_id=? and is_public=0;
-            else if (visibility.equals(StudyFilter.StudyVisibility.MY_PREPUBLISHED_STUDIES)) {
+            else if (visibility.equals(StudyFilter.StudyVisibility.MY_PREPUBLISHED_PROJECTS)) {
                 crits.add(Restrictions.and(Restrictions.eq("isPublic", false), Restrictions.eq("submitterId", submitterId)));
             }
             //select * from hb_study where is_public=1;
-            else if (visibility.equals(StudyFilter.StudyVisibility.ALL_PUBLISHED_STUDIES)) {
+            else if (visibility.equals(StudyFilter.StudyVisibility.ALL_PUBLISHED_PROJECTS)) {
                 crits.add(Restrictions.eq("isPublic", true));
             }
             //select * from hb_study where is_public=1 or submitter_id=? and is_public=0;
-            else if (visibility.equals(StudyFilter.StudyVisibility.ALL_STUDIES)) {
+            else if (visibility.equals(StudyFilter.StudyVisibility.ALL_PROJECTS)) {
                 crits.add(Restrictions.or(Restrictions.and(Restrictions.eq("isPublic", false), Restrictions.eq("submitterId", submitterId)), Restrictions.eq("isPublic", true)));
             }
         } else {
@@ -303,4 +313,18 @@ public class MGModelFactory {
         }
         return null;
     }
+
+    static class StudyComparator implements Comparator<Study> {
+
+        @Override
+        public int compare(Study o1, Study o2) {
+            Date lastUpdateO1 = o1.getLastMetadataReceived();
+            Date lastUpdateO2 = o2.getLastMetadataReceived();
+            if (lastUpdateO1 != null && lastUpdateO2 != null)
+                return -(lastUpdateO1.compareTo(lastUpdateO2));
+            return 0;
+        }
+    }
 }
+
+

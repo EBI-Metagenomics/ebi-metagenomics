@@ -14,11 +14,11 @@
         <li class="blue">
             <c:choose>
                 <c:when test="${empty model.submitter}">
-                    <a href="<c:url value="${baseURL}/studies/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_STUDIES"/>"
+                    <a href="<c:url value="${baseURL}/studies/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>"
                        title="View studies">Projects</a>
                 </c:when>
                 <c:otherwise>
-                    <a href="<c:url value="${baseURL}/studies/doSearch?search=Search&studyVisibility=ALL_STUDIES"/>"
+                    <a href="<c:url value="${baseURL}/studies/doSearch?search=Search&studyVisibility=ALL_PROJECTS"/>"
                        title="View studies">Projects</a>
                 </c:otherwise>
             </c:choose>

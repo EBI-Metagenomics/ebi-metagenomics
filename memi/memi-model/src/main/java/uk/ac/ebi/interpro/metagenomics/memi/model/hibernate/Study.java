@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * TODO: Description
+ * Hibernate generated study table.
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @version $Id$
@@ -43,8 +43,8 @@ public class Study implements SecureEntity {
     @Column(name = "SUBMITTER_ID")
     private long submitterId;
 
-    @Column(name = "STUDY_TYPE")
-    private StudyType studyType;
+//    @Column(name = "STUDY_TYPE")
+//    private StudyType studyType;
 
     @Column(name = "STUDY_Status")
     private StudyStatus studyStatus;
@@ -66,7 +66,6 @@ public class Study implements SecureEntity {
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Publication> publications;
 
-    //    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "study")
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "study")
     @Column(name = "Study_ID")
     private Set<Sample> samples;
@@ -140,21 +139,21 @@ public class Study implements SecureEntity {
         this.submitterId = submitterId;
     }
 
-    public StudyType getStudyType() {
-        return studyType;
-    }
+//    public StudyType getStudyType() {
+//        return studyType;
+//    }
+//
+//    public void setStudyType(StudyType studyType) {
+//        this.studyType = studyType;
+//    }
 
-    public void setStudyType(StudyType studyType) {
-        this.studyType = studyType;
-    }
-
-    public String getStudyTypeAsString() {
-        return getStudyType().toString();
-    }
-
-    public void setStudyTypeAsString(String enumType) {
-        this.setStudyType(StudyType.valueOf(enumType));
-    }
+//    public String getStudyTypeAsString() {
+//        return getStudyType().toString();
+//    }
+//
+//    public void setStudyTypeAsString(String enumType) {
+//        this.setStudyType(StudyType.valueOf(enumType));
+//    }
 
     public String getStudyStatusAsString() {
         return getStudyStatus().toString();
@@ -227,10 +226,12 @@ public class Study implements SecureEntity {
     }
 
     @Transient
-    public String getShortStudyAbstract()
-    {
-        if(studyAbstract!=null && studyAbstract.length()>15)
-            return studyAbstract.substring(0,15);
+    public String getShortStudyAbstract() {
+        if (studyAbstract != null && studyAbstract.length() > 50) {
+            studyAbstract = studyAbstract.substring(0, 50);
+            int index = studyAbstract.lastIndexOf(' ');
+            return studyAbstract.substring(0, index);
+        }
         return studyAbstract;
     }
 
@@ -282,23 +283,35 @@ public class Study implements SecureEntity {
         this.lastMetadataReceived = lastMetadataReceived;
     }
 
-    public enum StudyType {
-        ENVIRONMENTAL(EnvironmentSample.class),
-        HOST_ASSOCIATED(HostSample.class),
-        UNDEFINED(UndefinedSample.class);
-
-        private Class<? extends Sample> clazz;
-
-        private StudyType(Class<? extends Sample> clazz) {
-            this.clazz = clazz;
-        }
-
-        public Class<? extends Sample> getClazz() {
-            return clazz;
-        }
-    }
+//    public enum StudyType {
+//        ENVIRONMENTAL(EnvironmentSample.class),
+//        HOST_ASSOCIATED(HostSample.class),
+//        UNDEFINED(UndefinedSample.class);
+//
+//        private Class<? extends Sample> clazz;
+//
+//        private StudyType(Class<? extends Sample> clazz) {
+//            this.clazz = clazz;
+//        }
+//
+//        public Class<? extends Sample> getClazz() {
+//            return clazz;
+//        }
+//    }
 
     public enum StudyStatus {
-        QUEUED, IN_PROGRESS, FINISHED, UNDEFINED;
+        IN_PROGRESS("In progress"), FINISHED("Finished"), UNDEFINED("Undefined");
+
+        private String status;
+
+        private StudyStatus(String status) {
+            this.status = status;
+        }
+
+
+        @Override
+        public String toString() {
+            return status;
+        }
     }
 }

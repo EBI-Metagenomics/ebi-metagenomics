@@ -5,15 +5,13 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.velocity.app.VelocityEngine;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.StudyStatusEditor;
-import uk.ac.ebi.interpro.metagenomics.memi.basic.StudyTypeEditor;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.StudyVisibilityEditor;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.VelocityTemplateWriter;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateSampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateStudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.files.MemiFileWriter;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
@@ -23,17 +21,11 @@ import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewStudiesModel;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Represents the controller for the list studies page.
@@ -43,7 +35,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/" + ViewStudiesController.VIEW_NAME)
-public class ViewStudiesController implements IMGController {
+public class ViewStudiesController extends AbstractController implements IMGController {
 
     private final static Log log = LogFactory.getLog(ViewStudiesController.class);
 
@@ -63,7 +55,7 @@ public class ViewStudiesController implements IMGController {
     private HibernateStudyDAO studyDAO;
 
     @Resource
-    private SessionManager sessionManager;
+    private HibernateSampleDAO sampleDAO;
 
     @Resource
     private VelocityEngine velocityEngine;
@@ -92,18 +84,18 @@ public class ViewStudiesController implements IMGController {
     @RequestMapping(value = "doExport", method = RequestMethod.GET)
     public ModelAndView doExportStudies(@ModelAttribute(StudyFilter.MODEL_ATTR_NAME) StudyFilter filter, HttpServletResponse response,
                                         @RequestParam(required = false) final String searchTerm, @RequestParam(required = false) final StudyFilter.StudyVisibility studyVisibility,
-                                        @RequestParam(required = false) final Study.StudyType studyType, @RequestParam(required = false) final Study.StudyStatus studyStatus) {
+                                        @RequestParam(required = false) final Study.StudyStatus studyStatus) {
         log.info("Requesting exportStudies (GET method)...");
         ModelMap model = new ModelMap();
-        processRequestParams(filter, searchTerm, studyVisibility, studyType, studyStatus);
+        processRequestParams(filter, searchTerm, studyVisibility, studyStatus);
         populateModel(model, filter);
-        List<Study> studies = ((ViewStudiesModel) model.get(MGModel.MODEL_ATTR_NAME)).getStudies();
+        SortedMap<Study, Long> studyMap = ((ViewStudiesModel) model.get(MGModel.MODEL_ATTR_NAME)).getStudySampleSizeMap();
 
-        if (studies != null && studies.size() > 0) {
+        if (studyMap != null && studyMap.size() > 0) {
             //Create velocity spring_model
             Map<String, Object> velocityModel = new HashMap<String, Object>();
             velocityModel.put("studyProperties", getStudyProperties());
-            velocityModel.put("studies", studies);
+            velocityModel.put("studyMap", studyMap);
             velocityModel.put("columnLength", MAX_CHARS_PER_COLUMN);
             //Create file content
             String fileContent = VelocityTemplateWriter.createFileContent(velocityEngine, VELOCITY_TEMPLATE_LOCATION_PATH, velocityModel);
@@ -118,9 +110,9 @@ public class ViewStudiesController implements IMGController {
     @RequestMapping(params = "search", value = "doSearch", method = RequestMethod.GET)
     public ModelAndView doSearch(@ModelAttribute(StudyFilter.MODEL_ATTR_NAME) StudyFilter filter, ModelMap model,
                                  @RequestParam(required = false) final String searchTerm, @RequestParam(required = false) final StudyFilter.StudyVisibility studyVisibility,
-                                 @RequestParam(required = false) final Study.StudyType studyType, @RequestParam(required = false) final Study.StudyStatus studyStatus) {
+                                 @RequestParam(required = false) final Study.StudyStatus studyStatus) {
         log.info("Requesting doSearch (POST method)...");
-        processRequestParams(filter, searchTerm, studyVisibility, studyType, studyStatus);
+        processRequestParams(filter, searchTerm, studyVisibility, studyStatus);
         populateModel(model, filter);
         model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((ViewStudiesModel) model.get(MGModel.MODEL_ATTR_NAME)).getLoginForm());
         return new ModelAndView(VIEW_NAME, model);
@@ -135,29 +127,20 @@ public class ViewStudiesController implements IMGController {
         log.info("Requesting doClear (POST method)...");
 
         filter.setSearchTerm("");
-        filter.setStudyVisibility(StudyFilter.StudyVisibility.ALL_PUBLISHED_STUDIES);
+        filter.setStudyVisibility(StudyFilter.StudyVisibility.ALL_PUBLISHED_PROJECTS);
         filter.setStudyStatus(null);
-        filter.setStudyType(null);
         populateModel(model, new StudyFilter());
         model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((ViewStudiesModel) model.get(MGModel.MODEL_ATTR_NAME)).getLoginForm());
         return new ModelAndView(VIEW_NAME, model);
     }
 
     private void processRequestParams(StudyFilter filter, String searchTerm, StudyFilter.StudyVisibility studyVisibility,
-                                      Study.StudyType studyType, Study.StudyStatus studyStatus) {
-        //Get URL parameter of GET request
-//        String studyVisibility = request.getParameter("studyVisibility");
-//        String searchTerm = request.getParameter("searchTerm");
-//        String studyType = request.getParameter("studyType");
-//        String studyStatus = request.getParameter("studyStatus");
-
+                                      Study.StudyStatus studyStatus) {
         //Set parameters to the filter
         //Set parameter search term        
         if (searchTerm != null && searchTerm.trim().length() > 0) {
             filter.setSearchTerm(searchTerm);
         }
-        //Set parameter study type
-        filter.setStudyType(studyType);
 
         //Set parameter study status
         filter.setStudyStatus(studyStatus);
@@ -166,7 +149,7 @@ public class ViewStudiesController implements IMGController {
         if (sessionManager.getSessionBean().getSubmitter() != null && studyVisibility != null) {
             filter.setStudyVisibility(studyVisibility);
         } else {
-            filter.setStudyVisibility(StudyFilter.StudyVisibility.ALL_PUBLISHED_STUDIES);
+            filter.setStudyVisibility(StudyFilter.StudyVisibility.ALL_PUBLISHED_PROJECTS);
         }
     }
 
@@ -176,7 +159,7 @@ public class ViewStudiesController implements IMGController {
      */
     @InitBinder
     public void initBinder(WebDataBinder binder) {
-        binder.registerCustomEditor(Study.StudyType.class, "studyType", new StudyTypeEditor());
+//        binder.registerCustomEditor(Study.StudyType.class, "studyType", new SampleTypeEditor());
         binder.registerCustomEditor(Study.StudyStatus.class, "studyStatus", new StudyStatusEditor());
         binder.registerCustomEditor(StudyFilter.StudyVisibility.class, "studyVisibility", new StudyVisibilityEditor());
     }
@@ -186,23 +169,16 @@ public class ViewStudiesController implements IMGController {
      * Creates the MG model and adds it to the specified model map.
      */
     private void populateModel(ModelMap model, StudyFilter filter) {
-        final ViewStudiesModel subModel = MGModelFactory.getViewStudiesPageModel(sessionManager, studyDAO, filter);
+        final ViewStudiesModel subModel = MGModelFactory.getViewStudiesPageModel(sessionManager, studyDAO, sampleDAO, filter);
         model.addAttribute(MGModel.MODEL_ATTR_NAME, subModel);
     }
 
     private List<String> getStudyProperties() {
         List<String> result = new ArrayList<String>();
-        result.add("STUDY_ID");
-        result.add("STUDY_NAME");
-        result.add("STUDY_TYPE");
-        result.add("PRIVACY");
-        result.add("ANALYSIS_STATUS");
-        result.add("EXPERIMENTAL_FACTOR");
-        result.add("NCBI_PROJECT_ID");
-        result.add("PUBLIC_RELEASE_DATE");
-        result.add("CENTRE_NAME");
-        result.add("STUDY_LINKOUT");
-
+        result.add("PROJECT_NAME");
+        result.add("NUMBER_OF_SAMPLES");
+        result.add("SUBMITTED_DATE");
+        result.add("ANALYSIS");
         return result;
     }
 
@@ -213,18 +189,23 @@ public class ViewStudiesController implements IMGController {
     public String populatePageTitle(@ModelAttribute(StudyFilter.MODEL_ATTR_NAME) StudyFilter filter) {
         StudyFilter.StudyVisibility vis = filter.getStudyVisibility();
         if (vis != null) {
-            if (vis.equals(StudyFilter.StudyVisibility.MY_STUDIES)) {
+            if (vis.equals(StudyFilter.StudyVisibility.MY_PROJECTS)) {
                 return "My projects (published and pre-published)";
-            } else if (vis.equals(StudyFilter.StudyVisibility.MY_PUBLISHED_STUDIES)) {
+            } else if (vis.equals(StudyFilter.StudyVisibility.MY_PUBLISHED_PROJECTS)) {
                 return "My published projects";
-            } else if (vis.equals(StudyFilter.StudyVisibility.MY_PREPUBLISHED_STUDIES)) {
+            } else if (vis.equals(StudyFilter.StudyVisibility.MY_PREPUBLISHED_PROJECTS)) {
                 return "My pre-published projects";
-            } else if (vis.equals(StudyFilter.StudyVisibility.ALL_PUBLISHED_STUDIES)) {
+            } else if (vis.equals(StudyFilter.StudyVisibility.ALL_PUBLISHED_PROJECTS)) {
                 return "All published projects";
-            } else if (vis.equals(StudyFilter.StudyVisibility.ALL_STUDIES)) {
+            } else if (vis.equals(StudyFilter.StudyVisibility.ALL_PROJECTS)) {
                 return "All published and my pre-published projects";
             }
         }
-        return "List of projects";
+        return "List of studies";
+    }
+
+    @Override
+    String getModelViewName() {
+        return VIEW_NAME;
     }
 }

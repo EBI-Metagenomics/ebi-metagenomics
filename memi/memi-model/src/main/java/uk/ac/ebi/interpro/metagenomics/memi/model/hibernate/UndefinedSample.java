@@ -15,4 +15,11 @@ import javax.persistence.Entity;
 @Entity
 public class UndefinedSample extends Sample {
 
+    public Class<? extends Sample> getClazz() {
+        return this.getClass();
+    }
+
+    public SampleType getSampleType() {
+        return Sample.SampleType.UNDEFINED;
+    }
 }

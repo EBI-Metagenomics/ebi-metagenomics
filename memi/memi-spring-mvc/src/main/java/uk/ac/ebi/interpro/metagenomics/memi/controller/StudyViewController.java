@@ -5,7 +5,6 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.velocity.app.VelocityEngine;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,20 +12,16 @@ import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateSampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateStudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.ISampleStudyDAO;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Publication;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.StudyViewModel;
-import uk.ac.ebi.interpro.metagenomics.memi.tools.MemiModelAndViewFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.tools.MemiTools;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Represents the controller for the study overview page.
@@ -36,7 +31,7 @@ import java.util.Set;
  */
 @Controller
 @RequestMapping("/" + StudyViewController.VIEW_NAME + "/{studyId}")
-public class StudyViewController extends AbstractController<Study> {
+public class StudyViewController extends SecuredAbstractController<Study> {
 
 //    private interface ModelProcessingStrategy {
 //        void processModel(ModelMap model, Study study);
@@ -79,15 +74,12 @@ public class StudyViewController extends AbstractController<Study> {
             @Override
             public void processModel(ModelMap model, Study study) {
                 populateModel(model, study);
-                Study.StudyType type = Study.StudyType.UNDEFINED;
-                if (study != null) {
-                    type = study.getStudyType();
-                }
+
                 List<Sample> samples = ((StudyViewModel) model.get(StudyViewModel.MODEL_ATTR_NAME)).getSamples();
                 if (samples != null && samples.size() > 0) {
                     String[] samplesIDs = MemiTools.getSampleIds(samples);
                     if (downloadService != null) {
-                        boolean isDialogOpen = downloadService.openDownloadDialog(response, type, samplesIDs);
+                        boolean isDialogOpen = downloadService.openDownloadDialog(response, samples.get(0).getClazz(), samplesIDs);
                         model.addAttribute("isDialogOpen", isDialogOpen);
                     } else {
                         log.warn("Could not open download dialog to export samples. Download service is null!");

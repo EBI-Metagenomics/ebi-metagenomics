@@ -18,7 +18,6 @@ import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.AnalysisStatsModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -34,7 +33,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping('/' + AnalysisStatsController.VIEW_NAME + "/{sampleId}")
-public class AnalysisStatsController extends AbstractController<Sample> {
+public class AnalysisStatsController extends SecuredAbstractController<Sample> {
     private static final Log log = LogFactory.getLog(AnalysisStatsController.class);
     /**
      * View name of this controller which is used several times.
@@ -49,9 +48,6 @@ public class AnalysisStatsController extends AbstractController<Sample> {
 
     @Resource
     private MemiDownloadService downloadService;
-
-    @Resource
-    private SessionManager sessionManager;
 
     @Resource
     private MemiPropertyContainer propertyContainer;
