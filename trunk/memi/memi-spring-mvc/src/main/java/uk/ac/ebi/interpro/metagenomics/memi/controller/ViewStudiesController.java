@@ -57,7 +57,7 @@ public class ViewStudiesController implements IMGController {
 
     private final String VELOCITY_TEMPLATE_LOCATION_PATH = "WEB-INF/velocity_templates/exportStudies.vm";
 
-    private final String DOWNLOAD_FILE_NAME = "studies.csv";
+    private final String DOWNLOAD_FILE_NAME = "mg_projects.csv";
 
     @Resource
     private HibernateStudyDAO studyDAO;
