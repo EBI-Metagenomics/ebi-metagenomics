@@ -3,7 +3,9 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:ehcache="http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring"
        xsi:schemaLocation="
         http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
@@ -16,7 +18,9 @@
 		http://www.springframework.org/schema/task
 		http://www.springframework.org/schema/task/spring-task-3.0.xsd
 		http://www.springframework.org/schema/aop
-		http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+		http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+		http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring
+        http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring/ehcache-spring-1.1.xsd">
 
     <!-- Scans within the base package of the application for @Components to configure as beans -->
     <context:component-scan base-package="uk.ac.ebi.interpro.metagenomics.memi"/>
@@ -33,7 +37,6 @@
     <!-- Exception translation bean post processor -->
     <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
 
-    <!--Data source for IPDEV-->
     <bean name="ipDevDatasource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
         <property name="url" value="${jcp.jdbc.oracle.ipdev.url}"/>
@@ -50,6 +53,17 @@
         <property name="password" value="${jcp.jdbc.oracle.adev.password}"/>
     </bean>
 
+    <!--Caching-->
+    <ehcache:annotation-driven cache-manager="ehCacheManager" />
+    <bean id="ehCacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"/>
+
+    <!--RSS-->
+    <bean id="rssClient" class="uk.ac.ebi.interpro.metagenomics.memi.feed.CachingRomeClient">
+        <constructor-arg value="http://twitter.com/statuses/user_timeline/257482404.rss"/>
+        <!--Show no more than five news entries-->
+        <constructor-arg value="5"/>
+    </bean>
+    
     <!-- Definition of Hibernate session factory including Hibernate Mappings-->
     <bean id="hibernateSessionFactory"
           class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">

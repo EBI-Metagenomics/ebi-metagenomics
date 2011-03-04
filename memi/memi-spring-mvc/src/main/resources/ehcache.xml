@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd"
+         updateCheck="false">
+    
+    <!--
+     | Please see http://ehcache.sourceforge.net/documentation/configuration.html for
+     | detailed information on how to configurigure caches in this file
+     +-->
+    <!-- Location of persistent caches on disk -->
+    <!--TODO: Use standard MEMI network location for cache directory-->
+    <diskStore path="java.io.tmpdir/emg-memi" />
+
+    <defaultCache eternal="false" maxElementsInMemory="1000"
+        overflowToDisk="false" diskPersistent="false" timeToIdleSeconds="0"
+        timeToLiveSeconds="600" memoryStoreEvictionPolicy="LRU"/>
+
+    <cache name="rssEntriesCache" eternal="false"
+        maxElementsInMemory="100" overflowToDisk="false" diskPersistent="false"
+        timeToIdleSeconds="0" timeToLiveSeconds="300"
+        memoryStoreEvictionPolicy="LRU" />
+
+</ehcache>

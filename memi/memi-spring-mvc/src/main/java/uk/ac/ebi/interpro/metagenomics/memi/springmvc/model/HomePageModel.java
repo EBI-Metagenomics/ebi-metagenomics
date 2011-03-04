@@ -1,10 +1,12 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
 
+import com.sun.syndication.feed.synd.SyndEntry;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -15,7 +17,7 @@ import java.util.TreeMap;
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @since 1.0-SNAPSHOT
  */
-public class HomePageModel extends MGModel {
+public final class HomePageModel extends MGModel {
 
 //    private List<Study> publicStudies;
 
@@ -35,16 +37,21 @@ public class HomePageModel extends MGModel {
 
     private List<Sample> mySamples;
 
-    HomePageModel(Submitter submitter, SortedMap<Study, Long> publicStudiesMap, List<Sample> publicSamples) {
+    private final String rssUrl;
+    private final List<SyndEntry> rssItems;
+
+    HomePageModel(Submitter submitter, SortedMap<Study, Long> publicStudiesMap, List<Sample> publicSamples, String rssUrl, List<SyndEntry> rssItems) {
         super(submitter);
         this.publicStudiesMap = publicStudiesMap;
         this.publicSamples = publicSamples;
         this.myStudiesMap = new TreeMap<Study, Long>();
         this.mySamples = new ArrayList<Sample>();
+        this.rssUrl     = rssUrl;
+        this.rssItems   = rssItems;
     }
 
-    HomePageModel(Submitter submitter, SortedMap<Study, Long> publicStudiesMap, List<Sample> publicSamples, SortedMap<Study, Long> myStudiesMap, List<Sample> mySamples) {
-        this(submitter, publicStudiesMap, publicSamples);
+    HomePageModel(Submitter submitter, SortedMap<Study, Long> publicStudiesMap, List<Sample> publicSamples, String rssUrl, List<SyndEntry> rssItems, SortedMap<Study, Long> myStudiesMap, List<Sample> mySamples) {
+        this(submitter, publicStudiesMap, publicSamples, rssUrl, rssItems);
         this.myStudiesMap = myStudiesMap;
         this.mySamples = mySamples;
     }
@@ -81,4 +88,13 @@ public class HomePageModel extends MGModel {
     public void setMySamples(List<Sample> mySamples) {
         this.mySamples = mySamples;
     }
+
+    public List<SyndEntry> getRssItems() {
+        return Collections.unmodifiableList(rssItems);
+    }
+
+    public String getRssUrl() {
+        return rssUrl;
+    }
+    
 }
