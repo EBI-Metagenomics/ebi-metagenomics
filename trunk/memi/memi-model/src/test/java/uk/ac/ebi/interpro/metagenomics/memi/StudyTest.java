@@ -1,9 +1,10 @@
 package uk.ac.ebi.interpro.metagenomics.memi;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import uk.ac.ebi.interpro.metagenomics.memi.model.EmgStudy;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 
 /**
  * Test class for {@link uk.ac.ebi.interpro.metagenomics.memi.model.EmgStudy}.
@@ -15,12 +16,35 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.EmgStudy;
 //TODO: Refactor
 public class StudyTest {
 
-    private EmgStudy study;
+    private Study study;
 
     @Before
     public void setUp() throws Exception {
-        study = new EmgStudy();
+        study = new Study();
     }
+
+    @Test
+    public void testGetShortStudyAbstract() throws Exception {
+        String testString = getStringOfLength(50);
+        Assert.assertEquals(50, testString.length());
+        study.setStudyAbstract(testString);
+        Assert.assertEquals(testString, study.getShortStudyAbstract());
+        //
+        testString = getStringOfLength(40) + ' ' + getStringOfLength(20);
+        Assert.assertEquals(61, testString.length());
+        study.setStudyAbstract(testString);
+        Assert.assertEquals(40, study.getShortStudyAbstract().length());
+        Assert.assertEquals(getStringOfLength(40), study.getShortStudyAbstract());
+    }
+
+    private String getStringOfLength(int length) {
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < length; i++) {
+            sb.append('N');
+        }
+        return sb.toString();
+    }
+
 
     @Test
     @Ignore

@@ -15,14 +15,14 @@
 <table frame="box" width="95%">
     <tr>
         <td width="50%" align="left" valign="top">
-           <c:choose>
-            <c:when test="${not empty model.sample.sampleTitle}">
-                <c:set var="sampleTitle" value="${model.sample.sampleTitle}"/>
-            </c:when>
-            <c:otherwise>
-                <c:set var="sampleTitle" value="${notGivenId}"/>
-            </c:otherwise>
-        </c:choose>
+            <c:choose>
+                <c:when test="${not empty model.sample.sampleTitle}">
+                    <c:set var="sampleTitle" value="${model.sample.sampleTitle}"/>
+                </c:when>
+                <c:otherwise>
+                    <c:set var="sampleTitle" value="${notGivenId}"/>
+                </c:otherwise>
+            </c:choose>
             <h2>${model.sample.sampleTitle}</h2>
             Sample ${model.sample.sampleId}
         </td>
@@ -33,7 +33,7 @@
     Statistics</h3></a>
 
 
-<h3>Sample description</h3>
+<h3 id="sample_desc">Sample description</h3>
 <c:if test="${isDialogOpen==false}">
     <p><span style="color:red">No export data available for that sample!</span></p>
 </c:if>
