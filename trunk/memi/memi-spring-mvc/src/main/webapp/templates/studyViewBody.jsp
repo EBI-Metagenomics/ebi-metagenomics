@@ -9,7 +9,7 @@
 ${model.study.studyId}
 <br/><br/>
 <h3 id="study_desc">Project description</h3>
-<table width="95%">
+<table>
     <tr>
         <c:choose>
             <c:when test="${not empty model.study.studyAbstract}">
@@ -53,9 +53,9 @@ ${model.study.studyId}
         </td>
     </tr>
 </table>
-
+<br/>
 <h3>Contact Details:</h3>
-<table width="95%">
+<table>
     <tr>
         <td valign="top" align="right" width="150"><b>Submitter name:</b></td>
         <td>
@@ -85,9 +85,10 @@ ${model.study.studyId}
         <td><c:out value="${centreName}"/></td>
     </tr>
 </table>
+<br/>
 
 <h3>Other Information:</h3>
-<table width="95%">
+<table>
     <tr>
         <c:choose>
             <c:when test="${not empty model.study.publicReleaseDate}">
@@ -114,7 +115,7 @@ ${model.study.studyId}
         </c:choose>
     </tr>
 </table>
-
+<br/>
 <h3 id="samples_id">Associated Sample(s):</h3>
 
 <c:choose>
