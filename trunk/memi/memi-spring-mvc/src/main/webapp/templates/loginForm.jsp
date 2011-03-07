@@ -51,7 +51,9 @@
     <%--<li><a href="">Keystone symposium - Microbial Communities as Drivers of Ecosystem Complexity Breckenridge, Colorado, USA.</a> <span class="date">March 25 - 30, 2011</span></li>--%>
     <%--<li><a href="">Metagenomics: From the Bench to the Data Analysis - Heidelberg, Germany. </a> <span class="date">October 23 - 29, 2011</span></li>--%>
 <%--</ul>--%>
-<%--<p><a href="#">Follow us on Twitter</a></p>--%>    
+<%----%>
+    
+<p><a href="http://twitter.com/EBImetagenomics" class="but_signup">Follow us on Twitter</a></p><br/>
 </div>
 
 <div id ="sidebar-mailing">
