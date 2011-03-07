@@ -100,7 +100,7 @@
       <tiles:insertAttribute name="footer"/>
 </footer>
 
- <div id="extraDiv1"></div>
+<%--<div id="extraDiv1"></div0 can use this to add --%>
 <script type="text/javascript" src="http://www.ebi.ac.uk/inc/js/newmenu.js"></script>
 <script type="text/javascript">
     <!--
