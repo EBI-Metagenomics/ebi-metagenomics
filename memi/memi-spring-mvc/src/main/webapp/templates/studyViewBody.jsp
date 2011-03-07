@@ -5,18 +5,11 @@
 <div id="content-full">
 <h2>Project Overview</h2>
 
-<div style="margin-top:6px"></div>
-<table frame="box" width="95%">
-    <tr>
-        <td width="50%" align="left" valign="top">
-            <h2>${model.study.studyName}</h2>
-            ${model.study.studyId}
-        </td>
-    </tr>
-</table>
-<div style="margin-top:10px"></div>
+<h2>${model.study.studyName}</h2>
+${model.study.studyId}
+<br/><br/>
 <h3 id="study_desc">Project description</h3>
-<table frame="box" width="95%">
+<table width="95%">
     <tr>
         <c:choose>
             <c:when test="${not empty model.study.studyAbstract}">
@@ -60,9 +53,9 @@
         </td>
     </tr>
 </table>
-<div style="margin-top:10px"></div>
+
 <h3>Contact Details:</h3>
-<table frame="box" width="95%">
+<table width="95%">
     <tr>
         <td valign="top" align="right" width="150"><b>Submitter name:</b></td>
         <td>
@@ -92,8 +85,9 @@
         <td><c:out value="${centreName}"/></td>
     </tr>
 </table>
+
 <h3>Other Information:</h3>
-<table frame="box" width="95%">
+<table width="95%">
     <tr>
         <c:choose>
             <c:when test="${not empty model.study.publicReleaseDate}">
@@ -120,7 +114,7 @@
         </c:choose>
     </tr>
 </table>
-<div style="margin-top:10px"/>
+
 <h3 id="samples_id">Associated Sample(s):</h3>
 
 <c:choose>
@@ -128,10 +122,8 @@
         <c:if test="${isDialogOpen==false}">
             <p><span style="color:red">No export data available for that(these) sample(s)!</span></p>
         </c:if>
-        <div align="left">
-            <a href="<c:url value="${baseURL}/study/${model.study.studyId}/doExport/"/>">Export more detailed sample
-                info to
-                CSV</a>
+        <div>
+            <a href="<c:url value="${baseURL}/study/${model.study.studyId}/doExport/"/>">Export more detailed sample info to CSV</a>
         </div>
         <table border="1">
             <tr>
