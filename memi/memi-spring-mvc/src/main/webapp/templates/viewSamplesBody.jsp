@@ -4,43 +4,30 @@
 <div id="content-full">
     <h2>${pageTitle}</h2>
 
-    <div align="center">
-        <table>
+
+        <div class="filter">
             <form:form method="GET" action="${baseURL}/samples/doSearch" commandName="sampleFilter">
-                <tr>
-                    <td>Text:</td>
-                    <td><form:input path="searchTerm"/></td>
-                    <td><form:errors path="searchTerm" cssClass="error"/></td>
-                </tr>
-                <%--Used sample type instead of study type to not confuse the user--%>
-                <tr>
-                    <td>Sample type:</td>
-                    <td>
-                        <form:select path="sampleType">
+               Text: <form:input path="searchTerm"/> <form:errors path="searchTerm" cssClass="error"/><br/><br/>
+                       <%--Used sample type instead of study type to not confuse the user--%>
+                Sample type: <form:select path="sampleType">
                             <form:option value="All" label="All"/>
                             <form:options items="${model.sampleTypes}"/>
                         </form:select>
-                    </td>
-                </tr>
+
+              <br/><br/>
                 <c:if test="${not empty model.submitter}">
-                    <tr>
-                        <td>Privacy:</td>
-                        <td><form:select id="sampleVisibility" path="sampleVisibility">
+                    Privacy:<form:select id="sampleVisibility" path="sampleVisibility">
                             <form:options items="${model.sampleVisibilityList}"/>
-                        </form:select></td>
-                    </tr>
+                        </form:select>
                 </c:if>
-                <td></td>
-                <td align="right">
-                    <input type="submit" name="search" value="Search"/>
-                </td>
-                <td>
-                    <input type="submit" name="clear" value="Clear"/>
-                </td>
-                </tr>
+
+
+                    <input type="submit" name="search" value="Search"/> <input type="submit" name="clear" value="Clear"/>
+
             </form:form>
-        </table>
-    </div>
+        </div>
+
+
     <div style="margin-top:40px"></div>
     <c:choose>
         <c:when test="${not empty model.samples}">
@@ -49,7 +36,7 @@
             </c:if>
             <%--Request the current query string to export only the filtered studies--%>
             <c:set var="queryString" value="${pageContext.request.queryString}" scope="session"/>
-            <div align="left">
+            <div>
                 <a href="<c:url value="${baseURL}/samples/doExportTable?${queryString}"/>">Export table to CSV</a><br>
                 <c:if test="${not empty sampleFilter.sampleType}">
                     <a href="<c:url value="${baseURL}/samples/doExportDetails?${queryString}"/>">
@@ -57,10 +44,10 @@
                 </c:if>
             </div>
 
-            <table border="1" width="95%">
+            <table border="1">
                 <tr>
-                    <th>Sample Name</th>
-                    <th>Project Name</th>
+                    <th>Sample name</th>
+                    <th>Project name</th>
                     <th>Source</th>
                     <th>Analysis</th>
                 </tr>
@@ -88,7 +75,7 @@
             </table>
         </c:when>
         <c:otherwise>
-            <div align="center"><b>No data to display</b></div>
+            <div ><b>No data to display</b></div>
         </c:otherwise>
     </c:choose>
-</div>
+ </div>
