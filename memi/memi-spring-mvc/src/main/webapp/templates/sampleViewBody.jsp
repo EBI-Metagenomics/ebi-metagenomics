@@ -11,10 +11,10 @@
 <div id="content-full">
 <h2>Sample Overview</h2>
 
-<div style="margin-top:6px"></div>
-<table frame="box" width="95%">
+
+<table width="95%">
     <tr>
-        <td width="50%" align="left" valign="top">
+        <td >
             <c:choose>
                 <c:when test="${not empty model.sample.sampleTitle}">
                     <c:set var="sampleTitle" value="${model.sample.sampleTitle}"/>
@@ -24,24 +24,23 @@
                 </c:otherwise>
             </c:choose>
             <h2>${model.sample.sampleTitle}</h2>
-            Sample ${model.sample.sampleId}
+            ${model.sample.sampleId}
         </td>
     </tr>
 </table>
-<div style="margin-top:10px"></div>
-<a href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}"/>"><h3>Sample Analysis Results and
-    Statistics</h3></a>
 
+<a href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}"/>"><h3>Sample Analysis Results and Statistics</h3></a>
+<br/>
 
 <h3 id="sample_desc">Sample description</h3>
 <c:if test="${isDialogOpen==false}">
     <p><span style="color:red">No export data available for that sample!</span></p>
 </c:if>
 
-<div align="left">
+
     <a href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/doExportDetails"/>">Export to CSV</a>
-</div>
-<table frame="box" width="95%">
+
+<table width="100%">
     <tr>
         <c:choose>
             <c:when test="${not empty model.sample.sampleDescription}">
@@ -82,8 +81,8 @@
         </td>
     </tr>
 </table>
-<div style="margin-top:6px"></div>
-<table frame="box" width="95%">
+<br/>
+<table width="100%">
     <c:choose>
         <c:when test="${model.hostAssociated}">
             <tr>
@@ -179,8 +178,8 @@
         </c:otherwise>
     </c:choose>
 </table>
-<div style="margin-top:6px"/>
-<table frame="box" width="95%">
+<br/>
+<table width="100%">
     <tr>
         <c:choose>
             <c:when test="${not empty model.sample.geoLocName}">
@@ -218,7 +217,7 @@
         <td><c:out value="${miscellaneous}"/></td>
     </tr>
 </table>
-<div style="margin-top:10px"/>
+<br/>
 <h3>Submitted Raw Sequence in ENA</h3>
 <table frame="box" width="95%">
     <tr>
