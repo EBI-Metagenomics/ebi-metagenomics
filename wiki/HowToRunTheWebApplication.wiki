@@ -7,7 +7,7 @@ This tutorial should give you an explanation of how to run the latest version of
   * Create a Google account
   * Install the latest version of Java
   * Install Maven on your local machine
-  * Install Subversion or us an IDE with a smart Version Control Integration (IntellJ IDEA) 
+  * Install Subversion or us an IDE with a smart Version Control Integration ([http://www.jetbrains.com/idea/download/index.html IntellJ IDEA]) 
 
 = 1. Check out the project from subversion =
 
