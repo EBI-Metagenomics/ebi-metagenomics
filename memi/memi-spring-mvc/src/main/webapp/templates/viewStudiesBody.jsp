@@ -5,8 +5,8 @@
 <div id="content-full">
     <h2>${pageTitle}</h2>
 
-    <div align="center">
-        <table>
+     <div class="filter">
+
             <c:choose>
                 <c:when test="${empty model.submitter}">
                     <c:set var="actionUrlParam" value="studyVisibility=ALL_PUBLISHED_STUDIES"/>
@@ -16,42 +16,28 @@
                 </c:otherwise>
             </c:choose>
             <form:form method="GET" action="${baseURL}/studies/doSearch" commandName="studyFilter">
-                <tr>
-                    <td>Text:</td>
-                    <td><form:input id="autocomplete" path="searchTerm"/></td>
-                    <td><form:errors path="searchTerm" cssClass="error"/></td>
-                </tr>
-                <tr>
-                    <td>Analysis status:</td>
-                    <td>
+               Text:<form:input id="autocomplete" path="searchTerm"/> <form:errors path="searchTerm" cssClass="error"/><br/> <br/>
+               Analysis status:
                         <form:select id="studyStatus" path="studyStatus">
                             <form:option value="" label="All"/>
                             <form:options items="${model.studyStatusList}"/>
                         </form:select>
-                    </td> <td></td>
-                </tr>
+                  <br/> <br/>
                 <c:if test="${not empty model.submitter}">
-                    <tr>
-                        <td>Privacy:</td>
-                        <td>
-                            <form:select id="studyVisibility" path="studyVisibility">
+                   Privacy:<form:select id="studyVisibility" path="studyVisibility">
                                 <form:options items="${model.studyVisibilityList}"/>
                             </form:select>
-                        </td><td></td>
-                    </tr>
+
                 </c:if>
-                <tr>
-                    <td></td>
-                    <td align="right">
+
                         <input type="submit" name="search" value="Search"/>
-                    </td>
-                    <td>
+
                         <input type="submit" name="clear" value="Clear"/>
-                    </td>
-                </tr>
+
             </form:form>
-        </table>
+        
     </div>
+
     <div style="margin-top:40px"></div>
     <c:choose>
         <c:when test="${not empty model.studySampleSizeMap}">
