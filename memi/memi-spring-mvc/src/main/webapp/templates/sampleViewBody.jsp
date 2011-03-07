@@ -12,7 +12,7 @@
 <h2>Sample Overview</h2>
 
 
-<table width="95%">
+<table>
     <tr>
         <td >
             <c:choose>
@@ -40,7 +40,7 @@
 
     <a href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/doExportDetails"/>">Export to CSV</a>
 
-<table width="100%">
+<table>
     <tr>
         <c:choose>
             <c:when test="${not empty model.sample.sampleDescription}">
@@ -82,7 +82,7 @@
     </tr>
 </table>
 <br/>
-<table width="100%">
+<table>
     <c:choose>
         <c:when test="${model.hostAssociated}">
             <tr>
@@ -179,7 +179,7 @@
     </c:choose>
 </table>
 <br/>
-<table width="100%">
+<table>
     <tr>
         <c:choose>
             <c:when test="${not empty model.sample.geoLocName}">
@@ -219,7 +219,7 @@
 </table>
 <br/>
 <h3>Submitted Raw Sequence in ENA</h3>
-<table frame="box" width="95%">
+<table >
     <tr>
         <td valign="top" align="right" width="150"><b>Raw sequence reads:</b></td>
         <td>
