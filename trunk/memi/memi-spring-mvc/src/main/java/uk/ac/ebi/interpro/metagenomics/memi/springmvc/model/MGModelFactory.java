@@ -28,7 +28,7 @@ public class MGModelFactory {
     /**
      * The number studies, which should be shown on the portal home page.
      */
-    private final static int maxRowNumber = 5;
+    private final static int maxRowNumber = 4;
 
     private MGModelFactory() {
 
