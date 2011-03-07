@@ -1,12 +1,13 @@
 = Introduction =
 
-This tutorial should give you an explanation of how to run the latest version of this web application.
+This tutorial should give you an explanation of how to run the latest version of this Spring MVC-based web application.
 
 = Requirements =
 
   * Create a Google account
   * Install the latest version of Java
   * Install Maven on your local machine
+  * Install Subversion or us an IDE with a smart Version Control Integration (IntellJ IDEA) 
 
 = 1. Check out the project from subversion =
 
