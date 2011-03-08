@@ -18,9 +18,18 @@ import javax.mail.internet.MimeMessage;
  */
 public class EmailNotificationService implements INotificationService {
 
+    private final static Log log = LogFactory.getLog(EmailNotificationService.class);
+
     private JavaMailSenderImpl mailSender;
 
-    public static final Log log = LogFactory.getLog(EmailNotificationService.class);
+    private String receiver;
+
+    private String receiverCC;
+
+    private String sender;
+
+    private String emailSubject;
+
 
     public EmailNotificationService(JavaMailSenderImpl mailSender) {
         this.mailSender = mailSender;
@@ -31,14 +40,23 @@ public class EmailNotificationService implements INotificationService {
     }
 
     public void sendNotification(String message, Exception exception) {
+        log.info("Try to sending email notification...");
         //Create a mail message
         MimeMessage mimeMsg = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMsg);
         try {
-            helper.setTo("maxim@ebi.ac.uk");
-            helper.setCc("maxim.scheremetjew@gmail.com");
-            helper.setFrom("metagenomics-notification-service@ebi.ac.uk");
-            helper.setSubject("New submission from the MG portal");
+            if (receiver != null) {
+                helper.setTo(receiver);
+            }
+            if (receiverCC != null) {
+                helper.setCc(receiverCC);
+            }
+            if (sender != null) {
+                helper.setFrom(sender);
+            }
+            if (emailSubject != null) {
+                helper.setSubject(emailSubject);
+            }
 //            helper.setText("Thank you for ordering!");
             if (exception != null) {
                 helper.setText("An exception has occured!");
@@ -49,13 +67,45 @@ public class EmailNotificationService implements INotificationService {
 
         } catch (MessagingException e) {
             log.error("Could not build the message using the MimeMessageHelper!", e);
-            e.printStackTrace();
         }
         //try to send the email
         try {
             this.mailSender.send(mimeMsg);
+            log.info("Sent email notification successfully to " + receiver + "!");
         } catch (MailException ex) {
-            log.fatal("Email notification message could not sent!", ex);
+            log.fatal("Could not sent email notification message!", ex);
         }
+    }
+
+    public String getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(String receiver) {
+        this.receiver = receiver;
+    }
+
+    public String getReceiverCC() {
+        return receiverCC;
+    }
+
+    public void setReceiverCC(String receiverCC) {
+        this.receiverCC = receiverCC;
+    }
+
+    public String getSender() {
+        return sender;
+    }
+
+    public void setSender(String sender) {
+        this.sender = sender;
+    }
+
+    public String getEmailSubject() {
+        return emailSubject;
+    }
+
+    public void setEmailSubject(String emailSubject) {
+        this.emailSubject = emailSubject;
     }
 }
