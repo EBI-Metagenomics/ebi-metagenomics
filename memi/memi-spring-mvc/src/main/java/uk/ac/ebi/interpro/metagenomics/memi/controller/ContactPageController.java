@@ -29,7 +29,7 @@ import java.util.Map;
  * @since 1.0-SNAPSHOT
  */
 @Controller(value = "contactPageController")
-@RequestMapping("/" + ContactPageController.VIEW_NAME)
+@RequestMapping('/' + ContactPageController.VIEW_NAME)
 public class ContactPageController extends AbstractController implements IMGController {
 
     private final Log log = LogFactory.getLog(ContactPageController.class);
