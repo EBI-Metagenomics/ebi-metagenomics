@@ -295,7 +295,6 @@ padding:0 24px 0 14px;
     background: url(../img/arrow_link.jpg) no-repeat right center;
 }
 
-
 #submit-data-description a:hover,#submit-data-description  a:focus {
     background: url(../img/arrow_link_over.jpg) no-repeat  right center;
 }
@@ -303,6 +302,20 @@ padding:0 24px 0 14px;
 #submit-data-description a:active  {
     background: url(../img/arrow_link_click.jpg) no-repeat right center;
 }
+
+#list-data  a.all {
+    margin-right:4px;
+    padding:2px 40px 0 0;
+    float:right;
+    height: 30px;
+    border: 0px solid black;
+    display: block;
+    background: url(../img/arrow_link_small.jpg) no-repeat right top;
+}
+
+#list-data a.all:hover,#list-data  a.all:focus { background: url(../img/arrow_link_over_small.jpg) no-repeat  right top;}
+
+#list-data a.all:active  { background: url(../img/arrow_link_click_small.jpg) no-repeat right top;}
 
 
 section {
@@ -325,10 +338,9 @@ width:100%;
 #content {
 float:left;
 border: solid 0px green;
-width:684px;    /* was 690 reduced because of IE */
+width:682px;    /* was 690 reduced because of IE */
 height:auto;
 margin:14px 0 14px 0;
-
 }
 
 #content-full  {
@@ -343,6 +355,7 @@ width:auto;
 #sidebar {
 float:right; /* since this element is floated, a width must be given */
 width:256px;
+overflow:hidden; /*to shrunk the URL when too long  */
 border: solid 0px black;
 margin-top:0;
 background: url(../img/bgd_white_op45_8.png);
@@ -387,6 +400,7 @@ color:#866d9e ;
 
 a.list_more {
 color:#3e3e3e;
+font-weight:bold;
 }
 
 a.list_more:hover{
@@ -423,28 +437,29 @@ border-radius: 0 0 20px 0;
 
 #list-data-study {
 margin-top:14px;
-overflow:auto;
-min-height:440px;
-width:300px;
+min-height:442px;
+width:306px;
 float:left;
 padding:14px;
-line-height:1;
+line-height:1.2;
+height:auto;
 }
 
 #list-data-study h3, #list-data-sample h3 {font-size:110%;color:#7c8c99;margin: 1em 0px;}
 
 #list-data-sample {
-line-height:1;
+line-height:1.2;
 margin:14px 0 0 14px;
-overflow:auto;
-width:300px;
-min-height:440px;
-float:right;
+width:306px;
+min-height:442px;
+float:left;
 padding:14px;
+
 }
 
 .filter {padding:10px;border:1px solid #eaeaea; width:400px; margin: 0px auto;}
 
+::-webkit-selection  { background:#7d9ca6; color:#fff; text-shadow: none; }
 ::-moz-selection{ background: #7d9ca6; color:#fff; text-shadow: none; }
 ::selection { background:#7d9ca6; color:#fff; text-shadow: none; }
 
