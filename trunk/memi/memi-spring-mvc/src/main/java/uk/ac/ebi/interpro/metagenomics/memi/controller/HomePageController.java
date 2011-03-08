@@ -17,7 +17,6 @@ import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.HomePageModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -29,7 +28,7 @@ import javax.validation.Valid;
  * @since 1.0-SNAPSHOT
  */
 @Controller(value = "homePageController")
-@RequestMapping(value = "/*")
+@RequestMapping(value = "/")
 public class HomePageController extends LoginController implements IMGController {
 
     private final Log log = LogFactory.getLog(HomePageController.class);

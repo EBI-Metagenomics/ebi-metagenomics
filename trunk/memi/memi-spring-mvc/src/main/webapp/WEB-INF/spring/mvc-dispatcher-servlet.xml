@@ -16,6 +16,10 @@
     <!-- Configures the @Controller programming spring_model -->
     <mvc:annotation-driven/>
 
+    <!-- This Spring MVC tag allows you to request all images of the web application -->
+    <!-- E.g. using URL: http://localhost:8082/metagenomics/img/logo_8.png-->
+    <mvc:resources mapping="/img/*.*" location="/img/"/>
+
     <!-- Forwards requests to the "/" resource to the "welcome" view -->
     <!--<mvc:view-controller path="/" view-name="homePage"/>-->
 
@@ -27,17 +31,10 @@
         <property name="suffix" value=".jsp"/>
     </bean>
 
-    <!--Apache Tiles 2 integration-->
-    <!--<bean id="tilesViewResolver"-->
-    <!--class="org.springframework.web.servlet.view.UrlBasedViewResolver">-->
-    <!--<property name="viewClass" value="org.springframework.web.servlet.view.tiles2.TilesView"/>-->
-    <!--</bean>-->
-
     <bean id="tilesConfigurer"
           class="org.springframework.web.servlet.view.tiles2.TilesConfigurer"
           p:definitions="/WEB-INF/tiles/tiles-defs.xml"/>
 
     <!-- Imports user-defined @Controller beans that process client requests -->
     <import resource="controllers-context.xml"/>
-
 </beans>
