@@ -24,15 +24,11 @@ import javax.validation.Valid;
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @since 1.0-SNAPSHOT
  */
-public abstract class LoginController implements ILoginController {
+public abstract class LoginController extends AbstractController implements ILoginController {
     private final Log log = LogFactory.getLog(LoginController.class);
 
     @Resource
     private SubmitterDAO submitterDAO;
-
-    @Resource
-    private SessionManager sessionManager;
-
 
     public void processLogin(@ModelAttribute("loginForm") @Valid LoginForm loginForm, BindingResult result,
                              ModelMap model, SessionStatus status) {

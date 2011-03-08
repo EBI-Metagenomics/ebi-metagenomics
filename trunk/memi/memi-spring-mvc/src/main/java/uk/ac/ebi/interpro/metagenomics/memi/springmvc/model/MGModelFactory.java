@@ -1,5 +1,7 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
@@ -23,6 +25,7 @@ import java.util.*;
  * @since 1.0-SNAPSHOT
  */
 public class MGModelFactory {
+    private final static Log log = LogFactory.getLog(MGModelFactory.class);
 
     //Final variables
     /**
@@ -35,12 +38,14 @@ public class MGModelFactory {
     }
 
     public static HomePageModel getHomePageModel(SessionManager sessionMgr, HibernateStudyDAO studyDAO, HibernateSampleDAO sampleDAO, RomeClient romeClient) {
+        log.info("Building instance of " + HomePageModel.class + "...");
         Submitter submitter = getSessionSubmitter(sessionMgr);
         String rssUrl = null;
         try {
             rssUrl = romeClient.getFeed().getURL().toString();
         } catch (IOException e) {
             rssUrl = "unknown"; // TODO: Put URL default here
+            log.warn("Could not get feed URL from Rome client!", e);
         }
         if (submitter == null) {
             List<Study> studies = getOrderedPublicStudies(studyDAO);
@@ -59,26 +64,32 @@ public class MGModelFactory {
     }
 
     public static MGModel getMGModel(SessionManager sessionMgr) {
+        log.info("Building instance of " + MGModel.class + "...");
         return new MGModel(getSessionSubmitter(sessionMgr));
     }
 
     public static SubmissionModel getSubmissionModel(SessionManager sessionMgr) {
+        log.info("Building instance of " + SubmissionModel.class + "...");
         return new SubmissionModel(getSessionSubmitter(sessionMgr));
     }
 
     public static AnalysisStatsModel getAnalysisStatsModel(SessionManager sessionManager, Sample sample, String classPathToStatsFile) {
+        log.info("Building instance of " + AnalysisStatsModel.class + "...");
         return new AnalysisStatsModel(getSessionSubmitter(sessionManager), sample, classPathToStatsFile);
     }
 
     public static StudyViewModel getStudyViewModel(SessionManager sessionManager, Study study, List<Sample> samples) {
+        log.info("Building instance of " + StudyViewModel.class + "...");
         return new StudyViewModel(getSessionSubmitter(sessionManager), study, samples);
     }
 
     public static SampleViewModel getSampleViewModel(SessionManager sessionManager, Sample sample, List<String> archivedSeqs) {
+        log.info("Building instance of " + SampleViewModel.class + "...");
         return new SampleViewModel(getSessionSubmitter(sessionManager), sample, archivedSeqs);
     }
 
     public static ViewStudiesModel getViewStudiesPageModel(SessionManager sessionMgr, HibernateStudyDAO studyDAO, HibernateSampleDAO sampleDAO, StudyFilter filter) {
+        log.info("Building instance of " + ViewStudiesModel.class + "...");
         Submitter submitter = getSessionSubmitter(sessionMgr);
         long submitterId = (submitter != null ? submitter.getSubmitterId() : -1L);
         List<Study> studies = getFilteredStudies(studyDAO, filter, submitterId);
@@ -86,6 +97,7 @@ public class MGModelFactory {
     }
 
     public static ViewSamplesModel getViewSamplesPageModel(SessionManager sessionMgr, HibernateSampleDAO sampleDAO, SampleFilter filter) {
+        log.info("Building instance of " + ViewSamplesModel.class + "...");
         Submitter submitter = getSessionSubmitter(sessionMgr);
         long submitterId = (submitter != null ? submitter.getSubmitterId() : -1L);
         return new ViewSamplesModel(submitter, getFilteredSamples(sampleDAO, filter, submitterId));

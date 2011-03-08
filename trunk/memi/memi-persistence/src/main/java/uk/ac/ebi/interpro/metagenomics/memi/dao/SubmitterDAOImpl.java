@@ -28,7 +28,7 @@ public class SubmitterDAOImpl implements SubmitterDAO {
 
     private JdbcTemplate jdbcTemplate;
 
-    private final Log log = LogFactory.getLog(SubmitterDAOImpl.class);
+    private final static Log log = LogFactory.getLog(SubmitterDAOImpl.class);
 
     @Resource(name = "adevDatasource")
     public void setDataSource(DataSource dataSource) {
@@ -68,8 +68,7 @@ public class SubmitterDAOImpl implements SubmitterDAO {
                         }
                     });
 
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             log.warn("Could not perform database query. It might be that the JDBC connection could not build" +
                     " or is wrong configured. For more info take a look at the stack trace!", e);
         }

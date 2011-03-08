@@ -6,13 +6,10 @@ import org.apache.velocity.app.VelocityEngine;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import uk.ac.ebi.interpro.metagenomics.memi.basic.SampleVisibilityEditor;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.SampleTypeEditor;
+import uk.ac.ebi.interpro.metagenomics.memi.basic.SampleVisibilityEditor;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.VelocityTemplateWriter;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateSampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.files.MemiFileWriter;
@@ -23,16 +20,15 @@ import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewSamplesModel;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
 import uk.ac.ebi.interpro.metagenomics.memi.tools.MemiTools;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
-import java.text.Format;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Represents the controller for the list studies page.
@@ -42,9 +38,9 @@ import java.util.*;
  */
 @Controller
 @RequestMapping("/" + ViewSamplesController.VIEW_NAME)
-public class ViewSamplesController implements IMGController {
+public class ViewSamplesController extends AbstractController implements IMGController {
 
-    private final Log log = LogFactory.getLog(ViewSamplesController.class);
+    private final static Log log = LogFactory.getLog(ViewSamplesController.class);
 
     /* The maximum allowed number of characters per column within the study list table*/
     private final int MAX_CHARS_PER_COLUMN = 35;
@@ -58,9 +54,6 @@ public class ViewSamplesController implements IMGController {
 
     @Resource
     private HibernateSampleDAO sampleDAO;
-
-    @Resource
-    private SessionManager sessionManager;
 
     @Resource
     private VelocityEngine velocityEngine;
@@ -83,11 +76,15 @@ public class ViewSamplesController implements IMGController {
      * Handles the export of the samples table.
      */
     @RequestMapping(value = "doExportTable", method = RequestMethod.GET)
-    public ModelAndView doExportSampleTable(HttpServletRequest request, HttpServletResponse response, @ModelAttribute(SampleFilter.MODEL_ATTR_NAME) SampleFilter filter) {
+    public ModelAndView doExportSampleTable(@ModelAttribute(SampleFilter.MODEL_ATTR_NAME) final SampleFilter filter,
+                                            @RequestParam(required = false) final SampleFilter.SampleVisibility sampleVisibility,
+                                            @RequestParam(required = false) final String searchTerm,
+                                            @RequestParam(required = false) final Sample.SampleType sampleType,
+                                            HttpServletResponse response) {
         log.info("Requesting exportSamples (GET method)...");
 
-        ModelMap model = new ModelMap();
-        processRequestParams(request, filter);
+        final ModelMap model = new ModelMap();
+        processRequestParams(filter, searchTerm, sampleVisibility, sampleType);
         populateModel(model, filter);
         List<Sample> samples = ((ViewSamplesModel) model.get(MGModel.MODEL_ATTR_NAME)).getSamples();
 
@@ -113,11 +110,15 @@ public class ViewSamplesController implements IMGController {
      * Handles the export of a more detailed export file.
      */
     @RequestMapping(value = "doExportDetails", method = RequestMethod.GET)
-    public ModelAndView doExportDetails(HttpServletRequest request, HttpServletResponse response, @ModelAttribute(SampleFilter.MODEL_ATTR_NAME) SampleFilter filter) {
-        log.info("Requesting exportSamples (GET method)...");
+    public ModelAndView doExportDetails(@ModelAttribute(SampleFilter.MODEL_ATTR_NAME) final SampleFilter filter,
+                                        @RequestParam(required = false) final SampleFilter.SampleVisibility sampleVisibility,
+                                        @RequestParam(required = false) final String searchTerm,
+                                        @RequestParam(required = false) final Sample.SampleType sampleType,
+                                        HttpServletResponse response) {
+        log.info("Requesting exportSamples of ViewSamplesController...");
 
-        ModelMap model = new ModelMap();
-        processRequestParams(request, filter);
+        final ModelMap model = new ModelMap();
+        processRequestParams(filter, searchTerm, sampleVisibility, sampleType);
         populateModel(model, filter);
         List<Sample> samples = ((ViewSamplesModel) model.get(MGModel.MODEL_ATTR_NAME)).getSamples();
         if (samples != null && samples.size() > 0) {
@@ -134,24 +135,15 @@ public class ViewSamplesController implements IMGController {
         return new ModelAndView(VIEW_NAME, model);
     }
 
-//    @Override
-//    @RequestMapping(method = RequestMethod.POST)
-//    public ModelAndView doProcessLogin(@ModelAttribute(LoginForm.MODEL_ATTR_NAME) @Valid LoginForm loginForm, BindingResult result,
-//                                       ModelMap model, SessionStatus status) {
-//        log.info("Requesting doProcessLogin (POST method)...");
-//        //process login
-//        super.processLogin(loginForm, result, model, status);
-//        //create model and view
-//        populateModel(model, new SampleFilter());
-//        model.addAttribute(SampleFilter.MODEL_ATTR_NAME, ((ViewSamplesModel) model.get(MGModel.MODEL_ATTR_NAME)).getSampleFilter());
-//        return new ModelAndView(VIEW_NAME, model);
-//    }
-
     @RequestMapping(params = "search", value = "doSearch", method = RequestMethod.GET)
-    public ModelAndView doSearch(HttpServletRequest request, @ModelAttribute(SampleFilter.MODEL_ATTR_NAME) SampleFilter filter, ModelMap model) {
-        log.info("Requesting doSearch (POST method)...");
+    public ModelAndView doSearch(@ModelAttribute(SampleFilter.MODEL_ATTR_NAME) final SampleFilter filter,
+                                 @RequestParam(required = false) final SampleFilter.SampleVisibility sampleVisibility,
+                                 @RequestParam(required = false) final String searchTerm,
+                                 @RequestParam(required = false) final Sample.SampleType sampleType,
+                                 final ModelMap model) {
+        log.info("Requesting doSearch of " + ViewSamplesController.class + "...");
 
-        processRequestParams(request, filter);
+        processRequestParams(filter, searchTerm, sampleVisibility, sampleType);
         populateModel(model, filter);
         model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((ViewSamplesModel) model.get(MGModel.MODEL_ATTR_NAME)).getLoginForm());
         return new ModelAndView(VIEW_NAME, model);
@@ -172,35 +164,16 @@ public class ViewSamplesController implements IMGController {
         return new ModelAndView(VIEW_NAME, model);
     }
 
-    private void processRequestParams(HttpServletRequest request, SampleFilter filter) {
-        //Get URL parameter of GET request
-        String sampleVisibility = request.getParameter("sampleVisibility");
-        String searchTerm = request.getParameter("searchTerm");
-        String sampleType = request.getParameter("sampleType");
+    private void processRequestParams(SampleFilter filter, String searchTerm,
+                                      SampleFilter.SampleVisibility sampleVisibility,
+                                      Sample.SampleType sampleType) {
+        //Set filter parameters
+        filter.setSampleType(sampleType);
+        filter.setSearchTerm(searchTerm);
 
-        //Set parameter study type
-        if (sampleType != null && sampleType.trim().length() > 0) {
-            try {
-                Sample.SampleType type = Sample.SampleType.valueOf(sampleType);
-                if (type != null) {
-                    filter.setSampleType(type);
-                }
-            } catch (Exception e) {
-                log.warn("Could not find any sample type value for name: " + sampleType);
-                filter.setSampleType(null);
-            }
-        }
-
-        //Set parameters to the filter
-        if (searchTerm != null && searchTerm.trim().length() > 0) {
-            filter.setSearchTerm(searchTerm);
-        }
         //The visibility parameter can only be set if a user is logged in, means a session object exists
-        if (sessionManager.getSessionBean().getSubmitter() != null && sampleVisibility != null && sampleVisibility.trim().length() > 0) {
-            SampleFilter.SampleVisibility vis = SampleFilter.SampleVisibility.valueOf(sampleVisibility);
-            if (vis != null) {
-                filter.setSampleVisibility(vis);
-            }
+        if (sessionManager.getSessionBean().getSubmitter() != null) {
+            filter.setSampleVisibility(sampleVisibility);
         } else {
             filter.setSampleVisibility(SampleFilter.SampleVisibility.ALL_PUBLISHED_SAMPLES);
         }
@@ -249,5 +222,9 @@ public class ViewSamplesController implements IMGController {
             }
         }
         return "List of samples";
+    }
+
+    String getModelViewName() {
+        return VIEW_NAME;
     }
 }

@@ -1,4 +1,4 @@
-package uk.ac.ebi.interpro.metagenomics.memi;
+package uk.ac.ebi.interpro.metagenomics.memi.model.hibernate;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -25,16 +25,17 @@ public class StudyTest {
 
     @Test
     public void testGetShortStudyAbstract() throws Exception {
-        String testString = getStringOfLength(50);
-        Assert.assertEquals(50, testString.length());
+        int maxLength = 100;
+        String testString = getStringOfLength(maxLength);
+        Assert.assertEquals(maxLength, testString.length());
         study.setStudyAbstract(testString);
-        Assert.assertEquals(testString, study.getShortStudyAbstract());
+        Assert.assertEquals(testString, study.getShortStudyAbstract(maxLength));
         //
-        testString = getStringOfLength(40) + ' ' + getStringOfLength(20);
-        Assert.assertEquals(61, testString.length());
+        testString = getStringOfLength(90) + ' ' + getStringOfLength(30);
+        Assert.assertEquals(121, testString.length());
         study.setStudyAbstract(testString);
-        Assert.assertEquals(40, study.getShortStudyAbstract().length());
-        Assert.assertEquals(getStringOfLength(40), study.getShortStudyAbstract());
+        Assert.assertEquals(90, study.getShortStudyAbstract(maxLength).length());
+        Assert.assertEquals(getStringOfLength(90), study.getShortStudyAbstract(maxLength));
     }
 
     private String getStringOfLength(int length) {

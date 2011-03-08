@@ -33,9 +33,6 @@ public class LoginPageController extends LoginController implements IMGControlle
      */
     public static final String VIEW_NAME = "login";
 
-    @Resource
-    private SessionManager sessionManager;
-
     @Override
     public ModelAndView doGet(ModelMap model) {
         model.addAttribute("loginForm", new LoginForm());
@@ -58,5 +55,9 @@ public class LoginPageController extends LoginController implements IMGControlle
     public ModelAndView doCancelLoginProcess(@ModelAttribute(LoginForm.MODEL_ATTR_NAME) @Valid LoginForm loginForm, BindingResult result, ModelMap model, SessionStatus status) {
         //create model and view
         return new ModelAndView("redirect:index", model);
+    }
+
+    String getModelViewName() {
+        return VIEW_NAME;
     }
 }

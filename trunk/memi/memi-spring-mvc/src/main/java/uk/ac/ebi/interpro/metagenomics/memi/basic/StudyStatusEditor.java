@@ -16,7 +16,7 @@ import java.beans.PropertyEditorSupport;
  * @since 1.0-SNAPSHOT
  */
 public class StudyStatusEditor extends PropertyEditorSupport {
-    private final Log log = LogFactory.getLog(StudyStatusEditor.class);
+    private final static Log log = LogFactory.getLog(StudyStatusEditor.class);
 
     @Override
     public void setAsText(String text) {
@@ -30,8 +30,7 @@ public class StudyStatusEditor extends PropertyEditorSupport {
         try {
             status = Study.StudyStatus.valueOf(text);
             setValue(status);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             log.warn("Could not find any study status value for name: " + text);
         }
     }

@@ -136,17 +136,15 @@ public class ViewStudiesController extends AbstractController implements IMGCont
 
     private void processRequestParams(StudyFilter filter, String searchTerm, StudyFilter.StudyVisibility studyVisibility,
                                       Study.StudyStatus studyStatus) {
-        //Set parameters to the filter
+        //Set filter parameters
         //Set parameter search term        
-        if (searchTerm != null && searchTerm.trim().length() > 0) {
-            filter.setSearchTerm(searchTerm);
-        }
+        filter.setSearchTerm(searchTerm);
 
         //Set parameter study status
         filter.setStudyStatus(studyStatus);
 
         //The visibility parameter can only be set if a user is logged in, means a session object exists
-        if (sessionManager.getSessionBean().getSubmitter() != null && studyVisibility != null) {
+        if (sessionManager.getSessionBean().getSubmitter() != null) {
             filter.setStudyVisibility(studyVisibility);
         } else {
             filter.setStudyVisibility(StudyFilter.StudyVisibility.ALL_PUBLISHED_PROJECTS);
@@ -204,7 +202,6 @@ public class ViewStudiesController extends AbstractController implements IMGCont
         return "List of studies";
     }
 
-    @Override
     String getModelViewName() {
         return VIEW_NAME;
     }

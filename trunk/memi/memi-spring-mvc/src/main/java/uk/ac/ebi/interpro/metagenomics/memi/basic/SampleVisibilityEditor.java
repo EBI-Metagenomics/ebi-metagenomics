@@ -16,7 +16,7 @@ import java.beans.PropertyEditorSupport;
  * @since 1.0-SNAPSHOT
  */
 public class SampleVisibilityEditor extends PropertyEditorSupport {
-    private final Log log = LogFactory.getLog(SampleVisibilityEditor.class);
+    private final static Log log = LogFactory.getLog(SampleVisibilityEditor.class);
 
     @Override
     public void setAsText(String text) {
@@ -30,8 +30,7 @@ public class SampleVisibilityEditor extends PropertyEditorSupport {
         try {
             vis = SampleFilter.SampleVisibility.valueOf(text);
             setValue(vis);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             log.warn("Could not find any sample visibility value for name: " + text);
         }
     }
