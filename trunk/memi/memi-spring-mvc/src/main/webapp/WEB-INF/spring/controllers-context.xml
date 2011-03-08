@@ -63,7 +63,7 @@
         <!--Show no more than five news entries-->
         <constructor-arg value="5"/>
     </bean>
-    
+
     <!-- Definition of Hibernate session factory including Hibernate Mappings-->
     <bean id="hibernateSessionFactory"
           class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
@@ -128,9 +128,18 @@
     </bean>
 
     <!-- This bean initializes an email notification service -->
-    <bean id="emailNotificationServiceId" name="emailNotificationService"
+    <bean id="emailNotificationServiceSubmit" name="emailNotificationServiceSubmit"
           class="uk.ac.ebi.interpro.metagenomics.memi.services.EmailNotificationService">
         <constructor-arg ref="mailSender"/>
+    </bean>
+
+    <!-- This bean initializes an email notification service -->
+    <bean id="emailNotificationServiceContact" name="emailNotificationServiceContact"
+          class="uk.ac.ebi.interpro.metagenomics.memi.services.EmailNotificationService">
+        <constructor-arg ref="mailSender"/>
+        <property name="receiver" value="mr.matthew.fraser@googlemail.com"/>
+        <property name="receiverCC" value="maxim@ebi.ac.uk" />
+        <property name="emailSubject" value="[beta-feedback] Feedback about the new Metagenomics Website"/>
     </bean>
 
     <!-- This bean initializes the Velocity engine for templating. -->
