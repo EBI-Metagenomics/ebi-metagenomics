@@ -23,7 +23,7 @@ import java.util.*;
  * @since 1.0-SNAPSHOT
  */
 public class MGModelFactory {
-    
+
     //Final variables
     /**
      * The number studies, which should be shown on the portal home page.
@@ -33,7 +33,7 @@ public class MGModelFactory {
     private MGModelFactory() {
 
     }
-    
+
     public static HomePageModel getHomePageModel(SessionManager sessionMgr, HibernateStudyDAO studyDAO, HibernateSampleDAO sampleDAO, RomeClient romeClient) {
         Submitter submitter = getSessionSubmitter(sessionMgr);
         String rssUrl = null;
@@ -90,6 +90,11 @@ public class MGModelFactory {
         long submitterId = (submitter != null ? submitter.getSubmitterId() : -1L);
         return new ViewSamplesModel(submitter, getFilteredSamples(sampleDAO, filter, submitterId));
     }
+
+    public static ContactModel getContactModel(SessionManager sessionMgr) {
+        return new ContactModel(getSessionSubmitter(sessionMgr));
+    }
+
 
     /**
      * Returns a list of public studies limited by a specified number of rows and order by received date.
