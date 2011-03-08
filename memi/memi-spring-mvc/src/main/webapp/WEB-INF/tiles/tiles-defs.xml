@@ -73,6 +73,16 @@
         <put-attribute name="body" value="/templates/helpBody.jsp"/>
     </definition>
 
+    <definition name="contact" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="yellow"/>
+        <put-attribute name="body" value="/templates/contactBody.jsp"/>
+    </definition>
+
+    <definition name="contactSuccess" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="yellow"/>
+        <put-attribute name="body" value="/templates/contactSuccessBody.jsp"/>
+    </definition>
+
     <definition name="login" extends="rootTemplate">
         <put-attribute name="bodyClass" type="string" value="pink"/>
         <put-attribute name="body" value="/templates/loginBody.jsp"/>

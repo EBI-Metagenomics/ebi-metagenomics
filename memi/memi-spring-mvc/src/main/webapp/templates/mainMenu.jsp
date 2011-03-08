@@ -35,10 +35,10 @@
                 </c:otherwise>
             </c:choose>
         </li>
-       
-       
+
+
     <li class="green"><a href="<c:url value="${baseURL}/info"/>" title="About us">About</a></li>
-    <li class="yellow"><a href="mailto:chrish@ebi.ac.uk?subject=Request from the MG portal" title="Contact us" >Contact</a></li>
+    <li class="yellow"><a href="<c:url value="${baseURL}/contact"/>" title="Contact us" >Contact</a></li>
     <li class="white"></li>
     <%-- <li class="orange"><a href="<c:url value="${baseURL}/help"/>" title="Help">Help</a></li>--%>
      <%--<li class="black">  <c:choose>

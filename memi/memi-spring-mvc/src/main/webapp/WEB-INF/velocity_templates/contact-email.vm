@@ -1,0 +1,14 @@
+<html>
+<body>
+<div>
+    #if( ${submitter} )
+        Submitter name: ${submitter.firstName} ${submitter.surname} (Database ID: ${submitter.submitterId})<br>
+        Submitter email address: ${submitter.emailAddress}<br>
+    #end
+
+    Email Provided: ${contactForm.sender}<br>
+    Message: ${contactForm.message}<br>
+
+</div>
+</body>
+</html>

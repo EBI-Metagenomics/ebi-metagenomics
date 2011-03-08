@@ -44,7 +44,7 @@ public class SubmissionController implements IMGController {
 
     public static final String SUCCESS_VIEW_NAME = "submitSuccess";
 
-    @Resource(name = "emailNotificationService")
+    @Resource(name = "emailNotificationServiceSubmit")
     private INotificationService emailService;
 
     @Resource(name = "velocityEngine")
