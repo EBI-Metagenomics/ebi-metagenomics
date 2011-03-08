@@ -126,8 +126,13 @@ public abstract class Sample implements SecureEntity {
 
     @Transient
     public String getShortSampleDescription() {
-        if (sampleDescription != null && sampleDescription.length() > 100) {
-            String shortDescription = sampleDescription.substring(0, 100);
+        return getShortSampleDescription(100);
+    }
+
+    @Transient
+    protected String getShortSampleDescription(int maxLength) {
+        if (sampleDescription != null && sampleDescription.length() > maxLength) {
+            String shortDescription = sampleDescription.substring(0, maxLength);
             int index = shortDescription.lastIndexOf(' ');
             return shortDescription.substring(0, index);
         }
@@ -269,6 +274,5 @@ public abstract class Sample implements SecureEntity {
         public String toString() {
             return type;
         }
-
     }
 }

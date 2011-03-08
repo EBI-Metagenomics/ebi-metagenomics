@@ -190,7 +190,7 @@
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
-            <version>1.2.14</version>
+            <version>1.2.16</version>
             <scope>runtime</scope>
         </dependency>
         <!-- Packages to support user input validation within input forms (like the login or the submit forms) -->
@@ -313,7 +313,7 @@
                     </webAppConfig>
                     <connectors>
                         <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
-                            <port>8081</port>
+                            <port>8082</port>
                             <maxIdleTime>60000</maxIdleTime>
                         </connector>
                     </connectors>

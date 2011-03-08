@@ -1,5 +1,7 @@
 package uk.ac.ebi.interpro.metagenomics.memi.tiles;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.tiles.TilesApplicationContext;
 import org.apache.tiles.context.TilesRequestContextFactory;
 import org.apache.tiles.definition.DefinitionsFactoryException;
@@ -18,16 +20,19 @@ import java.util.List;
  */
 public class MGTilesContainerFactory extends BasicTilesContainerFactory {
 
+    private final static Log log = LogFactory.getLog(MGTilesContainerFactory.class);
+
     @Override
     protected List<URL> getSourceURLs(TilesApplicationContext applicationContext,
                                       TilesRequestContextFactory contextFactory) {
+        log.info("Getting Tiles definition sources...");
         List<URL> urls = new ArrayList<URL>();
         try {
             // TODO - Works OK, but seems to be the wrong path?
             urls.add(applicationContext.getResource("/WEB-INF/tiles-defs.xml"));
         } catch (IOException e) {
-            throw new DefinitionsFactoryException(
-                    "Cannot load definition URLs", e);
+            log.warn("Cannot load definition URLs!", new DefinitionsFactoryException(
+                    "Cannot load definition URLs", e));
         }
         return urls;
     }

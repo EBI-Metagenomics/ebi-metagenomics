@@ -5,27 +5,27 @@
     <h2>${pageTitle}</h2>
 
 
-        <div class="filter">
-            <form:form method="GET" action="${baseURL}/samples/doSearch" commandName="sampleFilter">
-               Text: <form:input path="searchTerm"/> <form:errors path="searchTerm" cssClass="error"/><br/><br/>
-                       <%--Used sample type instead of study type to not confuse the user--%>
-                Sample type: <form:select path="sampleType">
-                            <form:option value="All" label="All"/>
-                            <form:options items="${model.sampleTypes}"/>
-                        </form:select>
+    <div class="filter">
+        <form:form method="GET" action="${baseURL}/samples/doSearch" commandName="sampleFilter">
+            Text: <form:input path="searchTerm"/> <form:errors path="searchTerm" cssClass="error"/><br/><br/>
+            <%--Used sample type instead of study type to not confuse the user--%>
+            Sample source: <form:select path="sampleType">
+            <form:option value="" label="All"/>
+            <form:options items="${model.sampleTypes}"/>
+        </form:select>
 
-              <br/><br/>
-                <c:if test="${not empty model.submitter}">
-                    Privacy:<form:select id="sampleVisibility" path="sampleVisibility">
-                            <form:options items="${model.sampleVisibilityList}"/>
-                        </form:select>
-                </c:if>
+            <br/><br/>
+            <c:if test="${not empty model.submitter}">
+                Privacy:<form:select id="sampleVisibility" path="sampleVisibility">
+                <form:options items="${model.sampleVisibilityList}"/>
+            </form:select>
+            </c:if>
 
 
-                    <input type="submit" name="search" value="Search"/> <input type="submit" name="clear" value="Clear"/>
+            <input type="submit" name="search" value="Search"/> <input type="submit" name="clear" value="Clear"/>
 
-            </form:form>
-        </div>
+        </form:form>
+    </div>
 
 
     <div style="margin-top:40px"></div>
@@ -75,7 +75,7 @@
             </table>
         </c:when>
         <c:otherwise>
-            <div ><b>No data to display</b></div>
+            <div><b>No data to display</b></div>
         </c:otherwise>
     </c:choose>
- </div>
+</div>

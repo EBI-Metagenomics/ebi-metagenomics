@@ -1,4 +1,4 @@
-package uk.ac.ebi.interpro.metagenomics.memi;
+package uk.ac.ebi.interpro.metagenomics.memi.model;
 
 import org.junit.Before;
 import org.junit.Test;

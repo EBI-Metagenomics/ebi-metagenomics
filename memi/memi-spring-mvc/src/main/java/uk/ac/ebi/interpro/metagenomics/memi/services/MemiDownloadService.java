@@ -8,7 +8,6 @@ import org.springframework.util.FileCopyUtils;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.EnvironmentSample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.HostSample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
@@ -22,7 +21,7 @@ import java.util.Arrays;
  * @since 1.0-SNAPSHOT
  */
 public class MemiDownloadService {
-    private static final Log log = LogFactory.getLog(MemiDownloadService.class);
+    private final static Log log = LogFactory.getLog(MemiDownloadService.class);
 
     private final String CLASS_PATH = "uk/ac/ebi/interpro/metagenomics/memi/services/";
 
@@ -41,20 +40,20 @@ public class MemiDownloadService {
             }
             //configure HTTP response
             assembleServletResponse(response, is, fileName);
+            log.info("Opened download dialog successfully.");
             return true;
         } catch (FileNotFoundException e) {
-            log.error("Could not find the specified downloadable file!", e);
+            log.error("Could not find the specified downloadable file: " + file.getAbsolutePath(), e);
         } catch (IOException e) {
-            log.error("Could not create input stream for the specified downloadable file!", e);
+            log.error("Could not create input stream for the specified downloadable file (s.a.)!", e);
         } finally {
             if (is != null)
                 try {
                     is.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    log.error("Could not close input stream correctly!", e);
                 }
         }
-        log.info("Opened download dialog successfully.");
         return false;
     }
 
@@ -79,73 +78,63 @@ public class MemiDownloadService {
         InputStream sis = null;
         //name of the downloadable file
         String fileName = "";
-        try {
-            //create input stream for header file
-            if (clazz != null) {
-                Resource headerResource = getCSVFileHeaderStream(clazz);
-                if (headerResource != null && headerResource.exists()) {
+        //create input stream for header file
+        if (clazz != null) {
+            Resource headerResource = getCSVFileHeaderStream(clazz);
+            if (headerResource != null && headerResource.exists()) {
+                try {
                     headerFileIs = headerResource.getInputStream();
-                }
-            }
-            //create and stream sample files from project resource directory
-            for (String sampleID : sampleIDs) {
-                if (sampleIDs.length == 1) {
-                    fileName = sampleID;
-                }
-                //create a file input stream and concatenate if the previous input stream if exists
-                String pathName = sampleID + ".csv";
-                Resource sampleResource = new ClassPathResource(CLASS_PATH + pathName);
-                if (sampleResource != null && sampleResource.exists()) {
-                    sampleFileIs = sampleResource.getInputStream();
-                }
-                if (headerFileIs != null && sampleFileIs != null) {
-                    if (sis == null) {
-                        sis = new SequenceInputStream(headerFileIs, sampleFileIs);
-                    } else {
-                        sis = new SequenceInputStream(sis, sampleFileIs);
-                    }
-                }
-            }
-            if (sis != null) {
-                fileName = (sampleIDs.length == 1 ? fileName : "samples") + ".csv";
-                //configure HTTP response
-                assembleServletResponse(response, sis, fileName);
-                return true;
-            }
-        } catch (FileNotFoundException e) {
-            log.error("Could not find the specified downloadable file!", e);
-        } catch (IOException e) {
-            log.error("Could not create input stream for the specified downloadable file!", e);
-        } finally {
-            if (sampleFileIs != null) {
-                try {
-                    sampleFileIs.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (headerFileIs != null) {
-                try {
-                    headerFileIs.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (sis != null) {
-                try {
-                    sis.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    log.error("Could not get input stream for the specified resource: " + headerResource.getFilename(), e);
                 }
             }
         }
-        log.warn("Could not open download dialog!");
+        //create and stream sample files from project resource directory
+        for (String sampleID : sampleIDs) {
+            if (sampleIDs.length == 1) {
+                fileName = sampleID;
+            }
+            //create a file input stream and concatenate if the previous input stream if exists
+            String pathName = sampleID + ".csv";
+            Resource sampleResource = new ClassPathResource(CLASS_PATH + pathName);
+            if (sampleResource != null && sampleResource.exists()) {
+                try {
+                    sampleFileIs = sampleResource.getInputStream();
+                } catch (IOException e) {
+                    log.error("Could not get input stream for the specified resource: " + sampleResource.getFilename(), e);
+                }
+            }
+            if (headerFileIs != null && sampleFileIs != null) {
+                if (sis == null) {
+                    sis = new SequenceInputStream(headerFileIs, sampleFileIs);
+                } else {
+                    sis = new SequenceInputStream(sis, sampleFileIs);
+                }
+                try {
+                    sampleFileIs.close();
+                } catch (IOException e) {
+                    log.warn("Could not close SAMPLE file InputStream!", e);
+                }
+                try {
+                    headerFileIs.close();
+                } catch (IOException e) {
+                    log.warn("Could not close HEADER file InputStream!", e);
+                }
+            }
+        }
+        if (sis != null) {
+            fileName = (sampleIDs.length == 1 ? fileName : "samples") + ".csv";
+            //configure HTTP response
+            assembleServletResponse(response, sis, fileName);
+            return true;
+        }
         return false;
     }
 
     /**
      * Configures HTTP servlet response.
      */
+
     private void assembleServletResponse(HttpServletResponse response, InputStream is, String fileName) {
         response.setContentType("text/html;charset=UTF-8");
         response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
@@ -154,6 +143,14 @@ public class MemiDownloadService {
             log.info("Opened download dialog successfully.");
         } catch (IOException e) {
             log.warn("Could not get output stream to open the download dialog!", e);
+        } finally {
+            if (is != null) {
+                try {
+                    is.close();
+                } catch (IOException e) {
+                    log.warn("Could not close input stream after the assembly of the HTTP response!");
+                }
+            }
         }
     }
 

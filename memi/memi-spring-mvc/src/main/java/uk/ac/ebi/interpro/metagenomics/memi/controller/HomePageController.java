@@ -2,7 +2,6 @@ package uk.ac.ebi.interpro.metagenomics.memi.controller;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -13,8 +12,6 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateSampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateStudyDAO;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.NewsDAO;
-import uk.ac.ebi.interpro.metagenomics.memi.feed.CachingRomeClient;
 import uk.ac.ebi.interpro.metagenomics.memi.feed.RomeClient;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.HomePageModel;
@@ -49,15 +46,12 @@ public class HomePageController extends LoginController implements IMGController
     @Resource
     private HibernateSampleDAO sampleDAO;
 
-    //Other injections
-    @Resource
-    private SessionManager sessionManager;
-
     @Resource
     RomeClient rssClient;
 
     @Override
     public ModelAndView doGet(ModelMap model) {
+        log.info("Requesting doGet of " + HomePageController.class);
         //build and add the page model
         populateModel(model);
         model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((MGModel) model.get(MGModel.MODEL_ATTR_NAME)).getLoginForm());
@@ -69,6 +63,7 @@ public class HomePageController extends LoginController implements IMGController
     @RequestMapping(method = RequestMethod.POST)
     public ModelAndView doProcessLogin(@ModelAttribute(LoginForm.MODEL_ATTR_NAME) @Valid LoginForm loginForm, BindingResult result,
                                        ModelMap model, SessionStatus status) {
+        log.info("Requesting doProcessLogin of " + HomePageController.class + "...");
         //process login
         super.processLogin(loginForm, result, model, status);
         //create model and view
@@ -81,7 +76,12 @@ public class HomePageController extends LoginController implements IMGController
      * Creates the home page model and adds it to the specified model map.
      */
     private void populateModel(ModelMap model) {
+        log.info("Building model of " + HomePageController.class + "...");
         final HomePageModel hpModel = MGModelFactory.getHomePageModel(sessionManager, studyDAO, sampleDAO, rssClient);
         model.addAttribute(MGModel.MODEL_ATTR_NAME, hpModel);
+    }
+
+    String getModelViewName() {
+        return VIEW_NAME;
     }
 }

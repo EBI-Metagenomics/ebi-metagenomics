@@ -18,7 +18,6 @@ import uk.ac.ebi.interpro.metagenomics.memi.services.INotificationService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.SubmissionModel;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -33,9 +32,9 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping('/' + SubmissionController.VIEW_NAME)
-public class SubmissionController implements IMGController {
+public class SubmissionController extends AbstractController implements IMGController {
 
-    private final Log log = LogFactory.getLog(SubmissionController.class);
+    private final static Log log = LogFactory.getLog(SubmissionController.class);
 
     /**
      * View name of this controller which is used several times.
@@ -49,9 +48,6 @@ public class SubmissionController implements IMGController {
 
     @Resource(name = "velocityEngine")
     private VelocityEngine velocityEngine;
-
-    @Resource
-    private SessionManager sessionManager;
 
     @Override
     public ModelAndView doGet(ModelMap model) {
@@ -113,5 +109,9 @@ public class SubmissionController implements IMGController {
         }
         return VelocityEngineUtils.mergeTemplateIntoString(
                 velocityEngine, "WEB-INF/velocity_templates/submission-confirmation.vm", model);
+    }
+
+    String getModelViewName() {
+        return VIEW_NAME;
     }
 }

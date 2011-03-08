@@ -33,10 +33,6 @@ import java.util.List;
 @RequestMapping("/" + StudyViewController.VIEW_NAME + "/{studyId}")
 public class StudyViewController extends SecuredAbstractController<Study> {
 
-//    private interface ModelProcessingStrategy {
-//        void processModel(ModelMap model, Study study);
-//    }
-
     private final static Log log = LogFactory.getLog(StudyViewController.class);
 
     /**

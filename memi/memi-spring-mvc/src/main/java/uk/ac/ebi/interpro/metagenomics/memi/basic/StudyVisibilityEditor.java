@@ -15,7 +15,7 @@ import java.beans.PropertyEditorSupport;
  * @since 1.0-SNAPSHOT
  */
 public class StudyVisibilityEditor extends PropertyEditorSupport {
-    private final Log log = LogFactory.getLog(StudyVisibilityEditor.class);
+    private final static Log log = LogFactory.getLog(StudyVisibilityEditor.class);
 
     @Override
     public void setAsText(String text) {
