@@ -30,9 +30,9 @@
 
                 </c:if>
 
-                        <input type="submit" name="search" value="Search"/>
+                        <input type="submit" name="search" value="Search" class="main_button"/>
 
-                        <input type="submit" name="clear" value="Clear"/>
+                        <input type="submit" name="clear" value="Clear" class="main_button"/>
 
             </form:form>
         
