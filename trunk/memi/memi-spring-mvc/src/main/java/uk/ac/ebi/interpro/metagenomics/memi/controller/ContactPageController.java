@@ -52,7 +52,7 @@ public class ContactPageController extends AbstractController implements IMGCont
     public ModelAndView doGet(ModelMap model) {
         //build and add the page model
         populateModel(model);
-        model.addAttribute(ContactForm.MODEL_ATTR_NAME, ((ContactModel) model.get(MGModel.MODEL_ATTR_NAME)).getContactForm());
+        model.addAttribute(ContactForm.MODEL_ATTR_NAME, new ContactForm());
         return new ModelAndView(VIEW_NAME, model);
     }
 
