@@ -297,7 +297,7 @@ padding:0 24px 0 14px;
 margin-left:440px;
 padding-top:10px;
 font-size:110%;
-width: 180px;
+width: 164px;
 height: 41px;
 border: 0px solid black;
 display: block;
@@ -314,7 +314,7 @@ background: url(../img/arrow_link_click.jpg) no-repeat right center;
 
 #list-data  a.all {
 margin-right:4px;
-padding:2px 40px 0 0;
+padding:2px 36px 0 0;
 float:right;
 height: 30px;
 border: 0px solid black;
