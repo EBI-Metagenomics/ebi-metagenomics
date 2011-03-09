@@ -4,32 +4,32 @@
 <%-- This template is used within the login page component--%>
 <c:if test="${empty model.submitter}">
 <div id ="sidebar-login">
-   
-   <form:form  method="POST" action="" commandName="loginForm">
 
-              <h2>Login</h2>
-               Login to submit and view your data:<br/>
-                  <form:errors cssStyle="color:red;" path="emailAddress"/>
-                      <form:errors cssStyle="color:red;" path="password"/>
+    <img src="../img/icon_lock.gif" alt="Login lock icon"><h2>Login</h2>
+    Login to submit and view your data:<br/>
+         <form:form  method="POST" action="" commandName="loginForm">
+         E-Mail: <form:errors cssStyle="color:red;" path="emailAddress"/><form:input path="emailAddress"/> <br/>
 
-              E-Mail*:<form:input path="emailAddress"/><br/>
-              Password:<form:password path="password"/> <br/>
-              <input type="submit" name="login" value="Login"/>
-               
-              </tr>
-          </form:form>
-          <%--* A valid login is: E-Mail: TEST; Password:test--%>
-         <br/>New to metagenomics?
-         <a href="<c:url value=" https://www.ebi.ac.uk/embl/genomes/submission/registration.jsf"/>" title="Registration" class="but_signup">Sign-up</a>
+         Password: <form:errors cssClass="error" path="password"/><form:password path="password"/> <br/>
+
+         <input type="submit" name="login" class="main_button" value="Login"/>
+         </form:form>
+     <a href="<c:url value="https://www.ebi.ac.uk/embl/genomes/submission/forgot-passw.jsf?_afPfm=5"/>" title="Request a new password">Forgot your password?</a>
+         <%--* A valid login is: E-Mail: TEST; Password:test--%>
+         <span class="separator"></span>
+         <strong>New to metagenomics?</strong><br/>
+         <a href="<c:url value=" https://www.ebi.ac.uk/embl/genomes/submission/registration.jsf"/>" title="Registration">Click here to register</a>
          <%-- <br/>
          <a href="<c:url value=" https://www.ebi.ac.uk/embl/genomes/submission/forgot-passw.jsf?_afPfm=5"/>"
                      title="Request a new password">Forgotten password</a>--%>
+   
 </div>
 </c:if>
 
 
 <div id ="sidebar-news">
-<h2>News and Events</h2>
+  <a href="${model.rssUrl}" rel="alternate" type="application/rss+xml" title="Metagenomics RSS feeds" ><img src="../img/icon_rss.gif" alt="Metagenomics RSS feeds"></a><h2>News and Events</h2>
+  <span class="separator"></span>
 <c:choose>
     <c:when test="${empty model.rssItems}">
         No news
@@ -40,12 +40,9 @@
             <li><a href="${entry.link}" title="${entry.description.value}">${entry.title}</a></li>
         </c:forEach>
         </ul>
+        
     </c:otherwise>
 </c:choose>
-<div id="rssfeed">
-    <a href="${model.rssUrl}" class="rss" rel="alternate" type="application/rss+xml">RSS feed</a>
-</div>        
-
 <%--<ul>--%>
     <%--<li><a href="">GSC11 conference- Hinxton, UK.</a> <span class="date">April 4-6th, 2011</span> </li>--%>
     <%--<li><a href="">Keystone symposium - Microbial Communities as Drivers of Ecosystem Complexity Breckenridge, Colorado, USA.</a> <span class="date">March 25 - 30, 2011</span></li>--%>
@@ -53,10 +50,10 @@
 <%--</ul>--%>
 <%----%>
     
-<p><a href="http://twitter.com/EBImetagenomics" class="but_signup">Follow us on Twitter</a></p><br/>
+<p><a href="http://twitter.com/EBImetagenomics" class="twitter">Follow us on Twitter</a></p>
 </div>
 
 <div id ="sidebar-mailing">
-<h2>Mailing list</h2>
-<p>Subscribe to the EBI metagenomics mailing list to receive by email  updated information on the website activities: <a href="#">Click here</a></p>
+<img src="../img/icon_mailing.gif" alt="Mailing list"><h2>Mailing list</h2>
+<p>Subscribe to the EBI metagenomics mailing list to receive by email  updated information on the website activities: <a href="http://listserver.ebi.ac.uk/mailman/listinfo/metagenomics">click here.</a></p>
 </div>
