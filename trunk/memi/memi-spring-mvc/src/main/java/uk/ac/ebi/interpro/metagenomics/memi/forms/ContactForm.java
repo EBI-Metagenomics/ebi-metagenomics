@@ -15,8 +15,6 @@ import javax.validation.constraints.Size;
 public class ContactForm {
     public final static String MODEL_ATTR_NAME = "contactForm";
 
-    private String emailSubject;
-
     @NotEmpty
     @Email
     private String sender;
@@ -25,14 +23,6 @@ public class ContactForm {
     @NotEmpty
     @Size(min = 3, max = 1000)
     private String message;
-
-    public String getEmailSubject() {
-        return emailSubject;
-    }
-
-    public void setEmailSubject(String emailSubject) {
-        this.emailSubject = emailSubject;
-    }
 
     public String getSender() {
         return sender;
