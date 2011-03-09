@@ -63,7 +63,7 @@ public class ContactPageController extends AbstractController implements IMGCont
         populateModel(model);
         if (result.hasErrors()) {
             log.info("Contact form still has validation errors!");
-            model.addAttribute(ContactForm.MODEL_ATTR_NAME, ((ContactModel) model.get(MGModel.MODEL_ATTR_NAME)).getContactForm());
+            model.addAttribute(ContactForm.MODEL_ATTR_NAME, contactForm);
             return new ModelAndView(VIEW_NAME, model);
         }
         //build contact email message
