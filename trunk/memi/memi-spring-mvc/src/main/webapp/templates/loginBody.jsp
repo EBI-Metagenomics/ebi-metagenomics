@@ -10,10 +10,10 @@
                  <form:errors cssStyle="color:red;" path="emailAddress"/>
                     <form:errors cssStyle="color:red;" path="password"/>
 
-            E-Mail*:<form:input path="emailAddress"/><br/>
+            E-Mail:<form:input path="emailAddress"/><br/>
             Password:<form:password path="password"/> <br/>
-            <input type="submit" name="login" value="Login"/>
-                    <input type="submit" name="cancel" value="Cancel"/>
+            <input type="submit" name="login" value="Login" class="main_button"/>
+            <input type="submit" name="cancel" value="Cancel" class="main_button"/>
             </tr>
         </form:form>
         <%--* A valid login is: E-Mail: TEST; Password:test--%>
