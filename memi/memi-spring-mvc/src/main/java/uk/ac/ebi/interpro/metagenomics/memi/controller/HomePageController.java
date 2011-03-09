@@ -28,7 +28,7 @@ import javax.validation.Valid;
  * @since 1.0-SNAPSHOT
  */
 @Controller(value = "homePageController")
-@RequestMapping(value = "/")
+@RequestMapping(value = HomePageController.REQUEST_MAPPING_VALUE)
 public class HomePageController extends LoginController implements IMGController {
 
     private final Log log = LogFactory.getLog(HomePageController.class);
@@ -37,6 +37,10 @@ public class HomePageController extends LoginController implements IMGController
      * View name of this controller which is used several times.
      */
     public static final String VIEW_NAME = "index";
+
+    public static final String REQUEST_MAPPING_VALUE = "/";
+
+    public static final String REDIRECT_VALUE = "/metagenomics" + REQUEST_MAPPING_VALUE;
 
     //Data access objects
     @Resource

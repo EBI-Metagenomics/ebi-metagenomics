@@ -40,10 +40,6 @@ public class CommonController {
     public void installationSiteHandler() {
     }
 
-    @RequestMapping("/about")
-    public void aboutHandler() {
-    }
-
     @RequestMapping("/help")
     public ModelAndView helpHandler(ModelMap model) {
         model.addAttribute(MGModel.MODEL_ATTR_NAME, MGModelFactory.getMGModel(sessionManager));
@@ -53,6 +49,6 @@ public class CommonController {
     @RequestMapping("/logout")
     public ModelAndView indexHandler() {
         sessionManager.getSessionBean().removeSubmitter();
-        return new ModelAndView("redirect:" + HomePageController.VIEW_NAME);
+        return new ModelAndView("redirect:" + HomePageController.REDIRECT_VALUE);
     }
 }
