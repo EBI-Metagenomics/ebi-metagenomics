@@ -54,7 +54,7 @@ public class LoginPageController extends LoginController implements IMGControlle
     @RequestMapping(params = "cancel", method = RequestMethod.POST)
     public ModelAndView doCancelLoginProcess(@ModelAttribute(LoginForm.MODEL_ATTR_NAME) @Valid LoginForm loginForm, BindingResult result, ModelMap model, SessionStatus status) {
         //create model and view
-        return new ModelAndView("redirect:index", model);
+        return new ModelAndView("redirect:" + HomePageController.REDIRECT_VALUE, model);
     }
 
     String getModelViewName() {

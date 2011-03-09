@@ -82,7 +82,7 @@ public class SubmissionController extends AbstractController implements IMGContr
     @RequestMapping(params = "cancel", method = RequestMethod.POST)
     public ModelAndView doCancelSubmission(@ModelAttribute(LoginForm.MODEL_ATTR_NAME) @Valid LoginForm loginForm, BindingResult result, ModelMap model, SessionStatus status) {
         //create model and view
-        return new ModelAndView("redirect:index", model);
+        return new ModelAndView("redirect:" + HomePageController.REDIRECT_VALUE, model);
     }
 
     /**
