@@ -27,8 +27,8 @@
             <tr>
                 <td></td>
                 <td>
-                    <input type="submit" name="submit" value="Send Feedback" />
-                    <input type="reset" name="reset" value="Reset" />
+                    <input type="submit" name="submit" value="Submit" class="main_button" />
+                    <input type="reset" name="reset" value="Clear" class="main_button"/>
                 </td>
             </tr>
         </table>
