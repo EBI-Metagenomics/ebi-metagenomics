@@ -14,14 +14,18 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.SubmissionForm;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.services.INotificationService;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.SubmissionModel;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -89,7 +93,7 @@ public class SubmissionController extends AbstractController implements IMGContr
      * Creates the MG model and adds it to the specified model map.
      */
     private void populateModel(ModelMap model) {
-        final SubmissionModel subModel = MGModelFactory.getSubmissionModel(sessionManager);
+        final SubmissionModel subModel = MGModelFactory.getSubmissionModel(sessionManager, getBreadcrumbs(null));
         model.addAttribute(MGModel.MODEL_ATTR_NAME, subModel);
     }
 
@@ -111,7 +115,13 @@ public class SubmissionController extends AbstractController implements IMGContr
                 velocityEngine, "WEB-INF/velocity_templates/submission-confirmation.vm", model);
     }
 
-    String getModelViewName() {
+    protected String getModelViewName() {
         return VIEW_NAME;
+    }
+
+    protected List<Breadcrumb> getBreadcrumbs(SecureEntity entity) {
+        List<Breadcrumb> result = new ArrayList<Breadcrumb>();
+        result.add(new Breadcrumb("Submit", "Submit new data", VIEW_NAME));
+        return result;
     }
 }

@@ -6,6 +6,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import java.io.*;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
@@ -43,8 +44,8 @@ public class AnalysisStatsModel extends MGModel {
     private final String PATH_TO_ANALYSIS_DIRECTORY;
 
 
-    AnalysisStatsModel(Submitter submitter, Sample sample, String classPathToAnalysisDirectory) {
-        super(submitter);
+    AnalysisStatsModel(Submitter submitter, Sample sample, String classPathToAnalysisDirectory, List<Breadcrumb> breadcrumbs) {
+        super(submitter, breadcrumbs);
         this.sample = sample;
         this.PATH_TO_ANALYSIS_DIRECTORY = classPathToAnalysisDirectory;
         // TODO - Niave - just loads the static files for the JI_soil sample.

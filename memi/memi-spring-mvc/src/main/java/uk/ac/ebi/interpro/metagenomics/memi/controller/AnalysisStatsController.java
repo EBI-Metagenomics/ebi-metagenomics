@@ -14,8 +14,11 @@ import uk.ac.ebi.interpro.metagenomics.memi.dao.EmgLogFileInfoDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateSampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.ISampleStudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.AnalysisStatsModel;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
 
@@ -97,7 +100,7 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
      * Creates the home page model and adds it to the specified model map.
      */
     private void populateModel(final ModelMap model, final Sample sample) {
-        final AnalysisStatsModel mgModel = MGModelFactory.getAnalysisStatsModel(sessionManager, sample, propertyContainer.getPathToAnalysisDirectory());
+        final AnalysisStatsModel mgModel = MGModelFactory.getAnalysisStatsModel(sessionManager, sample, propertyContainer.getPathToAnalysisDirectory(), getBreadcrumbs(sample));
         model.addAttribute(MGModel.MODEL_ATTR_NAME, mgModel);
     }
 
@@ -148,8 +151,17 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
         return sampleDAO;
     }
 
-    @Override
-    String getModelViewName() {
+    protected String getModelViewName() {
         return VIEW_NAME;
+    }
+
+    protected List<Breadcrumb> getBreadcrumbs(SecureEntity entity) {
+        List<Breadcrumb> result = new ArrayList<Breadcrumb>();
+        if (entity != null && entity instanceof Sample) {
+            result.add(new Breadcrumb("Project: " + ((Sample) entity).getStudy().getStudyName(), "View project " + ((Sample) entity).getStudy().getStudyName(), StudyViewController.VIEW_NAME + '/' + ((Sample) entity).getStudy().getStudyId()));
+            result.add(new Breadcrumb("Sample: " + ((Sample) entity).getSampleTitle(), "View sample " + ((Sample) entity).getSampleTitle(), SampleViewController.VIEW_NAME + '/' + ((Sample) entity).getSampleId()));
+            result.add(new Breadcrumb("Analysis", "View analysis results", VIEW_NAME + '/' + ((Sample) entity).getSampleId()));
+        }
+        return result;
     }
 }

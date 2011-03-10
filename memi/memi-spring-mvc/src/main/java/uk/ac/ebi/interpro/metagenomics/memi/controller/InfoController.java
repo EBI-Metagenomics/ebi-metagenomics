@@ -7,8 +7,13 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents a controller for the info page.
@@ -40,11 +45,17 @@ public class InfoController extends AbstractController implements IMGController 
      */
     private void populateModel(final ModelMap model) {
         log.info("Building model of InfoController...");
-        final MGModel hpModel = MGModelFactory.getMGModel(sessionManager);
+        final MGModel hpModel = MGModelFactory.getMGModel(sessionManager, getBreadcrumbs(null));
         model.addAttribute(MGModel.MODEL_ATTR_NAME, hpModel);
     }
 
-    String getModelViewName() {
+    protected String getModelViewName() {
         return VIEW_NAME;
+    }
+
+    protected List<Breadcrumb> getBreadcrumbs(SecureEntity entity) {
+        List<Breadcrumb> result = new ArrayList<Breadcrumb>();
+        result.add(new Breadcrumb("About", "About the metagenomics portal", VIEW_NAME));
+        return result;
     }
 }

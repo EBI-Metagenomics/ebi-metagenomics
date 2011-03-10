@@ -10,10 +10,14 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModel;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
 
-import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This controller handles the login page in contrast to the login component
@@ -35,14 +39,17 @@ public class LoginPageController extends LoginController implements IMGControlle
 
     @Override
     public ModelAndView doGet(ModelMap model) {
+        populateModel(model);
         model.addAttribute("loginForm", new LoginForm());
         return new ModelAndView(VIEW_NAME, model);
     }
 
     @RequestMapping(params = "login", method = RequestMethod.POST)
     public ModelAndView doProcessLogin(@ModelAttribute(LoginForm.MODEL_ATTR_NAME) @Valid LoginForm loginForm, BindingResult result, ModelMap model, SessionStatus status) {
+
         //process login
         super.processLogin(loginForm, result, model, status);
+        populateModel(model);
         Submitter submitter = sessionManager.getSessionBean().getSubmitter();
         if (submitter != null) {
             return new ModelAndView("redirect:submit", model);
@@ -51,13 +58,27 @@ public class LoginPageController extends LoginController implements IMGControlle
         return new ModelAndView(VIEW_NAME, model);
     }
 
+    /**
+     * Creates the home page model and adds it to the specified model map.
+     */
+    private void populateModel(ModelMap model) {
+        final MGModel mgModel = MGModelFactory.getMGModel(sessionManager, getBreadcrumbs(null));
+        model.addAttribute(MGModel.MODEL_ATTR_NAME, mgModel);
+    }
+
     @RequestMapping(params = "cancel", method = RequestMethod.POST)
     public ModelAndView doCancelLoginProcess(@ModelAttribute(LoginForm.MODEL_ATTR_NAME) @Valid LoginForm loginForm, BindingResult result, ModelMap model, SessionStatus status) {
         //create model and view
         return new ModelAndView("redirect:" + HomePageController.REDIRECT_VALUE, model);
     }
 
-    String getModelViewName() {
+    protected String getModelViewName() {
         return VIEW_NAME;
+    }
+
+    protected List<Breadcrumb> getBreadcrumbs(SecureEntity entity) {
+        List<Breadcrumb> result = new ArrayList<Breadcrumb>();
+        result.add(new Breadcrumb("Login", "Login to the metagenomics portal", VIEW_NAME));
+        return result;
     }
 }

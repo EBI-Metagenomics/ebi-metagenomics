@@ -13,13 +13,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.ContactForm;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.services.EmailNotificationService;
 import uk.ac.ebi.interpro.metagenomics.memi.services.INotificationService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -82,9 +85,10 @@ public class ContactPageController extends AbstractController implements IMGCont
 
     /**
      * Creates the home page model and adds it to the specified model map.
+     * @param model The model map to populate
      */
     private void populateModel(ModelMap model) {
-        final ContactModel contactModel = MGModelFactory.getContactModel(sessionManager);
+        final ContactModel contactModel = MGModelFactory.getContactModel(sessionManager, getBreadcrumbs(null));
         model.addAttribute(MGModel.MODEL_ATTR_NAME, contactModel);
     }
 
@@ -106,7 +110,13 @@ public class ContactPageController extends AbstractController implements IMGCont
                 velocityEngine, "WEB-INF/velocity_templates/contact-email.vm", model);
     }
 
-    String getModelViewName() {
+    protected String getModelViewName() {
         return VIEW_NAME;
+    }
+
+    protected List<Breadcrumb> getBreadcrumbs(SecureEntity entity) {
+        List<Breadcrumb> result = new ArrayList<Breadcrumb>();
+        result.add(new Breadcrumb("Contact", "Contact us", VIEW_NAME));
+        return result;
     }
 }
