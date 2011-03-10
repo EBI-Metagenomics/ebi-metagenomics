@@ -6,6 +6,7 @@
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" lang="java">
     <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/images/favicon.ico">
     <link rel="icon"  type="image/ico" href="${pageContext.request.contextPath}/images/favicon.ico">
+    <link href="../../common/assets/css/ebi/ebi_common.css" rel="stylesheet" type="text/css" />    
     <title>EBI metagenomics portal</title>
     <meta name="description" content="EBI Metagenomics is a new web resource targeted at metagenomic researchers"/>
     <meta name="keywords" content="ebi, EBI, InterPro, interpro, metagenomics, metagenomic, metagenome, metagenomes, DNA, microbiology, microbial, ecology, organisms, microorganism, microorganisms, biodiversity, diversity, gene, genes, genome, genomes, genomic, genomics, ecogenomics, community genomics, genetic, sequencing, sequence, environment, environmental, ecosystem, ecosystems, samples, sample, annotation, protein, research, archive, metabolic, pathways, analysis, function, GAIA, shotgun, pyrosequencing, community, communities, metabolism, cultivation, bioinformatics, bioinformatic, database, metadata, dataset, data, repository,   "/>
@@ -77,8 +78,9 @@
 <%-- onload attribute is necessary to ensure that the EBI main header works in IE see  http://www.ebi.ac.uk/inc/template/#important style overflow addede because of he bug in the EBI website for the body--%>
 <body onload="if(navigator.userAgent.indexOf('MSIE') != -1) {document.getElementById('head').allowTransparency = true;}"
       class="<tiles:getAsString name='bodyClass'/>" style="overflow:visible;">
-<%-- EBI main header
-<%@include file='../inc/head.html' %>--%>
+<%-- EBI main header                 --%>
+<%--<%@include file='../inc/head.html' %>--%>
+<tiles:insertAttribute name="breadcrumbs"/>
 
 <div id="wrapper">
 

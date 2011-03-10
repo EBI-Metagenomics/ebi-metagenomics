@@ -16,8 +16,10 @@ import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateStudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.files.MemiFileWriter;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.StudyFilter;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewStudiesModel;
@@ -137,7 +139,7 @@ public class ViewStudiesController extends AbstractController implements IMGCont
     private void processRequestParams(StudyFilter filter, String searchTerm, StudyFilter.StudyVisibility studyVisibility,
                                       Study.StudyStatus studyStatus) {
         //Set filter parameters
-        //Set parameter search term        
+        //Set parameter search term
         filter.setSearchTerm(searchTerm);
 
         //Set parameter study status
@@ -167,7 +169,7 @@ public class ViewStudiesController extends AbstractController implements IMGCont
      * Creates the MG model and adds it to the specified model map.
      */
     private void populateModel(ModelMap model, StudyFilter filter) {
-        final ViewStudiesModel subModel = MGModelFactory.getViewStudiesPageModel(sessionManager, studyDAO, sampleDAO, filter);
+        final ViewStudiesModel subModel = MGModelFactory.getViewStudiesPageModel(sessionManager, studyDAO, sampleDAO, filter, getBreadcrumbs(null));
         model.addAttribute(MGModel.MODEL_ATTR_NAME, subModel);
     }
 
@@ -202,7 +204,13 @@ public class ViewStudiesController extends AbstractController implements IMGCont
         return "List of studies";
     }
 
-    String getModelViewName() {
+    protected String getModelViewName() {
         return VIEW_NAME;
+    }
+
+    protected List<Breadcrumb> getBreadcrumbs(SecureEntity entity) {
+        List<Breadcrumb> result = new ArrayList<Breadcrumb>();
+        result.add(new Breadcrumb("Projects", "View projects", VIEW_NAME));
+        return result;
     }
 }

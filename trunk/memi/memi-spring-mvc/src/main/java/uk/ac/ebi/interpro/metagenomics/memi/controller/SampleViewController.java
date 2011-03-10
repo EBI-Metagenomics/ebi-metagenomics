@@ -12,11 +12,9 @@ import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.EmgLogFileInfoDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateSampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.ISampleStudyDAO;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.EnvironmentSample;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.HostSample;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.*;
 import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.SampleViewModel;
@@ -101,7 +99,7 @@ public class SampleViewController extends SecuredAbstractController<Sample> {
      * Creates the home page model and adds it to the specified model map.
      */
     private void populateModel(final ModelMap model, final Sample sample) {
-        final SampleViewModel sampleModel = MGModelFactory.getSampleViewModel(sessionManager, sample, getArchivedSeqs(sample));
+        final SampleViewModel sampleModel = MGModelFactory.getSampleViewModel(sessionManager, sample, getArchivedSeqs(sample), getBreadcrumbs(sample));
         model.addAttribute(MGModel.MODEL_ATTR_NAME, sampleModel);
     }
 
@@ -117,7 +115,16 @@ public class SampleViewController extends SecuredAbstractController<Sample> {
         return sampleDAO;
     }
 
-    String getModelViewName() {
+    protected String getModelViewName() {
         return VIEW_NAME;
+    }
+
+    protected List<Breadcrumb> getBreadcrumbs(SecureEntity entity) {
+        List<Breadcrumb> result = new ArrayList<Breadcrumb>();
+        if (entity != null && entity instanceof Sample) {
+            result.add(new Breadcrumb("Project: " + ((Sample) entity).getStudy().getStudyName(), "View project " + ((Sample) entity).getStudy().getStudyName(), StudyViewController.VIEW_NAME + '/' + ((Sample) entity).getStudy().getStudyId()));
+            result.add(new Breadcrumb("Sample: " + ((Sample) entity).getSampleTitle(), "View project " + ((Sample) entity).getSampleTitle(), VIEW_NAME + '/' + ((Sample) entity).getSampleId()));
+        }
+        return result;
     }
 }

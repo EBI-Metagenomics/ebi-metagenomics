@@ -13,14 +13,17 @@ import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateSampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateStudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.ISampleStudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.StudyViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.tools.MemiTools;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -93,7 +96,7 @@ public class StudyViewController extends SecuredAbstractController<Study> {
 
     private void populateModel(ModelMap model, final Study study) {
         List<Sample> samples = sampleDAO.retrieveSamplesByStudyId(study.getId());
-        final StudyViewModel studyModel = MGModelFactory.getStudyViewModel(sessionManager, study, samples);
+        final StudyViewModel studyModel = MGModelFactory.getStudyViewModel(sessionManager, study, samples, getBreadcrumbs(study));
         model.addAttribute(StudyViewModel.MODEL_ATTR_NAME, studyModel);
     }
 
@@ -101,7 +104,15 @@ public class StudyViewController extends SecuredAbstractController<Study> {
         return studyDAO;
     }
 
-    String getModelViewName() {
+    protected String getModelViewName() {
         return VIEW_NAME;
+    }
+
+    protected List<Breadcrumb> getBreadcrumbs(SecureEntity entity) {
+        List<Breadcrumb> result = new ArrayList<Breadcrumb>();
+        if (entity != null && entity instanceof Study) {
+            result.add(new Breadcrumb("Project: " + ((Study) entity).getStudyName(), "View project " + ((Study) entity).getStudyName(), VIEW_NAME + '/' + ((Study) entity).getStudyId()));
+        }
+        return result;
     }
 }

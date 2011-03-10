@@ -1,8 +1,11 @@
 package uk.ac.ebi.interpro.metagenomics.memi.controller;
 
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Represents an abstract controller class, which extends all more specific controllers.
@@ -15,5 +18,7 @@ public abstract class AbstractController {
     @Resource
     protected SessionManager sessionManager;
 
-    abstract String getModelViewName();
+    protected abstract String getModelViewName();
+
+    protected abstract List<Breadcrumb> getBreadcrumbs(SecureEntity obj);
 }

@@ -13,6 +13,7 @@
         <!-- Default value if not overridden -->
         <!-- Attributes of type template-->
         <put-attribute name="header" type="template" value="/templates/header.jsp"/>
+        <put-attribute name="breadcrumbs" type="template" value="/templates/breadcrumbs.jsp"/>
         <put-attribute name="mainMenu" type="template" value="/templates/mainMenu.jsp"/>
         <put-attribute name="footer" type="template" value="/templates/footer.jsp"/>
     </definition>

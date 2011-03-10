@@ -3,6 +3,8 @@ package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.ContactForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
 
+import java.util.List;
+
 /**
  * Represents the model for the contact page.
  *
@@ -13,8 +15,8 @@ public class ContactModel extends MGModel {
 
     private ContactForm contactForm;
 
-    ContactModel(Submitter submitter) {
-        super(submitter);
+    ContactModel(Submitter submitter, List<Breadcrumb> breadcrumbs) {
+        super(submitter, breadcrumbs);
         this.contactForm = new ContactForm();
     }
 

@@ -16,7 +16,9 @@ import uk.ac.ebi.interpro.metagenomics.memi.files.MemiFileWriter;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.SampleFilter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewSamplesModel;
@@ -189,8 +191,8 @@ public class ViewSamplesController extends AbstractController implements IMGCont
      * Creates the MG model and adds it to the specified model map.
      */
     private void populateModel(ModelMap model, SampleFilter filter) {
-        final ViewSamplesModel subModel = MGModelFactory.getViewSamplesPageModel(sessionManager, sampleDAO, filter);
-        model.addAttribute(MGModel.MODEL_ATTR_NAME, subModel);
+        final ViewSamplesModel subModel = MGModelFactory.getViewSamplesPageModel(sessionManager, sampleDAO, filter, getBreadcrumbs(null));
+        model.addAttribute(MGModel.MODEL_ATTR_NAME, subModel);                                                                         
     }
 
     private List<String> getSampleProperties() {
@@ -224,7 +226,13 @@ public class ViewSamplesController extends AbstractController implements IMGCont
         return "List of samples";
     }
 
-    String getModelViewName() {
+    protected String getModelViewName() {
         return VIEW_NAME;
+    }
+
+    protected List<Breadcrumb> getBreadcrumbs(SecureEntity entity) {
+        List<Breadcrumb> result = new ArrayList<Breadcrumb>();
+        result.add(new Breadcrumb("Samples", "View samples", VIEW_NAME));
+        return result;
     }
 }

@@ -19,8 +19,8 @@ public class StudyViewModel extends MGModel {
 
     private Study study;
 
-    StudyViewModel(Submitter submitter, Study study, List<Sample> samples) {
-        super(submitter);
+    StudyViewModel(Submitter submitter, Study study, List<Sample> samples, List<Breadcrumb> breadcrumbs) {
+        super(submitter, breadcrumbs);
         this.samples = samples;
         this.study = study;
     }
