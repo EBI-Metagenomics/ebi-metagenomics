@@ -8,9 +8,9 @@
     <img src="../img/icon_lock.gif" alt="Login lock icon"><h2>Login</h2>
     Login to submit and view your data:<br/>
          <form:form  method="POST" action="" commandName="loginForm">
-         E-Mail: <form:errors cssStyle="color:red;" path="emailAddress"/><form:input path="emailAddress"/> <br/>
+         E-Mail:<br/> <form:errors cssClass="error" path="emailAddress"/><form:input path="emailAddress"/> <br/>
 
-         Password: <form:errors cssClass="error" path="password"/><form:password path="password"/> <br/>
+         Password:<br/> <form:errors cssClass="error" path="password"/><form:password path="password"/> <br/>
 
          <input type="submit" name="login" class="main_button" value="Login"/>
          </form:form>
