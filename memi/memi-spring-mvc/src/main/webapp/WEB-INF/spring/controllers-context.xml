@@ -56,6 +56,15 @@
     <!--Caching-->
     <ehcache:annotation-driven cache-manager="ehCacheManager" />
     <bean id="ehCacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"/>
+    <!--TODO: Replace with following?    -->
+    <!--From: http://blog.goyello.com/2010/07/29/quick-start-with-ehcache-annotations-for-spring/-->
+    <!--<ehcache:annotation-driven />-->
+    <!--<ehcache:config cache-manager="cacheManager">-->
+        <!--<ehcache:evict-expired-elements interval="60" />-->
+    <!--</ehcache:config>-->
+    <!--<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">-->
+        <!--<property name="configLocation"  value="/WEB-INF/ehcache.xml"/>-->
+    <!--</bean>    -->
 
     <!--RSS-->
     <bean id="rssClient" class="uk.ac.ebi.interpro.metagenomics.memi.feed.CachingRomeClient">
