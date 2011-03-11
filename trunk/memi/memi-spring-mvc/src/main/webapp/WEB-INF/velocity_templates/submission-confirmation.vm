@@ -1,19 +1,24 @@
 <html>
 <body>
 <div>
-    Submitter name: ${submitter.firstName} ${submitter.surname} (Database ID: ${submitter.submitterId})<br>
-    Submitter email address: ${submitter.emailAddress}<br>
-    Submission title: ${subForm.subTitle}<br>
-    Release date: ${subForm.releaseDate}<br>
-    Data description: ${subForm.dataDesc}<br>
-    Is analysis required: <br>
-    Is Human associated: ${subForm.humanAssociated}<br>
-    Test:
-    #if( ${subForm.analysisRequired} )
-        yes
-    #else
-        no
-    #end
+    <h1>New Data Submission: ${subForm.subTitle}</h1>
+
+    <h2>Submitter Details:</h2>
+    <p>
+        The user was logged on with the folloing details:<br />
+        Submitter Name: ${submitter.firstName} ${submitter.surname} (Database ID: ${submitter.submitterId})<br />
+        Submitter Email address: ${submitter.emailAddress}<br />
+    </p>
+
+    <h2>Submission Details:</h2>
+    <p>
+        Project Title: ${subForm.subTitle}<br />
+        Hold Private Until: ${subForm.releaseDate}<br />
+        Submission Description: ${subForm.dataDesc}<br />
+        #if (${dateWarning})
+            <strong>Warning:</strong> The "Hold Private Until" date of ${subForm.releaseDate} entered by the user was more than 2 years in the future.
+        #end
+    </p>
 </div>
 </body>
 </html>

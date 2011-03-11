@@ -3,6 +3,8 @@ package uk.ac.ebi.interpro.metagenomics.memi.forms;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.Future;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -25,11 +27,12 @@ public class SubmissionForm {
     @NotEmpty
     private String subTitle;
 
+    /**
+     * Hold project private until date
+     */
+    @Temporal(TemporalType.DATE)
+    @Future
     private Date releaseDate;
-
-    private boolean isAnalysisRequired;
-
-    private boolean isHumanAssociated;
 
     /**
      * Data description
@@ -74,19 +77,4 @@ public class SubmissionForm {
         }
     }
 
-    public boolean isAnalysisRequired() {
-        return isAnalysisRequired;
-    }
-
-    public void setAnalysisRequired(boolean analysisRequired) {
-        isAnalysisRequired = analysisRequired;
-    }
-
-    public boolean isHumanAssociated() {
-        return isHumanAssociated;
-    }
-
-    public void setHumanAssociated(boolean humanAssociated) {
-        isHumanAssociated = humanAssociated;
-    }
 }

@@ -68,8 +68,6 @@ public class SubmissionControllerTest {
         assertNull("All input fields should be null at initialization phase!", subForm.getSubTitle());
         assertNotNull("Date is set during initialization!", subForm.getReleaseDate());
         assertNull("All input fields should be null at initialization phase!", subForm.getDataDesc());
-        assertFalse("All checkboxes should be false at initialization phase!", subForm.isAnalysisRequired());
-        assertFalse("All checkboxes should be false at initialization phase!", subForm.isHumanAssociated());
     }
 
     @Test
@@ -89,8 +87,6 @@ public class SubmissionControllerTest {
         subForm.setSubTitle(testTitle);
         subForm.setReleaseDate(testDate);
         subForm.setDataDesc(testDescription);
-        subForm.setAnalysisRequired(isAnalysisRequired);
-        subForm.setHumanAssociated(isHumanAssociated);
         model.put("subForm", subForm);
         result = new BeanPropertyBindingResult(subForm, "subForm");
         assertEquals(0, result.getErrorCount());
@@ -102,8 +98,6 @@ public class SubmissionControllerTest {
         assertEquals("The content of the submission title input field should not be null!", testTitle, modelSubFormObj.getSubTitle());
         assertEquals("The content of the submission explanation input field should not be null!", testDate, modelSubFormObj.getReleaseDate());
         assertEquals("The content of the data description input field should not be null!", testDescription, modelSubFormObj.getDataDesc());
-        assertEquals("The checkbox should be not clicked (FALSE)!", isAnalysisRequired, modelSubFormObj.isAnalysisRequired());
-        assertEquals("The checkbox should be clicked (TRUE)!", isHumanAssociated, modelSubFormObj.isHumanAssociated());
     }
 
     @Test
@@ -118,22 +112,16 @@ public class SubmissionControllerTest {
         subForm.setSubTitle(testTitle);
         subForm.setReleaseDate(testDate);
         subForm.setDataDesc(testDescription);
-        subForm.setAnalysisRequired(isAnalysisRequired);
-        subForm.setHumanAssociated(isHumanAssociated);
         String actual = controller.buildMsg(subForm);
         //Test the static part of the email content
         assertTrue(actual.contains("Submitter name:"));
         assertTrue(actual.contains("Submission title:"));
         assertTrue(actual.contains("Release date:"));
         assertTrue(actual.contains("Data description:"));
-        assertTrue(actual.contains("Is analysis required:"));
-        assertTrue(actual.contains("Is Human associated:"));
-        //Test if submission form values are part of the message text        
+        //Test if submission form values are part of the message text
         assertTrue(actual.contains(testTitle));
         assertTrue(actual.contains(testDate));
         assertTrue(actual.contains(testDescription));
-        assertTrue(actual.contains("true"));
-        assertFalse(actual.contains("false"));
         assertFalse("Should not be a part of the message text!", actual.contains("hallo"));
     }
 }
