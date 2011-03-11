@@ -50,12 +50,12 @@ public abstract class LoginController extends AbstractController implements ILog
             if (submitter != null) {
                 String encryptedPw = SHA256.encrypt(loginForm.getPassword());
                 if (encryptedPw == null || !encryptedPw.equals(submitter.getPassword())) {
-                    result.addError(new FieldError("loginForm", "emailAddress", "Incorrect login data!"));
+                    result.addError(new FieldError("loginForm", "emailAddress", "Login failed. The email address or password was not recognised, please try again."));
                     return;
                 }
             } else {
                 log.warn("Could not find any submitter for the specified email address: " + emailAddress);
-                result.addError(new FieldError("loginForm", "emailAddress", "Incorrect login data!"));
+                result.addError(new FieldError("loginForm", "emailAddress", "Login failed. The email address or password was not recognised, please try again."));
                 return;
             }
         } else {

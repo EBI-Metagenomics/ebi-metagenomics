@@ -38,12 +38,6 @@ public class SubmissionFormTest {
         String desc = "desc";
         form.setDataDesc(desc);
         assertEquals(desc, form.getDataDesc());
-        boolean isAnalysisRequired = true;
-        form.setAnalysisRequired(isAnalysisRequired);
-        assertEquals(isAnalysisRequired, form.isAnalysisRequired());
-        boolean isHumanAssociated = false;
-        form.setHumanAssociated(isHumanAssociated);
-        assertEquals(isHumanAssociated, form.isHumanAssociated());
     }
 
     @Test

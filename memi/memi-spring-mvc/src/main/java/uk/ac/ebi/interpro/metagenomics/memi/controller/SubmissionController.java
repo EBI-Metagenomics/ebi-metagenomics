@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.SubmissionForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
+import uk.ac.ebi.interpro.metagenomics.memi.services.EmailNotificationService;
 import uk.ac.ebi.interpro.metagenomics.memi.services.INotificationService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModel;
@@ -23,10 +24,10 @@ import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.SubmissionModel;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Represents the controller for the submission forms.
@@ -71,9 +72,9 @@ public class SubmissionController extends AbstractController implements IMGContr
             model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((SubmissionModel) model.get(MGModel.MODEL_ATTR_NAME)).getLoginForm());
             return new ModelAndView(VIEW_NAME, model);
         }
-        subForm = (SubmissionForm) model.get("subForm");
         if (subForm != null) {
             String msg = buildMsg(subForm);
+            ((EmailNotificationService)emailService).setEmailSubject("MG-SUB: " + subForm.getSubTitle());
             emailService.sendNotification(msg);
             log.info("Sent an email with hibernate submission details: " + msg);
             status.setComplete();
@@ -105,8 +106,14 @@ public class SubmissionController extends AbstractController implements IMGContr
      */
     protected String buildMsg(SubmissionForm subForm) {
         Map<String, Object> model = new HashMap<String, Object>();
+
         //Add submission form to Velocity model
         model.put("subForm", subForm);
+
+        //Should a release date warning be added to the email?
+        String releaseDate = subForm.getReleaseDate();
+        model.put("dateWarning", !validateReleaseDate(releaseDate));
+
         //Add logged in user to Velocity model
         if (sessionManager != null && sessionManager.getSessionBean() != null) {
             model.put("submitter", sessionManager.getSessionBean().getSubmitter());
@@ -123,5 +130,39 @@ public class SubmissionController extends AbstractController implements IMGContr
         List<Breadcrumb> result = new ArrayList<Breadcrumb>();
         result.add(new Breadcrumb("Submit", "Submit new data", VIEW_NAME));
         return result;
+    }
+
+    /**
+     * Check that the release date entered is not more than 2 years from the current time.
+     * @param releaseDate String in format "MM/dd/yyy"
+     * @return False if validation failed, otherwise true
+     */
+    private boolean validateReleaseDate(String releaseDate) {
+        if (!releaseDate.equals(null)) {
+            return false;
+        }
+
+        Calendar calendar = Calendar.getInstance();
+        long now = System.currentTimeMillis();
+        calendar.setTimeInMillis(now);
+        calendar.add(Calendar.YEAR, 2);
+        long limit = calendar.getTimeInMillis();
+
+
+        DateFormat df = new SimpleDateFormat("MM/dd/yyy");
+        Date dateEntered = null;
+        try {
+            dateEntered = df.parse(releaseDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        long releaseTimeInMillis = dateEntered.getTime();
+        if (releaseTimeInMillis > limit) {
+            return false;
+        }
+
+        return true;
     }
 }
