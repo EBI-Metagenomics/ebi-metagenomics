@@ -2,6 +2,15 @@
 <ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd"
          updateCheck="false">
+
+<!--TODO: Replace with following?-->
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<!--<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"-->
+         <!--xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd">-->
+    <!--&lt;!&ndash;See: http://blog.goyello.com/2010/07/29/quick-start-with-ehcache-annotations-for-spring/&ndash;&gt;-->
+    <!--<defaultCache eternal="true" maxElementsInMemory="100" overflowToDisk="false" />-->
+    <!--<cache name="rssEntriesCache" maxElementsInMemory="10" eternal="true" overflowToDisk="false" />-->
+<!--</ehcache-->
     
     <!--
      | Please see http://ehcache.sourceforge.net/documentation/configuration.html for

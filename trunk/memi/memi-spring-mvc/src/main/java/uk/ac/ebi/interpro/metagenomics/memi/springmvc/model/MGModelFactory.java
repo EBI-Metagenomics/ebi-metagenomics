@@ -1,5 +1,6 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
 
+import com.sun.syndication.feed.synd.SyndEntry;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.criterion.Criterion;
@@ -40,18 +41,28 @@ public class MGModelFactory {
     public static HomePageModel getHomePageModel(SessionManager sessionMgr, HibernateStudyDAO studyDAO, HibernateSampleDAO sampleDAO, RomeClient romeClient, List<Breadcrumb> breadcrumbs) {
         log.info("Building instance of " + HomePageModel.class + "...");
         Submitter submitter = getSessionSubmitter(sessionMgr);
+        // Get RSS URL
         String rssUrl = null;
         try {
             rssUrl = romeClient.getFeed().getURL().toString();
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             rssUrl = "unknown"; // TODO: Put URL default here
-            log.warn("Could not get feed URL from Rome client!", e);
+            log.warn("Could not get RSS feed URL", e);
+        }
+        // Get RSS entries
+        List<SyndEntry> rssEntries = Collections.emptyList();
+        try {
+            rssEntries = romeClient.getEntries();
+        }
+        catch (Exception e) {
+            log.warn("Could not get RSS entries", e);
         }
         if (submitter == null) {
             List<Study> studies = getOrderedPublicStudies(studyDAO);
             SortedMap<Study, Long> publicStudiesMap = getStudySampleSizeMap(studies, sampleDAO);
 //            TODO: Check the order of the studies (should be solved in Java not with Hibernate)
-            return new HomePageModel(submitter, publicStudiesMap, getOrderedPublicSamples(sampleDAO), rssUrl, romeClient.getEntries(), breadcrumbs);
+            return new HomePageModel(submitter, publicStudiesMap, getOrderedPublicSamples(sampleDAO), rssUrl, rssEntries, breadcrumbs);
         } else {
             List<Study> myStudies = getOrderedStudiesBySubmitter(submitter.getSubmitterId(), studyDAO);
             SortedMap<Study, Long> myStudiesMap = getStudySampleSizeMap(myStudies, sampleDAO);
@@ -59,7 +70,7 @@ public class MGModelFactory {
             List<Study> publicStudies = getOrderedPublicStudiesWithoutSubId(submitter.getSubmitterId(), studyDAO);
             SortedMap<Study, Long> publicStudiesMap = getStudySampleSizeMap(publicStudies, sampleDAO);
             List<Sample> publicSamples = getOrderedPublicSamplesWithoutSubId(submitter.getSubmitterId(), sampleDAO);
-            return new HomePageModel(submitter, publicStudiesMap, publicSamples, rssUrl, romeClient.getEntries(), myStudiesMap, mySamples, breadcrumbs);
+            return new HomePageModel(submitter, publicStudiesMap, publicSamples, rssUrl, rssEntries, myStudiesMap, mySamples, breadcrumbs);
         }
     }
 
