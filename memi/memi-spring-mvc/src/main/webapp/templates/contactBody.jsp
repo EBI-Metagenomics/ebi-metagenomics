@@ -13,12 +13,12 @@
     <form:form action="contact" commandName="contactForm">
         <table>
             <tr>
-                <td>Email Subject:</td>
-                <td>Feedback about the new Metagenomics Website</td>
-            </tr>
-            <tr>
                 <td>Your email address*:<form:errors cssStyle="color:red;" path="sender"/></td>
                 <td><form:input path="sender"/></td>
+            </tr>
+            <tr>
+                <td>Feedback subject*:<form:errors cssStyle="color:red;" path="emailSubject"/></td>
+                <td><form:input path="emailSubject"/></td>
             </tr>
             <tr>
                 <td>Your comments*:<form:errors cssStyle="color:red;" path="message"/></td>

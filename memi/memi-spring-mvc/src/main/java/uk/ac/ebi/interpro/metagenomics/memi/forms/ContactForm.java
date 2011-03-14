@@ -19,6 +19,10 @@ public class ContactForm {
     @Email
     private String sender;
 
+    @NotEmpty
+    @Size(min = 3, max = 100)
+    private String emailSubject;
+
     // TODO: Size have to be discussed
     @NotEmpty
     @Size(min = 3, max = 1000)
@@ -30,6 +34,14 @@ public class ContactForm {
 
     public void setSender(String sender) {
         this.sender = sender;
+    }
+
+    public String getEmailSubject() {
+        return emailSubject;
+    }
+
+    public void setEmailSubject(String emailSubject) {
+        this.emailSubject = emailSubject;
     }
 
     public String getMessage() {
