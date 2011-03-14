@@ -20,7 +20,9 @@
                Analysis status:
                         <form:select id="studyStatus" path="studyStatus">
                             <form:option value="" label="All"/>
-                            <form:options items="${model.studyStatusList}"/>
+                            <form:option value="IN_PROGRESS" label="In Progress"/>
+                            <form:option value="FINISHED" cssClass="imagebacked" cssStyle="background-image: url(/img/ico_warning_8.png);" label="Finish"/>
+                            <%--<form:options id="" items="${model.studyStatusList}"/>--%>
                         </form:select>
                   <br/> <br/>
                 <c:if test="${not empty model.submitter}">
