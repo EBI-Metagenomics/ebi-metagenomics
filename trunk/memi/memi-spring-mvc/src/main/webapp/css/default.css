@@ -591,3 +591,10 @@ input.style:focus, textarea:focus {
 .error {
     color: #ff0000;
 }
+
+option.imagebacked {
+padding: 2px 0 2px 20px;
+background-repeat: no-repeat;
+background-position: 1px 2px;
+vertical-align: middle;
+}
