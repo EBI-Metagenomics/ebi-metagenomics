@@ -15,21 +15,26 @@
         <table>
             <tr>
                 <td>Project title*:<form:errors cssStyle="color:red;" path="subTitle"/></td>
-                <td><form:input path="subTitle" title="The project title will be used in the subject line of email communications to help identify the subject matter, as well as be used in the eventual submission as the title of the project under which the samples and analyses will be grouped (NB this can be changed/updated in the future)." /></td>
+                <td><form:input path="subTitle" title="Project title" /></td>
+                <td>The title will be used in the subject line of future email communications to help identify the subject matter and be used in the eventual submission as the title of the project under which the samples and analyses will be grouped (can be changed/updated later).</td>
             </tr>
             <tr>
                 <td>Hold Private Until:*<form:errors cssStyle="color:red;" path="releaseDate"/></td>
-                <td><form:input id="datepicker" path="releaseDate" title="The hold private until date is the date at which the information you provide will be released to the public. All data submitted to the EBI metagenomics services must be suitable for public release eventually, i.e. we cannot keep data private indefinitely. The maximum length of time data can be held privately is 2 years." /></td>
+                <td><form:input id="datepicker" path="releaseDate" title="Hold project data private until date" /></td>
+                <td>This is the date at which the information will be released to the public. All data submitted to EBI metagenomics must be suitable for public release eventually. The maximum length of time data can be held privately is 2 years.</td>
             </tr>
             <tr>
                 <td>Describe your Submission:*<form:errors cssStyle="color:red;" path="dataDesc"/></td>
-                <td><form:textarea path="dataDesc" title="The comments field is a free text box to allow the user to provide additional details about what they wish to submit and/or ask questions about the submission process." /></td>
+                <td><form:textarea path="dataDesc" title="Comments about your project" /></td>
+                <td>Please provide additional details about what you wish to submit and/or ask questions about the submission process.</td>
             </tr>
             <tr>
+                <td></td>
                 <td>
                     <input type="submit" name="submit" value="Submit" class="main_button"/>
                     <input type="submit" name="cancel" value="Cancel" class="main_button"/>
                 </td>
+                <td></td>
             </tr>
         </table>
     </form:form>
