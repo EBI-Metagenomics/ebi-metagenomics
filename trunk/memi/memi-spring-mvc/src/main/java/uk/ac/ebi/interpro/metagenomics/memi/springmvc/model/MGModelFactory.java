@@ -274,7 +274,7 @@ public class MGModelFactory {
         List<Criterion> crits = new ArrayList<Criterion>();
         //add search term criterion
         if (searchText != null && searchText.trim().length() > 0) {
-            crits.add(Restrictions.or(Restrictions.like("studyId", searchText, MatchMode.ANYWHERE), Restrictions.like("studyName", searchText, MatchMode.ANYWHERE)));
+            crits.add(Restrictions.or(Restrictions.ilike("studyId", searchText, MatchMode.ANYWHERE), Restrictions.ilike("studyName", searchText, MatchMode.ANYWHERE)));
         }
         //add study status criterion
         if (studyStatus != null) {
@@ -320,7 +320,7 @@ public class MGModelFactory {
         List<Criterion> crits = new ArrayList<Criterion>();
         //add search term criterion
         if (searchText != null && searchText.trim().length() > 0) {
-            crits.add(Restrictions.or(Restrictions.like("sampleId", searchText, MatchMode.ANYWHERE), Restrictions.like("sampleTitle", searchText, MatchMode.ANYWHERE)));
+            crits.add(Restrictions.or(Restrictions.ilike("sampleId", searchText, MatchMode.ANYWHERE), Restrictions.ilike("sampleTitle", searchText, MatchMode.ANYWHERE)));
         }
         //add is public criterion
         if (submitterId > -1) {
