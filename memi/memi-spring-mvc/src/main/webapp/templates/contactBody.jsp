@@ -35,7 +35,6 @@
         <p>* Required</p>
     </form:form>
 
-    <h3>The team</h3>
-    This new resource for metagenomics is supported by the <a href="http://www.ebi.ac.uk/Information/Staff/searchx.php?s_keyword=&s_group=28" title="The InterPro team at EBI">InterPro Team</a> at EBI, in collaboration with the ENA and UniProt groups.
+    
 
 </div>
