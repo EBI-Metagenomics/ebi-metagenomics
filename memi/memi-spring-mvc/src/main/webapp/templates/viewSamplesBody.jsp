@@ -72,9 +72,9 @@
                         <td>${sample.sampleTypeAString}</td>
                         <td>
                             <c:choose>
-                                <c:when test="${empty sample.analysisCompleted}"><img src="../img/ico_IN_PROGRESS_small_20.png" alt="Analysis in progress" title="Analysis in progress"></c:when>
+                                <c:when test="${empty sample.analysisCompleted}"><img src="../img/ico_IN_PROGRESS_25_8.png" alt="Analysis in progress" title="Analysis in progress"></c:when>
                                 <c:otherwise>
-                                    <a href="<c:url value="${baseURL}/analysisStatsView/${sample.sampleId}"/>"><img src="../img/ico_FINISHED_small_20.png" alt="Analysis finished - check the results" title="Analysis finished - check the results"></a>
+                                    <a href="<c:url value="${baseURL}/analysisStatsView/${sample.sampleId}"/>"><img src="../img/ico_FINISHED_25_8.png" alt="Analysis finished - check the results" title="Analysis finished - check the results"></a>
                                 </c:otherwise>
                             </c:choose>
                         </td>
