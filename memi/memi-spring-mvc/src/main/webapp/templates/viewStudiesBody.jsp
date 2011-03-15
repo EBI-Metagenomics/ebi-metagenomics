@@ -5,8 +5,8 @@
 <div id="content-full">
     <h2>${pageTitle}</h2>
 
-     <div class="filter">
-
+     <div class="center">
+     <div id="filter">
             <c:choose>
                 <c:when test="${empty model.submitter}">
                     <c:set var="actionUrlParam" value="studyVisibility=ALL_PUBLISHED_STUDIES"/>
@@ -16,64 +16,70 @@
                 </c:otherwise>
             </c:choose>
             <form:form method="GET" action="${baseURL}/studies/doSearch" commandName="studyFilter">
-               Text:<form:input id="autocomplete" path="searchTerm"/> <form:errors path="searchTerm" cssClass="error"/><br/> <br/>
-               Analysis status:
-                        <form:select id="studyStatus" path="studyStatus">
-                            <form:option value="" label="All"/>
-                            <form:option value="IN_PROGRESS" label="In Progress"/>
-                            <form:option value="FINISHED" cssClass="imagebacked" cssStyle="background-image: url(/img/ico_warning_8.png);" label="Finish"/>
-                            <%--<form:options id="" items="${model.studyStatusList}"/>--%>
-                        </form:select>
-                  <br/> <br/>
-                <c:if test="${not empty model.submitter}">
-                   Privacy:<form:select id="studyVisibility" path="studyVisibility">
-                                <form:options items="${model.studyVisibilityList}"/>
-                            </form:select>
+               <fieldset>
+               <label for="text">Text:</label>
+               <form:input id="autocomplete" path="searchTerm"/><br/><form:errors path="searchTerm" cssClass="error"/><br/>
+               <label for="status"> Analysis status:</label>
 
+                   <form:select id="studyStatus" path="studyStatus">
+                   <form:option value="" label="All"/>
+                   <form:option value="IN_PROGRESS" label="In Progress" cssClass=""/>
+                   <form:option value="FINISHED" label="Complete" cssClass=""/>
+                   <%--<form:options items="${model.studyStatusList}"/>--%>
+                   </form:select>
+
+                <c:if test="${not empty model.submitter}"><br/><br/>
+                <label for="privacy">Privacy:</label>
+                <form:select id="studyVisibility" path="studyVisibility">
+                <form:options items="${model.studyVisibilityList}"/>
+                </form:select>
                 </c:if>
 
-                        <input type="submit" name="search" value="Search" class="main_button"/>
-
-                        <input type="submit" name="clear" value="Clear" class="main_button"/>
-
+                <div id="filter-button">
+                <input type="submit" name="search" value="Search" class="main_button"/>
+                <input type="submit" name="clear" value="Clear" class="main_button"/>
+                </div>
+            </fieldset>
             </form:form>
         
-    </div>
+    </div></div>
 
-    <div style="margin-top:40px"></div>
-    <c:choose>
+      <c:choose>
         <c:when test="${not empty model.studySampleSizeMap}">
             <%--Request the current query string to export only the filtered studies--%>
             <c:set var="queryString" value="${pageContext.request.queryString}" scope="session"/>
-            <div align="left">
-                <a href="<c:url value="${baseURL}/studies/doExport?${queryString}"/>">Export table to CSV</a>
+            <div class="export">
+               <a href="<c:url value="${baseURL}/studies/doExport?${queryString}"/>" id="csv" title="Export table in CSV format">Export table (CSV)</a>
             </div>
 
-            <table border="1" width="95%">
+            <table border="1" class="result">
+                <thead>
                 <tr>
-                    <th>Project Name</th>
-                    <th>Number Of Samples</th>
-                    <th>Submitted Date</th>
-                    <th>Analysis</th>
+                    <th scope="col" abbr="Name">Project name</th>
+                    <th scope="col" abbr="Samples"  width="60px">Samples</th>
+                    <th scope="col" abbr="Date" width="120px">Submitted date</th>
+                    <th scope="col" abbr="Analysis" width="80px">Analysis</th>
                 </tr>
+                </thead>
+
+                <tbody>
+
                 <c:forEach var="entry" items="${model.studySampleSizeMap}" varStatus="status">
                     <tr>
-                        <td>
-                            <a href="<c:url value="${baseURL}/study/${entry.key.studyId}"/>">${entry.key.studyName}</a>
-                            <c:if test="${!entry.key.public}">
-                                <img src="/img/icon_priv_lock.gif" height="16" width="16" align="absmiddle" alt=""
-                                     border="0"/>
-                            </c:if>
+                        <td style="text-align:left;">
+                             <c:if test="${!entry.key.public}"><img alt="private" src="../img/icon_priv_private.gif">&nbsp;&nbsp;</c:if>
+                             <a href="<c:url value="${baseURL}/study/${entry.key.studyId}"/>">${entry.key.studyName}</a>                           
                         </td>
                         <td>${entry.value}</td>
-                        <td>${entry.key.formattedLastReceived}</td>
-                        <td>${entry.key.studyStatusAsString}</td>
+                        <td id="ordered">${entry.key.formattedLastReceived}</td>
+                        <td><img src="../img/ico_${entry.key.studyStatus}_small_20.png" alt="${entry.key.studyStatusAsString}" title="${entry.key.studyStatusAsString}"> </td>
                     </tr>
+                </tbody>
                 </c:forEach>
             </table>
         </c:when>
         <c:otherwise>
-            <div align="center"><b>No data to display</b></div>
+            <div class="error">No data matching your search</div>
         </c:otherwise>
     </c:choose>
 </div>
