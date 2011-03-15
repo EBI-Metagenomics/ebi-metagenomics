@@ -52,10 +52,12 @@ public class SubmitterDAOImpl implements SubmitterDAO {
 
     @Override
     public Submitter getSubmitterByEmailAddress(String emailAddress) {
+        if (emailAddress == null)
+            return null;
         Submitter submitter = null;
         try {
             submitter = this.jdbcTemplate.queryForObject("SELECT submitterid, first_name, surname, password, email_address FROM submitter WHERE ACTIVE='Y' AND email_address=?",
-                    new Object[]{emailAddress},
+                    new Object[]{emailAddress.toUpperCase()},
                     new RowMapper<Submitter>() {
                         public Submitter mapRow(ResultSet rs, int rowNum) throws SQLException {
                             Submitter submitter = new Submitter();
