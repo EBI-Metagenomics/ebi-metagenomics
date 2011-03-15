@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -67,6 +68,9 @@ public class SubmissionController extends AbstractController implements IMGContr
     public ModelAndView doPost(@ModelAttribute("subForm") @Valid SubmissionForm subForm, BindingResult result,
                                ModelMap model, SessionStatus status) {
         populateModel(model);
+        if (subForm != null && !validateReleaseDate(subForm.getReleaseDate())) {
+            result.addError(new FieldError("subForm", "releaseDate", "Data cannot be held private for more than 2 years"));
+        }
         if (result.hasErrors()) {
             log.info("Submission form still has validation errors!");
             model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((SubmissionModel) model.get(MGModel.MODEL_ATTR_NAME)).getLoginForm());
@@ -138,7 +142,7 @@ public class SubmissionController extends AbstractController implements IMGContr
      * @return False if validation failed, otherwise true
      */
     private boolean validateReleaseDate(String releaseDate) {
-        if (!releaseDate.equals(null)) {
+        if (releaseDate.equals(null)) {
             return false;
         }
 
