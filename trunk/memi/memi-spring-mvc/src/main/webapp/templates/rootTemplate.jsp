@@ -1,7 +1,8 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" lang="java">
     <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/images/favicon.ico">
@@ -35,48 +36,21 @@
      document.createElement('aside');
      document.createElement('footer');
     </script>
-
-    <%-- BEGIN CODE FROM EBI TEMPLATE--%>
-    <!--  VERSION 2 MARCH 22 7007 // -->
-    <script type="text/javascript">
-        <!--
-        function do_return() {
-            //window.frames['head'].document.forms['Text1293FORM'].elements['query'].value='Enter Text Here';
-            document.forms['Text1293FORM'].elements['query'].value = 'Enter Text Here';
-            //return false;
-        }
-        // -->
-    </script>
-    <link rel="stylesheet" href="http://www.ebi.ac.uk/inc/css/template.css" type="text/css"/>
-    <link rel="stylesheet" href="http://www.ebi.ac.uk/inc/css/newmenu.css" type="text/css"/>
-
-    <!--[if lt IE 9]><link rel="stylesheet" href="http://www.ebi.ac.uk/inc/css/IE_6.css" type="text/css"/><![endif]-->
-    <!--[if gte IE 7]><link rel="stylesheet" href="http://www.ebi.ac.uk/inc/css/IE_7.css" type="text/css"/><![endif]-->
-    <!--[if gte IE 8]><link rel="stylesheet" href="http://www.ebi.ac.uk/inc/css/IE_8.css" type="text/css"/><![endif]-->
-    <script type="text/javascript" src="http://www.ebi.ac.uk/inc/js/functions.js"></script>
-    <script type="text/javascript">
-        <!--
-        if ((navigator.userAgent.indexOf("Windows") != -1) && ( (navigator.userAgent.indexOf("Safari") != -1)  )) {
-            document.write('<link rel="stylesheet" href="http://www.ebi.ac.uk/inc/css/windows_safari.css" type="text/css" />');
-        }
-        document.onload = function() {
-            createOrUpdateEBeyeUSerIdCookie();
-        }
-        // -->
-    </script>
-    <script type="text/javascript" src="http://www.ebi.ac.uk/ebisearch/js/lib/jquery.cookies.2.2.0.min.js"></script>
-    <script type="text/javascript" src="http://www.ebi.ac.uk/ebisearch/js/queryLogging.js"></script>
-    <link rel="alternate" title="EBI News RSS" href="http://www.ebi.ac.uk/Information/News/rss/ebinews.xml"
-          type="application/rss+xml"/>
-
-     <%-- END CODE FROM EBI TEMPLATE--%>
+    <%-- simple script for alternate row in a table color was #EFF1F1 originally--%>
+    <script>
+    $(document).ready(function()
+    {
+      $("table.result tbody tr:even").css("background-color", "#F4F4F8");
+      $("table.result tbody tr:odd").css("background-color", "#e9e9e9");
+    });
+     </script>
 </head>
 
 <%-- The following variable saves and provides the base URL for the whole application --%>
 <c:set var="baseURL" value="${pageContext.request.contextPath}/metagenomics" scope="session"/>
 
 <%-- onload attribute is necessary to ensure that the EBI main header works in IE see  http://www.ebi.ac.uk/inc/template/#important style overflow addede because of he bug in the EBI website for the body--%>
-<body onload="if(navigator.userAgent.indexOf('MSIE') != -1) {document.getElementById('head').allowTransparency = true;}"
+<body 
       class="<tiles:getAsString name='bodyClass'/>" style="overflow:visible;">
 <%-- EBI main header                 --%>
 <%--<%@include file='../inc/head.html' %>--%>
@@ -102,30 +76,7 @@
       <tiles:insertAttribute name="footer"/>
 </footer>
 
-<%--<div id="extraDiv1"></div0 can use this to add --%>
-<script type="text/javascript" src="http://www.ebi.ac.uk/inc/js/newmenu.js"></script>
-<script type="text/javascript">
-    <!--
-    try {
-        var parentloc = parent.document.location.href;
-        if (parentloc.indexOf('db=ebiweb') != -1) {
-            document.Text1293FORM.FormsComboBox2.options[1].selected = true;
-        }
-        else if (parentloc.indexOf('db=literature') != -1) {
-            document.Text1293FORM.FormsComboBox2.options[2].selected = true;
-        }
-        else {
-        }
-        var loc = "" + parent.document.location.href;
-        if (loc.indexOf("docmode=printable") != -1) {
-            minimimise();
-        }
-    }
-    catch(err) {
-
-    }
-    // -->
-</script>
+<!--<div id="extraDiv1"></div> -->
 
 </body>
 </html>
