@@ -72,7 +72,7 @@
                         </td>
                         <td>${entry.value}</td>
                         <td id="ordered">${entry.key.formattedLastReceived}</td>
-                        <td><img src="../img/ico_${entry.key.studyStatus}_small_20.png" alt="${entry.key.studyStatusAsString}" title="${entry.key.studyStatusAsString}"> </td>
+                        <td><img src="../img/ico_${entry.key.studyStatus}_25_8.png" alt="${entry.key.studyStatusAsString}" title="${entry.key.studyStatusAsString}"> </td>
                     </tr>
                 </tbody>
                 </c:forEach>
