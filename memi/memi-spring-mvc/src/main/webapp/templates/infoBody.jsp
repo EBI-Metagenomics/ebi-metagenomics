@@ -1,9 +1,10 @@
 <div id="content-full">
     <h2>About Metagenomics</h2>
 
+    <div  id="sidebar-nav">
     <ul>
-        <li><a href="#intro">Introduction</a></li>
-        <li><a href="#feedback">Feedback</a></li>
+        <%--<li><a href="#intro">Introduction</a></li>
+        <li><a href="#feedback">Feedback</a></li>--%>
         <li><a href="#what_about">What is metagenomics?</a></li>
         <li><a href="#resources">Metagenomic-related resources at EBI</a>
             <ul>
@@ -11,7 +12,7 @@
                 <li><a href="#resources_2">InterPro</a></li>
             </ul>
         </li>
-        <li><a href="#features">Current features of the metagenomics portal</a>
+        <li><a href="#features">Current features</a>
             <ul>
                 <li><a href="#features_1">Submitting data</a></li>
                 <li><a href="#features_2">Data Privacy</a></li>
@@ -20,32 +21,22 @@
         </li>
         <li><a href="#p_features">Planned features</a></li>
         <li><a href="#mail">Mailing List</a></li>
-    </ul>
+        <li><a href="#credits">Credits</a>
+        <ul>
+                <li><a href="#credits_1">The team</a></li>
+                <li><a href="#credits_2">Photos</a></li>
+            </ul>
+        </li>
 
-    <div style="margin-top:6px"></div>
-    <h3 id="intro">Introduction</h3>
-
-    <p>EBI Metagenomics is a new web resource targeted at metagenomic researchers. This is the first release and we
+    </ul></div>
+    
+       <p class="intro">EBI Metagenomics is a new web resource targeted at metagenomic researchers. This is the first release and we
         intend to make rapid and frequent updates to improve the interfaces and services provided. We want provide a
-        service that is most useful to our users and do this we need to <a
-                href="mailto:chrish@ebi.ac.uk?subject=beta-metagenomics-feedback">hear from you</a>.
+        service that is most useful to our users and do this we need to hear from you.
         Additional tools and analyses
         will become available during the next few months and we actively encourage users to make requests for the tools
         that they wish to see on the site. If you have any additional feedback about any aspect of the site (good or
-        bad), please <a href="mailto:chrish@ebi.ac.uk?subject=beta-metagenomics-feedback">contact
-            us</a>.
-    </p>
-    <p>
-        <a href="#top">Back to Top</a>
-    </p>
-
-    <h3 id="feedback">Feedback</h3>
-
-    <p>Please use the <a href="mailto:chrish@ebi.ac.uk?subject=beta-metagenomics-feedback">feedback
-        form</a> to provide any comments or feedback about EBI metagenomics.
-    </p>
-    <p>
-        <a href="#top">Back to Top</a>
+        bad), please contact us.
     </p>
 
     <h3 id="what_about">What is metagenomics?</h3>
@@ -55,7 +46,7 @@
         sequence results of DNA extracted from a bucket of sea water.
     </p>
     <p>
-        <a href="#top">Back to Top</a>
+        <div class="but_top"><a href="#top" title="back to the top page">Top</a></div>
     </p>
 
     <h3 id="resources">Metagenomic-related resources at EBI</h3>
@@ -88,10 +79,10 @@
         time.
     </p>
     <p>
-        <a href="#top">Back to Top</a>
+        <div class="but_top"><a href="#top" title="back to the top page">Top</a></div>
     </p>
 
-    <h3 id="features">Current features of the metagenomics portal</h3>
+    <h3 id="features">Current features</h3>
 
     <p>In this current version of the resource, we offer users a personal service to assist with data and metadata
         formatting to comply with the SRA (Sequence Read Archive) data schema and the GSC (Genomic Standards Consortium)
@@ -118,19 +109,26 @@
     <p>Anyone with an account is free to submit data for analysis.</p>
 
     <h4 id="features_3">Analysis</h4>
+     <figure style="margin-right:14px;">
+    <img src="../img/chart_pipeline.gif"  alt="Pipeline chart"  />
+    <figcaption>
+      <h3>Metagenomics pipeline chart</h3>
+      <p>The basic pipeline is outlined this chart.</p>
+    </figcaption>
+    </figure>
 
-    <p>The raw sequence reads are clipped to remove technical parts to the reads and poor quality ends. They are then
+    <p>The basic pipeline is outlined this chart.</p>
+
+    <p> The raw sequence reads are clipped to remove technical parts to the reads and poor quality ends. They are then
         filtered to remove very short reads, duplicate reads and reads containing >10% unknown base calls (N's).</p>
 
     <p>The remaining reads are subject to analysis by FragGeneScan (FGS) which is a tool to predict coding sequences
-        (pCDS) within the reads. For further details on FGS please see <a
-                href="http://nar.oxfordjournals.org/content/early/2010/08/29/nar.gkq747.abstract">FragGeneScan:
+        (pCDS) within the reads. For further details on FGS please see <a href="http://nar.oxfordjournals.org/content/early/2010/08/29/nar.gkq747.abstract" class="ext">FragGeneScan:
             predicting genes in short and error-prone reads</a>. The pCDS are then analysed using InterProScan (uses a
         subset of InterPro's member database applications).
     </p>
-    <p>
-        <a href="#top">Back to Top</a>
-    </p>
+         <p>&nbsp;</p><p><div class="but_top" ><a href="#top" title="back to the top page">Top</a></div></p>
+  
 
     <h3 id="p_features">Planned features</h3>
 
@@ -142,18 +140,27 @@
     </ol>
     </p>
     <p>
-        <a href="#top">Back to Top</a>
+        <div class="but_top"><a href="#top" title="back to the top page">Top</a></div>
     </p>
 
     <h3 id="mail">Mailing List</h3>
 
-    <p>If you would like to be kept informed of further developments with the EBI metagenomics resources please sign up
-        for our mailing list by <a
-                href="mailto:chrish@ebi.ac.uk?subject=signup to MG-mailing-list">sending Chris an
-            email</a> with the subject line "signup to MG-mailing-list".
+    <p>If you would like to be kept informed of further developments with the EBI metagenomics resources please sign up for the
+        <a href="http://listserver.ebi.ac.uk/mailman/listinfo/metagenomics" class="ext"> EBI metagenomics mailing list</a>.
     </p>
-    <p>
-        <a href="#top">Back to Top</a>
-    </p>
+    <p><div class="but_top"><a href="#top" title="back to the top page">Top</a></div></p>
 
+    <h3 id="credits">Credits</h3>
+
+    <h4 id="credits_1">The team</h4>
+    <p>This new resource for metagenomics is supported by the <a href="http://www.ebi.ac.uk/Information/Staff/searchx.php?s_keyword=&s_group=28" title="The InterPro team at EBI" class="ext">InterPro Team</a> at EBI, in collaboration with the ENA and UniProt groups.</p>
+
+    <h4  id="credits_2">Photos</h4>
+    <p>We would like to thanks for their contribution related to the top banner pictures, the following authors:</p>
+    <ul><li>Image: A Blue Starfish (Linckia laevigata) resting on hard Acropora coral. Lighthouse, Ribbon Reefs, Great Barrier Reef,  by Richard Ling [<a href="http://www.rling.com" class="ext" rel="nofollow">Copyright (c) [2004] Richard Ling</a> - <a href="http://commons.wikimedia.org/wiki/File:Blue_Linckia_Starfish.JPG"class="ext" rel="nofollow"> Wikipedia</a>]
+    </li><li>Image: Coli Bacteria, by  renjith krishnan [<a href="http://www.freedigitalphotos.net/images/view_photog.php?photogid=721" class="ext">FreeDigitalPhotos.net</a>]
+    </li><li>Image: Honeycomb, by Apple\'s Eyes Studio [<a href="http://www.freedigitalphotos.net/images/view_photog.php?photogid=2000" class="ext">FreeDigitalPhotos.net</a>]
+    </li><li>Image: Oupeye (Belgium) biological sewage treatment,  by User:Xofc [<a href="http://www.gnu.org/copyleft/fdl.html" class="ext" rel="nofollow">GFDL</a> - <a href="http://commons.wikimedia.org/wiki/File:090913-EpurationOupeye_0020.jpeg"class="ext" rel="nofollow"> Wikipedia</a>]
+    </li></ul>
+     <p><div class="but_top"><a href="#top" title="back to the top page">Top</a></div></p>
 </div>
