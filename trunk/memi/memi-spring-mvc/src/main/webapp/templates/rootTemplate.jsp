@@ -25,8 +25,9 @@
     <script src="${pageContext.request.contextPath}/js/datepicker.js" type="text/javascript"></script>
     <%-- The auto completion is used with the study search page --%>
     <script src="${pageContext.request.contextPath}/js/autocompletion.js" type="text/javascript"></script>
-     <%-- HTML5 tags working in IE8 by including this JavaScript in the head  --%>
-        <script type="text/javascript">
+
+     <!--[if lt IE 9]><%-- HTML5 tags working in IE8 by including this JavaScript in the head  --%>
+     <script type="text/javascript">
      document.createElement('header');
      document.createElement('hgroup');
      document.createElement('nav');
@@ -35,7 +36,10 @@
      document.createElement('article');
      document.createElement('aside');
      document.createElement('footer');
+     document.createElement('figure');
+     document.createElement('figcaption');
     </script>
+    <![endif]-->
     <%-- simple script for alternate row in a table color was #EFF1F1 originally--%>
     <script>
     $(document).ready(function()
@@ -76,7 +80,8 @@
       <tiles:insertAttribute name="footer"/>
 </footer>
 
+<div id="extra_feedback"><h1><a href="<c:url value="${baseURL}/contact"/>">Give your feedback</a></h1></div>
+<div id="extra_beta"></div>
 <!--<div id="extraDiv1"></div> -->
-
 </body>
 </html>
