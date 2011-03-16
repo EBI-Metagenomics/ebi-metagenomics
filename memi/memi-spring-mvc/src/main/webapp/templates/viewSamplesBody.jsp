@@ -16,7 +16,7 @@
             <form:select path="sampleType">
             <form:option value="" label="All"/>
             <form:option value="ENVIRONMENTAL" label="Environmental"/>
-            <form:option value="HOST_ASSOCIATED" label="Host associated"/>    
+            <form:option value="HOST_ASSOCIATED" label="Host associated"/>
             <%--<form:options items="${model.sampleTypes}"/>--%>
         </form:select>
 
@@ -44,11 +44,11 @@
             </c:if>
             <%--Request the current query string to export only the filtered studies--%>
             <c:set var="queryString" value="${pageContext.request.queryString}" scope="session"/>
-            
+
             <div class="export">
-                <a href="<c:url value="${baseURL}/samples/doExportTable?${queryString}"/>" id="csv" title="Export table in CSV format">Export table (CSV)</a>
+                <a href="<c:url value="${baseURL}/samples/doExportTable?${queryString}"/>" id="csv" title="Export table shown below in CSV format">Export table (CSV)</a>
                 <c:if test="${not empty sampleFilter.sampleType}">
-                    <a href="<c:url value="${baseURL}/samples/doExportDetails?${queryString}"/>"  id="csv_plus" title="Export all detailed information (metadata)">Export detailed info (CSV)</a>
+                    <a href="<c:url value="${baseURL}/samples/doExportDetails?${queryString}"/>"  id="csv_plus" title="Export more detailed information about the samples below in CSV format">Export detailed info (CSV)</a>
                 </c:if>
             </div>
 
