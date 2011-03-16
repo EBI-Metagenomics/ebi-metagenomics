@@ -95,7 +95,7 @@ border:0px #dddddd solid;
 #extra_beta {
 background: transparent url(../img/ico_beta_20.png) no-repeat left bottom;
 position: absolute;
-left:10%;
+left:40%;
 top:0;
 width: 60px;
 height:  62px;
@@ -109,6 +109,7 @@ overflow: hidden;
 text-indent: -9999px;
 background: transparent url(../img/button_feedback_off.gif) no-repeat -2px;
 position: fixed;
+_position: absolute;  /* position fixed is not recognise on IE6 */
 left: 0;
 top:50px;
 width: 35px;
@@ -169,7 +170,7 @@ height: 56px;
 div.banner-logo h1 a {
 float: left;
 overflow: hidden;
-background: url(../img/logo_8.png) no-repeat 0 0;
+background: url(../img/logo_metagenomics.jpg) no-repeat 0 0;
 width: 378px;
 height: 81px;
 text-indent: -9999px;
@@ -202,7 +203,7 @@ div.top-menu ul li{
     border:0px green solid;
     float:left; 
     text-align:left;
-    font-size:120%;
+    font-size:130%;
     line-height:18px;
     -moz-border-radius: 10px 10px 0 0;
     -khtml-border-radius: 10px 10px 0 0;
@@ -895,8 +896,9 @@ background: url(../img/icon_csv_plus.gif) no-repeat right top;
 #breadcrumbs {
 display:block;border:0px red solid;  height:24px; background: url(../img/bgd_white_op45_8.png);z-index:50;
 position:relative; /*to make z-index work */
-padding-left:60px; /*temp with beta*/
+
 }
+
 #breadcrumbs .ebi_breadcrumbs li   {font-size:100%; background-color:transparent; } /*overwrite EBI style */
 #breadcrumbs .ebi_breadcrumbs a{ background-color:transparent;color:#3E3E3E; } /*overwrite EBI style */
 
