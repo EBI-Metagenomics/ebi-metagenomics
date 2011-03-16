@@ -39,16 +39,7 @@
 
     <li class="green"><a href="<c:url value="${baseURL}/info"/>" title="About us">About</a></li>
     <li class="yellow"><a href="<c:url value="${baseURL}/contact"/>" title="Contact us" >Contact</a></li>
-    <li class="white"></li>
-    <%-- <li class="orange"><a href="<c:url value="${baseURL}/help"/>" title="Help">Help</a></li>--%>
-     <%--<li class="black">  <c:choose>
-        <c:when test="${empty model.submitter}">
-            <a href="<c:url value="${baseURL}/index"/>" title="Login">Login</a>
-        </c:when>
-        <c:otherwise>
-            <a href="<c:url value="${baseURL}/logout"/>" title="logout">Logout</a>
-        </c:otherwise>
-    </c:choose>--%>
+
     </li>
     </ul>
 </div>
