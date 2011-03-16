@@ -41,7 +41,7 @@
                 </div>
             </fieldset>
             </form:form>
-        
+
     </div></div>
 
       <c:choose>
@@ -49,7 +49,8 @@
             <%--Request the current query string to export only the filtered studies--%>
             <c:set var="queryString" value="${pageContext.request.queryString}" scope="session"/>
             <div class="export">
-               <a href="<c:url value="${baseURL}/studies/doExport?${queryString}"/>" id="csv" title="Export table in CSV format">Export table (CSV)</a>
+               <a href="<c:url value="${baseURL}/studies/doExport?${queryString}"/>" id="csv" title="Export table shown below in CSV format">Export table (CSV)</a>
+               <a href="<c:url value="${baseURL}/studies/doExportDetails?${queryString}"/>"  id="csv_plus" title="Export more detailed information about the projects below in CSV format">Export detailed info (CSV)</a>
             </div>
 
             <table border="1" class="result">
@@ -68,7 +69,7 @@
                     <tr>
                         <td style="text-align:left;">
                              <c:if test="${!entry.key.public}"><img alt="private" src="../img/icon_priv_private.gif">&nbsp;&nbsp;</c:if>
-                             <a href="<c:url value="${baseURL}/study/${entry.key.studyId}"/>">${entry.key.studyName}</a>                           
+                             <a href="<c:url value="${baseURL}/study/${entry.key.studyId}"/>">${entry.key.studyName}</a>
                         </td>
                         <td>${entry.value}</td>
                         <td id="ordered">${entry.key.formattedLastReceived}</td>

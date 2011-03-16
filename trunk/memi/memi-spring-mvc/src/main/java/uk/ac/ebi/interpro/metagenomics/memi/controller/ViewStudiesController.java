@@ -109,6 +109,95 @@ public class ViewStudiesController extends AbstractController implements IMGCont
         return null;
     }
 
+    /**
+     * Handles the export of the study table.
+     * Creates a tab separated file using the Velocity engine and afterwards it is open a
+     * download dialog.
+     */
+    @RequestMapping(value = "doExportDetails", method = RequestMethod.GET)
+    public ModelAndView doExportDetailsStudies(@ModelAttribute(StudyFilter.MODEL_ATTR_NAME) StudyFilter filter, HttpServletResponse response,
+                                        @RequestParam(required = false) final String searchTerm, @RequestParam(required = false) final StudyFilter.StudyVisibility studyVisibility,
+                                        @RequestParam(required = false) final Study.StudyStatus studyStatus) {
+        log.info("Requesting exportStudies (GET method)...");
+        ModelMap model = new ModelMap();
+        processRequestParams(filter, searchTerm, studyVisibility, studyStatus);
+        populateModel(model, filter);
+        SortedMap<Study, Long> studyMap = ((ViewStudiesModel) model.get(MGModel.MODEL_ATTR_NAME)).getStudySampleSizeMap();
+
+        if (studyMap != null && studyMap.size() > 0) {
+            //Create export CSV text
+
+            // TODO Not a good idea to hold all file content text in a big string - this could get very large! OK for now with not much data...
+            // TODO Refactor Study and Sample table CSV exports and detailed exports to use common method!
+            StringBuffer fileContent = new StringBuffer("\"STUDY_ID\",\"PROJECT_NAME\",\"NUMBER_OF_SAMPLES\",\"SUBMITTED_DATE\",\"ANALYSIS\",\"NCBI_PROJECT_ID\",\"SUBMITTER_ID\",\"PUBLIC_RELEASE_DATE\",\"CENTRE_NAME\",\"EXPERIMENTAL_FACTOR\",\"IS_PUBLIC\",\"STUDY_LINKOUT\",\"STUDY_ABSTRACT\"");
+            fileContent.append("\n");
+
+            for (Map.Entry<Study, Long> mapEntry : studyMap.entrySet()) {
+                Study study = mapEntry.getKey();
+                Long numSamples = mapEntry.getValue();
+
+                fileContent.append(study.getStudyId()).append(',');
+
+                fileContent.append(study.getStudyName().replaceAll(",", "")).append(',');
+
+                fileContent.append(numSamples).append(',');
+
+                fileContent.append(study.getLastMetadataReceived()).append(',');
+
+                fileContent.append(study.getStudyStatus()).append(',');
+
+                long npi = study.getNcbiProjectId();
+                if (npi == 0) {
+                    fileContent.append("N/A").append(',');
+                } else {
+                    fileContent.append(npi).append(',');
+                }
+
+                long si = study.getSubmitterId();
+                if (npi == 0) {
+                    fileContent.append("N/A").append(',');
+                } else {
+                    fileContent.append(si).append(',');
+                }
+
+                Date prd = study.getPublicReleaseDate();
+                if (prd == null) {
+                    fileContent.append("N/A").append(',');
+                } else {
+                    fileContent.append(prd).append(',');
+                }
+
+                String cn = study.getCentreName().replaceAll(",", "-");
+                if (cn == null || cn.equals("")) {
+                    fileContent.append("N/A").append(',');
+                } else {
+                    fileContent.append(cn).append(',');
+                }
+                fileContent.append(study.getExperimentalFactor()).append(',');
+
+                fileContent.append(study.isPublic()).append(',');
+
+                String spu = study.getStudyPageURL();
+                if (spu == null || spu.equals("")) {
+                    fileContent.append("N/A").append(',');
+                } else {
+                    fileContent.append(spu).append(',');
+                }
+
+                fileContent.append(study.getStudyAbstract().replaceAll(",", "")).append(',');
+
+                fileContent.append("\n");
+            }
+
+            File file = MemiFileWriter.writeCSVFile(fileContent.toString());
+            String fileName = MemiTools.createFileName("mg_projects_");
+            if (file != null && file.canRead()) {
+                downloadService.openDownloadDialog(response, file, fileName, true);
+            }
+        }
+        return null;
+    }
+
     @RequestMapping(params = "search", value = "doSearch", method = RequestMethod.GET)
     public ModelAndView doSearch(@ModelAttribute(StudyFilter.MODEL_ATTR_NAME) StudyFilter filter, ModelMap model,
                                  @RequestParam(required = false) final String searchTerm, @RequestParam(required = false) final StudyFilter.StudyVisibility studyVisibility,
