@@ -95,7 +95,7 @@ border:0px #dddddd solid;
 #extra_beta {
 background: transparent url(../img/ico_beta_20.png) no-repeat left bottom;
 position: absolute;
-left: 20%;
+left:10%;
 top:0;
 width: 60px;
 height:  62px;
@@ -895,6 +895,7 @@ background: url(../img/icon_csv_plus.gif) no-repeat right top;
 #breadcrumbs {
 display:block;border:0px red solid;  height:24px; background: url(../img/bgd_white_op45_8.png);z-index:50;
 position:relative; /*to make z-index work */
+padding-left:60px; /*temp with beta*/
 }
 #breadcrumbs .ebi_breadcrumbs li   {font-size:100%; background-color:transparent; } /*overwrite EBI style */
 #breadcrumbs .ebi_breadcrumbs a{ background-color:transparent;color:#3E3E3E; } /*overwrite EBI style */
