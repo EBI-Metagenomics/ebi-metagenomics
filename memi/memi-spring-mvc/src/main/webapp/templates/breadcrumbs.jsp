@@ -1,5 +1,4 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <!-- TODO Remove this once the EBI template has been added! -->
 <style type="text/css" title="text/css">
     /* Bread Crumbs */
@@ -48,7 +47,8 @@
 
 </style>
 
-<div>
+<div id="breadcrumbs">
+    <div class="center_972">
     <ul class="ebi_breadcrumbs">
 
         <li>
@@ -70,4 +70,5 @@
         </c:forEach>
 
     </ul>
+     </div>
 </div>
