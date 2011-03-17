@@ -126,6 +126,11 @@ background: transparent url(../img/button_feedback_over.gif) no-repeat ;
 background: transparent url(../img/button_feedback_active.gif) no-repeat ;
 }
 
+.feedback_form  {
+background: transparent url(../img/button_feedback_oriz.gif) no-repeat ;
+border:0px solid #E5E5E5; width:102px; height:35px; margin-left:7px; ;    
+}
+
 #extraDiv1 {
 background: transparent url(../img/bgd_earth.gif) no-repeat -600px -1000px;
 position: fixed;
@@ -345,7 +350,7 @@ table {
 border-collapse: collapse;
 border: solid 1px #eaeaea;
 font-size:100%;
-width:96%;/* bug 100% with IE*/
+width:100%;/* bug 100% with IE*/
 }
 
 table td {padding: 4px;}
@@ -356,6 +361,15 @@ background:url(../img/bgd_black_op20_8.png);}
 
 table.results {
 background: url(../img/bgd_main_grey.jpg) #b5b5b5;
+}
+
+#contact  {
+border: solid 1px #eaeaea; 
+width:600px;
+}
+
+#contact tbody td{
+text-align:left;
 }
 
 table.result {
@@ -383,7 +397,7 @@ box-shadow:0px 1px 1px #adadad;
 -webkit-box-shadow:0px 1px 1px #adadad ;
 }
 
-table.result tbody tr:hover{
+table.result tbody tr:hover {
 /*background: url(../img/bgd_noise_trans.gif);  */
 /*background: url(../img/bgd_stripe_50_8.png);  */
 background: url(../img/bgd_black_op05_8.png);
@@ -527,7 +541,7 @@ background: url(../img/button_submit_over.gif) white no-repeat center center;
 #submit-data-description p  {
 border: solid 0px red;
 font-size:110%;
-color:#7c8c99;
+color:#445668;  /*was  #7c8c99*/
 padding:0 24px 0 14px;
 }
 
@@ -736,7 +750,7 @@ line-height:1.2;
 height:auto;
 }
 
-#list-data-study h3, #list-data-sample h3 {font-size:130%;color:#7c8c99;margin: 1em 0px; padding:0;}
+#list-data-study h3, #list-data-sample h3 {font-size:120%;color:#445668;  /*was  #7c8c99*/margin: 1em 0px; padding:0;}
 
 #list-data-sample {
 line-height:1.2;
