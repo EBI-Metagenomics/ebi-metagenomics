@@ -1,23 +1,23 @@
 ##  Created by Maxim Scheremetjew, EMBL-EBI, InterPro
 ##  Date: 05-Jan-2011
 ##  Desc: Velocity template to provide a downloadable semicolon separated file for publicStudies
-#foreach( $property in $sampleProperties )"$property",#end
+#foreach( $property in $sampleProperties )$property,#end
 
 #foreach( $sample in $samples )
-    #foreach( $property in $sampleProperties )
-        #if($property == 'SAMPLE_NAME')
-            #if($sample.sampleTitle)
-            "$sample.sampleTitle",#{else}"N/A",#end
-        #elseif($property == 'PROJECT_NAME')
-            #if($sample.study.studyName)
-            "$sample.study.studyName",#{else}"N/A",#end
-        #elseif($property == 'SOURCE')
-            #if($sample.sampleType.type)
-            "$sample.sampleType.type",#{else}"N/A",#end
-        #elseif($property == 'ANALYSIS')
-            #if($sample.analysisCompleted)
-            "Yes",#{else}"No",#end
-        #end
-    #end
+#foreach( $property in $sampleProperties )
+#if($property == 'SAMPLE_NAME')
+#if($sample.sampleTitle)
+$sample.sampleTitle,#{else},#end
+#elseif($property == 'PROJECT_NAME')
+#if($sample.study.studyName)
+$sample.study.studyName,#{else},#end
+#elseif($property == 'SOURCE')
+#if($sample.sampleType.type)
+$sample.sampleType.type,#{else},#end
+#elseif($property == 'ANALYSIS')
+#if($sample.analysisCompleted)
+Yes,#{else}No,#end
+#end
+#end
 
 #end
