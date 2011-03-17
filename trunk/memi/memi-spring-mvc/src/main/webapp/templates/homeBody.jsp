@@ -15,9 +15,10 @@
         <div id="submit-data-description">
             <h2>Data Submission</h2>
 
-            <p>We offers multiple options for submitting your data. We can also provide assistance in formatting and
-                processing for easy incorporation into our database. By submitting your data to us, you help to ensure
-                its long-term availability as well as place it within a rich, highly cross-referenced context.</p>
+            <p>Click "submit data" to send us your nucleotide sequences to analyse. It's as simple as 1,2,3:<br/>
+                1 . Login (or register)<br/>
+                2 . Provide details of your project and your nucleotide sequence data<br/>
+                3 . Track and view your analysis results.</p>
             <c:choose>
                 <c:when test="${empty model.submitter}">
                     <p>
