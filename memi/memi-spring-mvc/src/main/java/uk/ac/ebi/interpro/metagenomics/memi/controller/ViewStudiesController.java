@@ -129,7 +129,7 @@ public class ViewStudiesController extends AbstractController implements IMGCont
 
             // TODO Not a good idea to hold all file content text in a big string - this could get very large! OK for now with not much data...
             // TODO Refactor Study and Sample table CSV exports and detailed exports to use common method!
-            StringBuffer fileContent = new StringBuffer("\"STUDY_ID\",\"PROJECT_NAME\",\"NUMBER_OF_SAMPLES\",\"SUBMITTED_DATE\",\"ANALYSIS\",\"NCBI_PROJECT_ID\",\"SUBMITTER_ID\",\"PUBLIC_RELEASE_DATE\",\"CENTRE_NAME\",\"EXPERIMENTAL_FACTOR\",\"IS_PUBLIC\",\"STUDY_LINKOUT\",\"STUDY_ABSTRACT\"");
+            StringBuffer fileContent = new StringBuffer("STUDY_ID,PROJECT_NAME,NUMBER_OF_SAMPLES,SUBMITTED_DATE,ANALYSIS,NCBI_PROJECT_ID,PUBLIC_RELEASE_DATE,CENTRE_NAME,EXPERIMENTAL_FACTOR,IS_PUBLIC,STUDY_LINKOUT,STUDY_ABSTRACT");
             fileContent.append("\n");
 
             for (Map.Entry<Study, Long> mapEntry : studyMap.entrySet()) {
@@ -148,28 +148,21 @@ public class ViewStudiesController extends AbstractController implements IMGCont
 
                 long npi = study.getNcbiProjectId();
                 if (npi == 0) {
-                    fileContent.append("N/A").append(',');
+                    fileContent.append(',');
                 } else {
                     fileContent.append(npi).append(',');
                 }
 
-                long si = study.getSubmitterId();
-                if (npi == 0) {
-                    fileContent.append("N/A").append(',');
-                } else {
-                    fileContent.append(si).append(',');
-                }
-
                 Date prd = study.getPublicReleaseDate();
                 if (prd == null) {
-                    fileContent.append("N/A").append(',');
+                    fileContent.append(',');
                 } else {
                     fileContent.append(prd).append(',');
                 }
 
                 String cn = study.getCentreName().replaceAll(",", "-");
                 if (cn == null || cn.equals("")) {
-                    fileContent.append("N/A").append(',');
+                    fileContent.append(',');
                 } else {
                     fileContent.append(cn).append(',');
                 }
@@ -179,7 +172,7 @@ public class ViewStudiesController extends AbstractController implements IMGCont
 
                 String spu = study.getStudyPageURL();
                 if (spu == null || spu.equals("")) {
-                    fileContent.append("N/A").append(',');
+                    fileContent.append(',');
                 } else {
                     fileContent.append(spu).append(',');
                 }
