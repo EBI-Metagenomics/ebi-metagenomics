@@ -72,6 +72,7 @@ public class MemiDownloadService {
     public boolean openDownloadDialog(HttpServletResponse response, Class<? extends Sample> clazz, String... sampleIDs) {
         log.info("Trying to open the download dialog to export a CSV file for sample(s) with ID(s)" + Arrays.toString(sampleIDs) + "...");
 
+        boolean result = false;
         InputStream sampleFileIs = null;
         InputStream headerFileIs = null;
         //sequences input stream instance
@@ -110,37 +111,37 @@ public class MemiDownloadService {
                 } else {
                     sis = new SequenceInputStream(sis, sampleFileIs);
                 }
-                try {
-                    sampleFileIs.close();
-                } catch (IOException e) {
-                    log.warn("Could not close SAMPLE file InputStream!", e);
-                }
-                try {
-                    headerFileIs.close();
-                } catch (IOException e) {
-                    log.warn("Could not close HEADER file InputStream!", e);
-                }
             }
         }
         if (sis != null) {
             fileName = (sampleIDs.length == 1 ? fileName : "samples") + ".csv";
             //configure HTTP response
-            assembleServletResponse(response, sis, fileName);
-            return true;
+            result = assembleServletResponse(response, sis, fileName);
         }
-        return false;
+        try {
+            sampleFileIs.close();
+        } catch (IOException e) {
+            log.warn("Could not close SAMPLE file InputStream!", e);
+        }
+        try {
+            headerFileIs.close();
+        } catch (IOException e) {
+            log.warn("Could not close HEADER file InputStream!", e);
+        }
+        return result;
     }
 
     /**
      * Configures HTTP servlet response.
      */
 
-    private void assembleServletResponse(HttpServletResponse response, InputStream is, String fileName) {
+    private boolean assembleServletResponse(HttpServletResponse response, InputStream is, String fileName) {
         response.setContentType("text/html;charset=UTF-8");
         response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
         try {
             FileCopyUtils.copy(is, response.getOutputStream());
             log.info("Opened download dialog successfully.");
+            return true;
         } catch (IOException e) {
             log.warn("Could not get output stream to open the download dialog!", e);
         } finally {
@@ -152,6 +153,7 @@ public class MemiDownloadService {
                 }
             }
         }
+        return false;
     }
 
     /**
