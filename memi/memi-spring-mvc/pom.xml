@@ -41,8 +41,6 @@
     </organization>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <org.springframework.version>3.0.5.RELEASE</org.springframework.version>
         <tiles.version>2.2.2</tiles.version>
     </properties>
 
@@ -68,14 +66,14 @@
 
         <!-- Rome is an API for reading/writing RSS feeds -->
         <!--<dependency>-->
-            <!--<groupId>net.java.dev.rome</groupId>-->
-            <!--<artifactId>rome</artifactId>-->
-            <!--<version>1.0.0</version>-->
+        <!--<groupId>net.java.dev.rome</groupId>-->
+        <!--<artifactId>rome</artifactId>-->
+        <!--<version>1.0.0</version>-->
         <!--</dependency>-->
         <!--<dependency>-->
-            <!--<groupId>net.java.dev.rome</groupId>-->
-            <!--<artifactId>rome-fetcher</artifactId>-->
-            <!--<version>1.0.0</version>-->
+        <!--<groupId>net.java.dev.rome</groupId>-->
+        <!--<artifactId>rome-fetcher</artifactId>-->
+        <!--<version>1.0.0</version>-->
         <!--</dependency>-->
         <dependency>
             <groupId>rome</groupId>
@@ -100,58 +98,12 @@
             <version>3.12.1.GA</version>
         </dependency>
 
-        <!-- testing -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-hibernate3</artifactId>
-            <version>2.0.8</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>javax.transaction</groupId>
-                    <artifactId>jta</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <!--<dependency>-->
-        <!--<groupId>org.springframework</groupId>-->
-        <!--<artifactId>spring-jdbc</artifactId>-->
-        <!--<version>${org.springframework.version}</version>-->
-        <!--</dependency>-->
-
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-beans</artifactId>
             <version>${org.springframework.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-core</artifactId>
-            <version>${org.springframework.version}</version>
-        </dependency>
-
-        <!-- Spring test integration -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <version>${org.springframework.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- The following dependencies are used for Spring MVC development, included libs for JSTL-->
-        <!-- Spring framework -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-            <version>${org.springframework.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
         <!-- Spring MVC framework -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -164,6 +116,13 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+            <version>2.2</version>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
@@ -185,12 +144,6 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.5.8</version>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.16</version>
             <scope>runtime</scope>
         </dependency>
         <!-- Packages to support user input validation within input forms (like the login or the submit forms) -->
@@ -215,7 +168,7 @@
         <dependency>
             <groupId>org.apache.velocity</groupId>
             <artifactId>velocity</artifactId>
-            <version>1.6-beta1</version>
+            <version>1.7</version>
         </dependency>
         <!-- List of dependencies with compile scope-->
         <dependency>
@@ -264,18 +217,21 @@
         </dependency>
 
         <!-- Servlet -->
-
-        <!-- This package provides an API for HTTP servlet requests and responses -->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
             <version>2.5</version>
+            <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>javax.servlet.jsp</groupId>
             <artifactId>jsp-api</artifactId>
             <version>2.1</version>
+            <scope>provided</scope>
         </dependency>
+        <!-- This package provides an API for HTTP servlet requests and responses -->
+
         <!-- Packages for JSTL support -->
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -309,7 +265,7 @@
                 <!-- Set up the context path and the default port to 8081 -->
                 <configuration>
                     <webAppConfig>
-                        <contextPath>/</contextPath>
+                        <contextPath>/metagenomics</contextPath>
                     </webAppConfig>
                     <connectors>
                         <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
@@ -359,6 +315,17 @@
             <resource>
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
+                <excludes>
+                    <exclude>metagenomics.xml</exclude>
+                </excludes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <targetPath>${project.build.directory}/</targetPath>
+                <includes>
+                    <include>metagenomics.xml</include>
+                </includes>
             </resource>
         </resources>
         <testResources>
@@ -368,4 +335,134 @@
             </testResource>
         </testResources>
     </build>
+
+    <profiles>
+        <profile>
+            <id>default-profile</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+
+            <dependencies>
+                <dependency>
+                    <groupId>javax.servlet</groupId>
+                    <artifactId>servlet-api</artifactId>
+                    <version>2.5</version>
+                </dependency>
+
+                <dependency>
+                    <groupId>javax.servlet.jsp</groupId>
+                    <artifactId>jsp-api</artifactId>
+                    <version>2.1</version>
+                </dependency>
+
+                <dependency>
+                    <groupId>com.oracle.jdbc</groupId>
+                    <artifactId>com.springsource.oracle.jdbc</artifactId>
+                    <version>10.2.0.2</version>
+                </dependency>
+            </dependencies>
+
+            <properties>
+                <pathToAnalysisDirectory>/nfs/nobackup/interpro/development/metagenomics/analyses/
+                </pathToAnalysisDirectory>
+                <dailyErrorAppParam>${project.build.directory}/memi-ERROR.log4j</dailyErrorAppParam>
+                <dailyDebugAppParam>${project.build.directory}/memi-DEBUG.log4j</dailyDebugAppParam>
+                <dailyWarnAppParam>${project.build.directory}/memi-WARN.log4j</dailyWarnAppParam>
+                <log4j.log.level>debug</log4j.log.level>
+            </properties>
+        </profile>
+
+
+        <!-- Build test war file using
+        mvn -Pwar,test-war clean install   -->
+        <profile>
+            <id>test-war</id>
+            <properties>
+                <deployment.folder>/ebi/www/jtest/deploy/tc-interpro-das</deployment.folder>
+                <pathToAnalysisDirectory>/nfs/nobackup/interpro/development/metagenomics/analyses/
+                </pathToAnalysisDirectory>
+                <log4j.log.file>/nfs/nobackup/interpro/development/metagenomics/web-logs/test/memi.log4j
+                </log4j.log.file>
+                <dailyErrorAppParam>/nfs/nobackup/interpro/development/metagenomics/web-logs/test/memi-ERROR.log4j
+                </dailyErrorAppParam>
+                <dailyDebugAppParam>/nfs/nobackup/interpro/development/metagenomics/web-logs/test/memi-DEBUG.log4j
+                </dailyDebugAppParam>
+                <dailyWarnAppParam>/nfs/nobackup/interpro/development/metagenomics/web-logs/test/memi-WARN.log4j
+                </dailyWarnAppParam>
+                <log4j.log.level>info</log4j.log.level>
+            </properties>
+        </profile>
+
+        <!-- Build production war file using
+        mvn -Pwar,prod-war clean install   -->
+        <profile>
+            <id>prod-war</id>
+            <properties>
+                <deployment.folder>/ebi/www/jlive/deploy/tc-interpro-das</deployment.folder>
+                <pathToAnalysisDirectory>/nfs/nobackup/interpro/development/metagenomics/analyses/
+                </pathToAnalysisDirectory>
+                <log4j.log.file>/nfs/nobackup/interpro/development/metagenomics/web-logs/live/memi.log4j
+                </log4j.log.file>
+                <dailyErrorAppParam>/nfs/nobackup/interpro/development/metagenomics/web-logs/live/memi-ERROR.log4j
+                </dailyErrorAppParam>
+                <dailyDebugAppParam>/nfs/nobackup/interpro/development/metagenomics/web-logs/live/memi-DEBUG.log4j
+                </dailyDebugAppParam>
+                <dailyWarnAppParam>/nfs/nobackup/interpro/development/metagenomics/web-logs/live/memi-WARN.log4j
+                </dailyWarnAppParam>
+                <log4j.log.level>WARN</log4j.log.level>
+            </properties>
+        </profile>
+
+
+        <profile>
+            <id>war</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.keyboardsamurais.maven</groupId>
+                        <artifactId>maven-timestamp-plugin</artifactId>
+                        <version>1.0</version>
+                        <configuration>
+                            <propertyName>timestamp</propertyName>
+                            <!-- timestampPattern using SimpleDateFormat format. -->
+                            <timestampPattern>yyyyMMdd-HHmm</timestampPattern>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>create</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-war-plugin</artifactId>
+                        <version>2.1-alpha-1</version>
+                        <configuration>
+                            <!-- Currently need to comment out the warName element below
+                      for the jetty:run-war target to work. -->
+                            <warName>${project.name}-${timestamp}</warName>
+                            <!-- NOTE that the webResources filtering as exemplified
+                          below does NOT work recursively - only the contents of the explicit directory
+                          listed are filtered-->
+                            <webResources>
+                                <resource>
+                                    <directory>${basedir}/src/main/webapp/</directory>
+                                    <filtering>true</filtering>
+                                    <includes>
+                                        <include>
+                                            MydasServerConfig.xml
+                                        </include>
+                                    </includes>
+                                </resource>
+                            </webResources>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

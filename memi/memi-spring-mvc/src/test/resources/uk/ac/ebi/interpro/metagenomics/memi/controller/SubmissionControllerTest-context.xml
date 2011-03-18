@@ -25,9 +25,7 @@
                 class.resource.loader.class=org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
             </value>
         </property>
-        <property name="resourceLoaderPath">
-            <value>/WEB-INF/templates</value>
-        </property>
+        <property name="resourceLoaderPath" value="/WEB-INF/templates"/>
     </bean>
 
 </beans>

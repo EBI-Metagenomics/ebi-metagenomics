@@ -78,7 +78,7 @@
     <!-- Root Logger -->
     <!-- This will print all debug or higher messages to the specified appender reference -->
     <root>
-        <priority value="info"/>
+        <priority value="${log4j.log.level}"/>
         <appender-ref ref="console"/>
         <appender-ref ref="dailyDebugApp"/>
         <appender-ref ref="dailyWarnApp"/>

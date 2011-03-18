@@ -33,7 +33,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
     <servlet-mapping>
         <servlet-name>memi-mvc-dispatcher</servlet-name>
-        <url-pattern>/metagenomics/*</url-pattern>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
 
     <!-- Error pages -->

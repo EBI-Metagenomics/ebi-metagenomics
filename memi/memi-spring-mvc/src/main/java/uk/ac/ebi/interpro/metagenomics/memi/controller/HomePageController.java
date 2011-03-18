@@ -32,7 +32,7 @@ import java.util.List;
  * @since 1.0-SNAPSHOT
  */
 @Controller(value = "homePageController")
-@RequestMapping(value = HomePageController.REQUEST_MAPPING_VALUE)
+@RequestMapping(value = "/")
 public class HomePageController extends LoginController implements IMGController {
 
     private final Log log = LogFactory.getLog(HomePageController.class);
@@ -42,9 +42,9 @@ public class HomePageController extends LoginController implements IMGController
      */
     public static final String VIEW_NAME = "index";
 
-    public static final String REQUEST_MAPPING_VALUE = "/";
+    public static final String REQUEST_MAPPING_VALUE = "";
 
-    public static final String REDIRECT_VALUE = "/metagenomics" + REQUEST_MAPPING_VALUE;
+    public static final String REDIRECT_VALUE = "/" + REQUEST_MAPPING_VALUE;
 
     //Data access objects
     @Resource
@@ -81,6 +81,7 @@ public class HomePageController extends LoginController implements IMGController
 
     /**
      * Creates the home page model and adds it to the specified model map.
+     *
      * @param model Model map to populate
      */
     private void populateModel(ModelMap model) {
