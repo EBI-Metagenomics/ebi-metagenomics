@@ -26,12 +26,12 @@ public class ViewStudiesModel extends MGModel {
     private List<StudyFilter.StudyVisibility> studyVisibilityList;
 
 
-    ViewStudiesModel(Submitter submitter, SortedMap<Study, Long> studySampleSizeMap, List<Breadcrumb> breadcrumbs) {
-        this(submitter, studySampleSizeMap, new StudyFilter(), breadcrumbs);
+    ViewStudiesModel(Submitter submitter, SortedMap<Study, Long> studySampleSizeMap, String pageTitle, List<Breadcrumb> breadcrumbs) {
+        this(submitter, studySampleSizeMap, new StudyFilter(), pageTitle, breadcrumbs);
     }
 
-    ViewStudiesModel(Submitter submitter, SortedMap<Study, Long> studySampleSizeMap, StudyFilter filter, List<Breadcrumb> breadcrumbs) {
-        super(submitter, breadcrumbs);
+    ViewStudiesModel(Submitter submitter, SortedMap<Study, Long> studySampleSizeMap, StudyFilter filter, String pageTitle, List<Breadcrumb> breadcrumbs) {
+        super(submitter,pageTitle, breadcrumbs);
         this.studyFilter = filter;
         this.studyStatusList = getDefaultStudyStatus();
         this.studyVisibilityList = getDefaultStudyVisibilityList();

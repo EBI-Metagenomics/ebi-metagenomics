@@ -100,7 +100,8 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
      * Creates the home page model and adds it to the specified model map.
      */
     private void populateModel(final ModelMap model, final Sample sample) {
-        final AnalysisStatsModel mgModel = MGModelFactory.getAnalysisStatsModel(sessionManager, sample, propertyContainer.getPathToAnalysisDirectory(), getBreadcrumbs(sample));
+        String pageTitle = "Results " + sample.getSampleTitle();
+        final AnalysisStatsModel mgModel = MGModelFactory.getAnalysisStatsModel(sessionManager, sample, propertyContainer.getPathToAnalysisDirectory(), pageTitle, getBreadcrumbs(sample));
         model.addAttribute(MGModel.MODEL_ATTR_NAME, mgModel);
     }
 

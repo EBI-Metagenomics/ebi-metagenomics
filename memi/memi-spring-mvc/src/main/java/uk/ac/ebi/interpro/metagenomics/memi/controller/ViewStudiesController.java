@@ -251,7 +251,7 @@ public class ViewStudiesController extends AbstractController implements IMGCont
      * Creates the MG model and adds it to the specified model map.
      */
     private void populateModel(ModelMap model, StudyFilter filter) {
-        final ViewStudiesModel subModel = MGModelFactory.getViewStudiesPageModel(sessionManager, studyDAO, sampleDAO, filter, getBreadcrumbs(null));
+        final ViewStudiesModel subModel = MGModelFactory.getViewStudiesPageModel(sessionManager, studyDAO, sampleDAO, filter, "Metagenomics View Projects", getBreadcrumbs(null));
         model.addAttribute(MGModel.MODEL_ATTR_NAME, subModel);
     }
 

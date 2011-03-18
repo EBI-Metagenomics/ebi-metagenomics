@@ -28,8 +28,8 @@ public class SampleViewModel extends MGModel {
      */
     private final boolean isHostAssociated;
 
-    SampleViewModel(Submitter submitter, Sample sample, List<String> archivedSequences, List<Breadcrumb> breadcrumbs) {
-        super(submitter, breadcrumbs);
+    SampleViewModel(Submitter submitter, Sample sample, List<String> archivedSequences, String pageTitle, List<Breadcrumb> breadcrumbs) {
+        super(submitter, pageTitle, breadcrumbs);
         this.sample = sample;
         this.archivedSequences = archivedSequences;
         this.pubs = initialisePubs();

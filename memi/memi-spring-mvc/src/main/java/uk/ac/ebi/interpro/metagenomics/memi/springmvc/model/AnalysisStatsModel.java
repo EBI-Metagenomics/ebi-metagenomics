@@ -44,8 +44,8 @@ public class AnalysisStatsModel extends MGModel {
     private final String PATH_TO_ANALYSIS_DIRECTORY;
 
 
-    AnalysisStatsModel(Submitter submitter, Sample sample, String classPathToAnalysisDirectory, List<Breadcrumb> breadcrumbs) {
-        super(submitter, breadcrumbs);
+    AnalysisStatsModel(Submitter submitter, Sample sample, String classPathToAnalysisDirectory, String pageTitle, List<Breadcrumb> breadcrumbs) {
+        super(submitter, pageTitle, breadcrumbs);
         this.sample = sample;
         this.PATH_TO_ANALYSIS_DIRECTORY = classPathToAnalysisDirectory;
         // TODO - Niave - just loads the static files for the JI_soil sample.
