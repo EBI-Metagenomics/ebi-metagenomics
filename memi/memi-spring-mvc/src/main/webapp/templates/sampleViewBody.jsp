@@ -38,7 +38,9 @@
 </c:if>
 
 
-    <a href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/doExportDetails"/>">Export to CSV</a>
+<div class="export">
+    <a href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/doExportDetails"/>" id="csv_plus" title="Export more detailed information about this sample in CSV format">Export detailed info (CSV)</a>
+</div>
 
 <table>
     <tr>

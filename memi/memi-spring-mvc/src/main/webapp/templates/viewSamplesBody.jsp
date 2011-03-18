@@ -46,10 +46,11 @@
             <c:set var="queryString" value="${pageContext.request.queryString}" scope="session"/>
 
             <div class="export">
-                <a href="<c:url value="${baseURL}/samples/doExportTable?${queryString}"/>" id="csv" title="Export table shown below in CSV format">Export table (CSV)</a>
-                <c:if test="${not empty sampleFilter.sampleType}">
-                    <a href="<c:url value="${baseURL}/samples/doExportDetails?${queryString}"/>"  id="csv_plus" title="Export more detailed information about the samples below in CSV format">Export detailed info (CSV)</a>
-                </c:if>
+                <%--Don't show link to export full sample details here - just provide it on the individual sample page --%>
+                <%--<c:if test="${not empty sampleFilter.sampleType}">--%>
+                    <%--<a href="<c:url value="${baseURL}/samples/doExportDetails?${queryString}"/>"  id="csv_plus" title="Export more detailed information about the samples below in CSV format">Export detailed info (CSV)</a>--%>
+                <%--</c:if>--%>
+                <a href="<c:url value="${baseURL}/samples/doExportTable?${queryString}"/>" id="csv" title="Export table below in CSV format">Export table (CSV)</a>
             </div>
 
             <table border="1" class="result">

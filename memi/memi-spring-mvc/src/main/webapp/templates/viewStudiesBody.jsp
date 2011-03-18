@@ -49,8 +49,8 @@
             <%--Request the current query string to export only the filtered studies--%>
             <c:set var="queryString" value="${pageContext.request.queryString}" scope="session"/>
             <div class="export">
-               <a href="<c:url value="${baseURL}/studies/doExport?${queryString}"/>" id="csv" title="Export table shown below in CSV format">Export table (CSV)</a>
                <a href="<c:url value="${baseURL}/studies/doExportDetails?${queryString}"/>"  id="csv_plus" title="Export more detailed information about the projects below in CSV format">Export detailed info (CSV)</a>
+               <a href="<c:url value="${baseURL}/studies/doExport?${queryString}"/>" id="csv" title="Export table below in CSV format">Export table (CSV)</a>
             </div>
 
             <table border="1" class="result">
