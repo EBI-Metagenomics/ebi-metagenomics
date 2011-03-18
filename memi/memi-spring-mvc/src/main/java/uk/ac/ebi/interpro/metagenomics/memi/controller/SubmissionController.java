@@ -78,7 +78,7 @@ public class SubmissionController extends AbstractController implements IMGContr
         }
         if (subForm != null) {
             String msg = buildMsg(subForm);
-            ((EmailNotificationService)emailService).setEmailSubject("MG-SUB: " + subForm.getSubTitle());
+            ((EmailNotificationService)emailService).setEmailSubject("EMG-SUB: " + subForm.getSubTitle());
             emailService.sendNotification(msg);
             log.info("Sent an email with hibernate submission details: " + msg);
             status.setComplete();
