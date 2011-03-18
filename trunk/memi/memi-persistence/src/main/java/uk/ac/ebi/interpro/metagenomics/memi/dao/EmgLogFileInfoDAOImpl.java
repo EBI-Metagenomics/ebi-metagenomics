@@ -1,19 +1,14 @@
 package uk.ac.ebi.interpro.metagenomics.memi.dao;
 
-import org.apache.commons.collections.iterators.ArrayListIterator;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**

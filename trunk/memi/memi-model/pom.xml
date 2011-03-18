@@ -29,6 +29,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-annotations</artifactId>
+            <!--<version>3.5.1-Final</version>-->
             <version>3.5.1-Final</version>
             <scope>compile</scope>
         </dependency>
@@ -42,19 +43,6 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>1.6.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.16</version>
-        </dependency>
-        <!-- Contains the Oracle JDBC driver -->
-        <dependency>
-            <groupId>com.oracle.jdbc</groupId>
-            <artifactId>com.springsource.oracle.jdbc</artifactId>
-            <version>10.2.0.2</version>
-            <scope>runtime</scope>
         </dependency>
 
         <dependency>
@@ -76,14 +64,10 @@
         </dependency>
 
         <!-- Hibernate Search dependencies-->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-search</artifactId>
-            <version>3.1.0.GA</version>
-        </dependency>
+        <!--<dependency>-->
+        <!--<groupId>org.hibernate</groupId>-->
+        <!--<artifactId>hibernate-search</artifactId>-->
+        <!--<version>3.1.0.GA</version>-->
+        <!--</dependency>-->
     </dependencies>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
 </project>
