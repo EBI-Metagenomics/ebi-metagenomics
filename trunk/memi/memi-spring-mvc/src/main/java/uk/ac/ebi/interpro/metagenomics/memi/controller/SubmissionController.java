@@ -78,6 +78,12 @@ public class SubmissionController extends AbstractController implements IMGContr
         }
         if (subForm != null) {
             String msg = buildMsg(subForm);
+            if (sessionManager != null && sessionManager.getSessionBean() != null && sessionManager.getSessionBean().getSubmitter() != null) {
+                String sender = sessionManager.getSessionBean().getSubmitter().getEmailAddress();
+                ((EmailNotificationService)emailService).setSender(sender);
+            } else {
+                return new ModelAndView(CommonController.ERROR_PAGE_VIEW_NAME);
+            }
             ((EmailNotificationService)emailService).setEmailSubject("EMG-SUB: " + subForm.getSubTitle());
             emailService.sendNotification(msg);
             log.info("Sent an email with hibernate submission details: " + msg);
