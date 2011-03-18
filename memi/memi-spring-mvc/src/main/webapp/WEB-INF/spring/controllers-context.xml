@@ -140,9 +140,9 @@
     <bean id="emailNotificationServiceSubmit" name="emailNotificationServiceSubmit"
           class="uk.ac.ebi.interpro.metagenomics.memi.services.EmailNotificationService">
         <constructor-arg ref="mailSender"/>
-        <property name="receiver" value="mr.matthew.fraser@googlemail.com"/>
+        <property name="receiver" value="datasubs@ebi.ac.uk"/>
         <!--<property name="receiverCC" value="" />-->
-        <!--<property name="emailSubject" value="MG-SUB: Unknown project"/>-->
+        <!--<property name="emailSubject" value="EMG-SUB: Unknown project"/>-->
     </bean>
 
     <!-- This bean initializes an email notification service -->
