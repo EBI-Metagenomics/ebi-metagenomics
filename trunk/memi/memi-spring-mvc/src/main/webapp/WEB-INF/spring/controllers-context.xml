@@ -68,7 +68,10 @@
 
     <!--RSS-->
     <bean id="rssClient" class="uk.ac.ebi.interpro.metagenomics.memi.feed.CachingRomeClient">
-        <constructor-arg value="http://twitter.com/statuses/user_timeline/257482404.rss"/>
+        <!--TODO: Replace local cached feed with Twitter feed when fixed @Cacheable problem-->
+        <!--TODO: See also MGModelFactory.java-->
+        <!--<constructor-arg value="http://twitter.com/statuses/user_timeline/257482404.rss"/>-->
+        <constructor-arg value="http://www.ebi.ac.uk/~aquinn/rss/metagenomics-news.rss"/>
         <!--Show no more than five news entries-->
         <constructor-arg value="5"/>
     </bean>
