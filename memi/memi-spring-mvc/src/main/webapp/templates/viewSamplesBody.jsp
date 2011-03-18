@@ -66,16 +66,16 @@
                 <c:forEach var="sample" items="${model.samples}" varStatus="status">
                     <tr>
                         <td  style="text-align:left;" id="ordered">
-                        <c:if test="${!sample.public}"><img alt="private" src="../img/icon_priv_private.gif">&nbsp;&nbsp;</c:if>
+                        <c:if test="${!sample.public}"><img alt="private" src="${pageContext.request.contextPath}/img/icon_priv_private.gif">&nbsp;&nbsp;</c:if>
                         <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>">${sample.sampleTitle}</a>
                         </td>
                         <td style="text-align:left;">${sample.study.studyName}</td>
                         <td>${sample.sampleTypeAString}</td>
                         <td>
                             <c:choose>
-                                <c:when test="${empty sample.analysisCompleted}"><img src="../img/ico_IN_PROGRESS_25_8.png" alt="Analysis in progress" title="Analysis in progress"></c:when>
+                                <c:when test="${empty sample.analysisCompleted}"><img src="${pageContext.request.contextPath}/img/ico_IN_PROGRESS_25_8.png" alt="Analysis in progress" title="Analysis in progress"></c:when>
                                 <c:otherwise>
-                                    <a href="<c:url value="${baseURL}/analysisStatsView/${sample.sampleId}"/>"><img src="../img/ico_FINISHED_25_8.png" alt="Analysis finished - check the results" title="Analysis finished - check the results"></a>
+                                    <a href="<c:url value="${baseURL}/analysisStatsView/${sample.sampleId}"/>"><img src="${pageContext.request.contextPath}/img/ico_FINISHED_25_8.png" alt="Analysis finished - check the results" title="Analysis finished - check the results"></a>
                                 </c:otherwise>
                             </c:choose>
                         </td>
