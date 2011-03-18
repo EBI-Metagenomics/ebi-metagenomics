@@ -1,24 +1,16 @@
-<html>
-<body>
-<div>
-    <h1>New Data Submission: ${subForm.subTitle}</h1>
+New Data Submission: ${subForm.subTitle}
 
-    <h2>Submitter Details:</h2>
-    <p>
-        The user was logged on with the folloing details:<br />
-        Submitter Name: ${submitter.firstName} ${submitter.surname} (Database ID: ${submitter.submitterId})<br />
-        Submitter Email address: ${submitter.emailAddress}<br />
-    </p>
+Submitter Details:
 
-    <h2>Submission Details:</h2>
-    <p>
-        Project Title: ${subForm.subTitle}<br />
-        Hold Private Until: ${subForm.releaseDate}<br />
-        Submission Description: ${subForm.dataDesc}<br />
-        #if (${dateWarning})
-            <strong>Warning:</strong> The "Hold Private Until" date of ${subForm.releaseDate} entered by the user was more than 2 years in the future.
-        #end
-    </p>
-</div>
-</body>
-</html>
+The user was logged on with the folloing details:
+Submitter Name: ${submitter.firstName} ${submitter.surname} (Database ID: ${submitter.submitterId})
+Submitter Email address: ${submitter.emailAddress}
+
+Submission Details:
+
+Project Title: ${subForm.subTitle}
+Hold Private Until: ${subForm.releaseDate}
+Submission Description: ${subForm.dataDesc}
+#if (${dateWarning})
+Warning: The "Hold Private Until" date of ${subForm.releaseDate} entered by the user was more than 2 years in the future.
+#end
