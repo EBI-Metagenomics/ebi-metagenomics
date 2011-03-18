@@ -99,7 +99,8 @@ public class SampleViewController extends SecuredAbstractController<Sample> {
      * Creates the home page model and adds it to the specified model map.
      */
     private void populateModel(final ModelMap model, final Sample sample) {
-        final SampleViewModel sampleModel = MGModelFactory.getSampleViewModel(sessionManager, sample, getArchivedSeqs(sample), getBreadcrumbs(sample));
+        String pageTitle = sample.getSampleTitle() + " sample";
+        final SampleViewModel sampleModel = MGModelFactory.getSampleViewModel(sessionManager, sample, getArchivedSeqs(sample), pageTitle, getBreadcrumbs(sample));
         model.addAttribute(MGModel.MODEL_ATTR_NAME, sampleModel);
     }
 

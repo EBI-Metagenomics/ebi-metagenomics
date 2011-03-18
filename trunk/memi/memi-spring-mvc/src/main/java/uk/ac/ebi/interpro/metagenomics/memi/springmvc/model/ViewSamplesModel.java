@@ -26,12 +26,12 @@ public class ViewSamplesModel extends MGModel {
     private List<Sample.SampleType> sampleTypes;
 
 
-    ViewSamplesModel(Submitter submitter, List<Sample> samples, List<Breadcrumb> breadcrumbs) {
-        this(submitter, samples, new SampleFilter(), breadcrumbs);
+    ViewSamplesModel(Submitter submitter, List<Sample> samples, String pageTitle, List<Breadcrumb> breadcrumbs) {
+        this(submitter, samples, new SampleFilter(), pageTitle, breadcrumbs);
     }
 
-    ViewSamplesModel(Submitter submitter, List<Sample> samples, SampleFilter filter, List<Breadcrumb> breadcrumbs) {
-        super(submitter, breadcrumbs);
+    ViewSamplesModel(Submitter submitter, List<Sample> samples, SampleFilter filter, String pageTitle, List<Breadcrumb> breadcrumbs) {
+        super(submitter, pageTitle, breadcrumbs);
         this.sampleFilter = filter;
         this.samples = samples;
         this.sampleVisibilityList = getDefaultStudyVisibilityList();

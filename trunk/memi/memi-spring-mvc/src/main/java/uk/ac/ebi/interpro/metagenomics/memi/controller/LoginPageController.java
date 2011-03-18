@@ -62,7 +62,7 @@ public class LoginPageController extends LoginController implements IMGControlle
      * Creates the home page model and adds it to the specified model map.
      */
     private void populateModel(ModelMap model) {
-        final MGModel mgModel = MGModelFactory.getMGModel(sessionManager, getBreadcrumbs(null));
+        final MGModel mgModel = MGModelFactory.getMGModel(sessionManager, "Metagenomics Login", getBreadcrumbs(null));
         model.addAttribute(MGModel.MODEL_ATTR_NAME, mgModel);
     }
 

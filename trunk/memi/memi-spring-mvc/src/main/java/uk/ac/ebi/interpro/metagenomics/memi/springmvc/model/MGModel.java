@@ -21,6 +21,8 @@ public class MGModel {
 
     private List<Breadcrumb> breadcrumbs;
 
+    private String pageTitle;
+
     /**
      * Please notice to use this name for all the different model types. Otherwise the main menu would not work
      * fine.
@@ -28,8 +30,9 @@ public class MGModel {
     public final static String MODEL_ATTR_NAME = "model";
 
 
-    MGModel(Submitter submitter, List<Breadcrumb> breadcrumbs) {
+    MGModel(Submitter submitter, String pageTitle, List<Breadcrumb> breadcrumbs) {
         this.submitter = submitter;
+        this.pageTitle = pageTitle;
         this.breadcrumbs = breadcrumbs;
         this.loginForm = new LoginForm();
     }
@@ -40,6 +43,14 @@ public class MGModel {
 
     public void setSubmitter(Submitter submitter) {
         this.submitter = submitter;
+    }
+
+    public String getPageTitle() {
+        return pageTitle;
+    }
+
+    public void setPageTitle(String pageTitle) {
+        this.pageTitle = pageTitle;
     }
 
     public List<Breadcrumb> getBreadcrumbs() {

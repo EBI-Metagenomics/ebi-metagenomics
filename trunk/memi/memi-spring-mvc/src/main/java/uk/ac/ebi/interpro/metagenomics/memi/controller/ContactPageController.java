@@ -89,7 +89,7 @@ public class ContactPageController extends AbstractController implements IMGCont
      * @param model The model map to populate
      */
     private void populateModel(ModelMap model) {
-        final ContactModel contactModel = MGModelFactory.getContactModel(sessionManager, getBreadcrumbs(null));
+        final ContactModel contactModel = MGModelFactory.getContactModel(sessionManager, "Metagenomics Contact", getBreadcrumbs(null));
         model.addAttribute(MGModel.MODEL_ATTR_NAME, contactModel);
     }
 

@@ -8,7 +8,7 @@
     <!-- Default main template -->
     <definition name="rootTemplate" template="/templates/rootTemplate.jsp">
         <!-- Attributes of type string-->
-        <put-attribute name="title" type="string" value="MG portal"/>
+        <put-attribute name="pageTitle" type="template" value="/templates/pageTitle.jsp"/>
         <put-attribute name="bodyClass" type="string" value="grey"/>
         <!-- Default value if not overridden -->
         <!-- Attributes of type template-->

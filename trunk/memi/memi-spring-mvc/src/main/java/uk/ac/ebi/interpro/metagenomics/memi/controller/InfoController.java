@@ -45,7 +45,7 @@ public class InfoController extends AbstractController implements IMGController 
      */
     private void populateModel(final ModelMap model) {
         log.info("Building model of InfoController...");
-        final MGModel hpModel = MGModelFactory.getMGModel(sessionManager, getBreadcrumbs(null));
+        final MGModel hpModel = MGModelFactory.getMGModel(sessionManager, "Metagenomics About", getBreadcrumbs(null));
         model.addAttribute(MGModel.MODEL_ATTR_NAME, hpModel);
     }
 

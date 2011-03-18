@@ -15,8 +15,8 @@ public class SubmissionModel extends MGModel {
 
     private SubmissionForm subForm;
 
-    SubmissionModel(Submitter submitter, List<Breadcrumb> breadcrumbs) {
-        super(submitter, breadcrumbs);
+    SubmissionModel(Submitter submitter, String pageTitle, List<Breadcrumb> breadcrumbs) {
+        super(submitter, pageTitle, breadcrumbs);
         this.subForm = new SubmissionForm();
     }
 

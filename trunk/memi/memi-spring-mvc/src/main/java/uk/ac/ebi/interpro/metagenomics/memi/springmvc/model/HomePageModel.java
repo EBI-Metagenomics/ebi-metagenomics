@@ -36,8 +36,8 @@ public final class HomePageModel extends MGModel {
     private final String rssUrl;
     private final List<SyndEntry> rssItems;
 
-    HomePageModel(Submitter submitter, SortedMap<Study, Long> publicStudiesMap, List<Sample> publicSamples, String rssUrl, List<SyndEntry> rssItems, List<Breadcrumb> breadcrumbs) {
-        super(submitter, breadcrumbs);
+    HomePageModel(Submitter submitter, SortedMap<Study, Long> publicStudiesMap, List<Sample> publicSamples, String rssUrl, List<SyndEntry> rssItems, String pageTitle, List<Breadcrumb> breadcrumbs) {
+        super(submitter, pageTitle, breadcrumbs);
         this.publicStudiesMap = publicStudiesMap;
         this.publicSamples = publicSamples;
         this.myStudiesMap = new TreeMap<Study, Long>();
@@ -46,8 +46,8 @@ public final class HomePageModel extends MGModel {
         this.rssItems = rssItems;
     }
 
-    HomePageModel(Submitter submitter, SortedMap<Study, Long> publicStudiesMap, List<Sample> publicSamples, String rssUrl, List<SyndEntry> rssItems, SortedMap<Study, Long> myStudiesMap, List<Sample> mySamples, List<Breadcrumb> breadcrumbs) {
-        this(submitter, publicStudiesMap, publicSamples, rssUrl, rssItems, breadcrumbs);
+    HomePageModel(Submitter submitter, SortedMap<Study, Long> publicStudiesMap, List<Sample> publicSamples, String rssUrl, List<SyndEntry> rssItems, SortedMap<Study, Long> myStudiesMap, List<Sample> mySamples, String pageTitle, List<Breadcrumb> breadcrumbs) {
+        this(submitter, publicStudiesMap, publicSamples, rssUrl, rssItems, pageTitle, breadcrumbs);
         this.myStudiesMap = myStudiesMap;
         this.mySamples = mySamples;
     }

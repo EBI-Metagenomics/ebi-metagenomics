@@ -104,7 +104,7 @@ public class SubmissionController extends AbstractController implements IMGContr
      * Creates the MG model and adds it to the specified model map.
      */
     private void populateModel(ModelMap model) {
-        final SubmissionModel subModel = MGModelFactory.getSubmissionModel(sessionManager, getBreadcrumbs(null));
+        final SubmissionModel subModel = MGModelFactory.getSubmissionModel(sessionManager,  "Metagenomics Submit", getBreadcrumbs(null));
         model.addAttribute(MGModel.MODEL_ATTR_NAME, subModel);
     }
 

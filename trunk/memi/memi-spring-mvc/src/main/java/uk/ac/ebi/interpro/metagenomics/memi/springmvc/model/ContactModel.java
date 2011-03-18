@@ -15,8 +15,8 @@ public class ContactModel extends MGModel {
 
     private ContactForm contactForm;
 
-    ContactModel(Submitter submitter, List<Breadcrumb> breadcrumbs) {
-        super(submitter, breadcrumbs);
+    ContactModel(Submitter submitter, String pageTitle, List<Breadcrumb> breadcrumbs) {
+        super(submitter, pageTitle, breadcrumbs);
         this.contactForm = new ContactForm();
     }
 
