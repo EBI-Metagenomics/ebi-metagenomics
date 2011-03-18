@@ -42,14 +42,15 @@ public class MGModelFactory {
         log.info("Building instance of " + HomePageModel.class + "...");
         Submitter submitter = getSessionSubmitter(sessionMgr);
         // Get RSS URL
-        String rssUrl = null;
-        try {
-            rssUrl = romeClient.getFeed().getURL().toString();
-        }
-        catch (IOException e) {
-            rssUrl = "unknown"; // TODO: Put URL default here
-            log.warn("Could not get RSS feed URL", e);
-        }
+        // TODO: Replace local cached feed with Twitter feed when fixed @Cacheable problem
+        String rssUrl = "http://twitter.com/statuses/user_timeline/257482404.rss";
+//        try {
+//            rssUrl = "http://twitter.com/statuses/user_timeline/257482404.rss";
+//        }
+//        catch (IOException e) {
+//            rssUrl = "unknown"; // TODO: Put URL default here
+//            log.warn("Could not get RSS feed URL", e);
+//        }
         // Get RSS entries
         List<SyndEntry> rssEntries = Collections.emptyList();
         try {
