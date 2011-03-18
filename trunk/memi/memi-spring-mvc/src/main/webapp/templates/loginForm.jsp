@@ -5,7 +5,7 @@
 <c:if test="${empty model.submitter}">
 <div id ="sidebar-login">
 
-    <img src="../img/icon_lock.gif" alt="Login lock icon"><h2>Login</h2>
+    <img src="${pageContext.request.contextPath}/img/icon_lock.gif" alt="Login lock icon"><h2>Login</h2>
     Login to submit and view your data:<br/>
          <form:form  method="POST" action="" commandName="loginForm">
          E-Mail:<br/> <form:errors cssClass="error" path="emailAddress"/><form:input path="emailAddress"/> <br/>
@@ -28,7 +28,7 @@
 
 
 <div id ="sidebar-news">
-  <a href="${model.rssUrl}" rel="alternate" type="application/rss+xml" title="Metagenomics RSS feeds" ><img src="../img/icon_rss.gif" alt="Metagenomics RSS feeds"></a><h2>News and Events</h2>
+  <a href="${model.rssUrl}" rel="alternate" type="application/rss+xml" title="Metagenomics RSS feeds" ><img src="${pageContext.request.contextPath}/img/icon_rss.gif" alt="Metagenomics RSS feeds"></a><h2>News and Events</h2>
   <span class="separator"></span>
 <c:choose>
     <c:when test="${empty model.rssItems}">
@@ -51,6 +51,6 @@
 </div>
 
 <div id ="sidebar-mailing">
-<img src="../img/icon_mailing.gif" alt="Mailing list"><h2>Mailing list</h2>
+<img src="${pageContext.request.contextPath}/img/icon_mailing.gif" alt="Mailing list"><h2>Mailing list</h2>
 <p>Subscribe to the EBI metagenomics mailing list to receive by email  updated information on the website activities: <a href="http://listserver.ebi.ac.uk/mailman/listinfo/metagenomics">click here.</a></p>
 </div>

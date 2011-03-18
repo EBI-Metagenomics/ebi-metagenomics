@@ -68,12 +68,12 @@
                 <c:forEach var="entry" items="${model.studySampleSizeMap}" varStatus="status">
                     <tr>
                         <td style="text-align:left;">
-                             <c:if test="${!entry.key.public}"><img alt="private" src="../img/icon_priv_private.gif">&nbsp;&nbsp;</c:if>
+                             <c:if test="${!entry.key.public}"><img alt="private" src="${pageContext.request.contextPath}/img/icon_priv_private.gif">&nbsp;&nbsp;</c:if>
                              <a href="<c:url value="${baseURL}/study/${entry.key.studyId}"/>">${entry.key.studyName}</a>
                         </td>
                         <td>${entry.value}</td>
                         <td id="ordered">${entry.key.formattedLastReceived}</td>
-                        <td><img src="../img/ico_${entry.key.studyStatus}_25_8.png" alt="${entry.key.studyStatusAsString}" title="${entry.key.studyStatusAsString}"> </td>
+                        <td><img src="${pageContext.request.contextPath}/img/ico_${entry.key.studyStatus}_25_8.png" alt="${entry.key.studyStatusAsString}" title="${entry.key.studyStatusAsString}"> </td>
                     </tr>
                 </tbody>
                 </c:forEach>

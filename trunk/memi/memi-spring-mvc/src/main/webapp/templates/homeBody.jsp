@@ -46,7 +46,7 @@
                     <h2>My Projects</h2>
                     <h3>My latest projects</h3>
                     <c:forEach var="entry" items="${model.myStudiesMap}" varStatus="status">
-                        <p><c:if test="${!entry.key.public}"><img alt="private" src="../img/icon_priv_private.gif"></c:if>&nbsp;&nbsp;<a href="<c:url value="${baseURL}/study/${entry.key.studyId}"/>" class="list_more">${entry.key.studyName}</a>
+                        <p><c:if test="${!entry.key.public}"><img alt="private" src="${pageContext.request.contextPath}/img/icon_priv_private.gif"></c:if>&nbsp;&nbsp;<a href="<c:url value="${baseURL}/study/${entry.key.studyId}"/>" class="list_more">${entry.key.studyName}</a>
                         </br>
                         <span class="list_desc"><c:out value="${entry.key.shortStudyAbstract} ..."/></span>
                         <a href="<c:url value="${baseURL}/study/${entry.key.studyId}"/>#study_desc" class="more_view">view more</a> -  <a href="<c:url value="${baseURL}/study/${entry.key.studyId}"/>#samples_id"  class="list_sample"><c:out value="${entry.value} samples"/></a>                                                                                                                                                           </p>
@@ -61,7 +61,7 @@
                     <h3>My latest samples</h3>
                     <c:forEach var="sample" items="${model.mySamples}" varStatus="status">
                         <p><%--<span class="list_date">${sample.metadataReceived}:</span>--%>
-                           <c:if test="${!sample.public}"><img alt="private" src="../img/icon_priv_private.gif"></c:if>&nbsp;&nbsp;
+                           <c:if test="${!sample.public}"><img alt="private" src="${pageContext.request.contextPath}/img/icon_priv_private.gif"></c:if>&nbsp;&nbsp;
                            <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>" class="list_more">${sample.sampleTitle}</a>
                            </br>
                            <span class="list_desc"><c:out value="${sample.shortSampleDescription} ..."/></span>
