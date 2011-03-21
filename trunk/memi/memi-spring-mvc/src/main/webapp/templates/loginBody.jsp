@@ -1,11 +1,10 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%-- This template is used for the login page --%>
 <div id="content-full">
     <form:form method="POST" action="login" commandName="loginForm">
-        <h2><fmt:message key="label.submission.title"/></h2>
+        <h2>Start Submission Process</h2>
         <p> Login first to submit and view your data.</p>
         <h3>Login</h3>
 
