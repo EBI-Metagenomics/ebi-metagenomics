@@ -22,7 +22,7 @@
          <%-- <br/>
          <a href="<c:url value=" https://www.ebi.ac.uk/embl/genomes/submission/forgot-passw.jsf?_afPfm=5"/>"
                      title="Request a new password">Forgotten password</a>--%>
-   
+
 </div>
 </c:if>
 
@@ -37,16 +37,16 @@
     <c:otherwise>
         <ul>
         <c:forEach var="entry" items="${model.rssItems}" varStatus="status">
-            <li><a href="${entry.link}" title="${entry.description.value}">${entry.title}</a></li>
+            <li>${entry.title}</li>
         </c:forEach>
         </ul>
-        
+
     </c:otherwise>
 </c:choose>
 <%--<div id="rssfeed">--%>
     <%--<a href="${model.rssUrl}" class="rss" rel="alternate" type="application/rss+xml">RSS feed</a>--%>
 <%--</div>        --%>
-    
+
 <p><a href="http://twitter.com/EBImetagenomics" class="twitter">Follow us on Twitter</a></p>
 </div>
 
