@@ -39,5 +39,5 @@
           p:definitions="/WEB-INF/tiles/tiles-defs.xml"/>
 
     <!-- Imports user-defined @Controller beans that process client requests -->
-    <import resource="controllers-context-temp.xml"/>
+    <import resource="controllers-context.xml"/>
 </beans>
