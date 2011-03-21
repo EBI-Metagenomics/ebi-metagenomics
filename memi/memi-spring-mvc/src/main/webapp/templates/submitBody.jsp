@@ -1,7 +1,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <div id="content-full">
-    <h2><fmt:message key="label.submission.title"/></h2>
+    <h2>Start Submission Process</h2>
 
     <p>
         Please complete the details below to initiate the submission process. We are currently working on a dedicated submission wizard, but in the meantime we are providing the service by requesting the required details by email, our curators will then translate your data and metadata to the required formats.

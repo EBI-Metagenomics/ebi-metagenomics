@@ -1,23 +1,22 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
 
+import uk.ac.ebi.interpro.metagenomics.memi.googlechart.GoogleChartFactory;
+import uk.ac.ebi.interpro.metagenomics.memi.model.EmgFile;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 
-import java.io.*;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * Model to hold statistics related to the analysis of a sample.
  * <p/>
- * TODO - A bit hacked, with lots of hard-coded stuff that shouldn't be ;-)
  * TODO - revisit before beta release.
  *
- * @author Phil Jones
+ * @author Maxim Scheremetjew, Phil Jones
  * @version $Id$
  * @since 1.0-SNAPSHOT
  */
@@ -27,213 +26,92 @@ public class AnalysisStatsModel extends MGModel {
 
     private Sample sample;
 
-    private boolean hasStats = false;
+    // URLs to use the Google chart Tool
 
-    private int totalReads;
+    /* URL should display a bar chart about a statistical overview */
+    private String barChartURL;
 
-    private int readsWithOrfs;
+    /* URL should display a pie chart which includes GO annotations for biological process */
+    private String pieChartBiologicalProcessURL;
 
-    private int totalOrfs;
+    /* URL should display a pie chart which includes GO annotations for molecular function */
+    private String pieChartMolecularFunctionURL;
 
-    private int orfsWithMatches;
+    /* URL should display a pie chart which includes GO annotations for cellular component */
+    private String pieChartCellularComponentURL;
 
-    private Set<MatchStatistic> goMatchStatistics = new TreeSet<MatchStatistic>();
+    private String pieChartInterProMatchURL;
 
-    private Set<MatchStatistic> interProMatchStatistics = new TreeSet<MatchStatistic>();
+    private List<AbstractGOTerm> bioGOTerms;
 
-    private final String PATH_TO_ANALYSIS_DIRECTORY;
+    private EmgFile emgFile;
 
-
-    AnalysisStatsModel(Submitter submitter, Sample sample, String classPathToAnalysisDirectory, String pageTitle, List<Breadcrumb> breadcrumbs) {
+    AnalysisStatsModel(Submitter submitter, String pageTitle, List<Breadcrumb> breadcrumbs, Sample sample,
+                       String barChartURL, String pieChartBiologicalProcessURL,
+                       String pieChartCellularComponentURL, String pieChartMolecularFunctionURL,
+                       String pieChartInterProMatchURL, List<AbstractGOTerm> bioGOTerms, EmgFile emgFile) {
         super(submitter, pageTitle, breadcrumbs);
         this.sample = sample;
-        this.PATH_TO_ANALYSIS_DIRECTORY = classPathToAnalysisDirectory;
-        // TODO - Niave - just loads the static files for the JI_soil sample.
-        if (sample != null && "JI_soil".equals(sample.getSampleTitle())) {
-            // Set all that stats stuff.
-            try {
-                loadLossStats();
-                loadIPRStatistics();
-                loadGOStatistics();
-            } catch (IOException e) {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-                throw new IllegalStateException("Help!  Can't load statistics", e);
-            }
-        }
+        this.barChartURL = barChartURL;
+        this.pieChartBiologicalProcessURL = pieChartBiologicalProcessURL;
+        this.pieChartMolecularFunctionURL = pieChartMolecularFunctionURL;
+        this.pieChartCellularComponentURL = pieChartCellularComponentURL;
+        this.pieChartInterProMatchURL = pieChartInterProMatchURL;
+        this.bioGOTerms = bioGOTerms;
+        this.emgFile = emgFile;
+    }
+
+    private String getTempChart() {
+        List<Float> chartData = new ArrayList<Float>();
+        chartData.add(4.8235593f);
+        chartData.add(4.747398f);
+        chartData.add(4.468139f);
+        chartData.add(4.391978f);
+
+        List<String> chartLabels = new ArrayList<String>();
+        chartLabels.add("GO:0003824 catalytic activity (190)");
+        chartLabels.add("GO:0006412 translation (187)");
+        chartLabels.add("GO:0008152 metabolic process (176)");
+        chartLabels.add("GO:0003735 structural constituent of (173)");
+
+        Properties props = new Properties();
+        props.put(GoogleChartFactory.CHART_COLOUR, "FFCC33|7637A2");
+        props.put(GoogleChartFactory.CHART_MARGIN, "270,270");
+        props.put(GoogleChartFactory.CHART_SIZE, "740x180");
+
+        return GoogleChartFactory.buildPieChartURL(props, chartData, chartLabels);
     }
 
     public Sample getSample() {
         return sample;
     }
 
-    /**
-     * TODO - Paths to files currently hard-coded.
-     *
-     * @throws IOException
-     */
-    private void loadLossStats() throws IOException {
-        File file = new File(PATH_TO_ANALYSIS_DIRECTORY + "WHEAT_RHIZOSPHERE_ME_FASTA/WHEAT_RHIZOSPHERE_ME_FASTA_stats");
-        InputStream is = new FileInputStream(file);
-
-        // Load properties file containing overall match statistics
-        Properties overallStats = new Properties();
-        BufferedInputStream bis = null;
-        try {
-            bis = new BufferedInputStream(is);
-            overallStats.load(bis);
-
-            totalReads = Integer.parseInt(overallStats.getProperty("Total_number_of_reads"));
-            readsWithOrfs = Integer.parseInt(overallStats.getProperty("Number_of_reads_with_orf"));
-            totalOrfs = Integer.parseInt(overallStats.getProperty("Total_number_of_orfs"));
-            orfsWithMatches = Integer.parseInt(overallStats.getProperty("Number_of_orfs_with_IPRScan_match"));
-
-            hasStats = true;
-        } finally {
-            if (bis != null) {
-                bis.close();
-            }
-        }
+    public String getBarChartURL() {
+        return barChartURL;
     }
 
-    private void loadIPRStatistics() throws IOException {
-        File file = new File(PATH_TO_ANALYSIS_DIRECTORY + "WHEAT_RHIZOSPHERE_ME_FASTA/WHEAT_RHIZOSPHERE_ME_FASTA_entry-stats");
-        InputStream is = new FileInputStream(file);
-        loadStats(interProMatchStatistics, is, file.getName());
+    public String getPieChartBiologicalProcessURL() {
+        return pieChartBiologicalProcessURL;
     }
 
-    private void loadGOStatistics() throws IOException {
-        File file = new File(PATH_TO_ANALYSIS_DIRECTORY + "WHEAT_RHIZOSPHERE_ME_FASTA/WHEAT_RHIZOSPHERE_ME_FASTA_go-stats");
-        InputStream is = new FileInputStream(file);
-        loadStats(goMatchStatistics, is, file.getName());
+    public String getPieChartMolecularFunctionURL() {
+        return pieChartMolecularFunctionURL;
     }
 
-    private void loadStats(Set<MatchStatistic> stats, InputStream is, String fileName) throws IOException {
-        BufferedReader reader = null;
-        try {
-            reader = new BufferedReader(new InputStreamReader(is));
-            String line;
-            Integer totalCount = null;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split("\\t");
-                if (parts.length == 2 && "#Total proteins matched:".equals(parts[0])) {
-                    totalCount = new Integer(parts[1].trim());
-                } else if (parts.length == 3) {
-                    if (totalCount == null) {
-                        throw new IllegalStateException("The statistics file " + fileName + " does not appear to start with a 'Total proteins matched' line.");
-                    }
-                    stats.add(new MatchStatistic(parts, totalCount));
-                }
-            }
-        } finally {
-            if (reader != null) {
-                reader.close();
-            }
-        }
+    public String getPieChartCellularComponentURL() {
+        return pieChartCellularComponentURL;
     }
 
-    public boolean isHasStats() {
-        return hasStats;
+    public String getPieChartInterProMatchURL() {
+//        return pieChartInterProMatchURL;
+        return getTempChart();
     }
 
-    public int getTotalReads() {
-        return totalReads;
+    public List<AbstractGOTerm> getBioGOTerms() {
+        return bioGOTerms;
     }
 
-    public int getReadsWithOrfs() {
-        return readsWithOrfs;
-    }
-
-    public int getTotalOrfs() {
-        return totalOrfs;
-    }
-
-    public int getOrfsWithMatches() {
-        return orfsWithMatches;
-    }
-
-    /*
-   http://chart.apis.google.com/chart?chs=600x280&amp;cht=p3&amp;chco=cde6a8&amp;chd=t:100.0&amp;chl=Eukaryota (eucaryotes)&amp;chma=140,140
-
-   <img alt="" src="http://chart.apis.google.com/chart?chs=600x280&amp;cht=p3&amp;chco=FFCC33|7637A2|fff22a|9dd8f3&amp;chd=t:98.82353,0.7843138,0.26143792,0.13071896&amp;chl=Bacteria (eubacteria)|Archaea|Viruses|unclassified sequences&amp;chma=140,140">
-    */
-    public String getSubmittedReadsPieChartURL() {
-        if (hasStats) {
-            float percentReadsWithOrfs = (float) readsWithOrfs / (float) totalReads * 100f;
-            StringBuffer buf = new StringBuffer("http://chart.apis.google.com/chart?chs=740x180&amp;cht=p3&amp;chco=FFCC33|7637A2&amp;chd=t:");
-            buf.append(percentReadsWithOrfs)
-                    .append(',')
-                    .append(100f - percentReadsWithOrfs)
-                    .append("&amp;chl=Reads WITH predicted ORFs (")
-                    .append(NUMBER_FORMAT.format(readsWithOrfs))
-                    .append(")|Reads with NO predicted ORFs (")
-                    .append(NUMBER_FORMAT.format(totalReads - readsWithOrfs))
-                    .append(")&amp;chma=270,270");
-
-            return buf.toString();
-        } else {
-            return null;
-        }
-    }
-
-    public String getOrfPieChartURL() {
-        if (hasStats) {
-            float percentOrfsWithMatches = (float) orfsWithMatches / (float) totalOrfs * 100f;
-            StringBuffer buf = new StringBuffer("http://chart.apis.google.com/chart?chs=740x180&amp;cht=p3&amp;chco=FFCC33|7637A2&amp;chd=t:");
-            buf.append(percentOrfsWithMatches)
-                    .append(',')
-                    .append(100f - percentOrfsWithMatches)
-                    .append("&amp;chl=ORFs WITH InterPro matches (")
-                    .append(NUMBER_FORMAT.format(orfsWithMatches))
-                    .append(")|ORFs with NO InterPro matches (")
-                    .append(NUMBER_FORMAT.format(totalOrfs - orfsWithMatches))
-                    .append(")&amp;chma=270,270");
-
-            return buf.toString();
-        } else {
-            return null;
-        }
-    }
-
-    public String getGoPieChartURL() {
-        if (hasStats && goMatchStatistics != null) {
-            StringBuffer buf = new StringBuffer("http://chart.apis.google.com/chart?chs=740x180&amp;chco=FFCC33|7637A2&amp;cht=p3&amp;chd=t:");
-            StringBuffer valueBuf = new StringBuffer();
-            StringBuffer labelBuf = new StringBuffer();
-            int sliceCount = 0;
-            float percentOther = 100.0f;
-            for (MatchStatistic statistic : goMatchStatistics) {
-                if (sliceCount++ < 35) {
-                    percentOther -= statistic.getMatchPercentage();
-                    if (valueBuf.length() > 0) {
-                        valueBuf.append(',');
-                        labelBuf.append('|');
-                    }
-                    valueBuf.append(statistic.getMatchPercentage());
-
-                    String name = (statistic.getTerm().length() > 25)
-                            ? statistic.getTerm().substring(0, 25)
-                            : statistic.getTerm();
-                    labelBuf.append(statistic.getAccession())
-                            .append(' ')
-                            .append(name)
-                            .append(" (").append(statistic.getCount()).append(')');
-                }
-            }
-            valueBuf.append(',').append(percentOther);
-            labelBuf.append("|Other GO Terms");
-            buf.append(valueBuf)
-                    .append("&amp;chl=")
-                    .append(labelBuf)
-                    .append("&amp;chma=270,270");
-            return buf.toString();
-        } else return null;
-    }
-
-    public Set<MatchStatistic> getInterProMatchStatistics() {
-        return interProMatchStatistics;
-    }
-
-    public Set<MatchStatistic> getGoMatchStatistics() {
-        return goMatchStatistics;
+    public EmgFile getEmgFile() {
+        return emgFile;
     }
 }
