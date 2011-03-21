@@ -1,5 +1,6 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
 
+import au.com.bytecode.opencsv.CSVReader;
 import com.sun.syndication.feed.synd.SyndEntry;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -11,12 +12,14 @@ import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateStudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.feed.RomeClient;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.SampleFilter;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.StudyFilter;
+import uk.ac.ebi.interpro.metagenomics.memi.googlechart.GoogleChartFactory;
+import uk.ac.ebi.interpro.metagenomics.memi.model.EmgFile;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 /**
@@ -55,8 +58,7 @@ public class MGModelFactory {
         List<SyndEntry> rssEntries = Collections.emptyList();
         try {
             rssEntries = romeClient.getEntries();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             log.warn("Could not get RSS entries", e);
         }
         if (submitter == null) {
@@ -85,15 +87,21 @@ public class MGModelFactory {
     }
 
 
-
     public static SubmissionModel getSubmissionModel(SessionManager sessionMgr, String pageTitle, List<Breadcrumb> breadcrumbs) {
         log.info("Building instance of " + SubmissionModel.class + "...");
         return new SubmissionModel(getSessionSubmitter(sessionMgr), pageTitle, breadcrumbs);
     }
 
-    public static AnalysisStatsModel getAnalysisStatsModel(SessionManager sessionManager, Sample sample, String classPathToStatsFile, String pageTitle, List<Breadcrumb> breadcrumbs) {
+    public static AnalysisStatsModel getAnalysisStatsModel(SessionManager sessionManager, Sample sample, String classPathToStatsFile, String pageTitle, List<Breadcrumb> breadcrumbs, EmgFile emgFile) {
         log.info("Building instance of " + AnalysisStatsModel.class + "...");
-        return new AnalysisStatsModel(getSessionSubmitter(sessionManager), sample, classPathToStatsFile, pageTitle, breadcrumbs);
+        Map<Class, List<AbstractGOTerm>> goData = loadGODataFromCSV(classPathToStatsFile, emgFile);
+        return new AnalysisStatsModel(getSessionSubmitter(sessionManager), pageTitle, breadcrumbs, sample,
+                getBarChartURL(classPathToStatsFile, emgFile),
+                getPieChartURL(BiologicalProcessGOTerm.class, goData),
+                getPieChartURL(CellularComponentGOTerm.class, goData),
+                getPieChartURL(MolecularFunctionGOTerm.class, goData),
+                null,
+                goData.get(BiologicalProcessGOTerm.class), emgFile);
     }
 
     public static StudyViewModel getStudyViewModel(SessionManager sessionManager, Study study, List<Sample> samples, String pageTitle, List<Breadcrumb> breadcrumbs) {
@@ -368,6 +376,176 @@ public class MGModelFactory {
                 return -(lastUpdateO1.compareTo(lastUpdateO2));
             return 0;
         }
+    }
+
+    private static String getPieChartURL(Class clazz, Map<Class, List<AbstractGOTerm>> goData) {
+
+        List<Float> data = getGOData(clazz, goData);
+        List<String> labels = getGOLabels(clazz, goData);
+        Properties props = new Properties();
+        props.put(GoogleChartFactory.CHART_MARGIN, "270,270");
+        props.put(GoogleChartFactory.CHART_SIZE, "740x180");
+        if (clazz.equals(BiologicalProcessGOTerm.class)) {
+            props.put(GoogleChartFactory.CHART_COLOUR, "FFFF10,FF0000");
+        } else if (clazz.equals(CellularComponentGOTerm.class)) {
+            props.put(GoogleChartFactory.CHART_COLOUR, "FFFF10,00FF00");
+        } else {
+            props.put(GoogleChartFactory.CHART_COLOUR, "FFFF10,0000FF");
+        }
+
+        return GoogleChartFactory.buildPieChartURL(props, data, labels);
+    }
+
+
+    private static List<Float> getGOData(Class clazz, Map<Class, List<AbstractGOTerm>> goData) {
+        List<Float> result = new ArrayList<Float>();
+        List<AbstractGOTerm> goTerms = null;
+        if (clazz.equals(BiologicalProcessGOTerm.class)) {
+            goTerms = goData.get(BiologicalProcessGOTerm.class);
+        } else if (clazz.equals(CellularComponentGOTerm.class)) {
+            goTerms = goData.get(CellularComponentGOTerm.class);
+        } else {
+            goTerms = goData.get(MolecularFunctionGOTerm.class);
+        }
+        if (goTerms != null) {
+            float totalNumberOfMatches = 0;
+            //the first iteration is to get the total number of GO term matches
+            for (AbstractGOTerm term : goTerms) {
+                totalNumberOfMatches += (float) term.getNumberOfMatches();
+            }
+            //the second iteration is to calculate the pie chart data
+            for (AbstractGOTerm term : goTerms) {
+                result.add(((float) term.getNumberOfMatches()) / totalNumberOfMatches);
+
+            }
+        }
+        return result;
+    }
+
+    private static List<String> getGOLabels(Class clazz, Map<Class, List<AbstractGOTerm>> goData) {
+        List<String> result = new ArrayList<String>();
+        List<AbstractGOTerm> goTerms = null;
+        if (clazz.equals(BiologicalProcessGOTerm.class)) {
+            goTerms = goData.get(BiologicalProcessGOTerm.class);
+        } else if (clazz.equals(CellularComponentGOTerm.class)) {
+            goTerms = goData.get(CellularComponentGOTerm.class);
+        } else {
+            goTerms = goData.get(MolecularFunctionGOTerm.class);
+        }
+        if (goTerms != null) {
+            //the second iteration is to calculate the pie chart data
+            for (AbstractGOTerm term : goTerms) {
+                result.add(term.toString());
+            }
+        }
+        return result;
+    }
+
+    private static Map<Class, List<AbstractGOTerm>> loadGODataFromCSV(String classPathToStatsFile, EmgFile emgFile) {
+        Map<Class, List<AbstractGOTerm>> result = new Hashtable<Class, List<AbstractGOTerm>>();
+        result.put(BiologicalProcessGOTerm.class, new ArrayList<AbstractGOTerm>());
+        result.put(CellularComponentGOTerm.class, new ArrayList<AbstractGOTerm>());
+        result.put(MolecularFunctionGOTerm.class, new ArrayList<AbstractGOTerm>());
+
+        String directoryName = emgFile.getFileIDInUpperCase().replace('.', '_');
+        File file = new File(classPathToStatsFile + directoryName + '/' + directoryName + "_summary.go_slim");
+        CSVReader reader = null;
+        try {
+            reader = new CSVReader(new FileReader(file), '\t');
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        if (reader != null) {
+            List<String[]> rows = null;
+            try {
+                rows = reader.readAll();
+            } catch (IOException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+            if (rows != null) {
+                for (String[] row : rows) {
+                    String ontology = row[2];
+                    if (ontology != null && ontology.trim().length() > 0) {
+                        String accession = row[0];
+                        String synonym = row[1];
+                        int numberOfMatches = Integer.parseInt(row[3]);
+                        if (ontology.equals("biological_process")) {
+                            BiologicalProcessGOTerm instance = new BiologicalProcessGOTerm(accession,
+                                    synonym, numberOfMatches);
+                            result.get(BiologicalProcessGOTerm.class).add(instance);
+                        } else if (ontology.equals("cellular_component")) {
+                            CellularComponentGOTerm instance = new CellularComponentGOTerm(accession,
+                                    synonym, numberOfMatches);
+                            result.get(CellularComponentGOTerm.class).add(instance);
+                        } else {
+                            MolecularFunctionGOTerm instance = new MolecularFunctionGOTerm(accession,
+                                    synonym, numberOfMatches);
+                            result.get(MolecularFunctionGOTerm.class).add(instance);
+                        }
+                    }
+
+                }
+            }
+        }
+        return result;
+    }
+
+
+    private static String getBarChartURL(String classPathToStatsFile, EmgFile emgFile) {
+        List<Float> chartData = loadStatsFromCSV(classPathToStatsFile, emgFile);
+        if (chartData != null && chartData.size() > 0) {
+            Properties props = new Properties();
+            props.put(GoogleChartFactory.CHART_TYPE, "bhs");
+            props.put(GoogleChartFactory.CHART_SIZE, "450x200");
+            props.put(GoogleChartFactory.CHART_AXES, "x,y");
+            props.put(GoogleChartFactory.CHART_AXES_LABELS, "1:|0%|25%|50%|75%|100%|");
+            props.put(GoogleChartFactory.CHART_LEGEND_TEXT, "total number of reads|reads with at least 1 pCDS|reads with at least 1 InterPro match");
+            props.put(GoogleChartFactory.CHART_COLOUR, "FF0000|00FF00|0000FF");
+            props.put(GoogleChartFactory.CHART_MARKER, "N,000000,0,-1,11");
+            props.put(GoogleChartFactory.CHART_DATA_SCALE, "0," + chartData.get(0));
+            return GoogleChartFactory.buildChartURL(props, chartData);
+        }
+        return null;
+    }
+
+    private static List<Float> loadStatsFromCSV(String classPathToStatsFile, EmgFile emgFile) {
+        List<Float> result = new ArrayList<Float>();
+//        File file = new File(classPathToStatsFile + "MID3-MID6_FASTA/MID3-MID6_FASTA_summary");
+        String directoryName = emgFile.getFileIDInUpperCase().replace('.', '_');
+        File file = new File(classPathToStatsFile + directoryName + '/' + directoryName + "_summary");
+        CSVReader reader = null;
+        try {
+            reader = new CSVReader(new FileReader(file), '\t');
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        if (reader != null) {
+            List<String[]> rows = null;
+            try {
+                rows = reader.readAll();
+            } catch (IOException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+            if (rows != null) {
+                float numSubmittedSeqs = getValueOfRow(rows, 0);
+                float numSeqsWithPredicatedCDS = getValueOfRow(rows, 4);
+                float numSeqsWithInterProScanMatch = getValueOfRow(rows, 5);
+//                float firstBarValue = numSeqsWithPredicatedCDS / numSubmittedSeqs;
+//                float secondBarValue = numSeqsWithInterProScanMatch / numSubmittedSeqs;
+                result.add(numSubmittedSeqs);
+                result.add(numSeqsWithPredicatedCDS);
+                result.add(numSeqsWithInterProScanMatch);
+            }
+        }
+        return result;
+    }
+
+    private static float getValueOfRow(List<String[]> rows, int i) {
+        String[] row = rows.get(i);
+        if (row.length > 1) {
+            return Float.parseFloat(row[1]);
+        }
+        return -1f;
     }
 }
 

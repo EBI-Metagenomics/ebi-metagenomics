@@ -1,5 +1,7 @@
 package uk.ac.ebi.interpro.metagenomics.memi.dao;
 
+import uk.ac.ebi.interpro.metagenomics.memi.model.EmgFile;
+
 import java.util.List;
 
 /**
@@ -14,4 +16,6 @@ public interface EmgLogFileInfoDAO {
     public List<String> getFileIdsBySampleId(String sampleId);
 
     public List<String> getFileNamesBySampleId(String sampleId);
+
+    public List<EmgFile> getFilesBySampleId(String sampleId);
 }

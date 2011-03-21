@@ -30,6 +30,6 @@ public class CommonController {
     @RequestMapping("/logout")
     public ModelAndView indexHandler() {
         sessionManager.getSessionBean().removeSubmitter();
-        return new ModelAndView("redirect:" + HomePageController.REDIRECT_VALUE);
+        return new ModelAndView("redirect:" + HomePageController.REQUEST_MAPPING_VALUE);
     }
 }

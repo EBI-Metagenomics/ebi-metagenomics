@@ -4,6 +4,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import uk.ac.ebi.interpro.metagenomics.memi.model.EmgFile;
+import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
@@ -33,7 +35,6 @@ public class EmgLogFileInfoDAOImpl implements EmgLogFileInfoDAO {
     /**
      * Returns a list of file IDs by the specified sample ID.
      */
-    @Override
     public List<String> getFileIdsBySampleId(String sampleId) {
         log.info("Querying file IDs by sample ID: " + sampleId + " from table EMGLogFileInfo...");
         List<String> result = new ArrayList<String>();
@@ -48,7 +49,6 @@ public class EmgLogFileInfoDAOImpl implements EmgLogFileInfoDAO {
         return result;
     }
 
-    @Override
     public List<String> getFileNamesBySampleId(String sampleId) {
         log.info("Querying file IDs by sample ID: " + sampleId + " from table EMGLogFileInfo...");
         List<String> result = new ArrayList<String>();
@@ -56,6 +56,22 @@ public class EmgLogFileInfoDAOImpl implements EmgLogFileInfoDAO {
             List<Map<String, Object>> rows = this.jdbcTemplate.queryForList("select file_name from emg_log_file_info where sample_id=?", new String[]{sampleId});
             for (Map row : rows) {
                 result.add((String) row.get("FILE_NAME"));
+            }
+        } catch (Exception e) {
+            log.warn("Could not query file names!", e);
+        }
+        return result;
+    }
+
+    public List<EmgFile> getFilesBySampleId(String sampleId) {
+        log.info("Querying file IDs by sample ID: " + sampleId + " from table EMGLogFileInfo...");
+        List<EmgFile> result = new ArrayList<EmgFile>();
+        try {
+            List<Map<String, Object>> rows = this.jdbcTemplate.queryForList("select file_id, file_name from emg_log_file_info where sample_id=?", new String[]{sampleId});
+            for (Map row : rows) {
+                String fileName = (String) row.get("FILE_NAME");
+                String fileID = (String) row.get("FILE_ID");
+                result.add(new EmgFile(fileID, fileName));
             }
         } catch (Exception e) {
             log.warn("Could not query file names!", e);

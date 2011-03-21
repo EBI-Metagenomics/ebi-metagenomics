@@ -1,7 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="spring" uri="http://java.sun.com/jsp/jstl/core" %>
+<%--<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>--%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <div id="content">
+    <%--<spring:message code="label.email.submission.subject" />--%>
     <section id="submit-data">
         <div id="submit-data-display"><h1>
             <c:choose>
@@ -96,7 +97,7 @@
                     </c:forEach>
                     <p><a href="<c:url value="${baseURL}/studies/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>" title="View all public studies" class="all">View all projects</a></p>
                 </div>
-                
+
                 <div id="list-data-sample">
                     <h2>Samples</h2>
                     <h3>Latest public samples</h3>

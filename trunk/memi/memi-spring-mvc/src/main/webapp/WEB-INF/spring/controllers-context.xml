@@ -94,8 +94,6 @@
         <!--<property name="location" value="classpath:resources/hibernate.properties"/>-->
         <property name="annotatedClasses">
             <list>
-                <value>uk.ac.ebi.interpro.metagenomics.memi.model.EmgSample</value>
-                <value>uk.ac.ebi.interpro.metagenomics.memi.model.EmgStudy</value>
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Publication</value>
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study</value>
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample</value>
@@ -123,7 +121,8 @@
     </bean>
 
     <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-        <property name="basename" value="/WEB-INF/resources/messages"/>
+        <property name="basename" value="messages"/>
+        <property name="defaultEncoding" value="UTF-8"/>
     </bean>
 
     <!--Service-->
@@ -135,7 +134,7 @@
     </bean>
 
     <!-- This bean initializes an email notification service -->
-    <bean id="emailNotificationServiceSubmit" name="emailNotificationServiceSubmit"
+    <bean name="emailNotificationServiceSubmit"
           class="uk.ac.ebi.interpro.metagenomics.memi.services.EmailNotificationService">
         <constructor-arg ref="mailSender"/>
         <property name="receiver" value="datasubs@ebi.ac.uk"/>
@@ -144,7 +143,7 @@
     </bean>
 
     <!-- This bean initializes an email notification service -->
-    <bean id="emailNotificationServiceContact" name="emailNotificationServiceContact"
+    <bean name="emailNotificationServiceContact"
           class="uk.ac.ebi.interpro.metagenomics.memi.services.EmailNotificationService">
         <constructor-arg ref="mailSender"/>
         <property name="receiver" value="beta-ebi-metagenomics-feedback@googlegroups.com"/>

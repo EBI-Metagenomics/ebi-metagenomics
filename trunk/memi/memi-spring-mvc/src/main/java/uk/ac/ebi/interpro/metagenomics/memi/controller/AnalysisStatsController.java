@@ -13,9 +13,9 @@ import uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.EmgLogFileInfoDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateSampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.ISampleStudyDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.model.EmgFile;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.AnalysisStatsModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
@@ -67,7 +67,7 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
         }, model, sampleId);
     }
 
-    @RequestMapping(value = "/doExportResultFile/{fileName}", method = RequestMethod.GET)
+    @RequestMapping(value = "/doExportResultTable/{fileName}", method = RequestMethod.GET)
     public ModelAndView doExportResultFile(@PathVariable final String sampleId, @PathVariable final String fileName, ModelMap model, final HttpServletResponse response) {
         log.info("Checking if sample is accessible...");
         return checkAccessAndBuildModel(new ModelProcessingStrategy<Sample>() {
@@ -75,21 +75,13 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
             public void processModel(ModelMap model, Sample sample) {
                 log.info("Building model...");
                 populateModel(model, sample);
-//
-                String downloadPath = propertyContainer.getPathToAnalysisDirectory() + fileName + "/";
-                if (downloadPath.contains("_I5")) {
-                    downloadPath = downloadPath.replace("_I5", "");
-                } else {
-                    downloadPath = downloadPath.replace("_orf100_200_nameonly", "");
-                }
-                //Open file stream and download dialog
-                String fileExtension = ".fasta";
-                if (fileName.contains("I5"))
-                    fileExtension = ".tsv";
-                String pathName = downloadPath + fileName + fileExtension;
-                File file = new File(pathName);
+                EmgFile emgFile = ((AnalysisStatsModel) model.get(MGModel.MODEL_ATTR_NAME)).getEmgFile();
+
+                String directoryName = emgFile.getFileIDInUpperCase().replace('.', '_');
+                File file = new File(propertyContainer.getPathToAnalysisDirectory() + directoryName + '/' + directoryName + "_summary.go_slim");
+
                 if (downloadService != null) {
-                    downloadService.openDownloadDialog(response, file, fileName + fileExtension, false);
+                    downloadService.openDownloadDialog(response, file, emgFile.getFileName() + ".tsv", false);
                 }
             }
         }, model, sampleId);
@@ -101,7 +93,11 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
      */
     private void populateModel(final ModelMap model, final Sample sample) {
         String pageTitle = "Results " + sample.getSampleTitle();
-        final AnalysisStatsModel mgModel = MGModelFactory.getAnalysisStatsModel(sessionManager, sample, propertyContainer.getPathToAnalysisDirectory(), pageTitle, getBreadcrumbs(sample));
+        List<EmgFile> emgFiles = fileInfoDAO.getFilesBySampleId(sample.getSampleId());
+        //TODO: For the moment the system only allows to represent one file on the analysis page, but
+        //in the future it should be possible to represent all different data types (genomic, transcripomic)
+        EmgFile emgFile = (emgFiles.size() > 0 ? emgFiles.get(0) : null);
+        final AnalysisStatsModel mgModel = MGModelFactory.getAnalysisStatsModel(sessionManager, sample, propertyContainer.getPathToAnalysisDirectory(), pageTitle, getBreadcrumbs(sample), emgFile);
         model.addAttribute(MGModel.MODEL_ATTR_NAME, mgModel);
     }
 
