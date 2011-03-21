@@ -18,6 +18,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.SampleViewModel;
+import uk.ac.ebi.interpro.metagenomics.memi.tools.MemiTools;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -100,16 +101,8 @@ public class SampleViewController extends SecuredAbstractController<Sample> {
      */
     private void populateModel(final ModelMap model, final Sample sample) {
         String pageTitle = sample.getSampleTitle() + " sample";
-        final SampleViewModel sampleModel = MGModelFactory.getSampleViewModel(sessionManager, sample, getArchivedSeqs(sample), pageTitle, getBreadcrumbs(sample));
+        final SampleViewModel sampleModel = MGModelFactory.getSampleViewModel(sessionManager, sample, MemiTools.getArchivedSeqs(fileInfoDAO, sample), pageTitle, getBreadcrumbs(sample));
         model.addAttribute(MGModel.MODEL_ATTR_NAME, sampleModel);
-    }
-
-    private List<String> getArchivedSeqs(Sample sample) {
-        List<String> result = new ArrayList<String>();
-        if (fileInfoDAO != null && sample != null) {
-            result = fileInfoDAO.getFileIdsBySampleId(sample.getSampleId());
-        }
-        return result;
     }
 
     ISampleStudyDAO<Sample> getDAO() {

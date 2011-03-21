@@ -18,4 +18,6 @@ public interface EmgLogFileInfoDAO {
     public List<String> getFileNamesBySampleId(String sampleId);
 
     public List<EmgFile> getFilesBySampleId(String sampleId);
+
+    public List<String> getSraIDs(String sampleId);
 }

@@ -2,10 +2,12 @@ package uk.ac.ebi.interpro.metagenomics.memi.tools;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.EmgLogFileInfoDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -35,5 +37,13 @@ public class MemiTools {
         Date date = new Date();
         final String infix = dateFormatter.format(date);
         return fileName + infix + suffix;
+    }
+
+    public static List<String> getArchivedSeqs(EmgLogFileInfoDAO fileInfoDAO, Sample sample) {
+        List<String> result = new ArrayList<String>();
+        if (fileInfoDAO != null && sample != null) {
+            result = fileInfoDAO.getSraIDs(sample.getSampleId());
+        }
+        return result;
     }
 }
