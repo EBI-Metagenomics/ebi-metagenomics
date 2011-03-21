@@ -119,12 +119,16 @@ public class MemiDownloadService {
             result = assembleServletResponse(response, sis, fileName);
         }
         try {
-            sampleFileIs.close();
+            if (sampleFileIs != null) {
+                sampleFileIs.close();
+            }
         } catch (IOException e) {
             log.warn("Could not close SAMPLE file InputStream!", e);
         }
         try {
-            headerFileIs.close();
+            if (headerFileIs != null) {
+                headerFileIs.close();
+            }
         } catch (IOException e) {
             log.warn("Could not close HEADER file InputStream!", e);
         }
