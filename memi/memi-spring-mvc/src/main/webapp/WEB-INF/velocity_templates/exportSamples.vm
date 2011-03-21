@@ -12,8 +12,8 @@ $sample.sampleTitle,#{else},#end
 #if($sample.study.studyName)
 $sample.study.studyName,#{else},#end
 #elseif($property == 'SOURCE')
-#if($sample.sampleType.type)
-$sample.sampleType.type,#{else},#end
+#if($sample.sampleTypeAsString)
+$sample.sampleTypeAsString,#{else},#end
 #elseif($property == 'ANALYSIS')
 #if($sample.analysisCompleted)
 Yes,#{else}No,#end
