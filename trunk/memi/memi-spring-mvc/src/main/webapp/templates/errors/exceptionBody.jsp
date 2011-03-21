@@ -1,4 +1,5 @@
 <%@ page isErrorPage="true" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!--
 Random filler text since if the error page is less 513 bytes then Internet Explorer will display ones of it's own
@@ -20,8 +21,14 @@ Random filler text since if the error page is less 513 bytes then Internet Explo
     </p>
 
     <p>
-        Message:
-        ${exception.message}
+        <strong>ErrorMessage:</strong><br />
+        ${pageContext.exception.message}
+    </p>
+    <p>
+        <strong>Stack Trace:</strong><br />
+        <c:forEach var="st" items="${pageContext.exception.stackTrace}">
+           ${st}
+        </c:forEach>
     </p>
 
 
