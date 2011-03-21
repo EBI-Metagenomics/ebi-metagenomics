@@ -21,6 +21,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.AnalysisStatsModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
+import uk.ac.ebi.interpro.metagenomics.memi.tools.MemiTools;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -67,8 +68,38 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
         }, model, sampleId);
     }
 
-    @RequestMapping(value = "/doExportResultTable/{fileName}", method = RequestMethod.GET)
-    public ModelAndView doExportResultFile(@PathVariable final String sampleId, @PathVariable final String fileName, ModelMap model, final HttpServletResponse response) {
+    @RequestMapping(value = "/doExportGOSlimFile/{fileName}", method = RequestMethod.GET)
+    public ModelAndView doExportGOSlimFile(@PathVariable final String sampleId, @PathVariable final String fileName, ModelMap model, final HttpServletResponse response) {
+        return handleExport(sampleId, model, response, "_summary.go_slim", "tsv");
+    }
+
+    @RequestMapping(value = "/doExportGOFile/{fileName}", method = RequestMethod.GET)
+    public ModelAndView doExportGOFile(@PathVariable final String sampleId, @PathVariable final String fileName, final ModelMap model, final HttpServletResponse response) {
+        return handleExport(sampleId, model, response, "_summary.go", "tsv");
+    }
+
+    @RequestMapping(value = "/doExportMaskedFASTAFile/{fileName}", method = RequestMethod.GET)
+    public ModelAndView doExportMaskedFASTAFile(@PathVariable final String sampleId, @PathVariable final String fileName, final ModelMap model, final HttpServletResponse response) {
+        return handleExport(sampleId, model, response, "_masked.fasta", "fasta");
+    }
+
+    @RequestMapping(value = "/doExportCDSFile/{fileName}", method = RequestMethod.GET)
+    public ModelAndView doExportCDSFile(@PathVariable final String sampleId, @PathVariable final String fileName, final ModelMap model, final HttpServletResponse response) {
+        return handleExport(sampleId, model, response, "_CDS.faa", "fasta");
+    }
+
+    @RequestMapping(value = "/doExportI5File/{fileName}", method = RequestMethod.GET)
+    public ModelAndView doExportI5File(@PathVariable final String sampleId, @PathVariable final String fileName, final ModelMap model, final HttpServletResponse response) {
+        return handleExport(sampleId, model, response, "_I5.tsv", "tsv");
+    }
+
+    @RequestMapping(value = "/doExportIPRFile/{fileName}", method = RequestMethod.GET)
+    public ModelAndView doExportIPRFile(@PathVariable final String sampleId, @PathVariable final String fileName, final ModelMap model, final HttpServletResponse response) {
+        return handleExport(sampleId, model, response, "_summary.ipr", "tsv");
+    }
+
+    private ModelAndView handleExport(final String sampleId, ModelMap model, final HttpServletResponse response,
+                                      final String fileNameSuffix, final String fileExtension) {
         log.info("Checking if sample is accessible...");
         return checkAccessAndBuildModel(new ModelProcessingStrategy<Sample>() {
             @Override
@@ -78,10 +109,10 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
                 EmgFile emgFile = ((AnalysisStatsModel) model.get(MGModel.MODEL_ATTR_NAME)).getEmgFile();
 
                 String directoryName = emgFile.getFileIDInUpperCase().replace('.', '_');
-                File file = new File(propertyContainer.getPathToAnalysisDirectory() + directoryName + '/' + directoryName + "_summary.go_slim");
+                File file = new File(propertyContainer.getPathToAnalysisDirectory() + directoryName + '/' + directoryName + fileNameSuffix);
 
                 if (downloadService != null) {
-                    downloadService.openDownloadDialog(response, file, emgFile.getFileName() + ".tsv", false);
+                    downloadService.openDownloadDialog(response, file, emgFile.getFileName() + '.' + fileExtension, false);
                 }
             }
         }, model, sampleId);
@@ -97,7 +128,9 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
         //TODO: For the moment the system only allows to represent one file on the analysis page, but
         //in the future it should be possible to represent all different data types (genomic, transcripomic)
         EmgFile emgFile = (emgFiles.size() > 0 ? emgFiles.get(0) : null);
-        final AnalysisStatsModel mgModel = MGModelFactory.getAnalysisStatsModel(sessionManager, sample, propertyContainer.getPathToAnalysisDirectory(), pageTitle, getBreadcrumbs(sample), emgFile);
+        final AnalysisStatsModel mgModel = MGModelFactory.
+                getAnalysisStatsModel(sessionManager, sample, propertyContainer.getPathToAnalysisDirectory(),
+                        pageTitle, getBreadcrumbs(sample), emgFile, MemiTools.getArchivedSeqs(fileInfoDAO, sample));
         model.addAttribute(MGModel.MODEL_ATTR_NAME, mgModel);
     }
 

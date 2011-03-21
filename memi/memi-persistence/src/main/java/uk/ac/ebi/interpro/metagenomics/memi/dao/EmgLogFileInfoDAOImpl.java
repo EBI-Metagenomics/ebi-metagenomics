@@ -78,4 +78,22 @@ public class EmgLogFileInfoDAOImpl implements EmgLogFileInfoDAO {
         }
         return result;
     }
+
+    public List<String> getSraIDs(String sampleId) {
+        log.info("Querying SRA IDs by sample ID: " + sampleId + " from table EMGLogFileInfo...");
+        List<String> result = new ArrayList<String>();
+        try {
+            List<Map<String, Object>> rows = this.jdbcTemplate.queryForList("select sra_run_ids from emg_log_file_info where sample_id=?", new String[]{sampleId});
+            for (Map row : rows) {
+                String rowResult = (String) row.get("SRA_RUN_IDS");
+                String[] chunks = rowResult.split(";");
+                for (String chunk : chunks) {
+                    result.add(chunk);
+                }
+            }
+        } catch (Exception e) {
+            log.warn("Could not query file IDs!", e);
+        }
+        return result;
+    }
 }

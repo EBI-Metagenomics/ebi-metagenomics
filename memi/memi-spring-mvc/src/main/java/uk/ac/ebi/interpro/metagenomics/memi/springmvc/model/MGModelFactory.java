@@ -92,7 +92,10 @@ public class MGModelFactory {
         return new SubmissionModel(getSessionSubmitter(sessionMgr), pageTitle, breadcrumbs);
     }
 
-    public static AnalysisStatsModel getAnalysisStatsModel(SessionManager sessionManager, Sample sample, String classPathToStatsFile, String pageTitle, List<Breadcrumb> breadcrumbs, EmgFile emgFile) {
+    public static AnalysisStatsModel getAnalysisStatsModel(SessionManager sessionManager, Sample sample,
+                                                           String classPathToStatsFile, String pageTitle,
+                                                           List<Breadcrumb> breadcrumbs, EmgFile emgFile,
+                                                           List<String> archivedSequences) {
         log.info("Building instance of " + AnalysisStatsModel.class + "...");
         Map<Class, List<AbstractGOTerm>> goData = loadGODataFromCSV(classPathToStatsFile, emgFile);
         return new AnalysisStatsModel(getSessionSubmitter(sessionManager), pageTitle, breadcrumbs, sample,
@@ -101,7 +104,7 @@ public class MGModelFactory {
                 getPieChartURL(CellularComponentGOTerm.class, goData),
                 getPieChartURL(MolecularFunctionGOTerm.class, goData),
                 null,
-                goData.get(BiologicalProcessGOTerm.class), emgFile);
+                goData.get(BiologicalProcessGOTerm.class), emgFile, archivedSequences);
     }
 
     public static StudyViewModel getStudyViewModel(SessionManager sessionManager, Study study, List<Sample> samples, String pageTitle, List<Breadcrumb> breadcrumbs) {
@@ -497,10 +500,9 @@ public class MGModelFactory {
             Properties props = new Properties();
             props.put(GoogleChartFactory.CHART_TYPE, "bhs");
             props.put(GoogleChartFactory.CHART_SIZE, "450x200");
-            props.put(GoogleChartFactory.CHART_AXES, "x,y");
-            props.put(GoogleChartFactory.CHART_AXES_LABELS, "1:|0%|25%|50%|75%|100%|");
-            props.put(GoogleChartFactory.CHART_LEGEND_TEXT, "total number of reads|reads with at least 1 pCDS|reads with at least 1 InterPro match");
-            props.put(GoogleChartFactory.CHART_COLOUR, "FF0000|00FF00|0000FF");
+            props.put(GoogleChartFactory.CHART_AXES, "y");
+            props.put(GoogleChartFactory.CHART_LEGEND_TEXT, "total number of submitted reads|total number of processed reads|reads with at least 1 pCDS|reads with at least 1 InterPro match");
+            props.put(GoogleChartFactory.CHART_COLOUR, "FF0000|00FF00|0000FF|FFFF10");
             props.put(GoogleChartFactory.CHART_MARKER, "N,000000,0,-1,11");
             props.put(GoogleChartFactory.CHART_DATA_SCALE, "0," + chartData.get(0));
             return GoogleChartFactory.buildChartURL(props, chartData);
@@ -528,11 +530,13 @@ public class MGModelFactory {
             }
             if (rows != null) {
                 float numSubmittedSeqs = getValueOfRow(rows, 0);
+                float numSeqsOfProcessedSeqs = getValueOfRow(rows, 3);
                 float numSeqsWithPredicatedCDS = getValueOfRow(rows, 4);
                 float numSeqsWithInterProScanMatch = getValueOfRow(rows, 5);
 //                float firstBarValue = numSeqsWithPredicatedCDS / numSubmittedSeqs;
 //                float secondBarValue = numSeqsWithInterProScanMatch / numSubmittedSeqs;
                 result.add(numSubmittedSeqs);
+                result.add(numSeqsOfProcessedSeqs);
                 result.add(numSeqsWithPredicatedCDS);
                 result.add(numSeqsWithInterProScanMatch);
             }
