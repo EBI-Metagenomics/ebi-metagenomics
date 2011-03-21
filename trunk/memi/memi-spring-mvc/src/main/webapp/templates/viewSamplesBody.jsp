@@ -7,7 +7,7 @@
 
      <div class="center">
      <div id="filter">
-        <form:form method="GET" action="${baseURL}/samples/doSearch" commandName="sampleFilter">
+        <form:form method="GET" action="${pageContext.request.contextPath}/samples/doSearch" commandName="sampleFilter">
         <fieldset>
         <label for="text">Text:</label>
         <form:input path="searchTerm"/><br/><form:errors path="searchTerm" cssClass="error"/><br/>
@@ -70,7 +70,7 @@
                         <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>">${sample.sampleTitle}</a>
                         </td>
                         <td style="text-align:left;">${sample.study.studyName}</td>
-                        <td>${sample.sampleTypeAString}</td>
+                        <td>${sample.sampleTypeAsString}</td>
                         <td>
                             <c:choose>
                                 <c:when test="${empty sample.analysisCompleted}"><img src="${pageContext.request.contextPath}/img/ico_IN_PROGRESS_25_8.png" alt="Analysis in progress" title="Analysis in progress"></c:when>

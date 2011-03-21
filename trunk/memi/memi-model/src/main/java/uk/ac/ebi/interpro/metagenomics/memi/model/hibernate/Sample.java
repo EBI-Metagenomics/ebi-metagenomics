@@ -247,7 +247,7 @@ public abstract class Sample implements SecureEntity {
     public abstract SampleType getSampleType();
 
     @Transient
-    public String getSampleTypeAString() {
+    public String getSampleTypeAsString() {
         return getSampleType().toString();
     }
 

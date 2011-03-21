@@ -15,7 +15,7 @@
                     <c:set var="actionUrlParam" value=""/>
                 </c:otherwise>
             </c:choose>
-            <form:form method="GET" action="${baseURL}/studies/doSearch" commandName="studyFilter">
+            <form:form method="GET" action="${pageContext.request.contextPath}/studies/doSearch" commandName="studyFilter">
                <fieldset>
                <label for="text">Text:</label>
                <form:input id="autocomplete" path="searchTerm"/><br/><form:errors path="searchTerm" cssClass="error"/><br/>
