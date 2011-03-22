@@ -1,8 +1,6 @@
-/* reset.css
-html,body,div,span,applet,object,iframe,,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary,time, mark, audio, video{margin:0;padding:0;border:0;outline:0;font-size:100%;background:transparent;font: inherit; vertical-align: baseline;}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outline:3px solid #0092bf; }ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
- */
 /* reset.css  */
-h1, h3, p,ol,ul,li, form, fieldset {margin:0;padding:0;border:0;outline:0;font-size:100%;background:transparent;font: inherit; vertical-align: baseline;}
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary,time, mark, audio, video{margin:0;padding:0;border:0;outline:0;font-size:100%;background:transparent;font: inherit; vertical-align: baseline;}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outline:3px solid #0092bf; }ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+/* END reset.css  */
 
 html, body {height: 100%;}
 
@@ -37,7 +35,10 @@ font-weight: normal;
 font-style: normal;
 }
 
-p { display: block;margin: 1em 0px;}
+p { display: block;margin: 1em 0px; clear:none;}
+
+strong {font-weight:bold;}
+small {font-size:80%;}
 
 ul, ol {
 display: block;
@@ -50,8 +51,6 @@ margin:20px;
 }
 
 ul li ul { margin:10px;}
-
-
 
 #sidebar ul {
 display: block;
@@ -95,8 +94,8 @@ border:0px #dddddd solid;
 #extra_beta {
 background: transparent url(../img/ico_beta_8.png) no-repeat left bottom;
 position: absolute;
-left:40%;
-top:0;
+right:50%;
+top:78px;  /* was 36px - temporarly changed becasue of the BETA */
 width: 60px;
 height:  62px;
 z-index:90;
@@ -111,7 +110,7 @@ background: transparent url(../img/button_feedback_off.gif) no-repeat -2px;
 position: fixed;
 _position: absolute;  /* position fixed is not recognise on IE6 */
 left: 0;
-top:50px;
+top:100px;  /* was 50px - temporarly changed becasue of the BETA */
 width: 35px;
 height:  102px;
 z-index:100;
@@ -128,7 +127,8 @@ background: transparent url(../img/button_feedback_active.gif) no-repeat ;
 
 .feedback_form  {
 background: transparent url(../img/button_feedback_oriz.gif) no-repeat ;
-border:0px solid #E5E5E5; width:102px; height:35px; margin-left:7px; ;    
+border:0px solid #E5E5E5; width:102px; height:35px;
+margin-left:7px;    
 }
 
 #extraDiv1 {
@@ -305,6 +305,8 @@ border: 1px solid #ccc;
 }
 
 
+#sidebar-news { color:#3e3e3e;}
+
 #sidebar-news a.twitter {
 display:block;
 height:30px;
@@ -314,7 +316,6 @@ padding-left:40px;
 }
 
 #sidebar-news a.twitter:hover{color: #006af6;}
-
 
 
 div.but_top {
@@ -347,13 +348,15 @@ background:url(../img/bgd_black_op20_8.png);
 
 /* TABLE */
 table {
-border-collapse: collapse;
+border-collapse:collapse;
+border-spacing:2px;
 border: solid 1px #eaeaea;
 font-size:100%;
 width:100%;/* bug 100% with IE*/
+vertical-align: top;
 }
 
-table td {padding: 4px;}
+table td {padding: 4px; vertical-align: middle;}
 
 table th {
 padding: 4px;
@@ -364,7 +367,11 @@ background: url(../img/bgd_main_grey.jpg) #b5b5b5;
 }
 
 #contact  {
-border: solid 1px #eaeaea; 
+border: solid 1px #eaeaea;
+-moz-border-radius:4px;
+-khtml-border-radius:4px;
+-webkit-border-radius:4px;
+border-radius:4px;
 width:600px;
 }
 
@@ -686,13 +693,10 @@ border-radius: 14px;
 -webkit-border-radius: 14px;
 }
 
-#sidebar-news a, #footer a{
-color:#3e3e3e;
-}
-#sidebar-news a:hover,#footer a:hover {
-color:#222222 ;
-text-decoration:underline;
-}
+
+
+#footer a{color:#3e3e3e;}
+#footer a:hover {color:#222222; text-decoration:underline;}
 
 /*a.rss {*/
     /*padding-left: 22px;*/
@@ -908,9 +912,9 @@ background: url(../img/icon_csv_plus.gif) no-repeat right top;
 /* END EXPORT OPTIONS */
 
 #breadcrumbs {
-display:block;border:0px red solid;  height:24px; background: url(../img/bgd_white_op45_8.png);z-index:50;
+display:block;border:0px red solid;  height:24px; background: url(../img/bgd_white_op45_8.png);
 position:relative; /*to make z-index work */
-
+z-index:50;
 }
 
 #breadcrumbs .ebi_breadcrumbs li   {font-size:100%; background-color:transparent; } /*overwrite EBI style */
@@ -982,3 +986,5 @@ clear:both;
 }
 
 #ordered {font-weight: bold;}
+
+.ebi_contents {position:absolute;top:55px;margin:0;padding:0;width:100%;z-index:2;}/*added because of the EBI header */
