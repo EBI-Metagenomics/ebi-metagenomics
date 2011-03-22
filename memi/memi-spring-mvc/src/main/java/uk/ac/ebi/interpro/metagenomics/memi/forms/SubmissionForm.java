@@ -24,20 +24,20 @@ public class SubmissionForm {
     /**
      * Submission title
      */
-    @NotEmpty
+    @NotEmpty(message = "{form.field.notEmpty}")
     private String subTitle;
 
     /**
      * Hold project private until date
      */
     @Temporal(TemporalType.DATE)
-    @Future
+    @Future(message = "{form.field.future}")
     private Date releaseDate;
 
     /**
      * Data description
      */
-    @NotEmpty
+    @NotEmpty(message = "{form.field.notEmpty}")
     private String dataDesc;
 
     public SubmissionForm() {
