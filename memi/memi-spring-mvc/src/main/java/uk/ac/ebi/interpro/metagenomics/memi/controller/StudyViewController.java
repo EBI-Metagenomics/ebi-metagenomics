@@ -97,7 +97,8 @@ public class StudyViewController extends SecuredAbstractController<Study> {
     private void populateModel(ModelMap model, final Study study) {
         List<Sample> samples = sampleDAO.retrieveSamplesByStudyId(study.getId());
         String pageTitle = study.getStudyName() + " project";
-        final StudyViewModel studyModel = MGModelFactory.getStudyViewModel(sessionManager, study, samples, pageTitle, getBreadcrumbs(study));
+        final StudyViewModel studyModel = MGModelFactory.getStudyViewModel(sessionManager, study, samples,
+                pageTitle, getBreadcrumbs(study), propertyContainer);
         model.addAttribute(StudyViewModel.MODEL_ATTR_NAME, studyModel);
     }
 

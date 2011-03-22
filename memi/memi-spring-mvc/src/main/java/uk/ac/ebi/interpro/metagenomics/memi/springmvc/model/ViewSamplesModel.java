@@ -1,5 +1,6 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
 
+import uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.SampleFilter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
@@ -26,12 +27,14 @@ public class ViewSamplesModel extends MGModel {
     private List<Sample.SampleType> sampleTypes;
 
 
-    ViewSamplesModel(Submitter submitter, List<Sample> samples, String pageTitle, List<Breadcrumb> breadcrumbs) {
-        this(submitter, samples, new SampleFilter(), pageTitle, breadcrumbs);
+    ViewSamplesModel(Submitter submitter, List<Sample> samples, String pageTitle, List<Breadcrumb> breadcrumbs,
+                     MemiPropertyContainer propertyContainer) {
+        this(submitter, samples, new SampleFilter(), pageTitle, breadcrumbs, propertyContainer);
     }
 
-    ViewSamplesModel(Submitter submitter, List<Sample> samples, SampleFilter filter, String pageTitle, List<Breadcrumb> breadcrumbs) {
-        super(submitter, pageTitle, breadcrumbs);
+    ViewSamplesModel(Submitter submitter, List<Sample> samples, SampleFilter filter, String pageTitle,
+                     List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer) {
+        super(submitter, pageTitle, breadcrumbs, propertyContainer);
         this.sampleFilter = filter;
         this.samples = samples;
         this.sampleVisibilityList = getDefaultStudyVisibilityList();

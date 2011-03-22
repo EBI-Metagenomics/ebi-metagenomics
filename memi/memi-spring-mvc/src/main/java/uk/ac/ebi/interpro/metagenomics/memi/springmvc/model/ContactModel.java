@@ -1,5 +1,6 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
 
+import uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.ContactForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
 
@@ -15,8 +16,9 @@ public class ContactModel extends MGModel {
 
     private ContactForm contactForm;
 
-    ContactModel(Submitter submitter, String pageTitle, List<Breadcrumb> breadcrumbs) {
-        super(submitter, pageTitle, breadcrumbs);
+    ContactModel(Submitter submitter, String pageTitle, List<Breadcrumb> breadcrumbs,
+                 MemiPropertyContainer propertyContainer) {
+        super(submitter, pageTitle, breadcrumbs, propertyContainer);
         this.contactForm = new ContactForm();
     }
 

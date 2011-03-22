@@ -1,5 +1,6 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
 
+import uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.HostSample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Publication;
@@ -27,8 +28,9 @@ public class SampleViewModel extends MGModel {
      */
     private final boolean isHostAssociated;
 
-    SampleViewModel(Submitter submitter, Sample sample, List<String> archivedSequences, String pageTitle, List<Breadcrumb> breadcrumbs) {
-        super(submitter, pageTitle, breadcrumbs);
+    SampleViewModel(Submitter submitter, Sample sample, List<String> archivedSequences, String pageTitle,
+                    List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer) {
+        super(submitter, pageTitle, breadcrumbs, propertyContainer);
         this.sample = sample;
         this.archivedSequences = archivedSequences;
         this.pubs = initialisePubs();

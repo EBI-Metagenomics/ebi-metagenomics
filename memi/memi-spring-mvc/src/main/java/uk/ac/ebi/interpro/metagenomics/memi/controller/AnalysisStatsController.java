@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.EmgLogFileInfoDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateSampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.ISampleStudyDAO;
@@ -52,9 +51,6 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
 
     @Resource
     private MemiDownloadService downloadService;
-
-    @Resource
-    private MemiPropertyContainer propertyContainer;
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView doGetSample(final ModelMap model, @PathVariable final String sampleId) {
@@ -129,8 +125,8 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
         //in the future it should be possible to represent all different data types (genomic, transcripomic)
         EmgFile emgFile = (emgFiles.size() > 0 ? emgFiles.get(0) : null);
         final AnalysisStatsModel mgModel = MGModelFactory.
-                getAnalysisStatsModel(sessionManager, sample, propertyContainer.getPathToAnalysisDirectory(),
-                        pageTitle, getBreadcrumbs(sample), emgFile, MemiTools.getArchivedSeqs(fileInfoDAO, sample));
+                getAnalysisStatsModel(sessionManager, sample, pageTitle, getBreadcrumbs(sample), emgFile,
+                        MemiTools.getArchivedSeqs(fileInfoDAO, sample), propertyContainer);
         model.addAttribute(MGModel.MODEL_ATTR_NAME, mgModel);
     }
 

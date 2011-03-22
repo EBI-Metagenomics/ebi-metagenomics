@@ -38,7 +38,7 @@ import java.util.*;
  */
 @Controller
 @RequestMapping('/' + SubmissionController.VIEW_NAME)
-public class SubmissionController extends AbstractController implements IMGController {
+public class SubmissionController extends CheckLoginController implements IMGController {
 
     private final static Log log = LogFactory.getLog(SubmissionController.class);
 
@@ -57,41 +57,45 @@ public class SubmissionController extends AbstractController implements IMGContr
 
     @Override
     public ModelAndView doGet(ModelMap model) {
-        //build and add the page model
-        populateModel(model);
-        model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((SubmissionModel) model.get(MGModel.MODEL_ATTR_NAME)).getLoginForm());
-        model.addAttribute(SubmissionForm.MODEL_ATTR_NAME, ((SubmissionModel) model.get(MGModel.MODEL_ATTR_NAME)).getSubForm());
-        return new ModelAndView(VIEW_NAME, model);
+        if (isUserAssociatedToSession()) {
+            //build and add the page model
+            populateModel(model);
+            model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((SubmissionModel) model.get(MGModel.MODEL_ATTR_NAME)).getLoginForm());
+            model.addAttribute(SubmissionForm.MODEL_ATTR_NAME, ((SubmissionModel) model.get(MGModel.MODEL_ATTR_NAME)).getSubForm());
+            return new ModelAndView(VIEW_NAME, model);
+        } else {
+            return new ModelAndView("redirect:" + LoginPageController.VIEW_NAME);
+        }
     }
 
     @RequestMapping(params = "submit", method = RequestMethod.POST)
     public ModelAndView doPost(@ModelAttribute("subForm") @Valid SubmissionForm subForm, BindingResult result,
                                ModelMap model, SessionStatus status) {
-        populateModel(model);
-        if (subForm != null && !validateReleaseDate(subForm.getReleaseDate())) {
-            result.addError(new FieldError("subForm", "releaseDate", "Data cannot be held private for more than 2 years"));
-        }
-        if (result.hasErrors()) {
-            log.info("Submission form still has validation errors!");
-            model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((SubmissionModel) model.get(MGModel.MODEL_ATTR_NAME)).getLoginForm());
-            return new ModelAndView(VIEW_NAME, model);
-        }
-        if (subForm != null) {
-            String msg = buildMsg(subForm);
-            if (sessionManager != null && sessionManager.getSessionBean() != null && sessionManager.getSessionBean().getSubmitter() != null) {
+        if (isUserAssociatedToSession()) {
+            populateModel(model);
+            if (subForm != null && !validateReleaseDate(subForm.getReleaseDate())) {
+                result.addError(new FieldError("subForm", "releaseDate", "Data cannot be held private for more than 2 years"));
+            }
+            if (result.hasErrors()) {
+                log.info("Submission form still has validation errors!");
+                model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((SubmissionModel) model.get(MGModel.MODEL_ATTR_NAME)).getLoginForm());
+                return new ModelAndView(VIEW_NAME, model);
+            }
+            if (subForm != null) {
+                String msg = buildMsg(subForm);
                 String sender = sessionManager.getSessionBean().getSubmitter().getEmailAddress();
-                ((EmailNotificationService)emailService).setSender(sender);
+                ((EmailNotificationService) emailService).setSender(sender);
+                ((EmailNotificationService) emailService).setEmailSubject("EMG-SUB: " + subForm.getSubTitle());
+                emailService.sendNotification(msg);
+                log.info("Sent an email with hibernate submission details: " + msg);
+                status.setComplete();
             } else {
                 return new ModelAndView(CommonController.ERROR_PAGE_VIEW_NAME);
             }
-            ((EmailNotificationService)emailService).setEmailSubject("EMG-SUB: " + subForm.getSubTitle());
-            emailService.sendNotification(msg);
-            log.info("Sent an email with hibernate submission details: " + msg);
-            status.setComplete();
+            return new ModelAndView(SUCCESS_VIEW_NAME);
         } else {
-            return new ModelAndView(CommonController.ERROR_PAGE_VIEW_NAME);
+            return new ModelAndView("redirect:" + LoginPageController.VIEW_NAME);
         }
-        return new ModelAndView(SUCCESS_VIEW_NAME);
     }
 
     @RequestMapping(params = "cancel", method = RequestMethod.POST)
@@ -104,7 +108,8 @@ public class SubmissionController extends AbstractController implements IMGContr
      * Creates the MG model and adds it to the specified model map.
      */
     private void populateModel(ModelMap model) {
-        final SubmissionModel subModel = MGModelFactory.getSubmissionModel(sessionManager,  "Metagenomics Submit", getBreadcrumbs(null));
+        final SubmissionModel subModel = MGModelFactory.getSubmissionModel(sessionManager,
+                "Metagenomics Submit", getBreadcrumbs(null), propertyContainer);
         model.addAttribute(MGModel.MODEL_ATTR_NAME, subModel);
     }
 
@@ -144,6 +149,7 @@ public class SubmissionController extends AbstractController implements IMGContr
 
     /**
      * Check that the release date entered is not more than 2 years from the current time.
+     *
      * @param releaseDate String in format "MM/dd/yyy"
      * @return False if validation failed, otherwise true
      */

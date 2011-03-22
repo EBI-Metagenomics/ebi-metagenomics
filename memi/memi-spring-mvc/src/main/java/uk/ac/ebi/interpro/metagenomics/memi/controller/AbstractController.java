@@ -1,5 +1,6 @@
 package uk.ac.ebi.interpro.metagenomics.memi.controller;
 
+import uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
@@ -17,6 +18,9 @@ import java.util.List;
 public abstract class AbstractController {
     @Resource
     protected SessionManager sessionManager;
+
+    @Resource
+    protected MemiPropertyContainer propertyContainer;
 
     protected abstract String getModelViewName();
 

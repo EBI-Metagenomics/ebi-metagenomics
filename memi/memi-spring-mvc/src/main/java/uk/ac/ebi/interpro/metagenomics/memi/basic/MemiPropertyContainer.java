@@ -11,7 +11,11 @@ package uk.ac.ebi.interpro.metagenomics.memi.basic;
  */
 public class MemiPropertyContainer {
 
-    public String pathToAnalysisDirectory;
+    private String pathToAnalysisDirectory;
+
+    private String enaRedirectURL;
+
+    private String enaSubmissionURL;
 
     MemiPropertyContainer() {
     }
@@ -22,5 +26,21 @@ public class MemiPropertyContainer {
 
     public void setPathToAnalysisDirectory(String pathToAnalysisDirectory) {
         this.pathToAnalysisDirectory = pathToAnalysisDirectory;
+    }
+
+    public String getEnaRedirectURL() {
+        return enaRedirectURL;
+    }
+
+    public void setEnaRedirectURL(String enaRedirectURL) {
+        this.enaRedirectURL = enaRedirectURL;
+    }
+
+    public String getEnaSubmissionURL() {
+        return enaSubmissionURL;
+    }
+
+    public void setEnaSubmissionURL(String enaSubmissionURL) {
+        this.enaSubmissionURL = enaSubmissionURL;
     }
 }

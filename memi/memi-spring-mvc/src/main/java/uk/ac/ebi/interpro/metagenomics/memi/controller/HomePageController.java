@@ -86,7 +86,8 @@ public class HomePageController extends LoginController implements IMGController
      */
     private void populateModel(ModelMap model) {
         log.info("Building model of " + HomePageController.class + "...");
-        final HomePageModel hpModel = MGModelFactory.getHomePageModel(sessionManager, studyDAO, sampleDAO, rssClient, "Metagenomics Home", getBreadcrumbs(null));
+        final HomePageModel hpModel = MGModelFactory.getHomePageModel(sessionManager, studyDAO, sampleDAO,
+                rssClient, "Metagenomics Home", getBreadcrumbs(null), propertyContainer);
         model.addAttribute(MGModel.MODEL_ATTR_NAME, hpModel);
     }
 

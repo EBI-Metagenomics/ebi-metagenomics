@@ -1,5 +1,6 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
 
+import uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgFile;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
@@ -49,8 +50,8 @@ public class AnalysisStatsModel extends MGModel {
                        String barChartURL, String pieChartBiologicalProcessURL,
                        String pieChartCellularComponentURL, String pieChartMolecularFunctionURL,
                        String pieChartInterProMatchURL, List<AbstractGOTerm> bioGOTerms, EmgFile emgFile,
-                       List<String> archivedSequences) {
-        super(submitter, pageTitle, breadcrumbs);
+                       List<String> archivedSequences, MemiPropertyContainer propertyContainer) {
+        super(submitter, pageTitle, breadcrumbs, propertyContainer);
         this.sample = sample;
         this.barChartURL = barChartURL;
         this.pieChartBiologicalProcessURL = pieChartBiologicalProcessURL;
