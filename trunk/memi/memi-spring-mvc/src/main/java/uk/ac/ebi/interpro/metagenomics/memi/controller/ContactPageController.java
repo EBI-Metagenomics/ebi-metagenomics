@@ -74,6 +74,7 @@ public class ContactPageController extends AbstractController implements IMGCont
             String msg = buildMsg(contactForm);
             ((EmailNotificationService) emailService).setSender(contactForm.getSender());
             ((EmailNotificationService) emailService).setEmailSubject("[beta-feedback] " + contactForm.getEmailSubject());
+            ((EmailNotificationService) emailService).setReceiverCC(contactForm.getSender());
             emailService.sendNotification(msg);
             log.info("Sent an email with contact details: " + msg);
             status.setComplete();
