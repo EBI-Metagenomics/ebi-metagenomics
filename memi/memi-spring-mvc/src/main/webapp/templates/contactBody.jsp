@@ -15,15 +15,15 @@
         <div class="feedback_form"> </div>
         <table class="result" id="contact">
             <tr>
-                <td>Your email address <small>*</small>: <form:input path="sender"/></td>
+                <td>Your email address <small>*</small> : <form:input path="sender"  cssStyle="width:284px;"/></td>
             </tr>
             <tr><td ><form:errors cssClass="error" path="sender"/></td></tr>
             <tr>
-                <td>Feedback subject <small>*</small>: <form:input path="emailSubject" cssStyle="margin-left:14px;"/></td>
+                <td>Feedback subject <small>*</small> : <form:input path="emailSubject" cssStyle="margin-left:14px; width:284px;"/></td>
             </tr>
              <tr><td ><form:errors cssClass="error" path="emailSubject"/></td></tr>
             <tr>
-                <td>Your comments <small>*</small>:<br/><form:textarea path="message" cols="50" rows="10"/></td>
+                <td>Your comments <small>*</small> :<br/><form:textarea path="message" cols="50" rows="10"/></td>
             </tr>
              <tr ><td><form:errors cssClass="error" path="message"/></td></tr>
             <tr>
