@@ -305,18 +305,16 @@ border: 1px solid #ccc;
 }
 
 
-#sidebar-news { color:#3e3e3e;}
+#sidebar-news { color:#3e3e3e;
+padding:14px 0; /* to remove when more news*/
+}
 
 #sidebar-news a.twitter {
 display:block;
 height:30px;
-color:#00b4ff;
 background: url(../img/icon_twitter.gif) no-repeat  left top;
 padding-left:40px;
 }
-
-#sidebar-news a.twitter:hover{color: #006af6;}
-
 
 div.but_top {
 border:0px green solid;
