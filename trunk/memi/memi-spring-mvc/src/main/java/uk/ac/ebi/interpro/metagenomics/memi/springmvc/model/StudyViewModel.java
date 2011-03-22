@@ -1,5 +1,6 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
 
+import uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgSample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgStudy;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
@@ -19,8 +20,9 @@ public class StudyViewModel extends MGModel {
 
     private Study study;
 
-    StudyViewModel(Submitter submitter, Study study, List<Sample> samples, String pageTitle, List<Breadcrumb> breadcrumbs) {
-        super(submitter, pageTitle, breadcrumbs);
+    StudyViewModel(Submitter submitter, Study study, List<Sample> samples, String pageTitle,
+                   List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer) {
+        super(submitter, pageTitle, breadcrumbs, propertyContainer);
         this.samples = samples;
         this.study = study;
     }

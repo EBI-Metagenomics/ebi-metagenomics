@@ -191,7 +191,8 @@ public class ViewSamplesController extends AbstractController implements IMGCont
      * Creates the MG model and adds it to the specified model map.
      */
     private void populateModel(ModelMap model, SampleFilter filter) {
-        final ViewSamplesModel subModel = MGModelFactory.getViewSamplesPageModel(sessionManager, sampleDAO, filter, "Metagenomics View Samples", getBreadcrumbs(null));
+        final ViewSamplesModel subModel = MGModelFactory.getViewSamplesPageModel(sessionManager,
+                sampleDAO, filter, "Metagenomics View Samples", getBreadcrumbs(null), propertyContainer);
         model.addAttribute(MGModel.MODEL_ATTR_NAME, subModel);
     }
 

@@ -116,8 +116,8 @@ public class ViewStudiesController extends AbstractController implements IMGCont
      */
     @RequestMapping(value = "doExportDetails", method = RequestMethod.GET)
     public ModelAndView doExportDetailsStudies(@ModelAttribute(StudyFilter.MODEL_ATTR_NAME) StudyFilter filter, HttpServletResponse response,
-                                        @RequestParam(required = false) final String searchTerm, @RequestParam(required = false) final StudyFilter.StudyVisibility studyVisibility,
-                                        @RequestParam(required = false) final Study.StudyStatus studyStatus) {
+                                               @RequestParam(required = false) final String searchTerm, @RequestParam(required = false) final StudyFilter.StudyVisibility studyVisibility,
+                                               @RequestParam(required = false) final Study.StudyStatus studyStatus) {
         log.info("Requesting exportStudies (GET method)...");
         ModelMap model = new ModelMap();
         processRequestParams(filter, searchTerm, studyVisibility, studyStatus);
@@ -251,7 +251,8 @@ public class ViewStudiesController extends AbstractController implements IMGCont
      * Creates the MG model and adds it to the specified model map.
      */
     private void populateModel(ModelMap model, StudyFilter filter) {
-        final ViewStudiesModel subModel = MGModelFactory.getViewStudiesPageModel(sessionManager, studyDAO, sampleDAO, filter, "Metagenomics View Projects", getBreadcrumbs(null));
+        final ViewStudiesModel subModel = MGModelFactory.getViewStudiesPageModel(sessionManager, studyDAO,
+                sampleDAO, filter, "Metagenomics View Projects", getBreadcrumbs(null), propertyContainer);
         model.addAttribute(MGModel.MODEL_ATTR_NAME, subModel);
     }
 

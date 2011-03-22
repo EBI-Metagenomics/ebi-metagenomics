@@ -1,5 +1,6 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
 
+import uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.StudyFilter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
@@ -26,12 +27,14 @@ public class ViewStudiesModel extends MGModel {
     private List<StudyFilter.StudyVisibility> studyVisibilityList;
 
 
-    ViewStudiesModel(Submitter submitter, SortedMap<Study, Long> studySampleSizeMap, String pageTitle, List<Breadcrumb> breadcrumbs) {
-        this(submitter, studySampleSizeMap, new StudyFilter(), pageTitle, breadcrumbs);
+    ViewStudiesModel(Submitter submitter, SortedMap<Study, Long> studySampleSizeMap, String pageTitle,
+                     List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer) {
+        this(submitter, studySampleSizeMap, new StudyFilter(), pageTitle, breadcrumbs, propertyContainer);
     }
 
-    ViewStudiesModel(Submitter submitter, SortedMap<Study, Long> studySampleSizeMap, StudyFilter filter, String pageTitle, List<Breadcrumb> breadcrumbs) {
-        super(submitter,pageTitle, breadcrumbs);
+    ViewStudiesModel(Submitter submitter, SortedMap<Study, Long> studySampleSizeMap, StudyFilter filter,
+                     String pageTitle, List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer) {
+        super(submitter, pageTitle, breadcrumbs, propertyContainer);
         this.studyFilter = filter;
         this.studyStatusList = getDefaultStudyStatus();
         this.studyVisibilityList = getDefaultStudyVisibilityList();

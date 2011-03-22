@@ -16,7 +16,10 @@ import uk.ac.ebi.interpro.metagenomics.memi.forms.ContactForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.services.EmailNotificationService;
 import uk.ac.ebi.interpro.metagenomics.memi.services.INotificationService;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.*;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ContactModel;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModel;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -47,7 +50,7 @@ public class ContactPageController extends AbstractController implements IMGCont
     @Resource(name = "emailNotificationServiceContact")
     private INotificationService emailService;
 
-    @Resource(name = "velocityEngine")
+    @Resource
     private VelocityEngine velocityEngine;
 
 
@@ -87,10 +90,12 @@ public class ContactPageController extends AbstractController implements IMGCont
 
     /**
      * Creates the home page model and adds it to the specified model map.
+     *
      * @param model The model map to populate
      */
     private void populateModel(ModelMap model) {
-        final ContactModel contactModel = MGModelFactory.getContactModel(sessionManager, "Metagenomics Contact", getBreadcrumbs(null));
+        final ContactModel contactModel = MGModelFactory.getContactModel(sessionManager,
+                "Metagenomics Contact", getBreadcrumbs(null), propertyContainer);
         model.addAttribute(MGModel.MODEL_ATTR_NAME, contactModel);
     }
 

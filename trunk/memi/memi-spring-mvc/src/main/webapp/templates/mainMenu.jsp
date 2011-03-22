@@ -3,14 +3,9 @@
     <div class="top-menu">
         <ul>
             <li class="grey"><a href="<c:url value="${baseURL}/"/>" title="Home">Home</a></li>
-            <li class="pink"><c:choose>
-                <c:when test="${empty model.submitter}">
-                    <a href="<c:url value="${baseURL}/login"/>" class="more_desc" title="Submit data">Submit data</a>
-                </c:when>
-                <c:otherwise>
-                    <a href="<c:url value="${baseURL}/submit"/>" class="more_desc" title="Submit data">Submit data</a>
-                </c:otherwise>
-            </c:choose></li>
+            <li class="pink">
+                <a href="<c:url value="${baseURL}/submit"/>" class="more_desc" title="Submit data">Submit data</a>
+            </li>
             <li class="blue">
                 <c:choose>
                     <c:when test="${empty model.submitter}">
@@ -44,16 +39,17 @@
         </ul>
     </div>
     <div class="top-login">
-        <c:url var="editPrefsUrl"
-               value="http://jweb-1a.ebi.ac.uk:21040/embl/genomes/submission/external-update-link.jsf">
-            <c:param name="url" value="http://localhost:8082/metagenomics/"/>
-        </c:url>
         <c:choose>
             <c:when test="${empty model.submitter}">
                 <span id="login"> Not logged in | <a href="<c:url value="${baseURL}/"/>" title="Login">login</a></span>
             </c:when>
             <c:otherwise>
                 <c:out value="${model.submitter.firstName} ${model.submitter.surname}"/>
+                <c:url var="editPrefsUrl"
+                       value="${model.propertyContainer.enaSubmissionURL}/external-update-link.jsf">
+                    <c:param name="url"
+                             value="${model.propertyContainer.enaRedirectURL}${pageContext.request.contextPath}"/>
+                </c:url>
                 (<a href="<c:out value="${editPrefsUrl}"/>" title="Edit preferences">edit</a>)
                 <span id="logout">
                     <a href="<c:url value="${baseURL}/logout"/>" title="logout"> | logout</a>

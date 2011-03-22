@@ -7,6 +7,7 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
+import uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateSampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateStudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.feed.RomeClient;
@@ -41,7 +42,10 @@ public class MGModelFactory {
 
     }
 
-    public static HomePageModel getHomePageModel(SessionManager sessionMgr, HibernateStudyDAO studyDAO, HibernateSampleDAO sampleDAO, RomeClient romeClient, String pageTitle, List<Breadcrumb> breadcrumbs) {
+    public static HomePageModel getHomePageModel(SessionManager sessionMgr, HibernateStudyDAO studyDAO,
+                                                 HibernateSampleDAO sampleDAO, RomeClient romeClient,
+                                                 String pageTitle, List<Breadcrumb> breadcrumbs,
+                                                 MemiPropertyContainer propertyContainer) {
         log.info("Building instance of " + HomePageModel.class + "...");
         Submitter submitter = getSessionSubmitter(sessionMgr);
         // Get RSS URL
@@ -65,7 +69,8 @@ public class MGModelFactory {
             List<Study> studies = getOrderedPublicStudies(studyDAO);
             SortedMap<Study, Long> publicStudiesMap = getStudySampleSizeMap(studies, sampleDAO);
 //            TODO: Check the order of the studies (should be solved in Java not with Hibernate)
-            return new HomePageModel(submitter, publicStudiesMap, getOrderedPublicSamples(sampleDAO), rssUrl, rssEntries, pageTitle, breadcrumbs);
+            return new HomePageModel(submitter, publicStudiesMap, getOrderedPublicSamples(sampleDAO),
+                    rssUrl, rssEntries, pageTitle, breadcrumbs, propertyContainer);
         } else {
             List<Study> myStudies = getOrderedStudiesBySubmitter(submitter.getSubmitterId(), studyDAO);
             SortedMap<Study, Long> myStudiesMap = getStudySampleSizeMap(myStudies, sampleDAO);
@@ -73,67 +78,86 @@ public class MGModelFactory {
             List<Study> publicStudies = getOrderedPublicStudiesWithoutSubId(submitter.getSubmitterId(), studyDAO);
             SortedMap<Study, Long> publicStudiesMap = getStudySampleSizeMap(publicStudies, sampleDAO);
             List<Sample> publicSamples = getOrderedPublicSamplesWithoutSubId(submitter.getSubmitterId(), sampleDAO);
-            return new HomePageModel(submitter, publicStudiesMap, publicSamples, rssUrl, rssEntries, myStudiesMap, mySamples, pageTitle, breadcrumbs);
+            return new HomePageModel(submitter, publicStudiesMap, publicSamples, rssUrl, rssEntries,
+                    myStudiesMap, mySamples, pageTitle, breadcrumbs, propertyContainer);
         }
     }
 
     public static MGModel getMGModel(SessionManager sessionMgr) {
-        return getMGModel(sessionMgr, "EBI Metagenomics Portal", new ArrayList<Breadcrumb>());
+        return getMGModel(sessionMgr, "EBI Metagenomics Portal", new ArrayList<Breadcrumb>(), null);
     }
 
-    public static MGModel getMGModel(SessionManager sessionMgr, String pageTitle, List<Breadcrumb> breadcrumbs) {
+    public static MGModel getMGModel(SessionManager sessionMgr, String pageTitle, List<Breadcrumb> breadcrumbs,
+                                     MemiPropertyContainer propertyContainer) {
         log.info("Building instance of " + MGModel.class + "...");
-        return new MGModel(getSessionSubmitter(sessionMgr), pageTitle, breadcrumbs);
+        return new MGModel(getSessionSubmitter(sessionMgr), pageTitle, breadcrumbs, propertyContainer);
     }
 
 
-    public static SubmissionModel getSubmissionModel(SessionManager sessionMgr, String pageTitle, List<Breadcrumb> breadcrumbs) {
+    public static SubmissionModel getSubmissionModel(SessionManager sessionMgr, String pageTitle,
+                                                     List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer) {
         log.info("Building instance of " + SubmissionModel.class + "...");
-        return new SubmissionModel(getSessionSubmitter(sessionMgr), pageTitle, breadcrumbs);
+        return new SubmissionModel(getSessionSubmitter(sessionMgr), pageTitle, breadcrumbs, propertyContainer);
     }
 
     public static AnalysisStatsModel getAnalysisStatsModel(SessionManager sessionManager, Sample sample,
-                                                           String classPathToStatsFile, String pageTitle,
-                                                           List<Breadcrumb> breadcrumbs, EmgFile emgFile,
-                                                           List<String> archivedSequences) {
+                                                           String pageTitle, List<Breadcrumb> breadcrumbs,
+                                                           EmgFile emgFile, List<String> archivedSequences,
+                                                           MemiPropertyContainer propertyContainer) {
         log.info("Building instance of " + AnalysisStatsModel.class + "...");
-        Map<Class, List<AbstractGOTerm>> goData = loadGODataFromCSV(classPathToStatsFile, emgFile);
+        Map<Class, List<AbstractGOTerm>> goData = loadGODataFromCSV(propertyContainer.getPathToAnalysisDirectory(),
+                emgFile);
         return new AnalysisStatsModel(getSessionSubmitter(sessionManager), pageTitle, breadcrumbs, sample,
-                getBarChartURL(classPathToStatsFile, emgFile),
+                getBarChartURL(propertyContainer.getPathToAnalysisDirectory(), emgFile),
                 getPieChartURL(BiologicalProcessGOTerm.class, goData),
                 getPieChartURL(CellularComponentGOTerm.class, goData),
                 getPieChartURL(MolecularFunctionGOTerm.class, goData),
                 null,
-                goData.get(BiologicalProcessGOTerm.class), emgFile, archivedSequences);
+                goData.get(BiologicalProcessGOTerm.class), emgFile, archivedSequences, propertyContainer);
     }
 
-    public static StudyViewModel getStudyViewModel(SessionManager sessionManager, Study study, List<Sample> samples, String pageTitle, List<Breadcrumb> breadcrumbs) {
+    public static StudyViewModel getStudyViewModel(SessionManager sessionManager, Study study,
+                                                   List<Sample> samples, String pageTitle,
+                                                   List<Breadcrumb> breadcrumbs,
+                                                   MemiPropertyContainer propertyContainer) {
         log.info("Building instance of " + StudyViewModel.class + "...");
-        return new StudyViewModel(getSessionSubmitter(sessionManager), study, samples, pageTitle, breadcrumbs);
+        return new StudyViewModel(getSessionSubmitter(sessionManager), study, samples, pageTitle,
+                breadcrumbs, propertyContainer);
     }
 
-    public static SampleViewModel getSampleViewModel(SessionManager sessionManager, Sample sample, List<String> archivedSeqs, String pageTitle, List<Breadcrumb> breadcrumbs) {
+    public static SampleViewModel getSampleViewModel(SessionManager sessionManager, Sample sample,
+                                                     List<String> archivedSeqs, String pageTitle,
+                                                     List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer) {
         log.info("Building instance of " + SampleViewModel.class + "...");
-        return new SampleViewModel(getSessionSubmitter(sessionManager), sample, archivedSeqs, pageTitle, breadcrumbs);
+        return new SampleViewModel(getSessionSubmitter(sessionManager), sample, archivedSeqs, pageTitle,
+                breadcrumbs, propertyContainer);
     }
 
-    public static ViewStudiesModel getViewStudiesPageModel(SessionManager sessionMgr, HibernateStudyDAO studyDAO, HibernateSampleDAO sampleDAO, StudyFilter filter, String pageTitle, List<Breadcrumb> breadcrumbs) {
+    public static ViewStudiesModel getViewStudiesPageModel(SessionManager sessionMgr, HibernateStudyDAO studyDAO,
+                                                           HibernateSampleDAO sampleDAO, StudyFilter filter,
+                                                           String pageTitle, List<Breadcrumb> breadcrumbs,
+                                                           MemiPropertyContainer propertyContainer) {
         log.info("Building instance of " + ViewStudiesModel.class + "...");
         Submitter submitter = getSessionSubmitter(sessionMgr);
         long submitterId = (submitter != null ? submitter.getSubmitterId() : -1L);
         List<Study> studies = getFilteredStudies(studyDAO, filter, submitterId);
-        return new ViewStudiesModel(submitter, getStudySampleSizeMap(studies, sampleDAO), pageTitle, breadcrumbs);
+        return new ViewStudiesModel(submitter, getStudySampleSizeMap(studies, sampleDAO), pageTitle,
+                breadcrumbs, propertyContainer);
     }
 
-    public static ViewSamplesModel getViewSamplesPageModel(SessionManager sessionMgr, HibernateSampleDAO sampleDAO, SampleFilter filter, String pageTitle, List<Breadcrumb> breadcrumbs) {
+    public static ViewSamplesModel getViewSamplesPageModel(SessionManager sessionMgr, HibernateSampleDAO sampleDAO,
+                                                           SampleFilter filter, String pageTitle,
+                                                           List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer) {
         log.info("Building instance of " + ViewSamplesModel.class + "...");
         Submitter submitter = getSessionSubmitter(sessionMgr);
         long submitterId = (submitter != null ? submitter.getSubmitterId() : -1L);
-        return new ViewSamplesModel(submitter, getFilteredSamples(sampleDAO, filter, submitterId), pageTitle, breadcrumbs);
+        return new ViewSamplesModel(submitter, getFilteredSamples(sampleDAO, filter, submitterId),
+                pageTitle, breadcrumbs, propertyContainer);
     }
 
-    public static ContactModel getContactModel(SessionManager sessionMgr, String pageTitle, List<Breadcrumb> breadcrumbs) {
-        return new ContactModel(getSessionSubmitter(sessionMgr), pageTitle, breadcrumbs);
+    public static ContactModel getContactModel(SessionManager sessionMgr, String pageTitle,
+                                               List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer) {
+        return new ContactModel(getSessionSubmitter(sessionMgr), pageTitle, breadcrumbs, propertyContainer);
     }
 
 

@@ -1,6 +1,7 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
 
 import com.sun.syndication.feed.synd.SyndEntry;
+import uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
@@ -36,8 +37,10 @@ public final class HomePageModel extends MGModel {
     private final String rssUrl;
     private final List<SyndEntry> rssItems;
 
-    HomePageModel(Submitter submitter, SortedMap<Study, Long> publicStudiesMap, List<Sample> publicSamples, String rssUrl, List<SyndEntry> rssItems, String pageTitle, List<Breadcrumb> breadcrumbs) {
-        super(submitter, pageTitle, breadcrumbs);
+    HomePageModel(Submitter submitter, SortedMap<Study, Long> publicStudiesMap, List<Sample> publicSamples,
+                  String rssUrl, List<SyndEntry> rssItems, String pageTitle, List<Breadcrumb> breadcrumbs,
+                  MemiPropertyContainer propertyContainer) {
+        super(submitter, pageTitle, breadcrumbs, propertyContainer);
         this.publicStudiesMap = publicStudiesMap;
         this.publicSamples = publicSamples;
         this.myStudiesMap = new TreeMap<Study, Long>();
@@ -46,8 +49,11 @@ public final class HomePageModel extends MGModel {
         this.rssItems = rssItems;
     }
 
-    HomePageModel(Submitter submitter, SortedMap<Study, Long> publicStudiesMap, List<Sample> publicSamples, String rssUrl, List<SyndEntry> rssItems, SortedMap<Study, Long> myStudiesMap, List<Sample> mySamples, String pageTitle, List<Breadcrumb> breadcrumbs) {
-        this(submitter, publicStudiesMap, publicSamples, rssUrl, rssItems, pageTitle, breadcrumbs);
+    HomePageModel(Submitter submitter, SortedMap<Study, Long> publicStudiesMap, List<Sample> publicSamples,
+                  String rssUrl, List<SyndEntry> rssItems, SortedMap<Study, Long> myStudiesMap,
+                  List<Sample> mySamples, String pageTitle, List<Breadcrumb> breadcrumbs,
+                  MemiPropertyContainer propertyContainer) {
+        this(submitter, publicStudiesMap, publicSamples, rssUrl, rssItems, pageTitle, breadcrumbs, propertyContainer);
         this.myStudiesMap = myStudiesMap;
         this.mySamples = mySamples;
     }
