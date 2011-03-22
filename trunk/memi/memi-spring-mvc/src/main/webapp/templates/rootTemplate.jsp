@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="http://www.ebi.ac.uk/inc/css/sidebars.css" type="text/css"/>
     <script src="http://www.ebi.ac.uk/inc/js/contents.js" type="text/javascript"></script>
    <%-- END EBI style and code--%>
-    
+
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/default.css" type="text/css" media="all"/>
 
     <link href="http://fonts.googleapis.com/css?family=Droid+Sans:regular,bold" rel="stylesheet" type="text/css">
@@ -103,11 +103,11 @@
 <footer>
     <tiles:insertAttribute name="footer"/>
 </footer>
-    
+
 </div>
 
 <div id="extra_feedback"><h1><a href="<c:url value="${baseURL}/contact"/>">Give your feedback</a></h1></div>
-<div id="extra_beta"></div>
+<a href="<c:url value="${baseURL}/info#intro"/>" title="About us"><div id="extra_beta"></div></a>
 <!--<div id="extraDiv1"></div> -->
 </body>
 </html>
