@@ -1,5 +1,6 @@
 package uk.ac.ebi.interpro.metagenomics.memi.forms;
 
+import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.Size;
@@ -14,14 +15,11 @@ public class LoginForm {
 
     public final static String MODEL_ATTR_NAME = "loginForm";
 
-    @NotEmpty
-//    @Size(min = 1, max = 30)
-//    @Email
-//    TODO: Reactivate email annotation (deactivate because the test user has an invalid email address)
+    @NotEmpty(message = "{form.field.notEmpty}")
+    @Email(message = "{form.field.email}")
     private String emailAddress;
 
-    @NotEmpty
-//    @Size(min = 1, max = 12)
+    @NotEmpty(message = "{form.field.notEmpty}")
     private String password;
 
     public String getEmailAddress() {
