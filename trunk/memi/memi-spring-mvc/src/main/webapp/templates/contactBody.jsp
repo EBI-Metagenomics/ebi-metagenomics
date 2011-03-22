@@ -12,14 +12,14 @@
 
  
     <form:form action="contact" commandName="contactForm">
-        <div class="feedback_form"> </div>
+        <div class="feedback_form"></div>
         <table class="result" id="contact">
             <tr>
-                <td>Your email address <small>*</small> : <form:input path="sender"  cssStyle="width:284px;"/></td>
+                <td>E-Mail address <small>*</small> : <form:input path="sender"  cssStyle="margin-left:14px; width:284px;"/></td>
             </tr>
             <tr><td ><form:errors cssClass="error" path="sender"/></td></tr>
             <tr>
-                <td>Feedback subject <small>*</small> : <form:input path="emailSubject" cssStyle="margin-left:14px; width:284px;"/></td>
+                <td>Feedback subject <small>*</small> : <form:input path="emailSubject" cssStyle="width:284px;"/></td>
             </tr>
              <tr><td ><form:errors cssClass="error" path="emailSubject"/></td></tr>
             <tr>
