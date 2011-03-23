@@ -31,8 +31,11 @@ public abstract class Sample implements SecureEntity {
     @Column(name = "SAMPLE_ID")
     private String sampleId;
 
-    @Column(name = "SAMPLE_TITLE")
-    private String sampleTitle;
+    @Column(name = "SAMPLE_ALIAS")
+    private String sampleAlias;
+
+    @Column(name = "SAMPLE_NAME")
+    private String sampleName;
 
     @Column(name = "SAMPLE_DESC")
     @Lob
@@ -112,12 +115,12 @@ public abstract class Sample implements SecureEntity {
         this.sampleId = sampleId;
     }
 
-    public String getSampleTitle() {
-        return sampleTitle;
+    public String getSampleName() {
+        return sampleName;
     }
 
-    public void setSampleTitle(String sampleTitle) {
-        this.sampleTitle = sampleTitle;
+    public void setSampleName(String sampleName) {
+        this.sampleName = sampleName;
     }
 
     public String getSampleDescription() {
@@ -238,6 +241,14 @@ public abstract class Sample implements SecureEntity {
 
     public void setMiscellaneous(String miscellaneous) {
         this.miscellaneous = miscellaneous;
+    }
+
+    public String getSampleAlias() {
+        return sampleAlias;
+    }
+
+    public void setSampleAlias(String sampleAlias) {
+        this.sampleAlias = sampleAlias;
     }
 
     @Transient

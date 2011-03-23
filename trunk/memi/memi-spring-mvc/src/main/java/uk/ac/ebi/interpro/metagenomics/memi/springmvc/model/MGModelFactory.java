@@ -356,7 +356,7 @@ public class MGModelFactory {
         List<Criterion> crits = new ArrayList<Criterion>();
         //add search term criterion
         if (searchText != null && searchText.trim().length() > 0) {
-            crits.add(Restrictions.or(Restrictions.ilike("sampleId", searchText, MatchMode.ANYWHERE), Restrictions.ilike("sampleTitle", searchText, MatchMode.ANYWHERE)));
+            crits.add(Restrictions.or(Restrictions.ilike("sampleId", searchText, MatchMode.ANYWHERE), Restrictions.ilike("sampleName", searchText, MatchMode.ANYWHERE)));
         }
         //add is public criterion
         if (submitterId > -1) {
@@ -536,7 +536,6 @@ public class MGModelFactory {
 
     private static List<Float> loadStatsFromCSV(String classPathToStatsFile, EmgFile emgFile) {
         List<Float> result = new ArrayList<Float>();
-//        File file = new File(classPathToStatsFile + "MID3-MID6_FASTA/MID3-MID6_FASTA_summary");
         String directoryName = emgFile.getFileIDInUpperCase().replace('.', '_');
         File file = new File(classPathToStatsFile + directoryName + '/' + directoryName + "_summary");
         CSVReader reader = null;
@@ -557,8 +556,6 @@ public class MGModelFactory {
                 float numSeqsOfProcessedSeqs = getValueOfRow(rows, 3);
                 float numSeqsWithPredicatedCDS = getValueOfRow(rows, 4);
                 float numSeqsWithInterProScanMatch = getValueOfRow(rows, 5);
-//                float firstBarValue = numSeqsWithPredicatedCDS / numSubmittedSeqs;
-//                float secondBarValue = numSeqsWithInterProScanMatch / numSubmittedSeqs;
                 result.add(numSubmittedSeqs);
                 result.add(numSeqsOfProcessedSeqs);
                 result.add(numSeqsWithPredicatedCDS);

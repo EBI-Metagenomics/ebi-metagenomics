@@ -16,14 +16,14 @@
     <tr>
         <td >
             <c:choose>
-                <c:when test="${not empty model.sample.sampleTitle}">
-                    <c:set var="sampleTitle" value="${model.sample.sampleTitle}"/>
+                <c:when test="${not empty model.sample.sampleName}">
+                    <c:set var="sampleName" value="${model.sample.sampleName}"/>
                 </c:when>
                 <c:otherwise>
-                    <c:set var="sampleTitle" value="${notGivenId}"/>
+                    <c:set var="sampleName" value="${notGivenId}"/>
                 </c:otherwise>
             </c:choose>
-            <h2>${model.sample.sampleTitle}</h2>
+            <h2>${model.sample.sampleName}</h2>
             ${model.sample.sampleId}
         </td>
     </tr>
@@ -102,10 +102,10 @@
             <tr>
                 <td valign="top" align="right" width="150"><b>Host species:</b></td>
                 <c:choose>
-                    <c:when test="${not empty model.sample.taxonomyId && model.sample.taxonomyId>0}">
+                    <c:when test="${not empty model.sample.hostTaxonomyId && model.sample.hostTaxonomyId>0}">
                         <td>Tax Id:
-                            <a href="<c:url value="http://www.ncbi.nlm.nih.gov/taxonomy?Db=taxonomy&Cmd=DetailsSearch&Term=${model.sample.taxonomyId}[uid]"/>"><c:out
-                                    value="${model.sample.taxonomyId}"/></a>
+                            <a href="<c:url value="http://www.ncbi.nlm.nih.gov/taxonomy?Db=taxonomy&Cmd=DetailsSearch&Term=${model.sample.hostTaxonomyId}[uid]"/>"><c:out
+                                    value="${model.sample.hostTaxonomyId}"/></a>
                         </td>
                     </c:when>
                     <c:otherwise>

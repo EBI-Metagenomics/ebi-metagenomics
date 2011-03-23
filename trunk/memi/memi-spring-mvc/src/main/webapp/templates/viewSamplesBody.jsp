@@ -67,7 +67,7 @@
                     <tr>
                         <td  style="text-align:left;" id="ordered">
                         <c:if test="${!sample.public}"><img alt="private" src="${pageContext.request.contextPath}/img/icon_priv_private.gif">&nbsp;&nbsp;</c:if>
-                        <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>">${sample.sampleTitle}</a>
+                        <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>">${sample.sampleName}</a>
                         </td>
                         <td style="text-align:left;">${sample.study.studyName}</td>
                         <td>${sample.sampleTypeAsString}</td>

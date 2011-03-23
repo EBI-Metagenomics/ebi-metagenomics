@@ -79,7 +79,7 @@
                             <c:forEach var="sample" items="${model.mySamples}" varStatus="status">
                                 <p><%--<span class="list_date">${sample.metadataReceived}:</span>--%>
                                     <c:if test="${!sample.public}"><img alt="private" src="${pageContext.request.contextPath}/img/icon_priv_private.gif"></c:if>&nbsp;&nbsp;
-                                    <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>" class="list_more">${sample.sampleTitle}</a>
+                                    <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>" class="list_more">${sample.sampleName}</a>
                                     </br>
                                     <span class="list_desc"><c:out value="${sample.shortSampleDescription} ..."/></span>
                                     <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>#sample_desc" class="more_view">view more</a> -
@@ -121,7 +121,7 @@
                     <h3>Latest public samples</h3>
                     <c:forEach var="sample" items="${model.publicSamples}" varStatus="status">
                         <p><%--<span class="list_date">${sample.metadataReceived}:</span>--%>
-                            <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>" class="list_more">${sample.sampleTitle}</a>
+                            <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>" class="list_more">${sample.sampleName}</a>
                             </br>
                             <span class="list_desc"><c:out value="${sample.shortSampleDescription} ..."/></span>
                             <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>#sample_desc" class="more_view">view more</a> -

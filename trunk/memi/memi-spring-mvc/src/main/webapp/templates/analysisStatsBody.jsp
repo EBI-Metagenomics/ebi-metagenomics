@@ -9,7 +9,7 @@
 
             <h2>Study ${model.sample.study.studyName}</h2>
             <h4>Analysis of Sample <a
-                    href="<c:url value="${baseURL}/sample/${model.sample.sampleId}"/>">${model.sample.sampleTitle}</a>
+                    href="<c:url value="${baseURL}/sample/${model.sample.sampleId}"/>">${model.sample.sampleName}</a>
             </h4>
 
 

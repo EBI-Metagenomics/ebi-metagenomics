@@ -18,14 +18,14 @@
         </form:form>
 
         <c:url var="enaPasswordUrl"
-               value="${model.propertyContainer.enaSubmissionURL}/forgot-passw.jsf">
+               value="${model.propertyContainer.enaSubmissionURL}/external-password-link.jsf">
             <c:param name="url" value="${model.propertyContainer.enaRedirectURL}${pageContext.request.contextPath}"/>
         </c:url>
         <a href="<c:out value="${enaPasswordUrl}"/>" title="Request a new password">Forgot your password?</a>
         <span class="separator"></span>
         <strong>New to metagenomics?</strong><br/>
         <c:url var="enaRegistrationUrl"
-               value="${model.propertyContainer.enaSubmissionURL}/registration.jsf">
+               value="${model.propertyContainer.enaSubmissionURL}/external-reg-link.jsf">
             <c:param name="url" value="${model.propertyContainer.enaRedirectURL}${pageContext.request.contextPath}"/>
         </c:url>
         <a href="<c:out value="${enaRegistrationUrl}"/>" title="Registration">Click here to register</a>
