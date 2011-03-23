@@ -199,13 +199,13 @@ public class DatabaseMockuper {
                             ((HostSample) s).setHostSex((row[41].equals("female") ? HostSample.HostSex.FEMALE : HostSample.HostSex.MALE));
                             String taxonId = row[17];
                             if (taxonId != null && taxonId.trim().length() > 0) {
-                                ((HostSample) s).setTaxonomyId(Integer.parseInt(taxonId));
+                                ((HostSample) s).setHostTaxonomyId(Integer.parseInt(taxonId));
                             }
                             ((HostSample) s).setPhenotype(row[47]);
                         }
                         s.setSampleId(row[0]);
                         String studyId = row[1];
-                        s.setSampleTitle(row[2]);
+//                        s.setSampleTitle(row[2]);
                         s.setSampleClassification(row[3]);
                         s.setGeoLocName(row[4]);
 

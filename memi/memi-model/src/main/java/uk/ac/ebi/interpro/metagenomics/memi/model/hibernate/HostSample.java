@@ -17,10 +17,10 @@ public class HostSample extends Sample {
     private String phenotype;
 
     /**
-     * Host Id
+     * Host taxonomy ID (e.g. 9606 for Homo sapiens)
      */
-    @Column(name = "TAXONOMY_ID")
-    private int taxonomyId;
+    @Column(name = "HOST_TAX_ID")
+    private int hostTaxonomyId;
 
     @Column(name = "HOST_SEX")
     private HostSex hostSex;
@@ -45,12 +45,12 @@ public class HostSample extends Sample {
         this.phenotype = phenotype;
     }
 
-    public int getTaxonomyId() {
-        return taxonomyId;
+    public int getHostTaxonomyId() {
+        return hostTaxonomyId;
     }
 
-    public void setTaxonomyId(int taxonomyId) {
-        this.taxonomyId = taxonomyId;
+    public void setHostTaxonomyId(int hostTaxonomyId) {
+        this.hostTaxonomyId = hostTaxonomyId;
     }
 
     public HostSex getHostSex() {

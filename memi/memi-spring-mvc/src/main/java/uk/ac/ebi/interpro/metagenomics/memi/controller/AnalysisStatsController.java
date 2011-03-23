@@ -119,7 +119,7 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
      * Creates the home page model and adds it to the specified model map.
      */
     private void populateModel(final ModelMap model, final Sample sample) {
-        String pageTitle = "Results " + sample.getSampleTitle();
+        String pageTitle = "Results " + sample.getSampleName();
         List<EmgFile> emgFiles = fileInfoDAO.getFilesBySampleId(sample.getSampleId());
         //TODO: For the moment the system only allows to represent one file on the analysis page, but
         //in the future it should be possible to represent all different data types (genomic, transcripomic)
@@ -185,7 +185,7 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
         List<Breadcrumb> result = new ArrayList<Breadcrumb>();
         if (entity != null && entity instanceof Sample) {
             result.add(new Breadcrumb("Project: " + ((Sample) entity).getStudy().getStudyName(), "View project " + ((Sample) entity).getStudy().getStudyName(), StudyViewController.VIEW_NAME + '/' + ((Sample) entity).getStudy().getStudyId()));
-            result.add(new Breadcrumb("Sample: " + ((Sample) entity).getSampleTitle(), "View sample " + ((Sample) entity).getSampleTitle(), SampleViewController.VIEW_NAME + '/' + ((Sample) entity).getSampleId()));
+            result.add(new Breadcrumb("Sample: " + ((Sample) entity).getSampleName(), "View sample " + ((Sample) entity).getSampleName(), SampleViewController.VIEW_NAME + '/' + ((Sample) entity).getSampleId()));
             result.add(new Breadcrumb("Analysis Results", "View analysis results", VIEW_NAME + '/' + ((Sample) entity).getSampleId()));
         }
         return result;
