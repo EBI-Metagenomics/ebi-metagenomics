@@ -34,15 +34,15 @@
 
     <!--Metagenomics datasource-->
     <bean name="ipDevDatasource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="oracle.jdbc.OracleDriver"/>
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
         <property name="url" value="${jcp.jdbc.oracle.ipdev.url}"/>
         <property name="username" value="${jcp.jdbc.oracle.ipdev.username}"/>
         <property name="password" value="${jcp.jdbc.oracle.ipdev.password}"/>
     </bean>
 
     <!--ENA datasource-->
-    <bean name="enaAproDatasource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="oracle.jdbc.OracleDriver"/>
+    <bean id="enaAproDatasource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
         <property name="url" value="${jcp.jdbc.oracle.apro.url}"/>
         <property name="username" value="${jcp.jdbc.oracle.apro.username}"/>
         <property name="password" value="${jcp.jdbc.oracle.apro.password}"/>
@@ -88,14 +88,12 @@
                 <!--Enable Hibernate’s automatic session context management-->
                 <prop key="current_session_context_class">thread</prop>
                 <prop key="hibernate.transaction.auto_close_session">true</prop>
-                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <prop key="hibernate.hbm2ddl.auto">validate</prop>
             </props>
         </property>
         <!--<property name="location" value="classpath:resources/hibernate.properties"/>-->
         <property name="annotatedClasses">
             <list>
-                <!--<value>uk.ac.ebi.interpro.metagenomics.memi.model.EmgSample</value>-->
-                <!--<value>uk.ac.ebi.interpro.metagenomics.memi.model.EmgStudy</value>-->
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Publication</value>
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study</value>
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample</value>
@@ -185,7 +183,7 @@
 
     <!-- Please use this bean to specify the path to the analysis files -->
     <bean id="propContainer" class="uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer">
-        <property name="pathToAnalysisDirectory" value="/home/maxim/temp_memi_data/results/"/>
+        <property name="pathToAnalysisDirectory" value="/ebi/production/interpro/metagenomics/results/"/>
         <property name="enaRedirectURL" value="http://apple.windows.ebi.ac.uk:8082"/>
         <property name="enaSubmissionURL" value="http://www.ebi.ac.uk/embl/genomes/submission"/>
     </bean>
