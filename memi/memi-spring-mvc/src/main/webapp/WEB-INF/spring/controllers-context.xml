@@ -32,20 +32,20 @@
     <!-- Exception translation bean post processor -->
     <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
 
+    <!--Metagenomics datasource-->
     <bean name="ipDevDatasource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+        <property name="driverClassName" value="oracle.jdbc.OracleDriver"/>
         <property name="url" value="${jcp.jdbc.oracle.ipdev.url}"/>
         <property name="username" value="${jcp.jdbc.oracle.ipdev.username}"/>
         <property name="password" value="${jcp.jdbc.oracle.ipdev.password}"/>
     </bean>
 
-    <!--Data source for ADEV-->
-    <bean id="adevDatasourceId" name="adevDatasource"
-          class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
-        <property name="url" value="${jcp.jdbc.oracle.adev.url}"/>
-        <property name="username" value="${jcp.jdbc.oracle.adev.username}"/>
-        <property name="password" value="${jcp.jdbc.oracle.adev.password}"/>
+    <!--ENA datasource-->
+    <bean name="enaAproDatasource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="oracle.jdbc.OracleDriver"/>
+        <property name="url" value="${jcp.jdbc.oracle.apro.url}"/>
+        <property name="username" value="${jcp.jdbc.oracle.apro.username}"/>
+        <property name="password" value="${jcp.jdbc.oracle.apro.password}"/>
     </bean>
 
     <!--Caching-->
@@ -115,7 +115,7 @@
     <bean id="sampleDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateSampleDAOImpl"/>
 
     <bean name="submitterDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.SubmitterDAOImpl">
-        <property name="dataSource" ref="adevDatasource"/>
+        <property name="dataSource" ref="enaAproDatasource"/>
     </bean>
 
     <bean name="fileInfoDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.EmgLogFileInfoDAOImpl">
@@ -187,7 +187,7 @@
     <bean id="propContainer" class="uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer">
         <property name="pathToAnalysisDirectory" value="/home/maxim/temp_memi_data/results/"/>
         <property name="enaRedirectURL" value="http://apple.windows.ebi.ac.uk:8082"/>
-        <property name="enaSubmissionURL" value="http://jweb-1a.ebi.ac.uk:21040/embl/genomes/submission"/>
+        <property name="enaSubmissionURL" value="http://www.ebi.ac.uk/embl/genomes/submission"/>
     </bean>
 
 </beans>
