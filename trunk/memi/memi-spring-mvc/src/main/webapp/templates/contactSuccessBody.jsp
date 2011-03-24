@@ -1,7 +1,5 @@
 <div id="content-full">
-    <h2>Thank you</h2>
-
-    <div style="margin-top:6px"/>
+    <h2>Thank you</h2>  
     <p>
         Thank you for taking the time to help us improve the EBI Metagenomics Portal.
     </p>
