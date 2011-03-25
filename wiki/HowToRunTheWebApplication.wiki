@@ -15,7 +15,7 @@ This tutorial should give you an explanation of how to run the latest version of
 This project is hosted on Google code. You will find it under:
 http://code.google.com/p/ebi-metagenomics/
 
-1.2 Create a new directory for your project (e.g. ebi-metagenomics), go into this directory and type the following subversion command:
+1.2 Create a new directory for your project (e.g. ebi-metagenomics), go into this directory and type the following Subversion command:
 
 svn checkout https://ebi-metagenomics.googlecode.com/svn/trunk/ --username Maxim.Scheremetjew@googlemail.com
 
