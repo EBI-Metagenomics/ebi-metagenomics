@@ -151,7 +151,7 @@ ${model.study.studyId}
                             <c:otherwise>${sample.collectionDate}</c:otherwise>
                         </c:choose>
                     </td>
-                    <td align="center">${sample.sampleTitle}</td>
+                    <td align="center">${sample.sampleName}</td>
                     <td align="center">
                         <c:choose>
                             <c:when test="${empty sample.metadataReceived}">

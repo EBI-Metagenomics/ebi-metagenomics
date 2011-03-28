@@ -63,6 +63,12 @@ public class AnalysisStatsModel extends MGModel {
         this.archivedSequences = archivedSequences;
     }
 
+    AnalysisStatsModel(Submitter submitter, String pageTitle, List<Breadcrumb> breadcrumbs, Sample sample,
+                       EmgFile emgFile, List<String> archivedSequences, MemiPropertyContainer propertyContainer) {
+        this(submitter, pageTitle, breadcrumbs, sample, null, null, null, null, null, null, emgFile,
+                archivedSequences, propertyContainer);
+    }
+
     public Sample getSample() {
         return sample;
     }

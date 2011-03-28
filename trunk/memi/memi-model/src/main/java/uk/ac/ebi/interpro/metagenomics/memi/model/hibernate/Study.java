@@ -43,8 +43,8 @@ public class Study implements SecureEntity {
     @Column(name = "SUBMITTER_ID")
     private long submitterId;
 
-
-    @Column(name = "STUDY_Status")
+    @Column(name = "STUDY_Status", length = 30)
+    @Enumerated(EnumType.STRING)
     private StudyStatus studyStatus;
 
     @Temporal(TemporalType.DATE)

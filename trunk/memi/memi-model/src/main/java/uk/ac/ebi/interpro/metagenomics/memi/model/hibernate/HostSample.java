@@ -2,9 +2,12 @@ package uk.ac.ebi.interpro.metagenomics.memi.model.hibernate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
 /**
- * TODO: Description
+ * Represents a host-associated sample object, which extends abstract {@link Sample} class.
+ * Replaces {@link uk.ac.ebi.interpro.metagenomics.memi.model.EmgSample} object.
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @version $Id$
@@ -22,7 +25,8 @@ public class HostSample extends Sample {
     @Column(name = "HOST_TAX_ID")
     private int hostTaxonomyId;
 
-    @Column(name = "HOST_SEX")
+    @Column(name = "HOST_SEX", length = 30)
+    @Enumerated(value = EnumType.STRING)
     private HostSex hostSex;
 
     public Class<? extends Sample> getClazz() {

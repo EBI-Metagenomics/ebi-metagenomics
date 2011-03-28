@@ -5,7 +5,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 
 /**
- * TODO: Description
+ * Represents an environmental sample object, which extends abstract {@link Sample} class.
+ * Replaces {@link uk.ac.ebi.interpro.metagenomics.memi.model.EmgSample} object.
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @version $Id$
@@ -17,13 +18,13 @@ public class EnvironmentSample extends Sample {
     @Column(name = "LAT_LON")
     private String latLon;
 
-    @Column(name = "Environment_BIOME")
+    @Column(name = "ENVIRONMENT_BIOME")
     private String environmentalBiome;
 
-    @Column(name = "Environment_FEATURE")
+    @Column(name = "ENVIRONMENT_FEATURE")
     private String environmentalFeature;
 
-    @Column(name = "Environment_MATERIAL")
+    @Column(name = "ENVIRONMENT_MATERIAL")
     private String environmentalMaterial;
 
     public String getLatLon() {

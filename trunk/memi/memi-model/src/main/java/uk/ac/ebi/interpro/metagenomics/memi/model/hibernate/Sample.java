@@ -28,7 +28,7 @@ public abstract class Sample implements SecureEntity {
     @JoinColumn(name = "STUDY_ID", nullable = true)
     private Study study;
 
-    @Column(name = "SAMPLE_ID")
+    @Column(name = "SAMPLE_ID", nullable = false, length = 15)
     private String sampleId;
 
     @Column(name = "SAMPLE_ALIAS")
