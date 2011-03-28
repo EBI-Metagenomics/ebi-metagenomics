@@ -38,6 +38,12 @@ public class MGModelFactory {
      */
     private final static int maxRowNumber = 4;
 
+
+    /**
+     * The number of RSS news items to show on the portal home page.
+     */
+    private final static int maxRssRowNumber = 3;
+
     private MGModelFactory() {
 
     }
@@ -62,6 +68,10 @@ public class MGModelFactory {
         List<SyndEntry> rssEntries = Collections.emptyList();
         try {
             rssEntries = romeClient.getEntries();
+            if (rssEntries.size() > maxRssRowNumber) {
+                // Limit number of rss entries
+                rssEntries = rssEntries.subList(0, maxRssRowNumber);
+            }
         } catch (Exception e) {
             log.warn("Could not get RSS entries", e);
         }
@@ -172,7 +182,7 @@ public class MGModelFactory {
         if (studies == null) {
             studies = new ArrayList<Study>();
         } else {
-            if (studies.size() >= maxRowNumber) {
+            if (studies.size() > maxRowNumber) {
                 studies = studies.subList(0, maxRowNumber);
             }
         }
@@ -190,7 +200,7 @@ public class MGModelFactory {
         if (studies == null) {
             studies = new ArrayList<Study>();
         } else {
-            if (studies.size() >= maxRowNumber) {
+            if (studies.size() > maxRowNumber) {
                 studies = studies.subList(0, maxRowNumber);
             }
         }
@@ -205,7 +215,7 @@ public class MGModelFactory {
         if (studies == null) {
             studies = new ArrayList<Study>();
         } else {
-            if (studies.size() >= maxRowNumber) {
+            if (studies.size() > maxRowNumber) {
                 studies = studies.subList(0, maxRowNumber);
             }
         }
@@ -223,7 +233,7 @@ public class MGModelFactory {
         if (samples == null) {
             samples = new ArrayList<Sample>();
         } else {
-            if (samples.size() >= maxRowNumber) {
+            if (samples.size() > maxRowNumber) {
                 samples = samples.subList(0, maxRowNumber);
             }
         }
@@ -242,7 +252,7 @@ public class MGModelFactory {
         if (samples == null) {
             samples = new ArrayList<Sample>();
         } else {
-            if (samples.size() >= maxRowNumber) {
+            if (samples.size() > maxRowNumber) {
                 samples = samples.subList(0, maxRowNumber);
             }
         }
@@ -257,7 +267,7 @@ public class MGModelFactory {
         if (samples == null) {
             samples = new ArrayList<Sample>();
         } else {
-            if (samples.size() >= maxRowNumber) {
+            if (samples.size() > maxRowNumber) {
                 samples = samples.subList(0, maxRowNumber);
             }
         }
