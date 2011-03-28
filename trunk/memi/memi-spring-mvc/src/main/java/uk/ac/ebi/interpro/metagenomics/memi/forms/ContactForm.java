@@ -15,17 +15,17 @@ import javax.validation.constraints.Size;
 public class ContactForm {
     public final static String MODEL_ATTR_NAME = "contactForm";
 
-    @NotEmpty(message = "{form.field.notEmpty}")
-    @Email(message = "{form.field.email}")
+    @NotEmpty(message = "{form.contact.sender.email}")
+    @Email(message = "{form.contact.sender.email}")
     private String sender;
 
-    @NotEmpty(message = "{form.field.notEmpty}")
-    @Size(min = 3, max = 100, message = "{form.field.size}")
+    @NotEmpty( message = "{form.contact.emailSubject.notEmpty}")
+    @Size(min = 3, max = 100, message = "{form.contact.emailSubject.size}")
     private String emailSubject;
 
     // TODO: Size have to be discussed
-    @NotEmpty(message = "{form.field.notEmpty}")
-    @Size(min = 3, max = 1000, message = "{form.field.size}")
+    @NotEmpty(message = "{form.contact.message.notEmpty}")
+    @Size(min = 3, max = 1000, message = "{form.contact.message.size}")
     private String message;
 
     public String getSender() {

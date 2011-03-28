@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,10 +24,10 @@ import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.SubmissionModel;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Represents the controller for the submission forms.
@@ -73,9 +72,6 @@ public class SubmissionController extends CheckLoginController implements IMGCon
                                ModelMap model, SessionStatus status) {
         if (isUserAssociatedToSession()) {
             populateModel(model);
-            if (subForm != null && !validateReleaseDate(subForm.getReleaseDate())) {
-                result.addError(new FieldError("subForm", "releaseDate", "Data cannot be held private for more than 2 years"));
-            }
             if (result.hasErrors()) {
                 log.info("Submission form still has validation errors!");
                 model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((SubmissionModel) model.get(MGModel.MODEL_ATTR_NAME)).getLoginForm());
@@ -125,10 +121,6 @@ public class SubmissionController extends CheckLoginController implements IMGCon
         //Add submission form to Velocity model
         model.put("subForm", subForm);
 
-        //Should a release date warning be added to the email?
-        String releaseDate = subForm.getReleaseDate();
-        model.put("dateWarning", !validateReleaseDate(releaseDate));
-
         //Add logged in user to Velocity model
         if (sessionManager != null && sessionManager.getSessionBean() != null) {
             model.put("submitter", sessionManager.getSessionBean().getSubmitter());
@@ -147,38 +139,4 @@ public class SubmissionController extends CheckLoginController implements IMGCon
         return result;
     }
 
-    /**
-     * Check that the release date entered is not more than 2 years from the current time.
-     *
-     * @param releaseDate String in format "MM/dd/yyy"
-     * @return False if validation failed, otherwise true
-     */
-    private boolean validateReleaseDate(String releaseDate) {
-        if (releaseDate.equals(null)) {
-            return false;
-        }
-
-        Calendar calendar = Calendar.getInstance();
-        long now = System.currentTimeMillis();
-        calendar.setTimeInMillis(now);
-        calendar.add(Calendar.YEAR, 2);
-        long limit = calendar.getTimeInMillis();
-
-
-        DateFormat df = new SimpleDateFormat("MM/dd/yyy");
-        Date dateEntered = null;
-        try {
-            dateEntered = df.parse(releaseDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return false;
-        }
-
-        long releaseTimeInMillis = dateEntered.getTime();
-        if (releaseTimeInMillis > limit) {
-            return false;
-        }
-
-        return true;
-    }
 }
