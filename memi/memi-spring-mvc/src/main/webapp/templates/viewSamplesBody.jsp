@@ -12,7 +12,7 @@
         <label for="text">Text:</label>
         <form:input path="searchTerm"/><br/><form:errors path="searchTerm" cssClass="error"/><br/>
             <%--Used sample type instead of study type to not confuse the user--%>
-        <label for="text">Source:</label>
+        <label for="source">Source:</label>
             <form:select path="sampleType">
             <form:option value="" label="All"/>
             <form:option value="ENVIRONMENTAL" label="Environmental"/>
