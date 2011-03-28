@@ -1,4 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%  final String url = request.getRequestURL().toString();
+    final String context = request.getContextPath();
+    final String requestRoot =  url.substring(0, url.indexOf(context) + context.length());%>
 <div class="top-nav">
     <div class="top-menu">
         <ul>
@@ -45,10 +48,10 @@
             </c:when>
             <c:otherwise>
                 <c:out value="${model.submitter.firstName} ${model.submitter.surname}"/>
+                <c:set var="url" value="<%=requestRoot%>"/>
                 <c:url var="editPrefsUrl"
                        value="${model.propertyContainer.enaSubmissionURL}/external-update-link.jsf">
-                    <c:param name="url"
-                             value="${model.propertyContainer.enaRedirectURL}${pageContext.request.contextPath}"/>
+                    <c:param name="url" value="${url}"/>
                 </c:url>
                 (<a href="<c:out value="${editPrefsUrl}"/>" title="Edit preferences">edit</a>)
                 <span id="logout">
