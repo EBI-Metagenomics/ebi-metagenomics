@@ -15,11 +15,11 @@ public class LoginForm {
 
     public final static String MODEL_ATTR_NAME = "loginForm";
 
-    @NotEmpty(message = "{form.field.notEmpty}")
-    @Email(message = "{form.field.email}")
+    @NotEmpty(message = "{form.login.emailAddress.email}")
+    @Email(message = "{form.login.emailAddress.email}")
     private String emailAddress;
 
-    @NotEmpty(message = "{form.field.notEmpty}")
+    @NotEmpty(message = "{form.login.password.notEmpty}")
     private String password;
 
     public String getEmailAddress() {

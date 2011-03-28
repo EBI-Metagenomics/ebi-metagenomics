@@ -1,6 +1,7 @@
 package uk.ac.ebi.interpro.metagenomics.memi.forms;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.validation.ReleaseDate;
 
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -24,20 +25,21 @@ public class SubmissionForm {
     /**
      * Submission title
      */
-    @NotEmpty(message = "{form.field.notEmpty}")
+    @NotEmpty(message = "{form.submission.subTitle.notEmpty}")
     private String subTitle;
 
     /**
      * Hold project private until date
      */
     @Temporal(TemporalType.DATE)
-    @Future(message = "{form.field.future}")
+    @Future(message = "{form.submission.releaseDate.future}")
+    @ReleaseDate(message = "{form.submission.releaseDate.tooFarInFuture}")
     private Date releaseDate;
 
     /**
      * Data description
      */
-    @NotEmpty(message = "{form.field.notEmpty}")
+    @NotEmpty(message = "{form.submission.dataDesc.notEmpty}")
     private String dataDesc;
 
     public SubmissionForm() {
