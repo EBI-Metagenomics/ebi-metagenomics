@@ -115,15 +115,20 @@ public class MGModelFactory {
                                                            EmgFile emgFile, List<String> archivedSequences,
                                                            MemiPropertyContainer propertyContainer) {
         log.info("Building instance of " + AnalysisStatsModel.class + "...");
-        Map<Class, List<AbstractGOTerm>> goData = loadGODataFromCSV(propertyContainer.getPathToAnalysisDirectory(),
-                emgFile);
-        return new AnalysisStatsModel(getSessionSubmitter(sessionManager), pageTitle, breadcrumbs, sample,
-                getBarChartURL(propertyContainer.getPathToAnalysisDirectory(), emgFile),
-                getPieChartURL(BiologicalProcessGOTerm.class, goData),
-                getPieChartURL(CellularComponentGOTerm.class, goData),
-                getPieChartURL(MolecularFunctionGOTerm.class, goData),
-                null,
-                goData.get(BiologicalProcessGOTerm.class), emgFile, archivedSequences, propertyContainer);
+        if (emgFile != null) {
+            Map<Class, List<AbstractGOTerm>> goData = loadGODataFromCSV(propertyContainer.getPathToAnalysisDirectory(),
+                    emgFile);
+            return new AnalysisStatsModel(getSessionSubmitter(sessionManager), pageTitle, breadcrumbs, sample,
+                    getBarChartURL(propertyContainer.getPathToAnalysisDirectory(), emgFile),
+                    getPieChartURL(BiologicalProcessGOTerm.class, goData),
+                    getPieChartURL(CellularComponentGOTerm.class, goData),
+                    getPieChartURL(MolecularFunctionGOTerm.class, goData),
+                    null,
+                    goData.get(BiologicalProcessGOTerm.class), emgFile, archivedSequences, propertyContainer);
+        } else {
+            return new AnalysisStatsModel(getSessionSubmitter(sessionManager), pageTitle, breadcrumbs, sample,
+                    emgFile, archivedSequences, propertyContainer);
+        }
     }
 
     public static StudyViewModel getStudyViewModel(SessionManager sessionManager, Study study,
