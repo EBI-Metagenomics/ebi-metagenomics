@@ -59,11 +59,14 @@
                                     <span class="list_desc"><c:out value="${entry.key.shortStudyAbstract} ..."/></span>
                                     <a href="<c:url value="${baseURL}/study/${entry.key.studyId}"/>#study_desc" class="more_view">view more</a> -  <a href="<c:url value="${baseURL}/study/${entry.key.studyId}"/>#samples_id"  class="list_sample"><c:out value="${entry.value} samples"/></a>                                                                                                                                                           </p>
                             </c:forEach>
-                            <p>
-                                <a href="<c:url value="${baseURL}/studies/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>" title="View all public studies" class="all">All public projects</a>
-                                <a href="<c:url value="${baseURL}/studies/doSearch?search=Search&studyVisibility=MY_PROJECTS"/>" title="View all my studies" class="all">All my projects</a></p>
                         </c:otherwise>
                     </c:choose>
+                    <p>
+                        <a href="<c:url value="${baseURL}/studies/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>" title="View all public studies" class="all">All public projects</a>
+                        <c:if test="${not empty model.myStudiesMap}">
+                            <a href="<c:url value="${baseURL}/studies/doSearch?search=Search&studyVisibility=MY_PROJECTS"/>" title="View all my studies" class="all">All my projects</a>
+                        </c:if>
+                    </p>
                 </div>
 
                 <div id="list-data-sample">
@@ -95,7 +98,10 @@
                     </c:choose>
                     <p>
                         <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search"/>" title="View all public samples" class="all">All public samples</a>
-                        <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=MY_SAMPLES&search=Search"/>" title="View all my samples" class="all">All my samples</a></p>
+                        <c:if test="${not empty model.mySamples}">
+                        <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=MY_SAMPLES&search=Search"/>" title="View all my samples" class="all">All my samples</a>
+                        </c:if>
+                    </p>
                 </div>
             </c:when>
             <%-- End of show MyStudies and MySamples tables--%>
@@ -137,7 +143,6 @@
                 </div>
             </c:otherwise>
         </c:choose>
-
     </section>
 </div>
 

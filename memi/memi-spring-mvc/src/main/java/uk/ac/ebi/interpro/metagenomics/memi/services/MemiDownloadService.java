@@ -98,7 +98,7 @@ public class MemiDownloadService {
             //create a file input stream and concatenate if the previous input stream if exists
             String pathName = sampleID + ".csv";
             Resource sampleResource = new ClassPathResource(CLASS_PATH + pathName);
-            if (sampleResource != null && sampleResource.exists()) {
+            if (sampleResource.exists()) {
                 try {
                     sampleFileIs = sampleResource.getInputStream();
                 } catch (IOException e) {

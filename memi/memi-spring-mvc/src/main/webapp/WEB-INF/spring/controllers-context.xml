@@ -32,17 +32,17 @@
     <!-- Exception translation bean post processor -->
     <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
 
-    <!--Metagenomics datasource-->
-    <bean name="ipDevDatasource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+    <bean id="memiDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="oracle.jdbc.OracleDriver"/>
         <property name="url" value="${jcp.jdbc.oracle.ipdev.url}"/>
         <property name="username" value="${jcp.jdbc.oracle.ipdev.username}"/>
         <property name="password" value="${jcp.jdbc.oracle.ipdev.password}"/>
     </bean>
 
-    <!--ENA datasource-->
-    <bean id="enaAproDatasource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+    <!--Data source for ADEV-->
+    <bean id="enaLoginDataSource"
+          class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="oracle.jdbc.OracleDriver"/>
         <property name="url" value="${jcp.jdbc.oracle.apro.url}"/>
         <property name="username" value="${jcp.jdbc.oracle.apro.username}"/>
         <property name="password" value="${jcp.jdbc.oracle.apro.password}"/>
@@ -75,7 +75,7 @@
     <bean id="hibernateSessionFactory"
           class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
         <!--Database connection settings-->
-        <property name="dataSource" ref="ipDevDatasource"/>
+        <property name="dataSource" ref="memiDataSource"/>
         <!--Hibernate properties-->
         <property name="hibernateProperties">
             <props>
@@ -113,11 +113,11 @@
     <bean id="sampleDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateSampleDAOImpl"/>
 
     <bean name="submitterDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.SubmitterDAOImpl">
-        <property name="dataSource" ref="enaAproDatasource"/>
+        <property name="dataSource" ref="enaLoginDataSource"/>
     </bean>
 
     <bean name="fileInfoDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.EmgLogFileInfoDAOImpl">
-        <property name="dataSource" ref="ipDevDatasource"/>
+        <property name="dataSource" ref="memiDataSource"/>
     </bean>
 
     <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
