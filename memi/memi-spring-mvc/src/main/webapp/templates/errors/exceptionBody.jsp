@@ -18,6 +18,8 @@ Random filler text since if the error page is less 513 bytes then Internet Explo
 
     <p>
         Sorry, there was a problem with this page/file.
+        Please consider <a href="<c:url value="${baseURL}/contact"/>" title="Contact us">contacting us</a> to report this issue,
+        including details of what happened and which web browser/version number you are using. Thank you.
     </p>
 
     <p>
