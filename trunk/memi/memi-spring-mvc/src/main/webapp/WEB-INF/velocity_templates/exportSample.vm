@@ -8,6 +8,6 @@
 
 #foreach( $key in $keySet )
 #if( $key != 'SampleDescription')
-#if( !$propertyMap.get($key) )N/A;#{else}$propertyMap.get($key);#end
+#if( !$propertyMap.get($key) )"N/A";#{else}"$propertyMap.get($key)";#end
 #end
 #end

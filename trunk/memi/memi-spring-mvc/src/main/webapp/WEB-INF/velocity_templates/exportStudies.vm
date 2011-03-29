@@ -9,7 +9,7 @@
 #foreach( $property in $studyProperties )
 #if($property == 'PROJECT_NAME')
 #if($study.studyName)
-$study.studyName,#{else},#end
+"$study.studyName",#{else},#end
 #elseif($property == 'NUMBER_OF_SAMPLES')$propertyMap.get($study),#elseif($property == 'SUBMITTED_DATE')
 #if($study.lastMetadataReceived)
 $study.lastMetadataReceived,#{else},#end
