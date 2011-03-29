@@ -26,8 +26,9 @@ public class HostSample extends Sample {
     private int hostTaxonomyId;
 
     @Column(name = "HOST_SEX", length = 30)
-    @Enumerated(value = EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     private HostSex hostSex;
+
 
     public Class<? extends Sample> getClazz() {
         return this.getClass();
