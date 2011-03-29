@@ -138,7 +138,7 @@ public class ViewStudiesController extends AbstractController implements IMGCont
 
                 fileContent.append(study.getStudyId()).append(',');
 
-                fileContent.append(study.getStudyName().replaceAll(",", "")).append(',');
+                fileContent.append("\"").append(study.getStudyName()).append("\",");
 
                 fileContent.append(numSamples).append(',');
 
@@ -160,11 +160,11 @@ public class ViewStudiesController extends AbstractController implements IMGCont
                     fileContent.append(prd).append(',');
                 }
 
-                String cn = study.getCentreName().replaceAll(",", "-");
+                String cn = study.getCentreName();
                 if (cn == null || cn.equals("")) {
                     fileContent.append(',');
                 } else {
-                    fileContent.append(cn).append(',');
+                    fileContent.append("\"").append(cn).append("\",");
                 }
                 fileContent.append(study.getExperimentalFactor()).append(',');
 
@@ -177,7 +177,7 @@ public class ViewStudiesController extends AbstractController implements IMGCont
                     fileContent.append(spu).append(',');
                 }
 
-                fileContent.append(study.getStudyAbstract().replaceAll(",", "")).append(',');
+                fileContent.append("\"").append(study.getStudyAbstract()).append("\",");
 
                 fileContent.append("\n");
             }
