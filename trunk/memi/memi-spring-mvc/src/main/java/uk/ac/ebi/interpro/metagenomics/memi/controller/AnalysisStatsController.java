@@ -66,32 +66,32 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
 
     @RequestMapping(value = "/doExportGOSlimFile/{fileName}", method = RequestMethod.GET)
     public ModelAndView doExportGOSlimFile(@PathVariable final String sampleId, @PathVariable final String fileName, ModelMap model, final HttpServletResponse response) {
-        return handleExport(sampleId, model, response, "_summary.go_slim", "tsv");
+        return handleExport(sampleId, model, response, "_summary.go_slim", "_GO_slim.tsv");
     }
 
     @RequestMapping(value = "/doExportGOFile/{fileName}", method = RequestMethod.GET)
     public ModelAndView doExportGOFile(@PathVariable final String sampleId, @PathVariable final String fileName, final ModelMap model, final HttpServletResponse response) {
-        return handleExport(sampleId, model, response, "_summary.go", "tsv");
+        return handleExport(sampleId, model, response, "_summary.go", "_GO.tsv");
     }
 
     @RequestMapping(value = "/doExportMaskedFASTAFile/{fileName}", method = RequestMethod.GET)
     public ModelAndView doExportMaskedFASTAFile(@PathVariable final String sampleId, @PathVariable final String fileName, final ModelMap model, final HttpServletResponse response) {
-        return handleExport(sampleId, model, response, "_masked.fasta", "fasta");
+        return handleExport(sampleId, model, response, "_masked.fasta", "_nt_reads.fasta");
     }
 
     @RequestMapping(value = "/doExportCDSFile/{fileName}", method = RequestMethod.GET)
     public ModelAndView doExportCDSFile(@PathVariable final String sampleId, @PathVariable final String fileName, final ModelMap model, final HttpServletResponse response) {
-        return handleExport(sampleId, model, response, "_CDS.faa", "fasta");
+        return handleExport(sampleId, model, response, "_CDS.faa", "_pCDS.fasta");
     }
 
     @RequestMapping(value = "/doExportI5File/{fileName}", method = RequestMethod.GET)
     public ModelAndView doExportI5File(@PathVariable final String sampleId, @PathVariable final String fileName, final ModelMap model, final HttpServletResponse response) {
-        return handleExport(sampleId, model, response, "_I5.tsv", "tsv");
+        return handleExport(sampleId, model, response, "_I5.tsv", "_InterPro.tsv");
     }
 
     @RequestMapping(value = "/doExportIPRFile/{fileName}", method = RequestMethod.GET)
     public ModelAndView doExportIPRFile(@PathVariable final String sampleId, @PathVariable final String fileName, final ModelMap model, final HttpServletResponse response) {
-        return handleExport(sampleId, model, response, "_summary.ipr", "tsv");
+        return handleExport(sampleId, model, response, "_summary.ipr", "_InterPro_sum.tsv");
     }
 
     private ModelAndView handleExport(final String sampleId, ModelMap model, final HttpServletResponse response,
@@ -108,7 +108,7 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
                 File file = new File(propertyContainer.getPathToAnalysisDirectory() + directoryName + '/' + directoryName + fileNameSuffix);
 
                 if (downloadService != null) {
-                    downloadService.openDownloadDialog(response, file, emgFile.getFileName() + '.' + fileExtension, false);
+                    downloadService.openDownloadDialog(response, file, emgFile.getFileName() + fileExtension, false);
                 }
             }
         }, model, sampleId);
