@@ -13,7 +13,9 @@ body {
     word-spacing: 0em;
     line-height: 1.59;
     text-align: center; /* centers the container in IE 5* browsers.*/
-    background: url(../img/bgd_main_grey.jpg); }
+     /* removed to make it EBI compliant
+      background: url(../img/bgd_main_grey.jpg); */
+    }
 
 body.grey #wrapper,div.top-menu ul li.grey, body.grey div.but_top { background: url(../img/bgd_main_grey.jpg) #b5b5b5;}
 body.red #wrapper, div.top-menu ul li.red, body.red div.but_top { background: url(../img/bgd_main_red.jpg) #ee0836;}
@@ -24,6 +26,8 @@ body.orange #wrapper,div.top-menu ul li.orange, body.orange div.but_top  { backg
 body.greyblue #wrapper, body.greyblue h5, div.top-menu ul li.greyblue, body.greyblue div.but_top { background: url(../img/bgd_main_greyblue.jpg) #7d9ca6;}
 body.pink #wrapper, div.top-menu ul li.pink, body.pink div.but_top { background: url(../img/bgd_main_pink.jpg) #e80767;}
 body.blue #wrapper, body.blue h5, div.top-menu ul li.blue, body.blue div.but_top { background: url(../img/bgd_main_blue.jpg) #14c1df;}
+body.ebigreen #wrapper, div.top-menu ul li.ebigreen, body.ebigreen div.but_top { background: url(../img/bgd_main_ebi_green.jpg) #207A7A;}
+body.ebigrey #wrapper, div.top-menu ul li.ebigrey, body.ebigrey div.but_top { background: url(../img/bgd_main_ebi_grey.jpg) #404040;}
 
 @font-face {
 font-family: 'MyriadProRegular';
@@ -37,7 +41,7 @@ font-style: normal;
 
 p { display: block;margin: 1em 0px; clear:none;}
 
-strong {font-weight:bold;}
+strong, th {font-weight:bold;}
 small {font-size:80%;}
 
 ul, ol {
@@ -77,12 +81,13 @@ a:active { color: #647685;}
 
 #wrapper {
 overflow:auto; /*  To contain floated elements, apply overflow:auto; to the parent element, or place something to clear the floats at the bottom of the container, such as: <div style="clear:both;"></div>*/
+width: 972px;
+/* removed to make it EBI compliant 
 box-shadow: 0px 0px 70px #696969;
 -moz-box-shadow: 0px 0px 70px #696969;
 -khtml-box-shadow: 0px 0px 70px #696969;
 -webkit-box-shadow: 0px 0px 70px #696969;
-width: 972px;
-margin: 0px auto;
+margin: 0px auto;    */
 text-align: left; /* overrides text-align: center on the body element. */
 padding:14px 14px 0 14px;
 z-index:20;
@@ -94,23 +99,32 @@ border:0px #dddddd solid;
 #extra_beta {
 background: transparent url(../img/ico_beta_8.png) no-repeat left bottom;
 position: absolute;
-right:50%;
-top:78px;  /* was 36px - temporarly changed becasue of the BETA */
+left:420px;/* added to make it EBI compliant*/
+/* removed to make it EBI compliant
+right:50%;*/
+top:84px;  /* was 36px - temporarly changed becasue of the BETA */
 width: 60px;
 height:  62px;
 z-index:90;
 border:0px #dddddd solid;
 }
 
+#extra_beta:hover {
+height:  68px;
+}
+
 #extra_feedback h1 a{
 float: left;
 overflow: hidden;
 text-indent: -9999px;
-background: transparent url(../img/button_feedback_off.gif) no-repeat -2px;
+background: transparent url(../img/button_feedback_off_r.gif) no-repeat 2px;
 position: fixed;
 _position: absolute;  /* position fixed is not recognise on IE6 */
-left: 0;
-top:100px;  /* was 50px - temporarly changed becasue of the BETA */
+right: 0;
+/* removed to make it EBI compliant
+background: transparent url(../img/button_feedback_off.gif) no-repeat -2px;
+left: 0;  */
+top:100px; 
 width: 35px;
 height:  102px;
 z-index:100;
@@ -118,19 +132,28 @@ border:0px #dddddd solid;
 }
 
 #extra_feedback h1 a:hover {
-background: transparent url(../img/button_feedback_over.gif) no-repeat ;
+background: transparent url(../img/button_feedback_over_r.gif) no-repeat;
+/* removed to make it EBI compliant
+background: transparent url(../img/button_feedback_over.gif) no-repeat; */
 }
 
 #extra_feedback h1 a:active {
-background: transparent url(../img/button_feedback_active.gif) no-repeat ;
+background: transparent url(../img/button_feedback_active_r.gif) no-repeat;
+/* removed to make it EBI compliant
+background: transparent url(../img/button_feedback_active.gif) no-repeat;*/
 }
 
-.feedback_form  {
+.feedbackform_tab  {
 background: transparent url(../img/button_feedback_oriz.gif) no-repeat ;
 border:0px solid #E5E5E5; width:102px; height:35px;
 margin-left:7px;    
 }
 
+.loginform_tab  {
+background: transparent url(../img/button_login_oriz.png) no-repeat ;
+border:0px solid #E5E5E5; width:102px; height:35px;
+margin-left:7px;
+}
 #extraDiv1 {
 background: transparent url(../img/bgd_earth.gif) no-repeat -600px -1000px;
 position: fixed;
@@ -146,14 +169,18 @@ header, nav, .banner  { background-color: white;}
 nav { float: left; width:100%;}
 
 footer {
+text-align:left; /* added to make it EBI compliant  */
 color:#3e3e3e;
 z-index:30;
 border:0px red solid;
 display:block; /* for IE*/
 }
 
-footer #footer { width: 100%;  height:60px; background: url(../img/bgd_white_op45_8.png);}
-footer #linec  { width: 100%; height:4px; background: url(../img/bgd_black_op20_8.png);}
+footer #footer {
+padding: 4px 0 0 14px; /* added to make it EBI compliant  */
+height:30px;    /* was 60px modified to make it EBI compliant  */
+background: url(../img/bgd_white_op45_8.png) #c3c3c3;}
+footer #linec  { width:  100%; height:4px; background: url(../img/bgd_black_op20_8.png);}
 footer #lined  {width: 100%; height:8px;  background: url(../img/bgd_black_op40_8.png); }
 
 div.banner {
@@ -305,8 +332,8 @@ border: 1px solid #ccc;
 }
 
 
-#sidebar-news { color:#3e3e3e;
-padding:14px 0; /* to remove when more news*/
+#sidebar-news {
+color:#3e3e3e;
 }
 
 #sidebar-news a.twitter {
@@ -348,7 +375,7 @@ background:url(../img/bgd_black_op20_8.png);
 table {
 border-collapse:collapse;
 border-spacing:2px;
-border: solid 1px #eaeaea;
+border: solid 1px #e5e5e5;
 font-size:100%;
 width:100%;/* bug 100% with IE*/
 vertical-align: top;
@@ -365,7 +392,7 @@ background: url(../img/bgd_main_grey.jpg) #b5b5b5;
 }
 
 #contact  {
-border: solid 1px #eaeaea;
+border: solid 1px #e5e5e5;
 -moz-border-radius:4px;
 -khtml-border-radius:4px;
 -webkit-border-radius:4px;
@@ -416,12 +443,13 @@ border: 1px solid #e5e5e5;
 -moz-border-radius:2px;
 -webkit-border-radius:2px;
 border-radius:2px;
-color:#666;
+color:#424242;
 /* text-shadow:1px 1px 1px #fff;  */
 }
 
 table.result tbody td a:hover{
-text-decoration:none;
+text-decoration:underline;
+color:#006AF6;
 }
 
 table.result thead th:empty{background:transparent;border:none;}
@@ -457,7 +485,7 @@ border: 2px solid #E7EFE0;
 }
 /* END TABLE */
 
-/* TITLE, TEXT*/
+/* TITLE + TEXT*/
 
 h2 {
 border: solid 0px red;
@@ -508,18 +536,51 @@ font-size:150%;
 border-radius: 14px 14px 0 0;
 -moz-border-radius: 14px 14px 0 0;
 -khtml-border-radius: 14px 14px 0 0;
--webkit-border-radius: 10px 10px 0 0;
+-webkit-border-radius: 14px 14px 0 0;
 padding: 2px 0 0 4px;
 margin-bottom:2px;
 }
+
+.step_breadcrumbs {
+color:#c3c3c3;
+}
+
+
+#selected {
+color:#445668;/*font-size:120%;*/    }
+#selected .num {
+border:2px solid #7C8C99;
+/*margin: 0  2px 0 7px ;
+padding:0 7px;
+border-radius: 14px;
+-moz-border-radius: 14px;
+-khtml-border-radius: 14px;
+-webkit-border-radius: 14px;
+font-size:110%;*/
+}
+
+.num {
+border:1px solid #c3c3c3;
+margin: 0  2px 0 7px ;
+padding:1px 5px;
+border-radius: 10px;
+-moz-border-radius: 10px;
+-khtml-border-radius: 10px;
+-webkit-border-radius: 10px;
+font-size:110%;
+}
+
 /* END TITLE */
 
-
-
-#sidebar-login img, #sidebar-mailing img, #sidebar-news img {
+#sidebar-login img, #sidebar-mailing img, #sidebar-news img, #sidebar-warning img{
 float:right;
 margin: 4px 14px 0 4px;
 }
+#sidebar-ena img {
+float:right;
+margin: 4px 10px 0 4px;
+}
+
 
 #submit-data {
 width:100%;
@@ -586,7 +647,7 @@ background: url(../img/arrow_link_small.jpg) no-repeat right top;
 
 
 section {
-border: solid 0px #eaeaea;
+border: solid 0px black;
 display:block;
 }
 
@@ -595,7 +656,7 @@ margin:0;
 }
 
 #main-content {
-background: transparent url(../img/bgd_hex_8.png) no-repeat 630px 460px;
+background: transparent url(../img/bgd_hex_8.png) no-repeat 630px 560px;
 overflow:auto; /*  To contain floated elements, apply overflow:auto; to the parent element*/
 border: solid 0px black;
 width:100%;
@@ -628,6 +689,11 @@ margin-top:0;
 background: url(../img/bgd_white_op45_8.png);
 color:#666;
 height:auto;
+}
+#content-full #sidebar{
+background: none;
+border: solid 0px black;
+width:222px;
 }
 
 #sidebar-nav {
@@ -672,12 +738,15 @@ color:#c3c3c3;
 /*background-color:green;*/
 }
 
+#content-full #sidebar-mailing, #sidebar-warning, #sidebar-ena {
+margin: 0 7px 14px 0px;
+}
 
 #sidebar-login, #sidebar-news, #sidebar-mailing{
 margin: 14px 20px 14px 20px;
 }
 
-#sidebar-login, #sidebar-mailing  {
+#sidebar-login, #sidebar-mailing, #sidebar-warning, #sidebar-ena {
 border: solid 0px black;
 background-color:white;
 padding:10px;
@@ -765,9 +834,12 @@ padding:14px;
 
 
 .center {margin: 0px auto; width:400px;}
-.center_972 {margin: 0px auto;width: 972px; text-align: left;}
+.center_972 {
+/* removed to make it EBI compliant
+margin: 0px auto;*/
+width: 972px; text-align: left;}
 
-.separator {margin: 4px 0 4px 0; height:8px; width:194px; display:block; border:0px solid #eaeaea;background: url(../img/bgd_sep_dot.gif) repeat-x;}
+.separator {margin: 4px 0 4px 0; height:8px; width:194px; display:block; background: url(../img/bgd_sep_dot.gif) repeat-x;}
 
 /* FORM */
 
@@ -777,7 +849,7 @@ padding:14px;
 -webkit-border-radius: 0 0 20px 0;
 border-radius: 0 0 20px 0;
 padding:14px;
-border:1px solid #eaeaea;
+border:1px solid #e5e5e5;
 width:400px;
 margin:7px 0;
 }
@@ -795,7 +867,7 @@ border: 0px solid #556f8c;
 }
 
 #filter input,#filter select {
-	margin: 10px 20px 0 0; color: #445668;
+margin: 10px 20px 0 0; color: #445668;
 }
 #filter input:focus  {
 	background: #F4F4F8;	
@@ -838,11 +910,11 @@ border: 0px solid #696969;
 
 input.style, textarea {
     padding: 9px;
-    border: solid 1px #E5E5E5;
+    border: solid 1px #abadb3;
     outline: 0;
     font: normal 13px/100% Verdana, Tahoma, sans-serif;
     width: 200px;
-    background: #FFFFFF url('../img/bg_form.png') left top repeat-x;     /*to add pict*/
+    background: #FFFFFF;     /*to add pict*/
     background: -webkit-gradient(linear, left top, left 25, from(#FFFFFF), color-stop(4%, #EEEEEE), to(#FFFFFF));
     background: -moz-linear-gradient(top, #FFFFFF, #EEEEEE 1px, #FFFFFF 25px);
     }
@@ -875,6 +947,41 @@ input.style:focus, textarea:focus {
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     }
+
+.form_row {
+margin: 4px 0px;
+padding: 4px 0px;
+position: relative;
+border: 0px solid #ffaa22;
+overflow:auto;
+}
+
+.form_row input {
+
+float:left;  display: block;
+}
+
+.form_help {
+float:right;
+display: block;
+color: #455872; /*was  #8C2C5F*/
+font-size: 90%;
+margin: 0;
+padding: 7px;
+visibility: visible;
+width: 300px;
+line-height: 14px;
+background: #f1f3f7;/*was  #FAEEF4*/
+-webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+border-radius: 5px;
+}
+
+#subForm, #content-full #loginForm {
+border: 1px solid #e5e5e5;
+padding:14px;
+}
+
 /* END FORM */
 
 /* EXPORT OPTIONS */
@@ -910,9 +1017,12 @@ background: url(../img/icon_csv_plus.gif) no-repeat right top;
 /* END EXPORT OPTIONS */
 
 #breadcrumbs {
-display:block;border:0px red solid;  height:24px; background: url(../img/bgd_white_op45_8.png);
+display:block;border:0px red solid;  height:24px;
 position:relative; /*to make z-index work */
 z-index:50;
+/* removed to make it EBI compliant
+background: url(../img/bgd_white_op45_8.png);                                     */
+padding: 8px 0 0 14px;/* added to make it EBI compliant*/
 }
 
 #breadcrumbs .ebi_breadcrumbs li   {font-size:100%; background-color:transparent; } /*overwrite EBI style */
@@ -978,11 +1088,22 @@ figure:hover figcaption {
 
 .error {
 padding-left:18px;
-background:url(../img/ico_warning_8.png) no-repeat center left;
+background:url(../img/ico_warning_8.png) no-repeat 4px left;
 color: #ff0000;
-clear:both;
+clear:left;
+display:block;
 }
 
 #ordered {font-weight: bold;}
 
 .ebi_contents {position:absolute;top:55px;margin:0;padding:0;width:100%;z-index:2;}/*added because of the EBI header */
+
+.menu_bgd {
+background: url(../img/bgd_contentfull_menu.gif) -14px;
+}
+
+/* JQuery */
+.ui-datepicker-trigger {
+padding-left:2px; padding-top:1px;
+
+}
