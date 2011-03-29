@@ -12,7 +12,7 @@
 
  
     <form:form action="contact" commandName="contactForm">
-        <div class="feedback_form"></div>
+        <div class="feedbackform_tab"></div>
         <table class="result" id="contact">
             <tr>
                 <td>E-Mail address <small>*</small> : <form:input path="sender"  cssStyle="margin-left:14px; width:284px;"/></td>
