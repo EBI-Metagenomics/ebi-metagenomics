@@ -6,9 +6,7 @@
     <div class="top-menu">
         <ul>
             <li class="grey"><a href="<c:url value="${baseURL}/"/>" title="Home">Home</a></li>
-            <li class="pink">
-                <a href="<c:url value="${baseURL}/submit"/>" class="more_desc" title="Submit data">Submit data</a>
-            </li>
+            <li class="ebigrey"><a href="<c:url value="${baseURL}/submit"/>" class="more_desc" title="Submit data">Submit data</a></li><%--changed to make it EBI compliant --%> 
             <li class="blue">
                 <c:choose>
                     <c:when test="${empty model.submitter}">
@@ -36,8 +34,7 @@
 
 
             <li class="green"><a href="<c:url value="${baseURL}/info"/>" title="About us">About</a></li>
-            <li class="yellow"><a href="<c:url value="${baseURL}/contact"/>" title="Contact us">Contact</a></li>
-
+            <li class="ebigreen"><a href="<c:url value="${baseURL}/contact"/>" title="Contact us">Contact</a></li><%--changed to make it EBI compliant --%>
             </li>
         </ul>
     </div>
