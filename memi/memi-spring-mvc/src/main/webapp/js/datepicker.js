@@ -2,8 +2,8 @@ $(function() {
     $("#datepicker").datepicker({
         showOn: 'button',
         buttonText: 'Choose a date',
-        buttonImage: '/img/calendar.gif',
-        buttonImageOnly: false,
+        buttonImage: 'img/calendar.png',
+        buttonImageOnly: true,
         numberOfMonths: 1,
         maxDate: '+24m',
         minDate: '0d',
