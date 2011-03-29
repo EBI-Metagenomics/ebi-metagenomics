@@ -100,7 +100,7 @@
     </definition>
 
     <definition name="analysisStatsView" extends="rootTemplate">
-        <put-attribute name="bodyClass" type="string" value="greyBlue"/>
+        <put-attribute name="bodyClass" type="string" value="greyblue"/>
         <put-attribute name="body" value="/templates/analysisStatsBody.jsp"/>
     </definition>
 
