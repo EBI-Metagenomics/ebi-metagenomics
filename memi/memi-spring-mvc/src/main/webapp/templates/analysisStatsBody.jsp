@@ -39,7 +39,7 @@
 
             <table border="1" width="95%">
                 <tr>
-                    <td>Biological process</td>
+                    <td></td>
                     <td align="left">
                         <c:if test="${not empty model.pieChartBiologicalProcessURL}">
                             <a title="<c:out value="${goSlimExportID}"/>"
@@ -54,6 +54,9 @@
                             </a>
                         </c:if>
                     </td>
+                </tr>
+                <tr>
+                    <td>Biological process</td>
                 </tr>
                 <tr>
                     <td>
