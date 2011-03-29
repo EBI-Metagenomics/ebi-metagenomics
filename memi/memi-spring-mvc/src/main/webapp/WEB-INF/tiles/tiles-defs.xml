@@ -36,12 +36,12 @@
     </definition>
 
     <definition name="submit" extends="rootTemplate">
-        <put-attribute name="bodyClass" type="string" value="pink"/>
+        <put-attribute name="bodyClass" type="string" value="ebigrey"/>
         <put-attribute name="body" value="/templates/submitBody.jsp"/>
     </definition>
 
     <definition name="submitSuccess" extends="rootTemplate">
-        <put-attribute name="bodyClass" type="string" value="pink"/>
+        <put-attribute name="bodyClass" type="string" value="ebigrey"/>
         <put-attribute name="body" value="/templates/submitSuccessBody.jsp"/>
     </definition>
 
@@ -75,17 +75,17 @@
     </definition>
 
     <definition name="contact" extends="rootTemplate">
-        <put-attribute name="bodyClass" type="string" value="yellow"/>
+        <put-attribute name="bodyClass" type="string" value="ebigreen"/>
         <put-attribute name="body" value="/templates/contactBody.jsp"/>
     </definition>
 
     <definition name="contactSuccess" extends="rootTemplate">
-        <put-attribute name="bodyClass" type="string" value="yellow"/>
+        <put-attribute name="bodyClass" type="string" value="ebigreen"/>
         <put-attribute name="body" value="/templates/contactSuccessBody.jsp"/>
     </definition>
 
     <definition name="login" extends="rootTemplate">
-        <put-attribute name="bodyClass" type="string" value="pink"/>
+        <put-attribute name="bodyClass" type="string" value="ebigrey"/>
         <put-attribute name="body" value="/templates/loginBody.jsp"/>
     </definition>
 
