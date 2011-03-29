@@ -20,7 +20,7 @@ Random filler text since if the error page is less 513 bytes then Internet Explo
         Sorry, this page or document could not be found.
     </p>
     <p>
-        If you believe this to be a broken link them please consider contacting us to report it.
+        If you believe this to be a broken link them please consider <a href="<c:url value="${baseURL}/contact"/>" title="Contact us">contacting us</a> to report it.
         To continue you can try going back to your <a href="#" onclick="history.go(-1);return false;">previous browser
         page</a>, using the navigation menu above or starting again from the EBI metagenomics
         <a href="<c:url value="${baseURL}/"/>" title="Home">home page</a>.
