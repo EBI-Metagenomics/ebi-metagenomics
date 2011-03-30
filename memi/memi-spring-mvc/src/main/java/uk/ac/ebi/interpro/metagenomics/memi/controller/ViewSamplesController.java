@@ -78,7 +78,7 @@ public class ViewSamplesController extends AbstractController implements IMGCont
      * Handles the export of the samples table.
      */
     @RequestMapping(value = "doExportTable", method = RequestMethod.GET)
-    public ModelAndView doExportSampleTable(@ModelAttribute(SampleFilter.MODEL_ATTR_NAME) final SampleFilter filter,
+    public ModelAndView doExportSampleTable(@ModelAttribute(SampleFilter.MODEL_ATTR_NAME) SampleFilter filter,
                                             @RequestParam(required = false) final SampleFilter.SampleVisibility sampleVisibility,
                                             @RequestParam(required = false) final String searchTerm,
                                             @RequestParam(required = false) final Sample.SampleType sampleType,
@@ -112,7 +112,7 @@ public class ViewSamplesController extends AbstractController implements IMGCont
      * Handles the export of a more detailed export file.
      */
     @RequestMapping(value = "doExportDetails", method = RequestMethod.GET)
-    public ModelAndView doExportDetails(@ModelAttribute(SampleFilter.MODEL_ATTR_NAME) final SampleFilter filter,
+    public ModelAndView doExportDetails(@ModelAttribute(SampleFilter.MODEL_ATTR_NAME) SampleFilter filter,
                                         @RequestParam(required = false) final SampleFilter.SampleVisibility sampleVisibility,
                                         @RequestParam(required = false) final String searchTerm,
                                         @RequestParam(required = false) final Sample.SampleType sampleType,
@@ -138,30 +138,15 @@ public class ViewSamplesController extends AbstractController implements IMGCont
     }
 
     @RequestMapping(params = "search", value = "doSearch", method = RequestMethod.GET)
-    public ModelAndView doSearch(@ModelAttribute(SampleFilter.MODEL_ATTR_NAME) final SampleFilter filter,
+    public ModelAndView doSearch(@ModelAttribute(SampleFilter.MODEL_ATTR_NAME) SampleFilter filter,
                                  @RequestParam(required = false) final SampleFilter.SampleVisibility sampleVisibility,
                                  @RequestParam(required = false) final String searchTerm,
                                  @RequestParam(required = false) final Sample.SampleType sampleType,
-                                 final ModelMap model) {
+                                 ModelMap model) {
         log.info("Requesting doSearch of " + ViewSamplesController.class + "...");
 
         processRequestParams(filter, searchTerm, sampleVisibility, sampleType);
         populateModel(model, filter);
-        model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((ViewSamplesModel) model.get(MGModel.MODEL_ATTR_NAME)).getLoginForm());
-        return new ModelAndView(VIEW_NAME, model);
-    }
-
-    /**
-     * Values are set to an empty string for the search term and a public visibility.
-     */
-    @RequestMapping(params = "clear", value = "doSearch", method = RequestMethod.GET)
-    public ModelAndView doClearSearch(ModelMap model, @ModelAttribute(SampleFilter.MODEL_ATTR_NAME) SampleFilter filter) {
-        log.info("Requesting doClear (POST method)...");
-
-        filter.setSearchTerm("");
-        filter.setSampleVisibility(SampleFilter.SampleVisibility.ALL_PUBLISHED_SAMPLES);
-        filter.setSampleType(null);
-        populateModel(model, new SampleFilter());
         model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((ViewSamplesModel) model.get(MGModel.MODEL_ATTR_NAME)).getLoginForm());
         return new ModelAndView(VIEW_NAME, model);
     }
