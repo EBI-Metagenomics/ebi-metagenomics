@@ -202,22 +202,6 @@ public class ViewStudiesController extends AbstractController implements IMGCont
         return new ModelAndView(VIEW_NAME, model);
     }
 
-    /**
-     * Values are set to an empty string for the search term and a public visibility. The other
-     * parameter are set to all (null).
-     */
-    @RequestMapping(params = "clear", value = "doSearch", method = RequestMethod.GET)
-    public ModelAndView doClearSearch(ModelMap model, @ModelAttribute(StudyFilter.MODEL_ATTR_NAME) StudyFilter filter) {
-        log.info("Requesting doClear (POST method)...");
-
-        filter.setSearchTerm("");
-        filter.setStudyVisibility(StudyFilter.StudyVisibility.ALL_PUBLISHED_PROJECTS);
-        filter.setStudyStatus(null);
-        populateModel(model, new StudyFilter());
-        model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((ViewStudiesModel) model.get(MGModel.MODEL_ATTR_NAME)).getLoginForm());
-        return new ModelAndView(VIEW_NAME, model);
-    }
-
     private void processRequestParams(StudyFilter filter, String searchTerm, StudyFilter.StudyVisibility studyVisibility,
                                       Study.StudyStatus studyStatus) {
         //Set filter parameters
