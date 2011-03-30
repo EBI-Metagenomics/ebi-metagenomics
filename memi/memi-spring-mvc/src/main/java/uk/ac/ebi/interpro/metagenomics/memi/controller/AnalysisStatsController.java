@@ -4,7 +4,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -128,48 +127,6 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
                 getAnalysisStatsModel(sessionManager, sample, pageTitle, getBreadcrumbs(sample), emgFile,
                         MemiTools.getArchivedSeqs(fileInfoDAO, sample), propertyContainer);
         model.addAttribute(MGModel.MODEL_ATTR_NAME, mgModel);
-    }
-
-    @ModelAttribute(value = "resultFileNames")
-    public List<String> populateI5FileNames(@PathVariable String sampleId) {
-        List<String> result = new ArrayList<String>();
-        if (sampleId.equals("Sample_place_holder1")) {
-            String fileName = "wheat_rhizosphere_ME.fasta";
-            fileName = fileName.replace('.', '_').toUpperCase();
-            String downloadPath = propertyContainer.getPathToAnalysisDirectory() + fileName + "/";
-            String pathName = downloadPath + fileName + "_I5.tsv";
-            File file = new File(pathName);
-            if (file.exists() && file.canRead()) {
-                result.add(fileName + "_I5.tsv");
-            }
-            pathName = downloadPath + fileName + "_I5.tsv";
-            file = new File(pathName);
-            if (file.exists() && file.canRead()) {
-                result.add(fileName + "_orf100_200_nameonly.fasta");
-            }
-        } else {
-            List<String> fileNames = fileInfoDAO.getFileNamesBySampleId(sampleId);
-            for (String fileName : fileNames) {
-                fileName = fileName.trim();
-                if (fileName.length() > 0) {
-                    fileName = fileName.replace('.', '_').toUpperCase();
-
-                    //Check if files exist and show only if they are existing
-                    String downloadPath = propertyContainer.getPathToAnalysisDirectory() + fileName + "/";
-                    String pathName = downloadPath + fileName + "_I5.tsv";
-                    File file = new File(pathName);
-                    if (file.exists() && file.canRead()) {
-                        result.add(fileName + "_I5.tsv");
-                    }
-                    pathName = downloadPath + fileName + "_I5.tsv";
-                    file = new File(pathName);
-                    if (file.exists() && file.canRead()) {
-                        result.add(fileName + "_orf100_200_nameonly.fasta");
-                    }
-                }
-            }
-        }
-        return result;
     }
 
     @Override
