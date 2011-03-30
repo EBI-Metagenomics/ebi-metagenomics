@@ -20,7 +20,10 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -124,7 +127,8 @@ public class MGModelFactory {
                     getPieChartURL(CellularComponentGOTerm.class, goData),
                     getPieChartURL(MolecularFunctionGOTerm.class, goData),
                     null,
-                    goData.get(BiologicalProcessGOTerm.class), emgFile, archivedSequences, propertyContainer);
+                    goData.get(BiologicalProcessGOTerm.class), emgFile, archivedSequences, propertyContainer,
+                    getListOfInterProEntries(propertyContainer.getPathToAnalysisDirectory(), emgFile));
         } else {
             return new AnalysisStatsModel(getSessionSubmitter(sessionManager), pageTitle, breadcrumbs, sample,
                     emgFile, archivedSequences, propertyContainer);
@@ -586,6 +590,54 @@ public class MGModelFactory {
             return Float.parseFloat(row[1]);
         }
         return -1f;
+    }
+
+    private static List<InterProEntry> getListOfInterProEntries(String pathToAnalysisDirectory, EmgFile emgFile) {
+        return loadInterProMatchesFromCSV(pathToAnalysisDirectory, emgFile, 5);
+    }
+
+
+    /**
+     * Loads InterPro matches from the Python pipeline result file with file extension '_summary.ipr'.
+     * Please notice that the size of the returned list is limited.
+     *
+     * @param classPathToStatsFile
+     * @param emgFile
+     * @param listSize             Specifies the size limitation of the returned list.
+     * @return
+     */
+    private static List<InterProEntry> loadInterProMatchesFromCSV(String classPathToStatsFile, EmgFile emgFile, int listSize) {
+        List<InterProEntry> result = new ArrayList<InterProEntry>();
+
+        String directoryName = emgFile.getFileIDInUpperCase().replace('.', '_');
+        File file = new File(classPathToStatsFile + directoryName + '/' + directoryName + "_summary.ipr");
+        CSVReader reader = null;
+        try {
+            reader = new CSVReader(new FileReader(file), '\t');
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        if (reader != null) {
+            List<String[]> rows = null;
+            try {
+                rows = reader.readAll();
+            } catch (IOException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+            if (rows != null) {
+                //return size limitation the
+                rows = rows.subList(0, 5);
+                for (String[] row : rows) {
+                    String entryID = row[0];
+                    String entryDesc = row[1];
+                    int numOfEntryHits = Integer.parseInt(row[2]);
+                    if (entryID != null && entryID.trim().length() > 0) {
+                        result.add(new InterProEntry(entryID, entryDesc, numOfEntryHits));
+                    }
+                }
+            }
+        }
+        return result;
     }
 }
 

@@ -39,9 +39,14 @@ public class AnalysisStatsModel extends MGModel {
     private String pieChartCellularComponentURL;
 
     private String pieChartInterProMatchURL;
+    /* List of InterPro entries. Loaded from the MG pipeline produced file with the IPR extension
+     (summary of InterPro matches).
+     */
+    private List<InterProEntry> interProEntries;
 
     private List<AbstractGOTerm> bioGOTerms;
 
+    /* An EmgFile object holds two attributes of the */
     private EmgFile emgFile;
 
     private List<String> archivedSequences;
@@ -50,7 +55,8 @@ public class AnalysisStatsModel extends MGModel {
                        String barChartURL, String pieChartBiologicalProcessURL,
                        String pieChartCellularComponentURL, String pieChartMolecularFunctionURL,
                        String pieChartInterProMatchURL, List<AbstractGOTerm> bioGOTerms, EmgFile emgFile,
-                       List<String> archivedSequences, MemiPropertyContainer propertyContainer) {
+                       List<String> archivedSequences, MemiPropertyContainer propertyContainer,
+                       List<InterProEntry> interProEntries) {
         super(submitter, pageTitle, breadcrumbs, propertyContainer);
         this.sample = sample;
         this.barChartURL = barChartURL;
@@ -58,6 +64,7 @@ public class AnalysisStatsModel extends MGModel {
         this.pieChartMolecularFunctionURL = pieChartMolecularFunctionURL;
         this.pieChartCellularComponentURL = pieChartCellularComponentURL;
         this.pieChartInterProMatchURL = pieChartInterProMatchURL;
+        this.interProEntries = interProEntries;
         this.bioGOTerms = bioGOTerms;
         this.emgFile = emgFile;
         this.archivedSequences = archivedSequences;
@@ -66,7 +73,7 @@ public class AnalysisStatsModel extends MGModel {
     AnalysisStatsModel(Submitter submitter, String pageTitle, List<Breadcrumb> breadcrumbs, Sample sample,
                        EmgFile emgFile, List<String> archivedSequences, MemiPropertyContainer propertyContainer) {
         this(submitter, pageTitle, breadcrumbs, sample, null, null, null, null, null, null, emgFile,
-                archivedSequences, propertyContainer);
+                archivedSequences, propertyContainer, null);
     }
 
     public Sample getSample() {
@@ -103,5 +110,9 @@ public class AnalysisStatsModel extends MGModel {
 
     public EmgFile getEmgFile() {
         return emgFile;
+    }
+
+    public List<InterProEntry> getInterProEntries() {
+        return interProEntries;
     }
 }
