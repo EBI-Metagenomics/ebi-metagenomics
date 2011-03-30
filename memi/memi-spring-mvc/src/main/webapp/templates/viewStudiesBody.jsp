@@ -15,10 +15,12 @@
                     <c:set var="actionUrlParam" value=""/>
                 </c:otherwise>
             </c:choose>
-            <form:form method="GET" action="${pageContext.request.contextPath}/studies/doSearch" commandName="studyFilter">
+            <form:form method="GET" action="${pageContext.request.contextPath}/studies/doSearch"
+                       commandName="studyFilter">
                 <fieldset>
                     <label for="text">Text:</label>
-                    <form:input id="autocomplete" path="searchTerm"/><br/><form:errors path="searchTerm" cssClass="error"/><br/>
+                    <form:input id="autocomplete" path="searchTerm"/><br/><form:errors path="searchTerm"
+                                                                                       cssClass="error"/><br/>
                     <label for="status"> Analysis status:</label>
 
                     <form:select id="studyStatus" path="studyStatus">
@@ -51,41 +53,46 @@
                 </fieldset>
             </form:form>
 
-        </div></div>
+        </div>
+    </div>
 
     <c:choose>
         <c:when test="${not empty model.studySampleSizeMap}">
             <%--Request the current query string to export only the filtered studies--%>
             <c:set var="queryString" value="${pageContext.request.queryString}" scope="session"/>
             <div class="export">
-                <a href="<c:url value="${baseURL}/studies/doExportDetails?${queryString}"/>"  id="csv_plus" title="Export more detailed information about the projects below in CSV format">Export detailed info (CSV)</a>
-                <a href="<c:url value="${baseURL}/studies/doExport?${queryString}"/>" id="csv" title="Export table below in CSV format">Export table (CSV)</a>
+                <a href="<c:url value="${baseURL}/studies/doExportDetails?${queryString}"/>" id="csv_plus"
+                   title="Export more detailed information about the projects below in CSV format">Export detailed info
+                    (CSV)</a>
+                <a href="<c:url value="${baseURL}/studies/doExport?${queryString}"/>" id="csv"
+                   title="Export table below in CSV format">Export table (CSV)</a>
             </div>
 
             <table border="1" class="result">
                 <thead>
                 <tr>
                     <th scope="col" abbr="Name">Project name</th>
-                    <th scope="col" abbr="Samples"  width="60px">Samples</th>
+                    <th scope="col" abbr="Samples" width="60px">Samples</th>
                     <th scope="col" abbr="Date" width="120px">Submitted date</th>
                     <th scope="col" abbr="Analysis" width="80px">Analysis</th>
                 </tr>
                 </thead>
 
                 <tbody>
-
                 <c:forEach var="entry" items="${model.studySampleSizeMap}" varStatus="status">
-                <tr>
-                    <td style="text-align:left;">
-                        <c:if test="${!entry.key.public}"><img alt="private" src="${pageContext.request.contextPath}/img/icon_priv_private.gif">&nbsp;&nbsp;</c:if>
-                        <a href="<c:url value="${baseURL}/study/${entry.key.studyId}"/>">${entry.key.studyName}</a>
-                    </td>
-                    <td>${entry.value}</td>
-                    <td id="ordered">${entry.key.formattedLastReceived}</td>
-                    <td><img src="${pageContext.request.contextPath}/img/ico_${entry.key.studyStatus}_25_8.png" alt="${entry.key.studyStatusAsString}" title="${entry.key.studyStatusAsString}"> </td>
-                </tr>
-                </tbody>
+                    <tr>
+                        <td style="text-align:left;">
+                            <c:if test="${!entry.key.public}"><img alt="private"
+                                                                   src="${pageContext.request.contextPath}/img/icon_priv_private.gif">&nbsp;&nbsp;</c:if>
+                            <a href="<c:url value="${baseURL}/study/${entry.key.studyId}"/>">${entry.key.studyName}</a>
+                        </td>
+                        <td>${entry.value}</td>
+                        <td id="ordered">${entry.key.formattedLastReceived}</td>
+                        <td><img src="${pageContext.request.contextPath}/img/ico_${entry.key.studyStatus}_25_8.png"
+                                 alt="${entry.key.studyStatusAsString}" title="${entry.key.studyStatusAsString}"></td>
+                    </tr>
                 </c:forEach>
+                </tbody>
             </table>
         </c:when>
         <c:otherwise>
