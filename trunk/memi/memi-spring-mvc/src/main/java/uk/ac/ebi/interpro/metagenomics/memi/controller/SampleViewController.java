@@ -64,7 +64,7 @@ public class SampleViewController extends SecuredAbstractController<Sample> {
                 log.info("Building model...");
                 populateModel(model, sample);
             }
-        }, model, sampleId);
+        }, model, sampleId, getModelViewName());
     }
 
 
@@ -81,21 +81,8 @@ public class SampleViewController extends SecuredAbstractController<Sample> {
                     model.addAttribute("isDialogOpen", isDialogOpen);
                 }
             }
-        }, model, sampleId);
+        }, model, sampleId, getModelViewName());
     }
-
-
-//    private Study.StudyType getSampleType(Sample sample) {
-//        if (sample != null) {
-//            if (sample instanceof HostSample) {
-//                return Study.StudyType.HOST_ASSOCIATED;
-//
-//            } else if (sample instanceof EnvironmentSample) {
-//                return Study.StudyType.ENVIRONMENTAL;
-//            }
-//        }
-//        return Study.StudyType.UNDEFINED;
-//    }
 
     /**
      * Creates the home page model and adds it to the specified model map.
