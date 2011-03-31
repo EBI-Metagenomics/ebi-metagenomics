@@ -116,19 +116,20 @@ public class MGModelFactory {
     public static AnalysisStatsModel getAnalysisStatsModel(SessionManager sessionManager, Sample sample,
                                                            String pageTitle, List<Breadcrumb> breadcrumbs,
                                                            EmgFile emgFile, List<String> archivedSequences,
-                                                           MemiPropertyContainer propertyContainer) {
+                                                           MemiPropertyContainer propertyContainer,
+                                                           boolean isReturnSizeLimit) {
         log.info("Building instance of " + AnalysisStatsModel.class + "...");
         if (emgFile != null) {
             Map<Class, List<AbstractGOTerm>> goData = loadGODataFromCSV(propertyContainer.getPathToAnalysisDirectory(),
                     emgFile);
             return new AnalysisStatsModel(getSessionSubmitter(sessionManager), pageTitle, breadcrumbs, sample,
                     getBarChartURL(propertyContainer.getPathToAnalysisDirectory(), emgFile),
-                    getPieChartURL(BiologicalProcessGOTerm.class, goData),
-                    getPieChartURL(CellularComponentGOTerm.class, goData),
-                    getPieChartURL(MolecularFunctionGOTerm.class, goData),
+                    getHBarChartURL(BiologicalProcessGOTerm.class, goData),
+                    getHBarChartURL(CellularComponentGOTerm.class, goData),
+                    getHBarChartURL(MolecularFunctionGOTerm.class, goData),
                     null,
                     goData.get(BiologicalProcessGOTerm.class), emgFile, archivedSequences, propertyContainer,
-                    getListOfInterProEntries(propertyContainer.getPathToAnalysisDirectory(), emgFile));
+                    getListOfInterProEntries(propertyContainer.getPathToAnalysisDirectory(), emgFile, isReturnSizeLimit));
         } else {
             return new AnalysisStatsModel(getSessionSubmitter(sessionManager), pageTitle, breadcrumbs, sample,
                     emgFile, archivedSequences, propertyContainer);
@@ -424,27 +425,55 @@ public class MGModelFactory {
         }
     }
 
-    private static String getPieChartURL(Class clazz, Map<Class, List<AbstractGOTerm>> goData) {
+//    private static String getPieChartURL(Class clazz, Map<Class, List<AbstractGOTerm>> goData) {
+//
+//        List<Integer> data = getGOData(clazz, goData);
+//        List<String> labels = getGOLabels(clazz, goData);
+//        Properties props = new Properties();
+//        props.put(GoogleChartFactory.CHART_MARGIN, "270,270");
+//        props.put(GoogleChartFactory.CHART_SIZE, "740x180");
+//        if (clazz.equals(BiologicalProcessGOTerm.class)) {
+//            props.put(GoogleChartFactory.CHART_COLOUR, "FFFF10,FF0000");
+//        } else if (clazz.equals(CellularComponentGOTerm.class)) {
+//            props.put(GoogleChartFactory.CHART_COLOUR, "FFFF10,00FF00");
+//        } else {
+//            props.put(GoogleChartFactory.CHART_COLOUR, "FFFF10,0000FF");
+//        }
+//
+//        return GoogleChartFactory.buildPieChartURL(props, data, labels);
+//    }
 
-        List<Float> data = getGOData(clazz, goData);
+    private static String getHBarChartURL(Class clazz, Map<Class, List<AbstractGOTerm>> goData) {
+
+        List<Integer> data = getGOData(clazz, goData);
         List<String> labels = getGOLabels(clazz, goData);
         Properties props = new Properties();
-        props.put(GoogleChartFactory.CHART_MARGIN, "270,270");
-        props.put(GoogleChartFactory.CHART_SIZE, "740x180");
-        if (clazz.equals(BiologicalProcessGOTerm.class)) {
-            props.put(GoogleChartFactory.CHART_COLOUR, "FFFF10,FF0000");
-        } else if (clazz.equals(CellularComponentGOTerm.class)) {
-            props.put(GoogleChartFactory.CHART_COLOUR, "FFFF10,00FF00");
-        } else {
-            props.put(GoogleChartFactory.CHART_COLOUR, "FFFF10,0000FF");
-        }
 
-        return GoogleChartFactory.buildPieChartURL(props, data, labels);
+        props.put(GoogleChartFactory.CHART_MARGIN, "0,40,0,0");
+        props.put(GoogleChartFactory.CHART_SIZE, "300x440");
+        props.put(GoogleChartFactory.CHART_COLOUR, "ff0a00,ff4700,ff4700,ffb444,ffb444,ffd088,ffd088," +
+                "ffebcc,b8b082,b8b082,b8b082,b8b082,b8b082,b8b082,b8b082,b8b082");
+        props.put("chxt", "x");
+        props.put("chxs", "0,ffffff,0,0,_");
+
+        props.put("chds", "0,600");
+        props.put("chxr", "0,0,600");
+        props.put("chxs", "0,ffffff,0,0,_");
+
+//        if (clazz.equals(BiologicalProcessGOTerm.class)) {
+//            props.put(GoogleChartFactory.CHART_COLOUR, "FFFF10,FF0000");
+//        } else if (clazz.equals(CellularComponentGOTerm.class)) {
+//            props.put(GoogleChartFactory.CHART_COLOUR, "FFFF10,00FF00");
+//        } else {
+//            props.put(GoogleChartFactory.CHART_COLOUR, "FFFF10,0000FF");
+//        }
+
+        return GoogleChartFactory.buildHorizontalBarChartURL(props, data, labels);
     }
 
 
-    private static List<Float> getGOData(Class clazz, Map<Class, List<AbstractGOTerm>> goData) {
-        List<Float> result = new ArrayList<Float>();
+    private static List<Integer> getGOData(Class clazz, Map<Class, List<AbstractGOTerm>> goData) {
+        List<Integer> result = new ArrayList<Integer>();
         List<AbstractGOTerm> goTerms = null;
         if (clazz.equals(BiologicalProcessGOTerm.class)) {
             goTerms = goData.get(BiologicalProcessGOTerm.class);
@@ -454,15 +483,14 @@ public class MGModelFactory {
             goTerms = goData.get(MolecularFunctionGOTerm.class);
         }
         if (goTerms != null) {
-            float totalNumberOfMatches = 0;
-            //the first iteration is to get the total number of GO term matches
-            for (AbstractGOTerm term : goTerms) {
-                totalNumberOfMatches += (float) term.getNumberOfMatches();
-            }
+//            float totalNumberOfMatches = 0;
+//            //the first iteration is to get the total number of GO term matches
+//            for (AbstractGOTerm term : goTerms) {
+//                totalNumberOfMatches += (float) term.getNumberOfMatches();
+//            }
             //the second iteration is to calculate the pie chart data
             for (AbstractGOTerm term : goTerms) {
-                result.add(((float) term.getNumberOfMatches()) / totalNumberOfMatches);
-
+                result.add(term.getNumberOfMatches());
             }
         }
         return result;
@@ -538,7 +566,7 @@ public class MGModelFactory {
 
 
     private static String getBarChartURL(String classPathToStatsFile, EmgFile emgFile) {
-        List<Float> chartData = loadStatsFromCSV(classPathToStatsFile, emgFile);
+        List<Integer> chartData = loadStatsFromCSV(classPathToStatsFile, emgFile);
         if (chartData != null && chartData.size() > 0) {
             Properties props = new Properties();
             props.put(GoogleChartFactory.CHART_TYPE, "bhs");
@@ -553,8 +581,8 @@ public class MGModelFactory {
         return null;
     }
 
-    private static List<Float> loadStatsFromCSV(String classPathToStatsFile, EmgFile emgFile) {
-        List<Float> result = new ArrayList<Float>();
+    private static List<Integer> loadStatsFromCSV(String classPathToStatsFile, EmgFile emgFile) {
+        List<Integer> result = new ArrayList<Integer>();
         String directoryName = emgFile.getFileIDInUpperCase().replace('.', '_');
         File file = new File(classPathToStatsFile + directoryName + '/' + directoryName + "_summary");
         CSVReader reader = null;
@@ -571,10 +599,10 @@ public class MGModelFactory {
                 e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
             }
             if (rows != null) {
-                float numSubmittedSeqs = getValueOfRow(rows, 0);
-                float numSeqsOfProcessedSeqs = getValueOfRow(rows, 3);
-                float numSeqsWithPredicatedCDS = getValueOfRow(rows, 4);
-                float numSeqsWithInterProScanMatch = getValueOfRow(rows, 5);
+                int numSubmittedSeqs = getValueOfRow(rows, 0);
+                int numSeqsOfProcessedSeqs = getValueOfRow(rows, 3);
+                int numSeqsWithPredicatedCDS = getValueOfRow(rows, 4);
+                int numSeqsWithInterProScanMatch = getValueOfRow(rows, 5);
                 result.add(numSubmittedSeqs);
                 result.add(numSeqsOfProcessedSeqs);
                 result.add(numSeqsWithPredicatedCDS);
@@ -584,29 +612,30 @@ public class MGModelFactory {
         return result;
     }
 
-    private static float getValueOfRow(List<String[]> rows, int i) {
+    private static int getValueOfRow(List<String[]> rows, int i) {
         String[] row = rows.get(i);
         if (row.length > 1) {
-            return Float.parseFloat(row[1]);
+            return Integer.parseInt(row[1]);
         }
-        return -1f;
+        return -1;
     }
 
-    private static List<InterProEntry> getListOfInterProEntries(String pathToAnalysisDirectory, EmgFile emgFile) {
-        return loadInterProMatchesFromCSV(pathToAnalysisDirectory, emgFile, 5);
+    private static List<InterProEntry> getListOfInterProEntries(String pathToAnalysisDirectory, EmgFile emgFile, boolean isReturnSizeLimit) {
+        return loadInterProMatchesFromCSV(pathToAnalysisDirectory, emgFile, isReturnSizeLimit);
     }
 
 
     /**
      * Loads InterPro matches from the Python pipeline result file with file extension '_summary.ipr'.
-     * Please notice that the size of the returned list is limited.
+     * Please notice that the size of the returned list could be limited to 5 items.
+     * TODO: Size limitation is a temporary solution
      *
      * @param classPathToStatsFile
      * @param emgFile
-     * @param listSize             Specifies the size limitation of the returned list.
+     * @param isReturnSizeLimit    Specifies if the size of the returned list is limited to 5.
      * @return
      */
-    private static List<InterProEntry> loadInterProMatchesFromCSV(String classPathToStatsFile, EmgFile emgFile, int listSize) {
+    private static List<InterProEntry> loadInterProMatchesFromCSV(String classPathToStatsFile, EmgFile emgFile, boolean isReturnSizeLimit) {
         List<InterProEntry> result = new ArrayList<InterProEntry>();
 
         String directoryName = emgFile.getFileIDInUpperCase().replace('.', '_');
@@ -626,7 +655,9 @@ public class MGModelFactory {
             }
             if (rows != null) {
                 //return size limitation the
-                rows = rows.subList(0, 5);
+                if (isReturnSizeLimit) {
+                    rows = rows.subList(0, 5);
+                }
                 for (String[] row : rows) {
                     String entryID = row[0];
                     String entryDesc = row[1];
