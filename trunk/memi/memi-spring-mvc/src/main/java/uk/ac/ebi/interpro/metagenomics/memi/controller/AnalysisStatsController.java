@@ -60,7 +60,19 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
                 log.info("Building model...");
                 populateModel(model, sample);
             }
-        }, model, sampleId);
+        }, model, sampleId, getModelViewName());
+    }
+
+    @RequestMapping(value = "/showProteinMatches", method = RequestMethod.GET)
+    public ModelAndView showProteinMatches(final ModelMap model, @PathVariable final String sampleId) {
+        log.info("Checking if sample is accessible...");
+        return checkAccessAndBuildModel(new ModelProcessingStrategy<Sample>() {
+            @Override
+            public void processModel(ModelMap model, Sample sample) {
+                log.info("Building model...");
+                populateModel(model, sample, false);
+            }
+        }, model, sampleId, "showProteinMatches");
     }
 
     @RequestMapping(value = "/doExportGOSlimFile/{fileName}", method = RequestMethod.GET)
@@ -110,14 +122,14 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
                     downloadService.openDownloadDialog(response, file, emgFile.getFileName() + fileExtension, false);
                 }
             }
-        }, model, sampleId);
+        }, model, sampleId, getModelViewName());
     }
 
 
     /**
      * Creates the home page model and adds it to the specified model map.
      */
-    private void populateModel(final ModelMap model, final Sample sample) {
+    private void populateModel(final ModelMap model, final Sample sample, boolean isReturnSizeLimit) {
         String pageTitle = "Results " + sample.getSampleName();
         List<EmgFile> emgFiles = fileInfoDAO.getFilesBySampleId(sample.getSampleId());
         //TODO: For the moment the system only allows to represent one file on the analysis page, but
@@ -125,8 +137,15 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
         EmgFile emgFile = (emgFiles.size() > 0 ? emgFiles.get(0) : null);
         final AnalysisStatsModel mgModel = MGModelFactory.
                 getAnalysisStatsModel(sessionManager, sample, pageTitle, getBreadcrumbs(sample), emgFile,
-                        MemiTools.getArchivedSeqs(fileInfoDAO, sample), propertyContainer);
+                        MemiTools.getArchivedSeqs(fileInfoDAO, sample), propertyContainer, isReturnSizeLimit);
         model.addAttribute(MGModel.MODEL_ATTR_NAME, mgModel);
+    }
+
+    /**
+     * Creates the home page model and adds it to the specified model map.
+     */
+    private void populateModel(final ModelMap model, final Sample sample) {
+        populateModel(model, sample, true);
     }
 
     @Override
