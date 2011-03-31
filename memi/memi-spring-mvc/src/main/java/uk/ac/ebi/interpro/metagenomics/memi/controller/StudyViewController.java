@@ -64,7 +64,7 @@ public class StudyViewController extends SecuredAbstractController<Study> {
             public void processModel(ModelMap model, Study study) {
                 populateModel(model, study);
             }
-        }, model, studyId);
+        }, model, studyId, getModelViewName());
     }
 
     @RequestMapping(value = "/doExport", method = RequestMethod.GET)
@@ -87,7 +87,7 @@ public class StudyViewController extends SecuredAbstractController<Study> {
                     log.info("There are no samples to be exported!");
                 }
             }
-        }, model, studyId);
+        }, model, studyId, getModelViewName());
     }
 
     /**

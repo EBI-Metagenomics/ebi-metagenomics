@@ -47,7 +47,7 @@ public abstract class SecuredAbstractController<T extends SecureEntity> extends 
         return true;
     }
 
-    protected ModelAndView checkAccessAndBuildModel(ModelProcessingStrategy<T> modelProcessingStrategy, final ModelMap model, final String stringId) {
+    protected ModelAndView checkAccessAndBuildModel(ModelProcessingStrategy<T> modelProcessingStrategy, final ModelMap model, final String stringId, String viewName) {
         ISampleStudyDAO<T> dao = getDAO();
         if (dao != null) {
             final Study study;
@@ -72,7 +72,7 @@ public abstract class SecuredAbstractController<T extends SecureEntity> extends 
             log.error("Check why study DAO is null!");
             throw new IllegalStateException("Configuration error - the Study DAO is null");
         }
-        return new ModelAndView(getModelViewName(), model);
+        return new ModelAndView(viewName, model);
     }
 
     abstract ISampleStudyDAO<T> getDAO();
