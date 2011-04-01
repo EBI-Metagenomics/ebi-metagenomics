@@ -81,6 +81,7 @@ public class SubmissionController extends CheckLoginController implements IMGCon
                 String msg = buildMsg(subForm);
                 String sender = sessionManager.getSessionBean().getSubmitter().getEmailAddress();
                 ((EmailNotificationService) emailService).setSender(sender);
+                ((EmailNotificationService) emailService).setReceiverCC(sender);
                 ((EmailNotificationService) emailService).setEmailSubject("EMG-SUB: " + subForm.getSubTitle());
                 emailService.sendNotification(msg);
                 log.info("Sent an email with hibernate submission details: " + msg);
