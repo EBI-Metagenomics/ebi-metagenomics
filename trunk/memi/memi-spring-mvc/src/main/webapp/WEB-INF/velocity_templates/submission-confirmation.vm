@@ -1,9 +1,10 @@
+<pre>
 New Data Submission: ${subForm.subTitle}
 
 Submitter Details:
 
 The user was logged on with the folloing details:
-Submitter Name: ${submitter.firstName} ${submitter.surname} (Database ID: ${submitter.submitterId})
+Submitter Name: ${submitter.firstName} ${submitter.surname}
 Submitter Email address: ${submitter.emailAddress}
 
 Submission Details:
@@ -11,6 +12,4 @@ Submission Details:
 Project Title: ${subForm.subTitle}
 Hold Private Until: ${subForm.releaseDate}
 Submission Description: ${subForm.dataDesc}
-#if (${dateWarning})
-Warning: The "Hold Private Until" date of ${subForm.releaseDate} entered by the user was more than 2 years in the future.
-#end
+</pre>
