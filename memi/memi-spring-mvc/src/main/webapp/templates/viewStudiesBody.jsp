@@ -19,8 +19,11 @@
                        commandName="studyFilter">
                 <fieldset>
                     <label for="text">Text:</label>
-                    <form:input id="autocomplete" path="searchTerm"/><br/><form:errors path="searchTerm"
-                                                                                       cssClass="error"/><br/>
+                    <%-- Autocompletion temporarily disabled since it will not scale well with this current implementaion.
+                    Need to get the autocomplete text from the database before this feature is activated! --%>
+                    <%--<form:input id="autocomplete" path="searchTerm"/><br/>--%>
+                    <form:input path="searchTerm"/><br/>
+                    <form:errors path="searchTerm" cssClass="error"/><br/>
                     <label for="status"> Analysis status:</label>
 
                     <form:select id="studyStatus" path="studyStatus">
