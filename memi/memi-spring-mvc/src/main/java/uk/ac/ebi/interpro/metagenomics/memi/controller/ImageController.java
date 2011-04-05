@@ -103,7 +103,6 @@ public class ImageController extends AbstractController {
         } finally {
             try {
                 os.close();
-                return new byte[0];
             } catch (IOException e) {
                 log.error("Unable to close ImageInputStream!", e);
             }
