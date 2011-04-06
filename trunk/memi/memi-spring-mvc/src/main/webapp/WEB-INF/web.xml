@@ -36,9 +36,14 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
+    <!--<error-page>-->
+        <!--<error-code>404</error-code>-->
+        <!--<location>/pages/errors/404.jsp</location>-->
+    <!--</error-page>-->
+
     <error-page>
         <error-code>404</error-code>
-        <location>/pages/errors/404.jsp</location>
+        <location>/404</location>
     </error-page>
 
 </web-app>

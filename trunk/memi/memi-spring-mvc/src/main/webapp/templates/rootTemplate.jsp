@@ -14,7 +14,6 @@
           content="ebi, EBI, InterPro, interpro, metagenomics, metagenomic, metagenome, metagenomes, DNA, microbiology, microbial, ecology, organisms, microorganism, microorganisms, biodiversity, diversity, gene, genes, genome, genomes, genomic, genomics, ecogenomics, community genomics, genetic, sequencing, sequence, environment, environmental, ecosystem, ecosystems, samples, sample, annotation, protein, research, archive, metabolic, pathways, analysis, function, GAIA, shotgun, pyrosequencing, community, communities, metabolism, cultivation, bioinformatics, bioinformatic, database, metadata, dataset, data, repository,   "/>
 
 
-
     <%-- EBI style and code--%>
     <meta http-equiv="Content-Language" content="en-GB"/>
     <meta http-equiv="Window-target" content="_top"/>
@@ -23,12 +22,11 @@
     <link rel="stylesheet" href="http://www.ebi.ac.uk/inc/css/userstyles.css" type="text/css"/>
     <link rel="stylesheet" href="http://www.ebi.ac.uk/inc/css/sidebars.css" type="text/css"/>
     <script src="http://www.ebi.ac.uk/inc/js/contents.js" type="text/javascript"></script>
-   <%-- END EBI style and code--%>
+    <%-- END EBI style and code--%>
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/default.css" type="text/css" media="all"/>
 
     <link href="http://fonts.googleapis.com/css?family=Droid+Sans:regular,bold" rel="stylesheet" type="text/css">
-
 
 
     <%-- JQuery and JQuery UI source--%>
@@ -61,6 +59,12 @@
         $(document).ready(function() {
             $("table.result tbody tr:even").css("background-color", "#F4F4F8");
             $("table.result tbody tr:odd").css("background-color", "#e9e9e9");
+            <%--Set focus to login input field after clicking the login link--%>
+//            $('#loginLinkId').click(function() {
+//                $('#loginInputFieldId').focus();
+//            });
+            <%--Set focus during page initialisation--%>
+            $('#loginInputFieldId').focus();
         });
     </script>
 </head>
@@ -69,12 +73,14 @@
 <c:set var="baseURL" value="" scope="session"/>
 
 <%-- onload attribute is necessary to ensure that the EBI main header works in IE see  http://www.ebi.ac.uk/inc/template/#important style overflow addede because of he bug in the EBI website for the body--%>
-<body class="<tiles:getAsString name='bodyClass'/>" onLoad="if(navigator.userAgent.indexOf('MSIE') != -1) {document.getElementById('head').allowTransparency = true;}">
+<body class="<tiles:getAsString name='bodyClass'/>"
+      onLoad="if(navigator.userAgent.indexOf('MSIE') != -1) {document.getElementById('head').allowTransparency = true;}">
 
 
 <%-- EBI-Interpro main header changez-index? --%>
 <div class="headerdiv" id="headerdiv" style="position:absolute; z-index: 1; text-align:left;">
-    <iframe src="http://www.ebi.ac.uk/inc/head.html" name="head" id="head" frameborder="0" marginwidth="0px" marginheight="0px"
+    <iframe src="http://www.ebi.ac.uk/inc/head.html" name="head" id="head" frameborder="0" marginwidth="0px"
+            marginheight="0px"
             scrolling="no"
             width="100%" style="position:absolute; z-index: 1; height: 57px;">Header
     </iframe>
@@ -84,32 +90,34 @@
 
 <div class="ebi_contents">
 
-<tiles:insertAttribute name="breadcrumbs"/>
+    <tiles:insertAttribute name="breadcrumbs"/>
 
-<div id="wrapper" >
+    <div id="wrapper">
 
-    <header>
-        <tiles:insertAttribute name="header"/>
-    </header>
+        <header>
+            <tiles:insertAttribute name="header"/>
+        </header>
 
-    <nav>
-        <tiles:insertAttribute name="mainMenu"/>
-    </nav>
+        <nav>
+            <tiles:insertAttribute name="mainMenu"/>
+        </nav>
 
-    <div id="main-content">
-        <tiles:insertAttribute name="body"/>
+        <div id="main-content">
+            <tiles:insertAttribute name="body"/>
+        </div>
+
     </div>
 
-</div>
-
-<footer>
-    <tiles:insertAttribute name="footer"/>
-</footer>
+    <footer>
+        <tiles:insertAttribute name="footer"/>
+    </footer>
 
 </div>
 
 <div id="extra_feedback"><h1><a href="<c:url value="${baseURL}/contact"/>">Give your feedback</a></h1></div>
-<a href="<c:url value="${baseURL}/info#intro"/>" title="About us"><div id="extra_beta"></div></a>
+<a href="<c:url value="${baseURL}/info#intro"/>" title="About us">
+    <div id="extra_beta"></div>
+</a>
 <!--<div id="extraDiv1"></div> -->
 </body>
 </html>

@@ -1,6 +1,10 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://java.sun.com/jsp/jstl/core" %>
+<% final String url = request.getRequestURL().toString();
+    final String context = request.getContextPath();
+    final String requestRoot = url.substring(0, url.indexOf(context) + context.length());%>
+<c:set var="enaUrlParameter" value="<%=requestRoot%>"/>
 <%-- This template is used within the login page component--%>
 <c:if test="${empty model.submitter}">
     <div id="sidebar-login">
@@ -10,7 +14,7 @@
         <h2>Login</h2>
         Login to submit and view your data:<br/>
         <form:form method="POST" action="" commandName="loginForm">
-            E-Mail:<br/> <form:errors cssClass="error" path="emailAddress"/><form:input path="emailAddress"/> <br/>
+            E-Mail:<br/> <form:errors cssClass="error" path="emailAddress"/><form:input id="loginInputFieldId" path="emailAddress"/> <br/>
 
             Password:<br/> <form:errors cssClass="error" path="password"/><form:password path="password"/> <br/>
 
@@ -18,15 +22,15 @@
         </form:form>
 
         <c:url var="enaPasswordUrl"
-               value="${model.propertyContainer.enaSubmissionURL}/external-password-link.jsf">
-            <c:param name="url" value="${model.propertyContainer.enaRedirectURL}${pageContext.request.contextPath}"/>
+               value="${model.propertyContainer.enaSubmissionURL.forgottenPwdLink}">
+            <c:param name="url" value="${enaUrlParameter}"/>
         </c:url>
         <a href="<c:out value="${enaPasswordUrl}"/>" title="Request a new password">Forgot your password?</a>
         <span class="separator"></span>
         <strong>New to metagenomics?</strong><br/>
         <c:url var="enaRegistrationUrl"
-               value="${model.propertyContainer.enaSubmissionURL}/external-reg-link.jsf">
-            <c:param name="url" value="${model.propertyContainer.enaRedirectURL}${pageContext.request.contextPath}"/>
+               value="${model.propertyContainer.enaSubmissionURL.registrationLink}">
+            <c:param name="url" value="${enaUrlParameter}"/>
         </c:url>
         <a href="<c:out value="${enaRegistrationUrl}"/>" title="Registration">Click here to register</a>
     </div>
