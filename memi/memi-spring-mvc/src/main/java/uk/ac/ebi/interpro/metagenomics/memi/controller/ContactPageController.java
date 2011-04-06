@@ -82,7 +82,7 @@ public class ContactPageController extends AbstractController implements IMGCont
             log.info("Sent an email with contact details: " + msg);
             status.setComplete();
         } else {
-            return new ModelAndView(CommonController.ERROR_PAGE_VIEW_NAME);
+            return new ModelAndView(CommonController.EXCEPTION_PAGE_VIEW_NAME);
         }
         return new ModelAndView(SUCCESS_VIEW_NAME);
     }

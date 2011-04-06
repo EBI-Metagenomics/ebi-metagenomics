@@ -32,8 +32,9 @@
     <!-- Exception translation bean post processor -->
     <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
 
-    <bean id="memiDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="oracle.jdbc.OracleDriver"/>
+    <!--Metagenomics datasource-->
+    <bean name="memiDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
         <property name="url" value="${jcp.jdbc.oracle.ipdev.url}"/>
         <property name="username" value="${jcp.jdbc.oracle.ipdev.username}"/>
         <property name="password" value="${jcp.jdbc.oracle.ipdev.password}"/>
@@ -88,7 +89,7 @@
                 <!--Enable Hibernate’s automatic session context management-->
                 <prop key="current_session_context_class">thread</prop>
                 <prop key="hibernate.transaction.auto_close_session">true</prop>
-                <prop key="hibernate.hbm2ddl.auto">validate</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
             </props>
         </property>
         <!--<property name="location" value="classpath:resources/hibernate.properties"/>-->
@@ -151,6 +152,12 @@
         <!--<property name="emailSubject" value="[beta-feedback] Feedback about the new Metagenomics Website"/>-->
     </bean>
 
+    <!-- Default email notification service without any specific properties-->
+    <bean name="defaultEmailNotificationService"
+          class="uk.ac.ebi.interpro.metagenomics.memi.services.EmailNotificationService">
+        <constructor-arg ref="mailSender"/>
+    </bean>
+
     <!-- This bean initializes the Velocity engine for templating. -->
     <bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
         <property name="velocityProperties">
@@ -183,9 +190,9 @@
 
     <!-- Please use this bean to specify the path to the analysis files -->
     <bean id="propContainer" class="uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer">
-        <property name="pathToAnalysisDirectory" value="/ebi/production/interpro/metagenomics/results/"/>
-        <property name="enaRedirectURL" value="http://apple.windows.ebi.ac.uk:8082"/>
-        <property name="enaSubmissionURL" value="http://www.ebi.ac.uk/embl/genomes/submission"/>
+        <property name="pathToAnalysisDirectory" value="${pathToAnalysisDirectory}"/>
+        <property name="enaRedirectURL" value="${enaRedirectURL}"/>
+        <property name="enaSubmissionURL" value="${enaSubmissionURL}"/>
     </bean>
 
 </beans>

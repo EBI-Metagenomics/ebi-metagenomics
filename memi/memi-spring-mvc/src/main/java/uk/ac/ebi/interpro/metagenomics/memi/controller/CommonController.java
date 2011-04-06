@@ -1,9 +1,16 @@
 package uk.ac.ebi.interpro.metagenomics.memi.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
+import uk.ac.ebi.interpro.metagenomics.memi.model.EmgFile;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModel;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
+
 import javax.annotation.Resource;
 
 /**
@@ -16,7 +23,9 @@ import javax.annotation.Resource;
 @Controller
 public class CommonController {
 
-    public static final String ERROR_PAGE_VIEW_NAME = "exception";
+    public static final String EXCEPTION_PAGE_VIEW_NAME = "exception";
+
+    public static final String NO_SUCH_REQUEST_PAGE_VIEW_NAME = "404";
 
     public static final String ACCESS_DENIED_VIEW_NAME = "lostInSpace";
 
@@ -25,6 +34,12 @@ public class CommonController {
 
     @RequestMapping("/installationSite")
     public void installationSiteHandler() {
+    }
+
+    @RequestMapping(value = "/test")
+    public ModelAndView testHandler(ModelMap model) {
+        model.addAttribute("emgFile", new EmgFile("img", "chart.png"));
+        return new ModelAndView("/test", model);
     }
 
     @RequestMapping("/logout")
