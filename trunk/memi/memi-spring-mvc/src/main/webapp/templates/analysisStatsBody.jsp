@@ -23,19 +23,12 @@
         <table border="1" width="95%">
             <tr>
                 <td width="40px">
-                    <c:choose>
-                        <c:when test="${not empty model.barChartURL}">
-                            <c:url var="statisticsImage" value="/getImage" scope="request">
-                                <c:param name="imageName" value="statistics.png"/>
-                                <c:param name="imageType" value="PNG"/>
-                                <c:param name="dir" value="${model.emgFile.fileID}"/>
-                            </c:url>
-                            <img src="<c:out value="${statisticsImage}"/>"/>
-                        </c:when>
-                        <c:otherwise>
-                            <b><c:out value="${noDisplayID}"/></b>
-                        </c:otherwise>
-                    </c:choose>
+                    <c:url var="statisticsImage" value="/getImage" scope="request">
+                        <c:param name="imageName" value="statistics.png"/>
+                        <c:param name="imageType" value="PNG"/>
+                        <c:param name="dir" value="${model.emgFile.fileID}"/>
+                    </c:url>
+                    <img src="<c:out value="${statisticsImage}"/>"/>
                 </td>
             </tr>
         </table>

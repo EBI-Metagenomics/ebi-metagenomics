@@ -8,6 +8,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import java.io.PrintWriter;
 
 /**
  * Represents an email notification service.
@@ -57,10 +58,8 @@ public class EmailNotificationService implements INotificationService {
             if (emailSubject != null) {
                 helper.setSubject(emailSubject);
             }
-//            helper.setText("Thank you for ordering!");
             if (exception != null) {
-                helper.setText("An exception has occured!");
-                helper.setText(exception.getMessage());
+                helper.setText(buildPlainText(message, exception));
             } else {
                 helper.setText(message, true);
             }
@@ -75,6 +74,28 @@ public class EmailNotificationService implements INotificationService {
         } catch (MailException ex) {
             log.fatal("Could not sent email notification message!", ex);
         }
+    }
+
+    //TODO: write JUnit test
+    //TODO: Implementation not finished
+    private String buildPlainText(String message, Exception exception) {
+        StringBuffer result = new StringBuffer();
+        if (message != null) {
+            result.append(message);
+        }
+        if (exception.toString() != null) {
+            result.append(exception.toString());
+        }
+        if (exception.getMessage() != null) {
+            result.append(exception.getMessage());
+        }
+
+//        PrintWriter writer = new PrintWriter();
+//        exception.printStackTrace(writer);
+
+
+
+        return result.toString();
     }
 
     public String getReceiver() {
