@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgFile;
@@ -32,17 +33,25 @@ public class CommonController {
     @Resource
     private SessionManager sessionManager;
 
-    @RequestMapping("/installationSite")
+    @RequestMapping(value = "/installationSite", method = RequestMethod.GET)
     public void installationSiteHandler() {
+    }
+
+    @RequestMapping(value = "/404", method = RequestMethod.GET)
+    public ModelAndView testHandler() {
+        MGModel mgModel = MGModelFactory.getMGModel(sessionManager);
+        ModelMap model = new ModelMap();
+        model.addAttribute(MGModel.MODEL_ATTR_NAME, mgModel);
+        return new ModelAndView("/errors/" + CommonController.NO_SUCH_REQUEST_PAGE_VIEW_NAME, model);
     }
 
     @RequestMapping(value = "/test")
     public ModelAndView testHandler(ModelMap model) {
         model.addAttribute("emgFile", new EmgFile("img", "chart.png"));
-        return new ModelAndView("/test", model);
+        return new ModelAndView("test", model);
     }
 
-    @RequestMapping("/logout")
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public ModelAndView indexHandler() {
         sessionManager.getSessionBean().removeSubmitter();
         return new ModelAndView("redirect:" + HomePageController.REQUEST_MAPPING_VALUE);

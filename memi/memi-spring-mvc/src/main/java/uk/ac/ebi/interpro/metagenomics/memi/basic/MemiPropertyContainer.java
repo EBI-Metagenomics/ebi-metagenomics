@@ -13,9 +13,7 @@ public class MemiPropertyContainer {
 
     private String pathToAnalysisDirectory;
 
-    private String enaRedirectURL;
-
-    private String enaSubmissionURL;
+    private ENASubmissionURL enaSubmissionURL;
 
     MemiPropertyContainer() {
     }
@@ -28,19 +26,11 @@ public class MemiPropertyContainer {
         this.pathToAnalysisDirectory = pathToAnalysisDirectory;
     }
 
-    public String getEnaRedirectURL() {
-        return enaRedirectURL;
-    }
-
-    public void setEnaRedirectURL(String enaRedirectURL) {
-        this.enaRedirectURL = enaRedirectURL;
-    }
-
-    public String getEnaSubmissionURL() {
+    public ENASubmissionURL getEnaSubmissionURL() {
         return enaSubmissionURL;
     }
 
-    public void setEnaSubmissionURL(String enaSubmissionURL) {
+    public void setEnaSubmissionURL(ENASubmissionURL enaSubmissionURL) {
         this.enaSubmissionURL = enaSubmissionURL;
     }
 }

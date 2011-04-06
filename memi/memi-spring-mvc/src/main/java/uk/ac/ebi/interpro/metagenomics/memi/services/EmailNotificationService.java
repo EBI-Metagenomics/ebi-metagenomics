@@ -9,6 +9,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.PrintWriter;
+import java.io.StringWriter;
 
 /**
  * Represents an email notification service.
@@ -78,25 +79,36 @@ public class EmailNotificationService implements INotificationService {
 
     //TODO: write JUnit test
     //TODO: Implementation not finished
-    private String buildPlainText(String message, Exception exception) {
+    private String buildPlainText(String message, Exception e) {
         StringBuffer result = new StringBuffer();
         if (message != null) {
-            result.append(message);
+            result.append(message + "\n");
         }
-        if (exception.toString() != null) {
-            result.append(exception.toString());
+        if (e.toString() != null) {
+            result.append(e.toString() + "\n");
         }
-        if (exception.getMessage() != null) {
-            result.append(exception.getMessage());
+        if (e.getMessage() != null) {
+            result.append("Message:" + "\n");
+            result.append(e.getMessage() + "\n");
         }
-
-//        PrintWriter writer = new PrintWriter();
-//        exception.printStackTrace(writer);
-
-
+        String stackTrace = getStackTrace(e);
+        if (stackTrace != null) {
+            result.append("Stack trace:" + "\n");
+            result.append(stackTrace);
+        }
 
         return result.toString();
     }
+
+    private static String getStackTrace(Throwable t) {
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw, true);
+        t.printStackTrace(pw);
+        pw.flush();
+        sw.flush();
+        return sw.toString();
+    }
+
 
     public String getReceiver() {
         return receiver;

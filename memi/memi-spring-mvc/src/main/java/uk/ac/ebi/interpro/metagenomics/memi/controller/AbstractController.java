@@ -2,6 +2,7 @@ package uk.ac.ebi.interpro.metagenomics.memi.controller;
 
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer;
@@ -65,19 +66,18 @@ public abstract class AbstractController {
         return new ModelAndView("/errors/" + CommonController.EXCEPTION_PAGE_VIEW_NAME, model);
     }
 
-    private void sendEmail(NullPointerException e) {
-        ((EmailNotificationService) emailService).setSender("mg-portal@ebi.ac.uk");
-        ((EmailNotificationService) emailService).setReceiver("maxim@ebi.ac.uk");
-        ((EmailNotificationService) emailService).setEmailSubject("[MG portal] Exception occurred");
-        emailService.sendNotification("Following exception has been occurred:", e);
-
-    }
-
     @ExceptionHandler(Exception.class)
     public ModelAndView handleAllExceptions(Exception e) {
         MGModel mgModel = MGModelFactory.getMGModel(sessionManager);
         ModelMap model = new ModelMap();
         model.addAttribute(MGModel.MODEL_ATTR_NAME, mgModel);
         return new ModelAndView("/errors/" + CommonController.EXCEPTION_PAGE_VIEW_NAME, model);
+    }
+
+    private void sendEmail(NullPointerException e) {
+        ((EmailNotificationService) emailService).setSender("mg-portal@ebi.ac.uk");
+        ((EmailNotificationService) emailService).setReceiver("maxim@ebi.ac.uk");
+        ((EmailNotificationService) emailService).setEmailSubject("[MG portal] Exception occurred");
+        emailService.sendNotification("Following exception has been occurred:", e);
     }
 }

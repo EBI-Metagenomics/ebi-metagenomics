@@ -89,7 +89,7 @@
                 <!--Enable Hibernate’s automatic session context management-->
                 <prop key="current_session_context_class">thread</prop>
                 <prop key="hibernate.transaction.auto_close_session">true</prop>
-                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <prop key="hibernate.hbm2ddl.auto">validate</prop>
             </props>
         </property>
         <!--<property name="location" value="classpath:resources/hibernate.properties"/>-->
@@ -139,8 +139,6 @@
           class="uk.ac.ebi.interpro.metagenomics.memi.services.EmailNotificationService">
         <constructor-arg ref="mailSender"/>
         <property name="receiver" value="datasubs@ebi.ac.uk"/>
-        <!--<property name="receiverCC" value="" />-->
-        <!--<property name="emailSubject" value="EMG-SUB: Unknown project"/>-->
     </bean>
 
     <!-- This bean initializes an email notification service -->
@@ -148,8 +146,6 @@
           class="uk.ac.ebi.interpro.metagenomics.memi.services.EmailNotificationService">
         <constructor-arg ref="mailSender"/>
         <property name="receiver" value="beta-ebi-metagenomics-feedback@googlegroups.com"/>
-        <!--<property name="receiverCC" value="" />-->
-        <!--<property name="emailSubject" value="[beta-feedback] Feedback about the new Metagenomics Website"/>-->
     </bean>
 
     <!-- Default email notification service without any specific properties-->
@@ -191,8 +187,14 @@
     <!-- Please use this bean to specify the path to the analysis files -->
     <bean id="propContainer" class="uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer">
         <property name="pathToAnalysisDirectory" value="${pathToAnalysisDirectory}"/>
-        <property name="enaRedirectURL" value="${enaRedirectURL}"/>
-        <property name="enaSubmissionURL" value="${enaSubmissionURL}"/>
+        <property name="enaSubmissionURL" ref="enaSubmission"/>
+    </bean>
+
+    <bean id="enaSubmission" class="uk.ac.ebi.interpro.metagenomics.memi.basic.ENASubmissionURL">
+        <property name="mainURL" value="http://www.ebi.ac.uk/embl/genomes/submission/"/>
+        <property name="registrationPageName" value="external-reg-link.jsf"/>
+        <property name="editPrefsPageName" value="external-update-link.jsf"/>
+        <property name="forgottenPasswordPageName" value="external-password-link.jsf"/>
     </bean>
 
 </beans>
