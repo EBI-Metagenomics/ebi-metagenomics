@@ -3,7 +3,7 @@
    * [Documentation Documentation Home]
    * [Requirements User Requirements]   
   * Beta Test
-   * [RunningStandaloneInterProScan5 Running the stand-alone version]
+   * [HowToRunTheWebApplication]
   * Developer Documentation
    * [Implementation Implementation]    
    * [DevelopersRunningTestI5 Building and Running I5 from Source]
