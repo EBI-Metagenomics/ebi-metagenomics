@@ -77,7 +77,7 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
 
     @RequestMapping(value = "/doExportGOSlimFile/{fileName}", method = RequestMethod.GET)
     public ModelAndView doExportGOSlimFile(@PathVariable final String sampleId, @PathVariable final String fileName, ModelMap model, final HttpServletResponse response) {
-        return handleExport(sampleId, model, response, "_summary.go_slim", "_GO_slim.tsv");
+        return handleExport(sampleId, model, response, "_summary.go_slim", "_GO_slim.csv");
     }
 
     @RequestMapping(value = "/doExportGOFile/{fileName}", method = RequestMethod.GET)
@@ -102,7 +102,7 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
 
     @RequestMapping(value = "/doExportIPRFile/{fileName}", method = RequestMethod.GET)
     public ModelAndView doExportIPRFile(@PathVariable final String sampleId, @PathVariable final String fileName, final ModelMap model, final HttpServletResponse response) {
-        return handleExport(sampleId, model, response, "_summary.ipr", "_InterPro_sum.tsv");
+        return handleExport(sampleId, model, response, "_summary.ipr", "_InterPro_sum.csv");
     }
 
     private ModelAndView handleExport(final String sampleId, ModelMap model, final HttpServletResponse response,
