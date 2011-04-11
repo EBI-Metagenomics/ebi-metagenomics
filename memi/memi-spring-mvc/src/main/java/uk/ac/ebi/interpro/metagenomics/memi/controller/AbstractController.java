@@ -1,8 +1,9 @@
 package uk.ac.ebi.interpro.metagenomics.memi.controller;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer;
@@ -25,6 +26,7 @@ import java.util.List;
  * @since 1.0-SNAPSHOT
  */
 public abstract class AbstractController {
+    private static final Log log = LogFactory.getLog(AbstractController.class);
     @Resource
     protected SessionManager sessionManager;
 
@@ -51,6 +53,8 @@ public abstract class AbstractController {
     // TODO: This handler does not work for HTTP status code 404 errors
     @ExceptionHandler(NoSuchRequestHandlingMethodException.class)
     public ModelAndView handleNoSuchRequestException(NoSuchRequestHandlingMethodException ex) {
+        log.error("Called no such request exception handler!", ex);
+        sendEmail(ex);
         MGModel mgModel = MGModelFactory.getMGModel(sessionManager);
         ModelMap model = new ModelMap();
         model.addAttribute(MGModel.MODEL_ATTR_NAME, mgModel);
@@ -58,8 +62,9 @@ public abstract class AbstractController {
     }
 
     @ExceptionHandler(NullPointerException.class)
-    public ModelAndView handleNPExceptions(NullPointerException e) {
-        sendEmail(e);
+    public ModelAndView handleNPExceptions(NullPointerException ex) {
+        log.error("Called Null pointer exception handler!", ex);
+        sendEmail(ex);
         MGModel mgModel = MGModelFactory.getMGModel(sessionManager);
         ModelMap model = new ModelMap();
         model.addAttribute(MGModel.MODEL_ATTR_NAME, mgModel);
@@ -67,17 +72,19 @@ public abstract class AbstractController {
     }
 
     @ExceptionHandler(Exception.class)
-    public ModelAndView handleAllExceptions(Exception e) {
+    public ModelAndView handleAllExceptions(Exception ex) {
+        log.error("Called all exception handler!", ex);
+        sendEmail(ex);
         MGModel mgModel = MGModelFactory.getMGModel(sessionManager);
         ModelMap model = new ModelMap();
         model.addAttribute(MGModel.MODEL_ATTR_NAME, mgModel);
         return new ModelAndView("/errors/" + CommonController.EXCEPTION_PAGE_VIEW_NAME, model);
     }
 
-    private void sendEmail(NullPointerException e) {
+    private void sendEmail(Exception ex) {
         ((EmailNotificationService) emailService).setSender("mg-portal@ebi.ac.uk");
         ((EmailNotificationService) emailService).setReceiver("maxim@ebi.ac.uk");
         ((EmailNotificationService) emailService).setEmailSubject("[MG portal] Exception occurred");
-        emailService.sendNotification("Following exception has been occurred:", e);
+        emailService.sendNotification("Following exception has been occurred:", ex);
     }
 }

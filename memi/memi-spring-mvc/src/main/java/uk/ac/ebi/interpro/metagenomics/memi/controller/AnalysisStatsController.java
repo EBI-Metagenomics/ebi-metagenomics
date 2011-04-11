@@ -119,7 +119,8 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
                 File file = new File(propertyContainer.getPathToAnalysisDirectory() + directoryName + '/' + directoryName + fileNameSuffix);
 
                 if (downloadService != null) {
-                    downloadService.openDownloadDialog(response, file, emgFile.getFileName() + fileExtension, false);
+                    //white spaces are replaced by underscores
+                    downloadService.openDownloadDialog(response, file, emgFile.getFileName().replace(" ", "_") + fileExtension, false);
                 }
             }
         }, model, sampleId, getModelViewName());
