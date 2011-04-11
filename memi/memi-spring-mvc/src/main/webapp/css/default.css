@@ -374,21 +374,6 @@ background:url(../img/bgd_black_op20_8.png);
 /* END LINKS */
 
 /* TABLE */
-table {
-border-collapse:collapse;
-border-spacing:2px;
-border: solid 1px #e5e5e5;
-font-size:100%;
-width:100%;/* bug 100% with IE*/
-vertical-align: top;
-}
-
-table td {padding: 4px; vertical-align: middle;}
-
-table th {
-padding: 4px;
-background:url(../img/bgd_black_op20_8.png);}
-
 table.results {
 background: url(../img/bgd_main_grey.jpg) #b5b5b5;
 }
@@ -413,6 +398,7 @@ line-height: 1.4em;
 border-collapse:separate;
 border:none;
 width:100%;
+border-spacing:4px;
 }
 
 table.result thead th{
@@ -439,10 +425,10 @@ table.result tbody tr:hover {
 background: url(../img/bgd_black_op05_8.png);
 }
 
-
 table.result tbody td{
 padding:6px;
 text-align:center;
+vertical-align: middle;
 border: 1px solid #e5e5e5;
 -moz-border-radius:2px;
 -webkit-border-radius:2px;
@@ -1160,5 +1146,5 @@ margin-right:12px;
 /* JQuery */
 .ui-datepicker-trigger {
 padding-left:2px; padding-top:1px;
-
 }
+.ui-datepicker { font-size:90%;}
