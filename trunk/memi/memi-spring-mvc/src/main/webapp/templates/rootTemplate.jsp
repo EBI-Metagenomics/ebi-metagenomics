@@ -23,6 +23,9 @@
     <link rel="stylesheet" href="http://www.ebi.ac.uk/inc/css/sidebars.css" type="text/css"/>
     <script src="http://www.ebi.ac.uk/inc/js/contents.js" type="text/javascript"></script>
     <%-- END EBI style and code--%>
+    <%-- JQuery CSS--%>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/jquery-ui-1.8.11.custom.css" type="text/css" media="all"/>
+    <%-- END JQuery CSS--%>
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/default.css" type="text/css" media="all"/>
 
@@ -30,7 +33,6 @@
 
 
     <%-- JQuery and JQuery UI source--%>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/jquery-ui.css" type="text/css" media="all"/>
     <script src="${pageContext.request.contextPath}/js/jquery-1.4.4.min.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/js/jquery-ui-1.8.8.custom.min.js" type="text/javascript"></script>
     <%-- The date picker is used within the submission page --%>
