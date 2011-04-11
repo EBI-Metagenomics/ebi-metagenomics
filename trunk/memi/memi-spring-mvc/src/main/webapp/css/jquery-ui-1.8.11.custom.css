@@ -90,8 +90,8 @@
 
 /* states and images */
 .ui-icon { width: 16px; height: 16px; background-image: url(../img/jquery/overcast/ui-icons_999999_256x240.png); }
-.ui-widget-content .ui-icon {background-image: url(../img/ico_jquery.png); }
-.ui-widget-header .ui-icon {background-image: url(../img/ico_jquery.png); }
+.ui-widget-content .ui-icon {background-image: url(../img/jquery/overcast/ico_jquery.png); }
+.ui-widget-header .ui-icon {background-image: url(../img/jquery/overcast/ico_jquery.png); }
 .ui-state-default .ui-icon { background-image: url(../img/jquery/overcast/ui-icons_70b2e1_256x240.png); }
 .ui-state-hover .ui-icon, .ui-state-focus .ui-icon {background-image: url(../img/jquery/overcast/ui-icons_3383bb_256x240.png); }
 .ui-state-active .ui-icon {background-image: url(../img/jquery/overcast/ui-icons_454545_256x240.png); }
