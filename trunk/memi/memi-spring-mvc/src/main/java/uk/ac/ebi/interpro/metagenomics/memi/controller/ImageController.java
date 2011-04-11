@@ -110,17 +110,20 @@ public class ImageController extends AbstractController {
     }
 
     /**
-     * Supports the following image types:<br>
+     * Supports the following image types at the moment:<br>
      * JPEG, GIF and PNG.
      *
      * @param imageType
      */
     protected String getContentType(String imageType) {
         String result = "image/png";
-        if (imageType != null && imageType.trim().equalsIgnoreCase("jpeg")) {
-            result = "image/jpeg";
-        } else if (imageType != null && imageType.trim().equalsIgnoreCase("gif")) {
-            result = "image/gif";
+        if (imageType != null) {
+            imageType = imageType.trim();
+            if (imageType.equalsIgnoreCase("jpeg")) {
+                result = "image/jpeg";
+            } else if (imageType.equalsIgnoreCase("gif")) {
+                result = "image/gif";
+            }
         }
         return result;
     }
