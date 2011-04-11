@@ -97,8 +97,8 @@
                         </c:choose>
                     </td>
                 </tr>
-                </tbody>
                 </c:forEach>
+                </tbody>
             </table>
         </c:when>
         <c:otherwise>
