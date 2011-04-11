@@ -425,24 +425,6 @@ public class MGModelFactory {
         }
     }
 
-//    private static String getPieChartURL(Class clazz, Map<Class, List<AbstractGOTerm>> goData) {
-//
-//        List<Integer> data = getGOData(clazz, goData);
-//        List<String> labels = getGOLabels(clazz, goData);
-//        Properties props = new Properties();
-//        props.put(GoogleChartFactory.CHART_MARGIN, "270,270");
-//        props.put(GoogleChartFactory.CHART_SIZE, "740x180");
-//        if (clazz.equals(BiologicalProcessGOTerm.class)) {
-//            props.put(GoogleChartFactory.CHART_COLOUR, "FFFF10,FF0000");
-//        } else if (clazz.equals(CellularComponentGOTerm.class)) {
-//            props.put(GoogleChartFactory.CHART_COLOUR, "FFFF10,00FF00");
-//        } else {
-//            props.put(GoogleChartFactory.CHART_COLOUR, "FFFF10,0000FF");
-//        }
-//
-//        return GoogleChartFactory.buildPieChartURL(props, data, labels);
-//    }
-
     private static String getHBarChartURL(Class clazz, Map<Class, List<AbstractGOTerm>> goData) {
 
         List<Integer> data = getGOData(clazz, goData);
@@ -460,14 +442,6 @@ public class MGModelFactory {
         props.put("chxr", "0,0,600");
         props.put("chxs", "0,ffffff,0,0,_");
 
-//        if (clazz.equals(BiologicalProcessGOTerm.class)) {
-//            props.put(GoogleChartFactory.CHART_COLOUR, "FFFF10,FF0000");
-//        } else if (clazz.equals(CellularComponentGOTerm.class)) {
-//            props.put(GoogleChartFactory.CHART_COLOUR, "FFFF10,00FF00");
-//        } else {
-//            props.put(GoogleChartFactory.CHART_COLOUR, "FFFF10,0000FF");
-//        }
-
         return GoogleChartFactory.buildHorizontalBarChartURL(props, data, labels);
     }
 
@@ -483,11 +457,6 @@ public class MGModelFactory {
             goTerms = goData.get(MolecularFunctionGOTerm.class);
         }
         if (goTerms != null) {
-//            float totalNumberOfMatches = 0;
-//            //the first iteration is to get the total number of GO term matches
-//            for (AbstractGOTerm term : goTerms) {
-//                totalNumberOfMatches += (float) term.getNumberOfMatches();
-//            }
             //the second iteration is to calculate the pie chart data
             for (AbstractGOTerm term : goTerms) {
                 result.add(term.getNumberOfMatches());
@@ -521,23 +490,12 @@ public class MGModelFactory {
         result.put(CellularComponentGOTerm.class, new ArrayList<AbstractGOTerm>());
         result.put(MolecularFunctionGOTerm.class, new ArrayList<AbstractGOTerm>());
 
-        String directoryName = emgFile.getFileIDInUpperCase().replace('.', '_');
-        File file = new File(classPathToStatsFile + directoryName + '/' + directoryName + "_summary.go_slim");
-        CSVReader reader = null;
-        try {
-            reader = new CSVReader(new FileReader(file), '\t');
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-        if (reader != null) {
-            List<String[]> rows = null;
-            try {
-                rows = reader.readAll();
-            } catch (IOException e) {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-            }
-            if (rows != null) {
-                for (String[] row : rows) {
+        log.info("Processing GO slim file...");
+        List<String[]> rows = getRawData(classPathToStatsFile, emgFile, "_summary.go_slim", ',');
+
+        if (rows != null) {
+            for (String[] row : rows) {
+                if (row.length == 4) {
                     String ontology = row[2];
                     if (ontology != null && ontology.trim().length() > 0) {
                         String accession = row[0];
@@ -557,9 +515,13 @@ public class MGModelFactory {
                             result.get(MolecularFunctionGOTerm.class).add(instance);
                         }
                     }
-
+                } else {
+                    log.warn("Row size is not the expected one.");
                 }
             }
+        } else {
+            log.warn("Didn't get any data from GO term file. There might be some fundamental change to this file" +
+                    "(maybe in the near past), which affects this parsing process!");
         }
         return result;
     }
@@ -583,31 +545,22 @@ public class MGModelFactory {
 
     private static List<Integer> loadStatsFromCSV(String classPathToStatsFile, EmgFile emgFile) {
         List<Integer> result = new ArrayList<Integer>();
-        String directoryName = emgFile.getFileIDInUpperCase().replace('.', '_');
-        File file = new File(classPathToStatsFile + directoryName + '/' + directoryName + "_summary");
-        CSVReader reader = null;
-        try {
-            reader = new CSVReader(new FileReader(file), '\t');
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-        if (reader != null) {
-            List<String[]> rows = null;
-            try {
-                rows = reader.readAll();
-            } catch (IOException e) {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-            }
-            if (rows != null) {
-                int numSubmittedSeqs = getValueOfRow(rows, 0);
-                int numSeqsOfProcessedSeqs = getValueOfRow(rows, 3);
-                int numSeqsWithPredicatedCDS = getValueOfRow(rows, 4);
-                int numSeqsWithInterProScanMatch = getValueOfRow(rows, 5);
-                result.add(numSubmittedSeqs);
-                result.add(numSeqsOfProcessedSeqs);
-                result.add(numSeqsWithPredicatedCDS);
-                result.add(numSeqsWithInterProScanMatch);
-            }
+
+        log.info("Processing summary file...");
+        List<String[]> rows = getRawData(classPathToStatsFile, emgFile, "_summary", ',');
+
+        if (rows != null && rows.size() >= 6) {
+            int numSubmittedSeqs = getValueOfRow(rows, 0);
+            int numSeqsOfProcessedSeqs = getValueOfRow(rows, 3);
+            int numSeqsWithPredicatedCDS = getValueOfRow(rows, 4);
+            int numSeqsWithInterProScanMatch = getValueOfRow(rows, 5);
+            result.add(numSubmittedSeqs);
+            result.add(numSeqsOfProcessedSeqs);
+            result.add(numSeqsWithPredicatedCDS);
+            result.add(numSeqsWithInterProScanMatch);
+        } else {
+            log.warn("Didn't get any data from summary file. There might be some fundamental change to this file" +
+                    "(maybe in the near past), which affects this parsing process!");
         }
         return result;
     }
@@ -637,39 +590,58 @@ public class MGModelFactory {
      */
     private static List<InterProEntry> loadInterProMatchesFromCSV(String classPathToStatsFile, EmgFile emgFile, boolean isReturnSizeLimit) {
         List<InterProEntry> result = new ArrayList<InterProEntry>();
+        log.info("Processing interpro result summary file...");
+        List<String[]> rows = getRawData(classPathToStatsFile, emgFile, "_summary.ipr", ',');
 
-        String directoryName = emgFile.getFileIDInUpperCase().replace('.', '_');
-        File file = new File(classPathToStatsFile + directoryName + '/' + directoryName + "_summary.ipr");
-        CSVReader reader = null;
-        try {
-            reader = new CSVReader(new FileReader(file), '\t');
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-        if (reader != null) {
-            List<String[]> rows = null;
-            try {
-                rows = reader.readAll();
-            } catch (IOException e) {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        if (rows != null) {
+            //return size limitation the
+            if (isReturnSizeLimit) {
+                rows = rows.subList(0, 5);
             }
-            if (rows != null) {
-                //return size limitation the
-                if (isReturnSizeLimit) {
-                    rows = rows.subList(0, 5);
-                }
-                for (String[] row : rows) {
+            for (String[] row : rows) {
+                if (row.length == 3) {
                     String entryID = row[0];
                     String entryDesc = row[1];
                     int numOfEntryHits = Integer.parseInt(row[2]);
                     if (entryID != null && entryID.trim().length() > 0) {
                         result.add(new InterProEntry(entryID, entryDesc, numOfEntryHits));
                     }
+                } else {
+                    log.warn("Row size is not the expected one.");
                 }
             }
+        } else {
+            log.warn("Didn't get any data from interpro result summary file. There might be some fundamental change to this file" +
+                    "(maybe in the near past), which affects this parsing process!");
         }
         return result;
     }
+
+    /**
+     * Reads raw data from the specified file by using a CSV reader. Possible to specify different delimiters.
+     *
+     * @param classPathToStatsFile
+     * @param emgFile
+     * @return
+     */
+    private static List<String[]> getRawData(String classPathToStatsFile, EmgFile emgFile, String fileExtension, char delimiter) {
+        List<String[]> rows = null;
+
+        String directoryName = emgFile.getFileIDInUpperCase().replace('.', '_');
+        File file = new File(classPathToStatsFile + directoryName + '/' + directoryName + fileExtension);
+        CSVReader reader = null;
+        try {
+            reader = new CSVReader(new FileReader(file), delimiter);
+        } catch (FileNotFoundException e) {
+            log.warn("Could not find the following file " + file.getAbsolutePath(), e);
+        }
+        if (reader != null) {
+            try {
+                rows = reader.readAll();
+            } catch (IOException e) {
+                log.warn("Could not get rows from CSV file!", e);
+            }
+        }
+        return rows;
+    }
 }
-
-
