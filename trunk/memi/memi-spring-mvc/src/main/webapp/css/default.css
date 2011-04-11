@@ -54,6 +54,8 @@ display: block;
 margin:20px;
 }
 
+ol {list-style-type: decimal;}
+
 ul li ul { margin:10px;}
 
 #sidebar ul {
@@ -82,7 +84,7 @@ a:active { color: #647685;}
 #wrapper {
 overflow:auto; /*  To contain floated elements, apply overflow:auto; to the parent element, or place something to clear the floats at the bottom of the container, such as: <div style="clear:both;"></div>*/
 width: 972px;
-/* removed to make it EBI compliant 
+/* removed to make it EBI compliant
 box-shadow: 0px 0px 70px #696969;
 -moz-box-shadow: 0px 0px 70px #696969;
 -khtml-box-shadow: 0px 0px 70px #696969;
@@ -124,7 +126,7 @@ right: 0;
 /* removed to make it EBI compliant
 background: transparent url(../img/button_feedback_off.gif) no-repeat -2px;
 left: 0;  */
-top:100px; 
+top:100px;
 width: 35px;
 height:  102px;
 z-index:100;
@@ -146,7 +148,7 @@ background: transparent url(../img/button_feedback_active.gif) no-repeat;*/
 .feedbackform_tab  {
 background: transparent url(../img/button_feedback_oriz.gif) no-repeat ;
 border:0px solid #E5E5E5; width:102px; height:35px;
-margin-left:7px;    
+margin-left:7px;
 }
 
 .loginform_tab  {
@@ -233,7 +235,7 @@ div.top-menu ul{
 div.top-menu ul li{
     list-style-type:none;
     border:0px green solid;
-    float:left; 
+    float:left;
     text-align:left;
     font-size:130%;
     line-height:18px;
@@ -404,6 +406,8 @@ width:600px;
 text-align:left;
 }
 
+#small {width:670px;}
+
 table.result {
 line-height: 1.4em;
 border-collapse:separate;
@@ -495,7 +499,7 @@ font-size:200%;
 font-weight:normal;
 margin:0;
 }
-
+#go-chart h2 {font-size:140%;}
 
 h3 {
 color:#7c8c99;
@@ -506,7 +510,7 @@ margin:21px 0 ;
 h4 {
 color:#333;
 font-size:120%;
-
+font-weight:bold;
 }
 
 h5 {
@@ -525,7 +529,7 @@ color:#445668;
 padding-bottom:14px;
 }
 
-#sidebar h2 {
+#sidebar h2, #sidebar-steps h2 {
 padding:0;
 color:#333333;
 font-size:150%;
@@ -696,7 +700,24 @@ border: solid 0px black;
 width:222px;
 }
 
-#sidebar-nav {
+
+#sidebar-analysis {
+width:256px;float:right;border: solid 0px black; margin-left:14px;}
+
+
+#sidebar-steps  ol {
+margin:0 6px;
+counter-reset: section;
+list-style-type: none;
+}
+
+
+#sidebar-steps ol li { margin-top:7px;
+ counter-increment: section; }
+
+#sidebar-steps ol li:before  { content: counters(section, ".") ". "; }
+
+#sidebar-nav, #sidebar-steps {
 float:right;
 width:240px;
 margin: 14px 14px 0 14px;
@@ -709,8 +730,29 @@ border-radius: 0 0 20px 0;
 background:  #F4F4F8;
 }
 
-#sidebar-nav  ul{
-margin:10px;  font-weight:bold; font-size:110%;}
+#sidebar-export  {
+float:right;
+font-weight:normal;
+}
+
+#sidebar-export a { color:#445668;}
+
+#sidebar-export ul li {
+list-style-image:url(../img/arrow_menu_exp.gif);
+margin-left:7px;
+list-style-type:square;
+color:#c3c3c3;}
+
+#sidebar-steps {
+color:#3E3E3E;
+margin: 20px 0 0 0;
+padding:7px;
+border:red solid 0px;
+font-size:90%;
+/*font-size:70%;*/
+}
+
+#sidebar-nav  ul{ margin:10px;  font-weight:bold; font-size:110%;}
 
 #sidebar-nav  ul  li {
 list-style: none;
@@ -870,7 +912,7 @@ border: 0px solid #556f8c;
 margin: 10px 20px 0 0; color: #445668;
 }
 #filter input:focus  {
-	background: #F4F4F8;	
+	background: #F4F4F8;
 }
 
 #filter input[type=submit] {
@@ -1100,6 +1142,19 @@ display:block;
 
 .menu_bgd {
 background: url(../img/bgd_contentfull_menu.gif) -14px;
+}
+
+#go-chart {
+display:block;
+border:0px solid black;
+overflow:auto;
+width:100%;
+}
+
+#go-chart-process, #go-chart-molecular, #go-chart-cellular {
+float:left;
+border:0px solid green;
+margin-right:12px;
 }
 
 /* JQuery */
