@@ -1,44 +1,45 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div id="content-full">
-    <h4>Annotation profile -
-        <a href="http://www.ebi.ac.uk/interpro/" title="InterPro home page">InterPro</a>
-        protein matches</h4>
+     <h2>Analysis results<br/>
+        ${model.sample.sampleName} sample</h2> 
+    <h3>InterPro protein matches table</h3>
+    
     <c:choose>
         <c:when test="${not empty model.interProEntries}">
             <div class="export">
-                <c:set var="exportDetailedID" value="Export detailed file (Excel/TSV)" scope="page"/>
+                <c:set var="exportDetailedID" value="Export detailed file (TSV, 448Mb)" scope="page"/>
                 <a href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportI5File/${model.emgFile.fileName}"/>"
-                   id="csv_plus" title="<c:out value="${exportDetailedID}"/>">
+                    title="<c:out value="${exportDetailedID}"/>">
                     <c:out value="${exportDetailedID}"/>
                 </a>
-                <c:set var="exportTableID" value="Export table (Excel/TSV)" scope="page"/>
+                <c:set var="exportTableID" value="Export full table (CSV)" scope="page"/>
                 <a href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportIPRFile/${model.emgFile.fileName}"/>"
                    id="csv" title="<c:out value="${exportTableID}"/>">
                     <c:out value="${exportTableID}"/>
                 </a>
             </div>
+            
             <table border="1" class="result">
                 <thead>
                 <tr>
-                    <th align="center">InterPro Entry ID</th>
-                    <th align="center">InterPro Entry Description</th>
-                    <th align="center">Number of protein matches against this entry</th>
+                    <th scope="col" abbr="IEid" width="90px">InterPro ID</th>
+                    <th scope="col" abbr="IEname">Entry name</th>
+                    <th scope="col" abbr="IEnum"  width="80px">Protein matches</th>
                 </tr>
                 </thead>
                 <tbody>
                 <c:forEach var="entry" items="${model.interProEntries}" varStatus="status">
                     <tr>
-                        <td style="text-align:center;">
+                        <td>
                             <c:url var="linkToInterProSearch" value="http://wwwdev.ebi.ac.uk/interpro/ISearch">
                                 <c:param name="query" value="${entry.entryID}"/>
                             </c:url>
-                            <a href="<c:out value="${linkToInterProSearch}"/>"
-                               title="<c:out value="Link to ${entry.entryID}"/>">
-                                <c:out value="${entry.entryID}"/>
+                            <a href="<c:out value="${linkToInterProSearch}"/>" title="<c:out value="Link to ${entry.entryID}"/>"  class="ext">
+                            <c:out value="${entry.entryID}"/>
                             </a>
                         </td>
                         <td style="text-align:left;">${entry.entryDescription}</td>
-                        <td style="text-align:center;">${entry.numOfEntryHits}</td>
+                        <td id="ordered">${entry.numOfEntryHits}</td>
                     </tr>
                 </c:forEach>
                 </tbody>
