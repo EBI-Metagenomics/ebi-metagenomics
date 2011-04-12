@@ -6,7 +6,8 @@ html, body {height: 100%;}
 
 body {
     margin: 0; padding: 0; /*specified in EBI template.css */
-    font-family: 'Droid Sans', serif;
+    font-family:  Helvetica, Arial, sans-serif;
+    /*font-family: 'DroidSansRegular', Arial, sans-serif;   BUG with the no- Cleartype (standard) config on the PC */
     font-size: 80%;
     font-weight: 400;
     letter-spacing: 0em;
@@ -31,13 +32,40 @@ body.ebigrey #wrapper, div.top-menu ul li.ebigrey, body.ebigrey div.but_top { ba
 
 @font-face {
 font-family: 'MyriadProRegular';
-src: url('../fonts/myriadpro-regular-webfont.eot') format('eot'),
+src: url('../fonts/myriadpro-regular-webfont.eot'); /*to put first for IE*/
+src: local("?"),  /*The local values tell browsers to check first for your typeface on a visitor’s computer*/
      url('../fonts/myriadpro-regular-webfont.woff') format('woff'),
      url('../fonts/myriadpro-regular-webfont.ttf') format('truetype'),
-     url('../fonts/myriadpro-regular-webfont.svg#webfontZPnuZIZf') format('svg');
+     url('../fonts/myriadpro-regular-webfont.svg#webfontZPnuZIZf') format('svg'); /*paths to SVG files include an ID*/
 font-weight: normal;
 font-style: normal;
 }
+
+/*TRY  to solve Chris bug TEMP*/
+@font-face {
+    font-family: 'DroidSansRegular';
+    src: url('../fonts/DroidSans-webfont.eot');
+    src: local("?"),
+         url('../fonts/DroidSans-webfont.eot?#iefix') format('eot'),
+         url('../fonts/DroidSans-webfont.woff') format('woff'),
+         url('../fonts/DroidSans-webfont.ttf') format('truetype'),
+         url('../fonts/DroidSans-webfont.svg#webfontw7zqO19G') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'DroidSansBold';
+    src: url('../fonts/DroidSans-Bold-webfont.eot');
+    src: local("?"),
+         url('../fonts/DroidSans-Bold-webfont.eot?#iefix') format('eot'),
+         url('../fonts/DroidSans-Bold-webfont.woff') format('woff'),
+         url('../fonts/DroidSans-Bold-webfont.ttf') format('truetype'),
+         url('../fonts/DroidSans-Bold-webfont.svg#webfontSOhoM6aS') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+/*END TRY*/
 
 p { display: block;margin: 1em 0px; clear:none;}
 
