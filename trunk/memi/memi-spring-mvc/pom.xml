@@ -309,10 +309,6 @@
         parameters provided by a Maven profile (specified within the setting.xml file) -->
         <resources>
             <resource>
-                <directory>src/main/webapp</directory>
-                <filtering>true</filtering>
-            </resource>
-            <resource>
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
                 <excludes>
@@ -439,14 +435,9 @@
                           listed are filtered-->
                             <webResources>
                                 <resource>
-                                    <directory>${basedir}/src/main/webapp/</directory>
+                                    <directory>${basedir}/src/main/webapp/WEB-INF/spring/</directory>
                                     <filtering>true</filtering>
-                                    <includes>
-                                        <include>
-                                            MydasServerConfig.xml
-                                        </include>
-                                    </includes>
-                                </resource>
+                                 </resource>
                             </webResources>
                         </configuration>
                     </plugin>
