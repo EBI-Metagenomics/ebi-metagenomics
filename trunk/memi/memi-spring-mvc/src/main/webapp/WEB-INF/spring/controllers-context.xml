@@ -34,7 +34,7 @@
 
     <!--Metagenomics datasource-->
     <bean name="memiDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+        <property name="driverClassName" value="oracle.jdbc.OracleDriver"/>
         <property name="url" value="${jcp.jdbc.oracle.ipdev.url}"/>
         <property name="username" value="${jcp.jdbc.oracle.ipdev.username}"/>
         <property name="password" value="${jcp.jdbc.oracle.ipdev.password}"/>
