@@ -55,7 +55,7 @@
                 </c:url>
                 (<a href="<c:out value="${editPrefsUrl}"/>" title="Edit preferences">edit</a>)
                 <span id="logout">
-                    <a href="<c:url value="${baseURL}/logout"/>" title="logout"> | logout</a>
+                   |  <a href="<c:url value="${baseURL}/logout"/>" title="logout">logout</a>
                 </span>
             </c:otherwise>
         </c:choose>
