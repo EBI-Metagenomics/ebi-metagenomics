@@ -4,10 +4,47 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 
 html, body {height: 100%;}
 
+
+@font-face {
+font-family: 'MyriadProRegular';
+src: url('../fonts/myriadpro-regular-webfont.eot'); /*to put first for IE*/
+src: local('?'),  /*The local values tell browsers to check first for your typeface on a visitor’s computer*/
+     url('../fonts/myriadpro-regular-webfont.woff') format('woff'),
+     url('../fonts/myriadpro-regular-webfont.ttf') format('truetype'),
+     url('../fonts/myriadpro-regular-webfont.svg#webfontZPnuZIZf') format('svg'); /*paths to SVG files include an ID*/
+font-weight: normal;
+font-style: normal;
+}
+
+@font-face {
+    font-family: 'DroidSansRegular';
+    src: url('../fonts/DroidSans-webfont.eot');
+    src: url('../fonts/DroidSans-webfont.eot?#iefix') format('eot'),
+         url('../fonts/DroidSans-webfont.woff') format('woff'),
+         url('../fonts/DroidSans-webfont.ttf') format('truetype'),
+         url('../fonts/DroidSans-webfont.svg#webfontw7zqO19G') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'DroidSansBold';
+    /* even absolute link is not working In FIREFoxhttp://mcgraw-tech.com/default/includes/themes/merced/css/fonts/Droid-Sans-fontfacekit/DroidSans-webfont.eot'*/
+    src: url('../fonts/DroidSans-Bold-webfont.eot');
+    src: url('../fonts/DroidSans-Bold-webfont.eot?#iefix') format('eot'),
+         url('../fonts/DroidSans-Bold-webfont.woff') format('woff'),
+         url('../fonts/DroidSans-Bold-webfont.ttf') format('truetype'),
+         url('../fonts/DroidSans-Bold-webfont.svg#webfontSOhoM6aS') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
 body {
     margin: 0; padding: 0; /*specified in EBI template.css */
-    font-family:  Helvetica, Arial, sans-serif;
-    /*font-family: 'DroidSansRegular', Arial, sans-serif;   BUG with the no- Cleartype (standard) config on the PC */
+    /*font-family: 'Droid Sans', arial, serif;  GOOGLE way to include font -  BUG with the no-Cleartype (standard) config on the PC */
+    font-family: 'DroidSansRegular', Arial, sans-serif;  /*TEMP not working with IE and firefox, use Arial by default*/
     font-size: 80%;
     font-weight: 400;
     letter-spacing: 0em;
@@ -30,42 +67,6 @@ body.blue #wrapper, body.blue h5, div.top-menu ul li.blue, body.blue div.but_top
 body.ebigreen #wrapper, div.top-menu ul li.ebigreen, body.ebigreen div.but_top { background: url(../img/bgd_main_ebi_green.jpg) #207A7A;}
 body.ebigrey #wrapper, div.top-menu ul li.ebigrey, body.ebigrey div.but_top { background: url(../img/bgd_main_ebi_grey.jpg) #404040;}
 
-@font-face {
-font-family: 'MyriadProRegular';
-src: url('../fonts/myriadpro-regular-webfont.eot'); /*to put first for IE*/
-src: local("?"),  /*The local values tell browsers to check first for your typeface on a visitor’s computer*/
-     url('../fonts/myriadpro-regular-webfont.woff') format('woff'),
-     url('../fonts/myriadpro-regular-webfont.ttf') format('truetype'),
-     url('../fonts/myriadpro-regular-webfont.svg#webfontZPnuZIZf') format('svg'); /*paths to SVG files include an ID*/
-font-weight: normal;
-font-style: normal;
-}
-
-/*TRY  to solve Chris bug TEMP*/
-@font-face {
-    font-family: 'DroidSansRegular';
-    src: url('../fonts/DroidSans-webfont.eot');
-    src: local("?"),
-         url('../fonts/DroidSans-webfont.eot?#iefix') format('eot'),
-         url('../fonts/DroidSans-webfont.woff') format('woff'),
-         url('../fonts/DroidSans-webfont.ttf') format('truetype'),
-         url('../fonts/DroidSans-webfont.svg#webfontw7zqO19G') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'DroidSansBold';
-    src: url('../fonts/DroidSans-Bold-webfont.eot');
-    src: local("?"),
-         url('../fonts/DroidSans-Bold-webfont.eot?#iefix') format('eot'),
-         url('../fonts/DroidSans-Bold-webfont.woff') format('woff'),
-         url('../fonts/DroidSans-Bold-webfont.ttf') format('truetype'),
-         url('../fonts/DroidSans-Bold-webfont.svg#webfontSOhoM6aS') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-/*END TRY*/
 
 p { display: block;margin: 1em 0px; clear:none;}
 
@@ -472,7 +473,7 @@ color:#006AF6;
 
 table.result thead th:empty{background:transparent;border:none;}
 
-body.green table.result thead th{
+#green thead th{
 border:1px solid #93CE37;
 border-bottom:3px solid #9ED929;
 background-color:#9DD929;
@@ -497,7 +498,7 @@ border-top-left-radius:5px;
 border-top-right-radius:5px;
 }
 
-body.green table.result tbody td{
+#green tbody td{
 background-color:#DEF3CA;
 border: 2px solid #E7EFE0;
 }
@@ -507,7 +508,7 @@ border: 2px solid #E7EFE0;
 
 h2 {
 border: solid 0px red;
-font-family: MyriadProRegular, sans-serif;
+font-family: 'MyriadProRegular', arial, sans-serif; /*TEMP not working with IE and firefox, use Arial by default*/
 color:#003798;
 font-size:200%;
 font-weight:normal;
@@ -623,6 +624,7 @@ background: url(../img/button_submit_over.gif) white no-repeat center center;
 }*/
 
 #submit-data-description p  {
+
 border: solid 0px red;
 font-size:110%;
 color:#445668;  /*was  #7c8c99*/
@@ -922,9 +924,8 @@ text-shadow: 0px 1px 0px #f2f2f2;
 border: 0px solid #556f8c;
 }
 
-#filter input,#filter select {
-margin: 10px 20px 0 0; color: #445668;
-}
+#filter input, #filter select { margin: 10px 20px 0 0; color: #445668;}
+
 #filter input:focus  {
 	background: #F4F4F8;
 }
