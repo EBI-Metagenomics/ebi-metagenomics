@@ -32,12 +32,12 @@
                         <input type="submit" name="search" value="Search" class="main_button"/>
                         <c:choose>
                             <c:when test="${empty model.submitter}">
-                                <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search"/>"
-                                   title="View samples">Clear</a>
+                              <span class="clear_but"> | <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search"/>"
+                                   title="View samples">Clear</a></span>
                             </c:when>
                             <c:otherwise>
-                                <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_SAMPLES&search=Search"/>"
-                                   title="View samples">Clear</a>
+                               <span class="clear_but">| <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_SAMPLES&search=Search"/>"
+                                   title="View samples">Clear</a></span>
                             </c:otherwise>
                         </c:choose>
                     </div>
