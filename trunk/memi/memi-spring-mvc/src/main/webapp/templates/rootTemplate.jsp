@@ -74,7 +74,7 @@
 
 <%-- onload attribute is necessary to ensure that the EBI main header works in IE see  http://www.ebi.ac.uk/inc/template/#important style overflow addede because of he bug in the EBI website for the body--%>
 <body class="<tiles:getAsString name='bodyClass'/>"
-      onLoad="if(navigator.userAgent.indexOf('MSIE') != -1) {document.getElementById('head').allowTransparency = true;}">
+      onLoad="if(navigator.userAgent.indexOf('MSIE') != -1) {document.getElementById('head').allowTransparency = true;}" id="top">
 
 
 <%-- EBI-Interpro main header changez-index? --%>
