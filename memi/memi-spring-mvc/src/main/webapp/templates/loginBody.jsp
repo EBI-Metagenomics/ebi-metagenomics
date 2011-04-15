@@ -44,7 +44,8 @@
         </div>
         <p>
         <input type="submit" name="login" value="Login" class="main_button"/>
-        <input type="submit" name="cancel" value="Cancel" class="main_button"/>
+        <span class="clear_but" style="float:none;">| <a href="/metagenomics" title="cancel">Cancel</a></span>
+
         </p>
         </fieldset>    
         </form:form>
