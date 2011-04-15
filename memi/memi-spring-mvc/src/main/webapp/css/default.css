@@ -939,6 +939,8 @@ text-shadow: 0px 1px 0px #f2f2f2;
 border: 0px solid #556f8c;
 }
 
+input {padding:4px; border:1px solid #abadb3; color: #445668;}
+
 #filter input, #filter select { margin: 10px 20px 0 0; color: #445668;}
 
 #filter input:focus  {
