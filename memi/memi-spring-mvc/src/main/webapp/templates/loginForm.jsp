@@ -69,5 +69,5 @@
     <h2>Mailing list</h2>
 
     <p>Subscribe to the EBI metagenomics mailing list to receive by email updated information on the website activities:
-        <a href="http://listserver.ebi.ac.uk/mailman/listinfo/metagenomics">click here.</a></p>
+        <a class="ext" href="http://listserver.ebi.ac.uk/mailman/listinfo/metagenomics">click here.</a></p>
 </div>
