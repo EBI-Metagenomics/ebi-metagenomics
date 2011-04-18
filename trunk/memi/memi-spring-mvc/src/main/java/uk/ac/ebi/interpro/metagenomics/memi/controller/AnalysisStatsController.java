@@ -63,18 +63,6 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
         }, model, sampleId, getModelViewName());
     }
 
-    @RequestMapping(value = "/showProteinMatches", method = RequestMethod.GET)
-    public ModelAndView showProteinMatches(final ModelMap model, @PathVariable final String sampleId) {
-        log.info("Checking if sample is accessible...");
-        return checkAccessAndBuildModel(new ModelProcessingStrategy<Sample>() {
-            @Override
-            public void processModel(ModelMap model, Sample sample) {
-                log.info("Building model...");
-                populateModel(model, sample, false);
-            }
-        }, model, sampleId, "showProteinMatches");
-    }
-
     @RequestMapping(value = "/doExportGOSlimFile/{fileName}", method = RequestMethod.GET)
     public ModelAndView doExportGOSlimFile(@PathVariable final String sampleId, @PathVariable final String fileName, ModelMap model, final HttpServletResponse response) {
         return handleExport(sampleId, model, response, "_summary.go_slim", "_GO_slim.csv");
@@ -130,7 +118,7 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
     /**
      * Creates the home page model and adds it to the specified model map.
      */
-    private void populateModel(final ModelMap model, final Sample sample, boolean isReturnSizeLimit) {
+    protected void populateModel(final ModelMap model, final Sample sample, boolean isReturnSizeLimit) {
         String pageTitle = "Results " + sample.getSampleName();
         List<EmgFile> emgFiles = fileInfoDAO.getFilesBySampleId(sample.getSampleId());
         //TODO: For the moment the system only allows to represent one file on the analysis page, but

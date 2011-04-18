@@ -18,8 +18,10 @@
                     <c:out value="${exportTableID}"/>
                 </a>
             </div>
-            
-            <table border="1" class="result">
+            <br/>
+
+            <div id="pageNavPosition"></div>
+            <table id="results" border="1" class="result">
                 <thead>
                 <tr>
                     <th scope="col" abbr="IEid" width="90px">InterPro ID</th>
@@ -49,4 +51,11 @@
             <b><c:out value="${noDisplayID}"/></b>
         </c:otherwise>
     </c:choose>
+    <%--<script type="text/javascript">--%>
+    <%--var pager = new Pager('results', 30);--%>
+    <%--pager.init();--%>
+    <%--pager.showPageNav('pager', 'pageNavPosition');--%>
+    <%--pager.showPage(1);--%>
+    <%--</script>--%>
+
 </div>
