@@ -85,9 +85,10 @@
                     <td>${sample.sampleTypeAsString}</td>
                     <td>
                         <c:choose>
-                            <c:when test="${empty sample.analysisCompleted}"><img
+                            <c:when test="${empty sample.analysisCompleted}">in progress
+                                <%--<img
                                     src="${pageContext.request.contextPath}/img/ico_IN_PROGRESS_25_8.png"
-                                    alt="Analysis in progress" title="Analysis in progress"></c:when>
+                                    alt="Analysis in progress" title="Analysis in progress">--%></c:when>
                             <c:otherwise>
                                 <a href="<c:url value="${baseURL}/analysisStatsView/${sample.sampleId}"/>"><img
                                         src="${pageContext.request.contextPath}/img/ico_FINISHED_25_8.png"
