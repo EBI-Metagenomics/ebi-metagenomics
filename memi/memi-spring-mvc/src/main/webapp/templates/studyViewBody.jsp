@@ -97,24 +97,24 @@
     </c:choose>
  </div>
 
-    <h3 style="margin-bottom:0;">Contact details</h3>
+    <h3>Contact details</h3>
     <div class="output_form">
                 <c:set var="centreName" value="${model.study.centreName}"/>
              <c:choose>
              <c:when test="${not empty model.study.centreName}">
 
-              <label>Institute:</label>
+              <div class="result_row"><label>Institute:</label>
               </c:when>
               <c:otherwise><c:set var="centreName" value="${notGivenId}"/></c:otherwise>
               </c:choose>
-              <span><c:out value="${centreName}"/></span><br/><br/>
+              <span><c:out value="${centreName}"/></span></div>
 
                <%--make this dynamic in the future--%>
-              <label>Name:</label> <span>EBI Metagenomics team</span><br/><br/>
+              <div class="result_row"><label>Name:</label> <span>EBI Metagenomics team</span></div>
 
               <%--make this dynamic in the future--%>
-              <label>Email:</label>
-              <span><a href="mailto:datasubs@ebi.ac.uk" title="">datasubs@ebi.ac.uk</a></span>
+              <div class="result_row"><label>Email:</label>
+              <span><a href="mailto:datasubs@ebi.ac.uk" title="">datasubs@ebi.ac.uk</a></span></div>
     </div>
 
 
