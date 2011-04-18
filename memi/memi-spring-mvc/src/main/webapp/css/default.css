@@ -530,7 +530,7 @@ margin:0;
 h3 {
 color:#7c8c99;
 font-size:170%;
-margin:21px 0 ;
+margin:14px 0 7px 0;
 }
 
 h4 {
@@ -1031,7 +1031,6 @@ overflow:auto;
 }
 
 .form_row input {
-
 float:left;  display: block;
 }
 
@@ -1057,6 +1056,11 @@ padding:14px;
 }
 
 .clear_but {float: left; margin: 28px 10px 0 0; color:#cecece;}
+
+.result_row {
+padding: 4px 0px;
+border: 0px solid #ffaa22;
+}
 
 /* END FORM */
 
