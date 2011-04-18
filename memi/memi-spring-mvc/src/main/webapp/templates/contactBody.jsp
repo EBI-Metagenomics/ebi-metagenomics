@@ -48,8 +48,7 @@ and use Javascript to make them visible if it's enabled!
             <tr>
                 <td>
                     <input type="submit" name="submit" value="Submit" class="main_button" />
-                    <%--<input id="clearFormJS" type="button" name="clear" value="Clear" class="main_button" onclick="$('#contactForm').clearForm()" />--%>
-                    <span class="clear_but"  style="float:none;">| <a href="<c:url value="${baseURL}/contact"/>" title="Clear" onclick="$('#contactForm').clearForm()">Clear</a></span>
+                    <span class="clear_but"  style="float:none;">| <a href="#contact" title="Clear" onclick="$('#contactForm').clearForm()">Clear</a></span>
                 </td>
             </tr>
         </table>
