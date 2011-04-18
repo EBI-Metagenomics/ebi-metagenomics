@@ -91,8 +91,14 @@
                         </td>
                         <td>${entry.value}</td>
                         <td id="ordered">${entry.key.formattedLastReceived}</td>
-                        <td><img src="${pageContext.request.contextPath}/img/ico_${entry.key.studyStatus}_25_8.png"
-                                 alt="${entry.key.studyStatusAsString}" title="${entry.key.studyStatusAsString}"></td>
+                        <td>
+                            <c:choose>
+                        <c:when test="${entry.key.studyStatus == 'IN_PROGRESS'}">in progress 
+                        </c:when>
+                                <c:otherwise><img src="${pageContext.request.contextPath}/img/ico_${entry.key.studyStatus}_25_8.png"
+                                 alt="${entry.key.studyStatusAsString}" title="${entry.key.studyStatusAsString}"></c:otherwise>
+                            </c:choose>
+                            </td>
                     </tr>
                 </c:forEach>
                 </tbody>
