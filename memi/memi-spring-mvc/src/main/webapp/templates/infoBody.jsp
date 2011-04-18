@@ -126,8 +126,9 @@
 </p>
 
 <h4 id="features_3">Analysis</h4>
+
 <figure style="margin-right:14px;">
-    <img src="${pageContext.request.contextPath}/img/chart_pipeline.gif" alt="Pipeline chart"/>
+    <a href="${pageContext.request.contextPath}/img/chart_pipeline_400.gif"><img src="${pageContext.request.contextPath}/img/chart_pipeline.gif" alt="Pipeline chart"/> </a>
     <figcaption>
         <h3>Metagenomics pipeline chart</h3>
 
