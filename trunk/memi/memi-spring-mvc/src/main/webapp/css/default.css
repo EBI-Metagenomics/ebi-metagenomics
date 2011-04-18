@@ -1119,7 +1119,6 @@ figcaption {
   left: 0;
   bottom: 0;
   width: 100%;
-  font-size: .7em;
   color: #fff;
   background-color: rgba(0,0,0,.7);
   opacity: 0;
@@ -1152,9 +1151,13 @@ figcaption {
 }
 
 figure:hover figcaption {
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#aa000000,endColorstr=#aa000000);
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#aa000000,endColorstr=#aa000000);
 }
-
+figcaption h3 {
+color:white;
+font-weight:bold;
+font-size: 140%;
+}
 /* END CAPTION for IMAGES */
 
 ::-webkit-selection  { background:#7d9ca6; color:#fff; text-shadow: none; }
