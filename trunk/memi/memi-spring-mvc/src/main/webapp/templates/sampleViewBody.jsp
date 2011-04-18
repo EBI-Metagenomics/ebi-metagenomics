@@ -93,11 +93,11 @@ Classification: <c:out value="${sampleClassification}"/>
                         <c:set var="phenotype" value="${notGivenId}"/>
                     </c:otherwise>
                 </c:choose>
-  <label>Species:</label>
+  <div class="result_row"><label>Species:</label>
                 <c:choose>
                     <c:when test="${not empty model.sample.hostTaxonomyId && model.sample.hostTaxonomyId>0}">
                <%--To make it working--%>
-               <span>Homo sapiens, (human) <a class="ext" href="<c:url value="http://www.ncbi.nlm.nih.gov/taxonomy?Db=taxonomy&Cmd=DetailsSearch&Term=${model.sample.hostTaxonomyId}[uid]"/>">Tax ID <c:out value="${model.sample.hostTaxonomyId}"/></a> </span><br/><br/>
+               <span>Homo sapiens, (human) <a class="ext" href="<c:url value="http://www.ncbi.nlm.nih.gov/taxonomy?Db=taxonomy&Cmd=DetailsSearch&Term=${model.sample.hostTaxonomyId}[uid]"/>">Tax ID <c:out value="${model.sample.hostTaxonomyId}"/></a> </span></div>
                     </c:when>
                     <c:otherwise>
                        <c:out value="${notGivenId}"/>
@@ -112,9 +112,9 @@ Classification: <c:out value="${sampleClassification}"/>
                         <c:set var="hostSex" value="${notGivenId}"/>
                     </c:otherwise>
                 </c:choose>
-  <label>Sex:</label> <span style="text-transform:lowercase;"><c:out value="${hostSex}"/></span><br/><br/>
+  <div class="result_row"><label>Sex:</label> <span style="text-transform:lowercase;"><c:out value="${hostSex}"/></span></div> 
 
-  <label>Phenotype:</label> <span ><c:out value="${phenotype}"/></span>
+  <div class="result_row"><label>Phenotype:</label> <span ><c:out value="${phenotype}"/></span></div> 
 </div>
  </c:when>
 
@@ -129,7 +129,7 @@ Classification: <c:out value="${sampleClassification}"/>
                             <c:set var="environmentalBiome" value="${notGivenId}"/>
                         </c:otherwise>
                     </c:choose>
-      <label>Biome:</label> <span><c:out value="${environmentalBiome}"/></span><br/><br/>
+      <div class="result_row"><label>Biome:</label> <span><c:out value="${environmentalBiome}"/></span></div>
 
                        <c:choose>
                         <c:when test="${not empty model.sample.environmentalFeature}">
@@ -139,7 +139,7 @@ Classification: <c:out value="${sampleClassification}"/>
                             <c:set var="environmentalFeature" value="${notGivenId}"/>
                         </c:otherwise>
                     </c:choose>
-     <label>Experimental feature:</label> <span><c:out value="${environmentalFeature}"/></span><br/><br/>
+     <div class="result_row"><label>Experimental feature:</label> <span><c:out value="${environmentalFeature}"/></span></div>
                     <c:choose>
                         <c:when test="${not empty model.sample.environmentalMaterial}">
                             <c:set var="environmentalMaterial" value="${model.sample.environmentalMaterial}"/>
@@ -148,8 +148,8 @@ Classification: <c:out value="${sampleClassification}"/>
                             <c:set var="environmentalMaterial" value="${notGivenId}"/>
                         </c:otherwise>
                     </c:choose>
-     <label>Material:</label> <span><c:out value="${environmentalMaterial}"/></span>
-      </div>
+     <div class="result_row"><label>Material:</label> <span><c:out value="${environmentalMaterial}"/></span></div>
+    </div>
  </c:otherwise>
 </c:choose>
 
@@ -169,7 +169,7 @@ Classification: <c:out value="${sampleClassification}"/>
                         <c:set var="latLon" value="${notGivenId}"/>
                     </c:otherwise>
                 </c:choose>
-<label>Longitude/Latitude:</label> <span><c:out value="${latLon}"/> <a class="ext" href="<c:url value="http://maps.google.com/maps?q=${latLon}"/>">View map</a> </span><br/><br/>
+<div class="result_row"><label>Longitude/Latitude:</label> <span><c:out value="${latLon}"/> <a class="ext" href="<c:url value="http://maps.google.com/maps?q=${latLon}"/>">View map</a> </span></div>
 </c:otherwise>
 </c:choose>
 
@@ -182,7 +182,7 @@ Classification: <c:out value="${sampleClassification}"/>
                 <c:set var="geoLocName" value="${notGivenId}"/>
             </c:otherwise>
         </c:choose>
- <label>Geographic location:</label> <span><c:out value="${geoLocName}"/></span>
+ <div class="result_row"><label>Geographic location:</label> <span><c:out value="${geoLocName}"/></span></div>
  </div>
 
 
@@ -194,7 +194,7 @@ Classification: <c:out value="${sampleClassification}"/>
     <c:choose>
             <c:when test="${not empty model.sample.collectionDate}">      
                 <c:set var="collectionDate" value="${model.sample.collectionDate}"/>
-<label>Collection date:</label> <span><c:out value="${collectionDate}"/> </span><br/><br/>
+<div class="result_row"><label>Collection date:</label> <span><c:out value="${collectionDate}"/> </span></div>
             </c:when>
             <%--<c:otherwise><c:set var="collectionDate" value="${notGivenId}"/></c:otherwise>--%>
         </c:choose>
@@ -204,7 +204,7 @@ Classification: <c:out value="${sampleClassification}"/>
         <c:choose>
             <c:when test="${not empty model.sample.miscellaneous}">
                 <c:set var="miscellaneous" value="${model.sample.miscellaneous}"/>
- <label>Miscellaneous:</label> <span><c:out value="${miscellaneous}"/></span>
+ <div class="result_row"><label>Miscellaneous:</label> <span><c:out value="${miscellaneous}"/></span></div>
             </c:when>
              <%--<c:otherwise><c:set var="miscellaneous" value="${notGivenId}"/></c:otherwise>--%>
         </c:choose>
@@ -216,7 +216,7 @@ Classification: <c:out value="${sampleClassification}"/>
 <h3>Submitted nucleotide data</h3>
 
 <div class="output_form" id="large">
-<label>Raw sequence reads:</label>
+<div class="result_row"><label>Raw sequence reads:</label>
  <span>
             <c:choose>
                 <c:when test="${not empty model.archivedSequences}">
@@ -226,6 +226,6 @@ Classification: <c:out value="${sampleClassification}"/>
                     </c:forEach> (ENA website)
                 </c:when>
                 <c:otherwise>(not given)</c:otherwise>
-            </c:choose></span>
+            </c:choose></span></div>
 </div>
 </div>
