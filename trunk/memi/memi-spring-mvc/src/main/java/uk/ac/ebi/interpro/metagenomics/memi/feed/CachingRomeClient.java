@@ -103,7 +103,16 @@ public final class CachingRomeClient implements RomeClient {
             else {
                 urlText = url;
             }
-            String replacedUrl = "<a href=\"" + url + "\">" + urlText + "</a>";
+            String replacedUrl = "";
+            if (url.contains("ebi.ac.uk") && url.contains("/metagenomics")) {
+                // Link somewhere within EBI metagenomics
+                replacedUrl = "<a href=\"" + url + "\">";
+            }
+            else {
+                // Link outside of EBI metagenomics
+                replacedUrl = "<a href=\"" + url + "\" class=\"ext\">";
+            }
+            replacedUrl += urlText + "</a>";
             text = text.replaceAll(url, replacedUrl);
         }
 
