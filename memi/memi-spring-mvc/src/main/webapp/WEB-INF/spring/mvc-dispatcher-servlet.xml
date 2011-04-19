@@ -10,6 +10,12 @@
 
     <!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 
+    <!-- Imports user-defined @Controller beans that process client requests -->
+    <import resource="controllers-context.xml"/>
+    <import resource="service-beans-context.xml"/>
+    <import resource="persistence-config-context.xml"/>
+    <import resource="session-manager-context.xml"/>
+
     <!-- Configures the @Controller programming spring_model -->
     <mvc:annotation-driven/>
 
@@ -37,6 +43,14 @@
           class="org.springframework.web.servlet.view.tiles2.TilesConfigurer"
           p:definitions="/WEB-INF/tiles/tiles-defs.xml"/>
 
-    <!-- Imports user-defined @Controller beans that process client requests -->
-    <import resource="controllers-context.xml"/>
+    <!-- 2 configuration beans for localisation -->
+    <bean id="messageSource"
+          class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basename" value="classpath:messages"/>
+        <property name="defaultEncoding" value="UTF-8"/>
+    </bean>
+    <bean id="localeResolver"
+          class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+        <property name="defaultLocale" value="en"/>
+    </bean>
 </beans>

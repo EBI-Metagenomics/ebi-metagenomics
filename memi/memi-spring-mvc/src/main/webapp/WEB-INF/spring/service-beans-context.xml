@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+    <!--Services-->
+
+    <!-- The next 3 beans belong to the email notification service which is currently used in the submission form  -->
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="smtp.ebi.ac.uk"/>
+        <property name="port" value="25"/>
+    </bean>
+
+    <!-- This bean initializes an email notification service -->
+    <bean name="emailNotificationServiceSubmitPage"
+          class="uk.ac.ebi.interpro.metagenomics.memi.services.EmailNotificationService">
+        <constructor-arg ref="mailSender"/>
+        <property name="receiver" value="datasubs@ebi.ac.uk"/>
+        <!--<property name="receiverCC" value="" />-->
+        <!--<property name="emailSubject" value="EMG-SUB: Unknown project"/>-->
+    </bean>
+
+    <!-- This bean initializes an email notification service -->
+    <bean name="emailNotificationServiceContactPage"
+          class="uk.ac.ebi.interpro.metagenomics.memi.services.EmailNotificationService">
+        <constructor-arg ref="mailSender"/>
+        <property name="receiver" value="beta-ebi-metagenomics-feedback@googlegroups.com"/>
+        <!--<property name="receiverCC" value="" />-->
+        <!--<property name="emailSubject" value="[beta-feedback] Feedback about the new Metagenomics Website"/>-->
+    </bean>
+
+    <!-- Default email notification service without any specific properties-->
+    <bean name="defaultEmailNotificationService"
+          class="uk.ac.ebi.interpro.metagenomics.memi.services.EmailNotificationService">
+        <constructor-arg ref="mailSender"/>
+    </bean>
+
+    <!--This service configures a HTTP response, which opens a download dialog-->
+    <bean id="downloadService" class="uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService"/>
+
+</beans>

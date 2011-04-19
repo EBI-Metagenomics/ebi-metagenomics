@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+
+    <!-- The session bean holds the current logged in user/submitter reference-->
+    <!-- an HTTP Session-scoped bean exposed as a proxy -->
+    <bean id="sessionBeanRef" class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionBean"
+          scope="session">
+        <!-- this next element effects the proxying of the surrounding bean -->
+        <aop:scoped-proxy/>
+    </bean>
+
+    <!-- a singleton-scoped bean injected with a proxy to the above bean -->
+    <bean id="sessionManager" class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager">
+        <!-- a reference to the proxied userPreferences bean -->
+        <property name="sessionBean" ref="sessionBeanRef"/>
+    </bean>
+
+    <!-- Please use this bean to specify the path to the analysis files -->
+    <bean id="propContainer" class="uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer">
+        <property name="pathToAnalysisDirectory" value="${pathToAnalysisDirectory}"/>
+        <property name="enaSubmissionURL" ref="enaSubmission"/>
+    </bean>
+
+    <bean id="enaSubmission" class="uk.ac.ebi.interpro.metagenomics.memi.basic.ENASubmissionURL">
+        <property name="mainURL" value="http://www.ebi.ac.uk/embl/genomes/submission/"/>
+        <property name="registrationPageName" value="external-reg-link.jsf"/>
+        <property name="editPrefsPageName" value="external-update-link.jsf"/>
+        <property name="forgottenPasswordPageName" value="external-password-link.jsf"/>
+    </bean>
+</beans>

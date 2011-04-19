@@ -3,7 +3,6 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:tx="http://www.springframework.org/schema/tx"
-       xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:ehcache="http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring"
        xsi:schemaLocation="
         http://www.springframework.org/schema/beans
@@ -12,18 +11,11 @@
 		http://www.springframework.org/schema/context/spring-context-3.0.xsd
 		http://www.springframework.org/schema/tx
 		http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
-		http://www.springframework.org/schema/aop
-		http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
 		http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring
         http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring/ehcache-spring-1.1.xsd">
 
     <!-- Scans within the base package of the application for @Components to configure as beans -->
     <context:component-scan base-package="uk.ac.ebi.interpro.metagenomics.memi"/>
-
-    <!-- Transaction manager for the Hibernate SessionFactory -->
-    <bean id="txManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
-        <property name="sessionFactory" ref="hibernateSessionFactory"/>
-    </bean>
 
     <!-- Allow declarative transaction management using the @Transactional annotation (recommend by Spring (see Spring MVC documentation)-->
     <!-- Annotation-based configuration (Annotations are specified within DAOImpl classes)-->
@@ -31,23 +23,6 @@
 
     <!-- Exception translation bean post processor -->
     <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
-
-    <!--Metagenomics datasource-->
-    <bean name="memiDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="oracle.jdbc.OracleDriver"/>
-        <property name="url" value="${jcp.jdbc.oracle.ipdev.url}"/>
-        <property name="username" value="${jcp.jdbc.oracle.ipdev.username}"/>
-        <property name="password" value="${jcp.jdbc.oracle.ipdev.password}"/>
-    </bean>
-
-    <!--Data source for ADEV-->
-    <bean id="enaLoginDataSource"
-          class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="oracle.jdbc.OracleDriver"/>
-        <property name="url" value="${jcp.jdbc.oracle.apro.url}"/>
-        <property name="username" value="${jcp.jdbc.oracle.apro.username}"/>
-        <property name="password" value="${jcp.jdbc.oracle.apro.password}"/>
-    </bean>
 
     <!--Caching-->
     <ehcache:annotation-driven cache-manager="ehCacheManager"/>
@@ -72,88 +47,6 @@
         <constructor-arg value="5"/>
     </bean>
 
-    <!-- Definition of Hibernate session factory including Hibernate Mappings-->
-    <bean id="hibernateSessionFactory"
-          class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
-        <!--Database connection settings-->
-        <property name="dataSource" ref="memiDataSource"/>
-        <!--Hibernate properties-->
-        <property name="hibernateProperties">
-            <props>
-                <prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
-                <prop key="hibernate.show_sql">true</prop>
-                <prop key="hibernate.cache.provider_class">org.hibernate.cache.NoCacheProvider</prop>
-                <prop key="hibernate.cache.use_query_cache">false</prop>
-                <prop key="hibernate.cache.use_second_level_cache">false</prop>
-                <prop key="hibernate.connection.pool_size">1</prop>
-                <!--Enable Hibernate’s automatic session context management-->
-                <prop key="current_session_context_class">thread</prop>
-                <prop key="hibernate.transaction.auto_close_session">true</prop>
-                <prop key="hibernate.hbm2ddl.auto">validate</prop>
-            </props>
-        </property>
-        <!--<property name="location" value="classpath:resources/hibernate.properties"/>-->
-        <property name="annotatedClasses">
-            <list>
-                <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Publication</value>
-                <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study</value>
-                <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample</value>
-                <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.EnvironmentSample</value>
-                <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.HostSample</value>
-                <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.UndefinedSample</value>
-            </list>
-        </property>
-
-    </bean>
-
-
-    <!-- Specification of version of control elements like e.g. data access objects -->
-    <!-- List of data access objects -->
-    <bean id="studyDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateStudyDAOImpl"/>
-
-    <bean id="sampleDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateSampleDAOImpl"/>
-
-    <bean name="submitterDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.SubmitterDAOImpl">
-        <property name="dataSource" ref="enaLoginDataSource"/>
-    </bean>
-
-    <bean name="fileInfoDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.EmgLogFileInfoDAOImpl">
-        <property name="dataSource" ref="memiDataSource"/>
-    </bean>
-
-    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-        <property name="basename" value="messages"/>
-        <property name="defaultEncoding" value="UTF-8"/>
-    </bean>
-
-    <!--Service-->
-
-    <!-- The next 3 beans belong to the email notification service which is currently used in the submission form  -->
-    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-        <property name="host" value="smtp.ebi.ac.uk"/>
-        <property name="port" value="25"/>
-    </bean>
-
-    <!-- This bean initializes an email notification service -->
-    <bean name="emailNotificationServiceSubmit"
-          class="uk.ac.ebi.interpro.metagenomics.memi.services.EmailNotificationService">
-        <constructor-arg ref="mailSender"/>
-        <property name="receiver" value="datasubs@ebi.ac.uk"/>
-    </bean>
-
-    <!-- This bean initializes an email notification service -->
-    <bean name="emailNotificationServiceContact"
-          class="uk.ac.ebi.interpro.metagenomics.memi.services.EmailNotificationService">
-        <constructor-arg ref="mailSender"/>
-        <property name="receiver" value="beta-ebi-metagenomics-feedback@googlegroups.com"/>
-    </bean>
-
-    <!-- Default email notification service without any specific properties-->
-    <bean name="defaultEmailNotificationService"
-          class="uk.ac.ebi.interpro.metagenomics.memi.services.EmailNotificationService">
-        <constructor-arg ref="mailSender"/>
-    </bean>
-
     <!-- This bean initializes the Velocity engine for templating. -->
     <bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
         <property name="velocityProperties">
@@ -166,35 +59,4 @@
         </property>
         <property name="resourceLoaderPath" value="/WEB-INF/velocity_templates"/>
     </bean>
-
-    <!--This service configures a HTTP response, which opens a download dialog-->
-    <bean id="downloadService" class="uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService"/>
-
-    <!-- The session bean holds the current logged in user/submitter reference-->
-    <!-- an HTTP Session-scoped bean exposed as a proxy -->
-    <bean id="sessionBeanRef" class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionBean"
-          scope="session">
-        <!-- this next element effects the proxying of the surrounding bean -->
-        <aop:scoped-proxy/>
-    </bean>
-
-    <!-- a singleton-scoped bean injected with a proxy to the above bean -->
-    <bean id="sessionManager" class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager">
-        <!-- a reference to the proxied userPreferences bean -->
-        <property name="sessionBean" ref="sessionBeanRef"/>
-    </bean>
-
-    <!-- Please use this bean to specify the path to the analysis files -->
-    <bean id="propContainer" class="uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer">
-        <property name="pathToAnalysisDirectory" value="${pathToAnalysisDirectory}"/>
-        <property name="enaSubmissionURL" ref="enaSubmission"/>
-    </bean>
-
-    <bean id="enaSubmission" class="uk.ac.ebi.interpro.metagenomics.memi.basic.ENASubmissionURL">
-        <property name="mainURL" value="http://www.ebi.ac.uk/embl/genomes/submission/"/>
-        <property name="registrationPageName" value="external-reg-link.jsf"/>
-        <property name="editPrefsPageName" value="external-update-link.jsf"/>
-        <property name="forgottenPasswordPageName" value="external-password-link.jsf"/>
-    </bean>
-
 </beans>

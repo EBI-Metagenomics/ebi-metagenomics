@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+    <!--Data sources-->
+
+    <!--Metagenomics datasource-->
+    <bean name="memiDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+        <property name="url" value="${jcp.jdbc.oracle.ipdev.url}"/>
+        <property name="username" value="${jcp.jdbc.oracle.ipdev.username}"/>
+        <property name="password" value="${jcp.jdbc.oracle.ipdev.password}"/>
+    </bean>
+
+    <!--Data source for ADEV-->
+    <bean id="enaLoginDataSource"
+          class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="oracle.jdbc.OracleDriver"/>
+        <property name="url" value="${jcp.jdbc.oracle.apro.url}"/>
+        <property name="username" value="${jcp.jdbc.oracle.apro.username}"/>
+        <property name="password" value="${jcp.jdbc.oracle.apro.password}"/>
+    </bean>
+</beans>
