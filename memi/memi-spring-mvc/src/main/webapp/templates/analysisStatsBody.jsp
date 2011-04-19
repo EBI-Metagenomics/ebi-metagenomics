@@ -19,6 +19,7 @@
 
        <div id="sidebar-steps">
           <h2> Data processing steps </h2>
+          <span class="separator"></span>
                     <ol>
                         <li>Reads submitted</li>
 
@@ -40,6 +41,7 @@
 
 
         <h3>Download results</h3>
+
         <div id="box-export">
         <ul>
             <li><a title="Click to download all submitted nucleotide data on the ENA website" href="<c:url value="http://www.ebi.ac.uk/ena/data/view/${model.sample.sampleId}"/>">Export submitted nucleotide data (ENA website)</a></li>
