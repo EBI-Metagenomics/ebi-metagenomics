@@ -47,7 +47,7 @@ public class ContactPageController extends AbstractController implements IMGCont
 
     public static final String SUCCESS_VIEW_NAME = "contactSuccess";
 
-    @Resource(name = "emailNotificationServiceContact")
+    @Resource(name = "emailNotificationServiceContactPage")
     private INotificationService emailService;
 
     @Resource

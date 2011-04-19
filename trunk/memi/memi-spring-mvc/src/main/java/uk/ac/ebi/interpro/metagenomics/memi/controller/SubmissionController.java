@@ -48,7 +48,7 @@ public class SubmissionController extends CheckLoginController implements IMGCon
 
     public static final String SUCCESS_VIEW_NAME = "submitSuccess";
 
-    @Resource(name = "emailNotificationServiceSubmit")
+    @Resource(name = "emailNotificationServiceSubmitPage")
     private INotificationService emailService;
 
     @Resource(name = "velocityEngine")

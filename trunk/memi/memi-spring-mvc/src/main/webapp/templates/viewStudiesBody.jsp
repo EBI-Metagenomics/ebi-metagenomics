@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="spring" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <div id="content-full">
     <h2>${pageTitle}</h2>
@@ -19,9 +19,9 @@
                        commandName="studyFilter">
                 <fieldset>
                     <label for="text">Text:</label>
-                    <%-- Autocompletion temporarily disabled since it will not scale well with this current implementaion.
-                    Need to get the autocomplete text from the database before this feature is activated! --%>
-                    <%--<form:input id="autocomplete" path="searchTerm"/><br/>--%>
+                        <%-- Autocompletion temporarily disabled since it will not scale well with this current implementaion.
+          Need to get the autocomplete text from the database before this feature is activated! --%>
+                        <%--<form:input id="autocomplete" path="searchTerm"/><br/>--%>
                     <form:input path="searchTerm"/><br/>
                     <form:errors path="searchTerm" cssClass="error"/><br/>
                     <label for="status"> Analysis status:</label>
@@ -44,12 +44,14 @@
                         <input type="submit" name="search" value="Search" class="main_button"/>
                         <c:choose>
                             <c:when test="${empty model.submitter}">
-                              <span class="clear_but"> | <a href="<c:url value="${baseURL}/studies/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>"
-                                   title="View studies">Clear</a></span>
+                              <span class="clear_but"> | <a
+                                      href="<c:url value="${baseURL}/studies/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>"
+                                      title="View studies">Clear</a></span>
                             </c:when>
                             <c:otherwise>
-                               <span class="clear_but"> | <a href="<c:url value="${baseURL}/studies/doSearch?search=Search&studyVisibility=ALL_PROJECTS"/>"
-                                   title="View studies">Clear</a></span>
+                               <span class="clear_but"> | <a
+                                       href="<c:url value="${baseURL}/studies/doSearch?search=Search&studyVisibility=ALL_PROJECTS"/>"
+                                       title="View studies">Clear</a></span>
                             </c:otherwise>
                         </c:choose>
                     </div>
@@ -65,10 +67,12 @@
             <c:set var="queryString" value="${pageContext.request.queryString}" scope="session"/>
             <div class="export">
                 <a href="<c:url value="${baseURL}/studies/doExportDetails?${queryString}"/>" id="csv_plus"
-                   title="Export more detailed information about the projects below in CSV format">Export detailed info
-                    (CSV)</a>
+                   title="<spring:message code="viewStudies.download.anchor.title.detailed"/>">
+                    <spring:message code="viewStudies.download.anchor.label.detailed"/>
+                </a>
                 <a href="<c:url value="${baseURL}/studies/doExport?${queryString}"/>" id="csv"
-                   title="Export table below in CSV format">Export table (CSV)</a>
+                   title="<spring:message code="viewStudies.download.anchor.title.table"/>"><spring:message
+                        code="viewStudies.download.anchor.label.table"/></a>
             </div>
 
             <table border="1" class="result">
@@ -93,12 +97,14 @@
                         <td id="ordered">${entry.key.formattedLastReceived}</td>
                         <td>
                             <c:choose>
-                        <c:when test="${entry.key.studyStatus == 'IN_PROGRESS'}">in progress 
-                        </c:when>
-                                <c:otherwise><img src="${pageContext.request.contextPath}/img/ico_${entry.key.studyStatus}_25_8.png"
-                                 alt="${entry.key.studyStatusAsString}" title="${entry.key.studyStatusAsString}"></c:otherwise>
+                                <c:when test="${entry.key.studyStatus == 'IN_PROGRESS'}">in progress
+                                </c:when>
+                                <c:otherwise><img
+                                        src="${pageContext.request.contextPath}/img/ico_${entry.key.studyStatus}_25_8.png"
+                                        alt="${entry.key.studyStatusAsString}"
+                                        title="${entry.key.studyStatusAsString}"></c:otherwise>
                             </c:choose>
-                            </td>
+                        </td>
                     </tr>
                 </c:forEach>
                 </tbody>

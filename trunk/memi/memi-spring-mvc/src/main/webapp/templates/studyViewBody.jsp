@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="spring" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%--Page variable which is used several time within this page. Used for not specified study attributes.--%>
 <c:set var="notGivenId" value="(not given)"/>
 <div id="content-full">
@@ -144,7 +144,8 @@ Contact name: (not given)
         
          
           <div class="export">
-          <a href="<c:url value="${baseURL}/study/${model.study.studyId}/doExport/"/>"  id="csv_plus" title="Export more detailed information about the samples below in CSV format">Export detailed info (CSV)</a>
+          <a href="<c:url value="${baseURL}/study/${model.study.studyId}/doExport/"/>"  id="csv_plus" title="<spring:message code="studyView.download.anchor.title"/>">
+              <spring:message code="studyView.download.anchor.label"/></a>
           </div>
 
 

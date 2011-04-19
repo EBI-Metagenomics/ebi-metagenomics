@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="spring" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <div id="content-full">
     <h2>${pageTitle}</h2>
@@ -32,12 +32,14 @@
                         <input type="submit" name="search" value="Search" class="main_button"/>
                         <c:choose>
                             <c:when test="${empty model.submitter}">
-                              <span class="clear_but"> | <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search"/>"
-                                   title="View samples">Clear</a></span>
+                              <span class="clear_but"> | <a
+                                      href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search"/>"
+                                      title="View samples">Clear</a></span>
                             </c:when>
                             <c:otherwise>
-                               <span class="clear_but">| <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_SAMPLES&search=Search"/>"
-                                   title="View samples">Clear</a></span>
+                               <span class="clear_but">| <a
+                                       href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_SAMPLES&search=Search"/>"
+                                       title="View samples">Clear</a></span>
                             </c:otherwise>
                         </c:choose>
                     </div>
@@ -61,7 +63,8 @@
                     <%--<a href="<c:url value="${baseURL}/samples/doExportDetails?${queryString}"/>"  id="csv_plus" title="Export more detailed information about the samples below in CSV format">Export detailed info (CSV)</a>--%>
                     <%--</c:if>--%>
                 <a href="<c:url value="${baseURL}/samples/doExportTable?${queryString}"/>" id="csv"
-                   title="Export table below in CSV format">Export table (CSV)</a>
+                   title="<spring:message code="viewSamples.download.anchor.title"/>">
+                    <spring:message code="viewSamples.download.anchor.label"/></a>
             </div>
 
             <table border="1" class="result">
@@ -75,29 +78,29 @@
                 </thead>
                 <tbody>
                 <c:forEach var="sample" items="${model.samples}" varStatus="status">
-                <tr>
-                    <td style="text-align:left;" id="ordered">
-                        <c:if test="${!sample.public}"><img alt="private"
-                                                            src="${pageContext.request.contextPath}/img/icon_priv_private.gif">&nbsp;&nbsp;</c:if>
-                        <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>">${sample.sampleName}</a>
-                    </td>
-                    <td style="text-align:left;">${sample.study.studyName}</td>
-                    <td>${sample.sampleTypeAsString}</td>
-                    <td>
-                        <c:choose>
-                            <c:when test="${empty sample.analysisCompleted}">in progress
-                                <%--<img
-                                    src="${pageContext.request.contextPath}/img/ico_IN_PROGRESS_25_8.png"
-                                    alt="Analysis in progress" title="Analysis in progress">--%></c:when>
-                            <c:otherwise>
-                                <a href="<c:url value="${baseURL}/analysisStatsView/${sample.sampleId}"/>"><img
-                                        src="${pageContext.request.contextPath}/img/ico_FINISHED_25_8.png"
-                                        alt="Analysis finished - check the results"
-                                        title="Analysis finished - check the results"></a>
-                            </c:otherwise>
-                        </c:choose>
-                    </td>
-                </tr>
+                    <tr>
+                        <td style="text-align:left;" id="ordered">
+                            <c:if test="${!sample.public}"><img alt="private"
+                                                                src="${pageContext.request.contextPath}/img/icon_priv_private.gif">&nbsp;&nbsp;</c:if>
+                            <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>">${sample.sampleName}</a>
+                        </td>
+                        <td style="text-align:left;">${sample.study.studyName}</td>
+                        <td>${sample.sampleTypeAsString}</td>
+                        <td>
+                            <c:choose>
+                                <c:when test="${empty sample.analysisCompleted}">in progress
+                                    <%--<img
+                               src="${pageContext.request.contextPath}/img/ico_IN_PROGRESS_25_8.png"
+                               alt="Analysis in progress" title="Analysis in progress">--%></c:when>
+                                <c:otherwise>
+                                    <a href="<c:url value="${baseURL}/analysisStatsView/${sample.sampleId}"/>"><img
+                                            src="${pageContext.request.contextPath}/img/ico_FINISHED_25_8.png"
+                                            alt="Analysis finished - check the results"
+                                            title="Analysis finished - check the results"></a>
+                                </c:otherwise>
+                            </c:choose>
+                        </td>
+                    </tr>
                 </c:forEach>
                 </tbody>
             </table>
