@@ -5,117 +5,121 @@
 <div id="content-full">
 
 <c:choose>
-<c:when test="${not empty model.study.publications}">
-<div id="sidebar-analysis">
-     <div id="sidebar-related">
-        <h2>Related Publications</h2>
-         <span class="separator"></span>
-         <ul>
-        <c:forEach var="pub" items="${model.study.publications}" varStatus="status">
-         <li><strong><c:out value="${pub.pubTitle}"/></strong><br>
-           <i><c:out value="${pub.authors}"/> et al.</i><br>
-              <c:out value="${pub.year}"/> <c:out value="${pub.volume}"/><br>
+    <c:when test="${not empty model.study.publications}">
+        <div id="sidebar-analysis">
+            <div id="sidebar-related">
+                <h2>Related Publications</h2>
+                <span class="separator"></span>
+                <ul>
+                    <c:forEach var="pub" items="${model.study.publications}" varStatus="status">
+                        <li><strong><c:out value="${pub.pubTitle}"/></strong><br>
+                            <i><c:out value="${pub.authors}"/> et al.</i><br>
+                            <c:out value="${pub.year}"/> <c:out value="${pub.volume}"/><br>
 
 
-             <c:if test="${not empty pub.doi}"><a class="ext" style="font-size:110%;" href="<c:url value="http://dx.doi.org/${pub.doi}"/>">DOI</a></c:if>
-             <c:if test="${not empty pub.pubMedId && pub.pubMedId>0}">
-             - <a class="ext" style="font-size:110%;" href="<c:url value="http://www.ncbi.nlm.nih.gov/pubmed/${pub.pubMedId}"/>">PubMed (${pub.pubMedId})</a>
-             </c:if>
-        </li>
-        </c:forEach></ul>
-    </div>
-</div>
-</c:when>
-<c:otherwise>
-<%--<div id="sidebar-analysis">
-<div id="sidebar-steps">
-<h2>Related publications</h2>
-<span class="separator"></span>
- <p>&nbsp;</p>
-<p>There is no publications available for this project.<br/></p>
-</div>
-</div>--%>
-</c:otherwise>
+                            <c:if test="${not empty pub.doi}"><a class="ext" style="font-size:110%;"
+                                                                 href="<c:url value="http://dx.doi.org/${pub.doi}"/>">DOI</a></c:if>
+                            <c:if test="${not empty pub.pubMedId && pub.pubMedId>0}">
+                                - <a class="ext" style="font-size:110%;"
+                                     href="<c:url value="http://www.ncbi.nlm.nih.gov/pubmed/${pub.pubMedId}"/>">PubMed
+                                (${pub.pubMedId})</a>
+                            </c:if>
+                        </li>
+                    </c:forEach></ul>
+            </div>
+        </div>
+    </c:when>
+    <c:otherwise>
+        <%--<div id="sidebar-analysis">
+        <div id="sidebar-steps">
+        <h2>Related publications</h2>
+        <span class="separator"></span>
+         <p>&nbsp;</p>
+        <p>There is no publications available for this project.<br/></p>
+        </div>
+        </div>--%>
+    </c:otherwise>
 </c:choose>
 
-<span class="subtitle" >Project overview</span>
+<span class="subtitle">Project overview</span>
 
 <h2>${model.study.studyName}</h2>
 
 <br/>Project ID: ${model.study.studyId}
 
 <c:choose>
-<c:when test="${not empty model.study.ncbiProjectId && model.study.ncbiProjectId>0}">
-<br/>BioProject ID: <a class="ext" href="<c:url value="http://www.ebi.ac.uk/ena/data/view/Project:${model.study.ncbiProjectId}"/>"><c:out value="${model.study.ncbiProjectId}"/></a>
-</c:when>
-<c:otherwise></c:otherwise>
+    <c:when test="${not empty model.study.ncbiProjectId && model.study.ncbiProjectId>0}">
+        <br/>BioProject ID: <a class="ext"
+                               href="<c:url value="http://www.ebi.ac.uk/ena/data/view/Project:${model.study.ncbiProjectId}"/>"><c:out
+            value="${model.study.ncbiProjectId}"/></a>
+    </c:when>
+    <c:otherwise></c:otherwise>
 </c:choose>
 
 <br/>
-<c:choose><c:when test="${model.study.public}"></c:when>
-<c:otherwise>
+<c:if test="${!model.study.public}">
     Private data <img alt="private" src="${pageContext.request.contextPath}/img/icon_priv_private.gif">
-</c:otherwise>
-</c:choose>
-
+</c:if>
 <c:choose>
-<c:when test="${not empty model.study.publicReleaseDate}">
-<c:set var="publicReleaseDate" value="${model.study.publicReleaseDate}"/>
-<br/><br/><span class="list_date">Public release date: <c:out value="${publicReleaseDate}"/></span>
-</c:when>
-<c:otherwise>
-    <c:set var="publicReleaseDate" value="${notGivenId}"/>
-</c:otherwise>
+    <c:when test="${not empty model.study.publicReleaseDate}">
+        <c:set var="publicReleaseDate" value="${model.study.publicReleaseDate}"/>
+        <br/><br/><span class="list_date">Public release date: <c:out value="${publicReleaseDate}"/></span>
+    </c:when>
+    <c:otherwise>
+        <c:set var="publicReleaseDate" value="${notGivenId}"/>
+    </c:otherwise>
 </c:choose>
 
 <h3 id="study_desc" style="margin-top:40px;">Description</h3>
-<div class="output_form" >
+
+<div class="output_form">
     <c:choose>
         <c:when test="${not empty model.study.studyAbstract}">
-          <c:set var="studyAbstract" value="${model.study.studyAbstract}"/>
+            <c:set var="studyAbstract" value="${model.study.studyAbstract}"/>
         </c:when>
         <c:otherwise>
             <c:set var="studyAbstract" value="notGivenId"/>
         </c:otherwise>
     </c:choose>
 
-<p style="font-size:110%;"><c:out value="${studyAbstract}"/></p>
+    <p style="font-size:110%;"><c:out value="${studyAbstract}"/></p>
 
 
     <c:choose>
         <c:when test="${not empty model.study.experimentalFactor}">
-                  <c:choose>
-                  <c:when test="${model.study.experimentalFactor=='none'}"></c:when>
-                          <c:otherwise>
-            <c:set var="experimentalFactor" value="${model.study.experimentalFactor}"/>
-            <p><h4>Experimental factor:</h4> <c:out value="${experimentalFactor}"/></p>
-                   </c:otherwise></c:choose>
+            <c:choose>
+                <c:when test="${model.study.experimentalFactor=='none'}"></c:when>
+                <c:otherwise>
+                    <c:set var="experimentalFactor" value="${model.study.experimentalFactor}"/>
+                    <p><h4>Experimental factor:</h4> <c:out value="${experimentalFactor}"/></p>
+                </c:otherwise></c:choose>
         </c:when>
         <c:otherwise>
             <c:set var="experimentalFactor" value="${notGivenId}"/>
         </c:otherwise>
     </c:choose>
- </div>
+</div>
 
-    <h3>Contact details</h3>
-    <div class="output_form">
-                <c:set var="centreName" value="${model.study.centreName}"/>
-             <c:choose>
-             <c:when test="${not empty model.study.centreName}">
+<h3>Contact details</h3>
 
-              <div class="result_row"><label>Institute:</label>
-              </c:when>
-              <c:otherwise><c:set var="centreName" value="${notGivenId}"/></c:otherwise>
-              </c:choose>
-              <span><c:out value="${centreName}"/></span></div>
+<div class="output_form">
+    <c:set var="centreName" value="${model.study.centreName}"/>
+    <c:choose>
+    <c:when test="${not empty model.study.centreName}">
 
-               <%--make this dynamic in the future--%>
-              <div class="result_row"><label>Name:</label> <span>EBI Metagenomics team</span></div>
+    <div class="result_row"><label>Institute:</label>
+        </c:when>
+        <c:otherwise><c:set var="centreName" value="${notGivenId}"/></c:otherwise>
+        </c:choose>
+        <span><c:out value="${centreName}"/></span></div>
 
-              <%--make this dynamic in the future--%>
-              <div class="result_row"><label>Email:</label>
-              <span><a href="mailto:datasubs@ebi.ac.uk" title="">datasubs@ebi.ac.uk</a></span></div>
-    </div>
+    <%--make this dynamic in the future--%>
+    <div class="result_row"><label>Name:</label> <span>EBI Metagenomics team</span></div>
+
+    <%--make this dynamic in the future--%>
+    <div class="result_row"><label>Email:</label>
+        <span><a href="mailto:datasubs@ebi.ac.uk" title="">datasubs@ebi.ac.uk</a></span></div>
+</div>
 
 
 <%-- Do we need to display this static information?
@@ -129,47 +133,46 @@ Contact name: (not given)
 </p>--%>
 
 
-
 <%--<h3>Other information</h3>--%>
 
 <h3 id="samples_id">Associated samples</h3>
 <c:choose>
     <c:when test="${not empty model.samples}">
-       <%-- <c:if test="${isDialogOpen==false}">
+        <%-- <c:if test="${isDialogOpen==false}">
             <p><span style="color:red">No export data available for that(these) sample(s)!</span></p>
         </c:if>
         <div>
             <a href="<c:url value="${baseURL}/study/${model.study.studyId}/doExport/"/>">Export more detailed sample info to CSV</a>
         </div>--%>
-        
-         
-          <div class="export">
-          <a href="<c:url value="${baseURL}/study/${model.study.studyId}/doExport/"/>"  id="csv_plus" title="<spring:message code="studyView.download.anchor.title"/>">
-              <spring:message code="studyView.download.anchor.label"/></a>
-          </div>
 
 
+        <div class="export">
+            <a href="<c:url value="${baseURL}/study/${model.study.studyId}/doExport/"/>" id="csv_plus"
+               title="<spring:message code="studyView.download.anchor.title"/>">
+                <spring:message code="studyView.download.anchor.label"/></a>
+        </div>
 
-          <table border="1" class="result">
-                <thead>
-                <tr>
-                    <th scope="col" abbr="Sname">Sample name</th>
-                    <th scope="col" abbr="Pname">Sample ID</th>
-                     <th scope="col" abbr="Pname">Collection date</th>
-                    <th scope="col" abbr="Source" width="140px">Source</th>
-                    <th scope="col" abbr="Analysis" width="80px">Analysis</th>
-                </tr>
-                </thead>
-                <tbody>
-                <c:forEach var="sample" items="${model.samples}" varStatus="status">
+
+        <table border="1" class="result">
+            <thead>
+            <tr>
+                <th scope="col" abbr="Sname">Sample name</th>
+                <th scope="col" abbr="Pname">Sample ID</th>
+                <th scope="col" abbr="Pname">Collection date</th>
+                <th scope="col" abbr="Source" width="140px">Source</th>
+                <th scope="col" abbr="Analysis" width="80px">Analysis</th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach var="sample" items="${model.samples}" varStatus="status">
                 <tr>
                     <td style="text-align:left;" id="ordered">
                         <c:if test="${!sample.public}"><img alt="private"
                                                             src="${pageContext.request.contextPath}/img/icon_priv_private.gif">&nbsp;&nbsp;</c:if>
                         <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>">${sample.sampleName}</a>
                     </td>
-                    <td style="width:90px;" >${sample.sampleId}</td>
-                    <td style="width:120px;" >
+                    <td style="width:90px;">${sample.sampleId}</td>
+                    <td style="width:120px;">
                         <c:choose>
                             <c:when test="${empty sample.collectionDate}">-</c:when>
                             <c:otherwise>${sample.collectionDate}</c:otherwise>
@@ -189,14 +192,12 @@ Contact name: (not given)
                         </c:choose>
                     </td>
                 </tr>
-                </c:forEach>
-                </tbody>
-            </table>
+            </c:forEach>
+            </tbody>
+        </table>
 
 
-        
-
-      <%-- <table border="1">
+        <%-- <table border="1">
             <tr>
                 <th>No.</th>
                 <th>Sample ID</th>

@@ -46,7 +46,9 @@
 <h2>${model.sample.sampleName}</h2>
 <br/>Sample ID: ${model.sample.sampleId}
 <br/>
-Private data <img alt="private" src="${pageContext.request.contextPath}/img/icon_priv_private.gif">
+<c:if test="${!model.sample.public}">
+    Private data <img alt="private" src="${pageContext.request.contextPath}/img/icon_priv_private.gif">
+</c:if>
 
 <p><a class="list_sample" href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}"/>"> <img
         src="<c:url value="${baseURL}/img/ico_analysis.png"/>" alt="Analysis results and statistics"> View analysis
