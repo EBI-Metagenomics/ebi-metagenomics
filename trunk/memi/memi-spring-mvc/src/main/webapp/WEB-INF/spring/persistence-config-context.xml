@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+    <!-- Persistence configuration-->
+    <import resource="datasource-beans-context.xml"/>
+
+    <!-- Transaction manager for the Hibernate SessionFactory -->
+    <bean id="txManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="hibernateSessionFactory"/>
+    </bean>
+
+    <!-- Exception translation bean post processor -->
+    <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
+
+    <!-- Definition of Hibernate session factory including Hibernate Mappings-->
+    <bean id="hibernateSessionFactory"
+          class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+        <!--Database connection settings-->
+        <property name="dataSource" ref="memiDataSource"/>
+        <!--Hibernate properties-->
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.cache.provider_class">org.hibernate.cache.NoCacheProvider</prop>
+                <prop key="hibernate.cache.use_query_cache">false</prop>
+                <prop key="hibernate.cache.use_second_level_cache">false</prop>
+                <prop key="hibernate.connection.pool_size">1</prop>
+                <!--Enable Hibernate’s automatic session context management-->
+                <prop key="current_session_context_class">thread</prop>
+                <prop key="hibernate.transaction.auto_close_session">true</prop>
+                <prop key="hibernate.hbm2ddl.auto">validate</prop>
+            </props>
+        </property>
+        <!--<property name="location" value="classpath:resources/hibernate.properties"/>-->
+        <property name="annotatedClasses">
+            <list>
+                <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Publication</value>
+                <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study</value>
+                <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample</value>
+                <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.EnvironmentSample</value>
+                <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.HostSample</value>
+                <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.UndefinedSample</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- Specification of version of control elements like e.g. data access objects -->
+    <!-- List of data access objects -->
+    <bean id="studyDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateStudyDAOImpl"/>
+
+    <bean id="sampleDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateSampleDAOImpl"/>
+
+    <bean name="submitterDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.SubmitterDAOImpl">
+        <property name="dataSource" ref="enaLoginDataSource"/>
+    </bean>
+
+    <bean name="fileInfoDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.EmgLogFileInfoDAOImpl">
+        <property name="dataSource" ref="memiDataSource"/>
+    </bean>
+</beans>
