@@ -17,10 +17,6 @@
     <!-- Scans within the base package of the application for @Components to configure as beans -->
     <context:component-scan base-package="uk.ac.ebi.interpro.metagenomics.memi"/>
 
-    <!-- Allow declarative transaction management using the @Transactional annotation (recommend by Spring (see Spring MVC documentation)-->
-    <!-- Annotation-based configuration (Annotations are specified within DAOImpl classes)-->
-    <tx:annotation-driven transaction-manager="txManager"/>
-
     <!-- Exception translation bean post processor -->
     <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
 
