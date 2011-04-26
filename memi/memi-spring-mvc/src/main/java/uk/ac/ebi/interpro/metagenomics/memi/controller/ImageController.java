@@ -41,7 +41,6 @@ public class ImageController extends AbstractController {
                          @RequestParam(value = "imageName", required = true) String imageName,
                          @RequestParam(value = "imageType", required = true) String imageType,
                          @RequestParam(value = "dir", required = true) String directoryName) {
-        log.info("Creating servlet output stream for image " + imageName);
         long t0 = System.currentTimeMillis();
 
         if (imageName.trim().length() < 1 && imageType.trim().length() < 1) {
@@ -50,7 +49,10 @@ public class ImageController extends AbstractController {
         }
 
         directoryName = directoryName.toUpperCase().replace('.', '_');
+        imageName = directoryName + imageName;
+        log.info("Creating servlet output stream for image " + imageName);
         File inputFile = new File(propertyContainer.getPathToAnalysisDirectory() + directoryName + '/' + imageName);
+
         //TODO: Write test
         byte[] imageData = getImageData(inputFile, imageType.toUpperCase());
 
