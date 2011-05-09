@@ -6,7 +6,8 @@
     <h2>${pageTitle}</h2>
 
     <div class="center">
-        <div id="filter">
+
+        <div class="filter_form">
             <c:choose>
                 <c:when test="${empty model.submitter}">
                     <c:set var="actionUrlParam" value="studyVisibility=ALL_PUBLISHED_STUDIES"/>
@@ -18,48 +19,47 @@
             <form:form method="GET" action="${pageContext.request.contextPath}/studies/doSearch"
                        commandName="studyFilter">
                 <fieldset>
+                    <div class="result_row">
+
                     <label for="text">Text:</label>
                         <%-- Autocompletion temporarily disabled since it will not scale well with this current implementaion.
           Need to get the autocomplete text from the database before this feature is activated! --%>
                         <%--<form:input id="autocomplete" path="searchTerm"/><br/>--%>
-                    <form:input path="searchTerm"/><br/>
-                    <form:errors path="searchTerm" cssClass="error"/><br/>
-                    <%-- Removed because the column analysis has been removed from table
-                    <label for="status"> Analysis status:</label>
+                    <span><form:input path="searchTerm"/></span>
+                    <form:errors path="searchTerm" cssClass="error"/>
+                    </div>
 
-                    <form:select id="studyStatus" path="studyStatus">
-                        <form:option value="" label="All"/>
-                        <form:option value="IN_PROGRESS" label="In Progress" cssClass=""/>
-                        <form:option value="FINISHED" label="Complete" cssClass=""/>
-                        &lt;%&ndash;<form:options items="${model.studyStatusList}"/>&ndash;%&gt;
-                    </form:select>--%>
-
-                    <c:if test="${not empty model.submitter}"><br/><br/>
-                        <label for="privacy">Privacy:</label>
-                        <form:select id="studyVisibility" path="studyVisibility">
-                            <form:options items="${model.studyVisibilityList}"/>
-                        </form:select>
+                    <c:if test="${not empty model.submitter}">
+                    <div class="result_row">
+                    <label for="privacy">Privacy:</label>
+                     <span>
+                      <form:select id="studyVisibility" path="studyVisibility">
+                           <form:options items="${model.studyVisibilityList}"/>
+                      </form:select>
+                     </span>
+                    </div>
                     </c:if>
 
-                    <div id="filter-button">
-                        <input type="submit" name="search" value="Search" class="main_button"/>
-                        <c:choose>
-                            <c:when test="${empty model.submitter}">
-                              <span class="clear_but"> | <a
-                                      href="<c:url value="${baseURL}/studies/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>"
-                                      title="View studies">Clear</a></span>
-                            </c:when>
-                            <c:otherwise>
-                               <span class="clear_but"> | <a
-                                       href="<c:url value="${baseURL}/studies/doSearch?search=Search&studyVisibility=ALL_PROJECTS"/>"
-                                       title="View studies">Clear</a></span>
-                            </c:otherwise>
-                        </c:choose>
+                    <div class="result_row">
+                           <div class="filter_button">
+                                <input type="submit" name="search" value="Search" class="main_button"/>
+                                <c:choose>
+                                    <c:when test="${empty model.submitter}">
+                                     | <a href="<c:url value="${baseURL}/studies/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>"
+                                              title="View studies">Clear</a>
+                                    </c:when>
+                                    <c:otherwise>
+                                      | <a href="<c:url value="${baseURL}/studies/doSearch?search=Search&studyVisibility=ALL_PROJECTS"/>"
+                                               title="View studies">Clear</a>
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
                     </div>
                 </fieldset>
             </form:form>
 
         </div>
+
     </div>
 
     <c:choose>
