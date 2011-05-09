@@ -16,6 +16,7 @@ font-weight: normal;
 font-style: normal;
 }
 
+
 @font-face {
     font-family: 'DroidSansRegular';
     src: url('../fonts/DroidSans-webfont.eot');
@@ -742,7 +743,6 @@ list-style-type: none;
 #sidebar-steps ol li { margin-top:7px;
  counter-increment: section; }
 
-#sidebar-steps ol li:before  { content: counters(section, ".") ". "; }
 
 #sidebar-nav, #sidebar-steps, #sidebar-related {
 float:right;
@@ -885,6 +885,8 @@ color:#878787 ;
 font-size:100%;
 }
 
+
+
 #submit-data, #list-data-study, #list-data-sample {
 background-color: white;
 -moz-border-radius: 0 0 20px 0;
@@ -947,7 +949,23 @@ text-shadow: 0px 1px 0px #f2f2f2;
 border: 0px solid #556f8c;
 }
 
-input {padding:4px; border:1px solid #abadb3; color: #445668;}
+
+input, textarea, select {
+font-family: 'DroidSansRegular', Arial, sans-serif;
+padding:4px;
+border:1px solid #abadb3;
+color: #445668;}
+
+
+input {
+width: 150px;
+}
+
+input.main_button {
+width: auto;
+}
+
+
 
 #filter input, #filter select { margin: 10px 20px 0 0; color: #445668;}
 
@@ -990,26 +1008,20 @@ border: 0px solid #696969;
 }
 
 
-input.style, textarea {
+textarea {
     padding: 9px;
     border: solid 1px #abadb3;
     outline: 0;
-    font: normal 13px/100% Verdana, Tahoma, sans-serif;
-    width: 200px;
+    width: 400px;
+    max-width: 400px;
+    height: 150px;
+    line-height: 150%;
     background: #FFFFFF;     /*to add pict*/
     background: -webkit-gradient(linear, left top, left 25, from(#FFFFFF), color-stop(4%, #EEEEEE), to(#FFFFFF));
     background: -moz-linear-gradient(top, #FFFFFF, #EEEEEE 1px, #FFFFFF 25px);
     }
 
-textarea {
-    width: 400px;
-    max-width: 400px;
-    height: 150px;
-    line-height: 150%;
-    }
-
-input.style:hover, textarea:hover,
-input.style:focus, textarea:focus {
+textarea:hover, textarea:focus {
     border-color: #C9C9C9;
     -webkit-box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 8px;
     }
@@ -1027,8 +1039,7 @@ input.style:focus, textarea:focus {
     font-size: 14px;
     color: #FFFFFF;
     -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    }
+    -webkit-border-radius: 5px;}
 
 .form_row {
 margin: 4px 0px;
@@ -1063,7 +1074,8 @@ border: 1px solid #e5e5e5;
 padding:14px;
 }
 
-.clear_but {float: left; margin: 28px 10px 0 0; color:#cecece;}
+
+.filter_button {color:#cecece; margin-left:94px;}
 
 .result_row {
 padding: 4px 0px;
@@ -1208,14 +1220,25 @@ margin-right:12px;
 
 #samples_id {margin-bottom:0;}
 
-.output_form {
+
+
+.output_form, .filter_form {
 padding:14px;
 border:1px solid #e5e5e5;
 margin:7px 0;
 display:block;
 }
 
-.output_form  label  {
+.filter_form {
+-moz-border-radius: 0 0 20px 0;
+-khtml-border-radius: 0 0 20px 0;
+-webkit-border-radius: 0 0 20px 0;
+border-radius: 0 0 20px 0;
+}
+
+.filter_form .result_row { padding: 7px 0px;border: 0px solid black;}
+
+.output_form  label, .filter_form label  {
 float: left;
 clear: left;
 margin:0;
@@ -1230,7 +1253,7 @@ border: 0px solid #556f8c;
 width: 140px;
 }
 
-.output_form  span  {
+.output_form  span, .filter_form span {
 border: 0px solid #556f8c;
 margin-left:14px;
 }
@@ -1242,3 +1265,7 @@ margin-left:14px;
 padding-left:2px; padding-top:1px;
 }
 .ui-datepicker { font-size:90%;}
+
+
+/* PBm with IE7 */
+#sidebar-steps ol li:before  { content: counters(section, ".") ". "; }                 
