@@ -6,46 +6,60 @@
     <h2>${pageTitle}</h2>
 
     <div class="center">
-        <div id="filter">
+
+
+        <div class="filter_form">
             <form:form method="GET" action="${pageContext.request.contextPath}/samples/doSearch"
                        commandName="sampleFilter">
                 <fieldset>
+                    <div class="result_row">
                     <label for="text">Text:</label>
-                    <form:input path="searchTerm"/><br/><form:errors path="searchTerm" cssClass="error"/><br/>
-                        <%--Used sample type instead of study type to not confuse the user--%>
+                    <span><form:input path="searchTerm"/></span>
+                    <form:errors path="searchTerm" cssClass="error"/>
+                    </div>
+
+                    <div class="result_row">
+                    <%--Used sample type instead of study type to not confuse the user--%>
                     <label for="source">Source:</label>
-                    <form:select path="sampleType">
+                    <span>
+                        <form:select path="sampleType">
                         <form:option value="" label="All"/>
                         <form:option value="ENVIRONMENTAL" label="Environmental"/>
                         <form:option value="HOST_ASSOCIATED" label="Host associated"/>
                         <%--<form:options items="${model.sampleTypes}"/>--%>
-                    </form:select>
-
-                    <c:if test="${not empty model.submitter}"><br/><br/>
-                        <label for="privacy">Privacy:</label>
-                        <form:select id="sampleVisibility" path="sampleVisibility">
+                        </form:select>
+                    </span>
+                    </div>
+                    
+                    <c:if test="${not empty model.submitter}">
+                     <div class="result_row">
+                     <label for="privacy">Privacy:</label>
+                     <span><form:select id="sampleVisibility" path="sampleVisibility">
                             <form:options items="${model.sampleVisibilityList}"/>
                         </form:select>
+                     </span>
+                     </div>
                     </c:if>
 
-                    <div id="filter-button">
-                        <input type="submit" name="search" value="Search" class="main_button"/>
-                        <c:choose>
-                            <c:when test="${empty model.submitter}">
-                              <span class="clear_but"> | <a
-                                      href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search"/>"
-                                      title="View samples">Clear</a></span>
-                            </c:when>
-                            <c:otherwise>
-                               <span class="clear_but">| <a
-                                       href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_SAMPLES&search=Search"/>"
-                                       title="View samples">Clear</a></span>
-                            </c:otherwise>
-                        </c:choose>
+                     <div class="result_row">
+                           <div class="filter_button">
+                           <input type="submit" name="search" value="Search" class="main_button"/>
+                            <c:choose>
+                                <c:when test="${empty model.submitter}">
+                                 | <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search"/>"
+                                          title="View samples">Clear</a>
+                                </c:when>
+                                <c:otherwise>
+                                | <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_SAMPLES&search=Search"/>"
+                                           title="View samples">Clear</a>
+                                </c:otherwise>
+                            </c:choose>
+                            </div>
                     </div>
                 </fieldset>
             </form:form>
         </div>
+
     </div>
 
 
