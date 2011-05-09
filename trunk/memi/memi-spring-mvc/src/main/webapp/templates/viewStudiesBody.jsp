@@ -24,14 +24,15 @@
                         <%--<form:input id="autocomplete" path="searchTerm"/><br/>--%>
                     <form:input path="searchTerm"/><br/>
                     <form:errors path="searchTerm" cssClass="error"/><br/>
+                    <%-- Removed because the column analysis has been removed from table
                     <label for="status"> Analysis status:</label>
 
                     <form:select id="studyStatus" path="studyStatus">
                         <form:option value="" label="All"/>
                         <form:option value="IN_PROGRESS" label="In Progress" cssClass=""/>
                         <form:option value="FINISHED" label="Complete" cssClass=""/>
-                        <%--<form:options items="${model.studyStatusList}"/>--%>
-                    </form:select>
+                        &lt;%&ndash;<form:options items="${model.studyStatusList}"/>&ndash;%&gt;
+                    </form:select>--%>
 
                     <c:if test="${not empty model.submitter}"><br/><br/>
                         <label for="privacy">Privacy:</label>
@@ -81,21 +82,21 @@
                     <th scope="col" abbr="Name">Project name</th>
                     <th scope="col" abbr="Samples" width="60px">Samples</th>
                     <th scope="col" abbr="Date" width="120px">Submitted date</th>
-                    <th scope="col" abbr="Analysis" width="80px">Analysis</th>
+                    <%--<th scope="col" abbr="Analysis" width="80px">Analysis</th>--%>
                 </tr>
                 </thead>
 
                 <tbody>
                 <c:forEach var="entry" items="${model.studySampleSizeMap}" varStatus="status">
                     <tr>
-                        <td style="text-align:left;">
+                        <td style="text-align:left;" id="ordered">
                             <c:if test="${!entry.key.public}"><img alt="private"
                                                                    src="${pageContext.request.contextPath}/img/icon_priv_private.gif">&nbsp;&nbsp;</c:if>
                             <a href="<c:url value="${baseURL}/study/${entry.key.studyId}"/>">${entry.key.studyName}</a>
                         </td>
                         <td>${entry.value}</td>
-                        <td id="ordered">${entry.key.formattedLastReceived}</td>
-                        <td>
+                        <td >${entry.key.formattedLastReceived}</td>
+                        <%--<td>
                             <c:choose>
                                 <c:when test="${entry.key.studyStatus == 'IN_PROGRESS'}">in progress
                                 </c:when>
@@ -104,7 +105,7 @@
                                         alt="${entry.key.studyStatusAsString}"
                                         title="${entry.key.studyStatusAsString}"></c:otherwise>
                             </c:choose>
-                        </td>
+                        </td>--%>
                     </tr>
                 </c:forEach>
                 </tbody>
