@@ -161,7 +161,9 @@ public class MGModelFactory {
         Submitter submitter = getSessionSubmitter(sessionMgr);
         long submitterId = (submitter != null ? submitter.getSubmitterId() : -1L);
         List<Study> studies = getFilteredStudies(studyDAO, filter, submitterId);
-        return new ViewStudiesModel(submitter, getStudySampleSizeMap(studies, sampleDAO), pageTitle,
+        //studies are sorted by study name at the moment
+        SortedMap<Study, Long> sortedStudyMap = getStudySampleSizeMap(studies, sampleDAO);
+        return new ViewStudiesModel(submitter, sortedStudyMap, pageTitle,
                 breadcrumbs, propertyContainer);
     }
 
@@ -413,17 +415,6 @@ public class MGModelFactory {
         return null;
     }
 
-    static class StudyComparator implements Comparator<Study> {
-
-        @Override
-        public int compare(Study o1, Study o2) {
-            Date lastUpdateO1 = o1.getLastMetadataReceived();
-            Date lastUpdateO2 = o2.getLastMetadataReceived();
-            if (lastUpdateO1 != null && lastUpdateO2 != null)
-                return -(lastUpdateO1.compareTo(lastUpdateO2));
-            return 0;
-        }
-    }
 
     private static String getHBarChartURL(Class clazz, Map<Class, List<AbstractGOTerm>> goData) {
 
@@ -645,3 +636,26 @@ public class MGModelFactory {
         return rows;
     }
 }
+
+class StudyComparator implements Comparator<Study> {
+
+    @Override
+    public int compare(Study study1, Study study2) {
+        String studyName1 = study1.getStudyName();
+        String studyName2 = study2.getStudyName();
+        //uses compareTo method of String class to compare names of the employee
+        return studyName1.compareTo(studyName2);
+    }
+}
+
+//class StudyComparator implements Comparator<Study> {
+//
+//        @Override
+//        public int compare(Study o1, Study o2) {
+//            Date lastUpdateO1 = o1.getLastMetadataReceived();
+//            Date lastUpdateO2 = o2.getLastMetadataReceived();
+//            if (lastUpdateO1 != null && lastUpdateO2 != null)
+//                return -(lastUpdateO1.compareTo(lastUpdateO2));
+//            return 0;
+//        }
+//    }
