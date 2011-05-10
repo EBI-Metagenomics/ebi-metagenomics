@@ -39,7 +39,9 @@
     <script src="${pageContext.request.contextPath}/js/autocompletion.js" type="text/javascript"></script>
 
     <script src="${pageContext.request.contextPath}/js/formclearer.js" type="text/javascript"></script>
-
+    <%-- Jquey scroller - work only for the anchors on the same page--%>
+    <script src="${pageContext.request.contextPath}/js/smoothscrol.js" type="text/javascript"></script>
+    
     <!--[if lt IE 9]><%-- HTML5 tags working in IE8 by including this JavaScript in the head  --%>
 <script type="text/javascript">
     document.createElement('header');
@@ -54,6 +56,7 @@
     document.createElement('figcaption');
 </script>
     <![endif]-->
+
     <%-- simple script for alternate row in a table color was #EFF1F1 originally--%>
     <script>
         $(document).ready(function() {
@@ -119,5 +122,7 @@
     <div id="extra_beta"></div>
 </a>
 <!--<div id="extraDiv1"></div> -->
+
+
 </body>
 </html>
