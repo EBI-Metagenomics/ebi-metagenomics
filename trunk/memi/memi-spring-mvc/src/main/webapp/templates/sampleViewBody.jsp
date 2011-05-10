@@ -219,14 +219,13 @@
             </c:choose>
 
 
-            <c:choose>
-                <c:when test="${not empty model.sample.miscellaneous}">
-                    <c:set var="miscellaneous" value="${model.sample.miscellaneous}"/>
-                    <div class="result_row"><label>Miscellaneous:</label> <span><c:out value="${miscellaneous}"/></span>
-                    </div>
-                </c:when>
-                <%--<c:otherwise><c:set var="miscellaneous" value="${notGivenId}"/></c:otherwise>--%>
-            </c:choose>
+        <c:choose>
+            <c:when test="${not empty model.sample.miscellaneous }">
+                <c:set var="miscellaneous" value="${model.sample.miscellaneous}"/>
+ <div class="result_row"><label>Miscellaneous:</label> <span><c:out value="${miscellaneous}"/></span></div>
+            </c:when>
+             <%--<c:otherwise><c:set var="miscellaneous" value="${notGivenId}"/></c:otherwise>--%>
+        </c:choose>
 
         </div>
     </c:when>
@@ -247,4 +246,6 @@
                 <c:otherwise>(not given)</c:otherwise>
             </c:choose></span></div>
 </div>
+
+ <div class="but_top"><a href="#top" title="back to the top page">Top</a></div>
 </div>
