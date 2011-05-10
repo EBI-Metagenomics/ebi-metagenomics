@@ -56,21 +56,24 @@
     <c:otherwise></c:otherwise>
 </c:choose>
 
-<br/>
 <c:if test="${!model.study.public}">
-    Private data <img alt="private" src="${pageContext.request.contextPath}/img/icon_priv_private.gif">
-</c:if>
+<p>Private data <img alt="private" src="${pageContext.request.contextPath}/img/icon_priv_private.gif">
 <c:choose>
     <c:when test="${not empty model.study.publicReleaseDate}">
         <c:set var="publicReleaseDate" value="${model.study.publicReleaseDate}"/>
-        <br/><br/><span class="list_date">Public release date: <c:out value="${publicReleaseDate}"/></span>
+        <span class="list_date">&nbsp;(will be published on the <c:out value="${publicReleaseDate}"/>)</span>
     </c:when>
     <c:otherwise>
         <c:set var="publicReleaseDate" value="${notGivenId}"/>
     </c:otherwise>
 </c:choose>
+</p>
+</c:if>
 
-<h3 id="study_desc" style="margin-top:40px;">Description</h3>
+
+<p><span>Submitted date: ${model.study.formattedLastReceived}</span></p>
+
+<h3 id="study_desc" style="margin-top:40px;">Description </h3>
 
 <div class="output_form">
     <c:choose>
