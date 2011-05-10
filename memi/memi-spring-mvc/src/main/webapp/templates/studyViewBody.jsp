@@ -135,7 +135,6 @@
 Contact name: (not given)
 </p>--%>
 
-
 <%--<h3>Other information</h3>--%>
 
 <h3 id="samples_id">Associated samples</h3>
@@ -278,4 +277,5 @@ Contact name: (not given)
     </c:when>
     <c:otherwise>No samples to display</c:otherwise>
 </c:choose>
+ <div class="but_top"><a href="#top" title="back to the top page">Top</a></div>
 </div>
