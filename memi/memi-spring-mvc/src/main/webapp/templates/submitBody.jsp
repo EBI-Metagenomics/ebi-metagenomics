@@ -6,7 +6,7 @@
         <div id="sidebar-warning">
        <span class="error" style="font-weight:bold;padding-top:2px;font-size:80%; float:right;">IMPORTANT</span> <h2>Data type</h2>
         <p>
-        Presently, analysis is restricted to "long" (average reads lengths over 200nt), unassembled random shotgun sequence reads, i.e. Roche 454 sequences,
+        Presently, analysis is restricted to "long" (average reads lengths over 200nt), unassembled sequence reads, i.e. Roche 454 sequences,
         from metagenomic or metatranscriptomic samples.</p>
         <span class="separator"></span>
         <p><a href="mailto:datasubs@ebi.ac.uk" title="Send an enquiry about Metagenomics data submission"> Contact us</a>, if your datasets do not fit this description, to help us better understand your needs so we can tailor our future developments appropriately.</p>
@@ -14,7 +14,7 @@
 
 <div style="width:682px;">
      <h2>Submit data</h2>
-        <p class="step_breadcrumbs"><span class="num">1</span> Login |<span id="selected""><span class="num">2</span> Send the form </span> |<span class="num">3</span> Receive feedback |<span class="num">4</span> Analysis by our team |<span class="num">5</span> View your data |</p>
+     <p class="step_breadcrumbs"><span class="num">1</span> Login |<span id="selected"><span class="num">2</span> Send the form </span> |<span class="num">3</span> Provide your data |<span class="num">4</span> Await analysis results |<span class="num">5</span> Browse your data |</p>
 
      <h3>2- Send the form</h3>
 
@@ -46,7 +46,7 @@
      <label for="description">Describe your submission <small>*</small> :</label>
      <br/>
      <form:textarea path="dataDesc" title="Comments about your project" cssStyle="width:297px; height:100px;"/>
-     <span class="form_help">Please provide additional details about what you wish to submit and/or ask questions about the submission process.</span>
+     <span class="form_help">Please provide additional details about your data, such as number of samples, sequencing platform, isolation source etc... please also use this field to ask questions about the submission process.</span>
      <form:errors cssClass="error" path="dataDesc"/>
      </div>
      <p>
