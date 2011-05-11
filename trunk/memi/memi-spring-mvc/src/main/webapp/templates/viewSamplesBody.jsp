@@ -3,7 +3,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <div id="content-full">
-    <h2>${pageTitle}</h2>
+    <%--<h2>${pageTitle}</h2>--%>
+    <h2>Samples list</h2>
 
     <div class="center">
 
