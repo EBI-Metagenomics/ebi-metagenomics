@@ -24,7 +24,7 @@ and use Javascript to make them visible if it's enabled!
 
     <p>If you have any questions related to the EBI metagenomics resource, please email us at <a href="mailto:datasubs@ebi.ac.uk" title="Send an enquiry about Metagenomics data submission">datasubs@ebi.ac.uk</a>.</p>
 
-    <p>You can also contact us on Twitter using <a href="http://twitter.com/EBImetagenomics" class="twitter"> @EBImetagenomics</a></p>
+
 
     <h3>Beta Website Feedback</h3>
     <p>If you have feedback about this new website, please use the form below to send us your comments:</p>
@@ -55,4 +55,7 @@ and use Javascript to make them visible if it's enabled!
         <small>* Required</small>
     </form:form>
 
+<h3>Follow us on Twitter</h3>
+<p>Follow us on Twitter using <a href="http://twitter.com/EBImetagenomics" class="twitter"> @EBImetagenomics</a></p>
+    
 </div>
