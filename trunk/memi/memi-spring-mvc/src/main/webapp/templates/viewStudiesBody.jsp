@@ -3,7 +3,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <div id="content-full">
-    <h2>${pageTitle}</h2>
+    <%--<h2>${pageTitle}</h2>--%>
+    <h2>Projects list</h2>
 
     <div class="center">
 
@@ -94,7 +95,7 @@
                                                                    src="${pageContext.request.contextPath}/img/icon_priv_private.gif">&nbsp;&nbsp;</c:if>
                             <a href="<c:url value="${baseURL}/study/${entry.key.studyId}"/>">${entry.key.studyName}</a>
                         </td>
-                        <td>${entry.value}</td>
+                        <td><a href="<c:url value="${baseURL}/study/${entry.key.studyId}#samples_id"/>">${entry.value}</a></td>
                         <td >${entry.key.formattedLastReceived}</td>
                         <%--<td>
                             <c:choose>
@@ -115,4 +116,5 @@
             <div class="error">No data matching your search</div>
         </c:otherwise>
     </c:choose>
+   
 </div>
