@@ -1,18 +1,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <div id="content-full">
-    <h2>Analysis results<br/>
-        ${model.sample.sampleName} sample</h2>
+   <span class="subtitle">Sample analysis results <a href="<c:url value="${baseURL}/sample/${model.sample.sampleId}"/>" style="font-size:90%;"> (${model.sample.sampleId})</a></span>
+    <h2>${model.sample.sampleName}</h2>
 
     <h3>InterPro protein matches table</h3>
 
     <c:choose>
         <c:when test="${not empty model.interProEntries}">
             <div class="export">
+               <%-- remove detailed TSV export : available on top
                 <a href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportI5File/${model.emgFile.fileName}"/>"
                    title="<spring:message code="analysisStatsView.label.download.i5.matches.detailed"/>"/>
                 <spring:message code="analysisStatsView.label.download.i5.matches.detailed"/>
-                </a>
+                </a>--%>
                 <a href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportIPRFile/${model.emgFile.fileName}"/>"
                    id="csv" title="<spring:message code="analysisStatsView.label.download.i5.table.view"/>"/>
                 <spring:message code="analysisStatsView.label.download.i5.table.view"/>
@@ -26,7 +27,7 @@
                 <tr>
                     <th scope="col" abbr="IEid" width="90px">InterPro ID</th>
                     <th scope="col" abbr="IEname">Entry name</th>
-                    <th scope="col" abbr="IEnum" width="80px">Protein matches</th>
+                    <th scope="col" abbr="IEnum" width="130px">Proteins matched</th>
                 </tr>
                 </thead>
                 <tbody>
