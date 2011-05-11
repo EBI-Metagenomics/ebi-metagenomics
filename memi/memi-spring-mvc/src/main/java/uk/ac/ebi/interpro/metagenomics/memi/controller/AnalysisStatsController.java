@@ -70,7 +70,7 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
 
     @RequestMapping(value = "/doExportGOFile/{fileName}", method = RequestMethod.GET)
     public ModelAndView doExportGOFile(@PathVariable final String sampleId, @PathVariable final String fileName, final ModelMap model, final HttpServletResponse response) {
-        return handleExport(sampleId, model, response, "_summary.go", "_GO.tsv");
+        return handleExport(sampleId, model, response, "_summary.go", "_GO.csv");
     }
 
     @RequestMapping(value = "/doExportMaskedFASTAFile/{fileName}", method = RequestMethod.GET)
