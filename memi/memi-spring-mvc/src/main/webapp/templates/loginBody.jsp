@@ -8,24 +8,24 @@
     <div id="sidebar-mailing">
     <img src="${pageContext.request.contextPath}/img/icon_info.gif" alt="Information">
     <h2>Data Submission</h2>
-    <p>If you have any questions about submitting your data to the EBI metagenomics, please email us at <a href="mailto:datasubs@ebi.ac.uk" title="Send an enquiry about Metagenomics data submission">datasubs@ebi.ac.uk</a>.</p>
+    <p>If you have any questions about submitting your data to EBI metagenomics, please email us (<a href="mailto:datasubs@ebi.ac.uk" title="Send an enquiry about Metagenomics data submission">datasubs@ebi.ac.uk</a>).</p>
     </div>
 
     <div id="sidebar-ena">
     <img src="${pageContext.request.contextPath}/img/icon_ena.gif" alt="Information">
-    <h2>ENA Member?</h2>
-    <p>If you already are a user of the European Nucleotide Archive (ENA) or SPIN, you don't need to get another Username and Password. You can simply use your ENA account to log-in.<br/> If you are not a member yet , you will need to <a href="<c:url value=" https://www.ebi.ac.uk/embl/genomes/submission/registration.jsf"/>" title="Registration">register</a>.</p>
+    <h2>ENA user?</h2>
+    <p>If you already are a registered user of the European Nucleotide Archive (ENA) or SPIN, you don't need to get another Username and Password. You can simply use your ENA account to log-in.<br/> If you are not a member yet , you will need to <a href="<c:url value=" https://www.ebi.ac.uk/embl/genomes/submission/registration.jsf"/>" title="Registration">register</a>.</p>
     </div>
     </div>
 
     <div style="width:682px;">
         
         <h2>Submit data</h2>
-        <p class="step_breadcrumbs"><span id="selected""><span class="num">1</span> Login</span> |<span class="num">2</span> Send the form |<span class="num">3</span> Receive feedback |<span class="num">4</span> Analysis by our team |<span class="num">5</span> View your data |</p>
-
+        <p class="step_breadcrumbs"><span id="selected"><span class="num">1</span> Login </span>|<span class="num">2</span> Send the form |<span class="num">3</span> Provide your data |<span class="num">4</span> Await analysis results |<span class="num">5</span> Browse your data |</p>
+        
         <h3>1- Login, start submission process</h3>
         
-        <p> Login first to submit and view your data.</p>
+        <p>Please login to submit or view your projects.</p>
 
 
         <form:form method="POST" action="login" commandName="loginForm">
