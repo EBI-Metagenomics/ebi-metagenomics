@@ -4,7 +4,7 @@
    <span class="subtitle">Sample analysis results <a href="<c:url value="${baseURL}/sample/${model.sample.sampleId}"/>" style="font-size:90%;"> (${model.sample.sampleId})</a></span>
     <h2>${model.sample.sampleName}</h2>
 
-    <h3>InterPro protein matches table</h3>
+    <h3>InterPro match summary</h3>
 
     <c:choose>
         <c:when test="${not empty model.interProEntries}">
