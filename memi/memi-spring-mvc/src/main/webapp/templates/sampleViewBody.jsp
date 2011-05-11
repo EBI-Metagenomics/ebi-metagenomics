@@ -35,7 +35,8 @@
     </c:otherwise>
 </c:choose>
 
-<span class="subtitle">Sample overview</span>
+<span class="subtitle">Sample overview <a href="<c:url value="${baseURL}/sample/${model.sample.sampleId}"/>" style="font-size:90%;"> (${model.sample.sampleId})</a></span>
+
 <c:choose>
     <c:when test="${not empty model.sample.sampleName}">
         <c:set var="sampleName" value="${model.sample.sampleName}"/>
@@ -44,8 +45,7 @@
 </c:choose>
 
 <h2>${model.sample.sampleName}</h2>
-<br/>Sample ID: ${model.sample.sampleId}
-<br/>
+
 <c:if test="${!model.sample.public}">
     Private data <img alt="private" src="${pageContext.request.contextPath}/img/icon_priv_private.gif">
 </c:if>
