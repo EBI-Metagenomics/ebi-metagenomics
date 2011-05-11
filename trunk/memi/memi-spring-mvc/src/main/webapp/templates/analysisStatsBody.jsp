@@ -52,7 +52,7 @@
     <span class="subtitle">Sample analysis results <a href="<c:url value="${baseURL}/sample/${model.sample.sampleId}"/>" style="font-size:90%;"> (${model.sample.sampleId})</a></span>
     <h2>${model.sample.sampleName}</h2>
 
-   
+
 
     <h3>Download results</h3>
 
@@ -70,9 +70,9 @@
             <li><a title="Click to download full InterPro match table (TSV)"
                    href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportI5File/${model.emgFile.fileName}"/>"><spring:message
                     code="analysisStatsView.label.download.i5.matches"/></a></li>
-            <li><a title="Click to download GO terms result file (TSV)"
+            <li><a title="Click to download GO terms result file (CSV)"
                    href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportGOFile/${model.emgFile.fileName}"/>"><spring:message
-                    code="analysisStatsView.label.download.goterms.tsv"/></a></li>
+                    code="analysisStatsView.label.download.goterms.csv"/></a></li>
         </ul>
     </div>
 
