@@ -13,9 +13,9 @@
                 </c:otherwise>
             </c:choose></h1></div>
         <div id="submit-data-description">
-            <h2>Data Submission</h2>
+            <h2>Submit data for analysis</h2>
 
-            <p>Click "submit data" to send us your nucleotide sequences to analyse. It's as simple as 1,2,3:<br/>
+            <p>Click "submit data" to send us your nucleotide sequences to analyse.<br/>
                 1 . Login (or register)<br/>
                 2 . Provide details of your project and your nucleotide sequence data<br/>
                 3 . Track and view your analysis results.</p>
