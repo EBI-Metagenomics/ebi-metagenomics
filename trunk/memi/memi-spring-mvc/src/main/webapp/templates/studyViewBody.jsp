@@ -41,11 +41,9 @@
     </c:otherwise>
 </c:choose>
 
-<span class="subtitle">Project overview</span>
-
+<span class="subtitle">Project overview <a href="<c:url value="${baseURL}/study/${model.study.studyId}"/>" style="font-size:90%;"> (${model.study.studyId})</a></span>
 <h2>${model.study.studyName}</h2>
 
-<br/>Project ID: ${model.study.studyId}
 
 <c:choose>
     <c:when test="${not empty model.study.ncbiProjectId && model.study.ncbiProjectId>0}">
