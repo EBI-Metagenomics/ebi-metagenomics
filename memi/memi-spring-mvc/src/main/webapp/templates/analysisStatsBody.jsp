@@ -157,15 +157,15 @@
             <c:if test="${not empty model.pieChartBiologicalProcessURL}">
 
                <%-- remove detailed TSV export : available on top
-               <a title="<spring:message code="analysisStatsView.label.download.goterms.full.tsv"/>" href="<c:url
+               <a title="<spring:message code="analysisStatsView.label.download.goterms.full.csv"/>" href="<c:url
                         value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportGOFile/${model.emgFile.fileName}"/>">
-                    <spring:message code="analysisStatsView.label.download.goterms.full.tsv"/></a>--%>
+                    <spring:message code="analysisStatsView.label.download.goterms.full.csv"/></a>--%>
 
 
                 <a id="csv" title="<spring:message code="analysisStatsView.label.download.goterms.slim.csv"/>"
                    href="<c:url
                         value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportGOSlimFile/${model.emgFile.fileName}"/>">
-                    <spring:message code="analysisStatsView.label.download.goterms.full.tsv"/></a>
+                    <spring:message code="analysisStatsView.label.download.goterms.full.csv"/></a>
             </c:if>
 
         </div>
