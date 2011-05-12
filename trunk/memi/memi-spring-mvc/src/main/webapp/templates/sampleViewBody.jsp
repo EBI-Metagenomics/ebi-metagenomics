@@ -14,8 +14,7 @@
                 <span class="separator"></span>
                 <ul>
                     <c:forEach var="pub" items="${model.pubs}" varStatus="status">
-                        <li><c:out value="${pub.pubTitle}"/> <br/><a style="font-size:110%;" class="ext"
-                                                                     href="<c:url value="${pub.url}"/>">HTML</a></li>
+                        <li><a class="list_more" href="<c:url value="${pub.url}"/>"><c:out value="${pub.pubTitle}"/></a></li>
 
                     </c:forEach>
                 </ul>
