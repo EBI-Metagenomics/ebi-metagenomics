@@ -12,18 +12,18 @@
                 <span class="separator"></span>
                 <ul>
                     <c:forEach var="pub" items="${model.study.publications}" varStatus="status">
-                        <li><strong><c:out value="${pub.pubTitle}"/></strong><br>
+                        <li><a class="list_more" href="<c:url value="http://dx.doi.org/${pub.doi}"/>"><c:out value="${pub.pubTitle}"/></a><br>
                             <i><c:out value="${pub.authors}"/> et al.</i><br>
                             <c:out value="${pub.year}"/> <c:out value="${pub.volume}"/><br>
 
-
+                            <%-- removed cause we have just one link on the Title
                             <c:if test="${not empty pub.doi}"><a class="ext" style="font-size:110%;"
                                                                  href="<c:url value="http://dx.doi.org/${pub.doi}"/>">DOI</a></c:if>
                             <c:if test="${not empty pub.pubMedId && pub.pubMedId>0}">
                                 - <a class="ext" style="font-size:110%;"
                                      href="<c:url value="http://www.ncbi.nlm.nih.gov/pubmed/${pub.pubMedId}"/>">PubMed
                                 (${pub.pubMedId})</a>
-                            </c:if>
+                            </c:if>--%>
                         </li>
                     </c:forEach></ul>
             </div>
