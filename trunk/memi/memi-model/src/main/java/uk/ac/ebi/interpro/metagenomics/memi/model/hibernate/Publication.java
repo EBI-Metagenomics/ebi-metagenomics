@@ -12,16 +12,15 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "HB_PUBLICATION")
-@SequenceGenerator(
-        name = "PUB_SEQ",
-        sequenceName = "PUBLICATION_SEQ",
-        allocationSize = 1
-)
 public class Publication {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PUB_SEQ")
     @Column(name = "PUB_ID")
+    @SequenceGenerator(
+            name = "PUB_SEQ",
+            sequenceName = "PUBLICATION_SEQ")
+//        allocationSize = 1
     private long pubId;
 
     @Column(name = "PUB_TYPE", nullable = false)
@@ -37,7 +36,7 @@ public class Publication {
     private String issue;
 
     @Column(name = "PUBLISHED_YEAR", length = 4)
-    private int year;
+    private Integer year;
 
     @Column(name = "PUB_TITLE", length = 740)
     private String pubTitle;
@@ -64,10 +63,10 @@ public class Publication {
     private String doi;
 
     @Column(name = "PUBMED_ID", length = 10)
-    private int pubMedId;
+    private Integer pubMedId;
 
     @Column(name = "PUBMED_CENTRAL_ID", length = 10)
-    private int pubMedCentralId;
+    private Integer pubMedCentralId;
 
     @Column(name = "PUB_ABSTRACT")
     @Lob
@@ -81,11 +80,11 @@ public class Publication {
         this.pubId = pubId;
     }
 
-    public int getPubMedId() {
+    public Integer getPubMedId() {
         return pubMedId;
     }
 
-    public void setPubMedId(int pubMedId) {
+    public void setPubMedId(Integer pubMedId) {
         this.pubMedId = pubMedId;
     }
 
@@ -137,11 +136,11 @@ public class Publication {
         this.issue = issue;
     }
 
-    public int getYear() {
+    public Integer getYear() {
         return year;
     }
 
-    public void setYear(int year) {
+    public void setYear(Integer year) {
         this.year = year;
     }
 
@@ -193,11 +192,11 @@ public class Publication {
         this.authors = authors;
     }
 
-    public int getPubMedCentralId() {
+    public Integer getPubMedCentralId() {
         return pubMedCentralId;
     }
 
-    public void setPubMedCentralId(int pubMedCentralId) {
+    public void setPubMedCentralId(Integer pubMedCentralId) {
         this.pubMedCentralId = pubMedCentralId;
     }
 }

@@ -50,7 +50,7 @@ public class ViewStudiesController extends AbstractController implements IMGCont
      */
     public static final String VIEW_NAME = "studies";
 
-    private final String VELOCITY_TEMPLATE_LOCATION_PATH = "WEB-INF/velocity_templates/exportStudies.vm";
+    private final String VELOCITY_TEMPLATE_LOCATION_PATH = "exportStudies.vm";
 
     @Resource
     private HibernateStudyDAO studyDAO;
@@ -90,7 +90,7 @@ public class ViewStudiesController extends AbstractController implements IMGCont
         ModelMap model = new ModelMap();
         processRequestParams(filter, searchTerm, studyVisibility, studyStatus);
         populateModel(model, filter);
-        SortedMap<Study, Long> studyMap = ((ViewStudiesModel) model.get(MGModel.MODEL_ATTR_NAME)).getStudySampleSizeMap();
+        Map<Study, Long> studyMap = ((ViewStudiesModel) model.get(MGModel.MODEL_ATTR_NAME)).getStudySampleSizeMap();
 
         if (studyMap != null && studyMap.size() > 0) {
             //Create velocity spring_model
@@ -122,7 +122,7 @@ public class ViewStudiesController extends AbstractController implements IMGCont
         ModelMap model = new ModelMap();
         processRequestParams(filter, searchTerm, studyVisibility, studyStatus);
         populateModel(model, filter);
-        SortedMap<Study, Long> studyMap = ((ViewStudiesModel) model.get(MGModel.MODEL_ATTR_NAME)).getStudySampleSizeMap();
+        Map<Study, Long> studyMap = ((ViewStudiesModel) model.get(MGModel.MODEL_ATTR_NAME)).getStudySampleSizeMap();
 
         if (studyMap != null && studyMap.size() > 0) {
             //Create export CSV text

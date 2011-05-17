@@ -7,7 +7,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.SortedMap;
+import java.util.Map;
 
 /**
  * Represents the model for the list studies page.
@@ -20,19 +20,19 @@ public class ViewStudiesModel extends MGModel {
 
     private StudyFilter studyFilter;
 
-    private SortedMap<Study, Long> studySampleSizeMap;
+    private Map<Study, Long> studySampleSizeMap;
 
     private List<Study.StudyStatus> studyStatusList;
 
     private List<StudyFilter.StudyVisibility> studyVisibilityList;
 
 
-    ViewStudiesModel(Submitter submitter, SortedMap<Study, Long> studySampleSizeMap, String pageTitle,
+    ViewStudiesModel(Submitter submitter, Map<Study, Long> studySampleSizeMap, String pageTitle,
                      List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer) {
         this(submitter, studySampleSizeMap, new StudyFilter(), pageTitle, breadcrumbs, propertyContainer);
     }
 
-    ViewStudiesModel(Submitter submitter, SortedMap<Study, Long> studySampleSizeMap, StudyFilter filter,
+    ViewStudiesModel(Submitter submitter, Map<Study, Long> studySampleSizeMap, StudyFilter filter,
                      String pageTitle, List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer) {
         super(submitter, pageTitle, breadcrumbs, propertyContainer);
         this.studyFilter = filter;
@@ -49,11 +49,11 @@ public class ViewStudiesModel extends MGModel {
         this.studyFilter = studyFilter;
     }
 
-    public SortedMap<Study, Long> getStudySampleSizeMap() {
+    public Map<Study, Long> getStudySampleSizeMap() {
         return studySampleSizeMap;
     }
 
-    public void setStudySampleSizeMap(SortedMap<Study, Long> studySampleSizeMap) {
+    public void setStudySampleSizeMap(Map<Study, Long> studySampleSizeMap) {
         this.studySampleSizeMap = studySampleSizeMap;
     }
 

@@ -27,10 +27,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.tools.MemiTools;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Represents the controller for the list studies page.
@@ -52,7 +49,7 @@ public class ViewSamplesController extends AbstractController implements IMGCont
      */
     public final static String VIEW_NAME = "samples";
 
-    private final String VELOCITY_TEMPLATE_LOCATION_PATH = "WEB-INF/velocity_templates/exportSamples.vm";
+    private final String VELOCITY_TEMPLATE_LOCATION_PATH = "exportSamples.vm";
 
     @Resource
     private HibernateSampleDAO sampleDAO;
@@ -88,7 +85,7 @@ public class ViewSamplesController extends AbstractController implements IMGCont
         final ModelMap model = new ModelMap();
         processRequestParams(filter, searchTerm, sampleVisibility, sampleType);
         populateModel(model, filter);
-        List<Sample> samples = ((ViewSamplesModel) model.get(MGModel.MODEL_ATTR_NAME)).getSamples();
+        Set<Sample> samples = ((ViewSamplesModel) model.get(MGModel.MODEL_ATTR_NAME)).getSamples();
 
         if (samples != null && samples.size() > 0) {
             //Create velocity spring_model
@@ -122,11 +119,12 @@ public class ViewSamplesController extends AbstractController implements IMGCont
         final ModelMap model = new ModelMap();
         processRequestParams(filter, searchTerm, sampleVisibility, sampleType);
         populateModel(model, filter);
-        List<Sample> samples = ((ViewSamplesModel) model.get(MGModel.MODEL_ATTR_NAME)).getSamples();
+        Set<Sample> samples = ((ViewSamplesModel) model.get(MGModel.MODEL_ATTR_NAME)).getSamples();
         if (samples != null && samples.size() > 0) {
-            String[] samplesIDs = MemiTools.getSampleIds(samples);
+            Set<String> samplesIDs = MemiTools.getSampleIds(samples);
+            Class clazz = MemiTools.getTypeOfGenericSet(samples);
             if (downloadService != null) {
-                boolean isDialogOpen = downloadService.openDownloadDialog(response, samples.get(0).getClazz(), samplesIDs);
+                boolean isDialogOpen = downloadService.openDownloadDialog(response, clazz, samplesIDs);
                 model.addAttribute("isDialogOpen", isDialogOpen);
             } else {
                 log.warn("Could not open download dialog to export samples. Download service is null!");

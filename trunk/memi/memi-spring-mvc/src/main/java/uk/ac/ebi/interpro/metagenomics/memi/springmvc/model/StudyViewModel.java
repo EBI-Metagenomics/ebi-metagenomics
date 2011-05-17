@@ -8,6 +8,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Represents the model for the study overview page.

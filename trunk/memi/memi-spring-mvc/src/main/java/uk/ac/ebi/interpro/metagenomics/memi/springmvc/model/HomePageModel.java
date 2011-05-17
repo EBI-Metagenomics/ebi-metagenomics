@@ -6,11 +6,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * Represents the model for the home page.
@@ -23,21 +19,21 @@ public final class HomePageModel extends MGModel {
     /**
      * Maps studies and their number of samples.
      */
-    private SortedMap<Study, Long> publicStudiesMap;
+    private Map<Study, Long> publicStudiesMap;
 
     private List<Sample> publicSamples;
 
     /**
      * Maps studies and their number of samples.
      */
-    private SortedMap<Study, Long> myStudiesMap;
+    private Map<Study, Long> myStudiesMap;
 
     private List<Sample> mySamples;
 
     private final String rssUrl;
     private final List<SyndEntry> rssItems;
 
-    HomePageModel(Submitter submitter, SortedMap<Study, Long> publicStudiesMap, List<Sample> publicSamples,
+    HomePageModel(Submitter submitter, Map<Study, Long> publicStudiesMap, List<Sample> publicSamples,
                   String rssUrl, List<SyndEntry> rssItems, String pageTitle, List<Breadcrumb> breadcrumbs,
                   MemiPropertyContainer propertyContainer) {
         super(submitter, pageTitle, breadcrumbs, propertyContainer);
@@ -49,8 +45,8 @@ public final class HomePageModel extends MGModel {
         this.rssItems = rssItems;
     }
 
-    HomePageModel(Submitter submitter, SortedMap<Study, Long> publicStudiesMap, List<Sample> publicSamples,
-                  String rssUrl, List<SyndEntry> rssItems, SortedMap<Study, Long> myStudiesMap,
+    HomePageModel(Submitter submitter, Map<Study, Long> publicStudiesMap, List<Sample> publicSamples,
+                  String rssUrl, List<SyndEntry> rssItems, Map<Study, Long> myStudiesMap,
                   List<Sample> mySamples, String pageTitle, List<Breadcrumb> breadcrumbs,
                   MemiPropertyContainer propertyContainer) {
         this(submitter, publicStudiesMap, publicSamples, rssUrl, rssItems, pageTitle, breadcrumbs, propertyContainer);
@@ -58,19 +54,19 @@ public final class HomePageModel extends MGModel {
         this.mySamples = mySamples;
     }
 
-    public SortedMap<Study, Long> getPublicStudiesMap() {
+    public Map<Study, Long> getPublicStudiesMap() {
         return publicStudiesMap;
     }
 
-    public void setPublicStudiesMap(SortedMap<Study, Long> publicStudiesMap) {
+    public void setPublicStudiesMap(Map<Study, Long> publicStudiesMap) {
         this.publicStudiesMap = publicStudiesMap;
     }
 
-    public SortedMap<Study, Long> getMyStudiesMap() {
+    public Map<Study, Long> getMyStudiesMap() {
         return myStudiesMap;
     }
 
-    public void setMyStudiesMap(SortedMap<Study, Long> myStudiesMap) {
+    public void setMyStudiesMap(Map<Study, Long> myStudiesMap) {
         this.myStudiesMap = myStudiesMap;
     }
 

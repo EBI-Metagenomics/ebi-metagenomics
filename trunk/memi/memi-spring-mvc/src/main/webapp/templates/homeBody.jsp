@@ -52,7 +52,7 @@
                         </c:when>
                         <c:otherwise>
                             <h3>My latest projects</h3>
-                            <c:forEach var="entry" items="${model.myStudiesMap}" varStatus="status">
+                            <c:forEach var="entry" items="${model.myStudiesMap}" varStatus="status" begin="0" end="4">
                                 <p>
                                     <c:if test="${!entry.key.public}">
                                         <img alt="private" src="${pageContext.request.contextPath}/img/icon_priv_private.gif">
@@ -114,7 +114,7 @@
                 <div id="list-data-study">
                     <h2>Projects</h2>
                     <h3>Latest public projects</h3>
-                    <c:forEach var="entry" items="${model.publicStudiesMap}" varStatus="status">
+                    <c:forEach var="entry" items="${model.publicStudiesMap}" varStatus="status" begin="0" end="4">
                         <p><%--<span class="list_date">${entry.key.lastMetadataReceived}:</span> --%>
                             <a href="<c:url value="${baseURL}/study/${entry.key.studyId}"/>" class="list_more">${entry.key.studyName}</a>
                             <br />

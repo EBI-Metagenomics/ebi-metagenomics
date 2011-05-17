@@ -24,7 +24,9 @@ import uk.ac.ebi.interpro.metagenomics.memi.tools.MemiTools;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Represents the controller for sample overview page.
@@ -77,7 +79,9 @@ public class SampleViewController extends SecuredAbstractController<Sample> {
                 log.info("Building model...");
                 populateModel(model, sample);
                 if (downloadService != null) {
-                    boolean isDialogOpen = downloadService.openDownloadDialog(response, sample.getClazz(), sampleId);
+                    Set<String> samplesIDs = new HashSet<String>();
+                    samplesIDs.add(sampleId);
+                    boolean isDialogOpen = downloadService.openDownloadDialog(response, sample.getClazz(), samplesIDs);
                     model.addAttribute("isDialogOpen", isDialogOpen);
                 }
             }

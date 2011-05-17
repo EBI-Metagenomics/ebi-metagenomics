@@ -3,13 +3,12 @@ package uk.ac.ebi.interpro.metagenomics.memi.tools;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.EmgLogFileInfoDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.HostSample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Simple tool class which provides general used methods.
@@ -21,13 +20,24 @@ import java.util.List;
 public class MemiTools {
     private final static Log log = LogFactory.getLog(MemiTools.class);
 
-    public static String[] getSampleIds(List<Sample> samples) {
+    public static Set<String> getSampleIds(Collection<Sample> samples) {
         log.info("Getting sample IDs from the specified sample list...");
-        String[] result = new String[samples.size()];
-        for (int i = 0; i < result.length; i++) {
-            result[i] = samples.get(i).getSampleId();
+        Set<String> result = new HashSet<String>();
+        for (Sample sample : samples) {
+            result.add(sample.getSampleId());
         }
         return result;
+    }
+
+    /**
+     * Determines the generic type of specified collection. The items of the collection should have sub types,
+     * that is why it returns the type of the first selected entry.
+     */
+    public static Class getTypeOfGenericSet(Collection<Sample> samples) {
+        for (Sample sample : samples) {
+            return sample.getClass();
+        }
+        return Object.class;
     }
 
     public static String createFileName(final String fileName) {

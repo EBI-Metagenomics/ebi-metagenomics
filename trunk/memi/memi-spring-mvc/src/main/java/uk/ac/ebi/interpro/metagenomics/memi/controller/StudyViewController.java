@@ -24,7 +24,9 @@ import uk.ac.ebi.interpro.metagenomics.memi.tools.MemiTools;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Represents the controller for the study overview page.
@@ -76,9 +78,10 @@ public class StudyViewController extends SecuredAbstractController<Study> {
 
                 List<Sample> samples = ((StudyViewModel) model.get(StudyViewModel.MODEL_ATTR_NAME)).getSamples();
                 if (samples != null && samples.size() > 0) {
-                    String[] samplesIDs = MemiTools.getSampleIds(samples);
+                    Set<String> samplesIDs = MemiTools.getSampleIds(samples);
+                    Class clazz = MemiTools.getTypeOfGenericSet(samples);
                     if (downloadService != null) {
-                        boolean isDialogOpen = downloadService.openDownloadDialog(response, samples.get(0).getClazz(), samplesIDs);
+                        boolean isDialogOpen = downloadService.openDownloadDialog(response, clazz, samplesIDs);
                         model.addAttribute("isDialogOpen", isDialogOpen);
                     } else {
                         log.warn("Could not open download dialog to export samples. Download service is null!");

@@ -1,0 +1,27 @@
+package uk.ac.ebi.interpro.metagenomics.memi.basic.comparators;
+
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
+
+import java.util.Comparator;
+import java.util.Date;
+
+/**
+ * Used to order studies by last meta data received date within Home page {@link uk.ac.ebi.interpro.metagenomics.memi.controller.HomePageController}.
+ *
+ * @author Maxim Scheremetjew, EMBL-EBI, InterPro
+ * @version $Id$
+ * @since 1.0-SNAPSHOT
+ */
+public class HomePageStudiesComparator implements Comparator<Study> {
+
+    /**
+     * Compares studies by last meta data received date. Starts with the latest one!
+     */
+    @Override
+    public int compare(Study study1, Study study2) {
+        Date studyDate1 = study1.getLastMetadataReceived();
+        Date studyDate2 = study2.getLastMetadataReceived();
+        int studyDateComp = studyDate2.compareTo(studyDate1);
+        return ((studyDateComp == 0) ? study1.getStudyName().compareTo(study2.getStudyName()) : studyDateComp);
+    }
+}
