@@ -157,6 +157,21 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
 
     @Override
     @Transactional(readOnly = true)
+    public List<Sample> retrieveAllPublicSamples() {
+        Session session = sessionFactory.getCurrentSession();
+        if (session != null) {
+            Criteria crit = session.createCriteria(Sample.class);
+            //add WHERE clause
+            crit.add(Restrictions.eq("isPublic", true));
+            //Add distinct criterion
+            crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+            return crit.list();
+        }
+        return new ArrayList<Sample>();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public List<Sample> retrieveOrderedSamplesBySubmitter(long submitterId, String propertyName, boolean isDescendingOrder) {
         List<Sample> result = new ArrayList<Sample>();
         Session session = sessionFactory.getCurrentSession();
@@ -173,6 +188,21 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
             result = crit.list();
         }
         return result;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Sample> retrieveSamplesBySubmitter(long submitterId) {
+        Session session = sessionFactory.getCurrentSession();
+        if (session != null) {
+            Criteria crit = session.createCriteria(Sample.class);
+            //add WHERE clause
+            crit.add(Restrictions.eq("submitterId", submitterId));
+            //Add distinct criterion
+            crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+            return crit.list();
+        }
+        return new ArrayList<Sample>();
     }
 
     @Override
@@ -195,6 +225,23 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
             result = crit.list();
         }
         return result;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Sample> retrievePublicSamplesWithoutSubId(long submitterId) {
+        Session session = sessionFactory.getCurrentSession();
+        if (session != null) {
+            Criteria crit = session.createCriteria(Sample.class);
+            //add WHERE clause
+            crit.add(Restrictions.eq("isPublic", true));
+            //add another WHERE clause
+            crit.add(Restrictions.ne("submitterId", submitterId));
+            //Add distinct criterion
+            crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+            return crit.list();
+        }
+        return new ArrayList<Sample>();
     }
 
     @Override

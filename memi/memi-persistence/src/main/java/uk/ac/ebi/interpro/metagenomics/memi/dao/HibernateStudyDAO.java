@@ -37,6 +37,13 @@ public interface HibernateStudyDAO extends ISampleStudyDAO<Study> {
     List<Study> retrieveOrderedStudiesBySubmitter(long submitterId, String propertyName, boolean isDescendingOrder);
 
     /**
+     * Returns a list of public studies where the submitter ID IS equal the specified submitter ID.
+     *
+     * @param submitterId       Submitter ID for the IS equal restriction.
+     */
+    List<Study> retrieveStudiesBySubmitter(long submitterId);
+
+    /**
      * Returns an ordered list of public studies where the submitter ID IS NOT equal the specified submitter ID.
      *
      * @param submitterId       Submitter ID for the NOT equal restriction.
@@ -46,9 +53,22 @@ public interface HibernateStudyDAO extends ISampleStudyDAO<Study> {
     List<Study> retrieveOrderedPublicStudiesWithoutSubId(long submitterId, String propertyName, boolean isDescendingOrder);
 
     /**
+     * Returns a list of public studies where the submitter ID IS NOT equal the specified submitter ID.
+     *
+     * @param submitterId       Submitter ID for the NOT equal restriction.
+     */
+    List<Study> retrievePublicStudiesWithoutSubId(long submitterId);
+
+    /**
      * Returns a list of studies by the specified criteria.
      */
     List<Study> retrieveFilteredStudies(List<Criterion> crits);
+
+/**
+     * Returns a list of all public studies.
+     */
+    List<Study> retrievePublicStudies();
+
 
     Study readByStringId(String studyId);
 }

@@ -113,8 +113,7 @@ public class ContactPageController extends AbstractController implements IMGCont
         if (sessionManager != null && sessionManager.getSessionBean() != null) {
             model.put("submitter", sessionManager.getSessionBean().getSubmitter());
         }
-        return VelocityEngineUtils.mergeTemplateIntoString(
-                velocityEngine, "WEB-INF/velocity_templates/contact-email.vm", model);
+        return VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "contact-email.vm", model);
     }
 
     protected String getModelViewName() {

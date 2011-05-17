@@ -42,14 +42,6 @@
 
     <!-- This bean initializes the Velocity engine for templating. -->
     <bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
-        <property name="velocityProperties">
-            <props>
-                <prop key="resource.loader">class</prop>
-                <prop key="class.resource.loader.class">
-                    org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
-                </prop>
-            </props>
-        </property>
-        <property name="resourceLoaderPath" value="/WEB-INF/velocity_templates"/>
+        <property name="resourceLoaderPath" value="/WEB-INF/velocity/"/>
     </bean>
 </beans>

@@ -4,10 +4,10 @@ import uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.SampleFilter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Represents the model for the list studies page.
@@ -20,19 +20,19 @@ public class ViewSamplesModel extends MGModel {
 
     private SampleFilter sampleFilter;
 
-    private List<Sample> samples;
+    private Set<Sample> samples;
 
     private List<SampleFilter.SampleVisibility> sampleVisibilityList;
 
     private List<Sample.SampleType> sampleTypes;
 
 
-    ViewSamplesModel(Submitter submitter, List<Sample> samples, String pageTitle, List<Breadcrumb> breadcrumbs,
+    ViewSamplesModel(Submitter submitter, Set<Sample> samples, String pageTitle, List<Breadcrumb> breadcrumbs,
                      MemiPropertyContainer propertyContainer) {
         this(submitter, samples, new SampleFilter(), pageTitle, breadcrumbs, propertyContainer);
     }
 
-    ViewSamplesModel(Submitter submitter, List<Sample> samples, SampleFilter filter, String pageTitle,
+    ViewSamplesModel(Submitter submitter, Set<Sample> samples, SampleFilter filter, String pageTitle,
                      List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer) {
         super(submitter, pageTitle, breadcrumbs, propertyContainer);
         this.sampleFilter = filter;
@@ -49,11 +49,11 @@ public class ViewSamplesModel extends MGModel {
         this.sampleFilter = sampleFilter;
     }
 
-    public List<Sample> getSamples() {
+    public Set<Sample> getSamples() {
         return samples;
     }
 
-    public void setSamples(List<Sample> samples) {
+    public void setSamples(Set<Sample> samples) {
         this.samples = samples;
     }
 

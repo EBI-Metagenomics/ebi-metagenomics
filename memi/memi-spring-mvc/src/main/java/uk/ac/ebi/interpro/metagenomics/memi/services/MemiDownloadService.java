@@ -11,7 +11,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.util.Arrays;
+import java.util.Set;
 
 /**
  * Represents a service class. This class handles the creation of a HTTP response,
@@ -69,8 +69,8 @@ public class MemiDownloadService {
      * @param sampleIDs Specifies the name of the CSV file for each sample.
      * @return TRUE if a downloadable file exists and 'Save to file' dialog could be open.
      */
-    public boolean openDownloadDialog(HttpServletResponse response, Class<? extends Sample> clazz, String... sampleIDs) {
-        log.info("Trying to open the download dialog to export a CSV file for sample(s) with ID(s)" + Arrays.toString(sampleIDs) + "...");
+    public boolean openDownloadDialog(HttpServletResponse response, Class<? extends Sample> clazz, Set<String> sampleIDs) {
+        log.info("Trying to open the download dialog to export a CSV file for sample(s) with ID(s)" + sampleIDs.toArray() + "...");
 
         boolean result = false;
         InputStream sampleFileIs = null;
@@ -92,7 +92,7 @@ public class MemiDownloadService {
         }
         //create and stream sample files from project resource directory
         for (String sampleID : sampleIDs) {
-            if (sampleIDs.length == 1) {
+            if (sampleIDs.size() == 1) {
                 fileName = sampleID;
             }
             //create a file input stream and concatenate if the previous input stream if exists
@@ -114,7 +114,7 @@ public class MemiDownloadService {
             }
         }
         if (sis != null) {
-            fileName = (sampleIDs.length == 1 ? fileName : "samples") + ".csv";
+            fileName = (sampleIDs.size() == 1 ? fileName : "samples") + ".csv";
             //configure HTTP response
             result = assembleServletResponse(response, sis, fileName);
         }

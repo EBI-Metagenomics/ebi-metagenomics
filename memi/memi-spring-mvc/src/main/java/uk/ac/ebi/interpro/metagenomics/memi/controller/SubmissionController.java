@@ -51,7 +51,7 @@ public class SubmissionController extends CheckLoginController implements IMGCon
     @Resource(name = "emailNotificationServiceSubmitPage")
     private INotificationService emailService;
 
-    @Resource(name = "velocityEngine")
+    @Resource
     private VelocityEngine velocityEngine;
 
     @Override
@@ -126,8 +126,7 @@ public class SubmissionController extends CheckLoginController implements IMGCon
         if (sessionManager != null && sessionManager.getSessionBean() != null) {
             model.put("submitter", sessionManager.getSessionBean().getSubmitter());
         }
-        return VelocityEngineUtils.mergeTemplateIntoString(
-                velocityEngine, "WEB-INF/velocity_templates/submission-confirmation.vm", model);
+        return VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "submission-confirmation.vm", model);
     }
 
     protected String getModelViewName() {

@@ -3,6 +3,7 @@ package uk.ac.ebi.interpro.metagenomics.memi.dao;
 import org.hibernate.criterion.Criterion;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -25,6 +26,11 @@ public interface HibernateSampleDAO extends ISampleStudyDAO<Sample> {
     List<Sample> retrieveOrderedPublicSamples(String propertyName, boolean isDescendingOrder);
 
     /**
+     * Returns a list of public samples.
+     */
+    List<Sample> retrieveAllPublicSamples();
+
+    /**
      * Returns an ordered list of public samples where the submitter ID IS equal the specified submitter ID.
      *
      * @param submitterId       Submitter ID for the IS equal restriction.
@@ -34,6 +40,13 @@ public interface HibernateSampleDAO extends ISampleStudyDAO<Sample> {
     List<Sample> retrieveOrderedSamplesBySubmitter(long submitterId, String propertyName, boolean isDescendingOrder);
 
     /**
+     * Returns a list of public samples where the submitter ID IS equal the specified submitter ID.
+     *
+     * @param submitterId       Submitter ID for the IS equal restriction.
+     */
+    List<Sample> retrieveSamplesBySubmitter(long submitterId);
+
+    /**
      * Returns an ordered list of public samples where the submitter ID IS NOT equal the specified submitter ID.
      *
      * @param submitterId       Submitter ID for the NOT equal restriction.
@@ -41,6 +54,13 @@ public interface HibernateSampleDAO extends ISampleStudyDAO<Sample> {
      * @param isDescendingOrder Order direction.
      */
     List<Sample> retrieveOrderedPublicSamplesWithoutSubId(long submitterId, String propertyName, boolean isDescendingOrder);
+
+    /**
+     * Returns a list of public samples where the submitter ID IS NOT equal the specified submitter ID.
+     *
+     * @param submitterId       Submitter ID for the NOT equal restriction.
+     */
+    List<Sample> retrievePublicSamplesWithoutSubId(long submitterId);
 
     /**
      * Returns a list of samples by the specified criteria.

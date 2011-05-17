@@ -13,15 +13,14 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "HB_SAMPLE")
-@SequenceGenerator(
-        name = "SAMPLE_SEQ",
-        sequenceName = "SAMPLE_SEQ",
-        allocationSize = 1
-)
 public abstract class Sample implements SecureEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SAMPLE_SEQ")
+    @SequenceGenerator(
+            name = "SAMPLE_SEQ",
+            sequenceName = "SAMPLE_SEQ")
+//        allocationSize = 1
     private long id;
 
     @ManyToOne

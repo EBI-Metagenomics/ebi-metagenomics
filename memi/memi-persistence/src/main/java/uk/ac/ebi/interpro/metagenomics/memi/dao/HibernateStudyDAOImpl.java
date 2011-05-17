@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -155,6 +156,20 @@ public class HibernateStudyDAOImpl implements HibernateStudyDAO {
 
     @Override
     @Transactional(readOnly = true)
+    public List<Study> retrieveStudiesBySubmitter(long submitterId) {
+        Session session = sessionFactory.getCurrentSession();
+        if (session != null) {
+            Criteria crit = session.createCriteria(Study.class);
+            //add WHERE clause
+            crit.add(Restrictions.eq("submitterId", submitterId));
+            return crit.list();
+        }
+        return new ArrayList<Study>();
+    }
+
+
+    @Override
+    @Transactional(readOnly = true)
     public List<Study> retrieveOrderedPublicStudiesWithoutSubId(long submitterId, String propertyName, boolean isDescendingOrder) {
         List<Study> result = new ArrayList<Study>();
         Session session = sessionFactory.getCurrentSession();
@@ -177,6 +192,21 @@ public class HibernateStudyDAOImpl implements HibernateStudyDAO {
 
     @Override
     @Transactional(readOnly = true)
+    public List<Study> retrievePublicStudiesWithoutSubId(long submitterId) {
+        Session session = sessionFactory.getCurrentSession();
+        if (session != null) {
+            Criteria crit = session.createCriteria(Study.class);
+            //add WHERE clause
+            crit.add(Restrictions.eq("isPublic", true));
+            //add another WHERE clause
+            crit.add(Restrictions.ne("submitterId", submitterId));
+            return crit.list();
+        }
+        return new ArrayList<Study>();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public List<Study> retrieveFilteredStudies(List<Criterion> crits) {
         Session session = sessionFactory.getCurrentSession();
         Criteria criteria = null;
@@ -189,6 +219,18 @@ public class HibernateStudyDAOImpl implements HibernateStudyDAO {
         }
         if (criteria != null) {
             criteria.addOrder(Property.forName("lastMetadataReceived").desc());
+            return (List<Study>) criteria.list();
+        }
+        return new ArrayList<Study>();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Study> retrievePublicStudies() {
+        Session session = sessionFactory.getCurrentSession();
+        if (session != null) {
+            Criteria criteria = session.createCriteria(Study.class);
+            criteria.add(Restrictions.eq("isPublic", true));
             return (List<Study>) criteria.list();
         }
         return new ArrayList<Study>();
