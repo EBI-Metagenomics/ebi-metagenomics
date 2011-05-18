@@ -89,7 +89,7 @@
             <artifactId>com.springsource.oracle.jdbc</artifactId>
             <version>10.2.0.2</version>
             <!-- Possibly should be "provided" -->
-            <scope>provided</scope>
+            <!--<scope>provided</scope>-->
         </dependency>
         <!-- MySQL JDBC driver-->
         <dependency>

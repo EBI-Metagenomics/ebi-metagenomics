@@ -17,7 +17,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.AnalysisStatsModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModel;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.tools.MemiTools;
 
@@ -101,7 +101,7 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
             public void processModel(ModelMap model, Sample sample) {
                 log.info("Building model...");
                 populateModel(model, sample);
-                EmgFile emgFile = ((AnalysisStatsModel) model.get(MGModel.MODEL_ATTR_NAME)).getEmgFile();
+                EmgFile emgFile = ((AnalysisStatsModel) model.get(ViewModel.MODEL_ATTR_NAME)).getEmgFile();
 
                 String directoryName = emgFile.getFileIDInUpperCase().replace('.', '_');
                 File file = new File(propertyContainer.getPathToAnalysisDirectory() + directoryName + '/' + directoryName + fileNameSuffix);
@@ -127,7 +127,7 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
         final AnalysisStatsModel mgModel = MGModelFactory.
                 getAnalysisStatsModel(sessionManager, sample, pageTitle, getBreadcrumbs(sample), emgFile,
                         MemiTools.getArchivedSeqs(fileInfoDAO, sample), propertyContainer, isReturnSizeLimit);
-        model.addAttribute(MGModel.MODEL_ATTR_NAME, mgModel);
+        model.addAttribute(ViewModel.MODEL_ATTR_NAME, mgModel);
     }
 
     /**

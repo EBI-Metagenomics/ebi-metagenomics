@@ -18,7 +18,7 @@ import java.util.List;
  * @version $Id$
  * @since 1.0-SNAPSHOT
  */
-public class AnalysisStatsModel extends MGModel {
+public class AnalysisStatsModel extends ViewModel {
 
     public static final NumberFormat NUMBER_FORMAT = DecimalFormat.getInstance();
 

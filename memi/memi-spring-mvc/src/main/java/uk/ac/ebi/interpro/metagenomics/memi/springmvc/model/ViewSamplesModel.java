@@ -16,7 +16,7 @@ import java.util.Set;
  * @version $Id$
  * @since 1.0-SNAPSHOT
  */
-public class ViewSamplesModel extends MGModel {
+public class ViewSamplesModel extends ViewModel {
 
     private SampleFilter sampleFilter;
 

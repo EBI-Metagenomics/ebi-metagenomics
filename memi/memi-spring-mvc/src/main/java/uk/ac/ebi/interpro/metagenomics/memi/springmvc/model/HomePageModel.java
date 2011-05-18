@@ -14,7 +14,7 @@ import java.util.*;
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @since 1.0-SNAPSHOT
  */
-public final class HomePageModel extends MGModel {
+public final class HomePageModel extends ViewModel {
 
     /**
      * Maps studies and their number of samples.

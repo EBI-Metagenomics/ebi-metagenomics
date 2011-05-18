@@ -6,14 +6,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModel;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +36,7 @@ public class InfoController extends AbstractController implements IMGController 
         log.info("Requesting doGet of InfoController...");
         //build and add the page model
         populateModel(model);
-        model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((MGModel) model.get(MGModel.MODEL_ATTR_NAME)).getLoginForm());
+        model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((ViewModel) model.get(ViewModel.MODEL_ATTR_NAME)).getLoginForm());
         return new ModelAndView(VIEW_NAME, model);
     }
 
@@ -47,9 +45,9 @@ public class InfoController extends AbstractController implements IMGController 
      */
     private void populateModel(final ModelMap model) {
         log.info("Building model of InfoController...");
-        final MGModel hpModel = MGModelFactory.getMGModel(sessionManager, "Metagenomics About",
+        final ViewModel hpModel = MGModelFactory.getMGModel(sessionManager, "Metagenomics About",
                 getBreadcrumbs(null), propertyContainer);
-        model.addAttribute(MGModel.MODEL_ATTR_NAME, hpModel);
+        model.addAttribute(ViewModel.MODEL_ATTR_NAME, hpModel);
     }
 
     protected String getModelViewName() {

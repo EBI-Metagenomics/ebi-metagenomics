@@ -17,7 +17,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.HomePageModel;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModel;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
 
 import javax.annotation.Resource;
@@ -61,7 +61,7 @@ public class HomePageController extends LoginController implements IMGController
         log.info("Requesting doGet of " + HomePageController.class);
         //build and add the page model
         populateModel(model);
-        model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((MGModel) model.get(MGModel.MODEL_ATTR_NAME)).getLoginForm());
+        model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((ViewModel) model.get(ViewModel.MODEL_ATTR_NAME)).getLoginForm());
         return new ModelAndView(VIEW_NAME, model);
     }
 
@@ -88,7 +88,7 @@ public class HomePageController extends LoginController implements IMGController
         log.info("Building model of " + HomePageController.class + "...");
         final HomePageModel hpModel = MGModelFactory.getHomePageModel(sessionManager, studyDAO, sampleDAO,
                 rssClient, "Metagenomics Home", getBreadcrumbs(null), propertyContainer);
-        model.addAttribute(MGModel.MODEL_ATTR_NAME, hpModel);
+        model.addAttribute(ViewModel.MODEL_ATTR_NAME, hpModel);
     }
 
     protected String getModelViewName() {

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgFile;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModel;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
 
@@ -45,8 +45,8 @@ public class CommonController {
                 "log to no such request mapping found, please do not note this warning. HTTP status code " +
                 "404 responded. Please have a look to the Spring log to see which wrong URL was " +
                 "requested!");
-        MGModel mgModel = MGModelFactory.getMGModel(sessionManager);
-        model.addAttribute(MGModel.MODEL_ATTR_NAME, mgModel);
+        ViewModel viewModel = MGModelFactory.getMGModel(sessionManager);
+        model.addAttribute(ViewModel.MODEL_ATTR_NAME, viewModel);
         return new ModelAndView("/errors/" + CommonController.NO_SUCH_REQUEST_PAGE_VIEW_NAME, model);
     }
 

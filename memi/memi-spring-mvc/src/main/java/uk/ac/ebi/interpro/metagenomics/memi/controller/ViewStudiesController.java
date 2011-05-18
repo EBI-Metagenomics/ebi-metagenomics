@@ -20,7 +20,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModel;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewStudiesModel;
 import uk.ac.ebi.interpro.metagenomics.memi.tools.MemiTools;
@@ -71,8 +71,8 @@ public class ViewStudiesController extends AbstractController implements IMGCont
         log.info("Requesting doGet...");
         //build and add the page model
         populateModel(model, new StudyFilter());
-        model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((ViewStudiesModel) model.get(MGModel.MODEL_ATTR_NAME)).getLoginForm());
-        model.addAttribute(StudyFilter.MODEL_ATTR_NAME, ((ViewStudiesModel) model.get(MGModel.MODEL_ATTR_NAME)).getStudyFilter());
+        model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((ViewStudiesModel) model.get(ViewModel.MODEL_ATTR_NAME)).getLoginForm());
+        model.addAttribute(StudyFilter.MODEL_ATTR_NAME, ((ViewStudiesModel) model.get(ViewModel.MODEL_ATTR_NAME)).getStudyFilter());
         return new ModelAndView(VIEW_NAME, model);
     }
 
@@ -90,7 +90,7 @@ public class ViewStudiesController extends AbstractController implements IMGCont
         ModelMap model = new ModelMap();
         processRequestParams(filter, searchTerm, studyVisibility, studyStatus);
         populateModel(model, filter);
-        Map<Study, Long> studyMap = ((ViewStudiesModel) model.get(MGModel.MODEL_ATTR_NAME)).getStudySampleSizeMap();
+        Map<Study, Long> studyMap = ((ViewStudiesModel) model.get(ViewModel.MODEL_ATTR_NAME)).getStudySampleSizeMap();
 
         if (studyMap != null && studyMap.size() > 0) {
             //Create velocity spring_model
@@ -122,7 +122,7 @@ public class ViewStudiesController extends AbstractController implements IMGCont
         ModelMap model = new ModelMap();
         processRequestParams(filter, searchTerm, studyVisibility, studyStatus);
         populateModel(model, filter);
-        Map<Study, Long> studyMap = ((ViewStudiesModel) model.get(MGModel.MODEL_ATTR_NAME)).getStudySampleSizeMap();
+        Map<Study, Long> studyMap = ((ViewStudiesModel) model.get(ViewModel.MODEL_ATTR_NAME)).getStudySampleSizeMap();
 
         if (studyMap != null && studyMap.size() > 0) {
             //Create export CSV text
@@ -198,7 +198,7 @@ public class ViewStudiesController extends AbstractController implements IMGCont
         log.info("Requesting doSearch (POST method)...");
         processRequestParams(filter, searchTerm, studyVisibility, studyStatus);
         populateModel(model, filter);
-        model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((ViewStudiesModel) model.get(MGModel.MODEL_ATTR_NAME)).getLoginForm());
+        model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((ViewStudiesModel) model.get(ViewModel.MODEL_ATTR_NAME)).getLoginForm());
         return new ModelAndView(VIEW_NAME, model);
     }
 
@@ -237,7 +237,7 @@ public class ViewStudiesController extends AbstractController implements IMGCont
     private void populateModel(ModelMap model, StudyFilter filter) {
         final ViewStudiesModel subModel = MGModelFactory.getViewStudiesPageModel(sessionManager, studyDAO,
                 sampleDAO, filter, "Metagenomics View Projects", getBreadcrumbs(null), propertyContainer);
-        model.addAttribute(MGModel.MODEL_ATTR_NAME, subModel);
+        model.addAttribute(ViewModel.MODEL_ATTR_NAME, subModel);
     }
 
     private List<String> getStudyProperties() {

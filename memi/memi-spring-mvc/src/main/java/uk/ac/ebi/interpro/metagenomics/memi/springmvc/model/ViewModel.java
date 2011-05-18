@@ -12,7 +12,7 @@ import java.util.List;
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @since 1.0-SNAPSHOT
  */
-public class MGModel {
+public class ViewModel {
 
     private Submitter submitter;
 
@@ -34,8 +34,8 @@ public class MGModel {
     public final static String MODEL_ATTR_NAME = "model";
 
 
-    MGModel(Submitter submitter, String pageTitle, List<Breadcrumb> breadcrumbs,
-            MemiPropertyContainer propertyContainer) {
+    ViewModel(Submitter submitter, String pageTitle, List<Breadcrumb> breadcrumbs,
+              MemiPropertyContainer propertyContainer) {
         this.submitter = submitter;
         this.pageTitle = pageTitle;
         this.breadcrumbs = breadcrumbs;

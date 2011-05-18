@@ -11,7 +11,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.services.EmailNotificationService;
 import uk.ac.ebi.interpro.metagenomics.memi.services.INotificationService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModel;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
 
@@ -55,9 +55,9 @@ public abstract class AbstractController {
     public ModelAndView handleNoSuchRequestException(NoSuchRequestHandlingMethodException ex) {
         log.error("Called no such request exception handler!", ex);
         sendEmail(ex);
-        MGModel mgModel = MGModelFactory.getMGModel(sessionManager);
+        ViewModel viewModel = MGModelFactory.getMGModel(sessionManager);
         ModelMap model = new ModelMap();
-        model.addAttribute(MGModel.MODEL_ATTR_NAME, mgModel);
+        model.addAttribute(ViewModel.MODEL_ATTR_NAME, viewModel);
         return new ModelAndView("/errors/" + CommonController.NO_SUCH_REQUEST_PAGE_VIEW_NAME, model);
     }
 
@@ -65,9 +65,9 @@ public abstract class AbstractController {
     public ModelAndView handleNPExceptions(NullPointerException ex) {
         log.error("Called Null pointer exception handler!", ex);
         sendEmail(ex);
-        MGModel mgModel = MGModelFactory.getMGModel(sessionManager);
+        ViewModel viewModel = MGModelFactory.getMGModel(sessionManager);
         ModelMap model = new ModelMap();
-        model.addAttribute(MGModel.MODEL_ATTR_NAME, mgModel);
+        model.addAttribute(ViewModel.MODEL_ATTR_NAME, viewModel);
         return new ModelAndView("/errors/" + CommonController.EXCEPTION_PAGE_VIEW_NAME, model);
     }
 
@@ -75,9 +75,9 @@ public abstract class AbstractController {
     public ModelAndView handleAllExceptions(Exception ex) {
         log.error("Called all exception handler!", ex);
         sendEmail(ex);
-        MGModel mgModel = MGModelFactory.getMGModel(sessionManager);
+        ViewModel viewModel = MGModelFactory.getMGModel(sessionManager);
         ModelMap model = new ModelMap();
-        model.addAttribute(MGModel.MODEL_ATTR_NAME, mgModel);
+        model.addAttribute(ViewModel.MODEL_ATTR_NAME, viewModel);
         return new ModelAndView("/errors/" + CommonController.EXCEPTION_PAGE_VIEW_NAME, model);
     }
 
