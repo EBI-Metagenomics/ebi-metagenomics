@@ -16,7 +16,7 @@ import java.util.Map;
  * @version $Id$
  * @since 1.0-SNAPSHOT
  */
-public class ViewStudiesModel extends MGModel {
+public class ViewStudiesModel extends ViewModel {
 
     private StudyFilter studyFilter;
 

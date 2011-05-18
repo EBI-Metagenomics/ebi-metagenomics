@@ -16,7 +16,7 @@ import java.util.Set;
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @since 1.0-SNAPSHOT
  */
-public class SampleViewModel extends MGModel {
+public class SampleViewModel extends ViewModel {
     private Sample sample;
 
     private final Set<Publication> pubs;

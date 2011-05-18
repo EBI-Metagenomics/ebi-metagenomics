@@ -12,7 +12,7 @@ import java.util.List;
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @since 1.0-SNAPSHOT
  */
-public class SubmissionModel extends MGModel {
+public class SubmissionModel extends ViewModel {
 
     private SubmissionForm subForm;
 

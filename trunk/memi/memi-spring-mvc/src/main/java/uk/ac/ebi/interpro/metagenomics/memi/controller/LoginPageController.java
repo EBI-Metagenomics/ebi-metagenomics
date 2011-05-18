@@ -8,15 +8,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
-import uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModel;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
 
-import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,9 +62,9 @@ public class LoginPageController extends LoginController implements IMGControlle
      * Creates the home page model and adds it to the specified model map.
      */
     private void populateModel(ModelMap model) {
-        final MGModel mgModel = MGModelFactory.getMGModel(sessionManager, "Metagenomics Login",
+        final ViewModel viewModel = MGModelFactory.getMGModel(sessionManager, "Metagenomics Login",
                 getBreadcrumbs(null), propertyContainer);
-        model.addAttribute(MGModel.MODEL_ATTR_NAME, mgModel);
+        model.addAttribute(ViewModel.MODEL_ATTR_NAME, viewModel);
     }
 
     @RequestMapping(params = "cancel", method = RequestMethod.POST)

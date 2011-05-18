@@ -31,11 +31,13 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- * Represents a Metagenomics model factory. Use this factory if you want to create a {@link MGModel}.
+ * Represents a Metagenomics model factory. Use this factory if you want to create a {@link ViewModel}.
+ * TODO: Please note, that this factory class is deprecated and needs to be replace by {@link uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.AbstractViewModelBuilder}
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @since 1.0-SNAPSHOT
  */
+@Deprecated
 public class MGModelFactory {
     private final static Log log = LogFactory.getLog(MGModelFactory.class);
 
@@ -125,14 +127,14 @@ public class MGModelFactory {
         return result;
     }
 
-    public static MGModel getMGModel(SessionManager sessionMgr) {
+    public static ViewModel getMGModel(SessionManager sessionMgr) {
         return getMGModel(sessionMgr, "EBI Metagenomics Portal", new ArrayList<Breadcrumb>(), null);
     }
 
-    public static MGModel getMGModel(SessionManager sessionMgr, String pageTitle, List<Breadcrumb> breadcrumbs,
-                                     MemiPropertyContainer propertyContainer) {
-        log.info("Building instance of " + MGModel.class + "...");
-        return new MGModel(getSessionSubmitter(sessionMgr), pageTitle, breadcrumbs, propertyContainer);
+    public static ViewModel getMGModel(SessionManager sessionMgr, String pageTitle, List<Breadcrumb> breadcrumbs,
+                                       MemiPropertyContainer propertyContainer) {
+        log.info("Building instance of " + ViewModel.class + "...");
+        return new ViewModel(getSessionSubmitter(sessionMgr), pageTitle, breadcrumbs, propertyContainer);
     }
 
 
@@ -207,12 +209,6 @@ public class MGModelFactory {
         sortedSamples.addAll(filteredSamples);
         return new ViewSamplesModel(submitter, sortedSamples, pageTitle, breadcrumbs, propertyContainer);
     }
-
-    public static ContactModel getContactModel(SessionManager sessionMgr, String pageTitle,
-                                               List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer) {
-        return new ContactModel(getSessionSubmitter(sessionMgr), pageTitle, breadcrumbs, propertyContainer);
-    }
-
 
     /**
      * Returns a list of public studies limited by a specified number of rows and order by meta data received date.

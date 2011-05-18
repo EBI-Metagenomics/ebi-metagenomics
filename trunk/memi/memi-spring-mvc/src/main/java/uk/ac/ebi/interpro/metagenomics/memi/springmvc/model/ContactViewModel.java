@@ -12,12 +12,12 @@ import java.util.List;
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @since 1.0-SNAPSHOT
  */
-public class ContactModel extends MGModel {
+public class ContactViewModel extends ViewModel {
 
     private ContactForm contactForm;
 
-    ContactModel(Submitter submitter, String pageTitle, List<Breadcrumb> breadcrumbs,
-                 MemiPropertyContainer propertyContainer) {
+    public ContactViewModel(Submitter submitter, String pageTitle, List<Breadcrumb> breadcrumbs,
+                            MemiPropertyContainer propertyContainer) {
         super(submitter, pageTitle, breadcrumbs, propertyContainer);
         this.contactForm = new ContactForm();
     }

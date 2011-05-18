@@ -16,7 +16,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModel;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.SampleViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.tools.MemiTools;
@@ -96,7 +96,7 @@ public class SampleViewController extends SecuredAbstractController<Sample> {
         final SampleViewModel sampleModel = MGModelFactory.getSampleViewModel(sessionManager, sample,
                 MemiTools.getArchivedSeqs(fileInfoDAO, sample), pageTitle, getBreadcrumbs(sample),
                 propertyContainer);
-        model.addAttribute(MGModel.MODEL_ATTR_NAME, sampleModel);
+        model.addAttribute(ViewModel.MODEL_ATTR_NAME, sampleModel);
     }
 
     ISampleStudyDAO<Sample> getDAO() {
