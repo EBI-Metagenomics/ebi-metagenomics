@@ -17,10 +17,9 @@ import uk.ac.ebi.interpro.metagenomics.memi.forms.SubmissionForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.services.EmailNotificationService;
 import uk.ac.ebi.interpro.metagenomics.memi.services.INotificationService;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.SubmissionModel;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.*;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.SubmissionViewModelBuilder;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -104,10 +103,10 @@ public class SubmissionController extends CheckLoginController implements IMGCon
     /**
      * Creates the MG model and adds it to the specified model map.
      */
-    private void populateModel(ModelMap model) {
-        final SubmissionModel subModel = MGModelFactory.getSubmissionModel(sessionManager,
-                "Metagenomics Submit", getBreadcrumbs(null), propertyContainer);
-        model.addAttribute(ViewModel.MODEL_ATTR_NAME, subModel);
+    private void populateModel(final ModelMap model) {
+        final ViewModelBuilder<SubmissionModel> builder = new SubmissionViewModelBuilder(sessionManager, "Metagenomics Submit", getBreadcrumbs(null), propertyContainer);
+        final SubmissionModel submissionViewModel = builder.getModel();
+        model.addAttribute(ViewModel.MODEL_ATTR_NAME, submissionViewModel);
     }
 
     /**

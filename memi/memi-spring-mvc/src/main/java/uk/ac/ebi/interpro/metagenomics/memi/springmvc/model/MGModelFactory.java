@@ -119,14 +119,6 @@ public class MGModelFactory {
         return ((collection.size() > 5) ? 5 : collection.size());
     }
 
-    private static SortedSet<Sample> getSortedSamples(List<Sample> samples, Comparator<Sample> comparator) {
-        SortedSet<Sample> result = new TreeSet<Sample>(comparator);
-        for (Sample sample : samples) {
-            result.add(sample);
-        }
-        return result;
-    }
-
     public static ViewModel getMGModel(SessionManager sessionMgr) {
         return getMGModel(sessionMgr, "EBI Metagenomics Portal", new ArrayList<Breadcrumb>(), null);
     }
@@ -137,12 +129,6 @@ public class MGModelFactory {
         return new ViewModel(getSessionSubmitter(sessionMgr), pageTitle, breadcrumbs, propertyContainer);
     }
 
-
-    public static SubmissionModel getSubmissionModel(SessionManager sessionMgr, String pageTitle,
-                                                     List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer) {
-        log.info("Building instance of " + SubmissionModel.class + "...");
-        return new SubmissionModel(getSessionSubmitter(sessionMgr), pageTitle, breadcrumbs, propertyContainer);
-    }
 
     public static AnalysisStatsModel getAnalysisStatsModel(SessionManager sessionManager, Sample sample,
                                                            String pageTitle, List<Breadcrumb> breadcrumbs,
@@ -165,15 +151,6 @@ public class MGModelFactory {
             return new AnalysisStatsModel(getSessionSubmitter(sessionManager), pageTitle, breadcrumbs, sample,
                     emgFile, archivedSequences, propertyContainer);
         }
-    }
-
-    public static StudyViewModel getStudyViewModel(SessionManager sessionManager, Study study,
-                                                   List<Sample> samples, String pageTitle,
-                                                   List<Breadcrumb> breadcrumbs,
-                                                   MemiPropertyContainer propertyContainer) {
-        log.info("Building instance of " + StudyViewModel.class + "...");
-        return new StudyViewModel(getSessionSubmitter(sessionManager), study, samples, pageTitle,
-                breadcrumbs, propertyContainer);
     }
 
     public static SampleViewModel getSampleViewModel(SessionManager sessionManager, Sample sample,

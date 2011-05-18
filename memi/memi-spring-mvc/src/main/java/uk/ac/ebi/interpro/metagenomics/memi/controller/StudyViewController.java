@@ -19,6 +19,8 @@ import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.StudyViewModel;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.StudyViewModelBuilder;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.tools.MemiTools;
 
 import javax.annotation.Resource;
@@ -97,11 +99,12 @@ public class StudyViewController extends SecuredAbstractController<Study> {
      * Creates a {@link StudyViewModel} and adds it to the specified model map.
      */
 
-    private void populateModel(ModelMap model, final Study study) {
+    private void populateModel(final ModelMap model, final Study study) {
         List<Sample> samples = sampleDAO.retrieveSamplesByStudyId(study.getId());
         String pageTitle = study.getStudyName() + " project";
-        final StudyViewModel studyModel = MGModelFactory.getStudyViewModel(sessionManager, study, samples,
-                pageTitle, getBreadcrumbs(study), propertyContainer);
+        final ViewModelBuilder<StudyViewModel> builder = new StudyViewModelBuilder(sessionManager,
+                pageTitle, getBreadcrumbs(study), propertyContainer, study, samples);
+        final StudyViewModel studyModel = builder.getModel();
         model.addAttribute(StudyViewModel.MODEL_ATTR_NAME, studyModel);
     }
 

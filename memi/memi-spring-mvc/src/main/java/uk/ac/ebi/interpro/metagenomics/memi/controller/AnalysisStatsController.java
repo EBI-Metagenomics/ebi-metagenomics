@@ -17,13 +17,12 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.AnalysisStatsModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.tools.MemiTools;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.plaf.metal.MetalIconFactory;
 import java.io.File;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -137,6 +136,10 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, mgModel);
     }
 
+    /**
+     * Creates a map between file names and file sizes (for all downloadable files on analysis page). The file size of smaller files
+     * (cutoff: 1024x1024 bytes) is shown in KB, for all the other files it is shown in MB.
+     */
     private Map<String, String> getFileSizeMap(EmgFile emgFile) {
         Map<String, String> result = new HashMap<String, String>();
         String directoryName = emgFile.getFileIDInUpperCase().replace('.', '_');

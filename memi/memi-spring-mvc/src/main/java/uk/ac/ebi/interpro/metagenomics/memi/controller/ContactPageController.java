@@ -17,7 +17,8 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.services.EmailNotificationService;
 import uk.ac.ebi.interpro.metagenomics.memi.services.INotificationService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.*;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ContactPageViewModelBuilder;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ContactViewModelBuilder;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -91,8 +92,8 @@ public class ContactPageController extends AbstractController implements IMGCont
      *
      * @param model The model map to populate
      */
-    private void populateModel(ModelMap model) {
-        ContactPageViewModelBuilder builder = new ContactPageViewModelBuilder(sessionManager, "Metagenomics Contact", getBreadcrumbs(null), propertyContainer);
+    private void populateModel(final ModelMap model) {
+        final ViewModelBuilder<ContactViewModel> builder = new ContactViewModelBuilder(sessionManager, "Metagenomics Contact", getBreadcrumbs(null), propertyContainer);
         final ContactViewModel contactPageViewModel = builder.getModel();
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, contactPageViewModel);
     }
