@@ -23,9 +23,13 @@ import uk.ac.ebi.interpro.metagenomics.memi.tools.MemiTools;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.plaf.metal.MetalIconFactory;
 import java.io.File;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * The controller for analysis overview page.
@@ -63,34 +67,34 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
         }, model, sampleId, getModelViewName());
     }
 
-    @RequestMapping(value = "/doExportGOSlimFile/{fileName}", method = RequestMethod.GET)
-    public ModelAndView doExportGOSlimFile(@PathVariable final String sampleId, @PathVariable final String fileName, ModelMap model, final HttpServletResponse response) {
-        return handleExport(sampleId, model, response, "_summary.go_slim", "_GO_slim.csv");
+    @RequestMapping(value = "/doExportGOSlimFile", method = RequestMethod.GET)
+    public ModelAndView doExportGOSlimFile(@PathVariable final String sampleId, ModelMap model, final HttpServletResponse response) {
+        return handleExport(sampleId, model, response, EmgFile.fileExtensions[0], "_GO_slim.csv");
     }
 
-    @RequestMapping(value = "/doExportGOFile/{fileName}", method = RequestMethod.GET)
-    public ModelAndView doExportGOFile(@PathVariable final String sampleId, @PathVariable final String fileName, final ModelMap model, final HttpServletResponse response) {
-        return handleExport(sampleId, model, response, "_summary.go", "_GO.csv");
+    @RequestMapping(value = "/doExportGOFile", method = RequestMethod.GET)
+    public ModelAndView doExportGOFile(@PathVariable final String sampleId, final ModelMap model, final HttpServletResponse response) {
+        return handleExport(sampleId, model, response, EmgFile.fileExtensions[1], "_GO.csv");
     }
 
-    @RequestMapping(value = "/doExportMaskedFASTAFile/{fileName}", method = RequestMethod.GET)
-    public ModelAndView doExportMaskedFASTAFile(@PathVariable final String sampleId, @PathVariable final String fileName, final ModelMap model, final HttpServletResponse response) {
-        return handleExport(sampleId, model, response, "_masked.fasta", "_nt_reads.fasta");
+    @RequestMapping(value = "/doExportMaskedFASTAFile", method = RequestMethod.GET)
+    public ModelAndView doExportMaskedFASTAFile(@PathVariable final String sampleId, final ModelMap model, final HttpServletResponse response) {
+        return handleExport(sampleId, model, response, EmgFile.fileExtensions[2], "_nt_reads.fasta");
     }
 
-    @RequestMapping(value = "/doExportCDSFile/{fileName}", method = RequestMethod.GET)
-    public ModelAndView doExportCDSFile(@PathVariable final String sampleId, @PathVariable final String fileName, final ModelMap model, final HttpServletResponse response) {
-        return handleExport(sampleId, model, response, "_CDS.faa", "_pCDS.fasta");
+    @RequestMapping(value = "/doExportCDSFile", method = RequestMethod.GET)
+    public ModelAndView doExportCDSFile(@PathVariable final String sampleId, final ModelMap model, final HttpServletResponse response) {
+        return handleExport(sampleId, model, response, EmgFile.fileExtensions[3], "_pCDS.fasta");
     }
 
-    @RequestMapping(value = "/doExportI5File/{fileName}", method = RequestMethod.GET)
-    public ModelAndView doExportI5File(@PathVariable final String sampleId, @PathVariable final String fileName, final ModelMap model, final HttpServletResponse response) {
-        return handleExport(sampleId, model, response, "_I5.tsv", "_InterPro.tsv");
+    @RequestMapping(value = "/doExportI5File", method = RequestMethod.GET)
+    public ModelAndView doExportI5File(@PathVariable final String sampleId, final ModelMap model, final HttpServletResponse response) {
+        return handleExport(sampleId, model, response, EmgFile.fileExtensions[4], "_InterPro.tsv");
     }
 
-    @RequestMapping(value = "/doExportIPRFile/{fileName}", method = RequestMethod.GET)
-    public ModelAndView doExportIPRFile(@PathVariable final String sampleId, @PathVariable final String fileName, final ModelMap model, final HttpServletResponse response) {
-        return handleExport(sampleId, model, response, "_summary.ipr", "_InterPro_sum.csv");
+    @RequestMapping(value = "/doExportIPRFile", method = RequestMethod.GET)
+    public ModelAndView doExportIPRFile(@PathVariable final String sampleId, final ModelMap model, final HttpServletResponse response) {
+        return handleExport(sampleId, model, response, EmgFile.fileExtensions[5], "_InterPro_sum.csv");
     }
 
     private ModelAndView handleExport(final String sampleId, ModelMap model, final HttpServletResponse response,
@@ -124,11 +128,43 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
         //TODO: For the moment the system only allows to represent one file on the analysis page, but
         //in the future it should be possible to represent all different data types (genomic, transcripomic)
         EmgFile emgFile = (emgFiles.size() > 0 ? emgFiles.get(0) : null);
+        if (emgFile != null) {
+            emgFile.addFileSizeMap(getFileSizeMap(emgFile));
+        }
         final AnalysisStatsModel mgModel = MGModelFactory.
                 getAnalysisStatsModel(sessionManager, sample, pageTitle, getBreadcrumbs(sample), emgFile,
                         MemiTools.getArchivedSeqs(fileInfoDAO, sample), propertyContainer, isReturnSizeLimit);
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, mgModel);
     }
+
+    private Map<String, String> getFileSizeMap(EmgFile emgFile) {
+        Map<String, String> result = new HashMap<String, String>();
+        String directoryName = emgFile.getFileIDInUpperCase().replace('.', '_');
+        for (String fileExtension : EmgFile.fileExtensions) {
+            File file = new File(propertyContainer.getPathToAnalysisDirectory() + directoryName + '/' + directoryName + fileExtension);
+            if (file.canRead()) {
+                long cutoff = 1024 * 1024;
+                if (file.length() > cutoff) {
+                    long fileSize = file.length() / (long) (1024 * 1024);
+                    result.put(fileExtension, "(" + fileSize + " MB)");
+                } else {
+                    long fileSize = file.length() / (long) 1024;
+                    result.put(fileExtension, "(" + fileSize + " KB)");
+                }
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Example for pattern '000000.000':<br>
+     * 123.78  000000.000  000123.780
+     */
+    private String getCustomFormat(String pattern, double value) {
+        DecimalFormat myFormatter = new DecimalFormat(pattern);
+        return myFormatter.format(value);
+    }
+
 
     /**
      * Creates the home page model and adds it to the specified model map.
