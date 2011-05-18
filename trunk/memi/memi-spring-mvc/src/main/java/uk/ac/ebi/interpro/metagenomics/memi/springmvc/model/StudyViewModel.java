@@ -18,8 +18,8 @@ public class StudyViewModel extends ViewModel {
 
     private Study study;
 
-    StudyViewModel(Submitter submitter, Study study, List<Sample> samples, String pageTitle,
-                   List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer) {
+    public StudyViewModel(Submitter submitter, Study study, List<Sample> samples, String pageTitle,
+                          List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer) {
         super(submitter, pageTitle, breadcrumbs, propertyContainer);
         this.samples = samples;
         this.study = study;
