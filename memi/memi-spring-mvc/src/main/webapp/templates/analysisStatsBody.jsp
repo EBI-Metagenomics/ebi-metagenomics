@@ -59,28 +59,35 @@
 
 <div id="box-export">
     <ul>
-        <li><c:url var="fileSize" value="/getFileSize" scope="request">
-            <c:param name="imageName" value="_summary.png"/>
-            <c:param name="imageType" value="PNG"/>
-            <c:param name="dir" value=""/>
-        </c:url>
-            <img src="<c:out value="${statsImage}"/>"/>
+        <li>
             <a title="Click to download all submitted nucleotide data on the ENA website"
                href="<c:url value="http://www.ebi.ac.uk/ena/data/view/${model.sample.sampleId}"/>">
                 <spring:message code="analysisStatsView.label.download.seq.data"/>
             </a></li>
-        <li><a title="Click to download processed fasta nucleotide sequences"
-               href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportMaskedFASTAFile/${model.emgFile.fileName}"/>"><spring:message
-                code="analysisStatsView.label.download.seq.fasta"/> (<c:out value="${fileSize}"/>kb)</a></li>
-        <li><a title="Click to download predicted CDS in fasta format"
-               href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportCDSFile/${model.emgFile.fileName}"/>"><spring:message
-                code="analysisStatsView.label.download.cds.fasta"/></a></li>
-        <li><a title="Click to download full InterPro matches table (TSV)"
-               href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportI5File/${model.emgFile.fileName}"/>"><spring:message
-                code="analysisStatsView.label.download.i5.matches"/></a></li>
-        <li><a title="Click to download GO annotation result file (CSV)"
-               href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportGOFile/${model.emgFile.fileName}"/>"><spring:message
-                code="analysisStatsView.label.download.goterms.csv"/></a></li>
+        <li>
+            <a title="Click to download processed fasta nucleotide sequences"
+               href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportMaskedFASTAFile"/>"><spring:message
+                    code="analysisStatsView.label.download.seq.fasta"/> <c:out
+                    value="${model.emgFile.fileSizeMap['_masked.fasta']}"/>
+            </a></li>
+        <li>
+            <a title="Click to download predicted CDS in fasta format"
+               href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportCDSFile"/>"><spring:message
+                    code="analysisStatsView.label.download.cds.fasta"/> <c:out
+                    value="${model.emgFile.fileSizeMap['_CDS.faa']}"/>
+            </a></li>
+        <li>
+            <a title="Click to download full InterPro matches table (TSV)"
+               href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportI5File"/>"><spring:message
+                    code="analysisStatsView.label.download.i5.matches"/> <c:out
+                    value="${model.emgFile.fileSizeMap['_I5.tsv']}"/>
+            </a></li>
+        <li>
+            <a title="Click to download GO annotation result file (CSV)"
+               href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportGOFile"/>"><spring:message
+                    code="analysisStatsView.label.download.goterms.csv"/> <c:out
+                    value="${model.emgFile.fileSizeMap['_summary.go']}"/>
+            </a></li>
     </ul>
 </div>
 
@@ -116,9 +123,10 @@
                     <spring:message code="analysisStatsView.label.download.i5.matches.detailed"/>
                 </a>--%>
             <a id="csv"
-               href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportIPRFile/${model.emgFile.fileName}"/>"
+               href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportIPRFile"/>"
                title="<spring:message code="analysisStatsView.label.download.i5.table.view"/>">
-                <spring:message code="analysisStatsView.label.download.i5.table.view"/>
+                <spring:message code="analysisStatsView.label.download.i5.table.view"/> <c:out
+                    value="${model.emgFile.fileSizeMap['_summary.ipr']}"/>
             </a>
         </div>
         <table border="1" class="result" id="small">
@@ -178,8 +186,9 @@
 
             <a id="csv" title="<spring:message code="analysisStatsView.label.download.goterms.slim.csv"/>"
                href="<c:url
-                        value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportGOSlimFile/${model.emgFile.fileName}"/>">
-                <spring:message code="analysisStatsView.label.download.goterms.full.csv"/></a>
+                        value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportGOSlimFile"/>">
+                <spring:message code="analysisStatsView.label.download.goterms.full.csv"/> <c:out
+                    value="${model.emgFile.fileSizeMap['_summary.go_slim']}"/></a>
         </c:if>
 
     </div>
