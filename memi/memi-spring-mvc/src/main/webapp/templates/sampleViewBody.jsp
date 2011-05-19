@@ -49,9 +49,9 @@
     Private data <img alt="private" src="${pageContext.request.contextPath}/img/icon_priv_private.gif">
 </c:if>
 
-<p><a class="list_sample" href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}"/>"> <img
-        src="<c:url value="${baseURL}/img/ico_analysis.png"/>" alt="Analysis results and statistics"> View analysis
-    results and statistics</a></p>
+<p><a class="analysis" href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}"/>">
+   <img src="<c:url value="${baseURL}/img/ico_analysis_chart_01.png"/>" alt="view analysis results and statistics"> View analysis
+    results </a></p>
 
 <%-- Removed to be consistent with the Project page
 <c:if test="${isDialogOpen==false}">
@@ -61,7 +61,7 @@
     <a href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/doExportDetails"/>" id="csv_plus" title="Export more detailed information about this sample in CSV format">Export detailed info (CSV)</a>
 </div>--%>
 
-<h3 id="sample_desc" style="margin-top:40px;">Description</h3>
+<h3 id="sample_desc" style="margin-top:30px;">Description</h3>
 
 <c:choose>
     <c:when test="${not empty model.sample.sampleDescription}">
