@@ -107,19 +107,18 @@
     <c:set var="centreName" value="${model.study.centreName}"/>
     <c:choose>
     <c:when test="${not empty model.study.centreName}">
+        <div class="result_row"><label>Institute:</label><span><c:out value="${centreName}"/></span></div>
+    </c:when>
+        <c:otherwise><div class="result_row"><label>Institute:</label><c:set var="centreName" value="${notGivenId}"/></div></c:otherwise>
+    </c:choose>
 
-    <div class="result_row"><label>Institute:</label>
-        </c:when>
-        <c:otherwise><c:set var="centreName" value="${notGivenId}"/></c:otherwise>
-        </c:choose>
-        <span><c:out value="${centreName}"/></span></div>
 
     <%--make this dynamic in the future--%>
-    <div class="result_row"><label>Name:</label> <span>EBI Metagenomics team</span></div>
-
+    <div class="result_row"><label>Name:</label><span>none</span></div>
+  
     <%--make this dynamic in the future--%>
     <div class="result_row"><label>Email:</label>
-        <span><a href="mailto:datasubs@ebi.ac.uk" title="">datasubs@ebi.ac.uk</a></span></div>
+        <span>none</span></div>
 </div>
 
 
