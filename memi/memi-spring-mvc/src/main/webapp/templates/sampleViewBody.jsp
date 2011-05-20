@@ -64,14 +64,13 @@
 
 <h3 id="sample_desc" style="margin-top:30px;">Description</h3>
 
-<c:choose>
+<div class="output_form" >
+    <c:choose>
     <c:when test="${not empty model.sample.sampleDescription}">
         <c:set var="sampleDescription" value="${model.sample.sampleDescription}"/>
+          <p style="font-size:110%;"><c:out value="${sampleDescription}"/></p>
     </c:when>
-    <c:otherwise><c:set var="sampleDescription" value="${notGivenId}"/></c:otherwise>
-</c:choose>
-<div class="output_form">
-    <p style="font-size:110%;"><c:out value="${sampleDescription}"/></p>
+    </c:choose>
 
     <c:choose>
         <c:when test="${not empty model.sample.sampleClassification}">
@@ -82,7 +81,7 @@
         </c:otherwise>
     </c:choose>
 
-    Classification: <c:out value="${sampleClassification}"/>
+     <div class="result_row"><label>Classification:</label><span> <c:out value="${sampleClassification}"/></span></div>
 
 </div>
 <c:choose>
