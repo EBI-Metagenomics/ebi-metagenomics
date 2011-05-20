@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%--Page variable which is used several time within this page. Used for not specified study attributes.--%>
 <c:set var="notGivenId" value="(not given)"/>
 <div id="content-full">
@@ -115,7 +116,7 @@
 
     <%--make this dynamic in the future--%>
     <div class="result_row"><label>Name:</label><span>none</span></div>
-  
+
     <%--make this dynamic in the future--%>
     <div class="result_row"><label>Email:</label>
         <span>none</span></div>
@@ -174,7 +175,7 @@ Contact name: (not given)
                     <td style="width:120px;">
                         <c:choose>
                             <c:when test="${empty sample.collectionDate}">-</c:when>
-                            <c:otherwise>${sample.collectionDate}</c:otherwise>
+                            <c:otherwise><fmt:formatDate value="${sample.collectionDate}" pattern="dd-MMM-yyyy"/></c:otherwise>
                         </c:choose></td>
                     <td>${sample.sampleTypeAsString}</td>
                     <td>
