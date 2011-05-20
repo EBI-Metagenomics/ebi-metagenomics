@@ -261,7 +261,7 @@ public class Study implements SecureEntity {
     }
 
     public String getFormattedLastReceived() {
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        DateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
         return df.format(lastMetadataReceived);
     }
 
