@@ -125,8 +125,8 @@
             <a id="csv"
                href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportIPRFile"/>"
                title="<spring:message code="analysisStatsView.label.download.i5.table.view"/>">
-                <spring:message code="analysisStatsView.label.download.i5.table.view"/> <c:out
-                    value="${model.emgFile.fileSizeMap['_summary.ipr']}"/>
+                <spring:message code="analysisStatsView.label.download.i5.table.view"/><%-- <c:out
+                    value="${model.emgFile.fileSizeMap['_summary.ipr']}"/>--%>
             </a>
         </div>
         <table border="1" class="result" id="small">
@@ -187,8 +187,8 @@
             <a id="csv" title="<spring:message code="analysisStatsView.label.download.goterms.slim.csv"/>"
                href="<c:url
                         value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportGOSlimFile"/>">
-                <spring:message code="analysisStatsView.label.download.goterms.full.csv"/> <c:out
-                    value="${model.emgFile.fileSizeMap['_summary.go_slim']}"/></a>
+                <spring:message code="analysisStatsView.label.download.goterms.full.csv"/><%-- <c:out
+                    value="${model.emgFile.fileSizeMap['_summary.go_slim']}"/>--%></a>
         </c:if>
 
     </div>
