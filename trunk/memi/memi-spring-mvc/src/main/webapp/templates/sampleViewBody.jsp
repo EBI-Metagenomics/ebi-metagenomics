@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="spring" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%--Page variable which is used several time within this page. Used for not specified study attributes.--%>
 <c:set var="notGivenId" value="(not given)"/>
 <div id="content-full">
@@ -50,7 +51,7 @@
 </c:if>
 
 <p><a class="analysis" href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}"/>">
-   <img src="<c:url value="${baseURL}/img/ico_analysis_chart_01.png"/>" alt="view analysis results and statistics"> View analysis
+   <img src="<c:url value="${baseURL}/img/ico_analysis_chart.png"/>" alt="view analysis results and statistics"> View analysis
     results </a></p>
 
 <%-- Removed to be consistent with the Project page
@@ -211,8 +212,9 @@
             <c:choose>
                 <c:when test="${not empty model.sample.collectionDate}">
                     <c:set var="collectionDate" value="${model.sample.collectionDate}"/>
-                    <div class="result_row"><label>Collection date:</label> <span><c:out
-                            value="${collectionDate}"/> </span></div>
+                    <div class="result_row"><label>Collection date:</label>
+
+                     <span><fmt:formatDate value="${collectionDate}" pattern="dd-MMM-yyyy"/></span></div>
                 </c:when>
                 <%--<c:otherwise><c:set var="collectionDate" value="${notGivenId}"/></c:otherwise>--%>
             </c:choose>
