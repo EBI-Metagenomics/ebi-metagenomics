@@ -60,7 +60,7 @@
 <c:choose>
     <c:when test="${not empty model.study.publicReleaseDate}">
         <c:set var="publicReleaseDate" value="${model.study.publicReleaseDate}"/>
-        <span class="list_date">&nbsp;(will be published on the <c:out value="${publicReleaseDate}"/>)</span>
+        <span class="list_date">&nbsp;(will be published on the <fmt:formatDate value="${publicReleaseDate}" pattern="dd-MMM-yyyy"/>)</span>
     </c:when>
     <c:otherwise>
         <c:set var="publicReleaseDate" value="${notGivenId}"/>
@@ -171,8 +171,8 @@ Contact name: (not given)
                                                             src="${pageContext.request.contextPath}/img/icon_priv_private.gif">&nbsp;&nbsp;</c:if>
                         <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>">${sample.sampleName}</a>
                     </td>
-                    <td style="width:90px;">${sample.sampleId}</td>
-                    <td style="width:120px;">
+                    <td style="width:94px;">${sample.sampleId}</td>
+                    <td style="width:130px;">
                         <c:choose>
                             <c:when test="${empty sample.collectionDate}">-</c:when>
                             <c:otherwise><fmt:formatDate value="${sample.collectionDate}" pattern="dd-MMM-yyyy"/></c:otherwise>
