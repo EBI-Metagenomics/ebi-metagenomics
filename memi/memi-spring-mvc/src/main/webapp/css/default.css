@@ -1036,6 +1036,7 @@ border: 0px solid #696969;
 
 
 textarea {
+    font-size:100%; /*for Firefox*/
     padding: 9px;
     border: solid 1px #abadb3;
     outline: 0;
