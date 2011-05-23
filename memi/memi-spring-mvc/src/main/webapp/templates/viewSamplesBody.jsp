@@ -85,8 +85,8 @@
             <table border="1" class="result">
                 <thead>
                 <tr>
-                    <th scope="col" abbr="Sname">Sample name</th>
-                    <th scope="col" abbr="Pname">Project name</th>
+                    <th scope="col" abbr="Sname" id="h_left">Sample name</th>
+                    <th scope="col" abbr="Pname" id="h_left">Project name</th>
                     <th scope="col" abbr="Source" width="140px">Source</th>
                     <th scope="col" abbr="Analysis" width="80px">Analysis</th>
                 </tr>
