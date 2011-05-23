@@ -432,6 +432,9 @@ background:url(../img/bgd_black_op20_8.png);
 /* END LINKS */
 
 /* TABLE */
+
+#h_left {text-align:left;}
+
 table.results {
 background: url(../img/bgd_main_grey.jpg) #b5b5b5;
 }
@@ -475,6 +478,7 @@ box-shadow:0px 1px 1px #adadad;
 -moz-box-shadow:0px 1px 1px #adadad ;
 -khtml-box-shadow:0px 1px 1px #adadad ;
 -webkit-box-shadow:0px 1px 1px #adadad ;
+text-align:center;
 }
 
 table.result tbody tr:hover {
