@@ -133,7 +133,7 @@
             <thead>
             <tr>
                 <th scope="col" abbr="IEid" width="90px">InterPro ID</th>
-                <th scope="col" abbr="IEname">Entry name</th>
+                <th scope="col" abbr="IEname" id="h_left">Entry name</th>
                 <th scope="col" abbr="IEnum" width="130px">Proteins matched</th>
             </tr>
             </thead>
