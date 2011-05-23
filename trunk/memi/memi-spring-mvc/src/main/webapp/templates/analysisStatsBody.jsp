@@ -102,7 +102,7 @@
 <h3>Protein function analysis</h3>
 
 <p>The entire InterProScan results file (<a title="Click to download full InterPro matches table (TSV)"
-                                            href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportI5File/${model.emgFile.fileName}"/>">download
+                                            href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportI5File"/>">download
     here</a>) has been used to produce the following summaries.</p>
 
 <h4>InterPro match summary</h4>
