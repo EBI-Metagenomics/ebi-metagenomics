@@ -80,7 +80,7 @@
             <table border="1" class="result">
                 <thead>
                 <tr>
-                    <th scope="col" abbr="Name">Project name</th>
+                    <th scope="col" abbr="Name" id="h_left">Project name</th>
                     <th scope="col" abbr="Samples" width="60px">Samples</th>
                     <th scope="col" abbr="Date" width="120px">Submitted date</th>
                     <%--<th scope="col" abbr="Analysis" width="80px">Analysis</th>--%>
