@@ -4,7 +4,6 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 
 html, body {height: 100%;}
 
-
 @font-face {
 font-family: 'MyriadProRegular';
 src: url('../fonts/myriadpro-regular-webfont.eot'); /*to put first for IE*/
@@ -15,8 +14,6 @@ src: local('?'),  /*The local values tell browsers to check first for your typef
 font-weight: normal;
 font-style: normal;
 }
-
-
 @font-face {
     font-family: 'DroidSansRegular';
     src: url('../fonts/DroidSans-webfont.eot');
@@ -26,9 +23,7 @@ font-style: normal;
          url('../fonts/DroidSans-webfont.svg#webfontw7zqO19G') format('svg');
     font-weight: normal;
     font-style: normal;
-
 }
-
 @font-face {
     font-family: 'DroidSansBold';
     /* even absolute link is not working In FIREFoxhttp://mcgraw-tech.com/default/includes/themes/merced/css/fonts/Droid-Sans-fontfacekit/DroidSans-webfont.eot'*/
@@ -39,7 +34,6 @@ font-style: normal;
          url('../fonts/DroidSans-Bold-webfont.svg#webfontSOhoM6aS') format('svg');
     font-weight: normal;
     font-style: normal;
-
 }
 
 body {
@@ -338,7 +332,6 @@ text-decoration:underline;
 
 #login {
 display:block;
-width:150px; /*Bug in Chrome on 2 lines if not specified*/
 }
 
 #login a, #login a:link, #login a:focus {
