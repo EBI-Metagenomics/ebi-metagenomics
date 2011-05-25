@@ -78,16 +78,13 @@
 <%-- onload attribute is necessary to ensure that the EBI main header works in IE see  http://www.ebi.ac.uk/inc/template/#important style overflow addede because of he bug in the EBI website for the body--%>
 <body class="<tiles:getAsString name='bodyClass'/>" id="top">
 
-
-<%-- EBI-Interpro main header changez-index? --%>
-<div class="headerdiv" id="headerdiv" style="position:absolute; z-index: 1; text-align:left;">
-    <iframe src="http://www.ebi.ac.uk/inc/head.html" name="head" id="head" frameborder="0" marginwidth="0px"
-            marginheight="0px"
+<%-- EBI-Interpro main header - exactly same as Interpro header--%>
+<div class="headerdiv" id="headerdiv" style="position:absolute; z-index: 1;">
+    <iframe src="/inc/head.html" name="head" id="head" frameborder="0" marginwidth="0px" marginheight="0px"
             scrolling="no"
             width="100%" style="position:absolute; z-index: 1; height: 57px;">Header
     </iframe>
 </div>
-
 <%-- END EBI main header --%>
 
 <div class="ebi_contents">
@@ -117,9 +114,7 @@
 </div>
 
 <div id="extra_feedback"><h1><a href="<c:url value="${baseURL}/contact"/>">Give your feedback</a></h1></div>
-<a href="<c:url value="${baseURL}/info#intro"/>" title="About us">
-    <div id="extra_beta"></div>
-</a>
+<a href="<c:url value="${baseURL}/info#intro"/>" title="About us"><div id="extra_beta"></div></a>
 <!--<div id="extraDiv1"></div> -->
 
 
