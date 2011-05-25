@@ -42,12 +42,11 @@
         <form:password path="password" cssStyle="width:313px;"/>
         <form:errors cssClass="error" path="password"/>
         </div>
-        <p>
-        <input type="submit" name="login" value="Login" class="main_button"/>
+        <div class="form_row">
+        <input type="submit" name="login" value="Login" class="main_button"/>&nbsp;
         <span class="clear_but" style="float:none;">| <a href="/metagenomics" title="cancel">Cancel</a></span>
-
-        </p>
-        </fieldset>    
+        </div>
+        </fieldset>
         </form:form>
    <%--  <div class="loginform_tab"></div>
      <form:form method="POST" action="login" commandName="loginForm">
