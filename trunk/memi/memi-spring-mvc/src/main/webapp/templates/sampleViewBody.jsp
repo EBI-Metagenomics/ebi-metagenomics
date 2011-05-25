@@ -185,7 +185,9 @@
     <span><c:out value="${latLon}"/>
         <%-- Use of Google API, where parameter q is the query string, parameter z specifies the zoom factor
         and t the map type (value k stands for satellite)--%>
-    <a class="ext" href="<c:url value="http://maps.google.com/maps?q=${latLon}(Info%20Window)&t=k&z=5"/>">View map</a>
+    <a class="ext" href="<c:url value="http://maps.google.com/maps?q=${latLon}(Info%20Window)&t=k&z=5"/>">View map</a><br>
+    <a  href="<c:url value="http://maps.google.com/maps?q=${latLon}(Info%20Window)&t=k&z=5"/>"><img src="http://maps.google.com/maps/api/staticmap?center=${latLon}&zoom=1&size=70x70&maptype=roadmap
+&markers=color:blue%7C${latLon}&sensor=false" alt="" style="border:1px solid grey;margin-left:16px;"></a>
     </span>
             </div>
         </c:otherwise>
