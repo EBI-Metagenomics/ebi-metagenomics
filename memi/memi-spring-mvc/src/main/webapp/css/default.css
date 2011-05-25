@@ -46,7 +46,6 @@ body {
     letter-spacing: 0em;
     word-spacing: 0em;
     line-height: 1.59;
-    text-align: center; /* centers the container in IE 5* browsers.*/
      /* removed to make it EBI compliant
       background: url(../img/bgd_main_grey.jpg); */
     }
@@ -116,7 +115,6 @@ box-shadow: 0px 0px 70px #696969;
 -khtml-box-shadow: 0px 0px 70px #696969;
 -webkit-box-shadow: 0px 0px 70px #696969;
 margin: 0px auto;    */
-text-align: left; /* overrides text-align: center on the body element. */
 padding:14px 14px 0 14px;
 z-index:20;
 position:relative; /*to make z-index work */
@@ -135,6 +133,7 @@ width: 60px;
 height:  62px;
 z-index:90;
 border:0px #dddddd solid;
+cursor:pointer; /* for IE7 */
 }
 
 #extra_beta:hover {
@@ -337,7 +336,7 @@ display:block;
 #login a, #login a:link, #login a:focus {
 
 font-weight:bold;
-background:url(../img/login_off_8.png) no-repeat center right;
+background:url(../img/login_off_8.jpg) no-repeat center right;
 padding-right:20px;
 font-size:110%;
 }
@@ -1065,6 +1064,7 @@ textarea:hover, textarea:focus {
 
 .form_row {
 margin: 4px 0px;
+clear:both;/* added for IE6*/
 padding: 4px 0px;
 position: relative;
 border: 0px solid #ffaa22;
@@ -1221,7 +1221,7 @@ display:block;
 
 #ordered {font-weight: bold;}
 
-.ebi_contents {position:absolute;top:55px;margin:0;padding:0;width:100%;z-index:2;}/*added because of the EBI header */
+.ebi_contents { border:0px solid red; position:absolute; top:55px; left:0;margin:0;padding:0;width:100%;  }/*added because of the EBI header */
 
 .menu_bgd {
 background: url(../img/bgd_contentfull_menu.gif) -14px;
