@@ -971,7 +971,8 @@ border: 0px solid #556f8c;
 
 
 input, textarea, select {
-font-family: 'DroidSansRegular', Arial, sans-serif;
+/*font-family: 'DroidSansRegular', Arial, sans-serif;*/
+font-family: Arial, Helvetica, sans-serif;
 padding:4px;
 border:1px solid #abadb3;
 color: #445668;}
