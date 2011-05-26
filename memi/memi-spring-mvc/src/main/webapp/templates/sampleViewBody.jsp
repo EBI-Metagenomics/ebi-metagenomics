@@ -167,7 +167,7 @@
 
 <h3>Localisation</h3>
 
-<div class="output_form" id="large">
+<div class="output_form" id="large" style="display: block; overflow:auto;">
 
     <c:choose>
         <c:when test="${model.hostAssociated}"></c:when>
@@ -176,18 +176,16 @@
             <c:choose>
                 <c:when test="${not empty model.sample.latLon}">
                     <c:set var="latLon" value="${model.sample.latLon}"/>
+                     <%-- Use of Google API, where parameter q is the query string, parameter z specifies the zoom factor
+        and t the map type (value k stands for satellite)--%>
+                    <a  href="<c:url value="http://maps.google.com/maps?q=${latLon}(Info%20Window)&t=k&z=5"/>"><img src="http://maps.google.com/maps/api/staticmap?center=${latLon}&zoom=4&size=210x140&maptype=roadmap
+&markers=color:blue%7C${latLon}&sensor=false" alt="view map localisation"></a>
                 </c:when>
                 <c:otherwise>
                     <c:set var="latLon" value="${notGivenId}"/>
                 </c:otherwise>
             </c:choose>
-            <div class="result_row"><label>Longitude/Latitude:</label>
-    <span><c:out value="${latLon}"/>
-        <%-- Use of Google API, where parameter q is the query string, parameter z specifies the zoom factor
-        and t the map type (value k stands for satellite)--%>
-    <a class="ext" href="<c:url value="http://maps.google.com/maps?q=${latLon}(Info%20Window)&t=k&z=5"/>">View map</a><br>
-    <a  href="<c:url value="http://maps.google.com/maps?q=${latLon}(Info%20Window)&t=k&z=5"/>"><img src="http://maps.google.com/maps/api/staticmap?center=${latLon}&zoom=1&size=70x70&maptype=roadmap
-&markers=color:blue%7C${latLon}&sensor=false" alt="" style="border:1px solid grey;margin-left:16px;"></a>
+            <div class="result_row"><label>Longitude/Latitude:</label> <span><c:out value="${latLon}"/>
     </span>
             </div>
         </c:otherwise>
