@@ -167,7 +167,7 @@
 
 <h3>Localisation</h3>
 
-<div class="output_form" id="large" style="display: block; overflow:auto;">
+<div class="output_form" id="large" style="overflow:auto;">
 
     <c:choose>
         <c:when test="${model.hostAssociated}"></c:when>
@@ -178,8 +178,11 @@
                     <c:set var="latLon" value="${model.sample.latLon}"/>
                      <%-- Use of Google API, where parameter q is the query string, parameter z specifies the zoom factor
         and t the map type (value k stands for satellite)--%>
-                    <a  href="<c:url value="http://maps.google.com/maps?q=${latLon}(Info%20Window)&t=k&z=5"/>"><img src="http://maps.google.com/maps/api/staticmap?center=${latLon}&zoom=4&size=210x140&maptype=roadmap
-&markers=color:blue%7C${latLon}&sensor=false" alt="view map localisation"></a>
+                    <a  href="<c:url value="http://maps.google.com/maps?q=${latLon}(Info%20Window)&t=g&z=6"/>"><img src="http://maps.google.com/maps/api/staticmap?center=${latLon}&zoom=4&size=210x140&maptype=roadmap
+&markers=color:blue%7C${latLon}&sensor=false" alt="view map localisation" id="map"></a>
+
+                    <%--<div id="map_canvas" style="width:210px; height:140px"></div>--%>
+                    <%--<script language="javascript"> initialize ()</script>--%>
                 </c:when>
                 <c:otherwise>
                     <c:set var="latLon" value="${notGivenId}"/>
