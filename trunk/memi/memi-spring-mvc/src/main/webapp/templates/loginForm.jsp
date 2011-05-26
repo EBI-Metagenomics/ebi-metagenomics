@@ -9,7 +9,7 @@
 <c:if test="${empty model.submitter}">
     <div id="sidebar-login">
 
-        <img src="${pageContext.request.contextPath}/img/icon_lock.gif" alt="Login lock icon">
+        <img src="${pageContext.request.contextPath}/img/icon_lock.gif" alt="Login private data"/>
 
         <h2>Login</h2>
         Login to submit and view your data:<br/>
