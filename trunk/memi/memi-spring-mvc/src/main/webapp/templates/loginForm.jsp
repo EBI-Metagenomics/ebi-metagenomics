@@ -39,7 +39,7 @@
 
 <div id="sidebar-news">
     <a href="${model.rssUrl}" rel="alternate" type="application/rss+xml" title="Metagenomics RSS feeds"><img
-            src="${pageContext.request.contextPath}/img/icon_rss.gif" alt="Metagenomics RSS feeds"></a>
+            src="${pageContext.request.contextPath}/img/icon_rss.gif" alt="Metagenomics RSS feeds"/></a>
 
     <h2>News and Events</h2>
     <span class="separator"></span>
@@ -64,7 +64,7 @@
 </div>
 
 <div id="sidebar-mailing">
-    <img src="${pageContext.request.contextPath}/img/icon_mailing.gif" alt="Mailing list">
+    <img src="${pageContext.request.contextPath}/img/icon_mailing.gif" alt="Mailing list"/>
 
     <h2>Mailing list</h2>
 
