@@ -1280,9 +1280,10 @@ border: 0px solid #556f8c;
 margin-left:14px;
 }
 
-.output_form  img {
+#map {
 float:right;
 border: 1px solid grey;
+display:block;
 }
 
 
