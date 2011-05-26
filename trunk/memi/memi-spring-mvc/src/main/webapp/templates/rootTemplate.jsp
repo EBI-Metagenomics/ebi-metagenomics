@@ -4,15 +4,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" lang="java">
-    <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/img/favicon.ico">
-    <link rel="icon" type="image/ico" href="${pageContext.request.contextPath}/img/favicon.ico">
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" lang="java"/>
+    <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/img/favicon.ico"/>
+    <link rel="icon" type="image/ico" href="${pageContext.request.contextPath}/img/favicon.ico"/>
     <link href="../../common/assets/css/ebi/ebi_common.css" rel="stylesheet" type="text/css"/>
     <title><tiles:insertAttribute name="pageTitle"/></title>
     <meta name="description" content="EBI Metagenomics is a new web resource targeted at metagenomic researchers"/>
-    <meta name="keywords"
-          content="ebi, EBI, InterPro, interpro, metagenomics, metagenomic, metagenome, metagenomes, DNA, microbiology, microbial, ecology, organisms, microorganism, microorganisms, biodiversity, diversity, gene, genes, genome, genomes, genomic, genomics, ecogenomics, community genomics, genetic, sequencing, sequence, environment, environmental, ecosystem, ecosystems, samples, sample, annotation, protein, research, archive, metabolic, pathways, analysis, function, GAIA, shotgun, pyrosequencing, community, communities, metabolism, cultivation, bioinformatics, bioinformatic, database, metadata, dataset, data, repository,   "/>
-
+    <meta name="keywords" content="ebi, EBI, InterPro, interpro, metagenomics, metagenomic, metagenome, metagenomes, DNA, microbiology, microbial, ecology, organisms, microorganism, microorganisms, biodiversity, diversity, gene, genes, genome, genomes, genomic, genomics, ecogenomics, community genomics, genetic, sequencing, sequence, environment, environmental, ecosystem, ecosystems, samples, sample, annotation, protein, research, archive, metabolic, pathways, analysis, function, GAIA, shotgun, pyrosequencing, community, communities, metabolism, cultivation, bioinformatics, bioinformatic, database, metadata, dataset, data, repository,   "/>
 
     <%-- EBI style and code--%>
     <meta http-equiv="Content-Language" content="en-GB"/>
@@ -27,7 +25,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/jquery-ui-1.8.11.custom.css" type="text/css" media="all"/>
     <%-- END JQuery CSS--%>
 
-    <link href="http://fonts.googleapis.com/css?family=Droid+Sans:regular,bold" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Droid+Sans:regular,bold" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/default.css" type="text/css" media="all"/>
 
     <%-- JQuery and JQuery UI source--%>
