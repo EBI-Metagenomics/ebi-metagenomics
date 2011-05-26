@@ -177,7 +177,7 @@
 
 <h3 id="p_features">Planned features</h3>
 
-<p>The following features are planned for future releases of the resource:<br>
+<p>The following features are planned for future releases of the resource:<br/>
 <ol>
     <li>Inclusion of an assembly step for short reads</li>
     <li>Better summary information visualisations per sample</li>
