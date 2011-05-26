@@ -70,13 +70,30 @@
             $('#loginInputFieldId').focus();
         });
     </script>
+
+ <%--   <script type="text/javascript"
+    src="http://maps.google.com/maps/api/js?sensor=false">
+</script>
+<script type="text/javascript">
+//  function initialize(lat, long) {
+  function initialize() {
+    var latlng = new google.maps.LatLng(-34.397, 150.644);
+    var myOptions = {
+      zoom: 4,
+      center: latlng,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    var map = new google.maps.Map(document.getElementById("map_canvas"),
+        myOptions);
+  }
+</script>--%>
 </head>
 
 <%-- The following variable saves and provides the base URL for the whole application --%>
 <c:set var="baseURL" value="" scope="session"/>
 
 <%-- onload attribute is necessary to ensure that the EBI main header works in IE see  http://www.ebi.ac.uk/inc/template/#important style overflow addede because of he bug in the EBI website for the body--%>
-<body class="<tiles:getAsString name='bodyClass'/>" id="top">
+<body class="<tiles:getAsString name='bodyClass'/>" id="top" <%--onload="initialize()"--%>>
 
 <%-- EBI-Interpro main header - exactly same as Interpro header--%>
 <div class="headerdiv" id="headerdiv" style="position:absolute; z-index: 1;">
