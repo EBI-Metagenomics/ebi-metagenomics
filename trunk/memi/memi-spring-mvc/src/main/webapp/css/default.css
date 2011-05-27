@@ -1283,9 +1283,10 @@ margin-left:14px;
 
 #map {
 float:right;
-border: 1px solid grey;
+border: 1px solid #006AF6;
 display:block;
 }
+
 
 /* JQuery */
 .ui-datepicker-trigger {
