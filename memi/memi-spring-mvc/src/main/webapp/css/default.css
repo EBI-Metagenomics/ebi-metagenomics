@@ -176,11 +176,6 @@ border:0px solid #E5E5E5; width:102px; height:35px;
 margin-left:7px;
 }
 
-.loginform_tab  {
-background: transparent url(../img/button_login_oriz.png) no-repeat ;
-border:0px solid #E5E5E5; width:102px; height:35px;
-margin-left:7px;
-}
 #extraDiv1 {
 background: transparent url(../img/bgd_earth.gif) no-repeat -600px -1000px;
 position: fixed;
@@ -334,7 +329,6 @@ display:block;
 }
 
 #login a, #login a:link, #login a:focus {
-
 font-weight:bold;
 background:url(../img/login_off_8.jpg) no-repeat center right;
 padding-right:20px;
