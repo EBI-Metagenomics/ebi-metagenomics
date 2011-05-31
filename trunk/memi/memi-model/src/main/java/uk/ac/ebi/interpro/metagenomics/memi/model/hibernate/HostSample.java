@@ -25,6 +25,13 @@ public class HostSample extends Sample {
     @Column(name = "HOST_TAX_ID")
     private int hostTaxonomyId;
 
+
+    /**
+     * Name of the species for instance Homo sapiens
+     */
+    @Column(name = "SPECIES", nullable = true)
+    private String species;
+
     @Column(name = "HOST_SEX", length = 30)
     @Enumerated(EnumType.STRING)
     private HostSex hostSex;
@@ -64,5 +71,13 @@ public class HostSample extends Sample {
 
     public void setHostSex(HostSex hostSex) {
         this.hostSex = hostSex;
+    }
+
+    public String getSpecies() {
+        return species;
+    }
+
+    public void setSpecies(String species) {
+        this.species = species;
     }
 }
