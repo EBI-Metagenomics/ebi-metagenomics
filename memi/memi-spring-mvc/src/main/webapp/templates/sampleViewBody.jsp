@@ -15,7 +15,8 @@
                 <span class="separator"></span>
                 <ul>
                     <c:forEach var="pub" items="${model.pubs}" varStatus="status">
-                        <li><a class="list_more" href="<c:url value="${pub.url}"/>"><c:out value="${pub.pubTitle}"/></a></li>
+                        <li><a class="list_more" href="<c:url value="${pub.url}"/>"><c:out value="${pub.pubTitle}"/></a>
+                        </li>
 
                     </c:forEach>
                 </ul>
@@ -35,7 +36,8 @@
     </c:otherwise>
 </c:choose>
 
-<span class="subtitle">Sample overview <a href="<c:url value="${baseURL}/sample/${model.sample.sampleId}"/>" style="font-size:90%;"> (${model.sample.sampleId})</a></span>
+<span class="subtitle">Sample overview <a href="<c:url value="${baseURL}/sample/${model.sample.sampleId}"/>"
+                                          style="font-size:90%;"> (${model.sample.sampleId})</a></span>
 
 <c:choose>
     <c:when test="${not empty model.sample.sampleName}">
@@ -50,9 +52,19 @@
     Private data <img alt="private" src="${pageContext.request.contextPath}/img/icon_priv_private.gif">
 </c:if>
 
-<p><a class="analysis" href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}"/>">
-   <img src="<c:url value="${baseURL}/img/ico_analysis_chart.png"/>" alt="view analysis results and statistics"> View analysis
-    results </a></p>
+<%-- If analysis is completed a link to the analysis page is shown, otherwise you will see comment that the analysis is still in progress--%>
+<c:choose>
+    <c:when test="${not empty model.sample.analysisCompleted}">
+        <p>
+            <a class="analysis" href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}"/>">
+                <img src="<c:url value="${baseURL}/img/ico_analysis_chart.png"/>"
+                     alt="view analysis results and statistics">View analysis results</a>
+        </p>
+    </c:when>
+    <c:otherwise>
+        <h3>Analysis in progress!</h3>
+    </c:otherwise>
+</c:choose>
 
 <%-- Removed to be consistent with the Project page
 <c:if test="${isDialogOpen==false}">
@@ -64,12 +76,12 @@
 
 <h3 id="sample_desc" style="margin-top:30px;">Description</h3>
 
-<div class="output_form" >
+<div class="output_form">
     <c:choose>
-    <c:when test="${not empty model.sample.sampleDescription}">
-        <c:set var="sampleDescription" value="${model.sample.sampleDescription}"/>
-          <p style="font-size:110%;"><c:out value="${sampleDescription}"/></p>
-    </c:when>
+        <c:when test="${not empty model.sample.sampleDescription}">
+            <c:set var="sampleDescription" value="${model.sample.sampleDescription}"/>
+            <p style="font-size:110%;"><c:out value="${sampleDescription}"/></p>
+        </c:when>
     </c:choose>
 
     <c:choose>
@@ -81,7 +93,7 @@
         </c:otherwise>
     </c:choose>
 
-     <div class="result_row"><label>Classification:</label><span> <c:out value="${sampleClassification}"/></span></div>
+    <div class="result_row"><label>Classification:</label><span> <c:out value="${sampleClassification}"/></span></div>
 
 </div>
 <c:choose>
@@ -101,8 +113,7 @@
             <div class="result_row"><label>Species:</label>
                 <c:choose>
                 <c:when test="${not empty model.sample.hostTaxonomyId && model.sample.hostTaxonomyId>0}">
-                    <%--To make it working--%>
-                <span>Homo sapiens, (human) <a class="ext"
+                <span><c:out value="${model.sample.species}"/> <a class="ext"
                                                href="<c:url value="http://www.ncbi.nlm.nih.gov/taxonomy?Db=taxonomy&Cmd=DetailsSearch&Term=${model.sample.hostTaxonomyId}[uid]"/>">Tax
                     ID <c:out value="${model.sample.hostTaxonomyId}"/></a> </span></div>
             </c:when>
@@ -176,9 +187,10 @@
             <c:choose>
                 <c:when test="${not empty model.sample.latLon}">
                     <c:set var="latLon" value="${model.sample.latLon}"/>
-                     <%-- Use of Google API, where parameter q is the query string, parameter z specifies the zoom factor
-        and t the map type (value k stands for satellite)--%>
-                    <a  href="<c:url value="http://maps.google.com/maps?q=${latLon}(Info%20Window)&t=g&z=6"/>"><img src="http://maps.google.com/maps/api/staticmap?center=${latLon}&zoom=4&size=210x140&maptype=roadmap
+                    <%-- Use of Google API, where parameter q is the query string, parameter z specifies the zoom factor
+           and t the map type (value k stands for satellite)--%>
+                    <a href="<c:url value="http://maps.google.com/maps?q=${latLon}(Info%20Window)&t=g&z=6"/>"><img
+                            src="http://maps.google.com/maps/api/staticmap?center=${latLon}&zoom=4&size=210x140&maptype=roadmap
 &markers=color:blue%7C${latLon}&sensor=false" alt="view map localisation" id="map"></a>
 
                     <%--<div id="map_canvas" style="width:210px; height:140px"></div>--%>
@@ -216,19 +228,20 @@
                     <c:set var="collectionDate" value="${model.sample.collectionDate}"/>
                     <div class="result_row"><label>Collection date:</label>
 
-                     <span><fmt:formatDate value="${collectionDate}" pattern="dd-MMM-yyyy"/></span></div>
+                        <span><fmt:formatDate value="${collectionDate}" pattern="dd-MMM-yyyy"/></span></div>
                 </c:when>
                 <%--<c:otherwise><c:set var="collectionDate" value="${notGivenId}"/></c:otherwise>--%>
             </c:choose>
 
 
-        <c:choose>
-            <c:when test="${not empty model.sample.miscellaneous }">
-                <c:set var="miscellaneous" value="${model.sample.miscellaneous}"/>
- <div class="result_row"><label>Miscellaneous:</label> <span><c:out value="${miscellaneous}"/></span></div>
-            </c:when>
-             <%--<c:otherwise><c:set var="miscellaneous" value="${notGivenId}"/></c:otherwise>--%>
-        </c:choose>
+            <c:choose>
+                <c:when test="${not empty model.sample.miscellaneous }">
+                    <c:set var="miscellaneous" value="${model.sample.miscellaneous}"/>
+                    <div class="result_row"><label>Miscellaneous:</label> <span><c:out value="${miscellaneous}"/></span>
+                    </div>
+                </c:when>
+                <%--<c:otherwise><c:set var="miscellaneous" value="${notGivenId}"/></c:otherwise>--%>
+            </c:choose>
 
         </div>
     </c:when>
@@ -250,5 +263,5 @@
             </c:choose></span></div>
 </div>
 
- <div class="but_top"><a href="#top" title="back to the top page">Top</a></div>
+<div class="but_top"><a href="#top" title="back to the top page">Top</a></div>
 </div>
