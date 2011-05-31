@@ -22,39 +22,41 @@
                 <fieldset>
                     <div class="result_row">
 
-                    <label for="text">Text:</label>
-                        <%-- Autocompletion temporarily disabled since it will not scale well with this current implementaion.
-          Need to get the autocomplete text from the database before this feature is activated! --%>
-                        <%--<form:input id="autocomplete" path="searchTerm"/><br/>--%>
-                    <span><form:input path="searchTerm"/></span>
-                    <form:errors path="searchTerm" cssClass="error"/>
+                        <label for="text">Text:</label>
+                            <%-- Autocompletion temporarily disabled since it will not scale well with this current implementaion.
+              Need to get the autocomplete text from the database before this feature is activated! --%>
+                            <%--<form:input id="autocomplete" path="searchTerm"/><br/>--%>
+                        <span><form:input path="searchTerm"/></span>
+                        <form:errors path="searchTerm" cssClass="error"/>
                     </div>
 
                     <c:if test="${not empty model.submitter}">
-                    <div class="result_row">
-                    <label for="privacy">Privacy:</label>
+                        <div class="result_row">
+                            <label for="privacy">Privacy:</label>
                      <span>
                       <form:select id="studyVisibility" path="studyVisibility">
-                           <form:options items="${model.studyVisibilityList}"/>
+                          <form:options items="${model.studyVisibilityList}"/>
                       </form:select>
                      </span>
-                    </div>
+                        </div>
                     </c:if>
 
                     <div class="result_row">
-                           <div class="filter_button">
-                                <input type="submit" name="search" value="Search" class="main_button"/>
-                                <c:choose>
-                                    <c:when test="${empty model.submitter}">
-                                     | <a href="<c:url value="${baseURL}/studies/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>"
-                                              title="View studies">Clear</a>
-                                    </c:when>
-                                    <c:otherwise>
-                                      | <a href="<c:url value="${baseURL}/studies/doSearch?search=Search&studyVisibility=ALL_PROJECTS"/>"
-                                               title="View studies">Clear</a>
-                                    </c:otherwise>
-                                </c:choose>
-                            </div>
+                        <div class="filter_button">
+                            <input type="submit" name="search" value="Search" class="main_button"/>
+                            <c:choose>
+                                <c:when test="${empty model.submitter}">
+                                    | <a
+                                        href="<c:url value="${baseURL}/studies/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>"
+                                        title="View studies">Clear</a>
+                                </c:when>
+                                <c:otherwise>
+                                    | <a
+                                        href="<c:url value="${baseURL}/studies/doSearch?search=Search&studyVisibility=ALL_PROJECTS"/>"
+                                        title="View studies">Clear</a>
+                                </c:otherwise>
+                            </c:choose>
+                        </div>
                     </div>
                 </fieldset>
             </form:form>
@@ -80,13 +82,22 @@
             <table border="1" class="result">
                 <thead>
                 <tr>
-                    <th scope="col" abbr="Name" id="h_left">Project name</th>
-                    <th scope="col" abbr="Samples" width="60px">Samples</th>
-                    <th scope="col" abbr="Date" width="120px">Submitted date</th>
-                    <%--<th scope="col" abbr="Analysis" width="80px">Analysis</th>--%>
+                    <c:forEach var="headerName" items="${model.tableHeaderNames}">
+                        <c:set var="headerWidth" value="" scope="page"/>
+                        <c:set var="headerId" value="" scope="page"/>
+                        <c:if test="${headerName == 'Project name'}">
+                            <c:set var="headerId" value="h_left" scope="page"/>
+                        </c:if>
+                        <c:if test="${headerName == 'Samples'}">
+                            <c:set var="headerWidth" value="60px" scope="page"/>
+                        </c:if>
+                        <c:if test="${headerName == 'Submitted date'}">
+                            <c:set var="headerWidth" value="120px" scope="page"/>
+                        </c:if>
+                        <th id="${headerId}" abbr="${headerName}" width="${headerWidth}" scope="col">${headerName}</th>
+                    </c:forEach>
                 </tr>
                 </thead>
-
                 <tbody>
                 <c:forEach var="entry" items="${model.studySampleSizeMap}" varStatus="status">
                     <tr>
@@ -95,18 +106,20 @@
                                                                    src="${pageContext.request.contextPath}/img/icon_priv_private.gif">&nbsp;&nbsp;</c:if>
                             <a href="<c:url value="${baseURL}/study/${entry.key.studyId}"/>">${entry.key.studyName}</a>
                         </td>
-                        <td><a href="<c:url value="${baseURL}/study/${entry.key.studyId}#samples_id"/>">${entry.value}</a></td>
-                        <td >${entry.key.formattedLastReceived}</td>
-                        <%--<td>
-                            <c:choose>
-                                <c:when test="${entry.key.studyStatus == 'IN_PROGRESS'}">in progress
-                                </c:when>
-                                <c:otherwise><img
-                                        src="${pageContext.request.contextPath}/img/ico_${entry.key.studyStatus}_25_8.png"
-                                        alt="${entry.key.studyStatusAsString}"
-                                        title="${entry.key.studyStatusAsString}"></c:otherwise>
-                            </c:choose>
-                        </td>--%>
+                        <td>
+                            <a href="<c:url value="${baseURL}/study/${entry.key.studyId}#samples_id"/>">${entry.value}</a>
+                        </td>
+                        <td>${entry.key.formattedLastReceived}</td>
+                            <%--<td>
+                                <c:choose>
+                                    <c:when test="${entry.key.studyStatus == 'IN_PROGRESS'}">in progress
+                                    </c:when>
+                                    <c:otherwise><img
+                                            src="${pageContext.request.contextPath}/img/ico_${entry.key.studyStatus}_25_8.png"
+                                            alt="${entry.key.studyStatusAsString}"
+                                            title="${entry.key.studyStatusAsString}"></c:otherwise>
+                                </c:choose>
+                            </td>--%>
                     </tr>
                 </c:forEach>
                 </tbody>
@@ -116,5 +129,5 @@
             <div class="error">No data matching your search</div>
         </c:otherwise>
     </c:choose>
-   
+
 </div>

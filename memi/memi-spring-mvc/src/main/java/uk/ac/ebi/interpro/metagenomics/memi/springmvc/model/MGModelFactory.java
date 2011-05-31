@@ -164,7 +164,8 @@ public class MGModelFactory {
     public static ViewStudiesModel getViewStudiesPageModel(SessionManager sessionMgr, HibernateStudyDAO studyDAO,
                                                            HibernateSampleDAO sampleDAO, StudyFilter filter,
                                                            String pageTitle, List<Breadcrumb> breadcrumbs,
-                                                           MemiPropertyContainer propertyContainer) {
+                                                           MemiPropertyContainer propertyContainer,
+                                                           List<String> tableHeaderNames) {
         log.info("Building instance of " + ViewStudiesModel.class + "...");
         Submitter submitter = getSessionSubmitter(sessionMgr);
         long submitterId = (submitter != null ? submitter.getSubmitterId() : -1L);
@@ -172,19 +173,20 @@ public class MGModelFactory {
         //studies are sorted by study name at the moment
         Map<Study, Long> sortedStudyMap = getStudySampleSizeMap(studies, sampleDAO, new ViewStudiesComparator());
         return new ViewStudiesModel(submitter, sortedStudyMap, pageTitle,
-                breadcrumbs, propertyContainer);
+                breadcrumbs, propertyContainer, tableHeaderNames);
     }
 
     public static ViewSamplesModel getViewSamplesPageModel(SessionManager sessionMgr, HibernateSampleDAO sampleDAO,
                                                            SampleFilter filter, String pageTitle,
-                                                           List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer) {
+                                                           List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer,
+                                                           List<String> tableHeaderNames) {
         log.info("Building instance of " + ViewSamplesModel.class + "...");
         Submitter submitter = getSessionSubmitter(sessionMgr);
         long submitterId = (submitter != null ? submitter.getSubmitterId() : -1L);
         List<Sample> filteredSamples = getFilteredSamples(sampleDAO, filter, submitterId);
         Set<Sample> sortedSamples = new TreeSet<Sample>(new ViewSamplesComparator());
         sortedSamples.addAll(filteredSamples);
-        return new ViewSamplesModel(submitter, sortedSamples, pageTitle, breadcrumbs, propertyContainer);
+        return new ViewSamplesModel(submitter, sortedSamples, pageTitle, breadcrumbs, propertyContainer, tableHeaderNames);
     }
 
     /**

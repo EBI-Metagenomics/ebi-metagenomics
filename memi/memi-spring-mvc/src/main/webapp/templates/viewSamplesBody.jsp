@@ -85,10 +85,20 @@
             <table border="1" class="result">
                 <thead>
                 <tr>
-                    <th scope="col" abbr="Sname" id="h_left">Sample name</th>
-                    <th scope="col" abbr="Pname" id="h_left">Project name</th>
-                    <th scope="col" abbr="Source" width="140px">Source</th>
-                    <th scope="col" abbr="Analysis" width="80px">Analysis</th>
+                    <c:forEach var="headerName" items="${model.tableHeaderNames}">
+                        <c:set var="headerWidth" value="" scope="page"/>
+                        <c:set var="headerId" value="" scope="page"/>
+                        <c:if test="${headerName == 'Sample name' || headerName == 'Project name'}">
+                            <c:set var="headerId" value="h_left" scope="page"/>
+                        </c:if>
+                        <c:if test="${headerName == 'Source'}">
+                            <c:set var="headerWidth" value="140px" scope="page"/>
+                        </c:if>
+                        <c:if test="${headerName == 'Analysis'}">
+                            <c:set var="headerWidth" value="80px" scope="page"/>
+                        </c:if>
+                        <th id="${headerId}" abbr="${headerName}" width="${headerWidth}" scope="col">${headerName}</th>
+                    </c:forEach>
                 </tr>
                 </thead>
                 <tbody>

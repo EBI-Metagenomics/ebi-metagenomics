@@ -26,19 +26,30 @@ public class ViewSamplesModel extends ViewModel {
 
     private List<Sample.SampleType> sampleTypes;
 
+    /**
+     * Specifies a list of table header names for the table on samples view page (the list of names should be in the order you like to show within the web
+     * application).
+     */
+    private List<String> tableHeaderNames;
+
 
     ViewSamplesModel(Submitter submitter, Set<Sample> samples, String pageTitle, List<Breadcrumb> breadcrumbs,
-                     MemiPropertyContainer propertyContainer) {
-        this(submitter, samples, new SampleFilter(), pageTitle, breadcrumbs, propertyContainer);
+                     MemiPropertyContainer propertyContainer, List<String> tableHeaderNames) {
+        this(submitter, samples, new SampleFilter(), pageTitle, breadcrumbs, propertyContainer, tableHeaderNames);
     }
 
     ViewSamplesModel(Submitter submitter, Set<Sample> samples, SampleFilter filter, String pageTitle,
-                     List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer) {
+                     List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer, List<String> tableHeaderNames) {
         super(submitter, pageTitle, breadcrumbs, propertyContainer);
         this.sampleFilter = filter;
         this.samples = samples;
         this.sampleVisibilityList = getDefaultStudyVisibilityList();
         this.sampleTypes = getDefaultSampleTypes();
+        this.tableHeaderNames = tableHeaderNames;
+    }
+
+    public List<String> getTableHeaderNames() {
+        return tableHeaderNames;
     }
 
     public SampleFilter getSampleFilter() {
