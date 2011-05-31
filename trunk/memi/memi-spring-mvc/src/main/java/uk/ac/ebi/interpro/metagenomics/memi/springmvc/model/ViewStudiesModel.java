@@ -26,19 +26,31 @@ public class ViewStudiesModel extends ViewModel {
 
     private List<StudyFilter.StudyVisibility> studyVisibilityList;
 
+    /**
+     * Specifies a list of table header names for the table on studies view page (the list of names should be in the order you like to show within the web
+     * application).
+     */
+    private List<String> tableHeaderNames;
+
 
     ViewStudiesModel(Submitter submitter, Map<Study, Long> studySampleSizeMap, String pageTitle,
-                     List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer) {
-        this(submitter, studySampleSizeMap, new StudyFilter(), pageTitle, breadcrumbs, propertyContainer);
+                     List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer, List<String> tableHeaders) {
+        this(submitter, studySampleSizeMap, new StudyFilter(), pageTitle, breadcrumbs, propertyContainer, tableHeaders);
     }
 
     ViewStudiesModel(Submitter submitter, Map<Study, Long> studySampleSizeMap, StudyFilter filter,
-                     String pageTitle, List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer) {
+                     String pageTitle, List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer,
+                     List<String> tableHeaders) {
         super(submitter, pageTitle, breadcrumbs, propertyContainer);
         this.studyFilter = filter;
         this.studyStatusList = getDefaultStudyStatus();
         this.studyVisibilityList = getDefaultStudyVisibilityList();
         this.studySampleSizeMap = studySampleSizeMap;
+        this.tableHeaderNames = tableHeaders;
+    }
+
+    public List<String> getTableHeaderNames() {
+        return tableHeaderNames;
     }
 
     public StudyFilter getStudyFilter() {

@@ -90,7 +90,7 @@ public class ViewSamplesController extends AbstractController implements IMGCont
         if (samples != null && samples.size() > 0) {
             //Create velocity spring_model
             Map<String, Object> velocityModel = new HashMap<String, Object>();
-            velocityModel.put("sampleProperties", getSampleProperties());
+            velocityModel.put("sampleProperties", getTableHeaderNames());
             velocityModel.put("samples", samples);
             velocityModel.put("columnLength", MAX_CHARS_PER_COLUMN);
             //Create file content
@@ -175,16 +175,22 @@ public class ViewSamplesController extends AbstractController implements IMGCont
      */
     private void populateModel(ModelMap model, SampleFilter filter) {
         final ViewSamplesModel subModel = MGModelFactory.getViewSamplesPageModel(sessionManager,
-                sampleDAO, filter, "Metagenomics View Samples", getBreadcrumbs(null), propertyContainer);
+                sampleDAO, filter, "Metagenomics View Samples", getBreadcrumbs(null), propertyContainer, getTableHeaderNames());
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, subModel);
     }
 
-    private List<String> getSampleProperties() {
+    /**
+     * Specifies a list of table header names for the table on studies view page (the list of names should be in the order you like to show within the web
+     * application).
+     *
+     * @return A list of table header names.
+     */
+    private List<String> getTableHeaderNames() {
         List<String> result = new ArrayList<String>();
-        result.add("SAMPLE_NAME");
-        result.add("PROJECT_NAME");
-        result.add("SOURCE");
-        result.add("ANALYSIS");
+        result.add("Sample name");
+        result.add("Project name");
+        result.add("Source");
+        result.add("Analysis");
         return result;
     }
 
