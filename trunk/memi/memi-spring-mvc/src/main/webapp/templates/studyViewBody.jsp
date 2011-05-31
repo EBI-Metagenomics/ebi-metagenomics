@@ -13,18 +13,19 @@
                 <span class="separator"></span>
                 <ul>
                     <c:forEach var="pub" items="${model.study.publications}" varStatus="status">
-                        <li><a class="list_more" href="<c:url value="http://dx.doi.org/${pub.doi}"/>"><c:out value="${pub.pubTitle}"/></a><br/>
+                        <li><a class="list_more" href="<c:url value="http://dx.doi.org/${pub.doi}"/>"><c:out
+                                value="${pub.pubTitle}"/></a><br/>
                             <i><c:out value="${pub.authors}"/> et al.</i><br/>
                             <c:out value="${pub.year}"/> <c:out value="${pub.volume}"/><br/>
 
-                            <%-- removed cause we have just one link on the Title
-                            <c:if test="${not empty pub.doi}"><a class="ext" style="font-size:110%;"
-                                                                 href="<c:url value="http://dx.doi.org/${pub.doi}"/>">DOI</a></c:if>
-                            <c:if test="${not empty pub.pubMedId && pub.pubMedId>0}">
-                                - <a class="ext" style="font-size:110%;"
-                                     href="<c:url value="http://www.ncbi.nlm.nih.gov/pubmed/${pub.pubMedId}"/>">PubMed
-                                (${pub.pubMedId})</a>
-                            </c:if>--%>
+                                <%-- removed cause we have just one link on the Title
+                                <c:if test="${not empty pub.doi}"><a class="ext" style="font-size:110%;"
+                                                                     href="<c:url value="http://dx.doi.org/${pub.doi}"/>">DOI</a></c:if>
+                                <c:if test="${not empty pub.pubMedId && pub.pubMedId>0}">
+                                    - <a class="ext" style="font-size:110%;"
+                                         href="<c:url value="http://www.ncbi.nlm.nih.gov/pubmed/${pub.pubMedId}"/>">PubMed
+                                    (${pub.pubMedId})</a>
+                                </c:if>--%>
                         </li>
                     </c:forEach></ul>
             </div>
@@ -42,7 +43,9 @@
     </c:otherwise>
 </c:choose>
 
-<span class="subtitle">Project overview <a href="<c:url value="${baseURL}/study/${model.study.studyId}"/>" style="font-size:90%;"> (${model.study.studyId})</a></span>
+<span class="subtitle">Project overview <a href="<c:url value="${baseURL}/study/${model.study.studyId}"/>"
+                                           style="font-size:90%;"> (${model.study.studyId})</a></span>
+
 <h2>${model.study.studyName}</h2>
 
 
@@ -56,17 +59,18 @@
 </c:choose>
 
 <c:if test="${!model.study.public}">
-<p>Private data <img alt="private" src="${pageContext.request.contextPath}/img/icon_priv_private.gif">
-<c:choose>
-    <c:when test="${not empty model.study.publicReleaseDate}">
-        <c:set var="publicReleaseDate" value="${model.study.publicReleaseDate}"/>
-        <span class="list_date">&nbsp;(will be published on the <fmt:formatDate value="${publicReleaseDate}" pattern="dd-MMM-yyyy"/>)</span>
-    </c:when>
-    <c:otherwise>
-        <c:set var="publicReleaseDate" value="${notGivenId}"/>
-    </c:otherwise>
-</c:choose>
-</p>
+    <p>Private data <img alt="private" src="${pageContext.request.contextPath}/img/icon_priv_private.gif">
+        <c:choose>
+            <c:when test="${not empty model.study.publicReleaseDate}">
+                <c:set var="publicReleaseDate" value="${model.study.publicReleaseDate}"/>
+                <span class="list_date">&nbsp;(will be published on the <fmt:formatDate value="${publicReleaseDate}"
+                                                                                        pattern="dd-MMM-yyyy"/>)</span>
+            </c:when>
+            <c:otherwise>
+                <c:set var="publicReleaseDate" value="${notGivenId}"/>
+            </c:otherwise>
+        </c:choose>
+    </p>
 </c:if>
 
 
@@ -107,19 +111,35 @@
 <div class="output_form">
     <c:set var="centreName" value="${model.study.centreName}"/>
     <c:choose>
-    <c:when test="${not empty model.study.centreName}">
-        <div class="result_row"><label>Institute:</label><span><c:out value="${centreName}"/></span></div>
-    </c:when>
-        <c:otherwise><div class="result_row"><label>Institute:</label><c:set var="centreName" value="${notGivenId}"/></div></c:otherwise>
+        <c:when test="${not empty model.study.centreName}">
+            <div class="result_row"><label>Institute:</label><span><c:out value="${centreName}"/></span></div>
+        </c:when>
+        <c:otherwise>
+            <div class="result_row"><label>Institute:</label><c:set var="centreName" value="${notGivenId}"/></div>
+        </c:otherwise>
     </c:choose>
 
-
-    <%--make this dynamic in the future--%>
-    <div class="result_row"><label>Name:</label><span>none</span></div>
-
-    <%--make this dynamic in the future--%>
-    <div class="result_row"><label>Email:</label>
-        <span>none</span></div>
+    <%--Contact details are distinguished by the origination of the study:<br>--%>
+    <%--Submitted: Somebody submitted his Metagenomics project to us<br>--%>
+    <%--Mirrored: We integrated a Metagenomics project from an external service provider for instance MG-Rast<br>--%>
+    <%--Harvested: Nucleotid sequences submitted to the ENA.--%>
+    <c:choose>
+        <c:when test="${model.study.dataOrigination == 'SUBMITTED'}">
+            <c:set var="contactName" value="${model.submitter.firstName} ${model.submitter.surname}" scope="page"/>
+            <c:set var="contactMail" value="${model.submitter.emailAddress}" scope="page"/>
+        </c:when>
+        <c:when test="${model.study.dataOrigination == 'HARVESTED'}">
+            <c:set var="contactName" value="${model.study.authorName}" scope="page"/>
+            <c:set var="contactMail" value="${model.study.authorEmailAddress}" scope="page"/>
+        </c:when>
+        <%--The Otherwise case is for data origination MIRRORED OR NULL values--%>
+        <c:otherwise>
+            <c:set var="contactName" value="not available" scope="page"/>
+            <c:set var="contactMail" value="not available" scope="page"/>
+        </c:otherwise>
+    </c:choose>
+    <div class="result_row"><label>Name:</label><span>${contactName}</span></div>
+    <div class="result_row"><label>Email:</label><span>${contactMail}</span></div>
 </div>
 
 
@@ -175,7 +195,8 @@ Contact name: (not given)
                     <td style="width:130px;">
                         <c:choose>
                             <c:when test="${empty sample.collectionDate}">-</c:when>
-                            <c:otherwise><fmt:formatDate value="${sample.collectionDate}" pattern="dd-MMM-yyyy"/></c:otherwise>
+                            <c:otherwise><fmt:formatDate value="${sample.collectionDate}"
+                                                         pattern="dd-MMM-yyyy"/></c:otherwise>
                         </c:choose></td>
                     <td>${sample.sampleTypeAsString}</td>
                     <td>
@@ -275,5 +296,5 @@ Contact name: (not given)
     </c:when>
     <c:otherwise>No samples to display</c:otherwise>
 </c:choose>
- <div class="but_top"><a href="#top" title="back to the top page">Top</a></div>
+<div class="but_top"><a href="#top" title="back to the top page">Top</a></div>
 </div>

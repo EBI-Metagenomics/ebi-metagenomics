@@ -14,48 +14,50 @@
                        commandName="sampleFilter">
                 <fieldset>
                     <div class="result_row">
-                    <label for="text">Text:</label>
-                    <span><form:input path="searchTerm"/></span>
-                    <form:errors path="searchTerm" cssClass="error"/>
+                        <label for="text">Text:</label>
+                        <span><form:input path="searchTerm"/></span>
+                        <form:errors path="searchTerm" cssClass="error"/>
                     </div>
 
                     <div class="result_row">
-                    <%--Used sample type instead of study type to not confuse the user--%>
-                    <label for="source">Source:</label>
+                            <%--Used sample type instead of study type to not confuse the user--%>
+                        <label for="source">Source:</label>
                     <span>
                         <form:select path="sampleType">
-                        <form:option value="" label="All"/>
-                        <form:option value="ENVIRONMENTAL" label="Environmental"/>
-                        <form:option value="HOST_ASSOCIATED" label="Host associated"/>
-                        <%--<form:options items="${model.sampleTypes}"/>--%>
+                            <form:option value="" label="All"/>
+                            <form:option value="ENVIRONMENTAL" label="Environmental"/>
+                            <form:option value="HOST_ASSOCIATED" label="Host associated"/>
+                            <%--<form:options items="${model.sampleTypes}"/>--%>
                         </form:select>
                     </span>
                     </div>
-                    
+
                     <c:if test="${not empty model.submitter}">
-                     <div class="result_row">
-                     <label for="privacy">Privacy:</label>
+                        <div class="result_row">
+                            <label for="privacy">Privacy:</label>
                      <span><form:select id="sampleVisibility" path="sampleVisibility">
-                            <form:options items="${model.sampleVisibilityList}"/>
-                        </form:select>
+                         <form:options items="${model.sampleVisibilityList}"/>
+                     </form:select>
                      </span>
-                     </div>
+                        </div>
                     </c:if>
 
-                     <div class="result_row">
-                           <div class="filter_button">
-                           <input type="submit" name="search" value="Search" class="main_button"/>
+                    <div class="result_row">
+                        <div class="filter_button">
+                            <input type="submit" name="search" value="Search" class="main_button"/>
                             <c:choose>
                                 <c:when test="${empty model.submitter}">
-                                 | <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search"/>"
-                                          title="View samples">Clear</a>
+                                    | <a
+                                        href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search"/>"
+                                        title="View samples">Clear</a>
                                 </c:when>
                                 <c:otherwise>
-                                | <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_SAMPLES&search=Search"/>"
-                                           title="View samples">Clear</a>
+                                    | <a
+                                        href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_SAMPLES&search=Search"/>"
+                                        title="View samples">Clear</a>
                                 </c:otherwise>
                             </c:choose>
-                            </div>
+                        </div>
                     </div>
                 </fieldset>
             </form:form>
@@ -88,15 +90,18 @@
                     <c:forEach var="headerName" items="${model.tableHeaderNames}">
                         <c:set var="headerWidth" value="" scope="page"/>
                         <c:set var="headerId" value="" scope="page"/>
-                        <c:if test="${headerName == 'Sample name' || headerName == 'Project name'}">
-                            <c:set var="headerId" value="h_left" scope="page"/>
-                        </c:if>
-                        <c:if test="${headerName == 'Source'}">
-                            <c:set var="headerWidth" value="140px" scope="page"/>
-                        </c:if>
-                        <c:if test="${headerName == 'Analysis'}">
-                            <c:set var="headerWidth" value="80px" scope="page"/>
-                        </c:if>
+                        <c:choose>
+                            <c:when test="${headerName == 'Sample name' || headerName == 'Project name'}">
+                                <c:set var="headerId" value="h_left" scope="page"/>
+                            </c:when>
+                            <c:when test="${headerName == 'Source'}">
+                                <c:set var="headerWidth" value="140px" scope="page"/>
+                            </c:when>
+                            <%--The Otherwise case is for header name Analysis--%>
+                            <c:otherwise>
+                                <c:set var="headerWidth" value="80px" scope="page"/>
+                            </c:otherwise>
+                        </c:choose>
                         <th id="${headerId}" abbr="${headerName}" width="${headerWidth}" scope="col">${headerName}</th>
                     </c:forEach>
                 </tr>
