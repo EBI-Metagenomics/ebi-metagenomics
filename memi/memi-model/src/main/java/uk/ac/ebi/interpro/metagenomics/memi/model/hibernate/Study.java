@@ -89,6 +89,26 @@ public class Study implements SecureEntity {
     @Column(name = "STUDY_LINKOUT")
     private String studyPageURL;
 
+    /**
+     * Specifies the origination of the study.<br>
+     * Submitted: Somebody submitted his Metagenomics project to us<br>
+     * Mirrored: We integrated a Metagenomics project from an external service provider for instance MG-Rast<br>
+     * Harvested: Nucleotid sequences submitted to the ENA.
+     */
+    @Column(name = "DATA_ORIGINATION", length = 20)
+    @Enumerated(EnumType.STRING)
+    private DataOrigination dataOrigination;
+
+    @Column(name = "AUTHOR_NAME", length = 100)
+    private String authorName;
+
+    @Column(name = "AUTHOR_EMAIL", length = 100)
+    private String authorEmailAddress;
+
+    public enum DataOrigination {
+        SUBMITTED, HARVESTED, MIRRORED;
+    }
+
     public Study() {
         publications = new HashSet<Publication>();
         samples = new HashSet<Sample>();
@@ -267,6 +287,30 @@ public class Study implements SecureEntity {
 
     public void setLastMetadataReceived(Date lastMetadataReceived) {
         this.lastMetadataReceived = lastMetadataReceived;
+    }
+
+    public DataOrigination getDataOrigination() {
+        return dataOrigination;
+    }
+
+    public void setDataOrigination(DataOrigination dataOrigination) {
+        this.dataOrigination = dataOrigination;
+    }
+
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
+    }
+
+    public String getAuthorEmailAddress() {
+        return authorEmailAddress;
+    }
+
+    public void setAuthorEmailAddress(String authorEmailAddress) {
+        this.authorEmailAddress = authorEmailAddress;
     }
 
     /**

@@ -85,15 +85,18 @@
                     <c:forEach var="headerName" items="${model.tableHeaderNames}">
                         <c:set var="headerWidth" value="" scope="page"/>
                         <c:set var="headerId" value="" scope="page"/>
-                        <c:if test="${headerName == 'Project name'}">
-                            <c:set var="headerId" value="h_left" scope="page"/>
-                        </c:if>
-                        <c:if test="${headerName == 'Samples'}">
-                            <c:set var="headerWidth" value="60px" scope="page"/>
-                        </c:if>
-                        <c:if test="${headerName == 'Submitted date'}">
-                            <c:set var="headerWidth" value="120px" scope="page"/>
-                        </c:if>
+                        <c:choose>
+                            <c:when test="${headerName == 'Project name'}">
+                                <c:set var="headerId" value="h_left" scope="page"/>
+                            </c:when>
+                            <c:when test="${headerName == 'Samples'}">
+                                <c:set var="headerWidth" value="60px" scope="page"/>
+                            </c:when>
+                            <%--The Otherwise case is for header name Submitted date--%>
+                            <c:otherwise>
+                                <c:set var="headerWidth" value="120px" scope="page"/>
+                            </c:otherwise>
+                        </c:choose>
                         <th id="${headerId}" abbr="${headerName}" width="${headerWidth}" scope="col">${headerName}</th>
                     </c:forEach>
                 </tr>
@@ -110,16 +113,6 @@
                             <a href="<c:url value="${baseURL}/study/${entry.key.studyId}#samples_id"/>">${entry.value}</a>
                         </td>
                         <td>${entry.key.formattedLastReceived}</td>
-                            <%--<td>
-                                <c:choose>
-                                    <c:when test="${entry.key.studyStatus == 'IN_PROGRESS'}">in progress
-                                    </c:when>
-                                    <c:otherwise><img
-                                            src="${pageContext.request.contextPath}/img/ico_${entry.key.studyStatus}_25_8.png"
-                                            alt="${entry.key.studyStatusAsString}"
-                                            title="${entry.key.studyStatusAsString}"></c:otherwise>
-                                </c:choose>
-                            </td>--%>
                     </tr>
                 </c:forEach>
                 </tbody>
