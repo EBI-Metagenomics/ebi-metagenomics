@@ -10,7 +10,8 @@
     <link href="../../common/assets/css/ebi/ebi_common.css" rel="stylesheet" type="text/css"/>
     <title><tiles:insertAttribute name="pageTitle"/></title>
     <meta name="description" content="EBI Metagenomics is a new web resource targeted at metagenomic researchers"/>
-    <meta name="keywords" content="ebi, EBI, InterPro, interpro, metagenomics, metagenomic, metagenome, metagenomes, DNA, microbiology, microbial, ecology, organisms, microorganism, microorganisms, biodiversity, diversity, gene, genes, genome, genomes, genomic, genomics, ecogenomics, community genomics, genetic, sequencing, sequence, environment, environmental, ecosystem, ecosystems, samples, sample, annotation, protein, research, archive, metabolic, pathways, analysis, function, GAIA, shotgun, pyrosequencing, community, communities, metabolism, cultivation, bioinformatics, bioinformatic, database, metadata, dataset, data, repository,   "/>
+    <meta name="keywords"
+          content="ebi, EBI, InterPro, interpro, metagenomics, metagenomic, metagenome, metagenomes, DNA, microbiology, microbial, ecology, organisms, microorganism, microorganisms, biodiversity, diversity, gene, genes, genome, genomes, genomic, genomics, ecogenomics, community genomics, genetic, sequencing, sequence, environment, environmental, ecosystem, ecosystems, samples, sample, annotation, protein, research, archive, metabolic, pathways, analysis, function, GAIA, shotgun, pyrosequencing, community, communities, metabolism, cultivation, bioinformatics, bioinformatic, database, metadata, dataset, data, repository,   "/>
 
     <%-- EBI style and code--%>
     <meta http-equiv="Content-Language" content="en-GB"/>
@@ -22,7 +23,8 @@
     <script src="http://www.ebi.ac.uk/inc/js/contents.js" type="text/javascript"></script>
     <%-- END EBI style and code--%>
     <%-- JQuery CSS--%>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/jquery-ui-1.8.11.custom.css" type="text/css" media="all"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/jquery-ui-1.8.11.custom.css" type="text/css"
+          media="all"/>
     <%-- END JQuery CSS--%>
 
     <link href="http://fonts.googleapis.com/css?family=Droid+Sans:regular,bold" rel="stylesheet" type="text/css"/>
@@ -39,7 +41,7 @@
     <script src="${pageContext.request.contextPath}/js/formclearer.js" type="text/javascript"></script>
     <%-- Jquey scroller - work only for the anchors on the same page--%>
     <script src="${pageContext.request.contextPath}/js/smoothscrol.js" type="text/javascript"></script>
-    
+
     <!--[if lt IE 9]><%-- HTML5 tags working in IE8 by including this JavaScript in the head  --%>
 <script type="text/javascript">
     document.createElement('header');
@@ -69,22 +71,26 @@
         });
     </script>
 
- <%--   <script type="text/javascript"
-    src="http://maps.google.com/maps/api/js?sensor=false">
-</script>
-<script type="text/javascript">
-//  function initialize(lat, long) {
-  function initialize() {
-    var latlng = new google.maps.LatLng(-34.397, 150.644);
-    var myOptions = {
-      zoom: 4,
-      center: latlng,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-    var map = new google.maps.Map(document.getElementById("map_canvas"),
-        myOptions);
-  }
-</script>--%>
+    <script type="text/javascript"
+            src="http://maps.google.com/maps/api/js?sensor=false">
+    </script>
+    <script type="text/javascript">
+        function initialize(lat, long) {
+            var latlng = new google.maps.LatLng(lat, long);
+            google.maps.MarkerOptions
+            var myOptions = {
+                zoom: 4,
+                center: latlng,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            var map = new google.maps.Map(document.getElementById("map_canvas"),
+                    myOptions);
+            var marker = new google.maps.Marker({
+                position: latlng,
+                map: map
+            });
+        }
+    </script>
 </head>
 
 <%-- The following variable saves and provides the base URL for the whole application --%>
@@ -129,7 +135,9 @@
 </div>
 
 <div id="extra_feedback"><h1><a href="<c:url value="${baseURL}/contact"/>">Give your feedback</a></h1></div>
-<a href="<c:url value="${baseURL}/info#intro"/>" title="About us"><div id="extra_beta"></div></a>
+<a href="<c:url value="${baseURL}/info#intro"/>" title="About us">
+    <div id="extra_beta"></div>
+</a>
 <!--<div id="extraDiv1"></div> -->
 
 

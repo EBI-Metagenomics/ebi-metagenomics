@@ -17,9 +17,9 @@ public class EmgFile {
 
     private Map<String, String> fileSizeMap;
 
-    public static String[] fileExtensions = new String[]
-            {"_summary.go_slim", "_summary.go", "_masked.fasta",
-                    "_CDS.faa", "_I5.tsv", "_summary.ipr"};
+//    public static String[] fileExtensions = new String[]
+//            {"_summary.go_slim", "_summary.go", "_masked.fasta",
+//                    "_CDS.faa", "_I5.tsv", "_summary.ipr"};
 
     public EmgFile(String fileID, String fileName) {
         this.fileID = fileID;
@@ -44,5 +44,24 @@ public class EmgFile {
 
     public Map<String, String> getFileSizeMap() {
         return fileSizeMap;
+    }
+
+    public enum EmgFileExtension {
+        GO_SLIM("_summary.go_slim"),
+        GO("_summary.go"),
+        MASKED_FASTA("_masked.fasta"),
+        CDS_FAA("_CDS.faa"),
+        I5_TSV("_I5.tsv"),
+        IPR("_summary.ipr");
+
+        private String fileExtension;
+
+        private EmgFileExtension(String fileExtension) {
+            this.fileExtension = fileExtension;
+        }
+
+        public String getFileExtension() {
+            return fileExtension;
+        }
     }
 }

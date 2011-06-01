@@ -114,7 +114,7 @@
                 <c:choose>
                 <c:when test="${not empty model.sample.hostTaxonomyId && model.sample.hostTaxonomyId>0}">
                 <span><c:out value="${model.sample.species}"/> <a class="ext"
-                                               href="<c:url value="http://www.ncbi.nlm.nih.gov/taxonomy?Db=taxonomy&Cmd=DetailsSearch&Term=${model.sample.hostTaxonomyId}[uid]"/>">Tax
+                                                                  href="<c:url value="http://www.ncbi.nlm.nih.gov/taxonomy?Db=taxonomy&Cmd=DetailsSearch&Term=${model.sample.hostTaxonomyId}[uid]"/>">Tax
                     ID <c:out value="${model.sample.hostTaxonomyId}"/></a> </span></div>
             </c:when>
             <c:otherwise>
@@ -180,31 +180,24 @@
 
 <div class="output_form" id="large" style="overflow:auto;">
 
-    <c:choose>
-        <c:when test="${model.hostAssociated}"></c:when>
-        <c:otherwise>
-
-            <c:choose>
-                <c:when test="${not empty model.sample.latLon}">
-                    <c:set var="latLon" value="${model.sample.latLon}"/>
-                    <%-- Use of Google API, where parameter q is the query string, parameter z specifies the zoom factor
-           and t the map type (value k stands for satellite)--%>
-                    <a href="<c:url value="http://maps.google.com/maps?q=${latLon}(Info%20Window)&t=g&z=6"/>"><img
-                            src="http://maps.google.com/maps/api/staticmap?center=${latLon}&zoom=4&size=210x140&maptype=roadmap
-&markers=color:blue%7C${latLon}&sensor=false" alt="view map localisation" id="map"></a>
-
-                    <%--<div id="map_canvas" style="width:210px; height:140px"></div>--%>
-                    <%--<script language="javascript"> initialize ()</script>--%>
-                </c:when>
-                <c:otherwise>
-                    <c:set var="latLon" value="${notGivenId}"/>
-                </c:otherwise>
-            </c:choose>
-            <div class="result_row"><label>Longitude/Latitude:</label> <span><c:out value="${latLon}"/>
-    </span>
-            </div>
-        </c:otherwise>
-    </c:choose>
+    <c:if test="${!model.hostAssociated}">
+        <c:choose>
+            <c:when test="${not empty model.sample.latitude}">
+                <c:set var="latLon" value="${model.sample.latitude} , ${model.sample.longitude}"/>
+                <%-- Use of Google API, where parameter q is the query string, parameter z specifies the zoom factor
+       and t the map type (value k stands for satellite)--%>
+                <%--<a href="<c:url value="http://maps.google.com/maps?q=${latLon}(Info%20Window)&t=g&z=6"/>"><img--%>
+                <%--src="http://maps.google.com/maps/api/staticmap?center=${latLon}&zoom=4&size=210x140&maptype=roadmap--%>
+                <%--&markers=color:blue%7C${latLon}&sensor=false" alt="view map localisation" id="map"></a>--%>
+                <div id="map_canvas" style="width:210px; height:140px; margin-left:auto;"></div>
+                <script language="javascript"> initialize(${model.sample.latitude}, ${model.sample.longitude})</script>
+            </c:when>
+            <c:otherwise>
+                <c:set var="latLon" value="${notGivenId}"/>
+            </c:otherwise>
+        </c:choose>
+        <div class="result_row"><label>Latitude/Longitude:</label> <span><c:out value="${latLon}"/></span></div>
+    </c:if>
     <c:choose>
         <c:when test="${not empty model.sample.geoLocName}">
             <c:set var="geoLocName" value="${model.sample.geoLocName}"/>
@@ -233,16 +226,11 @@
                 <%--<c:otherwise><c:set var="collectionDate" value="${notGivenId}"/></c:otherwise>--%>
             </c:choose>
 
-
-            <c:choose>
-                <c:when test="${not empty model.sample.miscellaneous }">
-                    <c:set var="miscellaneous" value="${model.sample.miscellaneous}"/>
-                    <div class="result_row"><label>Miscellaneous:</label> <span><c:out value="${miscellaneous}"/></span>
-                    </div>
-                </c:when>
-                <%--<c:otherwise><c:set var="miscellaneous" value="${notGivenId}"/></c:otherwise>--%>
-            </c:choose>
-
+            <c:if test="${not empty model.sample.miscellaneous }">
+                <c:set var="miscellaneous" value="${model.sample.miscellaneous}"/>
+                <div class="result_row"><label>Miscellaneous:</label> <span><c:out value="${miscellaneous}"/></span>
+                </div>
+            </c:if>
         </div>
     </c:when>
 </c:choose>
