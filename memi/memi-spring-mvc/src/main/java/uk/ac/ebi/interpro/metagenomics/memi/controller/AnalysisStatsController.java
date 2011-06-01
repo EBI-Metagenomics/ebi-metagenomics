@@ -68,32 +68,32 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
 
     @RequestMapping(value = "/doExportGOSlimFile", method = RequestMethod.GET)
     public ModelAndView doExportGOSlimFile(@PathVariable final String sampleId, ModelMap model, final HttpServletResponse response) {
-        return handleExport(sampleId, model, response, EmgFile.fileExtensions[0], "_GO_slim.csv");
+        return handleExport(sampleId, model, response, EmgFile.EmgFileExtension.GO_SLIM.getFileExtension(), "_GO_slim.csv");
     }
 
     @RequestMapping(value = "/doExportGOFile", method = RequestMethod.GET)
     public ModelAndView doExportGOFile(@PathVariable final String sampleId, final ModelMap model, final HttpServletResponse response) {
-        return handleExport(sampleId, model, response, EmgFile.fileExtensions[1], "_GO.csv");
+        return handleExport(sampleId, model, response, EmgFile.EmgFileExtension.GO.getFileExtension(), "_GO.csv");
     }
 
     @RequestMapping(value = "/doExportMaskedFASTAFile", method = RequestMethod.GET)
     public ModelAndView doExportMaskedFASTAFile(@PathVariable final String sampleId, final ModelMap model, final HttpServletResponse response) {
-        return handleExport(sampleId, model, response, EmgFile.fileExtensions[2], "_nt_reads.fasta");
+        return handleExport(sampleId, model, response, EmgFile.EmgFileExtension.MASKED_FASTA.getFileExtension(), "_nt_reads.fasta");
     }
 
     @RequestMapping(value = "/doExportCDSFile", method = RequestMethod.GET)
     public ModelAndView doExportCDSFile(@PathVariable final String sampleId, final ModelMap model, final HttpServletResponse response) {
-        return handleExport(sampleId, model, response, EmgFile.fileExtensions[3], "_pCDS.fasta");
+        return handleExport(sampleId, model, response, EmgFile.EmgFileExtension.CDS_FAA.getFileExtension(), "_pCDS.fasta");
     }
 
     @RequestMapping(value = "/doExportI5File", method = RequestMethod.GET)
     public ModelAndView doExportI5File(@PathVariable final String sampleId, final ModelMap model, final HttpServletResponse response) {
-        return handleExport(sampleId, model, response, EmgFile.fileExtensions[4], "_InterPro.tsv");
+        return handleExport(sampleId, model, response, EmgFile.EmgFileExtension.I5_TSV.getFileExtension(), "_InterPro.tsv");
     }
 
     @RequestMapping(value = "/doExportIPRFile", method = RequestMethod.GET)
     public ModelAndView doExportIPRFile(@PathVariable final String sampleId, final ModelMap model, final HttpServletResponse response) {
-        return handleExport(sampleId, model, response, EmgFile.fileExtensions[5], "_InterPro_sum.csv");
+        return handleExport(sampleId, model, response, EmgFile.EmgFileExtension.IPR.getFileExtension(), "_InterPro_sum.csv");
     }
 
     private ModelAndView handleExport(final String sampleId, ModelMap model, final HttpServletResponse response,
@@ -143,16 +143,16 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
     private Map<String, String> getFileSizeMap(EmgFile emgFile) {
         Map<String, String> result = new HashMap<String, String>();
         String directoryName = emgFile.getFileIDInUpperCase().replace('.', '_');
-        for (String fileExtension : EmgFile.fileExtensions) {
+        for (EmgFile.EmgFileExtension fileExtension : EmgFile.EmgFileExtension.values()) {
             File file = new File(propertyContainer.getPathToAnalysisDirectory() + directoryName + '/' + directoryName + fileExtension);
             if (file.canRead()) {
                 long cutoff = 1024 * 1024;
                 if (file.length() > cutoff) {
                     long fileSize = file.length() / (long) (1024 * 1024);
-                    result.put(fileExtension, "(" + fileSize + " MB)");
+                    result.put(fileExtension.getFileExtension(), "(" + fileSize + " MB)");
                 } else {
                     long fileSize = file.length() / (long) 1024;
-                    result.put(fileExtension, "(" + fileSize + " KB)");
+                    result.put(fileExtension.getFileExtension(), "(" + fileSize + " KB)");
                 }
             }
         }

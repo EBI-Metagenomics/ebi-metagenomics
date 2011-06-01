@@ -66,7 +66,8 @@
                     <a title="Click to download all submitted nucleotide data on the ENA website"
                        href="<c:url value="http://www.ebi.ac.uk/ena/data/view/${model.sample.sampleId}"/>">
                         <spring:message code="analysisStatsView.label.download.seq.data"/>
-                    </a></li>
+                    </a>
+                </li>
                 <li>
                     <a title="Click to download processed fasta nucleotide sequences"
                        href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportMaskedFASTAFile"/>"><spring:message
