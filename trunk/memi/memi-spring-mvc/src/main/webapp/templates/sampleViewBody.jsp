@@ -184,12 +184,11 @@
         <c:choose>
             <c:when test="${not empty model.sample.latitude}">
                 <c:set var="latLon" value="${model.sample.latitude} , ${model.sample.longitude}"/>
-                <%-- Use of Google API, where parameter q is the query string, parameter z specifies the zoom factor
-       and t the map type (value k stands for satellite)--%>
+                <%-- Static map code - to remove once we are sure we want to use interactive map instead%>
                 <%--<a href="<c:url value="http://maps.google.com/maps?q=${latLon}(Info%20Window)&t=g&z=6"/>"><img--%>
                 <%--src="http://maps.google.com/maps/api/staticmap?center=${latLon}&zoom=4&size=210x140&maptype=roadmap--%>
                 <%--&markers=color:blue%7C${latLon}&sensor=false" alt="view map localisation" id="map"></a>--%>
-                <div id="map_canvas" style="width:210px; height:140px; margin-left:auto;"></div>
+                <div id="map_canvas"></div>
                 <script language="javascript"> initialize(${model.sample.latitude}, ${model.sample.longitude})</script>
             </c:when>
             <c:otherwise>
