@@ -104,9 +104,14 @@
         <put-attribute name="body" value="/templates/analysisStatsBody.jsp"/>
     </definition>
 
-    <definition name="lostInSpace" extends="rootTemplate">
+    <definition name="accessDenied" extends="rootTemplate">
         <put-attribute name="bodyClass" type="string" value="grey"/>
-        <put-attribute name="body" value="/templates/lostInSpaceBody.jsp"/>
+        <put-attribute name="body" value="/templates/accessDeniedBody.jsp"/>
+    </definition>
+
+    <definition name="entryNotFound" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="grey"/>
+        <put-attribute name="body" value="/templates/entryNotFoundBody.jsp"/>
     </definition>
 
     <definition name="showProteinMatchesView" extends="rootTemplate">
