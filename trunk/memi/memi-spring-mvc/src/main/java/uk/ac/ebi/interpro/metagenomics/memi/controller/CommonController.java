@@ -30,7 +30,9 @@ public class CommonController {
 
     public static final String NO_SUCH_REQUEST_PAGE_VIEW_NAME = "404";
 
-    public static final String ACCESS_DENIED_VIEW_NAME = "lostInSpace";
+    public static final String ACCESS_DENIED_VIEW_NAME = "accessDenied";
+
+    public static final String ENTRY_NOT_FOUND_VIEW_NAME = "entryNotFound";
 
     @Resource
     private SessionManager sessionManager;

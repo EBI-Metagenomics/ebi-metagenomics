@@ -9,10 +9,6 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
-import uk.ac.ebi.interpro.metagenomics.memi.tools.MemiModelAndViewFactory;
-
-import javax.annotation.Resource;
 
 /**
  * Represents a secured abstract controller class, which extends secured specific controllers.
@@ -53,7 +49,7 @@ public abstract class SecuredAbstractController<T extends SecureEntity> extends 
             final Study study;
             final T securedEntity = dao.readByStringId(stringId);
             if (securedEntity == null) {
-                return MemiModelAndViewFactory.getAccessDeniedMAV(stringId);
+                return getEntryNotExistMAV(stringId);
             } else if (securedEntity instanceof Study) {
                 study = (Study) securedEntity;
             } else if (securedEntity instanceof Sample) {
@@ -64,7 +60,7 @@ public abstract class SecuredAbstractController<T extends SecureEntity> extends 
 
             if (!study.isPublic() && !isAccessible(study)) {
                 log.info("Requesting private study with ID " + stringId + "...");
-                return MemiModelAndViewFactory.getAccessDeniedMAV(stringId);
+                return getAccessDeniedMAV(stringId);
             }
 
             modelProcessingStrategy.processModel(model, securedEntity);
@@ -73,6 +69,30 @@ public abstract class SecuredAbstractController<T extends SecureEntity> extends 
             throw new IllegalStateException("Configuration error - the Study DAO is null");
         }
         return new ModelAndView(viewName, model);
+    }
+
+    /**
+     * This view is shown if somebody tries to access a private entry OR if session has timed out.
+     *
+     * @param objectId
+     * @return Access denied model and view.
+     */
+    private ModelAndView getAccessDeniedMAV(String objectId) {
+        ModelMap model = new ModelMap();
+        model.addAttribute("objectId", objectId);
+        return new ModelAndView(CommonController.ACCESS_DENIED_VIEW_NAME, model);
+    }
+
+    /**
+     * This view is shown if somebody types in a entry ID which does not exist.
+     *
+     * @param objectId
+     * @return Entry not exists model and view.
+     */
+    private ModelAndView getEntryNotExistMAV(String objectId) {
+        ModelMap model = new ModelMap();
+        model.addAttribute("objectId", objectId);
+        return new ModelAndView(CommonController.ENTRY_NOT_FOUND_VIEW_NAME, model);
     }
 
     abstract ISampleStudyDAO<T> getDAO();

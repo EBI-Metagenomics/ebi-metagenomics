@@ -65,7 +65,7 @@
                         </c:otherwise>
                     </c:choose>
                     <p>
-                        <a href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>" title="View all public studies" class="all">All public projects</a>
+                        <a href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>" title="View all public projects" class="all">All public projects</a>
                         <c:if test="${not empty model.myStudiesMap}">
                             <a href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=MY_PROJECTS"/>" title="View all my studies" class="all">All my projects</a>
                         </c:if>
@@ -122,7 +122,7 @@
                             <a href="<c:url value="${baseURL}/project/${entry.key.studyId}"/>#study_desc" class="more_view">view more</a> - <a href="<c:url value="${baseURL}/project/${entry.key.studyId}"/>#samples_id" class="list_sample"><c:out value="${entry.value} sample"/><c:if test='${entry.value > 1}'>s</c:if></a>
                         </p>
                     </c:forEach>
-                    <p><a href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>" title="View all public studies" class="all">View all projects</a></p>
+                    <p><a href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>" title="View all public projects" class="all">View all projects</a></p>
                 </div>
 
                 <div id="list-data-sample">
