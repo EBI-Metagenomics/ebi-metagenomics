@@ -43,7 +43,7 @@
     </c:otherwise>
 </c:choose>
 
-<span class="subtitle">Project overview <a href="<c:url value="${baseURL}/study/${model.study.studyId}"/>"
+<span class="subtitle">Project overview <a href="<c:url value="${baseURL}/project/${model.study.studyId}"/>"
                                            style="font-size:90%;"> (${model.study.studyId})</a></span>
 
 <h2>${model.study.studyName}</h2>
@@ -162,12 +162,12 @@ Contact name: (not given)
             <p><span style="color:red">No export data available for that(these) sample(s)!</span></p>
         </c:if>
         <div>
-            <a href="<c:url value="${baseURL}/study/${model.study.studyId}/doExport/"/>">Export more detailed sample info to CSV</a>
+            <a href="<c:url value="${baseURL}/project/${model.study.studyId}/doExport/"/>">Export more detailed sample info to CSV</a>
         </div>--%>
 
 
         <div class="export">
-            <a href="<c:url value="${baseURL}/study/${model.study.studyId}/doExport/"/>" id="csv_plus"
+            <a href="<c:url value="${baseURL}/project/${model.study.studyId}/doExport/"/>" id="csv_plus"
                title="<spring:message code="studyView.download.anchor.title"/>">
                 <spring:message code="studyView.download.anchor.label"/></a>
         </div>
