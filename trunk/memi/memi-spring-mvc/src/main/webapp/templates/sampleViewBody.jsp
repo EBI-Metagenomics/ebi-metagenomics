@@ -62,7 +62,7 @@
         </p>
     </c:when>
     <c:otherwise>
-        <h3>Analysis in progress!</h3>
+        <%--<h3>Analysis in progress!</h3>--%>
     </c:otherwise>
 </c:choose>
 
