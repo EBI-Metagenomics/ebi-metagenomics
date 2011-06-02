@@ -56,18 +56,18 @@
                                 <p>
                                     <c:if test="${!entry.key.public}">
                                         <img alt="private" src="${pageContext.request.contextPath}/img/icon_priv_private.gif">
-                                    </c:if>&nbsp;&nbsp;<a href="<c:url value="${baseURL}/study/${entry.key.studyId}"/>" class="list_more">${entry.key.studyName}</a>
+                                    </c:if>&nbsp;&nbsp;<a href="<c:url value="${baseURL}/project/${entry.key.studyId}"/>" class="list_more">${entry.key.studyName}</a>
                                     <br />
                                     <span class="list_desc"><c:out value="${entry.key.shortStudyAbstract} ..."/></span>
-                                    <a href="<c:url value="${baseURL}/study/${entry.key.studyId}"/>#study_desc" class="more_view">view more</a> -  <a href="<c:url value="${baseURL}/study/${entry.key.studyId}"/>#samples_id"  class="list_sample"><c:out value="${entry.value} sample"/><c:if test='${entry.value > 1}'>s</c:if></a>
+                                    <a href="<c:url value="${baseURL}/project/${entry.key.studyId}"/>#study_desc" class="more_view">view more</a> -  <a href="<c:url value="${baseURL}/project/${entry.key.studyId}"/>#samples_id"  class="list_sample"><c:out value="${entry.value} sample"/><c:if test='${entry.value > 1}'>s</c:if></a>
                                 </p>
                             </c:forEach>
                         </c:otherwise>
                     </c:choose>
                     <p>
-                        <a href="<c:url value="${baseURL}/studies/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>" title="View all public studies" class="all">All public projects</a>
+                        <a href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>" title="View all public studies" class="all">All public projects</a>
                         <c:if test="${not empty model.myStudiesMap}">
-                            <a href="<c:url value="${baseURL}/studies/doSearch?search=Search&studyVisibility=MY_PROJECTS"/>" title="View all my studies" class="all">All my projects</a>
+                            <a href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=MY_PROJECTS"/>" title="View all my studies" class="all">All my projects</a>
                         </c:if>
                     </p>
                 </div>
@@ -116,13 +116,13 @@
                     <h3>Latest public projects</h3>
                     <c:forEach var="entry" items="${model.publicStudiesMap}" varStatus="status" begin="0" end="4">
                         <p><%--<span class="list_date">${entry.key.lastMetadataReceived}:</span> --%>
-                            <a href="<c:url value="${baseURL}/study/${entry.key.studyId}"/>" class="list_more">${entry.key.studyName}</a>
+                            <a href="<c:url value="${baseURL}/project/${entry.key.studyId}"/>" class="list_more">${entry.key.studyName}</a>
                             <br />
                             <span class="list_desc"><c:out value="${entry.key.shortStudyAbstract} ..."/></span>
-                            <a href="<c:url value="${baseURL}/study/${entry.key.studyId}"/>#study_desc" class="more_view">view more</a> - <a href="<c:url value="${baseURL}/study/${entry.key.studyId}"/>#samples_id" class="list_sample"><c:out value="${entry.value} sample"/><c:if test='${entry.value > 1}'>s</c:if></a>
+                            <a href="<c:url value="${baseURL}/project/${entry.key.studyId}"/>#study_desc" class="more_view">view more</a> - <a href="<c:url value="${baseURL}/project/${entry.key.studyId}"/>#samples_id" class="list_sample"><c:out value="${entry.value} sample"/><c:if test='${entry.value > 1}'>s</c:if></a>
                         </p>
                     </c:forEach>
-                    <p><a href="<c:url value="${baseURL}/studies/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>" title="View all public studies" class="all">View all projects</a></p>
+                    <p><a href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>" title="View all public studies" class="all">View all projects</a></p>
                 </div>
 
                 <div id="list-data-sample">

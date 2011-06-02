@@ -17,7 +17,7 @@
                     <c:set var="actionUrlParam" value=""/>
                 </c:otherwise>
             </c:choose>
-            <form:form method="GET" action="${pageContext.request.contextPath}/studies/doSearch"
+            <form:form method="GET" action="${pageContext.request.contextPath}/projects/doSearch"
                        commandName="studyFilter">
                 <fieldset>
                     <div class="result_row">
@@ -47,12 +47,12 @@
                             <c:choose>
                                 <c:when test="${empty model.submitter}">
                                     | <a
-                                        href="<c:url value="${baseURL}/studies/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>"
+                                        href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>"
                                         title="View studies">Clear</a>
                                 </c:when>
                                 <c:otherwise>
                                     | <a
-                                        href="<c:url value="${baseURL}/studies/doSearch?search=Search&studyVisibility=ALL_PROJECTS"/>"
+                                        href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=ALL_PROJECTS"/>"
                                         title="View studies">Clear</a>
                                 </c:otherwise>
                             </c:choose>
@@ -70,11 +70,11 @@
             <%--Request the current query string to export only the filtered studies--%>
             <c:set var="queryString" value="${pageContext.request.queryString}" scope="session"/>
             <div class="export">
-                <a href="<c:url value="${baseURL}/studies/doExportDetails?${queryString}"/>" id="csv_plus"
+                <a href="<c:url value="${baseURL}/projects/doExportDetails?${queryString}"/>" id="csv_plus"
                    title="<spring:message code="viewStudies.download.anchor.title.detailed"/>">
                     <spring:message code="viewStudies.download.anchor.label.detailed"/>
                 </a>
-                <a href="<c:url value="${baseURL}/studies/doExport?${queryString}"/>" id="csv"
+                <a href="<c:url value="${baseURL}/projects/doExport?${queryString}"/>" id="csv"
                    title="<spring:message code="viewStudies.download.anchor.title.table"/>"><spring:message
                         code="viewStudies.download.anchor.label.table"/></a>
             </div>
@@ -107,10 +107,10 @@
                         <td style="text-align:left;" id="ordered">
                             <c:if test="${!entry.key.public}"><img alt="private"
                                                                    src="${pageContext.request.contextPath}/img/icon_priv_private.gif">&nbsp;&nbsp;</c:if>
-                            <a href="<c:url value="${baseURL}/study/${entry.key.studyId}"/>">${entry.key.studyName}</a>
+                            <a href="<c:url value="${baseURL}/project/${entry.key.studyId}"/>">${entry.key.studyName}</a>
                         </td>
                         <td>
-                            <a href="<c:url value="${baseURL}/study/${entry.key.studyId}#samples_id"/>">${entry.value}</a>
+                            <a href="<c:url value="${baseURL}/project/${entry.key.studyId}#samples_id"/>">${entry.value}</a>
                         </td>
                         <td>${entry.key.formattedLastReceived}</td>
                     </tr>

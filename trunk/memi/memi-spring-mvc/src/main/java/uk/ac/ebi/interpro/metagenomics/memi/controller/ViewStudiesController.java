@@ -48,7 +48,7 @@ public class ViewStudiesController extends AbstractController implements IMGCont
     /**
      * View name of this controller which is used several times.
      */
-    public static final String VIEW_NAME = "studies";
+    public static final String VIEW_NAME = "projects";
 
     private final String VELOCITY_TEMPLATE_LOCATION_PATH = "exportStudies.vm";
 

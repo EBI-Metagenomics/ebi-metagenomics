@@ -17,7 +17,6 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.StudyViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.StudyViewModelBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder;
@@ -26,12 +25,11 @@ import uk.ac.ebi.interpro.metagenomics.memi.tools.MemiTools;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
 /**
- * Represents the controller for the study overview page.
+ * Represents the controller for the study (project) overview page. The use of terms project for study has a historical background.
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @since 1.0-SNAPSHOT
@@ -45,7 +43,7 @@ public class StudyViewController extends SecuredAbstractController<Study> {
     /**
      * View name of this controller which is used several times.
      */
-    public static final String VIEW_NAME = "study";
+    public static final String VIEW_NAME = "project";
 
     @Resource
     private HibernateStudyDAO studyDAO;
