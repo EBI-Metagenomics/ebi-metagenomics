@@ -1,5 +1,5 @@
   * Introductory
-   * [http://code.google.com/p/interproscan/ Project Home]
+   * [http://code.google.com/p/ebi-metagenomics/ Project Home]
    * [Documentation Documentation Home]
    * [Requirements User Requirements]   
   * Developer Documentation
