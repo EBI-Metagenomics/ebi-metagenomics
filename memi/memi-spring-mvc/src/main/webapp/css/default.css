@@ -1275,10 +1275,12 @@ border: 0px solid #556f8c;
 margin-left:14px;
 }
 
-#map {
+#map_canvas {
 float:right;
 border: 1px solid #006AF6;
 display:block;
+width:210px;
+height:140px;
 }
 
 
