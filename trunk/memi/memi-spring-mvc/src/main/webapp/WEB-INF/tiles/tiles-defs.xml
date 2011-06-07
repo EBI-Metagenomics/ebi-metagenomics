@@ -45,10 +45,6 @@
         <put-attribute name="body" value="/templates/submitSuccessBody.jsp"/>
     </definition>
 
-    <definition name="installationSite" extends="rootTemplate">
-        <put-attribute name="body" value="/templates/installationSiteBody.jsp"/>
-    </definition>
-
     <definition name="viewStudies" extends="rootTemplate">
         <put-attribute name="bodyClass" type="string" value="blue"/>
         <put-attribute name="body" value="/templates/viewStudiesBody.jsp"/>
