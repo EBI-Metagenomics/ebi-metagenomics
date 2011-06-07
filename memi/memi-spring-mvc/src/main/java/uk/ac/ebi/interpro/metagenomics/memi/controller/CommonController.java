@@ -37,10 +37,6 @@ public class CommonController {
     @Resource
     private SessionManager sessionManager;
 
-    @RequestMapping(value = "/installationSite", method = RequestMethod.GET)
-    public void installationSiteHandler() {
-    }
-
     @RequestMapping(value = "/404", method = RequestMethod.GET)
     public ModelAndView pageNotFoundHandler(ModelMap model) {
         log.warn("This method is called twice times at the moment. If you don't find any Spring related " +
@@ -50,12 +46,6 @@ public class CommonController {
         ViewModel viewModel = MGModelFactory.getMGModel(sessionManager);
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, viewModel);
         return new ModelAndView("/errors/" + CommonController.NO_SUCH_REQUEST_PAGE_VIEW_NAME, model);
-    }
-
-    @RequestMapping(value = "/test")
-    public ModelAndView testHandler(ModelMap model) {
-        model.addAttribute("emgFile", new EmgFile("img", "chart.png"));
-        return new ModelAndView("test", model);
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
