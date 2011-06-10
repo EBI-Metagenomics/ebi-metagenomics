@@ -1,6 +1,7 @@
 package uk.ac.ebi.interpro.metagenomics.memi.model.hibernate;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -67,6 +68,13 @@ public abstract class Sample implements SecureEntity {
     private Date analysisCompleted;
 
     /**
+     * Date when we received the last meta data or a substantial update.
+     */
+    @Temporal(TemporalType.DATE)
+    @Column(name = "LAST_UPDATE", columnDefinition = "DATE DEFAULT CURRENT_DATE", nullable = false)
+    private Date lastMetadataReceived;
+
+    /**
      * Single samples of public study could be private. Default value is private.
      */
     @Column(name = "IS_PUBLIC")
@@ -78,6 +86,12 @@ public abstract class Sample implements SecureEntity {
     @Column(name = "MISC")
     @Lob
     private String miscellaneous;
+
+    @Column(name = "LATITUDE", precision = 7, scale = 4)
+    private BigDecimal latitude;
+
+    @Column(name = "LONGITUDE", precision = 7, scale = 4)
+    private BigDecimal longitude;
 
     /**
      * Associated publication. Deactivated lazy loading.
@@ -248,6 +262,30 @@ public abstract class Sample implements SecureEntity {
 
     public void setSampleAlias(String sampleAlias) {
         this.sampleAlias = sampleAlias;
+    }
+
+    public BigDecimal getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(BigDecimal latitude) {
+        this.latitude = latitude;
+    }
+
+    public BigDecimal getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(BigDecimal longitude) {
+        this.longitude = longitude;
+    }
+
+    public Date getLastMetadataReceived() {
+        return lastMetadataReceived;
+    }
+
+    public void setLastMetadataReceived(Date lastMetadataReceived) {
+        this.lastMetadataReceived = lastMetadataReceived;
     }
 
     @Transient
