@@ -19,8 +19,8 @@ public class HomePageSamplesComparator implements Comparator<Sample> {
      */
     @Override
     public int compare(Sample sample1, Sample sample2) {
-        Date sampleDate1 = sample1.getMetadataReceived();
-        Date sampleDate2 = sample2.getMetadataReceived();
+        Date sampleDate1 = sample1.getLastMetadataReceived();
+        Date sampleDate2 = sample2.getLastMetadataReceived();
         int sampleDateComp = sampleDate2.compareTo(sampleDate1);
         return ((sampleDateComp == 0) ? sample1.getSampleName().compareTo(sample2.getSampleName()) : sampleDateComp);
     }

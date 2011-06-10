@@ -51,10 +51,10 @@ public class Study implements SecureEntity {
     private Date publicReleaseDate;
 
     /**
-     * Date of the last received metadata.
+     * Date when we received the last meta data or a substantial update.
      */
     @Temporal(TemporalType.DATE)
-    @Column(name = "LAST_UPDATE")
+    @Column(name = "LAST_UPDATE", columnDefinition = "DATE DEFAULT CURRENT_DATE", nullable = false)
     private Date lastMetadataReceived;
 
     /**

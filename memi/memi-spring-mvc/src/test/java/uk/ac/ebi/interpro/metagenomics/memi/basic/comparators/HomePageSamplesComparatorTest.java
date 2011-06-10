@@ -43,22 +43,22 @@ public class HomePageSamplesComparatorTest extends TestCase {
         Sample sample1 = new HostSample();
         sample1.setSampleName("a");
         calendar = new GregorianCalendar(2011, 01, 02);
-        sample1.setMetadataReceived(calendar.getTime());
+        sample1.setLastMetadataReceived(calendar.getTime());
         //
         Sample sample2 = new HostSample();
         sample2.setSampleName("b");
         calendar = new GregorianCalendar(2011, 01, 04);
-        sample2.setMetadataReceived(calendar.getTime());
+        sample2.setLastMetadataReceived(calendar.getTime());
         //
         Sample sample3 = new HostSample();
         sample3.setSampleName("c");
         calendar = new GregorianCalendar(2011, 01, 01);
-        sample3.setMetadataReceived(calendar.getTime());
+        sample3.setLastMetadataReceived(calendar.getTime());
         //
         Sample sample4 = new HostSample();
         sample4.setSampleName("d");
         calendar = new GregorianCalendar(2011, 01, 01);
-        sample4.setMetadataReceived(calendar.getTime());
+        sample4.setLastMetadataReceived(calendar.getTime());
 
         SortedSet<Sample> samples = new TreeSet<Sample>(new HomePageSamplesComparator());
         samples.add(sample1);
@@ -86,22 +86,22 @@ public class HomePageSamplesComparatorTest extends TestCase {
         Sample sample1 = new HostSample();
         sample1.setSampleName("a");
         calendar = new GregorianCalendar(2011, 01, 02);
-        sample1.setMetadataReceived(calendar.getTime());
+        sample1.setLastMetadataReceived(calendar.getTime());
         //
         Sample sample2 = new HostSample();
         sample2.setSampleName("b");
         calendar = new GregorianCalendar(2011, 01, 04);
-        sample2.setMetadataReceived(calendar.getTime());
+        sample2.setLastMetadataReceived(calendar.getTime());
         //
         Sample sample3 = new HostSample();
         sample3.setSampleName("c");
         calendar = new GregorianCalendar(2011, 01, 01);
-        sample3.setMetadataReceived(calendar.getTime());
+        sample3.setLastMetadataReceived(calendar.getTime());
         //
         Sample sample4 = new HostSample();
         sample4.setSampleName("d");
         calendar = new GregorianCalendar(2011, 01, 03);
-        sample4.setMetadataReceived(calendar.getTime());
+        sample4.setLastMetadataReceived(calendar.getTime());
         //
         List<Sample> samples = new ArrayList<Sample>();
         samples.add(sample1);

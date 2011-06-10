@@ -1,9 +1,8 @@
 package uk.ac.ebi.interpro.metagenomics.memi.model.hibernate;
 
 
-import javax.persistence.*;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import java.math.BigDecimal;
 
 /**
  * Represents an environmental sample object, which extends abstract {@link Sample} class.
@@ -19,12 +18,6 @@ public class EnvironmentSample extends Sample {
     //TODO: Needs to be removed in the future. Replaced by latitude and longitude attributes.
     @Column(name = "LAT_LON")
     private String latLon;
-
-    @Column(name = "LATITUDE", precision = 7, scale = 4)
-    private BigDecimal latitude;
-
-    @Column(name = "LONGITUDE", precision = 7, scale = 4)
-    private BigDecimal longitude;
 
     @Column(name = "ENVIRONMENT_BIOME")
     private String environmentalBiome;
@@ -65,22 +58,6 @@ public class EnvironmentSample extends Sample {
 
     public void setEnvironmentalMaterial(String environmentalMaterial) {
         this.environmentalMaterial = environmentalMaterial;
-    }
-
-    public BigDecimal getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(BigDecimal latitude) {
-        this.latitude = latitude;
-    }
-
-    public BigDecimal getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(BigDecimal longitude) {
-        this.longitude = longitude;
     }
 
     public Class<? extends Sample> getClazz() {
