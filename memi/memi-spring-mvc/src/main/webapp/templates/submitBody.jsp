@@ -1,7 +1,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <div id="content-full" class="menu_bgd">
-    
+
         <div id="sidebar">
         <div id="sidebar-warning">
        <span class="error" style="font-weight:bold;padding-top:2px;font-size:80%; float:right;">IMPORTANT</span> <h2>Data type</h2>
@@ -9,7 +9,7 @@
         Presently, analysis is restricted to "long" (average reads lengths over 200nt), unassembled sequence reads, i.e. Roche 454 sequences,
         from metagenomic or metatranscriptomic samples.</p>
         <span class="separator"></span>
-        <p><a href="mailto:datasubs@ebi.ac.uk" title="Send an enquiry about Metagenomics data submission"> Contact us</a>, if your datasets do not fit this description, to help us better understand your needs so we can tailor our future developments appropriately.</p>
+        <p><a href="mailto:datasubs@ebi.ac.uk?subject=EBI Metagenomics - dataset" title="Send an enquiry about Metagenomics data submission"> Contact us</a>, if your datasets do not fit this description, to help us better understand your needs so we can tailor our future developments appropriately.</p>
         </div></div>
 
 <div style="width:682px;">
@@ -24,7 +24,7 @@
     </p>
 
 
-   
+
      <form:form action="submit" commandName="subForm">
      <fieldset>
      <div class="form_row">
