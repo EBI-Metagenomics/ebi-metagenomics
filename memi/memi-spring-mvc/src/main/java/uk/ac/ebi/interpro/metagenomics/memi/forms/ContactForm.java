@@ -23,9 +23,8 @@ public class ContactForm {
     @Size(min = 3, max = 100, message = "{form.contact.emailSubject.size}")
     private String emailSubject;
 
-    // TODO: Size have to be discussed
     @NotEmpty(message = "{form.contact.message.notEmpty}")
-    @Size(min = 3, max = 1000, message = "{form.contact.message.size}")
+    @Size(min = 3, message = "{form.contact.message.size}")
     private String message;
 
     public String getSender() {
