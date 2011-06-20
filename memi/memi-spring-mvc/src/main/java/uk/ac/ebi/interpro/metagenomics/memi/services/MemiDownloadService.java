@@ -43,7 +43,7 @@ public class MemiDownloadService {
             log.info("Opened download dialog successfully.");
             return true;
         } catch (FileNotFoundException e) {
-            log.error("Could not find the specified downloadable file: " + file.getAbsolutePath(), e);
+            log.warn("Could not find the specified downloadable file: " + file.getAbsolutePath(), e);
         } catch (IOException e) {
             log.error("Could not create input stream for the specified downloadable file (s.a.)!", e);
         } finally {
@@ -86,7 +86,7 @@ public class MemiDownloadService {
                 try {
                     headerFileIs = headerResource.getInputStream();
                 } catch (IOException e) {
-                    log.error("Could not get input stream for the specified resource: " + headerResource.getFilename(), e);
+                    log.warn("Could not get input stream for the specified resource: " + headerResource.getFilename(), e);
                 }
             }
         }
@@ -102,7 +102,7 @@ public class MemiDownloadService {
                 try {
                     sampleFileIs = sampleResource.getInputStream();
                 } catch (IOException e) {
-                    log.error("Could not get input stream for the specified resource: " + sampleResource.getFilename(), e);
+                    log.warn("Could not get input stream for the specified resource: " + sampleResource.getFilename(), e);
                 }
             }
             if (headerFileIs != null && sampleFileIs != null) {
