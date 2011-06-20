@@ -100,7 +100,7 @@ public class ImageController extends AbstractController {
             ImageIO.write(image, imageFormat, os);
             return os.toByteArray();
         } catch (IOException e) {
-            log.error("Unable to stream input file " + inputFile.getAbsolutePath() + " and write it to a byte array.", e);
+            log.warn("Unable to stream input file " + inputFile.getAbsolutePath() + " and write it to a byte array.", e);
             return new byte[0];
         } finally {
             try {
