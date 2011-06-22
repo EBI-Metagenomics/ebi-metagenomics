@@ -14,6 +14,9 @@ import java.util.Date;
  * @since 1.0-SNAPSHOT
  */
 public class Submitter implements Serializable {
+
+    public final static String TABLE_NAME = "spin2006.submitter";
+
     private long submitterId;
 
     private String password;
