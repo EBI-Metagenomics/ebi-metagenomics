@@ -11,6 +11,8 @@ import java.util.Map;
  */
 public class EmgFile {
 
+    public final static String TABLE_NAME = "log_file_info";
+
     private String fileID;
 
     private String fileName;

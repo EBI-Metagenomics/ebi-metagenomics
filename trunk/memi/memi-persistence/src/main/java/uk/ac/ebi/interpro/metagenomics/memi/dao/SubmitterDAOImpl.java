@@ -56,7 +56,7 @@ public class SubmitterDAOImpl implements SubmitterDAO {
             return null;
         Submitter submitter = null;
         try {
-            submitter = this.jdbcTemplate.queryForObject("SELECT submitterid, first_name, surname, password, email_address FROM spin2006.submitter WHERE ACTIVE='Y' AND email_address=?",
+            submitter = this.jdbcTemplate.queryForObject("SELECT submitterid, first_name, surname, password, email_address FROM " + Submitter.TABLE_NAME + " WHERE ACTIVE='Y' AND email_address=?",
                     new Object[]{emailAddress.toUpperCase()},
                     new RowMapper<Submitter>() {
                         public Submitter mapRow(ResultSet rs, int rowNum) throws SQLException {
