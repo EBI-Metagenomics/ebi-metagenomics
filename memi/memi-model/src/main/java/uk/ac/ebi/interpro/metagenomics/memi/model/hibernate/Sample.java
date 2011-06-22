@@ -13,22 +13,22 @@ import java.util.Set;
  * @since 1.0-SNAPSHOT
  */
 @Entity
-@Table(name = "HB_SAMPLE")
+@Table(name = "SAMPLE")
 public abstract class Sample implements SecureEntity {
 
     @Id
+    @Column(name = "SAMPLE_ID")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SAMPLE_SEQ")
     @SequenceGenerator(
             name = "SAMPLE_SEQ",
             sequenceName = "SAMPLE_SEQ")
-//        allocationSize = 1
     private long id;
 
     @ManyToOne
     @JoinColumn(name = "STUDY_ID", nullable = true)
     private Study study;
 
-    @Column(name = "SAMPLE_ID", nullable = false, length = 15)
+    @Column(name = "EXT_SAMPLE_ID", nullable = false, length = 15)
     private String sampleId;
 
     @Column(name = "SAMPLE_ALIAS")

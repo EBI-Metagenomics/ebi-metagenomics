@@ -16,10 +16,11 @@ import java.util.Set;
  * @since 1.0-SNAPSHOT
  */
 @Entity
-@Table(name = "HB_STUDY")
+@Table(name = "STUDY")
 public class Study implements SecureEntity {
 
     @Id
+    @Column(name = "STUDY_ID")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "STUDY_SEQ")
     @SequenceGenerator(
             name = "STUDY_SEQ",
@@ -27,7 +28,7 @@ public class Study implements SecureEntity {
 //            allocationSize = 1
     private long id;
 
-    @Column(name = "STUDY_ID", length = 18)
+    @Column(name = "EXT_STUDY_ID", length = 18)
     private String studyId;
 
     @Column(name = "STUDY_NAME")
