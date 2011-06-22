@@ -13,6 +13,8 @@ import java.util.List;
  */
 public interface EmgLogFileInfoDAO {
 
+    public final static String TABLE_NAME = "log_file_info";
+
     public List<String> getFileIdsBySampleId(String sampleId);
 
     public List<String> getFileNamesBySampleId(String sampleId);
