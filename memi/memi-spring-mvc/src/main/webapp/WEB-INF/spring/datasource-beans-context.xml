@@ -21,6 +21,10 @@
         <property name="maxIdle" value="10"/>
         <!--The maximum number of milliseconds that the pool will wait (when there are no available connections) for a connection to be returned before throwing an exception, or -1 to wait indefinitely. -->
         <property name="maxWait" value="3000"/>
+        <!--This fix the following connection pooling issue:-->
+        <!--http://amitcodes.wordpress.com/2008/07/26/16/-->
+        <property name="testOnBorrow" value="true"/>
+        <property name="validationQuery" value="select 1 from dual"/>
     </bean>
 
     <!--Data source for ADEV-->
