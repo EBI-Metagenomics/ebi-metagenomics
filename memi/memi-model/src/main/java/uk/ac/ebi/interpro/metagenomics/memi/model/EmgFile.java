@@ -13,6 +13,8 @@ public class EmgFile {
 
     public final static String TABLE_NAME = "log_file_info";
 
+    public final static String TABLE_ATTR_EXT_SAMPLE_ID = "ext_sample_id";
+
     private String fileID;
 
     private String fileName;

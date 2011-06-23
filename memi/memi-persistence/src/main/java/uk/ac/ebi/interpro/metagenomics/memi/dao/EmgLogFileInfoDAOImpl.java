@@ -38,7 +38,7 @@ public class EmgLogFileInfoDAOImpl implements EmgLogFileInfoDAO {
         log.info("Querying file IDs by sample ID: " + sampleId + " from table EMGLogFileInfo...");
         List<String> result = new ArrayList<String>();
         try {
-            List<Map<String, Object>> rows = this.jdbcTemplate.queryForList("select file_id from " + EmgFile.TABLE_NAME + " where sample_id=?", new String[]{sampleId});
+            List<Map<String, Object>> rows = this.jdbcTemplate.queryForList("select file_id from " + EmgFile.TABLE_NAME + " where " + EmgFile.TABLE_ATTR_EXT_SAMPLE_ID + "=?", new String[]{sampleId});
             for (Map row : rows) {
                 result.add((String) row.get("FILE_ID"));
             }
@@ -52,7 +52,7 @@ public class EmgLogFileInfoDAOImpl implements EmgLogFileInfoDAO {
         log.info("Querying file IDs by sample ID: " + sampleId + " from table EMGLogFileInfo...");
         List<String> result = new ArrayList<String>();
         try {
-            List<Map<String, Object>> rows = this.jdbcTemplate.queryForList("select file_name from " + EmgFile.TABLE_NAME + " where sample_id=?", new String[]{sampleId});
+            List<Map<String, Object>> rows = this.jdbcTemplate.queryForList("select file_name from " + EmgFile.TABLE_NAME + " where " + EmgFile.TABLE_ATTR_EXT_SAMPLE_ID + "=?", new String[]{sampleId});
             for (Map row : rows) {
                 result.add((String) row.get("FILE_NAME"));
             }
@@ -66,7 +66,7 @@ public class EmgLogFileInfoDAOImpl implements EmgLogFileInfoDAO {
         log.info("Querying file IDs by sample ID: " + sampleId + " from table EMGLogFileInfo...");
         List<EmgFile> result = new ArrayList<EmgFile>();
         try {
-            List<Map<String, Object>> rows = this.jdbcTemplate.queryForList("select file_id, file_name from " + EmgFile.TABLE_NAME + " where sample_id=?", new String[]{sampleId});
+            List<Map<String, Object>> rows = this.jdbcTemplate.queryForList("select file_id, file_name from " + EmgFile.TABLE_NAME + " where " + EmgFile.TABLE_ATTR_EXT_SAMPLE_ID + "=?", new String[]{sampleId});
             for (Map row : rows) {
                 String fileName = (String) row.get("FILE_NAME");
                 String fileID = (String) row.get("FILE_ID");
@@ -82,7 +82,7 @@ public class EmgLogFileInfoDAOImpl implements EmgLogFileInfoDAO {
         log.info("Querying SRA IDs by sample ID: " + sampleId + " from table EMGLogFileInfo...");
         List<String> result = new ArrayList<String>();
         try {
-            List<Map<String, Object>> rows = this.jdbcTemplate.queryForList("select sra_run_ids from " + EmgFile.TABLE_NAME + " where sample_id=?", new String[]{sampleId});
+            List<Map<String, Object>> rows = this.jdbcTemplate.queryForList("select sra_run_ids from " + EmgFile.TABLE_NAME + " where " + EmgFile.TABLE_ATTR_EXT_SAMPLE_ID + "=?", new String[]{sampleId});
             for (Map row : rows) {
                 String rowResult = (String) row.get("SRA_RUN_IDS");
                 String[] chunks = rowResult.split(";");
