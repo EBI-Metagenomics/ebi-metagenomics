@@ -347,18 +347,18 @@ public class Study implements SecureEntity {
     @Override
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (studyId != null ? studyId.hashCode() : 0);
-        result = 31 * result + studyName.hashCode();
+        result = 31 * result + (studyId == null ? 0 : studyId.hashCode());
+        result = 31 * result + (studyName == null ? 0 : studyName.hashCode());
         result = 31 * result + (int) (ncbiProjectId ^ (ncbiProjectId >>> 32));
         result = 31 * result + (int) (submitterId ^ (submitterId >>> 32));
-        result = 31 * result + studyStatus.hashCode();
-        result = 31 * result + publicReleaseDate.hashCode();
-        result = 31 * result + lastMetadataReceived.hashCode();
-        result = 31 * result + centreName.hashCode();
-        result = 31 * result + studyAbstract.hashCode();
-        result = 31 * result + experimentalFactor.hashCode();
+        result = 31 * result + (studyStatus == null ? 0 : studyStatus.hashCode());
+        result = 31 * result + (publicReleaseDate == null ? 0 : publicReleaseDate.hashCode());
+        result = 31 * result + (lastMetadataReceived == null ? 0 : lastMetadataReceived.hashCode());
+        result = 31 * result + (centreName == null ? 0 : centreName.hashCode());
+        result = 31 * result + (studyAbstract == null ? 0 : studyAbstract.hashCode());
+        result = 31 * result + (experimentalFactor == null ? 0 : experimentalFactor.hashCode());
         result = 31 * result + (isPublic ? 1 : 0);
-        result = 31 * result + studyPageURL.hashCode();
+        result = 31 * result + (studyPageURL == null ? 0 : studyPageURL.hashCode());
         return result;
     }
 

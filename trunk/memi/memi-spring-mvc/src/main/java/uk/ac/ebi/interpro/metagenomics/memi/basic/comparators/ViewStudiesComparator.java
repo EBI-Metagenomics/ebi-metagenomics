@@ -15,19 +15,25 @@ public class ViewStudiesComparator implements Comparator<Study> {
 
     /**
      * Compares samples by name. If names are equal then it compares by study identifiers, which should be usually unique.
+     * If one of the study names is NULL it returns -1 (incomparable/different).
      */
     @Override
     public int compare(Study study1, Study study2) {
         String studyName1 = study1.getStudyName();
         String studyName2 = study2.getStudyName();
-        int studyNameComp = studyName1.compareTo(studyName2);
-        long studyIdDiff = study1.getId() - study2.getId();
-        int studyIdComp = 0;
-        if (studyIdDiff > 0) {
-            studyIdComp = 1;
-        } else if (studyIdDiff < 0) {
-            studyIdComp = -1;
+        if (studyName1 != null && studyName2 != null) {
+            studyName1 = studyName1.toLowerCase();
+            studyName2 = studyName2.toLowerCase();
+            int studyNameComp = studyName1.compareTo(studyName2);
+            long studyIdDiff = study1.getId() - study2.getId();
+            int studyIdComp = 0;
+            if (studyIdDiff > 0) {
+                studyIdComp = 1;
+            } else if (studyIdDiff < 0) {
+                studyIdComp = -1;
+            }
+            return ((studyNameComp == 0) ? studyIdComp : studyNameComp);
         }
-        return ((studyNameComp == 0) ? studyIdComp : studyNameComp);
+        return -1;
     }
 }

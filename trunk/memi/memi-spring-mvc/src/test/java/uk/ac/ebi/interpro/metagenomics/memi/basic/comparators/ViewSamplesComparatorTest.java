@@ -43,15 +43,15 @@ public class ViewSamplesComparatorTest extends TestCase {
         sample1.setId(1);
         //
         Sample sample2 = new HostSample();
-        sample2.setSampleName("a");
+        sample2.setSampleName("A");
         sample2.setId(2);
         //
         Sample sample3 = new HostSample();
-        sample3.setSampleName("c");
+        sample3.setSampleName("C");
         sample3.setId(3);
         //
         Sample sample4 = new HostSample();
-        sample4.setSampleName("c");
+        sample4.setSampleName("C");
         sample4.setId(4);
         //
         SortedSet<Sample> samples = new TreeSet<Sample>(new ViewSamplesComparator());
@@ -76,7 +76,7 @@ public class ViewSamplesComparatorTest extends TestCase {
     @org.junit.Test
     public void testCompareCollectionsSort() {
         Sample sample1 = new HostSample();
-        sample1.setSampleName("b");
+        sample1.setSampleName("B");
         sample1.setId(1);
         //
         Sample sample2 = new HostSample();
