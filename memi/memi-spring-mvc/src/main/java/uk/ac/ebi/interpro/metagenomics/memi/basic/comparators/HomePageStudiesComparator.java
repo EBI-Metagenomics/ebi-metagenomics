@@ -22,6 +22,14 @@ public class HomePageStudiesComparator implements Comparator<Study> {
         Date studyDate1 = study1.getLastMetadataReceived();
         Date studyDate2 = study2.getLastMetadataReceived();
         int studyDateComp = studyDate2.compareTo(studyDate1);
-        return ((studyDateComp == 0) ? study1.getStudyName().compareTo(study2.getStudyName()) : studyDateComp);
+        if (studyDateComp == 0) {
+            if (study1.getStudyName() != null && study2.getStudyName() != null) {
+                return study1.getStudyName().compareTo(study2.getStudyName());
+            }
+
+        } else {
+            return studyDateComp;
+        }
+        return 0;
     }
 }

@@ -40,7 +40,7 @@ public class ViewStudiesComparatorTest extends TestCase {
     @org.junit.Test
     public void testCompareSortedSet() {
         Study study1 = new Study();
-        study1.setStudyName("b");
+        study1.setStudyName("B");
         study1.setId(1);
         //
         Study study2 = new Study();
@@ -81,15 +81,15 @@ public class ViewStudiesComparatorTest extends TestCase {
         study1.setId(1);
         //
         Study study2 = new Study();
-        study2.setStudyName("a");
+        study2.setStudyName("A");
         study2.setId(2);
         //
         Study study3 = new Study();
-        study3.setStudyName("c");
+        study3.setStudyName("C");
         study3.setId(4);
         //
         Study study4 = new Study();
-        study4.setStudyName("c");
+        study4.setStudyName("C");
         study4.setId(3);
         //
         List<Study> studies = new ArrayList<Study>();
