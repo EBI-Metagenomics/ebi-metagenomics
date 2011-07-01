@@ -98,10 +98,10 @@ public class StudyViewController extends SecuredAbstractController<Study> {
      */
 
     private void populateModel(final ModelMap model, final Study study) {
-        List<Sample> samples = sampleDAO.retrieveSamplesByStudyId(study.getId());
+//        List<Sample> samples = sampleDAO.retrieveSamplesByStudyId(study.getId());
         String pageTitle = study.getStudyName() + " project";
         final ViewModelBuilder<StudyViewModel> builder = new StudyViewModelBuilder(sessionManager,
-                pageTitle, getBreadcrumbs(study), propertyContainer, study, samples);
+                pageTitle, getBreadcrumbs(study), propertyContainer, study, sampleDAO, studyDAO);
         final StudyViewModel studyModel = builder.getModel();
         model.addAttribute(StudyViewModel.MODEL_ATTR_NAME, studyModel);
     }

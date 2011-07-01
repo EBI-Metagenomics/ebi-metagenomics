@@ -1,5 +1,7 @@
 package uk.ac.ebi.interpro.metagenomics.memi.model.hibernate;
 
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -94,9 +96,9 @@ public abstract class Sample implements SecureEntity {
     private BigDecimal longitude;
 
     /**
-     * Associated publication. Deactivated lazy loading.
+     * Associated publication.
      */
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany
     private Set<Publication> publications;
 
     protected Sample() {
@@ -321,6 +323,11 @@ public abstract class Sample implements SecureEntity {
         @Override
         public String toString() {
             return type;
+        }
+
+        public String getUpperCaseString() {
+            String result = type.replace(" ", "_");
+            return result.toUpperCase();
         }
     }
 }

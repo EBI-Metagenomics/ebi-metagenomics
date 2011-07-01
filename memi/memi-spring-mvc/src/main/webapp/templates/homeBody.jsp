@@ -100,9 +100,9 @@
                         </c:otherwise>
                     </c:choose>
                     <p>
-                        <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search"/>" title="View all public samples" class="all">All public samples</a>
+                        <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search&startPosition=0"/>" title="View all public samples" class="all">All public samples</a>
                         <c:if test="${not empty model.mySamples}">
-                            <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=MY_SAMPLES&search=Search"/>" title="View all my samples" class="all">All my samples</a>
+                            <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=MY_SAMPLES&search=Search&startPosition=0"/>" title="View all my samples" class="all">All my samples</a>
                         </c:if>
                     </p>
                 </div>
@@ -142,7 +142,7 @@
                             </c:choose>
                         </p>
                     </c:forEach>
-                    <p><a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search"/>" title="View all public samples" class="all">View all samples</a></p>
+                    <p><a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search&startPosition=0"/>" title="View all public samples" class="all">View all samples</a></p>
                 </div>
             </c:otherwise>
         </c:choose>

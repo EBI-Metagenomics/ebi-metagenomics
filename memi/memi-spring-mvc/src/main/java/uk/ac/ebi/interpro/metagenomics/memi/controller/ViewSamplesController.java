@@ -19,9 +19,11 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.SamplesViewModel;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.SamplesViewPagination;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewSamplesModel;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.SamplesViewModelBuilder;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.tools.MemiTools;
 
 import javax.annotation.Resource;
@@ -64,11 +66,22 @@ public class ViewSamplesController extends AbstractController implements IMGCont
     public ModelAndView doGet(ModelMap model) {
         log.info("Requesting doGet...");
         //build and add the page model
-        populateModel(model, new SampleFilter());
-        model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((ViewSamplesModel) model.get(ViewModel.MODEL_ATTR_NAME)).getLoginForm());
-        model.addAttribute(SampleFilter.MODEL_ATTR_NAME, ((ViewSamplesModel) model.get(ViewModel.MODEL_ATTR_NAME)).getSampleFilter());
+        populateModel(model, new SampleFilter(), 0);
+        model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((SamplesViewModel) model.get(ViewModel.MODEL_ATTR_NAME)).getLoginForm());
+        model.addAttribute(SampleFilter.MODEL_ATTR_NAME, ((SamplesViewModel) model.get(ViewModel.MODEL_ATTR_NAME)).getSampleFilter());
         return new ModelAndView(VIEW_NAME, model);
     }
+
+//    @RequestMapping(value = "next", method = RequestMethod.GET)
+//    public ModelAndView doGetNext(ModelMap model,
+//                                  @RequestParam(required = false) final int startPosition) {
+//        log.info("Requesting doGet...");
+//        //build and add the page model
+//        populateModel(model, new SampleFilter(), new SamplesViewPagination(startPosition, 10));
+//        model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((SamplesViewModel) model.get(ViewModel.MODEL_ATTR_NAME)).getLoginForm());
+//        model.addAttribute(SampleFilter.MODEL_ATTR_NAME, ((SamplesViewModel) model.get(ViewModel.MODEL_ATTR_NAME)).getSampleFilter());
+//        return new ModelAndView(VIEW_NAME, model);
+//    }
 
 
     /**
@@ -79,13 +92,14 @@ public class ViewSamplesController extends AbstractController implements IMGCont
                                             @RequestParam(required = false) final SampleFilter.SampleVisibility sampleVisibility,
                                             @RequestParam(required = false) final String searchTerm,
                                             @RequestParam(required = false) final Sample.SampleType sampleType,
+                                            @RequestParam(required = true) final int startPosition,
                                             HttpServletResponse response) {
         log.info("Requesting exportSamples (GET method)...");
 
         final ModelMap model = new ModelMap();
         processRequestParams(filter, searchTerm, sampleVisibility, sampleType);
-        populateModel(model, filter);
-        Set<Sample> samples = ((ViewSamplesModel) model.get(ViewModel.MODEL_ATTR_NAME)).getSamples();
+        populateModel(model, filter, startPosition);
+        Collection<Sample> samples = ((SamplesViewModel) model.get(ViewModel.MODEL_ATTR_NAME)).getSamples();
 
         if (samples != null && samples.size() > 0) {
             //Create velocity spring_model
@@ -113,13 +127,14 @@ public class ViewSamplesController extends AbstractController implements IMGCont
                                         @RequestParam(required = false) final SampleFilter.SampleVisibility sampleVisibility,
                                         @RequestParam(required = false) final String searchTerm,
                                         @RequestParam(required = false) final Sample.SampleType sampleType,
+                                        @RequestParam(required = true) final int startPosition,
                                         HttpServletResponse response) {
         log.info("Requesting exportSamples of ViewSamplesController...");
 
         final ModelMap model = new ModelMap();
         processRequestParams(filter, searchTerm, sampleVisibility, sampleType);
-        populateModel(model, filter);
-        Set<Sample> samples = ((ViewSamplesModel) model.get(ViewModel.MODEL_ATTR_NAME)).getSamples();
+        populateModel(model, filter, startPosition);
+        Collection<Sample> samples = ((SamplesViewModel) model.get(ViewModel.MODEL_ATTR_NAME)).getSamples();
         if (samples != null && samples.size() > 0) {
             Set<String> samplesIDs = MemiTools.getSampleIds(samples);
             Class clazz = MemiTools.getTypeOfGenericSet(samples);
@@ -140,12 +155,13 @@ public class ViewSamplesController extends AbstractController implements IMGCont
                                  @RequestParam(required = false) final SampleFilter.SampleVisibility sampleVisibility,
                                  @RequestParam(required = false) final String searchTerm,
                                  @RequestParam(required = false) final Sample.SampleType sampleType,
+                                 @RequestParam(required = true) final int startPosition,
                                  ModelMap model) {
         log.info("Requesting doSearch of " + ViewSamplesController.class + "...");
 
         processRequestParams(filter, searchTerm, sampleVisibility, sampleType);
-        populateModel(model, filter);
-        model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((ViewSamplesModel) model.get(ViewModel.MODEL_ATTR_NAME)).getLoginForm());
+        populateModel(model, filter, startPosition);
+        model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((SamplesViewModel) model.get(ViewModel.MODEL_ATTR_NAME)).getLoginForm());
         return new ModelAndView(VIEW_NAME, model);
     }
 
@@ -173,10 +189,11 @@ public class ViewSamplesController extends AbstractController implements IMGCont
     /**
      * Creates the MG model and adds it to the specified model map.
      */
-    private void populateModel(ModelMap model, SampleFilter filter) {
-        final ViewSamplesModel subModel = MGModelFactory.getViewSamplesPageModel(sessionManager,
-                sampleDAO, filter, "Metagenomics View Samples", getBreadcrumbs(null), propertyContainer, getTableHeaderNames());
-        model.addAttribute(ViewModel.MODEL_ATTR_NAME, subModel);
+    private void populateModel(ModelMap model, SampleFilter filter, int startPosition) {
+        final ViewModelBuilder<SamplesViewModel> builder = new SamplesViewModelBuilder(sessionManager, "Metagenomics View Samples",
+                getBreadcrumbs(null), propertyContainer, getTableHeaderNames(), sampleDAO, filter, startPosition);
+        final SamplesViewModel samplesViewModel = builder.getModel();
+        model.addAttribute(ViewModel.MODEL_ATTR_NAME, samplesViewModel);
     }
 
     /**

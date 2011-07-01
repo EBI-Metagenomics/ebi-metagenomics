@@ -24,11 +24,11 @@
             <li class="greyblue">
                 <c:choose>
                     <c:when test="${empty model.submitter}">
-                        <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search"/>"
+                        <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search&startPosition=0"/>"
                            title="View samples">Samples</a>
                     </c:when>
                     <c:otherwise>
-                        <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_SAMPLES&search=Search"/>"
+                        <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_SAMPLES&search=Search&startPosition=0"/>"
                            title="View samples">Samples</a>
                     </c:otherwise>
                 </c:choose>

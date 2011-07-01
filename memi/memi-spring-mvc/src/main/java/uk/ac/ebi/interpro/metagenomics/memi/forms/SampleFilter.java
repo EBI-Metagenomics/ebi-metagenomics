@@ -20,6 +20,8 @@ public class SampleFilter {
 
     private String searchTerm;
 
+    private final int startPosition = 0;
+
     public SampleFilter() {
         this.sampleVisibility = SampleVisibility.ALL_PUBLISHED_SAMPLES;
     }
@@ -48,6 +50,10 @@ public class SampleFilter {
         this.sampleType = sampleType;
     }
 
+    public int getStartPosition() {
+        return startPosition;
+    }
+
     /**
      * ALL_SAMPLES: All published and my pre-published SAMPLES
      * ALL_PUBLISHED_SAMPLES: All published SAMPLES
@@ -71,6 +77,12 @@ public class SampleFilter {
         @Override
         public String toString() {
             return name;
+        }
+
+        public String getUpperCaseString() {
+            String result = name.replace(" ", "_");
+            result = result.replace("-", "");
+            return result.toUpperCase();
         }
     }
 }

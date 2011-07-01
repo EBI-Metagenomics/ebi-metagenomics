@@ -9,6 +9,13 @@ import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
 
 import java.util.List;
 
+/**
+ * Model builder class for ContactViewModel. See {@link ViewModelBuilder} for more information of how to use.
+ *
+ * @author Maxim Scheremetjew, EMBL-EBI, InterPro
+ * @version $Id$
+ * @since 1.0-SNAPSHOT
+ */
 public class ContactViewModelBuilder extends AbstractViewModelBuilder<ContactViewModel> {
 
     private final static Log log = LogFactory.getLog(ContactViewModelBuilder.class);

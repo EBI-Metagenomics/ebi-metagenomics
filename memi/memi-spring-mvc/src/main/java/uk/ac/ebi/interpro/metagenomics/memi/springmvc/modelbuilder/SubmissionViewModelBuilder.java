@@ -9,6 +9,13 @@ import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
 
 import java.util.List;
 
+/**
+ * Model builder class for SubmissionModel. See {@link ViewModelBuilder} for more information of how to use.
+ *
+ * @author Maxim Scheremetjew, EMBL-EBI, InterPro
+ * @version $Id$
+ * @since 1.0-SNAPSHOT
+ */
 public class SubmissionViewModelBuilder extends AbstractViewModelBuilder<SubmissionModel> {
 
     private final static Log log = LogFactory.getLog(SubmissionViewModelBuilder.class);
