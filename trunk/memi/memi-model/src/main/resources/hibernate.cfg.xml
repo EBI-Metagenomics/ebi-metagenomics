@@ -12,7 +12,7 @@
         <property name="connection.password">${jcp.jdbc.oracle.ipdev.password}</property>
         <property name="transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>
         <!-- Drop and re-create the database schema on startup -->
-        <property name="hbm2ddl.auto">update</property>
+        <property name="hbm2ddl.auto">validate</property>
         <!--  thread is the short name for
           org.hibernate.context.ThreadLocalSessionContext
           and let Hibernate bind the session automatically to the thread

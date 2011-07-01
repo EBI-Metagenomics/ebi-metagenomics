@@ -10,12 +10,10 @@ import org.hibernate.criterion.Restrictions;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.comparators.HomePageSamplesComparator;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.comparators.HomePageStudiesComparator;
-import uk.ac.ebi.interpro.metagenomics.memi.basic.comparators.ViewSamplesComparator;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.comparators.ViewStudiesComparator;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateSampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateStudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.feed.RomeClient;
-import uk.ac.ebi.interpro.metagenomics.memi.forms.SampleFilter;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.StudyFilter;
 import uk.ac.ebi.interpro.metagenomics.memi.googlechart.GoogleChartFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgFile;
@@ -176,19 +174,6 @@ public class MGModelFactory {
                 breadcrumbs, propertyContainer, tableHeaderNames);
     }
 
-    public static ViewSamplesModel getViewSamplesPageModel(SessionManager sessionMgr, HibernateSampleDAO sampleDAO,
-                                                           SampleFilter filter, String pageTitle,
-                                                           List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer,
-                                                           List<String> tableHeaderNames) {
-        log.info("Building instance of " + ViewSamplesModel.class + "...");
-        Submitter submitter = getSessionSubmitter(sessionMgr);
-        long submitterId = (submitter != null ? submitter.getSubmitterId() : -1L);
-        List<Sample> filteredSamples = getFilteredSamples(sampleDAO, filter, submitterId);
-        Set<Sample> sortedSamples = new TreeSet<Sample>(new ViewSamplesComparator());
-        sortedSamples.addAll(filteredSamples);
-        return new ViewSamplesModel(submitter, sortedSamples, pageTitle, breadcrumbs, propertyContainer, tableHeaderNames);
-    }
-
     /**
      * Returns a list of public studies limited by a specified number of rows and order by meta data received date.
      */
@@ -268,22 +253,6 @@ public class MGModelFactory {
         return result;
     }
 
-    private static List<Sample> getFilteredSamples(HibernateSampleDAO sampleDAO, SampleFilter filter, long submitterId) {
-        List<Sample> result = sampleDAO.retrieveFilteredSamples(buildFilterCriteria(filter, submitterId), getSampleClass(filter.getSampleType()));
-        if (result == null) {
-            result = new ArrayList<Sample>();
-        }
-        return result;
-    }
-
-    private static Class<? extends Sample> getSampleClass(Sample.SampleType type) {
-        if (type != null) {
-            return type.getClazz();
-        }
-        // Without knowing the type, return the superclass.
-        return Sample.class;
-    }
-
     /**
      * Builds a list of criteria for the specified study filter. These criteria can be used for
      * a Hibernate query.
@@ -328,47 +297,6 @@ public class MGModelFactory {
             crits.add(Restrictions.eq("isPublic", true));
         }
 
-        return crits;
-    }
-
-    /**
-     * Builds a list of criteria for the specified {@link uk.ac.ebi.interpro.metagenomics.memi.forms.SampleFilter}}.
-     * These criteria can be used for a Hibernate query.
-     */
-    private static List<Criterion> buildFilterCriteria(SampleFilter filter, long submitterId) {
-        String searchText = filter.getSearchTerm();
-        SampleFilter.SampleVisibility visibility = filter.getSampleVisibility();
-
-        List<Criterion> crits = new ArrayList<Criterion>();
-        //add search term criterion
-        if (searchText != null && searchText.trim().length() > 0) {
-            crits.add(Restrictions.or(Restrictions.ilike("sampleId", searchText, MatchMode.ANYWHERE), Restrictions.ilike("sampleName", searchText, MatchMode.ANYWHERE)));
-        }
-        //add is public criterion
-        if (submitterId > -1) {
-            //SELECT * FROM HB_STUDY where submitter_id=?;
-            if (visibility.equals(SampleFilter.SampleVisibility.MY_SAMPLES)) {
-                crits.add(Restrictions.eq("submitterId", submitterId));
-            }
-            //select * from hb_study where submitter_id=? and is_public=1;
-            else if (visibility.equals(SampleFilter.SampleVisibility.MY_PUBLISHED_SAMPLES)) {
-                crits.add(Restrictions.and(Restrictions.eq("isPublic", true), Restrictions.eq("submitterId", submitterId)));
-            }
-            //select * from hb_study where submitter_id=? and is_public=0;
-            else if (visibility.equals(SampleFilter.SampleVisibility.MY_PREPUBLISHED_SAMPLES)) {
-                crits.add(Restrictions.and(Restrictions.eq("isPublic", false), Restrictions.eq("submitterId", submitterId)));
-            }
-            //select * from hb_study where is_public=1;
-            else if (visibility.equals(SampleFilter.SampleVisibility.ALL_PUBLISHED_SAMPLES)) {
-                crits.add(Restrictions.eq("isPublic", true));
-            }
-            //select * from hb_study where is_public=1 or submitter_id=? and is_public=0;
-            else if (visibility.equals(SampleFilter.SampleVisibility.ALL_SAMPLES)) {
-                crits.add(Restrictions.or(Restrictions.and(Restrictions.eq("isPublic", false), Restrictions.eq("submitterId", submitterId)), Restrictions.eq("isPublic", true)));
-            }
-        } else {
-            crits.add(Restrictions.eq("isPublic", true));
-        }
         return crits;
     }
 

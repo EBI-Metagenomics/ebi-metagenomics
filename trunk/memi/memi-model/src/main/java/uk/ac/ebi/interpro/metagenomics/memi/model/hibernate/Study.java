@@ -59,9 +59,9 @@ public class Study implements SecureEntity {
     private Date lastMetadataReceived;
 
     /**
-     * Associated publication. Deactivated lazy loading.
+     * Associated publication.
      */
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany
     private Set<Publication> publications;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "study")

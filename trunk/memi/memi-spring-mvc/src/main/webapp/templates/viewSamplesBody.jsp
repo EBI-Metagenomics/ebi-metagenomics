@@ -48,18 +48,19 @@
                             <c:choose>
                                 <c:when test="${empty model.submitter}">
                                     | <a
-                                        href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search"/>"
+                                        href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search&startPosition=0"/>"
                                         title="View samples">Clear</a>
                                 </c:when>
                                 <c:otherwise>
                                     | <a
-                                        href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_SAMPLES&search=Search"/>"
+                                        href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_SAMPLES&search=Search&startPosition=0"/>"
                                         title="View samples">Clear</a>
                                 </c:otherwise>
                             </c:choose>
                         </div>
                     </div>
                 </fieldset>
+                <form:hidden path="startPosition"></form:hidden>
             </form:form>
         </div>
 
@@ -83,6 +84,35 @@
                    title="<spring:message code="viewSamples.download.anchor.title"/>">
                     <spring:message code="viewSamples.download.anchor.label"/></a>
             </div>
+
+            <%--Start of item pagination pattern--%>
+            <c:set var="prevId" value="< Prev"/>
+            <c:set var="nextId" value="Next >"/>
+            <c:set var="firstId" value="First"/>
+            <c:set var="lastId" value="Last"/>
+            <p>
+                <c:out value="${model.pagination.displayedItemRange}"/> of <c:out
+                    value="${model.pagination.totalItems} |"/>
+                <c:choose>
+                    <c:when test="${model.pagination.existPreviousStartPos}">
+                        <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=${model.sampleFilter.searchTerm}&sampleVisibility=${model.sampleFilter.sampleVisibility.upperCaseString}&search=Search&startPosition=${model.pagination.start}&sampleType=${model.sampleFilter.sampleType.upperCaseString}"/>"
+                           id="csv" title="First"><c:out value="${firstId}"/></a> |
+                        <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=${model.sampleFilter.searchTerm}&sampleVisibility=${model.sampleFilter.sampleVisibility.upperCaseString}&search=Search&startPosition=${model.pagination.previousStartPos}&sampleType=${model.sampleFilter.sampleType.upperCaseString}"/>"
+                           id="csv" title="Prev"><c:out value="${prevId}"/></a> |
+                    </c:when>
+                    <c:otherwise><c:out value="${firstId} | ${prevId} |"/></c:otherwise>
+                </c:choose>
+                <c:choose>
+                    <c:when test="${model.pagination.existNextStartPos}">
+                        <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=${model.sampleFilter.searchTerm}&sampleVisibility=${model.sampleFilter.sampleVisibility.upperCaseString}&search=Search&startPosition=${model.pagination.nextStartPos}&sampleType=${model.sampleFilter.sampleType.upperCaseString}"/>"
+                           id="csv" title="Next"><c:out value="${nextId}"/></a> |
+                        <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=${model.sampleFilter.searchTerm}&sampleVisibility=${model.sampleFilter.sampleVisibility.upperCaseString}&search=Search&startPosition=${model.pagination.lastLinkPosition}&sampleType=${model.sampleFilter.sampleType.upperCaseString}"/>"
+                           id="csv" title="Last"><c:out value="${lastId}"/></a>
+                    </c:when>
+                    <c:otherwise><c:out value="${nextId} | ${lastId}"/></c:otherwise>
+                </c:choose>
+            </p>
+            <%--End of item pagination pattern--%>
 
             <table border="1" class="result">
                 <thead>

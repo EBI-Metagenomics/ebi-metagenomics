@@ -6,8 +6,8 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Represents the model for the list studies page.
@@ -16,11 +16,11 @@ import java.util.Set;
  * @version $Id$
  * @since 1.0-SNAPSHOT
  */
-public class ViewSamplesModel extends ViewModel {
+public class SamplesViewModel extends ViewModel {
 
     private SampleFilter sampleFilter;
 
-    private Set<Sample> samples;
+    private Collection<Sample> samples;
 
     private List<SampleFilter.SampleVisibility> sampleVisibilityList;
 
@@ -32,20 +32,24 @@ public class ViewSamplesModel extends ViewModel {
      */
     private List<String> tableHeaderNames;
 
+    private SamplesViewPagination pagination;
 
-    ViewSamplesModel(Submitter submitter, Set<Sample> samples, String pageTitle, List<Breadcrumb> breadcrumbs,
-                     MemiPropertyContainer propertyContainer, List<String> tableHeaderNames) {
-        this(submitter, samples, new SampleFilter(), pageTitle, breadcrumbs, propertyContainer, tableHeaderNames);
+
+    public SamplesViewModel(Submitter submitter, Collection<Sample> samples, String pageTitle, List<Breadcrumb> breadcrumbs,
+                            MemiPropertyContainer propertyContainer, List<String> tableHeaderNames, SamplesViewPagination pagination, SampleFilter filter) {
+        this(submitter, samples, filter, pageTitle, breadcrumbs, propertyContainer, tableHeaderNames, pagination);
     }
 
-    ViewSamplesModel(Submitter submitter, Set<Sample> samples, SampleFilter filter, String pageTitle,
-                     List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer, List<String> tableHeaderNames) {
+    SamplesViewModel(Submitter submitter, Collection<Sample> samples, SampleFilter filter, String pageTitle,
+                     List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer, List<String> tableHeaderNames,
+                     SamplesViewPagination pagination) {
         super(submitter, pageTitle, breadcrumbs, propertyContainer);
         this.sampleFilter = filter;
         this.samples = samples;
         this.sampleVisibilityList = getDefaultStudyVisibilityList();
         this.sampleTypes = getDefaultSampleTypes();
         this.tableHeaderNames = tableHeaderNames;
+        this.pagination = pagination;
     }
 
     public List<String> getTableHeaderNames() {
@@ -60,11 +64,11 @@ public class ViewSamplesModel extends ViewModel {
         this.sampleFilter = sampleFilter;
     }
 
-    public Set<Sample> getSamples() {
+    public Collection<Sample> getSamples() {
         return samples;
     }
 
-    public void setSamples(Set<Sample> samples) {
+    public void setSamples(Collection<Sample> samples) {
         this.samples = samples;
     }
 
@@ -82,6 +86,14 @@ public class ViewSamplesModel extends ViewModel {
 
     public void setSampleTypes(List<Sample.SampleType> sampleTypes) {
         this.sampleTypes = sampleTypes;
+    }
+
+    public SamplesViewPagination getPagination() {
+        return pagination;
+    }
+
+    public void setPagination(SamplesViewPagination pagination) {
+        this.pagination = pagination;
     }
 
     private List<SampleFilter.SampleVisibility> getDefaultStudyVisibilityList() {

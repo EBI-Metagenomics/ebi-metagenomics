@@ -42,7 +42,7 @@ public interface HibernateSampleDAO extends ISampleStudyDAO<Sample> {
     /**
      * Returns a list of public samples where the submitter ID IS equal the specified submitter ID.
      *
-     * @param submitterId       Submitter ID for the IS equal restriction.
+     * @param submitterId Submitter ID for the IS equal restriction.
      */
     List<Sample> retrieveSamplesBySubmitter(long submitterId);
 
@@ -58,7 +58,7 @@ public interface HibernateSampleDAO extends ISampleStudyDAO<Sample> {
     /**
      * Returns a list of public samples where the submitter ID IS NOT equal the specified submitter ID.
      *
-     * @param submitterId       Submitter ID for the NOT equal restriction.
+     * @param submitterId Submitter ID for the NOT equal restriction.
      */
     List<Sample> retrievePublicSamplesWithoutSubId(long submitterId);
 
@@ -70,7 +70,9 @@ public interface HibernateSampleDAO extends ISampleStudyDAO<Sample> {
      * @param clazz
      * @return
      */
-    List<Sample> retrieveFilteredSamples(List<Criterion> crits, Class<? extends Sample> clazz);
+    List<Sample> retrieveFilteredSamples(List<Criterion> crits, Class<? extends Sample> clazz, int startPosition, int pageSize);
+
+    Long countFilteredSamples(List<Criterion> crits, Class<? extends Sample> clazz);
 
     Sample readByStringId(String sampleId);
 

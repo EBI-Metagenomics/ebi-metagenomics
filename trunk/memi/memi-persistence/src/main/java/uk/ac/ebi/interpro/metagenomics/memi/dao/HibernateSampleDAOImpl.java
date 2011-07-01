@@ -100,7 +100,14 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Long count() {
+        Session session = sessionFactory.getCurrentSession();
+        if (session != null) {
+            Criteria criteria = session.createCriteria(Sample.class);
+            criteria.setProjection(Projections.rowCount());
+            return ((Long) criteria.list().get(0)).longValue();
+        }
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
@@ -246,7 +253,30 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Sample> retrieveFilteredSamples(List<Criterion> crits, Class<? extends Sample> clazz) {
+    public List<Sample> retrieveFilteredSamples(List<Criterion> crits, Class<? extends Sample> clazz, int startPosition, int pageSize) {
+        Session session = sessionFactory.getCurrentSession();
+        Criteria criteria = null;
+        if (session != null) {
+            criteria = session.createCriteria(clazz);
+            //add criteria
+            for (Criterion crit : crits) {
+                criteria.add(crit);
+            }
+        }
+        if (criteria != null) {
+            //add distinct criterion
+//            criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+            criteria.addOrder(Order.asc("sampleName").ignoreCase());
+            criteria.setFirstResult(startPosition);
+            criteria.setMaxResults(pageSize);
+
+            return (List<Sample>) criteria.list();
+        }
+        return new ArrayList<Sample>();
+    }
+
+    @Transactional(readOnly = true)
+    public Long countFilteredSamples(List<Criterion> crits, Class<? extends Sample> clazz) {
         Session session = sessionFactory.getCurrentSession();
         Criteria criteria = null;
         if (session != null) {
@@ -259,9 +289,10 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
         if (criteria != null) {
             //add distinct criterion
             criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-            return (List<Sample>) criteria.list();
+            criteria.setProjection(Projections.rowCount());
+            return (Long) criteria.list().get(0);
         }
-        return new ArrayList<Sample>();
+        return null;
     }
 
     @Override
