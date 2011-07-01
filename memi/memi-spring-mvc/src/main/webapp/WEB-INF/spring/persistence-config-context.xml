@@ -35,9 +35,6 @@
                 <prop key="hibernate.show_sql">false</prop>
                 <prop key="hibernate.format_sql">false</prop>
                 <prop key="hibernate.use_sql_comments">false</prop>
-                <!--Enable Hibernate’s automatic session context management-->
-                <prop key="current_session_context_class">thread</prop>
-                <prop key="hibernate.transaction.auto_close_session">true</prop>
                 <!--Do not use the create value before you build up a sql dump of the hibernate tables-->
                 <prop key="hibernate.hbm2ddl.auto">validate</prop>
                 <!--Connection Pooling-->
@@ -81,4 +78,5 @@
     <bean name="fileInfoDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.EmgLogFileInfoDAOImpl">
         <property name="dataSource" ref="memiDataSource"/>
     </bean>
+
 </beans>
