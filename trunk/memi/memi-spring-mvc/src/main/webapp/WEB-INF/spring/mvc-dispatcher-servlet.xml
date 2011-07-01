@@ -19,6 +19,17 @@
     <!-- Configures the @Controller programming spring_model -->
     <mvc:annotation-driven/>
 
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="org.springframework.orm.hibernate3.support.OpenSessionInViewInterceptor"
+                  name="openSessionInViewInterceptor">
+                <property name="sessionFactory" ref="hibernateSessionFactory">
+                </property>
+            </bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
     <!-- This Spring MVC tag allows you to request all images of the web application -->
     <!-- E.g. using URL: http://localhost:8082/metagenomics/img/logo_8.png-->
     <mvc:resources mapping="/img/*.*" location="/img/"/>
