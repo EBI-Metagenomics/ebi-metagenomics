@@ -20,7 +20,6 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.SamplesViewModel;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.SamplesViewPagination;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.SamplesViewModelBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder;

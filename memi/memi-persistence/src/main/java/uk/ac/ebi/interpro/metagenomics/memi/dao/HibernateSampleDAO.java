@@ -3,7 +3,6 @@ package uk.ac.ebi.interpro.metagenomics.memi.dao;
 import org.hibernate.criterion.Criterion;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 
-import java.util.Collection;
 import java.util.List;
 
 /**
