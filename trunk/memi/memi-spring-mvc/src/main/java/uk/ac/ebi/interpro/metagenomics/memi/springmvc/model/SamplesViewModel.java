@@ -20,7 +20,12 @@ public class SamplesViewModel extends ViewModel {
 
     private SampleFilter sampleFilter;
 
+    /* Collection of samples which are shown in the table */
     private Collection<Sample> samples;
+
+    /* Collection of samples which are necessary for download. */
+    private Collection<Sample> downloadableSamples;
+
 
     private List<SampleFilter.SampleVisibility> sampleVisibilityList;
 
@@ -35,17 +40,18 @@ public class SamplesViewModel extends ViewModel {
     private SamplesViewPagination pagination;
 
 
-    public SamplesViewModel(Submitter submitter, Collection<Sample> samples, String pageTitle, List<Breadcrumb> breadcrumbs,
+    public SamplesViewModel(Submitter submitter, Collection<Sample> samples, Collection<Sample> downloadableSamples, String pageTitle, List<Breadcrumb> breadcrumbs,
                             MemiPropertyContainer propertyContainer, List<String> tableHeaderNames, SamplesViewPagination pagination, SampleFilter filter) {
-        this(submitter, samples, filter, pageTitle, breadcrumbs, propertyContainer, tableHeaderNames, pagination);
+        this(submitter, samples, downloadableSamples, filter, pageTitle, breadcrumbs, propertyContainer, tableHeaderNames, pagination);
     }
 
-    SamplesViewModel(Submitter submitter, Collection<Sample> samples, SampleFilter filter, String pageTitle,
+    SamplesViewModel(Submitter submitter, Collection<Sample> samples, Collection<Sample> downloadableSamples, SampleFilter filter, String pageTitle,
                      List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer, List<String> tableHeaderNames,
                      SamplesViewPagination pagination) {
         super(submitter, pageTitle, breadcrumbs, propertyContainer);
         this.sampleFilter = filter;
         this.samples = samples;
+        this.downloadableSamples = downloadableSamples;
         this.sampleVisibilityList = getDefaultStudyVisibilityList();
         this.sampleTypes = getDefaultSampleTypes();
         this.tableHeaderNames = tableHeaderNames;
@@ -94,6 +100,10 @@ public class SamplesViewModel extends ViewModel {
 
     public void setPagination(SamplesViewPagination pagination) {
         this.pagination = pagination;
+    }
+
+    public Collection<Sample> getDownloadableSamples() {
+        return downloadableSamples;
     }
 
     private List<SampleFilter.SampleVisibility> getDefaultStudyVisibilityList() {

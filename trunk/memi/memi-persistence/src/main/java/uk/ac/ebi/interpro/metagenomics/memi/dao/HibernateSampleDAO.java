@@ -63,15 +63,35 @@ public interface HibernateSampleDAO extends ISampleStudyDAO<Sample> {
     List<Sample> retrievePublicSamplesWithoutSubId(long submitterId);
 
     /**
-     * Returns a list of samples by the specified criteria.
+     * Returns a list of samples filtered by the specified criteria and ordered by sample name (ascending). This method is used for pagination.
+     *
+     * @param crits         A list of criteria which should be add to the Hibernate query. Criteria must be
+     *                      applicable to the sample class, but not to the sub classes.
+     * @param clazz         Class of type Sample.
+     * @param startPosition Used for pagination. In terms of Oracle this parameter specifies the row number of the first entry which should be selected.
+     * @param pageSize      Used for pagination.Specifies how many entries should be selected for the specified page.
+     * @return
+     */
+    List<Sample> retrieveFilteredSamples(List<Criterion> crits, Class<? extends Sample> clazz, int startPosition, int pageSize, String orderedByColumnWithName);
+
+    /**
+     * Returns a list of samples filtered by the specified criteria and ordered by sample name (ascending).
      *
      * @param crits A list of criteria which should be add to the Hibernate query. Criteria must be
      *              applicable to the sample class, but not to the sub classes.
-     * @param clazz
+     * @param clazz Class of type Sample.
      * @return
      */
-    List<Sample> retrieveFilteredSamples(List<Criterion> crits, Class<? extends Sample> clazz, int startPosition, int pageSize);
+    List<Sample> retrieveFilteredSamples(List<Criterion> crits, Class<? extends Sample> clazz, String orderedByColumnWithName);
 
+    /**
+     * Counts the result size of the specified query.
+     *
+     * @param crits A list of criteria which should be add to the Hibernate query. Criteria must be
+     *              applicable to the sample class, but not to the sub classes.
+     * @param clazz Class of type Sample.
+     * @return
+     */
     Long countFilteredSamples(List<Criterion> crits, Class<? extends Sample> clazz);
 
     Sample readByStringId(String sampleId);

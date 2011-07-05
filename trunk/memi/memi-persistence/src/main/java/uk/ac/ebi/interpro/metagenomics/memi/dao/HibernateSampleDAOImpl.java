@@ -251,22 +251,10 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
         return new ArrayList<Sample>();
     }
 
-    @Override
     @Transactional(readOnly = true)
-    public List<Sample> retrieveFilteredSamples(List<Criterion> crits, Class<? extends Sample> clazz, int startPosition, int pageSize) {
-        Session session = sessionFactory.getCurrentSession();
-        Criteria criteria = null;
-        if (session != null) {
-            criteria = session.createCriteria(clazz);
-            //add criteria
-            for (Criterion crit : crits) {
-                criteria.add(crit);
-            }
-        }
+    public List<Sample> retrieveFilteredSamples(List<Criterion> crits, Class<? extends Sample> clazz, int startPosition, int pageSize, String orderedByColumnWithName) {
+        Criteria criteria = setUpFilteredSamplesCriteria(crits, clazz, orderedByColumnWithName);
         if (criteria != null) {
-            //add distinct criterion
-//            criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-            criteria.addOrder(Order.asc("sampleName").ignoreCase());
             criteria.setFirstResult(startPosition);
             criteria.setMaxResults(pageSize);
 
@@ -276,7 +264,33 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
     }
 
     @Transactional(readOnly = true)
-    public Long countFilteredSamples(List<Criterion> crits, Class<? extends Sample> clazz) {
+    public List<Sample> retrieveFilteredSamples(List<Criterion> crits, Class<? extends Sample> clazz, String orderedByColumnWithName) {
+        Criteria criteria = setUpFilteredSamplesCriteria(crits, clazz, orderedByColumnWithName);
+        if (criteria != null) {
+            return (List<Sample>) criteria.list();
+        }
+        return new ArrayList<Sample>();
+    }
+
+    private Criteria setUpFilteredSamplesCriteria(List<Criterion> crits, Class<? extends Sample> clazz, String orderedByColumnWithName) {
+        Session session = sessionFactory.getCurrentSession();
+        Criteria criteria = null;
+        if (session != null) {
+            criteria = session.createCriteria(clazz);
+            //add criteria
+            for (Criterion crit : crits) {
+                criteria.add(crit);
+            }
+            if (criteria != null) {
+                criteria.addOrder(Order.asc(orderedByColumnWithName).ignoreCase());
+            }
+        }
+        return criteria;
+    }
+
+    @Transactional(readOnly = true)
+    public Long countFilteredSamples
+            (List<Criterion> crits, Class<? extends Sample> clazz) {
         Session session = sessionFactory.getCurrentSession();
         Criteria criteria = null;
         if (session != null) {
@@ -296,12 +310,14 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
     }
 
     @Override
-    public int deleteAll() {
+    public int deleteAll
+            () {
         return 0;
     }
 
     @Override
-    public Long getMaximumPrimaryKey() {
+    public Long getMaximumPrimaryKey
+            () {
         return null;
     }
 }

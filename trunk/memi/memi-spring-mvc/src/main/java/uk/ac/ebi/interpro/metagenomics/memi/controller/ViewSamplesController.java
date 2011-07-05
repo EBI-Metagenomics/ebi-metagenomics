@@ -99,7 +99,7 @@ public class ViewSamplesController extends AbstractController implements IMGCont
         final ModelMap model = new ModelMap();
         processRequestParams(filter, searchTerm, sampleVisibility, sampleType);
         populateModel(model, filter, startPosition);
-        Collection<Sample> samples = ((SamplesViewModel) model.get(ViewModel.MODEL_ATTR_NAME)).getSamples();
+        Collection<Sample> samples = ((SamplesViewModel) model.get(ViewModel.MODEL_ATTR_NAME)).getDownloadableSamples();
 
         if (samples != null && samples.size() > 0) {
             //Create velocity spring_model
