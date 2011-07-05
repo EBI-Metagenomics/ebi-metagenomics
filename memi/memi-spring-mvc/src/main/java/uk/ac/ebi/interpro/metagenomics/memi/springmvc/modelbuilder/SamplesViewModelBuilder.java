@@ -69,18 +69,18 @@ public class SamplesViewModelBuilder extends AbstractViewModelBuilder<SamplesVie
         List<Sample> filteredSamples = getFilteredSamples(sampleDAO, filterCriteria);
         long filteredSampleCount = sampleDAO.countFilteredSamples(filterCriteria, getSampleClass(filter.getSampleType()));
         SamplesViewPagination pagination = new SamplesViewPagination(startPosition, filteredSampleCount, PAGE_SIZE);
+        //Get downloadable samples
+        List<Sample> downloadableSamples = sampleDAO.retrieveFilteredSamples(filterCriteria, getSampleClass(filter.getSampleType()), "sampleName");
 
-        return new SamplesViewModel(submitter, filteredSamples, pageTitle, breadcrumbs, propertyContainer, tableHeaderNames, pagination, filter);
+        return new SamplesViewModel(submitter, filteredSamples, downloadableSamples, pageTitle, breadcrumbs, propertyContainer, tableHeaderNames, pagination, filter);
     }
 
     private List<Sample> getFilteredSamples(HibernateSampleDAO sampleDAO, List<Criterion> filterCriteria) {
         List<Sample> result = sampleDAO.retrieveFilteredSamples(filterCriteria, getSampleClass(filter.getSampleType()),
-                startPosition, PAGE_SIZE);
-        if (result == null) {
-            result = new ArrayList<Sample>();
-        }
+                startPosition, PAGE_SIZE, "sampleName");
         return result;
     }
+
 
     private Class<? extends Sample> getSampleClass(Sample.SampleType type) {
         if (type != null) {
