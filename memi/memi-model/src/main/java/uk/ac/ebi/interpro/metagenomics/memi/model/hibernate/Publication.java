@@ -38,7 +38,7 @@ public class Publication {
     @Column(name = "PUBLISHED_YEAR", length = 4)
     private Integer year;
 
-    @Column(name = "PUB_TITLE", length = 740)
+    @Column(name = "PUB_TITLE", length = 740, nullable = false)
     private String pubTitle;
 
     @Column(name = "URL", length = 740)
@@ -187,6 +187,41 @@ public class Publication {
     public String getAuthors() {
         return authors;
     }
+
+    /**
+     * Returns a maximum of 5 authors.
+     */
+    @Transient
+    public String getShortAuthors() {
+        if (authors != null && authors.length() > 0) {
+            int pos = getNthOccurrence(authors, ',', 5);
+            if (pos == -1) {
+                return getAuthors();
+            } else {
+                return getAuthors().substring(0, pos);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Returns the nth occurrence of a specified character (c) in a specified string (str).
+     *
+     * @param str The string to look for the occurrence of character c.
+     * @param c   The character who's occurrence is of interest
+     * @param nth The nth occurrence.
+     */
+    @Transient
+    protected int getNthOccurrence(String str, char c, int nth) {
+        if (str != null) {
+            int pos = str.indexOf(c, 0);
+            while (nth-- > 1 && pos != -1)
+                pos = str.indexOf(c, pos + 1);
+            return pos;
+        }
+        return -1;
+    }
+
 
     public void setAuthors(String authors) {
         this.authors = authors;
