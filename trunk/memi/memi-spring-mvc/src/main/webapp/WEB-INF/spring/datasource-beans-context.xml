@@ -9,7 +9,7 @@
     <!--Metagenomics datasource-->
     <bean id="memiDataSource" class="org.apache.commons.dbcp.BasicDataSource"
           destroy-method="close">
-        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+        <property name="driverClassName" value="${jcp.jdbc.oracle.driverClassName}"/>
         <property name="url" value="${jcp.jdbc.oracle.ipdev.url}"/>
         <property name="username" value="${jcp.jdbc.oracle.ipdev.username}"/>
         <property name="password" value="${jcp.jdbc.oracle.ipdev.password}"/>
@@ -30,7 +30,7 @@
     <!--Data source for ADEV-->
     <bean id="enaLoginDataSource"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="oracle.jdbc.OracleDriver"/>
+        <property name="driverClassName" value="${jcp.jdbc.oracle.driverClassName}"/>
         <property name="url" value="${jcp.jdbc.oracle.apro.url}"/>
         <property name="username" value="${jcp.jdbc.oracle.apro.username}"/>
         <property name="password" value="${jcp.jdbc.oracle.apro.password}"/>
