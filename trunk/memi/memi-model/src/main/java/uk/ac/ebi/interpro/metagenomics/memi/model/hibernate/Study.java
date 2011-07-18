@@ -28,7 +28,7 @@ public class Study implements SecureEntity {
 //            allocationSize = 1
     private long id;
 
-    @Column(name = "EXT_STUDY_ID", length = 18)
+    @Column(name = "EXT_STUDY_ID", length = 18, nullable = false)
     private String studyId;
 
     @Column(name = "STUDY_NAME")

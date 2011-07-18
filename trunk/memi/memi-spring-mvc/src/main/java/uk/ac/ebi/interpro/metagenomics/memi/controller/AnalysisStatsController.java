@@ -123,7 +123,7 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
      */
     protected void populateModel(final ModelMap model, final Sample sample, boolean isReturnSizeLimit) {
         String pageTitle = "Results " + sample.getSampleName();
-        List<EmgFile> emgFiles = fileInfoDAO.getFilesBySampleId(sample.getSampleId());
+        List<EmgFile> emgFiles = fileInfoDAO.getFilesBySampleId(sample.getId());
         //TODO: For the moment the system only allows to represent one file on the analysis page, but
         //in the future it should be possible to represent all different data types (genomic, transcripomic)
         EmgFile emgFile = (emgFiles.size() > 0 ? emgFiles.get(0) : null);
