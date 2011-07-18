@@ -13,11 +13,11 @@ import java.util.List;
  */
 public interface EmgLogFileInfoDAO {
 
-    public List<String> getFileIdsBySampleId(String sampleId);
+    public List<String> getFileIdsBySampleId(long sampleId);
 
-    public List<String> getFileNamesBySampleId(String sampleId);
+    public List<String> getFileNamesBySampleId(long sampleId);
 
-    public List<EmgFile> getFilesBySampleId(String sampleId);
+    public List<EmgFile> getFilesBySampleId(long sampleId);
 
-    public List<String> getSraIDs(String sampleId);
+    public List<String> getSraIDs(long sampleId);
 }

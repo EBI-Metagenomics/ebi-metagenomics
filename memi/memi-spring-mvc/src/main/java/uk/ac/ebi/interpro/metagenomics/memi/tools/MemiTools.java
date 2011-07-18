@@ -52,7 +52,7 @@ public class MemiTools {
     public static List<String> getArchivedSeqs(EmgLogFileInfoDAO fileInfoDAO, Sample sample) {
         List<String> result = new ArrayList<String>();
         if (fileInfoDAO != null && sample != null) {
-            result = fileInfoDAO.getSraIDs(sample.getSampleId());
+            result = fileInfoDAO.getSraIDs(sample.getId());
         }
         return result;
     }
