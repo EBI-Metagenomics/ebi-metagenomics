@@ -14,7 +14,7 @@
                    title="<spring:message code="analysisStatsView.label.download.i5.matches.detailed"/>"/>
                 <spring:message code="analysisStatsView.label.download.i5.matches.detailed"/>
                 </a>--%>
-                <a href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportIPRFile/${model.emgFile.fileName}"/>"
+                <a href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportIPRFile/"/>"
                    id="csv" title="<spring:message code="analysisStatsView.label.download.i5.table.view"/>"/>
                 <spring:message code="analysisStatsView.label.download.i5.table.view"/>
                 </a>
