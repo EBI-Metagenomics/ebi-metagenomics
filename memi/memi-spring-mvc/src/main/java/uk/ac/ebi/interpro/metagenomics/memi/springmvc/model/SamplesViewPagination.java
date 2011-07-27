@@ -1,7 +1,8 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
 
 /**
- * TODO: Description
+ * Represents an object which handles pagination in general.
+ * TODO: Comment Maxim - This should be general pattern. If so, then give it a more general name and use it also for studies view and study view
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @version $Id$

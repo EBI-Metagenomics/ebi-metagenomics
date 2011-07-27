@@ -92,25 +92,28 @@
             <c:set var="lastId" value="Last"/>
             <p>
                 <c:out value="${model.pagination.displayedItemRange}"/> of <c:out
-                    value="${model.pagination.totalItems} |"/>
-                <c:choose>
-                    <c:when test="${model.pagination.existPreviousStartPos}">
-                        <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=${model.sampleFilter.searchTerm}&sampleVisibility=${model.sampleFilter.sampleVisibility.upperCaseString}&search=Search&startPosition=${model.pagination.start}&sampleType=${model.sampleFilter.sampleType.upperCaseString}"/>"
-                           id="csv" title="First"><c:out value="${firstId}"/></a> |
-                        <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=${model.sampleFilter.searchTerm}&sampleVisibility=${model.sampleFilter.sampleVisibility.upperCaseString}&search=Search&startPosition=${model.pagination.previousStartPos}&sampleType=${model.sampleFilter.sampleType.upperCaseString}"/>"
-                           id="csv" title="Prev"><c:out value="${prevId}"/></a> |
-                    </c:when>
-                    <c:otherwise><c:out value="${firstId} | ${prevId} |"/></c:otherwise>
-                </c:choose>
-                <c:choose>
-                    <c:when test="${model.pagination.existNextStartPos}">
-                        <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=${model.sampleFilter.searchTerm}&sampleVisibility=${model.sampleFilter.sampleVisibility.upperCaseString}&search=Search&startPosition=${model.pagination.nextStartPos}&sampleType=${model.sampleFilter.sampleType.upperCaseString}"/>"
-                           id="csv" title="Next"><c:out value="${nextId}"/></a> |
-                        <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=${model.sampleFilter.searchTerm}&sampleVisibility=${model.sampleFilter.sampleVisibility.upperCaseString}&search=Search&startPosition=${model.pagination.lastLinkPosition}&sampleType=${model.sampleFilter.sampleType.upperCaseString}"/>"
-                           id="csv" title="Last"><c:out value="${lastId}"/></a>
-                    </c:when>
-                    <c:otherwise><c:out value="${nextId} | ${lastId}"/></c:otherwise>
-                </c:choose>
+                    value="${model.pagination.totalItems}"/>
+                <c:if test="${model.pagination.totalItems > model.pagination.pageSize}">
+                    <c:choose>
+                        <c:when test="${model.pagination.existPreviousStartPos}">
+                            <c:out value=" | "/>
+                            <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=${model.sampleFilter.searchTerm}&sampleVisibility=${model.sampleFilter.sampleVisibility.upperCaseString}&search=Search&startPosition=${model.pagination.start}&sampleType=${model.sampleFilter.sampleType.upperCaseString}"/>"
+                               id="csv" title="First"><c:out value="${firstId}"/></a> |
+                            <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=${model.sampleFilter.searchTerm}&sampleVisibility=${model.sampleFilter.sampleVisibility.upperCaseString}&search=Search&startPosition=${model.pagination.previousStartPos}&sampleType=${model.sampleFilter.sampleType.upperCaseString}"/>"
+                               id="csv" title="Prev"><c:out value="${prevId}"/></a> |
+                        </c:when>
+                        <c:otherwise><c:out value="${firstId} | ${prevId} |"/></c:otherwise>
+                    </c:choose>
+                    <c:choose>
+                        <c:when test="${model.pagination.existNextStartPos}">
+                            <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=${model.sampleFilter.searchTerm}&sampleVisibility=${model.sampleFilter.sampleVisibility.upperCaseString}&search=Search&startPosition=${model.pagination.nextStartPos}&sampleType=${model.sampleFilter.sampleType.upperCaseString}"/>"
+                               id="csv" title="Next"><c:out value="${nextId}"/></a> |
+                            <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=${model.sampleFilter.searchTerm}&sampleVisibility=${model.sampleFilter.sampleVisibility.upperCaseString}&search=Search&startPosition=${model.pagination.lastLinkPosition}&sampleType=${model.sampleFilter.sampleType.upperCaseString}"/>"
+                               id="csv" title="Last"><c:out value="${lastId}"/></a>
+                        </c:when>
+                        <c:otherwise><c:out value="${nextId} | ${lastId}"/></c:otherwise>
+                    </c:choose>
+                </c:if>
             </p>
             <%--End of item pagination pattern--%>
 
