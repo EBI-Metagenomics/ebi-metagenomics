@@ -224,7 +224,7 @@
     <li>Image: Coli Bacteria, by renjith krishnan [<a
             href="http://www.freedigitalphotos.net/images/view_photog.php?photogid=721" class="ext">FreeDigitalPhotos.net</a>]
     </li>
-    <li>Image: Honeycomb, by Apple\'s Eyes Studio [<a
+    <li>Image: Honeycomb, by Apple's Eyes Studio [<a
             href="http://www.freedigitalphotos.net/images/view_photog.php?photogid=2000" class="ext">FreeDigitalPhotos.net</a>]
     </li>
     <li>Image: Oupeye (Belgium) biological sewage treatment, by User:Xofc [<a
