@@ -12,6 +12,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.StudyViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -36,7 +37,11 @@ public class StudyViewModelBuilder extends AbstractViewModelBuilder<StudyViewMod
 
     private HibernateSampleDAO sampleDAO;
 
-//    private HibernateStudyDAO studyDAO;
+    private HibernateStudyDAO studyDAO;
+
+    private Set<Publication> relatedLinks;
+
+    private Set<Publication> relatedPublications;
 
 
     public StudyViewModelBuilder(SessionManager sessionMgr, String pageTitle, List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer,
@@ -47,7 +52,10 @@ public class StudyViewModelBuilder extends AbstractViewModelBuilder<StudyViewMod
         this.propertyContainer = propertyContainer;
         this.study = study;
         this.sampleDAO = sampleDAO;
-//        this.studyDAO = studyDAO;
+        this.relatedLinks = new HashSet<Publication>();
+        this.relatedPublications = new HashSet<Publication>();
+
+        this.studyDAO = studyDAO;
     }
 
     @Override
@@ -55,7 +63,22 @@ public class StudyViewModelBuilder extends AbstractViewModelBuilder<StudyViewMod
         log.info("Building instance of " + StudyViewModel.class + "...");
         List<Sample> samples = sampleDAO.retrieveSamplesByStudyId(study.getId());
 //        Set<Publication> publications = studyDAO.retrieveStudyPublications(study.getId());
+        getPublications();
         return new StudyViewModel(getSessionSubmitter(sessionMgr), study, samples, pageTitle,
-                breadcrumbs, propertyContainer);
+                breadcrumbs, propertyContainer, relatedPublications, relatedLinks);
+    }
+
+    private void getPublications() {
+        for(Publication pub: study.getPublications())
+        {
+            if(pub.getPubType()=='1')
+            {
+                relatedPublications.add(pub);
+            }
+            else
+            {
+                relatedLinks.add(pub);
+            }
+        }
     }
 }
