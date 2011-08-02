@@ -1,18 +1,23 @@
 package uk.ac.ebi.interpro.metagenomics.memi.model.hibernate;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import javax.persistence.*;
+import java.util.Comparator;
 
 
 /**
- * Hibernate generated publication table.
- * TODO: Check why SequenceGenerator parameter allocationSize does not work
+ * Represents a publication object. Please notice, this table is a copy of already existing publication table in InterPro.
+ * The only difference is that the publication type was transformed from a char type to a enum.
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @since 1.0-SNAPSHOT
  */
 @Entity
 @Table(name = "PUBLICATION")
-public class Publication {
+public class Publication implements Comparator<Publication> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PUB_SEQ")
@@ -23,8 +28,9 @@ public class Publication {
 //        allocationSize = 1
     private long pubId;
 
-    @Column(name = "PUB_TYPE", nullable = false)
-    private char pubType;
+    @Column(name = "PUB_TYPE", length = 30, nullable = false)
+    @Enumerated(EnumType.STRING)
+    private PublicationType pubType;
 
     @Column(name = "ISBN", length = 10)
     private String isbn;
@@ -72,6 +78,19 @@ public class Publication {
     @Lob
     private String pubAbstract;
 
+    protected Publication() {
+    }
+
+    public Publication(PublicationType pubType, String isbn, String volume, Integer year, String pubTitle, String authors, String doi) {
+        this.pubType = pubType;
+        this.isbn = isbn;
+        this.volume = volume;
+        this.year = year;
+        this.pubTitle = pubTitle;
+        this.authors = authors;
+        this.doi = doi;
+    }
+
     public long getPubId() {
         return pubId;
     }
@@ -104,11 +123,11 @@ public class Publication {
         this.pubTitle = pubTitle;
     }
 
-    public char getPubType() {
+    public PublicationType getPubType() {
         return pubType;
     }
 
-    public void setPubType(char pubType) {
+    public void setPubType(PublicationType pubType) {
         this.pubType = pubType;
     }
 
@@ -233,5 +252,58 @@ public class Publication {
 
     public void setPubMedCentralId(Integer pubMedCentralId) {
         this.pubMedCentralId = pubMedCentralId;
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(83, 23).
+                append(getPubType()).
+                append(getAuthors()).
+                append(getPubTitle()).
+                append(getDoi()).
+                append(getIsbn()).
+                append(getYear()).
+                append(getVolume()).
+                toHashCode();
+    }
+
+
+    @Override
+    public int compare(Publication o1, Publication o2) {
+        return 0;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        Publication pub = (Publication) obj;
+        return new EqualsBuilder()
+//                .appendSuper(super.equals(obj))
+                .append(getPubType(), pub.getPubType())
+                .append(getAuthors(), pub.getAuthors())
+                .append(getPubTitle(), pub.getPubTitle())
+                .append(getDoi(), pub.getDoi())
+                .append(getIsbn(), pub.getIsbn())
+                .append(getYear(), pub.getYear())
+                .append(getVolume(), pub.getVolume())
+                .isEquals();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this).
+                append("id", getPubId()).
+                append("title", getPubTitle()).
+                append("type", getPubType()).
+                append("authors", getAuthors()).
+                toString();
     }
 }
