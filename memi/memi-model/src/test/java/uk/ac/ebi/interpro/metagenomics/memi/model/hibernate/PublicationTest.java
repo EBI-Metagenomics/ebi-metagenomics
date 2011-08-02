@@ -1,13 +1,12 @@
 package uk.ac.ebi.interpro.metagenomics.memi.model.hibernate;
 
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertNull;
+import java.util.HashSet;
+import java.util.Set;
+
+import static junit.framework.Assert.*;
 
 /**
  * Test class for {@link uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Publication}.
@@ -65,5 +64,29 @@ public class PublicationTest {
         publication.setAuthors(null);
         assertNull(publication.getAuthors());
         assertNull(publication.getShortAuthors());
+    }
+
+    @Test
+    public void testHashCode() {
+        Publication pub1 = new Publication(PublicationType.PUBLICATION, "isbn1", "volumn1", 2001, "title1", "authors1", "doi1");
+        Publication pub2 = new Publication(PublicationType.PUBLICATION, "isbn1", "volumn1", 2001, "title1", "authors1", "doi1");
+        Publication pub3 = new Publication(PublicationType.WEBSITE_LINK, "isbn3", "volumn3", 2003, "title3", "authors3", "doi3");
+        //
+        Set<Publication> publications = new HashSet<Publication>();
+        assertNotNull(publications);
+        assertEquals(0, publications.size());
+        //
+        publications.add(pub1);
+        assertEquals(1, publications.size());
+        assertTrue(publications.contains(pub1));
+        //
+        publications.add(pub2);
+        assertEquals(1, publications.size());
+        assertTrue(publications.contains(pub2));
+        assertTrue(publications.contains(pub1));
+        //
+        publications.add(pub3);
+        assertEquals(2, publications.size());
+        assertTrue(publications.contains(pub3));
     }
 }

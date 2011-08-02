@@ -34,7 +34,7 @@ public class DatabaseMockuper {
         //create publications
         List<Publication> pubs = new ArrayList<Publication>();
 
-        Publication p1 = new Publication();
+        Publication p1 = new Publication(PublicationType.PUBLICATION, "isbn1", "volumn1", 2010, "title1", "authors1", "doi1");
         p1.setAuthors("Kristen M. DeAngelis, John M. Gladden, Martin Allgaier");
         p1.setYear(2010);
         p1.setPubTitle("Strategies for Enhancing the Effectiveness of Metagenomic-based Enzyme Discovery in Lignocellulolytic Microbial Communities");
@@ -42,7 +42,7 @@ public class DatabaseMockuper {
         p1.setDoi("10.1007/s12155-010-9089-z");
         pubs.add(p1);
 
-        Publication p2 = new Publication();
+        Publication p2 = new Publication(PublicationType.PUBLICATION, "isbn1", "volumn1", 2010, "title1", "authors1", "doi1");
         p2.setAuthors("Turnbaugh PJ, Hamady M, Yatsunenko T");
         p2.setYear(2009);
         p2.setPubTitle("A core gut microbiome in obese and lean twins.");
@@ -51,7 +51,7 @@ public class DatabaseMockuper {
         p2.setDoi("10.1038/nature07540");
         pubs.add(p2);
 
-        Publication p3 = new Publication();
+        Publication p3 = new Publication(PublicationType.PUBLICATION, "isbn1", "volumn1", 2010, "title1", "authors1", "doi1");
         p3.setAuthors("Folker Meyer, Lynn Schriml, Ian R Joint");
         p3.setYear(2010);
         p3.setPubTitle("Metagenomes and metatranscriptomes from the L4 long-term coastal monitoring station in the Western English Channel");
@@ -59,31 +59,31 @@ public class DatabaseMockuper {
         p3.setDoi("10.4056/sigs.1202536");
         pubs.add(p3);
 
-        Publication p4 = new Publication();
+        Publication p4 = new Publication(PublicationType.PUBLICATION, "isbn1", "volumn1", 2010, "title1", "authors1", "doi1");
         p4.setPubTitle("The seasonal structure of microbial communities in the Western English Channel");
         p4.setDoi("10.1111/j.1462-2920.2009.02017.x");
         p4.setAuthors("Jack A. Gilbert, Dawn Field, Paul Swift");
         p4.setYear(2009);
         pubs.add(p4);
 
-        Publication p5 = new Publication();
+        Publication p5 = new Publication(PublicationType.PUBLICATION, "isbn1", "volumn1", 2010, "title1", "authors1", "doi1");
         p5.setPubTitle("Detection of Large Numbers of Novel Sequences in the Metatranscriptomes of Complex Marine Microbial Communities");
         p5.setDoi("10.1371/journal.pone.0003042");
         p5.setAuthors("Jack A. Gilbert");
         p5.setYear(2008);
         pubs.add(p5);
 
-        Publication p6 = new Publication();
+        Publication p6 = new Publication(PublicationType.PUBLICATION, "isbn1", "volumn1", 2010, "title1", "authors1", "doi1");
         p6.setPubTitle("The Visualization and Analysis of Microbial Population Structures");
         p6.setUrl("http://vamps.mbl.edu");
         pubs.add(p6);
 
-        Publication p7 = new Publication();
+        Publication p7 = new Publication(PublicationType.PUBLICATION, "isbn1", "volumn1", 2010, "title1", "authors1", "doi1");
         p7.setPubTitle("International census of marine microbes");
         p7.setUrl("http://icomm.mbl.edu");
         pubs.add(p7);
 
-        Publication p8 = new Publication();
+        Publication p8 = new Publication(PublicationType.PUBLICATION, "isbn1", "volumn1", 2010, "title1", "authors1", "doi1");
         p8.setAuthors("Carola Simon, Arnim Wiezer, Axel W. Strittmatter");
         p8.setYear(2009);
         p8.setPubTitle("Phylogenetic Diversity and Metabolic Potential Revealed in a Glacier Ice Metagenome");

@@ -101,7 +101,7 @@ public class StudyViewController extends SecuredAbstractController<Study> {
 //        List<Sample> samples = sampleDAO.retrieveSamplesByStudyId(study.getId());
         String pageTitle = study.getStudyName() + " project";
         final ViewModelBuilder<StudyViewModel> builder = new StudyViewModelBuilder(sessionManager,
-                pageTitle, getBreadcrumbs(study), propertyContainer, study, sampleDAO, studyDAO);
+                pageTitle, getBreadcrumbs(study), propertyContainer, study, sampleDAO);
         final StudyViewModel studyModel = builder.getModel();
         model.addAttribute(StudyViewModel.MODEL_ATTR_NAME, studyModel);
     }

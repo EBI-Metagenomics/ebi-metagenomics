@@ -4,9 +4,7 @@ package uk.ac.ebi.interpro.metagenomics.memi.model.hibernate;
 import javax.persistence.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Hibernate generated study table.
