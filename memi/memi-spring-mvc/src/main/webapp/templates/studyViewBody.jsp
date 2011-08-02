@@ -7,41 +7,45 @@
 
 <c:choose>
     <c:when test="${not empty model.study.publications}">
+
         <div id="sidebar-analysis">
+
+           <c:if test="${not empty model.relatedPublications}">
             <div id="sidebar-related">
                 <h2>Related Publications</h2>
                 <span class="separator"></span>
                 <ul>
-                    <c:forEach var="pub" items="${model.study.publications}" varStatus="status">
-                        <li>
-                            <c:choose>
-                                <c:when test="${ pub.pubType == '1'}">
-                                    <a class="list_more" href="<c:url value="http://dx.doi.org/${pub.doi}"/>"><c:out
-                                            value="${pub.pubTitle}"/></a><br/>
+                    <c:forEach var="pub" items="${model.relatedPublications}" varStatus="status">
+
+                                     <li><a class="list_more" href="<c:url value="http://dx.doi.org/${pub.doi}"/>"><c:out value="${pub.pubTitle}"/></a><br/>
                                     <i><c:out value="${pub.shortAuthors}"/></i><br/>
-                                    <c:out value="${pub.year}"/> <c:out value="${pub.volume}"/><br/>
-                                </c:when>
-                                <c:otherwise>
-                                    <a class="list_more" href="<c:url value="${pub.url}"/>"><c:out
-                                            value="${pub.pubTitle}"/></a>
-                                </c:otherwise>
-                            </c:choose>
-                        </li>
+                                    <c:out value="${pub.year}"/> <c:out value="${pub.volume}"/><br/> </li>
+
                     </c:forEach>
                 </ul>
             </div>
+            </c:if>
+
+            <c:if test="${not empty model.relatedLinks}">
+            <div id="sidebar-related" style="margin-top:14px;">
+                <h2>Related resources</h2>
+                <span class="separator"></span>
+                <ul>
+                  <c:forEach var="pub" items="${model.relatedLinks}" varStatus="status">
+                    <li>
+                    <a class="list_more" href="<c:url value="${pub.url}"/>"><c:out value="${pub.pubTitle}"/></a>
+                    </li>
+                    </c:forEach>
+
+                </ul>
+            </div>
+            </c:if>
+         
+
         </div>
+
+
     </c:when>
-    <c:otherwise>
-        <%--<div id="sidebar-analysis">
-        <div id="sidebar-steps">
-        <h2>Related publications</h2>
-        <span class="separator"></span>
-         <p>&nbsp;</p>
-        <p>There is no publications available for this project.<br/></p>
-        </div>
-        </div>--%>
-    </c:otherwise>
 </c:choose>
 
 <span class="subtitle">Project overview <a href="<c:url value="${baseURL}/project/${model.study.studyId}"/>"
