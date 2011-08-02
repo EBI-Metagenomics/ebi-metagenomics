@@ -22,11 +22,26 @@ public class StudyViewModel extends ViewModel {
 
     private Study study;
 
+    private Set<Publication> relatedLinks;
+
+    private Set<Publication> relatedPublications;
+
     public StudyViewModel(Submitter submitter, Study study, List<Sample> samples, String pageTitle,
-                          List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer) {
+                          List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer,
+                          Set<Publication> relatedPublications,Set<Publication> relatedLinks ) {
         super(submitter, pageTitle, breadcrumbs, propertyContainer);
         this.samples = samples;
         this.study = study;
+        this.relatedLinks=relatedLinks;
+        this.relatedPublications=relatedPublications;
+    }
+
+    public Set<Publication> getRelatedLinks() {
+        return relatedLinks;
+    }
+
+    public Set<Publication> getRelatedPublications() {
+        return relatedPublications;
     }
 
     public List<Sample> getSamples() {
