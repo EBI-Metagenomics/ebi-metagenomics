@@ -16,9 +16,10 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.SampleViewModel;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.SampleViewModelBuilder;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.tools.MemiTools;
 
 import javax.annotation.Resource;
@@ -92,10 +93,11 @@ public class SampleViewController extends SecuredAbstractController<Sample> {
      * Creates the home page model and adds it to the specified model map.
      */
     private void populateModel(final ModelMap model, final Sample sample) {
-        String pageTitle = sample.getSampleName() + " sample";
-        final SampleViewModel sampleModel = MGModelFactory.getSampleViewModel(sessionManager, sample,
-                MemiTools.getArchivedSeqs(fileInfoDAO, sample), pageTitle, getBreadcrumbs(sample),
-                propertyContainer);
+        final String pageTitle = sample.getSampleName() + " sample";
+        final ViewModelBuilder<SampleViewModel> builder = new SampleViewModelBuilder(sessionManager,
+                pageTitle, getBreadcrumbs(sample), propertyContainer, sample,
+                MemiTools.getArchivedSeqs(fileInfoDAO, sample));
+        final SampleViewModel sampleModel = builder.getModel();
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, sampleModel);
     }
 

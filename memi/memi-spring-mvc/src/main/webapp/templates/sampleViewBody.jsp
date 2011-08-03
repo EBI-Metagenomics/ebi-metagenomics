@@ -8,26 +8,24 @@
 
 
 <c:choose>
-    <c:when test="${not empty model.pubs}">
+    <c:when test="${not empty model.publications}">
         <div id="sidebar-analysis">
             <div id="sidebar-related">
                 <h2>Related resources</h2>
                 <span class="separator"></span>
                 <ul>
-                    <c:forEach var="pub" items="${model.pubs}" varStatus="status">
+                    <c:forEach var="pub" items="${model.publications}" varStatus="status">
                         <li>
-                            <c:choose>
-                                <c:when test="${ pub.pubType == '1'}">
-                                    <a class="list_more" href="<c:url value="http://dx.doi.org/${pub.doi}"/>"><c:out
-                                            value="${pub.pubTitle}"/></a><br/>
-                                    <i><c:out value="${pub.shortAuthors}"/></i><br/>
-                                    <c:out value="${pub.year}"/> <c:out value="${pub.volume}"/><br/>
-                                </c:when>
-                                <c:otherwise>
-                                    <a class="list_more" href="<c:url value="${pub.url}"/>"><c:out
-                                            value="${pub.pubTitle}"/></a>
-                                </c:otherwise>
-                            </c:choose>
+                            <c:if test="${pub.pubType == 'PUBLICATION'}">
+                                <a class="list_more" href="<c:url value="http://dx.doi.org/${pub.doi}"/>"><c:out
+                                        value="${pub.pubTitle}"/></a><br/>
+                                <i><c:out value="${pub.shortAuthors}"/></i><br/>
+                                <c:out value="${pub.year}"/> <c:out value="${pub.volume}"/><br/>
+                            </c:if>
+                            <c:if test="${pub.pubType == 'WEBSITE_LINK'}">
+                                <a class="list_more" href="<c:url value="${pub.url}"/>"><c:out
+                                        value="${pub.pubTitle}"/></a>
+                            </c:if>
                         </li>
                     </c:forEach>
                 </ul>

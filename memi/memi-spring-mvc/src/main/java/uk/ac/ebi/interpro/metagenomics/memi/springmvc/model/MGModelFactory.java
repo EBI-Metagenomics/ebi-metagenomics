@@ -151,14 +151,6 @@ public class MGModelFactory {
         }
     }
 
-    public static SampleViewModel getSampleViewModel(SessionManager sessionManager, Sample sample,
-                                                     List<String> archivedSeqs, String pageTitle,
-                                                     List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer) {
-        log.info("Building instance of " + SampleViewModel.class + "...");
-        return new SampleViewModel(getSessionSubmitter(sessionManager), sample, archivedSeqs, pageTitle,
-                breadcrumbs, propertyContainer);
-    }
-
     public static ViewStudiesModel getViewStudiesPageModel(SessionManager sessionMgr, HibernateStudyDAO studyDAO,
                                                            HibernateSampleDAO sampleDAO, StudyFilter filter,
                                                            String pageTitle, List<Breadcrumb> breadcrumbs,

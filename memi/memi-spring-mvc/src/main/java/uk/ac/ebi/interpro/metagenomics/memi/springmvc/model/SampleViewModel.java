@@ -2,13 +2,10 @@ package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
 
 import uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.HostSample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Publication;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Represents the model for the study overview page.
@@ -17,24 +14,25 @@ import java.util.Set;
  * @since 1.0-SNAPSHOT
  */
 public class SampleViewModel extends ViewModel {
-    private Sample sample;
+    private final Sample sample;
 
-    private final Set<Publication> pubs;
+    private final List<Publication> publications;
 
-    private List<String> archivedSequences;
+    private final List<String> archivedSequences;
 
     /**
      * Indicates if the sample of this model is host-associated OR not
      */
     private final boolean isHostAssociated;
 
-    SampleViewModel(Submitter submitter, Sample sample, List<String> archivedSequences, String pageTitle,
-                    List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer) {
+    public SampleViewModel(Submitter submitter, Sample sample, List<String> archivedSequences, String pageTitle,
+                           List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer,
+                           boolean isHostAssociated, List<Publication> publications) {
         super(submitter, pageTitle, breadcrumbs, propertyContainer);
         this.sample = sample;
         this.archivedSequences = archivedSequences;
-        this.pubs = initialisePubs();
-        this.isHostAssociated = initialiseHostAssociation();
+        this.publications = publications;
+        this.isHostAssociated = isHostAssociated;
     }
 
 
@@ -42,40 +40,12 @@ public class SampleViewModel extends ViewModel {
         return sample;
     }
 
-    public void setSample(Sample sample) {
-        this.sample = sample;
-    }
-
-    private Set<Publication> initialisePubs() {
-        if (sample != null) {
-            Set<Publication> pubs = sample.getPublications();
-            if (pubs != null) {
-                return pubs;
-            }
-        }
-        return new HashSet<Publication>();
-
-    }
-
-    public Set<Publication> getPubs() {
-        return pubs;
+    public List<Publication> getPublications() {
+        return publications;
     }
 
     public List<String> getArchivedSequences() {
         return archivedSequences;
-    }
-
-    public void setArchivedSequences(List<String> archivedSequences) {
-        this.archivedSequences = archivedSequences;
-    }
-
-    private boolean initialiseHostAssociation() {
-        if (sample != null) {
-            if (sample instanceof HostSample) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public boolean isHostAssociated() {

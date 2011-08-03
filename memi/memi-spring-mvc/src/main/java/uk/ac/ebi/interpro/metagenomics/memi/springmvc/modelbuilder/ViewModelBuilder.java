@@ -1,9 +1,5 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder;
 
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
-
-import java.util.Collection;
-
 /**
  * This interface allows an object of type model builder to be used in generic ways.
  * Example of how to use:<br>
