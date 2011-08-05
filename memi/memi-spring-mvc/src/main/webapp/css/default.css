@@ -116,10 +116,10 @@ box-shadow: 0px 0px 70px #696969;
 -webkit-box-shadow: 0px 0px 70px #696969;
 margin: 0px auto;    */
 padding:14px 14px 0 14px;
-z-index:20;
+
 position:relative; /*to make z-index work */
 /* background: transparent url(../img/bgd_earth.gif) no-repeat -180px -120px; artistic */
-border:0px #dddddd solid;
+border:1px #dddddd red;
 }
 
 #extra_beta {
