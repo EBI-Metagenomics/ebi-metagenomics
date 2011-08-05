@@ -100,7 +100,7 @@
 <body class="<tiles:getAsString name='bodyClass'/>" id="top" <%--onload="initialize()"--%>>
 
 <%-- EBI-Interpro main header - exactly same as Interpro header--%>
-<div class="headerdiv" id="headerdiv" style="position:absolute; z-index: 200;">
+<div class="headerdiv" id="headerdiv" style="position:relative; z-index: 200;">
     <iframe src="/inc/head.html" name="head" id="head" frameborder="0" marginwidth="0px" marginheight="0px"
             scrolling="no"
             width="100%" style="position:relative; z-index: 200; height: 57px;">Header
