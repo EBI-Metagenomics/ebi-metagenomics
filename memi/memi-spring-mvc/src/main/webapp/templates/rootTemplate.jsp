@@ -108,7 +108,7 @@
 <c:set var="baseURL" value="" scope="session"/>
 
 <%-- IMPORTANT onload attribute is necessary to ensure that the EBI main header works in IE see  http://www.ebi.ac.uk/inc/template/#important style overflow added because of a bug in the EBI website for the body--%>
-<body class="<tiles:getAsString name='bodyClass'/>" id="top" onload="loaded()">
+<body class="<tiles:getAsString name='bodyClass'/>" id="top" onload="loaded()" <%--onload="initialize()"--%>>
 
 <%-- EBI-Interpro main header - exactly same as Interpro header--%>
 <div class="headerdiv" id="headerdiv" style="position:absolute; z-index: 200;">
