@@ -21,6 +21,14 @@
     <link rel="stylesheet" href="http://www.ebi.ac.uk/inc/css/userstyles.css" type="text/css"/>
     <link rel="stylesheet" href="http://www.ebi.ac.uk/inc/css/sidebars.css" type="text/css"/>
     <script src="http://www.ebi.ac.uk/inc/js/contents.js" type="text/javascript"></script>
+    <%-- script EBI to convert header to transparent when IE6, IE7, IE8  --%>
+    <script type="text/javascript">
+    function loaded() {
+    if (navigator.userAgent.indexOf('MSIE') != -1) {
+    document.getElementById('head').allowTransparency = true;
+    }
+    }
+    </script>
     <%-- END EBI style and code--%>
     <%-- JQuery CSS--%>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/jquery-ui-1.8.11.custom.css" type="text/css"
@@ -91,19 +99,22 @@
             });
         }
     </script>
+
+
+
 </head>
 
 <%-- The following variable saves and provides the base URL for the whole application --%>
 <c:set var="baseURL" value="" scope="session"/>
 
-<%-- onload attribute is necessary to ensure that the EBI main header works in IE see  http://www.ebi.ac.uk/inc/template/#important style overflow addede because of he bug in the EBI website for the body--%>
-<body class="<tiles:getAsString name='bodyClass'/>" id="top" <%--onload="initialize()"--%>>
+<%-- IMPORTANT onload attribute is necessary to ensure that the EBI main header works in IE see  http://www.ebi.ac.uk/inc/template/#important style overflow added because of a bug in the EBI website for the body--%>
+<body class="<tiles:getAsString name='bodyClass'/>" id="top" onload="loaded()">
 
 <%-- EBI-Interpro main header - exactly same as Interpro header--%>
-<div class="headerdiv" id="headerdiv" style="position:relative; z-index: 200;">
+<div class="headerdiv" id="headerdiv" style="position:absolute; z-index: 200;">
     <iframe src="/inc/head.html" name="head" id="head" frameborder="0" marginwidth="0px" marginheight="0px"
             scrolling="no"
-            width="100%" style="position:relative; z-index: 200; height: 57px;">Header
+            width="100%" style="position:absolute; z-index: 200; height: 57px;">Header
     </iframe>
 </div>
 <%-- END EBI main header --%>
