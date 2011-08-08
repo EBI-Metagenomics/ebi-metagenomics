@@ -154,7 +154,7 @@ left: 0;  */
 top:100px;
 width: 35px;
 height:  102px;
-border:1px #dddddd solid;
+border:0px #dddddd solid;
 }
 
 #extra_feedback h1 a:hover {
@@ -1215,7 +1215,7 @@ display:block;
 
 #ordered {font-weight: bold;}
 
-.ebi_contents { border:0px solid red; position:absolute; top:55px; left:0;margin:0;padding:0;width:100%;  }/*added because of the EBI header */
+.ebi_contents { border:1px solid red; position:absolute; top:55px;margin:0;padding:0;width:100%;clear: both;z-index: 2;  }/*added because of the EBI header */
 
 .menu_bgd {
 background: url(../img/bgd_contentfull_menu.gif) -14px;
