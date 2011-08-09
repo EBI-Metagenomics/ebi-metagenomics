@@ -1135,7 +1135,8 @@ background: url(../img/icon_csv_plus.gif) no-repeat right top;
 /* END EXPORT OPTIONS */
 
 #breadcrumbs {
-display:block;border:0px red solid;  height:24px;
+display:block;
+border:0px red solid;  height:24px;
 position:relative; /*to make z-index work */
 z-index:50;
 /* removed to make it EBI compliant
@@ -1143,8 +1144,10 @@ background: url(../img/bgd_white_op45_8.png);                                   
 padding: 8px 0 0 14px;/* added to make it EBI compliant*/
 }
 
-#breadcrumbs .ebi_breadcrumbs li   {font-size:100%; background-color:transparent; } /*overwrite EBI style */
-#breadcrumbs .ebi_breadcrumbs a{ background-color:transparent;color:#3E3E3E; } /*overwrite EBI style */
+#breadcrumbs .ebi_breadcrumbs li   {display:inline; font-size:100%; background-color:transparent; } /*overwrite EBI style to Keep for IE6 and IE7*/
+#breadcrumbs .ebi_breadcrumbs a{ padding: 1px 0 0 12px;  margin: 0;  height: 14px; text-align: left;  background: transparent url(http://www.ebi.ac.uk/inc/images/bread_arrow2.gif) top left no-repeat;color:#3E3E3E; } /*overwrite EBI style to Keep for IE6 and IE7*/
+#breadcrumbs .ebi_breadcrumbs { border:0px solid red; margin: 0; padding: 0;} /*overwrite EBI style to Keep for IE6 and IE7*/
+#breadcrumbs .ebi_breadcrumbs li:first-child a { padding: 2px 0 0 0; height: 14px; text-align: left; background-color: transparent;} /*overwrite EBI style to Keep for IE6 and IE7*/
 
 /* CAPTION for IMAGES */
 figure {
@@ -1297,6 +1300,7 @@ padding-left:2px; padding-top:1px;
 
  /*EBI Bread Crumbs */
     .ebi_breadcrumbs {
+        border:0px solid red;
         list-style: none;
         margin: 0;
         padding: 0;
