@@ -7,7 +7,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import uk.ac.ebi.interpro.metagenomics.memi.model.EmgFile;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
@@ -52,8 +51,13 @@ public class CommonController {
     public ModelAndView indexHandler() {
         if (sessionManager.getSessionBean() != null) {
             Submitter submitter = sessionManager.getSessionBean().getSubmitter();
-            log.info("Submitter with email address " + submitter.getEmailAddress() + " tries to logout...");
-            sessionManager.getSessionBean().removeSubmitter();
+            if (submitter != null) {
+                // Session has not automatically timed out so do need to perform the logout
+                if (log.isInfoEnabled()) {
+                    log.info("Submitter with email address " + submitter.getEmailAddress() + " tries to logout...");
+                }
+                sessionManager.getSessionBean().removeSubmitter();
+            }
         }
         return new ModelAndView("redirect:" + HomePageController.REQUEST_MAPPING_VALUE);
     }
