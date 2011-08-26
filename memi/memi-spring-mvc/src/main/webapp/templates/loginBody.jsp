@@ -58,7 +58,11 @@
 
         <div class="sub_sign">
         <div class="form_row"><h3>Not registered yet?</h3>
-        <span class="sub_sign_text"><a href="<c:url value=" https://www.ebi.ac.uk/embl/genomes/submission/registration.jsf"/>" title="Registration">Sign-up</a> to register</span>
+        <c:url var="enaRegistrationUrl"
+               value="${model.propertyContainer.enaSubmissionURL.registrationLink}">
+            <c:param name="url" value="${enaUrlParameter}"/>
+        </c:url>
+        <span class="sub_sign_text"><a href="<c:url value="${enaRegistrationUrl}"/>" title="Registration">Sign-up</a> to register</span>
         </div>
         <div class="form_row"><h3>or</h3></div>
         <p> <img src="${pageContext.request.contextPath}/img/ico_ena_user.jpg" alt="ENA member"></p>
