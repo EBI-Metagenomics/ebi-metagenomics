@@ -1,6 +1,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="enaUrlParameter" value="<%=requestRoot%>/login"/>
 <%-- This template is used for the login page --%>
 <div id="content-full">
 
