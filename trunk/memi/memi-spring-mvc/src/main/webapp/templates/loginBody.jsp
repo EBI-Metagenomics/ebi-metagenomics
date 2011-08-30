@@ -51,7 +51,11 @@
         <form:password path="password" cssStyle="width:313px;"/>
         <form:errors cssClass="error" path="password"/>
         </div>
-        <div ><a href="<c:url value=" https://www.ebi.ac.uk/embl/genomes/submission/forgot-passw.jsf?_afPfm=5"/>"  title="Request a new password">Forgot your password?</a></div>
+        <c:url var="enaPasswordUrl"
+               value="${model.propertyContainer.enaSubmissionURL.forgottenPwdLink}">
+            <c:param name="url" value="${enaUrlParameter}"/>
+        </c:url>
+        <div ><a href="<c:out value="${enaPasswordUrl}"/>"  title="Request a new password">Forgot your password?</a></div>
         <div class="form_row_log">
         <input type="submit" name="login" value="Login" class="main_button"/>&nbsp;
         <span class="clear_but" style="float:none;">| <a href="/metagenomics" title="cancel">Cancel</a></span>
