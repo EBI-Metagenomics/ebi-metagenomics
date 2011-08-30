@@ -3,7 +3,7 @@
 <%@ taglib prefix="spring" uri="http://java.sun.com/jsp/jstl/core" %>
 <% final String url = request.getRequestURL().toString();
     final String context = request.getContextPath();
-    final String requestRoot = url.substring(0, url.indexOf(context) + context.length());%>
+    final String requestRoot = url.substring(0, url.indexOf(context) + context.length()) + "/login";%>
 <c:set var="enaUrlParameter" value="<%=requestRoot%>"/>
 <%-- This template is used for the login page --%>
 <div id="content-full">
