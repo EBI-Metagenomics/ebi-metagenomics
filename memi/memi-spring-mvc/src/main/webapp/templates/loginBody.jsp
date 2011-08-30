@@ -1,7 +1,10 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="enaUrlParameter" value="<%=requestRoot%>/login"/>
+<% final String url = request.getRequestURL().toString();
+    final String context = request.getContextPath();
+    final String requestRoot = url.substring(0, url.indexOf(context) + context.length());%>
+<c:set var="enaUrlParameter" value="<%=requestRoot%>"/>
 <%-- This template is used for the login page --%>
 <div id="content-full">
 
