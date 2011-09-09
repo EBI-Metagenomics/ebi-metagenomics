@@ -1,19 +1,15 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
 
 import au.com.bytecode.opencsv.CSVReader;
-import com.sun.syndication.feed.synd.SyndEntry;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer;
-import uk.ac.ebi.interpro.metagenomics.memi.basic.comparators.HomePageSamplesComparator;
-import uk.ac.ebi.interpro.metagenomics.memi.basic.comparators.HomePageStudiesComparator;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.comparators.ViewStudiesComparator;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateSampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateStudyDAO;
-import uk.ac.ebi.interpro.metagenomics.memi.feed.RomeClient;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.StudyFilter;
 import uk.ac.ebi.interpro.metagenomics.memi.googlechart.GoogleChartFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgFile;
@@ -39,82 +35,8 @@ import java.util.*;
 public class MGModelFactory {
     private final static Log log = LogFactory.getLog(MGModelFactory.class);
 
-    /**
-     * The number of RSS news items to show on the portal home page.
-     */
-    private final static int maxRssRowNumber = 3;
-
     private MGModelFactory() {
 
-    }
-
-    public static HomePageModel getHomePageModel(SessionManager sessionMgr, HibernateStudyDAO studyDAO,
-                                                 HibernateSampleDAO sampleDAO, RomeClient romeClient,
-                                                 String pageTitle, List<Breadcrumb> breadcrumbs,
-                                                 MemiPropertyContainer propertyContainer) {
-        log.info("Building instance of " + HomePageModel.class + "...");
-        Submitter submitter = getSessionSubmitter(sessionMgr);
-        // Get RSS URL
-        // TODO: Replace local cached feed with Twitter feed when fixed @Cacheable problem
-        String rssUrl = "http://twitter.com/statuses/user_timeline/257482404.rss";
-//        try {
-//            rssUrl = "http://twitter.com/statuses/user_timeline/257482404.rss";
-//        }
-//        catch (IOException e) {
-//            rssUrl = "unknown"; // TODO: Put URL default here
-//            log.warn("Could not get RSS feed URL", e);
-//        }
-        // Get RSS entries
-        List<SyndEntry> rssEntries = Collections.emptyList();
-        try {
-            rssEntries = romeClient.getEntries();
-            if (rssEntries.size() > maxRssRowNumber) {
-                // Limit number of rss entries
-                rssEntries = rssEntries.subList(0, maxRssRowNumber);
-            }
-        } catch (Exception e) {
-            log.warn("Could not get RSS entries", e);
-        }
-//        If case: if nobody is logged in
-        if (submitter == null) {
-            //retrieve public studies and order them by last meta data received
-            List<Study> studies = getPublicStudies(studyDAO);
-            Map<Study, Long> publicStudiesMap = getStudySampleSizeMap(studies, sampleDAO, new HomePageStudiesComparator());
-            //retrieve public samples and order them by last meta data received
-            List<Sample> samples = getPublicSamples(sampleDAO);
-            Collections.sort(samples, new HomePageSamplesComparator());
-            samples = samples.subList(0, getToIndex(samples));
-
-            return new HomePageModel(submitter, publicStudiesMap, samples,
-                    rssUrl, rssEntries, pageTitle, breadcrumbs, propertyContainer);
-        }
-//        Else case: if somebody is logged in
-        else {
-            //retrieve private studies and order them by last meta data received
-            List<Study> myStudies = getStudiesBySubmitter(submitter.getSubmitterId(), studyDAO);
-            Map<Study, Long> myStudiesMap = getStudySampleSizeMap(myStudies, sampleDAO, new HomePageStudiesComparator());
-
-            //retrieve private samples and order them last meta data received
-            List<Sample> mySamples = getSamplesBySubmitter(submitter.getSubmitterId(), sampleDAO);
-            Collections.sort(mySamples, new HomePageSamplesComparator());
-            mySamples = mySamples.subList(0, getToIndex(mySamples));
-
-            //retrieve public studies and order them last meta data received
-            List<Study> publicStudies = getPublicStudiesWithoutSubId(submitter.getSubmitterId(), studyDAO);
-            Map<Study, Long> publicStudiesMap = getStudySampleSizeMap(publicStudies, sampleDAO, new HomePageStudiesComparator());
-
-            //retrieve public samples and order them last meta data received
-            List<Sample> publicSamples = getOrderedPublicSamplesWithoutSubId(submitter.getSubmitterId(), sampleDAO);
-            Collections.sort(publicSamples, new HomePageSamplesComparator());
-            publicSamples = publicSamples.subList(0, getToIndex(publicSamples));
-
-            return new HomePageModel(submitter, publicStudiesMap, publicSamples, rssUrl, rssEntries,
-                    myStudiesMap, mySamples, pageTitle, breadcrumbs, propertyContainer);
-        }
-    }
-
-    private static int getToIndex(Collection<Sample> collection) {
-        return ((collection.size() > 5) ? 5 : collection.size());
     }
 
     public static ViewModel getMGModel(SessionManager sessionMgr) {
@@ -164,67 +86,6 @@ public class MGModelFactory {
         Map<Study, Long> sortedStudyMap = getStudySampleSizeMap(studies, sampleDAO, new ViewStudiesComparator());
         return new ViewStudiesModel(submitter, sortedStudyMap, pageTitle,
                 breadcrumbs, propertyContainer, tableHeaderNames);
-    }
-
-    /**
-     * Returns a list of public studies limited by a specified number of rows and order by meta data received date.
-     */
-    private static List<Study> getPublicStudies(HibernateStudyDAO studyDAO) {
-        List<Study> studies = new ArrayList<Study>();
-        if (studyDAO != null) {
-            studies = studyDAO.retrievePublicStudies();
-        }
-        return studies;
-    }
-
-    /**
-     * Returns a list of studies for the specified submitter.
-     */
-    private static List<Study> getStudiesBySubmitter(long submitterId, HibernateStudyDAO studyDAO) {
-        List<Study> studies = new ArrayList<Study>();
-        if (studyDAO != null) {
-            studies = studyDAO.retrieveStudiesBySubmitter(submitterId);
-        }
-        return studies;
-    }
-
-    private static List<Study> getPublicStudiesWithoutSubId(long submitterId, HibernateStudyDAO studyDAO) {
-        List<Study> studies = new ArrayList<Study>();
-        if (studyDAO != null) {
-            studies = studyDAO.retrievePublicStudiesWithoutSubId(submitterId);
-        }
-        return studies;
-    }
-
-    /**
-     * Returns a list of public sample limited by a specified number of rows and order by received date.
-     */
-    public static List<Sample> getPublicSamples(HibernateSampleDAO sampleDAO) {
-        List<Sample> samples = new ArrayList<Sample>();
-        if (sampleDAO != null) {
-            samples = sampleDAO.retrieveAllPublicSamples();
-        }
-        return samples;
-    }
-
-
-    /**
-     * Returns a list of studies for the specified submitter, limited by a specified number of rows.
-     */
-    private static List<Sample> getSamplesBySubmitter(long submitterId, HibernateSampleDAO sampleDAO) {
-        List<Sample> samples = new ArrayList<Sample>();
-        if (sampleDAO != null) {
-            samples = sampleDAO.retrieveSamplesBySubmitter(submitterId);
-        }
-        return samples;
-    }
-
-    private static List<Sample> getOrderedPublicSamplesWithoutSubId(long submitterId, HibernateSampleDAO sampleDAO) {
-        List<Sample> samples = new ArrayList<Sample>();
-        if (sampleDAO != null) {
-            samples = sampleDAO.retrievePublicSamplesWithoutSubId(submitterId);
-        }
-        return samples;
     }
 
     private static List<Study> getFilteredStudies(HibernateStudyDAO studyDAO, StudyFilter filter, long submitterId) {

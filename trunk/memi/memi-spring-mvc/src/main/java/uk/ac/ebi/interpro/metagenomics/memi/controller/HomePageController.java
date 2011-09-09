@@ -15,10 +15,10 @@ import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateStudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.feed.RomeClient;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.HomePageModel;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.*;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.HomePageViewModelBuilder;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.StudyViewModelBuilder;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -86,8 +86,9 @@ public class HomePageController extends LoginController implements IMGController
      */
     private void populateModel(ModelMap model) {
         log.info("Building model of " + HomePageController.class + "...");
-        final HomePageModel hpModel = MGModelFactory.getHomePageModel(sessionManager, studyDAO, sampleDAO,
-                rssClient, "Metagenomics Home", getBreadcrumbs(null), propertyContainer);
+        final ViewModelBuilder<HomePageViewModel> builder = new HomePageViewModelBuilder(sessionManager, "Metagenomics Home",
+                getBreadcrumbs(null), propertyContainer, studyDAO, sampleDAO, rssClient);
+        final HomePageViewModel hpModel = builder.getModel();
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, hpModel);
     }
 
