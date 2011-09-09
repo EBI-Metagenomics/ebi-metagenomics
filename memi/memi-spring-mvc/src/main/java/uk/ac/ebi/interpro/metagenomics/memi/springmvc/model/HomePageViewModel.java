@@ -14,7 +14,7 @@ import java.util.*;
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @since 1.0-SNAPSHOT
  */
-public final class HomePageModel extends ViewModel {
+public final class HomePageViewModel extends ViewModel {
 
     /**
      * Maps studies and their number of samples.
@@ -31,11 +31,17 @@ public final class HomePageModel extends ViewModel {
     private List<Sample> mySamples;
 
     private final String rssUrl;
+
     private final List<SyndEntry> rssItems;
 
-    HomePageModel(Submitter submitter, Map<Study, Long> publicStudiesMap, List<Sample> publicSamples,
-                  String rssUrl, List<SyndEntry> rssItems, String pageTitle, List<Breadcrumb> breadcrumbs,
-                  MemiPropertyContainer propertyContainer) {
+    /**
+     * The number of latest project and samples to show on the home page.
+     */
+    private final int maxRowNumberOfLatestItems;
+
+    public HomePageViewModel(Submitter submitter, Map<Study, Long> publicStudiesMap, List<Sample> publicSamples,
+                             String rssUrl, List<SyndEntry> rssItems, String pageTitle, List<Breadcrumb> breadcrumbs,
+                             MemiPropertyContainer propertyContainer, int maxRowNumberOfLatestItems) {
         super(submitter, pageTitle, breadcrumbs, propertyContainer);
         this.publicStudiesMap = publicStudiesMap;
         this.publicSamples = publicSamples;
@@ -43,13 +49,14 @@ public final class HomePageModel extends ViewModel {
         this.mySamples = new ArrayList<Sample>();
         this.rssUrl = rssUrl;
         this.rssItems = rssItems;
+        this.maxRowNumberOfLatestItems = maxRowNumberOfLatestItems;
     }
 
-    HomePageModel(Submitter submitter, Map<Study, Long> publicStudiesMap, List<Sample> publicSamples,
-                  String rssUrl, List<SyndEntry> rssItems, Map<Study, Long> myStudiesMap,
-                  List<Sample> mySamples, String pageTitle, List<Breadcrumb> breadcrumbs,
-                  MemiPropertyContainer propertyContainer) {
-        this(submitter, publicStudiesMap, publicSamples, rssUrl, rssItems, pageTitle, breadcrumbs, propertyContainer);
+    public HomePageViewModel(Submitter submitter, Map<Study, Long> publicStudiesMap, List<Sample> publicSamples,
+                             String rssUrl, List<SyndEntry> rssItems, Map<Study, Long> myStudiesMap,
+                             List<Sample> mySamples, String pageTitle, List<Breadcrumb> breadcrumbs,
+                             MemiPropertyContainer propertyContainer, int maxRowNumberOfLatestItems) {
+        this(submitter, publicStudiesMap, publicSamples, rssUrl, rssItems, pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems);
         this.myStudiesMap = myStudiesMap;
         this.mySamples = mySamples;
     }
@@ -93,5 +100,9 @@ public final class HomePageModel extends ViewModel {
 
     public String getRssUrl() {
         return rssUrl;
+    }
+
+    public int getMaxRowNumberOfLatestItems() {
+        return maxRowNumberOfLatestItems;
     }
 }
