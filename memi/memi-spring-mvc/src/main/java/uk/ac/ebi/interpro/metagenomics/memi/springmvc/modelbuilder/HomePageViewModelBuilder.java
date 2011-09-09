@@ -6,21 +6,16 @@ import org.apache.commons.logging.LogFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.comparators.HomePageSamplesComparator;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.comparators.HomePageStudiesComparator;
-import uk.ac.ebi.interpro.metagenomics.memi.basic.comparators.PublicationComparator;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateSampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateStudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.feed.RomeClient;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Publication;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.PublicationType;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.HomePageViewModel;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.StudyViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
 
-import javax.annotation.Resource;
 import java.util.*;
 
 /**
@@ -54,7 +49,7 @@ public class HomePageViewModelBuilder extends AbstractViewModelBuilder<HomePageV
     /**
      * The number of latest project and samples to show on the home page. Used within this builder class, but also within the Java Server Page.
      */
-    private final int maxRowNumberOfLatestItems = 4;
+    private final int maxRowNumberOfLatestItems = 5;
 
 
     public HomePageViewModelBuilder(SessionManager sessionMgr, String pageTitle, List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer,
