@@ -27,6 +27,8 @@ public class ContactForm {
     @Size(min = 3, message = "{form.contact.message.size}")
     private String message;
 
+    private String leaveIt; // Secret HoneyPot field to detect robots - should be left blank by humans!
+
     public String getSender() {
         return sender;
     }
@@ -51,4 +53,11 @@ public class ContactForm {
         this.message = message;
     }
 
+    public String getLeaveIt() {
+        return leaveIt;
+    }
+
+    public void setLeaveIt(String leaveIt) {
+        this.leaveIt = leaveIt;
+    }
 }

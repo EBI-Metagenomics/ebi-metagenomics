@@ -73,12 +73,17 @@ public class ContactPageController extends AbstractController implements IMGCont
         }
         //build contact email message
         if (contactForm != null) {
-            String msg = buildMsg(contactForm);
-            ((EmailNotificationService) emailService).setSender(contactForm.getSender());
-            ((EmailNotificationService) emailService).setEmailSubject("[beta-feedback] " + contactForm.getEmailSubject());
-            ((EmailNotificationService) emailService).setReceiverCC(contactForm.getSender());
-            emailService.sendNotification(msg);
-            log.info("Sent an email with contact details: " + msg);
+            String leaveIt = contactForm.getLeaveIt();
+            if (leaveIt == null || leaveIt.equals("")) {
+                String msg = buildMsg(contactForm);
+                ((EmailNotificationService) emailService).setSender(contactForm.getSender());
+                ((EmailNotificationService) emailService).setEmailSubject("[beta-feedback] " + contactForm.getEmailSubject());
+                ((EmailNotificationService) emailService).setReceiverCC(contactForm.getSender());
+                emailService.sendNotification(msg);
+                if (log.isInfoEnabled()) {
+                    log.info("Sent an email with contact details: " + msg);
+                }
+            } // else we have a robot so don't want to actually send the email
             status.setComplete();
         } else {
             return new ModelAndView(CommonController.EXCEPTION_PAGE_VIEW_NAME);
