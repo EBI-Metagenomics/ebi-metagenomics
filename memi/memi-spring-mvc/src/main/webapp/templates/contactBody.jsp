@@ -12,9 +12,13 @@ and use Javascript to make them visible if it's enabled!
     });
 </script>
 <style type="text/css">
-  input#clearFormJS {
-    display: none;
-  }
+    input#clearFormJS {
+        display: none;
+    }
+    /* Secret form honeypot field - hidden from users, but not from robots */
+    tr.leave_it {
+        display: none;
+    }
 </style>
 
 
@@ -45,6 +49,9 @@ and use Javascript to make them visible if it's enabled!
                 <td>Your comments <small>*</small> :<br/><form:textarea path="message" cols="50" rows="10"/></td>
             </tr>
             <tr ><td><form:errors cssClass="error" path="message"/></td></tr>
+            <tr class="leave_it">
+                <td>If you are a human please leave this field blank : <form:input path="leaveIt"  cssStyle="margin-left:14px; width:284px;"/></td>
+            </tr>
             <tr>
                 <td>
                     <input type="submit" name="submit" value="Submit" class="main_button" />
