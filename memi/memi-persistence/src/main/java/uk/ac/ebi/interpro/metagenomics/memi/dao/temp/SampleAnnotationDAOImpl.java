@@ -28,7 +28,7 @@ public class SampleAnnotationDAOImpl implements SampleAnnotationDAO {
 
     private final Log log = LogFactory.getLog(SampleAnnotationDAOImpl.class);
 
-    @Resource
+    @Resource(name = "memiDataSource")
     public void setDataSource(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
