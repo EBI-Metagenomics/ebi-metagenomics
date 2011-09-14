@@ -1325,10 +1325,10 @@ padding-left:2px; padding-top:1px;
 }
 .ui-datepicker { font-size:90%;}
 
-.collapsibleContainer{border: solid 1px #9BB5C1;}
-.collapsibleContainerTitle{cursor:pointer;}
-.collapsibleContainerTitle div{padding-top:5px;padding-left:10px;background-color:#9BB5C1;color:#607882;}
-.collapsibleContainerContent{padding: 10px;}
+div.collapsibleContainer{border: solid 1px #9BB5C1;}
+div.collapsibleContainerTitle{cursor:pointer;}
+div.collapsibleContainerTitle div{padding-top:5px;padding-left:10px;background-color:#9BB5C1;color:#607882;}
+div.collapsibleContainerContent{padding: 10px;}
 
 
 /* PBm with IE7 */
