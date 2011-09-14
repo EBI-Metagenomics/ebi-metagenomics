@@ -79,4 +79,8 @@
         <property name="dataSource" ref="memiDataSource"/>
     </bean>
 
+    <bean class="uk.ac.ebi.interpro.metagenomics.memi.dao.temp.SampleAnnotationDAOImpl">
+        <property name="dataSource" ref="memiDataSource"/>
+    </bean>
+
 </beans>
