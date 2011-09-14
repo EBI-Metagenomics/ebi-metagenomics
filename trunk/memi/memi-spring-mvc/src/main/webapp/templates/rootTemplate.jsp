@@ -49,6 +49,7 @@
     <script src="${pageContext.request.contextPath}/js/formclearer.js" type="text/javascript"></script>
     <%-- Jquey scroller - work only for the anchors on the same page--%>
     <script src="${pageContext.request.contextPath}/js/smoothscrol.js" type="text/javascript"></script>
+    <script src="${pageContext.request.contextPath}/js/diQuery-collapsiblePanel.js" type="text/javascript"></script>
 
     <!--[if lt IE 9]><%-- HTML5 tags working in IE8 by including this JavaScript in the head  --%>
 <script type="text/javascript">
