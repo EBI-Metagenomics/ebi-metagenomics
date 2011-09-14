@@ -58,7 +58,7 @@ public class SampleViewController extends SecuredAbstractController<Sample> {
     @Resource
     private MemiDownloadService downloadService;
 
-    @Resource
+    @Resource(name="annotationDAO")
     private SampleAnnotationDAO sampleAnnotationDAO;
 
     //GET request method
