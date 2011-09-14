@@ -4,6 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.comparators.PublicationComparator;
+import uk.ac.ebi.interpro.metagenomics.memi.model.EmgSampleAnnotation;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.HostSample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Publication;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
@@ -39,23 +40,26 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
 
     private List<String> archivedSeqs;
 
+    private List<EmgSampleAnnotation> sampleAnnotations;
+
 
     public SampleViewModelBuilder(SessionManager sessionMgr, String pageTitle, List<Breadcrumb> breadcrumbs,
                                   MemiPropertyContainer propertyContainer,
-                                  Sample sample, List<String> archivedSeqs) {
+                                  Sample sample, List<String> archivedSeqs, List<EmgSampleAnnotation> sampleAnnotations) {
         super(sessionMgr);
         this.pageTitle = pageTitle;
         this.breadcrumbs = breadcrumbs;
         this.propertyContainer = propertyContainer;
         this.sample = sample;
         this.archivedSeqs = archivedSeqs;
+        this.sampleAnnotations=sampleAnnotations;
     }
 
     @Override
     public SampleViewModel getModel() {
         log.info("Building instance of " + SampleViewModel.class + "...");
         return new SampleViewModel(getSessionSubmitter(sessionMgr), sample, archivedSeqs, pageTitle,
-                breadcrumbs, propertyContainer, isHostAssociated(), getSamplePublications());
+                breadcrumbs, propertyContainer, isHostAssociated(), getSamplePublications(),sampleAnnotations);
     }
 
     private boolean isHostAssociated() {
