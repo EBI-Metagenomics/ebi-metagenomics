@@ -264,8 +264,25 @@
             </c:choose></span></div>
 </div>
 
-<div class="collapsibleContainer" title="Example Collapsible Panel">
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.... (you get the idea!) </p>
+<div class="collapsibleContainer" title="Meta data">
+            <table border="1" class="result">
+                <thead>
+                <tr>
+                    <c:set var="headerWidth" value="" scope="page"/>
+                    <c:set var="headerId" value="" scope="page"/>
+                    <th id="${headerId}" abbr="${headerName}" width="${headerWidth}" scope="col">Annotation</th>
+                    <th id="${headerId}" abbr="${headerName}" width="${headerWidth}" scope="col">Value</th>
+                </tr>
+                </thead>
+                <tbody>
+                   <c:forEach var="annotation" items="${model.sampleAnnotations}" varStatus="status">
+                      <tr>
+                        <td style="text-align:left;" id="ordered">${annotation.annotationValue<}</td>
+                        <td style="text-align:left;">${annotation.annotationName}</td>
+                      </tr>
+                   </c:forEach>
+                </tbody>
+            </table>
 </div>
 
 <div class="but_top"><a href="#top" title="back to the top page">Top</a></div>

@@ -12,6 +12,8 @@ import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.EmgLogFileInfoDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateSampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.ISampleStudyDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.temp.SampleAnnotationDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.model.EmgSampleAnnotation;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
@@ -56,6 +58,9 @@ public class SampleViewController extends SecuredAbstractController<Sample> {
     @Resource
     private MemiDownloadService downloadService;
 
+    @Resource
+    private SampleAnnotationDAO sampleAnnotationDAO;
+
     //GET request method
 
     @RequestMapping(method = RequestMethod.GET)
@@ -94,9 +99,10 @@ public class SampleViewController extends SecuredAbstractController<Sample> {
      */
     private void populateModel(final ModelMap model, final Sample sample) {
         final String pageTitle = sample.getSampleName() + " sample";
+        final List<EmgSampleAnnotation> sampleAnnotations = (List<EmgSampleAnnotation>) sampleAnnotationDAO.getSampleAnnotations(sample.getId());
         final ViewModelBuilder<SampleViewModel> builder = new SampleViewModelBuilder(sessionManager,
                 pageTitle, getBreadcrumbs(sample), propertyContainer, sample,
-                MemiTools.getArchivedSeqs(fileInfoDAO, sample));
+                MemiTools.getArchivedSeqs(fileInfoDAO, sample),sampleAnnotations);
         final SampleViewModel sampleModel = builder.getModel();
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, sampleModel);
     }

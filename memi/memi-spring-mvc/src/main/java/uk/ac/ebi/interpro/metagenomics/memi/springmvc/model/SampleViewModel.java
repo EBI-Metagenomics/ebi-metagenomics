@@ -1,6 +1,7 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
 
 import uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer;
+import uk.ac.ebi.interpro.metagenomics.memi.model.EmgSampleAnnotation;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Publication;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
@@ -20,6 +21,8 @@ public class SampleViewModel extends ViewModel {
 
     private final List<String> archivedSequences;
 
+    private final List<EmgSampleAnnotation> sampleAnnotations;
+
     /**
      * Indicates if the sample of this model is host-associated OR not
      */
@@ -27,12 +30,13 @@ public class SampleViewModel extends ViewModel {
 
     public SampleViewModel(Submitter submitter, Sample sample, List<String> archivedSequences, String pageTitle,
                            List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer,
-                           boolean isHostAssociated, List<Publication> publications) {
+                           boolean isHostAssociated, List<Publication> publications, List<EmgSampleAnnotation> sampleAnnotations) {
         super(submitter, pageTitle, breadcrumbs, propertyContainer);
         this.sample = sample;
         this.archivedSequences = archivedSequences;
         this.publications = publications;
         this.isHostAssociated = isHostAssociated;
+        this.sampleAnnotations = sampleAnnotations;
     }
 
 
@@ -50,5 +54,9 @@ public class SampleViewModel extends ViewModel {
 
     public boolean isHostAssociated() {
         return isHostAssociated;
+    }
+
+    public List<EmgSampleAnnotation> getSampleAnnotations() {
+        return sampleAnnotations;
     }
 }
