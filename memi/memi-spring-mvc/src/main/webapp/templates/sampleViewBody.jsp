@@ -2,6 +2,11 @@
 <%@ taglib prefix="spring" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<script language="javascript" type="text/javascript">
+    $(document).ready(function() {
+        $(".collapsibleContainer").collapsiblePanel();
+    });
+</script>
 <%--Page variable which is used several time within this page. Used for not specified study attributes.--%>
 <c:set var="notGivenId" value="(not given)"/>
 <div id="content-full">
@@ -257,6 +262,10 @@
                 </c:when>
                 <c:otherwise>(not given)</c:otherwise>
             </c:choose></span></div>
+</div>
+
+<div class="collapsibleContainer" title="Example Collapsible Panel">
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.... (you get the idea!) </p>
 </div>
 
 <div class="but_top"><a href="#top" title="back to the top page">Top</a></div>
