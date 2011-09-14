@@ -7,7 +7,7 @@ html, body {height: 100%;}
 @font-face {
 font-family: 'MyriadProRegular';
 src: url('../fonts/myriadpro-regular-webfont.eot'); /*to put first for IE*/
-src: local('?'),  /*The local values tell browsers to check first for your typeface on a visitor’s computer*/
+src: local('?'),  /*The local values tell browsers to check first for your typeface on a visitorï¿½s computer*/
      url('../fonts/myriadpro-regular-webfont.woff') format('woff'),
      url('../fonts/myriadpro-regular-webfont.ttf') format('truetype'),
      url('../fonts/myriadpro-regular-webfont.svg#webfontZPnuZIZf') format('svg'); /*paths to SVG files include an ID*/
@@ -1324,6 +1324,11 @@ span.form_help ul li{
 padding-left:2px; padding-top:1px;
 }
 .ui-datepicker { font-size:90%;}
+
+.collapsibleContainer{border: solid 1px #9BB5C1;}
+.collapsibleContainerTitle{cursor:pointer;}
+.collapsibleContainerTitle div{padding-top:5px;padding-left:10px;background-color:#9BB5C1;color:#607882;}
+.collapsibleContainerContent{padding: 10px;}
 
 
 /* PBm with IE7 */
