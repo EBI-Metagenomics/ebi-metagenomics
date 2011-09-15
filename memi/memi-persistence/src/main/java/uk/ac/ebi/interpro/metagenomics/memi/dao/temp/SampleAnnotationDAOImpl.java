@@ -38,7 +38,8 @@ public class SampleAnnotationDAOImpl implements SampleAnnotationDAO {
         log.info("Querying sample annotations for sample: " + sampleId + " from table EMG.SAMPLE_ANN...");
         List<EmgSampleAnnotation> result = new ArrayList<EmgSampleAnnotation>();
         try {
-            List<Map<String, Object>> rows = this.jdbcTemplate.queryForList("select var_name, var_val_cv, var_val_ucv, units from sample_ann where sample_id=?", new Long[]{sampleId});
+//            List<Map<String, Object>> rows = this.jdbcTemplate.queryForList("select var_name, var_val_cv, var_val_ucv, units from sample_ann where sample_id=?", new Long[]{sampleId});
+            List<Map<String, Object>> rows = this.jdbcTemplate.queryForList("select * from sample_ann where sample_id=?", new Long[]{sampleId});
             for (Map row : rows) {
                 String varValCV = (String) row.get("VAR_VAL_CV");
                 String varValUCV = (String) row.get("VAR_VAL_UCV");
