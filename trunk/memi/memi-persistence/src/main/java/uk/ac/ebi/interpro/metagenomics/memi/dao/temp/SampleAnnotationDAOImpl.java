@@ -41,6 +41,7 @@ public class SampleAnnotationDAOImpl implements SampleAnnotationDAO {
 //            List<Map<String, Object>> rows = this.jdbcTemplate.queryForList("select var_name, var_val_cv, var_val_ucv, units from sample_ann where sample_id=?", new Long[]{sampleId});
             List<Map<String, Object>> rows = this.jdbcTemplate.queryForList("select * from sample_ann where sample_id=?", new Long[]{sampleId});
             for (Map row : rows) {
+                log.info(row.keySet()+" ### "+row.values());
                 String varValCV = (String) row.get("VAR_VAL_CV");
                 String varValUCV = (String) row.get("VAR_VAL_UCV");
                 String value = (varValCV != null && varValCV.trim().length() > 0 ? varValCV : varValUCV);
