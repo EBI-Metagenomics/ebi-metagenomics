@@ -2,11 +2,6 @@
 <%@ taglib prefix="spring" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<script language="javascript" type="text/javascript">
-    $(document).ready(function() {
-        $(".collapsibleContainer").collapsiblePanel();
-    });
-</script>
 <%--Page variable which is used several time within this page. Used for not specified study attributes.--%>
 <c:set var="notGivenId" value="(not given)"/>
 <div id="content-full">
@@ -223,30 +218,30 @@
 </div>
 
 
-<c:choose>
-    <c:when test="${not empty model.sample.collectionDate || not empty model.sample.miscellaneous}">
+<%--<c:choose>--%>
+    <%--<c:when test="${not empty model.sample.collectionDate || not empty model.sample.miscellaneous}">--%>
 
-        <h3>Other information</h3>
+        <%--<h3>Other information</h3>--%>
 
-        <div class="output_form" id="large">
-            <c:choose>
-                <c:when test="${not empty model.sample.collectionDate}">
-                    <c:set var="collectionDate" value="${model.sample.collectionDate}"/>
-                    <div class="result_row"><label>Collection date:</label>
+        <%--<div class="output_form" id="large">--%>
+            <%--<c:choose>--%>
+                <%--<c:when test="${not empty model.sample.collectionDate}">--%>
+                    <%--<c:set var="collectionDate" value="${model.sample.collectionDate}"/>--%>
+                    <%--<div class="result_row"><label>Collection date:</label>--%>
 
-                        <span><fmt:formatDate value="${collectionDate}" pattern="dd-MMM-yyyy"/></span></div>
-                </c:when>
-                <%--<c:otherwise><c:set var="collectionDate" value="${notGivenId}"/></c:otherwise>--%>
-            </c:choose>
+                        <%--<span><fmt:formatDate value="${collectionDate}" pattern="dd-MMM-yyyy"/></span></div>--%>
+                <%--</c:when>--%>
+                <%--&lt;%&ndash;<c:otherwise><c:set var="collectionDate" value="${notGivenId}"/></c:otherwise>&ndash;%&gt;--%>
+            <%--</c:choose>--%>
 
-            <c:if test="${not empty model.sample.miscellaneous }">
-                <c:set var="miscellaneous" value="${model.sample.miscellaneous}"/>
-                <div class="result_row"><label>Miscellaneous:</label> <span><c:out value="${miscellaneous}"/></span>
-                </div>
-            </c:if>
-        </div>
-    </c:when>
-</c:choose>
+            <%--<c:if test="${not empty model.sample.miscellaneous }">--%>
+                <%--<c:set var="miscellaneous" value="${model.sample.miscellaneous}"/>--%>
+                <%--<div class="result_row"><label>Miscellaneous:</label> <span><c:out value="${miscellaneous}"/></span>--%>
+                <%--</div>--%>
+            <%--</c:if>--%>
+        <%--</div>--%>
+    <%--</c:when>--%>
+<%--</c:choose>--%>
 
 <h3>Submitted nucleotide data</h3>
 
@@ -264,26 +259,28 @@
             </c:choose></span></div>
 </div>
 
-<div class="collapsibleContainer" title="Meta data">
-            <table border="1" class="result">
-                <thead>
-                <tr>
-                    <c:set var="headerWidth" value="" scope="page"/>
-                    <c:set var="headerId" value="" scope="page"/>
-                    <th id="${headerId}" abbr="${headerName}" width="${headerWidth}" scope="col">Annotation</th>
-                    <th id="${headerId}" abbr="${headerName}" width="${headerWidth}" scope="col">Value</th>
-                </tr>
-                </thead>
-                <tbody>
-                   <c:forEach var="annotation" items="${model.sampleAnnotations}" varStatus="status">
-                      <tr>
-                        <td style="text-align:left;" id="ordered">${annotation.annotationName}</td>
-                        <td style="text-align:left;">${annotation.annotationValue}</td>
-                      </tr>
-                   </c:forEach>
-                </tbody>
-            </table>
-</div>
+<h3>Other information</h3>
+
+<c:if test="${not empty model.sampleAnnotations}">
+    <table border="1" class="result">
+        <thead>
+        <tr>
+            <c:set var="headerWidth" value="" scope="page"/>
+            <c:set var="headerId" value="" scope="page"/>
+            <th id="${headerId}" abbr="${headerName}" width="${headerWidth}" scope="col">Annotation</th>
+            <th id="${headerId}" abbr="${headerName}" width="${headerWidth}" scope="col">Value</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach var="annotation" items="${model.sampleAnnotations}" varStatus="status">
+            <tr>
+                <td style="text-align:left;" id="ordered">${annotation.annotationName}</td>
+                <td style="text-align:left;">${annotation.annotationValue} ${annotation.unit}</td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+</c:if>
 
 <div class="but_top"><a href="#top" title="back to the top page">Top</a></div>
 </div>

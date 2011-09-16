@@ -1,7 +1,5 @@
 package uk.ac.ebi.interpro.metagenomics.memi.model;
 
-import java.util.Map;
-
 /**
  * Represents a sample annotation object.
  * <p/>
@@ -35,6 +33,6 @@ public class EmgSampleAnnotation {
     }
 
     public String getUnit() {
-        return unit;
+        return (unit == null || unit.equals("null") ? "" : unit.trim());
     }
 }
