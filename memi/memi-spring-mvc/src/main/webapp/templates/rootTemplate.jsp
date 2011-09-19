@@ -23,11 +23,11 @@
     <script src="http://www.ebi.ac.uk/inc/js/contents.js" type="text/javascript"></script>
     <%-- script EBI to convert header to transparent when IE6, IE7, IE8  --%>
     <script type="text/javascript">
-    function loaded() {
-    if (navigator.userAgent.indexOf('MSIE') != -1) {
-    document.getElementById('head').allowTransparency = true;
-    }
-    }
+        function loaded() {
+            if (navigator.userAgent.indexOf('MSIE') != -1) {
+                document.getElementById('head').allowTransparency = true;
+            }
+        }
     </script>
     <%-- END EBI style and code--%>
     <%-- JQuery CSS--%>
@@ -49,6 +49,8 @@
     <script src="${pageContext.request.contextPath}/js/formclearer.js" type="text/javascript"></script>
     <%-- Jquey scroller - work only for the anchors on the same page--%>
     <script src="${pageContext.request.contextPath}/js/smoothscrol.js" type="text/javascript"></script>
+    <%--JQuery UI - Dialog box for login--%>
+    <script src="${pageContext.request.contextPath}/js/loginDialog.js" type="text/javascript"></script>
 
     <!--[if lt IE 9]><%-- HTML5 tags working in IE8 by including this JavaScript in the head  --%>
 <script type="text/javascript">
@@ -99,7 +101,6 @@
             });
         }
     </script>
-
 
 
 </head>
