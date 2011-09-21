@@ -75,7 +75,7 @@
 <%--Login dialog--%>
 <div id="login_dialog_div" class="sub">
     <div class="sub_log">
-        <form id="login_form" action="jquery">
+        <form id="login_form" action="doLogin">
             <fieldset>
                 <div class="form_row"><h3>Login</h3></div>
                 <div class="form_row">
