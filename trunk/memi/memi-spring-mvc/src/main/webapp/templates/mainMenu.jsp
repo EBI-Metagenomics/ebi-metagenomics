@@ -1,7 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<% final String url = request.getRequestURL().toString();
-    final String context = request.getContextPath();
-    final String requestRoot = url.substring(0, url.indexOf(context) + context.length());%>
+<%@ include file="loginDialog.jsp" %>
 <div class="top-nav">
     <div class="top-menu">
         <ul>
@@ -46,7 +44,6 @@
             <c:when test="${empty model.submitter}">
                 <span id="login"> Not logged in | <a id="loginLinkId" href="<c:url value="${baseURL}/"/>" title="Login">login</a>
                 <a id="jqueryLogin" href="" title="Login">JQuery Login</a></span>
-                <%--<button id="opener">Open the dialog</button>--%>
             </c:when>
             <c:otherwise>
                 <c:out value="${model.submitter.firstName} ${model.submitter.surname}"/>

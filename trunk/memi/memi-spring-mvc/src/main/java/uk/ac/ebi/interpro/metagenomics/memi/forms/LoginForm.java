@@ -3,8 +3,6 @@ package uk.ac.ebi.interpro.metagenomics.memi.forms;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.validation.constraints.Size;
-
 /**
  * Represents a customized login form.
  *
@@ -21,6 +19,14 @@ public class LoginForm {
 
     @NotEmpty(message = "{form.login.password.notEmpty}")
     private String password;
+
+    public LoginForm() {
+    }
+
+    public LoginForm(String emailAddress, String password) {
+        this.emailAddress = emailAddress;
+        this.password = password;
+    }
 
     public String getEmailAddress() {
         return emailAddress;

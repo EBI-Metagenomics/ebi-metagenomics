@@ -8,11 +8,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Represents a common controller, which currently holds request mappings
@@ -48,7 +49,7 @@ public class CommonController {
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    public ModelAndView indexHandler() {
+    public ModelAndView indexHandler(HttpServletRequest request) {
         if (sessionManager.getSessionBean() != null) {
             Submitter submitter = sessionManager.getSessionBean().getSubmitter();
             if (submitter != null) {
@@ -59,6 +60,10 @@ public class CommonController {
                 sessionManager.getSessionBean().removeSubmitter();
             }
         }
-        return new ModelAndView("redirect:" + HomePageController.REQUEST_MAPPING_VALUE);
+        String referer = request.getHeader("Referer");
+        if (referer == null || referer.length() == 0) {
+            referer = "/metagenomics";
+        }
+        return new ModelAndView("redirect:" + referer);
     }
 }
