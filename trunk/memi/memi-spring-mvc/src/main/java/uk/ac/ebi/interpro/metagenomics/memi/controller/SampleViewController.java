@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import uk.ac.ebi.interpro.metagenomics.memi.basic.comparators.EmgSampleAnnComparator;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.EmgLogFileInfoDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateSampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.ISampleStudyDAO;
@@ -26,10 +27,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.tools.MemiTools;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Represents the controller for sample overview page.
@@ -58,7 +56,7 @@ public class SampleViewController extends SecuredAbstractController<Sample> {
     @Resource
     private MemiDownloadService downloadService;
 
-    @Resource(name="annotationDAO")
+    @Resource(name = "annotationDAO")
     private SampleAnnotationDAO sampleAnnotationDAO;
 
     //GET request method
@@ -99,10 +97,11 @@ public class SampleViewController extends SecuredAbstractController<Sample> {
      */
     private void populateModel(final ModelMap model, final Sample sample) {
         final String pageTitle = sample.getSampleName() + " sample";
-        final List<EmgSampleAnnotation> sampleAnnotations = (List<EmgSampleAnnotation>) sampleAnnotationDAO.getSampleAnnotations(sample.getId());
+        List<EmgSampleAnnotation> sampleAnnotations = (List<EmgSampleAnnotation>) sampleAnnotationDAO.getSampleAnnotations(sample.getId());
+        Collections.sort(sampleAnnotations, new EmgSampleAnnComparator());
         final ViewModelBuilder<SampleViewModel> builder = new SampleViewModelBuilder(sessionManager,
                 pageTitle, getBreadcrumbs(sample), propertyContainer, sample,
-                MemiTools.getArchivedSeqs(fileInfoDAO, sample),sampleAnnotations);
+                MemiTools.getArchivedSeqs(fileInfoDAO, sample), sampleAnnotations);
         final SampleViewModel sampleModel = builder.getModel();
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, sampleModel);
     }
