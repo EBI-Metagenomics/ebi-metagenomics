@@ -41,7 +41,7 @@ public class LoginPageController extends LoginController implements IMGControlle
     public ModelAndView doGet(ModelMap model) {
         populateModel(model);
         model.addAttribute("loginForm", new LoginForm());
-        return new ModelAndView(VIEW_NAME, model);
+        return getModelAndView(model);
     }
 
     @RequestMapping(params = "login", method = RequestMethod.POST)
@@ -50,12 +50,7 @@ public class LoginPageController extends LoginController implements IMGControlle
         //process login
         super.processLogin(loginForm, result, model, status);
         populateModel(model);
-        Submitter submitter = sessionManager.getSessionBean().getSubmitter();
-        if (submitter != null) {
-            return new ModelAndView("redirect:submit", model);
-        }
-        //create model and view
-        return new ModelAndView(VIEW_NAME, model);
+        return getModelAndView(model);
     }
 
     /**
@@ -81,5 +76,14 @@ public class LoginPageController extends LoginController implements IMGControlle
         List<Breadcrumb> result = new ArrayList<Breadcrumb>();
         result.add(new Breadcrumb("Login", "Login to the metagenomics portal", VIEW_NAME));
         return result;
+    }
+
+    private ModelAndView getModelAndView(ModelMap model) {
+        Submitter submitter = sessionManager.getSessionBean().getSubmitter();
+        if (submitter != null) {
+            return new ModelAndView("redirect:submit", model);
+        }
+        //create model and view
+        return new ModelAndView(VIEW_NAME, model);
     }
 }
