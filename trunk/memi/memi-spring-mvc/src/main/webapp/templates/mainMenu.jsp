@@ -43,7 +43,7 @@
         <c:choose>
             <c:when test="${empty model.submitter}">
                 <span id="login"> Not logged in | <a id="loginLinkId" href="<c:url value="${baseURL}/"/>" title="Login">login</a>
-                <a id="jqueryLogin" href="" title="Login">JQuery Login</a></span>
+                <%--<a id="jqueryLogin" href="" title="Login">JQuery Login</a></span>--%>
             </c:when>
             <c:otherwise>
                 <c:out value="${model.submitter.firstName} ${model.submitter.surname}"/>
