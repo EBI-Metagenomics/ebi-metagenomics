@@ -30,8 +30,8 @@ import java.util.Set;
  * @since 1.0-SNAPSHOT
  */
 @Controller
-public class LoginDialogController extends AbstractController {
-    private final Log log = LogFactory.getLog(LoginDialogController.class);
+public class LoginFormController extends AbstractController {
+    private final Log log = LogFactory.getLog(LoginFormController.class);
 
     @Resource
     private SubmitterDAO submitterDAO;
