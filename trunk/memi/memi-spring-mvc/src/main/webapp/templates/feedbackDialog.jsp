@@ -24,8 +24,8 @@
                 }
             }
         };
-        <%-- Client side feedback form validation and submission. Please notice that there also exists a server side form validation--%>
-        <%--Be aware of the following issue: http://www.ozonesolutions.com/programming/2011/09/ajaxform-and-validation-plugins-for-jquery/--%>
+//      Client side feedback form validation and submission. Please notice that there also exists a server side form validation
+//      Be aware of the following issue: http://www.ozonesolutions.com/programming/2011/09/ajaxform-and-validation-plugins-for-jquery/
         $('#feedback_form').validate(
         {
             submitHandler: function(form) {
@@ -63,10 +63,9 @@
                 }
             }
         });
-        <%--Link to how JQuery form Plugin works: http://jquery.malsup.com/form/#getting-started--%>
+//      Link to how JQuery form Plugin works: http://jquery.malsup.com/form/#getting-started
         $('#feedback_form').ajaxForm(options);
-
-        <%--Feedback dialog specification--%>
+//      Feedback dialog specification
         var $dialog =
                 $feedbackDiv.dialog({
                     autoOpen: false, // Avoids auto open after a new dialog instance is being created
@@ -114,7 +113,6 @@
     });
 </script>
 
-<%--Feedback DIV--%>
 <div id="feedback_div">
     <h3>Beta Website Feedback</h3>
 
