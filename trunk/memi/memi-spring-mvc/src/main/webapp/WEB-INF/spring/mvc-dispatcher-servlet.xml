@@ -30,7 +30,7 @@
         </mvc:interceptor>
     </mvc:interceptors>
 
-    <!-- This Spring MVC tag allows you to request all images of the web application -->
+    <!-- This Spring MVC tag allows you to request any files in the specified directories -->
     <!-- E.g. using URL: http://localhost:8082/metagenomics/img/logo_8.png-->
     <mvc:resources mapping="/img/*.*" location="/img/"/>
     <mvc:resources mapping="/img/jquery/overcast/*.*" location="/img/jquery/overcast/"/>
