@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+            http://www.springframework.org/schema/mvc
+            http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+
+    <!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+
+    <!-- Imports user-defined @Controller beans that process client requests -->
+    <import resource="controllers-context.xml"/>
+    <import resource="service-beans-context.xml"/>
+    <import resource="persistence-config-context.xml"/>
+    <import resource="session-manager-context.xml"/>
+
+    <!-- Configures the @Controller programming spring_model -->
+    <mvc:annotation-driven/>
+
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="org.springframework.orm.hibernate3.support.OpenSessionInViewInterceptor"
+                  name="openSessionInViewInterceptor">
+                <property name="sessionFactory" ref="hibernateSessionFactory">
+                </property>
+            </bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+    <!-- This Spring MVC tag allows you to request any files in the specified directories -->
+    <!-- E.g. using URL: http://localhost:8082/metagenomics/img/logo_8.png-->
+    <mvc:resources mapping="/img/*.*" location="/img/"/>
+    <mvc:resources mapping="/img/jquery/overcast/*.*" location="/img/jquery/overcast/"/>
+    <mvc:resources mapping="/img/jquery/smoothness/*.*" location="/img/jquery/smoothness/"/>
+    <mvc:resources mapping="/fonts/*.*" location="/fonts/"/>
+    <mvc:resources mapping="/css/*.*" location="/css/"/>
+    <mvc:resources mapping="/js/*.*" location="/js/"/>
+
+    <!-- Forwards requests to the "/" resource to the "welcome" view -->
+    <!--<mvc:view-controller path="/" view-name="homePage"/>-->
+
+    <!--Resolves JSP pages selected for rendering by @Controllers to .jsp resources in the /pages directory-->
+    <bean id="jstlViewResolver"
+          class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/pages/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <bean id="tilesConfigurer"
+          class="org.springframework.web.servlet.view.tiles2.TilesConfigurer"
+          p:definitions="/WEB-INF/tiles/tiles-defs.xml"/>
+
+    <!-- 2 configuration beans for localisation -->
+    <bean id="messageSource"
+          class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basename" value="classpath:messages"/>
+        <property name="defaultEncoding" value="UTF-8"/>
+    </bean>
+    <bean id="localeResolver"
+          class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+        <property name="defaultLocale" value="en"/>
+    </bean>
+</beans>
