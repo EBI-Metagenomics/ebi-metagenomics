@@ -2,8 +2,6 @@ package uk.ac.ebi.interpro.metagenomics.memi.dao.temp;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,23 +21,16 @@ import java.util.Map;
  * Time: 18:19
  * To change this template use File | Settings | File Templates.
  */
-@Repository(value = "sampleAnnotationDAOBean")
+@Repository
 public class SampleAnnotationDAOImpl implements SampleAnnotationDAO {
 
     private JdbcTemplate jdbcTemplate;
 
-    private String tableNamePrefix;
-
     private final Log log = LogFactory.getLog(SampleAnnotationDAOImpl.class);
 
-    @Autowired(required = true)
+    @Resource(name = "memiDataSource")
     public void setDataSource(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
-    }
-
-    @Autowired(required = true)
-    public void setTableNamePrefix(String tableNamePrefix) {
-        this.tableNamePrefix = tableNamePrefix;
     }
 
     @Transactional(readOnly = true)
@@ -48,7 +39,7 @@ public class SampleAnnotationDAOImpl implements SampleAnnotationDAO {
         List<EmgSampleAnnotation> result = new ArrayList<EmgSampleAnnotation>();
         try {
 //            List<Map<String, Object>> rows = this.jdbcTemplate.queryForList("select var_name, var_val_cv, var_val_ucv, units from sample_ann where sample_id=?", new Long[]{sampleId});
-            List<Map<String, Object>> rows = this.jdbcTemplate.queryForList("select vn.var_name, sa.var_val_cv, sa.var_val_ucv,sa.units from " + tableNamePrefix + "." + "sample_ann sa join " + tableNamePrefix + "." + "variable_names vn on (sa.var_id=vn.var_id) where sa.sample_id=?", new Long[]{sampleId});
+            List<Map<String, Object>> rows = this.jdbcTemplate.queryForList("select vn.var_name, sa.var_val_cv, sa.var_val_ucv,sa.units from sample_ann sa join variable_names vn on (sa.var_id=vn.var_id) where sa.sample_id=?", new Long[]{sampleId});
             for (Map row : rows) {
                 String varValCV = (String) row.get("var_val_cv");
                 String varValUCV = (String) row.get("var_val_ucv");
