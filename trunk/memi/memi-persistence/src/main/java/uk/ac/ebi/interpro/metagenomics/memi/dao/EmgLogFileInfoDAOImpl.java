@@ -2,8 +2,6 @@ package uk.ac.ebi.interpro.metagenomics.memi.dao;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgFile;
@@ -26,18 +24,11 @@ public class EmgLogFileInfoDAOImpl implements EmgLogFileInfoDAO {
 
     private JdbcTemplate jdbcTemplate;
 
-    private String tableNamePrefix;
-
     private final Log log = LogFactory.getLog(EmgLogFileInfoDAOImpl.class);
 
-    @Autowired(required = true)
+    @Resource
     public void setDataSource(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
-    }
-
-    @Autowired(required = true)
-    public void setTableNamePrefix(String tableNamePrefix) {
-        this.tableNamePrefix = tableNamePrefix;
     }
 
     /**
@@ -47,7 +38,7 @@ public class EmgLogFileInfoDAOImpl implements EmgLogFileInfoDAO {
         log.info("Querying file IDs by sample ID: " + sampleId + " from table EMGLogFileInfo...");
         List<String> result = new ArrayList<String>();
         try {
-            List<Map<String, Object>> rows = this.jdbcTemplate.queryForList("select file_id from " + tableNamePrefix + "." + EmgFile.TABLE_NAME + "where" + EmgFile.SAMPLE_ID + " = ? ", new Long[]{sampleId});
+            List<Map<String, Object>> rows = this.jdbcTemplate.queryForList("select file_id from " + EmgFile.TABLE_NAME + " where " + EmgFile.SAMPLE_ID + "=?", new Long[]{sampleId});
             for (Map row : rows) {
                 result.add((String) row.get("FILE_ID"));
             }
