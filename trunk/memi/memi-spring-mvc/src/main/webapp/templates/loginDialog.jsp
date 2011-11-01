@@ -27,11 +27,11 @@
         var $dialog =
                 $("#login_dialog_div").dialog({
                     autoOpen: false, // Avoids auto open after a new dialog instance is being created
-                    title: 'JQuery Login Dialog', //Dialog title
+                    title: 'Login for EBI Metagenomics', //Dialog title
                     modal: true, //Dialog has modal behavior; other items on the page are disabled
                     closeOnEscape: true, //Dialog closes when it has focus and the user presses the esacpe (ESC) key
-                    height: 420,
-                    width: 800
+                    height: 400,
+                    width: 730
                 });
 
         //Open dialog command by clicking link with Id jqueryLogin
@@ -74,15 +74,15 @@
 <c:set var="enaUrlParam" value="<%=activePage%>"/>
 <%--Login dialog--%>
 <div id="login_dialog_div" class="sub">
+    <div id="errorMessage" class="error"></div>
     <div class="sub_log">
         <form id="login_form" action="doLogin">
             <fieldset>
                 <div class="form_row"><h3>Login</h3></div>
+
                 <div class="form_row">
                     <label for="emailAddress">E-Mail:</label>
                     <br/>
-
-                    <div id="errorMessage" class="error"></div>
                     <input type="text" name="emailAddress" id="emailAddress" style="width:313px;"/>
                 </div>
                 <div class="form_row">
@@ -94,7 +94,7 @@
                        value="${model.propertyContainer.enaSubmissionURL.forgottenPwdLink}">
                     <c:param name="url" value="${enaUrlParam}"/>
                 </c:url>
-                <div><a href="<c:out value="${enaPasswordUrl}"/>" title="Request a new password">Forgot your
+                <div><a href="<c:out value="${enaPasswordUrl}"/>" title="Request a new password" style="color:#188960;">Forgot your
                     password?</a></div>
                 <div class="form_row_log">
                     <input type="submit" name="login" value="Login" class="main_button"/>&nbsp;
@@ -111,13 +111,11 @@
                 <c:param name="url" value="${enaUrlParam}"/>
             </c:url>
             <span class="sub_sign_text"><a href="<c:url value="${enaRegistrationUrl}"/>"
-                                           title="Registration">Sign-up</a> to register</span>
+                                           title="Registration" style="color:#188960;">Sign-up</a> to register</span>
         </div>
-        <div class="form_row"><h3>or</h3></div>
-        <p><img src="${pageContext.request.contextPath}/img/ico_ena_user.jpg" alt="ENA member"></p>
+        <div class="form_row" style="font-size:140%;">or</div>
+        <p><a href="http://www.ebi.ac.uk/ena/home"> <img src="${pageContext.request.contextPath}/img/ico_ena_user.jpg" alt="ENA member" border="0"></a></p>
 
-        <p class="sub_sign_note">If you already are a registered user of the European Nucleotide Archive (ENA), you
-            should
-            simply use your ENA account to log-in.</p>
+        <p class="sub_sign_note">If you already are a registered user of the European Nucleotide Archive (ENA), you should simply use your ENA account to log-in.</p>
     </div>
 </div>

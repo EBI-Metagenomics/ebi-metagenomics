@@ -2,38 +2,110 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <div id="content">
     <%--<spring:message code="label.email.submission.subject" />--%>
-    <section id="submit-data">
-        <div id="submit-data-display"><h1>
-            <c:choose>
-                <c:when test="${empty model.submitter}">
-                    <a href="<c:url value="${baseURL}/login"/>">Submit your data</a>
-                </c:when>
-                <c:otherwise>
-                    <a href="<c:url value="${baseURL}/submit"/>">Submit your data</a>
-                </c:otherwise>
-            </c:choose></h1></div>
-        <div id="submit-data-description">
-            <h2>Submit data for analysis</h2>
+<section id="submit-data">
+    <c:choose>
+     <%-- Show Private welcome message only if a user is logged in--%>
+     <c:when test="${not empty model.submitter}">
 
-            <p>Click "submit data" to send us your nucleotide sequences to analyse.<br/>
-                1 . Login (or register)<br/>
-                2 . Provide details of your project and your nucleotide sequence data<br/>
-                3 . Track and view your analysis results.</p>
-            <c:choose>
-                <c:when test="${empty model.submitter}">
-                    <p>
-                        <a href="<c:url value="${baseURL}/login"/>">Submit your data</a>
-                    </p>
+         <div id="submit-data-description">
+            <h2>Welcome to your private area</h2>
 
-                </c:when>
-                <c:otherwise>
-                    <p>
-                        <a href="<c:url value="${baseURL}/submit"/>">Submit your data</a>
-                    </p>
-                </c:otherwise>
-            </c:choose>
+            <p> Your username is : <strong>Meta Genome</strong>  (edit your profile)<br/>
+                Your email is : <strong>metagenomic@gmail.com</strong></p>
+
+            <p> You have submitted: <strong>0</strong> projects and <strong>0</strong> samples.</p>
+
+            <p> You can view and analyse in this area (under My projects and My samples) any private information that is not yet publicly available. </p>
+            <p> Click here to submit a new project</p>
+            <p> Click here to logout and return to the metagenomics homepage</p>
         </div>
-        <%--  <a href="<c:url value="${baseURL}/info"/>">more Info</a></p>   --%>
+     </c:when>
+
+
+
+
+
+
+
+
+     <%-- Show Slideshow if not logged in --%>
+     <c:otherwise>
+      <!--[if IE 6]><div id="IE6" class="IE"><![endif]--> <!--[if IE 7]><div id="IE7" class="IE"><![endif]--> <!--[if IE & ((!IE 6) & (!IE 7))]><div><![endif]--> <!--[if !IE]>--><div><!--<![endif]-->
+      <div class="carousel">
+
+       <ul>
+       <li>
+       <!-- module 1 -->
+      <div class="module">
+      <div class="top_corners"></div>
+      <div class="content">
+      <h3>Easy submission</h3>
+       <div class="cent"><img src="${pageContext.request.contextPath}/img/icons_sub.png" alt="easy submission" /></div>
+      <p>Manually supported submission process, with help available for
+        meta-data provision. Raw SFF format 454 data accepted, other formats considered on request.<br /></p>
+      <div class="find_more"><a href="${pageContext.request.contextPath}/info#features_1" title="find out more about easy submission"><span>Find out more</span></a></div>
+      </div>
+      <div class="bottom_corners"></div>
+      </div>
+       </li>
+       <li>
+       <!-- module 2 -->
+      <div class="module">
+      <div class="top_corners"></div>
+      <div class="content">
+      <h3>Powerful analysis</h3>
+      <div class="cent"><img src="${pageContext.request.contextPath}/img/icons_ana.png" alt="powerful analysis" /></div>
+      <p>Functional analysis of metagenomic sequences using InterPro - a powerful and sophisticated alternative to BLAST-based analyses.<br /></p>
+      <div class="find_more"><a href="${pageContext.request.contextPath}/info#features_2" title="find out more about analysis"><span>Find out more</span></a></div>
+      </div>
+      <div class="bottom_corners"></div>
+      </div>
+       </li>
+      <li>
+      <!-- module 3 -->
+      <div class="module">
+      <div class="top_corners"></div>
+      <div class="content">
+      <h3>Data archiving</h3>
+       <div class="cent"><img src="${pageContext.request.contextPath}/img/icons_arc.png" alt="data archiving"  /></div>
+      <p>Data automatically archived at the Sequence Read Archive (SRA), ensuring accession numbers are supplied - a prerequisite for publication in many journals.</p>
+      <div class="find_more"><a href="${pageContext.request.contextPath}/info#features_3" title="find out more about data archiving"><span>Find out more</span></a></div>
+      </div>
+      <div class="bottom_corners"></div>
+      </div>
+      </li>
+      <li>
+      <!-- module 4 -->
+      <div class="module">
+      <div class="top_corners"></div>
+      <div class="content">
+      <h3>Submit your data</h3>
+      <div class="cent"><img src="${pageContext.request.contextPath}/img/icons_submit.png" alt="" width="71" height="71" /></div>
+      <p style="padding-bottom:7px; "> Click &quot;submit data&quot; to send us your nucleotide sequences to analyse.</p>
+       <div style="margin:0; padding-left:14px;font-size:80%;list-style-type: none;" >1 . Login (or register)<br/>
+       2 . Provide details of your project and your nucleotide sequence data <br/>
+       3 . Track and view your analysis results.</div>
+       <c:choose>
+       <c:when test="${empty model.submitter}">
+        <div class="find_more"><a href="<c:url value="${baseURL}/login"/>" title="submit data for analysis"><span>Submit your data</span></a></div>
+        </div>
+       </c:when>
+       <c:otherwise>
+         <div class="find_more"><a href="<c:url value="${baseURL}/submit"/>" title="submit data for analysis"><span>Submit your data</span></a></div>
+        </div>
+      </c:otherwise>
+      </c:choose>
+      <div class="bottom_corners"></div>
+      </div>
+      </li>
+
+        </ul>
+      </div>
+    </div>
+  </c:otherwise>
+     </c:choose>
+
+
     </section>
 
 
@@ -183,7 +255,32 @@
                 </div>
             </c:otherwise>
         </c:choose>
+        <div id="list-news"><h2>News & events</h2><h3>Latest news & events  <a href="${model.rssUrl}" rel="alternate" type="application/rss+xml" title="Metagenomics RSS feeds"><img
+            src="${pageContext.request.contextPath}/img/icon_rss.gif" alt="Metagenomics RSS feeds"/></a></h3>
+
+
+       <c:choose>
+        <c:when test="${empty model.rssItems}">
+          <p><span class="list_desc">No news</span></p>
+        </c:when>
+        <c:otherwise>
+
+            <c:forEach var="entry" items="${model.rssItems}" varStatus="status">
+             <p><span class="list_desc">${entry.title}</span>   </p>
+                </c:forEach>
+
+
+        </c:otherwise>
+    </c:choose>
+<p><a href="http://twitter.com/EBImetagenomics" class="twitter">Follow us on Twitter</a></p>
+<span class="separator"></span>
+ <h2>Mailing list</h2>
+ <p><span class="list_desc"><a class="list_more" href="http://listserver.ebi.ac.uk/mailman/listinfo/metagenomics">Subscribe</a> to the EBI metagenomics mailing list to receive update information. </span> </p>
+
+        </div>
     </section>
+
+
 </div>
 
-<div id="sidebar"><tiles:insertAttribute name="loginForm"/></div>
+<%--<div id="sidebar"><tiles:insertAttribute name="loginForm"/></div>--%>

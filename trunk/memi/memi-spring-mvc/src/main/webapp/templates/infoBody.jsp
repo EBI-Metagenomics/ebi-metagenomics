@@ -1,210 +1,115 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div id="content-full">
-<h2>About EBI Metagenomics Beta</h2>
+<h2>About EBI Metagenomics</h2>
 
 <div id="sidebar-nav">
     <ul>
         <%--<li><a href="#intro">Introduction</a></li>
        <li><a href="#feedback">Feedback</a></li>--%>
-        <li><a href="#what_about">What is metagenomics?</a></li>
-        <li><a href="#resources">Metagenomic-related resources at EBI</a>
+        <li><a href="#what_about">EBI Metagenomics service</a></li>
+        <li><a href="#features">Features</a>
             <ul>
-                <li><a href="#resources_1">ENA and Raw Sequence data</a></li>
-                <li><a href="#resources_2">InterPro</a></li>
+                <li><a href="#features_1">Easy submission</a></li>
+                <li><a href="#features_2">Powerful analysis</a></li>
+                <li><a href="#features_3">Data archiving</a></li>
             </ul>
         </li>
-        <li><a href="#features">Current features</a>
+        <li><a href="#submit">Submission process</a>
             <ul>
-                <li><a href="#features_1">Submitting data</a></li>
-                <li><a href="#features_2">Data Privacy</a></li>
-                <li><a href="#features_3">Analysis</a></li>
+                <li><a href="#registration">User registration</a></li>
+                <li><a href="#format">Data formats supported</a></li>
+                <li><a href="#prepublication">Prepublication confidentialit</a></li>
             </ul>
         </li>
+        <li><a href="#analysis">Analysis</a></li>
         <li><a href="#p_features">Planned features</a></li>
-        <li><a href="#mail">Mailing List</a></li>
-        <li><a href="#credits">Credits</a>
-            <ul>
-                <li><a href="#credits_1">The team</a></li>
-                <li><a href="#credits_2">Photos</a></li>
-            </ul>
-        </li>
+        <li><a href="#mail">Mailing list</a></li>
+        <li><a href="#credits">Credits</a> </li>
 
     </ul>
 </div>
 
-<p class="intro">
-    EBI Metagenomics Beta is a new web resource targeted at metagenomic researchers. This is the first
-    release and we intend to make rapid and frequent updates to improve the interfaces and services provided.
-    Additional tools and analyses will become available during the next few months and we actively encourage users to
-    make requests for the tools that they wish to see on the site.
-    We want to provide a service that is most useful for our users and to do this we need to hear from you.
-    If you have any additional feedback about any aspect of the site (good or bad), please
-    <a href="<c:url value="${baseURL}/contact"/>" title="Contact us">contact us</a>.
+<h3 id="what_about">EBI Metagenomics service</h3>
+
+<p>Metagenomics is the study of all genomes present in any given environment without the need for prior individual identification or amplification. For example, in its simplest form, a metagenomic study might be the direct sequence results of DNA extracted from a bucket of sea water.</p>
+<p>The EBI Metagenomics service is an automated pipeline for the analysis and archiving of metagenomic data that aims to provide insights into the functional and metabolic potential of a sample.
 </p>
 
-<h3 id="what_about">What is metagenomics?</h3>
 
-<p>
-    The study of all genomes present in any given environment without the need for prior individual identification or
-    amplification is termed metagenomics. For example, in its simplest form a metagenomic study might be the direct
-    sequence results of DNA extracted from a bucket of sea water.
+<h3 id="features">Features</h3>
+
+<h4 id="features_1">Easy submission</h4>
+<div class="about_img"><img src="${pageContext.request.contextPath}/img/icons_sub.png" alt="easy submission" /></div>
+<p>The EBI Metagenomics service offers a manually-assisted submission route, with help available to ensure data and metadata formatting comply with the Sequence Read Archive (SRA) data schema and the Genomic Standards Consortium (GSC) sample metadata guidelines respectively, allowing harmonisation of analysis efforts across the wider genomics community.
 </p>
 
-<p>
+<h4 id="features_2">Powerful analysis</h4>
+<div class="about_img"><img src="${pageContext.request.contextPath}/img/icons_ana.png" alt="powerful analysis" /></div>
+<p>The service makes extensive use of InterPro for functional analysis of predicted protein coding sequences. InterPro uses diagnostic models to classify sequences into families and predict the presence of functionally important domains and sites. By utilising this resource, the service offers a powerful and sophisticated alternative to BLAST-based functional metagenomic analyses.
+<br/><br/></p>
 
-<div class="but_top"><a href="#top" title="back to the top page">Top</a></div>
+<h4 id="features_3">Data archiving</h4>
+<div class="about_img"><img src="${pageContext.request.contextPath}/img/icons_arc.png" alt="data archiving"/></div>
+<p>Data submitted to the EBI Metagenomics service is automatically archived in the SRA, which is part of the European Nucleotide Archive (ENA). Accession numbers are supplied for sequence data as part of the archiving process, which is a prerequisite for publication in many journals.
+</p>
+<p>The SRA only accepts data that is intended for public release. However, in accordance with our prepublication confidentiality statement, we are able to request that data remains private within the SRA until publication.</p>
+
+
+<h3 id="submit">Submission process</h3>  
+
+<h4 id="registration">User registration</h4>
+<p>Registration is required to submit data for analysis. Please note that the registration system is shared with ENA, so if you have previously submitted sequences to EMBL-Bank you will already have a valid account.
 </p>
 
-<h3 id="resources">Metagenomic-related resources at EBI</h3>
+<h4 id="format">Data formats supported</h4>
+<p>The service accepts long (minimum reads lengths over 100nt), unassembled random shotgun sequence reads, such as Roche 454 sequences, from metagenomic or metatranscriptomic samples. However, we would like to hear from users with datasets that do not fit this description to help us better understand your needs so we can tailor future developments of the service accordingly.</p>
 
-<p>
-    The EBI resources of the European Nucleotide Archive (in particular Sequence Read Archive and EMBL-Bank),
-    UniProt, InterPro, Ensembl Genomes and IntAct are all used for analysis by metagenomic researchers, but not in
-    an integrated manner. We want to provide a user friendly interface to these services, promoting their utility in
-    the field of metagenomics. The resource will enable protein prediction, function analysis, comparison to
-    complete reference genomes and metabolic pathway analysis.
-</p>
+<h4 id="prepublication">Prepublication confidentiality</h4>
+<p>Any data submitted to us can be kept confidential (by secure user login) for a period of up to 2 years to allow time for the data producer to publish their findings. However it should be noted that ALL data must eventually be suitable for public release. Human associated samples (e.g., human gut samples) must be filtered prior to submission to remove any human contaminants. Please contact us if you require help with this step.</p>
 
-<h4 id="resources_1">ENA and Raw Sequence data</h4>
 
-<p>
-    The European Nucleotide Archives (ENA) already accept metagenomic sequences, however the only submission route at
-    present is via user-generated XML files. Metagenomics users have a need for an improved metagenomics-focused
-    service; therefore, we are working closely with the ENA to develop submission tools specifically designed for
-    use with the comprehensive metadata of metagenomic studies. Submitting data to the ENA allows users to obtain
-    INSDC accession numbers that are required by many journals for publication of metagenomics research.
-</p>
+<h3 id="analysis">Analysis</h3>
 
-<h4 id="resources_2">InterPro</h4>
-
-<p>
-    InterPro is an integrated database of protein "signatures" used for the classification and automatic annotation
-    of proteins and genomes. InterPro classifies sequences into families and predicts the occurrence of functional
-    domains, repeats and important sites. InterPro adds in-depth annotation, including GO terms, to the protein
-    signatures. The EBI metagenomics pipeline takes advantage of the analysis tool created by the InterPro team
-    (InterProScan) to perform comparative scanning of the pCDSs against the multitude of highly curated protein
-    signatures in the various member databases. Certain Interpro member databases are not used in the analysis of
-    metagenomic fragments because they yield few or no matches and therefore do not constitute a good use of compute
-    time.
-</p>
-
-<p>
-
-<div class="but_top"><a href="#top" title="back to the top page">Top</a></div>
-</p>
-
-<h3 id="features">Current features</h3>
-
-<p>
-    In this current version (Beta) of the resource, we offer users a manually assisted submission route to ensure data
-    and metadata formatting to comply with the SRA (Sequence Read Archive) data schema and the GSC (Genomic Standards
-    Consortium) sample metadata guidelines respectively. We provide a minimum analysis of the reads submitted and allow
-    users to download the results.
-</p>
-
-<h4 id="features_1">Submitting data</h4>
-
-<p>
-    Presently, analysis is restricted to "long" (average reads lengths over 250nt), unassembled random shotgun
-    sequence reads, i.e. Roche 454 sequences, from metagenomic or metatranscriptomic samples. However, we would like
-    to hear from users with datasets that do not fit this description to help us better understand your needs so we
-    can tailor our future developments appropriately.
-</p>
-
-<p>
-    Registration is required to submit data for analysis. Please note that the registration system is shared with ENA,
-    so if you have ever submitted sequences to EMBL-Bank you will already have a valid account.
-</p>
-
-<h4 id="features_2">Data Privacy</h4>
-
-<p>
-    Any data submitted to us can be kept private (by secure user login) for a period of up to 2 years. However it
-    should be noted that ALL data must eventually be suitable for public release. Human associated samples (e.g.
-    human gut samples) must be filtered by users prior to submission to remove any Human contaminants (Note that we
-    intend to offer a filtering step in the near future.)
-</p>
-
-<h4 id="features_3">Analysis</h4>
-
-<figure style="margin-right:14px;">
+<figure>
     <a href="${pageContext.request.contextPath}/img/chart_pipeline_400.gif"><img src="${pageContext.request.contextPath}/img/chart_pipeline.gif" alt="Pipeline chart"/> </a>
     <figcaption>
-        <h3>Metagenomics pipeline chart</h3>
+        <%--<h3>Pipeline</h3>--%>
 
         <p>The basic pipeline is outlined this chart.</p>
     </figcaption>
 </figure>
 
-<p>The basic pipeline is outlined this chart.</p>
-
-<p> The raw sequence reads are clipped to remove technical parts to the reads and poor quality ends. They are then
-    filtered to remove very short reads, duplicate reads and reads containing >10% unknown base calls (N's).</p>
-
-<p>The remaining reads are subject to analysis by FragGeneScan (FGS) which is a tool to predict coding sequences
-    (pCDS) within the reads. For further details on FGS please see <a
-            href="http://nar.oxfordjournals.org/content/early/2010/08/29/nar.gkq747.abstract" class="ext">FragGeneScan:
-        predicting genes in short and error-prone reads</a>. The pCDS are then analysed using InterProScan (uses a
-    subset of InterPro's member database applications). The InterProScan results table is downloadable for further
-    interrogation and contains the interpro IDs, member database IDs and associated GO terms.
-</p>
-<p>
-    The interpro results table is dowloadable in TSV format which can be opened in any spreadsheet application
-    (e.g. Microsoft Excel). The columns in the table are:
-</p>
-<ul>
-    <li>Sequence ID</li>
-    <li>MD5 checksum of sequence</li>
-    <li>Length of pCDS (in amino acids)</li>
-    <li>Member database of match</li>
-    <li>Member database ID of match</li>
-    <li>Member database description for that ID</li>
-    <li>Start position of match</li>
-    <li>End position of match</li>
-    <li>E-Value of match</li>
-    <li>T (Match status)</li>
-    <li>Date analysis ran</li>
-    <li>InterPro ID</li>
-    <li>InterPro name</li>
-    <li>Comma separated list of associated GO terms in the format: &lt;ontology&gt;:&lt;description&gt;&lt;(GO:ID)&gt;,"</li>
-</ul>
-
-
-<p>
-    <div class="but_top"><a href="#top" title="back to the top page">Top</a></div>
-</p>
-
+<p>The raw sequence reads are clipped to remove technical parts and poor quality ends.</p>
+<p>They are then filtered to remove very short reads, duplicate reads and reads containing >10% unknown base calls. </p>
+<p>The remaining reads are subject to analysis by FragGeneScan (FGS) (<a
+            href="http://nar.oxfordjournals.org/content/early/2010/08/29/nar.gkq747.abstract" class="ext">FragGeneScan: predicting genes in short and error-prone reads</a>) to predict coding sequences (pCDS). </p>
+<p>These are then analysed using InterProScan and results (including processed reads, pCDS, InterProScan results and GO term annotation results) are returned. Results are also downloadable for further interrogation.</p>
+ <br/>
 
 <h3 id="p_features">Planned features</h3>
 
-<p>The following features are planned for future releases of the resource:<br/>
-<ol>
-    <li>Inclusion of an assembly step for short reads</li>
-    <li>Better summary information visualisations per sample</li>
+<p>We intend to make frequent updates to the interfaces and services provided. The following features are planned for future releases of the resource:<br/>
+<ul>
+    <li>Inclusion of an assembly step for over-lapping paired-end short reads</li>
+    <li>Better information visualisations</li>
     <li>Inclusion of 16S rRNA diversity analysis</li>
     <li>Interactive visualisation of InterPro matches with links to InterPro entries</li>
-</ol>
-</p>
-<p>
-
-<div class="but_top"><a href="#top" title="back to the top page">Top</a></div>
+    <li>Human contaminant filtering</li>
+</ul>
 </p>
 
-<h3 id="mail">Mailing List</h3>
+<p>We actively encourage users to make requests for additional tools and analyses that they wish to see as part of the service. We also welcome general feedback. Please contact us if you have any comments about any aspect of the site</p>
 
-<p>If you would like to be kept informed of further developments with the EBI metagenomics resources please sign up
-    for the
-    <a href="http://listserver.ebi.ac.uk/mailman/listinfo/metagenomics" class="ext"> EBI metagenomics mailing
-        list</a>.
-</p>
+<h3 id="mail">Mailing list</h3>
 
-<p>
+<p>If you would like to be kept informed of further developments with the EBI metagenomics resources please sign up  for the
+<a href="http://listserver.ebi.ac.uk/mailman/listinfo/metagenomics" class="ext"> EBI metagenomics mailing  list</a>.</p>
 
-<div class="but_top"><a href="#top" title="back to the top page">Top</a></div>
-</p>
 
 <h3 id="credits">Credits</h3>
 
+<p>We would like to thanks the Beta testers for providing valuable feedback.</p>
+    
 <h4 id="credits_1">The team</h4>
 
 <p>This new resource for metagenomics is supported by the <a
