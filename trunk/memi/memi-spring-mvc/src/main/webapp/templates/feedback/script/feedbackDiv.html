@@ -1,0 +1,62 @@
+<div id="feedback_div" style="display:none;">
+    <h3>Beta Website Feedback</h3>
+
+    <p>If you have feedback about this new website, please use the form below to send us your
+        comments:</p>
+
+    <form id="feedback_form" action="**/doFeedback">
+        <div class="feedbackform_tab"></div>
+        <fieldset>
+            <table class="result" id="contact">
+                <tr>
+                    <td>
+                        <!--E-Mail address-->
+                        <!--<small>*</small>-->
+                        <!--:-->
+                        <!--<input id="emailAddress" style="margin-left:14px; width:284px;"/>-->
+                        <!---->
+                        E-Mail address:
+                        <input id="emailAddress" name="emailAddress" style="margin-left:14px; width:284px;"/>
+                    </td>
+                </tr>
+                <!--<tr>-->
+                    <!--<td>-->
+                        <!--<div id="addressErrorMessage" class="error"></div>-->
+                    <!--</td>-->
+                <!--</tr>-->
+                <tr>
+                    <td><label for="emailSubject">Feedback subject
+                        <small>*</small>
+                        :</label><input type="text" name="emailSubject" id="emailSubject" style="width:284px;"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div id="subjectErrorMessage" class="error"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="emailMessage">Your comments
+                        <small>*</small>
+                        :</label><br/><textarea id="emailMessage" name="emailMessage" cols="50" rows="10"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div id="msgError" class="error"></div>
+                    </td>
+                </tr>
+                <input type="hidden" name="leaveIt" id="leaveIt" style="margin-left:14px; width:284px;"/>
+                <tr>
+                    <td>
+                        <input type="submit" name="submit" value="Submit" class="main_button"/>
+                        <span class="clear_but" style="float:none;">| <input id="resetFeedbackFrom" type="reset"
+                                                                             value="Reset"
+                                                                             class="main_button"/></span>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        <small>* Required</small>
+    </form>
+</div>
