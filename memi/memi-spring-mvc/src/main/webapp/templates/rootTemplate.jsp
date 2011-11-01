@@ -23,11 +23,11 @@
     <script src="http://www.ebi.ac.uk/inc/js/contents.js" type="text/javascript"></script>
     <%-- script EBI to convert header to transparent when IE6, IE7, IE8  --%>
     <script type="text/javascript">
-        function loaded() {
-            if (navigator.userAgent.indexOf('MSIE') != -1) {
-                document.getElementById('head').allowTransparency = true;
-            }
-        }
+    function loaded() {
+    if (navigator.userAgent.indexOf('MSIE') != -1) {
+    document.getElementById('head').allowTransparency = true;
+    }
+    }
     </script>
     <%-- END EBI style and code--%>
     <%-- JQuery CSS--%>
@@ -99,6 +99,15 @@
             });
         }
     </script>
+
+    <%-- script for carousel--%>
+    <script src="${pageContext.request.contextPath}/js/jquery.carousel.min.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		$(function(){
+			$("div.carousel").carousel({pagination: true,  autoSlide: true, autoSlideInterval: 15000, delayAutoSlide: 2000, loop: true });
+
+		});
+	</script>
 </head>
 
 <%-- The following variable saves and provides the base URL for the whole application --%>
