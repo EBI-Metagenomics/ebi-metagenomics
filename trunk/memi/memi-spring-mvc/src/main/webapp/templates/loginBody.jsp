@@ -8,22 +8,6 @@
 <%-- This template is used for the login page --%>
 <div id="content-full">
 
-   <%-- <div id="sidebar">
-    <div id="sidebar-mailing">
-    <img src="${pageContext.request.contextPath}/img/icon_info.gif" alt="Information">
-    <h2>Data Submission</h2>
-    <p>If you have any questions about submitting your data to EBI metagenomics, please email us (<a href="mailto:datasubs@ebi.ac.uk?subject=EBI Metagenomics - data submission" title="Send an enquiry about Metagenomics data submission">datasubs@ebi.ac.uk</a>).</p>
-    </div>
-
-    <div id="sidebar-ena">
-    <img src="${pageContext.request.contextPath}/img/icon_ena.gif" alt="Information">
-    <h2>ENA user?</h2>
-    <p>If you already are a registered user of the European Nucleotide Archive (ENA) or SPIN, you don't need to get another Username and Password. You can simply use your ENA account to log-in.<br/> If you are not a member yet , you will need to <a href="<c:url value=" https://www.ebi.ac.uk/embl/genomes/submission/registration.jsf"/>" title="Registration">register</a>.</p>
-    </div>
-    </div>--%>
-
-
-
         <h2>Submit data</h2>
 
         <p class="intro">We currently provide a manually-supported submission service. After registering, you will be asked to send us a summary of your data using an online form. You will then be contacted by our curation team to enable submission of your data to our analysis pipeline and to the underlying archive (SRA). Our curators will translate your data and metadata to the required formats and provide you with accession numbers that you can use for publication purposes, and a direct link to your analysis results (note, depending on the size of your submission, the analysis may take a few days to complete).</p>
@@ -72,8 +56,8 @@
         </c:url>
         <span class="sub_sign_text"><a href="<c:url value="${enaRegistrationUrl}"/>" title="Registration">Sign-up</a> to register</span>
         </div>
-        <div class="form_row"><h3>or</h3></div>
-        <p> <img src="${pageContext.request.contextPath}/img/ico_ena_user.jpg" alt="ENA member"></p>
+        <div class="form_row" style="font-size:140%;">or</div>
+        <p><a href="http://www.ebi.ac.uk/ena/home"><img src="${pageContext.request.contextPath}/img/ico_ena_user.jpg" alt="ENA member"></a></p>
         <p class="sub_sign_note">If you already are a registered user of the European Nucleotide Archive (ENA), you should simply use your ENA account to log-in.</p>
         </div>
         </div>
