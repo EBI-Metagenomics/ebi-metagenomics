@@ -98,9 +98,7 @@
 </script>
 <style>
     #feedback_div {
-        float: left;
-        overflow: hidden;
-        text-indent: -9999px; /*background: transparent url(../img/button_feedback_off_r.gif) no-repeat 2px;*/
+        
         position: fixed;
         _position: absolute; /* position fixed is not recognise on IE6 */
         right: 0;
