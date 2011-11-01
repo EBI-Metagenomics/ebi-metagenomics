@@ -2,17 +2,20 @@ package uk.ac.ebi.interpro.metagenomics.memi.controller;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.velocity.app.VelocityEngine;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.ui.velocity.VelocityEngineUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.SubmitterDAO;
-import uk.ac.ebi.interpro.metagenomics.memi.encryption.SHA256;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.FeedbackForm;
-import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
-import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
+import uk.ac.ebi.interpro.metagenomics.memi.services.EmailNotificationService;
+import uk.ac.ebi.interpro.metagenomics.memi.services.INotificationService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 
 import javax.annotation.Resource;
@@ -35,10 +38,34 @@ public class FeedbackFormController extends AbstractController {
     @Resource
     private SubmitterDAO submitterDAO;
 
-    @RequestMapping(value = "/doFeedback", method = RequestMethod.POST)
+    @Resource(name = "emailNotificationServiceContactPage")
+    private INotificationService emailService;
+
+    @Resource
+    private VelocityEngine velocityEngine;
+
+    @RequestMapping(value = "/feedback", method = RequestMethod.GET)
+    public ModelAndView doGet(ModelMap model) {
+        //build and add the default page model
+        return new ModelAndView("feedback", model);
+    }
+
+    @RequestMapping(value = "/feedback", method = RequestMethod.POST)
+    public ModelAndView doPost(final ModelMap model) {
+        //build and add the default page model
+        return new ModelAndView("/contactSuccess", model);
+    }
+
+    @RequestMapping(value = "**/contactSuccess", method = RequestMethod.GET)
+    public ModelAndView doGetSuccessPage(final ModelMap model) {
+        //build and add the default page model
+        return new ModelAndView("/contactSuccess", model);
+    }
+
+    @RequestMapping(value = "**/doFeedback", method = RequestMethod.POST)
     public
     @ResponseBody
-    Map<String, String> doProcessLogin(@RequestParam String emailAddress, @RequestParam String emailSubject,
+    Map<String, String> doProcessFeedback(@RequestParam String emailAddress, @RequestParam String emailSubject,
                                        @RequestParam String emailMessage, @RequestParam String leaveIt,
                                        HttpServletResponse response) {
         // Server side feedback form validation
@@ -61,24 +88,40 @@ public class FeedbackFormController extends AbstractController {
                 }
                 errorMessages.put(id, message);
             }
+            log.info("Feedback form has still validation errors! Error messages are: \n" + errorMessages);
             return errorMessages;
+        } else {
+            //build contact email message
+            if (leaveIt == null || leaveIt.equals("")) {
+                String msg = buildMsg(emailMessage);
+                ((EmailNotificationService) emailService).setSender(emailAddress);
+                ((EmailNotificationService) emailService).setEmailSubject("[beta-feedback] " + emailSubject);
+                ((EmailNotificationService) emailService).setReceiverCC(emailAddress);
+                emailService.sendNotification(msg);
+                if (log.isInfoEnabled()) {
+                    log.info("Sent an email with contact details: " + msg);
+                }
+            } // else we have a robot so don't want to actually send the email
         }
+//            Returning NULL means everything is OK
         return null;
     }
 
-    @RequestMapping(value = "/doFeedbackJSON", method = RequestMethod.POST)
-    public
-    @ResponseBody
-    Map<String, ? extends Object> getAvailability(@RequestParam String emailAddress, @RequestParam String emailSubject,
-                                                  @RequestParam String emailMessage, @RequestParam String leaveIt,
-                                                  HttpServletResponse response) {
-        response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-//        for (Account a : accounts.values()) {
-//            if (a.getName().equals(name)) {
-//                return AvailabilityStatus.notAvailable(name);
-//            }
-//        }
-        return Collections.singletonMap("id", 87436);
+    /**
+     * Builds the email message using Velocity..
+     *
+     * @param message Feeback message.
+     * @return The email message as String representation.
+     */
+    protected String buildMsg(String message) {
+        Map<String, Object> model = new HashMap<String, Object>();
+        //Add contact form to Velocity model
+        model.put("message", message);
+        //Add logged in user to Velocity model
+        if (sessionManager != null && sessionManager.getSessionBean() != null) {
+            model.put("submitter", sessionManager.getSessionBean().getSubmitter());
+        }
+        return VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "feedback-email.vm", model);
     }
 
     @Override

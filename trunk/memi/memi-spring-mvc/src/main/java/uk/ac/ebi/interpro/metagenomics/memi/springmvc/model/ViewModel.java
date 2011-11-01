@@ -34,8 +34,8 @@ public class ViewModel {
     public final static String MODEL_ATTR_NAME = "model";
 
 
-    ViewModel(Submitter submitter, String pageTitle, List<Breadcrumb> breadcrumbs,
-              MemiPropertyContainer propertyContainer) {
+    public ViewModel(Submitter submitter, String pageTitle, List<Breadcrumb> breadcrumbs,
+                     MemiPropertyContainer propertyContainer) {
         this.submitter = submitter;
         this.pageTitle = pageTitle;
         this.breadcrumbs = breadcrumbs;

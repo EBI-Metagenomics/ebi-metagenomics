@@ -23,11 +23,11 @@
     <script src="http://www.ebi.ac.uk/inc/js/contents.js" type="text/javascript"></script>
     <%-- script EBI to convert header to transparent when IE6, IE7, IE8  --%>
     <script type="text/javascript">
-    function loaded() {
-    if (navigator.userAgent.indexOf('MSIE') != -1) {
-    document.getElementById('head').allowTransparency = true;
-    }
-    }
+        function loaded() {
+            if (navigator.userAgent.indexOf('MSIE') != -1) {
+                document.getElementById('head').allowTransparency = true;
+            }
+        }
     </script>
     <%-- END EBI style and code--%>
     <%-- JQuery CSS--%>
@@ -41,6 +41,8 @@
     <%-- JQuery and JQuery UI source--%>
     <script src="${pageContext.request.contextPath}/js/jquery-1.4.4.min.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/js/jquery-ui-1.8.8.custom.min.js" type="text/javascript"></script>
+    <script src="${pageContext.request.contextPath}/js/jquery.validate-1.7.js" type="text/javascript"></script>
+    <script src="${pageContext.request.contextPath}/js/jquery.form-2.85.js" type="text/javascript"></script>
     <%-- The date picker is used within the submission page --%>
     <script src="${pageContext.request.contextPath}/js/datepicker.js" type="text/javascript"></script>
     <%-- The auto completion is used with the study search page --%>
@@ -102,12 +104,14 @@
 
     <%-- script for carousel--%>
     <script src="${pageContext.request.contextPath}/js/jquery.carousel.min.js" type="text/javascript"></script>
-	<script type="text/javascript">
-		$(function(){
-			$("div.carousel").carousel({pagination: true,  autoSlide: true, autoSlideInterval: 15000, delayAutoSlide: 2000, loop: true });
+    <script type="text/javascript">
+        $(function() {
+            $("div.carousel").carousel({pagination: true,  autoSlide: true, autoSlideInterval: 15000, delayAutoSlide: 2000, loop: true });
 
-		});
-	</script>
+        });
+    </script>
+    <!-- The following line includes the feedback scripts and styles inside the HEAD tag. -->
+    <%@ include file="feedback/script/feedback_script_style.jsp" %>
 </head>
 
 <%-- The following variable saves and provides the base URL for the whole application --%>
@@ -151,12 +155,18 @@
 
 </div>
 
-<div id="extra_feedback"><h1><a href="<c:url value="${baseURL}/contact"/>">Give your feedback</a></h1></div>
+<div id="extra_feedback">
+    <h1>
+        <a id="script_feedbackLink" href="javascript:showFeedbackForm()"
+           title="Give your feedback">Give your feedback</a>
+        <a id="noscript_feedbackLink" href="<c:url value="${baseURL}/feedback"/>"
+           title="Give your feedback">Give your feedback</a>
+    </h1>
+</div>
 <a href="<c:url value="${baseURL}/info#intro"/>" title="About us">
     <div id="extra_beta"></div>
 </a>
-<!--<div id="extraDiv1"></div> -->
-
-
+<!-- The following line includes the feedback DIV and the feedback FORM -->
+<%@ include file="feedback/script/feedbackDiv.html" %>
 </body>
 </html>
