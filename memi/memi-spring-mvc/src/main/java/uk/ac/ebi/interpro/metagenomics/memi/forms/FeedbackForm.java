@@ -13,13 +13,13 @@ import javax.validation.constraints.Size;
  * @since 1.0-SNAPSHOT
  */
 public class FeedbackForm {
-    public final static String MODEL_ATTR_NAME = "contactForm";
+    public final static String MODEL_ATTR_NAME = "feedbackForm";
 
     @NotEmpty(message = "{form.contact.sender.email}")
     @Email(message = "{form.contact.sender.email}")
     private String sender;
 
-    @NotEmpty( message = "{form.contact.emailSubject.notEmpty}")
+    @NotEmpty(message = "{form.contact.emailSubject.notEmpty}")
     @Size(min = 3, max = 100, message = "{form.contact.emailSubject.size}")
     private String emailSubject;
 
