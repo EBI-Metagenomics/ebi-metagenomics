@@ -1250,6 +1250,13 @@ display:block;
 margin:7px 14px;
 }
 
+input.error {
+background-image:none;
+padding-left:0; 
+background-color:#FAEFEE;
+color: #8C302C;
+border:1px red solid;
+}
 #ordered {font-weight: bold;}
 
 .ebi_contents { border:0px solid red; position:absolute; top:55px;margin:0;padding:0;width:100%;clear: both;z-index: 2;  }/*added because of the EBI header */
