@@ -1,13 +1,9 @@
 <div id="feedback_div" style="display:none;">
-    <h3>Beta Website Feedback</h3>
 
-    <p>If you have feedback about this new website, please use the form below to send us your
-        comments:</p>
-
-    <form id="feedback_form" action="**/doFeedback">
+    <form id="feedback_form"  action="**/doFeedback">
         <div class="feedbackform_tab"></div>
         <fieldset>
-            <table class="result" id="contact">
+            <table class="result" style="background-color:white;" id="contact">
                 <tr>
                     <td>
                         <label for="emailAddress">E-Mail address
@@ -40,7 +36,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <div id="msgError" class="error"></div>
+                        <!--<div id="msgError" class="error"></div>-->  <small>* Required</small>
                     </td>
                 </tr>
                 <input type="hidden" name="leaveIt" id="leaveIt" style="margin-left:14px; width:284px;"/>
@@ -54,6 +50,6 @@
                 </tr>
             </table>
         </fieldset>
-        <small>* Required</small>
+
     </form>
 </div>
