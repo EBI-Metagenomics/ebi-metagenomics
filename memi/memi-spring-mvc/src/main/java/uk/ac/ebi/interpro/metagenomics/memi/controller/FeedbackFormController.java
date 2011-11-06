@@ -41,7 +41,7 @@ public class FeedbackFormController extends AbstractController {
     @Resource
     private SubmitterDAO submitterDAO;
 
-    @Resource(name = "emailNotificationServiceContactPage")
+    @Resource(name = "emailNotificationServiceFeedbackPage")
     private INotificationService emailService;
 
     @Resource
@@ -50,22 +50,22 @@ public class FeedbackFormController extends AbstractController {
     @RequestMapping(value = "/feedback", method = RequestMethod.GET)
     public ModelAndView doGet(ModelMap model) {
         //build and add the default page model
-        populateModel(model);
+        populateModel(model, "Metagenomics Feedback");
         return new ModelAndView("feedback", model);
     }
 
     @RequestMapping(value = "/feedback", method = RequestMethod.POST)
     public ModelAndView doPost(final ModelMap model) {
         //build and add the default page model
-        populateModel(model);
-        return new ModelAndView("/contactSuccess", model);
+        populateModel(model, "Metagenomics Thank you");
+        return new ModelAndView("/feedbackSuccess", model);
     }
 
-    @RequestMapping(value = "**/contactSuccess", method = RequestMethod.GET)
+    @RequestMapping(value = "**/feedbackSuccess", method = RequestMethod.GET)
     public ModelAndView doGetSuccessPage(final ModelMap model) {
         //build and add the default page model
-        populateModel(model);
-        return new ModelAndView("/contactSuccess", model);
+        populateModel(model, "Metagenomics Thank you");
+        return new ModelAndView("/feedbackSuccess", model);
     }
 
     @RequestMapping(value = "**/doFeedback", method = RequestMethod.POST)
@@ -97,7 +97,7 @@ public class FeedbackFormController extends AbstractController {
             log.info("Feedback form has still validation errors! Error messages are: \n" + errorMessages);
             return errorMessages;
         } else {
-            //build contact email message
+            //build feedback email message
             if (leaveIt == null || leaveIt.equals("")) {
                 String msg = buildMsg(emailMessage);
                 ((EmailNotificationService) emailService).setSender(emailAddress);
@@ -105,7 +105,7 @@ public class FeedbackFormController extends AbstractController {
                 ((EmailNotificationService) emailService).setReceiverCC(emailAddress);
                 emailService.sendNotification(msg);
                 if (log.isInfoEnabled()) {
-                    log.info("Sent an email with contact details: " + msg);
+                    log.info("Sent an email with feedback details: " + msg);
                 }
             } // else we have a robot so don't want to actually send the email
         }
@@ -113,8 +113,8 @@ public class FeedbackFormController extends AbstractController {
         return null;
     }
 
-    private void populateModel(final ModelMap model) {
-        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "Metagenomics Thank you", getBreadcrumbs(null), propertyContainer);
+    private void populateModel(final ModelMap model, final String pageTitle) {
+        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, pageTitle, getBreadcrumbs(null), propertyContainer);
         final ViewModel defaultViewModel = builder.getModel();
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, defaultViewModel);
     }
@@ -127,7 +127,7 @@ public class FeedbackFormController extends AbstractController {
      */
     protected String buildMsg(String message) {
         Map<String, Object> model = new HashMap<String, Object>();
-        //Add contact form to Velocity model
+        //Add feedback form to Velocity model
         model.put("message", message);
         //Add logged in user to Velocity model
         if (sessionManager != null && sessionManager.getSessionBean() != null) {

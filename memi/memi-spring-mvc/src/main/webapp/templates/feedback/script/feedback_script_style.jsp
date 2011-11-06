@@ -11,7 +11,7 @@
             success: function(data, textStatus, jqXHR) {
                 var $pathName = window.location.pathname;
                 var $pos = window.location.pathname.search("/metagenomics");
-                window.location.href = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1) + "contactSuccess";
+                window.location.href = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1) + "feedbackSuccess";
             },
             error: function(xhr, ajaxOptions, thrownError) {
                 var jsonObject = jQuery.parseJSON(xhr.responseText);
