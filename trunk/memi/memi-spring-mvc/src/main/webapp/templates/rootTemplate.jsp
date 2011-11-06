@@ -35,7 +35,7 @@
           media="all"/>
     <%-- END JQuery CSS--%>
 
-    <link href="http://fonts.googleapis.com/css?family=Droid+Sans:regular,bold" rel="stylesheet" type="text/css"/>
+    <link href="https://fonts.googleapis.com/css?family=Droid+Sans:regular,bold" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/default.css" type="text/css" media="all"/>
 
     <%-- JQuery and JQuery UI source--%>
@@ -82,7 +82,7 @@
     </script>
 
     <script type="text/javascript"
-            src="http://maps.google.com/maps/api/js?sensor=false">
+            src="https://maps.google.com/maps/api/js?sensor=false">
     </script>
     <script type="text/javascript">
         function initialize(lat, long) {
