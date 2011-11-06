@@ -1,7 +1,8 @@
 <script type="text/javascript">
     $.fx.speeds._default = 1000;
     var validator;
-    $(function() {
+//    $(function() {
+    (function( $ ){
 //        prepare options for AJAX submission
         var options = {
             type: "POST",
