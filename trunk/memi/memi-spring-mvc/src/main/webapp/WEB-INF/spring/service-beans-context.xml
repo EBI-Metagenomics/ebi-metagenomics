@@ -22,7 +22,7 @@
     </bean>
 
     <!-- This bean initializes an email notification service -->
-    <bean name="emailNotificationServiceContactPage"
+    <bean name="emailNotificationServiceFeedbackPage"
           class="uk.ac.ebi.interpro.metagenomics.memi.services.EmailNotificationService">
         <constructor-arg ref="mailSender"/>
         <property name="receiver" value="beta-ebi-metagenomics-feedback@googlegroups.com"/>

@@ -80,9 +80,9 @@
         <put-attribute name="body" value="/templates/feedbackBody.jsp"/>
     </definition>
 
-    <definition name="contactSuccess" extends="rootTemplate">
+    <definition name="feedbackSuccess" extends="rootTemplate">
         <put-attribute name="bodyClass" type="string" value="ebigreen"/>
-        <put-attribute name="body" value="/templates/contactSuccessBody.jsp"/>
+        <put-attribute name="body" value="/templates/feedbackSuccessBody.jsp"/>
     </definition>
 
     <definition name="login" extends="rootTemplate">
