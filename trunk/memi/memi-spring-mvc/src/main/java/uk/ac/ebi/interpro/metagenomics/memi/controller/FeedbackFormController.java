@@ -17,6 +17,9 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.services.EmailNotificationService;
 import uk.ac.ebi.interpro.metagenomics.memi.services.INotificationService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.DefaultViewModelBuilder;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -47,18 +50,21 @@ public class FeedbackFormController extends AbstractController {
     @RequestMapping(value = "/feedback", method = RequestMethod.GET)
     public ModelAndView doGet(ModelMap model) {
         //build and add the default page model
+        populateModel(model);
         return new ModelAndView("feedback", model);
     }
 
     @RequestMapping(value = "/feedback", method = RequestMethod.POST)
     public ModelAndView doPost(final ModelMap model) {
         //build and add the default page model
+        populateModel(model);
         return new ModelAndView("/contactSuccess", model);
     }
 
     @RequestMapping(value = "**/contactSuccess", method = RequestMethod.GET)
     public ModelAndView doGetSuccessPage(final ModelMap model) {
         //build and add the default page model
+        populateModel(model);
         return new ModelAndView("/contactSuccess", model);
     }
 
@@ -66,8 +72,8 @@ public class FeedbackFormController extends AbstractController {
     public
     @ResponseBody
     Map<String, String> doProcessFeedback(@RequestParam String emailAddress, @RequestParam String emailSubject,
-                                       @RequestParam String emailMessage, @RequestParam String leaveIt,
-                                       HttpServletResponse response) {
+                                          @RequestParam String emailMessage, @RequestParam String leaveIt,
+                                          HttpServletResponse response) {
         // Server side feedback form validation
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         javax.validation.Validator validator = factory.getValidator();
@@ -105,6 +111,12 @@ public class FeedbackFormController extends AbstractController {
         }
 //            Returning NULL means everything is OK
         return null;
+    }
+
+    private void populateModel(final ModelMap model) {
+        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "Metagenomics Thank you", getBreadcrumbs(null), propertyContainer);
+        final ViewModel defaultViewModel = builder.getModel();
+        model.addAttribute(ViewModel.MODEL_ATTR_NAME, defaultViewModel);
     }
 
     /**
