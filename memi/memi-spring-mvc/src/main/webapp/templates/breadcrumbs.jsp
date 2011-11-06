@@ -5,10 +5,10 @@
     <ul class="ebi_breadcrumbs">
 
         <li>
-            <a href="<c:url value="http://www.ebi.ac.uk/"/>" title="EBI">EBI</a>
+            <a href="<c:url value="https://www.ebi.ac.uk/"/>" title="EBI">EBI</a>
         </li>
         <li>
-            <a href="<c:url value="http://www.ebi.ac.uk/Databases/"/>" title="Databases">Databases</a>
+            <a href="<c:url value="https://www.ebi.ac.uk/Databases/"/>" title="Databases">Databases</a>
         </li>
         <li>
             <a href="<c:url value="${baseURL}/"/>" title="Metagenomics">Metagenomics</a>

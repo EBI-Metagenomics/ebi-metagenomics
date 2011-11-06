@@ -57,7 +57,7 @@
         <span class="sub_sign_text"><a href="<c:url value="${enaRegistrationUrl}"/>" title="Registration">Sign-up</a> to register</span>
         </div>
         <div class="form_row" style="font-size:140%;">or</div>
-        <p><a href="http://www.ebi.ac.uk/ena/home"><img src="${pageContext.request.contextPath}/img/ico_ena_user.jpg" alt="ENA member"></a></p>
+        <p><a href="https://www.ebi.ac.uk/ena/home"><img src="${pageContext.request.contextPath}/img/ico_ena_user.jpg" alt="ENA member"></a></p>
         <p class="sub_sign_note">If you already are a registered user of the European Nucleotide Archive (ENA), you should simply use your ENA account to log-in.</p>
         </div>
         </div>

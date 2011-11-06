@@ -34,7 +34,7 @@
                 <c:forEach var="entry" items="${model.interProEntries}" varStatus="status">
                     <tr>
                         <td>
-                            <c:url var="linkToInterProSearch" value="http://wwwdev.ebi.ac.uk/interpro/ISearch">
+                            <c:url var="linkToInterProSearch" value="https://wwwdev.ebi.ac.uk/interpro/ISearch">
                                 <c:param name="query" value="${entry.entryID}"/>
                             </c:url>
                             <a href="<c:out value="${linkToInterProSearch}"/>"

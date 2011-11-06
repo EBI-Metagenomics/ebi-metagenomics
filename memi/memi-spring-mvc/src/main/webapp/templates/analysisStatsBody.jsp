@@ -8,7 +8,7 @@
 <div id="sidebar-analysis">
         <%--  <div id="sidebar-export" >
                     <ul>
-                        <li><a title="Click to download all submitted nucleotide data on the ENA website" href="<c:url value="http://www.ebi.ac.uk/ena/data/view/${model.sample.sampleId}"/>">Export submitted nucleotide data (ENA website)</a></li>
+                        <li><a title="Click to download all submitted nucleotide data on the ENA website" href="<c:url value="https://www.ebi.ac.uk/ena/data/view/${model.sample.sampleId}"/>">Export submitted nucleotide data (ENA website)</a></li>
                         <li><a title="Click to download processed fasta nucleotide sequences" href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportMaskedFASTAFile/${model.emgFile.fileName}"/>">Export processed nucleotide data (FASTA)</a></li>
                         <li><a title="Click to download predicted CDS in fasta format" href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportCDSFile/${model.emgFile.fileName}"/>">Export predicted CDS (FASTA)</a></li>
                         <li><a title="Click to download full InterPro match table (TSV)" href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportI5File/${model.emgFile.fileName}"/>">Export Interpro matches (TSV)</a></li>
@@ -64,7 +64,7 @@
             <ul>
                 <li>
                     <a title="Click to download all submitted nucleotide data on the ENA website"
-                       href="<c:url value="http://www.ebi.ac.uk/ena/data/view/${model.sample.sampleId}"/>">
+                       href="<c:url value="https://www.ebi.ac.uk/ena/data/view/${model.sample.sampleId}"/>">
                         <spring:message code="analysisStatsView.label.download.seq.data"/>
                     </a>
                 </li>
@@ -145,7 +145,7 @@
                     <c:forEach var="entry" items="${model.interProEntries}" varStatus="status">
                         <tr>
                             <td>
-                                <c:url var="linkToInterProSearch" value="http://wwwdev.ebi.ac.uk/interpro/ISearch">
+                                <c:url var="linkToInterProSearch" value="https://wwwdev.ebi.ac.uk/interpro/ISearch">
                                     <c:param name="query" value="${entry.entryID}"/>
                                 </c:url>
                                 <a href="<c:out value="${linkToInterProSearch}"/>"
