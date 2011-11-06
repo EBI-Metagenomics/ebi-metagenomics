@@ -17,10 +17,10 @@
     <meta http-equiv="Content-Language" content="en-GB"/>
     <meta http-equiv="Window-target" content="_top"/>
     <meta name="no-email-collection" content="http://www.unspam.com/noemailcollection/"/>
-    <link rel="stylesheet" href="http://www.ebi.ac.uk/inc/css/contents.css" type="text/css"/>
-    <link rel="stylesheet" href="http://www.ebi.ac.uk/inc/css/userstyles.css" type="text/css"/>
-    <link rel="stylesheet" href="http://www.ebi.ac.uk/inc/css/sidebars.css" type="text/css"/>
-    <script src="http://www.ebi.ac.uk/inc/js/contents.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="https://www.ebi.ac.uk/inc/css/contents.css" type="text/css"/>
+    <link rel="stylesheet" href="https://www.ebi.ac.uk/inc/css/userstyles.css" type="text/css"/>
+    <link rel="stylesheet" href="https://www.ebi.ac.uk/inc/css/sidebars.css" type="text/css"/>
+    <script src="https://www.ebi.ac.uk/inc/js/contents.js" type="text/javascript"></script>
     <%-- script EBI to convert header to transparent when IE6, IE7, IE8  --%>
     <script type="text/javascript">
         function loaded() {
@@ -117,7 +117,7 @@
 <%-- The following variable saves and provides the base URL for the whole application --%>
 <c:set var="baseURL" value="" scope="session"/>
 
-<%-- IMPORTANT onload attribute is necessary to ensure that the EBI main header works in IE see  http://www.ebi.ac.uk/inc/template/#important style overflow added because of a bug in the EBI website for the body--%>
+<%-- IMPORTANT onload attribute is necessary to ensure that the EBI main header works in IE see  https://www.ebi.ac.uk/inc/template/#important style overflow added because of a bug in the EBI website for the body--%>
 <body class="<tiles:getAsString name='bodyClass'/>" id="top" onload="loaded()" <%--onload="initialize()"--%>>
 
 <%-- EBI-Interpro main header - exactly same as Interpro header--%>

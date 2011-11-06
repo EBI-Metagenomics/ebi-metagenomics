@@ -251,7 +251,7 @@
             <c:choose>
                 <c:when test="${not empty model.archivedSequences}">
                     <c:forEach var="seqId" items="${model.archivedSequences}" varStatus="status">
-                        <a class="ext" href="<c:url value="http://www.ebi.ac.uk/ena/data/view/${seqId}"/>">
+                        <a class="ext" href="<c:url value="https://www.ebi.ac.uk/ena/data/view/${seqId}"/>">
                             <c:out value="${seqId}"/></a>
                     </c:forEach> (ENA website)
                 </c:when>

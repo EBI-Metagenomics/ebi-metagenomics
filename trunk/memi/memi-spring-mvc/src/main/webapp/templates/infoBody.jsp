@@ -113,7 +113,7 @@
 <h4 id="credits_1">The team</h4>
 
 <p>This new resource for metagenomics is supported by the <a
-        href="http://www.ebi.ac.uk/Information/Staff/searchx.php?s_keyword=&s_group=28"
+        href="https://www.ebi.ac.uk/Information/Staff/searchx.php?s_keyword=&s_group=28"
         title="The InterPro team at EBI" class="ext">InterPro Team</a> at EBI, in collaboration with the ENA and
     UniProt groups.</p>
 
