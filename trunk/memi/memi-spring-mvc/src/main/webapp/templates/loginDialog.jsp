@@ -40,6 +40,12 @@
             $dialog.dialog("open");
             return false;
         });
+         $("#j2querylogin")
+                .click(function() {
+            $dialog.dialog("open");
+            return false;
+        });
+
         //Close dialog by mouse click in the overlay area
         $('.ui-widget-overlay').live("click", function() {
             $dialog.dialog("close");
