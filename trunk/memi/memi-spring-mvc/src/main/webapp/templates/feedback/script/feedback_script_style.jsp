@@ -1,8 +1,7 @@
 <script type="text/javascript">
     $.fx.speeds._default = 1000;
     var validator;
-//    $(function() {
-    (function( $ ){
+    $(function() {
 //        prepare options for AJAX submission
         var options = {
             type: "POST",
@@ -66,11 +65,11 @@
 //      How JQuery form Plugin works: http://jquery.malsup.com/form/#getting-started
         $('#feedback_form').ajaxForm(options);
 
-        //Resets input fields to their original value (requires form plugin), removes classes indicating invalid elements and hides error messages.
+
+        });//Resets input fields to their original value (requires form plugin), removes classes indicating invalid elements and hides error messages.
         $('#resetFeedbackFrom').click(function() {
             validator.resetForm();
             return false;
-        });
     })(jQuery);
 </script>
 
@@ -97,19 +96,7 @@
         validator.resetForm();
     }
 </script>
-<style>
-    #feedback_div {
-        
-        position: fixed;
-        _position: absolute; /* position fixed is not recognise on IE6 */
-        right: 0;
-        top: 11px;
-        width: 450px;
-        height: 650px;
-        border: 0px #dddddd solid;
-        z-index: 90;
-    }
-</style>
+
 <!-- Script and no script implementation for DIV with Id 'extra_feedback' (You'll find it in rootTemplate.jsp) -->
 <script>
     document.write('<style type="text/css">#noscript_feedbackLink{display: none;}');
