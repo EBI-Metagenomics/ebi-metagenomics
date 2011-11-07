@@ -17,7 +17,7 @@
 
             <p> You can view and analyse in this area (under My projects and My samples) any private information that is not yet publicly available. </p>
             <p> Click here to submit a new project</p>
-            <p> Click here to logout and return to the metagenomics homepage</p>
+            <p> <a href="<c:url value="${baseURL}/logout"/>" title="logout">Click here</a> to logout and return to the metagenomics homepage</p>
         </div>
      </c:when>
 
@@ -81,10 +81,11 @@
       <div class="content">
       <h3>Submit your data</h3>
       <div class="cent"><img src="${pageContext.request.contextPath}/img/icons_submit.png" alt="" width="71" height="71" /></div>
-      <p style="padding-bottom:7px; "> Click &quot;submit data&quot; to send us your nucleotide sequences to analyse.</p>
-       <div style="margin:0; padding-left:14px;font-size:80%;list-style-type: none;" >1 . Login (or register)<br/>
-       2 . Provide details of your project and your nucleotide sequence data <br/>
-       3 . Track and view your analysis results.</div>
+      <c:url var="enaRegistrationUrl" value="${model.propertyContainer.enaSubmissionURL.registrationLink}">
+      <c:param name="url" value="${enaUrlParameter}"/>
+      </c:url>
+      <p style="padding-bottom:7px; "> You can click on &quot;submit your data&quot; to send us your nucleotide sequences for analysis.
+(Note: you will need to <a id="j2querylogin" class="jquerylogin" href="#" title="Login">login</a> or <a href="<c:url value="${enaRegistrationUrl}"/>" title="Registration">register</a> first). </p>
        <c:choose>
        <c:when test="${empty model.submitter}">
         <div class="find_more"><a href="<c:url value="${baseURL}/login"/>" title="submit data for analysis"><span>Submit your data</span></a></div>
