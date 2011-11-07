@@ -175,14 +175,21 @@ background: transparent url(../img/button_feedback_active_r.gif) no-repeat;
 background: transparent url(../img/button_feedback_active.gif) no-repeat;*/
 }
 
-.feedbackform_tab  {
+.feedbackform_tab_o  {
 background: transparent url(../img/button_feedback_oriz.gif) no-repeat ;
 border:0px solid #E5E5E5; width:102px; height:35px;
 margin-left:7px;
 }
 
+.feedbackform_tab_v  {
+background: transparent url(../img/button_feedback_off_r.gif) no-repeat;
+ margin-top: 89px;
+border:0px solid #E5E5E5; width:35px; height:102px;
+}
+
+
 #extraDiv1 {
-background: transparent url(../img/bgd_earth.gif) no-repeat -600px -1000px;
+background: transparent url(../img/backgrounds/bgd_earth.gif) no-repeat -600px -1000px;
 position: fixed;
 bottom: 0px;
 width: 100%;
@@ -340,6 +347,7 @@ text-decoration:underline;
 
 #login {
 display:block;
+color:#7E7E7E;
 }
 
 #login a, #login a:link, #login a:focus {
@@ -440,16 +448,17 @@ table.results {
 background: url(../img/bgd_main_grey.jpg) #b5b5b5;
 }
 
-#contact  {
+#feedback_form table {
 border: solid 1px #e5e5e5;
 -moz-border-radius:4px;
 -khtml-border-radius:4px;
 -webkit-border-radius:4px;
 border-radius:4px;
-width:600px;
+background-color:white;
+/*width:600px;*/
 }
 
-#contact tbody td{
+#feedback_form table tbody td{
 text-align:left;
 }
 
@@ -994,7 +1003,7 @@ border: 0px solid #556f8c;
 
 
 input, textarea, select {
-/*font-family: 'DroidSansRegular', Arial, sans-serif;*/
+font-family: helvetica, "trebuchet MS", arial, sans-serif;
 padding:4px;
 border:1px solid #abadb3;
 color: #445668;}
@@ -1052,8 +1061,8 @@ border: 0px solid #696969;
 
 
 textarea {
-    font-size:100%; /*for Firefox*/
-    padding: 9px;
+    font-size:100%;/* for Firefox*/
+    padding: 9px 4px;
     border: solid 1px #abadb3;
     outline: 0;
     width: 400px;
@@ -1250,12 +1259,17 @@ display:block;
 margin:7px 14px;
 }
 
+label.error {
+padding-left:0px;
+background:none;
+}
+
 input.error {
-background-image:none;
-padding-left:0; 
-background-color:#FAEFEE;
+padding-left:4px;
+padding-right: 26px;
+background: #FAEFEE url(../img/ico_form_cancel.png) no-repeat 290px center;
 color: #8C302C;
-border:1px red solid;
+border:1px #ff5954 solid;
 }
 #ordered {font-weight: bold;}
 
@@ -1471,3 +1485,12 @@ background:url(../img/carousel_l.png) 0 0 no-repeat; margin-right:-34px;}
 
   
 #login_dialog_div {display:none; /*solve a bug  of conflict between popup and carousel on IE6 and IE7*/}
+
+/* FEEDBACK FORM */
+#feedback_div   {
+    position: fixed;
+        _position: absolute; /* position fixed is not recognise on IE6 */
+        right: 0;
+        top: 11px;
+        border: 0px red solid;
+        z-index: 90;}
