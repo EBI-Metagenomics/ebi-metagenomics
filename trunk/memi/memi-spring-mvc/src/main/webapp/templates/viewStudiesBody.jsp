@@ -65,6 +65,9 @@
         <c:when test="${not empty model.studySampleSizeMap}">
             <%--Request the current query string to export only the filtered studies--%>
             <c:set var="queryString" value="${pageContext.request.queryString}" scope="session"/>
+
+            <div class="table_opt">
+
             <div class="export">
                 <a href="<c:url value="${baseURL}/projects/doExportDetails?${queryString}"/>" id="csv_plus"
                    title="<spring:message code="viewStudies.download.anchor.title.detailed"/>">
@@ -74,6 +77,8 @@
                    title="<spring:message code="viewStudies.download.anchor.title.table"/>"><spring:message
                         code="viewStudies.download.anchor.label.table"/></a>
             </div>
+
+             </div>
 
             <table border="1" class="result">
                 <thead>
