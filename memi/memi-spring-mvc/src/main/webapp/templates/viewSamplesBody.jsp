@@ -47,14 +47,12 @@
                             <input type="submit" name="search" value="Search" class="main_button"/>
                             <c:choose>
                                 <c:when test="${empty model.submitter}">
-                                    | <a
-                                        href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search&startPosition=0"/>"
-                                        title="View samples">Clear</a>
+                                    | <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search&startPosition=0"/>"
+                                        >Clear</a>
                                 </c:when>
                                 <c:otherwise>
-                                    | <a
-                                        href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_SAMPLES&search=Search&startPosition=0"/>"
-                                        title="View samples">Clear</a>
+                                    | <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_SAMPLES&search=Search&startPosition=0"/>"
+                                       >Clear</a>
                                 </c:otherwise>
                             </c:choose>
                         </div>
