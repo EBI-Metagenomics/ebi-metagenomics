@@ -73,6 +73,8 @@
             <%--Request the current query string to export only the filtered studies--%>
             <c:set var="queryString" value="${pageContext.request.queryString}" scope="session"/>
 
+            <div class="table_opt">
+
             <div class="export">
                     <%--Don't show link to export full sample details here - just provide it on the individual sample page --%>
                     <%--<c:if test="${not empty sampleFilter.sampleType}">--%>
@@ -83,14 +85,15 @@
                     <spring:message code="viewSamples.download.anchor.label"/></a>
             </div>
 
+            <div class="table_opt_pag">
             <%--Start of item pagination pattern--%>
             <c:set var="prevId" value="< Prev"/>
             <c:set var="nextId" value="Next >"/>
             <c:set var="firstId" value="First"/>
             <c:set var="lastId" value="Last"/>
-            <p>
-                <c:out value="${model.pagination.displayedItemRange}"/> of <c:out
-                    value="${model.pagination.totalItems}"/>
+
+                <c:out value="${model.pagination.displayedItemRange}"/> of <c:out value="${model.pagination.totalItems}"/>
+                &nbsp;  &nbsp;
                 <c:if test="${model.pagination.totalItems > model.pagination.pageSize}">
                     <c:choose>
                         <c:when test="${model.pagination.existPreviousStartPos}">
@@ -112,9 +115,9 @@
                         <c:otherwise><c:out value="${nextId} | ${lastId}"/></c:otherwise>
                     </c:choose>
                 </c:if>
-            </p>
+            </div>
             <%--End of item pagination pattern--%>
-
+            </div>
             <table border="1" class="result">
                 <thead>
                 <tr>
