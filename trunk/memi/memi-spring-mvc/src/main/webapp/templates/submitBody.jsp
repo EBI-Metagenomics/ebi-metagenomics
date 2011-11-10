@@ -50,7 +50,7 @@
      </div>
      <p style="clear:both;/*For IE6*/">
      <input type="submit" name="submit" value="Submit" class="main_button"/>
-     <span class="clear_but" style="float:none;">| <a href="/metagenomics" title="cancel">Cancel</a></span>
+     <span class="clear_but">| <a href="/metagenomics" title="cancel">Cancel</a></span>
      </p>
      </fieldset>
     </form:form>
