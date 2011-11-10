@@ -42,7 +42,7 @@
         <div ><a href="<c:out value="${enaPasswordUrl}"/>"  title="Request a new password">Forgot your password?</a></div>
         <div class="form_row_log">
         <input type="submit" name="login" value="Login" class="main_button"/>&nbsp;
-        <span class="clear_but" style="float:none;">| <a href="/metagenomics" title="cancel">Cancel</a></span>
+        <span class="clear_but">| <a href="/metagenomics" title="cancel">Cancel</a></span>
         </div>
         </fieldset>
         </form:form>
