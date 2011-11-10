@@ -104,7 +104,7 @@
                     password?</a></div>
                 <div class="form_row_log">
                     <input type="submit" name="login" value="Login" class="main_button"/>&nbsp;
-                    <span class="clear_but" style="float:none;">| <a id="cancelLoginDialog" href="" title="Cancel">Cancel</a></span>
+                    <span class="clear_but">| <a id="cancelLoginDialog" href="" title="Cancel">Cancel</a></span>
                 </div>
             </fieldset>
         </form>
