@@ -1,37 +1,37 @@
-<div id="feedback_div" style="display:none;">
+<div id="feedback_div" >
+ <div class="feedbackform_tab_v">
+ <a id="script_feedbackLink" href="javascript:showFeedbackForm()"  title="Give your feedback"></a>
+ <a id="noscript_feedbackLink" href="<c:url value="${baseURL}/feedback"/>" title="Give your feedback"></a>
+</div>
 
-    <form id="feedback_form"  action="**/doFeedback">
-        <div class="feedbackform_tab"></div>
+ <div class="cont_feedback_form">
+    <form id="feedback_form"  action="**/doFeedback" >
+        <!--<div class="feedbackform_tab_o"></div>-->
+        <!--<h3>Send us your feedback</h3>-->
         <fieldset>
-            <table class="result" style="background-color:white;" id="contact">
+            <table class="result" style="width:600px;/*made it larger than the container in purpose to make it nicer*/">
                 <tr>
-                    <td>
-                        <label for="emailAddress">E-Mail address
-                            <small>*</small>
-                            :</label>
-                        <input id="emailAddress" name="emailAddress" style="margin-left:14px; width:284px;"/>
+                    <td><div class="close_wind"><a  href="javascript:hideFeedbackForm()"  title="Close this window"></a> </div>
+                        <label for="emailAddress">E-Mail address <small>*</small>:</label>
+
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <div id="addressErrorMessage" class="error"></div>
+                      <input id="emailAddress" name="emailAddress"/>
                     </td>
                 </tr>
                 <tr>
-                    <td><label for="emailSubject">Feedback subject
-                        <small>*</small>
-                        :</label><input type="text" name="emailSubject" id="emailSubject" style="width:284px;"/>
-                    </td>
+                    <td><label for="emailSubject">Feedback subject <small>*</small>:</label> </td>
                 </tr>
                 <tr>
                     <td>
-                        <div id="subjectErrorMessage" class="error"></div>
+                      <input type="text" name="emailSubject" id="emailSubject"/>
                     </td>
                 </tr>
                 <tr>
-                    <td><label for="emailMessage">Your comments
-                        <small>*</small>
-                        :</label><br/><textarea id="emailMessage" name="emailMessage" cols="50" rows="10"></textarea>
+                    <td><label for="emailMessage">Your comments <small>*</small>:</label>
+                        <br/><textarea id="emailMessage" name="emailMessage" ></textarea>
                     </td>
                 </tr>
                 <tr>
@@ -39,17 +39,17 @@
                         <!--<div id="msgError" class="error"></div>-->  <small>* Required</small>
                     </td>
                 </tr>
-                <input type="hidden" name="leaveIt" id="leaveIt" style="margin-left:14px; width:284px;"/>
+                <input type="hidden" name="leaveIt" id="leaveIt" />
                 <tr>
                     <td>
-                        <input type="submit" name="submit" value="Submit" class="main_button"/>
-                        <span class="clear_but" style="float:none;">| <input id="resetFeedbackFrom" type="reset"
-                                                                             value="Reset"
-                                                                             class="main_button"/></span>
+                    <input type="submit" name="submit" value="Submit" class="main_button"/>
+                    <span class="clear_but">| <input id="resetFeedbackFrom" type="reset" class="main_button" value="Clear"/>
+                    </span>
                     </td>
                 </tr>
             </table>
         </fieldset>
 
     </form>
+    </div>
 </div>
