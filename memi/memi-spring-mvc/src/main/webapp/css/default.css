@@ -989,6 +989,8 @@ color: #445668;}
 
 input {
 width: 150px;
+/*background: -webkit-gradient(linear, left top, left 6, from(#FFFFFF), color-stop(4%, #EEEEEE), to(#FFFFFF));*/
+/*background: -moz-linear-gradient(top, #FFFFFF, #EEEEEE 1px, #FFFFFF 6px);*/
 }
 
 #feedback_form input {
@@ -1053,9 +1055,8 @@ textarea {
     outline: 0;
     width: 360px;
     max-width: 360px;
-    height: 150px;
+    height: 120px;
     line-height: 150%;
-    background: #FFFFFF;     /*to add pict*/
     background: -webkit-gradient(linear, left top, left 25, from(#FFFFFF), color-stop(4%, #EEEEEE), to(#FFFFFF));
     background: -moz-linear-gradient(top, #FFFFFF, #EEEEEE 1px, #FFFFFF 25px);
     }
@@ -1245,6 +1246,8 @@ display:block;
 }
 
 #feedback_form label {font-weight:bold;font-size:110%;color:#445668;}
+
+#feedback_form #required {background: url(../img/ico_form_required.png) no-repeat right center; padding-right:14px;} 
 
 #feedback_form  label.error {
 font-weight:normal;
