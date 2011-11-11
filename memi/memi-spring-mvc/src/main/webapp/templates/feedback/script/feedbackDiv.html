@@ -12,7 +12,7 @@
             <table class="result" style="width:600px;/*made it larger than the container in purpose to make it nicer*/">
                 <tr>
                     <td><div class="close_wind"><a  href="javascript:hideFeedbackForm()"  title="Close this window"></a> </div>
-                        <label for="emailAddress">E-Mail address <small>*</small>:</label>
+                        <label for="emailAddress" id="required">E-Mail</label>
 
                     </td>
                 </tr>
@@ -22,7 +22,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><label for="emailSubject">Feedback subject <small>*</small>:</label> </td>
+                    <td><label for="emailSubject" id="required">Feedback subject</label> </td>
                 </tr>
                 <tr>
                     <td>
@@ -30,21 +30,20 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><label for="emailMessage">Your comments <small>*</small>:</label>
+                    <td><label for="emailMessage" id="required">Your comments</label>
                         <br/><textarea id="emailMessage" name="emailMessage" ></textarea>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <!--<div id="msgError" class="error"></div>-->  <small>* Required</small>
+                       <input type="submit" name="submit" value="Submit" class="main_button"/>
+                    <span class="clear_but">| <a href="javascript:resetFeedbackFrom()" title="Clear the form">Clear</a> </span>
                     </td>
                 </tr>
                 <input type="hidden" name="leaveIt" id="leaveIt" />
                 <tr>
                     <td>
-                    <input type="submit" name="submit" value="Submit" class="main_button"/>
-                    <span class="clear_but">| <input id="resetFeedbackFrom" type="reset" class="main_button" value="Clear"/>
-                    </span>
+                    <span id="required"></span>&nbsp;<small>required</small>
                     </td>
                 </tr>
             </table>
