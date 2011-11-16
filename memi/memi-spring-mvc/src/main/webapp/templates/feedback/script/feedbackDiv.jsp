@@ -17,9 +17,7 @@
                             <div class="close_wind">
                                 <a href="javascript:hideFeedbackForm()" title="Close this window"></a>
                             </div>
-                            <label for="emailAddress"><spring:message code="feedbackForm.inputField.email.label"/>
-                                <small>*</small>
-                                :</label>
+                            <label for="emailAddress"  id="required"><spring:message code="feedbackForm.inputField.email.label"/></label>
                         </td>
                     </tr>
                     <tr>
@@ -29,9 +27,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <label for="emailSubject"><spring:message code="feedbackForm.inputField.subject.label"/>
-                                <small>*</small>
-                                :</label>
+                            <label for="emailSubject"  id="required"><spring:message code="feedbackForm.inputField.subject.label"/></label>
                         </td>
                     </tr>
                     <tr>
@@ -40,25 +36,25 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><label for="emailMessage"><spring:message code="feedbackForm.inputField.message.label"/>
-                            <small>*</small>
-                            :</label>
+                        <td><label for="emailMessage"  id="required"><spring:message code="feedbackForm.inputField.message.label"/></label>
                             <br/><textarea id="emailMessage" name="emailMessage"></textarea>
                         </td>
                     </tr>
-                    <tr>
-                        <td>
-                            <small>* Required</small>
-                        </td>
-                    </tr>
-                    <input type="hidden" name="leaveIt" id="leaveIt"/>
-                    <tr>
+
+                     <tr>
                         <td>
                             <input type="submit" name="submit" value="Submit" class="main_button"/>
                             <span class="clear_but">| <a href="#" onclick="clearFeedbackForm()"
                                                          title="Clear the form">Clear</a></span>
                         </td>
                     </tr>
+                <input type="hidden" name="leaveIt" id="leaveIt" />
+                <tr>
+                    <td>
+                    <span id="required"></span>&nbsp;<small>required</small>
+                    </td>
+                </tr>
+
                 </table>
             </fieldset>
         </form>
