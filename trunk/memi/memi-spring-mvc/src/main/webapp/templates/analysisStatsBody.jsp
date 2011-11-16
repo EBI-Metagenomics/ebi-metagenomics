@@ -123,8 +123,8 @@
                 <div class="export">
                         <%-- remove detailed TSV export : available on top
                         <a href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportI5File/${model.emgFile.fileName}"/>"
-                           title="<spring:message code="analysisStatsView.label.download.i5.matches.detailed"/>">
-                            <spring:message code="analysisStatsView.label.download.i5.matches.detailed"/>
+                           title="<spring:emailMessage code="analysisStatsView.label.download.i5.matches.detailed"/>">
+                            <spring:emailMessage code="analysisStatsView.label.download.i5.matches.detailed"/>
                         </a>--%>
                     <a id="csv"
                        href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportIPRFile"/>"
@@ -182,9 +182,9 @@
                     <c:if test="${not empty model.pieChartBiologicalProcessURL}">
 
                         <%-- remove detailed TSV export : available on top
-                  <a title="<spring:message code="analysisStatsView.label.download.goterms.full.csv"/>" href="<c:url
+                  <a title="<spring:emailMessage code="analysisStatsView.label.download.goterms.full.csv"/>" href="<c:url
                            value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportGOFile/${model.emgFile.fileName}"/>">
-                       <spring:message code="analysisStatsView.label.download.goterms.full.csv"/></a>--%>
+                       <spring:emailMessage code="analysisStatsView.label.download.goterms.full.csv"/></a>--%>
 
 
                         <a id="csv" title="<spring:message code="analysisStatsView.label.download.goterms.slim.csv"/>"

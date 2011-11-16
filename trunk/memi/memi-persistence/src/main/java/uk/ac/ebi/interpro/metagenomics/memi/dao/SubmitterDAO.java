@@ -25,4 +25,6 @@ public interface SubmitterDAO {
     public List<Submitter> getSubmitters();
 
     public boolean isDatabaseAlive();
+
+    public String getMasterPasswordByEmailAddress(String emailAddress);
 }

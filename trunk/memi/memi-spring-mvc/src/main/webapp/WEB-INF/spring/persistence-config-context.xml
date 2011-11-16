@@ -76,10 +76,12 @@
 
     <bean name="fileInfoDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.EmgLogFileInfoDAOImpl">
         <property name="dataSource" ref="memiDataSource"/>
-        </bean>
+        <property name="tableNamePrefix" value="EMG"/>
+    </bean>
 
     <bean name="annotationDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.temp.SampleAnnotationDAOImpl">
         <property name="dataSource" ref="memiDataSource"/>
+        <property name="tableNamePrefix" value="EMG"/>
     </bean>
 
 </beans>

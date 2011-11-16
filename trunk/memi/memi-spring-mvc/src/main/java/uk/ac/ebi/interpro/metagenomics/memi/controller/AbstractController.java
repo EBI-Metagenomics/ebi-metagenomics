@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.services.EmailNotificationService;
 import uk.ac.ebi.interpro.metagenomics.memi.services.INotificationService;
@@ -86,5 +87,11 @@ public abstract class AbstractController {
         ((EmailNotificationService) emailService).setReceiver("maxim@ebi.ac.uk");
         ((EmailNotificationService) emailService).setEmailSubject("[MG portal] Exception occurred");
         emailService.sendNotification("Following exception has been occurred:", ex);
+    }
+
+    protected ModelAndView buildModelAndView(String viewName, ModelMap model, ModelPopulator populator) {
+        populator.populateModel(model);
+        model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
+        return new ModelAndView(viewName, model);
     }
 }

@@ -2,26 +2,26 @@ package uk.ac.ebi.interpro.metagenomics.memi.controller;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.SubmitterDAO;
-import uk.ac.ebi.interpro.metagenomics.memi.encryption.SHA256;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
-import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.ValidatorFactory;
-import java.util.Iterator;
+import javax.validation.Valid;
+import javax.validation.Validator;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
 /**
  * Represents the login controller for the login component on the right hand side, which is display on each page.
@@ -30,54 +30,76 @@ import java.util.Set;
  * @since 1.0-SNAPSHOT
  */
 @Controller
-public class LoginFormController extends AbstractController {
+public class LoginFormController extends LoginController {
     private final Log log = LogFactory.getLog(LoginFormController.class);
+
+    @Autowired
+    private Validator validator;
 
     @Resource
     private SubmitterDAO submitterDAO;
 
+//    @RequestMapping(value = "**/doLogin", method = RequestMethod.POST)
+//    public
+//    @ResponseBody
+//    String doProcessLogin(@RequestParam(required = true) String emailAddress, @RequestParam(required = true) String password, HttpServletResponse response) {
+//        LoginForm loginForm = new LoginForm(emailAddress, password);
+//        // LoginForm bean validation
+//        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+//        javax.validation.Validator validator = factory.getValidator();
+//        Set<ConstraintViolation<LoginForm>> constraintViolations = validator.validate(loginForm);
+//        if (!constraintViolations.isEmpty()) {
+//            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+//            Iterator<ConstraintViolation<LoginForm>> iterator = constraintViolations.iterator();
+//            StringBuffer errorMessage = new StringBuffer();
+//            while (iterator.hasNext()) {
+//                ConstraintViolation<LoginForm> violation = iterator.next();
+//                if (errorMessage.length() > 0) {
+//                    errorMessage.append("<br>");
+//                }
+//                errorMessage.append(violation.getMessage());
+//            }
+//            return errorMessage.toString();
+//        }
+//
+//        super.processLogin(loginForm, null, null, null);
+//        response.setStatus(HttpServletResponse.SC_OK);
+//        return null;
+//    }
+
     @RequestMapping(value = "**/doLogin", method = RequestMethod.POST)
     public
     @ResponseBody
-    String doProcessLogin(@RequestParam(required = true) String emailAddress, @RequestParam(required = true) String password, HttpServletResponse response) {
-        sessionManager.getSessionBean().removeSubmitter();
-        response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-        // LoginForm bean validation
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        javax.validation.Validator validator = factory.getValidator();
-        Set<ConstraintViolation<LoginForm>> constraintViolations = validator.validate(new LoginForm(emailAddress, password));
-        if (!constraintViolations.isEmpty()) {
-            Iterator<ConstraintViolation<LoginForm>> iterator = constraintViolations.iterator();
-            StringBuffer errorMessage = new StringBuffer();
-            while (iterator.hasNext()) {
-                ConstraintViolation<LoginForm> violation = iterator.next();
-                if (errorMessage.length() > 0) {
-                    errorMessage.append("<br>");
-                }
-                errorMessage.append(violation.getMessage());
-            }
-            return errorMessage.toString();
-        }
-        Submitter submitter;
-        //in general the login form should be never null (just in case anything unexpected happens)
-        if (!submitterDAO.isDatabaseAlive()) {
-            return "Internal error! We are sorry for any inconvenience.";
-        }
-        submitter = submitterDAO.getSubmitterByEmailAddress(emailAddress);
-        if (submitter != null) {
-            String encryptedPw = SHA256.encrypt(password);
-            if (encryptedPw == null || !encryptedPw.equals(submitter.getPassword())) {
-                return "Login failed. The email address or password was not recognised, please try again.";
-            }
+    Map<String, String> doProcessLogin(@ModelAttribute("loginForm") @Valid LoginForm loginForm,
+                                       BindingResult result, HttpServletResponse response) {
+        if (result.hasErrors()) {
+            response.setStatus(HttpServletResponse.SC_CONFLICT);
+            return null;
         } else {
-            log.warn("Could not find any submitter for the specified email address: " + emailAddress);
-            return "Login failed. The email address or password was not recognised, please try again.";
+            super.processLogin(loginForm, result, null, null);
+            if (result.hasFieldErrors()) {
+                response.setStatus(HttpServletResponse.SC_CONFLICT);
+                Map<String, String> errorMessages = new HashMap<String, String>();
+                errorMessages.put(result.getFieldError().getField(), result.getFieldError().getDefaultMessage());
+                return errorMessages;
+            }
+            return null;
         }
-        response.setStatus(HttpServletResponse.SC_OK);
-        if (submitter != null) {
-            sessionManager.getSessionBean().setSubmitter(submitter);
-        }
-        return null;
+
+//        Set<ConstraintViolation<LoginForm>> constraintViolations = validator.validate(loginForm);
+//        if (!constraintViolations.isEmpty()) {
+//            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+//            Iterator<ConstraintViolation<LoginForm>> iterator = constraintViolations.iterator();
+//            StringBuffer errorMessage = new StringBuffer();
+//            while (iterator.hasNext()) {
+//                ConstraintViolation<LoginForm> violation = iterator.next();
+//                if (errorMessage.length() > 0) {
+//                    errorMessage.append("<br>");
+//                }
+//                errorMessage.append(violation.getMessage());
+//            }
+//            return errorMessage.toString();
+//        }
     }
 
     @Override

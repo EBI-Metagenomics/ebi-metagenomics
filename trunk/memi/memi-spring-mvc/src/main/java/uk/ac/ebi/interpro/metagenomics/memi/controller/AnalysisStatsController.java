@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.EmgLogFileInfoDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateSampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.ISampleStudyDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgFile;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
@@ -133,6 +134,7 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
         final AnalysisStatsModel mgModel = MGModelFactory.
                 getAnalysisStatsModel(sessionManager, sample, pageTitle, getBreadcrumbs(sample), emgFile,
                         MemiTools.getArchivedSeqs(fileInfoDAO, sample), propertyContainer, isReturnSizeLimit);
+        model.addAttribute("loginForm", new LoginForm());
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, mgModel);
     }
 

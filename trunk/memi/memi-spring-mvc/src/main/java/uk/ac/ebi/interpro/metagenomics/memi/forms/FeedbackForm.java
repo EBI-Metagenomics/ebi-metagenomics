@@ -15,33 +15,37 @@ import javax.validation.constraints.Size;
 public class FeedbackForm {
     public final static String MODEL_ATTR_NAME = "feedbackForm";
 
-    @NotEmpty(message = "{form.feedback.sender.email}")
-    @Email(message = "{form.feedback.sender.email}")
-    private String sender;
+    @NotEmpty(message = "{form.feedback.emailAddress.email}")
+    @Email(message = "{form.feedback.emailAddress.email}")
+    private String emailAddress;
 
     @NotEmpty(message = "{form.feedback.emailSubject.notEmpty}")
     @Size(min = 3, max = 100, message = "{form.feedback.emailSubject.size}")
     private String emailSubject;
 
-    @NotEmpty(message = "{form.feedback.message.notEmpty}")
-    @Size(min = 3, message = "{form.feedback.message.size}")
-    private String message;
+    @NotEmpty(message = "{form.feedback.emailMessage.notEmpty}")
+    @Size(min = 3, message = "{form.feedback.emailMessage.size}")
+    private String emailMessage;
 
     private String leaveIt; // Secret HoneyPot field to detect robots - should be left blank by humans!
 
-    public FeedbackForm(String sender, String emailSubject, String message, String leaveIt) {
-        this.sender = sender;
+    public FeedbackForm() {
+
+    }
+
+    public FeedbackForm(String emailAddress, String emailSubject, String emailMessage, String leaveIt) {
+        this.emailAddress = emailAddress;
         this.emailSubject = emailSubject;
-        this.message = message;
+        this.emailMessage = emailMessage;
         this.leaveIt = leaveIt;
     }
 
-    public String getSender() {
-        return sender;
+    public String getEmailAddress() {
+        return emailAddress;
     }
 
-    public void setSender(String sender) {
-        this.sender = sender;
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
     }
 
     public String getEmailSubject() {
@@ -52,12 +56,12 @@ public class FeedbackForm {
         this.emailSubject = emailSubject;
     }
 
-    public String getMessage() {
-        return message;
+    public String getEmailMessage() {
+        return emailMessage;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setEmailMessage(String emailMessage) {
+        this.emailMessage = emailMessage;
     }
 
     public String getLeaveIt() {

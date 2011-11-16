@@ -1,285 +1,323 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
+<%--<% final String url = request.getRequestURL().toString();--%>
+    <%--final String context = request.getContextPath();--%>
+    <%--final String requestRoot = url.substring(0, url.indexOf(context) + context.length());%>--%>
+<%--<c:set var="enaUrlParameter" value="<%=requestRoot%>"/>--%>
 <div id="content">
-    <%--<spring:message code="label.email.submission.subject" />--%>
+<%--<spring:emailMessage code="label.email.submission.subject" />--%>
 <section id="submit-data">
-    <c:choose>
-     <%-- Show Private welcome message only if a user is logged in--%>
-     <c:when test="${not empty model.submitter}">
-
-         <div id="submit-data-description">
+<c:choose>
+    <%-- Show Private welcome emailMessage only if a user is logged in--%>
+    <%--Private area is deactivated for the moment until any decision was made--%>
+    <%--<c:when test="${not empty model.submitter}">--%>
+    <c:when test="false">
+        <div id="submit-data-description">
             <h2>Welcome to your private area</h2>
 
-            <p> Your username is : <strong>Meta Genome</strong>  (edit your profile)<br/>
+            <p> Your username is : <strong>Meta Genome</strong> (edit your profile)<br/>
                 Your email is : <strong>metagenomic@gmail.com</strong></p>
 
             <p> You have submitted: <strong>0</strong> projects and <strong>0</strong> samples.</p>
 
-            <p> You can view and analyse in this area (under My projects and My samples) any private information that is not yet publicly available. </p>
+            <p> You can view and analyse in this area (under My projects and My samples) any private information that is
+                not yet publicly available. </p>
+
             <p> Click here to submit a new project</p>
-            <p> <a href="<c:url value="${baseURL}/logout"/>" title="logout">Click here</a> to logout and return to the metagenomics homepage</p>
+
+            <p><a href="<c:url value="${baseURL}/logout"/>" title="logout">Click here</a> to logout and return to the
+                metagenomics homepage</p>
         </div>
-     </c:when>
+    </c:when>
 
 
+    <%-- Show Slideshow if not logged in --%>
+    <c:otherwise>
+        <!--[if IE 6]><div id="IE6" class="IE"><![endif]--> <!--[if IE 7]><div id="IE7" class="IE"><![endif]--> <!--[if IE & ((!IE 6) & (!IE 7))]><div><![endif]--> <!--[if !IE]>--><div><!--<![endif]-->
+        <div class="carousel">
 
+            <ul>
+                <li>
+                    <!-- module 1 -->
+                    <div class="module">
+                        <div class="top_corners"></div>
+                        <div class="content">
+                            <h3>Easy submission</h3>
 
+                            <div class="cent"><img src="${pageContext.request.contextPath}/img/icons_sub.png"
+                                                   alt="easy submission"/></div>
+                            <p>Manually supported submission process, with help available for
+                                meta-data provision. Raw SFF format 454 data accepted, other formats considered on
+                                request.<br/></p>
 
+                            <div class="find_more"><a href="${pageContext.request.contextPath}/info#features_1"
+                                                      title="find out more about easy submission"><span>Find out more</span></a>
+                            </div>
+                        </div>
+                        <div class="bottom_corners"></div>
+                    </div>
+                </li>
+                <li>
+                    <!-- module 2 -->
+                    <div class="module">
+                        <div class="top_corners"></div>
+                        <div class="content">
+                            <h3>Powerful analysis</h3>
 
+                            <div class="cent"><img src="${pageContext.request.contextPath}/img/icons_ana.png"
+                                                   alt="powerful analysis"/></div>
+                            <p>Functional analysis of metagenomic sequences using InterPro - a powerful and
+                                sophisticated alternative to BLAST-based analyses.<br/></p>
 
+                            <div class="find_more"><a href="${pageContext.request.contextPath}/info#features_2"
+                                                      title="find out more about analysis"><span>Find out more</span></a>
+                            </div>
+                        </div>
+                        <div class="bottom_corners"></div>
+                    </div>
+                </li>
+                <li>
+                    <!-- module 3 -->
+                    <div class="module">
+                        <div class="top_corners"></div>
+                        <div class="content">
+                            <h3>Data archiving</h3>
 
-     <%-- Show Slideshow if not logged in --%>
-     <c:otherwise>
-      <!--[if IE 6]><div id="IE6" class="IE"><![endif]--> <!--[if IE 7]><div id="IE7" class="IE"><![endif]--> <!--[if IE & ((!IE 6) & (!IE 7))]><div><![endif]--> <!--[if !IE]>--><div><!--<![endif]-->
-      <div class="carousel">
+                            <div class="cent"><img src="${pageContext.request.contextPath}/img/icons_arc.png"
+                                                   alt="data archiving"/></div>
+                            <p>Data automatically archived at the Sequence Read Archive (SRA), ensuring accession
+                                numbers are supplied - a prerequisite for publication in many journals.</p>
 
-       <ul>
-       <li>
-       <!-- module 1 -->
-      <div class="module">
-      <div class="top_corners"></div>
-      <div class="content">
-      <h3>Easy submission</h3>
-       <div class="cent"><img src="${pageContext.request.contextPath}/img/icons_sub.png" alt="easy submission" /></div>
-      <p>Manually supported submission process, with help available for
-        meta-data provision. Raw SFF format 454 data accepted, other formats considered on request.<br /></p>
-      <div class="find_more"><a href="${pageContext.request.contextPath}/info#features_1" title="find out more about easy submission"><span>Find out more</span></a></div>
-      </div>
-      <div class="bottom_corners"></div>
-      </div>
-       </li>
-       <li>
-       <!-- module 2 -->
-      <div class="module">
-      <div class="top_corners"></div>
-      <div class="content">
-      <h3>Powerful analysis</h3>
-      <div class="cent"><img src="${pageContext.request.contextPath}/img/icons_ana.png" alt="powerful analysis" /></div>
-      <p>Functional analysis of metagenomic sequences using InterPro - a powerful and sophisticated alternative to BLAST-based analyses.<br /></p>
-      <div class="find_more"><a href="${pageContext.request.contextPath}/info#features_2" title="find out more about analysis"><span>Find out more</span></a></div>
-      </div>
-      <div class="bottom_corners"></div>
-      </div>
-       </li>
-      <li>
-      <!-- module 3 -->
-      <div class="module">
-      <div class="top_corners"></div>
-      <div class="content">
-      <h3>Data archiving</h3>
-       <div class="cent"><img src="${pageContext.request.contextPath}/img/icons_arc.png" alt="data archiving"  /></div>
-      <p>Data automatically archived at the Sequence Read Archive (SRA), ensuring accession numbers are supplied - a prerequisite for publication in many journals.</p>
-      <div class="find_more"><a href="${pageContext.request.contextPath}/info#features_3" title="find out more about data archiving"><span>Find out more</span></a></div>
-      </div>
-      <div class="bottom_corners"></div>
-      </div>
-      </li>
-      <li>
-      <!-- module 4 -->
-      <div class="module">
-      <div class="top_corners"></div>
-      <div class="content">
-      <h3>Submit your data</h3>
-      <div class="cent"><img src="${pageContext.request.contextPath}/img/icons_submit.png" alt="" width="71" height="71" /></div>
-      <c:url var="enaRegistrationUrl" value="${model.propertyContainer.enaSubmissionURL.registrationLink}">
-      <c:param name="url" value="${enaUrlParameter}"/>
-      </c:url>
-      <p style="padding-bottom:7px; "> You can click on &quot;submit your data&quot; to send us your nucleotide sequences for analysis.
-(Note: you will need to <a id="j2querylogin" class="jquerylogin" href="#" title="Login">login</a> or <a href="<c:url value="${enaRegistrationUrl}"/>" title="Registration">register</a> first). </p>
-       <c:choose>
-       <c:when test="${empty model.submitter}">
-        <div class="find_more"><a href="<c:url value="${baseURL}/login"/>" title="submit data for analysis"><span>Submit your data</span></a></div>
+                            <div class="find_more"><a href="${pageContext.request.contextPath}/info#features_3"
+                                                      title="find out more about data archiving"><span>Find out more</span></a>
+                            </div>
+                        </div>
+                        <div class="bottom_corners"></div>
+                    </div>
+                </li>
+                <li>
+                    <!-- module 4 -->
+                    <div class="module">
+                        <div class="top_corners"></div>
+                        <div class="content">
+                            <h3>Submit your data</h3>
+
+                            <div class="cent"><img src="${pageContext.request.contextPath}/img/icons_submit.png" alt=""
+                                                   width="71" height="71"/></div>
+                            <c:url var="enaRegistrationUrl"
+                                   value="${model.propertyContainer.enaSubmissionURL.registrationLink}">
+                                <c:param name="url" value="${enaUrlParameter}"/>
+                            </c:url>
+                            <p style="padding-bottom:7px; "> You can click on &quot;submit your data&quot; to send us
+                                your nucleotide sequences for analysis.
+                                (Note: you will need to <a href="javascript:openLoginDialogForm()" title="Login">login</a>
+                                or <a href="<c:out value="${enaRegistrationUrl}"/>" title="Registration">register</a>
+                                first). </p>
+                            <c:choose>
+                            <c:when test="${empty model.submitter}">
+                            <div class="find_more"><a href="<c:url value="${baseURL}/login"/>"
+                                                      title="submit data for analysis"><span>Submit your data</span></a>
+                            </div>
+                        </div>
+                        </c:when>
+                        <c:otherwise>
+                        <div class="find_more"><a href="<c:url value="${baseURL}/submit"/>"
+                                                  title="submit data for analysis"><span>Submit your data</span></a>
+                        </div>
+                    </div>
+                    </c:otherwise>
+                    </c:choose>
+                    <div class="bottom_corners"></div>
         </div>
-       </c:when>
-       <c:otherwise>
-         <div class="find_more"><a href="<c:url value="${baseURL}/submit"/>" title="submit data for analysis"><span>Submit your data</span></a></div>
-        </div>
-      </c:otherwise>
-      </c:choose>
-      <div class="bottom_corners"></div>
-      </div>
-      </li>
+        </li>
 
         </ul>
-      </div>
-    </div>
-  </c:otherwise>
-     </c:choose>
+        </div>
+        </div>
+    </c:otherwise>
+</c:choose>
 
 
-    </section>
+</section>
 
 
-    <section id="list-data">
+<section id="list-data">
 
-        <c:choose>
-            <%-- Show MyStudies and MySamples tables only if a user is logged in--%>
-            <c:when test="${not empty model.submitter}">
-                <div id="list-data-study">
-                    <h2>My Projects</h2>
-                    <c:choose>
-                        <c:when test="${empty model.myStudiesMap}">
-                            <p>
-                                No projects submitted
-                            </p>
-                        </c:when>
-                        <c:otherwise>
-                            <h3>My latest projects</h3>
-                            <%--The count starts at 0, that is why we subtract 1 from the end value--%>
-                            <c:forEach var="entry" items="${model.myStudiesMap}" varStatus="status" begin="0"
-                                       end="${model.maxRowNumberOfLatestItems-1}">
-                                <p>
-                                    <c:if test="${!entry.key.public}">
-                                        <img alt="private"
-                                             src="${pageContext.request.contextPath}/img/icon_priv_private.gif">
-                                    </c:if>&nbsp;&nbsp;<a
-                                        href="<c:url value="${baseURL}/project/${entry.key.studyId}"/>"
-                                        class="list_more">${entry.key.studyName}</a>
-                                    <br/>
-                                    <span class="list_desc"><c:out value="${entry.key.shortStudyAbstract} ..."/></span>
-                                    <a href="<c:url value="${baseURL}/project/${entry.key.studyId}"/>#study_desc"
-                                       class="more_view">view more</a> - <a
-                                        href="<c:url value="${baseURL}/project/${entry.key.studyId}"/>#samples_id"
-                                        class="list_sample"><c:out value="${entry.value} sample"/><c:if
-                                        test='${entry.value > 1}'>s</c:if></a>
-                                </p>
-                            </c:forEach>
-                        </c:otherwise>
-                    </c:choose>
-                    <p>
-                        <a href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>"
-                           title="View all public projects" class="all">All public projects</a>
-                        <c:if test="${not empty model.myStudiesMap}">
-                            <a href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=MY_PROJECTS"/>"
-                               title="View all my studies" class="all">All my projects</a>
-                        </c:if>
-                    </p>
-                </div>
-
-                <div id="list-data-sample">
-                    <h2>My Samples</h2>
-                    <c:choose>
-                        <c:when test="${empty model.mySamples}">
-                            <p>
-                                No samples submitted
-                            </p>
-                        </c:when>
-                        <c:otherwise>
-                            <h3>My latest samples</h3>
-                            <%--The count starts at 0, that is why we subtract 1 from the end value--%>
-                            <c:forEach var="sample" items="${model.mySamples}" varStatus="status" begin="0"
-                                       end="${model.maxRowNumberOfLatestItems-1}">
-                                <p><%--<span class="list_date">${sample.metadataReceived}:</span>--%>
-                                    <c:if test="${!sample.public}"><img alt="private"
-                                                                        src="${pageContext.request.contextPath}/img/icon_priv_private.gif"></c:if>&nbsp;&nbsp;
-                                    <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>"
-                                       class="list_more">${sample.sampleName}</a>
-                                    <br/>
-                                    <span class="list_desc"><c:out value="${sample.shortSampleDescription} ..."/></span>
-                                    <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>#sample_desc"
-                                       class="more_view">view more</a> -
-                                    <c:choose>
-                                        <c:when test="${empty sample.analysisCompleted}">Analysis in progress</c:when>
-                                        <c:otherwise>
-                                            <a href="<c:url value="${baseURL}/analysisStatsView/${sample.sampleId}"/>"
-                                               class="list_sample">Analysis results</a>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </p>
-                            </c:forEach>
-                        </c:otherwise>
-                    </c:choose>
-                    <p>
-                        <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search&startPosition=0"/>"
-                           title="View all public samples" class="all">All public samples</a>
-                        <c:if test="${not empty model.mySamples}">
-                            <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=MY_SAMPLES&search=Search&startPosition=0"/>"
-                               title="View all my samples" class="all">All my samples</a>
-                        </c:if>
-                    </p>
-                </div>
-            </c:when>
-            <%-- End of show MyStudies and MySamples tables--%>
-
-            <%-- Show recent PublicStudies and PublicSamples only when the user is not logged in --%>
-            <c:otherwise>
-                <div id="list-data-study">
-                    <h2>Projects</h2>
-
-                    <h3>Latest public projects</h3>
+    <c:choose>
+        <%-- Show MyStudies and MySamples tables only if a user is logged in--%>
+        <c:when test="${not empty model.submitter}">
+            <div id="list-data-study">
+                <h2>My Projects</h2>
+                <c:choose>
+                    <c:when test="${empty model.myStudiesMap}">
+                        <p>
+                            No projects submitted
+                        </p>
+                    </c:when>
+                    <c:otherwise>
+                        <h3>My latest projects</h3>
                         <%--The count starts at 0, that is why we subtract 1 from the end value--%>
-                    <c:forEach var="entry" items="${model.publicStudiesMap}" varStatus="status" begin="0"
-                               end="${model.maxRowNumberOfLatestItems-1}">
-                        <p><%--<span class="list_date">${entry.key.lastMetadataReceived}:</span> --%>
-                            <a href="<c:url value="${baseURL}/project/${entry.key.studyId}"/>"
-                               class="list_more">${entry.key.studyName}</a>
-                            <br/>
-                            <span class="list_desc"><c:out value="${entry.key.shortStudyAbstract} ..."/></span>
-                            <a href="<c:url value="${baseURL}/project/${entry.key.studyId}"/>#study_desc"
-                               class="more_view">view more</a> - <a
+                        <c:forEach var="entry" items="${model.myStudiesMap}" varStatus="status" begin="0"
+                                   end="${model.maxRowNumberOfLatestItems-1}">
+                            <p>
+                                <c:if test="${!entry.key.public}">
+                                    <img alt="private"
+                                         src="${pageContext.request.contextPath}/img/icon_priv_private.gif">
+                                </c:if>&nbsp;&nbsp;<a
+                                    href="<c:url value="${baseURL}/project/${entry.key.studyId}"/>"
+                                    class="list_more">${entry.key.studyName}</a>
+                                <br/>
+                                <span class="list_desc"><c:out value="${entry.key.shortStudyAbstract} ..."/></span>
+                                <a href="<c:url value="${baseURL}/project/${entry.key.studyId}"/>#study_desc"
+                                   class="more_view">view more</a> - <a
                                     href="<c:url value="${baseURL}/project/${entry.key.studyId}"/>#samples_id"
                                     class="list_sample"><c:out value="${entry.value} sample"/><c:if
                                     test='${entry.value > 1}'>s</c:if></a>
+                            </p>
+                        </c:forEach>
+                    </c:otherwise>
+                </c:choose>
+                <p>
+                    <a href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>"
+                       title="View all public projects" class="all">All public projects</a>
+                    <c:if test="${not empty model.myStudiesMap}">
+                        <a href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=MY_PROJECTS"/>"
+                           title="View all my studies" class="all">All my projects</a>
+                    </c:if>
+                </p>
+            </div>
+
+            <div id="list-data-sample">
+                <h2>My Samples</h2>
+                <c:choose>
+                    <c:when test="${empty model.mySamples}">
+                        <p>
+                            No samples submitted
                         </p>
-                    </c:forEach>
-                    <p>
-                        <a href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>"
-                           title="View all public projects" class="all">View all projects</a></p>
-                </div>
-
-                <div id="list-data-sample">
-                    <h2>Samples</h2>
-
-                    <h3>Latest public samples</h3>
+                    </c:when>
+                    <c:otherwise>
+                        <h3>My latest samples</h3>
                         <%--The count starts at 0, that is why we subtract 1 from the end value--%>
-                    <c:forEach var="sample" items="${model.publicSamples}" varStatus="status" begin="0"
-                               end="${model.maxRowNumberOfLatestItems-1}">
-                        <p><%--<span class="list_date">${sample.metadataReceived}:</span>--%>
-                            <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>"
-                               class="list_more">${sample.sampleName}</a>
-                            <br/>
-                            <span class="list_desc"><c:out value="${sample.shortSampleDescription} ..."/></span>
-                            <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>#sample_desc"
-                               class="more_view">view more</a> -
-                            <c:choose>
-                                <c:when test="${empty sample.analysisCompleted}">Analysis in progress</c:when>
-                                <c:otherwise>
-                                    <a href="<c:url value="${baseURL}/analysisStatsView/${sample.sampleId}"/>"
-                                       class="list_sample">Analysis results</a>
-                                </c:otherwise>
-                            </c:choose>
-                        </p>
-                    </c:forEach>
-                    <p>
-                        <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search&startPosition=0"/>"
-                           title="View all public samples" class="all">View all samples</a></p>
-                </div>
-            </c:otherwise>
-        </c:choose>
-        <div id="list-news"><h2>News & events</h2><h3>Latest news & events  <a href="${model.rssUrl}" rel="alternate" type="application/rss+xml" title="Metagenomics RSS feeds"><img
-            src="${pageContext.request.contextPath}/img/icon_rss.gif" alt="Metagenomics RSS feeds"/></a></h3>
-
-
-       <c:choose>
-        <c:when test="${empty model.rssItems}">
-          <p><span class="list_desc">No news</span></p>
+                        <c:forEach var="sample" items="${model.mySamples}" varStatus="status" begin="0"
+                                   end="${model.maxRowNumberOfLatestItems-1}">
+                            <p><%--<span class="list_date">${sample.metadataReceived}:</span>--%>
+                                <c:if test="${!sample.public}"><img alt="private"
+                                                                    src="${pageContext.request.contextPath}/img/icon_priv_private.gif"></c:if>&nbsp;&nbsp;
+                                <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>"
+                                   class="list_more">${sample.sampleName}</a>
+                                <br/>
+                                <span class="list_desc"><c:out value="${sample.shortSampleDescription} ..."/></span>
+                                <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>#sample_desc"
+                                   class="more_view">view more</a> -
+                                <c:choose>
+                                    <c:when test="${empty sample.analysisCompleted}">Analysis in progress</c:when>
+                                    <c:otherwise>
+                                        <a href="<c:url value="${baseURL}/analysisStatsView/${sample.sampleId}"/>"
+                                           class="list_sample">Analysis results</a>
+                                    </c:otherwise>
+                                </c:choose>
+                            </p>
+                        </c:forEach>
+                    </c:otherwise>
+                </c:choose>
+                <p>
+                    <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search&startPosition=0"/>"
+                       title="View all public samples" class="all">All public samples</a>
+                    <c:if test="${not empty model.mySamples}">
+                        <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=MY_SAMPLES&search=Search&startPosition=0"/>"
+                           title="View all my samples" class="all">All my samples</a>
+                    </c:if>
+                </p>
+            </div>
         </c:when>
-        <c:otherwise>
+        <%-- End of show MyStudies and MySamples tables--%>
 
-            <c:forEach var="entry" items="${model.rssItems}" varStatus="status">
-             <p><span class="list_desc">${entry.title}</span>   </p>
+        <%-- Show recent PublicStudies and PublicSamples only when the user is not logged in --%>
+        <c:otherwise>
+            <div id="list-data-study">
+                <h2>Projects</h2>
+
+                <h3>Latest public projects</h3>
+                    <%--The count starts at 0, that is why we subtract 1 from the end value--%>
+                <c:forEach var="entry" items="${model.publicStudiesMap}" varStatus="status" begin="0"
+                           end="${model.maxRowNumberOfLatestItems-1}">
+                    <p><%--<span class="list_date">${entry.key.lastMetadataReceived}:</span> --%>
+                        <a href="<c:url value="${baseURL}/project/${entry.key.studyId}"/>"
+                           class="list_more">${entry.key.studyName}</a>
+                        <br/>
+                        <span class="list_desc"><c:out value="${entry.key.shortStudyAbstract} ..."/></span>
+                        <a href="<c:url value="${baseURL}/project/${entry.key.studyId}"/>#study_desc"
+                           class="more_view">view more</a> - <a
+                                href="<c:url value="${baseURL}/project/${entry.key.studyId}"/>#samples_id"
+                                class="list_sample"><c:out value="${entry.value} sample"/><c:if
+                                test='${entry.value > 1}'>s</c:if></a>
+                    </p>
+                </c:forEach>
+                <p>
+                    <a href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>"
+                       title="View all public projects" class="all">View all projects</a></p>
+            </div>
+
+            <div id="list-data-sample">
+                <h2>Samples</h2>
+
+                <h3>Latest public samples</h3>
+                    <%--The count starts at 0, that is why we subtract 1 from the end value--%>
+                <c:forEach var="sample" items="${model.publicSamples}" varStatus="status" begin="0"
+                           end="${model.maxRowNumberOfLatestItems-1}">
+                    <p><%--<span class="list_date">${sample.metadataReceived}:</span>--%>
+                        <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>"
+                           class="list_more">${sample.sampleName}</a>
+                        <br/>
+                        <span class="list_desc"><c:out value="${sample.shortSampleDescription} ..."/></span>
+                        <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>#sample_desc"
+                           class="more_view">view more</a> -
+                        <c:choose>
+                            <c:when test="${empty sample.analysisCompleted}">Analysis in progress</c:when>
+                            <c:otherwise>
+                                <a href="<c:url value="${baseURL}/analysisStatsView/${sample.sampleId}"/>"
+                                   class="list_sample">Analysis results</a>
+                            </c:otherwise>
+                        </c:choose>
+                    </p>
+                </c:forEach>
+                <p>
+                    <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search&startPosition=0"/>"
+                       title="View all public samples" class="all">View all samples</a></p>
+            </div>
+        </c:otherwise>
+    </c:choose>
+    <div id="list-news"><h2>News & events</h2>
+
+        <h3>Latest news & events <a href="${model.rssUrl}" rel="alternate" type="application/rss+xml"
+                                    title="Metagenomics RSS feeds"><img
+                src="${pageContext.request.contextPath}/img/icon_rss.gif" alt="Metagenomics RSS feeds"/></a></h3>
+
+
+        <c:choose>
+            <c:when test="${empty model.rssItems}">
+                <p><span class="list_desc">No news</span></p>
+            </c:when>
+            <c:otherwise>
+
+                <c:forEach var="entry" items="${model.rssItems}" varStatus="status">
+                    <p><span class="list_desc">${entry.title}</span></p>
                 </c:forEach>
 
 
-        </c:otherwise>
-    </c:choose>
-<p><a href="http://twitter.com/EBImetagenomics" class="twitter">Follow us on Twitter</a></p>
-<span class="separator"></span>
- <h2>Mailing list</h2>
- <p><span class="list_desc"><a class="list_more" href="http://listserver.ebi.ac.uk/mailman/listinfo/metagenomics">Subscribe</a> to the EBI metagenomics mailing list to receive update information. </span> </p>
+            </c:otherwise>
+        </c:choose>
+        <p><a href="http://twitter.com/EBImetagenomics" class="twitter">Follow us on Twitter</a></p>
+        <span class="separator"></span>
 
-        </div>
-    </section>
+        <h2>Mailing list</h2>
+
+        <p><span class="list_desc"><a class="list_more"
+                                      href="http://listserver.ebi.ac.uk/mailman/listinfo/metagenomics">Subscribe</a> to the EBI metagenomics mailing list to receive update information. </span>
+        </p>
+
+    </div>
+</section>
 
 
 </div>

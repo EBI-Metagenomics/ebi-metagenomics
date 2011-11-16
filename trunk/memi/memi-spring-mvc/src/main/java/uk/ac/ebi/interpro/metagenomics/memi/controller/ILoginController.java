@@ -10,12 +10,14 @@ import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import javax.validation.Valid;
 
 /**
+ * Not in use anymore.
  * Represents a interface that defines which methods have to be implemented
  * for each login controller.
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @since 1.0-SNAPSHOT
  */
+@Deprecated
 public interface ILoginController {
 
     public ModelAndView doProcessLogin(@ModelAttribute(LoginForm.MODEL_ATTR_NAME) @Valid LoginForm loginForm, BindingResult result,

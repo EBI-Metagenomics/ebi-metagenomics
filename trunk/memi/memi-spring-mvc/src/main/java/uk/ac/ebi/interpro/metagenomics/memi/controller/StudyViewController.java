@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateSampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateStudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.ISampleStudyDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
@@ -103,6 +104,7 @@ public class StudyViewController extends SecuredAbstractController<Study> {
         final ViewModelBuilder<StudyViewModel> builder = new StudyViewModelBuilder(sessionManager,
                 pageTitle, getBreadcrumbs(study), propertyContainer, study, sampleDAO);
         final StudyViewModel studyModel = builder.getModel();
+        model.addAttribute("loginForm", new LoginForm());
         model.addAttribute(StudyViewModel.MODEL_ATTR_NAME, studyModel);
     }
 
