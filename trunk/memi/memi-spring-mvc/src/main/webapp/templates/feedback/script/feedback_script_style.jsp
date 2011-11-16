@@ -2,7 +2,7 @@
 <%--This file keeps the code for the feedback dialog--%>
 <%--Login form validation is handled on the server side by a AJAX POST request--%>
 <script type="text/javascript">
-    $.fx.speeds._default = 1000;
+    //    $.fx.speeds._default = 1000;
     var feedbackFormValidator;
     $(function() {
 //        prepare options for AJAX submission
@@ -73,28 +73,30 @@
     //Resets input fields to their original value (requires form plugin), removes classes indicating invalid elements and hides error messages.
     function clearFeedbackForm() {
         feedbackFormValidator.resetForm();
-        return false;
+//        return false;
     }
-    //    Global variable to track display value of DIV with ID feedback_div (see ../feedback/feedbackDiv.html file)
-    var feedbackDivDisplayValue;
-    //Hides feedback form
+    var flag = true;
     function hideFeedbackForm() {
-        feedbackDivDisplayValue = "none";
-        $("#feedback_div").hide("slide", { direction: "right" }, 2000);
+        $("#feedback_div").animate({
+            right: '-=440px'
+        }, 1500);
+        clearFeedbackForm();
     }
     //Shows feedback form
     function showFeedbackForm() {
-        clearFeedbackForm();
-        if (feedbackDivDisplayValue == null) {
-            var feedbackDivElement = document.getElementById("feedback_div");
-            feedbackDivDisplayValue = feedbackDivElement.style.display;
-        }
-        if (feedbackDivDisplayValue == "none") {
-            feedbackDivDisplayValue = "block";
-            $("#feedback_div").show("slide", { direction: "right" }, 2000);
+        $("#feedback_div").animate({
+            right: '+=440px'
+        }, 1500);
+    }
+
+    function slideFeedbackForm() {
+        if (flag) {
+            flag = false;
+            hideFeedbackForm();
         }
         else {
-            hideFeedbackForm();
+            flag = true;
+            showFeedbackForm();
         }
     }
 </script>

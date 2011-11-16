@@ -1,7 +1,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <div id="feedback_div">
     <div class="feedbackform_tab_v">
-        <a id="script_feedbackLink" href="javascript:hideFeedbackForm()" title="Give your feedback"></a>
+        <a id="script_feedbackLink" href="javascript:slideFeedbackForm()" title="Give your feedback"></a>
         <!--<a id="noscript_feedbackLink" href="<c:url value="${baseURL}/feedback"/>" title="Give your feedback"></a>-->
     </div>
 
@@ -15,7 +15,7 @@
                     <tr>
                         <td>
                             <div class="close_wind">
-                                <a href="javascript:hideFeedbackForm()" title="Close this window"></a>
+                                <a href="javascript:slideFeedbackForm()" title="Close this window"></a>
                             </div>
                             <label for="emailAddress"  id="required"><spring:message code="feedbackForm.inputField.email.label"/></label>
                         </td>
@@ -44,8 +44,7 @@
                      <tr>
                         <td>
                             <input type="submit" name="submit" value="Submit" class="main_button"/>
-                            <span class="clear_but">| <a href="#" onclick="clearFeedbackForm()"
-                                                         title="Clear the form">Clear</a></span>
+                            <span class="clear_but">| <a href="javascript:clearFeedbackForm()" title="Clear the form">Clear</a></span>
                         </td>
                     </tr>
                 <input type="hidden" name="leaveIt" id="leaveIt" />
