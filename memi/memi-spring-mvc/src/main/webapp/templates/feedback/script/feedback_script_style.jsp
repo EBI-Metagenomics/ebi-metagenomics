@@ -78,25 +78,25 @@
     var flag = true;
     function hideFeedbackForm() {
         $("#feedback_div").animate({
-            right: '-=440px'
+            right: '-=444px'
         }, 1500);
         clearFeedbackForm();
     }
     //Shows feedback form
     function showFeedbackForm() {
         $("#feedback_div").animate({
-            right: '+=440px'
+            right: '+=444px'
         }, 1500);
     }
 
     function slideFeedbackForm() {
         if (flag) {
             flag = false;
-            hideFeedbackForm();
+            showFeedbackForm();
         }
         else {
             flag = true;
-            showFeedbackForm();
+            hideFeedbackForm();
         }
     }
 </script>
