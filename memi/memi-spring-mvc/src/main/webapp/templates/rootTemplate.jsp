@@ -167,6 +167,6 @@
     <div id="extra_beta"></div>
 </a>
 <!-- The following line includes the feedback DIV and the feedback FORM -->
-<%@ include file="feedback/script/feedbackDiv.html" %>
+<%@ include file="feedback/script/feedbackDiv.jsp" %>
 </body>
 </html>

@@ -1,7 +1,5 @@
 package uk.ac.ebi.interpro.metagenomics.memi.controller;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,21 +30,17 @@ public class ContactPageController extends AbstractController implements IMGCont
 
     @Override
     public ModelAndView doGet(ModelMap model) {
-        //build and add the default page model
-        populateModel(model);
-        return new ModelAndView(VIEW_NAME, model);
-    }
-
-
-    /**
-     * Creates the home page model and adds it to the specified model map.
-     *
-     * @param model The model map to populate
-     */
-    private void populateModel(final ModelMap model) {
-        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "Metagenomics Contact", getBreadcrumbs(null), propertyContainer);
-        final ViewModel defaultViewModel = builder.getModel();
-        model.addAttribute(ViewModel.MODEL_ATTR_NAME, defaultViewModel);
+        return buildModelAndView(
+                getModelViewName(),
+                model,
+                new ModelPopulator() {
+                    @Override
+                    public void populateModel(ModelMap model) {
+                        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "Metagenomics Contact", getBreadcrumbs(null), propertyContainer);
+                        final ViewModel defaultViewModel = builder.getModel();
+                        model.addAttribute(ViewModel.MODEL_ATTR_NAME, defaultViewModel);
+                    }
+                });
     }
 
     protected String getModelViewName() {

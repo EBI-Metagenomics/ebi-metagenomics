@@ -1,7 +1,7 @@
 <html>
 <body>
 <div>
-    ${message}
+    ${emailMessage}
 </div>
 </body>
 </html>

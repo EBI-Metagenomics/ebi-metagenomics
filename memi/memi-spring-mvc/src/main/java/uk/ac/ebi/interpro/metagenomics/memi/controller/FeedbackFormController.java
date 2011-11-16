@@ -6,17 +6,18 @@ import org.apache.velocity.app.VelocityEngine;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.ui.velocity.VelocityEngineUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.SubmitterDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.FeedbackForm;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.services.EmailNotificationService;
 import uk.ac.ebi.interpro.metagenomics.memi.services.INotificationService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.SubmissionModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.DefaultViewModelBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder;
@@ -24,6 +25,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuil
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolation;
+import javax.validation.Valid;
 import javax.validation.Validation;
 import javax.validation.ValidatorFactory;
 import java.util.*;
@@ -38,6 +40,11 @@ import java.util.*;
 public class FeedbackFormController extends AbstractController {
     private final Log log = LogFactory.getLog(FeedbackFormController.class);
 
+    /**
+     * View name of this controller which is used several times.
+     */
+    public static final String VIEW_NAME = "feedback";
+
     @Resource
     private SubmitterDAO submitterDAO;
 
@@ -49,31 +56,68 @@ public class FeedbackFormController extends AbstractController {
 
     @RequestMapping(value = "/feedback", method = RequestMethod.GET)
     public ModelAndView doGet(ModelMap model) {
-        //build and add the default page model
-        populateModel(model, "Metagenomics Feedback");
-        return new ModelAndView("feedback", model);
+        return buildModelAndView(
+                getModelViewName(),
+                model,
+                new ModelPopulator() {
+                    @Override
+                    public void populateModel(ModelMap model) {
+                        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "Metagenomics Feedback", getBreadcrumbs(null), propertyContainer);
+                        final ViewModel defaultViewModel = builder.getModel();
+                        model.addAttribute(ViewModel.MODEL_ATTR_NAME, defaultViewModel);
+                        model.addAttribute("feedbackForm", new FeedbackForm());
+                    }
+                }
+        );
     }
 
     @RequestMapping(value = "/feedback", method = RequestMethod.POST)
-    public ModelAndView doPost(final ModelMap model) {
-        //build and add the default page model
-        populateModel(model, "Metagenomics Thank you");
-        return new ModelAndView("/feedbackSuccess", model);
+    public String doPost(@ModelAttribute("feedbackForm") @Valid FeedbackForm feedbackForm,
+                         BindingResult result, ModelMap model,
+                         SessionStatus status) {
+        if (result.hasErrors()) {
+            log.info("Feedback form has validation errors!");
+            return "/feedback";
+        }
+        //build contact email message
+        if (feedbackForm != null) {
+            String msg = buildMsg(feedbackForm.getEmailMessage());
+            ((EmailNotificationService) emailService).setSender(feedbackForm.getEmailAddress());
+            ((EmailNotificationService) emailService).setEmailSubject("[beta-feedback] " + feedbackForm.getEmailSubject());
+            ((EmailNotificationService) emailService).setReceiverCC(feedbackForm.getEmailAddress());
+            emailService.sendNotification(msg);
+            log.info("Sent an email with contact details: " + msg);
+            status.setComplete();
+        } else {
+            return CommonController.EXCEPTION_PAGE_VIEW_NAME;
+        }
+        return "/feedbackSuccess";
     }
 
     @RequestMapping(value = "**/feedbackSuccess", method = RequestMethod.GET)
     public ModelAndView doGetSuccessPage(final ModelMap model) {
-        //build and add the default page model
-        populateModel(model, "Metagenomics Thank you");
-        return new ModelAndView("/feedbackSuccess", model);
+        return buildModelAndView(
+                "/feedbackSuccess",
+                model,
+                new ModelPopulator() {
+                    @Override
+                    public void populateModel(ModelMap model) {
+                        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "Metagenomics Thank you", getBreadcrumbs(null), propertyContainer);
+                        final ViewModel defaultViewModel = builder.getModel();
+                        model.addAttribute(ViewModel.MODEL_ATTR_NAME, defaultViewModel);
+                    }
+                }
+        );
     }
 
     @RequestMapping(value = "**/doFeedback", method = RequestMethod.POST)
     public
     @ResponseBody
-    Map<String, String> doProcessFeedback(@RequestParam String emailAddress, @RequestParam String emailSubject,
-                                          @RequestParam String emailMessage, @RequestParam String leaveIt,
-                                          HttpServletResponse response) {
+    Map<String, String> doProcessFeedback(@RequestParam(required = true, value = "emailAddress") String emailAddress,
+                                          @RequestParam(required = true, value = "emailSubject") String emailSubject,
+                                          @RequestParam(required = true, value = "emailMessage") String emailMessage,
+                                          @RequestParam(value = "leaveIt") String leaveIt,
+                                          final HttpServletResponse response) {
         // Server side feedback form validation
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         javax.validation.Validator validator = factory.getValidator();
@@ -113,12 +157,6 @@ public class FeedbackFormController extends AbstractController {
         return null;
     }
 
-    private void populateModel(final ModelMap model, final String pageTitle) {
-        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, pageTitle, getBreadcrumbs(null), propertyContainer);
-        final ViewModel defaultViewModel = builder.getModel();
-        model.addAttribute(ViewModel.MODEL_ATTR_NAME, defaultViewModel);
-    }
-
     /**
      * Builds the email message using Velocity..
      *
@@ -128,7 +166,7 @@ public class FeedbackFormController extends AbstractController {
     protected String buildMsg(String message) {
         Map<String, Object> model = new HashMap<String, Object>();
         //Add feedback form to Velocity model
-        model.put("message", message);
+        model.put("emailMessage", message);
         //Add logged in user to Velocity model
         if (sessionManager != null && sessionManager.getSessionBean() != null) {
             model.put("submitter", sessionManager.getSessionBean().getSubmitter());
@@ -138,7 +176,7 @@ public class FeedbackFormController extends AbstractController {
 
     @Override
     protected String getModelViewName() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return VIEW_NAME;
     }
 
     @Override

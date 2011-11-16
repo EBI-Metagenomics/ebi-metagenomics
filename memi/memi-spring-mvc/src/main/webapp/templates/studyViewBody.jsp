@@ -170,7 +170,7 @@ Contact name: (not given)
         <div class="export">
             <a href="<c:url value="${baseURL}/project/${model.study.studyId}/doExport/"/>" id="csv_plus"
                title="<spring:message code="studyView.download.anchor.title"/>">
-                <spring:message code="studyView.download.anchor.label"/></a>
+                <spring:message code="studyView.download.anchor.title"/></a>
         </div>
 
 

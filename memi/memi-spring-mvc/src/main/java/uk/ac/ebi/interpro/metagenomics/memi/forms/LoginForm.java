@@ -9,7 +9,7 @@ import org.hibernate.validator.constraints.NotEmpty;
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @since 1.0-SNAPSHOT
  */
-public class LoginForm {
+public final class LoginForm {
 
     public final static String MODEL_ATTR_NAME = "loginForm";
 

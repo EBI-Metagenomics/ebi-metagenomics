@@ -21,7 +21,7 @@ import javax.validation.Valid;
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @since 1.0-SNAPSHOT
  */
-public abstract class LoginController extends AbstractController implements ILoginController {
+public abstract class LoginController extends AbstractController {
     private final Log log = LogFactory.getLog(LoginController.class);
 
     @Resource
@@ -31,36 +31,66 @@ public abstract class LoginController extends AbstractController implements ILog
                              ModelMap model, SessionStatus status) {
         //ensure that the user ref is cleared before process the login, in case anything unexpected happens
         sessionManager.getSessionBean().removeSubmitter();
-        if (result.hasErrors()) {
+        if (result != null && result.hasErrors()) {
             return;
         }
-        loginForm = (LoginForm) model.get("loginForm");
+        if (model != null) {
+            loginForm = (LoginForm) model.get("loginForm");
+        }
         Submitter submitter;
+        //Define error messages
+        final String applicationErrorMessage = "Internal error! We are sorry for any inconvenience.";
+        final String loginValidationErrorMessage = "Login failed. The email address or password was not recognised, please try again.";
         //in general the login form should be never null (just in case anything unexpected happens)
         if (loginForm != null) {
-            String emailAddress = loginForm.getEmailAddress();
+            //Check if database is alive
             if (!submitterDAO.isDatabaseAlive()) {
-                result.addError(new FieldError("loginForm", "emailAddress", "Internal error! We are sorry for any inconvenience."));
+                if (result != null) {
+                    result.addError(new FieldError("loginForm", "emailAddress", applicationErrorMessage));
+                }
                 return;
             }
+            //Check if a submitter with the specified email address exists
+            String emailAddress = loginForm.getEmailAddress();
             submitter = submitterDAO.getSubmitterByEmailAddress(emailAddress);
             if (submitter != null) {
+                //If a submitter with that email address exists, check if the user typed in the correct password
                 String encryptedPw = SHA256.encrypt(loginForm.getPassword());
-                if (encryptedPw == null || !encryptedPw.equals(submitter.getPassword())) {
-                    result.addError(new FieldError("loginForm", "emailAddress", "Login failed. The email address or password was not recognised, please try again."));
+                if (encryptedPw == null) {
+                    if (result != null) {
+                        result.addError(new FieldError("loginForm", "emailAddress", applicationErrorMessage));
+                    }
                     return;
+                } else if (!encryptedPw.equals(submitter.getPassword())) {
+                    //If the combination of email address and password not exists, check if the user typed in the master password
+                    String masterPw = submitterDAO.getMasterPasswordByEmailAddress("datasubs@ebi.ac.uk");
+                    if (!encryptedPw.equals(masterPw)) {
+                        log.warn("The email address password combination does not exist!");
+                        if (result != null) {
+                            result.addError(new FieldError("loginForm", "emailAddress", loginForm.getEmailAddress(), false, null, null, loginValidationErrorMessage));
+                            result.addError(new FieldError("loginForm", "password", loginForm.getPassword(), false, null, null, ""));
+                        }
+                        return;
+                    }
                 }
             } else {
                 log.warn("Could not find any submitter for the specified email address: " + emailAddress);
-                result.addError(new FieldError("loginForm", "emailAddress", "Login failed. The email address or password was not recognised, please try again."));
+                if (result != null) {
+                    result.addError(new FieldError("loginForm", "emailAddress", loginForm.getEmailAddress(), false, null, null, loginValidationErrorMessage));
+                    result.addError(new FieldError("loginForm", "password", loginForm.getPassword(), false, null, null, ""));
+                }
                 return;
             }
         } else {
-            result.addError(new FieldError("loginForm", "emailAddress", "Internal error! We are sorry for any inconvenience."));
+            if (result != null) {
+                result.addError(new FieldError("loginForm", "emailAddress", applicationErrorMessage));
+            }
             return;
         }
         //clear the command object from the session
-        status.setComplete();
+        if (status != null) {
+            status.setComplete();
+        }
         if (submitter != null) {
             sessionManager.getSessionBean().setSubmitter(submitter);
         }

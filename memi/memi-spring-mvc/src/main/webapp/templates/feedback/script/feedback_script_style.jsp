@@ -1,6 +1,9 @@
+<%--author: Maxim Scheremetjew, EBI, InterPro--%>
+<%--This file keeps the code for the feedback dialog--%>
+<%--Login form validation is handled on the server side by a AJAX POST request--%>
 <script type="text/javascript">
     $.fx.speeds._default = 1000;
-    var validator;
+    var feedbackFormValidator;
     $(function() {
 //        prepare options for AJAX submission
         var options = {
@@ -16,7 +19,7 @@
             error: function(xhr, ajaxOptions, thrownError) {
                 var jsonObject = jQuery.parseJSON(xhr.responseText);
                 if (jsonObject != null) {
-                    $("#addressErrorMessage").html(jsonObject.sender);
+                    $("#addressErrorMessage").html(jsonObject.emailAddress);
                     $("#subjectErrorMessage").html(jsonObject.emailSubject);
                     $("#msgError").html(jsonObject.message);
                 }
@@ -25,7 +28,7 @@
 
 //      Client side feedback form validation and submission. Please notice that there also exists a server side form validation
 //      Be aware of the following issue: http://www.ozonesolutions.com/programming/2011/09/ajaxform-and-validation-plugins-for-jquery/
-        validator = $('#feedback_form').validate(
+        feedbackFormValidator = $('#feedback_form').validate(
         {
             submitHandler: function(form) {
                 // pass options to ajaxSubmit
@@ -66,17 +69,22 @@
         $('#feedback_form').ajaxForm(options);
 
 
-        });//Resets input fields to their original value (requires form plugin), removes classes indicating invalid elements and hides error messages.
-        $('#resetFeedbackFrom').click(function() {
-            validator.resetForm();
-            return false;
-    })(jQuery);
-</script>
-
-<script type="text/javascript">
+    });
+    //Resets input fields to their original value (requires form plugin), removes classes indicating invalid elements and hides error messages.
+    function clearFeedbackForm() {
+        feedbackFormValidator.resetForm();
+        return false;
+    }
     //    Global variable to track display value of DIV with ID feedback_div (see ../feedback/feedbackDiv.html file)
     var feedbackDivDisplayValue;
+    //Hides feedback form
+    function hideFeedbackForm() {
+        feedbackDivDisplayValue = "none";
+        $("#feedback_div").hide("slide", { direction: "right" }, 2000);
+    }
+    //Shows feedback form
     function showFeedbackForm() {
+        clearFeedbackForm();
         if (feedbackDivDisplayValue == null) {
             var feedbackDivElement = document.getElementById("feedback_div");
             feedbackDivDisplayValue = feedbackDivElement.style.display;
@@ -89,14 +97,7 @@
             hideFeedbackForm();
         }
     }
-
-    function hideFeedbackForm() {
-        feedbackDivDisplayValue = "none";
-        $("#feedback_div").hide("slide", { direction: "right" }, 2000);
-        validator.resetForm();
-    }
 </script>
-
 <!-- Script and no script implementation for DIV with Id 'extra_feedback' (You'll find it in rootTemplate.jsp) -->
 <script>
     document.write('<style type="text/css">#noscript_feedbackLink{display: none;}');

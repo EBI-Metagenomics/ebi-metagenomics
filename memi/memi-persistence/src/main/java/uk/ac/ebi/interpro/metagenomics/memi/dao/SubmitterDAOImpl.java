@@ -88,6 +88,26 @@ public class SubmitterDAOImpl implements SubmitterDAO {
     }
 
     @Override
+    public String getMasterPasswordByEmailAddress(String emailAddress) {
+        if (emailAddress == null)
+            return null;
+        try {
+            return this.jdbcTemplate.queryForObject("SELECT password FROM " + Submitter.TABLE_NAME + " WHERE ACTIVE='Y' AND email_address=?",
+                    new Object[]{emailAddress.toUpperCase()}, String.class);
+//                    new RowMapper<String>() {
+//                        public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+//                            return rs.getString("password");
+//                        }
+//                    });
+
+        } catch (Exception e) {
+            log.warn("Could not perform database query. It might be that the JDBC connection could not build" +
+                    " or is wrong configured. For more info take a look at the stack trace!", e);
+        }
+        return null;
+    }
+
+    @Override
     // TODO: Implement
     public List<Submitter> getSubmitters() {
         return null;  //To change body of implemented methods use File | Settings | File Templates.

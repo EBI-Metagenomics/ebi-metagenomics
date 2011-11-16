@@ -17,7 +17,9 @@ import uk.ac.ebi.interpro.metagenomics.memi.forms.SubmissionForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.services.EmailNotificationService;
 import uk.ac.ebi.interpro.metagenomics.memi.services.INotificationService;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.*;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.SubmissionModel;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.SubmissionViewModelBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder;
 
@@ -53,14 +55,11 @@ public class SubmissionController extends CheckLoginController implements IMGCon
     @Resource
     private VelocityEngine velocityEngine;
 
-    @Override
     public ModelAndView doGet(ModelMap model) {
         if (isUserAssociatedToSession()) {
-            //build and add the page model
-            populateModel(model);
-            model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((SubmissionModel) model.get(ViewModel.MODEL_ATTR_NAME)).getLoginForm());
-            model.addAttribute(SubmissionForm.MODEL_ATTR_NAME, ((SubmissionModel) model.get(ViewModel.MODEL_ATTR_NAME)).getSubForm());
-            return new ModelAndView(VIEW_NAME, model);
+            final ModelPopulator modelPopulator = new SubmissionModelPopulator();
+            model.addAttribute(SubmissionForm.MODEL_ATTR_NAME, new SubmissionForm());
+            return buildModelAndView(getModelViewName(), model, modelPopulator);
         } else {
             return new ModelAndView("redirect:" + LoginPageController.VIEW_NAME);
         }
@@ -70,10 +69,11 @@ public class SubmissionController extends CheckLoginController implements IMGCon
     public ModelAndView doPost(@ModelAttribute("subForm") @Valid SubmissionForm subForm, BindingResult result,
                                ModelMap model, SessionStatus status) {
         if (isUserAssociatedToSession()) {
-            populateModel(model);
+            final ModelPopulator modelPopulator = new SubmissionModelPopulator();
+            modelPopulator.populateModel(model);
             if (result.hasErrors()) {
                 log.info("Submission form still has validation errors!");
-                model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((SubmissionModel) model.get(ViewModel.MODEL_ATTR_NAME)).getLoginForm());
+                model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
                 return new ModelAndView(VIEW_NAME, model);
             }
             if (subForm != null) {
@@ -88,7 +88,8 @@ public class SubmissionController extends CheckLoginController implements IMGCon
             } else {
                 return new ModelAndView(CommonController.EXCEPTION_PAGE_VIEW_NAME);
             }
-            return new ModelAndView(SUCCESS_VIEW_NAME);
+            model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
+            return new ModelAndView(SUCCESS_VIEW_NAME, model);
         } else {
             return new ModelAndView("redirect:" + LoginPageController.VIEW_NAME);
         }
@@ -98,15 +99,6 @@ public class SubmissionController extends CheckLoginController implements IMGCon
     public ModelAndView doCancelSubmission(@ModelAttribute(LoginForm.MODEL_ATTR_NAME) @Valid LoginForm loginForm, BindingResult result, ModelMap model, SessionStatus status) {
         //create model and view
         return new ModelAndView("redirect:" + HomePageController.REDIRECT_VALUE, model);
-    }
-
-    /**
-     * Creates the MG model and adds it to the specified model map.
-     */
-    private void populateModel(final ModelMap model) {
-        final ViewModelBuilder<SubmissionModel> builder = new SubmissionViewModelBuilder(sessionManager, "Metagenomics Submit", getBreadcrumbs(null), propertyContainer);
-        final SubmissionModel submissionViewModel = builder.getModel();
-        model.addAttribute(ViewModel.MODEL_ATTR_NAME, submissionViewModel);
     }
 
     /**
@@ -136,6 +128,15 @@ public class SubmissionController extends CheckLoginController implements IMGCon
         List<Breadcrumb> result = new ArrayList<Breadcrumb>();
         result.add(new Breadcrumb("Submit", "Submit new data", VIEW_NAME));
         return result;
+    }
+
+    class SubmissionModelPopulator implements ModelPopulator {
+        @Override
+        public void populateModel(ModelMap model) {
+            final ViewModelBuilder<SubmissionModel> builder = new SubmissionViewModelBuilder(sessionManager, "Metagenomics Submit", getBreadcrumbs(null), propertyContainer);
+            final SubmissionModel submissionViewModel = builder.getModel();
+            model.addAttribute(ViewModel.MODEL_ATTR_NAME, submissionViewModel);
+        }
     }
 
 }

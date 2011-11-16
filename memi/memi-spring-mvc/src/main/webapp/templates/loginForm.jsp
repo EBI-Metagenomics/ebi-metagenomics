@@ -14,7 +14,8 @@
         <h2>Login</h2>
         Login to submit and view your data:<br/>
         <form:form method="POST" action="" commandName="loginForm">
-            E-Mail:<br/> <form:errors cssClass="error" path="emailAddress"/><form:input id="loginInputFieldId" path="emailAddress"/> <br/>
+            E-Mail:<br/> <form:errors cssClass="error" path="emailAddress"/><form:input id="loginInputFieldId"
+                                                                                        path="emailAddress"/> <br/>
 
             Password:<br/> <form:errors cssClass="error" path="password"/><form:password path="password"/> <br/>
 
@@ -43,6 +44,12 @@
 
     <h2>News and Events</h2>
     <span class="separator"></span>
+    <!--
+    <ul>
+        <li><span style="color:red;">Please be advised that due to engineering works this web service will be unavailable from Friday (October 21st) 2pm to Monday (October 24th) 12am. </span>
+        </li>
+    </ul>
+    -->
     <c:choose>
         <c:when test="${empty model.rssItems}">
             No news

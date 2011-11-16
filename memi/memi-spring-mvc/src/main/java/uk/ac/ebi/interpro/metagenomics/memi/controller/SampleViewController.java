@@ -14,6 +14,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.dao.EmgLogFileInfoDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateSampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.ISampleStudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.temp.SampleAnnotationDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgSampleAnnotation;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
@@ -103,6 +104,7 @@ public class SampleViewController extends SecuredAbstractController<Sample> {
                 pageTitle, getBreadcrumbs(sample), propertyContainer, sample,
                 MemiTools.getArchivedSeqs(fileInfoDAO, sample), sampleAnnotations);
         final SampleViewModel sampleModel = builder.getModel();
+        model.addAttribute("loginForm", new LoginForm());
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, sampleModel);
     }
 
