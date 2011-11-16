@@ -65,10 +65,10 @@ public abstract class LoginController extends AbstractController {
                     //If the combination of email address and password not exists, check if the user typed in the master password
                     String masterPw = submitterDAO.getMasterPasswordByEmailAddress("datasubs@ebi.ac.uk");
                     if (!encryptedPw.equals(masterPw)) {
-                        log.warn("The email address password combination does not exist!");
+                        log.warn("The typed in email-address password combination does not exist!");
                         if (result != null) {
-                            result.addError(new FieldError("loginForm", "emailAddress", loginForm.getEmailAddress(), false, null, null, loginValidationErrorMessage));
-                            result.addError(new FieldError("loginForm", "password", loginForm.getPassword(), false, null, null, ""));
+                            result.addError(new FieldError("loginForm", "emailAddress", loginForm.getEmailAddress(), false, null, null, ""));
+                            result.addError(new FieldError("loginForm", "password", loginForm.getPassword(), false, null, null, loginValidationErrorMessage));
                         }
                         return;
                     }
@@ -76,8 +76,8 @@ public abstract class LoginController extends AbstractController {
             } else {
                 log.warn("Could not find any submitter for the specified email address: " + emailAddress);
                 if (result != null) {
-                    result.addError(new FieldError("loginForm", "emailAddress", loginForm.getEmailAddress(), false, null, null, loginValidationErrorMessage));
-                    result.addError(new FieldError("loginForm", "password", loginForm.getPassword(), false, null, null, ""));
+                    result.addError(new FieldError("loginForm", "emailAddress", loginForm.getEmailAddress(), false, null, null, ""));
+                    result.addError(new FieldError("loginForm", "password", loginForm.getPassword(), false, null, null, loginValidationErrorMessage));
                 }
                 return;
             }

@@ -1,11 +1,8 @@
 package uk.ac.ebi.interpro.metagenomics.memi.controller;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,7 +15,6 @@ import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import javax.validation.Validator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,41 +27,8 @@ import java.util.Map;
  */
 @Controller
 public class LoginFormController extends LoginController {
-    private final Log log = LogFactory.getLog(LoginFormController.class);
-
-    @Autowired
-    private Validator validator;
-
     @Resource
     private SubmitterDAO submitterDAO;
-
-//    @RequestMapping(value = "**/doLogin", method = RequestMethod.POST)
-//    public
-//    @ResponseBody
-//    String doProcessLogin(@RequestParam(required = true) String emailAddress, @RequestParam(required = true) String password, HttpServletResponse response) {
-//        LoginForm loginForm = new LoginForm(emailAddress, password);
-//        // LoginForm bean validation
-//        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-//        javax.validation.Validator validator = factory.getValidator();
-//        Set<ConstraintViolation<LoginForm>> constraintViolations = validator.validate(loginForm);
-//        if (!constraintViolations.isEmpty()) {
-//            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-//            Iterator<ConstraintViolation<LoginForm>> iterator = constraintViolations.iterator();
-//            StringBuffer errorMessage = new StringBuffer();
-//            while (iterator.hasNext()) {
-//                ConstraintViolation<LoginForm> violation = iterator.next();
-//                if (errorMessage.length() > 0) {
-//                    errorMessage.append("<br>");
-//                }
-//                errorMessage.append(violation.getMessage());
-//            }
-//            return errorMessage.toString();
-//        }
-//
-//        super.processLogin(loginForm, null, null, null);
-//        response.setStatus(HttpServletResponse.SC_OK);
-//        return null;
-//    }
 
     @RequestMapping(value = "**/doLogin", method = RequestMethod.POST)
     public
@@ -80,26 +43,13 @@ public class LoginFormController extends LoginController {
             if (result.hasFieldErrors()) {
                 response.setStatus(HttpServletResponse.SC_CONFLICT);
                 Map<String, String> errorMessages = new HashMap<String, String>();
-                errorMessages.put(result.getFieldError().getField(), result.getFieldError().getDefaultMessage());
+                for (FieldError error : result.getFieldErrors()) {
+                    errorMessages.put(error.getField(), error.getDefaultMessage());
+                }
                 return errorMessages;
             }
             return null;
         }
-
-//        Set<ConstraintViolation<LoginForm>> constraintViolations = validator.validate(loginForm);
-//        if (!constraintViolations.isEmpty()) {
-//            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-//            Iterator<ConstraintViolation<LoginForm>> iterator = constraintViolations.iterator();
-//            StringBuffer errorMessage = new StringBuffer();
-//            while (iterator.hasNext()) {
-//                ConstraintViolation<LoginForm> violation = iterator.next();
-//                if (errorMessage.length() > 0) {
-//                    errorMessage.append("<br>");
-//                }
-//                errorMessage.append(violation.getMessage());
-//            }
-//            return errorMessage.toString();
-//        }
     }
 
     @Override

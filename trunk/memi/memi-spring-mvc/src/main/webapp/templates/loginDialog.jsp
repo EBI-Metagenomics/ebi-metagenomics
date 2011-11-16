@@ -45,7 +45,7 @@
                     document.getElementById("loginDialog_emailAddress").setAttribute("class", "error");
                     document.getElementById("loginDialog_password").setAttribute("class", "error");
                     //Sets error message of DIV block
-                    document.getElementById('loginDialog_emailAddress.errors').innerHTML = jsonObject.emailAddress;
+                    document.getElementById('loginDialog_emailAddress.errors').innerHTML = jsonObject.password;
                 }
             }
         };
@@ -115,13 +115,12 @@
                     <span><spring:message code="loginForm.inputField.email.label"/><small>*</small> :</span>
                     <br/>
                     <form:input id="loginDialog_emailAddress" path="emailAddress" cssStyle="width:313px;"/>
-                        <%--<label id="loginFailedMsg" class="error"></label>--%>
-                    <span id="loginDialog_emailAddress.errors" class="error"></span>
                 </div>
                 <div class="form_row">
                     <span><spring:message code="loginForm.inputField.password.label"/><small>*</small> :</span>
                     <br/>
-                    <form:input id="loginDialog_password" path="password" type="password" cssStyle="width:313px;"/>
+                    <form:password id="loginDialog_password" path="password" cssStyle="width:313px;"/>
+                    <span id="loginDialog_emailAddress.errors" class="error"></span>
                 </div>
                     <%--ENA URL parameter: Neccessary for the ENA implementation to redirect back to the Metagenomics website for instance if somebody wants to create a new account--%>
                 <c:set var="enaUrlParam" value="<%=activePage%>"/>
