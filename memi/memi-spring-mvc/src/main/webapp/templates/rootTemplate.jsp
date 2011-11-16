@@ -155,14 +155,14 @@
 
 </div>
 
-<div id="extra_feedback">
-    <h1>
-        <a id="script_feedbackLink" href="javascript:showFeedbackForm()"
-           title="Give your feedback">Give your feedback</a>
-        <a id="noscript_feedbackLink" href="<c:url value="${baseURL}/feedback"/>"
-           title="Give your feedback">Give your feedback</a>
-    </h1>
-</div>
+<%--<div id="extra_feedback">--%>
+    <%--<h1>--%>
+        <%--<a id="script_feedbackLink" href="javascript:showFeedbackForm()"--%>
+           <%--title="Give your feedback">Give your feedback</a>--%>
+        <%--<a id="noscript_feedbackLink" href="<c:url value="${baseURL}/feedback"/>"--%>
+           <%--title="Give your feedback">Give your feedback</a>--%>
+    <%--</h1>--%>
+<%--</div>--%>
 <a href="<c:url value="${baseURL}/info#intro"/>" title="About us">
     <div id="extra_beta"></div>
 </a>
