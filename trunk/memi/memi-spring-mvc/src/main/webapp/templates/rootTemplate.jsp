@@ -38,6 +38,8 @@
     <link href="https://fonts.googleapis.com/css?family=Droid+Sans:regular,bold" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/default.css" type="text/css" media="all"/>
 
+    <!--[if lt IE 8]><style type="text/css"> table.result tbody tr td {background-color: #F4F4F8;}</style> <![endif]-->
+    
     <%-- JQuery and JQuery UI source--%>
     <script src="${pageContext.request.contextPath}/js/jquery-1.4.4.min.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/js/jquery-ui-1.8.8.custom.min.js" type="text/javascript"></script>
