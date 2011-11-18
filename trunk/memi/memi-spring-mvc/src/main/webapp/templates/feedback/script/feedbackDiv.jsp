@@ -1,9 +1,18 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
+<!-- ALTERNATIVE CODE TO JQUERY FEEDBACK POPUP JUST FOR IE6-->
+<div id="feedback_no_div">
+<div class="feedbackform_tab_v"><a id="script_feedbackLink" href="<c:url value="${baseURL}/feedback"/>" title="Give your feedback"></a>
+</div>
+</div>
+<!-- END ALTERNATIVE CODE -->
+
 <div id="feedback_div">
     <div class="feedbackform_tab_v">
         <a id="script_feedbackLink" href="javascript:slideFeedbackForm()" title="Give your feedback"></a>
         <a id="noscript_feedbackLink" href="<c:url value="${baseURL}/feedback"/>" title="Give your feedback"></a>
     </div>
+
 
     <div class="cont_feedback_form">
         <form id="feedback_form" action="**/doFeedback">
