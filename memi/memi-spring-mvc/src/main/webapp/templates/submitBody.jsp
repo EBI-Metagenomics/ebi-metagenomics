@@ -3,16 +3,6 @@
 
 <div id="content-full">
 
-    <%--<div id="sidebar">
-    <div id="sidebar-warning">
-   <span class="error" style="font-weight:bold;padding-top:2px;font-size:80%; float:right;">IMPORTANT</span> <h2>Data type</h2>
-    <p>
-    Presently, analysis is restricted to "long" (average reads lengths over 200nt), unassembled sequence reads, i.e. Roche 454 sequences,
-    from metagenomic or metatranscriptomic samples.</p>
-    <span class="separator"></span>
-    <p><a href="mailto:datasubs@ebi.ac.uk?subject=EBI Metagenomics - dataset" title="Send an enquiry about Metagenomics data submission"> Contact us</a>, if your datasets do not fit this description, to help us better understand your needs so we can tailor our future developments appropriately.</p>
-    </div></div>--%>
-
     <h2>Submit data</h2>
 
     <p class="intro">We currently provide a manually-supported submission service. You are asked to send us a summary of
@@ -25,34 +15,29 @@
     <%-- Removed because the two pages (login and SSend the form look too similar
     <p class="sub_warn"><img src="${pageContext.request.contextPath}/img/ico_warning_8.png" alt="Important: Data type"> Presently, analysis is restricted to "long" (average reads lengths over 200nt), unassembled sequence reads, i.e. Roche 454 sequences, from metagenomic or metatranscriptomic samples.</p>
 --%>
-    <p class="step_breadcrumbs"><span id="selected"><%--<span class="num">2</span>--%> Send the form </span></p>
-
-    <div class="sub">
+      <div class="sub">
 
         <div class="sub_form">
-            <form:form action="submit" commandName="subForm">
+            <form:form action="submit" commandName="subForm" id="submit_form">
                 <fieldset>
+                    <legend>Enter details</legend>
                     <div class="form_row">
-                        <span><spring:message code="submissionForm.inputField.title.label"/><small>*</small> :</span>
-                        <br/>
-                        <form:input path="subTitle" cssErrorClass="error" title="Project title"
-                                    cssStyle="width:313px;"/>
+                        <label for="title"  id="required"><spring:message code="submissionForm.inputField.title.label"/></label><br/>
+                        <form:input path="subTitle" cssErrorClass="error" title="Project title"/>
                         <span class="form_help"><spring:message code="submissionForm.inputField.title.help"/></span>
                         <form:errors path="subTitle" cssClass="error"/></div>
+
                     <div class="form_row">
-                        <span><spring:message code="submissionForm.inputField.date.label"/><small>*</small> :</span>
+                        <label for="date" id="required"><spring:message code="submissionForm.inputField.date.label"/></label>
                         <br/>
-                        <form:input id="datepicker" path="releaseDate" cssErrorClass="error"
-                                    title="Hold project data private until date"
-                                    cssStyle="width:296px;"/>
+                        <form:input id="datepicker" path="releaseDate" cssErrorClass="error" title="Hold project data private until date" />
                         <span class="form_help"><spring:message code="submissionForm.inputField.date.help"/></span>
                         <form:errors cssClass="error" path="releaseDate"/>
                     </div>
+
                     <div class="form_row">
-                        <span><spring:message code="submissionForm.inputField.desc.label"/><small>*</small> :</span>
-                        <br/>
-                        <form:textarea path="dataDesc" cssErrorClass="error" title="Comments about your project"
-                                       cssStyle="width:303px; height:100px;float:left;"/>
+                     <label for="description"  id="required"><spring:message code="submissionForm.inputField.desc.label"/></label><br/>
+                     <form:textarea path="dataDesc" cssErrorClass="error" cssStyle="float:left;" title="Comments about your project"/>
                         <span class="form_help"><spring:message code="submissionForm.inputField.desc.help.provide"/> <ul>
                             <li><spring:message code="submissionForm.inputField.desc.help.li.1"/></li>
                             <li><spring:message code="submissionForm.inputField.desc.help.li.2"/></li>
@@ -63,10 +48,12 @@
                     <p style="clear:both;/*For IE6*/">
                         <input type="submit" name="submit" value="Submit" class="main_button"/>
                         <span class="clear_but">| <a href="/metagenomics" title="cancel">Cancel</a></span>
+                     <br/>
+                    <span id="required"></span>&nbsp;<small>required</small>    
                     </p>
                 </fieldset>
             </form:form>
-            <small>* Required</small>
+
         </div>
     </div>
 
