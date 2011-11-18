@@ -16,27 +16,27 @@
                             <div class="close_wind">
                                 <a href="javascript:slideFeedbackForm()" title="Close this window"></a>
                             </div>
-                            <label for="emailAddress"  id="required"><spring:message code="feedbackForm.inputField.email.label"/></label>
+                            <label for="feedbackForm_emailAddress"  id="required"><spring:message code="feedbackForm.inputField.email.label"/></label>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <input id="emailAddress" name="emailAddress"/>
+                            <input id="feedbackForm_emailAddress" name="emailAddress" type="text"/>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <label for="emailSubject"  id="required"><spring:message code="feedbackForm.inputField.subject.label"/></label>
+                            <label for="feedbackForm_emailSubject"  id="required"><spring:message code="feedbackForm.inputField.subject.label"/></label>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <input type="text" name="emailSubject" id="emailSubject"/>
+                            <input id="feedbackForm_emailSubject" name="emailSubject" type="text"/>
                         </td>
                     </tr>
                     <tr>
-                        <td><label for="emailMessage"  id="required"><spring:message code="feedbackForm.inputField.message.label"/></label>
-                            <br/><textarea id="emailMessage" name="emailMessage"></textarea>
+                        <td><label for="feedbackForm_emailMessage"  id="required"><spring:message code="feedbackForm.inputField.message.label"/></label>
+                            <br/><textarea id="feedbackForm_emailMessage" name="emailMessage"></textarea>
                         </td>
                     </tr>
 
