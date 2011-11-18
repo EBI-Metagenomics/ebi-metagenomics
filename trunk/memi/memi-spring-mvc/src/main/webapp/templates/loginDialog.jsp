@@ -99,11 +99,6 @@
         dialog.dialog("close");
     }
 </script>
-<style type="text/css">
-    #login_dialog_div {
-        display: none;
-    }
-</style>
 <%--Login dialog--%>
 <div id="login_dialog_div" class="sub">
     <%--<div id="errorMessage" class="error"></div>--%>
@@ -112,13 +107,11 @@
             <fieldset>
                 <div class="form_row"><h3>Login</h3></div>
                 <div class="form_row">
-                    <span><spring:message code="loginForm.inputField.email.label"/><small>*</small> :</span>
-                    <br/>
-                    <form:input id="loginDialog_emailAddress" path="emailAddress" cssStyle="width:313px;"/>
+                   <label for="emailAddress"><spring:message code="loginForm.inputField.email.label"/></label>
+                  <form:input id="loginDialog_emailAddress" path="emailAddress" cssStyle="width:313px;"/>
                 </div>
                 <div class="form_row">
-                    <span><spring:message code="loginForm.inputField.password.label"/><small>*</small> :</span>
-                    <br/>
+                    <label for="password"><spring:message code="loginForm.inputField.password.label"/></label>
                     <form:password id="loginDialog_password" path="password" cssStyle="width:313px;"/>
                     <span id="loginDialog_emailAddress.errors" class="error"></span>
                 </div>
@@ -135,8 +128,7 @@
                 </div>
                 <div class="form_row_log">
                     <input type="submit" name="login" value="Login" class="main_button"/>&nbsp;
-                    <span class="clear_but">| <a href="javascript:closeLoginDialogForm()"
-                                                 title="Cancel">Cancel</a></span>
+                    <span class="clear_but">| <a href="javascript:closeLoginDialogForm()"  title="Cancel">Cancel</a></span>
                 </div>
             </fieldset>
         </form:form>
@@ -156,6 +148,6 @@
                                                           alt="ENA member" border="0"></a></p>
 
         <p class="sub_sign_note">If you already are a registered user of the European Nucleotide Archive (ENA), you
-            should simply use your ENA account to log-in.</p>
+            should simply use your ENA account to login.</p>
     </div>
 </div>
