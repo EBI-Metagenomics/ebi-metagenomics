@@ -1292,7 +1292,7 @@ margin:0;
 
 .close_wind a {
 background: transparent url(../img/ico_close.png) no-repeat right top;
-border:0px solid green; float:right; width:22px; height:22px; margin-right:50px;-moz-opacity:.5;opacity:0.50;filter:alpha(opacity=50); margin-right:166px;
+border:0px solid green; float:right; width:22px; height:22px; -moz-opacity:.5;opacity:0.50;filter:alpha(opacity=50);margin-right:7px;
 }
 
 .close_wind a:hover {
@@ -1542,7 +1542,7 @@ background:url(../img/carousel_l.png) 0 0 no-repeat; margin-right:-34px;}
 
 /* FEEDBACK FORM */
 #feedback_div   {  
-    position: fixed;
+    position:fixed;
     _position: absolute; /* position fixed is not recognise on IE6 */
     right: -444px;
     top: 11px;
@@ -1550,9 +1550,19 @@ background:url(../img/carousel_l.png) 0 0 no-repeat; margin-right:-34px;}
     z-index: 90;
     margin-top: 85px;
     height:520px;/*specified to show the shadow*/
-
+    display:block;
 }
-
+#feedback_no_div {
+    position:fixed;
+    _position: absolute; /* position fixed is not recognise on IE6 */
+    right: 0;
+    top: 11px;
+    border: 0px red solid;
+    z-index: 90;
+    margin-top: 85px;
+    height:100px;/*specified to show the shadow*/
+    display:none;
+}
 
 .feedbackform_tab_o  {
 background: transparent url(../img/button_feedback_oriz.gif) no-repeat ;
