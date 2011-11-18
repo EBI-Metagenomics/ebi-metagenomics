@@ -51,7 +51,7 @@ public class SubmissionFormTest {
             NotEmpty ann = subtitleField.getAnnotation(NotEmpty.class);
             assertNotNull(ann);
             Size sizeAnn = subtitleField.getAnnotation(Size.class);
-            assertNull(sizeAnn);
+            assertNotNull(sizeAnn);
             //check the annotation of the data description field
             Field dataDesc = SubmissionForm.class.
                     getDeclaredField("dataDesc");

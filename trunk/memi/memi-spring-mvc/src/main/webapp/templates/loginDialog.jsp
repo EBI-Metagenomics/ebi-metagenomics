@@ -107,11 +107,13 @@
             <fieldset>
                 <div class="form_row"><h3>Login</h3></div>
                 <div class="form_row">
-                   <label for="emailAddress"><spring:message code="loginForm.inputField.email.label"/></label>
-                  <form:input id="loginDialog_emailAddress" path="emailAddress" cssStyle="width:313px;"/>
+                    <label for="loginDialog_emailAddress"><spring:message
+                            code="loginForm.inputField.email.label"/></label>
+                    <form:input id="loginDialog_emailAddress" path="emailAddress" cssStyle="width:313px;"/>
                 </div>
                 <div class="form_row">
-                    <label for="password"><spring:message code="loginForm.inputField.password.label"/></label>
+                    <label for="loginDialog_password"><spring:message
+                            code="loginForm.inputField.password.label"/></label>
                     <form:password id="loginDialog_password" path="password" cssStyle="width:313px;"/>
                     <span id="loginDialog_emailAddress.errors" class="error"></span>
                 </div>
@@ -128,7 +130,8 @@
                 </div>
                 <div class="form_row_log">
                     <input type="submit" name="login" value="Login" class="main_button"/>&nbsp;
-                    <span class="clear_but">| <a href="javascript:closeLoginDialogForm()"  title="Cancel">Cancel</a></span>
+                    <span class="clear_but">| <a href="javascript:closeLoginDialogForm()"
+                                                 title="Cancel">Cancel</a></span>
                 </div>
             </fieldset>
         </form:form>

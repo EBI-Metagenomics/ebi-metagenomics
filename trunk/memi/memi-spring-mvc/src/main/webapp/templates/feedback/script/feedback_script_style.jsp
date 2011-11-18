@@ -73,10 +73,13 @@
     //Resets input fields to their original value (requires form plugin), removes classes indicating invalid elements and hides error messages.
     function clearFeedbackForm() {
         feedbackFormValidator.resetForm();
-//        return false;
+        document.getElementById("feedbackForm_emailAddress").setAttribute("class", "");
+        document.getElementById("feedbackForm_emailMessage").setAttribute("class", "");
+        document.getElementById("feedbackForm_emailSubject").setAttribute("class", "");
     }
     var flag = true;
     function hideFeedbackForm() {
+//        var feedbackFormRightPosition = document.getElementById("feedback_div").style.right;
         $("#feedback_div").animate({
             right: '-=444px'
         }, 1500);

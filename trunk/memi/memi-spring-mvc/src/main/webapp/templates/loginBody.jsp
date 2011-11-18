@@ -27,34 +27,37 @@
         <div class="sub_log">
             <form:form method="POST" action="login" commandName="loginForm" id="submit_form">
 
-                    <div class="form_row"><h3>Login</h3></div>
+                <div class="form_row"><h3>Login</h3></div>
 
-                    <div class="form_row">
-                        <label for="emailAddress"><spring:message code="loginForm.inputField.email.label"/></label>
-                        <form:input path="emailAddress" cssErrorClass="error" cssStyle="width:313px;"/>
-                        <form:errors path="emailAddress" cssClass="error"/>
-                    </div>
+                <div class="form_row">
+                    <label for="loginPage_emailAddress"><spring:message
+                            code="loginForm.inputField.email.label"/></label>
+                    <form:input id="loginPage_emailAddress" path="emailAddress" cssErrorClass="error"
+                                cssStyle="width:313px;"/>
+                    <form:errors path="emailAddress" cssClass="error"/>
+                </div>
 
-                    <div class="form_row">
-                        <label for="password"><spring:message code="loginForm.inputField.password.label"/></label>            
-                        <form:password path="password" cssErrorClass="error" cssStyle="width:313px;"/>
-                        <form:errors path="password" cssClass="error"/>
-                    </div>
-                    <c:set var="enaUrlParam" value="<%=activePage%>"/>
-                    <c:url var="enaPasswordUrl"
-                           value="${model.propertyContainer.enaSubmissionURL.forgottenPwdLink}">
-                        <c:param name="url" value="${enaUrlParam}"/>
-                    </c:url>
-                    <div>
-                        <a href="<c:out value="${enaPasswordUrl}"/>" title="Request a new password">
-                            <spring:message code="loginForm.link.external.forgotten.password"/>
-                        </a>
-                    </div>
-                    <div class="form_row_log">
-                        <input type="submit" name="login" value="Login" class="main_button"/>&nbsp;
-                        <span class="clear_but">| <a href="/metagenomics" title="cancel">Cancel</a></span>
-                    </div>
-               
+                <div class="form_row">
+                    <label for="loginPage_password"><spring:message code="loginForm.inputField.password.label"/></label>
+                    <form:password id="loginPage_password" path="password" cssErrorClass="error"
+                                   cssStyle="width:313px;"/>
+                    <form:errors path="password" cssClass="error"/>
+                </div>
+                <c:set var="enaUrlParam" value="<%=activePage%>"/>
+                <c:url var="enaPasswordUrl"
+                       value="${model.propertyContainer.enaSubmissionURL.forgottenPwdLink}">
+                    <c:param name="url" value="${enaUrlParam}"/>
+                </c:url>
+                <div>
+                    <a href="<c:out value="${enaPasswordUrl}"/>" title="Request a new password">
+                        <spring:message code="loginForm.link.external.forgotten.password"/>
+                    </a>
+                </div>
+                <div class="form_row_log">
+                    <input type="submit" name="login" value="Login" class="main_button"/>&nbsp;
+                    <span class="clear_but">| <a href="/metagenomics" title="cancel">Cancel</a></span>
+                </div>
+
             </form:form>
         </div>
 

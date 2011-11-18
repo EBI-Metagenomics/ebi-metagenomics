@@ -6,6 +6,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.forms.validation.ReleaseDate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Future;
+import javax.validation.constraints.Size;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,6 +27,7 @@ public class SubmissionForm {
      * Submission title
      */
     @NotEmpty(message = "{form.submission.subTitle.notEmpty}")
+    @Size(min = 3, max = 100, message = "{form.submission.subTitle.size}")
     private String subTitle;
 
     /**
@@ -40,6 +42,7 @@ public class SubmissionForm {
      * Data description
      */
     @NotEmpty(message = "{form.submission.dataDesc.notEmpty}")
+    @Size(min = 3, message = "{form.submission.dataDesc.size}")
     private String dataDesc;
 
     public SubmissionForm() {

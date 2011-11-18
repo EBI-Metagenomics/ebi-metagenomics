@@ -23,12 +23,12 @@
                     <legend>Enter details</legend>
                     <div class="form_row">
                         <label for="title"  id="required"><spring:message code="submissionForm.inputField.title.label"/></label><br/>
-                        <form:input path="subTitle" cssErrorClass="error" title="Project title"/>
+                        <form:input id="title" path="subTitle" cssErrorClass="error" title="Project title"/>
                         <span class="form_help"><spring:message code="submissionForm.inputField.title.help"/></span>
                         <form:errors path="subTitle" cssClass="error"/></div>
 
                     <div class="form_row">
-                        <label for="date" id="required"><spring:message code="submissionForm.inputField.date.label"/></label>
+                        <label for="datepicker" id="required"><spring:message code="submissionForm.inputField.date.label"/></label>
                         <br/>
                         <form:input id="datepicker" path="releaseDate" cssErrorClass="error" title="Hold project data private until date" />
                         <span class="form_help"><spring:message code="submissionForm.inputField.date.help"/></span>
@@ -37,7 +37,7 @@
 
                     <div class="form_row">
                      <label for="description"  id="required"><spring:message code="submissionForm.inputField.desc.label"/></label><br/>
-                     <form:textarea path="dataDesc" cssErrorClass="error" cssStyle="float:left;" title="Comments about your project"/>
+                     <form:textarea id="description" path="dataDesc" cssErrorClass="error" cssStyle="float:left;" title="Comments about your project"/>
                         <span class="form_help"><spring:message code="submissionForm.inputField.desc.help.provide"/> <ul>
                             <li><spring:message code="submissionForm.inputField.desc.help.li.1"/></li>
                             <li><spring:message code="submissionForm.inputField.desc.help.li.2"/></li>
