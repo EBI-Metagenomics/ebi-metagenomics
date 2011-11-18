@@ -25,17 +25,18 @@
         <%--<p>Please login to submit or view your projects.</p>--%>
 
         <div class="sub_log">
-            <form:form method="POST" action="login" commandName="loginForm">
-                <fieldset>
+            <form:form method="POST" action="login" commandName="loginForm" id="submit_form">
+
                     <div class="form_row"><h3>Login</h3></div>
+
                     <div class="form_row">
-                        <span><spring:message code="loginForm.inputField.email.label"/><small>*</small> :</span>
-                        <br/>
+                        <label for="emailAddress"><spring:message code="loginForm.inputField.email.label"/></label>
                         <form:input path="emailAddress" cssErrorClass="error" cssStyle="width:313px;"/>
                         <form:errors path="emailAddress" cssClass="error"/>
                     </div>
+
                     <div class="form_row">
-                        <span><spring:message code="loginForm.inputField.password.label"/><small>*</small> :</span>
+                        <label for="password"><spring:message code="loginForm.inputField.password.label"/></label>            
                         <form:password path="password" cssErrorClass="error" cssStyle="width:313px;"/>
                         <form:errors path="password" cssClass="error"/>
                     </div>
@@ -53,7 +54,7 @@
                         <input type="submit" name="login" value="Login" class="main_button"/>&nbsp;
                         <span class="clear_but">| <a href="/metagenomics" title="cancel">Cancel</a></span>
                     </div>
-                </fieldset>
+               
             </form:form>
         </div>
 
@@ -70,7 +71,7 @@
                     src="${pageContext.request.contextPath}/img/ico_ena_user.jpg" alt="ENA member"></a></p>
 
             <p class="sub_sign_note">If you already are a registered user of the European Nucleotide Archive (ENA), you
-                should simply use your ENA account to log-in.</p>
+                should simply use your ENA account to login.</p>
         </div>
     </div>
 
