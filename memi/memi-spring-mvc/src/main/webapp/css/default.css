@@ -955,7 +955,21 @@ width: 972px; text-align: left;}
 
 .separator {margin: 4px 0 4px 0; height:8px; width:194px; display:block; background: url(../img/bgd_sep_dot.gif) repeat-x;}
 
-/* FORM */
+/* FORMS */
+form legend {
+background-color: #e5e5e5;
+color: #455872;
+padding: 2px 7px;
+font-variant: small-caps;
+font-size: 130%;
+border: 1px solid #ABADB3;
+}
+
+form#submit_form fieldset {
+border: 1px solid #e5e5e5;
+padding:7px 14px;
+}
+
 #filter {
 -moz-border-radius: 0 0 20px 0;
 -khtml-border-radius: 0 0 20px 0;
@@ -993,7 +1007,7 @@ width: 150px;
 /*background: -moz-linear-gradient(top, #FFFFFF, #EEEEEE 1px, #FFFFFF 6px);*/
 }
 
-#feedback_form input {
+#feedback_form input, #submit_form input {
 width: 360px;
 /*-moz-box-shadow:inset 0 0 7px #ccc;*/
 /*-webkit-box-shadow:inset 0 0 7px #ccc;*/
@@ -1001,11 +1015,9 @@ width: 360px;
 }
 
 
-input.main_button, #feedback_form input.main_button {
+input.main_button, #feedback_form input.main_button, #submit_form input.main_button {
 width: auto;
 }
-
-
 
 #filter input, #filter select { margin: 10px 20px 0 0; color: #445668;}
 
@@ -1059,6 +1071,7 @@ textarea {
     line-height: 150%;
     background: -webkit-gradient(linear, left top, left 25, from(#FFFFFF), color-stop(4%, #EEEEEE), to(#FFFFFF));
     background: -moz-linear-gradient(top, #FFFFFF, #EEEEEE 1px, #FFFFFF 25px);
+    overflow: auto; /* important remove scrollbar shown by default on IE*/
     }
 
 textarea:hover, textarea:focus {
@@ -1131,7 +1144,8 @@ border: 0px solid #ffaa22;
 
 .table_opt {border:0px solid black;display:block; overflow:auto; padding-top:7px; }
 
-.table_opt_pag {border:0px solid green;color: #424242; float:left; font-size:90%;padding-top:8px;margin-left:14px;}
+.table_opt_pag {border:0px solid green;color: #424242; float:left; font-size:90%;padding-top:8px;margin-left:14px; width:200px;}
+.table_opt_pag_num {float:left;margin-right:28px;}
 
 /* EXPORT OPTIONS */
 .export   {
@@ -1238,7 +1252,7 @@ font-size: 140%;
 ::selection { background:#7d9ca6; color:#fff; text-shadow: none; }
 
 
-.error {
+.warning {
 background:url(../img/ico_warning_8.png) no-repeat 0 4px;
 color: #ff0000;
 clear:left;
@@ -1246,16 +1260,20 @@ display:block;
 }
 
 #feedback_form label {font-weight:bold;font-size:110%;color:#445668;}
+#login_form label, #submit_form label {font-weight:bold;font-size:110%;color:#605F5F;}
 
-#feedback_form #required {background: url(../img/ico_form_required.png) no-repeat right center; padding-right:14px;} 
 
-#feedback_form  label.error {
+#feedback_form #required,  #submit_form  #required  {background: url(../img/ico_form_required.png) no-repeat right center; padding-right:14px; border: 0px red solid; zoom:1; /* for IE7 and IE6 to visualise the span and background without content*/}
+
+label.error, span.error, #feedback_form label.error, #login_form label.error {
+display:block;
 font-weight:normal;
 color: #ff0000;
 font-size:100%;
 padding-left:0px;
 background:none;
 margin:7px 2px;
+clear:left;
 }
 
 input.error, textarea.error {
@@ -1264,6 +1282,13 @@ color: #8C302C;
 border:1px #ff918e solid;
 margin:0;
 }
+
+/*input.valid, textarea.valid {*/
+/*background: white url(../img/ico_form_check.png) no-repeat right top;*/
+/*border:1px #ade89f solid;*/
+/*margin:0;*/
+/*}*/
+
 
 .close_wind a {
 background: transparent url(../img/ico_close.png) no-repeat right top;
@@ -1350,10 +1375,10 @@ height:140px;
 .sub_log, .sub_sign {-moz-border-radius: 20px;-khtml-border-radius: 20px;-webkit-border-radius: 20px;border-radius: 20px;float: left; display:block; border: 1px solid #e5e5e5;}
 .sub_log {width:340px; padding:0 14px;}
 .sub_sign {width:260px; padding:0 14px 14px 14px; margin-left:14px; text-align:center;}
-.sub_warn, .sub_ask  {display: block; padding: 14px; width:690px; -moz-border-radius: 7px;-khtml-border-radius: 7px;-webkit-border-radius: 7px;border-radius: 7px;}
+.sub_warn, .sub_ask  {display: block; padding: 14px; width: 712px; -moz-border-radius: 7px;-khtml-border-radius: 7px;-webkit-border-radius: 7px;border-radius: 7px;}
 .sub_warn { font-size: 110%;margin-bottom: 14px;color: #8c302c; background: #faefee;}
-.sub_ask { font-size: 90%;  margin-top: 28px; color: #455872; background: #f1f3f7; clear:both; /*for IE6*/}
-.sub_form {width:690px; padding:7px 14px;float: left; display:block; border: 1px solid #e5e5e5;}
+.sub_ask { font-size: 90%;  margin-top: 21px; color: #455872; background: #f1f3f7; clear:both; /*for IE6*/}
+.sub_form {width:740px; float: left; display:block;}
 .sub_sign_text {font-size:160%; color:#333;}
 .sub_sign_note {color:#606060;}
 
@@ -1457,7 +1482,7 @@ height:64px;cursor:pointer;line-height:999px;zoom:1;border:0px solid black;
 position:relative;
 z-index:20;top:-40px;}
 
-.carousel .carousel-control {font-size: 0;}/*fix a bug with Firefox that shows text byu default / alternative of using text-indent property that doesn't work with IE  */
+.carousel .carousel-control {font-size: 0;}/*fix a bug with Firefox that shows text by default / alternative of using text-indent property that doesn't work with IE  */
 
 
 
@@ -1469,7 +1494,30 @@ background:url(../img/carousel_l.png) 0 0 no-repeat; margin-right:-34px;}
 .carousel .carousel-control:hover{-moz-opacity:.7;opacity:0.70;filter:alpha(opacity=70);}
 .carousel .disabled,.carousel .disabled:hover{-moz-opacity:.2;opacity:0.20;filter:alpha(opacity=20);cursor:default;}
 
+/*table pagination*/
+.pag-next, .pag-last, .pag-prev, .pag-first, .pag-next-off, .pag-prev-off, .pag-first-off, .pag-last-off {float:left;padding:0 4px;}
+.pag-next a:hover, .pag-prev a:hover, .pag-last a:hover, .pag-first a:hover   {-moz-opacity:.7;opacity:0.70;filter:alpha(opacity=70);}
 
+
+.pag-next a { background:url(../img/ico_pag_next.png) no-repeat left 2px; width:17px; height:18px;display:block;}
+/*.pag-next a:active { background:url(../img/ico_pag_next_active.png) no-repeat left 2px;}*/
+.pag-next-off { background:url(../img/ico_pag_next_off.png) no-repeat left 2px;width:17px; height:18px;display:block;}
+
+
+.pag-prev a { background:url(../img/ico_pag_prev.png) no-repeat left 2px; width:17px; height:18px;display:block; }
+/*.pag-prev a:hover { background:url(../img/ico_pag_prev_over.png) no-repeat left 2px;}*/
+/*.pag-prev a:active { background:url(../img/ico_pag_prev_active.png) no-repeat left 2px;}*/
+.pag-prev-off { background:url(../img/ico_pag_prev_off.png) no-repeat  left 2px;width:17px; height:18px;}
+
+.pag-last a { background:url(../img/ico_pag_last.png) no-repeat left 2px; width:17px; height:18px; display:block;}
+/*.pag-last a:hover { background:url(../img/ico_pag_last_over.png) no-repeat left 2px;}*/
+/*.pag-last a:active { background:url(../img/ico_pag_last_active.png) no-repeat left 2px;}*/
+.pag-last-off { background:url(../img/ico_pag_last_off.png) no-repeat left 2px;width:17px; height:18px;display:block;}
+
+.pag-first a { background:url(../img/ico_pag_first.png) no-repeat left 2px; width:17px; height:18px;display:block; }
+/*.pag-first a:hover { background:url(../img/ico_pag_first_over.png) no-repeat left 2px;}*/
+/*.pag-first a:active { background:url(../img/ico_pag_first_active.png) no-repeat left 2px;}*/
+.pag-first-off { background:url(../img/ico_pag_first_off.png) no-repeat left 2px;width:17px; height:18px;display:block;}
 /* modules */
 .module {width:292px; background:#fafafa url(../img/backgrounds/module_lge_bg.jpg) bottom left repeat-x; margin:0 6px ;line-height:normal;}
 .module .top_corners {background:url(../img/backgrounds/module_explore_top.png) top left no-repeat; height:8px; overflow:hidden;}
@@ -1496,11 +1544,11 @@ background:url(../img/carousel_l.png) 0 0 no-repeat; margin-right:-34px;}
 #feedback_div   {  
     position: fixed;
     _position: absolute; /* position fixed is not recognise on IE6 */
-    right: 0;
+    right: -444px;
     top: 11px;
     border: 0px red solid;
     z-index: 90;
- margin-top: 85px;
+    margin-top: 85px;
     height:520px;/*specified to show the shadow*/
 
 }
@@ -1522,19 +1570,19 @@ background: transparent url(../img/button_feedback_off_r.gif) no-repeat;
 width: 35px;
 height:  102px;
 float:left;margin-top: 126px;
- box-shadow:0px 2px 7px #adadad;
--moz-box-shadow:0px 2px 7px #adadad ;
--khtml-box-shadow:0px 2px 7px #adadad ;
--webkit-box-shadow:0px 2px 7px #adadad ;
+ box-shadow:0px 2px 7px #cecece;
+-moz-box-shadow:0px 2px 7px #cecece ;
+-khtml-box-shadow:0px 2px 7px #cecece ;
+-webkit-box-shadow:0px 2px 7px #cecece ;
 border:0px solid green;
 }
 
 .feedbackform_tab_v a:hover {
-background: transparent url(../img/button_feedback_over_r.gif) no-repeat;
- box-shadow:0px 1px 5px #adadad;
--moz-box-shadow:0px 1px 5px #adadad ;
--khtml-box-shadow:0px 1px 5px #adadad ;
--webkit-box-shadow:0px 1px 5px #adadad ;
+background: white url(../img/button_feedback_over_r.gif) no-repeat -1px;
+ box-shadow:0px 1px 5px #cecece;
+-moz-box-shadow:0px 1px 5px #cecece ;
+-khtml-box-shadow:0px 1px 5px #cecece ;
+-webkit-box-shadow:0px 1px 5px #cecece ;
 }
 
 .feedbackform_tab_v a:active  {
