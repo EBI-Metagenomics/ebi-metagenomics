@@ -10,7 +10,7 @@
             <!--<div class="feedbackform_tab_o"></div>-->
             <!--<h3>Send us your feedback</h3>-->
             <fieldset>
-                <table class="result" style="width:600px;/*made it larger than the container, in purpose, to make it nicer*/">
+                <table class="result">
                     <tr>
                         <td>
                             <div class="close_wind">
