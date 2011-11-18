@@ -17,7 +17,6 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.services.EmailNotificationService;
 import uk.ac.ebi.interpro.metagenomics.memi.services.INotificationService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.SubmissionModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.DefaultViewModelBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder;
@@ -31,14 +30,14 @@ import javax.validation.ValidatorFactory;
 import java.util.*;
 
 /**
- * Represents the feedback form controller for the JQuery feedback dialog on the right hand side, which is display on each page.
+ * Represents the feedback form controller for JavaScript and no JavaScript version. The script version is based on jQuery.
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @since 1.0-SNAPSHOT
  */
 @Controller
-public class FeedbackFormController extends AbstractController {
-    private final Log log = LogFactory.getLog(FeedbackFormController.class);
+public class FeedbackFormsController extends AbstractController {
+    private final Log log = LogFactory.getLog(FeedbackFormsController.class);
 
     /**
      * View name of this controller which is used several times.
@@ -72,12 +71,13 @@ public class FeedbackFormController extends AbstractController {
     }
 
     @RequestMapping(value = "/feedback", method = RequestMethod.POST)
-    public String doPost(@ModelAttribute("feedbackForm") @Valid FeedbackForm feedbackForm,
-                         BindingResult result, ModelMap model,
-                         SessionStatus status) {
+    public ModelAndView doPost(@ModelAttribute("feedbackForm") @Valid FeedbackForm feedbackForm,
+                               BindingResult result, ModelMap model,
+                               SessionStatus status) {
+        model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
         if (result.hasErrors()) {
             log.info("Feedback form has validation errors!");
-            return "/feedback";
+            return new ModelAndView("/feedback", model);
         }
         //build contact email message
         if (feedbackForm != null) {
@@ -89,9 +89,9 @@ public class FeedbackFormController extends AbstractController {
             log.info("Sent an email with contact details: " + msg);
             status.setComplete();
         } else {
-            return CommonController.EXCEPTION_PAGE_VIEW_NAME;
+            return new ModelAndView(CommonController.EXCEPTION_PAGE_VIEW_NAME, model);
         }
-        return "/feedbackSuccess";
+        return new ModelAndView("/feedbackSuccess", model);
     }
 
     @RequestMapping(value = "**/feedbackSuccess", method = RequestMethod.GET)
@@ -110,6 +110,16 @@ public class FeedbackFormController extends AbstractController {
         );
     }
 
+    /**
+     * Request handler method for the jQuery version (JavaScript enabled version). Supports anti-spam technique honeypot.
+     * Sends out an email message to the metagenomics feedback mailing list at the end of the procedure.
+     *
+     * @param emailAddress Request parameter.
+     * @param emailSubject Request parameter.
+     * @param emailMessage Request parameter.
+     * @param leaveIt      Request parameter for a hidden input field (required for the honeypot pattern).
+     * @return Map between path name AND error message.
+     */
     @RequestMapping(value = "**/doFeedback", method = RequestMethod.POST)
     public
     @ResponseBody

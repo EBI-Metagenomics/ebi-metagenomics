@@ -108,7 +108,7 @@
                 <div class="form_row"><h3>Login</h3></div>
                 <div class="form_row">
                     <label for="loginDialog_emailAddress"><spring:message
-                            code="loginForm.inputField.email.label"/></label>
+                            code="email.label"/></label>
                     <form:input id="loginDialog_emailAddress" path="emailAddress" cssStyle="width:313px;"/>
                 </div>
                 <div class="form_row">

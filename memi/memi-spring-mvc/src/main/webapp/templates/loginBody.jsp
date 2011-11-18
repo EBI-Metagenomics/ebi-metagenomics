@@ -31,7 +31,7 @@
 
                 <div class="form_row">
                     <label for="loginPage_emailAddress"><spring:message
-                            code="loginForm.inputField.email.label"/></label>
+                            code="email.label"/></label>
                     <form:input id="loginPage_emailAddress" path="emailAddress" cssErrorClass="error"
                                 cssStyle="width:313px;"/>
                     <form:errors path="emailAddress" cssClass="error"/>
