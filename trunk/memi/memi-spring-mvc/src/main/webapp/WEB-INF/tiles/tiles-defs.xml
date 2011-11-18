@@ -77,7 +77,7 @@
 
     <definition name="feedback" extends="rootTemplate">
         <put-attribute name="bodyClass" type="string" value="ebigreen"/>
-        <put-attribute name="body" value="/templates/feedbackBody.jsp"/>
+        <put-attribute name="body" value="/templates/feedback/noscript/feedbackBody.jsp"/>
     </definition>
 
     <definition name="feedbackSuccess" extends="rootTemplate">

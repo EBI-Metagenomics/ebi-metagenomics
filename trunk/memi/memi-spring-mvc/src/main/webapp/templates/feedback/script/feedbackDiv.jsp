@@ -2,7 +2,7 @@
 <div id="feedback_div">
     <div class="feedbackform_tab_v">
         <a id="script_feedbackLink" href="javascript:slideFeedbackForm()" title="Give your feedback"></a>
-        <!--<a id="noscript_feedbackLink" href="<c:url value="${baseURL}/feedback"/>" title="Give your feedback"></a>-->
+        <a id="noscript_feedbackLink" href="<c:url value="${baseURL}/feedback"/>" title="Give your feedback"></a>
     </div>
 
     <div class="cont_feedback_form">
@@ -16,7 +16,8 @@
                             <div class="close_wind">
                                 <a href="javascript:slideFeedbackForm()" title="Close this window"></a>
                             </div>
-                            <label for="feedbackForm_emailAddress"  id="required"><spring:message code="feedbackForm.inputField.email.label"/></label>
+                            <label for="feedbackForm_emailAddress" id="required"><spring:message
+                                    code="email.label"/></label>
                         </td>
                     </tr>
                     <tr>
@@ -26,7 +27,8 @@
                     </tr>
                     <tr>
                         <td>
-                            <label for="feedbackForm_emailSubject"  id="required"><spring:message code="feedbackForm.inputField.subject.label"/></label>
+                            <label for="feedbackForm_emailSubject" id="required"><spring:message
+                                    code="feedbackForm.inputField.subject.label"/></label>
                         </td>
                     </tr>
                     <tr>
@@ -35,24 +37,24 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><label for="feedbackForm_emailMessage"  id="required"><spring:message code="feedbackForm.inputField.message.label"/></label>
+                        <td><label for="feedbackForm_emailMessage" id="required"><spring:message
+                                code="feedbackForm.inputField.message.label"/></label>
                             <br/><textarea id="feedbackForm_emailMessage" name="emailMessage"></textarea>
                         </td>
                     </tr>
-
-                     <tr>
+                    <tr>
                         <td>
                             <input type="submit" name="submit" value="Submit" class="main_button"/>
                             <span class="clear_but">| <a href="javascript:clearFeedbackForm()" title="Clear the form">Clear</a></span>
                         </td>
                     </tr>
-                <input type="hidden" name="leaveIt" id="leaveIt" />
-                <tr>
-                    <td>
-                    <span id="required"></span>&nbsp;<small>required</small>
-                    </td>
-                </tr>
-
+                    <input type="hidden" name="leaveIt" id="leaveIt"/>
+                    <tr>
+                        <td>
+                            <span id="required"></span>&nbsp;
+                            <small>required</small>
+                        </td>
+                    </tr>
                 </table>
             </fieldset>
         </form>
