@@ -195,7 +195,7 @@ public class ViewStudiesController extends AbstractController implements IMGCont
     public ModelAndView doSearch(@ModelAttribute(StudyFilter.MODEL_ATTR_NAME) StudyFilter filter, ModelMap model,
                                  @RequestParam(required = false) final String searchTerm, @RequestParam(required = false) final StudyFilter.StudyVisibility studyVisibility,
                                  @RequestParam(required = false) final Study.StudyStatus studyStatus) {
-        log.info("Requesting doSearch (POST method)...");
+        log.info("Requesting doSearch (GET method)...");
         processRequestParams(filter, searchTerm, studyVisibility, studyStatus);
         populateModel(model, filter);
         model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((ViewStudiesModel) model.get(ViewModel.MODEL_ATTR_NAME)).getLoginForm());

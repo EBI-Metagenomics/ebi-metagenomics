@@ -52,6 +52,8 @@ public class SubmissionController extends CheckLoginController implements IMGCon
     @Resource(name = "emailNotificationServiceSubmitPage")
     private INotificationService emailService;
 
+    private final String DISPLAY_PARAM = "?display=true";
+
     @Resource
     private VelocityEngine velocityEngine;
 
@@ -61,7 +63,7 @@ public class SubmissionController extends CheckLoginController implements IMGCon
             model.addAttribute(SubmissionForm.MODEL_ATTR_NAME, new SubmissionForm());
             return buildModelAndView(getModelViewName(), model, modelPopulator);
         } else {
-            return new ModelAndView("redirect:" + LoginPageController.VIEW_NAME);
+            return new ModelAndView("redirect:" + LoginPageController.VIEW_NAME + DISPLAY_PARAM);
         }
     }
 
@@ -91,7 +93,7 @@ public class SubmissionController extends CheckLoginController implements IMGCon
             model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
             return new ModelAndView(SUCCESS_VIEW_NAME, model);
         } else {
-            return new ModelAndView("redirect:" + LoginPageController.VIEW_NAME);
+            return new ModelAndView("redirect:" + LoginPageController.VIEW_NAME + DISPLAY_PARAM);
         }
     }
 
