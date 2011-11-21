@@ -5,21 +5,29 @@
 <%-- This template is used for the login page --%>
 <div id="content-full">
 
-    <h2>Submit data</h2>
+    <c:if test="${displaySubBlock}">
+        <h2>Submit data</h2>
 
-    <p class="intro">We currently provide a manually-supported submission service. After registering, you will be asked
-        to send us a summary of your data using an online form. You will then be contacted by our curation team to
-        enable submission of your data to our analysis pipeline and to the underlying archive (SRA). Our curators will
-        translate your data and metadata to the required formats and provide you with accession numbers that you can use
-        for publication purposes, and a direct link to your analysis results (note, depending on the size of your
-        submission, the analysis may take a few days to complete).</p>
+        <p class="intro">We currently provide a manually-supported submission service. After registering, you will be
+            asked
+            to send us a summary of your data using an online form. You will then be contacted by our curation team to
+            enable submission of your data to our analysis pipeline and to the underlying archive (SRA). Our curators
+            will
+            translate your data and metadata to the required formats and provide you with accession numbers that you can
+            use
+            for publication purposes, and a direct link to your analysis results (note, depending on the size of your
+            submission, the analysis may take a few days to complete).</p>
 
-    <p class="sub_warn"><img src="${pageContext.request.contextPath}/img/ico_warning_8.png" alt="Important: Data type">
-        Presently, analysis is restricted to "long" (average reads lengths over 200nt), unassembled sequence reads, i.e.
-        Roche 454 sequences, from metagenomic or metatranscriptomic samples.</p>
+        <p class="sub_warn"><img src="${pageContext.request.contextPath}/img/ico_warning_8.png"
+                                 alt="Important: Data type">
+            Presently, analysis is restricted to "long" (average reads lengths over 200nt), unassembled sequence reads,
+            i.e.
+            Roche 454 sequences, from metagenomic or metatranscriptomic samples.</p>
 
-    <p class="step_breadcrumbs"><span
-            id="selected"><%--<span class="num">1</span>--%> Login, start submission process</span></p>
+        <p class="step_breadcrumbs"><span
+                id="selected"><%--<span class="num">1</span>--%> Login, start submission process</span></p>
+
+    </c:if>
 
     <div class="sub">
         <%--<p>Please login to submit or view your projects.</p>--%>
@@ -58,6 +66,7 @@
                     <span class="clear_but">| <a href="/metagenomics" title="cancel">Cancel</a></span>
                 </div>
 
+                <input type="hidden" name="display" value="${displaySubBlock}"/>
             </form:form>
         </div>
 

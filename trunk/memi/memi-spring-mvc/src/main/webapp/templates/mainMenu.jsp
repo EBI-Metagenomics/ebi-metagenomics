@@ -42,7 +42,10 @@
     <div class="top-login">
         <c:choose>
             <c:when test="${empty model.submitter}">
-                <span id="login"> Not logged in | <a href="javascript:openLoginDialogForm()" title="Login">Login</a></span>
+                <span id="login"> Not logged in |
+                    <a id="script_loginLink" href="javascript:openLoginDialogForm()" title="Login">Login</a>
+                    <a id="noscript_loginLink" href="<c:url value="${baseURL}/login?display=false"/>" title="Login">Login</a>
+                </span>
             </c:when>
             <c:otherwise>
                 <c:out value="${model.submitter.firstName} ${model.submitter.surname}"/>

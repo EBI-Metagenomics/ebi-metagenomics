@@ -17,8 +17,10 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.services.EmailNotificationService;
 import uk.ac.ebi.interpro.metagenomics.memi.services.INotificationService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.FeedbackModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.DefaultViewModelBuilder;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.FeedbackViewModelBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder;
 
 import javax.annotation.Resource;
@@ -55,25 +57,17 @@ public class FeedbackFormsController extends AbstractController {
 
     @RequestMapping(value = "/feedback", method = RequestMethod.GET)
     public ModelAndView doGet(ModelMap model) {
-        return buildModelAndView(
-                getModelViewName(),
-                model,
-                new ModelPopulator() {
-                    @Override
-                    public void populateModel(ModelMap model) {
-                        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "Metagenomics Feedback", getBreadcrumbs(null), propertyContainer);
-                        final ViewModel defaultViewModel = builder.getModel();
-                        model.addAttribute(ViewModel.MODEL_ATTR_NAME, defaultViewModel);
-                        model.addAttribute("feedbackForm", new FeedbackForm());
-                    }
-                }
-        );
+        final ModelPopulator modelPopulator = new FeebackModelPopulator();
+        model.addAttribute("feedbackForm", new FeedbackForm());
+        return buildModelAndView(getModelViewName(), model, modelPopulator);
     }
 
     @RequestMapping(value = "/feedback", method = RequestMethod.POST)
     public ModelAndView doPost(@ModelAttribute("feedbackForm") @Valid FeedbackForm feedbackForm,
                                BindingResult result, ModelMap model,
                                SessionStatus status) {
+        final ModelPopulator modelPopulator = new FeebackModelPopulator();
+        modelPopulator.populateModel(model);
         model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
         if (result.hasErrors()) {
             log.info("Feedback form has validation errors!");
@@ -192,5 +186,14 @@ public class FeedbackFormsController extends AbstractController {
     @Override
     protected List<Breadcrumb> getBreadcrumbs(SecureEntity obj) {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    class FeebackModelPopulator implements ModelPopulator {
+        @Override
+        public void populateModel(ModelMap model) {
+            final ViewModelBuilder<FeedbackModel> builder = new FeedbackViewModelBuilder(sessionManager, "Metagenomics Feedback", getBreadcrumbs(null), propertyContainer);
+            final FeedbackModel feedbackViewModel = builder.getModel();
+            model.addAttribute(ViewModel.MODEL_ATTR_NAME, feedbackViewModel);
+        }
     }
 }

@@ -6,15 +6,17 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,27 +32,43 @@ import java.util.List;
  */
 @Controller
 @RequestMapping(value = "/" + LoginPageController.VIEW_NAME)
-public class LoginPageController extends LoginController implements IMGController {
+public class LoginPageController extends LoginController {
 
     /**
      * View name of this controller which is used several times.
      */
     public static final String VIEW_NAME = "login";
 
-    @Override
-    public ModelAndView doGet(ModelMap model) {
+//    public ModelAndView doGet(ModelMap model) {
+//        populateModel(model);
+//        model.addAttribute("loginForm", new LoginForm());
+//        return getModelAndView(model);
+//    }
+
+
+    /**
+     * Handles /login?display=true requests.
+     *
+     * @param display Short term for 'display submission block'. If TRUE the submission block is shown on the page,
+     *                otherwise it is invisible.
+     */
+    @RequestMapping(method = RequestMethod.GET)
+    public ModelAndView doGet(@RequestParam(required = true) final boolean display, ModelMap model) {
         populateModel(model);
         model.addAttribute("loginForm", new LoginForm());
-        return getModelAndView(model);
+        return getModelAndView(model, display);
     }
 
     @RequestMapping(params = "login", method = RequestMethod.POST)
-    public ModelAndView doProcessLogin(@ModelAttribute(LoginForm.MODEL_ATTR_NAME) @Valid LoginForm loginForm, BindingResult result, ModelMap model, SessionStatus status) {
-
+    public ModelAndView doProcessLogin(
+            @ModelAttribute(LoginForm.MODEL_ATTR_NAME) @Valid LoginForm loginForm,
+            BindingResult result, ModelMap model, SessionStatus status,
+            HttpServletRequest request) {
+        boolean display = Boolean.parseBoolean(request.getParameter("display"));
         //process login
         super.processLogin(loginForm, result, model, status);
         populateModel(model);
-        return getModelAndView(model);
+        return getModelAndView(model, display);
     }
 
     /**
@@ -63,7 +81,7 @@ public class LoginPageController extends LoginController implements IMGControlle
     }
 
     @RequestMapping(params = "cancel", method = RequestMethod.POST)
-    public ModelAndView doCancelLoginProcess(@ModelAttribute(LoginForm.MODEL_ATTR_NAME) @Valid LoginForm loginForm, BindingResult result, ModelMap model, SessionStatus status) {
+    public ModelAndView doCancelLoginProcess(@ModelAttribute(LoginForm.MODEL_ATTR_NAME) @Valid LoginForm loginForm, ModelMap model) {
         //create model and view
         return new ModelAndView("redirect:" + HomePageController.REDIRECT_VALUE, model);
     }
@@ -78,11 +96,17 @@ public class LoginPageController extends LoginController implements IMGControlle
         return result;
     }
 
-    private ModelAndView getModelAndView(ModelMap model) {
+    private ModelAndView getModelAndView(final ModelMap model, final boolean display) {
         Submitter submitter = sessionManager.getSessionBean().getSubmitter();
         if (submitter != null) {
-            return new ModelAndView("redirect:submit", model);
+            if (display) {
+                return new ModelAndView("redirect:submit", model);
+            } else {
+                return new ModelAndView("redirect:", model);
+            }
         }
+        //display submission block
+        model.addAttribute("displaySubBlock", display);
         //create model and view
         return new ModelAndView(VIEW_NAME, model);
     }

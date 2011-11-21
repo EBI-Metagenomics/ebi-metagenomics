@@ -31,27 +31,40 @@
     </script>
     <%-- END EBI style and code--%>
     <%-- JQuery CSS--%>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/jquery-ui-1.8.11.custom.css" type="text/css"  media="all"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/jquery-ui-1.8.11.custom.css" type="text/css"
+          media="all"/>
     <%-- END JQuery CSS--%>
 
     <link href="https://fonts.googleapis.com/css?family=Droid+Sans:regular,bold" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/default.css" type="text/css" media="all"/>
 
-    <!--[if lt IE 8]><style type="text/css"> table.result tbody tr td {background-color: #F4F4F8;}</style> <![endif]-->
-    <!--[if lt IE 7]><style type="text/css"> #feedback_div {display:none;} #feedback_no_div {display:block;}</style><![endif]-->
-    <%-- JQuery and JQuery UI source--%>
+    <!--[if lt IE 8]>
+    <style type="text/css"> table.result tbody tr td {
+        background-color: #F4F4F8;
+    }</style> <![endif]-->
+    <!--[if lt IE 7]>
+    <style type="text/css"> #feedback_div {
+        display: none;
+    }
+
+    #feedback_no_div {
+        display: block;
+    }</style><![endif]-->
+    <!-- JQuery and JQuery UI source-->
     <script src="${pageContext.request.contextPath}/js/jquery-1.4.4.min.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/js/jquery-ui-1.8.8.custom.min.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/js/jquery.validate-1.7.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/js/jquery.form-2.85.js" type="text/javascript"></script>
-    <%-- The date picker is used within the submission page --%>
+    <!-- The date picker is used within the submission page -->
     <script src="${pageContext.request.contextPath}/js/datepicker.js" type="text/javascript"></script>
-    <%-- The auto completion is used with the study search page --%>
+    <!-- The auto completion is used with the study search page -->
     <script src="${pageContext.request.contextPath}/js/autocompletion.js" type="text/javascript"></script>
 
     <script src="${pageContext.request.contextPath}/js/formclearer.js" type="text/javascript"></script>
-    <%-- Jquey scroller - work only for the anchors on the same page--%>
+    <!-- Jquey scroller - work only for the anchors on the same page-->
     <script src="${pageContext.request.contextPath}/js/smoothscrol.js" type="text/javascript"></script>
+    <!-- The following line includes the feedback dialog script. -->
+    <script src="${pageContext.request.contextPath}/js/feedback_script.js" type="text/javascript"></script>
 
     <!--[if lt IE 9]><%-- HTML5 tags working in IE8 by including this JavaScript in the head  --%>
 <script type="text/javascript">
@@ -111,8 +124,21 @@
 
         });
     </script>
-    <!-- The following line includes the feedback scripts and styles inside the HEAD tag. -->
-    <%@ include file="feedback/script/feedback_script_style.jsp" %>
+    <!-- Script and noscript versions for feedback and login links -->
+    <script type="text/javascript">
+        document.write('<style type="text/css">#noscript_feedbackLink{display: none;}#noscript_loginLink{display: none;}</style>');
+    </script>
+    <noscript>
+        <style type="text/css">
+            #script_feedbackLink {
+                display: none;
+            }
+
+            #script_loginLink {
+                display: none;
+            }
+        </style>
+    </noscript>
 </head>
 
 <%-- The following variable saves and provides the base URL for the whole application --%>
@@ -157,12 +183,12 @@
 </div>
 
 <%--<div id="extra_feedback">--%>
-    <%--<h1>--%>
-        <%--<a id="script_feedbackLink" href="javascript:showFeedbackForm()"--%>
-           <%--title="Give your feedback">Give your feedback</a>--%>
-        <%--<a id="noscript_feedbackLink" href="<c:url value="${baseURL}/feedback"/>"--%>
-           <%--title="Give your feedback">Give your feedback</a>--%>
-    <%--</h1>--%>
+<%--<h1>--%>
+<%--<a id="script_feedbackLink" href="javascript:showFeedbackForm()"--%>
+<%--title="Give your feedback">Give your feedback</a>--%>
+<%--<a id="noscript_feedbackLink" href="<c:url value="${baseURL}/feedback"/>"--%>
+<%--title="Give your feedback">Give your feedback</a>--%>
+<%--</h1>--%>
 <%--</div>--%>
 <a href="<c:url value="${baseURL}/info#intro"/>" title="About us">
     <div id="extra_beta"></div>
