@@ -10,7 +10,7 @@
 
     <div class="feedbackform_tab_o"></div>
     <div class="sub">
-        <form:form id="feedback_form" action="feedback" commandName="feedbackForm">
+        <form:form id="feedback_form_no" action="feedback" commandName="feedbackForm">
             <fieldset>
                 <table class="result">
                     <tr>
