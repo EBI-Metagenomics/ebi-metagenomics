@@ -436,7 +436,7 @@ table.results {
 background: url(../img/bgd_main_grey.jpg) #b5b5b5;
 }
 
-#feedback_form table tbody td{
+#feedback_form table tbody td, #feedback_form_no table tbody td{
 text-align:left;
 }
 
@@ -1007,7 +1007,7 @@ width: 150px;
 /*background: -moz-linear-gradient(top, #FFFFFF, #EEEEEE 1px, #FFFFFF 6px);*/
 }
 
-#feedback_form input, #submit_form input {
+#feedback_form input, #feedback_form_no input, #submit_form input {
 width: 360px;
 /*-moz-box-shadow:inset 0 0 7px #ccc;*/
 /*-webkit-box-shadow:inset 0 0 7px #ccc;*/
@@ -1015,7 +1015,7 @@ width: 360px;
 }
 
 
-input.main_button, #feedback_form input.main_button, #submit_form input.main_button {
+input.main_button, #feedback_form input.main_button, #feedback_form_no input.main_button, #submit_form input.main_button {
 width: auto;
 }
 
@@ -1259,13 +1259,13 @@ clear:left;
 display:block;
 }
 
-#feedback_form label {font-weight:bold;font-size:110%;color:#445668;}
+#feedback_form label,  #feedback_form_no label {font-weight:bold;font-size:110%;color:#445668;}
 #login_form label, #submit_form label {font-weight:bold;font-size:110%;color:#605F5F;}
 
 
-#feedback_form #required,  #submit_form  #required  {background: url(../img/ico_form_required.png) no-repeat right center; padding-right:14px; border: 0px red solid; zoom:1; /* for IE7 and IE6 to visualise the span and background without content*/}
+#feedback_form #required, #feedback_form_no #required,  #submit_form  #required  {background: url(../img/ico_form_required.png) no-repeat right center; padding-right:14px; border: 0px red solid; zoom:1; /* for IE7 and IE6 to visualise the span and background without content*/}
 
-label.error, span.error, #feedback_form label.error, #login_form label.error {
+label.error, span.error, #feedback_form label.error, #feedback_form_no label.error, #login_form label.error {
 display:block;
 font-weight:normal;
 color: #ff0000;
