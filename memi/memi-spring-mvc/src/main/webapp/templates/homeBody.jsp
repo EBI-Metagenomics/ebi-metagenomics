@@ -114,17 +114,17 @@
                             <div class="find_more"><a href="<c:url value="${baseURL}/login"/>"
                                                       title="submit data for analysis"><span>Submit your data</span></a>
                             </div>
-                        </div>
-                        </c:when>
-                        <c:otherwise>
+                            </c:when>
+                         <c:otherwise>
                         <div class="find_more"><a href="<c:url value="${baseURL}/submit"/>"
                                                   title="submit data for analysis"><span>Submit your data</span></a>
+                             </div>
+                              </c:otherwise>
+                         </c:choose>
+
                         </div>
-                    </div>
-                    </c:otherwise>
-                    </c:choose>
                     <div class="bottom_corners"></div>
-        </div>
+                </div>
         </li>
 
         </ul>
