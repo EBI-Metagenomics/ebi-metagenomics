@@ -1,7 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ include file="scriptlets/_getActivePage.jsp" %>
 <%-- This template is used for the login page --%>
 <div id="content-full">
 
@@ -51,7 +50,6 @@
                                    cssStyle="width:313px;"/>
                     <form:errors path="password" cssClass="error"/>
                 </div>
-                <c:set var="enaUrlParam" value="<%=activePage%>"/>
                 <c:url var="enaPasswordUrl"
                        value="${model.propertyContainer.enaSubmissionURL.forgottenPwdLink}">
                     <c:param name="url" value="${enaUrlParam}"/>
@@ -74,7 +72,7 @@
             <div class="form_row"><h3>Not registered yet?</h3>
                 <c:url var="enaRegistrationUrl"
                        value="${model.propertyContainer.enaSubmissionURL.registrationLink}">
-                    <c:param name="url" value="${enaUrlParameter}"/>
+                    <c:param name="url" value="${enaUrlParam}"/>
                 </c:url>
                 <span class="sub_sign_text"><a href="<c:url value="${enaRegistrationUrl}"/>" title="Registration">Sign-up</a> to register</span>
             </div>

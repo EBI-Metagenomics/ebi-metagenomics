@@ -4,7 +4,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ include file="scriptlets/_getActivePage.jsp" %>
 <script type="text/javascript">
     var dialog;
     var loginDialogValidator;
@@ -118,7 +117,6 @@
                     <span id="loginDialog_emailAddress.errors" class="error"></span>
                 </div>
                     <%--ENA URL parameter: Neccessary for the ENA implementation to redirect back to the Metagenomics website for instance if somebody wants to create a new account--%>
-                <c:set var="enaUrlParam" value="<%=activePage%>"/>
                 <c:url var="enaPasswordUrl"
                        value="${model.propertyContainer.enaSubmissionURL.forgottenPwdLink}">
                     <c:param name="url" value="${enaUrlParam}"/>

@@ -49,7 +49,6 @@
             </c:when>
             <c:otherwise>
                 <c:out value="${model.submitter.firstName} ${model.submitter.surname}"/>
-                <c:set var="enaUrlParam" value="<%=requestRoot%>"/>
                 <c:url var="editPrefsUrl"
                        value="${model.propertyContainer.enaSubmissionURL.editPrefsLink}">
                     <c:param name="url" value="${enaUrlParam}"/>

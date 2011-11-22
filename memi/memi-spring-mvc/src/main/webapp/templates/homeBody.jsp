@@ -1,11 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
-<%--<% final String url = request.getRequestURL().toString();--%>
-    <%--final String context = request.getContextPath();--%>
-    <%--final String requestRoot = url.substring(0, url.indexOf(context) + context.length());%>--%>
-<%--<c:set var="enaUrlParameter" value="<%=requestRoot%>"/>--%>
 <div id="content">
-<%--<spring:emailMessage code="label.email.submission.subject" />--%>
 <section id="submit-data">
 <c:choose>
     <%-- Show Private welcome emailMessage only if a user is logged in--%>
@@ -106,11 +101,12 @@
                                                    width="71" height="71"/></div>
                             <c:url var="enaRegistrationUrl"
                                    value="${model.propertyContainer.enaSubmissionURL.registrationLink}">
-                                <c:param name="url" value="${enaUrlParameter}"/>
+                                <c:param name="url" value="${enaUrlParam}"/>
                             </c:url>
                             <p style="padding-bottom:7px; "> You can click on &quot;submit your data&quot; to send us
                                 your nucleotide sequences for analysis.
-                                (Note: you will need to <a href="javascript:openLoginDialogForm()" title="Login">login</a>
+                                (Note: you will need to <a href="javascript:openLoginDialogForm()"
+                                                           title="Login">login</a>
                                 or <a href="<c:out value="${enaRegistrationUrl}"/>" title="Registration">register</a>
                                 first). </p>
                             <c:choose>

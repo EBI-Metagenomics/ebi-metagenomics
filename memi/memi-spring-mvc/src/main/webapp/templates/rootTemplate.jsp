@@ -141,6 +141,8 @@
     </noscript>
 </head>
 
+<%@ include file="scriptlets/_getActivePage.jsp" %>
+<c:set var="enaUrlParam" value="<%=activePage%>" scope="session"/>
 <%-- The following variable saves and provides the base URL for the whole application --%>
 <c:set var="baseURL" value="" scope="session"/>
 
