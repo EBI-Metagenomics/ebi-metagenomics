@@ -26,6 +26,7 @@
     <bean id="propContainer" class="uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer">
         <property name="pathToAnalysisDirectory" value="${pathToAnalysisDirectory}"/>
         <property name="enaSubmissionURL" ref="enaSubmission"/>
+        <property name="enaMasterUserEmail" value="${ena.master.user.email}"/>
     </bean>
 
     <bean id="enaSubmission" class="uk.ac.ebi.interpro.metagenomics.memi.basic.ENASubmissionURL">

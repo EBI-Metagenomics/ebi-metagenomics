@@ -101,7 +101,7 @@ public class ViewStudiesController extends AbstractController implements IMGCont
             //Create file content
             String fileContent = VelocityTemplateWriter.createFileContent(velocityEngine, VELOCITY_TEMPLATE_LOCATION_PATH, velocityModel);
             File file = MemiFileWriter.writeCSVFile(fileContent);
-            String fileName = MemiTools.createFileName("mg_projects_");
+            String fileName = MemiTools.createFileName("mg_projects_summary_");
             if (file != null && file.canRead()) {
                 downloadService.openDownloadDialog(response, file, fileName, true);
             }

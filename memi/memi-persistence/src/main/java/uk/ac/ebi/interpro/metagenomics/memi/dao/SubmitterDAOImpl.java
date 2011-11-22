@@ -94,12 +94,6 @@ public class SubmitterDAOImpl implements SubmitterDAO {
         try {
             return this.jdbcTemplate.queryForObject("SELECT password FROM " + Submitter.TABLE_NAME + " WHERE ACTIVE='Y' AND email_address=?",
                     new Object[]{emailAddress.toUpperCase()}, String.class);
-//                    new RowMapper<String>() {
-//                        public String mapRow(ResultSet rs, int rowNum) throws SQLException {
-//                            return rs.getString("password");
-//                        }
-//                    });
-
         } catch (Exception e) {
             log.warn("Could not perform database query. It might be that the JDBC connection could not build" +
                     " or is wrong configured. For more info take a look at the stack trace!", e);

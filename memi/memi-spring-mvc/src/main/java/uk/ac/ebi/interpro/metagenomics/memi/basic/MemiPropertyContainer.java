@@ -15,6 +15,8 @@ public class MemiPropertyContainer {
 
     private ENASubmissionURL enaSubmissionURL;
 
+    private String enaMasterUserEmail;
+
     MemiPropertyContainer() {
     }
 
@@ -32,5 +34,13 @@ public class MemiPropertyContainer {
 
     public void setEnaSubmissionURL(ENASubmissionURL enaSubmissionURL) {
         this.enaSubmissionURL = enaSubmissionURL;
+    }
+
+    public String getEnaMasterUserEmail() {
+        return enaMasterUserEmail;
+    }
+
+    public void setEnaMasterUserEmail(String enaMasterUserEmail) {
+        this.enaMasterUserEmail = enaMasterUserEmail;
     }
 }
