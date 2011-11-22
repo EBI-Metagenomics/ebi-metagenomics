@@ -1144,7 +1144,7 @@ border: 0px solid #ffaa22;
 
 .table_opt {border:0px solid black;display:block; overflow:auto; padding-top:7px; }
 
-.table_opt_pag {border:0px solid green;color: #424242; float:left; font-size:90%;padding-top:8px;margin-left:14px; width:200px;}
+.table_opt_pag {border:0px solid green;color: #424242; float:left; font-size:90%;padding-top:8px;margin-left:14px; }
 .table_opt_pag_num {float:left;margin-right:28px;}
 
 /* EXPORT OPTIONS */
