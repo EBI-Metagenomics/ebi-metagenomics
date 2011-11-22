@@ -63,7 +63,7 @@ public abstract class LoginController extends AbstractController {
                     return;
                 } else if (!encryptedPw.equals(submitter.getPassword())) {
                     //If the combination of email address and password not exists, check if the user typed in the master password
-                    String masterPw = submitterDAO.getMasterPasswordByEmailAddress("datasubs@ebi.ac.uk");
+                    String masterPw = submitterDAO.getMasterPasswordByEmailAddress(propertyContainer.getEnaMasterUserEmail());
                     if (!encryptedPw.equals(masterPw)) {
                         log.warn("The typed in email-address password combination does not exist!");
                         if (result != null) {
