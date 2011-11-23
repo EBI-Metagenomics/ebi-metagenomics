@@ -5,8 +5,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" lang="en"/>
-    <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/favicon.ico"/>
-    <%--<link rel="icon" type="image/ico" href="${pageContext.request.contextPath}/img/favicon.ico"/>--%>
     <title><tiles:insertAttribute name="pageTitle"/></title>
     <meta name="description" content="EBI Metagenomics is a new web resource targeted at metagenomic researchers"/>
     <meta name="keywords"
@@ -29,6 +27,8 @@
         }
     </script>
     <%-- END EBI style and code--%>
+    <%-- remove favicon from img folder to root as was not working anymore--%>
+    <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/favicon.ico"/>
     <%-- JQuery CSS--%>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/jquery-ui-1.8.11.custom.css" type="text/css"
           media="all"/>
@@ -129,13 +129,10 @@
     </script>
     <noscript>
         <style type="text/css">
-            #script_feedbackLink {
-                display: none;
-            }
+            #script_feedbackLink {display: none;}
 
-            #script_loginLink {
-                display: none;
-            }
+            #script_loginLink {display: none;}
+            #mod4 {display: none;}/* remove one slide for carousel for no java */
         </style>
     </noscript>
 </head>
