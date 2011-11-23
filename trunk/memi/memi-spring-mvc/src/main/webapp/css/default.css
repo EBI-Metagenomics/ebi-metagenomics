@@ -51,23 +51,24 @@ body {
       background: url(../img/bgd_main_grey.jpg); */
     }
 
-body.grey #wrapper,div.top-menu ul li.grey, body.grey div.but_top { background: #b5b5b5;}  /*background: url(../img/bgd_hex_8.png) #b5b5b5;*/
-/*body.grey #wrapper,div.top-menu ul li.grey, body.grey div.but_top { background: url(../img/bgd_main_grey.jpg) #b5b5b5;}*/
-body.red #wrapper, div.top-menu ul li.red, body.red div.but_top { background: url(../img/bgd_main_red.jpg) #ee0836;}
-body.green #wrapper, body.green h5,div.top-menu ul li.green, body.green div.but_top {   background: #6b7380;}
-/*body.green #wrapper, body.green h5,div.top-menu ul li.green, body.green div.but_top { background: url(../img/bgd_main_green.jpg) #90cc2d;}*/
+body.grey #wrapper, body.green #wrapper, body.ebigreen #wrapper, body.ebigrey #wrapper, body.blue #wrapper, body.greyblue #wrapper { background: #b5b5b5;}
+body div.but_top  { background: #6b7380;}
+
+div.top-menu ul li.grey {background: #b5b5b5;}
+div.top-menu ul li.ebigrey {background: #6b7380;}
+
+/*body.blue #wrapper, body.blue h5, div.top-menu ul li.blue, body.blue div.but_top { background: url(../img/bgd_main_blue.jpg) #14c1df;}
+body.ebigreen #wrapper, div.top-menu ul li.ebigreen, body.ebigreen div.but_top { background: url(../img/bgd_main_ebi_green.jpg) #207A7A;}
+body.ebigrey #wrapper, div.top-menu ul li.ebigrey, body.ebigrey div.but_top { background: url(../img/bgd_main_ebi_grey.jpg) #404040;}
+body.greyblue #wrapper, body.greyblue h5, div.top-menu ul li.greyblue, body.greyblue div.but_top { background: url(../img/bgd_main_greyblue.jpg) #7d9ca6;}
+body.green #wrapper, body.green h5,div.top-menu ul li.green, body.green div.but_top { background: url(../img/bgd_main_green.jpg) #90cc2d;}
+body.grey #wrapper,div.top-menu ul li.grey, body.grey div.but_top { background: url(../img/bgd_main_grey.jpg) #b5b5b5;}
+body.red #wrapper { background: url(../img/bgd_main_red.jpg) #ee0836;}
 body.yellow #wrapper, body.yellow h5, div.top-menu ul li.yellow, body.yellow div.but_top { background: url(../img/bgd_main_yellow.jpg) #efd223;}
-body.black #wrapper, div.top-menu ul li.black, body.black div.but_top { background: url(../img/bgd_main_black.jpg) #202020;}
-body.orange #wrapper,div.top-menu ul li.orange, body.orange div.but_top  { background: url(../img/bgd_main_orange.jpg) #ff8400;}
-body.greyblue #wrapper, body.greyblue h5, div.top-menu ul li.greyblue, body.greyblue div.but_top {    background: #6b7380;}
-/*body.greyblue #wrapper, body.greyblue h5, div.top-menu ul li.greyblue, body.greyblue div.but_top { background: url(../img/bgd_main_greyblue.jpg) #7d9ca6;}*/
-body.pink #wrapper, div.top-menu ul li.pink, body.pink div.but_top { background: url(../img/bgd_main_pink.jpg) #e80767;}
-body.blue #wrapper, body.blue h5, div.top-menu ul li.blue, body.blue div.but_top {   background: #6b7380;}
-/*body.blue #wrapper, body.blue h5, div.top-menu ul li.blue, body.blue div.but_top { background: url(../img/bgd_main_blue.jpg) #14c1df;}*/
-body.ebigreen #wrapper, div.top-menu ul li.ebigreen, body.ebigreen div.but_top {   background: #6b7380;}
-/*body.ebigreen #wrapper, div.top-menu ul li.ebigreen, body.ebigreen div.but_top { background: url(../img/bgd_main_ebi_green.jpg) #207A7A;}*/
-body.ebigrey #wrapper, div.top-menu ul li.ebigrey, body.ebigrey div.but_top {  background: #6b7380;}
-/*body.ebigrey #wrapper, div.top-menu ul li.ebigrey, body.ebigrey div.but_top { background: url(../img/bgd_main_ebi_grey.jpg) #404040;}*/
+body.black #wrapper, div.top-menu ul li.black { background: url(../img/bgd_main_black.jpg) #202020;}
+body.orange #wrapper,div.top-menu ul li.orange  { background: url(../img/bgd_main_orange.jpg) #ff8400;}
+body.pink #wrapper, div.top-menu ul li.pink { background: url(../img/bgd_main_pink.jpg) #e80767;}
+*/
 
 p { display: block;margin: 1em 0px; clear:none;}
 
@@ -239,7 +240,7 @@ display: block; float:left; border:0px solid #c3c3c3;
 
 div.top-nav {
 border:0px green solid;
-overflow:auto;
+overflow:hidden;/*solve a bug on firefox, onclick scrollbar*/
 width:100%;
 }
 
@@ -275,7 +276,7 @@ div.top-menu ul li{
 
 }
 
-div.top-menu ul li a, div.top-menu ul li a:link, div.top-menu ul li a:focus{
+div.top-menu  a, div.top-menu  a:link, div.top-menu a:focus{
     border:0px red solid;
     display:block;
    /*width:86px;  only if we want to have the same width for the Tabs on top */
@@ -284,9 +285,10 @@ div.top-menu ul li a, div.top-menu ul li a:link, div.top-menu ul li a:focus{
     cursor:pointer;
     color:white;
     text-decoration:none;
+   /*text-shadow: #737373 1px 1px 1px;*/
 }
 
-div.top-menu ul li a:hover, div.top-menu ul li a:link:hover  {
+div.top-menu a:hover, div.top-menu a:link:hover  {
 /* Arrow style
 background:url(../img/arrow_menu_over.png) no-repeat right 10px;*/
 background:url(../img/bgd_black_op20_8.png);
@@ -924,10 +926,10 @@ background-color: white;
 -webkit-border-radius: 0 0 20px 0;
 border-radius: 0 0 20px 0;
 /*border: 1px solid #9f9f9f;*/
-/*box-shadow:0px 2px 2px #8a8a8a;*/
-/*-moz-box-shadow:0px 2px 2px #8a8a8a ;*/
-/*-khtml-box-shadow:0px 2px 2px #8a8a8a ;*/
-/*-webkit-box-shadow:0px 2px 2px #8a8a8a ;*/
+/*box-shadow:2px 2px 7px #8a8a8a;*/
+/*-moz-box-shadow:2px 2px 7px #8a8a8a ;*/
+/*-khtml-box-shadow:2px 2px 7px #8a8a8a ;*/
+/*-webkit-box-shadow:2px 2px 7px #8a8a8a ;*/
 }
 
 #list-data-study, #list-data-sample, #list-news  {
@@ -1277,7 +1279,7 @@ clear:left;
 }
 
 input.error, textarea.error {
-background: #FAEFEE url(../img/ico_form_cancel.png) no-repeat right top;
+background: #FFCFCF url(../img/ico_form_cancel.png) no-repeat right top;
 color: #8C302C;
 border:1px #ff918e solid;
 margin:0;
@@ -1537,11 +1539,11 @@ background:url(../img/carousel_l.png) 0 0 no-repeat; margin-right:-34px;}
 .carousel ul{padding:0;list-style:none;}
 .carousel ul li{position:relative;width:307px; border:0px solid red;margin:0;}/* space between modules*/
 
-  
+
 #login_dialog_div {display:none; /*solve a bug  of conflict between popup and carousel on IE6 and IE7*/}
 
 /* FEEDBACK FORM */
-#feedback_div   {  
+#feedback_div   {
     position:fixed;
     _position: absolute; /* position fixed is not recognise on IE6 */
     right: -444px;
