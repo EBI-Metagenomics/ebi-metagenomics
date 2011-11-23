@@ -1537,7 +1537,8 @@ background:url(../img/carousel_l.png) 0 0 no-repeat; margin-right:-34px;}
 .js ul li{overflow:hidden;display:inline;float:left;width:500px;text-align:center;zoom:1;}
 
 .carousel ul{padding:0;list-style:none;}
-.carousel ul li{position:relative;width:307px; border:0px solid red;margin:0;}/* space between modules*/
+.carousel ul li{position:relative;width:307px; border:0px solid red;margin:0;
+ float:left; /* used for no-script version */}
 
 
 #login_dialog_div {display:none; /*solve a bug  of conflict between popup and carousel on IE6 and IE7*/}
