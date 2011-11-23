@@ -77,6 +77,7 @@ public class LoginPageController extends LoginController {
     private void populateModel(ModelMap model) {
         final ViewModel viewModel = MGModelFactory.getMGModel(sessionManager, "Metagenomics Login",
                 getBreadcrumbs(null), propertyContainer);
+        viewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_SUBMIT_VIEW);
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, viewModel);
     }
 

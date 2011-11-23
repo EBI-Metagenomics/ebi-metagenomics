@@ -64,6 +64,7 @@ public class HomePageController extends AbstractController implements IMGControl
                         final ViewModelBuilder<HomePageViewModel> builder = new HomePageViewModelBuilder(sessionManager, "Metagenomics Home",
                                 getBreadcrumbs(null), propertyContainer, studyDAO, sampleDAO, rssClient);
                         final HomePageViewModel hpModel = builder.getModel();
+                        hpModel.changeToHighlightedClass(ViewModel.TAB_CLASS_HOME_VIEW);
                         model.addAttribute(ViewModel.MODEL_ATTR_NAME, hpModel);
                     }
                 });

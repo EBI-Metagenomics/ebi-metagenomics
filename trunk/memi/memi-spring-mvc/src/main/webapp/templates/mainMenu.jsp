@@ -3,11 +3,13 @@
 <div class="top-nav">
     <div class="top-menu">
         <ul>
-            <li class="grey"><a href="<c:url value="${baseURL}/"/>" title="Home">Home</a></li>
-            <li class="ebigrey"><a href="<c:url value="${baseURL}/submit"/>" class="more_desc" title="Submit data">Submit
+            <li class="${model.tabClasses["tabClassHomeView"]}"><a href="<c:url value="${baseURL}/"/>"
+                                                                   title="Home">Home</a></li>
+            <li class="${model.tabClasses["tabClassSubmitView"]}"><a href="<c:url value="${baseURL}/submit"/>"
+                                                                     class="more_desc" title="Submit data">Submit
                 data</a></li>
             <%--changed to make it EBI compliant --%>
-            <li class="blue">
+            <li class="${model.tabClasses["tabClassProjectsView"]}">
                 <c:choose>
                     <c:when test="${empty model.submitter}">
                         <a href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>"
@@ -19,7 +21,7 @@
                     </c:otherwise>
                 </c:choose>
             </li>
-            <li class="greyblue">
+            <li class="${model.tabClasses["tabClassSamplesView"]}">
                 <c:choose>
                     <c:when test="${empty model.submitter}">
                         <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search&startPosition=0"/>"
@@ -33,8 +35,10 @@
             </li>
 
 
-            <li class="green"><a href="<c:url value="${baseURL}/info"/>" title="About us">About</a></li>
-            <li class="ebigreen"><a href="<c:url value="${baseURL}/contact"/>" title="Contact us">Contact</a></li>
+            <li class="${model.tabClasses["tabClassAboutView"]}"><a href="<c:url value="${baseURL}/info"/>"
+                                                                    title="About us">About</a></li>
+            <li class="${model.tabClasses["tabClassContactView"]}"><a href="<c:url value="${baseURL}/contact"/>"
+                                                                      title="Contact us">Contact</a></li>
             <%--changed to make it EBI compliant --%>
             </li>
         </ul>

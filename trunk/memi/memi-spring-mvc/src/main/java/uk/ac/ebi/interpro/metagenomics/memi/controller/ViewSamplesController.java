@@ -192,6 +192,7 @@ public class ViewSamplesController extends AbstractController implements IMGCont
         final ViewModelBuilder<SamplesViewModel> builder = new SamplesViewModelBuilder(sessionManager, "Metagenomics View Samples",
                 getBreadcrumbs(null), propertyContainer, getTableHeaderNames(), sampleDAO, filter, startPosition);
         final SamplesViewModel samplesViewModel = builder.getModel();
+        samplesViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_SAMPLES_VIEW);
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, samplesViewModel);
     }
 

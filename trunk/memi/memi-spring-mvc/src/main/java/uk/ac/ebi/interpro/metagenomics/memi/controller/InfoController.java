@@ -47,6 +47,7 @@ public class InfoController extends AbstractController implements IMGController 
         log.info("Building model of InfoController...");
         final ViewModel hpModel = MGModelFactory.getMGModel(sessionManager, "Metagenomics About",
                 getBreadcrumbs(null), propertyContainer);
+        hpModel.changeToHighlightedClass(ViewModel.TAB_CLASS_ABOUT_VIEW);
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, hpModel);
     }
 
