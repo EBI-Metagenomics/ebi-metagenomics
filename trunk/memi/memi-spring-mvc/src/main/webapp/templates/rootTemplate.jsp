@@ -85,12 +85,6 @@
         $(document).ready(function() {
             $("table.result tbody tr:even").css("background-color", "#F4F4F8");
             $("table.result tbody tr:odd").css("background-color", "#e9e9e9");
-            <%--Set focus to login input field after clicking the login link--%>
-//            $('#loginLinkId').click(function() {
-//                $('#loginInputFieldId').focus();
-//            });
-            <%--Set focus during page initialisation--%>
-            $('#loginInputFieldId').focus();
         });
     </script>
 
