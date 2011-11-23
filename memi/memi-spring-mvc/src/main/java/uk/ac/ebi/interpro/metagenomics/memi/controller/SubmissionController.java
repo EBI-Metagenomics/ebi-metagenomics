@@ -137,6 +137,7 @@ public class SubmissionController extends CheckLoginController implements IMGCon
         public void populateModel(ModelMap model) {
             final ViewModelBuilder<SubmissionModel> builder = new SubmissionViewModelBuilder(sessionManager, "Metagenomics Submit", getBreadcrumbs(null), propertyContainer);
             final SubmissionModel submissionViewModel = builder.getModel();
+            submissionViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_SUBMIT_VIEW);
             model.addAttribute(ViewModel.MODEL_ATTR_NAME, submissionViewModel);
         }
     }

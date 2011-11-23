@@ -104,6 +104,7 @@ public class SampleViewController extends SecuredAbstractController<Sample> {
                 pageTitle, getBreadcrumbs(sample), propertyContainer, sample,
                 MemiTools.getArchivedSeqs(fileInfoDAO, sample), sampleAnnotations);
         final SampleViewModel sampleModel = builder.getModel();
+        sampleModel.changeToHighlightedClass(ViewModel.TAB_CLASS_SAMPLES_VIEW);
         model.addAttribute("loginForm", new LoginForm());
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, sampleModel);
     }

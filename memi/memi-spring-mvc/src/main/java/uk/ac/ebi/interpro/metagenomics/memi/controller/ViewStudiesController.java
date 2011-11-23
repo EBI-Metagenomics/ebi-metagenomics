@@ -237,6 +237,7 @@ public class ViewStudiesController extends AbstractController implements IMGCont
     private void populateModel(ModelMap model, StudyFilter filter) {
         final ViewStudiesModel subModel = MGModelFactory.getViewStudiesPageModel(sessionManager, studyDAO,
                 sampleDAO, filter, "Metagenomics View Projects", getBreadcrumbs(null), propertyContainer, getTableHeaderNames());
+        subModel.changeToHighlightedClass(ViewModel.TAB_CLASS_PROJECTS_VIEW);
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, subModel);
     }
 

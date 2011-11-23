@@ -19,6 +19,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.StudyViewModel;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.StudyViewModelBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.tools.MemiTools;
@@ -104,6 +105,7 @@ public class StudyViewController extends SecuredAbstractController<Study> {
         final ViewModelBuilder<StudyViewModel> builder = new StudyViewModelBuilder(sessionManager,
                 pageTitle, getBreadcrumbs(study), propertyContainer, study, sampleDAO);
         final StudyViewModel studyModel = builder.getModel();
+        studyModel.changeToHighlightedClass(ViewModel.TAB_CLASS_PROJECTS_VIEW);
         model.addAttribute("loginForm", new LoginForm());
         model.addAttribute(StudyViewModel.MODEL_ATTR_NAME, studyModel);
     }
