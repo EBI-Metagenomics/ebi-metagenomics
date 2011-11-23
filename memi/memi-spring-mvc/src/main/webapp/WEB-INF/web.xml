@@ -37,8 +37,8 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
     </servlet-mapping>
 
     <!--<error-page>-->
-        <!--<error-code>404</error-code>-->
-        <!--<location>/pages/errors/404.jsp</location>-->
+    <!--<error-code>404</error-code>-->
+    <!--<location>/pages/errors/404.jsp</location>-->
     <!--</error-page>-->
 
     <error-page>
@@ -46,4 +46,10 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
         <location>/404</location>
     </error-page>
 
+    <!--This mapping makes the favicon works on Tomcat-->
+    <mime-mapping>
+        <extension>ico</extension>
+        <mime-type>image/x-icon</mime-type>
+        <!--<mime-type>image/vnd.microsoft.icon</mime-type>-->
+    </mime-mapping>
 </web-app>
