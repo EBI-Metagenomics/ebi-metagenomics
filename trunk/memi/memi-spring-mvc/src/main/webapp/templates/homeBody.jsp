@@ -36,7 +36,7 @@
                 <ul>
                     <li>
                         <!-- module 1 -->
-                        <div class="module">
+                        <div class="module" id="mod1">
                             <div class="top_corners"></div>
                             <div class="content">
                                 <h3>Easy submission</h3>
@@ -56,7 +56,7 @@
                     </li>
                     <li>
                         <!-- module 2 -->
-                        <div class="module">
+                        <div class="module" id="mod2">
                             <div class="top_corners"></div>
                             <div class="content">
                                 <h3>Powerful analysis</h3>
@@ -75,7 +75,7 @@
                     </li>
                     <li>
                         <!-- module 3 -->
-                        <div class="module">
+                        <div class="module" id="mod3">
                             <div class="top_corners"></div>
                             <div class="content">
                                 <h3>Data archiving</h3>
@@ -94,7 +94,7 @@
                     </li>
                     <li>
                         <!-- module 4 -->
-                        <div class="module">
+                        <div class="module" id="mod4">
                             <div class="top_corners"></div>
                             <div class="content">
                                 <h3>Submit your data</h3>
