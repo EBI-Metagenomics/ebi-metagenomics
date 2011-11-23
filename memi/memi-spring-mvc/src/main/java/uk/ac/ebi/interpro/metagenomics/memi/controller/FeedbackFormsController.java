@@ -185,7 +185,9 @@ public class FeedbackFormsController extends AbstractController {
 
     @Override
     protected List<Breadcrumb> getBreadcrumbs(SecureEntity obj) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        List<Breadcrumb> result = new ArrayList<Breadcrumb>();
+        result.add(new Breadcrumb("Feedback", "Send feedback about the Metagenomics portal", VIEW_NAME));
+        return result;
     }
 
     class FeebackModelPopulator implements ModelPopulator {

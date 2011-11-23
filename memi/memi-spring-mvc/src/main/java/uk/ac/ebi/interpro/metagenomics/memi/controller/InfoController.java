@@ -57,7 +57,7 @@ public class InfoController extends AbstractController implements IMGController 
 
     protected List<Breadcrumb> getBreadcrumbs(SecureEntity entity) {
         List<Breadcrumb> result = new ArrayList<Breadcrumb>();
-        result.add(new Breadcrumb("About", "About the metagenomics portal", VIEW_NAME));
+        result.add(new Breadcrumb("About", "About the Metagenomics portal", VIEW_NAME));
         return result;
     }
 }

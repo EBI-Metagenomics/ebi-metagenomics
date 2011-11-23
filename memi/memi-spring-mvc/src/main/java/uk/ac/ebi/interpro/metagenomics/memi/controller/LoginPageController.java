@@ -54,7 +54,7 @@ public class LoginPageController extends LoginController {
      */
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView doGet(@RequestParam(required = true) final boolean display, ModelMap model) {
-        populateModel(model);
+        populateModel(model, display);
         model.addAttribute("loginForm", new LoginForm());
         return getModelAndView(model, display);
     }
@@ -67,17 +67,20 @@ public class LoginPageController extends LoginController {
         boolean display = Boolean.parseBoolean(request.getParameter("display"));
         //process login
         super.processLogin(loginForm, result, model, status);
-        populateModel(model);
+        populateModel(model, display);
         return getModelAndView(model, display);
     }
 
     /**
      * Creates the home page model and adds it to the specified model map.
      */
-    private void populateModel(ModelMap model) {
+    private void populateModel(final ModelMap model, final boolean display) {
         final ViewModel viewModel = MGModelFactory.getMGModel(sessionManager, "Metagenomics Login",
                 getBreadcrumbs(null), propertyContainer);
-        viewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_SUBMIT_VIEW);
+        //We only do highlighting the submission tab if the login is part of the submission process (clicked on submit data tab)
+        if (display) {
+            viewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_SUBMIT_VIEW);
+        }
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, viewModel);
     }
 
