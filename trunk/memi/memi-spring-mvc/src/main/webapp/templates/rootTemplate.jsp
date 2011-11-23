@@ -6,8 +6,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" lang="en"/>
     <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/img/favicon.ico"/>
-    <link rel="icon" type="image/ico" href="${pageContext.request.contextPath}/img/favicon.ico"/>
-    <link href="../../common/assets/css/ebi/ebi_common.css" rel="stylesheet" type="text/css"/>
+    <%--<link rel="icon" type="image/ico" href="${pageContext.request.contextPath}/img/favicon.ico"/>--%>
     <title><tiles:insertAttribute name="pageTitle"/></title>
     <meta name="description" content="EBI Metagenomics is a new web resource targeted at metagenomic researchers"/>
     <meta name="keywords"
