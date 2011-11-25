@@ -13,10 +13,12 @@ import uk.ac.ebi.interpro.metagenomics.memi.services.EmailNotificationService;
 import uk.ac.ebi.interpro.metagenomics.memi.services.INotificationService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.DefaultViewModelBuilder;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -56,30 +58,21 @@ public abstract class AbstractController {
     public ModelAndView handleNoSuchRequestException(NoSuchRequestHandlingMethodException ex) {
         log.error("Called no such request exception handler!", ex);
         sendEmail(ex);
-        ViewModel viewModel = MGModelFactory.getMGModel(sessionManager);
-        ModelMap model = new ModelMap();
-        model.addAttribute(ViewModel.MODEL_ATTR_NAME, viewModel);
-        return new ModelAndView("/errors/" + CommonController.NO_SUCH_REQUEST_PAGE_VIEW_NAME, model);
+        return buildErrorModelAndView(CommonController.NO_SUCH_REQUEST_PAGE_VIEW_NAME);
     }
 
     @ExceptionHandler(NullPointerException.class)
     public ModelAndView handleNPExceptions(NullPointerException ex) {
         log.error("Called Null pointer exception handler!", ex);
         sendEmail(ex);
-        ViewModel viewModel = MGModelFactory.getMGModel(sessionManager);
-        ModelMap model = new ModelMap();
-        model.addAttribute(ViewModel.MODEL_ATTR_NAME, viewModel);
-        return new ModelAndView("/errors/" + CommonController.EXCEPTION_PAGE_VIEW_NAME, model);
+        return buildErrorModelAndView(CommonController.EXCEPTION_PAGE_VIEW_NAME);
     }
 
     @ExceptionHandler(Exception.class)
     public ModelAndView handleAllExceptions(Exception ex) {
         log.error("Called all exception handler!", ex);
         sendEmail(ex);
-        ViewModel viewModel = MGModelFactory.getMGModel(sessionManager);
-        ModelMap model = new ModelMap();
-        model.addAttribute(ViewModel.MODEL_ATTR_NAME, viewModel);
-        return new ModelAndView("/errors/" + CommonController.EXCEPTION_PAGE_VIEW_NAME, model);
+        return buildErrorModelAndView(CommonController.EXCEPTION_PAGE_VIEW_NAME);
     }
 
     private void sendEmail(Exception ex) {
@@ -93,5 +86,14 @@ public abstract class AbstractController {
         populator.populateModel(model);
         model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
         return new ModelAndView(viewName, model);
+    }
+
+    private ModelAndView buildErrorModelAndView(String viewName) {
+        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "EBI Metagenomics Portal", new ArrayList<Breadcrumb>(), null);
+        final ViewModel viewModel = builder.getModel();
+        ModelMap model = new ModelMap();
+        model.addAttribute(ViewModel.MODEL_ATTR_NAME, viewModel);
+        model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
+        return new ModelAndView("/errors/" + viewName, model);
     }
 }

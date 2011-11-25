@@ -1,7 +1,5 @@
 package uk.ac.ebi.interpro.metagenomics.memi.model.hibernate;
 
-import org.hibernate.annotations.FetchMode;
-
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -303,8 +301,9 @@ public abstract class Sample implements SecureEntity {
 
 
     public enum SampleType {
-        ENVIRONMENTAL(EnvironmentSample.class, "Environmental"),
+            ENVIRONMENTAL(EnvironmentSample.class, "Environmental"),
         HOST_ASSOCIATED(HostSample.class, "Host associated"),
+        ENGINEERED(EngineeredSample.class, "Man-made"),
         UNDEFINED(UndefinedSample.class, "Undefined");
 
         private Class<? extends Sample> clazz;

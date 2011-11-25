@@ -28,6 +28,7 @@
         <mapping class="uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample"/>
         <mapping class="uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.HostSample"/>
         <mapping class="uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.EnvironmentSample"/>
+        <mapping class="uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.EngineeredSample"/>
         <mapping class="uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.UndefinedSample"/>
     </session-factory>
 </hibernate-configuration>

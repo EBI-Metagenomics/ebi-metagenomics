@@ -8,12 +8,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.DefaultViewModelBuilder;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 
 /**
  * Represents a common controller, which currently holds request mappings
@@ -43,7 +46,8 @@ public class CommonController {
                 "log to no such request mapping found, please do not note this warning. HTTP status code " +
                 "404 responded. Please have a look to the Spring log to see which wrong URL was " +
                 "requested!");
-        ViewModel viewModel = MGModelFactory.getMGModel(sessionManager);
+        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "EBI Metagenomics Portal", new ArrayList<Breadcrumb>(), null);
+        final ViewModel viewModel = builder.getModel();
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, viewModel);
         return new ModelAndView("/errors/" + CommonController.NO_SUCH_REQUEST_PAGE_VIEW_NAME, model);
     }

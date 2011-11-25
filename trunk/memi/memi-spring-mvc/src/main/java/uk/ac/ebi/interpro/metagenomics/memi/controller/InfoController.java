@@ -10,7 +10,8 @@ import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.DefaultViewModelBuilder;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,10 +46,10 @@ public class InfoController extends AbstractController implements IMGController 
      */
     private void populateModel(final ModelMap model) {
         log.info("Building model of InfoController...");
-        final ViewModel hpModel = MGModelFactory.getMGModel(sessionManager, "Metagenomics About",
-                getBreadcrumbs(null), propertyContainer);
-        hpModel.changeToHighlightedClass(ViewModel.TAB_CLASS_ABOUT_VIEW);
-        model.addAttribute(ViewModel.MODEL_ATTR_NAME, hpModel);
+        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "Metagenomics About", getBreadcrumbs(null), propertyContainer);
+        final ViewModel infoModel = builder.getModel();
+        infoModel.changeToHighlightedClass(ViewModel.TAB_CLASS_ABOUT_VIEW);
+        model.addAttribute(ViewModel.MODEL_ATTR_NAME, infoModel);
     }
 
     protected String getModelViewName() {

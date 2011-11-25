@@ -13,8 +13,9 @@ import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.DefaultViewModelBuilder;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -75,8 +76,8 @@ public class LoginPageController extends LoginController {
      * Creates the home page model and adds it to the specified model map.
      */
     private void populateModel(final ModelMap model, final boolean display) {
-        final ViewModel viewModel = MGModelFactory.getMGModel(sessionManager, "Metagenomics Login",
-                getBreadcrumbs(null), propertyContainer);
+        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "Metagenomics Login", getBreadcrumbs(null), propertyContainer);
+        final ViewModel viewModel = builder.getModel();
         //We only do highlighting the submission tab if the login is part of the submission process (clicked on submit data tab)
         if (display) {
             viewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_SUBMIT_VIEW);
