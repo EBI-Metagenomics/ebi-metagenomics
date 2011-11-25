@@ -96,15 +96,18 @@ public class SamplesViewModelBuilder extends AbstractViewModelBuilder<SamplesVie
      */
     private List<Criterion> buildFilterCriteria(SampleFilter filter, long submitterId) {
         String searchText = filter.getSearchTerm();
-        SampleFilter.SampleVisibility visibility = filter.getSampleVisibility();
 
         List<Criterion> crits = new ArrayList<Criterion>();
         //add search term criterion
         if (searchText != null && searchText.trim().length() > 0) {
             crits.add(Restrictions.or(Restrictions.ilike("sampleId", searchText, MatchMode.ANYWHERE), Restrictions.ilike("sampleName", searchText, MatchMode.ANYWHERE)));
         }
-        //add is public criterion
+        //add 'isPublic' criterion
         if (submitterId > -1) {
+            SampleFilter.SampleVisibility visibility = filter.getSampleVisibility();
+            if (visibility == null) {
+                visibility = SampleFilter.SampleVisibility.MY_SAMPLES;
+            }
             //SELECT * FROM HB_STUDY where submitter_id=?;
             if (visibility.equals(SampleFilter.SampleVisibility.MY_SAMPLES)) {
                 crits.add(Restrictions.eq("submitterId", submitterId));
