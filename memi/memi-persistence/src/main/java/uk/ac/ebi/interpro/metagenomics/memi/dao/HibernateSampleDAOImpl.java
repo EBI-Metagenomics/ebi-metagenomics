@@ -1,6 +1,9 @@
 package uk.ac.ebi.interpro.metagenomics.memi.dao;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
@@ -14,6 +17,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -25,6 +29,8 @@ import java.util.List;
  */
 @Repository
 public class HibernateSampleDAOImpl implements HibernateSampleDAO {
+
+    private final static Log log = LogFactory.getLog(HibernateSampleDAOImpl.class);
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -52,7 +58,11 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
     public Sample read(Long id) {
         Session session = sessionFactory.getCurrentSession();
         if (session != null) {
-            return (Sample) session.get(Sample.class, id);
+            try {
+                return (Sample) session.get(Sample.class, id);
+            } catch (HibernateException e) {
+                log.error("Couldn't retrieve sample by identifier!", e);
+            }
         }
         return null;
     }
@@ -63,9 +73,13 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
         if (session != null) {
             Criteria crit = session.createCriteria(Sample.class);
             crit.add(Restrictions.eq("sampleId", sampleId));
-            List<Sample> samples = crit.list();
-            if (samples != null && samples.size() > 0) {
-                return samples.get(0);
+            try {
+                List<Sample> samples = crit.list();
+                if (!samples.isEmpty()) {
+                    return samples.get(0);
+                }
+            } catch (HibernateException e) {
+                log.error("Couldn't retrieve sample by String type ID!", e);
             }
         }
         return null;
@@ -80,9 +94,13 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
             if (crit != null) {
                 crit.setProjection(Projections.rowCount())
                         .add(Restrictions.eq("study.id", studyId));
-                List<Long> result = crit.list();
-                if (result != null && result.size() > 0) {
-                    return result.get(0);
+                try {
+                    List<Long> result = crit.list();
+                    if (result != null && result.size() > 0) {
+                        return result.get(0);
+                    }
+                } catch (HibernateException e) {
+                    log.error("Couldn't retrieve samples size by study ID!", e);
                 }
             }
         }
@@ -106,9 +124,13 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
         if (session != null) {
             Criteria criteria = session.createCriteria(Sample.class);
             criteria.setProjection(Projections.rowCount());
-            return ((Long) criteria.list().get(0)).longValue();
+            try {
+                return ((Long) criteria.list().get(0)).longValue();
+            } catch (HibernateException e) {
+                log.error("Couldn't retrieve sample count!", e);
+            }
         }
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return new Long(0);  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override
@@ -116,9 +138,13 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
     public List<Sample> retrieveAll() {
         Session session = sessionFactory.getCurrentSession();
         if (session != null) {
-            return session.createCriteria(Sample.class).list();
+            try {
+                return session.createCriteria(Sample.class).list();
+            } catch (HibernateException e) {
+                log.error("Couldn't retrieve all samples!", e);
+            }
         }
-        return null;
+        return Collections.emptyList();
     }
 
     /**
@@ -135,10 +161,14 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
                 crit.add(Restrictions.eq("study.id", studyId));
                 //Add distinct criterion
                 crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-                return crit.list();
+                try {
+                    return crit.list();
+                } catch (HibernateException e) {
+                    log.error("Couldn't retrieve samples by study ID!", e);
+                }
             }
         }
-        return null;
+        return Collections.emptyList();
     }
 
 
@@ -157,7 +187,11 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
             }
             //add WHERE clause
             crit.add(Restrictions.eq("isPublic", true));
-            result = crit.list();
+            try {
+                result = crit.list();
+            } catch (HibernateException e) {
+                log.error("Couldn't retrieve ordered public samples!", e);
+            }
         }
         return result;
     }
@@ -172,9 +206,13 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
             crit.add(Restrictions.eq("isPublic", true));
             //Add distinct criterion
             crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-            return crit.list();
+            try {
+                return crit.list();
+            } catch (HibernateException e) {
+                log.error("Couldn't all public samples!", e);
+            }
         }
-        return new ArrayList<Sample>();
+        return Collections.emptyList();
     }
 
     @Override
@@ -192,7 +230,11 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
             }
             //add WHERE clause
             crit.add(Restrictions.eq("submitterId", submitterId));
-            result = crit.list();
+            try {
+                result = crit.list();
+            } catch (HibernateException e) {
+                log.error("Couldn't retrieve ordered samples by submitter ID!", e);
+            }
         }
         return result;
     }
@@ -207,9 +249,13 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
             crit.add(Restrictions.eq("submitterId", submitterId));
             //Add distinct criterion
             crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-            return crit.list();
+            try {
+                return crit.list();
+            } catch (HibernateException e) {
+                log.error("Couldn't retrieve samples by submitter ID!", e);
+            }
         }
-        return new ArrayList<Sample>();
+        return Collections.emptyList();
     }
 
     @Override
@@ -229,7 +275,11 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
             crit.add(Restrictions.eq("isPublic", true));
             //add another WHERE clause
             crit.add(Restrictions.ne("submitterId", submitterId));
-            result = crit.list();
+            try {
+                result = crit.list();
+            } catch (HibernateException e) {
+                log.error("Couldn't retrieve ordered public samples without submitter ID!", e);
+            }
         }
         return result;
     }
@@ -246,9 +296,13 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
             crit.add(Restrictions.ne("submitterId", submitterId));
             //Add distinct criterion
             crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-            return crit.list();
+            try {
+                return crit.list();
+            } catch (HibernateException e) {
+                log.error("Couldn't retrieve public samples without submitter ID!", e);
+            }
         }
-        return new ArrayList<Sample>();
+        return Collections.emptyList();
     }
 
     @Transactional(readOnly = true)
@@ -257,19 +311,26 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
         if (criteria != null) {
             criteria.setFirstResult(startPosition);
             criteria.setMaxResults(pageSize);
-
-            return (List<Sample>) criteria.list();
+            try {
+                return (List<Sample>) criteria.list();
+            } catch (HibernateException e) {
+                log.error("Couldn't retrieve filtered samples!", e);
+            }
         }
-        return new ArrayList<Sample>();
+        return Collections.emptyList();
     }
 
     @Transactional(readOnly = true)
     public List<Sample> retrieveFilteredSamples(List<Criterion> crits, Class<? extends Sample> clazz, String orderedByColumnWithName) {
         Criteria criteria = setUpFilteredSamplesCriteria(crits, clazz, orderedByColumnWithName);
         if (criteria != null) {
-            return (List<Sample>) criteria.list();
+            try {
+                return (List<Sample>) criteria.list();
+            } catch (HibernateException e) {
+                log.error("Couldn't retrieve filtered samples!", e);
+            }
         }
-        return new ArrayList<Sample>();
+        return Collections.emptyList();
     }
 
     private Criteria setUpFilteredSamplesCriteria(List<Criterion> crits, Class<? extends Sample> clazz, String orderedByColumnWithName) {
@@ -304,9 +365,16 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
             //add distinct criterion
             criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
             criteria.setProjection(Projections.rowCount());
-            return (Long) criteria.list().get(0);
+            try {
+                List result = criteria.list();
+                if (!result.isEmpty()) {
+                    return (Long) criteria.list().get(0);
+                }
+            } catch (HibernateException e) {
+                log.error("Couldn't query filtered sample count!", e);
+            }
         }
-        return null;
+        return new Long(0);
     }
 
     @Override

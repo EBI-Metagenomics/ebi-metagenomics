@@ -39,17 +39,6 @@ public class MGModelFactory {
 
     }
 
-    public static ViewModel getMGModel(SessionManager sessionMgr) {
-        return getMGModel(sessionMgr, "EBI Metagenomics Portal", new ArrayList<Breadcrumb>(), null);
-    }
-
-    public static ViewModel getMGModel(SessionManager sessionMgr, String pageTitle, List<Breadcrumb> breadcrumbs,
-                                       MemiPropertyContainer propertyContainer) {
-        log.info("Building instance of " + ViewModel.class + "...");
-        return new ViewModel(getSessionSubmitter(sessionMgr), pageTitle, breadcrumbs, propertyContainer);
-    }
-
-
     public static AnalysisStatsModel getAnalysisStatsModel(SessionManager sessionManager, Sample sample,
                                                            String pageTitle, List<Breadcrumb> breadcrumbs,
                                                            EmgFile emgFile, List<String> archivedSequences,

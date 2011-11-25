@@ -27,6 +27,7 @@
                             <form:option value="" label="All"/>
                             <form:option value="ENVIRONMENTAL" label="Environmental"/>
                             <form:option value="HOST_ASSOCIATED" label="Host associated"/>
+                            <form:option value="ENGINEERED" label="Man-made"/>
                             <%--<form:options items="${model.sampleTypes}"/>--%>
                         </form:select>
                     </span>

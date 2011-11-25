@@ -59,6 +59,7 @@
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample</value>
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.EnvironmentSample</value>
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.HostSample</value>
+                <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.EngineeredSample</value>
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.UndefinedSample</value>
             </list>
         </property>
