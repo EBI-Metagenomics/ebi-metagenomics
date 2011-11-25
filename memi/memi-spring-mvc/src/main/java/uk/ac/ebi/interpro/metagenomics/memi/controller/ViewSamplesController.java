@@ -173,7 +173,7 @@ public class ViewSamplesController extends AbstractController implements IMGCont
 
         //The visibility parameter can only be set if a user is logged in, means a session object exists
         if (sessionManager.getSessionBean().getSubmitter() != null) {
-            filter.setSampleVisibility(sampleVisibility);
+            filter.setSampleVisibility((sampleVisibility != null ? sampleVisibility : SampleFilter.SampleVisibility.MY_SAMPLES));
         } else {
             filter.setSampleVisibility(SampleFilter.SampleVisibility.ALL_PUBLISHED_SAMPLES);
         }
