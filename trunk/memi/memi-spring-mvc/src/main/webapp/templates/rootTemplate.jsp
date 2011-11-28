@@ -52,7 +52,7 @@
     <!-- JQuery and JQuery UI source-->
     <script src="${pageContext.request.contextPath}/js/jquery-1.4.4.min.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/js/jquery-ui-1.8.8.custom.min.js" type="text/javascript"></script>
-    <script src="${pageContext.request.contextPath}/js/jquery.validate-1.7.js" type="text/javascript"></script>
+    <script src="${pageContext.request.contextPath}/js/jquery.validate-1.9.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/js/jquery.form-2.85.js" type="text/javascript"></script>
     <!-- The date picker is used within the submission page -->
     <script src="${pageContext.request.contextPath}/js/datepicker.js" type="text/javascript"></script>
