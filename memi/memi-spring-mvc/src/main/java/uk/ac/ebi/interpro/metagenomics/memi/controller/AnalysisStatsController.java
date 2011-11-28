@@ -67,10 +67,10 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
         }, model, sampleId, getModelViewName());
     }
 
-    @RequestMapping(value = "/doExportGOSlimFile", method = RequestMethod.GET)
-    public ModelAndView doExportGOSlimFile(@PathVariable final String sampleId, ModelMap model, final HttpServletResponse response) {
-        return handleExport(sampleId, model, response, EmgFile.EmgFileExtension.GO_SLIM.getFileExtension(), "_GO_slim.csv");
-    }
+//    @RequestMapping(value = "/doExportGOSlimFile", method = RequestMethod.GET)
+//    public ModelAndView doExportGOSlimFile(@PathVariable final String sampleId, ModelMap model, final HttpServletResponse response) {
+//        return handleExport(sampleId, model, response, EmgFile.EmgFileExtension.GO_SLIM.getFileExtension(), "_GO_slim.csv");
+//    }
 
     @RequestMapping(value = "/doExportGOFile", method = RequestMethod.GET)
     public ModelAndView doExportGOFile(@PathVariable final String sampleId, final ModelMap model, final HttpServletResponse response) {

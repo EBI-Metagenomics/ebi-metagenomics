@@ -87,7 +87,7 @@
                             value="${model.emgFile.fileSizeMap['_I5.tsv']}"/>
                     </a></li>
                 <li>
-                    <a title="Click to download GO annotation result file (CSV)"
+                    <a title="<spring:message code="analysisStatsView.label.download.goterms.title"/>"
                        href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportGOFile"/>"><spring:message
                             code="analysisStatsView.label.download.goterms.csv"/> <c:out
                             value="${model.emgFile.fileSizeMap['_summary.go']}"/>
@@ -187,9 +187,9 @@
                        <spring:emailMessage code="analysisStatsView.label.download.goterms.full.csv"/></a>--%>
 
 
-                        <a id="csv" title="<spring:message code="analysisStatsView.label.download.goterms.slim.csv"/>"
+                        <a id="csv" title="<spring:message code="analysisStatsView.label.download.goterms.title"/>"
                            href="<c:url
-                            value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportGOSlimFile"/>">
+                            value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportGOFile"/>">
                             <spring:message code="analysisStatsView.label.download.goterms.full.csv"/><%-- <c:out
                         value="${model.emgFile.fileSizeMap['_summary.go_slim']}"/>--%></a>
                     </c:if>
