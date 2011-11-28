@@ -106,7 +106,7 @@ public class StudyViewController extends SecuredAbstractController<Study> {
                 pageTitle, getBreadcrumbs(study), propertyContainer, study, sampleDAO);
         final StudyViewModel studyModel = builder.getModel();
         studyModel.changeToHighlightedClass(ViewModel.TAB_CLASS_PROJECTS_VIEW);
-        model.addAttribute("loginForm", new LoginForm());
+        model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
         model.addAttribute(StudyViewModel.MODEL_ATTR_NAME, studyModel);
     }
 

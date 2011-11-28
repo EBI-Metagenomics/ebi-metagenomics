@@ -5,10 +5,14 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.ISampleStudyDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.DefaultViewModelBuilder;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder;
 
 /**
  * Represents a secured abstract controller class, which extends secured specific controllers.
@@ -60,7 +64,7 @@ public abstract class SecuredAbstractController<T extends SecureEntity> extends 
 
             if (!study.isPublic() && !isAccessible(study)) {
                 log.info("Requesting private study with ID " + stringId + "...");
-                return getAccessDeniedMAV(stringId);
+                return buildAccessDeniedModelAndView(stringId);
             }
 
             modelProcessingStrategy.processModel(model, securedEntity);
@@ -77,11 +81,17 @@ public abstract class SecuredAbstractController<T extends SecureEntity> extends 
      * @param objectId
      * @return Access denied model and view.
      */
-    private ModelAndView getAccessDeniedMAV(String objectId) {
+    private ModelAndView buildAccessDeniedModelAndView(String objectId) {
+        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager,
+                "EBI Metagenomics Portal", null, null);
+        final ViewModel viewModel = builder.getModel();
         ModelMap model = new ModelMap();
         model.addAttribute("objectId", objectId);
+        model.addAttribute(ViewModel.MODEL_ATTR_NAME, viewModel);
+        model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
         return new ModelAndView(CommonController.ACCESS_DENIED_VIEW_NAME, model);
     }
+
 
     /**
      * This view is shown if somebody types in a entry ID which does not exist.

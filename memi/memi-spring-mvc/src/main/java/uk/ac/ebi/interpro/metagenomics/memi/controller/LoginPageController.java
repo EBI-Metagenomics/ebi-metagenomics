@@ -56,7 +56,7 @@ public class LoginPageController extends LoginController {
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView doGet(@RequestParam(required = true) final boolean display, ModelMap model) {
         populateModel(model, display);
-        model.addAttribute("loginForm", new LoginForm());
+        model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
         return getModelAndView(model, display);
     }
 
