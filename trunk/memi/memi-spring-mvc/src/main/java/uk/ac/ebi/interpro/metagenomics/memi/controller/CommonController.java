@@ -7,6 +7,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
@@ -49,6 +50,7 @@ public class CommonController {
         final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "EBI Metagenomics Portal", new ArrayList<Breadcrumb>(), null);
         final ViewModel viewModel = builder.getModel();
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, viewModel);
+        model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
         return new ModelAndView("/errors/" + CommonController.NO_SUCH_REQUEST_PAGE_VIEW_NAME, model);
     }
 

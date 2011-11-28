@@ -89,11 +89,18 @@ public abstract class AbstractController {
     }
 
     private ModelAndView buildErrorModelAndView(String viewName) {
-        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "EBI Metagenomics Portal", new ArrayList<Breadcrumb>(), null);
+        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager,
+                "EBI Metagenomics Portal", getBreadcrumbsForErrorPage(null, viewName), null);
         final ViewModel viewModel = builder.getModel();
         ModelMap model = new ModelMap();
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, viewModel);
         model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
         return new ModelAndView("/errors/" + viewName, model);
+    }
+
+    private List<Breadcrumb> getBreadcrumbsForErrorPage(SecureEntity entity, String viewName) {
+        List<Breadcrumb> result = new ArrayList<Breadcrumb>();
+        result.add(new Breadcrumb("Error Page", "Error appeared. Sorry for any inconvenience!", "/errors/" + viewName));
+        return result;
     }
 }

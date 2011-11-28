@@ -123,7 +123,7 @@
                 <c:choose>
                 <c:when test="${not empty model.sample.hostTaxonomyId && model.sample.hostTaxonomyId>0}">
                 <span><c:out value="${model.sample.species}"/> <a class="ext"
-                                                                  href="<c:url value="http://www.ncbi.nlm.nih.gov/taxonomy?Db=taxonomy&Cmd=DetailsSearch&Term=${model.sample.hostTaxonomyId}[uid]"/>">Tax
+                                                                  href="<c:url value="http://www.uniprot.org/taxonomy/${model.sample.hostTaxonomyId}"/>">Tax
                     ID <c:out value="${model.sample.hostTaxonomyId}"/></a> </span></div>
             </c:when>
             <c:otherwise>
@@ -219,28 +219,28 @@
 
 
 <%--<c:choose>--%>
-    <%--<c:when test="${not empty model.sample.collectionDate || not empty model.sample.miscellaneous}">--%>
+<%--<c:when test="${not empty model.sample.collectionDate || not empty model.sample.miscellaneous}">--%>
 
-        <%--<h3>Other information</h3>--%>
+<%--<h3>Other information</h3>--%>
 
-        <%--<div class="output_form" id="large">--%>
-            <%--<c:choose>--%>
-                <%--<c:when test="${not empty model.sample.collectionDate}">--%>
-                    <%--<c:set var="collectionDate" value="${model.sample.collectionDate}"/>--%>
-                    <%--<div class="result_row"><label>Collection date:</label>--%>
+<%--<div class="output_form" id="large">--%>
+<%--<c:choose>--%>
+<%--<c:when test="${not empty model.sample.collectionDate}">--%>
+<%--<c:set var="collectionDate" value="${model.sample.collectionDate}"/>--%>
+<%--<div class="result_row"><label>Collection date:</label>--%>
 
-                        <%--<span><fmt:formatDate value="${collectionDate}" pattern="dd-MMM-yyyy"/></span></div>--%>
-                <%--</c:when>--%>
-                <%--&lt;%&ndash;<c:otherwise><c:set var="collectionDate" value="${notGivenId}"/></c:otherwise>&ndash;%&gt;--%>
-            <%--</c:choose>--%>
+<%--<span><fmt:formatDate value="${collectionDate}" pattern="dd-MMM-yyyy"/></span></div>--%>
+<%--</c:when>--%>
+<%--&lt;%&ndash;<c:otherwise><c:set var="collectionDate" value="${notGivenId}"/></c:otherwise>&ndash;%&gt;--%>
+<%--</c:choose>--%>
 
-            <%--<c:if test="${not empty model.sample.miscellaneous }">--%>
-                <%--<c:set var="miscellaneous" value="${model.sample.miscellaneous}"/>--%>
-                <%--<div class="result_row"><label>Miscellaneous:</label> <span><c:out value="${miscellaneous}"/></span>--%>
-                <%--</div>--%>
-            <%--</c:if>--%>
-        <%--</div>--%>
-    <%--</c:when>--%>
+<%--<c:if test="${not empty model.sample.miscellaneous }">--%>
+<%--<c:set var="miscellaneous" value="${model.sample.miscellaneous}"/>--%>
+<%--<div class="result_row"><label>Miscellaneous:</label> <span><c:out value="${miscellaneous}"/></span>--%>
+<%--</div>--%>
+<%--</c:if>--%>
+<%--</div>--%>
+<%--</c:when>--%>
 <%--</c:choose>--%>
 
 <h3>Submitted nucleotide data</h3>
