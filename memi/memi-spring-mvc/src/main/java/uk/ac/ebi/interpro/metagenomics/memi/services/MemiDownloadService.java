@@ -5,6 +5,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.util.FileCopyUtils;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.EngineeredSample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.EnvironmentSample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.HostSample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
@@ -88,7 +89,10 @@ public class MemiDownloadService {
                 } catch (IOException e) {
                     log.warn("Could not get input stream for the specified resource: " + headerResource.getFilename(), e);
                 }
+            } else {
+                log.debug("Header file resource is NULL or doesn't exist!");
             }
+
         }
         //create and stream sample files from project resource directory
         for (String sampleID : sampleIDs) {
@@ -111,6 +115,8 @@ public class MemiDownloadService {
                 } else {
                     sis = new SequenceInputStream(sis, sampleFileIs);
                 }
+            } else {
+                log.debug("Header file input stream or sample file input stream is NULL!");
             }
         }
         if (sis != null) {
@@ -140,6 +146,7 @@ public class MemiDownloadService {
      */
 
     private boolean assembleServletResponse(HttpServletResponse response, InputStream is, String fileName) {
+        log.debug("Trying to assemble servlet response");
         response.setContentType("text/html;charset=UTF-8");
         response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
         try {
@@ -166,7 +173,7 @@ public class MemiDownloadService {
      */
     private Resource getCSVFileHeaderStream(Class<? extends Sample> clazz) {
         String headerFileName = null;
-        if (clazz.equals(EnvironmentSample.class)) {
+        if (clazz.equals(EnvironmentSample.class) || clazz.equals(EngineeredSample.class)) {
             headerFileName = "data_EMG_env_samples.csv";
         } else if (clazz.equals(HostSample.class)) {
             headerFileName = "data_EMG_host_samples.csv";
