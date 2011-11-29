@@ -101,7 +101,9 @@ public class MemiDownloadService {
             }
             //create a file input stream and concatenate if the previous input stream if exists
             String pathName = sampleID + ".csv";
-            Resource sampleResource = new ClassPathResource(CLASS_PATH + pathName);
+            String path = CLASS_PATH + pathName;
+            log.debug("Creating sample file resource with path " + path);
+            Resource sampleResource = new ClassPathResource(path);
             if (sampleResource.exists()) {
                 try {
                     sampleFileIs = sampleResource.getInputStream();
@@ -181,7 +183,9 @@ public class MemiDownloadService {
             log.warn("Could not set any header file name, because an undefined study type was specified!");
         }
         if (headerFileName != null) {
-            return new ClassPathResource(CLASS_PATH + headerFileName);
+            String path = CLASS_PATH + headerFileName;
+            log.debug("Creating header file resource with path " + path);
+            return new ClassPathResource(path);
         }
         return null;
     }
