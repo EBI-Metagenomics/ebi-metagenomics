@@ -321,7 +321,7 @@ padding:8px 14px;
 
 a.analysis:hover {background:url(../img/backgrounds/bgd_button_login_off.gif) repeat-x 16px;text-decoration:none;}
 
-a.analysis img {vertical-align:middle;}
+a.analysis img {vertical-align:middle;padding:0 4px;border:0px red solid;}
 
 #logout {color:#333;font-weight:bold;}
 
