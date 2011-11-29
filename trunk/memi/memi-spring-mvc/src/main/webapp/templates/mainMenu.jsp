@@ -52,7 +52,7 @@
                 </span>
             </c:when>
             <c:otherwise>
-                <c:out value="${model.submitter.firstName} ${model.submitter.surname}"/>
+                <span id="logout"><c:out value="${model.submitter.firstName} ${model.submitter.surname}"/></span>
                 <c:url var="editPrefsUrl"
                        value="${model.propertyContainer.enaSubmissionURL.editPrefsLink}">
                     <c:param name="url" value="${enaUrlParam}"/>
