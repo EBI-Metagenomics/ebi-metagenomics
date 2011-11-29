@@ -82,6 +82,10 @@ public abstract class SecuredAbstractController<T extends SecureEntity> extends 
      * @return Access denied model and view.
      */
     private ModelAndView buildAccessDeniedModelAndView(String objectId) {
+        return getModelAndView(objectId, CommonController.ACCESS_DENIED_VIEW_NAME);
+    }
+
+    private ModelAndView getModelAndView(String objectId, String viewName) {
         final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager,
                 "EBI Metagenomics Portal", null, null);
         final ViewModel viewModel = builder.getModel();
@@ -89,7 +93,7 @@ public abstract class SecuredAbstractController<T extends SecureEntity> extends 
         model.addAttribute("objectId", objectId);
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, viewModel);
         model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
-        return new ModelAndView(CommonController.ACCESS_DENIED_VIEW_NAME, model);
+        return new ModelAndView(viewName, model);
     }
 
 
@@ -100,9 +104,7 @@ public abstract class SecuredAbstractController<T extends SecureEntity> extends 
      * @return Entry not exists model and view.
      */
     private ModelAndView getEntryNotExistMAV(String objectId) {
-        ModelMap model = new ModelMap();
-        model.addAttribute("objectId", objectId);
-        return new ModelAndView(CommonController.ENTRY_NOT_FOUND_VIEW_NAME, model);
+        return getModelAndView(objectId, CommonController.ENTRY_NOT_FOUND_VIEW_NAME);
     }
 
     abstract ISampleStudyDAO<T> getDAO();
