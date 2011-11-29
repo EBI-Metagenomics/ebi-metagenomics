@@ -66,7 +66,7 @@
     <c:when test="${not empty model.sample.analysisCompleted}">
         <p>
             <a class="analysis" href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}"/>">
-                <img src="<c:url value="${baseURL}/img/ico_analysis_chart.png"/>"
+                <img src="<c:url value="${baseURL}/img/ico_analysis_chart.gif"/>"
                      alt="view analysis results and statistics">View analysis results</a>
         </p>
     </c:when>
