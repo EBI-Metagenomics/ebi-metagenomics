@@ -110,7 +110,7 @@
 
         <h4>InterPro match summary</h4>
 
-        <p>Top 5 abundant InterPro terms found in this analysis:</p>
+        <p>Top five most frequently found InterPro matches to this sample:</p>
         <c:choose>
             <c:when test="${not empty model.interProEntries}">
                 <%--<c:set var="proteinExportID" value="Export full InterPro protein matches table (Excel or TSV)"/>--%>
