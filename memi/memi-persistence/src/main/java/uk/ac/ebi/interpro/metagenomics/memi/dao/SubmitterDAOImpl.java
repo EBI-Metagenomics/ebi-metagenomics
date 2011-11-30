@@ -38,10 +38,37 @@ public class SubmitterDAOImpl implements SubmitterDAO {
     public SubmitterDAOImpl() {
     }
 
+    /**
+     * Queries submitter by submitter ID.
+     *
+     * @param submitterId submitter ID.
+     * @return Submitter.
+     */
     @Override
-    // TODO: Implement
     public Submitter getSubmitterById(long submitterId) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        if (submitterId == 0)
+            return null;
+        Submitter submitter = null;
+        try {
+            submitter = this.jdbcTemplate.queryForObject("SELECT submitterid, first_name, surname, password, email_address FROM " + Submitter.TABLE_NAME + " WHERE ACTIVE='Y' AND submitterid=?",
+                    new Object[]{submitterId},
+                    new RowMapper<Submitter>() {
+                        public Submitter mapRow(ResultSet rs, int rowNum) throws SQLException {
+                            Submitter submitter = new Submitter();
+                            submitter.setSubmitterId(Integer.parseInt(rs.getString("submitterid")));
+                            submitter.setFirstName(rs.getString("first_name"));
+                            submitter.setSurname(rs.getString("surname"));
+                            submitter.setEmailAddress(rs.getString("email_address"));
+                            submitter.setPassword(rs.getString("password"));
+                            return submitter;
+                        }
+                    });
+
+        } catch (Exception e) {
+            log.warn("Could not perform database query. It might be that the JDBC connection could not build" +
+                    " or is wrong configured. For more info take a look at the stack trace!", e);
+        }
+        return submitter;
     }
 
     @Override

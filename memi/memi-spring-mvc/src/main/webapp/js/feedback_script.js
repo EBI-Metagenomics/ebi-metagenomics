@@ -10,9 +10,8 @@ $(function() {
         data: $("#feedback_form").serialize(),
         dataType: "json",
         success: function(data, textStatus, jqXHR) {
-            var $pathName = window.location.pathname;
-            var $pos = window.location.pathname.search("/metagenomics");
-            window.location.href = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1) + "feedbackSuccess";
+            var root = location.protocol + '//' + location.host;
+            window.location.href = root + "/metagenomics/feedbackSuccess";
         },
         error: function(xhr, ajaxOptions, thrownError) {
             var jsonObject = jQuery.parseJSON(xhr.responseText);

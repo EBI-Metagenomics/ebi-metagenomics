@@ -14,7 +14,9 @@ import java.util.List;
  */
 public interface HibernateSampleDAO extends ISampleStudyDAO<Sample> {
 
-    List<Sample> retrieveSamplesByStudyId(long studyId);
+    List<Sample> retrieveAllSamplesByStudyId(long studyId);
+
+    List<Sample> retrievePublicSamplesByStudyId(long studyId);
 
     /**
      * Returns an ordered list of public samples.

@@ -91,7 +91,7 @@ public class FeedbackFormsController extends AbstractController {
     @RequestMapping(value = "**/feedbackSuccess", method = RequestMethod.GET)
     public ModelAndView doGetSuccessPage(final ModelMap model) {
         return buildModelAndView(
-                "/feedbackSuccess",
+                "feedbackSuccess",
                 model,
                 new ModelPopulator() {
                     @Override

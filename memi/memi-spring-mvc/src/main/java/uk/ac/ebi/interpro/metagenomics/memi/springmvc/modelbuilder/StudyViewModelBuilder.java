@@ -5,6 +5,8 @@ import org.apache.commons.logging.LogFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.comparators.PublicationComparator;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateSampleDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.SubmitterDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Publication;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.PublicationType;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
@@ -42,9 +44,11 @@ public class StudyViewModelBuilder extends AbstractViewModelBuilder<StudyViewMod
 
     private List<Publication> relatedPublications;
 
+    private SubmitterDAO submitterDAO;
+
 
     public StudyViewModelBuilder(SessionManager sessionMgr, String pageTitle, List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer,
-                                 Study study, HibernateSampleDAO sampleDAO) {
+                                 Study study, HibernateSampleDAO sampleDAO, SubmitterDAO submitterDAO) {
         super(sessionMgr);
         this.pageTitle = pageTitle;
         this.breadcrumbs = breadcrumbs;
@@ -53,15 +57,38 @@ public class StudyViewModelBuilder extends AbstractViewModelBuilder<StudyViewMod
         this.sampleDAO = sampleDAO;
         this.relatedLinks = new ArrayList<Publication>();
         this.relatedPublications = new ArrayList<Publication>();
+        this.submitterDAO = submitterDAO;
     }
 
     @Override
     public StudyViewModel getModel() {
         log.info("Building instance of " + StudyViewModel.class + "...");
-        List<Sample> samples = sampleDAO.retrieveSamplesByStudyId(study.getId());
+        Submitter submitter = getSessionSubmitter(sessionMgr);
+        List<Sample> samples = getSamplesForStudyViewModel(submitter);
         buildPublicationLists();
-        return new StudyViewModel(getSessionSubmitter(sessionMgr), study, samples, pageTitle,
-                breadcrumbs, propertyContainer, relatedPublications, relatedLinks);
+        Submitter studyOwner = submitterDAO.getSubmitterById(study.getSubmitterId());
+        if (studyOwner != null) {
+            String submitterName = studyOwner.getFirstName() + " " + studyOwner.getSurname();
+            return new StudyViewModel(submitter, study, samples, pageTitle,
+                    breadcrumbs, propertyContainer, relatedPublications, relatedLinks, submitterName, studyOwner.getEmailAddress());
+        } else {
+            return new StudyViewModel(submitter, study, samples, pageTitle,
+                    breadcrumbs, propertyContainer, relatedPublications, relatedLinks);
+        }
+    }
+
+    private List<Sample> getSamplesForStudyViewModel(Submitter submitter) {
+        long studyId = study.getId();
+        if (submitter == null) {
+            return sampleDAO.retrievePublicSamplesByStudyId(studyId);
+        } else {
+            //Check if submitter is study owner
+            if (submitter.getSubmitterId() == study.getSubmitterId()) {
+                return sampleDAO.retrieveAllSamplesByStudyId(studyId);
+            } else {
+                return sampleDAO.retrievePublicSamplesByStudyId(studyId);
+            }
+        }
     }
 
     /**
