@@ -207,7 +207,7 @@ Contact name: (not given)
                                     alt="Analysis in progress" title="Analysis in progress">--%>in progress</c:when>
                             <c:otherwise>
                                 <a href="<c:url value="${baseURL}/analysisStatsView/${sample.sampleId}"/>"><img
-                                        src="${pageContext.request.contextPath}/img/ico_FINISHED_25_8.png"
+                                        src="${pageContext.request.contextPath}/img/ico_analysis_chart.gif"
                                         alt="Analysis finished - check the results"
                                         title="Analysis finished - check the results"></a>
                             </c:otherwise>
