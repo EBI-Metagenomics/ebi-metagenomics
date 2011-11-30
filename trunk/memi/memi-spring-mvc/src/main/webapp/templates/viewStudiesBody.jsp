@@ -71,7 +71,7 @@
             <div class="export">
                 <a href="<c:url value="${baseURL}/projects/doExportDetails?${queryString}"/>" id="csv_plus"
                    title="<spring:message code="viewStudies.download.anchor.title.detailed"/>">
-                    <spring:message code="viewStudies.download.anchor.label.detailed"/>
+                    <spring:message code="download.anchor.label.detailed"/>
                 </a>
                 <a href="<c:url value="${baseURL}/projects/doExport?${queryString}"/>" id="csv"
                    title="<spring:message code="viewStudies.download.anchor.title.table"/>"><spring:message

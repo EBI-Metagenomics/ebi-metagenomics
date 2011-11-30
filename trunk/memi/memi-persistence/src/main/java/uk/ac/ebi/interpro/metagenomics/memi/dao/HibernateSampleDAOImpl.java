@@ -15,10 +15,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * Represents the implementation class of {@link uk.ac.ebi.interpro.metagenomics.memi.dao.EmgSampleDAO}
@@ -148,17 +145,41 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
     }
 
     /**
-     * @return All samples filtered by the specified study Id.
+     * Retrieves samples (public and private) by study ID.
+     *
+     * @return Public and private samples by the specified study Id.
      */
     @Override
     @Transactional(readOnly = true)
-    public List<Sample> retrieveSamplesByStudyId(long studyId) {
+    public List<Sample> retrieveAllSamplesByStudyId(long studyId) {
+        Set<Criterion> criterionSet = new HashSet<Criterion>(2);
+        criterionSet.add(Restrictions.eq("study.id", studyId));
+        return retrieveSamplesByCriterionSet(criterionSet);
+    }
+
+    /**
+     * Retrieves public samples by study ID.
+     *
+     * @return Public samples by the specified study Id.
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<Sample> retrievePublicSamplesByStudyId(long studyId) {
+        Set<Criterion> criterionSet = new HashSet<Criterion>(2);
+        criterionSet.add(Restrictions.eq("study.id", studyId));
+        criterionSet.add(Restrictions.eq("isPublic", true));
+        return retrieveSamplesByCriterionSet(criterionSet);
+    }
+
+    private List<Sample> retrieveSamplesByCriterionSet(Set<Criterion> criterionSet) {
         Session session = sessionFactory.getCurrentSession();
         if (session != null) {
             Criteria crit = session.createCriteria(Sample.class);
             if (crit != null) {
-                //Add where clause
-                crit.add(Restrictions.eq("study.id", studyId));
+                for (Criterion criterion : criterionSet) {
+                    //Add where clauses
+                    crit.add(criterion);
+                }
                 //Add distinct criterion
                 crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
                 try {

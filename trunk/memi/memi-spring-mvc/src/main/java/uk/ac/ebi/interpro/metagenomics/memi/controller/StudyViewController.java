@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateSampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateStudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.ISampleStudyDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.SubmitterDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
@@ -59,6 +60,9 @@ public class StudyViewController extends SecuredAbstractController<Study> {
     @Resource
     private MemiDownloadService downloadService;
 
+    @Resource
+    private SubmitterDAO submitterDAO;
+
     //GET Methods
 
     @RequestMapping(method = RequestMethod.GET)
@@ -103,7 +107,7 @@ public class StudyViewController extends SecuredAbstractController<Study> {
 //        List<Sample> samples = sampleDAO.retrieveSamplesByStudyId(study.getId());
         String pageTitle = study.getStudyName() + " project";
         final ViewModelBuilder<StudyViewModel> builder = new StudyViewModelBuilder(sessionManager,
-                pageTitle, getBreadcrumbs(study), propertyContainer, study, sampleDAO);
+                pageTitle, getBreadcrumbs(study), propertyContainer, study, sampleDAO, submitterDAO);
         final StudyViewModel studyModel = builder.getModel();
         studyModel.changeToHighlightedClass(ViewModel.TAB_CLASS_PROJECTS_VIEW);
         model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());

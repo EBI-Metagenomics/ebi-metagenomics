@@ -126,8 +126,8 @@
     <%--Harvested: Nucleotid sequences submitted to the ENA.--%>
     <c:choose>
         <c:when test="${model.study.dataOrigination == 'SUBMITTED'}">
-            <c:set var="contactName" value="${model.submitter.firstName} ${model.submitter.surname}" scope="page"/>
-            <c:set var="contactMail" value="${model.submitter.emailAddress}" scope="page"/>
+            <c:set var="contactName" value="${model.submitterName}" scope="page"/>
+            <c:set var="contactMail" value="${model.emailAddress}" scope="page"/>
         </c:when>
         <c:when test="${model.study.dataOrigination == 'HARVESTED'}">
             <c:set var="contactName" value="${model.study.authorName}" scope="page"/>
@@ -166,12 +166,12 @@ Contact name: (not given)
             <a href="<c:url value="${baseURL}/project/${model.study.studyId}/doExport/"/>">Export more detailed sample info to CSV</a>
         </div>--%>
 
-
-        <div class="export">
-            <a href="<c:url value="${baseURL}/project/${model.study.studyId}/doExport/"/>" id="csv_plus"
-               title="<spring:message code="studyView.download.anchor.title"/>">
-                <spring:message code="studyView.download.anchor.title"/></a>
-        </div>
+        <!-- Removed link temporarily-->
+        <%--<div class="export">--%>
+        <%--<a href="<c:url value="${baseURL}/project/${model.study.studyId}/doExport/"/>" id="csv_plus"--%>
+        <%--title="<spring:message code="studyView.download.anchor.title"/>">--%>
+        <%--<spring:message code="download.anchor.label.detailed"/></a>--%>
+        <%--</div>--%>
 
 
         <table border="1" class="result">
