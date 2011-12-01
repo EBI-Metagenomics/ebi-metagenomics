@@ -1523,13 +1523,13 @@ background:url(../img/carousel_l.png) 0 0 no-repeat; margin-right:-34px;}
 /*.pag-first a:active { background:url(../img/ico_pag_first_active.png) no-repeat left 2px;}*/
 .pag-first-off { background:url(../img/ico_pag_first_off.png) no-repeat left 2px;width:17px; height:18px;display:block;}
 /* modules */
-.module {width:292px; background:#fafafa url(../img/backgrounds/module_lge_bg.jpg) bottom left repeat-x; margin:0 6px ;line-height:normal;}
+.module {width:292px; background:#fafafa url(../img/backgrounds/module_lge_bg.jpg) bottom left repeat-x; margin:0 6px ;line-height:1.2;}
 .module .top_corners {background:url(../img/backgrounds/module_explore_top.png) top left no-repeat; height:8px; overflow:hidden;}
 .module .bottom_corners {background:url(../img/backgrounds/module_explore_bottom.png) top left no-repeat; height:8px; overflow:hidden;}
 .module .content {height:250px !important; border:solid #e6e6e6; border-width:0 1px; min-height:240px; position:relative;  text-align:left;}
 .module .content .cent {border:0px solid red; padding:7px 14px 7px 100px;}
 .module .content h3 {font-size:150%; margin:-3px 0 7px 0; padding:0 7px; font-weight:normal;}
-.module .content p {padding:0 7px; line-height:normal; margin:0;}
+.module .content p {padding:0 7px;line-height:1.2; margin:0;}
 
 
 
