@@ -40,8 +40,7 @@
                 </ol>
             </li>
             <li>3. CDS predicted (FragGeneScan v 1.15)</li>
-            <li>4. Matches were generated against predicted CDS with InterProScan 5.0 (beta release) using a subset of databases from InterPro release 31.0 (databases used for analysis: Pfam, TIGRFAM, PRINTS, PROSITE patterns,
-> Gene3d). The Gene Ontology term summary was generated using the following GO slim: goslim_goa
+            <li>4. Matches were generated against predicted CDS with InterProScan 5.0 (beta release) using a subset of databases from InterPro release 31.0 (databases used for analysis: Pfam, TIGRFAM, PRINTS, PROSITE patterns, Gene3d). The Gene Ontology term summary was generated using the following GO slim: goslim_goa
 
             </li>
         </ol>
