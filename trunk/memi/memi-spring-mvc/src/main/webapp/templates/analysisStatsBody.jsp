@@ -225,7 +225,7 @@
             </div>
         </div>
         <div class="but_top"><a href="#top" title="back to the top page">Top</a></div>
-        </div>
+
     </c:when>
     <c:otherwise>
         <h3>Analysis in progress!</h3>
@@ -236,3 +236,4 @@
     <h3>Sample ID Not Recognised</h3>
 </c:otherwise>
 </c:choose>
+   </div>
