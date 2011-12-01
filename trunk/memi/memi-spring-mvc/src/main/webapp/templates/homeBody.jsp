@@ -208,12 +208,16 @@
                                 <br/>
                                 <span class="list_desc"><c:out value="${sample.shortSampleDescription} ..."/></span>
                                 <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>#sample_desc"
-                                   class="more_view">view more</a> -
+                                   class="more_view">view more</a>
                                 <c:choose>
-                                    <c:when test="${empty sample.analysisCompleted}">Analysis in progress</c:when>
+                                    <c:when test="${empty sample.analysisCompleted}">
+                                        <%-- leave empty to be consistent with sample overview page
+                                 - <img src="${pageContext.request.contextPath}/img/ico_analysis_chart_small_off.gif" alt="Analysis in progress" title="Analysis in progress">--%></c:when>
                                     <c:otherwise>
-                                        <a href="<c:url value="${baseURL}/analysisStatsView/${sample.sampleId}"/>"
-                                           class="list_sample">Analysis results</a>
+                                        - <a href="<c:url value="${baseURL}/analysisStatsView/${sample.sampleId}"/>"
+                                   class="list_sample"> <img src="${pageContext.request.contextPath}/img/ico_analysis_chart_small.gif"
+                                            alt="Analysis finished - check the results"
+                                            title="Analysis finished - check the results"></a>                        
                                     </c:otherwise>
                                 </c:choose>
                             </p>
