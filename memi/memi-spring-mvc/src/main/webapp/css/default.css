@@ -1324,7 +1324,7 @@ width:100%;
 #go-chart-process, #go-chart-molecular, #go-chart-cellular {
 float:left;
 border:0px solid green;
-margin-right:10px; /*reduced because of IE6*/
+margin-right:7px; /*reduced because of IE6*/
 }
 
 #samples_id {margin-bottom:0;}
