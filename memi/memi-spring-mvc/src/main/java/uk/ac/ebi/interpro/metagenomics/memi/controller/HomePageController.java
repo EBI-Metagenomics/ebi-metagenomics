@@ -61,7 +61,7 @@ public class HomePageController extends AbstractController implements IMGControl
                     @Override
                     public void populateModel(ModelMap model) {
                         log.info("Building model of " + HomePageController.class + "...");
-                        final ViewModelBuilder<HomePageViewModel> builder = new HomePageViewModelBuilder(sessionManager, "Metagenomics Home",
+                        final ViewModelBuilder<HomePageViewModel> builder = new HomePageViewModelBuilder(sessionManager, "EBI metagenomics: archiving, analysis and integration of metagenomics data",
                                 getBreadcrumbs(null), propertyContainer, studyDAO, sampleDAO, rssClient);
                         final HomePageViewModel hpModel = builder.getModel();
                         hpModel.changeToHighlightedClass(ViewModel.TAB_CLASS_HOME_VIEW);

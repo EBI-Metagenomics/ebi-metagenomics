@@ -96,7 +96,7 @@ public class FeedbackFormsController extends AbstractController {
                 new ModelPopulator() {
                     @Override
                     public void populateModel(ModelMap model) {
-                        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "Metagenomics Thank you", getBreadcrumbs(null), propertyContainer);
+                        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "Thanks for submitting your data - EBI metagenomics", getBreadcrumbs(null), propertyContainer);
                         final ViewModel defaultViewModel = builder.getModel();
                         model.addAttribute(ViewModel.MODEL_ATTR_NAME, defaultViewModel);
                     }
@@ -193,7 +193,7 @@ public class FeedbackFormsController extends AbstractController {
     class FeebackModelPopulator implements ModelPopulator {
         @Override
         public void populateModel(ModelMap model) {
-            final ViewModelBuilder<FeedbackModel> builder = new FeedbackViewModelBuilder(sessionManager, "Metagenomics Feedback", getBreadcrumbs(null), propertyContainer);
+            final ViewModelBuilder<FeedbackModel> builder = new FeedbackViewModelBuilder(sessionManager, "Send your feedback - EBI metagenomics", getBreadcrumbs(null), propertyContainer);
             final FeedbackModel feedbackViewModel = builder.getModel();
             model.addAttribute(ViewModel.MODEL_ATTR_NAME, feedbackViewModel);
         }
