@@ -636,8 +636,8 @@ margin: 4px 10px 0 4px;
 
 
 #submit-data {
-border: solid 0px red;
-height:288px; /*for IE6*/
+border: solid 0px black;
+height:300px; /* was 288 for IE6*/
 padding:14px 14px 0 14px;  /*reduced for carousel*/
 display:block;
 overflow:auto;
@@ -1453,7 +1453,7 @@ width:908px;/*628px for 2 slides*/margin:0;border:0px solid pink;
 }
 
 /* pagination*/
-div.center-wrap{overflow:hidden;clear:both;zoom:1; text-align:center; line-height:normal;}
+div.center-wrap{/*overflow:hidden; remove because of bug in Firefox*/ clear:both;zoom:1; text-align:center; line-height:1;}
 div.center-wrap div{border:0px solid red;margin:2px 0; display:block; }
 div.center-wrap p{border:0;margin:0;}
 div.center-wrap a{
