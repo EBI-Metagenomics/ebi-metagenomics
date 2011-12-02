@@ -47,7 +47,7 @@ public class CommonController {
                 "log to no such request mapping found, please do not note this warning. HTTP status code " +
                 "404 responded. Please have a look to the Spring log to see which wrong URL was " +
                 "requested!");
-        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "EBI Metagenomics Portal", new ArrayList<Breadcrumb>(), null);
+        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "404 Document Not Found - EBI Metagenomics", new ArrayList<Breadcrumb>(), null);
         final ViewModel viewModel = builder.getModel();
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, viewModel);
         model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());

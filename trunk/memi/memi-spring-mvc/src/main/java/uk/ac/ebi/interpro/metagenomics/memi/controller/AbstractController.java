@@ -90,7 +90,7 @@ public abstract class AbstractController {
 
     private ModelAndView buildErrorModelAndView(String viewName) {
         final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager,
-                "EBI Metagenomics Portal", getBreadcrumbsForErrorPage(null, viewName), null);
+                "Error page - EBI metagenomics", getBreadcrumbsForErrorPage(null, viewName), null);
         final ViewModel viewModel = builder.getModel();
         ModelMap model = new ModelMap();
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, viewModel);

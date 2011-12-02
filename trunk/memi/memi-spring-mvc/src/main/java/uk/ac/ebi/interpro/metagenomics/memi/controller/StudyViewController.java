@@ -105,7 +105,7 @@ public class StudyViewController extends SecuredAbstractController<Study> {
 
     private void populateModel(final ModelMap model, final Study study) {
 //        List<Sample> samples = sampleDAO.retrieveSamplesByStudyId(study.getId());
-        String pageTitle = study.getStudyName() + " project";
+        String pageTitle = "Project overview: "+ study.getStudyName() +" - EBI metagenomics";
         final ViewModelBuilder<StudyViewModel> builder = new StudyViewModelBuilder(sessionManager,
                 pageTitle, getBreadcrumbs(study), propertyContainer, study, sampleDAO, submitterDAO);
         final StudyViewModel studyModel = builder.getModel();

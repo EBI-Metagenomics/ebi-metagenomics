@@ -46,7 +46,7 @@ public class InfoController extends AbstractController implements IMGController 
      */
     private void populateModel(final ModelMap model) {
         log.info("Building model of InfoController...");
-        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "Metagenomics About", getBreadcrumbs(null), propertyContainer);
+        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "About EBI metagenomics", getBreadcrumbs(null), propertyContainer);
         final ViewModel infoModel = builder.getModel();
         infoModel.changeToHighlightedClass(ViewModel.TAB_CLASS_ABOUT_VIEW);
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, infoModel);

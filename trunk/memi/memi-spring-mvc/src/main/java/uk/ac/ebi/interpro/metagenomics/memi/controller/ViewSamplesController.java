@@ -189,7 +189,7 @@ public class ViewSamplesController extends AbstractController implements IMGCont
      * Creates the MG model and adds it to the specified model map.
      */
     private void populateModel(ModelMap model, SampleFilter filter, int startPosition) {
-        final ViewModelBuilder<SamplesViewModel> builder = new SamplesViewModelBuilder(sessionManager, "Metagenomics View Samples",
+        final ViewModelBuilder<SamplesViewModel> builder = new SamplesViewModelBuilder(sessionManager, "Samples list - EBI metagenomics",
                 getBreadcrumbs(null), propertyContainer, getTableHeaderNames(), sampleDAO, filter, startPosition);
         final SamplesViewModel samplesViewModel = builder.getModel();
         samplesViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_SAMPLES_VIEW);

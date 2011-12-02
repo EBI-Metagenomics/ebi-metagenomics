@@ -119,11 +119,15 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
     }
 
 
+    protected void populateModel(final ModelMap model, final Sample sample, boolean isReturnSizeLimit) {
+        String pageTitle = "Sample analysis results: "+ sample.getSampleName()+" - EBI metagenomics";
+        populateModel(model,sample,isReturnSizeLimit,pageTitle);
+     }
+
     /**
      * Creates the home page model and adds it to the specified model map.
      */
-    protected void populateModel(final ModelMap model, final Sample sample, boolean isReturnSizeLimit) {
-        String pageTitle = "Results " + sample.getSampleName();
+    protected void populateModel(final ModelMap model, final Sample sample, boolean isReturnSizeLimit, String pageTitle) {
         List<EmgFile> emgFiles = fileInfoDAO.getFilesBySampleId(sample.getId());
         //TODO: For the moment the system only allows to represent one file on the analysis page, but
         //in the future it should be possible to represent all different data types (genomic, transcripomic)
