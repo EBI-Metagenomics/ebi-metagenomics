@@ -8,7 +8,6 @@
 <script src="${pageContext.request.contextPath}/js/loginDialog_script.js" type="text/javascript"></script>
 <%--Login dialog--%>
 <div id="login_dialog_div" class="sub">
-    <%--<div id="errorMessage" class="error"></div>--%>
     <div class="sub_log">
         <form:form id="login_form" action="**/doLogin" commandName="loginForm">
             <fieldset>
