@@ -21,6 +21,16 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
         <param-value>/WEB-INF/spring/mvc-dispatcher-servlet.xml</param-value>
     </context-param>
 
+    <!--This filter transparently supports HTTP HEAD requests in Java and Spring MVC-->
+    <filter>
+        <filter-name>headRequestFilter</filter-name>
+        <filter-class>uk.ac.ebi.interpro.metagenomics.memi.basic.HttpHeadFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>headRequestFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
     <servlet>
         <servlet-name>memi-mvc-dispatcher</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -53,26 +63,26 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
         <!--<mime-type>image/vnd.microsoft.icon</mime-type>-->
     </mime-mapping>
 
-    <mime-mapping>
-        <extension>eot</extension>
-        <mime-type>application/vnd.ms-fontobject</mime-type>
-    </mime-mapping>
+    <!--<mime-mapping>-->
+    <!--<extension>eot</extension>-->
+    <!--<mime-type>application/vnd.ms-fontobject</mime-type>-->
+    <!--</mime-mapping>-->
 
-    <mime-mapping>
-        <extension>svg</extension>
-        <mime-type>image/svg+xml</mime-type>
-    </mime-mapping>
+    <!--<mime-mapping>-->
+    <!--<extension>svg</extension>-->
+    <!--<mime-type>image/svg+xml</mime-type>-->
+    <!--</mime-mapping>-->
 
-    <mime-mapping>
-        <extension>ttf</extension>
-        <mime-type>application/x-font-ttf</mime-type>
-        <!--<mime-type>font/ttf</mime-type>-->
-        <!--<mime-type>font/truetype</mime-type>-->
-    </mime-mapping>
+    <!--<mime-mapping>-->
+    <!--<extension>ttf</extension>-->
+    <!--<mime-type>application/x-font-ttf</mime-type>-->
+    <!--&lt;!&ndash;<mime-type>font/ttf</mime-type>&ndash;&gt;-->
+    <!--&lt;!&ndash;<mime-type>font/truetype</mime-type>&ndash;&gt;-->
+    <!--</mime-mapping>-->
 
-    <mime-mapping>
-        <extension>woff</extension>
-        <mime-type>application/x-font-woff</mime-type>
-        <!--<mime-type>font/x-woff</mime-type>-->
-    </mime-mapping>
+    <!--<mime-mapping>-->
+    <!--<extension>woff</extension>-->
+    <!--<mime-type>application/x-font-woff</mime-type>-->
+    <!--&lt;!&ndash;<mime-type>font/x-woff</mime-type>&ndash;&gt;-->
+    <!--</mime-mapping>-->
 </web-app>

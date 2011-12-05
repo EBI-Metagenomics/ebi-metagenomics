@@ -9,9 +9,13 @@ $(function() {
                 closeOnEscape: true, //Dialog closes when it has focus and the user presses the esacpe (ESC) key
                 height: 400,
                 width: 730,
-                beforeClose: function(event, ui) {
-                    $("#errorMessage").html("");
+                open: function(event, ui) {
+                    clearLoginDialogForm();
+                    document.getElementById('loginDialog_emailAddress.errors').innerHTML = "";
                 }
+//                beforeClose: function(event, ui) {
+//                    $("#errorMessage").html("");
+//                }
             });
 
     //Close dialog by mouse click in the overlay area
@@ -81,4 +85,10 @@ function openLoginDialogForm() {
 //Closes the dialog
 function closeLoginDialogForm() {
     dialog.dialog("close");
+}
+//Resets input fields to their original value (requires form plugin), removes classes indicating invalid elements and hides error messages.
+function clearLoginDialogForm() {
+    loginDialogValidator.resetForm();
+    document.getElementById("loginDialog_emailAddress").setAttribute("class", "");
+    document.getElementById("loginDialog_password").setAttribute("class", "");
 }
