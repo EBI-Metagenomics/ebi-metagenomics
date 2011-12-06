@@ -93,29 +93,32 @@
             <c:set var="firstId" value="First"/>
             <c:set var="lastId" value="Last"/>
 
-                <c:out value="${model.pagination.displayedItemRange}"/> of <c:out value="${model.pagination.totalItems}"/>
-                &nbsp;  &nbsp;
+                <div class="table_opt_pag_num"><c:out value="${model.pagination.displayedItemRange}"/> of <c:out value="${model.pagination.totalItems}"/>
+                </div>
+                <div class="table_opt_pag_arr">
                 <c:if test="${model.pagination.totalItems > model.pagination.pageSize}">
                     <c:choose>
                         <c:when test="${model.pagination.existPreviousStartPos}">
-                            <c:out value=" | "/>
-                            <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=${model.sampleFilter.searchTerm}&sampleVisibility=${model.sampleFilter.sampleVisibility.upperCaseString}&search=Search&startPosition=${model.pagination.start}&sampleType=${model.sampleFilter.sampleType.upperCaseString}"/>"
-                               id="csv" title="First"><c:out value="${firstId}"/></a> |
-                            <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=${model.sampleFilter.searchTerm}&sampleVisibility=${model.sampleFilter.sampleVisibility.upperCaseString}&search=Search&startPosition=${model.pagination.previousStartPos}&sampleType=${model.sampleFilter.sampleType.upperCaseString}"/>"
-                               id="csv" title="Prev"><c:out value="${prevId}"/></a> |
+                          
+                             <div class="pag-first"><a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=${model.sampleFilter.searchTerm}&sampleVisibility=${model.sampleFilter.sampleVisibility.upperCaseString}&search=Search&startPosition=${model.pagination.start}&sampleType=${model.sampleFilter.sampleType.upperCaseString}"/>"
+                               id="csv" title="<c:out value="${firstId}"/>"></a></div>
+                            <div class="pag-prev"><a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=${model.sampleFilter.searchTerm}&sampleVisibility=${model.sampleFilter.sampleVisibility.upperCaseString}&search=Search&startPosition=${model.pagination.previousStartPos}&sampleType=${model.sampleFilter.sampleType.upperCaseString}"/>"
+                               id="csv" title="<c:out value="${prevId}"/>"></a></div>
                         </c:when>
-                        <c:otherwise><c:out value="${firstId} | ${prevId} |"/></c:otherwise>
+                        <c:otherwise><div class="pag-first-off"></div>  <div class="pag-prev-off"></div></c:otherwise>
                     </c:choose>
+                    <%--<span style="float:left;padding:0 4px; color:#ABADB3;">prev | next</span>--%>
                     <c:choose>
                         <c:when test="${model.pagination.existNextStartPos}">
-                            <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=${model.sampleFilter.searchTerm}&sampleVisibility=${model.sampleFilter.sampleVisibility.upperCaseString}&search=Search&startPosition=${model.pagination.nextStartPos}&sampleType=${model.sampleFilter.sampleType.upperCaseString}"/>"
-                               id="csv" title="Next"><c:out value="${nextId}"/></a> |
-                            <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=${model.sampleFilter.searchTerm}&sampleVisibility=${model.sampleFilter.sampleVisibility.upperCaseString}&search=Search&startPosition=${model.pagination.lastLinkPosition}&sampleType=${model.sampleFilter.sampleType.upperCaseString}"/>"
-                               id="csv" title="Last"><c:out value="${lastId}"/></a>
+                           <div class="pag-next"><a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=${model.sampleFilter.searchTerm}&sampleVisibility=${model.sampleFilter.sampleVisibility.upperCaseString}&search=Search&startPosition=${model.pagination.nextStartPos}&sampleType=${model.sampleFilter.sampleType.upperCaseString}"/>"
+                               id="csv" title="<c:out value="${nextId}"/>"></a></div>
+                             <div class="pag-last"><a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=${model.sampleFilter.searchTerm}&sampleVisibility=${model.sampleFilter.sampleVisibility.upperCaseString}&search=Search&startPosition=${model.pagination.lastLinkPosition}&sampleType=${model.sampleFilter.sampleType.upperCaseString}"/>"
+                               id="csv" title="<c:out value="${lastId}"/>"></a></div>
                         </c:when>
-                        <c:otherwise><c:out value="${nextId} | ${lastId}"/></c:otherwise>
+                        <c:otherwise><div class="pag-next-off"></div> <div class="pag-last-off"></div></c:otherwise>
                     </c:choose>
                 </c:if>
+                </div>
             </div>
             <%--End of item pagination pattern--%>
             </div>
@@ -128,7 +131,9 @@
                         <c:choose>
                             <c:when test="${headerName == 'Sample name' || headerName == 'Project name'}">
                                 <c:set var="headerId" value="h_left" scope="page"/>
+                                
                             </c:when>
+
                             <c:when test="${headerName == 'Source'}">
                                 <c:set var="headerWidth" value="140px" scope="page"/>
                             </c:when>
@@ -149,7 +154,7 @@
                                                                 src="${pageContext.request.contextPath}/img/icon_priv_private.gif">&nbsp;&nbsp;</c:if>
                             <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>">${sample.sampleName}</a>
                         </td>
-                        <td style="text-align:left;">${sample.study.studyName}</td>
+                        <td style="text-align:left;" width="240px">${sample.study.studyName}</td>
                         <td>${sample.sampleTypeAsString}</td>
                         <td>
                             <c:choose>
