@@ -40,15 +40,18 @@
                 </ol>
             </li>
             <li>3. CDS predicted (FragGeneScan v 1.15)</li>
-            <li>4. Matches were generated against predicted CDS with InterProScan 5.0 (beta release) using a subset of databases from InterPro release 31.0 (databases used for analysis: Pfam, TIGRFAM, PRINTS, PROSITE patterns, Gene3d). The Gene Ontology term summary was generated using the following GO slim: goslim_goa
+            <li>4. Matches were generated against predicted CDS with InterProScan 5.0 (beta release) using a subset of
+                databases from InterPro release 31.0 (databases used for analysis: Pfam, TIGRFAM, PRINTS, PROSITE
+                patterns, Gene3d). The Gene Ontology term summary was generated using the following GO slim: goslim_goa
 
             </li>
         </ol>
     </div>
 </div>
 
-<span class="subtitle">Sample analysis results <a href="<c:url value="${baseURL}/sample/${model.sample.sampleId}"/>"
-                                                  style="font-size:90%;"> (${model.sample.sampleId})</a></span>
+<span class="subtitle">Sample analysis results - ${model.experimentType.lowerCase} <a
+        href="<c:url value="${baseURL}/sample/${model.sample.sampleId}"/>"
+        style="font-size:90%;"> (${model.sample.sampleId})</a></span>
 
 <h2>${model.sample.sampleName}</h2>
 
@@ -171,7 +174,8 @@
 
         <h4>Annotation by GO Terms</h4>
 
-        <p>A summary of Gene Ontology (GO) terms derived from InterPro matches to your sample is provided in the chart below. You can view the complete list of GO terms by clicking on the download icon.</p>
+        <p>A summary of Gene Ontology (GO) terms derived from InterPro matches to your sample is provided in the chart
+            below. You can view the complete list of GO terms by clicking on the download icon.</p>
 
         <div>
             <div id="go-chart">
@@ -236,4 +240,4 @@
     <h3>Sample ID Not Recognised</h3>
 </c:otherwise>
 </c:choose>
-   </div>
+</div>

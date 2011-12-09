@@ -51,12 +51,14 @@ public class AnalysisStatsModel extends ViewModel {
 
     private List<String> archivedSequences;
 
+    private ExperimentType experimentType;
+
     AnalysisStatsModel(Submitter submitter, String pageTitle, List<Breadcrumb> breadcrumbs, Sample sample,
                        String barChartURL, String pieChartBiologicalProcessURL,
                        String pieChartCellularComponentURL, String pieChartMolecularFunctionURL,
                        String pieChartInterProMatchURL, List<AbstractGOTerm> bioGOTerms, EmgFile emgFile,
                        List<String> archivedSequences, MemiPropertyContainer propertyContainer,
-                       List<InterProEntry> interProEntries) {
+                       List<InterProEntry> interProEntries, ExperimentType experimentType) {
         super(submitter, pageTitle, breadcrumbs, propertyContainer);
         this.sample = sample;
         this.barChartURL = barChartURL;
@@ -68,12 +70,13 @@ public class AnalysisStatsModel extends ViewModel {
         this.bioGOTerms = bioGOTerms;
         this.emgFile = emgFile;
         this.archivedSequences = archivedSequences;
+        this.experimentType = experimentType;
     }
 
     AnalysisStatsModel(Submitter submitter, String pageTitle, List<Breadcrumb> breadcrumbs, Sample sample,
                        EmgFile emgFile, List<String> archivedSequences, MemiPropertyContainer propertyContainer) {
         this(submitter, pageTitle, breadcrumbs, sample, null, null, null, null, null, null, emgFile,
-                archivedSequences, propertyContainer, null);
+                archivedSequences, propertyContainer, null, ExperimentType.GENOMIC);
     }
 
     public Sample getSample() {
@@ -114,5 +117,22 @@ public class AnalysisStatsModel extends ViewModel {
 
     public List<InterProEntry> getInterProEntries() {
         return interProEntries;
+    }
+
+    public ExperimentType getExperimentType() {
+        return experimentType;
+    }
+
+    public enum ExperimentType {
+        GENOMIC, TRANSCRIPTOMIC;
+
+        public String getLowerCase() {
+            return toString();
+        }
+
+        @Override
+        public String toString() {
+            return super.toString().toLowerCase();
+        }
     }
 }

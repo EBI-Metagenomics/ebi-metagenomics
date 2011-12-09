@@ -120,9 +120,9 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
 
 
     protected void populateModel(final ModelMap model, final Sample sample, boolean isReturnSizeLimit) {
-        String pageTitle = "Sample analysis results: "+ sample.getSampleName()+" - EBI metagenomics";
-        populateModel(model,sample,isReturnSizeLimit,pageTitle);
-     }
+        String pageTitle = "Sample analysis results: " + sample.getSampleName() + " - EBI metagenomics";
+        populateModel(model, sample, isReturnSizeLimit, pageTitle);
+    }
 
     /**
      * Creates the home page model and adds it to the specified model map.
@@ -135,9 +135,14 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
         if (emgFile != null) {
             emgFile.addFileSizeMap(getFileSizeMap(emgFile));
         }
+//         TODO: The following 'if' case is a quick and dirty solution to solve the differentiation issue between genomic and transcriptomic analysis
+        AnalysisStatsModel.ExperimentType experimentType = AnalysisStatsModel.ExperimentType.GENOMIC;
+        if (sample.getId() == 367) {
+            experimentType = AnalysisStatsModel.ExperimentType.TRANSCRIPTOMIC;
+        }
         final AnalysisStatsModel mgModel = MGModelFactory.
                 getAnalysisStatsModel(sessionManager, sample, pageTitle, getBreadcrumbs(sample), emgFile,
-                        MemiTools.getArchivedSeqs(fileInfoDAO, sample), propertyContainer, isReturnSizeLimit);
+                        MemiTools.getArchivedSeqs(fileInfoDAO, sample), propertyContainer, isReturnSizeLimit, experimentType);
         mgModel.changeToHighlightedClass(ViewModel.TAB_CLASS_SAMPLES_VIEW);
         model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, mgModel);

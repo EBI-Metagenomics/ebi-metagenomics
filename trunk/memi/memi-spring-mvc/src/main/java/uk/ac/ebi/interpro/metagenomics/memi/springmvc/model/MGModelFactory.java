@@ -43,7 +43,7 @@ public class MGModelFactory {
                                                            String pageTitle, List<Breadcrumb> breadcrumbs,
                                                            EmgFile emgFile, List<String> archivedSequences,
                                                            MemiPropertyContainer propertyContainer,
-                                                           boolean isReturnSizeLimit) {
+                                                           boolean isReturnSizeLimit, AnalysisStatsModel.ExperimentType experimentType) {
         log.info("Building instance of " + AnalysisStatsModel.class + "...");
         if (emgFile != null) {
             Map<Class, List<AbstractGOTerm>> goData = loadGODataFromCSV(propertyContainer.getPathToAnalysisDirectory(),
@@ -55,7 +55,7 @@ public class MGModelFactory {
                     getHBarChartURL(MolecularFunctionGOTerm.class, goData),
                     null,
                     goData.get(BiologicalProcessGOTerm.class), emgFile, archivedSequences, propertyContainer,
-                    getListOfInterProEntries(propertyContainer.getPathToAnalysisDirectory(), emgFile, isReturnSizeLimit));
+                    getListOfInterProEntries(propertyContainer.getPathToAnalysisDirectory(), emgFile, isReturnSizeLimit), experimentType);
         } else {
             return new AnalysisStatsModel(getSessionSubmitter(sessionManager), pageTitle, breadcrumbs, sample,
                     emgFile, archivedSequences, propertyContainer);

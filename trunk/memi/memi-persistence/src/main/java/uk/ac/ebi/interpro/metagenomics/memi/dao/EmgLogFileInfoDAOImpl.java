@@ -91,15 +91,24 @@ public class EmgLogFileInfoDAOImpl implements EmgLogFileInfoDAO {
         log.info("Querying SRA IDs by sample ID: " + sampleId + " from table EMGLogFileInfo...");
         List<String> result = new ArrayList<String>();
         try {
-            List<Map<String, Object>> rows = this.jdbcTemplate.queryForList("select sra_run_ids from " + EmgFile.TABLE_NAME + " where " + EmgFile.SAMPLE_ID + "=?", new Long[]{sampleId});
+//            TODO: The following 'if else' case is a quick and dirty solution to solve the differentiation issue between genomic and transcriptomic analysis
+            List<Map<String, Object>> rows = null;
+
+            if (sampleId == 367) {
+                rows = this.jdbcTemplate.queryForList("select sra_run_ids from " + EmgFile.TABLE_NAME + " where " + EmgFile.SAMPLE_ID + "=?", new Long[]{sampleId});
+            } else {
+                rows = this.jdbcTemplate.queryForList("select sra_run_ids from " + EmgFile.TABLE_NAME + " where " + EmgFile.SAMPLE_ID + "=? and data_type_gta=?", new Object[]{new Long(sampleId), "genomic"});
+            }
             for (Map row : rows) {
                 String rowResult = (String) row.get("SRA_RUN_IDS");
-                String[] chunks = rowResult.split(";");
-                for (String chunk : chunks) {
-                    result.add(chunk);
-                }
+                result.add(rowResult);
+//                String[] chunks = rowResult.split(";");
+//                for (String chunk : chunks) {
+//                    result.add(chunk.trim());
+//                }
             }
-        } catch (Exception e) {
+        } catch (Exception
+                e) {
             log.warn("Could not query file IDs!", e);
         }
         return result;
