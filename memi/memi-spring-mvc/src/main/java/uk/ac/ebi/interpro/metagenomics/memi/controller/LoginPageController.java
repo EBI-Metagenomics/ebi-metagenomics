@@ -40,12 +40,6 @@ public class LoginPageController extends LoginController {
      */
     public static final String VIEW_NAME = "login";
 
-//    public ModelAndView doGet(ModelMap model) {
-//        populateModel(model);
-//        model.addAttribute("loginForm", new LoginForm());
-//        return getModelAndView(model);
-//    }
-
 
     /**
      * Handles /login?display=true requests.
