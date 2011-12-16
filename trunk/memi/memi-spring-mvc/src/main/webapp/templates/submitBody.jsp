@@ -12,10 +12,7 @@
         purposes, and a direct link to your analysis results (note, depending on the size of your submission, the
         analysis may take a few days to complete).</p>
 
-    <%-- Removed because the two pages (login and SSend the form look too similar
-    <p class="sub_warn"><img src="${pageContext.request.contextPath}/img/ico_warning_8.png" alt="Important: Data type"> Presently, analysis is restricted to "long" (average reads lengths over 200nt), unassembled sequence reads, i.e. Roche 454 sequences, from metagenomic or metatranscriptomic samples.</p>
---%>
-      <div class="sub">
+       <div class="sub">
 
         <div class="sub_form">
             <form:form action="submit" commandName="subForm" id="submit_form">
