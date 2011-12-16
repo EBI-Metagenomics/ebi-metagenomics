@@ -17,8 +17,11 @@
             for publication purposes, and a direct link to your analysis results (note, depending on the size of your
             submission, the analysis may take a few days to complete).</p>
 
-        <p class="sub_warn"><img src="${pageContext.request.contextPath}/img/ico_warning_8.png"
-                                 alt="Important: Data type">
+         <p class="sub_warn"><img src="${pageContext.request.contextPath}/img/ico_warning_8.png">
+         NOTICE: Please continue with your submission request, but be aware that due to the festive season there will be no response to emails or submission requests between Dec 16th 2011 and January 3rd 2012 inclusive. Outstanding requests will be dealt with as soon as possible when we return in 2012.
+            </p>
+
+        <p class="sub_warn"><img src="${pageContext.request.contextPath}/img/ico_warning_8.png">
             Presently, analysis is restricted to "long" (average reads lengths over 200nt), unassembled sequence reads,
             i.e.
             Roche 454 sequences, from metagenomic or metatranscriptomic samples.</p>
