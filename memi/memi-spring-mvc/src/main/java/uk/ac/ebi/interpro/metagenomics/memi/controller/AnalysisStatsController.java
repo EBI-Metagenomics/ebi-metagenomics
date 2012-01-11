@@ -23,6 +23,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.tools.MemiTools;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.text.DecimalFormat;
@@ -73,32 +74,38 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
 //    }
 
     @RequestMapping(value = "/doExportGOFile", method = RequestMethod.GET)
-    public ModelAndView doExportGOFile(@PathVariable final String sampleId, final ModelMap model, final HttpServletResponse response) {
-        return handleExport(sampleId, model, response, EmgFile.EmgFileExtension.GO.getFileExtension(), "_GO.csv");
+    public ModelAndView doExportGOFile(@PathVariable final String sampleId, final ModelMap model,
+                                       final HttpServletResponse response, final HttpServletRequest request) {
+        return handleExport(sampleId, model, response, request, EmgFile.EmgFileExtension.GO.getFileExtension(), "_GO.csv");
     }
 
     @RequestMapping(value = "/doExportMaskedFASTAFile", method = RequestMethod.GET)
-    public ModelAndView doExportMaskedFASTAFile(@PathVariable final String sampleId, final ModelMap model, final HttpServletResponse response) {
-        return handleExport(sampleId, model, response, EmgFile.EmgFileExtension.MASKED_FASTA.getFileExtension(), "_nt_reads.fasta");
+    public ModelAndView doExportMaskedFASTAFile(@PathVariable final String sampleId, final ModelMap model,
+                                                final HttpServletResponse response, final HttpServletRequest request) {
+        return handleExport(sampleId, model, response, request, EmgFile.EmgFileExtension.MASKED_FASTA.getFileExtension(), "_nt_reads.fasta");
     }
 
     @RequestMapping(value = "/doExportCDSFile", method = RequestMethod.GET)
-    public ModelAndView doExportCDSFile(@PathVariable final String sampleId, final ModelMap model, final HttpServletResponse response) {
-        return handleExport(sampleId, model, response, EmgFile.EmgFileExtension.CDS_FAA.getFileExtension(), "_pCDS.fasta");
+    public ModelAndView doExportCDSFile(@PathVariable final String sampleId, final ModelMap model,
+                                        final HttpServletResponse response, final HttpServletRequest request) {
+        return handleExport(sampleId, model, response, request, EmgFile.EmgFileExtension.CDS_FAA.getFileExtension(), "_pCDS.fasta");
     }
 
     @RequestMapping(value = "/doExportI5File", method = RequestMethod.GET)
-    public ModelAndView doExportI5File(@PathVariable final String sampleId, final ModelMap model, final HttpServletResponse response) {
-        return handleExport(sampleId, model, response, EmgFile.EmgFileExtension.I5_TSV.getFileExtension(), "_InterPro.tsv");
+    public ModelAndView doExportI5File(@PathVariable final String sampleId, final ModelMap model,
+                                       final HttpServletResponse response, final HttpServletRequest request) {
+        return handleExport(sampleId, model, response, request, EmgFile.EmgFileExtension.I5_TSV.getFileExtension(), "_InterPro.tsv");
     }
 
     @RequestMapping(value = "/doExportIPRFile", method = RequestMethod.GET)
-    public ModelAndView doExportIPRFile(@PathVariable final String sampleId, final ModelMap model, final HttpServletResponse response) {
-        return handleExport(sampleId, model, response, EmgFile.EmgFileExtension.IPR.getFileExtension(), "_InterPro_sum.csv");
+    public ModelAndView doExportIPRFile(@PathVariable final String sampleId, final ModelMap model,
+                                        final HttpServletResponse response, final HttpServletRequest request) {
+        return handleExport(sampleId, model, response, request, EmgFile.EmgFileExtension.IPR.getFileExtension(), "_InterPro_sum.csv");
     }
 
     private ModelAndView handleExport(final String sampleId, ModelMap model, final HttpServletResponse response,
-                                      final String fileNameSuffix, final String fileExtension) {
+                                      final HttpServletRequest request, final String fileNameSuffix,
+                                      final String fileExtension) {
         log.info("Checking if sample is accessible...");
         return checkAccessAndBuildModel(new ModelProcessingStrategy<Sample>() {
             @Override
@@ -112,12 +119,11 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
 
                 if (downloadService != null) {
                     //white spaces are replaced by underscores
-                    downloadService.openDownloadDialog(response, file, emgFile.getFileName().replace(" ", "_") + fileExtension, false);
+                    downloadService.openDownloadDialog(response, request, file, emgFile.getFileName().replace(" ", "_") + fileExtension, false);
                 }
             }
         }, model, sampleId, getModelViewName());
     }
-
 
     protected void populateModel(final ModelMap model, final Sample sample, boolean isReturnSizeLimit) {
         String pageTitle = "Sample analysis results: " + sample.getSampleName() + " - EBI metagenomics";

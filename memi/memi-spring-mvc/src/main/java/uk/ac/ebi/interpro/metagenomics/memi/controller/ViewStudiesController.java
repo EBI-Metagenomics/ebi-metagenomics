@@ -20,12 +20,13 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewStudiesModel;
 import uk.ac.ebi.interpro.metagenomics.memi.tools.MemiTools;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.util.*;
@@ -83,7 +84,8 @@ public class ViewStudiesController extends AbstractController implements IMGCont
      * download dialog.
      */
     @RequestMapping(value = "doExport", method = RequestMethod.GET)
-    public ModelAndView doExportStudies(@ModelAttribute(StudyFilter.MODEL_ATTR_NAME) StudyFilter filter, HttpServletResponse response,
+    public ModelAndView doExportStudies(@ModelAttribute(StudyFilter.MODEL_ATTR_NAME) StudyFilter filter,
+                                        final HttpServletResponse response, final HttpServletRequest request,
                                         @RequestParam(required = false) final String searchTerm, @RequestParam(required = false) final StudyFilter.StudyVisibility studyVisibility,
                                         @RequestParam(required = false) final Study.StudyStatus studyStatus) {
         log.info("Requesting exportStudies (GET method)...");
@@ -103,7 +105,7 @@ public class ViewStudiesController extends AbstractController implements IMGCont
             File file = MemiFileWriter.writeCSVFile(fileContent);
             String fileName = MemiTools.createFileName("mg_projects_summary_");
             if (file != null && file.canRead()) {
-                downloadService.openDownloadDialog(response, file, fileName, true);
+                downloadService.openDownloadDialog(response, request, file, fileName, true);
             }
         }
         return null;
@@ -115,8 +117,10 @@ public class ViewStudiesController extends AbstractController implements IMGCont
      * download dialog.
      */
     @RequestMapping(value = "doExportDetails", method = RequestMethod.GET)
-    public ModelAndView doExportDetailsStudies(@ModelAttribute(StudyFilter.MODEL_ATTR_NAME) StudyFilter filter, HttpServletResponse response,
-                                               @RequestParam(required = false) final String searchTerm, @RequestParam(required = false) final StudyFilter.StudyVisibility studyVisibility,
+    public ModelAndView doExportDetailsStudies(@ModelAttribute(StudyFilter.MODEL_ATTR_NAME) StudyFilter filter,
+                                               final HttpServletResponse response, final HttpServletRequest request,
+                                               @RequestParam(required = false) final String searchTerm,
+                                               @RequestParam(required = false) final StudyFilter.StudyVisibility studyVisibility,
                                                @RequestParam(required = false) final Study.StudyStatus studyStatus) {
         log.info("Requesting exportStudies (GET method)...");
         ModelMap model = new ModelMap();
@@ -185,7 +189,7 @@ public class ViewStudiesController extends AbstractController implements IMGCont
             File file = MemiFileWriter.writeCSVFile(fileContent.toString());
             String fileName = MemiTools.createFileName("mg_projects_");
             if (file != null && file.canRead()) {
-                downloadService.openDownloadDialog(response, file, fileName, true);
+                downloadService.openDownloadDialog(response, request, file, fileName, true);
             }
         }
         return null;

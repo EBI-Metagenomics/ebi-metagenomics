@@ -26,6 +26,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuil
 import uk.ac.ebi.interpro.metagenomics.memi.tools.MemiTools;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.util.*;
@@ -92,7 +93,7 @@ public class ViewSamplesController extends AbstractController implements IMGCont
                                             @RequestParam(required = false) final String searchTerm,
                                             @RequestParam(required = false) final Sample.SampleType sampleType,
                                             @RequestParam(required = true) final int startPosition,
-                                            HttpServletResponse response) {
+                                            final HttpServletResponse response, final HttpServletRequest request) {
         log.info("Requesting exportSamples (GET method)...");
 
         final ModelMap model = new ModelMap();
@@ -111,7 +112,7 @@ public class ViewSamplesController extends AbstractController implements IMGCont
             File file = MemiFileWriter.writeCSVFile(fileContent);
             String fileName = MemiTools.createFileName("mg_samples_");
             if (file != null && file.canRead()) {
-                downloadService.openDownloadDialog(response, file, fileName, true);
+                downloadService.openDownloadDialog(response, request, file, fileName, true);
             }
         }
         return new ModelAndView(VIEW_NAME, model);
@@ -192,6 +193,7 @@ public class ViewSamplesController extends AbstractController implements IMGCont
         final ViewModelBuilder<SamplesViewModel> builder = new SamplesViewModelBuilder(sessionManager, "Samples list - EBI metagenomics",
                 getBreadcrumbs(null), propertyContainer, getTableHeaderNames(), sampleDAO, filter, startPosition);
         final SamplesViewModel samplesViewModel = builder.getModel();
+        model.addAttribute("loginForm", new LoginForm());
         samplesViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_SAMPLES_VIEW);
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, samplesViewModel);
     }
