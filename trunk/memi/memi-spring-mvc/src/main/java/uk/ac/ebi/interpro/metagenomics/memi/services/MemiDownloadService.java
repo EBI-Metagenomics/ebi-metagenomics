@@ -5,13 +5,19 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.web.servlet.support.RequestContextUtils;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.EngineeredSample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.EnvironmentSample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.HostSample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
+import uk.ac.ebi.interpro.metagenomics.memi.tools.StreamCopyUtil;
 
+import javax.servlet.ServletContext;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.nio.channels.Channel;
 import java.util.Set;
 
 /**
@@ -31,16 +37,17 @@ public class MemiDownloadService {
      *
      * @return TRUE if a downloadable file exists and 'Save to file' dialog could be open.
      */
-    public boolean openDownloadDialog(HttpServletResponse response, File file, String fileName, boolean isDeleteFile) {
+    public boolean openDownloadDialog(final HttpServletResponse response, final HttpServletRequest request,
+                                      final File file, String fileName, boolean isDeleteFile) {
         log.info("Trying to open the download dialog for the file with name " + file.getName() + "...");
-        InputStream is = null;
+        FileInputStream fis = null;
         try {
-            is = new FileInputStream(file);
+            fis = new FileInputStream(file);
+            //configure HTTP response
+            assembleServletResponse(response, request, file, fis, fileName);
             if (isDeleteFile) {
                 file.delete();
             }
-            //configure HTTP response
-            assembleServletResponse(response, is, fileName);
             log.info("Opened download dialog successfully.");
             return true;
         } catch (FileNotFoundException e) {
@@ -48,9 +55,9 @@ public class MemiDownloadService {
         } catch (IOException e) {
             log.error("Could not create input stream for the specified downloadable file (s.a.)!", e);
         } finally {
-            if (is != null)
+            if (fis != null)
                 try {
-                    is.close();
+                    fis.close();
                 } catch (IOException e) {
                     log.error("Could not close input stream correctly!", e);
                 }
@@ -142,6 +149,47 @@ public class MemiDownloadService {
         }
         return result;
     }
+
+    /**
+     * Configures HTTP servlet response for a file download.
+     */
+
+    private boolean assembleServletResponse(final HttpServletResponse response, final HttpServletRequest request,
+                                            final File file, final FileInputStream fis, final String fileName) {
+        log.debug("Trying to assemble servlet response");
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+        //Resumable download options
+        response.setContentLength((int) file.length());
+        response.setHeader("Accept-Ranges", "bytes");
+        response.setBufferSize(2048000);
+        //Transfer-Encoding
+//        response.setHeader("Transfer-Encoding", "chunked");
+
+        //Get and set content size
+        ServletContext context = RequestContextUtils.getWebApplicationContext(request).getServletContext();
+        String mimetype = context.getMimeType(file.getAbsolutePath());
+        //response.setContentType("text/plain; charset=utf-8");
+        response.setContentType(mimetype);
+        try {
+            ServletOutputStream sot = response.getOutputStream();
+            StreamCopyUtil.copy(fis, sot);
+            sot.flush();
+            sot.close();
+            return true;
+        } catch (IOException e) {
+            log.warn("Could not get output stream to open the download dialog!", e);
+        } finally {
+            if (fis != null) {
+                try {
+                    fis.close();
+                } catch (IOException e) {
+                    log.warn("Could not close input stream after the assembly of the HTTP response!");
+                }
+            }
+        }
+        return false;
+    }
+
 
     /**
      * Configures HTTP servlet response.
