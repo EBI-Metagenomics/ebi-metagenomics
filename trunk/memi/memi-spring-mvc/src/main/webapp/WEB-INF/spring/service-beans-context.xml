@@ -16,7 +16,7 @@
     <bean name="emailNotificationServiceSubmitPage"
           class="uk.ac.ebi.interpro.metagenomics.memi.services.EmailNotificationService">
         <constructor-arg ref="mailSender"/>
-        <property name="receiver" value="datasubs@ebi.ac.uk"/>
+        <property name="receiver" value="${email.address.submission}"/>
         <!--<property name="receiverCC" value="" />-->
         <!--<property name="emailSubject" value="EMG-SUB: Unknown project"/>-->
     </bean>
@@ -25,7 +25,7 @@
     <bean name="emailNotificationServiceFeedbackPage"
           class="uk.ac.ebi.interpro.metagenomics.memi.services.EmailNotificationService">
         <constructor-arg ref="mailSender"/>
-        <property name="receiver" value="beta-ebi-metagenomics-feedback@googlegroups.com"/>
+        <property name="receiver" value="${email.address.beta.feedback}"/>
         <!--<property name="receiverCC" value="" />-->
         <!--<property name="emailSubject" value="[beta-feedback] Feedback about the new Metagenomics Website"/>-->
     </bean>
