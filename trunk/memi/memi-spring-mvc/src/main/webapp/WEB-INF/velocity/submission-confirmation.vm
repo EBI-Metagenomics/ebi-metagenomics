@@ -12,4 +12,5 @@ Submission Details:
 Project Title: ${subForm.subTitle}
 Hold Private Until: ${subForm.releaseDate}
 Submission Description: ${subForm.dataDesc}
+Attached file name: ${attachment}
 </pre>

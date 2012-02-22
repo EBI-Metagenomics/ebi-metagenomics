@@ -1,6 +1,7 @@
 package uk.ac.ebi.interpro.metagenomics.memi.forms;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.validation.ReleaseDate;
 
 import javax.persistence.Temporal;
@@ -45,6 +46,11 @@ public class SubmissionForm {
     @Size(min = 3, message = "{form.submission.dataDesc.size}")
     private String dataDesc;
 
+    /**
+     * File attachment
+     */
+    private CommonsMultipartFile attachment;
+
     public SubmissionForm() {
         long time = Calendar.getInstance().getTimeInMillis();
         //add time to 1 year in advance
@@ -82,4 +88,11 @@ public class SubmissionForm {
         }
     }
 
+    public CommonsMultipartFile getAttachment() {
+        return attachment;
+    }
+
+    public void setAttachment(CommonsMultipartFile attachment) {
+        this.attachment = attachment;
+    }
 }
