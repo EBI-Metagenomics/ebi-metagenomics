@@ -71,7 +71,7 @@
     <bean id="multipartResolver"
           class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <!-- one of the properties available; the maximum file size in bytes -->
-        <!--Set to 4 megabytes at the moment-->
-        <property name="maxUploadSize" value="4194304"/>
+        <!--Set to 8 megabytes at the moment-->
+        <property name="maxUploadSize" value="8388608"/>
     </bean>
 </beans>
