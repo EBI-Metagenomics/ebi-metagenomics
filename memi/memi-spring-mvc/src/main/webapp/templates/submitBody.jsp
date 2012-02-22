@@ -8,7 +8,7 @@
     <div class="sub">
 
         <div class="sub_form">
-            <form:form action="submit" commandName="subForm" id="submit_form">
+            <form:form id="sub_form" commandName="subForm" method="post" action="submit" enctype="multipart/form-data">
                 <fieldset>
                     <legend>Enter details</legend>
                     <div class="form_row">
@@ -40,8 +40,29 @@
                         </ul><br/><spring:message code="submissionForm.inputField.desc.help.this"/></span>
                         <form:errors cssClass="error" path="dataDesc"/>
                     </div>
+                    <div class="form_row">
+                        <label for="file"><spring:message
+                                code="submissionForm.inputField.attachment.label"/></label><br/>
+                        <c:choose>
+                            <c:when test="${isMaxSizeError}">
+                                <input class="error" type="file" value="" title="Upload an Excel sheet"
+                                       name="attachment" id="file">
+                            </c:when>
+                            <c:otherwise>
+                                <form:input id="file" path="attachment" cssErrorClass="error" cssStyle="float:left;"
+                                            title="Upload an Excel sheet" type="file"/>
+                            </c:otherwise>
+                        </c:choose>
+                        <span class="form_help"><spring:message
+                                code="submissionForm.inputField.attachment.help"/></span>
+                            <%--<form:errors cssClass="error" path="attachment"/>--%>
+                        <c:if test="${isMaxSizeError}">
+                        <span class="error"
+                              id="attachment.errors">${attachment}</span>
+                        </c:if>
+                    </div>
                     <p style="clear:both;/*For IE6*/">
-                        <input type="submit" name="submit" value="Submit" class="main_button"/>
+                        <input name="submit" value="Submit" class="main_button" type="submit"/>
                         <span class="clear_but">| <a href="/metagenomics" title="cancel">Cancel</a></span>
                         <br/>
                         <span id="required"></span>&nbsp;

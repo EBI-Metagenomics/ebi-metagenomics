@@ -70,6 +70,10 @@ public class EmailNotificationService implements INotificationService {
         }
         //try to send the email
         try {
+//            Properties p = new Properties();
+//            p.put("mail.mime.charset","UTF-8");
+//            p.put("mail.mime.content","text/html");
+//            this.mailSender.setJavaMailProperties(p);
             this.mailSender.send(mimeMsg);
             log.info("Sent email notification successfully to " + receiver + "!");
         } catch (MailException ex) {

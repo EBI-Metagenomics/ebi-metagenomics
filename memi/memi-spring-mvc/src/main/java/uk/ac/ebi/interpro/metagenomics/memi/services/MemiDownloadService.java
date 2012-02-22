@@ -10,6 +10,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.EngineeredSample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.EnvironmentSample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.HostSample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
+import uk.ac.ebi.interpro.metagenomics.memi.tools.MemiTools;
 import uk.ac.ebi.interpro.metagenomics.memi.tools.StreamCopyUtil;
 
 import javax.servlet.ServletContext;
@@ -30,6 +31,19 @@ public class MemiDownloadService {
     private final static Log log = LogFactory.getLog(MemiDownloadService.class);
 
     private final String CLASS_PATH = "uk/ac/ebi/interpro/metagenomics/memi/services/";
+
+    public void openDownloadDialog(final HttpServletResponse response, final HttpServletRequest request,
+                                   Resource resource) throws IOException {
+        File file = resource.getFile();
+        byte[] fileBytes = MemiTools.getBytesFromFile(file);
+        ServletContext context = RequestContextUtils.getWebApplicationContext(request).getServletContext();
+        String mimetype = context.getMimeType(file.getAbsolutePath());
+        response.setContentType(mimetype);
+        response.setContentLength((int) file.length());
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + file.getName() + "\"");
+
+        FileCopyUtils.copy(fileBytes, response.getOutputStream());
+    }
 
     /**
      * Create a HTTP response, which opens a download dialog with a stream of the specified file.

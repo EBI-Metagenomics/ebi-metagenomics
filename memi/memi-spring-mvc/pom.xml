@@ -262,6 +262,18 @@
             <scope>compile</scope>
         </dependency>
 
+        <!-- Apache Commons Upload -->
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.2.2</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.1</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -324,6 +336,7 @@
                 <filtering>true</filtering>
                 <excludes>
                     <exclude>metagenomics.xml</exclude>
+                    <exclude>**/unfiltered/*.*</exclude>
                 </excludes>
             </resource>
             <resource>
@@ -332,6 +345,13 @@
                 <targetPath>${project.build.directory}/</targetPath>
                 <includes>
                     <include>metagenomics.xml</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+                <includes>
+                    <include>**/unfiltered/*.*</include>
                 </includes>
             </resource>
         </resources>

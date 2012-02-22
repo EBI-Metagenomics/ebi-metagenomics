@@ -67,4 +67,11 @@
           class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
         <property name="defaultLocale" value="en"/>
     </bean>
+    <!--Spring's multipart (file upload) support-->
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- one of the properties available; the maximum file size in bytes -->
+        <!--Set to 4 megabytes at the moment-->
+        <property name="maxUploadSize" value="4194304"/>
+    </bean>
 </beans>

@@ -112,7 +112,7 @@ public class SubmissionControllerTest {
         subForm.setSubTitle(testTitle);
         subForm.setReleaseDate(testDate);
         subForm.setDataDesc(testDescription);
-        String actual = controller.buildMsg(subForm);
+        String actual = controller.buildMsg(subForm, false, null,null);
         //Test the static part of the email content
         assertTrue(actual.contains("Submitter name:"));
         assertTrue(actual.contains("Submission title:"));
