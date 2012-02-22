@@ -43,6 +43,7 @@
                     <div class="form_row">
                         <label for="file"><spring:message
                                 code="submissionForm.inputField.attachment.label"/></label><br/>
+                            <%--This if-else statement is really a hack to get some customized error style--%>
                         <c:choose>
                             <c:when test="${isMaxSizeError}">
                                 <input class="error" type="file" value="" title="Upload an Excel sheet"
@@ -55,7 +56,7 @@
                         </c:choose>
                         <span class="form_help"><spring:message
                                 code="submissionForm.inputField.attachment.help"/></span>
-                            <%--<form:errors cssClass="error" path="attachment"/>--%>
+                            <%--This if statement is really a hack to get some customized error style--%>
                         <c:if test="${isMaxSizeError}">
                         <span class="error"
                               id="attachment.errors">${attachment}</span>
