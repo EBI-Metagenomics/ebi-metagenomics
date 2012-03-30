@@ -16,14 +16,6 @@
     <name>memi-model</name>
     <url>http://maven.apache.org</url>
 
-    <repositories>
-        <!--Specified this Hibernate JBoss repository to resolve the latest version of Hibernate Annotations 3.5.1-->
-        <repository>
-            <id>JBoss repository</id>
-            <url>https://repository.jboss.org/maven2/</url>
-        </repository>
-    </repositories>
-
     <dependencies>
         <!-- Dependencies to run Hibernate-->
         <dependency>

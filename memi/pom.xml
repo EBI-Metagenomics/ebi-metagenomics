@@ -31,6 +31,32 @@
     <!--<url>http://ebi-metagenomics.googlecode.com/svn/</url>-->
     <!--</scm>-->
 
+    <repositories>
+        <!--Specified this Hibernate JBoss repository to resolve the latest version of Hibernate Annotations 3.5.1-->
+        <repository>
+            <id>JBoss repository</id>
+            <url>https://repository.jboss.org/maven2/</url>
+        </repository>
+        <repository>
+            <id>google-code-interproscan</id>
+            <name>google-code-interproscan</name>
+            <layout>default</layout>
+            <url>http://interproscan.googlecode.com/svn/repository/</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <!--<repository>-->
+        <!--<id>oracleReleases</id>-->
+        <!--<name>Oracle Released Java Packages</name>-->
+        <!--<url>http://download.oracle.com/maven</url>-->
+        <!--<layout>default</layout>-->
+        <!--</repository>-->
+        <!--<repository>-->
+        <!--<id>Sourcesense repository</id>-->
+        <!--<url>https://nexus.sourcesense.com/nexus/content/repositories/public/</url>-->
+        <!--</repository>-->
+    </repositories>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
