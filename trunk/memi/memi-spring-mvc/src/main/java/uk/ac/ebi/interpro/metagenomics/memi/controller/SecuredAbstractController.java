@@ -25,12 +25,20 @@ public abstract class SecuredAbstractController<T extends SecureEntity> extends 
 
     private static final Log log = LogFactory.getLog(SecuredAbstractController.class);
 
-    private boolean isAccessible(Study study) {
-        String warningMsg = "Could not request private study with ID " + study.getStudyId() + "!";
+    /**
+     * Check if the specified secure entity object has the same submitter Id as the login session user. FYI, each study and sample has
+     * a submitter, which is associated as submitter Id property. To submit samples to ENA OR to login into the MG portal you need
+     * an ENA account/ you need to be a registered submitter.
+     *
+     * @param secureEntity
+     * @return
+     */
+    private boolean isAccessible(T secureEntity) {
+        String warningMsg = "Could not request security entity with ID " + secureEntity.getSecureEntityId() + "!";
         if (sessionManager != null && sessionManager.getSessionBean() != null) {
             Submitter submitter = sessionManager.getSessionBean().getSubmitter();
             if (submitter != null) {
-                if (submitter.getSubmitterId() != study.getSubmitterId()) {
+                if (submitter.getSubmitterId() != secureEntity.getSubmitterId()) {
                     log.warn(warningMsg + "Another submitter with ID " + submitter.getSubmitterId() + " tried to access this study!");
                     return false;
                 } else {
@@ -47,24 +55,22 @@ public abstract class SecuredAbstractController<T extends SecureEntity> extends 
         return true;
     }
 
+    /**
+     * Checks if the secure entity(study/sample) is public and owned by the logged in user/submitter.
+     */
     protected ModelAndView checkAccessAndBuildModel(ModelProcessingStrategy<T> modelProcessingStrategy, final ModelMap model, final String stringId, String viewName) {
         ISampleStudyDAO<T> dao = getDAO();
         if (dao != null) {
-            final Study study;
             final T securedEntity = dao.readByStringId(stringId);
             if (securedEntity == null) {
                 return getEntryNotExistMAV(stringId);
-            } else if (securedEntity instanceof Study) {
-                study = (Study) securedEntity;
-            } else if (securedEntity instanceof Sample) {
-                study = ((Sample) securedEntity).getStudy();
+            } else if (securedEntity instanceof Study || securedEntity instanceof Sample) {
+                if (!securedEntity.isPublic() && !isAccessible(securedEntity)) {
+                    log.info("Requesting private study with ID " + stringId + "...");
+                    return buildAccessDeniedModelAndView(stringId);
+                }
             } else {
-                throw new IllegalStateException("Have introduced a new implementation of SecureEntity, but are not handling it in this method.");
-            }
-
-            if (!study.isPublic() && !isAccessible(study)) {
-                log.info("Requesting private study with ID " + stringId + "...");
-                return buildAccessDeniedModelAndView(stringId);
+                throw new IllegalStateException("Unknown implementation of SecureEntity object (neither study nor sample), which cannot be handle.");
             }
 
             modelProcessingStrategy.processModel(model, securedEntity);
@@ -87,7 +93,7 @@ public abstract class SecuredAbstractController<T extends SecureEntity> extends 
 
     private ModelAndView getModelAndView(String objectId, String viewName) {
         final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager,
-                "Error page - EBI metagenomics", null, null);
+                "Error page - EBI metagenomics", null, propertyContainer);
         final ViewModel viewModel = builder.getModel();
         ModelMap model = new ModelMap();
         model.addAttribute("objectId", objectId);

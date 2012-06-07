@@ -5,9 +5,9 @@ import java.util.Date;
 
 /**
  * Should represents the submitter object from the ENA database,
- * but at the moment it is much simpler version.
+ * but at the moment it is a much simpler version.
  * TODO: Should be exactly mapped with the ENA submitter object
- * TODO: Add JPA and Hibernate annotations
+ * TODO: Add JPA and Hibernate annotations - Why? The submitter is requested by plain Jdbc.
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @version $Id$

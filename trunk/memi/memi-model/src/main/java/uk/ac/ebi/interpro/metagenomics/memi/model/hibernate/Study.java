@@ -252,6 +252,12 @@ public class Study implements SecureEntity {
         this.experimentalFactor = experimentalFactor;
     }
 
+    @Override
+    @Transient
+    public String getSecureEntityId() {
+        return getStudyId();
+    }
+
     public boolean isPublic() {
         return isPublic;
     }
