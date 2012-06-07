@@ -40,7 +40,7 @@ public class ImageController extends AbstractController {
     public void getImage(HttpServletResponse response,
                          @RequestParam(value = "imageName", required = true) String imageName,
                          @RequestParam(value = "imageType", required = true) String imageType,
-                         @RequestParam(value = "dir", required = true) String directoryName) {
+                         @RequestParam(value = "dir", required = true) String directoryName) throws IOException {
         long t0 = System.currentTimeMillis();
 
         if (imageName.trim().length() < 1 && imageType.trim().length() < 1) {
@@ -69,27 +69,14 @@ public class ImageController extends AbstractController {
         log.info("Finished. Creation of image output stream took " + t + " milliseconds.");
     }
 
-    protected void streamImageData(HttpServletResponse response, byte[] imageData, String contentType) {
-        ServletOutputStream servletoutputStream = null;
-        try {
-            log.info("Streaming (" + contentType + ") size "
-                    + imageData.length + " bytes!");
-            response.setContentType(contentType);
-            response.setContentLength(imageData.length);
-            servletoutputStream = response.getOutputStream();
-            servletoutputStream.write(imageData);
-            servletoutputStream.flush();
-        } catch (IOException ex) {
-            log.error("Unable to stream image data!", ex);
-        } finally {
-            if (servletoutputStream != null) {
-                try {
-                    servletoutputStream.close();
-                } catch (IOException e) {
-                    log.error("Unable to close servlet output stream!", e);
-                }
-            }
-        }
+    protected void streamImageData(HttpServletResponse response, byte[] imageData, String contentType) throws IOException {
+        log.info("Streaming (" + contentType + ") size "
+                + imageData.length + " bytes!");
+        response.setContentType(contentType);
+        response.setContentLength(imageData.length);
+        ServletOutputStream servletoutputStream = response.getOutputStream();
+        servletoutputStream.write(imageData);
+        servletoutputStream.flush();
     }
 
     protected byte[] getImageData(File inputFile, String imageFormat) {

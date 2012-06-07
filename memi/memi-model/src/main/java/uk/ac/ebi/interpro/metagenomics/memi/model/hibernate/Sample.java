@@ -299,9 +299,15 @@ public abstract class Sample implements SecureEntity {
         return getSampleType().toString();
     }
 
+    @Override
+    @Transient
+    public String getSecureEntityId() {
+        return getSampleId();
+    }
+
 
     public enum SampleType {
-            ENVIRONMENTAL(EnvironmentSample.class, "Environmental"),
+        ENVIRONMENTAL(EnvironmentSample.class, "Environmental"),
         HOST_ASSOCIATED(HostSample.class, "Host associated"),
         ENGINEERED(EngineeredSample.class, "Man-made"),
         UNDEFINED(UndefinedSample.class, "Undefined");

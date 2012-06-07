@@ -32,19 +32,6 @@ public class MemiDownloadService {
 
     private final String CLASS_PATH = "uk/ac/ebi/interpro/metagenomics/memi/services/";
 
-    public void openDownloadDialog(final HttpServletResponse response, final HttpServletRequest request,
-                                   Resource resource) throws IOException {
-        File file = resource.getFile();
-        byte[] fileBytes = MemiTools.getBytesFromFile(file);
-        ServletContext context = RequestContextUtils.getWebApplicationContext(request).getServletContext();
-        String mimetype = context.getMimeType(file.getAbsolutePath());
-        response.setContentType(mimetype);
-        response.setContentLength((int) file.length());
-        response.setHeader("Content-Disposition", "attachment; filename=\"" + file.getName() + "\"");
-
-        FileCopyUtils.copy(fileBytes, response.getOutputStream());
-    }
-
     /**
      * Create a HTTP response, which opens a download dialog with a stream of the specified file.
      *
@@ -167,40 +154,21 @@ public class MemiDownloadService {
      * Configures HTTP servlet response for a file download.
      */
 
-    private boolean assembleServletResponse(final HttpServletResponse response, final HttpServletRequest request,
-                                            final File file, final FileInputStream fis, final String fileName) {
+    private void assembleServletResponse(final HttpServletResponse response, final HttpServletRequest request,
+                                         final File file, final FileInputStream fis, final String fileName) throws IOException {
         log.debug("Trying to assemble servlet response");
         response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
         //Resumable download options
         response.setContentLength((int) file.length());
         response.setHeader("Accept-Ranges", "bytes");
         response.setBufferSize(2048000);
-        //Transfer-Encoding
-//        response.setHeader("Transfer-Encoding", "chunked");
-
         //Get and set content size
         ServletContext context = RequestContextUtils.getWebApplicationContext(request).getServletContext();
         String mimetype = context.getMimeType(file.getAbsolutePath());
-        //response.setContentType("text/plain; charset=utf-8");
         response.setContentType(mimetype);
-        try {
-            ServletOutputStream sot = response.getOutputStream();
-            StreamCopyUtil.copy(fis, sot);
-            sot.flush();
-            sot.close();
-            return true;
-        } catch (IOException e) {
-            log.warn("Could not get output stream to open the download dialog!", e);
-        } finally {
-            if (fis != null) {
-                try {
-                    fis.close();
-                } catch (IOException e) {
-                    log.warn("Could not close input stream after the assembly of the HTTP response!");
-                }
-            }
-        }
-        return false;
+        ServletOutputStream sot = response.getOutputStream();
+        StreamCopyUtil.copy(fis, sot);
+        sot.flush();
     }
 
 
