@@ -21,7 +21,7 @@ import java.util.List;
  */
 @Controller(value = "contactPageController")
 @RequestMapping('/' + ContactPageController.VIEW_NAME)
-public class ContactPageController extends AbstractController implements IMGController {
+public class ContactPageController extends AbstractController implements IController {
 
     /**
      * View name of this controller which is used several times.

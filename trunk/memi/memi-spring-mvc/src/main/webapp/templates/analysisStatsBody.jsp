@@ -6,15 +6,6 @@
 <c:choose>
 <c:when test="${not empty model.sample}">
 <div id="sidebar-analysis">
-        <%--  <div id="sidebar-export" >
-                    <ul>
-                        <li><a title="Click to download all submitted nucleotide data on the ENA website" href="<c:url value="https://www.ebi.ac.uk/ena/data/view/${model.sample.sampleId}"/>">Export submitted nucleotide data (ENA website)</a></li>
-                        <li><a title="Click to download processed fasta nucleotide sequences" href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportMaskedFASTAFile/${model.emgFile.fileName}"/>">Export processed nucleotide data (FASTA)</a></li>
-                        <li><a title="Click to download predicted CDS in fasta format" href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportCDSFile/${model.emgFile.fileName}"/>">Export predicted CDS (FASTA)</a></li>
-                        <li><a title="Click to download full InterPro match table (TSV)" href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportI5File/${model.emgFile.fileName}"/>">Export Interpro matches (TSV)</a></li>
-                        <li><a title="Export GO terms result file (TSV)" href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportGOFile/${model.emgFile.fileName}"/>">Export GO terms result file (TSV)</a></li>
-                    </ul>
-        </div>--%>
 
     <div id="sidebar-steps">
         <h2> Data processing steps </h2>
@@ -188,11 +179,10 @@
                        <spring:emailMessage code="analysisStatsView.label.download.goterms.full.csv"/></a>--%>
 
 
-                        <a id="csv" title="<spring:message code="analysisStatsView.label.download.goterms.title"/>"
+                        <a id="csv" title="<spring:message code="analysisStatsView.label.download.go.slim.anchor.title"/>"
                            href="<c:url
-                            value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportGOFile"/>">
-                            <spring:message code="analysisStatsView.label.download.goterms.full.csv"/><%-- <c:out
-                        value="${model.emgFile.fileSizeMap['_summary.go_slim']}"/>--%></a>
+                            value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportGOSlimFile"/>">
+                            <spring:message code="analysisStatsView.label.download.go.slim.anchor.href.message"/></a>
                     </c:if>
                 </div>
             </div>

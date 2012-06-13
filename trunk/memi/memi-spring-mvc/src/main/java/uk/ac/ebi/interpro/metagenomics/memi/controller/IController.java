@@ -6,13 +6,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Represents a interface that defines which methods have to be implemented
- * for each Metagenomics controller. MG stands for Metagenomics.
+ * Represents an interface that defines which methods have to be implemented
+ * for each controller implementation class.
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @since 1.0-SNAPSHOT
  */
-public interface IMGController {
+public interface IController {
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView doGet(ModelMap model);
