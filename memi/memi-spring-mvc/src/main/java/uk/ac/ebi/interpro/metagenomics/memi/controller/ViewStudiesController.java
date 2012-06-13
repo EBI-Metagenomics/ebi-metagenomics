@@ -39,7 +39,7 @@ import java.util.*;
  */
 @Controller
 @RequestMapping("/" + ViewStudiesController.VIEW_NAME)
-public class ViewStudiesController extends AbstractController implements IMGController {
+public class ViewStudiesController extends AbstractController implements IController {
 
     private final static Log log = LogFactory.getLog(ViewStudiesController.class);
 

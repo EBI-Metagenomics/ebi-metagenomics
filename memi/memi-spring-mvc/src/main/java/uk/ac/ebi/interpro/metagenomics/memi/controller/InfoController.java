@@ -24,7 +24,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping(value = "/" + InfoController.VIEW_NAME)
-public class InfoController extends AbstractController implements IMGController {
+public class InfoController extends AbstractController implements IController {
     private final Log log = LogFactory.getLog(InfoController.class);
 
     /**

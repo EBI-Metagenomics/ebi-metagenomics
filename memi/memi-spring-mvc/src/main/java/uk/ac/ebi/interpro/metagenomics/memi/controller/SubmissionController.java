@@ -47,7 +47,7 @@ import java.util.*;
  */
 @Controller
 @RequestMapping('/' + SubmissionController.VIEW_NAME)
-public class SubmissionController extends CheckLoginController implements IMGController, HandlerExceptionResolver {
+public class SubmissionController extends CheckLoginController implements IController, HandlerExceptionResolver {
 
     private final static Log log = LogFactory.getLog(SubmissionController.class);
 

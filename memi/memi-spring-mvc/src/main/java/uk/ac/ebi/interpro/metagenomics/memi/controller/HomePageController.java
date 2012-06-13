@@ -28,7 +28,7 @@ import java.util.List;
  */
 @Controller(value = "homePageController")
 @RequestMapping(value = "/")
-public class HomePageController extends AbstractController implements IMGController {
+public class HomePageController extends AbstractController implements IController {
 
     private final Log log = LogFactory.getLog(HomePageController.class);
 
