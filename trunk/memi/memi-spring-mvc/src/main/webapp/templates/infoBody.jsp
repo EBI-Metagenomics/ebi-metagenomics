@@ -102,6 +102,12 @@ The SRA only accepts data that is intended for public release. However, any data
 
 <p>We actively encourage users to make requests for additional tools and analyses that they wish to see as part of the service. We also welcome general feedback. Please contact us if you have comments about any aspect of the site</p>
 
+<h3 id="funding">Funding</h3>
+<p>The EBI metagenomics resource was set with and is supported by funding from EMBL. Additional support
+funding has been gratefully received from the Biotechnology and Biological Sciences Research Council
+(BBSRC grant BB/I02612X/1) and the EU's Seventh Framework Programme for Research (FP7 grant MICROB3).
+</p>
+
 <h3 id="mail">Mailing list</h3>
 
 <p>If you would like to be kept informed of further developments with the EBI metagenomics resources please sign up  for the
@@ -111,7 +117,7 @@ The SRA only accepts data that is intended for public release. However, any data
 <h3 id="credits">Credits</h3>
 
 <p>We would like to thanks our beta testers for providing valuable feedback.</p>
-    
+
 <h4 id="credits_1">The team</h4>
 
 <p>This new resource for metagenomics is supported by the <a
