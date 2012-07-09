@@ -1395,6 +1395,8 @@ span.form_help ul li{
 
 .about_img {float:left;margin:7px 14px 0 0;}
 
+.funding_img {float:right;margin:7px 14px 0 0;}
+
 /* JQuery */
 .ui-datepicker-trigger {
 padding-left:2px; padding-top:1px;

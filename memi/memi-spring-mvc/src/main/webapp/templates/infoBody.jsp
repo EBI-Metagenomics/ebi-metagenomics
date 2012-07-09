@@ -23,6 +23,7 @@
         </li>
         <li><a href="#analysis">How we analyse the data</a></li>
         <li><a href="#p_features">Planned features</a></li>
+        <li><a href="#funding">Funding</a></li>
         <li><a href="#mail">Mailing list</a></li>
         <li><a href="#credits">Credits</a> </li>
 
@@ -103,10 +104,12 @@ The SRA only accepts data that is intended for public release. However, any data
 <p>We actively encourage users to make requests for additional tools and analyses that they wish to see as part of the service. We also welcome general feedback. Please contact us if you have comments about any aspect of the site</p>
 
 <h3 id="funding">Funding</h3>
-<p>The EBI metagenomics resource was set with and is supported by funding from EMBL. Additional support
-funding has been gratefully received from the Biotechnology and Biological Sciences Research Council
+<div class="funding_img"><img src="${pageContext.request.contextPath}/img/funding/FP7.jpg" alt="FP7" width="122" height="94"/></div>
+<div class="funding_img"><img src="${pageContext.request.contextPath}/img/funding/BBSRC.png" alt="BBSRC" /></div>
+<p>The EBI metagenomics resource was initiated by funding from EMBL. It continues to be developed with support from EMBL and additional
+    funding has been gratefully received from the Biotechnology and Biological Sciences Research Council
 (BBSRC grant BB/I02612X/1) and the EU's Seventh Framework Programme for Research (FP7 grant MICROB3).
-</p>
+<br/><br/></p>
 
 <h3 id="mail">Mailing list</h3>
 
