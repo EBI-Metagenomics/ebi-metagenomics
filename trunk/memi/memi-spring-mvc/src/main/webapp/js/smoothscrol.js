@@ -2,7 +2,7 @@ window.$j = window.$ = jQuery;
   $.browser.old_ie = $.browser.msie && $.browser.version < 8;
   $j(document).ready(function() {
   // jQuery SmoothScroll | Version 10-04-30
-  $('a[href*=#top], a[href*=#what_about], a[href*=#resources], a[href*=#resources_1], a[href*=#resources_2], a[href*=#features], a[href*=#features_1], a[href*=#features_2], a[href*=#features_3], a[href*=#p_features], a[href*=#mail], a[href*=#credits], a[href*=#registration], a[href*=#format], a[href*=#prepublication], a[href*=#analysis], a[href*=#submit]').click(function() {
+  $('a[href*=#top], a[href*=#what_about], a[href*=#resources], a[href*=#resources_1], a[href*=#resources_2], a[href*=#features], a[href*=#features_1], a[href*=#features_2], a[href*=#features_3], a[href*=#p_features], a[href*=#funding], a[href*=#mail], a[href*=#credits], a[href*=#registration], a[href*=#format], a[href*=#prepublication], a[href*=#analysis], a[href*=#submit]').click(function() {
 
    // duration in ms
    var duration=1000;
