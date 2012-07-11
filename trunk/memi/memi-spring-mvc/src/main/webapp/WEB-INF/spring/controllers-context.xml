@@ -30,12 +30,31 @@
     <!--<property name="configLocation"  value="/WEB-INF/ehcache.xml"/>-->
     <!--</bean>    -->
 
+    <!--To update the RSS feed automatically:-->
+
+<!--1. Create a sub-directory called "bin":-->
+
+<!--mkdir -p ~/public_html/rss/bin-->
+
+<!--2. Save the attached shell script (metagenomics-news.sh) in the bin directory-->
+
+<!--3. Change user name in the script-->
+
+<!--4. Add the following to your crontab on the cluster:-->
+
+<!--# Get Metagenomic RSS feed every 5 minutes-->
+<!--0,5,10,15,20,25,30,35,40,45,50,55 * * * *-->
+<!--~/public_html/rss/bin/metagenomics-news.sh-->
+
+<!--6. Change permission of the shell script:-->
+
+<!--chmod 755 ~/public_html/rss/bin/metagenomics-news.sh-->
     <!--RSS-->
     <bean id="rssClient" class="uk.ac.ebi.interpro.metagenomics.memi.feed.CachingRomeClient">
         <!--TODO: Replace local cached feed with Twitter feed when fixed @Cacheable problem-->
         <!--TODO: See also MGModelFactory.java-->
         <!--<constructor-arg value="http://twitter.com/statuses/user_timeline/257482404.rss"/>-->
-        <constructor-arg value="http://www.ebi.ac.uk/~aquinn/rss/metagenomics-news.rss"/>
+        <constructor-arg value="http://www.ebi.ac.uk/~maxim/rss/metagenomics-news.rss"/>
         <!--Show no more than five news entries-->
         <constructor-arg value="5"/>
     </bean>
