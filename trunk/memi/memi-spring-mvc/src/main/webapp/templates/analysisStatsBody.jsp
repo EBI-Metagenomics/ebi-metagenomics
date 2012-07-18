@@ -74,7 +74,7 @@
                     </a></li>
                 <li>
                     <a title="Click to download full InterPro matches table (TSV)"
-                       href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportI5File"/>"><spring:message
+                       href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportI5TSVFile"/>"><spring:message
                             code="analysisStatsView.label.download.i5.matches"/> <c:out
                             value="${model.emgFile.fileSizeMap['_I5.tsv']}"/>
                     </a></li>
@@ -83,6 +83,12 @@
                        href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportGOFile"/>"><spring:message
                             code="analysisStatsView.label.download.goterms.csv"/> <c:out
                             value="${model.emgFile.fileSizeMap['_summary.go']}"/>
+                    </a></li>
+                <li>
+                    <a title="<spring:message code="analysisStatsView.label.download.interproHits.title"/>"
+                       href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportIPRhitsFile"/>"><spring:message
+                            code="analysisStatsView.label.download.interproHits.cds.fasta"/> <c:out
+                            value="${model.emgFile.fileSizeMap['_IPRhits.fasta']}"/>
                     </a></li>
             </ul>
         </div>
@@ -98,7 +104,7 @@
         <h3>Protein function analysis</h3>
 
         <p>The entire InterProScan results file (<a title="Click to download full InterPro matches table (TSV)"
-                                                    href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportI5File"/>">download
+                                                    href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportI5TSVFile"/>">download
             here</a>) has been used to produce the following summaries.</p>
 
         <h4>InterPro match summary</h4>
@@ -106,18 +112,7 @@
         <p>Top five most frequently found InterPro matches to this sample:</p>
         <c:choose>
             <c:when test="${not empty model.interProEntries}">
-                <%--<c:set var="proteinExportID" value="Export full InterPro protein matches table (Excel or TSV)"/>--%>
-                <%--<a title="<c:out value="${proteinExportID}"/>"--%>
-                <%--href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportIPRFile/${model.emgFile.fileName}"/>">--%>
-                <%--<c:out value="${proteinExportID}"/>--%>
-                <%--</a>--%>
-
                 <div class="export">
-                        <%-- remove detailed TSV export : available on top
-                        <a href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportI5File/${model.emgFile.fileName}"/>"
-                           title="<spring:emailMessage code="analysisStatsView.label.download.i5.matches.detailed"/>">
-                            <spring:emailMessage code="analysisStatsView.label.download.i5.matches.detailed"/>
-                        </a>--%>
                     <a id="csv"
                        href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportIPRFile"/>"
                        title="<spring:message code="analysisStatsView.label.download.i5.table.view"/>">

@@ -56,7 +56,8 @@ public class EmgFile {
         MASKED_FASTA("_masked.fasta"),
         CDS_FAA("_CDS.faa"),
         I5_TSV("_I5.tsv"),
-        IPR("_summary.ipr");
+        IPR("_summary.ipr"),
+        IPR_HITS("_IPRhits.fasta");
 
         private String fileExtension;
 

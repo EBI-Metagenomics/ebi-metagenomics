@@ -32,7 +32,7 @@ import java.io.File;
 import java.util.*;
 
 /**
- * Represents the controller for the list studies page.
+ * Represents the controller for the samples view page.
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @since 1.0-SNAPSHOT

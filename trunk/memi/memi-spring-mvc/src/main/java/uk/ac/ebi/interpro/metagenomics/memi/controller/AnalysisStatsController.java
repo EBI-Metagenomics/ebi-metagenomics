@@ -92,7 +92,7 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
         return handleExport(sampleId, model, response, request, EmgFile.EmgFileExtension.CDS_FAA.getFileExtension(), "_pCDS.fasta");
     }
 
-    @RequestMapping(value = "/doExportI5File", method = RequestMethod.GET)
+    @RequestMapping(value = "/doExportI5TSVFile", method = RequestMethod.GET)
     public ModelAndView doExportI5File(@PathVariable final String sampleId, final ModelMap model,
                                        final HttpServletResponse response, final HttpServletRequest request) {
         return handleExport(sampleId, model, response, request, EmgFile.EmgFileExtension.I5_TSV.getFileExtension(), "_InterPro.tsv");
@@ -104,6 +104,22 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
         return handleExport(sampleId, model, response, request, EmgFile.EmgFileExtension.IPR.getFileExtension(), "_InterPro_sum.csv");
     }
 
+    @RequestMapping(value = "/doExportIPRhitsFile", method = RequestMethod.GET)
+    public ModelAndView doExportIPRhitsFile(@PathVariable final String sampleId, final ModelMap model,
+                                            final HttpServletResponse response, final HttpServletRequest request) {
+        return handleExport(sampleId, model, response, request, EmgFile.EmgFileExtension.IPR_HITS.getFileExtension(), "_InterPro_hits.fasta");
+    }
+
+    /**
+     * @param sampleId
+     * @param model
+     * @param response
+     * @param request
+     * @param fileNameSuffix
+     * @param fileExtension  - Defines the file extension and a file name suffix for the download file itself.
+     * @return
+     */
+    //TODO: Parameter name fileExtension is a bit misleading
     private ModelAndView handleExport(final String sampleId, ModelMap model, final HttpServletResponse response,
                                       final HttpServletRequest request, final String fileNameSuffix,
                                       final String fileExtension) {
