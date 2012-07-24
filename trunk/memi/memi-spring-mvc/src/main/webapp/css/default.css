@@ -343,7 +343,7 @@ color:#7E7E7E;
 
 #login a, #login a:link, #login a:focus {
 font-weight:bold;
-color: #006af6;   
+color: #006af6;
 background:url(../img/login_off_8.jpg) no-repeat center right;
 padding-right:20px;
 font-size:110%;
@@ -355,11 +355,11 @@ text-decoration:underline;
 
 a.ext, a.ext:link {
     padding-left: 12px;
-    background: url(../img/ico_ext_link.png) no-repeat 0 2px;
+    background: url(../img/ico_ext_link.png) no-repeat 0 3px;
 }
 
 a.ext:hover,a.ext:active, a.ext:focus {
-    background: url(../img/ico_ext_link_on.png) no-repeat 0 2px;
+    background: url(../img/ico_ext_link_on.png) no-repeat 0 3px;
 }
 
 a.signup {
@@ -1617,3 +1617,12 @@ border-radius:4px;
 background-color:white;
 /*width:600px;*/}
 
+
+/* customize Jquery style */
+.ui-widget-header {
+border: 0px solid #BBB;
+background:none;
+}
+.ui-widget-header span {display:none;}   /* remove title from dialog-sign-in*/
+
+.ui-corner-all {border-radius: 12px;}
