@@ -104,6 +104,13 @@ public class Study implements SecureEntity {
     @Column(name = "AUTHOR_EMAIL", length = 100)
     private String authorEmailAddress;
 
+    /**
+     * Submitted - Directly submitted to us (EBI Metagenomics).
+     * <p/>
+     * Harvested - Study already existed in ENA/SRA.
+     * <p/>
+     * Mirrored - External source e.g. MGRast.
+     */
     public enum DataOrigination {
         SUBMITTED, HARVESTED, MIRRORED;
     }
