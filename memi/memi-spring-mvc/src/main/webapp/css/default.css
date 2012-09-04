@@ -969,7 +969,7 @@ font-size: 130%;
 border: 1px solid #ABADB3;
 }
 
-form#submit_form fieldset {
+form#sub_form fieldset {
 border: 1px solid #e5e5e5;
 padding:7px 14px;
 }
@@ -1011,7 +1011,7 @@ width: 150px;
 /*background: -moz-linear-gradient(top, #FFFFFF, #EEEEEE 1px, #FFFFFF 6px);*/
 }
 
-#feedback_form input, #feedback_form_no input, #submit_form input {
+#feedback_form input, #feedback_form_no input, #sub_form input {
 width: 360px;
 /*-moz-box-shadow:inset 0 0 7px #ccc;*/
 /*-webkit-box-shadow:inset 0 0 7px #ccc;*/
@@ -1019,7 +1019,7 @@ width: 360px;
 }
 
 
-input.main_button, #feedback_form input.main_button, #feedback_form_no input.main_button, #submit_form input.main_button {
+input.main_button, #feedback_form input.main_button, #feedback_form_no input.main_button, #sub_form input.main_button {
 width: auto;
 }
 
@@ -1149,7 +1149,7 @@ border: 0px solid #ffaa22;
 .table_opt {border:0px solid black;display:block; overflow:auto;}
 
 .table_opt_pag {color: #424242; float:left; margin-left:14px; border:0px solid green;padding-top:8px;padding-bottom:4px;}
-.table_opt_pag_num {float:left; width:80px;margin-right:7px; font-size:90%; border:0px solid red;}
+.table_opt_pag_num {float:left; width:100px;margin-right:7px; font-size:90%; border:0px solid red;}
 .table_opt_pag_arr  {float:left;  font-size:90%; border:0px solid red;}
 
 /* EXPORT OPTIONS */
@@ -1262,10 +1262,10 @@ display:block;
 }
 
 #feedback_form label,  #feedback_form_no label {font-weight:bold;font-size:110%;color:#445668;}
-#login_form label, #submit_form label {font-weight:bold;font-size:110%;color:#605F5F;}
+#login_form label, #sub_form label {font-weight:bold;font-size:110%;color:#605F5F;}
 
 
-#feedback_form #required, #feedback_form_no #required,  #submit_form  #required  {background: url(../img/ico_form_required.png) no-repeat right center; padding-right:14px; border: 0px red solid; zoom:1; /* for IE7 and IE6 to visualise the span and background without content*/}
+#feedback_form #required, #feedback_form_no #required,  #sub_form  #required  {background: url(../img/ico_form_required.png) no-repeat right center; padding-right:14px; border: 0px red solid; zoom:1; /* for IE7 and IE6 to visualise the span and background without content*/}
 
 label.error, span.error, #feedback_form label.error, #feedback_form_no label.error, #login_form label.error {
 display:block;
@@ -1626,3 +1626,79 @@ background:none;
 .ui-widget-header span {display:none;}   /* remove title from dialog-sign-in*/
 
 .ui-corner-all {border-radius: 12px;}
+
+/* moving tab Jquery */
+
+#moving_tab {
+    /* hide overlength child elements*/
+    overflow:hidden;
+    /* all the child elements are refering to this width */
+    width:930px;
+    border:0px solid red;
+    /* fix ie 6 overflow bug */
+    position:relative;
+
+}
+
+    #moving_tab .tabs {
+        /* enable absolute position for .lava */
+        position:relative;
+        height:30px;
+
+        /* styling */
+        padding-top:4px;
+        cursor:pointer;
+    }
+
+    #moving_tab .tabs .item {
+        /* enable z-index */
+        position:relative;
+        z-index:10;
+
+        /* display in one row */
+        float:left;
+        display:block;
+        /* width = half size of #moving_tab */
+        width:150px;
+        text-align:center; font-size:14px; font-weight:bold;
+    }
+
+    #moving_tab .tabs .lava {
+        position:absolute;
+        top:0; left:0;
+        /* display the lava in bottom most layer */
+        z-index:0;
+        /* width = half size of #moving_tab */
+        width:150px;
+        /* height of .tabs */
+        height:30px;
+        background:#859c9c;
+        -moz-border-radius: 4px;
+        -khtml-border-radius: 4px;
+        -webkit-border-radius: 4px;
+        border-radius:4px;
+
+    }
+
+    #moving_tab .content {
+        /* enable absolute position for .panel */
+        position:relative; overflow:hidden;
+      /* background:#abe3eb;border-top:1px solid #d9fafa;border:1px solid #d9fafa; */ 
+    }
+
+    #moving_tab .panel {
+        /* width is width of #moving_tab times 2 */
+        position:relative;
+        width:5000px;
+        display:block;
+        overflow:auto;
+        border:0px solid grey;
+    }
+
+    #moving_tab .panel .panel_sec {
+        float:left;   
+        /* width is the same with #moving_tab */
+        width:930px;
+
+    }
+.selected {font-weight:bold; color:white;}
