@@ -168,7 +168,7 @@
                                     class="list_more">${entry.key.studyName}</a>
                                 <br/>
                                 <span class="list_desc"><c:out value="${entry.key.shortStudyAbstract} ..."/></span>
-                                <a href="<c:url value="${baseURL}/project/${entry.key.studyId}"/>#study_desc"
+                                <a href="<c:url value="${baseURL}/project/${entry.key.studyId}"/>"
                                    class="more_view">view more</a> - <a
                                     href="<c:url value="${baseURL}/project/${entry.key.studyId}"/>#samples_id"
                                     class="list_sample"><c:out value="${entry.value} sample"/><c:if
@@ -207,7 +207,7 @@
                                    class="list_more">${sample.sampleName}</a>
                                 <br/>
                                 <span class="list_desc"><c:out value="${sample.shortSampleDescription} ..."/></span>
-                                <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>#sample_desc"
+                                <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>"
                                    class="more_view">view more</a>
                                 <c:choose>
                                     <c:when test="${empty sample.analysisCompleted}">
@@ -250,7 +250,7 @@
                            class="list_more">${entry.key.studyName}</a>
                         <br/>
                         <span class="list_desc"><c:out value="${entry.key.shortStudyAbstract} ..."/></span>
-                        <a href="<c:url value="${baseURL}/project/${entry.key.studyId}"/>#study_desc"
+                        <a href="<c:url value="${baseURL}/project/${entry.key.studyId}"/>"
                            class="more_view">view more</a> - <a
                                 href="<c:url value="${baseURL}/project/${entry.key.studyId}"/>#samples_id"
                                 class="list_sample"><c:out value="${entry.value} sample"/><c:if
@@ -274,7 +274,7 @@
                            class="list_more">${sample.sampleName}</a>
                         <br/>
                         <span class="list_desc"><c:out value="${sample.shortSampleDescription} ..."/></span>
-                        <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>#sample_desc"
+                        <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>"
                            class="more_view">view more</a>
                         <c:choose>
                             <c:when test="${empty sample.analysisCompleted}">
