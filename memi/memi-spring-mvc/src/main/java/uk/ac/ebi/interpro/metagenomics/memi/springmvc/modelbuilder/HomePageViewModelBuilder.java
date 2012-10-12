@@ -69,7 +69,7 @@ public class HomePageViewModelBuilder extends AbstractViewModelBuilder<HomePageV
         Submitter submitter = getSessionSubmitter(sessionMgr);
         // Get RSS URL
         // TODO: Replace local cached feed with Twitter feed when fixed @Cacheable problem
-        String rssUrl = "http://twitter.com/statuses/user_timeline/257482404.rss";
+        String rssUrl = "https://api.twitter.com/1/statuses/user_timeline/EBImetagenomics.rss";
         List<SyndEntry> rssEntries = Collections.emptyList();
         try {
             rssEntries = rssClient.getEntries();
