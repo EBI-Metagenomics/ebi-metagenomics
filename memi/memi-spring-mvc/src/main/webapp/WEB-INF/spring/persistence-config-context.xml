@@ -9,6 +9,7 @@
 
     <!-- Persistence configuration-->
     <import resource="datasource-beans-context.xml"/>
+    <import resource="external-datasources-beans-context.xml"/>
 
     <!-- Allow declarative transaction management using the @Transactional annotation (recommend by Spring (see Spring MVC documentation)-->
     <!-- Annotation-based configuration (Annotations are specified within DAOImpl classes)-->
@@ -76,9 +77,18 @@
 
     <bean id="sampleDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateSampleDAOImpl"/>
 
-    <bean name="submitterDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.SubmitterDAOImpl">
-        <property name="dataSource" ref="enaLoginDataSource"/>
+    <bean name="submitterDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.apro.SubmitterDAOImpl">
+        <property name="dataSource" ref="aproDataSource"/>
     </bean>
+
+    <bean name="submissionContactDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.erapro.SubmissionContactDAOImpl">
+        <property name="dataSource" ref="eraProDataSource"/>
+    </bean>
+
+    <bean name="countryDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.apro.CountryDAOImpl">
+        <property name="dataSource" ref="aproDataSource"/>
+    </bean>
+
 
     <bean name="fileInfoDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.EmgLogFileInfoDAOImpl">
         <property name="dataSource" ref="memiDataSource"/>

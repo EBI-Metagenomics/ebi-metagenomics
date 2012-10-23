@@ -2,12 +2,12 @@ package uk.ac.ebi.interpro.metagenomics.memi.model;
 
 import org.junit.Before;
 import org.junit.Test;
-import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
+import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 
 import static org.junit.Assert.assertEquals;
 
 /**
- * Test class for {@link uk.ac.ebi.interpro.metagenomics.memi.model.Submitter}.
+ * Test class for {@link uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter}.
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @version $Id$

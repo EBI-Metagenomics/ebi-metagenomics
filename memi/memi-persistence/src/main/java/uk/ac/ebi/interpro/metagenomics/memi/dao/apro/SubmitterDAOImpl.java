@@ -1,11 +1,11 @@
-package uk.ac.ebi.interpro.metagenomics.memi.dao;
+package uk.ac.ebi.interpro.metagenomics.memi.dao.apro;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
+import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
@@ -15,7 +15,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 /**
- * Represents the implementation class of {@link uk.ac.ebi.interpro.metagenomics.memi.dao.SubmitterDAO}.
+ * Represents the implementation class of {@link SubmitterDAO}.
  * The Repository annotation makes it a candidate for component-scanning.
  * TODO: Associate with Hibernate (all methods still return mock-up objects)
  *
@@ -50,19 +50,8 @@ public class SubmitterDAOImpl implements SubmitterDAO {
             return null;
         Submitter submitter = null;
         try {
-            submitter = this.jdbcTemplate.queryForObject("SELECT submitterid, first_name, surname, password, email_address FROM " + Submitter.TABLE_NAME + " WHERE ACTIVE='Y' AND submitterid=?",
-                    new Object[]{submitterId},
-                    new RowMapper<Submitter>() {
-                        public Submitter mapRow(ResultSet rs, int rowNum) throws SQLException {
-                            Submitter submitter = new Submitter();
-                            submitter.setSubmitterId(Integer.parseInt(rs.getString("submitterid")));
-                            submitter.setFirstName(rs.getString("first_name"));
-                            submitter.setSurname(rs.getString("surname"));
-                            submitter.setEmailAddress(rs.getString("email_address"));
-                            submitter.setPassword(rs.getString("password"));
-                            return submitter;
-                        }
-                    });
+            submitter = this.jdbcTemplate.queryForObject("SELECT submitterid, first_name, surname, password, email_address, country, address FROM " + Submitter.TABLE_NAME + " WHERE ACTIVE='Y' AND submitterid=?",
+                    new Object[]{submitterId}, new SubmitterRowMapper());
 
         } catch (Exception e) {
             log.warn("Could not perform database query. It might be that the JDBC connection could not build" +
@@ -83,19 +72,8 @@ public class SubmitterDAOImpl implements SubmitterDAO {
             return null;
         Submitter submitter = null;
         try {
-            submitter = this.jdbcTemplate.queryForObject("SELECT submitterid, first_name, surname, password, email_address FROM " + Submitter.TABLE_NAME + " WHERE ACTIVE='Y' AND email_address=?",
-                    new Object[]{emailAddress.toUpperCase()},
-                    new RowMapper<Submitter>() {
-                        public Submitter mapRow(ResultSet rs, int rowNum) throws SQLException {
-                            Submitter submitter = new Submitter();
-                            submitter.setSubmitterId(Integer.parseInt(rs.getString("submitterid")));
-                            submitter.setFirstName(rs.getString("first_name"));
-                            submitter.setSurname(rs.getString("surname"));
-                            submitter.setEmailAddress(rs.getString("email_address"));
-                            submitter.setPassword(rs.getString("password"));
-                            return submitter;
-                        }
-                    });
+            submitter = this.jdbcTemplate.queryForObject("SELECT submitterid, first_name, surname, password, email_address, country, address FROM " + Submitter.TABLE_NAME + " WHERE ACTIVE='Y' AND email_address=?",
+                    new Object[]{emailAddress.toUpperCase()}, new SubmitterRowMapper());
 
         } catch (Exception e) {
             log.warn("Could not perform database query. It might be that the JDBC connection could not build" +
@@ -132,5 +110,20 @@ public class SubmitterDAOImpl implements SubmitterDAO {
     // TODO: Implement
     public List<Submitter> getSubmitters() {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    class SubmitterRowMapper implements RowMapper<Submitter> {
+
+        public Submitter mapRow(ResultSet rs, int rowNum) throws SQLException {
+            Submitter submitter = new Submitter();
+            submitter.setSubmitterId(Integer.parseInt(rs.getString("submitterid")));
+            submitter.setFirstName(rs.getString("first_name"));
+            submitter.setSurname(rs.getString("surname"));
+            submitter.setEmailAddress(rs.getString("email_address"));
+            submitter.setPassword(rs.getString("password"));
+            submitter.setCountry(rs.getString("country"));
+            submitter.setAddress(rs.getString("address"));
+            return submitter;
+        }
     }
 }

@@ -1,6 +1,6 @@
 package uk.ac.ebi.interpro.metagenomics.memi.controller;
 
-import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.velocity.app.VelocityEngine;
@@ -14,18 +14,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.apro.CountryDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.erapro.SubmissionContactDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
-import uk.ac.ebi.interpro.metagenomics.memi.forms.SubmissionForm;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.SRARegistrationForm;
+import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.services.EmailNotificationService;
 import uk.ac.ebi.interpro.metagenomics.memi.services.INotificationService;
 import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.SRARegistrationModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.SubmissionModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.SRARegistrationViewModelBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.SubmissionViewModelBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder;
 
@@ -33,10 +37,10 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.text.Format;
-import java.text.SimpleDateFormat;
+import java.io.StringReader;
 import java.util.*;
 
 /**
@@ -58,7 +62,7 @@ public class SubmissionController extends CheckLoginController implements IContr
 
     public static final String SUCCESS_VIEW_NAME = "submitSuccess";
 
-    @Resource(name = "emailNotificationServiceSubmitPage")
+    @Resource(name = "emailNotificationServiceSRARegistration")
     private INotificationService emailService;
 
     private final String DISPLAY_PARAM = "?display=true";
@@ -69,6 +73,12 @@ public class SubmissionController extends CheckLoginController implements IContr
     @Resource
     private MemiDownloadService downloadService;
 
+    @Resource
+    private CountryDAO countryDAO;
+
+    @Resource
+    private SubmissionContactDAO submissionContactDAO;
+
     public ModelAndView doGet(ModelMap model) {
         if (isUserAssociatedToSession()) {
             return buildModelAndView(model, false);
@@ -78,9 +88,14 @@ public class SubmissionController extends CheckLoginController implements IContr
     }
 
     private ModelAndView buildModelAndView(ModelMap model, boolean isMaxSizeError) {
-        final ModelPopulator modelPopulator = new SubmissionModelPopulator();
-        model.addAttribute(SubmissionForm.MODEL_ATTR_NAME, new SubmissionForm());
+//        final ModelPopulator modelPopulator = new SubmissionModelPopulator();
+        final ModelPopulator modelPopulator = new SRARegistrationModelPopulator();
+        //TODO: Try to remove that
+        SRARegistrationForm registrationForm = new SRARegistrationForm();
+        preFillRegistrationForm(registrationForm);
+        model.addAttribute(SRARegistrationForm.MODEL_ATTR_NAME, registrationForm);
         model.addAttribute("isMaxSizeError", isMaxSizeError);
+        model.addAttribute("hasSraAccount", submissionContactDAO.checkAccountByEmailAddress(getSessionSubmitter().getEmailAddress()));
         return buildModelAndView(getModelViewName(), model, modelPopulator);
     }
 
@@ -105,34 +120,27 @@ public class SubmissionController extends CheckLoginController implements IContr
 
     //    @RequestMapping(params = "submit", method = RequestMethod.POST)
     @RequestMapping(method = RequestMethod.POST)
-    public ModelAndView doPost(@ModelAttribute(SubmissionForm.MODEL_ATTR_NAME) @Valid SubmissionForm subForm, BindingResult result,
+    public ModelAndView doPost(@ModelAttribute(SRARegistrationForm.MODEL_ATTR_NAME) @Valid SRARegistrationForm registrationForm, BindingResult result,
                                ModelMap model, SessionStatus status) {
         if (isUserAssociatedToSession()) {
-            final ModelPopulator modelPopulator = new SubmissionModelPopulator();
+//            final ModelPopulator modelPopulator = new SubmissionModelPopulator();
+            final ModelPopulator modelPopulator = new SRARegistrationModelPopulator();
             modelPopulator.populateModel(model);
             if (result.hasErrors()) {
-                log.info("Submission form still has validation errors!");
+                log.info("The submission form has still validation errors!");
                 model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
                 return new ModelAndView(VIEW_NAME, model);
             }
-            if (subForm != null) {
-                boolean isAttachmentStored = false;
-                String pathName;
-                CommonsMultipartFile commonsFile = subForm.getAttachment();
-                String originalFileName = commonsFile.getOriginalFilename();
-                String storedFileName = buildNewFileName(originalFileName);
-                if (commonsFile.getFileItem() != null && commonsFile.getName().length() > 0 && commonsFile.getSize() > 0) {
-                    pathName = buildFilePathName(storedFileName);
-                    isAttachmentStored = writeFileToDisk(commonsFile, pathName);
-                }
-                String msg = buildMsg(subForm, isAttachmentStored, originalFileName, storedFileName);
-                String sender = sessionManager.getSessionBean().getSubmitter().getEmailAddress();
-                ((EmailNotificationService) emailService).setSender(sender);
-                ((EmailNotificationService) emailService).setReceiverCC(sender);
-                ((EmailNotificationService) emailService).setEmailSubject("EMG-SUB: " + subForm.getSubTitle());
-                ((EmailNotificationService) emailService).setEmailSubject("EMG-SUB: " + subForm.getSubTitle());
+            if (registrationForm != null) {
+                String email = registrationForm.getEmail();
+                ((EmailNotificationService) emailService).setSender(email);
+                ((EmailNotificationService) emailService).setReceiverCC(email);
+                ((EmailNotificationService) emailService).setEmailSubject("EMG-SUB: " + registrationForm.getSubTitle());
+                ((EmailNotificationService) emailService).setEmailSubject("EMG-SUB: " + registrationForm.getSubTitle());
+                String msg = buildEmailMsg(registrationForm);
+                //TODO: Send email to datasub
                 emailService.sendNotification(msg);
-                log.info("Sent an email with hibernate submission details: " + msg);
+//                log.info("Sent an email with hibernate submission details: " + msg);
                 status.setComplete();
             } else {
                 return new ModelAndView(CommonController.EXCEPTION_PAGE_VIEW_NAME);
@@ -166,59 +174,29 @@ public class SubmissionController extends CheckLoginController implements IContr
         return buildModelAndView(model, true);
     }
 
-    private String buildNewFileName(String originalFileName) {
-        long time = Calendar.getInstance().getTimeInMillis();
-        //add time to 1 year in advance
-        time = time + 1000L * 60L * 60L * 24L * 365L * 2L;
-        Format formatter = new SimpleDateFormat("yyyy-MM-dd");
-        Random randomGenerator = new Random();
-
-        return new StringBuilder(formatter.format(new Date(time))).
-                append("_").
-                append(randomGenerator.nextInt(1000)).
-                append("_").
-                append(originalFileName).toString();
-    }
-
-    private String buildFilePathName(String fileName) {
-        return new StringBuilder(propertyContainer.getPathToSubmissionDirectory()).
-                append(fileName).toString();
-    }
-
-    private boolean writeFileToDisk(CommonsMultipartFile attachment, final String pathName) {
-        FileItem fileItem = attachment.getFileItem();
-        if (fileItem != null) {
-            try {
-                fileItem.write(new File(pathName));
-                return true;
-            } catch (Exception e) {
-                log.warn("Couldn't write attached file with name " + fileItem.getName() + " to the file system!", e);
-            }
-        }
-        return false;
-    }
-
 
     /**
-     * Builds the email message from the submission form using Velocity..
+     * Builds the email message from the SRA registration form using Velocity..
      *
-     * @param subForm Submission form object from which the user input will be read out.
+     * @param registrationForm
      * @return The email message as String representation.
      */
-    protected String buildMsg(SubmissionForm subForm, final boolean isAttachmentStored, final String originalFileName,
-                              final String storedFileName) {
+    protected String buildEmailMsg(final SRARegistrationForm registrationForm) {
         Map<String, Object> model = new HashMap<String, Object>();
 
         //Add submission form to Velocity model
-        model.put("subForm", subForm);
-        model.put("attachment", (isAttachmentStored ? originalFileName + " (" + storedFileName + ")" : "No file provided!"));
+        model.put("institute", registrationForm.getInstitute());
+        model.put("country", registrationForm.getCountry());
+        model.put("department", registrationForm.getDepartment());
+        model.put("name", registrationForm.getFirstName() + " " + registrationForm.getLastName());
+        model.put("email", registrationForm.getEmail());
+        model.put("summary", registrationForm.getDataDesc());
+        model.put("title", registrationForm.getSubTitle());
+        model.put("releaseDate", registrationForm.getReleaseDate());
 
-        //Add logged in user to Velocity model
-        if (sessionManager != null && sessionManager.getSessionBean() != null) {
-            model.put("submitter", sessionManager.getSessionBean().getSubmitter());
-        }
-        return VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "submission-confirmation.vm", model);
+        return VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "sra-registration-email.vm", model);
     }
+
 
     protected String getModelViewName() {
         return VIEW_NAME;
@@ -240,4 +218,65 @@ public class SubmissionController extends CheckLoginController implements IContr
         }
     }
 
+    class SRARegistrationModelPopulator implements ModelPopulator {
+        @Override
+        public void populateModel(ModelMap model) {
+
+            final ViewModelBuilder<SRARegistrationModel> builder = new SRARegistrationViewModelBuilder(sessionManager, "Submit data - EBI metagenomics",
+                    getBreadcrumbs(null), propertyContainer, countryDAO, getSessionSubmitter());
+            final SRARegistrationModel sraRegistrationModel = builder.getModel();
+            sraRegistrationModel.changeToHighlightedClass(ViewModel.TAB_CLASS_SUBMIT_VIEW);
+            model.addAttribute(ViewModel.MODEL_ATTR_NAME, sraRegistrationModel);
+        }
+    }
+
+    private void preFillRegistrationForm(SRARegistrationForm registrationForm) {
+        Submitter submitter = getSessionSubmitter();
+        if (submitter != null) {
+            log.info("Pre fill the SRA registration form with submitter details.");
+            String email = submitter.getEmailAddress();
+            //trim email address
+            if (email != null)
+                email.trim();
+            registrationForm.setEmail(email);
+            //
+            String firstName = submitter.getFirstName();
+            //trim email address
+            if (firstName != null) {
+                firstName.trim();
+            }
+            //
+            registrationForm.setFirstName(firstName);
+            String lastName = submitter.getSurname();
+            //trim last name
+            if (lastName != null) {
+                lastName.trim();
+            }
+            registrationForm.setLastName(lastName);
+            //
+            if (submitter.getAddress() != null) {
+                parseAddressDetails(registrationForm, submitter.getAddress());
+            }
+            //
+            registrationForm.setCountry(submitter.getCountry());
+        } else {
+            log.info("No submitter attached to the session. Therefore no submitter details to pre fill the registration form.");
+        }
+    }
+
+    private void parseAddressDetails(SRARegistrationForm registrationForm, String address) {
+        try {
+            List<String> lines = IOUtils.readLines(new StringReader(address));
+            if (lines != null && lines.size() > 3) {
+                registrationForm.setDepartment(lines.get(0));
+                registrationForm.setInstitute(lines.get(1));
+                registrationForm.setPostalAddress(lines.get(2));
+                registrationForm.setPostalCode(lines.get(3));
+            } else {
+                log.warn("Cannot parse the address field, because it has an unexpected format!");
+            }
+        } catch (IOException e) {
+            log.error("Exception occurred while parsing the address field!", e);
+        }
+    }
 }

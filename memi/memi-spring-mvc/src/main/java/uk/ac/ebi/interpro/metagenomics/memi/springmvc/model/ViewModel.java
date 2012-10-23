@@ -2,7 +2,7 @@ package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
 
 import uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
-import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
+import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 
 import java.util.HashMap;
 import java.util.List;

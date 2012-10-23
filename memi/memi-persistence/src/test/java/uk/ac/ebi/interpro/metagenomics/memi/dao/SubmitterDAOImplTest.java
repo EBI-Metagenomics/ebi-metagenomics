@@ -5,14 +5,15 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.apro.SubmitterDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 
 import javax.annotation.Resource;
 
 import static org.junit.Assert.*;
 
 /**
- * Represents a unit test for {@link uk.ac.ebi.interpro.metagenomics.memi.dao.SubmitterDAOImpl}. This test queries
+ * Represents a unit test for {@link uk.ac.ebi.interpro.metagenomics.memi.dao.apro.SubmitterDAOImpl}. This test queries
  * the real Oracle database. Pay attention: If you run these test methods outside the EBI, they will fail (then better
  * annotate the test methods with @Ignore).
  *

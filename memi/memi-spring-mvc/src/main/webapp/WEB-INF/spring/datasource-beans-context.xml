@@ -4,7 +4,7 @@
        xsi:schemaLocation="
         http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
-    <!--Data sources-->
+    <!--Internal data sources-->
 
     <!--Metagenomics datasource-->
     <bean id="memiDataSource" class="org.apache.commons.dbcp.BasicDataSource"
@@ -25,14 +25,5 @@
         <!--http://amitcodes.wordpress.com/2008/07/26/16/-->
         <property name="testOnBorrow" value="true"/>
         <property name="validationQuery" value="select 1 from dual"/>
-    </bean>
-
-    <!--Data source for ADEV-->
-    <bean id="enaLoginDataSource"
-          class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="${jcp.jdbc.oracle.driverClassName}"/>
-        <property name="url" value="${jcp.jdbc.oracle.apro.url}"/>
-        <property name="username" value="${jcp.jdbc.oracle.apro.username}"/>
-        <property name="password" value="${jcp.jdbc.oracle.apro.password}"/>
     </bean>
 </beans>
