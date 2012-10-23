@@ -10,7 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.SubmitterDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.apro.SubmitterDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.FeedbackForm;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;

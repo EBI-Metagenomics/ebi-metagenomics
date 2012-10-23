@@ -1,6 +1,6 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.session;
 
-import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
+import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 
 import java.io.Serializable;
 

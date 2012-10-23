@@ -8,6 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
+import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.services.EmailNotificationService;
 import uk.ac.ebi.interpro.metagenomics.memi.services.INotificationService;
@@ -102,5 +103,21 @@ public abstract class AbstractController {
         List<Breadcrumb> result = new ArrayList<Breadcrumb>();
         result.add(new Breadcrumb("Error Page", "Error appeared. Sorry for any inconvenience!", "/errors/" + viewName));
         return result;
+    }
+
+    /**
+     * Returns a representation of the current logged in user/submitter, but only if somebody is logged in.
+     */
+    public Submitter getSessionSubmitter() {
+        if (sessionManager != null) {
+            if (sessionManager.getSessionBean() != null) {
+                return sessionManager.getSessionBean().getSubmitter();
+            } else {
+                log.warn("Session bean is NULL. It seems like there is an error within the application, because the session bean should never be NULL.");
+            }
+        } else {
+            log.warn("Session manager is NULL. It seems like there is an error within the application, because the session manager should never be NULL.");
+        }
+        return null;
     }
 }

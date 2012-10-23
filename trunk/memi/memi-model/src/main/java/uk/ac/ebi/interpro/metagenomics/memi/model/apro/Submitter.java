@@ -1,4 +1,4 @@
-package uk.ac.ebi.interpro.metagenomics.memi.model;
+package uk.ac.ebi.interpro.metagenomics.memi.model.apro;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -15,6 +15,7 @@ import java.util.Date;
  */
 public class Submitter implements Serializable {
 
+    //TODO: This variable shouldn't be visible on Google code
     public final static String TABLE_NAME = "spin2006.submitter";
 
     private long submitterId;

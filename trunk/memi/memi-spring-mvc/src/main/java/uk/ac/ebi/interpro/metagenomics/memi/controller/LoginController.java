@@ -7,10 +7,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.support.SessionStatus;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.SubmitterDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.apro.SubmitterDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.encryption.SHA256;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
-import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
+import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;

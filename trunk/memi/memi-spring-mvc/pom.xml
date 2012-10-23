@@ -42,6 +42,8 @@
 
     <properties>
         <tiles.version>2.2.2</tiles.version>
+        <hibernate-validator.version>4.3.0.Final</hibernate-validator.version>
+        <javax.validation-api.version>1.0.0.GA</javax.validation-api.version>
     </properties>
 
     <!-- Most of the dependencies are ordered by topics (e.g. Spring) or by scope -->
@@ -150,12 +152,12 @@
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
-            <version>1.0.0.GA</version>
+            <version>${javax.validation-api.version}</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
-            <version>4.0.2.GA</version>
+            <version>${hibernate-validator.version}</version>
         </dependency>
         <!--Connection pooling-->
         <dependency>

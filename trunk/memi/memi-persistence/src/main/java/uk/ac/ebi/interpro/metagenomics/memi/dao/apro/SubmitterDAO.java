@@ -1,11 +1,11 @@
-package uk.ac.ebi.interpro.metagenomics.memi.dao;
+package uk.ac.ebi.interpro.metagenomics.memi.dao.apro;
 
-import uk.ac.ebi.interpro.metagenomics.memi.model.Submitter;
+import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 
 import java.util.List;
 
 /**
- * Represents the data access object interface for {@link uk.ac.ebi.interpro.metagenomics.memi.model.Submitter}.
+ * Represents the data access object interface for {@link uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter}.
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @version $Id$
