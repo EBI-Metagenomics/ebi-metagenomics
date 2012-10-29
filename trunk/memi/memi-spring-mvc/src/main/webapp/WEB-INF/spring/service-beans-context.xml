@@ -25,8 +25,14 @@
     <bean name="emailNotificationServiceSRARegistration"
           class="uk.ac.ebi.interpro.metagenomics.memi.services.EmailNotificationService">
         <constructor-arg ref="mailSender"/>
-        <property name="receiver" value="${email.address.sra.registration}"/>
-        <!--<property name="receiverCC" value="" />-->
+        <property name="receiver" value="${sra.registration.email.address.receiver}"/>
+        <property name="receiverCCList">
+            <list>
+                <value type="java.lang.String">${sra.registration.email.address.receiverCC_1}</value>
+                <value type="java.lang.String">${sra.registration.email.address.receiverCC_2}</value>
+                <value type="java.lang.String">${sra.registration.email.address.receiverCC_3}</value>
+            </list>
+        </property>
         <!--<property name="emailSubject" value="EMG-SUB: Unknown project"/>-->
     </bean>
 

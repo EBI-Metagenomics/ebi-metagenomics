@@ -5,7 +5,7 @@
 <div id="content-full">
 
     <c:if test="${displaySubBlock}">
-        <%@ include file="components/submitIntroAndWarn.jsp" %>
+        <%@ include file="components/loginComponent.jsp" %>
 
         <p class="step_breadcrumbs"><span
                 id="selected"><%--<span class="num">1</span>--%> Login, start submission process</span></p>

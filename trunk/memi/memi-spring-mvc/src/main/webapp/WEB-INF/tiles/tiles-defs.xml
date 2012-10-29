@@ -37,12 +37,22 @@
 
     <definition name="submit" extends="rootTemplate">
         <put-attribute name="bodyClass" type="string" value="ebigrey"/>
-        <put-attribute name="body" value="/templates/sraRegisterFormBody.jsp"/>
+        <put-attribute name="body" value="/templates/submitBody.jsp"/>
+    </definition>
+
+    <definition name="sraRegistration" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="ebigrey"/>
+        <put-attribute name="body" value="/templates/sraRegistrationFormBody.jsp"/>
+    </definition>
+
+    <definition name="sraWebin" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="ebigrey"/>
+        <put-attribute name="body" value="/templates/sraWebinBody.jsp"/>
     </definition>
 
     <definition name="submitSuccess" extends="rootTemplate">
         <put-attribute name="bodyClass" type="string" value="ebigrey"/>
-        <put-attribute name="body" value="/templates/submitSuccessBody.jsp"/>
+        <put-attribute name="body" value="/templates/sraRegistrationSuccessBody.jsp"/>
     </definition>
 
     <definition name="viewStudies" extends="rootTemplate">

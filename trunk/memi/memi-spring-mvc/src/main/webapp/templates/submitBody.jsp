@@ -3,7 +3,7 @@
 
 <div id="content-full">
 
-    <%@ include file="components/submitIntroAndWarn.jsp" %>
+    <%@ include file="components/loginComponent.jsp" %>
 
     <div class="sub">
 
