@@ -10,6 +10,8 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents an email notification service.
@@ -27,6 +29,8 @@ public class EmailNotificationService implements INotificationService {
     private String receiver;
 
     private String receiverCC;
+
+    private String[] receiverCCList;
 
     private String sender;
 
@@ -52,6 +56,9 @@ public class EmailNotificationService implements INotificationService {
             }
             if (receiverCC != null) {
                 helper.setCc(receiverCC);
+            }
+            if (receiverCCList != null) {
+                helper.setCc(receiverCCList);
             }
             if (sender != null) {
                 helper.setFrom(sender);
@@ -128,6 +135,14 @@ public class EmailNotificationService implements INotificationService {
 
     public void setReceiverCC(String receiverCC) {
         this.receiverCC = receiverCC;
+    }
+
+    public String[] getReceiverCCList() {
+        return receiverCCList;
+    }
+
+    public void setReceiverCCList(String[] receiverCCList) {
+        this.receiverCCList = receiverCCList;
     }
 
     public String getSender() {

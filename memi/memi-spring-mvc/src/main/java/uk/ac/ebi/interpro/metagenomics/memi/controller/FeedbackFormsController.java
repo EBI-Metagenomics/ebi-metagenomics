@@ -117,9 +117,9 @@ public class FeedbackFormsController extends AbstractController {
     @RequestMapping(value = "**/doFeedback", method = RequestMethod.POST)
     public
     @ResponseBody
-    Map<String, String> doProcessFeedback(@RequestParam(required = true, value = "emailAddress") String emailAddress,
-                                          @RequestParam(required = true, value = "emailSubject") String emailSubject,
-                                          @RequestParam(required = true, value = "emailMessage") String emailMessage,
+    Map<String, String> doProcessFeedback(@RequestParam(value = "emailAddress") String emailAddress,
+                                          @RequestParam(value = "emailSubject") String emailSubject,
+                                          @RequestParam(value = "emailMessage") String emailMessage,
                                           @RequestParam(value = "leaveIt") String leaveIt,
                                           final HttpServletResponse response) {
         // Server side feedback form validation

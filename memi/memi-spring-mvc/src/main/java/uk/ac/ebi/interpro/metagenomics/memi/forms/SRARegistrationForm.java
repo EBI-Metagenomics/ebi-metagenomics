@@ -87,6 +87,8 @@ public class SRARegistrationForm {
     //DATA: Please confirm that the data submitted through this account is NOT sensitive, restricted-access or human-identifiable.
     private boolean isNotSensitiveData;
 
+    private String leaveIt; // Secret HoneyPot field to detect robots - should be left blank by humans!
+
 
     public SRARegistrationForm() {
         long time = Calendar.getInstance().getTimeInMillis();
@@ -197,5 +199,13 @@ public class SRARegistrationForm {
 
     public void setNotSensitiveData(boolean notSensitiveData) {
         isNotSensitiveData = notSensitiveData;
+    }
+
+    public String getLeaveIt() {
+        return leaveIt;
+    }
+
+    public void setLeaveIt(String leaveIt) {
+        this.leaveIt = leaveIt;
     }
 }
