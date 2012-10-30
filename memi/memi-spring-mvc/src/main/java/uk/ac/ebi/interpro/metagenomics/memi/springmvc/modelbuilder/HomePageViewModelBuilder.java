@@ -3,6 +3,7 @@ package uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder;
 import com.sun.syndication.feed.synd.SyndEntry;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.HibernateException;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.comparators.HomePageSamplesComparator;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.comparators.HomePageStudiesComparator;

@@ -83,7 +83,7 @@ public class FeedbackFormsController extends AbstractController {
             log.info("Sent an email with contact details: " + msg);
             status.setComplete();
         } else {
-            return new ModelAndView(CommonController.EXCEPTION_PAGE_VIEW_NAME, model);
+            return new ModelAndView(DefaultController.EXCEPTION_PAGE_VIEW_NAME, model);
         }
         return new ModelAndView("/feedbackSuccess", model);
     }

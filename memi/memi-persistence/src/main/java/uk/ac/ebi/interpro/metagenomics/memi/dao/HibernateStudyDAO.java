@@ -39,7 +39,7 @@ public interface HibernateStudyDAO extends ISampleStudyDAO<Study> {
     /**
      * Returns a list of public studies where the submitter ID IS equal the specified submitter ID.
      *
-     * @param submitterId       Submitter ID for the IS equal restriction.
+     * @param submitterId Submitter ID for the IS equal restriction.
      */
     List<Study> retrieveStudiesBySubmitter(long submitterId);
 
@@ -55,7 +55,7 @@ public interface HibernateStudyDAO extends ISampleStudyDAO<Study> {
     /**
      * Returns a list of public studies where the submitter ID IS NOT equal the specified submitter ID.
      *
-     * @param submitterId       Submitter ID for the NOT equal restriction.
+     * @param submitterId Submitter ID for the NOT equal restriction.
      */
     List<Study> retrievePublicStudiesWithoutSubId(long submitterId);
 
@@ -64,7 +64,7 @@ public interface HibernateStudyDAO extends ISampleStudyDAO<Study> {
      */
     List<Study> retrieveFilteredStudies(List<Criterion> crits);
 
-/**
+    /**
      * Returns a list of all public studies.
      */
     List<Study> retrievePublicStudies();

@@ -30,6 +30,12 @@
         <put-attribute name="loginForm" type="template" value="/templates/loginForm.jsp"/>
     </definition>
 
+    <definition name="homeError" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="grey"/>
+        <put-attribute name="body" value="/templates/errors/homeErrorBody.jsp"/>
+    </definition>
+
+
     <definition name="info" extends="rootTemplate">
         <put-attribute name="bodyClass" type="string" value="green"/>
         <put-attribute name="body" value="/templates/infoBody.jsp"/>
@@ -108,6 +114,11 @@
     <definition name="exception" extends="rootTemplate">
         <put-attribute name="bodyClass" type="string" value="grey"/>
         <put-attribute name="body" value="/templates/errors/exceptionBody.jsp"/>
+    </definition>
+
+    <definition name="databaseException" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="grey"/>
+        <put-attribute name="body" value="/templates/errors/databaseExceptionBody.jsp"/>
     </definition>
 
     <definition name="error" extends="rootTemplate">

@@ -97,7 +97,7 @@ public class SampleViewController extends SecuredAbstractController<Sample> {
      * Creates the home page model and adds it to the specified model map.
      */
     private void populateModel(final ModelMap model, final Sample sample) {
-        final String pageTitle = "Sample overview: "+ sample.getSampleName() +" - EBI metagenomics";
+        final String pageTitle = "Sample overview: " + sample.getSampleName() + " - EBI metagenomics";
         List<EmgSampleAnnotation> sampleAnnotations = (List<EmgSampleAnnotation>) sampleAnnotationDAO.getSampleAnnotations(sample.getId());
         Collections.sort(sampleAnnotations, new EmgSampleAnnComparator());
         final ViewModelBuilder<SampleViewModel> builder = new SampleViewModelBuilder(sessionManager,
