@@ -50,7 +50,6 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
         //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    @Override
     @Transactional(readOnly = true)
     public Sample read(Long id) {
         Session session = sessionFactory.getCurrentSession();
@@ -58,7 +57,7 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
             try {
                 return (Sample) session.get(Sample.class, id);
             } catch (HibernateException e) {
-                log.error("Couldn't retrieve sample by identifier!", e);
+                throw new HibernateException("Couldn't retrieve sample by identifier " + id, e);
             }
         }
         return null;
@@ -76,13 +75,12 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
                     return samples.get(0);
                 }
             } catch (HibernateException e) {
-                log.error("Couldn't retrieve sample by String type ID!", e);
+                throw new HibernateException("Couldn't retrieve sample by identifier " + sampleId, e);
             }
         }
         return null;
     }
 
-    @Override
     @Transactional(readOnly = true)
     public long retrieveSampleSizeByStudyId(long studyId) {
         Session session = sessionFactory.getCurrentSession();
@@ -97,7 +95,7 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
                         return result.get(0);
                     }
                 } catch (HibernateException e) {
-                    throw new HibernateException("Couldn't retrieve samples size by study ID!", e);
+                    throw new HibernateException("Couldn't retrieve samples size by study Id " + studyId, e);
                 }
             }
         }
@@ -114,7 +112,6 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
         //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    @Override
     @Transactional(readOnly = true)
     public Long count() {
         Session session = sessionFactory.getCurrentSession();
@@ -124,13 +121,12 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
             try {
                 return ((Long) criteria.list().get(0)).longValue();
             } catch (HibernateException e) {
-                log.error("Couldn't retrieve sample count!", e);
+                throw new HibernateException("Couldn't retrieve sample count!", e);
             }
         }
         return new Long(0);  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    @Override
     @Transactional(readOnly = true)
     public List<Sample> retrieveAll() {
         Session session = sessionFactory.getCurrentSession();
@@ -138,7 +134,7 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
             try {
                 return session.createCriteria(Sample.class).list();
             } catch (HibernateException e) {
-                log.error("Couldn't retrieve all samples!", e);
+                throw new HibernateException("Couldn't retrieve all samples!", e);
             }
         }
         return Collections.emptyList();
@@ -162,7 +158,6 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
      *
      * @return Public samples by the specified study Id.
      */
-    @Override
     @Transactional(readOnly = true)
     public List<Sample> retrievePublicSamplesByStudyId(long studyId) {
         Set<Criterion> criterionSet = new HashSet<Criterion>(2);
@@ -185,7 +180,7 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
                 try {
                     return crit.list();
                 } catch (HibernateException e) {
-                    log.error("Couldn't retrieve samples by study ID!", e);
+                    throw new HibernateException("Couldn't retrieve samples by criteria!", e);
                 }
             }
         }
@@ -193,7 +188,6 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
     }
 
 
-    @Override
     @Transactional(readOnly = true)
     public List<Sample> retrieveOrderedPublicSamples(String propertyName, boolean isDescendingOrder) {
         List<Sample> result = new ArrayList<Sample>();
@@ -211,13 +205,12 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
             try {
                 result = crit.list();
             } catch (HibernateException e) {
-                log.error("Couldn't retrieve ordered public samples!", e);
+                throw new HibernateException("Couldn't retrieve ordered public samples!", e);
             }
         }
         return result;
     }
 
-    @Override
     @Transactional(readOnly = true)
     public List<Sample> retrieveAllPublicSamples() {
         Session session = sessionFactory.getCurrentSession();
@@ -236,7 +229,6 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
         return Collections.emptyList();
     }
 
-    @Override
     @Transactional(readOnly = true)
     public List<Sample> retrieveOrderedSamplesBySubmitter(long submitterId, String propertyName, boolean isDescendingOrder) {
         List<Sample> result = new ArrayList<Sample>();
@@ -254,13 +246,12 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
             try {
                 result = crit.list();
             } catch (HibernateException e) {
-                log.error("Couldn't retrieve ordered samples by submitter ID!", e);
+                throw new HibernateException("Couldn't retrieve ordered samples by submitter ID " + submitterId, e);
             }
         }
         return result;
     }
 
-    @Override
     @Transactional(readOnly = true)
     public List<Sample> retrieveSamplesBySubmitter(long submitterId) {
         Session session = sessionFactory.getCurrentSession();
@@ -273,13 +264,12 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
             try {
                 return crit.list();
             } catch (HibernateException e) {
-                log.error("Couldn't retrieve samples by submitter ID!", e);
+                throw new HibernateException("Couldn't retrieve samples by submitter ID " + submitterId, e);
             }
         }
         return Collections.emptyList();
     }
 
-    @Override
     @Transactional(readOnly = true)
     public List<Sample> retrieveOrderedPublicSamplesWithoutSubId(long submitterId, String propertyName, boolean isDescendingOrder) {
         List<Sample> result = new ArrayList<Sample>();
@@ -299,13 +289,12 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
             try {
                 result = crit.list();
             } catch (HibernateException e) {
-                log.error("Couldn't retrieve ordered public samples without submitter ID!", e);
+                throw new HibernateException("Couldn't retrieve ordered public samples without submitter ID " + submitterId, e);
             }
         }
         return result;
     }
 
-    @Override
     @Transactional(readOnly = true)
     public List<Sample> retrievePublicSamplesWithoutSubId(long submitterId) {
         Session session = sessionFactory.getCurrentSession();
@@ -320,7 +309,7 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
             try {
                 return crit.list();
             } catch (HibernateException e) {
-                log.error("Couldn't retrieve public samples without submitter ID!", e);
+                throw new HibernateException("Couldn't retrieve public samples without submitter ID " + submitterId, e);
             }
         }
         return Collections.emptyList();
@@ -335,7 +324,7 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
             try {
                 return (List<Sample>) criteria.list();
             } catch (HibernateException e) {
-                log.error("Couldn't retrieve filtered samples!", e);
+                throw new HibernateException("Couldn't retrieve filtered samples!", e);
             }
         }
         return Collections.emptyList();
@@ -348,7 +337,7 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
             try {
                 return (List<Sample>) criteria.list();
             } catch (HibernateException e) {
-                log.error("Couldn't retrieve filtered samples!", e);
+                throw new HibernateException("Couldn't retrieve filtered samples!", e);
             }
         }
         return Collections.emptyList();
@@ -392,7 +381,7 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
                     return (Long) criteria.list().get(0);
                 }
             } catch (HibernateException e) {
-                log.error("Couldn't query filtered sample count!", e);
+                throw new HibernateException("Couldn't query filtered sample count!", e);
             }
         }
         return new Long(0);
