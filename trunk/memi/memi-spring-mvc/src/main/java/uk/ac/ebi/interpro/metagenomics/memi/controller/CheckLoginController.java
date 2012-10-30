@@ -15,14 +15,14 @@ import java.util.List;
  */
 public abstract class CheckLoginController extends AbstractController {
 
-    /**
-     * Checks if somebody is logged in.
-     */
-    protected boolean isUserAssociatedToSession() {
-        if (sessionManager != null && sessionManager.getSessionBean() != null
-                && sessionManager.getSessionBean().getSubmitter() != null) {
-            return true;
-        }
-        return false;
-    }
+//    /**
+//     * Checks if somebody is logged in.
+//     */
+//    protected boolean isUserAssociatedToSession() {
+//        if (sessionManager != null && sessionManager.getSessionBean() != null
+//                && sessionManager.getSessionBean().getSubmitter() != null) {
+//            return true;
+//        }
+//        return false;
+//    }
 }

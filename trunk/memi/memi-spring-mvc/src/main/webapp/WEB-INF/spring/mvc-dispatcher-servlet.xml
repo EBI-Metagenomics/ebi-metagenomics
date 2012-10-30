@@ -15,6 +15,7 @@
     <import resource="service-beans-context.xml"/>
     <import resource="persistence-config-context.xml"/>
     <import resource="session-manager-context.xml"/>
+    <import resource="exception-handling-context.xml"/>
 
     <!-- Configures the @Controller programming spring_model -->
     <mvc:annotation-driven/>

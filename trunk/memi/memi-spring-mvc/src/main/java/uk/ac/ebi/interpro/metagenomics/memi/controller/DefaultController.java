@@ -27,8 +27,8 @@ import java.util.ArrayList;
  * @since 1.0-SNAPSHOT
  */
 @Controller
-public class CommonController {
-    private static final Log log = LogFactory.getLog(CommonController.class);
+public class DefaultController {
+    private static final Log log = LogFactory.getLog(DefaultController.class);
 
     public static final String EXCEPTION_PAGE_VIEW_NAME = "exception";
 
@@ -51,7 +51,7 @@ public class CommonController {
         final ViewModel viewModel = builder.getModel();
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, viewModel);
         model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
-        return new ModelAndView("/errors/" + CommonController.NO_SUCH_REQUEST_PAGE_VIEW_NAME, model);
+        return new ModelAndView("/errors/" + DefaultController.NO_SUCH_REQUEST_PAGE_VIEW_NAME, model);
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)

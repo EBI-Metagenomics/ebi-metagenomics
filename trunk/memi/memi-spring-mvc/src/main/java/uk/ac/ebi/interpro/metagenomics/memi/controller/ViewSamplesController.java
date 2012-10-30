@@ -62,7 +62,6 @@ public class ViewSamplesController extends AbstractController implements IContro
     @Resource
     private MemiDownloadService downloadService;
 
-    @Override
     public ModelAndView doGet(ModelMap model) {
         log.info("Requesting doGet...");
         //build and add the page model

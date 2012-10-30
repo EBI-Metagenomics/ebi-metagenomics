@@ -88,7 +88,7 @@ public abstract class SecuredAbstractController<T extends SecureEntity> extends 
      * @return Access denied model and view.
      */
     private ModelAndView buildAccessDeniedModelAndView(String objectId) {
-        return getModelAndView(objectId, CommonController.ACCESS_DENIED_VIEW_NAME);
+        return getModelAndView(objectId, DefaultController.ACCESS_DENIED_VIEW_NAME);
     }
 
     private ModelAndView getModelAndView(String objectId, String viewName) {
@@ -110,7 +110,7 @@ public abstract class SecuredAbstractController<T extends SecureEntity> extends 
      * @return Entry not exists model and view.
      */
     private ModelAndView getEntryNotExistMAV(String objectId) {
-        return getModelAndView(objectId, CommonController.ENTRY_NOT_FOUND_VIEW_NAME);
+        return getModelAndView(objectId, DefaultController.ENTRY_NOT_FOUND_VIEW_NAME);
     }
 
     abstract ISampleStudyDAO<T> getDAO();

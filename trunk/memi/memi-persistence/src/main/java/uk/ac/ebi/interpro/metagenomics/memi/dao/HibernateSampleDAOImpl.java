@@ -97,7 +97,7 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
                         return result.get(0);
                     }
                 } catch (HibernateException e) {
-                    log.error("Couldn't retrieve samples size by study ID!", e);
+                    throw new HibernateException("Couldn't retrieve samples size by study ID!", e);
                 }
             }
         }
@@ -230,7 +230,7 @@ public class HibernateSampleDAOImpl implements HibernateSampleDAO {
             try {
                 return crit.list();
             } catch (HibernateException e) {
-                log.error("Couldn't all public samples!", e);
+                throw new HibernateException("Couldn't retrieve all public samples!", e);
             }
         }
         return Collections.emptyList();

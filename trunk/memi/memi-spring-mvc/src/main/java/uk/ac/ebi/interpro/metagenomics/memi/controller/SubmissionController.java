@@ -5,7 +5,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.velocity.app.VelocityEngine;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.ui.velocity.VelocityEngineUtils;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.apro.CountryDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.erapro.SubmissionContactDAO;
@@ -51,7 +49,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping('/' + SubmissionController.VIEW_NAME)
-public class SubmissionController extends CheckLoginController implements IController, HandlerExceptionResolver {
+public class SubmissionController extends CheckLoginController implements IController {
 
     private final static Log log = LogFactory.getLog(SubmissionController.class);
 
@@ -170,29 +168,13 @@ public class SubmissionController extends CheckLoginController implements IContr
             }
         } else {
             log.error("Internal application error. Registration form object is unexpectedly NULL!");
-            return new ModelAndView(CommonController.EXCEPTION_PAGE_VIEW_NAME);
+            return new ModelAndView(DefaultController.EXCEPTION_PAGE_VIEW_NAME);
         }
         model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
         return new ModelAndView(SUCCESS_VIEW_NAME, model);
 //        } else {
 //            return new ModelAndView("redirect:" + LoginPageController.VIEW_NAME + LOGIN_CONTROLLER_DISPLAY_PARAM);
 //        }
-    }
-
-    /**
-     * Resolves MaxUploadSizeExceeded exceptions. This method is called before any Spring request method is called. So we lose users input unfortunately.
-     * TODO: Try to use Spring's BindingResult object for a more consistent error handling.
-     *
-     * @param request
-     * @param response
-     * @param object
-     * @param exception
-     * @return
-     */
-    @Override
-    public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response,
-                                         Object object, Exception exception) {
-        return new ModelAndView("error");
     }
 
 
