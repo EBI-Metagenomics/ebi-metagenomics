@@ -1017,7 +1017,7 @@ width: 360px;
 /*-webkit-box-shadow:inset 0 0 7px #ccc;*/
 /*box-shadow:inset 0 0 7px #ccc;*/
 }
-
+#sub_form input[type=checkbox]  {width: 20px; margin-top: 3px;}
 
 input.main_button, #feedback_form input.main_button, #feedback_form_no input.main_button, #sub_form input.main_button {
 width: auto;
@@ -1117,9 +1117,8 @@ overflow:auto;
 }
 
 
-.form_row input {
-float:left;  display: block;
-}
+.form_row input {float:left; }
+img.ui-datepicker-trigger {float:left; /*solve a bug with chromium*/}
 
 .form_help {
 float:right;
@@ -1397,13 +1396,6 @@ span.form_help ul li{
 
 .funding_img {float:right;margin:7px 14px 0 0;}
 
-/* JQuery */
-.ui-datepicker-trigger {
-padding-left:2px; padding-top:1px;
-}
-.ui-datepicker { font-size:90%;}
-
-
  /*EBI Bread Crumbs */
 
     .ebi_breadcrumbs li {
@@ -1625,6 +1617,7 @@ background:none;
 }
 
 .ui-corner-all {border-radius: 12px;}
+.ui-datepicker { font-size:90%;}
 
 /* moving tab Jquery */
 
