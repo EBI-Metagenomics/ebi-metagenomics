@@ -11,8 +11,8 @@ import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.StudyStatusEditor;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.StudyVisibilityEditor;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.VelocityTemplateWriter;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateSampleDAO;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateStudyDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.StudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.files.MemiFileWriter;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.StudyFilter;
@@ -54,10 +54,10 @@ public class ViewStudiesController extends AbstractController implements IContro
     private final String VELOCITY_TEMPLATE_LOCATION_PATH = "exportStudies.vm";
 
     @Resource
-    private HibernateStudyDAO studyDAO;
+    private StudyDAO studyDAO;
 
     @Resource
-    private HibernateSampleDAO sampleDAO;
+    private SampleDAO sampleDAO;
 
     @Resource
     private VelocityEngine velocityEngine;

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.comparators.EmgSampleAnnComparator;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.EmgLogFileInfoDAO;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateSampleDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.ISampleStudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.temp.SampleAnnotationDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
@@ -46,7 +46,7 @@ public class SampleViewController extends SecuredAbstractController<Sample> {
     public static final String VIEW_NAME = "sample";
 
     @Resource
-    private HibernateSampleDAO sampleDAO;
+    private SampleDAO sampleDAO;
 
     @Resource
     private EmgLogFileInfoDAO fileInfoDAO;

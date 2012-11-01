@@ -4,7 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.comparators.PublicationComparator;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateSampleDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.apro.SubmitterDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Publication;
@@ -38,7 +38,7 @@ public class StudyViewModelBuilder extends AbstractViewModelBuilder<StudyViewMod
 
     private Study study;
 
-    private HibernateSampleDAO sampleDAO;
+    private SampleDAO sampleDAO;
 
     private List<Publication> relatedLinks;
 
@@ -48,7 +48,7 @@ public class StudyViewModelBuilder extends AbstractViewModelBuilder<StudyViewMod
 
 
     public StudyViewModelBuilder(SessionManager sessionMgr, String pageTitle, List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer,
-                                 Study study, HibernateSampleDAO sampleDAO, SubmitterDAO submitterDAO) {
+                                 Study study, SampleDAO sampleDAO, SubmitterDAO submitterDAO) {
         super(sessionMgr);
         this.pageTitle = pageTitle;
         this.breadcrumbs = breadcrumbs;

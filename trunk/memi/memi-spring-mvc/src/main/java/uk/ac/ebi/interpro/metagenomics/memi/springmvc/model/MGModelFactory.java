@@ -8,8 +8,8 @@ import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.comparators.ViewStudiesComparator;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateSampleDAO;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateStudyDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.StudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.StudyFilter;
 import uk.ac.ebi.interpro.metagenomics.memi.googlechart.GoogleChartFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgFile;
@@ -62,8 +62,8 @@ public class MGModelFactory {
         }
     }
 
-    public static ViewStudiesModel getViewStudiesPageModel(SessionManager sessionMgr, HibernateStudyDAO studyDAO,
-                                                           HibernateSampleDAO sampleDAO, StudyFilter filter,
+    public static ViewStudiesModel getViewStudiesPageModel(SessionManager sessionMgr, StudyDAO studyDAO,
+                                                           SampleDAO sampleDAO, StudyFilter filter,
                                                            String pageTitle, List<Breadcrumb> breadcrumbs,
                                                            MemiPropertyContainer propertyContainer,
                                                            List<String> tableHeaderNames) {
@@ -77,7 +77,7 @@ public class MGModelFactory {
                 breadcrumbs, propertyContainer, tableHeaderNames);
     }
 
-    private static List<Study> getFilteredStudies(HibernateStudyDAO studyDAO, StudyFilter filter, long submitterId) {
+    private static List<Study> getFilteredStudies(StudyDAO studyDAO, StudyFilter filter, long submitterId) {
         List<Study> result = studyDAO.retrieveFilteredStudies(buildFilterCriteria(filter, submitterId));
         if (result == null) {
             result = new ArrayList<Study>();
@@ -85,7 +85,7 @@ public class MGModelFactory {
         return result;
     }
 
-    private static Map<Study, Long> getStudySampleSizeMap(List<Study> studies, HibernateSampleDAO sampleDAO, Comparator<Study> comparator) {
+    private static Map<Study, Long> getStudySampleSizeMap(List<Study> studies, SampleDAO sampleDAO, Comparator<Study> comparator) {
         Map<Study, Long> result = new TreeMap<Study, Long>(comparator);
         for (Study study : studies) {
             if (sampleDAO != null) {

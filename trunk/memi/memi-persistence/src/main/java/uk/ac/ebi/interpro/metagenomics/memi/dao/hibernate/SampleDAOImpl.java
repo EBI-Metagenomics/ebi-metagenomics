@@ -25,14 +25,14 @@ import java.util.*;
  * @since 1.0-SNAPSHOT
  */
 @Repository
-public class HibernateSampleDAOImpl implements HibernateSampleDAO {
+public class SampleDAOImpl implements SampleDAO {
 
-    private final static Log log = LogFactory.getLog(HibernateSampleDAOImpl.class);
+    private final static Log log = LogFactory.getLog(SampleDAOImpl.class);
 
     @Autowired
     private SessionFactory sessionFactory;
 
-    public HibernateSampleDAOImpl() {
+    public SampleDAOImpl() {
     }
 
     @Override

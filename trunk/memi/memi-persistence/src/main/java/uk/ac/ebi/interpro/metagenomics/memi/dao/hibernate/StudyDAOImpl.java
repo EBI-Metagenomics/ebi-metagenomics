@@ -20,22 +20,22 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Represents the implementation class of {@link HibernateStudyDAO}.
+ * Represents the implementation class of {@link StudyDAO}.
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @version $Id$
  * @since 1.0-SNAPSHOT
  */
 @Repository
-public class HibernateStudyDAOImpl implements HibernateStudyDAO {
+public class StudyDAOImpl implements StudyDAO {
 
-    private final static Log log = LogFactory.getLog(HibernateStudyDAOImpl.class);
+    private final static Log log = LogFactory.getLog(StudyDAOImpl.class);
 
     @Autowired
     private SessionFactory sessionFactory;
 
 
-    public HibernateStudyDAOImpl() {
+    public StudyDAOImpl() {
     }
 
     @Override
