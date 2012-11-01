@@ -1623,7 +1623,6 @@ background-color:white;
 border: 0px solid #BBB;
 background:none;
 }
-.ui-widget-header span {display:none;}   /* remove title from dialog-sign-in*/
 
 .ui-corner-all {border-radius: 12px;}
 
