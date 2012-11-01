@@ -11,7 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.SampleTypeEditor;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.SampleVisibilityEditor;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.VelocityTemplateWriter;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateSampleDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.files.MemiFileWriter;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.SampleFilter;
@@ -54,7 +54,7 @@ public class ViewSamplesController extends AbstractController implements IContro
     private final String VELOCITY_TEMPLATE_LOCATION_PATH = "exportSamples.vm";
 
     @Resource
-    private HibernateSampleDAO sampleDAO;
+    private SampleDAO sampleDAO;
 
     @Resource
     private VelocityEngine velocityEngine;

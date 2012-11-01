@@ -13,7 +13,7 @@ import java.util.List;
  * @version $Id$
  * @since 1.0-SNAPSHOT
  */
-public interface HibernateSampleDAO extends ISampleStudyDAO<Sample> {
+public interface SampleDAO extends ISampleStudyDAO<Sample> {
 
     List<Sample> retrieveAllSamplesByStudyId(long studyId);
 

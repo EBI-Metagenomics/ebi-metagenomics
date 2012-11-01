@@ -13,7 +13,7 @@ import java.util.List;
  * @version $Id$
  * @since 1.0-SNAPSHOT
  */
-public interface HibernateStudyDAO extends ISampleStudyDAO<Study> {
+public interface StudyDAO extends ISampleStudyDAO<Study> {
 
     /**
      * Retrieves studies order by the specified property.

@@ -6,8 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateSampleDAO;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateStudyDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.StudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.feed.RomeClient;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
@@ -43,10 +43,10 @@ public class HomePageController extends AbstractController implements IControlle
 
     //Data access objects
     @Resource
-    private HibernateStudyDAO studyDAO;
+    private StudyDAO studyDAO;
 
     @Resource
-    private HibernateSampleDAO sampleDAO;
+    private SampleDAO sampleDAO;
 
     @Resource
     RomeClient rssClient;

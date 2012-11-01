@@ -6,7 +6,7 @@ import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateSampleDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.SampleFilter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
@@ -37,7 +37,7 @@ public class SamplesViewModelBuilder extends AbstractViewModelBuilder<SamplesVie
 
     private List<String> tableHeaderNames;
 
-    private HibernateSampleDAO sampleDAO;
+    private SampleDAO sampleDAO;
 
     private SampleFilter filter;
 
@@ -47,7 +47,7 @@ public class SamplesViewModelBuilder extends AbstractViewModelBuilder<SamplesVie
 
     public SamplesViewModelBuilder(SessionManager sessionMgr, String pageTitle, List<Breadcrumb> breadcrumbs,
                                    MemiPropertyContainer propertyContainer, List<String> tableHeaderNames,
-                                   HibernateSampleDAO sampleDAO, SampleFilter filter,
+                                   SampleDAO sampleDAO, SampleFilter filter,
                                    int startPosition) {
         super(sessionMgr);
         this.pageTitle = pageTitle;
@@ -75,7 +75,7 @@ public class SamplesViewModelBuilder extends AbstractViewModelBuilder<SamplesVie
         return new SamplesViewModel(submitter, filteredSamples, downloadableSamples, pageTitle, breadcrumbs, propertyContainer, tableHeaderNames, pagination, filter);
     }
 
-    private List<Sample> getFilteredSamples(HibernateSampleDAO sampleDAO, List<Criterion> filterCriteria) {
+    private List<Sample> getFilteredSamples(SampleDAO sampleDAO, List<Criterion> filterCriteria) {
         List<Sample> result = sampleDAO.retrieveFilteredSamples(filterCriteria, getSampleClass(filter.getSampleType()),
                 startPosition, PAGE_SIZE, "sampleName");
         return result;

@@ -3,12 +3,11 @@ package uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder;
 import com.sun.syndication.feed.synd.SyndEntry;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.HibernateException;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.comparators.HomePageSamplesComparator;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.comparators.HomePageStudiesComparator;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateSampleDAO;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateStudyDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.StudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.feed.RomeClient;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
@@ -36,9 +35,9 @@ public class HomePageViewModelBuilder extends AbstractViewModelBuilder<HomePageV
 
     private MemiPropertyContainer propertyContainer;
 
-    private HibernateStudyDAO studyDAO;
+    private StudyDAO studyDAO;
 
-    private HibernateSampleDAO sampleDAO;
+    private SampleDAO sampleDAO;
 
     private RomeClient rssClient;
 
@@ -54,7 +53,7 @@ public class HomePageViewModelBuilder extends AbstractViewModelBuilder<HomePageV
 
 
     public HomePageViewModelBuilder(SessionManager sessionMgr, String pageTitle, List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer,
-                                    HibernateStudyDAO studyDAO, HibernateSampleDAO sampleDAO, RomeClient rssClient) {
+                                    StudyDAO studyDAO, SampleDAO sampleDAO, RomeClient rssClient) {
         super(sessionMgr);
         this.pageTitle = pageTitle;
         this.breadcrumbs = breadcrumbs;
@@ -122,7 +121,7 @@ public class HomePageViewModelBuilder extends AbstractViewModelBuilder<HomePageV
     /**
      * Returns a list of public studies limited by a specified number of rows and order by meta data received date.
      */
-    private List<Study> getPublicStudies(HibernateStudyDAO studyDAO) {
+    private List<Study> getPublicStudies(StudyDAO studyDAO) {
         List<Study> studies = new ArrayList<Study>();
         if (studyDAO != null) {
             studies = studyDAO.retrievePublicStudies();
@@ -130,7 +129,7 @@ public class HomePageViewModelBuilder extends AbstractViewModelBuilder<HomePageV
         return studies;
     }
 
-    private Map<Study, Long> getStudySampleSizeMap(List<Study> studies, HibernateSampleDAO sampleDAO, Comparator<Study> comparator) {
+    private Map<Study, Long> getStudySampleSizeMap(List<Study> studies, SampleDAO sampleDAO, Comparator<Study> comparator) {
         Map<Study, Long> result = new TreeMap<Study, Long>(comparator);
         for (Study study : studies) {
             if (sampleDAO != null) {
@@ -143,7 +142,7 @@ public class HomePageViewModelBuilder extends AbstractViewModelBuilder<HomePageV
     /**
      * Returns a list of public sample limited by a specified number of rows and order by received date.
      */
-    public List<Sample> getPublicSamples(HibernateSampleDAO sampleDAO) {
+    public List<Sample> getPublicSamples(SampleDAO sampleDAO) {
         List<Sample> samples = new ArrayList<Sample>();
         if (sampleDAO != null) {
             samples = sampleDAO.retrieveAllPublicSamples();
@@ -158,7 +157,7 @@ public class HomePageViewModelBuilder extends AbstractViewModelBuilder<HomePageV
     /**
      * Returns a list of studies for the specified submitter.
      */
-    private List<Study> getStudiesBySubmitter(long submitterId, HibernateStudyDAO studyDAO) {
+    private List<Study> getStudiesBySubmitter(long submitterId, StudyDAO studyDAO) {
         List<Study> studies = new ArrayList<Study>();
         if (studyDAO != null) {
             studies = studyDAO.retrieveStudiesBySubmitter(submitterId);
@@ -169,7 +168,7 @@ public class HomePageViewModelBuilder extends AbstractViewModelBuilder<HomePageV
     /**
      * Returns a list of studies for the specified submitter, limited by a specified number of rows.
      */
-    private List<Sample> getSamplesBySubmitter(long submitterId, HibernateSampleDAO sampleDAO) {
+    private List<Sample> getSamplesBySubmitter(long submitterId, SampleDAO sampleDAO) {
         List<Sample> samples = new ArrayList<Sample>();
         if (sampleDAO != null) {
             samples = sampleDAO.retrieveSamplesBySubmitter(submitterId);
@@ -177,7 +176,7 @@ public class HomePageViewModelBuilder extends AbstractViewModelBuilder<HomePageV
         return samples;
     }
 
-    private List<Study> getPublicStudiesWithoutSubId(long submitterId, HibernateStudyDAO studyDAO) {
+    private List<Study> getPublicStudiesWithoutSubId(long submitterId, StudyDAO studyDAO) {
         List<Study> studies = new ArrayList<Study>();
         if (studyDAO != null) {
             studies = studyDAO.retrievePublicStudiesWithoutSubId(submitterId);
@@ -185,7 +184,7 @@ public class HomePageViewModelBuilder extends AbstractViewModelBuilder<HomePageV
         return studies;
     }
 
-    private List<Sample> getOrderedPublicSamplesWithoutSubId(long submitterId, HibernateSampleDAO sampleDAO) {
+    private List<Sample> getOrderedPublicSamplesWithoutSubId(long submitterId, SampleDAO sampleDAO) {
         List<Sample> samples = new ArrayList<Sample>();
         if (sampleDAO != null) {
             samples = sampleDAO.retrievePublicSamplesWithoutSubId(submitterId);

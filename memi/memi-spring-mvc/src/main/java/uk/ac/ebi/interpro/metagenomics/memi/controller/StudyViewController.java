@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateSampleDAO;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.HibernateStudyDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.StudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.ISampleStudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.apro.SubmitterDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
@@ -49,10 +49,10 @@ public class StudyViewController extends SecuredAbstractController<Study> {
     public static final String VIEW_NAME = "project";
 
     @Resource
-    private HibernateStudyDAO studyDAO;
+    private StudyDAO studyDAO;
 
     @Resource
-    private HibernateSampleDAO sampleDAO;
+    private SampleDAO sampleDAO;
 
     @Resource
     private VelocityEngine velocityEngine;
