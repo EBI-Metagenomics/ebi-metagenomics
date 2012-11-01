@@ -27,8 +27,8 @@
                                 code="registrationForm.inputField.firstName.label"/></label><br/>
                         <form:input id="firstName" path="firstName" cssErrorClass="error"
                                     title="Please enter your first name"/>
-                                <span class="form_help"><spring:message
-                                        code="registrationForm.inputField.firstName.help"/></span>
+                                <%--<span class="form_help"><spring:message--%>
+                                        <%--code="registrationForm.inputField.firstName.help"/></span>--%>
                         <form:errors path="firstName" cssClass="error"/>
                     </div>
                         <%--Last name input field--%>
@@ -38,8 +38,8 @@
                         <br/>
                         <form:input id="lastNameId" path="lastName" cssErrorClass="error"
                                     title="Please enter your last name"/>
-                                <span class="form_help"><spring:message
-                                        code="registrationForm.inputField.lastName.help"/></span>
+                                <%--<span class="form_help"><spring:message--%>
+                                        <%--code="registrationForm.inputField.lastName.help"/></span>--%>
                         <form:errors path="lastName" cssClass="error"/>
                     </div>
                         <%--Department input field--%>
@@ -48,8 +48,8 @@
                                 code="registrationForm.inputField.department.label"/></label><br/>
                         <form:input id="department" path="department" cssErrorClass="error"
                                     title="Please enter your department within your Institute"/>
-                                <span class="form_help"><spring:message
-                                        code="registrationForm.inputField.department.help"/></span>
+                                <%--<span class="form_help"><spring:message--%>
+                                        <%--code="registrationForm.inputField.department.help"/></span>--%>
                         <form:errors path="department" cssClass="error"/></div>
                         <%--Institute input field--%>
                     <div class="form_row">
@@ -57,8 +57,8 @@
                                 code="registrationForm.inputField.institute.label"/></label><br/>
                         <form:input id="institute" path="institute" cssErrorClass="error"
                                     title="Please enter your Institute"/>
-                                <span class="form_help"><spring:message
-                                        code="registrationForm.inputField.institute.help"/></span>
+                                <%--<span class="form_help"><spring:message--%>
+                                        <%--code="registrationForm.inputField.institute.help"/></span>--%>
                         <form:errors path="institute" cssClass="error"/></div>
                         <%--Postal address input field--%>
                     <div class="form_row">
@@ -75,8 +75,8 @@
                                 code="registrationForm.inputField.postalCode.label"/></label><br/>
                         <form:input id="postalCode" path="postalCode" cssErrorClass="error"
                                     title="Please enter your Institute's postal code"/>
-                                <span class="form_help"><spring:message
-                                        code="registrationForm.inputField.postalCode.help"/></span>
+                                <%--<span class="form_help"><spring:message--%>
+                                        <%--code="registrationForm.inputField.postalCode.help"/></span>--%>
                         <form:errors path="postalCode" cssClass="error"/></div>
                         <%--Country selection field--%>
                     <div class="form_row">
@@ -87,10 +87,14 @@
                             <form:option value="" label="--- Select country ---"/>
                             <form:options items="${model.countries}"/>
                         </form:select>
-                                <span class="form_help"><spring:message
-                                        code="registrationForm.inputField.country.help"/></span>
+                                <%--<span class="form_help"><spring:message--%>
+                                        <%--code="registrationForm.inputField.country.help"/></span>--%>
                         <form:errors path="country" cssClass="error"/></div>
-                    <br>
+
+
+                </fieldset>
+                <br/>
+                <fieldset>
                     <legend>Project data</legend>
                         <%--Project title input field--%>
                     <div class="form_row">
@@ -129,14 +133,10 @@
                     </div>
                         <%--Sensitive data option--%>
                     <div class="form_row">
-                        <label for="notSensitiveData" id="required"><spring:message
-                                code="registrationForm.inputField.notSensitiveData.label"/></label>
-                        <br/>
-                        <form:checkbox id="notSensitiveData" path="notSensitiveData"
+                      <form:checkbox id="notSensitiveData" path="notSensitiveData"
                                        cssErrorClass="error"
                                        title="Please tick this option to confirm that you don't want to submit sensitive data"/>
-                                <span class="form_help"><spring:message
-                                        code="registrationForm.inputField.notSensitiveData.help"/></span>
+                        <span>I confirm that the data submitted through this account is NOT sensitive, restricted-access or human-identifiable.</span>
                         <form:errors cssClass="error" path="notSensitiveData"/>
                     </div>
                     <form:input type="hidden" path="leaveIt"/>
