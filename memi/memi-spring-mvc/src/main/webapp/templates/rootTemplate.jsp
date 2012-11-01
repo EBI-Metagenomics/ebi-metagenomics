@@ -117,6 +117,37 @@
 
         });
     </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+        $("#datepicker").focus(function() {
+            $("#datepicker").datepicker("show");
+        });
+    });
+    </script>
+    <%-- script for tabs, doesn't work with login popup
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            //set the default location (fix ie 6 issue)
+            $('.lava').css({left:$('span.item:first').position()['left']});
+
+            $('.item').click(function () {
+
+
+            $(this).addClass("selected");
+
+            //scroll the lava to current item position
+            $('.lava').stop().animate({left:$(this).position()['left']}, {duration:200});
+
+            //scroll the panel to the correct content
+            $('.panel').stop().animate({left:$(this).position()['left'] * (-6.2)}, {duration:200});
+
+            });
+
+        });
+    </script>
+     --%>
     <!-- Script and noscript versions for feedback and login links -->
     <script type="text/javascript">
         document.write('<style type="text/css">#noscript_feedbackLink{display: none;}#noscript_loginLink{display: none;}</style>');
