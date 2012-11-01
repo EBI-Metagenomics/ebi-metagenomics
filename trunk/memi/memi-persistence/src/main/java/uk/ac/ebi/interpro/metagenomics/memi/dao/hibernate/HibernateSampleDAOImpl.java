@@ -1,4 +1,4 @@
-package uk.ac.ebi.interpro.metagenomics.memi.dao;
+package uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
