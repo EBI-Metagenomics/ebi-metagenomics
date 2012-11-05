@@ -104,6 +104,10 @@ public class Study implements SecureEntity {
     @Column(name = "AUTHOR_EMAIL", length = 100)
     private String authorEmailAddress;
 
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "STUDY_ID", nullable = false)
+    private Set<StudyXref> studyXrefs;
+
     /**
      * Submitted - Directly submitted to us (EBI Metagenomics).
      * <p/>
@@ -323,6 +327,14 @@ public class Study implements SecureEntity {
 
     public void setAuthorEmailAddress(String authorEmailAddress) {
         this.authorEmailAddress = authorEmailAddress;
+    }
+
+    public Set<StudyXref> getStudyXrefs() {
+        return studyXrefs;
+    }
+
+    public void setStudyXrefs(Set<StudyXref> studyXrefs) {
+        this.studyXrefs = studyXrefs;
     }
 
     /**
