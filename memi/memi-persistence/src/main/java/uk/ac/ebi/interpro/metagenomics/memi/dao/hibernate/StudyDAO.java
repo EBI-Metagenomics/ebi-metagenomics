@@ -1,7 +1,6 @@
 package uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate;
 
 import org.hibernate.criterion.Criterion;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.ISampleStudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 
 import java.util.List;

@@ -1,5 +1,6 @@
-package uk.ac.ebi.interpro.metagenomics.memi.dao;
+package uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate;
 
+import uk.ac.ebi.interpro.metagenomics.memi.dao.GenericDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 
