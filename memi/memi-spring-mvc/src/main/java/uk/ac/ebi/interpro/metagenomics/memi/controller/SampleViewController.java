@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.comparators.EmgSampleAnnComparator;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.EmgLogFileInfoDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAO;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.ISampleStudyDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.ISampleStudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.temp.SampleAnnotationDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgSampleAnnotation;
