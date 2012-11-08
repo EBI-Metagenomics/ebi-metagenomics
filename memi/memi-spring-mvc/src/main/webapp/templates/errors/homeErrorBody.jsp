@@ -149,14 +149,14 @@
         <div id="list-data-study">
             <h2>Projects</h2>
 
-            <p class="into">We are unable to display the data you request. We are aware of that fact and trying to fix
-                that as fast as possible. Please try later again.</p>
+            <p class="into">We are unable to display the data you request. We are aware of this problem and are trying
+                to fix it as fast as possible. Please try again later.</p>
         </div>
         <div id="list-data-sample">
             <h2>Samples</h2>
 
-            <p class="into">We are unable to display the data you request. We are aware of that fact and trying to fix
-                that as fast as possible. Please try later again.</p>
+            <p class="into">We are unable to display the data you request. We are aware of this problem and are trying
+                to fix it as fast as possible. Please try again later.</p>
         </div>
         <div id="list-news">
             <h2>News & events</h2>

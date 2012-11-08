@@ -19,11 +19,11 @@ import java.util.Set;
 //        }
 //)
 //TODO: Fix query
-@NamedQueries(
-        {
-                @NamedQuery(name = User.DELETE_ALL_USERS, query = "delete from EMGUSER")
-        }
-)
+//@NamedQueries(
+//        {
+//                @NamedQuery(name = User.DELETE_ALL_USERS, query = "delete from EMGUSER")
+//        }
+//)
 public class User {
 
     public static final String DELETE_ALL_USERS = "delete.all.users";
