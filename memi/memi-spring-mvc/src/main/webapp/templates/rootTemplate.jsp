@@ -64,14 +64,10 @@
     <script src="${pageContext.request.contextPath}/js/smoothscrol.js" type="text/javascript"></script>
     <!-- The following line includes the feedback dialog script. -->
     <script src="${pageContext.request.contextPath}/js/feedback_script.js" type="text/javascript"></script>
-    <%--Client-side twitter news feed - http://tweet.seaofclouds.com/--%>
-    <script language="javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"
-            type="text/javascript"></script>
-    <script language="javascript" src="${pageContext.request.contextPath}/js/tweet/jquery.tweet.js"
-            type="text/javascript"></script>
+
+   <%--Client-side twitter news feed - http://tweet.seaofclouds.com/--%>
+    <script src="${pageContext.request.contextPath}/js/tweet/jquery.tweet.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/js/tweet/tweet.instance.js" type="text/javascript"></script>
-    <link href="${pageContext.request.contextPath}/css/tweet/jquery.tweet.css" media="all" rel="stylesheet"
-          type="text/css"/>
 
     <!--[if lt IE 9]><%-- HTML5 tags working in IE8 by including this JavaScript in the head  --%>
 <script type="text/javascript">
