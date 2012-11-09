@@ -64,6 +64,14 @@
     <script src="${pageContext.request.contextPath}/js/smoothscrol.js" type="text/javascript"></script>
     <!-- The following line includes the feedback dialog script. -->
     <script src="${pageContext.request.contextPath}/js/feedback_script.js" type="text/javascript"></script>
+    <%--Client-side twitter news feed - http://tweet.seaofclouds.com/--%>
+    <script language="javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"
+            type="text/javascript"></script>
+    <script language="javascript" src="${pageContext.request.contextPath}/js/tweet/jquery.tweet.js"
+            type="text/javascript"></script>
+    <script src="${pageContext.request.contextPath}/js/tweet/tweet.instance.js" type="text/javascript"></script>
+    <link href="${pageContext.request.contextPath}/css/tweet/jquery.tweet.css" media="all" rel="stylesheet"
+          type="text/css"/>
 
     <!--[if lt IE 9]><%-- HTML5 tags working in IE8 by including this JavaScript in the head  --%>
 <script type="text/javascript">
@@ -82,7 +90,7 @@
 
     <%-- simple script for alternate row in a table color was #EFF1F1 originally--%>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $("table.result tbody tr:even").css("background-color", "#F4F4F8");
             $("table.result tbody tr:odd").css("background-color", "#e9e9e9");
         });
@@ -96,15 +104,15 @@
             var latlng = new google.maps.LatLng(lat, long);
             google.maps.MarkerOptions
             var myOptions = {
-                zoom: 4,
-                center: latlng,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
+                zoom:4,
+                center:latlng,
+                mapTypeId:google.maps.MapTypeId.ROADMAP
             };
             var map = new google.maps.Map(document.getElementById("map_canvas"),
                     myOptions);
             var marker = new google.maps.Marker({
-                position: latlng,
-                map: map
+                position:latlng,
+                map:map
             });
         }
     </script>
@@ -112,17 +120,17 @@
     <%-- script for carousel--%>
     <script src="${pageContext.request.contextPath}/js/jquery.carousel.min.js" type="text/javascript"></script>
     <script type="text/javascript">
-        $(function() {
-            $("div.carousel").carousel({pagination: true,  autoSlide: true, autoSlideInterval: 15000, delayAutoSlide: 2000, loop: true });
+        $(function () {
+            $("div.carousel").carousel({pagination:true, autoSlide:true, autoSlideInterval:15000, delayAutoSlide:2000, loop:true });
 
         });
     </script>
     <script type="text/javascript">
-        $(document).ready(function() {
-        $("#datepicker").focus(function() {
-            $("#datepicker").datepicker("show");
+        $(document).ready(function () {
+            $("#datepicker").focus(function () {
+                $("#datepicker").datepicker("show");
+            });
         });
-    });
     </script>
     <%-- script for tabs, doesn't work with login popup
 
@@ -154,10 +162,19 @@
     </script>
     <noscript>
         <style type="text/css">
-            #script_feedbackLink {display: none;}
+            #script_feedbackLink {
+                display: none;
+            }
 
-            #script_loginLink {display: none;}
-            #mod4 {display: none;}/* remove one slide for carousel for no java */
+            #script_loginLink {
+                display: none;
+            }
+
+            #mod4 {
+                display: none;
+            }
+
+                /* remove one slide for carousel for no java */
         </style>
     </noscript>
 </head>
