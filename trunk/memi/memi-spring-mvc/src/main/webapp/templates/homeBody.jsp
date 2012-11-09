@@ -302,20 +302,7 @@
                                     title="Metagenomics RSS feeds"><img
                 src="${pageContext.request.contextPath}/img/icon_rss.gif" alt="Metagenomics RSS feeds"/></a></h3>
 
-
-        <c:choose>
-            <c:when test="${empty model.rssItems}">
-                <p><span class="list_desc">No news</span></p>
-            </c:when>
-            <c:otherwise>
-
-                <c:forEach var="entry" items="${model.rssItems}" varStatus="status">
-                    <p><span class="list_desc">${entry.title}</span></p>
-                </c:forEach>
-
-
-            </c:otherwise>
-        </c:choose>
+        <div class="tweet"></div>
         <p><a href="http://twitter.com/EBImetagenomics" class="twitter">Follow us on Twitter</a></p>
         <span class="separator"></span>
 
