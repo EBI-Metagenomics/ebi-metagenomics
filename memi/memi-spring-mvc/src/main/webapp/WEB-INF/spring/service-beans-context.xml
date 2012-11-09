@@ -8,41 +8,40 @@
 
     <!-- The next 3 beans belong to the email notification service which is currently used in the submission form  -->
     <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-        <property name="host" value="smtp.ebi.ac.uk"/>
+        <property name="host" value="${javamail.sender.host}"/>
         <property name="port" value="25"/>
     </bean>
 
-    <!-- This bean initializes an email notification service -->
-    <bean name="emailNotificationServiceSubmitPage"
+    <!--Email service for CustomizedExceptionResolver-->
+    <bean name="emailNotificationServiceExceptionResolver"
           class="uk.ac.ebi.interpro.metagenomics.memi.services.EmailNotificationService">
         <constructor-arg ref="mailSender"/>
-        <property name="receiver" value="${email.address.submission}"/>
-        <!--<property name="receiverCC" value="" />-->
-        <!--<property name="emailSubject" value="EMG-SUB: Unknown project"/>-->
+        <property name="receiver" value="${emailService.exceptionResolver.receiver}"/>
+        <property name="sender" value="${emailService.exceptionResolver.sender}"/>
+        <property name="emailSubject" value="DEVELOPERS [MG portal] Exception occurred"/>
     </bean>
 
-    <!-- This bean initializes an email notification service -->
+    <!--Email service for the SRARegistration form  -->
     <bean name="emailNotificationServiceSRARegistration"
           class="uk.ac.ebi.interpro.metagenomics.memi.services.EmailNotificationService">
         <constructor-arg ref="mailSender"/>
-        <property name="receiver" value="${sra.registration.email.address.receiver}"/>
+        <property name="receiver" value="${emailService.sraRegistration.receiver}"/>
         <property name="receiverCCList">
             <list>
-                <value type="java.lang.String">${sra.registration.email.address.receiverCC_1}</value>
-                <value type="java.lang.String">${sra.registration.email.address.receiverCC_2}</value>
-                <value type="java.lang.String">${sra.registration.email.address.receiverCC_3}</value>
+                <value type="java.lang.String">${emailService.sraRegistration.receiverCC_1}</value>
+                <value type="java.lang.String">${emailService.sraRegistration.receiverCC_2}</value>
+                <value type="java.lang.String">${emailService.sraRegistration.receiverCC_3}</value>
+                <value type="java.lang.String">${emailService.sraRegistration.receiverCC_4}</value>
             </list>
         </property>
-        <!--<property name="emailSubject" value="EMG-SUB: Unknown project"/>-->
+        <property name="emailSubject" value="New SRA account request from the MGPortal"/>
     </bean>
 
-    <!-- This bean initializes an email notification service -->
+    <!--Email service for the feedback form-->
     <bean name="emailNotificationServiceFeedbackPage"
           class="uk.ac.ebi.interpro.metagenomics.memi.services.EmailNotificationService">
         <constructor-arg ref="mailSender"/>
-        <property name="receiver" value="${email.address.beta.feedback}"/>
-        <!--<property name="receiverCC" value="" />-->
-        <!--<property name="emailSubject" value="[beta-feedback] Feedback about the new Metagenomics Website"/>-->
+        <property name="receiver" value="${emailService.feedbackForm.receiver}"/>
     </bean>
 
     <!-- Default email notification service without any specific properties-->

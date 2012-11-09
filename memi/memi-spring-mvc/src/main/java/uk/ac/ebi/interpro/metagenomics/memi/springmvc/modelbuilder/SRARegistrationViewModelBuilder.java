@@ -72,7 +72,7 @@ public class SRARegistrationViewModelBuilder extends AbstractViewModelBuilder<SR
 //            }
 //            //
 //            registrationForm.setFirstName(firstName);
-//            String lastName = submitter.getSurname();
+//            String lastName = submitter.getFirstName();
 //            //trim last name
 //            if (lastName != null) {
 //                lastName.trim();

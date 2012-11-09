@@ -7,7 +7,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 import uk.ac.ebi.interpro.metagenomics.memi.controller.HomePageController;
 import uk.ac.ebi.interpro.metagenomics.memi.controller.ModelPopulator;
-import uk.ac.ebi.interpro.metagenomics.memi.feed.RomeClient;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.services.EmailNotificationService;
@@ -35,17 +34,13 @@ import java.util.List;
  */
 public class CustomizedExceptionResolver extends SimpleMappingExceptionResolver {
 
-
     @Resource
     protected SessionManager sessionManager;
 
     @Resource
-    RomeClient rssClient;
-
-    @Resource
     protected MemiPropertyContainer propertyContainer;
 
-    @Resource(name = "defaultEmailNotificationService")
+    @Resource(name = "emailNotificationServiceExceptionResolver")
     private INotificationService emailService;
 
     @Override
@@ -63,7 +58,7 @@ public class CustomizedExceptionResolver extends SimpleMappingExceptionResolver 
                             public void populateModel(ModelMap model) {
 //                            log.info("Building model of " + HomePageController.class + "...");
                                 final ViewModelBuilder<HomePageErrorViewModel> builder = new HomePageErrorViewModelBuilder(sessionManager, "EBI metagenomics: archiving, analysis and integration of metagenomics data",
-                                        getBreadcrumbsForErrorPage(null, "home"), propertyContainer, rssClient);
+                                        getBreadcrumbsForErrorPage(null, "home"), propertyContainer);
                                 final HomePageErrorViewModel errorViewModel = builder.getModel();
                                 errorViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_HOME_VIEW);
                                 model.addAttribute(ViewModel.MODEL_ATTR_NAME, errorViewModel);
@@ -99,9 +94,6 @@ public class CustomizedExceptionResolver extends SimpleMappingExceptionResolver 
     }
 
     protected void sendEmail(Exception ex) {
-        ((EmailNotificationService) emailService).setSender("mg-portal@ebi.ac.uk");
-        ((EmailNotificationService) emailService).setReceiver("maxim@ebi.ac.uk");
-        ((EmailNotificationService) emailService).setEmailSubject("[MG portal] Exception occurred");
         emailService.sendNotification("Following exception has been occurred:", ex);
     }
 }

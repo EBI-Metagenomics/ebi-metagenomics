@@ -1,6 +1,5 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder;
 
-import com.sun.syndication.feed.synd.SyndEntry;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer;
@@ -8,7 +7,6 @@ import uk.ac.ebi.interpro.metagenomics.memi.basic.comparators.HomePageSamplesCom
 import uk.ac.ebi.interpro.metagenomics.memi.basic.comparators.HomePageStudiesComparator;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.StudyDAO;
-import uk.ac.ebi.interpro.metagenomics.memi.feed.RomeClient;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
@@ -39,13 +37,6 @@ public class HomePageViewModelBuilder extends AbstractViewModelBuilder<HomePageV
 
     private SampleDAO sampleDAO;
 
-    private RomeClient rssClient;
-
-    /**
-     * The number of RSS news items to show on the portal home page.
-     */
-    private final int maxRssRowNumber = 3;
-
     /**
      * The number of latest project and samples to show on the home page. Used within this builder class, but also within the Java Server Page.
      */
@@ -53,33 +44,19 @@ public class HomePageViewModelBuilder extends AbstractViewModelBuilder<HomePageV
 
 
     public HomePageViewModelBuilder(SessionManager sessionMgr, String pageTitle, List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer,
-                                    StudyDAO studyDAO, SampleDAO sampleDAO, RomeClient rssClient) {
+                                    StudyDAO studyDAO, SampleDAO sampleDAO) {
         super(sessionMgr);
         this.pageTitle = pageTitle;
         this.breadcrumbs = breadcrumbs;
         this.propertyContainer = propertyContainer;
         this.studyDAO = studyDAO;
         this.sampleDAO = sampleDAO;
-        this.rssClient = rssClient;
     }
 
     @Override
     public HomePageViewModel getModel() {
         log.info("Building instance of " + HomePageViewModel.class + "...");
         Submitter submitter = getSessionSubmitter(sessionMgr);
-        // Get RSS URL
-        // TODO: Replace local cached feed with Twitter feed when fixed @Cacheable problem
-        String rssUrl = "https://api.twitter.com/1/statuses/user_timeline/EBImetagenomics.rss";
-        List<SyndEntry> rssEntries = Collections.emptyList();
-        try {
-            rssEntries = rssClient.getEntries();
-            if (rssEntries.size() > maxRssRowNumber) {
-                // Limit number of rss entries
-                rssEntries = rssEntries.subList(0, maxRssRowNumber);
-            }
-        } catch (Exception e) {
-            log.warn("Could not get RSS entries", e);
-        }
 //        If case: if nobody is logged in
         if (submitter == null) {
             //retrieve public studies and order them by last meta data received
@@ -91,7 +68,7 @@ public class HomePageViewModelBuilder extends AbstractViewModelBuilder<HomePageV
             samples = samples.subList(0, getToIndex(samples));
 
             return new HomePageViewModel(submitter, publicStudiesMap, samples,
-                    rssUrl, rssEntries, pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems);
+                    pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems);
         }
 //        Else case: if somebody is logged in
         else {
@@ -113,7 +90,7 @@ public class HomePageViewModelBuilder extends AbstractViewModelBuilder<HomePageV
             Collections.sort(publicSamples, new HomePageSamplesComparator());
             publicSamples = publicSamples.subList(0, getToIndex(publicSamples));
 
-            return new HomePageViewModel(submitter, publicStudiesMap, publicSamples, rssUrl, rssEntries,
+            return new HomePageViewModel(submitter, publicStudiesMap, publicSamples,
                     myStudiesMap, mySamples, pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems);
         }
     }

@@ -215,9 +215,10 @@
                                  - <img src="${pageContext.request.contextPath}/img/ico_analysis_chart_small_off.gif" alt="Analysis in progress" title="Analysis in progress">--%></c:when>
                                     <c:otherwise>
                                         - <a href="<c:url value="${baseURL}/analysisStatsView/${sample.sampleId}"/>"
-                                   class="list_sample"> <img src="${pageContext.request.contextPath}/img/ico_analysis_chart_small.gif"
+                                             class="list_sample"> <img
+                                            src="${pageContext.request.contextPath}/img/ico_analysis_chart_small.gif"
                                             alt="Analysis finished - check the results"
-                                            title="Analysis finished - check the results"></a>                        
+                                            title="Analysis finished - check the results"></a>
                                     </c:otherwise>
                                 </c:choose>
                             </p>
@@ -280,12 +281,13 @@
                             <c:when test="${empty sample.analysisCompleted}">
                                 <%-- leave empty to be consistent with sample overview page
                                  - <img src="${pageContext.request.contextPath}/img/ico_analysis_chart_small_off.gif" alt="Analysis in progress" title="Analysis in progress">--%>
-                                </c:when>
+                            </c:when>
                             <c:otherwise>
-                                 - <a href="<c:url value="${baseURL}/analysisStatsView/${sample.sampleId}"/>"
-                                   class="list_sample"> <img src="${pageContext.request.contextPath}/img/ico_analysis_chart_small.gif"
-                                            alt="Analysis finished - check the results"
-                                            title="Analysis finished - check the results"></a>
+                                - <a href="<c:url value="${baseURL}/analysisStatsView/${sample.sampleId}"/>"
+                                     class="list_sample"> <img
+                                    src="${pageContext.request.contextPath}/img/ico_analysis_chart_small.gif"
+                                    alt="Analysis finished - check the results"
+                                    title="Analysis finished - check the results"></a>
                             </c:otherwise>
                         </c:choose>
                     </p>
@@ -296,23 +298,7 @@
             </div>
         </c:otherwise>
     </c:choose>
-    <div id="list-news"><h2>News & events</h2>
-
-        <h3>Latest news & events <a href="${model.rssUrl}" rel="alternate" type="application/rss+xml"
-                                    title="Metagenomics RSS feeds"><img
-                src="${pageContext.request.contextPath}/img/icon_rss.gif" alt="Metagenomics RSS feeds"/></a></h3>
-
-        <div class="tweet"></div>
-        <p><a href="http://twitter.com/EBImetagenomics" class="twitter">Follow us on Twitter</a></p>
-        <span class="separator"></span>
-
-        <h2>Mailing list</h2>
-
-        <p><span class="list_desc"><a class="list_more"
-                                      href="http://listserver.ebi.ac.uk/mailman/listinfo/metagenomics">Subscribe</a> to the EBI metagenomics mailing list to receive update information. </span>
-        </p>
-
-    </div>
+    <%@ include file="components/listNewsComponent.jsp" %>
 </section>
 
 
