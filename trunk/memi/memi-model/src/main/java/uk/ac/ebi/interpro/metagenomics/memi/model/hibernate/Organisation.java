@@ -2,6 +2,7 @@ package uk.ac.ebi.interpro.metagenomics.memi.model.hibernate;
 
 import javax.persistence.*;
 
+//TODO: Add organisation site
 @Entity
 @Table(name = "ORGANISATION")
 public class Organisation {

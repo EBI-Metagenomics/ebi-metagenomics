@@ -158,7 +158,6 @@ public class SubmissionController extends CheckLoginController implements IContr
                 String email = registrationForm.getEmail();
                 ((EmailNotificationService) emailService).setSender(email);
                 ((EmailNotificationService) emailService).setReceiverCC(email);
-                ((EmailNotificationService) emailService).setEmailSubject("New SRA account request from the MGPortal");
                 String msg = buildEmailMsg(registrationForm);
                 log.info("Sending a new SRA account request email to SRA.");
                 emailService.sendNotification(msg);

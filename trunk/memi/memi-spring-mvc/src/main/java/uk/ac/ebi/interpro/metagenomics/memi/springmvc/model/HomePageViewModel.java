@@ -1,12 +1,14 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
 
-import com.sun.syndication.feed.synd.SyndEntry;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Represents the model for the home page.
@@ -30,33 +32,27 @@ public final class HomePageViewModel extends ViewModel {
 
     private List<Sample> mySamples;
 
-    private final String rssUrl;
-
-    private final List<SyndEntry> rssItems;
-
     /**
      * The number of latest project and samples to show on the home page.
      */
     private final int maxRowNumberOfLatestItems;
 
     public HomePageViewModel(Submitter submitter, Map<Study, Long> publicStudiesMap, List<Sample> publicSamples,
-                             String rssUrl, List<SyndEntry> rssItems, String pageTitle, List<Breadcrumb> breadcrumbs,
+                             String pageTitle, List<Breadcrumb> breadcrumbs,
                              MemiPropertyContainer propertyContainer, int maxRowNumberOfLatestItems) {
         super(submitter, pageTitle, breadcrumbs, propertyContainer);
         this.publicStudiesMap = publicStudiesMap;
         this.publicSamples = publicSamples;
         this.myStudiesMap = new TreeMap<Study, Long>();
         this.mySamples = new ArrayList<Sample>();
-        this.rssUrl = rssUrl;
-        this.rssItems = rssItems;
         this.maxRowNumberOfLatestItems = maxRowNumberOfLatestItems;
     }
 
     public HomePageViewModel(Submitter submitter, Map<Study, Long> publicStudiesMap, List<Sample> publicSamples,
-                             String rssUrl, List<SyndEntry> rssItems, Map<Study, Long> myStudiesMap,
+                             Map<Study, Long> myStudiesMap,
                              List<Sample> mySamples, String pageTitle, List<Breadcrumb> breadcrumbs,
                              MemiPropertyContainer propertyContainer, int maxRowNumberOfLatestItems) {
-        this(submitter, publicStudiesMap, publicSamples, rssUrl, rssItems, pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems);
+        this(submitter, publicStudiesMap, publicSamples, pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems);
         this.myStudiesMap = myStudiesMap;
         this.mySamples = mySamples;
     }
@@ -92,14 +88,6 @@ public final class HomePageViewModel extends ViewModel {
 
     public void setMySamples(List<Sample> mySamples) {
         this.mySamples = mySamples;
-    }
-
-    public List<SyndEntry> getRssItems() {
-        return Collections.unmodifiableList(rssItems);
-    }
-
-    public String getRssUrl() {
-        return rssUrl;
     }
 
     public int getMaxRowNumberOfLatestItems() {
