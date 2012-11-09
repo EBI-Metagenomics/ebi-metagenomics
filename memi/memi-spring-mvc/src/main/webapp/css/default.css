@@ -1694,3 +1694,8 @@ background:none;
 
     }
 .selected {font-weight:bold; color:white;}
+
+/* JQUERY TWEET */
+.tweet {color: #7E7E7E;font-size: 100%;}
+.tweet  ul {margin:0px;}
+.tweet  li {list-style-type: none; margin: 1em 0px;}
