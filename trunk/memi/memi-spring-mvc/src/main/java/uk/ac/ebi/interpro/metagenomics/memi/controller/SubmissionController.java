@@ -4,7 +4,6 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.velocity.app.VelocityEngine;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.ui.velocity.VelocityEngineUtils;
@@ -30,10 +29,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.SRARegistrati
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
@@ -121,25 +117,6 @@ public class SubmissionController extends CheckLoginController implements IContr
             log.warn("Internal application error. Submission contact data access object is unexpectedly NULL.");
         }
         return false;
-    }
-
-    @RequestMapping(value = "/doOpenTemplateDownload", method = RequestMethod.GET)
-    public ModelAndView doOpenTemplateDownload(final ModelMap model, final HttpServletResponse response,
-                                               final HttpServletRequest request) {
-        return handleDownload(model, response, request);
-    }
-
-    private ModelAndView handleDownload(ModelMap model, HttpServletResponse response, HttpServletRequest request) {
-        ClassPathResource resource = new ClassPathResource("/unfiltered/ERAMetadataVc5.2.xls");
-        try {
-            if (downloadService != null) {
-                File file = resource.getFile();
-                downloadService.openDownloadDialog(response, request, file, file.getName(), false);
-            }
-        } catch (IOException e) {
-            log.warn("Couldn't get file from the following resource - " + resource.getPath(), e);
-        }
-        return buildModelAndView(model, getModelViewName());
     }
 
     @RequestMapping(method = RequestMethod.POST)
