@@ -32,27 +32,12 @@ public class DefaultController {
 
     public static final String EXCEPTION_PAGE_VIEW_NAME = "exception";
 
-    public static final String NO_SUCH_REQUEST_PAGE_VIEW_NAME = "404";
-
     public static final String ACCESS_DENIED_VIEW_NAME = "accessDenied";
 
     public static final String ENTRY_NOT_FOUND_VIEW_NAME = "entryNotFound";
 
     @Resource
     private SessionManager sessionManager;
-
-    @RequestMapping(value = "/404", method = RequestMethod.GET)
-    public ModelAndView pageNotFoundHandler(ModelMap model) {
-        log.warn("This method is called twice times at the moment. If you don't find any Spring related " +
-                "log to no such request mapping found, please do not note this warning. HTTP status code " +
-                "404 responded. Please have a look to the Spring log to see which wrong URL was " +
-                "requested!");
-        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "404 Document Not Found - EBI Metagenomics", new ArrayList<Breadcrumb>(), null);
-        final ViewModel viewModel = builder.getModel();
-        model.addAttribute(ViewModel.MODEL_ATTR_NAME, viewModel);
-        model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
-        return new ModelAndView("/errors/" + DefaultController.NO_SUCH_REQUEST_PAGE_VIEW_NAME, model);
-    }
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public ModelAndView indexHandler(HttpServletRequest request) {

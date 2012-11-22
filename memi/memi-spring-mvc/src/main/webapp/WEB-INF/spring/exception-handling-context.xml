@@ -10,16 +10,16 @@
     <!--<property name="order" value="0"/>-->
     <!--</bean>-->
 
-    <bean class="uk.ac.ebi.interpro.metagenomics.memi.basic.CustomizedExceptionResolver"/>
+    <bean id="customizedExceptionHandler"
+          class="uk.ac.ebi.interpro.metagenomics.memi.basic.CustomizedExceptionResolver">
+        <property name="exceptionMappings">
+            <props>
+                <prop key="org.springframework.web.bind.MissingServletRequestParameterException">
+                    errors/missing-parameter
+                </prop>
+            </props>
+        </property>
+        <property name="defaultErrorView" value="errors/exception"/>
+    </bean>
 
-    <!--<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">-->
-    <!--<property name="exceptionMappings">-->
-    <!--<props>-->
-    <!--<prop key="org.springframework.dao.DataAccessException">/errors/homeError</prop>-->
-    <!--<prop key="org.springframework.transaction.TransactionException">/errors/homeError</prop>-->
-    <!--</props>-->
-    <!--</property>-->
-    <!--<property name="defaultErrorView" value="/errors/404"/>-->
-    <!--<property name="defaultStatusCode" value="500"/>-->
-    <!--</bean>-->
 </beans>

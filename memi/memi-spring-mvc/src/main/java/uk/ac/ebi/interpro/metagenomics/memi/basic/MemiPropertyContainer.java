@@ -13,8 +13,6 @@ public class MemiPropertyContainer {
 
     private String pathToAnalysisDirectory;
 
-    private String pathToSubmissionDirectory;
-
     private ENASubmissionURL enaSubmissionURL;
 
     private String enaMasterUserEmail;
@@ -44,13 +42,5 @@ public class MemiPropertyContainer {
 
     public void setEnaMasterUserEmail(String enaMasterUserEmail) {
         this.enaMasterUserEmail = enaMasterUserEmail;
-    }
-
-    public String getPathToSubmissionDirectory() {
-        return pathToSubmissionDirectory;
-    }
-
-    public void setPathToSubmissionDirectory(String pathToSubmissionDirectory) {
-        this.pathToSubmissionDirectory = pathToSubmissionDirectory;
     }
 }

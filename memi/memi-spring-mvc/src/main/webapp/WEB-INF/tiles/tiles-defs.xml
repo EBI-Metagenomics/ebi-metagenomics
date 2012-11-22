@@ -111,6 +111,11 @@
         <put-attribute name="body" value="/templates/errors/404Body.jsp"/>
     </definition>
 
+    <definition name="missing-parameter" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="grey"/>
+        <put-attribute name="body" value="/templates/errors/missing-parameterBody.jsp"/>
+    </definition>
+
     <definition name="exception" extends="rootTemplate">
         <put-attribute name="bodyClass" type="string" value="grey"/>
         <put-attribute name="body" value="/templates/errors/exceptionBody.jsp"/>
