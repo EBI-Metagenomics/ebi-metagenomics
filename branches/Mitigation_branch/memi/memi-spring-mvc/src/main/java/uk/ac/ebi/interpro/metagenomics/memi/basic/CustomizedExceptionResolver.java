@@ -83,7 +83,7 @@ public class CustomizedExceptionResolver extends SimpleMappingExceptionResolver 
 
     protected ModelAndView buildErrorModelAndView(String viewName) {
         final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager,
-                "Error page - EBI metagenomics", getBreadcrumbsForErrorPage(null, viewName), null);
+                "Error page", getBreadcrumbsForErrorPage(null, viewName), null);
         final ViewModel viewModel = builder.getModel();
         ModelMap model = new ModelMap();
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, viewModel);
@@ -93,7 +93,7 @@ public class CustomizedExceptionResolver extends SimpleMappingExceptionResolver 
 
     protected ModelMap buildErrorModelMap() {
         final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager,
-                "Error page - EBI metagenomics", null, null);
+                "Error page", null, null);
         final ViewModel viewModel = builder.getModel();
         ModelMap model = new ModelMap();
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, viewModel);
