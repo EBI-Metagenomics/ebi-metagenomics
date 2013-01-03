@@ -189,7 +189,7 @@ public class ViewSamplesController extends AbstractController implements IContro
      * Creates the MG model and adds it to the specified model map.
      */
     private void populateModel(ModelMap model, SampleFilter filter, int startPosition) {
-        final ViewModelBuilder<SamplesViewModel> builder = new SamplesViewModelBuilder(sessionManager, "Samples list - EBI metagenomics",
+        final ViewModelBuilder<SamplesViewModel> builder = new SamplesViewModelBuilder(sessionManager, "Samples list",
                 getBreadcrumbs(null), propertyContainer, getTableHeaderNames(), sampleDAO, filter, startPosition);
         final SamplesViewModel samplesViewModel = builder.getModel();
         model.addAttribute("loginForm", new LoginForm());

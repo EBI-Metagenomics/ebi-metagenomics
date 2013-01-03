@@ -143,7 +143,7 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
     }
 
     protected void populateModel(final ModelMap model, final Sample sample, boolean isReturnSizeLimit) {
-        String pageTitle = "Sample analysis results: " + sample.getSampleName() + " - EBI metagenomics";
+        String pageTitle = "Sample analysis results: " + sample.getSampleName() + "";
         populateModel(model, sample, isReturnSizeLimit, pageTitle);
     }
 
