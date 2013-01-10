@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
-<div id="content">
-<section id="submit-data">
+<div id="memicontent">
+<section id="submit-data" >      <%--  class="grid_24" --%>
     <c:choose>
         <%-- Show Private welcome emailMessage only if a user is logged in--%>
         <%--Private area is deactivated for the moment until any decision was made--%>
@@ -141,12 +141,12 @@
 </section>
 
 
-<section id="list-data">
+<section id="list-data">   <%--  class="grid_24" --%>
 
     <c:choose>
         <%-- Show MyStudies and MySamples tables only if a user is logged in--%>
         <c:when test="${not empty model.submitter}">
-            <div id="list-data-study">
+            <div id="list-data-study" class="grid_9 alpha">
                 <h2>My Projects</h2>
                 <c:choose>
                     <c:when test="${empty model.myStudiesMap}">
@@ -187,7 +187,7 @@
                 </p>
             </div>
 
-            <div id="list-data-sample">
+            <div id="list-data-sample" class="grid_9">
                 <h2>My Samples</h2>
                 <c:choose>
                     <c:when test="${empty model.mySamples}">
@@ -239,7 +239,7 @@
 
         <%-- Show recent PublicStudies and PublicSamples only when the user is not logged in --%>
         <c:otherwise>
-            <div id="list-data-study">
+            <div id="list-data-study" class="grid_9 alpha">
                 <h2>Projects</h2>
 
                 <h3>Latest public projects</h3>
@@ -263,7 +263,7 @@
                        title="View all public projects" class="all">View all projects</a></p>
             </div>
 
-            <div id="list-data-sample">
+            <div id="list-data-sample" class="grid_9">
                 <h2>Samples</h2>
 
                 <h3>Latest public samples</h3>
