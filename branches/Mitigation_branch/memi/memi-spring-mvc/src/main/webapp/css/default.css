@@ -1,5 +1,5 @@
 /* reset.css  */
-html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary,time, mark, audio, video{margin:0;padding:0;border:0;outline:0;font-size:100%;background:transparent;font: inherit; vertical-align: baseline;}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outline:3px solid #0092bf; }ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+html,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article, aside, canvas, details, embed, figure, figcaption, header, hgroup, menu, nav, output, ruby, section, summary,time, mark, audio, video{margin:0;padding:0;border:0;outline:0;font-size:100%;background:transparent;font: inherit; vertical-align: baseline;}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outline:3px solid #0092bf; }ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 /* END reset.css  */
 
 html, body {height: 100%;}
@@ -37,7 +37,7 @@ font-style: normal;
 }
 
 body {
-    margin: 0; padding: 0; /*specified in EBI template.css */
+    padding: 0; /*specified in EBI template.css */
     /*font-family: 'Droid Sans', arial, serif;  link to GOOGLE  font  BUG with the no-Cleartype (standard) config on the PC */
     /*font-family: 'DroidSansRegular', Arial, sans-serif; @font-face TEMP not working with IE and firefox, use Arial by default*/
     font-family: helvetica, "trebuchet MS", arial, sans-serif;
@@ -51,7 +51,7 @@ body {
       background: url(../img/bgd_main_grey.jpg); */
     }
 
-body.grey #wrapper, body.green #wrapper, body.ebigreen #wrapper, body.ebigrey #wrapper, body.blue #wrapper, body.greyblue #wrapper { background: #b5b5b5;}
+body.grey #wrapper, body.green #wrapper, body.ebigreen #wrapper, body.ebigrey #wrapper, body.blue #wrapper, body.greyblue #wrapper { background: #b5b5b5; /*#909FA8*/}
 body div.but_top  { background: #6b7380;}
 
 div.top-menu ul li.grey {background: #b5b5b5;}
@@ -78,7 +78,7 @@ small {font-size:80%;}
 ul, ol {
 list-style: disc;
 display: block;
-margin:20px;
+
 }
 
 ol {list-style-type: decimal;}
@@ -97,6 +97,21 @@ list-style-type: disc;
 -webkit-padding-start: 0px;
 margin:15px;
 }
+/*suggested change to ebi-global.css - to comment out when submitting*/
+div#global-masthead { border-color: rgba(255, 255, 255, 0.4); } /*add a softer bottom bordr to EBI global*/
+div#headerdiv div.nav ul {font-size: 90%;height: 100%;}/*smaller font for global navigation e.g. BBC & make the size of border full height in case the height of nav is changing*/
+div#global-masthead ul li  {border-left: 1px solid #4C4C4C; height: 100%; width:74px;} /*move border to li elements and make them thinner +make the size of border full height in case the height of nav is changing, defining a width fix a bug on IE6*/
+div#global-masthead ul li a {border-right: 0px solid black;border-left: 0px solid #666;}/*remove the default border*/
+div#local-title.logo-title img { margin: 18px 9px;}
+/*div#local-masthead {background-image: url(../img/bgd_main_greyblue.jpg) ;}*/
+div#local-masthead {background: #5f8694 url(../img/bgd_gd_banner_greyblue.png) repeat-y top left;border-bottom: 3px solid #EEE;}
+/*div#local-masthead {background-color: #7D9CA6;} *//*default #70BDBD*/
+div#local-masthead ul {margin-top: 0; background-color: rgba(17, 17, 17, 0.2);} /*main navigation bar more transparent - softer and remove the negative margin...why? */
+div#local-masthead ul li {border-right: 1px solid rgba(255, 255, 255, 0.5);}/*change the dotted line*/
+div#local-masthead ul li a:link { text-shadow:  rgba(0, 0, 0, 0.2) 1px 1px 0px;}
+div#local-masthead ul li a:hover, div#local-masthead ul li a:focus, div#local-masthead ul li a:active {border-bottom: 0px solid #71b360; background-color: rgba(0, 0, 0, 0.2);}
+
+/*/suggested change to ebi-global.css */
 
 img {border: none;}
 
@@ -112,15 +127,15 @@ a:active { color: #647685;}
 
 #wrapper {
 overflow:auto; /*  To contain floated elements, apply overflow:auto; to the parent element, or place something to clear the floats at the bottom of the container, such as: <div style="clear:both;"></div>*/
-width: 958px;  /*was too much left aligned so removed 14px margin from 972px */
+/*width: 958px;  was too much left aligned so removed 14px margin from 972px */
 /* removed to make it EBI compliant
 box-shadow: 0px 0px 70px #696969;
 -moz-box-shadow: 0px 0px 70px #696969;
 -khtml-box-shadow: 0px 0px 70px #696969;
 -webkit-box-shadow: 0px 0px 70px #696969;
 margin: 0px auto;    */
-margin-left:14px;  /*was too much left aligned */
-padding:14px 14px 0 14px;
+/*margin-left:14px; was too much left aligned - defined by added class grid 24*/
+padding:14px;
 z-index:20;
 position:relative; /*to make z-index work */
 /* background: transparent url(../img/bgd_earth.gif) no-repeat -180px -120px; artistic */
@@ -187,24 +202,21 @@ z-index:1;
 border:0px black solid;
 }
 
-header, nav, .banner  { background-color: white;}
+header, .banner  { background-color: white;}
 
 nav { float: left; width:100%;}
 
 footer {
-text-align:left; /* added to make it EBI compliant  */
-color:#3e3e3e;
-z-index:30;
-border:0px red solid;
-display:block; /* for IE*/
+    font-size: 13px;
+    font-family: Verdana, sans-serif; /*added to be compliant with EBI and to avoid table*/
 }
 
-footer #footer {
-padding: 4px 0 0 14px; /* added to make it EBI compliant  */
-height:30px;    /* was 60px modified to make it EBI compliant  */
-background: url(../img/bgd_white_op45_8.png) #c3c3c3;}
-footer #linec  { width:  100%; height:4px; background: url(../img/bgd_black_op20_8.png);}
-footer #lined  {width: 100%; height:8px;  background: url(../img/bgd_black_op40_8.png); }
+/*footer #footer {*/
+/*padding: 4px 0 0 14px; *//* added to make it EBI compliant  */
+/*height:30px;    *//* was 60px modified to make it EBI compliant  */
+/*background: url(../img/bgd_white_op45_8.png) #c3c3c3;}*/
+/*footer #linec  { width:  100%; height:4px; background: url(../img/bgd_black_op20_8.png);}*/
+/*footer #lined  {width: 100%; height:8px;  background: url(../img/bgd_black_op40_8.png); }*/
 
 div.banner {
 width: 100%;
@@ -444,7 +456,7 @@ background: url(../img/bgd_main_grey.jpg) #b5b5b5;
 text-align:left;
 }
 
-#small {width:660px;}
+#small {width:72%;} /*table in analysis result changed in pourcentage for mitigation*/
 
 table.result {
 line-height: 1.4em;
@@ -638,7 +650,6 @@ margin: 4px 10px 0 4px;
 #submit-data {
 border: solid 0px black;
 height:300px; /* was 288 for IE6*/
-padding:14px 14px 0 14px;  /*reduced for carousel*/
 display:block;
 overflow:auto;
 }
@@ -729,18 +740,18 @@ width:100%;
  /* height:100%;  */
 }
 
-#content {
+#memicontent {
 float:left;
 border: solid 0px green;
 width:100%;  /* was 556px when 2 columns*/
 /*width:682px;    *//* was 690 reduced because of IE */
 height:auto;
-margin:14px 0 14px 0;
+
 }
 
 #content-full  {
 border: solid 0px green;
-margin:14px 0 14px 0;
+
 padding:14px 14px 28px 14px;
 background-color:white;
 min-height:580px;
@@ -770,7 +781,7 @@ width:256px;float:right;border: solid 0px black; padding:0 0 14px 14px;
 
 
 #sidebar-steps  ol {
-margin:0 6px;
+    padding:9px; margin:9px 0;
 counter-reset: section;
 list-style-type: none;
 }
@@ -828,28 +839,28 @@ list-style: disc;
 border: 0px solid black;
 }
 
-#sidebar-nav  ul{ margin:10px;  font-weight:bold; font-size:110%;}
+#sidebar-nav ul{padding:9px; margin:9px 0;font-weight:bold; font-size:110%;}
 
-#sidebar-nav  ul  li {
+#sidebar-nav ul  li {
 list-style: none;
 border: 0px solid black;
 line-height:1.8;
 }
 
-#sidebar-nav  ul  li a {
+#sidebar-nav ul  li a {
 display:block;
 text-decoration:none;
 color:#445668;
 }
 
-#sidebar-nav  ul  li ul { margin: 0; font-weight:normal;font-size:90%;}
+#sidebar-nav ul  li ul { margin: 0; font-weight:normal;font-size:90%;}
 
-#sidebar-nav  ul  li a:hover {
+#sidebar-nav ul  li a:hover {
 color:#2b3743;
 background: url(../img/bgd_black_op05_8.png);
 }
 
-#sidebar-nav  ul  li ul li {
+#sidebar-nav ul  li ul li {
 list-style: square;
 margin-left:14px;
 color:#c3c3c3;
@@ -935,9 +946,8 @@ border-radius: 0 0 20px 0;
 }
 
 #list-data-study, #list-data-sample, #list-news  {
-float:left;
-width:282px;
-line-height:1.3;
+/*width:282px;*/
+line-height:1.3;   width:28.9%;
 _height:400px; /*to keep same height for IE6 */
 min-height:440px;
 padding:14px;
@@ -945,9 +955,9 @@ padding:14px;
 
 #list-data-study h3, #list-data-sample h3, #list-news h3 {font-size:120%;color:#445668;  /*was  #7c8c99*/margin: 1em 0px; padding:0;}
 
-#list-data-sample, #list-news {
-margin-left:14px;
-}
+/*#list-data-sample, #list-news {*/
+/*margin-left:14px;*/
+/*}*/
 
 
 
@@ -1305,7 +1315,7 @@ border:0px solid green; float:right; width:22px; height:22px; -moz-opacity:.5;op
 
 #ordered {font-weight: bold;}
 
-.ebi_contents { border:0px solid red; position:absolute; top:55px;margin:0;padding:0;width:100%;clear: both;z-index: 2;  }/*added because of the EBI header */
+/*.ebi_contents { border:0px solid red; position:absolute; top:55px;margin:0;padding:0;width:100%;clear: both;z-index: 2;  }*//*added because of the EBI header */
 
 .menu_bgd {
 background: url(../img/bgd_contentfull_menu.gif) -14px;
@@ -1435,13 +1445,14 @@ span.form_help ul li{
 
 
 /* carousel */
-.carousel {margin:0;border:0px green solid;zoom:1; font-size:110%;}
+.carousel {margin:0;border:0px green solid;zoom:1; font-size:110%;border:0px solid pink;min-width:860px;padding:14px 14px 0 14px;  /*moved padding for EBI Mitigation*/}
 .carousel div{margin:0;padding:0;}
 
 .carousel-wrap{
 display:inline-block;
 vertical-align:middle;
-width:908px;/*628px for 2 slides*/margin:0;border:0px solid pink;
+/*908px for 3 slides; 628px for 2 slides*/margin:0;
+width:840px; /*for EBI compliant 1024px screen*/
 }
 
 /* pagination*/
@@ -1515,7 +1526,7 @@ background:url(../img/carousel_l.png) 0 0 no-repeat; margin-right:-34px;}
 /*.pag-first a:active { background:url(../img/ico_pag_first_active.png) no-repeat left 2px;}*/
 .pag-first-off { background:url(../img/ico_pag_first_off.png) no-repeat 4px 2px;width:17px; height:18px;display:block;}
 /* modules */
-.module {width:292px; background:#fafafa url(../img/backgrounds/module_lge_bg.jpg) bottom left repeat-x; margin:0 6px ;line-height:1.2;}
+.module {width:274px;/*was 286*/ background:#fafafa url(../img/backgrounds/module_lge_bg.jpg) bottom left repeat-x; margin:0 6px ;line-height:1.2;}
 .module .top_corners {background:url(../img/backgrounds/module_explore_top.png) top left no-repeat; height:8px; overflow:hidden;}
 .module .bottom_corners {background:url(../img/backgrounds/module_explore_bottom.png) top left no-repeat; height:8px; overflow:hidden;}
 .module .content {height:250px !important; border:solid #e6e6e6; border-width:0 1px; min-height:240px; position:relative;  text-align:left;}
@@ -1531,7 +1542,7 @@ background:url(../img/carousel_l.png) 0 0 no-repeat; margin-right:-34px;}
 .js ul li{overflow:hidden;display:inline;float:left;width:500px;text-align:center;zoom:1;}
 
 .carousel ul{padding:0;list-style:none;}
-.carousel ul li{position:relative;width:307px; border:0px solid red;margin:0;
+.carousel ul li{position:relative;width:283px; border:0px solid red;margin:0;
  float:left; /* used for no-script version */}
 
 
@@ -1697,5 +1708,5 @@ background:none;
 
 /* JQUERY TWEET */
 .tweet {color: #7E7E7E;font-size: 100%;}
-.tweet  ul {margin:0px;}
+.tweet  ul {margin:0px; padding: 0px;}
 .tweet  li {list-style-type: none; margin: 1em 0px;}
