@@ -1,4 +1,4 @@
-<div id="list-news"><h2>News & events</h2>
+<div id="list-news" class="grid_7 omega"><h2>News & events</h2>
 
     <h3>Latest news & events <a href="https://api.twitter.com/1/statuses/user_timeline/EBImetagenomics.rss"
                                 rel="alternate" type="application/rss+xml"
