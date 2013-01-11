@@ -2,7 +2,7 @@
 <%--<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>--%>
 
 <div id="content-full">
-
+    <div class="grid_24">
     <%@ include file="components/sraRegistrationFormComponent.jsp" %>
 
     <div class="sub">
@@ -157,4 +157,5 @@
                             title="Send an enquiry about Metagenomics data submission">datasubs@ebi.ac.uk</a>).
     </div>
 
+</div>
 </div>

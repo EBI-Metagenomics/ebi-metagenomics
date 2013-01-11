@@ -3,6 +3,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <div id="content-full">
+    <div class="grid_24">
     <h3>Beta website feedback</h3>
 
     <p>If you have feedback about this new website, please use the form below to send us your
@@ -71,4 +72,4 @@
             </fieldset>
         </form:form>
     </div>
-</div>
+</div></div>

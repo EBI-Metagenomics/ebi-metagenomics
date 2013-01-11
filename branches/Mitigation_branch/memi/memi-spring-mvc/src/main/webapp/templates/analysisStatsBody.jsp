@@ -3,6 +3,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <div id="content-full">
+<div class="grid_24">
 <c:choose>
 <c:when test="${not empty model.sample}">
 <div id="sidebar-analysis">
@@ -225,4 +226,5 @@
     <h3>Sample ID Not Recognised</h3>
 </c:otherwise>
 </c:choose>
+</div>
 </div>

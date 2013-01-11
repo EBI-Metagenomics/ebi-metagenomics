@@ -4,7 +4,7 @@
 <%--Page variable which is used several time within this page. Used for not specified study attributes.--%>
 <c:set var="notGivenId" value="(not given)"/>
 <div id="content-full">
-
+<div class="grid_24">
 <c:choose>
     <c:when test="${not empty model.study.publications}">
 
@@ -222,4 +222,4 @@ Contact name: (not given)
     <c:otherwise>No samples to display</c:otherwise>
 </c:choose>
 <div class="but_top"><a href="#top" title="back to the top page">Top</a></div>
-</div>
+</div></div>

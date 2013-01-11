@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <div id="content-full">
+    <div class="grid_24">
    <span class="subtitle">Sample analysis results <a href="<c:url value="${baseURL}/sample/${model.sample.sampleId}"/>" style="font-size:90%;"> (${model.sample.sampleId})</a></span>
     <h2>${model.sample.sampleName}</h2>
 
@@ -60,4 +61,4 @@
     <%--pager.showPage(1);--%>
     <%--</script>--%>
 
-</div>
+</div></div>

@@ -126,7 +126,7 @@ a:hover,  a:focus { color: red; text-decoration:underline;}
 a:active { color: #647685;}
 
 #wrapper {
-overflow:auto; /*  To contain floated elements, apply overflow:auto; to the parent element, or place something to clear the floats at the bottom of the container, such as: <div style="clear:both;"></div>*/
+/*overflow:auto;   To contain floated elements, apply overflow:auto; to the parent element, or place something to clear the floats at the bottom of the container, such as: <div style="clear:both;"></div>*/
 /*width: 958px;  was too much left aligned so removed 14px margin from 972px */
 /* removed to make it EBI compliant
 box-shadow: 0px 0px 70px #696969;
@@ -137,7 +137,7 @@ margin: 0px auto;    */
 /*margin-left:14px; was too much left aligned - defined by added class grid 24*/
 padding:14px;
 z-index:20;
-position:relative; /*to make z-index work */
+/*position:relative; to make z-index work */
 /* background: transparent url(../img/bgd_earth.gif) no-repeat -180px -120px; artistic */
 border:0px #dddddd solid;
 }
@@ -542,9 +542,9 @@ font-family: helvetica, "trebuchet MS", arial, sans-serif;
 color:#066;
 font-size:190%;
 font-weight:normal;
-margin:0;
+margin:0.83em 0;/*added for compliance*/
 }
-
+#list-data h2 {margin:0;} /*added for compliance*/
 #go-chart h2 {font-size:140%;}
 
 .subtitle {font-size:150%;color: #066;}
@@ -649,9 +649,10 @@ margin: 4px 10px 0 4px;
 
 #submit-data {
 border: solid 0px black;
-height:300px; /* was 288 for IE6*/
+ /*height:300px; /* was 288 for IE6*/
 display:block;
-overflow:auto;
+margin-top: 14px;
+/*overflow:auto;*/
 }
 
 #submit-data-display,#submit-data-description  {display:block; float:left;}
@@ -752,10 +753,10 @@ height:auto;
 #content-full  {
 border: solid 0px green;
 
-padding:14px 14px 28px 14px;
+/*padding:14px 14px 28px 14px;*/
 background-color:white;
-min-height:580px;
-width:auto;
+min-height:580px;float:left;
+    width:100%;
 }
 
 #sidebar {
@@ -832,11 +833,11 @@ padding:7px;
 }
 
 #sidebar-related {margin:0;}
-#sidebar-related  ul{ margin:14px;}
+#sidebar-related  ul{ margin:0;padding:9px; }
 
 #sidebar-related  ul  li {
 list-style: disc;
-border: 0px solid black;
+border: 0px solid black;list-style-position:inside;
 }
 
 #sidebar-nav ul{padding:9px; margin:9px 0;font-weight:bold; font-size:110%;}
@@ -1456,7 +1457,7 @@ width:840px; /*for EBI compliant 1024px screen*/
 }
 
 /* pagination*/
-div.center-wrap{/*overflow:hidden; remove because of bug in Firefox*/ clear:both;zoom:1; text-align:center; line-height:1;}
+div.center-wrap{/*overflow:hidden; remove because of bug in Firefox*/ clear:both;zoom:1; text-align:center; margin-top: 14px;}
 div.center-wrap div{border:0px solid red;margin:2px 0; display:block; }
 div.center-wrap p{border:0;margin:0;}
 div.center-wrap a{

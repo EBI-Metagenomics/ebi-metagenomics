@@ -2,7 +2,7 @@
 <%--<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>--%>
 
 <div id="content-full">
-
+    <div class="grid_24">
     <%@ include file="components/sraWebinComponent.jsp" %>
 
     <p align="center">
@@ -15,4 +15,5 @@
     </div>
     </p>
 
+</div>
 </div>

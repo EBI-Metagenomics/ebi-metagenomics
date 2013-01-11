@@ -255,7 +255,7 @@
     <%--<tiles:insertAttribute name="breadcrumbs"/> to move to body--%>
    <%-- <div class="grid_24" style="background-color:white;">  --%>
 
-    <div id="wrapper">
+
 
         <%--<header>--%>
             <%--<tiles:insertAttribute name="header"/>--%>
@@ -269,7 +269,7 @@
             <tiles:insertAttribute name="body"/>
 
 
-    </div>
+
 
     <%--</div>--%>
 

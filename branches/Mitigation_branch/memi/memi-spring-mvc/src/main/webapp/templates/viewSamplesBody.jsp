@@ -3,6 +3,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <div id="content-full">
+    <div class="grid_24">
     <%--<h2>${pageTitle}</h2>--%>
     <h2>Samples list</h2>
 
@@ -180,4 +181,5 @@
         </c:otherwise>
     </c:choose>
     <div class="but_top"><a href="#top" title="back to the top page">Top</a></div>
+</div>
 </div>

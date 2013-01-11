@@ -1,4 +1,5 @@
 <div id="content-full">
+    <div class="grid_24">
     <h2>Contact us</h2>
 
     <p>If you have any questions related to the EBI metagenomics resource, please email us at <a
@@ -9,4 +10,4 @@
 
     <p>Follow us on Twitter using <a href="http://twitter.com/EBImetagenomics" class="twitter"> @EBImetagenomics</a></p>
 
-</div>
+</div></div>
