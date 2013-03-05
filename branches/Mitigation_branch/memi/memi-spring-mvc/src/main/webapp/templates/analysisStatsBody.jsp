@@ -100,7 +100,7 @@
             <c:param name="imageType" value="PNG"/>
             <c:param name="dir" value="${model.emgFile.fileID}"/>
         </c:url>
-        <img src="<c:out value="${statsImage}"/>"/>
+        <p><img src="<c:out value="${statsImage}"/>"/></p>
 
         <h3>Protein function analysis</h3>
 
@@ -190,7 +190,7 @@
                         <c:param name="imageType" value="PNG"/>
                         <c:param name="dir" value="${model.emgFile.fileID}"/>
                     </c:url>
-                    <img src="<c:out value="${bioImage}"/>"/>
+                    <p><img src="<c:out value="${bioImage}"/>"/></p>
                         <%--<b><c:out value="${noDisplayID}"/></b>--%>
                 </div>
 
@@ -201,7 +201,7 @@
                         <c:param name="imageType" value="PNG"/>
                         <c:param name="dir" value="${model.emgFile.fileID}"/>
                     </c:url>
-                    <img src="<c:out value="${molecularImage}"/>"/>
+                    <p><img src="<c:out value="${molecularImage}"/>"/></p>
                 </div>
                 <div id="go-chart-cellular">
                     <h2>Cellular component</h2>
@@ -210,7 +210,7 @@
                         <c:param name="imageType" value="PNG"/>
                         <c:param name="dir" value="${model.emgFile.fileID}"/>
                     </c:url>
-                    <img src="<c:out value="${cellImage}"/>"/>
+                    <p><img src="<c:out value="${cellImage}"/>"/></p>
                 </div>
             </div>
         </div>
