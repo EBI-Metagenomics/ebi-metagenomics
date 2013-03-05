@@ -1,40 +1,8 @@
 /* reset.css  */
-html,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article, aside, canvas, details, embed, figure, figcaption, header, hgroup, menu, nav, output, ruby, section, summary,time, mark, audio, video{margin:0;padding:0;border:0;outline:0;font-size:100%;background:transparent;font: inherit; vertical-align: baseline;}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outline:3px solid #0092bf; }ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+html,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article, aside, canvas, details, embed, figure, figcaption, header, hgroup, menu, nav, output, ruby, section, summary,time, mark, audio, video{margin:0;padding:0;border:0;outline:0;font-size:100%;background:transparent;font: inherit; vertical-align: baseline;}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outline:2px solid #0092bf; }ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 /* END reset.css  */
 
 html, body {height: 100%;}
-
-@font-face {
-font-family: 'MyriadProRegular';
-src: url('../fonts/myriadpro-regular-webfont.eot'); /*to put first for IE*/
-src: local('?'),  /*The local values tell browsers to check first for your typeface on a visitors computer*/
-     url('../fonts/myriadpro-regular-webfont.woff') format('woff'),
-     url('../fonts/myriadpro-regular-webfont.ttf') format('truetype'),
-     url('../fonts/myriadpro-regular-webfont.svg#webfontZPnuZIZf') format('svg'); /*paths to SVG files include an ID*/
-font-weight: normal;
-font-style: normal;
-}
-@font-face {
-    font-family: 'DroidSansRegular';
-    src: url('../fonts/DroidSans-webfont.eot');
-    src: url('../fonts/DroidSans-webfont.eot?#iefix') format('eot'),
-         url('../fonts/DroidSans-webfont.woff') format('woff'),
-         url('../fonts/DroidSans-webfont.ttf') format('truetype'),
-         url('../fonts/DroidSans-webfont.svg#webfontw7zqO19G') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'DroidSansBold';
-    /* even absolute link is not working In FIREFoxhttp://mcgraw-tech.com/default/includes/themes/merced/css/fonts/Droid-Sans-fontfacekit/DroidSans-webfont.eot'*/
-    src: url('../fonts/DroidSans-Bold-webfont.eot');
-    src: url('../fonts/DroidSans-Bold-webfont.eot?#iefix') format('eot'),
-         url('../fonts/DroidSans-Bold-webfont.woff') format('woff'),
-         url('../fonts/DroidSans-Bold-webfont.ttf') format('truetype'),
-         url('../fonts/DroidSans-Bold-webfont.svg#webfontSOhoM6aS') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
 
 body {
     padding: 0; /*specified in EBI template.css */
@@ -54,6 +22,10 @@ body {
 body.grey #wrapper, body.green #wrapper, body.ebigreen #wrapper, body.ebigrey #wrapper, body.blue #wrapper, body.greyblue #wrapper { background: #b5b5b5; /*#909FA8*/}
 body div.but_top  { background: #6b7380;}
 
+h1, h2, h3, h4, h5, h6, p, table {
+padding: 0 9px;
+}
+
 div.top-menu ul li.grey {background: #b5b5b5;}
 div.top-menu ul li.ebigrey {background: #6b7380;}
 
@@ -70,7 +42,7 @@ body.orange #wrapper,div.top-menu ul li.orange  { background: url(../img/bgd_mai
 body.pink #wrapper, div.top-menu ul li.pink { background: url(../img/bgd_main_pink.jpg) #e80767;}
 */
 
-p { display: block;margin: 1em 0px; clear:none;}
+p { display: block; margin: 0 0 20px 0; clear:none;}
 
 strong, th {font-weight:bold;}
 small {font-size:80%;}
@@ -97,21 +69,24 @@ list-style-type: disc;
 -webkit-padding-start: 0px;
 margin:15px;
 }
-/*suggested change to ebi-global.css - to comment out when submitting*/
+/*suggested change to ebi-global.css */
 div#global-masthead { border-color: rgba(255, 255, 255, 0.4); } /*add a softer bottom bordr to EBI global*/
 div#headerdiv div.nav ul {font-size: 90%;height: 100%;}/*smaller font for global navigation e.g. BBC & make the size of border full height in case the height of nav is changing*/
-div#global-masthead ul li  {border-left: 1px solid #4C4C4C; height: 100%; width:74px;} /*move border to li elements and make them thinner +make the size of border full height in case the height of nav is changing, defining a width fix a bug on IE6*/
-div#global-masthead ul li a {border-right: 0px solid black;border-left: 0px solid #666;}/*remove the default border*/
+/*div#global-masthead ul li  {border-left: 1px solid #4C4C4C; height: 100%; width:74px;} *//*move border to li elements and make them thinner +make the size of border full height in case the height of nav is changing, defining a width fix a bug on IE6*/
+/*div#global-masthead ul li a {border-right: 0px solid black;border-left: 0px solid #666;}*//*remove the default border*/
 div#local-title.logo-title img { margin: 18px 9px;}
 /*div#local-masthead {background-image: url(../img/bgd_main_greyblue.jpg) ;}*/
 div#local-masthead {background: #5f8694 url(../img/bgd_gd_banner_greyblue.png) repeat-y top left;border-bottom: 3px solid #EEE;}
 /*div#local-masthead {background-color: #7D9CA6;} *//*default #70BDBD*/
 div#local-masthead ul {margin-top: 0; background-color: rgba(17, 17, 17, 0.2);} /*main navigation bar more transparent - softer and remove the negative margin...why? */
 div#local-masthead ul li {border-right: 1px solid rgba(255, 255, 255, 0.5);}/*change the dotted line*/
-div#local-masthead ul li a:link { text-shadow:  rgba(0, 0, 0, 0.2) 1px 1px 0px;}
+div#local-masthead ul li a:link { text-shadow:  rgba(0, 0, 0, 0.2) 1px 1px 0px; font-size: 96%; font-family: Verdana, sans-serif;}/*make it similar to interpro menu*/
 div#local-masthead ul li a:hover, div#local-masthead ul li a:focus, div#local-masthead ul li a:active {border-bottom: 0px solid #71b360; background-color: rgba(0, 0, 0, 0.2);}
-
 /*/suggested change to ebi-global.css */
+
+/*change to ebi-mitigation.css*/
+div#headerdiv { background-color: #fff; font-size:100%; /*font-size: 11px;*/font-family: Verdana, sans-serif; }/*they changed the size of the font*/
+/*/change to ebi-mitigation.css*/
 
 img {border: none;}
 
@@ -365,14 +340,8 @@ font-size:110%;
 text-decoration:underline;
 }
 
-a.ext, a.ext:link {
-    padding-left: 12px;
-    background: url(../img/ico_ext_link.png) no-repeat 0 3px;
-}
-
-a.ext:hover,a.ext:active, a.ext:focus {
-    background: url(../img/ico_ext_link_on.png) no-repeat 0 3px;
-}
+/*a.ext, a.ext:link {padding-left: 12px;background: url(../img/ico_ext_link.png) no-repeat 0 3px;}*/
+/*a.ext:hover,a.ext:active, a.ext:focus {background: url(../img/ico_ext_link_on.png) no-repeat 0 3px; }*/
 
 a.signup {
 width:166px;
@@ -420,7 +389,7 @@ div.but_top {
 border:0px green solid;
 width:40px;
 text-align:center;
-margin-top:26px;
+margin:26px 0 9px 9px;
 display:block;
 
 }
@@ -547,7 +516,7 @@ margin:0.83em 0;/*added for compliance*/
 #list-data h2 {margin:0;} /*added for compliance*/
 #go-chart h2 {font-size:140%;}
 
-.subtitle {font-size:150%;color: #066;}
+.subtitle {font-size:150%;color: #066; margin-left: 9px;margin-top:20px;}
 
 
 
@@ -586,7 +555,7 @@ padding-left:14px;
 .intro {
 font-size:120%;
 color:#445668;
-padding-bottom:14px;
+/*padding-bottom:14px;*/
 }
 
 #sidebar h2, #sidebar-steps h2, #sidebar-related h2 {
@@ -803,7 +772,7 @@ border: 1px solid #E5E5E5;
 border-radius: 0 0 20px 0;
 background:  #F4F4F8;
 }
-
+#box-export ul {padding:0 9px;margin-left: 9px;}
 #box-export ul li {
 list-style-image:url(../img/arrow_menu_exp.gif);
 margin-left:7px;
@@ -954,7 +923,7 @@ min-height:440px;
 padding:14px;
 }
 
-#list-data-study h3, #list-data-sample h3, #list-news h3 {font-size:120%;color:#445668;  /*was  #7c8c99*/margin: 1em 0px; padding:0;}
+#list-data-study h3, #list-data-sample h3, #list-news h3 {font-size:120%;color:#445668;  /*was  #7c8c99*/margin: 1em 0px; /*padding:0;*/}
 
 /*#list-data-sample, #list-news {*/
 /*margin-left:14px;*/
@@ -968,7 +937,7 @@ padding:14px;
 margin: 0px auto;*/
 width: 972px; text-align: left;}
 
-.separator {margin: 4px 0 4px 0; height:8px; width:194px; display:block; background: url(../img/bgd_sep_dot.gif) repeat-x;}
+.separator {margin: 9px; height:8px; width:194px; display:block; background: url(../img/bgd_sep_dot.gif) repeat-x;}
 
 /* FORMS */
 form legend {
@@ -1014,6 +983,8 @@ font-family: helvetica, "trebuchet MS", arial, sans-serif;
 padding:4px;
 border:1px solid #abadb3;
 color: #445668;}
+
+#headerdiv input {border:0px; padding:0; }/*added for the mitigation template*/
 
 
 input {
@@ -1339,13 +1310,8 @@ margin-right:7px; /*reduced because of IE6*/
 
 
 
-.output_form, .filter_form {
-padding:14px;
-border:1px solid #e5e5e5;
-margin:7px 0;
-display:block;
-}
-
+.output_form, .filter_form {padding:14px; border:1px solid #e5e5e5; margin:9px; display:block;}
+.output_form p {padding:0;}
 .filter_form {
 -moz-border-radius: 0 0 20px 0;
 -khtml-border-radius: 0 0 20px 0;
@@ -1383,13 +1349,13 @@ width:210px;
 height:140px;
 }
 
-.sub {display:block;overflow:auto;}
+.sub {display:block;overflow:auto;margin: 9px;}
 .sub_log, .sub_sign {-moz-border-radius: 20px;-khtml-border-radius: 20px;-webkit-border-radius: 20px;border-radius: 20px;float: left; display:block; border: 1px solid #e5e5e5;}
 .sub_log {width:340px; padding:0 14px;}
 .sub_sign {width:260px; padding:0 14px 14px 14px; margin-left:14px; text-align:center;}
 .sub_warn, .sub_ask  {display: block; padding: 14px; width: 712px; -moz-border-radius: 7px;-khtml-border-radius: 7px;-webkit-border-radius: 7px;border-radius: 7px;}
 .sub_warn { font-size: 110%;margin-bottom: 14px;color: #8c302c; background: #faefee;}
-.sub_ask { font-size: 90%;  margin-top: 21px; color: #455872; background: #f1f3f7; clear:both; /*for IE6*/}
+.sub_ask { font-size: 90%;  margin: 21px 9px 9px 9px; color: #455872; background: #f1f3f7; clear:both; /*for IE6*/}
 .sub_form {width:740px; float: left; display:block;}
 .sub_sign_text {font-size:160%; color:#333;}
 .sub_sign_note {color:#606060;}
@@ -1403,7 +1369,7 @@ span.form_help ul li{
  margin-left:14px;
 }
 
-.about_img {float:left;margin:7px 14px 0 0;}
+.about_img {float:left;margin:0px 14px 0 9px;}
 
 .funding_img {float:right;margin:7px 14px 0 0;}
 
@@ -1448,7 +1414,7 @@ span.form_help ul li{
 /* carousel */
 .carousel {margin:0;border:0px green solid;zoom:1; font-size:110%;border:0px solid pink;min-width:860px;padding:14px 14px 0 14px;  /*moved padding for EBI Mitigation*/}
 .carousel div{margin:0;padding:0;}
-
+.carousel:focus{outline:0px solid #0092bf;}/*removed the annoying effect on the slideshow*/
 .carousel-wrap{
 display:inline-block;
 vertical-align:middle;
@@ -1710,4 +1676,4 @@ background:none;
 /* JQUERY TWEET */
 .tweet {color: #7E7E7E;font-size: 100%;}
 .tweet  ul {margin:0px; padding: 0px;}
-.tweet  li {list-style-type: none; margin: 1em 0px;}
+.tweet  li {list-style-type: none; margin:0 9px 20px 9px;}
