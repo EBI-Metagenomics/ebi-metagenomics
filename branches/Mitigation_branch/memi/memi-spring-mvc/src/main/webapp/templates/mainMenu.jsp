@@ -35,7 +35,7 @@
 
 
             <li class="${model.tabClasses["tabClassAboutView"]}"><a href="<c:url value="${baseURL}/info"/>"
-                                                                    title="About us">About</a></li>
+                                                                    title="About us">About Metagenomics</a></li>
             <li class="${model.tabClasses["tabClassContactView"]}"><a href="<c:url value="${baseURL}/contact"/>"
                                                                       title="Contact us">Contact</a></li>
             <%--changed to make it EBI compliant --%>
