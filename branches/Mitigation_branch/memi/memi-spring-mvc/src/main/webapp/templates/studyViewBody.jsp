@@ -98,7 +98,7 @@
                 <c:when test="${model.study.experimentalFactor=='none'}"></c:when>
                 <c:otherwise>
                     <c:set var="experimentalFactor" value="${model.study.experimentalFactor}"/>
-                    <p><h4>Experimental factor:</h4> <c:out value="${experimentalFactor}"/></p>
+                   <h4>Experimental factor: <c:out value="${experimentalFactor}"/></h4>
                 </c:otherwise></c:choose>
         </c:when>
         <c:otherwise>
