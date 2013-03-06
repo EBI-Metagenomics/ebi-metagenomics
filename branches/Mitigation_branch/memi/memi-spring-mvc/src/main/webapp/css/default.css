@@ -15,8 +15,7 @@ body {
     letter-spacing: 0em;
     word-spacing: 0em;
     line-height: 1.59;
-     /* removed to make it EBI compliant
-      background: url(../img/bgd_main_grey.jpg); */
+     /* background: url(../img/bgd_main_grey.jpg); removed to make it EBI compliant*/
     }
 
 body.grey #wrapper, body.green #wrapper, body.ebigreen #wrapper, body.ebigrey #wrapper, body.blue #wrapper, body.greyblue #wrapper { background: #b5b5b5; /*#909FA8*/}
@@ -79,13 +78,21 @@ div#local-title.logo-title img { margin: 18px 9px;}
 div#local-masthead {background: #5f8694 url(../img/bgd_gd_banner_greyblue.png) repeat-y top left;border-bottom: 3px solid #EEE;}
 /*div#local-masthead {background-color: #7D9CA6;} *//*default #70BDBD*/
 div#local-masthead ul {margin-top: 0; background-color: rgba(17, 17, 17, 0.2);} /*main navigation bar more transparent - softer and remove the negative margin...why? */
-div#local-masthead ul li {border-right: 1px solid rgba(255, 255, 255, 0.5);}/*change the dotted line*/
+div#local-masthead ul li {margin-bottom: 0; border-right: 1px solid rgba(255, 255, 255, 0.5);}/*change the dotted line*/
 div#local-masthead ul li a:link { text-shadow:  rgba(0, 0, 0, 0.2) 1px 1px 0px; font-size: 96%; font-family: Verdana, sans-serif;}/*make it similar to interpro menu*/
 div#local-masthead ul li a:hover, div#local-masthead ul li a:focus, div#local-masthead ul li a:active {border-bottom: 0px solid #71b360; background-color: rgba(0, 0, 0, 0.2);}
 /*/suggested change to ebi-global.css */
 
 /*change to ebi-mitigation.css*/
 div#headerdiv { background-color: #fff; font-size:100%; /*font-size: 11px;*/font-family: Verdana, sans-serif; }/*they changed the size of the font*/
+div#local-masthead ul li.active-trail a:link, div#local-masthead ul li.active-trail a:visited  {
+    padding-top: 2px;
+    border-bottom: 3px solid #666;
+    background-color: #111;
+}
+div#local-masthead ul li.active, div#local-masthead ul li.active-trail { background-color: #111; }  /*style not defined in mitigation*/
+
+
 /*/change to ebi-mitigation.css*/
 
 img {border: none;}
@@ -746,7 +753,7 @@ width:222px;
 
 
 #sidebar-analysis {
-width:256px;float:right;border: solid 0px black; padding:0 0 14px 14px;
+width:256px;float:right;border: solid 0px black; padding:9px;
  background-color:white;/*to deal with description box border*/}
 
 
@@ -920,7 +927,7 @@ border-radius: 0 0 20px 0;
 line-height:1.3;   width:28.9%;
 _height:400px; /*to keep same height for IE6 */
 min-height:440px;
-padding:14px;
+padding:9px;
 }
 
 #list-data-study h3, #list-data-sample h3, #list-news h3 {font-size:120%;color:#445668;  /*was  #7c8c99*/margin: 1em 0px; /*padding:0;*/}
@@ -1331,6 +1338,8 @@ font-size: 110%;
 color: #445668; /* was #003798 or blue 4d68a1 */
 border: 0px solid #556f8c;
 }
+
+.output_form h4 {padding-left:0;}
 
 #large label {
 width: 140px;
