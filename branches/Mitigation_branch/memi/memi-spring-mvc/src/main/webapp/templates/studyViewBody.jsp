@@ -52,9 +52,9 @@
 
 <c:choose>
     <c:when test="${not empty model.study.ncbiProjectId && model.study.ncbiProjectId>0}">
-        <br/>BioProject ID: <a class="ext"
+      <p>BioProject ID: <a class="ext"
                                href="<c:url value="https://www.ebi.ac.uk/ena/data/view/Project:${model.study.ncbiProjectId}"/>"><c:out
-            value="${model.study.ncbiProjectId}"/></a>
+            value="${model.study.ncbiProjectId}"/></a></p>
     </c:when>
     <c:otherwise></c:otherwise>
 </c:choose>
