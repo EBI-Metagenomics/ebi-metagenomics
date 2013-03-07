@@ -21,10 +21,6 @@ body {
 body.grey #wrapper, body.green #wrapper, body.ebigreen #wrapper, body.ebigrey #wrapper, body.blue #wrapper, body.greyblue #wrapper { background: #b5b5b5; /*#909FA8*/}
 body div.but_top  { background: #6b7380;}
 
-h1, h2, h3, h4, h5, h6, p, table {
-padding: 0 9px;
-}
-
 div.top-menu ul li.grey {background: #b5b5b5;}
 div.top-menu ul li.ebigrey {background: #6b7380;}
 
@@ -40,6 +36,9 @@ body.black #wrapper, div.top-menu ul li.black { background: url(../img/bgd_main_
 body.orange #wrapper,div.top-menu ul li.orange  { background: url(../img/bgd_main_orange.jpg) #ff8400;}
 body.pink #wrapper, div.top-menu ul li.pink { background: url(../img/bgd_main_pink.jpg) #e80767;}
 */
+h1, h2, h3, h4, h5, h6, p, table {
+padding: 0 9px;
+}
 
 p { display: block; margin: 0 0 20px 0; clear:none;}
 
@@ -71,25 +70,19 @@ margin:15px;
 /*suggested change to ebi-global.css */
 div#global-masthead { border-color: rgba(255, 255, 255, 0.4); } /*like BBC top line*/
 div#headerdiv div.nav ul {font-size: 90%;height: 100%;}/*smaller font for global navigation e.g. BBC & make the size of border full height in case the height of nav is changing*/
-div#local-title.logo-title img {margin: 18px 9px;}
 div#local-masthead {background: #5f8694 url(../img/bgd_gd_banner_greyblue.png) repeat-y top left;/*border-bottom: 0px solid #EEE;box-shadow: 0px 2px 2px rgba(50, 50, 50, 0.2); -webkit-box-shadow: 0px 2px 2px rgba(50, 50, 50, 0.2); -moz-box-shadow: 0px 2px 2px rgba(50, 50, 50, 0.2);*/} /*cam't insert shadow - bug with right hand logout*/
 /*div#local-masthead {background-color: #7D9CA6;} *//*default #70BDBD*/
 div#local-masthead ul {height: auto;width: 100%;margin-top: 0; background-color: rgba(17, 17, 17, 0.2);} /*main navigation bar more transparent - softer and remove the negative margin...why? */
 div#local-masthead ul li {margin-bottom: 0; border-right: 1px solid rgba(255, 255, 255, 0.5);}/*change the dotted line*/
 div#local-masthead ul li a:link { text-shadow:  rgba(0, 0, 0, 0.2) 1px 1px 0px; font-size: 96%; font-family: Verdana, sans-serif;}/*make it similar to interpro menu*/
 div#local-masthead ul li a:hover, div#local-masthead ul li a:focus, div#local-masthead ul li a:active {border-bottom: 0px solid #71b360; background-color: rgba(0, 0, 0, 0.2);}
+div#local-title.logo-title img {margin: 18px 9px;} /*make the metagenomics logo more centered */
 /*/suggested change to ebi-global.css */
 
 /*change to ebi-mitigation.css*/
-div#headerdiv { background-color: #fff; font-size:100%; /*font-size: 11px;*/font-family: Verdana, sans-serif; }/*they changed the size of the font*/
-div#local-masthead ul li.active-trail a:link, div#local-masthead ul li.active-trail a:visited  {
-    padding-top: 2px;
-    border-bottom: 3px solid #666;
-    background-color: #111;
-}
+div#headerdiv { background-color: #fff; font-size:100%; font-family: Verdana, sans-serif; }/*replace default font-size: 11px;*/
+div#local-masthead ul li.active-trail a:link, div#local-masthead ul li.active-trail a:visited {padding-top: 2px;border-bottom: 3px solid #666;background-color: #111;}/*style not defined in mitigation*/
 div#local-masthead ul li.active, div#local-masthead ul li.active-trail { background-color: #111; }  /*style not defined in mitigation*/
-
-
 /*/change to ebi-mitigation.css*/
 
 img {border: none;}
@@ -631,7 +624,7 @@ margin: 4px 10px 0 4px;
 border: solid 0px black;
  /*height:300px; /* was 288 for IE6*/
 display:block;
-margin-top: 14px;
+margin-top: 20px;
 /*overflow:auto;*/
 }
 
@@ -686,7 +679,7 @@ background: url(../img/arrow_link_click.jpg) no-repeat right center;
 #list-data {
 display:block;
 overflow:auto;
-margin-top:14px;
+margin-top:20px;
 }
 
 #list-data  a.all {
@@ -931,7 +924,7 @@ border-radius: 0 0 20px 0;
 line-height:1.3;   width:28.9%;
 _height:400px; /*to keep same height for IE6 */
 min-height:440px;
-padding:9px;
+padding: 0 9px 9px 9px;
 }
 
 #list-data-study h3, #list-data-sample h3, #list-news h3 {font-size:120%;color:#445668;  /*was  #7c8c99*/margin: 1em 0px; /*padding:0;*/}
@@ -1425,7 +1418,7 @@ span.form_help ul li{
 
 
 /* carousel */
-.carousel {margin:0;border:0px green solid;zoom:1; font-size:110%;border:0px solid pink;min-width:860px;padding:14px 14px 0 14px;  /*moved padding for EBI Mitigation*/}
+.carousel {text-align:center; margin:0;border:0px green solid;zoom:1; font-size:110%;min-width:860px; /*padding:14px 14px 0 14px;*/  /*removed padding for EBI Mitigation*/}
 .carousel div{margin:0;padding:0;}
 .carousel:focus{outline:0px solid #0092bf;}/*removed the annoying effect on the slideshow*/
 .carousel-wrap{
