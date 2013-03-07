@@ -47,15 +47,15 @@
                                    <a  class="icon icon-functional" data-icon="l" id="script_loginLink" href="javascript:openLoginDialogForm()" title="Login">Login</a>
                                    <a  class="icon icon-functional" data-icon="l" id="noscript_loginLink" href="<c:url value="${baseURL}/login?display=false"/>" title="Login">Login</a>
                                </li>
-               <span style="float:right; margin-right: 9px; margin-top:4px; font-size: 90%; font-weight: bold; "> Not logged in </span>
+               <span class="logout"> Not logged in </span>
             </c:when>
                        <c:otherwise>
-                           <li class="functional last">
-                            <a class="icon icon-functional" data-icon="l" href="<c:url value="${baseURL}/logout"/>" title="logout">logout</a>
+                        <li class="functional last">
+                        <a class="icon icon-functional" data-icon="l" href="<c:url value="${baseURL}/logout"/>" title="logout">logout</a>
                         </li>
-                        <span style="float:right; margin-right: 9px; margin-top:4px; font-size: 90%; font-weight: bold; "><c:out value="${model.submitter.firstName} ${model.submitter.surname}"/>
+                        <span class="login_name"><c:out value="${model.submitter.firstName} ${model.submitter.surname}"/>
                         <c:url var="editPrefsUrl" value="${model.propertyContainer.enaSubmissionURL.editPrefsLink}"><c:param name="url" value="${enaUrlParam}"/></c:url>
-                        <a style="display:inline;color: white;border:0px red solid;" href="<c:out value="${editPrefsUrl}"/>" title="Edit preferences">(edit)</a></span>
+                        &nbsp;<a href="<c:out value="${editPrefsUrl}"/>" title="Edit preferences">(edit)</a></span>
 
                            <%--<li class="functional" id="logout"><c:out value="${model.submitter.firstName} ${model.submitter.surname}"/></li>--%>
                            <%--<c:url var="editPrefsUrl"--%>
