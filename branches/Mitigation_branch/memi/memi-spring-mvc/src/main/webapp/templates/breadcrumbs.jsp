@@ -1,17 +1,21 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%--doesn't work
+<nav id="breadcrumb">--%>
+      <%--<p>--%>
+      <%--<a href="<c:url value="${baseURL}/"/>" title="EBI Metagenomics">EBI Metagenomics</a> &gt;--%>
+          <%--<c:forEach var="breadcrumb" items="${model.breadcrumbs}" varStatus="loop">--%>
+          <%--<a href="<c:url value="${baseURL}/${breadcrumb.url}"/>" title="${breadcrumb.linkDescription}"--%>
+          <%--${breadcrumb.linkName}</a>--%>
+           <%--</c:forEach>--%>
+     <%--</p>--%>
+   <%--</nav>--%>
 
 <div id="breadcrumbs">
-    <div class="center_972">
+
     <ul class="ebi_breadcrumbs">
 
         <li>
-            <a href="<c:url value="https://www.ebi.ac.uk/"/>" title="EBI">EBI</a>
-        </li>
-        <li>
-            <a href="<c:url value="https://www.ebi.ac.uk/Databases/"/>" title="Databases">Databases</a>
-        </li>
-        <li>
-            <a href="<c:url value="${baseURL}/"/>" title="Metagenomics">Metagenomics</a>
+            <a href="<c:url value="${baseURL}/"/>" title="EBI Metagenomics">EBI Metagenomics</a>
         </li>
 
         <c:forEach var="breadcrumb" items="${model.breadcrumbs}" varStatus="loop">
@@ -23,5 +27,5 @@
         </c:forEach>
 
     </ul>
-     </div>
+
 </div>
