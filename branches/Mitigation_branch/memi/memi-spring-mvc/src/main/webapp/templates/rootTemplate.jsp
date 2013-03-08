@@ -252,7 +252,7 @@
 <%-- END EBI main header --%>
 <div class="ebi_contents" id="contents"> <%-- style="margin:0; width:100%;"--%>
 
-    <%--<tiles:insertAttribute name="breadcrumbs"/> to move to body--%>
+    <tiles:insertAttribute name="breadcrumbs"/><%-- to move to body--%>
    <%-- <div class="grid_24" style="background-color:white;">  --%>
 
 
