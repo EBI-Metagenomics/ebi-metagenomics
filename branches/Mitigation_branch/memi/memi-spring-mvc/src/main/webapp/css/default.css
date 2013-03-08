@@ -1162,15 +1162,15 @@ background: url(../img/icon_csv_plus.gif) no-repeat right top;
 }
 
 /* END EXPORT OPTIONS */
-
+#contents {background-color: #ffffff;}/*temp fix*/
 #breadcrumbs {
 display:block;
-border:0px red solid;  height:24px;
+border:0px red solid;  /*height:24px;*/
 /*position:relative; *//*to make z-index work *//*
 z-index:50;*/
 /* removed to make it EBI compliant
 background: url(../img/bgd_white_op45_8.png);                                     */
-padding: 8px 0 0 14px;/* added to make it EBI compliant*/
+padding: 20px 0 9px 9px;/* added to make it EBI compliant*/
 }
 
 #breadcrumbs .ebi_breadcrumbs li   {display:inline; font-size:100%; background-color:transparent; } /*overwrite EBI style to Keep for IE6 and IE7*/
