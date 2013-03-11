@@ -6,7 +6,7 @@ package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
  * Time: 15:05:06
  */
 public class Breadcrumb {
-    private static final int maxLinkNameLength = 35; // Max number of characters that a breadcrumb link can have
+    private static final int maxLinkNameLength = 60; // Max number of characters that a breadcrumb link can have
     private String linkName;
     private String linkDescription;
     private String url;
