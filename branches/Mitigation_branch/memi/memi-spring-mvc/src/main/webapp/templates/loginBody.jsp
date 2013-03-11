@@ -2,8 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%-- This template is used for the login page --%>
-<div id="content-full">
-    <div class="grid_24">
+
     <c:if test="${displaySubBlock}">
         <%@ include file="components/loginComponent.jsp" %>
 
@@ -73,6 +72,3 @@
             href="mailto:datasubs@ebi.ac.uk?subject=EBI Metagenomics - data submission"
             title="Send an enquiry about Metagenomics data submission">datasubs@ebi.ac.uk</a>).
     </div>
-
-</div>
-</div>

@@ -1,6 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div id="content-full">
-    <div class="grid_24">
+
 <h2>About EBI Metagenomics</h2>
 
 <div id="sidebar-nav">
@@ -154,4 +153,3 @@ The SRA only accepts data that is intended for public release. However, any data
 
 <div class="but_top"><a href="#top" title="back to the top page">Top</a></div>
 </p>
-</div>          </div>

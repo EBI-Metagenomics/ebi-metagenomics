@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div id="content-full">
-    <div class="grid_24">    <h2>Thank you for completing the SRA registration form</h2>
+
+   <h2>Thank you for completing the SRA registration form</h2>
 
     <p class="intro">
         Your request has been successfully sent to the Sequence Read Archive. You will be contacted by the email address
@@ -11,5 +11,3 @@
                                                                                     href="<c:url value="${baseURL}/"/>">home
         page</a>.
     </p>
-</div>
- </div>

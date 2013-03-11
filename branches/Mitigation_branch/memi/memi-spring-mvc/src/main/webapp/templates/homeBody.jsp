@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
-<div id="content-full">
-<section id="submit-data" class="grid_24">      <%--  class="grid_24" --%>
+
+<section id="submit-data">
     <c:choose>
         <%-- Show Private welcome emailMessage only if a user is logged in--%>
         <%--Private area is deactivated for the moment until any decision was made--%>
@@ -141,7 +141,7 @@
 </section>
 
 
-<section id="list-data" class="grid_24">   <%--  class="grid_24" --%>
+<section id="list-data">
 
     <c:choose>
         <%-- Show MyStudies and MySamples tables only if a user is logged in--%>
@@ -300,8 +300,5 @@
     </c:choose>
     <%@ include file="components/listNewsComponent.jsp" %>
 </section>
-
-
-</div>
 
 <%--<div id="sidebar"><tiles:insertAttribute name="loginForm"/></div>--%>

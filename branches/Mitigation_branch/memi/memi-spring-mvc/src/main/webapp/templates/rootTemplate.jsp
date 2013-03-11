@@ -251,27 +251,20 @@
 </div>
 <%-- END EBI main header --%>
 <div class="ebi_contents" id="contents"> <%-- style="margin:0; width:100%;"--%>
-
-    <tiles:insertAttribute name="breadcrumbs"/><%-- to move to body--%>
-   <%-- <div class="grid_24" style="background-color:white;">  --%>
-
-
+    <div id="content-full">
+    <div class="grid_24">
+    <tiles:insertAttribute name="breadcrumbs"/>
 
         <%--<header>--%>
             <%--<tiles:insertAttribute name="header"/>--%>
         <%--</header>--%>
-
         <%--<nav>--%>
             <%--<tiles:insertAttribute name="mainMenu"/>--%>
         <%--</nav>--%>
 
-
-            <tiles:insertAttribute name="body"/>
-
-
-
-
-    <%--</div>--%>
+    <tiles:insertAttribute name="body"/>
+    </div>
+    </div>
 
     <footer>
        <tiles:insertAttribute name="footer"/>

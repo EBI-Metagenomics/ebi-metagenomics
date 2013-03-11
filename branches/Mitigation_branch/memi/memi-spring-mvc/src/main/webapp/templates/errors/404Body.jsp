@@ -12,9 +12,6 @@ Random filler text since if the error page is less 513 bytes then Internet Explo
 "Friendly Error Pages" instead.
 -->
 
-
-<div id="content-full">
-    <div class="grid_24">
     <h2>File Not Found</h2>
 
     <p>
@@ -27,6 +24,3 @@ Random filler text since if the error page is less 513 bytes then Internet Explo
         <a href="<c:url value="${baseURL}/"/>" title="Home">home page</a>.
 
     </p>
-
-</div>
-</div>

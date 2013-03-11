@@ -12,9 +12,7 @@ Random filler text since if the error page is less 513 bytes then Internet Explo
 "Friendly Error Pages" instead.
 -->
 
-
-<div id="content-full">
-    <div class="grid_24"><h2>An Error Has Occurred</h2>
+<h2>An Error Has Occurred</h2>
 
     <p class="intro">
         Sorry, there was a problem with this page/file.
@@ -36,5 +34,3 @@ Random filler text since if the error page is less 513 bytes then Internet Explo
     <%--${st}--%>
     <%--</c:forEach>--%>
     <%--</p>--%>
-</div>
- </div>
