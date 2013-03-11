@@ -728,8 +728,8 @@ border: solid 0px green;
 
 /*padding:14px 14px 28px 14px;*/
 background-color:white;
-min-height:580px;float:left;
-    width:100%;
+min-height:380px;float:left;
+width:100%;
 }
 
 #sidebar {
@@ -1162,21 +1162,8 @@ background: url(../img/icon_csv_plus.gif) no-repeat right top;
 }
 
 /* END EXPORT OPTIONS */
-#contents {background-color: #ffffff;}/*temp fix*/
-#breadcrumbs {
-display:block;
-border:0px red solid;  /*height:24px;*/
-/*position:relative; *//*to make z-index work *//*
-z-index:50;*/
-/* removed to make it EBI compliant
-background: url(../img/bgd_white_op45_8.png);                                     */
-padding: 20px 0 9px 9px;/* added to make it EBI compliant*/
-}
 
-#breadcrumbs .ebi_breadcrumbs li   {display:inline; font-size:100%; background-color:transparent; } /*overwrite EBI style to Keep for IE6 and IE7*/
-#breadcrumbs .ebi_breadcrumbs a{ padding: 1px 0 0 12px;  margin: 0;  height: 14px; text-align: left;  background: transparent url(http://www.ebi.ac.uk/inc/images/bread_arrow2.gif) top left no-repeat;color:#999; font-size:86%; } /*overwrite EBI style to Keep for IE6 and IE7*/
-#breadcrumbs .ebi_breadcrumbs { border:0px solid red; margin: 0; padding: 0;} /*overwrite EBI style to Keep for IE6 and IE7*/
-#breadcrumbs .ebi_breadcrumbs li:first-child a { padding: 2px 0 0 0; height: 14px; text-align: left; background: white;} /*overwrite EBI style to Keep for IE6 and IE7*/
+#contents {background-color: #ffffff;}/*temp fix*/
 
 /* CAPTION for IMAGES */
 figure {
@@ -1380,42 +1367,10 @@ span.form_help ul li{
 .funding_img {float:right;margin:7px 14px 0 0;}
 
  /*EBI Bread Crumbs */
-
-    .ebi_breadcrumbs li {
-        display: inline;
-        margin: 0;
-        padding: 0;
-        font-size: 8pt;
-        color: #999999;
-        background-color: #ffffff;
-    }
-
-    .ebi_breadcrumbs a {
-        padding: 1px 0 0 12px;
-        margin: 0;
-        height: 14px;
-        text-align: left;
-        background: #ffffff url(http://www.ebi.ac.uk/inc/images/bread_arrow2.gif) top left no-repeat;
-    }
-
-    .ebi_breadcrumbs li:first-child a {
-        padding: 2px 0 0 0px;
-        margin: 0;
-        height: 14px;
-        text-align: left;
-        background: #ffffff;
-    }
-
-    .ebi_breadcrumbs a:link,.ebi_breadcrumbs a:visited {
-        color: #999999;
-        text-decoration: none;
-    }
-
-    .ebi_breadcrumbs a:hover,.ebi_breadcrumbs a:active {
-        color: #e33e3e;
-        text-decoration: underline;
-    }
-
+#breadcrumb {display:block;padding:9px; color:#999; border:0px red solid;font-size:90%;}
+#breadcrumb p {margin:0; padding-left:0;}
+#breadcrumb a {color:#999; text-decoration: none;}
+#breadcrumb a:hover,#breadcrumb a:active {color:#999;text-decoration: underline;}
 
 /* carousel */
 .carousel {text-align:center; margin:0;border:0px green solid;zoom:1; font-size:110%;min-width:860px; /*padding:14px 14px 0 14px;*/  /*removed padding for EBI Mitigation*/}
