@@ -56,7 +56,7 @@
 <h2>${model.sample.sampleName}</h2>
 
 <c:if test="${!model.sample.public}">
-    Private data <img alt="private" src="${pageContext.request.contextPath}/img/icon_priv_private.gif">
+    <p>Private data <img alt="private" src="${pageContext.request.contextPath}/img/icon_priv_private.gif"> </p>
 </c:if>
 
 <%-- If analysis is completed a link to the analysis page is shown, otherwise you will see comment that the analysis is still in progress--%>
