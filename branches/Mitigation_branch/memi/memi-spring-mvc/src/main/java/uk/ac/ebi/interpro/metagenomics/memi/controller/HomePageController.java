@@ -71,7 +71,6 @@ public class HomePageController extends AbstractController implements IControlle
 
     protected List<Breadcrumb> getBreadcrumbs(SecureEntity entity) {
         List<Breadcrumb> result = new ArrayList<Breadcrumb>();
-        result.add(new Breadcrumb("Home", "Home page", ""));
         return result;
     }
 }

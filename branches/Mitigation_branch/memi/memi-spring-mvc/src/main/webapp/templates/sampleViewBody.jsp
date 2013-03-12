@@ -44,8 +44,7 @@
     </c:otherwise>
 </c:choose>
 
-<span class="subtitle">Sample overview <a href="<c:url value="${baseURL}/sample/${model.sample.sampleId}"/>"
-                                          style="font-size:90%;"> (${model.sample.sampleId})</a></span>
+<span class="subtitle">Sample overview (${model.sample.sampleId})</span>
 
 <c:choose>
     <c:when test="${not empty model.sample.sampleName}">

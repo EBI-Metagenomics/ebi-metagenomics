@@ -43,8 +43,7 @@
     </c:when>
 </c:choose>
 
-<span class="subtitle">Project overview <a href="<c:url value="${baseURL}/project/${model.study.studyId}"/>"
-                                           style="font-size:90%;"> (${model.study.studyId})</a></span>
+<span class="subtitle">Project overview (${model.study.studyId})</span>
 
 <h2>${model.study.studyName}</h2>
 
