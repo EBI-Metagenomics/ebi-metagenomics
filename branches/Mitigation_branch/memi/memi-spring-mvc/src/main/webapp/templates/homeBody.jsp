@@ -30,8 +30,11 @@
 
         <%-- Show Slideshow if not logged in --%>
         <c:otherwise>
-            <div>Public samples: ${model.publicSamplesCount}</div>
-            <div>Private samples: ${model.privateSamplesCount}</div>
+            <div>${model.publicSamplesCount} public samples (X public project)</div>
+            <div>${model.privateSamplesCount} private samples (X private project)</div>
+            <div>40 registered users</div>
+            <div>X total submitted nucleotide reads</div>
+
             <!--[if IE 6]><div id="IE6" class="IE"><![endif]--> <!--[if IE 7]><div id="IE7" class="IE"><![endif]--> <!--[if IE & ((!IE 6) & (!IE 7))]><div><![endif]--> <!--[if !IE]>--><div><!--<![endif]-->
             <div class="carousel">
 
@@ -244,7 +247,7 @@
             <div id="list-data-study" class="grid_9 alpha">
                 <h2>Projects</h2>
 
-                <h3>Latest public projects</h3>
+                <h3>Latest public projects (Total:X)</h3>
                     <%--The count starts at 0, that is why we subtract 1 from the end value--%>
                 <c:forEach var="entry" items="${model.publicStudiesMap}" varStatus="status" begin="0"
                            end="${model.maxRowNumberOfLatestItems-1}">
@@ -268,7 +271,8 @@
             <div id="list-data-sample" class="grid_9">
                 <h2>Samples</h2>
 
-                <h3>Latest public samples</h3>
+                <h3>Latest public samples (Total: <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search&startPosition=0"/>"
+                                       title="View list of ${model.publicSamplesCount} public samples">${model.publicSamplesCount}</a>)</h3>
                     <%--The count starts at 0, that is why we subtract 1 from the end value--%>
                 <c:forEach var="sample" items="${model.publicSamples}" varStatus="status" begin="0"
                            end="${model.maxRowNumberOfLatestItems-1}">
