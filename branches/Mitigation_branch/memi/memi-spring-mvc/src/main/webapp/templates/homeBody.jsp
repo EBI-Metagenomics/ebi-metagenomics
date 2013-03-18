@@ -247,7 +247,8 @@
             <div id="list-data-study" class="grid_9 alpha">
                 <h2>Projects</h2>
 
-                <h3>Latest public projects (Total:X)</h3>
+                <h3>Latest public projects (Total: <a href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>"
+                                       title="View all public projects">X</a>)</h3>
                     <%--The count starts at 0, that is why we subtract 1 from the end value--%>
                 <c:forEach var="entry" items="${model.publicStudiesMap}" varStatus="status" begin="0"
                            end="${model.maxRowNumberOfLatestItems-1}">
@@ -272,7 +273,7 @@
                 <h2>Samples</h2>
 
                 <h3>Latest public samples (Total: <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search&startPosition=0"/>"
-                                       title="View list of ${model.publicSamplesCount} public samples">${model.publicSamplesCount}</a>)</h3>
+                                       title="View all ${model.publicSamplesCount} public samples">${model.publicSamplesCount}</a>)</h3>
                     <%--The count starts at 0, that is why we subtract 1 from the end value--%>
                 <c:forEach var="sample" items="${model.publicSamples}" varStatus="status" begin="0"
                            end="${model.maxRowNumberOfLatestItems-1}">
