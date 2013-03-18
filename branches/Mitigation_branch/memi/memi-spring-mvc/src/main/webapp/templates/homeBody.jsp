@@ -30,6 +30,8 @@
 
         <%-- Show Slideshow if not logged in --%>
         <c:otherwise>
+            <div>Public samples: ${model.publicSamplesCount}</div>
+            <div>Private samples: ${model.privateSamplesCount}</div>
             <!--[if IE 6]><div id="IE6" class="IE"><![endif]--> <!--[if IE 7]><div id="IE7" class="IE"><![endif]--> <!--[if IE & ((!IE 6) & (!IE 7))]><div><![endif]--> <!--[if !IE]>--><div><!--<![endif]-->
             <div class="carousel">
 

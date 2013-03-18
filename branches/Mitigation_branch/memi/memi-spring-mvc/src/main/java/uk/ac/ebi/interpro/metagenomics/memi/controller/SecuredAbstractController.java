@@ -78,6 +78,9 @@ public abstract class SecuredAbstractController<T extends SecureEntity> extends 
             log.error("Check why study DAO is null!");
             throw new IllegalStateException("Configuration error - the Study DAO is null");
         }
+        if (model == null) {
+            return null;
+        }
         return new ModelAndView(viewName, model);
     }
 

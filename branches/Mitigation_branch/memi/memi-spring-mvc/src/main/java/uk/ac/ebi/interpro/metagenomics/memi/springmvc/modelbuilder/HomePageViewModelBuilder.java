@@ -67,8 +67,11 @@ public class HomePageViewModelBuilder extends AbstractViewModelBuilder<HomePageV
             Collections.sort(samples, new HomePageSamplesComparator());
             samples = samples.subList(0, getToIndex(samples));
 
+            Long publicSamplesCount = sampleDAO.countAllPublic();
+            Long privateSamplesCount = sampleDAO.countAllPrivate();
+
             return new HomePageViewModel(submitter, publicStudiesMap, samples,
-                    pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems);
+                    pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems, publicSamplesCount, privateSamplesCount);
         }
 //        Else case: if somebody is logged in
         else {

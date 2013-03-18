@@ -30,9 +30,11 @@
                 </ol>
             </li>
             <li>3. CDS predicted (FragGeneScan v 1.15)</li>
-            <li>4. Matches were generated against predicted CDS with InterProScan 5.0 (beta release) using a subset of
+            <li>4. Matches were generated against predicted CDS with InterProScan 5.0 (beta release) using a subset
+                of
                 databases from InterPro release 31.0 (databases used for analysis: Pfam, TIGRFAM, PRINTS, PROSITE
-                patterns, Gene3d). The Gene Ontology term summary was generated using the following GO slim: goslim_goa
+                patterns, Gene3d). The Gene Ontology term summary was generated using the following GO slim:
+                goslim_goa
 
             </li>
         </ol>
@@ -52,44 +54,53 @@
         <h3>Download results</h3>
 
         <div id="box-export">
+            <h4>Sequence data</h4>
             <ul>
-                <li>
-                    <a title="Click to download all submitted nucleotide data on the ENA website"
-                       href="<c:url value="https://www.ebi.ac.uk/ena/data/view/${model.sample.sampleId}"/>">
-                        <spring:message code="analysisStatsView.label.download.seq.data"/>
-                    </a>
-                </li>
-                <li>
-                    <a title="Click to download processed fasta nucleotide sequences"
-                       href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportMaskedFASTAFile"/>"><spring:message
-                            code="analysisStatsView.label.download.seq.fasta"/> <c:out
-                            value="${model.emgFile.fileSizeMap['_masked.fasta']}"/>
-                    </a></li>
-                <li>
-                    <a title="Click to download predicted CDS in fasta format"
-                       href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportCDSFile"/>"><spring:message
-                            code="analysisStatsView.label.download.cds.fasta"/> <c:out
-                            value="${model.emgFile.fileSizeMap['_CDS.faa']}"/>
-                    </a></li>
-                <li>
-                    <a title="Click to download full InterPro matches table (TSV)"
-                       href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportI5TSVFile"/>"><spring:message
-                            code="analysisStatsView.label.download.i5.matches"/> <c:out
-                            value="${model.emgFile.fileSizeMap['_I5.tsv']}"/>
-                    </a></li>
-                <li>
-                    <a title="<spring:message code="analysisStatsView.label.download.goterms.title"/>"
-                       href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportGOFile"/>"><spring:message
-                            code="analysisStatsView.label.download.goterms.csv"/> <c:out
-                            value="${model.emgFile.fileSizeMap['_summary.go']}"/>
-                    </a></li>
-                <li>
-                    <a title="<spring:message code="analysisStatsView.label.download.interproHits.title"/>"
-                       href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportIPRhitsFile"/>"><spring:message
-                            code="analysisStatsView.label.download.interproHits.cds.fasta"/> <c:out
-                            value="${model.emgFile.fileSizeMap['_IPRhits.fasta']}"/>
-                    </a></li>
+                <c:forEach var="downloadLink" items="${model.downloadSection.seqDataDownloadLinks}" varStatus="loop">
+                    <li>
+                        <c:choose>
+                            <c:when test="${downloadLink.externalLink}">
+                                <a href="${downloadLink.linkURL}"
+                                   title="${downloadLink.linkTitle}">${downloadLink.linkText}</a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="<c:url value="${baseURL}/${downloadLink.linkURL}"/>"
+                                   title="${downloadLink.linkTitle}">
+                                        ${downloadLink.linkText}</a><span
+                                    class="list_date">&nbsp;${downloadLink.fileSize}</span>
+                            </c:otherwise>
+                        </c:choose>
+                    </li>
+                </c:forEach>
             </ul>
+            <c:if test="${not empty model.downloadSection.funcAnalysisDownloadLinks}">
+                <h4>Functional Analysis</h4>
+                <ul>
+                    <c:forEach var="downloadLink" items="${model.downloadSection.funcAnalysisDownloadLinks}"
+                               varStatus="loop">
+                        <li>
+                            <a href="<c:url value="${baseURL}/${downloadLink.linkURL}"/>"
+                               title="${downloadLink.linkTitle}">
+                                    ${downloadLink.linkText}</a><span
+                                class="list_date">&nbsp;${downloadLink.fileSize}</span>
+                        </li>
+                    </c:forEach>
+                </ul>
+            </c:if>
+            <c:if test="${not empty model.downloadSection.taxaAnalysisDownloadLinks}">
+                <h4>Taxonomic Analysis</h4>
+                <ul>
+                    <c:forEach var="downloadLink" items="${model.downloadSection.taxaAnalysisDownloadLinks}"
+                               varStatus="loop">
+                        <li>
+                            <a href="<c:url value="${baseURL}/${downloadLink.linkURL}"/>"
+                               title="${downloadLink.linkTitle}">
+                                    ${downloadLink.linkText}</a><span
+                                class="list_date">&nbsp;${downloadLink.fileSize}</span>
+                        </li>
+                    </c:forEach>
+                </ul>
+            </c:if>
         </div>
 
         <h3>General statistics</h3>
@@ -159,7 +170,8 @@
 
         <h4>Annotation by GO Terms</h4>
 
-        <p>A summary of Gene Ontology (GO) terms derived from InterPro matches to your sample is provided in the chart
+        <p>A summary of Gene Ontology (GO) terms derived from InterPro matches to your sample is provided in the
+            chart
             below. You can view the complete list of GO terms by clicking on the download icon.</p>
 
         <div>
@@ -173,10 +185,12 @@
                        <spring:emailMessage code="analysisStatsView.label.download.goterms.full.csv"/></a>--%>
 
 
-                        <a id="csv" title="<spring:message code="analysisStatsView.label.download.go.slim.anchor.title"/>"
+                        <a id="csv"
+                           title="<spring:message code="analysisStatsView.label.download.go.slim.anchor.title"/>"
                            href="<c:url
                             value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportGOSlimFile"/>">
-                            <spring:message code="analysisStatsView.label.download.go.slim.anchor.href.message"/></a>
+                            <spring:message
+                                    code="analysisStatsView.label.download.go.slim.anchor.href.message"/></a>
                     </c:if>
                 </div>
             </div>

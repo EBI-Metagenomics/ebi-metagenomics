@@ -16,6 +16,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.EmgFile;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.DownloadSection;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
 
 import java.io.File;
@@ -43,7 +44,8 @@ public class MGModelFactory {
                                                            String pageTitle, List<Breadcrumb> breadcrumbs,
                                                            EmgFile emgFile, List<String> archivedSequences,
                                                            MemiPropertyContainer propertyContainer,
-                                                           boolean isReturnSizeLimit, AnalysisStatsModel.ExperimentType experimentType) {
+                                                           boolean isReturnSizeLimit, AnalysisStatsModel.ExperimentType experimentType,
+                                                           final DownloadSection downloadSection) {
         log.info("Building instance of " + AnalysisStatsModel.class + "...");
         if (emgFile != null) {
             Map<Class, List<AbstractGOTerm>> goData = loadGODataFromCSV(propertyContainer.getPathToAnalysisDirectory(),
@@ -55,10 +57,11 @@ public class MGModelFactory {
                     getHBarChartURL(MolecularFunctionGOTerm.class, goData),
                     null,
                     goData.get(BiologicalProcessGOTerm.class), emgFile, archivedSequences, propertyContainer,
-                    getListOfInterProEntries(propertyContainer.getPathToAnalysisDirectory(), emgFile, isReturnSizeLimit), experimentType);
+                    getListOfInterProEntries(propertyContainer.getPathToAnalysisDirectory(), emgFile, isReturnSizeLimit), experimentType,
+                    downloadSection);
         } else {
             return new AnalysisStatsModel(getSessionSubmitter(sessionManager), pageTitle, breadcrumbs, sample,
-                    emgFile, archivedSequences, propertyContainer);
+                    emgFile, archivedSequences, propertyContainer, downloadSection);
         }
     }
 

@@ -38,17 +38,17 @@ public class StudyDAOImpl implements StudyDAO {
     public StudyDAOImpl() {
     }
 
-    @Override
+    //TODO: Do implement
     public Study insert(Study newInstance) {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    @Override
+    //TODO: Do implement
     public Collection<Study> insert(Collection<Study> newInstances) {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    @Override
+    //TODO: Do implement
     public void update(Study modifiedInstance) {
         //To change body of implemented methods use File | Settings | File Templates.
     }
@@ -91,17 +91,17 @@ public class StudyDAOImpl implements StudyDAO {
     }
 
 
-    @Override
+    //TODO: Do implement
     public Study readDeep(Long id, String... deepFields) {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    @Override
+    //TODO: Do implement
     public void delete(Study persistentObject) {
         //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    @Override
+    //TODO: Do implement
     public Long count() {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
@@ -285,12 +285,12 @@ public class StudyDAOImpl implements StudyDAO {
         return new ArrayList<Study>();
     }
 
-    @Override
+    //TODO: Do implement
     public int deleteAll() {
         return 0;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    @Override
+    //TODO: Do implement
     public Long getMaximumPrimaryKey() {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }

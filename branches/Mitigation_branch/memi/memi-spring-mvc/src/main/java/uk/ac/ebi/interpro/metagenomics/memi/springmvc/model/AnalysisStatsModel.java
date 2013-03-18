@@ -4,6 +4,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgFile;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.DownloadSection;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -53,12 +54,15 @@ public class AnalysisStatsModel extends ViewModel {
 
     private ExperimentType experimentType;
 
+    private DownloadSection downloadSection;
+
     AnalysisStatsModel(Submitter submitter, String pageTitle, List<Breadcrumb> breadcrumbs, Sample sample,
                        String barChartURL, String pieChartBiologicalProcessURL,
                        String pieChartCellularComponentURL, String pieChartMolecularFunctionURL,
                        String pieChartInterProMatchURL, List<AbstractGOTerm> bioGOTerms, EmgFile emgFile,
                        List<String> archivedSequences, MemiPropertyContainer propertyContainer,
-                       List<InterProEntry> interProEntries, ExperimentType experimentType) {
+                       List<InterProEntry> interProEntries, ExperimentType experimentType,
+                       final DownloadSection downloadSection) {
         super(submitter, pageTitle, breadcrumbs, propertyContainer);
         this.sample = sample;
         this.barChartURL = barChartURL;
@@ -71,12 +75,14 @@ public class AnalysisStatsModel extends ViewModel {
         this.emgFile = emgFile;
         this.archivedSequences = archivedSequences;
         this.experimentType = experimentType;
+        this.downloadSection = downloadSection;
     }
 
     AnalysisStatsModel(Submitter submitter, String pageTitle, List<Breadcrumb> breadcrumbs, Sample sample,
-                       EmgFile emgFile, List<String> archivedSequences, MemiPropertyContainer propertyContainer) {
+                       EmgFile emgFile, List<String> archivedSequences, MemiPropertyContainer propertyContainer,
+                       final DownloadSection downloadSection) {
         this(submitter, pageTitle, breadcrumbs, sample, null, null, null, null, null, null, emgFile,
-                archivedSequences, propertyContainer, null, ExperimentType.GENOMIC);
+                archivedSequences, propertyContainer, null, ExperimentType.GENOMIC, downloadSection);
     }
 
     public Sample getSample() {
@@ -121,6 +127,10 @@ public class AnalysisStatsModel extends ViewModel {
 
     public ExperimentType getExperimentType() {
         return experimentType;
+    }
+
+    public DownloadSection getDownloadSection() {
+        return downloadSection;
     }
 
     public enum ExperimentType {

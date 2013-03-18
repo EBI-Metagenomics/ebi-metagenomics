@@ -36,10 +36,10 @@ public class Study implements SecureEntity {
      * NCBI BioProject ID
      */
     @Column(name = "NCBI_PROJECT_ID")
-    private long ncbiProjectId;
+    private Long ncbiProjectId;
 
     @Column(name = "SUBMITTER_ID")
-    private long submitterId;
+    private Long submitterId;
 
     @Column(name = "STUDY_Status", length = 30)
     @Enumerated(EnumType.STRING)
@@ -150,19 +150,19 @@ public class Study implements SecureEntity {
         this.studyName = studyName;
     }
 
-    public long getNcbiProjectId() {
+    public Long getNcbiProjectId() {
         return ncbiProjectId;
     }
 
-    public void setNcbiProjectId(long ncbiProjectId) {
+    public void setNcbiProjectId(Long ncbiProjectId) {
         this.ncbiProjectId = ncbiProjectId;
     }
 
-    public long getSubmitterId() {
+    public Long getSubmitterId() {
         return submitterId;
     }
 
-    public void setSubmitterId(long submitterId) {
+    public void setSubmitterId(Long submitterId) {
         this.submitterId = submitterId;
     }
 
@@ -349,8 +349,8 @@ public class Study implements SecureEntity {
 
         if (id != study.id) return false;
         if (isPublic != study.isPublic) return false;
-        if (ncbiProjectId != study.ncbiProjectId) return false;
-        if (submitterId != study.submitterId) return false;
+        if (ncbiProjectId.equals(study.ncbiProjectId)) return false;
+        if (submitterId.equals(study.submitterId)) return false;
         if (!centreName.equals(study.centreName)) return false;
         if (!experimentalFactor.equals(study.experimentalFactor)) return false;
         if (!lastMetadataReceived.equals(study.lastMetadataReceived)) return false;
@@ -372,8 +372,8 @@ public class Study implements SecureEntity {
         int result = (int) (id ^ (id >>> 32));
         result = 31 * result + (studyId == null ? 0 : studyId.hashCode());
         result = 31 * result + (studyName == null ? 0 : studyName.hashCode());
-        result = 31 * result + (int) (ncbiProjectId ^ (ncbiProjectId >>> 32));
-        result = 31 * result + (int) (submitterId ^ (submitterId >>> 32));
+        result = 31 * result + (ncbiProjectId == null ? 0 : ncbiProjectId.hashCode());
+        result = 31 * result + (submitterId == null ? 0 : submitterId.hashCode());
         result = 31 * result + (studyStatus == null ? 0 : studyStatus.hashCode());
         result = 31 * result + (publicReleaseDate == null ? 0 : publicReleaseDate.hashCode());
         result = 31 * result + (lastMetadataReceived == null ? 0 : lastMetadataReceived.hashCode());

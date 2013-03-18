@@ -37,22 +37,30 @@ public final class HomePageViewModel extends ViewModel {
      */
     private final int maxRowNumberOfLatestItems;
 
+    private Long publicSamplesCount;
+
+    private Long privateSamplesCount;
+
     public HomePageViewModel(Submitter submitter, Map<Study, Long> publicStudiesMap, List<Sample> publicSamples,
                              String pageTitle, List<Breadcrumb> breadcrumbs,
-                             MemiPropertyContainer propertyContainer, int maxRowNumberOfLatestItems) {
+                             MemiPropertyContainer propertyContainer, int maxRowNumberOfLatestItems,
+                             final Long publicSamplesCount,
+                             final Long privateSamplesCount) {
         super(submitter, pageTitle, breadcrumbs, propertyContainer);
         this.publicStudiesMap = publicStudiesMap;
         this.publicSamples = publicSamples;
         this.myStudiesMap = new TreeMap<Study, Long>();
         this.mySamples = new ArrayList<Sample>();
         this.maxRowNumberOfLatestItems = maxRowNumberOfLatestItems;
+        this.privateSamplesCount = privateSamplesCount;
+        this.publicSamplesCount = publicSamplesCount;
     }
 
     public HomePageViewModel(Submitter submitter, Map<Study, Long> publicStudiesMap, List<Sample> publicSamples,
                              Map<Study, Long> myStudiesMap,
                              List<Sample> mySamples, String pageTitle, List<Breadcrumb> breadcrumbs,
                              MemiPropertyContainer propertyContainer, int maxRowNumberOfLatestItems) {
-        this(submitter, publicStudiesMap, publicSamples, pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems);
+        this(submitter, publicStudiesMap, publicSamples, pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems, null, null);
         this.myStudiesMap = myStudiesMap;
         this.mySamples = mySamples;
     }
@@ -92,5 +100,13 @@ public final class HomePageViewModel extends ViewModel {
 
     public int getMaxRowNumberOfLatestItems() {
         return maxRowNumberOfLatestItems;
+    }
+
+    public Long getPublicSamplesCount() {
+        return publicSamplesCount;
+    }
+
+    public Long getPrivateSamplesCount() {
+        return privateSamplesCount;
     }
 }
