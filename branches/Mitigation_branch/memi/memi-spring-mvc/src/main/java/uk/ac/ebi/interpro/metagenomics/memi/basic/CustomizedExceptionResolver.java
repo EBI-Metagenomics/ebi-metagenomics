@@ -102,9 +102,9 @@ public class CustomizedExceptionResolver extends SimpleMappingExceptionResolver 
     }
 
     private List<Breadcrumb> getBreadcrumbsForErrorPage(SecureEntity entity, String viewName) {
-        List<Breadcrumb> result = new ArrayList<Breadcrumb>();
-        result.add(new Breadcrumb("Error Page", "Error appeared. Sorry for any inconvenience!", "/errors/" + viewName));
-        return result;
+//        List<Breadcrumb> result = new ArrayList<Breadcrumb>();
+//        result.add(new Breadcrumb("Error Page", "Error appeared. Sorry for any inconvenience!", "/errors/" + viewName));
+        return new ArrayList<Breadcrumb>();
     }
 
     protected void sendEmail(Exception ex) {

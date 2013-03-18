@@ -70,7 +70,6 @@ public class HomePageController extends AbstractController implements IControlle
     }
 
     protected List<Breadcrumb> getBreadcrumbs(SecureEntity entity) {
-        List<Breadcrumb> result = new ArrayList<Breadcrumb>();
-        return result;
+        return new ArrayList<Breadcrumb>();
     }
 }
