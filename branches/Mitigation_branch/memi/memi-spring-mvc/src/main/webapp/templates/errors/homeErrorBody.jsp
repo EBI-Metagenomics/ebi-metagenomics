@@ -146,16 +146,16 @@
 
     <section id="list-data">
 
-        <div id="list-data-study">
+        <div id="list-data-study" class="grid_9 alpha">
             <h2>Projects</h2>
 
-            <p class="into">We are unable to display the data you request. We are aware of this problem and are trying
+            <p>We are unable to display the data you request. We are aware of this problem and are trying
                 to fix it as fast as possible. Please try again later.</p>
         </div>
-        <div id="list-data-sample">
+        <div id="list-data-sample" class="grid_9">
             <h2>Samples</h2>
 
-            <p class="into">We are unable to display the data you request. We are aware of this problem and are trying
+            <p>We are unable to display the data you request. We are aware of this problem and are trying
                 to fix it as fast as possible. Please try again later.</p>
         </div>
         <%@ include file="../components/listNewsComponent.jsp" %>
