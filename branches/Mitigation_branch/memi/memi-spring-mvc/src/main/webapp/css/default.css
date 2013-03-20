@@ -40,7 +40,7 @@ h1, h2, h3, h4, h5, h6, p, table {
 padding: 0 9px;
 }
 
-p { display: block; margin: 0 0 20px 0; clear:none;}
+p { display: block; margin: 0 0 14px 0; clear:none;}
 
 strong, th {font-weight:bold;}
 small {font-size:80%;}
@@ -84,7 +84,29 @@ div#headerdiv { background-color: #fff; font-size:100%; font-family: Verdana, sa
 div#local-masthead ul li.active-trail a:link, div#local-masthead ul li.active-trail a:visited {padding-top: 2px;border-bottom: 3px solid #666;background-color: #111;}/*style not defined in mitigation*/
 div#local-masthead ul li.active, div#local-masthead ul li.active-trail { background-color: #111; }  /*style not defined in mitigation*/
 /*/change to ebi-mitigation.css*/
+/*imported from ebi-visual.css*/
+@font-face {
+		font-family: 'EBI-Generic';
+		src:url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.eot'); /*was linked to ../../../fonts/EBI-Generic/fonts/EBI-Generic.eot*/
+		src:url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.eot?#iefix') format('embedded-opentype'),
+			url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.woff') format('woff'),
+			url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.svg#EBI-Generic') format('svg'),
+			url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.ttf') format('truetype');
+		font-weight: normal;
+		font-style: normal;
+	}
 
+@font-face{font-family:'EBI-Functional';src:url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.eot');src:url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.eot?#iefix') format('embedded-opentype'),
+url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.woff') format('woff'),
+local('☺'),
+url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional.svg#EBI-Functional') format('svg'),
+url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional.ttf') format('truetype');font-weight:normal;font-style:normal}
+
+.icon {text-decoration: none; font-style: normal;}
+.icon-functional:before {font-family: 'EBI-Functional'; font-size: 100%; color: #bbb; content: attr(data-icon);margin: 0 0.3em 0 0; }
+.icon-static:before, .icon-generic:before { font-family: 'EBI-Generic'; /* font-size: 123.1%; */ font-size: 100%;  color: #bbb;	content: attr(data-icon); margin: 0 0.3em 0 0; }
+
+/*/from ebi-visual.css*/
 img {border: none;}
 
 a {
@@ -386,9 +408,11 @@ a.twitter {
 display:block;
 height:30px;
 background: url(../img/icon_twitter.gif) no-repeat  left top;
-padding-left:40px;
+padding-left:34px;
+float:right;
+margin-left: 9px;
 }
-
+a.twitter .external {display: none;}
 div.but_top {
 border:0px green solid;
 width:40px;
@@ -941,7 +965,7 @@ padding: 0 9px 9px 9px;
 margin: 0px auto;*/
 width: 972px; text-align: left;}
 
-.separator {margin: 9px; height:8px; width:194px; display:block; background: url(../img/bgd_sep_dot.gif) repeat-x;}
+.separator {margin: 20px 9px 9px 9px; height:1px; display:block; background: url(../img/bgd_sep_dot.gif) repeat-x 0 -5px;}
 
 /* FORMS */
 form legend {
@@ -1622,7 +1646,11 @@ background:none;
     }
 .selected {font-weight:bold; color:white;}
 
+.data-stat {margin-top: 1em;/*line-height: 1.8em;*/ }
+.data-stat .icon {font-size: 140%;}
+
 /* JQUERY TWEET */
-.tweet {color: #7E7E7E;font-size: 100%;}
+.tweet {margin-top: 1em; }
 .tweet  ul {margin:0px; padding: 0px;}
 .tweet  li {list-style-type: none; margin:0 9px 20px 9px;}
+
