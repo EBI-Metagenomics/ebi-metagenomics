@@ -30,10 +30,6 @@
 
         <%-- Show Slideshow if not logged in --%>
         <c:otherwise>
-            <div>${model.publicSamplesCount} public samples (${model.publicStudiesCount} public project)</div>
-            <div>${model.privateSamplesCount} private samples (${model.privateStudiesCount} private project)</div>
-            <div>40 registered users</div>
-            <div>X total submitted nucleotide reads</div>
 
             <!--[if IE 6]><div id="IE6" class="IE"><![endif]--> <!--[if IE 7]><div id="IE7" class="IE"><![endif]--> <!--[if IE & ((!IE 6) & (!IE 7))]><div><![endif]--> <!--[if !IE]>--><div><!--<![endif]-->
             <div class="carousel">
