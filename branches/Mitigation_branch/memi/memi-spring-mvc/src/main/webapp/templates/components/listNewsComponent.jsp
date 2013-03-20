@@ -14,7 +14,7 @@
     <div class="tweet"></div>
     <p><a href="http://twitter.com/EBImetagenomics" alt="Follow us on Twitter">Follow us on Twitter</a></p>
 
-    <span class="separator"></span>
+    <%--<span class="separator"></span>--%>
 
     <h2>Mailing list</h2>
 
