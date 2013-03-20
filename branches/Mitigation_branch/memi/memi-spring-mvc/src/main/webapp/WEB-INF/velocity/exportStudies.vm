@@ -3,12 +3,10 @@
 ##  Desc: Velocity template to provide a downloadable semicolon separated file for publicStudies
 #foreach( $property in $tableHeaderNames )$property,#end
 
-#set( $keySet = $studyMap.keySet() )
-#set( $propertyMap = $studyMap )
-#foreach( $study in $keySet )
+#foreach( $study in $studies )
 #if($study.studyName)
 "$study.studyName",#{else}"",#end
-"$propertyMap.get($study)",#if($study.lastMetadataReceived)
+"$study.sampleSize",#if($study.lastMetadataReceived)
 $study.lastMetadataReceived,#{else},#end
 
 #end

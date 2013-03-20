@@ -87,6 +87,7 @@
             </div>
 
             <div class="table_opt_pag">
+
             <%--Start of item pagination pattern--%>
             <c:set var="prevId" value="< Prev"/>
             <c:set var="nextId" value="Next >"/>

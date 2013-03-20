@@ -14,9 +14,9 @@ import static junit.framework.Assert.assertTrue;
  * @version $Id$
  * @since 1.0-SNAPSHOT
  */
-public class SamplesViewPaginationTest {
+public class ViewPaginationTest {
 
-    private SamplesViewPagination instance;
+    private ViewPagination instance;
 
     @Before
     public void setUp() throws Exception {
@@ -25,7 +25,7 @@ public class SamplesViewPaginationTest {
 
     @Test
     public void testPagination() {
-        instance = new SamplesViewPagination(0, 66, 10);
+        instance = new ViewPagination(0, 66, 10);
         assertEquals(0, instance.getStartPosition());
         assertEquals(10, instance.getPageSize());
         assertEquals(66, instance.getTotalItems());
@@ -36,7 +36,7 @@ public class SamplesViewPaginationTest {
         assertEquals("1 - 10", instance.getDisplayedItemRange());
         assertEquals(60, instance.getLastLinkPosition());
         //2nd test instance
-        instance = new SamplesViewPagination(61, 66, 10);
+        instance = new ViewPagination(61, 66, 10);
         assertEquals(61, instance.getStartPosition());
         assertEquals(10, instance.getPageSize());
         assertEquals(66, instance.getTotalItems());
@@ -47,7 +47,7 @@ public class SamplesViewPaginationTest {
         assertEquals("62 - 66", instance.getDisplayedItemRange());
         assertEquals(60, instance.getLastLinkPosition());
         //3rd test instance
-        instance = new SamplesViewPagination(10, 66, 5);
+        instance = new ViewPagination(10, 66, 5);
         assertEquals(10, instance.getStartPosition());
         assertEquals(5, instance.getPageSize());
         assertEquals(66, instance.getTotalItems());
@@ -58,7 +58,7 @@ public class SamplesViewPaginationTest {
         assertEquals("11 - 15", instance.getDisplayedItemRange());
         assertEquals(65, instance.getLastLinkPosition());
         //4th test instance
-        instance = new SamplesViewPagination(10, 66, 4);
+        instance = new ViewPagination(10, 66, 4);
         assertEquals(10, instance.getStartPosition());
         assertEquals(4, instance.getPageSize());
         assertEquals(66, instance.getTotalItems());
@@ -69,7 +69,7 @@ public class SamplesViewPaginationTest {
         assertEquals("11 - 14", instance.getDisplayedItemRange());
         assertEquals(64, instance.getLastLinkPosition());
         //4th test instance
-        instance = new SamplesViewPagination(10, 17, 3);
+        instance = new ViewPagination(10, 17, 3);
         assertEquals(10, instance.getStartPosition());
         assertEquals(3, instance.getPageSize());
         assertEquals(17, instance.getTotalItems());

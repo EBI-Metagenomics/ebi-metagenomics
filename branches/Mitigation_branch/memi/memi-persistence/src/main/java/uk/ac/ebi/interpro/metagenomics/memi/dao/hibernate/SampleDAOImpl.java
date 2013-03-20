@@ -360,7 +360,9 @@ public class SampleDAOImpl implements SampleDAO {
         return Collections.emptyList();
     }
 
-    private Criteria setUpFilteredSamplesCriteria(List<Criterion> crits, Class<? extends Sample> clazz, String orderedByColumnWithName) {
+    private Criteria setUpFilteredSamplesCriteria(final List<Criterion> crits,
+                                                  Class<? extends Sample> clazz,
+                                                  final String orderedByColumnWithName) {
         Session session = sessionFactory.getCurrentSession();
         Criteria criteria = null;
         if (session != null) {
@@ -369,7 +371,7 @@ public class SampleDAOImpl implements SampleDAO {
             for (Criterion crit : crits) {
                 criteria.add(crit);
             }
-            if (criteria != null) {
+            if (orderedByColumnWithName != null) {
                 criteria.addOrder(Order.asc(orderedByColumnWithName).ignoreCase());
             }
         }

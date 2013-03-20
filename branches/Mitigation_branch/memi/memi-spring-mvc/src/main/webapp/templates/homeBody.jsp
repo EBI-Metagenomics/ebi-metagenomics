@@ -160,7 +160,8 @@
                         </p>
                     </c:when>
                     <c:otherwise>
-                        <h3>My latest projects</h3>
+                        <h3>My latest projects (Total: <a href="<c:url value="${baseURL}/projects/doSearch?searchTerm=&studyVisibility=MY_PROJECTS&search=Search"/>"
+                                                          title="View all ${model.myStudiesCount} my projects">${model.myStudiesCount}</a>)</h3>
                         <%--The count starts at 0, that is why we subtract 1 from the end value--%>
                         <c:forEach var="entry" items="${model.myStudiesMap}" varStatus="status" begin="0"
                                    end="${model.maxRowNumberOfLatestItems-1}">
@@ -201,7 +202,8 @@
                         </p>
                     </c:when>
                     <c:otherwise>
-                        <h3>My latest samples</h3>
+                        <h3>My latest samples (Total: <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleType=&sampleVisibility=MY_SAMPLES&search=Search&startPosition=0"/>"
+                                                         title="View all ${model.mySamplesCount} my samples">${model.mySamplesCount}</a>)</h3>
                         <%--The count starts at 0, that is why we subtract 1 from the end value--%>
                         <c:forEach var="sample" items="${model.mySamples}" varStatus="status" begin="0"
                                    end="${model.maxRowNumberOfLatestItems-1}">
@@ -248,20 +250,20 @@
                 <h2>Projects</h2>
 
                 <h3>Latest public projects (Total: <a href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>"
-                                       title="View all public projects">X</a>)</h3>
+                                       title="View all ${model.publicStudiesCount} public projects">${model.publicStudiesCount}</a>)</h3>
                     <%--The count starts at 0, that is why we subtract 1 from the end value--%>
-                <c:forEach var="entry" items="${model.publicStudiesMap}" varStatus="status" begin="0"
+                <c:forEach var="study" items="${model.studies}" varStatus="status" begin="0"
                            end="${model.maxRowNumberOfLatestItems-1}">
                     <p><%--<span class="list_date">${entry.key.lastMetadataReceived}:</span> --%>
-                        <a href="<c:url value="${baseURL}/project/${entry.key.studyId}"/>"
-                           class="list_more">${entry.key.studyName}</a>
+                        <a href="<c:url value="${baseURL}/project/${study.studyId}"/>"
+                           class="list_more">${study.studyName}</a>
                         <br/>
-                        <span class="list_desc"><c:out value="${entry.key.shortStudyAbstract} ..."/></span>
-                        <a href="<c:url value="${baseURL}/project/${entry.key.studyId}"/>"
+                        <span class="list_desc"><c:out value="${study.shortStudyAbstract} ..."/></span>
+                        <a href="<c:url value="${baseURL}/project/${study.studyId}"/>"
                            class="more_view">view more</a> - <a
-                                href="<c:url value="${baseURL}/project/${entry.key.studyId}"/>#samples_id"
-                                class="list_sample"><c:out value="${entry.value} sample"/><c:if
-                                test='${entry.value > 1}'>s</c:if></a>
+                                href="<c:url value="${baseURL}/project/${study.studyId}"/>#samples_id"
+                                class="list_sample"><c:out value="${study.sampleSize} sample"/><c:if
+                                test='${study.sampleSize > 1}'>s</c:if></a>
                     </p>
                 </c:forEach>
                 <p>

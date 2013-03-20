@@ -12,7 +12,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.SamplesViewModel;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.SamplesViewPagination;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewPagination;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
 
 import java.util.ArrayList;
@@ -68,7 +68,7 @@ public class SamplesViewModelBuilder extends AbstractViewModelBuilder<SamplesVie
         List<Criterion> filterCriteria = buildFilterCriteria(filter, submitterId);
         List<Sample> filteredSamples = getFilteredSamples(sampleDAO, filterCriteria);
         long filteredSampleCount = sampleDAO.countFilteredSamples(filterCriteria, getSampleClass(filter.getSampleType()));
-        SamplesViewPagination pagination = new SamplesViewPagination(startPosition, filteredSampleCount, PAGE_SIZE);
+        ViewPagination pagination = new ViewPagination(startPosition, filteredSampleCount, PAGE_SIZE);
         //Get downloadable samples
         List<Sample> downloadableSamples = sampleDAO.retrieveFilteredSamples(filterCriteria, getSampleClass(filter.getSampleType()), "sampleName");
 

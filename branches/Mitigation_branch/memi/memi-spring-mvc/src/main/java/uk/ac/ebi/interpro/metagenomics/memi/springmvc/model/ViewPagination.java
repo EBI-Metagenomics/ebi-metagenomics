@@ -2,13 +2,12 @@ package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
 
 /**
  * Represents an object which handles pagination in general.
- * TODO: Comment Maxim - This should be general pattern. If so, then give it a more general name and use it also for studies view and study view
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @version $Id$
  * @since 1.0-SNAPSHOT
  */
-public class SamplesViewPagination {
+public class ViewPagination {
     private int startPosition;
 
     private int nextStartPos;
@@ -30,11 +29,11 @@ public class SamplesViewPagination {
     private int lastLinkPosition;
 
 
-    public SamplesViewPagination(int startPosition, int pageSize) {
+    public ViewPagination(int startPosition, int pageSize) {
         this(startPosition, 0, pageSize);
     }
 
-    public SamplesViewPagination(int startPosition, long totalItems, int pageSize) {
+    public ViewPagination(int startPosition, long totalItems, int pageSize) {
         this.startPosition = startPosition;
         this.totalItems = totalItems;
         this.pageSize = pageSize;
