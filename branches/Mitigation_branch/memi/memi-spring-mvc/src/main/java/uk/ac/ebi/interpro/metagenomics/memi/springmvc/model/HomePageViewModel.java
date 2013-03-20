@@ -43,6 +43,8 @@ public final class HomePageViewModel extends ViewModel {
 
     private Long publicStudiesCount;
 
+    private Long privateStudiesCount;
+
     private Long mySamplesCount;
 
     private Long myStudiesCount;
@@ -56,6 +58,7 @@ public final class HomePageViewModel extends ViewModel {
                              final Long publicSamplesCount,
                              final Long privateSamplesCount,
                              final Long publicStudiesCount,
+                             final Long privateStudiesCount,
                              final List<Study> studies) {
         super(submitter, pageTitle, breadcrumbs, propertyContainer);
         this.publicSamples = publicSamples;
@@ -65,6 +68,7 @@ public final class HomePageViewModel extends ViewModel {
         this.privateSamplesCount = privateSamplesCount;
         this.publicSamplesCount = publicSamplesCount;
         this.publicStudiesCount = publicStudiesCount;
+        this.privateStudiesCount = privateStudiesCount;
         this.studies = studies;
     }
 
@@ -76,8 +80,12 @@ public final class HomePageViewModel extends ViewModel {
                              final MemiPropertyContainer propertyContainer,
                              final int maxRowNumberOfLatestItems,
                              final Long mySamplesCount,
-                             final Long myStudiesCount) {
-        this(submitter, new ArrayList<Sample>(), pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems, null, null, null, new ArrayList<Study>());
+                             final Long myStudiesCount,
+                             final Long publicSamplesCount,
+                             final Long privateSamplesCount,
+                             final Long publicStudiesCount,
+                             final Long privateStudiesCount) {
+        this(submitter, new ArrayList<Sample>(), pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems, publicSamplesCount, privateSamplesCount, publicStudiesCount, privateStudiesCount, new ArrayList<Study>());
         this.myStudiesMap = myStudiesMap;
         this.mySamples = mySamples;
         this.mySamplesCount = mySamplesCount;
@@ -127,6 +135,10 @@ public final class HomePageViewModel extends ViewModel {
 
     public Long getPublicStudiesCount() {
         return publicStudiesCount;
+    }
+
+    public Long getPrivateStudiesCount() {
+        return privateStudiesCount;
     }
 
     public Long getMySamplesCount() {

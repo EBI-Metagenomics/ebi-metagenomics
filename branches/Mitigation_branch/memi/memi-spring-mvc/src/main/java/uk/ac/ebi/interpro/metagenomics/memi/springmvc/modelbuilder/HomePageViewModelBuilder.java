@@ -57,6 +57,10 @@ public class HomePageViewModelBuilder extends AbstractViewModelBuilder<HomePageV
     public HomePageViewModel getModel() {
         log.info("Building instance of " + HomePageViewModel.class + "...");
         Submitter submitter = getSessionSubmitter(sessionMgr);
+        final Long publicSamplesCount = sampleDAO.countAllPublic();
+        final Long privateSamplesCount = sampleDAO.countAllPrivate();
+        final Long publicStudiesCount = studyDAO.countAllPublic();
+        final Long privateStudiesCount = studyDAO.countAllPrivate();
 //        If case: if nobody is logged in
         if (submitter == null) {
             //retrieve public studies and order them by last meta data received
@@ -68,12 +72,8 @@ public class HomePageViewModelBuilder extends AbstractViewModelBuilder<HomePageV
             Collections.sort(samples, new HomePageSamplesComparator());
             samples = samples.subList(0, getToIndex(samples));
 
-            final Long publicSamplesCount = sampleDAO.countAllPublic();
-            final Long privateSamplesCount = sampleDAO.countAllPrivate();
-            final Long publicStudiesCount = studyDAO.countAllPublic();
-
             return new HomePageViewModel(submitter, samples,
-                    pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems, publicSamplesCount, privateSamplesCount, publicStudiesCount, studies);
+                    pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems, publicSamplesCount, privateSamplesCount, publicStudiesCount, privateStudiesCount, studies);
         }
 //        Else case: if somebody is logged in
         else {
@@ -98,7 +98,7 @@ public class HomePageViewModelBuilder extends AbstractViewModelBuilder<HomePageV
             final Long mySamplesCount = (mySamples != null ? new Long(mySamples.size()) : new Long(0));
             final Long myStudiesCount = (myStudies != null ? new Long(myStudies.size()) : new Long(0));
 
-            return new HomePageViewModel(submitter, myStudiesMap, mySamples, pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems, mySamplesCount, myStudiesCount);
+            return new HomePageViewModel(submitter, myStudiesMap, mySamples, pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems, mySamplesCount, myStudiesCount, publicSamplesCount, privateSamplesCount, publicStudiesCount, privateStudiesCount);
         }
     }
 

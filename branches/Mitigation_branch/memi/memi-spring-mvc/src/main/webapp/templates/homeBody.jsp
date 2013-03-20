@@ -30,8 +30,8 @@
 
         <%-- Show Slideshow if not logged in --%>
         <c:otherwise>
-            <div>${model.publicSamplesCount} public samples (X public project)</div>
-            <div>${model.privateSamplesCount} private samples (X private project)</div>
+            <div>${model.publicSamplesCount} public samples (${model.publicStudiesCount} public project)</div>
+            <div>${model.privateSamplesCount} private samples (${model.privateStudiesCount} private project)</div>
             <div>40 registered users</div>
             <div>X total submitted nucleotide reads</div>
 
