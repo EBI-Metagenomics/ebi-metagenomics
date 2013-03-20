@@ -3,6 +3,7 @@
 <div id="content">
 <section id="submit-data">
     <c:choose>
+        test Hubert
         <%-- Show Private welcome emailMessage only if a user is logged in--%>
         <%--Private area is deactivated for the moment until any decision was made--%>
         <%--<c:when test="${not empty model.submitter}">--%>
