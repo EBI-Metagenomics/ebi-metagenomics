@@ -126,19 +126,37 @@
         <c:when test="${model.study.dataOrigination == 'SUBMITTED'}">
             <c:set var="contactName" value="${model.submitterName}" scope="page"/>
             <c:set var="contactMail" value="${model.emailAddress}" scope="page"/>
+
+            <c:if test="${not empty contactName && contactName != 'not available'}">
+            <div class="result_row"><label>Name:</label><span>${contactName}</span></div>
+            </c:if>
+            <c:if test="${not empty contactMail && contactMail != 'not available'}">
+            <div class="result_row"><label>Email:</label><span class="lowercase">${contactMail}</span></div>
+            </c:if>
+
+            <div class="result_row"><label>Name:</label><span>${contactName}</span></div>
+            <div class="result_row"><label>Email:</label><span class="lowercase">${contactMail}</span></div>
         </c:when>
         <c:when test="${model.study.dataOrigination == 'HARVESTED'}">
-            <c:set var="contactName" value="${model.study.authorName}" scope="page"/>
-            <c:set var="contactMail" value="${model.study.authorEmailAddress}" scope="page"/>
+        <c:set var="contactName" value="${model.study.authorName}" scope="page"/>
+        <c:set var="contactMail" value="${model.study.authorEmailAddress}" scope="page"/>
+
+        <c:if test="${not empty contactName && contactName != 'not available'}">
+        <div class="result_row"><label>Name:</label><span>${contactName}</span></div>
+        </c:if>
+        <c:if test="${not empty contactMail && contactMail != 'not available'}">
+        <div class="result_row"><label>Email:</label><span class="lowercase">${contactMail}</span></div>
+        </c:if>
+
         </c:when>
+
         <%--The Otherwise case is for data origination MIRRORED OR NULL values--%>
         <c:otherwise>
-            <c:set var="contactName" value="not available" scope="page"/>
-            <c:set var="contactMail" value="not available" scope="page"/>
+            <div class="result_row"><label>Name:</label><span>not available</span></div>
+            <div class="result_row"><label>Email:</label><span>not available</span></div>
         </c:otherwise>
     </c:choose>
-    <div class="result_row"><label>Name:</label><span>${contactName}</span></div>
-    <div class="result_row"><label>Email:</label><span>${contactMail}</span></div>
+
 </div>
 
 
