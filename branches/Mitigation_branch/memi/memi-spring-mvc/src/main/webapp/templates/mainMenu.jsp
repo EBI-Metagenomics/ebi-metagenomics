@@ -44,7 +44,9 @@
             <c:when test="${empty model.submitter}">
                 <%--<li class="functional last"><a href="#" class="icon icon-static" data-icon="\">Feedback</a></li>--%>
                 <li class="functional last">
-                                   <a  class="icon icon-functional" data-icon="l" id="script_loginLink" href="javascript:openLoginDialogForm()" title="Login">Login</a>
+                                   <%--<a  class="icon icon-functional" data-icon="l" id="script_loginLink" href="javascript:openLoginDialogForm()" title="Login">Login</a>--%>
+                    <a  id="script_loginLink" href="javascript:openLoginDialogForm()" title="Login">Login</a><%--Remove icon as font-size was bugging on mouse over--%>
+
                                    <a  class="icon icon-functional" data-icon="l" id="noscript_loginLink" href="<c:url value="${baseURL}/login?display=false"/>" title="Login">Login</a>
                                </li>
                <span class="logout"> Not logged in </span>
