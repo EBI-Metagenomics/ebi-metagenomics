@@ -53,7 +53,8 @@
             </c:when>
                        <c:otherwise>
                         <li class="functional last">
-                        <a class="icon icon-functional" data-icon="l" href="<c:url value="${baseURL}/logout"/>" title="logout">logout</a>
+                        <%--<a class="icon icon-functional" data-icon="l" href="<c:url value="${baseURL}/logout"/>" title="logout">logout</a>--%>
+                        <a href="<c:url value="${baseURL}/logout"/>" title="logout">logout</a>
                         </li>
                         <span class="login_name"><c:out value="${model.submitter.firstName} ${model.submitter.surname}"/>
                         <c:url var="editPrefsUrl" value="${model.propertyContainer.enaSubmissionURL.editPrefsLink}"><c:param name="url" value="${enaUrlParam}"/></c:url>
