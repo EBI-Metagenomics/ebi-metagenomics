@@ -40,7 +40,7 @@ public class HomePageViewModelBuilder extends AbstractViewModelBuilder<HomePageV
     /**
      * The number of latest project and samples to show on the home page. Used within this builder class, but also within the Java Server Page.
      */
-    private final int maxRowNumberOfLatestItems = 4;
+    private final int maxRowNumberOfLatestItems = 5;
 
 
     public HomePageViewModelBuilder(SessionManager sessionMgr, String pageTitle, List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer,
