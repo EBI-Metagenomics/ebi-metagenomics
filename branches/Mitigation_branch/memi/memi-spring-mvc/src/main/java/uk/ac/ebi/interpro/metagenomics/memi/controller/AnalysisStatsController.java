@@ -199,20 +199,23 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
         }
         final AnalysisStatsModel mgModel = MGModelFactory.
                 getAnalysisStatsModel(sessionManager, sample, pageTitle, getBreadcrumbs(sample), emgFile,
-                        MemiTools.getArchivedSeqs(fileInfoDAO, sample), propertyContainer, isReturnSizeLimit, experimentType, buildDownloadSection(sample.getSampleId(), downloadableFiles));
+                        MemiTools.getArchivedSeqs(fileInfoDAO, sample), propertyContainer, isReturnSizeLimit, experimentType, buildDownloadSection(sample.getSampleId(), sample.isPublic(), downloadableFiles));
         mgModel.changeToHighlightedClass(ViewModel.TAB_CLASS_SAMPLES_VIEW);
         model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, mgModel);
     }
 
-    private DownloadSection buildDownloadSection(final String sampleId, final List<File> downloadableFiles) {
+    private DownloadSection buildDownloadSection(final String sampleId, final boolean sampleIsPublic, final List<File> downloadableFiles) {
         final List<DownloadLink> seqDataDownloadLinks = new ArrayList<DownloadLink>();
         final List<DownloadLink> funcAnalysisDownloadLinks = new ArrayList<DownloadLink>();
         final List<DownloadLink> taxaAnalysisDownloadLinks = new ArrayList<DownloadLink>();
 
+        final String linkURL = (sampleIsPublic ? "https://www.ebi.ac.uk/ena/data/view/" + sampleId + "?display=html" : "https://www.ebi.ac.uk/ena/submit/sra/#home");
         seqDataDownloadLinks.add(new DownloadLink("Submitted nucleotide reads (ENA website)",
                 "Click to download all submitted nucleotide data on the ENA website",
-                "https://www.ebi.ac.uk/ena/data/view/" + sampleId + "?display=html", true, 1));
+                linkURL,
+                true,
+                1));
 
         for (File file : downloadableFiles) {
             if (file.getName().endsWith(EmgFile.ResultFileType.MASKED_FASTA.getFileNameEnd())) {
