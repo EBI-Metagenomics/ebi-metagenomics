@@ -7,4 +7,4 @@
 
 <h3>Follow us on Twitter</h3>
 
-<p>Follow us on Twitter using <a href="http://twitter.com/EBImetagenomics" class="twitter"> @EBImetagenomics</a></p>
+<p>Follow us on Twitter using <a href="http://twitter.com/EBImetagenomics">@EBImetagenomics</a></p>
