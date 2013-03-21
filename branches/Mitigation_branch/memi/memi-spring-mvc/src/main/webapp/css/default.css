@@ -1654,3 +1654,5 @@ background:none;
 .tweet  ul {margin:0px; padding: 0px;}
 .tweet  li {list-style-type: none; margin:0 9px 20px 9px;}
 
+.lowercase {text-transform:lowercase;}
+
