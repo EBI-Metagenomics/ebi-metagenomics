@@ -170,8 +170,8 @@
                                     class="list_more">${entry.key.studyName}</a>
                                 <br/>
                                 <span class="list_desc"><c:out value="${entry.key.shortStudyAbstract} ..."/></span>
-                                <a href="<c:url value="${baseURL}/project/${entry.key.studyId}"/>"
-                                   class="more_view">view more</a> - <a
+                                <br/><a href="<c:url value="${baseURL}/project/${entry.key.studyId}"/>"
+                                   class="more_view">View more</a> - <a
                                     href="<c:url value="${baseURL}/project/${entry.key.studyId}"/>#samples_id"
                                     class="list_sample"><c:out value="${entry.value} sample"/><c:if
                                     test='${entry.value > 1}'>s</c:if></a>
@@ -210,8 +210,9 @@
                                    class="list_more">${sample.sampleName}</a>
                                 <br/>
                                 <span class="list_desc"><c:out value="${sample.shortSampleDescription} ..."/></span>
+                                <br/>
                                 <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>"
-                                   class="more_view">view more</a>
+                                   class="more_view">View more</a>
                                 <c:choose>
                                     <c:when test="${empty sample.analysisCompleted}">
                                         <%-- leave empty to be consistent with sample overview page
@@ -255,8 +256,9 @@
                            class="list_more">${study.studyName}</a>
                         <br/>
                         <span class="list_desc"><c:out value="${study.shortStudyAbstract} ..."/></span>
+                        <br/>
                         <a href="<c:url value="${baseURL}/project/${study.studyId}"/>"
-                           class="more_view">view more</a> - <a
+                           class="more_view">View more</a> - <a
                                 href="<c:url value="${baseURL}/project/${study.studyId}"/>#samples_id"
                                 class="list_sample"><c:out value="${study.sampleSize} sample"/><c:if
                                 test='${study.sampleSize > 1}'>s</c:if></a>
@@ -280,8 +282,8 @@
                            class="list_more">${sample.sampleName}</a>
                         <br/>
                         <span class="list_desc"><c:out value="${sample.shortSampleDescription} ..."/></span>
-                        <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>"
-                           class="more_view">view more</a>
+                        <br/>
+                        <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>" class="more_view">View more</a>
                         <c:choose>
                             <c:when test="${empty sample.analysisCompleted}">
                                 <%-- leave empty to be consistent with sample overview page
