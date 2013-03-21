@@ -68,9 +68,9 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
         log.info("Checking if sample is accessible...");
         if (export != null) {
             if (export.equalsIgnoreCase(this.requestParamValues[0])) {
-                return handleExport(sampleId, response, request, EmgFile.ResultFileType.BIOM, ".biom");
+                return handleExport(sampleId, response, request, EmgFile.ResultFileType.BIOM, "_otu.biom");
             } else if (export.equalsIgnoreCase(this.requestParamValues[1])) {
-                return handleExport(sampleId, response, request, EmgFile.ResultFileType.TAB_SEPARATED_TAX_RESULT_FILE, ".tsv");
+                return handleExport(sampleId, response, request, EmgFile.ResultFileType.TAB_SEPARATED_TAX_RESULT_FILE, "_otu.tsv");
             }
         }
         return checkAccessAndBuildModel(new ModelProcessingStrategy<Sample>() {
@@ -246,14 +246,14 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
                         6,
                         getFileSize(file)));
             } else if (file.getName().endsWith(EmgFile.ResultFileType.BIOM.getFileNameEnd())) {
-                taxaAnalysisDownloadLinks.add(new DownloadLink("biom file format: Version 1.0",
-                        "Click to download the biom formatted file",
+                taxaAnalysisDownloadLinks.add(new DownloadLink("OTUs and taxonomic assignments (BIOM)",
+                        "Click to download the OTUs and taxonomic assignments (BIOM)",
                         "analysisStatsView/" + sampleId + "?export=" + this.requestParamValues[0],
                         7,
                         getFileSize(file)));
             } else if (file.getName().endsWith(EmgFile.ResultFileType.TAB_SEPARATED_TAX_RESULT_FILE.getFileNameEnd())) {
-                taxaAnalysisDownloadLinks.add(new DownloadLink("Humand readable taxonomy result file (TSV)",
-                        "Click to download the human readable version",
+                taxaAnalysisDownloadLinks.add(new DownloadLink("OTUs and taxonomic assignments (TSV)",
+                        "Click to download the OTUs and taxonomic assignments (TSV)",
                         "analysisStatsView/" + sampleId + "?export=" + this.requestParamValues[1],
                         8,
                         getFileSize(file)));
