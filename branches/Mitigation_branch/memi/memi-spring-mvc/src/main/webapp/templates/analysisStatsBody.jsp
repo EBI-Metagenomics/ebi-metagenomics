@@ -4,10 +4,65 @@
 
 <c:choose>
 <c:when test="${not empty model.sample}">
+<aside>
+<div id="sidebar-download">
+
+<h3>Download results</h3>
+
+<div id="box-export">
+    <h4>Sequence data</h4>
+    <ul>
+        <c:forEach var="downloadLink" items="${model.downloadSection.seqDataDownloadLinks}" varStatus="loop">
+            <li>
+                <c:choose>
+                    <c:when test="${downloadLink.externalLink}">
+                        <a href="${downloadLink.linkURL}"
+                           title="${downloadLink.linkTitle}">${downloadLink.linkText}</a>
+                    </c:when>
+                    <c:otherwise>
+                        <a href="<c:url value="${baseURL}/${downloadLink.linkURL}"/>"
+                           title="${downloadLink.linkTitle}">
+                                ${downloadLink.linkText}</a><span
+                            class="list_date"> - ${downloadLink.fileSize}</span>
+                    </c:otherwise>
+                </c:choose>
+            </li>
+        </c:forEach>
+    </ul>
+    <c:if test="${not empty model.downloadSection.funcAnalysisDownloadLinks}">
+        <h4>Functional Analysis</h4>
+        <ul>
+            <c:forEach var="downloadLink" items="${model.downloadSection.funcAnalysisDownloadLinks}"
+                       varStatus="loop">
+                <li>
+                    <a href="<c:url value="${baseURL}/${downloadLink.linkURL}"/>"
+                       title="${downloadLink.linkTitle}">
+                            ${downloadLink.linkText}</a><span
+                        class="list_date"> - ${downloadLink.fileSize}</span>
+                </li>
+            </c:forEach>
+        </ul>
+    </c:if>
+    <c:if test="${not empty model.downloadSection.taxaAnalysisDownloadLinks}">
+        <h4>Taxonomic Analysis</h4>
+        <ul>
+            <c:forEach var="downloadLink" items="${model.downloadSection.taxaAnalysisDownloadLinks}"
+                       varStatus="loop">
+                <li>
+                    <a href="<c:url value="${baseURL}/${downloadLink.linkURL}"/>"
+                       title="${downloadLink.linkTitle}">
+                            ${downloadLink.linkText}</a><span
+                        class="list_date"> - ${downloadLink.fileSize}</span>
+                </li>
+            </c:forEach>
+        </ul>
+    </c:if>
+</div>
+</div>
 <div id="sidebar-analysis">
 
     <div id="sidebar-steps">
-        <h2> Data processing steps </h2>
+        <h3> Data processing steps </h3>
         <span class="separator"></span>
         <ol>
             <li>1. Reads submitted</li>
@@ -40,7 +95,7 @@
         </ol>
     </div>
 </div>
-
+</aside>
 <span class="subtitle">Sample analysis results - ${model.experimentType.lowerCase} <a
         href="<c:url value="${baseURL}/sample/${model.sample.sampleId}"/>"
         style="font-size:90%;"> (${model.sample.sampleId})</a></span>
@@ -50,58 +105,6 @@
 
 <c:choose>
     <c:when test="${not empty model.sample.analysisCompleted}">
-
-        <h3>Download results</h3>
-
-        <div id="box-export">
-            <h4>Sequence data</h4>
-            <ul>
-                <c:forEach var="downloadLink" items="${model.downloadSection.seqDataDownloadLinks}" varStatus="loop">
-                    <li>
-                        <c:choose>
-                            <c:when test="${downloadLink.externalLink}">
-                                <a href="${downloadLink.linkURL}"
-                                   title="${downloadLink.linkTitle}">${downloadLink.linkText}</a>
-                            </c:when>
-                            <c:otherwise>
-                                <a href="<c:url value="${baseURL}/${downloadLink.linkURL}"/>"
-                                   title="${downloadLink.linkTitle}">
-                                        ${downloadLink.linkText}</a><span
-                                    class="list_date">&nbsp;${downloadLink.fileSize}</span>
-                            </c:otherwise>
-                        </c:choose>
-                    </li>
-                </c:forEach>
-            </ul>
-            <c:if test="${not empty model.downloadSection.funcAnalysisDownloadLinks}">
-                <h4>Functional Analysis</h4>
-                <ul>
-                    <c:forEach var="downloadLink" items="${model.downloadSection.funcAnalysisDownloadLinks}"
-                               varStatus="loop">
-                        <li>
-                            <a href="<c:url value="${baseURL}/${downloadLink.linkURL}"/>"
-                               title="${downloadLink.linkTitle}">
-                                    ${downloadLink.linkText}</a><span
-                                class="list_date">&nbsp;${downloadLink.fileSize}</span>
-                        </li>
-                    </c:forEach>
-                </ul>
-            </c:if>
-            <c:if test="${not empty model.downloadSection.taxaAnalysisDownloadLinks}">
-                <h4>Taxonomic Analysis</h4>
-                <ul>
-                    <c:forEach var="downloadLink" items="${model.downloadSection.taxaAnalysisDownloadLinks}"
-                               varStatus="loop">
-                        <li>
-                            <a href="<c:url value="${baseURL}/${downloadLink.linkURL}"/>"
-                               title="${downloadLink.linkTitle}">
-                                    ${downloadLink.linkText}</a><span
-                                class="list_date">&nbsp;${downloadLink.fileSize}</span>
-                        </li>
-                    </c:forEach>
-                </ul>
-            </c:if>
-        </div>
 
         <h3>General statistics</h3>
         <c:url var="statsImage" value="/getImage" scope="request">
@@ -122,13 +125,14 @@
         <p>Top five most frequently found InterPro matches to this sample:</p>
         <c:choose>
             <c:when test="${not empty model.interProEntries}">
-                <div class="export">
+                <div id="small"> <div class="export">
                     <a id="csv"
                        href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportIPRFile"/>"
                        title="<spring:message code="analysisStatsView.label.download.i5.table.view"/>">
                         <spring:message code="analysisStatsView.label.download.i5.table.view"/><%-- <c:out
                     value="${model.emgFile.fileSizeMap['_summary.ipr']}"/>--%>
                     </a>
+                </div>
                 </div>
                 <table border="1" class="result" id="small">
                     <thead>
@@ -172,28 +176,27 @@
 
         <p>A summary of Gene Ontology (GO) terms derived from InterPro matches to your sample is provided in the
             chart
-            below. You can view the complete list of GO terms by clicking on the download icon.</p>
-
-        <div>
-            <div id="go-chart">
-                <div class="export">
-                    <c:if test="${not empty model.pieChartBiologicalProcessURL}">
-
-                        <%-- remove detailed TSV export : available on top
-                  <a title="<spring:emailMessage code="analysisStatsView.label.download.goterms.full.csv"/>" href="<c:url
-                           value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportGOFile/${model.emgFile.fileName}"/>">
-                       <spring:emailMessage code="analysisStatsView.label.download.goterms.full.csv"/></a>--%>
+            below. <br/>You can view the complete list of GO terms by clicking on the download icon.</p>
 
 
-                        <a id="csv"
-                           title="<spring:message code="analysisStatsView.label.download.go.slim.anchor.title"/>"
-                           href="<c:url
-                            value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportGOSlimFile"/>">
-                            <spring:message
-                                    code="analysisStatsView.label.download.go.slim.anchor.href.message"/></a>
-                    </c:if>
-                </div>
-            </div>
+        <div class="export" style="float:none; margin-left:9px;">
+            <c:if test="${not empty model.pieChartBiologicalProcessURL}">
+
+                <%-- remove detailed TSV export : available on top
+          <a title="<spring:emailMessage code="analysisStatsView.label.download.goterms.full.csv"/>" href="<c:url
+                   value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportGOFile/${model.emgFile.fileName}"/>">
+               <spring:emailMessage code="analysisStatsView.label.download.goterms.full.csv"/></a>--%>
+
+
+                <a id="csv"
+                   title="<spring:message code="analysisStatsView.label.download.go.slim.anchor.title"/>"
+                   href="<c:url
+                    value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportGOSlimFile"/>">
+                    <spring:message
+                            code="analysisStatsView.label.download.go.slim.anchor.href.message"/></a>
+            </c:if>
+        </div>
+
             <div id="go-chart">
                 <div id="go-chart-process">
                     <h2>Biological process</h2>
@@ -225,7 +228,7 @@
                     <p><img src="<c:out value="${cellImage}"/>"/></p>
                 </div>
             </div>
-        </div>
+
         <div class="but_top"><a href="#top" title="back to the top page">Top</a></div>
 
     </c:when>
