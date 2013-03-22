@@ -1,7 +1,7 @@
 <div id="list-news" class="grid_9 omega">
     <h2>Data content</h2>
-    <p class="data-stat"><span class="icon icon-functional" data-icon="U" title=""></span> <strong>${model.publicSamplesCount}</strong> public samples (${model.publicStudiesCount} public project)<br/>
-    <span class="icon icon-functional" data-icon="L" title=""></span> <strong>${model.privateSamplesCount}</strong> private samples (${model.privateStudiesCount} private project)<br/>
+    <p class="data-stat"><span class="icon icon-functional" data-icon="U" title=""></span> <strong>${model.publicSamplesCount}</strong> public samples (${model.publicStudiesCount} public projects)<br/>
+    <span class="icon icon-functional" data-icon="L" title=""></span> <strong>${model.privateSamplesCount}</strong> private samples (${model.privateStudiesCount} private projects)<br/>
     <span class="icon icon-generic" data-icon="M" title=""></span> <strong>40</strong> registered users<br/>
     <%--<img src="/metagenomics/img/icons_sub.png" alt="easy submission" width="20px" style="vertical-align: top;"> <strong>X</strong> total submitted nucleotide reads--%>
     </p>
