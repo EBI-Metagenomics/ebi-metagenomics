@@ -453,7 +453,7 @@ background: url(../img/bgd_main_grey.jpg) #b5b5b5;
 text-align:left;
 }
 
-#small {width:72%;} /*table in analysis result changed in pourcentage for mitigation*/
+#small {width:70%;} /*table in analysis result changed in pourcentage for mitigation*/
 
 table.result {
 line-height: 1.4em;
@@ -551,7 +551,7 @@ margin:0.83em 0;/*added for compliance*/
 h3 {
 color:#7c8c99;
 font-size:160%;
-margin:14px 0 7px 0;
+margin:9px 0;
 }
 
 .form_row h3 {
@@ -586,7 +586,7 @@ color:#445668;
 /*padding-bottom:14px;*/
 }
 
-#sidebar h2, #sidebar-steps h2, #sidebar-related h2 {
+#sidebar h2, #sidebar-related h2 {
 padding:7px 0 0 0;
 color:#333333;
 font-size:150%;
@@ -772,14 +772,14 @@ border: solid 0px black;
 width:222px;
 }
 
+#sidebar-download, #sidebar-analysis {width:30%;float:right;border: solid 0px black;}
 
-#sidebar-analysis {
-width:256px;float:right;border: solid 0px black; padding:9px;
+#sidebar-analysis {clear: right;
  background-color:white;/*to deal with description box border*/}
 
 
 #sidebar-steps  ol {
-    padding:9px; margin:9px 0;
+padding:9px; margin:0;
 counter-reset: section;
 list-style-type: none;
 }
@@ -800,6 +800,7 @@ border: 1px solid #E5E5E5;
 border-radius: 0 0 20px 0;
 background:  #F4F4F8;
 }
+
 #box-export ul {padding:0 9px;margin-left: 9px;}
 #box-export ul li {
 list-style-image:url(../img/arrow_menu_exp.gif);
@@ -822,12 +823,8 @@ margin-left:7px;
 list-style-type:square;
 color:#c3c3c3;}
 
-#sidebar-steps,#sidebar-related {
-margin: 20px 0 0 0;
-color:#3E3E3E;
-font-size:90%;
-padding:7px;
-}
+#sidebar-related {margin: 20px 0 0 0;color:#3E3E3E;font-size:90%; padding:7px;}
+#sidebar-steps {color:#3E3E3E; font-size: 89%;width:auto;margin:18px 9px 0 0 ;padding:0;}
 
 #sidebar-related {margin:0;}
 #sidebar-related  ul{ margin:0;padding:9px; }
@@ -1298,7 +1295,6 @@ background: url(../img/bgd_contentfull_menu.gif) -14px;
 
 #go-chart {
 display:block;
-border:0px solid black;
 overflow:auto;
 width:100%;
 }
