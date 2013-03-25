@@ -45,8 +45,7 @@
                                 <div class="cent"><img src="${pageContext.request.contextPath}/img/icons_sub.png"
                                                        alt="easy submission"/></div>
                                 <p>Manually supported submission process, with help available for
-                                    meta-data provision. Raw SFF format 454 data accepted, other formats considered on
-                                    request.<br/></p>
+                                    meta-data provision. Accepted data formats include SFF (454), FASTQ (Illumina and IonTorrent).<br/></p>
 
                                 <div class="find_more"><a href="${pageContext.request.contextPath}/info#features_1"
                                                           title="find out more about easy submission"><span>Find out more</span></a>

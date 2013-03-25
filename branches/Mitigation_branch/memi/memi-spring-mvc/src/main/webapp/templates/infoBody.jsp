@@ -36,7 +36,7 @@
 <figcaption><p>Metagenomics is the study of all genomes present in any given environment...</p></figcaption></figure>
 <p>Metagenomics is the study of all genomes present in any given environment without the need for prior individual identification or amplification. For example, in its simplest form, a metagenomic study might be the direct sequence results of DNA extracted from a bucket of sea water.</p>
 <p>The EBI Metagenomics service is an automated pipeline for the analysis and archiving of metagenomic data that aims to provide insights into the functional and metabolic potential of a sample. You can freely browse all the public data in the repository.</p>
-<p> This website is a beta version. Please take your time to explore and tell us what you think about it. We welcome your feedback on look and feel, functionality or scientific content. If you want to be kept informed about updates to the website, please subscribe to our mailing list. Also note that since it is a beta site, it may change over the coming months.</p>
+<p>Please take your time to explore and tell us what you think about our website. We welcome your feedback on look and feel, functionality or scientific content. If you want to be kept informed about updates to the website, please subscribe to our mailing list. Also note, as we are constantly trying to improve your experience, this site may change from time to time.</p>
 
 
 <h3 id="features">Why choose EBI Metagenomics?</h3>
@@ -64,9 +64,8 @@ The SRA only accepts data that is intended for public release. However, any data
 </p>
 
 <h4 id="format">Check your data format</h4>
-<p>The service accepts long (minimum reads lengths over 100nt), unassembled random shotgun sequence reads, such as Roche 454 sequences, from metagenomic or metatranscriptomic samples.
- </p>
- <p>If your dataset does not fit this description, please contact us to help us better understand your needs.</p>
+<p>The service accepts all NGS shotgun sequence reads, including Roche 454, Illumina and IonTorrent sequences, from metagenomic or metatranscriptomic samples. Amplicon marker gene studies are also accepted, particularly if associated with other meta-omic data for a sample.</p>
+ <p>If your dataset does not fit these descriptions, please contact us to help us better understand your needs.</p>
 
 <h4 id="prepublication">Filter any human-associated samples</h4>
 <p>Human associated samples (e.g., human gut samples) must be filtered prior to submission to remove any human contaminants.</p>
@@ -93,7 +92,6 @@ The SRA only accepts data that is intended for public release. However, any data
 
 <p>We intend to make frequent updates to the interfaces and services provided. The following features are planned for future releases of the resource:<br/>
 <ul>
-    <li>Inclusion of an assembly step for over-lapping paired-end short reads</li>
     <li>Better information visualisations, including comparative analysis of results</li>
     <li>Inclusion of 16S rRNA diversity analysis</li>
     <li>Interactive visualisation of InterPro matches with links to InterPro entries</li>
@@ -130,7 +128,7 @@ The SRA only accepts data that is intended for public release. However, any data
 
 <h4 id="credits_2">Photos</h4>
 
-<p>We would like to thank the following authors for their contribution related to the top pictures:</p>
+<p>We would like to thank the following authors for their contribution related to the top banner pictures:</p>
 <ul>
     <li>Image: A Blue Starfish (Linckia laevigata) resting on hard Acropora coral. Lighthouse, Ribbon Reefs, Great
         Barrier Reef, by Richard Ling [<a href="http://www.rling.com" class="ext" rel="nofollow">Copyright (c)
