@@ -2,6 +2,10 @@
 
 <h2>About EBI Metagenomics</h2>
 
+
+
+<h3 id="what_about">EBI Metagenomics service</h3>
+
 <div id="sidebar-nav">
     <ul>
         <%--<li><a href="#intro">Introduction</a></li>
@@ -29,8 +33,6 @@
 
     </ul>
 </div>
-
-<h3 id="what_about">EBI Metagenomics service</h3>
 
 <figure class="fr"><img src="${pageContext.request.contextPath}/img/pict_metagenomics_01.png" alt="Metagenomics"/>
 <figcaption><p>Metagenomics is the study of all genomes present in any given environment...</p></figcaption></figure>
