@@ -62,7 +62,7 @@
 <div id="sidebar-analysis">
 
     <div id="sidebar-steps">
-        <h3> Data processing steps </h3>
+        <h2> Data processing steps </h2>
         <span class="separator"></span>
         <ol>
             <li>1. Reads submitted</li>
