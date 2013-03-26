@@ -8,7 +8,7 @@
 
 <c:choose>
     <c:when test="${not empty model.publications}">
-        <div id="sidebar-analysis">
+        <div id="sidebar-allrel">
             <div id="sidebar-related">
                 <h2>Related resources</h2>
                 <span class="separator"></span>
