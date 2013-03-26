@@ -20,7 +20,7 @@
                         package
                     </li>
                     <li>2.2. Quality filtered - sequences with > 10% undetermined nucleotides removed</li>
-                    <li>2.3. Read length filtered - sequences shorter than 100 nt removed</li>
+                    <li>2.3. Read length filtered - sequences shorter than ???? nt removed</li>
                     <li>2.4. Duplicate sequences removed - clustered on 99% identity (UCLUST v 1.1.579),
                         representative sequence chosen
                     </li>
