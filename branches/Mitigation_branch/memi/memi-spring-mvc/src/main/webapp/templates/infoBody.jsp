@@ -37,8 +37,9 @@
 <figure class="fr"><img src="${pageContext.request.contextPath}/img/pict_metagenomics_01.png" alt="Metagenomics"/>
 <figcaption><p>Metagenomics is the study of all genomes present in any given environment...</p></figcaption></figure>
 <p>Metagenomics is the study of all genomes present in any given environment without the need for prior individual identification or amplification. For example, in its simplest form, a metagenomic study might be the direct sequence results of DNA extracted from a bucket of sea water.</p>
-<p>The EBI Metagenomics service is an automated pipeline for the analysis and archiving of metagenomic data that aims to provide insights into the functional and metabolic potential of a sample. You can freely browse all the public data in the repository.</p>
-<p>Please take your time to explore and tell us what you think about our website. We welcome your feedback on look and feel, functionality or scientific content. If you want to be kept informed about updates to the website, please subscribe to our mailing list. Also note, as we are constantly trying to improve your experience, this site may change from time to time.</p>
+<p>The EBI Metagenomics service is an automated pipeline for the analysis and archiving of metagenomic data that aims to provide insights into the phylogenetic diversity as well as the functional and metabolic potential of a sample. You can freely browse all the public data in the repository.
+</p>
+<p>Please take your time to explore and tell us what you think about our website. We welcome your feedback on look and feel, functionality or scientific content. If you want to be kept informed about updates to the website, please subscribe to our mailing list. Also note, as we constantly try to improve the site, it may change from time to time.</p>
 
 
 <h3 id="features">Why choose EBI Metagenomics?</h3>
@@ -50,7 +51,7 @@
 
 <h4 id="features_2">Powerful analysis</h4>
 <div class="about_img_l"><img src="${pageContext.request.contextPath}/img/icons_ana.png" alt="powerful analysis" /></div>
-<p>The service makes extensive use of InterPro for functional analysis of predicted protein coding sequences. InterPro uses diagnostic models to classify sequences into families and predict the presence of functionally important domains and sites. By utilising this resource, the service offers a powerful and sophisticated alternative to BLAST-based functional metagenomic analyses.
+<p>The service identifies rRNA sequences, using rRNASelector, and performs taxonomic analysis upon 16S rRNAs using Qiime. The remaining reads are submitted for functional analysis of predicted protein coding sequences using the InterPro sequence analysis resource. InterPro uses diagnostic models to classify sequences into families and to predict the presence of functionally important domains and sites. By utilising this resource, the service offers a powerful and sophisticated alternative to BLAST-based functional metagenomic analyses.
 <br/><br/></p>
 
 <h4 id="features_3">Data archiving</h4>
@@ -66,7 +67,7 @@ The SRA only accepts data that is intended for public release. However, any data
 </p>
 
 <h4 id="format">Check your data format</h4>
-<p>The service accepts all NGS shotgun sequence reads, including Roche 454, Illumina and IonTorrent sequences, from metagenomic or metatranscriptomic samples. Amplicon marker gene studies are also accepted, particularly if associated with other meta-omic data for a sample.</p>
+<p>The service accepts all NGS shotgun sequence reads, including Roche 454, Illumina and IonTorrent sequences, from metagenomic or metatranscriptomic samples. Amplicon marker gene studies may be included, particularly if they are associated with other meta-omic data for a sample.</p>
  <p>If your dataset does not fit these descriptions, please contact us to help us better understand your needs.</p>
 
 <h4 id="prepublication">Filter any human-associated samples</h4>
@@ -84,18 +85,17 @@ The SRA only accepts data that is intended for public release. However, any data
 </figure>
 
 <p>The raw sequence reads are clipped to remove technical parts and poor quality ends.</p>
-<p>They are then filtered to remove very short reads, duplicate reads and reads containing >10% unknown base calls. </p>
+<p>They are then filtered to remove very short reads, duplicate reads and reads containing >10% unknown base calls. Overlapping paired-end short reads are assembled.</p>
+<p>Reads containing ribosomal rRNA gene sequence are filtered out and taxonomic analysis is performed on 16S ribosomal RNA gene sequences using QIIME (<a href="http://europepmc.org/abstract/MED/20383131" class="ext">Qiime article</a>).</p>
 <p>The remaining reads are subject to analysis by FragGeneScan (FGS) (<a
             href="http://nar.oxfordjournals.org/content/early/2010/08/29/nar.gkq747.abstract" class="ext">FragGeneScan article</a>) to predict coding sequences (pCDS). </p>
 <p>These are then analysed using InterProScan and results (including processed reads, pCDS, InterProScan results and GO term annotation results) are returned. Results are also downloadable for further interrogation.</p>
-
 
 <h3 id="p_features">Planned features</h3>
 
 <p>We intend to make frequent updates to the interfaces and services provided. The following features are planned for future releases of the resource:<br/>
 <ul>
     <li>Better information visualisations, including comparative analysis of results</li>
-    <li>Inclusion of 16S rRNA diversity analysis</li>
     <li>Interactive visualisation of InterPro matches with links to InterPro entries</li>
     <li>Human contaminant filtering</li>
 </ul>

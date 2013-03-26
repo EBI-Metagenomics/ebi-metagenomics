@@ -74,7 +74,7 @@
                         package
                     </li>
                     <li>2.2. Quality filtered - sequences with > 10% undetermined nucleotides removed</li>
-                    <li>2.3. Read length filtered - sequences shorter than 100 nt removed</li>
+                    <li>2.3. Read length filtered - depending on the platform short sequences are removed</li>
                     <li>2.4. Duplicate sequences removed - clustered on 99% identity (UCLUST v 1.1.579),
                         representative sequence chosen
                     </li>
@@ -84,13 +84,12 @@
                     </li>
                 </ol>
             </li>
-            <li>3. CDS predicted (FragGeneScan v 1.15)</li>
-            <li>4. Matches were generated against predicted CDS with InterProScan 5.0 (beta release) using a subset
-                of
+            <li>3. rRNA reads are filtered using rRNASelector (rRNASelector v 1.0.0)</li>
+            <li>4. Taxonomy analysis is performed upon 16s rRNA using Qiime (Qiime v 1.5).</li>
+            <li>5. CDS predicted (FragGeneScan v 1.15)</li>
+            <li>6. Matches were generated against predicted CDS with InterProScan 5.0 (beta release) using a subset of
                 databases from InterPro release 31.0 (databases used for analysis: Pfam, TIGRFAM, PRINTS, PROSITE
-                patterns, Gene3d). The Gene Ontology term summary was generated using the following GO slim:
-                goslim_goa
-
+                patterns, Gene3d). The Gene Ontology term summary was generated using the following GO slim: goslim_goa
             </li>
         </ol>
     </div>
@@ -174,9 +173,8 @@
 
         <h4>Annotation by GO Terms</h4>
 
-        <p>A summary of Gene Ontology (GO) terms derived from InterPro matches to your sample is provided in the
-            chart
-            below. <br/>You can view the complete list of GO terms by clicking on the download icon.</p>
+        <p>A summary of Gene Ontology (GO) terms derived from InterPro matches to your sample is provided in the chart
+            below. You can view the complete list of GO terms by clicking on the download icon.</p>
 
 
         <div class="export" style="float:none; margin-left:9px;">
