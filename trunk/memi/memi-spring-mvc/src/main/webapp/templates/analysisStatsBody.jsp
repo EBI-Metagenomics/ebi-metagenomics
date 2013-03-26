@@ -30,11 +30,12 @@
                     </li>
                 </ol>
             </li>
-            <li>3. CDS predicted (FragGeneScan v 1.15)</li>
-            <li>4. Matches were generated against predicted CDS with InterProScan 5.0 (beta release) using a subset of
+            <li>3. rRNA reads are filtered using rRNASelector (rRNASelector v 1.0.0)</li>
+            <li>4. Taxonomy analysis is performed upon 16s rRNA using Qiime (Qiime v 1.5).</li>
+            <li>5. CDS predicted (FragGeneScan v 1.15)</li>
+            <li>6. Matches were generated against predicted CDS with InterProScan 5.0 (beta release) using a subset of
                 databases from InterPro release 31.0 (databases used for analysis: Pfam, TIGRFAM, PRINTS, PROSITE
                 patterns, Gene3d). The Gene Ontology term summary was generated using the following GO slim: goslim_goa
-
             </li>
         </ol>
     </div>
