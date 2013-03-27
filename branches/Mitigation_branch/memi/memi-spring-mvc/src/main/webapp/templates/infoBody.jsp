@@ -76,20 +76,53 @@ The SRA only accepts data that is intended for public release. However, any data
 
 <h3 id="analysis">How we analyse the data</h3>
 
-<figure class="fl">
-    <a href="${pageContext.request.contextPath}/img/chart_pipeline_400.gif"><img src="${pageContext.request.contextPath}/img/chart_pipeline.gif" alt="Pipeline chart"/> </a>
-    <%--<figcaption>--%>
-        <%--<h3>Pipeline</h3>--%>
-        <%--<p>The basic pipeline is outlined this chart.</p>--%>
-    <%--</figcaption>--%>
-</figure>
+<%--<figure class="fl">--%>
+    <%--<a href="${pageContext.request.contextPath}/img/chart_pipeline_400.gif"><img src="${pageContext.request.contextPath}/img/chart_pipeline.gif" alt="Pipeline chart"/> </a>--%>
+    <%--&lt;%&ndash;<figcaption>&ndash;%&gt;--%>
+        <%--&lt;%&ndash;<h3>Pipeline</h3>&ndash;%&gt;--%>
+        <%--&lt;%&ndash;<p>The basic pipeline is outlined this chart.</p>&ndash;%&gt;--%>
+    <%--&lt;%&ndash;</figcaption>&ndash;%&gt;--%>
+<%--</figure>--%>
 
-<p>The raw sequence reads are clipped to remove technical parts and poor quality ends.</p>
-<p>They are then filtered to remove very short reads, duplicate reads and reads containing >10% unknown base calls. Overlapping paired-end short reads are assembled.</p>
-<p>Reads containing ribosomal rRNA gene sequence are filtered out and taxonomic analysis is performed on 16S ribosomal RNA gene sequences using QIIME (<a href="http://europepmc.org/abstract/MED/20383131" class="ext">Qiime article</a>).</p>
-<p>The remaining reads are subject to analysis by FragGeneScan (FGS) (<a
-            href="http://nar.oxfordjournals.org/content/early/2010/08/29/nar.gkq747.abstract" class="ext">FragGeneScan article</a>) to predict coding sequences (pCDS). </p>
-<p>These are then analysed using InterProScan and results (including processed reads, pCDS, InterProScan results and GO term annotation results) are returned. Results are also downloadable for further interrogation.</p>
+<%--<p>The raw sequence reads are clipped to remove technical parts and poor quality ends.</p>--%>
+<%--<p>They are then filtered to remove very short reads, duplicate reads and reads containing >10% unknown base calls. Overlapping paired-end short reads are assembled.</p>--%>
+<%--<p>Reads containing ribosomal rRNA gene sequence are filtered out and taxonomic analysis is performed on 16S ribosomal RNA gene sequences using QIIME (<a href="http://europepmc.org/abstract/MED/20383131" class="ext">Qiime article</a>).</p>--%>
+<%--<p>The remaining reads are subject to analysis by FragGeneScan (FGS) (<a--%>
+            <%--href="http://nar.oxfordjournals.org/content/early/2010/08/29/nar.gkq747.abstract" class="ext">FragGeneScan article</a>) to predict coding sequences (pCDS). </p>--%>
+<%--<p>These are then analysed using InterProScan and results (including processed reads, pCDS, InterProScan results and GO term annotation results) are returned. Results are also downloadable for further interrogation.</p>--%>
+<p>Data processing steps:</p>
+    <div id="sidebar-steps" style="margin:0 9px 9px 9px;">
+
+
+        <ol>
+            <li>1. Reads submitted</li>
+
+            <li>2. Nucleotide sequences processed
+                <ol>
+                    <li>2.1. Clipped - low quality ends trimmed and adapter sequences removed using Biopython
+                        SeqIO
+                        package
+                    </li>
+                    <li>2.2. Quality filtered - sequences with > 10% undetermined nucleotides removed</li>
+                    <li>2.3. Read length filtered - depending on the platform short sequences are removed</li>
+                    <li>2.4. Duplicate sequences removed - clustered on 99% identity (UCLUST v 1.1.579),
+                        representative sequence chosen
+                    </li>
+                    <li>2.5. Repeat masked - RepeatMasker (open-3.2.2), removed reads with 50% or more
+                        nucleotides
+                        masked
+                    </li>
+                </ol>
+            </li>
+            <li>3. rRNA reads are filtered using rRNASelector (rRNASelector v 1.0.0)</li>
+            <li>4. Taxonomy analysis is performed upon 16s rRNA using Qiime (Qiime v 1.5).</li>
+            <li>5. CDS predicted (FragGeneScan v 1.15)</li>
+            <li>6. Matches were generated against predicted CDS with InterProScan 5.0 (beta release) using a subset of
+                databases from InterPro release 31.0 (databases used for analysis: Pfam, TIGRFAM, PRINTS, PROSITE
+                patterns, Gene3d). The Gene Ontology term summary was generated using the following GO slim: goslim_goa
+            </li>
+        </ol>
+    </div>
 
 <h3 id="p_features">Planned features</h3>
 
