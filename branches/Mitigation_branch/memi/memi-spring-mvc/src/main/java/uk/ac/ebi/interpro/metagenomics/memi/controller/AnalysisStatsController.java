@@ -263,8 +263,8 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
                         2,
                         getFileSize(file)));
             } else if (file.getName().endsWith(EmgFile.ResultFileType.TAX_ANALYSIS_TREE_FILE.getFileNameEnd())) {
-                taxaAnalysisDownloadLinks.add(new DownloadLink("Newick phylogenetic tree (Newick format)",
-                        "Click to download the Newick phylogenetic tree file (Newick format)",
+                taxaAnalysisDownloadLinks.add(new DownloadLink("Phylogenetic tree (Newick format)",
+                        "Click to download the phylogenetic tree file (Newick format)",
                         "analysisStatsView/" + sampleId + "?export=" + this.requestParamValues[2],
                         3,
                         getFileSize(file)));
