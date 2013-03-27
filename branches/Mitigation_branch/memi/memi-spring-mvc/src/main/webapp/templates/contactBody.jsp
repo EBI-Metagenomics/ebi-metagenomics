@@ -1,9 +1,8 @@
-
 <h2>Contact us</h2>
 
-<p>If you have any questions related to the EBI metagenomics resource, please email us at <a
-    href="mailto:datasubs@ebi.ac.uk?subject=EBI Metagenomics"
-    title="Send an enquiry about Metagenomics data submission">datasubs@ebi.ac.uk</a>.</p>
+<p>If you have any questions related to the EBI metagenomics resource, please <a title="EBI's support & feedback form"
+                                                                                 href="http://www.ebi.ac.uk/support/metagenomics"
+                                                                                 class="ext">contact us</a>.</p>
 
 <h3>Follow us on Twitter</h3>
 

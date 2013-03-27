@@ -11,6 +11,8 @@ public final class FilePathNameBuilder {
 
     private static final String SUB_FILE_PATH_NAME_BIOM_RESULT_FILE = "/otus/otu_table.biom";
 
+    private static final String SUB_FILE_PATH_NAME_TREE_RESULT_FILE = "/otus/rep_set.tre";
+
     private static final String FILE_NAME_ENDING_TAX_RESULT_FILE = "_rRNAFiltered.fasta_rep_set_tax_assignments.txt";
 
     private static final String SUB_DIR_PATH_NAME_TAX_RESULT_FILE = "/otus/rdp_assigned_taxonomy/";
@@ -46,6 +48,12 @@ public final class FilePathNameBuilder {
         if (biomFile.exists()) {
             results.add(humanReadableFile);
         }
+        //3. Tree file with .tre extension
+        File treeFile = new File(rootDirPathName + SUB_FILE_PATH_NAME_TREE_RESULT_FILE);
+        if (treeFile.exists()) {
+            results.add(treeFile);
+        }
+
         return results;
     }
 
@@ -63,9 +71,11 @@ public final class FilePathNameBuilder {
         String directoryName = emgFile.getFileIDInUpperCase().replace('.', '_');
         final String rootDirPathName = propertyContainer.getPathToAnalysisDirectory() + directoryName;
         switch (resultFileType) {
-            case BIOM:
+            case TAX_ANALYSIS_BIOM_FILE:
                 return rootDirPathName + SUB_FILE_PATH_NAME_BIOM_RESULT_FILE;
-            case TAB_SEPARATED_TAX_RESULT_FILE:
+            case TAX_ANALYSIS_TREE_FILE:
+                return rootDirPathName + SUB_FILE_PATH_NAME_TREE_RESULT_FILE;
+            case TAX_ANALYSIS_TSV_FILE:
                 return rootDirPathName + SUB_DIR_PATH_NAME_TAX_RESULT_FILE + directoryName + FILE_NAME_ENDING_TAX_RESULT_FILE;
             default:
                 return rootDirPathName + '/' + directoryName + resultFileType.getFileNameEnd();

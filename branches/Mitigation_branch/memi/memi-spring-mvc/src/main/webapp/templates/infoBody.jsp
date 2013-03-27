@@ -68,7 +68,7 @@ The SRA only accepts data that is intended for public release. However, any data
 
 <h4 id="format">Check your data format</h4>
 <p>The service accepts all NGS shotgun sequence reads, including Roche 454, Illumina and IonTorrent sequences, from metagenomic or metatranscriptomic samples. Amplicon marker gene studies may be included, particularly if they are associated with other meta-omic data for a sample.</p>
- <p>If your dataset does not fit these descriptions, please contact us to help us better understand your needs.</p>
+ <p>If your dataset does not fit these descriptions, please <a title="EBI's support & feedback form" href="http://www.ebi.ac.uk/support/metagenomics" class="ext">contact us</a> to help us better understand your needs.</p>
 
 <h4 id="prepublication">Filter any human-associated samples</h4>
 <p>Human associated samples (e.g., human gut samples) must be filtered prior to submission to remove any human contaminants.</p>
@@ -101,7 +101,7 @@ The SRA only accepts data that is intended for public release. However, any data
 </ul>
 </p>
 
-<p>We actively encourage users to make requests for additional tools and analyses that they wish to see as part of the service. We also welcome general feedback. Please contact us if you have comments about any aspect of the site</p>
+<p>We actively encourage users to make requests for additional tools and analyses that they wish to see as part of the service. We also welcome general feedback. Please <a title="EBI's support & feedback form" href="http://www.ebi.ac.uk/support/metagenomics" class="ext">contact us</a> if you have comments about any aspect of the site</p>
 
 <h3 id="funding">Funding</h3>
 <div class="about_img_r"><img src="${pageContext.request.contextPath}/img/funding/FP7.jpg" alt="FP7" width="122" height="94"/>

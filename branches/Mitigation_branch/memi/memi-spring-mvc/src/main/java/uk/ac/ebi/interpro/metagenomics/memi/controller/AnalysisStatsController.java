@@ -57,7 +57,7 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
     @Resource
     private MemiDownloadService downloadService;
 
-    private final String[] requestParamValues = new String[]{"biom", "taxa"};
+    private final String[] requestParamValues = new String[]{"biom", "taxa", "tree"};
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView doGetSample(@PathVariable final String sampleId,
@@ -68,9 +68,11 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
         log.info("Checking if sample is accessible...");
         if (export != null) {
             if (export.equalsIgnoreCase(this.requestParamValues[0])) {
-                return handleExport(sampleId, response, request, EmgFile.ResultFileType.BIOM, "_otu.biom");
+                return handleExport(sampleId, response, request, EmgFile.ResultFileType.TAX_ANALYSIS_BIOM_FILE, "_otu.biom");
             } else if (export.equalsIgnoreCase(this.requestParamValues[1])) {
-                return handleExport(sampleId, response, request, EmgFile.ResultFileType.TAB_SEPARATED_TAX_RESULT_FILE, "_otu.tsv");
+                return handleExport(sampleId, response, request, EmgFile.ResultFileType.TAX_ANALYSIS_TSV_FILE, "_otu.tsv");
+            } else if (export.equalsIgnoreCase(this.requestParamValues[2])) {
+                return handleExport(sampleId, response, request, EmgFile.ResultFileType.TAX_ANALYSIS_TREE_FILE, "_newick.tre");
             }
         }
         return checkAccessAndBuildModel(new ModelProcessingStrategy<Sample>() {
@@ -248,17 +250,23 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
                         "analysisStatsView/" + sampleId + "/doExportIPRhitsFile",
                         6,
                         getFileSize(file)));
-            } else if (file.getName().endsWith(EmgFile.ResultFileType.BIOM.getFileNameEnd())) {
+            } else if (file.getName().endsWith(EmgFile.ResultFileType.TAX_ANALYSIS_BIOM_FILE.getFileNameEnd())) {
                 taxaAnalysisDownloadLinks.add(new DownloadLink("OTUs and taxonomic assignments (BIOM)",
                         "Click to download the OTUs and taxonomic assignments (BIOM)",
                         "analysisStatsView/" + sampleId + "?export=" + this.requestParamValues[0],
-                        7,
+                        1,
                         getFileSize(file)));
-            } else if (file.getName().endsWith(EmgFile.ResultFileType.TAB_SEPARATED_TAX_RESULT_FILE.getFileNameEnd())) {
+            } else if (file.getName().endsWith(EmgFile.ResultFileType.TAX_ANALYSIS_TSV_FILE.getFileNameEnd())) {
                 taxaAnalysisDownloadLinks.add(new DownloadLink("OTUs and taxonomic assignments (TSV)",
                         "Click to download the OTUs and taxonomic assignments (TSV)",
                         "analysisStatsView/" + sampleId + "?export=" + this.requestParamValues[1],
-                        8,
+                        2,
+                        getFileSize(file)));
+            } else if (file.getName().endsWith(EmgFile.ResultFileType.TAX_ANALYSIS_TREE_FILE.getFileNameEnd())) {
+                taxaAnalysisDownloadLinks.add(new DownloadLink("Newick phylogenetic tree (Newick format)",
+                        "Click to download the Newick phylogenetic tree file (Newick format)",
+                        "analysisStatsView/" + sampleId + "?export=" + this.requestParamValues[2],
+                        3,
                         getFileSize(file)));
             }
 

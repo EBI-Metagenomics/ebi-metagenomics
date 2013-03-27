@@ -58,8 +58,9 @@ public class EmgFile {
         I5_TSV("_I5.tsv"),
         IPR("_summary.ipr"),
         IPR_HITS("_IPRhits.fasta"),
-        BIOM(".biom"),
-        TAB_SEPARATED_TAX_RESULT_FILE("_rRNAFiltered.fasta_rep_set_tax_assignments.txt");
+        TAX_ANALYSIS_BIOM_FILE(".biom"),
+        TAX_ANALYSIS_TREE_FILE(".tre"),
+        TAX_ANALYSIS_TSV_FILE("_rRNAFiltered.fasta_rep_set_tax_assignments.txt");
 
         private String fileNameEnd;
 

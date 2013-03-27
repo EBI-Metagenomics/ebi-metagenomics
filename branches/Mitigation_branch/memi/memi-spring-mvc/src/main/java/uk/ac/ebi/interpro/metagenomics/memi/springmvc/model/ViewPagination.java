@@ -38,7 +38,7 @@ public class ViewPagination {
         this.totalItems = totalItems;
         this.pageSize = pageSize;
         setPreviousStartPos();
-        setNextStartPos();
+        setNextStartPosAndExistNextStartPos();
         setDisplayedItemRange();
         setLastPosition();
     }
@@ -63,18 +63,28 @@ public class ViewPagination {
         return nextStartPos;
     }
 
-    public void setNextStartPos() {
-        this.nextStartPos = startPosition + getPageSize();
-        if (nextStartPos > totalItems) {
-            nextStartPos = startPosition;
-            existNextStartPos = false;
+    /**
+     * Example:
+     * <p/>
+     * startPosition=10
+     * pageSize=10
+     * totalItems=20
+     * Then nextStartPos=10+10=20
+     * If 20=>20
+     * Then nextStartPos=10
+     */
+    public void setNextStartPosAndExistNextStartPos() {
+        this.nextStartPos = startPosition + pageSize;
+        if (nextStartPos >= totalItems) {
+            this.nextStartPos = startPosition;
+            this.existNextStartPos = false;
         } else {
-            existNextStartPos = true;
+            this.existNextStartPos = true;
         }
     }
 
     public void setPreviousStartPos() {
-        this.previousStartPos = startPosition - getPageSize();
+        this.previousStartPos = startPosition - pageSize;
         if (previousStartPos < start) {
             previousStartPos = start;
             existPreviousStartPos = false;
@@ -134,6 +144,9 @@ public class ViewPagination {
     }
 
     public void setLastPosition() {
-        this.lastLinkPosition = (int) (totalItems - (totalItems % getPageSize()));
+        //There are 2 cases to distinguish
+        //Case 1: The modulo of totalItems and pageSize is NULL, e.g. if the sample size is 20. So you will have 2 pages (1-10 and 11-20) and the last link position (startPosition) should be 10
+        //Case 2: The modulo of totalItems and pageSize is NOT NULL, e.g. if the sample size is 21. So you will have 3 pages (1-10 and 11-20 and 21-21 of 21) and the last link position (startPosition) should be 20.
+        this.lastLinkPosition = (int) (totalItems % pageSize == 0 ? totalItems - pageSize : (totalItems - (totalItems % pageSize)));
     }
 }
