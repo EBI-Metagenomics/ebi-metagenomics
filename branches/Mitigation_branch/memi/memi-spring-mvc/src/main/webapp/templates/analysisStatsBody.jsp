@@ -59,41 +59,7 @@
     </c:if>
 </div>
 </div>
-<div id="sidebar-analysis">
 
-    <div id="sidebar-steps">
-        <h2> Data processing steps </h2>
-        <span class="separator"></span>
-        <ol>
-            <li>1. Reads submitted</li>
-
-            <li>2. Nucleotide sequences processed
-                <ol>
-                    <li>2.1. Clipped - low quality ends trimmed and adapter sequences removed using Biopython
-                        SeqIO
-                        package
-                    </li>
-                    <li>2.2. Quality filtered - sequences with > 10% undetermined nucleotides removed</li>
-                    <li>2.3. Read length filtered - depending on the platform short sequences are removed</li>
-                    <li>2.4. Duplicate sequences removed - clustered on 99% identity (UCLUST v 1.1.579),
-                        representative sequence chosen
-                    </li>
-                    <li>2.5. Repeat masked - RepeatMasker (open-3.2.2), removed reads with 50% or more
-                        nucleotides
-                        masked
-                    </li>
-                </ol>
-            </li>
-            <li>3. rRNA reads are filtered using rRNASelector (rRNASelector v 1.0.0)</li>
-            <li>4. Taxonomy analysis is performed upon 16s rRNA using Qiime (Qiime v 1.5).</li>
-            <li>5. CDS predicted (FragGeneScan v 1.15)</li>
-            <li>6. Matches were generated against predicted CDS with InterProScan 5.0 (beta release) using a subset of
-                databases from InterPro release 31.0 (databases used for analysis: Pfam, TIGRFAM, PRINTS, PROSITE
-                patterns, Gene3d). The Gene Ontology term summary was generated using the following GO slim: goslim_goa
-            </li>
-        </ol>
-    </div>
-</div>
 </aside>
 <span class="subtitle">Sample analysis results - ${model.experimentType.lowerCase} <a
         href="<c:url value="${baseURL}/sample/${model.sample.sampleId}"/>"
