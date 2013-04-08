@@ -215,7 +215,8 @@ public class MGModelFactory {
     }
 
     private static List<InterProEntry> getListOfInterProEntries(String pathToAnalysisDirectory, EmgFile emgFile, boolean isReturnSizeLimit) {
-        return loadInterProMatchesFromCSV(pathToAnalysisDirectory, emgFile, isReturnSizeLimit);
+        List<String[]> rows = getRawData(pathToAnalysisDirectory, emgFile, "_summary.ipr", ',');
+        return loadInterProMatchesFromCSV(rows, isReturnSizeLimit);
     }
 
 
@@ -224,19 +225,18 @@ public class MGModelFactory {
      * Please notice that the size of the returned list could be limited to 5 items.
      * TODO: Size limitation is a temporary solution
      *
-     * @param classPathToStatsFile
-     * @param emgFile
-     * @param isReturnSizeLimit    Specifies if the size of the returned list is limited to 5.
+     * @param rows              Parsed list of InterPro entries.
+     * @param isReturnSizeLimit Specifies if the size of the returned list is limited to 5.
      * @return
      */
-    private static List<InterProEntry> loadInterProMatchesFromCSV(String classPathToStatsFile, EmgFile emgFile, boolean isReturnSizeLimit) {
+    protected static List<InterProEntry> loadInterProMatchesFromCSV(List<String[]> rows,
+                                                                    final boolean isReturnSizeLimit) {
         List<InterProEntry> result = new ArrayList<InterProEntry>();
         log.info("Processing interpro result summary file...");
-        List<String[]> rows = getRawData(classPathToStatsFile, emgFile, "_summary.ipr", ',');
 
         if (rows != null) {
             //return size limitation the
-            if (isReturnSizeLimit) {
+            if (isReturnSizeLimit && rows.size() > 5) {
                 rows = rows.subList(0, 5);
             }
             for (String[] row : rows) {
@@ -252,7 +252,7 @@ public class MGModelFactory {
                 }
             }
         } else {
-            log.warn("Didn't get any data from interpro result summary file. There might be some fundamental change to this file" +
+            log.warn("Didn't get any data from InterPro result summary file. There might be some fundamental change to this file" +
                     "(maybe in the near past), which affects this parsing process!");
         }
         return result;

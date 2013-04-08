@@ -8,7 +8,7 @@ import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 
 /**
- * TODO: Description
+ * JUnit test for the pagination.
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @version $Id$
