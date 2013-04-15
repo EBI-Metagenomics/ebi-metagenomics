@@ -81,7 +81,7 @@ public abstract class Sample implements SecureEntity {
     private boolean isPublic;
 
     @Column(name = "SUBMITTER_ID")
-    private long submitterId;
+    private Long submitterId;
 
     @Column(name = "MISC")
     @Lob
@@ -223,11 +223,11 @@ public abstract class Sample implements SecureEntity {
         this.analysisCompleted = analysisCompleted;
     }
 
-    public long getSubmitterId() {
+    public Long getSubmitterId() {
         return submitterId;
     }
 
-    public void setSubmitterId(long submitterId) {
+    public void setSubmitterId(Long submitterId) {
         this.submitterId = submitterId;
     }
 

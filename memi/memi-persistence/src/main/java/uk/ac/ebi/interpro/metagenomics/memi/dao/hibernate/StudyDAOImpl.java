@@ -8,7 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Property;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -38,17 +38,17 @@ public class StudyDAOImpl implements StudyDAO {
     public StudyDAOImpl() {
     }
 
-    @Override
+    //TODO: Do implement
     public Study insert(Study newInstance) {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    @Override
+    //TODO: Do implement
     public Collection<Study> insert(Collection<Study> newInstances) {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    @Override
+    //TODO: Do implement
     public void update(Study modifiedInstance) {
         //To change body of implemented methods use File | Settings | File Templates.
     }
@@ -91,19 +91,67 @@ public class StudyDAOImpl implements StudyDAO {
     }
 
 
-    @Override
+    //TODO: Do implement
     public Study readDeep(Long id, String... deepFields) {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    @Override
+    //TODO: Do implement
     public void delete(Study persistentObject) {
         //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    @Override
     public Long count() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return getStudyCount(null);
+    }
+
+    @Transactional(readOnly = true)
+    public Long countAllPublic() {
+        return getStudyCount(new Boolean(true));
+    }
+
+    @Transactional(readOnly = true)
+    public Long countAllPrivate() {
+        return getStudyCount(new Boolean(false));
+    }
+
+    @Transactional(readOnly = true)
+    public Long countByCriteria(final List<Criterion> crits) {
+        Session session = sessionFactory.getCurrentSession();
+        if (session != null) {
+            try {
+                Criteria criteria = session.createCriteria(Study.class);
+                //Adds filter criteria
+                //add criterions
+                for (Criterion criterion : crits) {
+                    criteria.add(criterion);
+                }
+                //Adds row count
+                criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+                criteria.setProjection(Projections.rowCount());
+                return ((Long) criteria.list().get(0)).longValue();
+            } catch (HibernateException e) {
+                throw new HibernateException("Cannot retrieve filtered study count!", e);
+            }
+        }
+        return null;
+    }
+
+    private Long getStudyCount(final Boolean isPublic) {
+        Session session = sessionFactory.getCurrentSession();
+        if (session != null) {
+            Criteria criteria = session.createCriteria(Study.class);
+            if (isPublic != null) {
+                criteria.add(Restrictions.eq("isPublic", isPublic));
+            }
+            criteria.setProjection(Projections.rowCount());
+            try {
+                return ((Long) criteria.list().get(0)).longValue();
+            } catch (HibernateException e) {
+                throw new HibernateException("Cannot retrieve study count!", e);
+            }
+        }
+        return null;
     }
 
     @Transactional(readOnly = true)
@@ -249,22 +297,57 @@ public class StudyDAOImpl implements StudyDAO {
     }
 
     @Transactional(readOnly = true)
-    public List<Study> retrieveFilteredStudies(List<Criterion> crits) {
+    public List<Study> retrieveFilteredStudies(final List<Criterion> crits) {
+        return getFilteredStudies(crits, null, null, null, null);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Study> retrieveFilteredStudies(final List<Criterion> crits,
+                                               final Boolean isDescendingOrder,
+                                               final String propertyName) {
+        return getFilteredStudies(crits, null, null, isDescendingOrder, propertyName);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Study> retrieveFilteredStudies(final List<Criterion> crits,
+                                               final Integer startPosition,
+                                               final Integer pageSize,
+                                               final Boolean isDescendingOrder,
+                                               final String propertyName) {
+        return getFilteredStudies(crits, startPosition, pageSize, isDescendingOrder, propertyName);
+    }
+
+
+    private List<Study> getFilteredStudies(final List<Criterion> crits,
+                                           final Integer startPosition,
+                                           final Integer pageSize,
+                                           final Boolean isDescendingOrder,
+                                           final String propertyName) {
         Session session = sessionFactory.getCurrentSession();
-        Criteria criteria = null;
         if (session != null) {
-            criteria = session.createCriteria(Study.class);
+            Criteria criteria = session.createCriteria(Study.class);
             //add criterions
-            for (Criterion crit : crits) {
-                criteria.add(crit);
+            for (Criterion criterion : crits) {
+                criteria.add(criterion);
             }
-        }
-        if (criteria != null) {
-            criteria.addOrder(Property.forName("lastMetadataReceived").desc());
+            if (startPosition != null) {
+                criteria.setFirstResult(startPosition);
+            }
+            if (pageSize != null) {
+                criteria.setMaxResults(pageSize);
+            }
+            if (isDescendingOrder != null && propertyName != null) {
+                if (isDescendingOrder) {
+                    criteria.addOrder(Order.desc(propertyName));
+                } else {
+                    criteria.addOrder(Order.asc(propertyName));
+                }
+            }
+//            criteria.addOrder(Property.forName("lastMetadataReceived").desc());
             try {
                 return (List<Study>) criteria.list();
             } catch (HibernateException e) {
-                throw new HibernateException("Couldn't retrieve filtered studies!", e);
+                throw new HibernateException("Cannot retrieve filtered studies!", e);
             }
         }
         return new ArrayList<Study>();
@@ -285,12 +368,36 @@ public class StudyDAOImpl implements StudyDAO {
         return new ArrayList<Study>();
     }
 
-    @Override
+    @Transactional(readOnly = true)
+    public List<Study> retrieveOrderedPublicStudies(final Boolean isDescendingOrder,
+                                                    final String propertyName) {
+        Session session = sessionFactory.getCurrentSession();
+        if (session != null) {
+            Criteria criteria = session.createCriteria(Study.class);
+            criteria.add(Restrictions.eq("isPublic", true));
+            if (isDescendingOrder != null && propertyName != null) {
+                if (isDescendingOrder) {
+                    criteria.addOrder(Order.desc(propertyName));
+                } else {
+                    criteria.addOrder(Order.asc(propertyName));
+                }
+            }
+            try {
+                return (List<Study>) criteria.list();
+            } catch (HibernateException e) {
+                throw new HibernateException("Couldn't retrieve all public studies!", e);
+            }
+        }
+        return new ArrayList<Study>();
+    }
+
+    //TODO: Do implement
+
     public int deleteAll() {
         return 0;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    @Override
+    //TODO: Do implement
     public Long getMaximumPrimaryKey() {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }

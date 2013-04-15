@@ -20,9 +20,10 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.StudiesViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewStudiesModel;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.StudiesViewModelBuilder;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.tools.MemiTools;
 
 import javax.annotation.Resource;
@@ -67,13 +68,12 @@ public class ViewStudiesController extends AbstractController implements IContro
 
     //GET request handler methods
 
-    @Override
     public ModelAndView doGet(ModelMap model) {
         log.info("Requesting doGet...");
         //build and add the page model
-        populateModel(model, new StudyFilter());
-        model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((ViewStudiesModel) model.get(ViewModel.MODEL_ATTR_NAME)).getLoginForm());
-        model.addAttribute(StudyFilter.MODEL_ATTR_NAME, ((ViewStudiesModel) model.get(ViewModel.MODEL_ATTR_NAME)).getStudyFilter());
+        populateModel(model, new StudyFilter(), 0, true);
+        model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((StudiesViewModel) model.get(ViewModel.MODEL_ATTR_NAME)).getLoginForm());
+        model.addAttribute(StudyFilter.MODEL_ATTR_NAME, ((StudiesViewModel) model.get(ViewModel.MODEL_ATTR_NAME)).getFilter());
         return new ModelAndView(VIEW_NAME, model);
     }
 
@@ -86,19 +86,20 @@ public class ViewStudiesController extends AbstractController implements IContro
     @RequestMapping(value = "doExport", method = RequestMethod.GET)
     public ModelAndView doExportStudies(@ModelAttribute(StudyFilter.MODEL_ATTR_NAME) StudyFilter filter,
                                         final HttpServletResponse response, final HttpServletRequest request,
-                                        @RequestParam(required = false) final String searchTerm, @RequestParam(required = false) final StudyFilter.StudyVisibility studyVisibility,
+                                        @RequestParam(required = false) final String searchTerm,
+                                        @RequestParam(required = false) final StudyFilter.StudyVisibility studyVisibility,
                                         @RequestParam(required = false) final Study.StudyStatus studyStatus) {
         log.info("Requesting exportStudies (GET method)...");
         ModelMap model = new ModelMap();
         processRequestParams(filter, searchTerm, studyVisibility, studyStatus);
-        populateModel(model, filter);
-        Map<Study, Long> studyMap = ((ViewStudiesModel) model.get(ViewModel.MODEL_ATTR_NAME)).getStudySampleSizeMap();
+        populateModel(model, filter, false);
+        Collection<Study> studies = ((StudiesViewModel) model.get(ViewModel.MODEL_ATTR_NAME)).getStudies();
 
-        if (studyMap != null && studyMap.size() > 0) {
+        if (studies != null && studies.size() > 0) {
             //Create velocity spring_model
             Map<String, Object> velocityModel = new HashMap<String, Object>();
             velocityModel.put("tableHeaderNames", getTableHeaderNames());
-            velocityModel.put("studyMap", studyMap);
+            velocityModel.put("studies", studies);
             velocityModel.put("columnLength", MAX_CHARS_PER_COLUMN);
             //Create file content
             String fileContent = VelocityTemplateWriter.createFileContent(velocityEngine, VELOCITY_TEMPLATE_LOCATION_PATH, velocityModel);
@@ -125,10 +126,10 @@ public class ViewStudiesController extends AbstractController implements IContro
         log.info("Requesting exportStudies (GET method)...");
         ModelMap model = new ModelMap();
         processRequestParams(filter, searchTerm, studyVisibility, studyStatus);
-        populateModel(model, filter);
-        Map<Study, Long> studyMap = ((ViewStudiesModel) model.get(ViewModel.MODEL_ATTR_NAME)).getStudySampleSizeMap();
+        populateModel(model, filter, false);
+        Collection<Study> studies = ((StudiesViewModel) model.get(ViewModel.MODEL_ATTR_NAME)).getStudies();
 
-        if (studyMap != null && studyMap.size() > 0) {
+        if (studies != null && studies.size() > 0) {
             //Create export CSV text
 
             // TODO Not a good idea to hold all file content text in a big string - this could get very large! OK for now with not much data...
@@ -136,18 +137,11 @@ public class ViewStudiesController extends AbstractController implements IContro
             StringBuffer fileContent = new StringBuffer("STUDY_ID,PROJECT_NAME,NUMBER_OF_SAMPLES,SUBMITTED_DATE,ANALYSIS,NCBI_PROJECT_ID,PUBLIC_RELEASE_DATE,CENTRE_NAME,EXPERIMENTAL_FACTOR,IS_PUBLIC,STUDY_LINKOUT,STUDY_ABSTRACT");
             fileContent.append("\n");
 
-            for (Map.Entry<Study, Long> mapEntry : studyMap.entrySet()) {
-                Study study = mapEntry.getKey();
-                Long numSamples = mapEntry.getValue();
-
+            for (Study study : studies) {
                 fileContent.append(study.getStudyId()).append(',');
-
                 fileContent.append("\"").append(study.getStudyName()).append("\",");
-
-                fileContent.append(numSamples).append(',');
-
+                fileContent.append(study.getSampleSize()).append(',');
                 fileContent.append(study.getLastMetadataReceived()).append(',');
-
                 fileContent.append(study.getStudyStatus()).append(',');
 
                 long npi = study.getNcbiProjectId();
@@ -197,12 +191,14 @@ public class ViewStudiesController extends AbstractController implements IContro
 
     @RequestMapping(params = "search", value = "doSearch", method = RequestMethod.GET)
     public ModelAndView doSearch(@ModelAttribute(StudyFilter.MODEL_ATTR_NAME) StudyFilter filter, ModelMap model,
-                                 @RequestParam(required = false) final String searchTerm, @RequestParam(required = false) final StudyFilter.StudyVisibility studyVisibility,
-                                 @RequestParam(required = false) final Study.StudyStatus studyStatus) {
+                                 @RequestParam(required = false) final String searchTerm,
+                                 @RequestParam(required = false) final StudyFilter.StudyVisibility studyVisibility,
+                                 @RequestParam(required = false) final Study.StudyStatus studyStatus,
+                                 @RequestParam(required = false, defaultValue = "0", value = "startPosition") final int startPosition) {
         log.info("Requesting doSearch (GET method)...");
         processRequestParams(filter, searchTerm, studyVisibility, studyStatus);
-        populateModel(model, filter);
-        model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((ViewStudiesModel) model.get(ViewModel.MODEL_ATTR_NAME)).getLoginForm());
+        populateModel(model, filter, startPosition, true);
+        model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((StudiesViewModel) model.get(ViewModel.MODEL_ATTR_NAME)).getLoginForm());
         return new ModelAndView(VIEW_NAME, model);
     }
 
@@ -238,11 +234,20 @@ public class ViewStudiesController extends AbstractController implements IContro
     /**
      * Creates the MG model and adds it to the specified model map.
      */
-    private void populateModel(ModelMap model, StudyFilter filter) {
-        final ViewStudiesModel subModel = MGModelFactory.getViewStudiesPageModel(sessionManager, studyDAO,
-                sampleDAO, filter, "Projects list - EBI metagenomics", getBreadcrumbs(null), propertyContainer, getTableHeaderNames());
-        subModel.changeToHighlightedClass(ViewModel.TAB_CLASS_PROJECTS_VIEW);
-        model.addAttribute(ViewModel.MODEL_ATTR_NAME, subModel);
+    private void populateModel(ModelMap model, StudyFilter filter,
+                               final int startPosition,
+                               final boolean doPagination) {
+        final ViewModelBuilder<StudiesViewModel> builder = new StudiesViewModelBuilder(sessionManager, "Projects list",
+                getBreadcrumbs(null), propertyContainer, getTableHeaderNames(), sampleDAO, studyDAO, filter, startPosition, doPagination);
+        final StudiesViewModel studiesViewModel = builder.getModel();
+        studiesViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_PROJECTS_VIEW);
+        model.addAttribute(ViewModel.MODEL_ATTR_NAME, studiesViewModel);
+    }
+
+    private void populateModel(final ModelMap model,
+                               final StudyFilter filter,
+                               final boolean doPagination) {
+        this.populateModel(model, filter, 0, doPagination);
     }
 
 

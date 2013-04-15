@@ -2,8 +2,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-<div id="content-full">
-    <%--<h2>${pageTitle}</h2>--%>
     <h2>Projects list</h2>
 
     <div class="center">
@@ -35,7 +33,7 @@
                             <label for="privacy">Privacy:</label>
                      <span>
                       <form:select id="studyVisibility" path="studyVisibility">
-                          <form:options items="${model.studyVisibilityList}"/>
+                          <form:options items="${model.studyVisibilities}"/>
                       </form:select>
                      </span>
                         </div>
@@ -62,7 +60,7 @@
     </div>
 
     <c:choose>
-        <c:when test="${not empty model.studySampleSizeMap}">
+        <c:when test="${not empty model.studies}">
             <%--Request the current query string to export only the filtered studies--%>
             <c:set var="queryString" value="${pageContext.request.queryString}" scope="session"/>
 
@@ -80,6 +78,42 @@
 
              </div>
 
+            <div class="table_opt_pag">
+
+                    <%--Start of item pagination pattern--%>
+                <c:set var="prevId" value="< Prev"/>
+                <c:set var="nextId" value="Next >"/>
+                <c:set var="firstId" value="First"/>
+                <c:set var="lastId" value="Last"/>
+
+                <div class="table_opt_pag_num"><c:out value="${model.pagination.displayedItemRange}"/> of <c:out value="${model.pagination.totalItems}"/>
+                </div>
+                <div class="table_opt_pag_arr">
+                    <c:if test="${model.pagination.totalItems > model.pagination.pageSize}">
+                        <c:choose>
+                            <c:when test="${model.pagination.existPreviousStartPos}">
+
+                                <div class="pag-first"><a href="<c:url value="${baseURL}/projects/doSearch?searchTerm=${model.filter.searchTerm}&studyVisibility=${model.filter.studyVisibility.upperCaseString}&search=Search&startPosition=${model.pagination.start}"/>"
+                                                          id="csv" title="<c:out value="${firstId}"/>"></a></div>
+                                <div class="pag-prev"><a href="<c:url value="${baseURL}/projects/doSearch?searchTerm=${model.filter.searchTerm}&studyVisibility=${model.filter.studyVisibility.upperCaseString}&search=Search&startPosition=${model.pagination.previousStartPos}"/>"
+                                                         id="csv" title="<c:out value="${prevId}"/>"></a></div>
+                            </c:when>
+                            <c:otherwise><div class="pag-first-off"></div>  <div class="pag-prev-off"></div></c:otherwise>
+                        </c:choose>
+                        <%--<span style="float:left;padding:0 4px; color:#ABADB3;">prev | next</span>--%>
+                        <c:choose>
+                            <c:when test="${model.pagination.existNextStartPos}">
+                                <div class="pag-next"><a href="<c:url value="${baseURL}/projects/doSearch?searchTerm=${model.filter.searchTerm}&studyVisibility=${model.filter.studyVisibility.upperCaseString}&search=Search&startPosition=${model.pagination.nextStartPos}"/>"
+                                                         id="csv" title="<c:out value="${nextId}"/>"></a></div>
+                                <div class="pag-last"><a href="<c:url value="${baseURL}/projects/doSearch?searchTerm=${model.filter.searchTerm}&studyVisibility=${model.filter.studyVisibility.upperCaseString}&search=Search&startPosition=${model.pagination.lastLinkPosition}"/>"
+                                                         id="csv" title="<c:out value="${lastId}"/>"></a></div>
+                            </c:when>
+                            <c:otherwise><div class="pag-next-off"></div> <div class="pag-last-off"></div></c:otherwise>
+                        </c:choose>
+                    </c:if>
+                </div>
+            </div>
+            <%--End of item pagination pattern--%>
             <table border="1" class="result">
                 <thead>
                 <tr>
@@ -103,17 +137,17 @@
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach var="entry" items="${model.studySampleSizeMap}" varStatus="status">
+                <c:forEach var="study" items="${model.studies}" varStatus="status">
                     <tr>
                         <td style="text-align:left;" id="ordered">
-                            <c:if test="${!entry.key.public}"><img alt="private"
+                            <c:if test="${!study.public}"><img alt="private"
                                                                    src="${pageContext.request.contextPath}/img/icon_priv_private.gif">&nbsp;&nbsp;</c:if>
-                            <a href="<c:url value="${baseURL}/project/${entry.key.studyId}"/>">${entry.key.studyName}</a>
+                            <a href="<c:url value="${baseURL}/project/${study.studyId}"/>">${study.studyName}</a>
                         </td>
                         <td>
-                            <a href="<c:url value="${baseURL}/project/${entry.key.studyId}#samples_id"/>">${entry.value}</a>
+                            <a href="<c:url value="${baseURL}/project/${study.studyId}#samples_id"/>">${study.sampleSize}</a>
                         </td>
-                        <td>${entry.key.formattedLastReceived}</td>
+                        <td>${study.formattedLastReceived}</td>
                     </tr>
                 </c:forEach>
                 </tbody>
@@ -123,5 +157,5 @@
             <div class="error">No data matching your search</div>
         </c:otherwise>
     </c:choose>
+<div class="but_top"><a href="#top" title="back to the top page">Top</a></div>
 
-</div>

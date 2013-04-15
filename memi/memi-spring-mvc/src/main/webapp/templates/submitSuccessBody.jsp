@@ -1,4 +1,4 @@
-<div id="content-full">
+
     <h2>Thank you for completing the submission form</h2>
 
 
@@ -10,4 +10,3 @@
         A copy of your submission has been sent to your email address, if you do not receive this within a
         few minutes then please check your spam/bulk mail folder.
     </p>
-</div>

@@ -2,7 +2,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-<div id="content-full">
+
     <%--<h2>${pageTitle}</h2>--%>
     <h2>Samples list</h2>
 
@@ -87,6 +87,7 @@
             </div>
 
             <div class="table_opt_pag">
+
             <%--Start of item pagination pattern--%>
             <c:set var="prevId" value="< Prev"/>
             <c:set var="nextId" value="Next >"/>
@@ -180,4 +181,3 @@
         </c:otherwise>
     </c:choose>
     <div class="but_top"><a href="#top" title="back to the top page">Top</a></div>
-</div>

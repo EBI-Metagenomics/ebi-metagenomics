@@ -191,7 +191,7 @@ public class SubmissionController extends CheckLoginController implements IContr
         @Override
         public void populateModel(ModelMap model) {
 
-            final ViewModelBuilder<SRARegistrationModel> builder = new SRARegistrationViewModelBuilder(sessionManager, "Submit data - EBI metagenomics",
+            final ViewModelBuilder<SRARegistrationModel> builder = new SRARegistrationViewModelBuilder(sessionManager, "Submit data",
                     getBreadcrumbs(null), propertyContainer, countryDAO, getSessionSubmitter());
             final SRARegistrationModel sraRegistrationModel = builder.getModel();
             sraRegistrationModel.changeToHighlightedClass(ViewModel.TAB_CLASS_SUBMIT_VIEW);

@@ -73,5 +73,11 @@ public class StudyFilter {
         public String toString() {
             return name;
         }
+
+        public String getUpperCaseString() {
+            String result = name.replace(" ", "_");
+            result = result.replace("-", "");
+            return result.toUpperCase();
+        }
     }
 }

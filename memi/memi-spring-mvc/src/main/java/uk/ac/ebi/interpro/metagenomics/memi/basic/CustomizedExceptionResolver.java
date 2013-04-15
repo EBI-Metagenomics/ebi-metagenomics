@@ -60,7 +60,7 @@ public class CustomizedExceptionResolver extends SimpleMappingExceptionResolver 
                             public void populateModel(ModelMap model) {
 //                            log.info("Building model of " + HomePageController.class + "...");
                                 final ViewModelBuilder<HomePageErrorViewModel> builder = new HomePageErrorViewModelBuilder(sessionManager, "EBI metagenomics: archiving, analysis and integration of metagenomics data",
-                                        getBreadcrumbsForErrorPage(null, "home"), propertyContainer);
+                                        new ArrayList<Breadcrumb>(), propertyContainer);
                                 final HomePageErrorViewModel errorViewModel = builder.getModel();
                                 errorViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_HOME_VIEW);
                                 model.addAttribute(ViewModel.MODEL_ATTR_NAME, errorViewModel);
@@ -83,7 +83,7 @@ public class CustomizedExceptionResolver extends SimpleMappingExceptionResolver 
 
     protected ModelAndView buildErrorModelAndView(String viewName) {
         final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager,
-                "Error page - EBI metagenomics", getBreadcrumbsForErrorPage(null, viewName), null);
+                "Error page", new ArrayList<Breadcrumb>(), null);
         final ViewModel viewModel = builder.getModel();
         ModelMap model = new ModelMap();
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, viewModel);
@@ -93,18 +93,12 @@ public class CustomizedExceptionResolver extends SimpleMappingExceptionResolver 
 
     protected ModelMap buildErrorModelMap() {
         final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager,
-                "Error page - EBI metagenomics", null, null);
+                "Error page", new ArrayList<Breadcrumb>(), null);
         final ViewModel viewModel = builder.getModel();
         ModelMap model = new ModelMap();
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, viewModel);
         model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
         return model;
-    }
-
-    private List<Breadcrumb> getBreadcrumbsForErrorPage(SecureEntity entity, String viewName) {
-        List<Breadcrumb> result = new ArrayList<Breadcrumb>();
-        result.add(new Breadcrumb("Error Page", "Error appeared. Sorry for any inconvenience!", "/errors/" + viewName));
-        return result;
     }
 
     protected void sendEmail(Exception ex) {

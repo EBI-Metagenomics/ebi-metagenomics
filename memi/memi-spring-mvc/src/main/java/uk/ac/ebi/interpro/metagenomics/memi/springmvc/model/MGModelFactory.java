@@ -3,19 +3,12 @@ package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
 import au.com.bytecode.opencsv.CSVReader;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Restrictions;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer;
-import uk.ac.ebi.interpro.metagenomics.memi.basic.comparators.ViewStudiesComparator;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAO;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.StudyDAO;
-import uk.ac.ebi.interpro.metagenomics.memi.forms.StudyFilter;
 import uk.ac.ebi.interpro.metagenomics.memi.googlechart.GoogleChartFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgFile;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.DownloadSection;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
 
 import java.io.File;
@@ -43,7 +36,8 @@ public class MGModelFactory {
                                                            String pageTitle, List<Breadcrumb> breadcrumbs,
                                                            EmgFile emgFile, List<String> archivedSequences,
                                                            MemiPropertyContainer propertyContainer,
-                                                           boolean isReturnSizeLimit, AnalysisStatsModel.ExperimentType experimentType) {
+                                                           boolean isReturnSizeLimit, AnalysisStatsModel.ExperimentType experimentType,
+                                                           final DownloadSection downloadSection) {
         log.info("Building instance of " + AnalysisStatsModel.class + "...");
         if (emgFile != null) {
             Map<Class, List<AbstractGOTerm>> goData = loadGODataFromCSV(propertyContainer.getPathToAnalysisDirectory(),
@@ -55,92 +49,14 @@ public class MGModelFactory {
                     getHBarChartURL(MolecularFunctionGOTerm.class, goData),
                     null,
                     goData.get(BiologicalProcessGOTerm.class), emgFile, archivedSequences, propertyContainer,
-                    getListOfInterProEntries(propertyContainer.getPathToAnalysisDirectory(), emgFile, isReturnSizeLimit), experimentType);
+                    getListOfInterProEntries(propertyContainer.getPathToAnalysisDirectory(), emgFile, isReturnSizeLimit), experimentType,
+                    downloadSection);
         } else {
             return new AnalysisStatsModel(getSessionSubmitter(sessionManager), pageTitle, breadcrumbs, sample,
-                    emgFile, archivedSequences, propertyContainer);
+                    emgFile, archivedSequences, propertyContainer, downloadSection);
         }
     }
 
-    public static ViewStudiesModel getViewStudiesPageModel(SessionManager sessionMgr, StudyDAO studyDAO,
-                                                           SampleDAO sampleDAO, StudyFilter filter,
-                                                           String pageTitle, List<Breadcrumb> breadcrumbs,
-                                                           MemiPropertyContainer propertyContainer,
-                                                           List<String> tableHeaderNames) {
-        log.info("Building instance of " + ViewStudiesModel.class + "...");
-        Submitter submitter = getSessionSubmitter(sessionMgr);
-        long submitterId = (submitter != null ? submitter.getSubmitterId() : -1L);
-        List<Study> studies = getFilteredStudies(studyDAO, filter, submitterId);
-        //studies are sorted by study name at the moment
-        Map<Study, Long> sortedStudyMap = getStudySampleSizeMap(studies, sampleDAO, new ViewStudiesComparator());
-        return new ViewStudiesModel(submitter, sortedStudyMap, pageTitle,
-                breadcrumbs, propertyContainer, tableHeaderNames);
-    }
-
-    private static List<Study> getFilteredStudies(StudyDAO studyDAO, StudyFilter filter, long submitterId) {
-        List<Study> result = studyDAO.retrieveFilteredStudies(buildFilterCriteria(filter, submitterId));
-        if (result == null) {
-            result = new ArrayList<Study>();
-        }
-        return result;
-    }
-
-    private static Map<Study, Long> getStudySampleSizeMap(List<Study> studies, SampleDAO sampleDAO, Comparator<Study> comparator) {
-        Map<Study, Long> result = new TreeMap<Study, Long>(comparator);
-        for (Study study : studies) {
-            if (sampleDAO != null) {
-                result.put(study, sampleDAO.retrieveSampleSizeByStudyId(study.getId()));
-            }
-        }
-        return result;
-    }
-
-    /**
-     * Builds a list of criteria for the specified study filter. These criteria can be used for
-     * a Hibernate query.
-     */
-    private static List<Criterion> buildFilterCriteria(StudyFilter filter, long submitterId) {
-        String searchText = filter.getSearchTerm();
-        Study.StudyStatus studyStatus = filter.getStudyStatus();
-        StudyFilter.StudyVisibility visibility = filter.getStudyVisibility();
-
-        List<Criterion> crits = new ArrayList<Criterion>();
-        //add search term criterion
-        if (searchText != null && searchText.trim().length() > 0) {
-            crits.add(Restrictions.or(Restrictions.ilike("studyId", searchText, MatchMode.ANYWHERE), Restrictions.ilike("studyName", searchText, MatchMode.ANYWHERE)));
-        }
-        //add study status criterion
-        if (studyStatus != null) {
-            crits.add(Restrictions.eq("studyStatus", studyStatus));
-        }
-        //add is public criterion
-        if (submitterId > -1) {
-            //SELECT * FROM HB_STUDY where submitter_id=?;
-            if (visibility.equals(StudyFilter.StudyVisibility.MY_PROJECTS)) {
-                crits.add(Restrictions.eq("submitterId", submitterId));
-            }
-            //select * from hb_study where submitter_id=? and is_public=1;
-            else if (visibility.equals(StudyFilter.StudyVisibility.MY_PUBLISHED_PROJECTS)) {
-                crits.add(Restrictions.and(Restrictions.eq("isPublic", true), Restrictions.eq("submitterId", submitterId)));
-            }
-            //select * from hb_study where submitter_id=? and is_public=0;
-            else if (visibility.equals(StudyFilter.StudyVisibility.MY_PREPUBLISHED_PROJECTS)) {
-                crits.add(Restrictions.and(Restrictions.eq("isPublic", false), Restrictions.eq("submitterId", submitterId)));
-            }
-            //select * from hb_study where is_public=1;
-            else if (visibility.equals(StudyFilter.StudyVisibility.ALL_PUBLISHED_PROJECTS)) {
-                crits.add(Restrictions.eq("isPublic", true));
-            }
-            //select * from hb_study where is_public=1 or submitter_id=? and is_public=0;
-            else if (visibility.equals(StudyFilter.StudyVisibility.ALL_PROJECTS)) {
-                crits.add(Restrictions.or(Restrictions.and(Restrictions.eq("isPublic", false), Restrictions.eq("submitterId", submitterId)), Restrictions.eq("isPublic", true)));
-            }
-        } else {
-            crits.add(Restrictions.eq("isPublic", true));
-        }
-
-        return crits;
-    }
 
     private static Submitter getSessionSubmitter(SessionManager sessionMgr) {
         if (sessionMgr != null && sessionMgr.getSessionBean() != null) {
@@ -299,7 +215,8 @@ public class MGModelFactory {
     }
 
     private static List<InterProEntry> getListOfInterProEntries(String pathToAnalysisDirectory, EmgFile emgFile, boolean isReturnSizeLimit) {
-        return loadInterProMatchesFromCSV(pathToAnalysisDirectory, emgFile, isReturnSizeLimit);
+        List<String[]> rows = getRawData(pathToAnalysisDirectory, emgFile, "_summary.ipr", ',');
+        return loadInterProMatchesFromCSV(rows, isReturnSizeLimit);
     }
 
 
@@ -308,19 +225,18 @@ public class MGModelFactory {
      * Please notice that the size of the returned list could be limited to 5 items.
      * TODO: Size limitation is a temporary solution
      *
-     * @param classPathToStatsFile
-     * @param emgFile
-     * @param isReturnSizeLimit    Specifies if the size of the returned list is limited to 5.
+     * @param rows              Parsed list of InterPro entries.
+     * @param isReturnSizeLimit Specifies if the size of the returned list is limited to 5.
      * @return
      */
-    private static List<InterProEntry> loadInterProMatchesFromCSV(String classPathToStatsFile, EmgFile emgFile, boolean isReturnSizeLimit) {
+    protected static List<InterProEntry> loadInterProMatchesFromCSV(List<String[]> rows,
+                                                                    final boolean isReturnSizeLimit) {
         List<InterProEntry> result = new ArrayList<InterProEntry>();
         log.info("Processing interpro result summary file...");
-        List<String[]> rows = getRawData(classPathToStatsFile, emgFile, "_summary.ipr", ',');
 
         if (rows != null) {
             //return size limitation the
-            if (isReturnSizeLimit) {
+            if (isReturnSizeLimit && rows.size() > 5) {
                 rows = rows.subList(0, 5);
             }
             for (String[] row : rows) {
@@ -336,7 +252,7 @@ public class MGModelFactory {
                 }
             }
         } else {
-            log.warn("Didn't get any data from interpro result summary file. There might be some fundamental change to this file" +
+            log.warn("Didn't get any data from InterPro result summary file. There might be some fundamental change to this file" +
                     "(maybe in the near past), which affects this parsing process!");
         }
         return result;

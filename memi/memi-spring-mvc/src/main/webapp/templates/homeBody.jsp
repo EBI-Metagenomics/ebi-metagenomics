@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
-<div id="content">
+
 <section id="submit-data">
     <c:choose>
         <%-- Show Private welcome emailMessage only if a user is logged in--%>
@@ -30,6 +30,7 @@
 
         <%-- Show Slideshow if not logged in --%>
         <c:otherwise>
+
             <!--[if IE 6]><div id="IE6" class="IE"><![endif]--> <!--[if IE 7]><div id="IE7" class="IE"><![endif]--> <!--[if IE & ((!IE 6) & (!IE 7))]><div><![endif]--> <!--[if !IE]>--><div><!--<![endif]-->
             <div class="carousel">
 
@@ -44,7 +45,8 @@
                                 <div class="cent"><img src="${pageContext.request.contextPath}/img/icons_sub.png"
                                                        alt="easy submission"/></div>
                                 <p>Manually supported submission process, with help available for
-                                    meta-data provision. Accepted data formats include SFF (454) and FASTQ (Illumina and IonTorrent).<br/></p>
+                                    meta-data provision. Accepted data formats include SFF (454) and FASTQ (Illumina and
+                                    IonTorrent).<br/></p>
 
                                 <div class="find_more"><a href="${pageContext.request.contextPath}/info#features_1"
                                                           title="find out more about easy submission"><span>Find out more</span></a>
@@ -63,7 +65,8 @@
                                 <div class="cent"><img src="${pageContext.request.contextPath}/img/icons_ana.png"
                                                        alt="powerful analysis"/></div>
                                 <p>Functional analysis of metagenomic sequences using InterPro - a powerful and
-                                    sophisticated alternative to BLAST-based analyses. Taxonomy diversity analysis is performed using Qiime. <br/></p>
+                                    sophisticated alternative to BLAST-based analyses. Taxonomy diversity analysis is
+                                    performed using Qiime. <br/></p>
 
                                 <div class="find_more"><a href="${pageContext.request.contextPath}/info#features_2"
                                                           title="find out more about analysis"><span>Find out more</span></a>
@@ -105,9 +108,9 @@
                                        value="${model.propertyContainer.enaSubmissionURL.registrationLink}">
                                     <c:param name="url" value="${enaUrlParam}"/>
                                 </c:url>
-                                <p style="padding-bottom:7px; "> You can click on &quot;submit your data&quot; to send
-                                    us
-                                    your nucleotide sequences for analysis.
+                                <p style="padding-bottom:7px; "> You can click on <a href="<c:url value="${baseURL}/submit"/>"
+                                                                                     title="Submit data">Submit data</a>
+                                    to send us your nucleotide sequences for analysis.
                                     (Note: you will need to <a href="javascript:openLoginDialogForm()"
                                                                title="Login">login</a>
                                     or <a href="<c:out value="${enaRegistrationUrl}"/>"
@@ -145,7 +148,7 @@
     <c:choose>
         <%-- Show MyStudies and MySamples tables only if a user is logged in--%>
         <c:when test="${not empty model.submitter}">
-            <div id="list-data-study">
+            <div id="list-data-study" class="grid_9 alpha">
                 <h2>My Projects</h2>
                 <c:choose>
                     <c:when test="${empty model.myStudiesMap}">
@@ -154,7 +157,9 @@
                         </p>
                     </c:when>
                     <c:otherwise>
-                        <h3>My latest projects</h3>
+                        <h3>My latest projects (Total: <a
+                                href="<c:url value="${baseURL}/projects/doSearch?searchTerm=&studyVisibility=MY_PROJECTS&search=Search"/>"
+                                title="View all ${model.myStudiesCount} my projects">${model.myStudiesCount}</a>)</h3>
                         <%--The count starts at 0, that is why we subtract 1 from the end value--%>
                         <c:forEach var="entry" items="${model.myStudiesMap}" varStatus="status" begin="0"
                                    end="${model.maxRowNumberOfLatestItems-1}">
@@ -167,8 +172,8 @@
                                     class="list_more">${entry.key.studyName}</a>
                                 <br/>
                                 <span class="list_desc"><c:out value="${entry.key.shortStudyAbstract} ..."/></span>
-                                <a href="<c:url value="${baseURL}/project/${entry.key.studyId}"/>"
-                                   class="more_view">view more</a> - <a
+                                <br/><a href="<c:url value="${baseURL}/project/${entry.key.studyId}"/>"
+                                        class="more_view">View more</a> - <a
                                     href="<c:url value="${baseURL}/project/${entry.key.studyId}"/>#samples_id"
                                     class="list_sample"><c:out value="${entry.value} sample"/><c:if
                                     test='${entry.value > 1}'>s</c:if></a>
@@ -186,7 +191,7 @@
                 </p>
             </div>
 
-            <div id="list-data-sample">
+            <div id="list-data-sample" class="grid_9">
                 <h2>My Samples</h2>
                 <c:choose>
                     <c:when test="${empty model.mySamples}">
@@ -195,7 +200,9 @@
                         </p>
                     </c:when>
                     <c:otherwise>
-                        <h3>My latest samples</h3>
+                        <h3>My latest samples (Total: <a
+                                href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleType=&sampleVisibility=MY_SAMPLES&search=Search&startPosition=0"/>"
+                                title="View all ${model.mySamplesCount} my samples">${model.mySamplesCount}</a>)</h3>
                         <%--The count starts at 0, that is why we subtract 1 from the end value--%>
                         <c:forEach var="sample" items="${model.mySamples}" varStatus="status" begin="0"
                                    end="${model.maxRowNumberOfLatestItems-1}">
@@ -206,8 +213,9 @@
                                    class="list_more">${sample.sampleName}</a>
                                 <br/>
                                 <span class="list_desc"><c:out value="${sample.shortSampleDescription} ..."/></span>
+                                <br/>
                                 <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>"
-                                   class="more_view">view more</a>
+                                   class="more_view">View more</a>
                                 <c:choose>
                                     <c:when test="${empty sample.analysisCompleted}">
                                         <%-- leave empty to be consistent with sample overview page
@@ -238,23 +246,27 @@
 
         <%-- Show recent PublicStudies and PublicSamples only when the user is not logged in --%>
         <c:otherwise>
-            <div id="list-data-study">
+            <div id="list-data-study" class="grid_9 alpha">
                 <h2>Projects</h2>
 
-                <h3>Latest public projects</h3>
+                <h3>Latest public projects (Total: <a
+                        href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>"
+                        title="View all ${model.publicStudiesCount} public projects">${model.publicStudiesCount}</a>)
+                </h3>
                     <%--The count starts at 0, that is why we subtract 1 from the end value--%>
-                <c:forEach var="entry" items="${model.publicStudiesMap}" varStatus="status" begin="0"
+                <c:forEach var="study" items="${model.studies}" varStatus="status" begin="0"
                            end="${model.maxRowNumberOfLatestItems-1}">
                     <p><%--<span class="list_date">${entry.key.lastMetadataReceived}:</span> --%>
-                        <a href="<c:url value="${baseURL}/project/${entry.key.studyId}"/>"
-                           class="list_more">${entry.key.studyName}</a>
+                        <a href="<c:url value="${baseURL}/project/${study.studyId}"/>"
+                           class="list_more">${study.studyName}</a>
                         <br/>
-                        <span class="list_desc"><c:out value="${entry.key.shortStudyAbstract} ..."/></span>
-                        <a href="<c:url value="${baseURL}/project/${entry.key.studyId}"/>"
-                           class="more_view">view more</a> - <a
-                                href="<c:url value="${baseURL}/project/${entry.key.studyId}"/>#samples_id"
-                                class="list_sample"><c:out value="${entry.value} sample"/><c:if
-                                test='${entry.value > 1}'>s</c:if></a>
+                        <span class="list_desc"><c:out value="${study.shortStudyAbstract} ..."/></span>
+                        <br/>
+                        <a href="<c:url value="${baseURL}/project/${study.studyId}"/>"
+                           class="more_view">View more</a> - <a
+                                href="<c:url value="${baseURL}/project/${study.studyId}"/>#samples_id"
+                                class="list_sample"><c:out value="${study.sampleSize} sample"/><c:if
+                                test='${study.sampleSize > 1}'>s</c:if></a>
                     </p>
                 </c:forEach>
                 <p>
@@ -262,10 +274,13 @@
                        title="View all public projects" class="all">View all projects</a></p>
             </div>
 
-            <div id="list-data-sample">
+            <div id="list-data-sample" class="grid_9">
                 <h2>Samples</h2>
 
-                <h3>Latest public samples</h3>
+                <h3>Latest public samples (Total: <a
+                        href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search&startPosition=0"/>"
+                        title="View all ${model.publicSamplesCount} public samples">${model.publicSamplesCount}</a>)
+                </h3>
                     <%--The count starts at 0, that is why we subtract 1 from the end value--%>
                 <c:forEach var="sample" items="${model.publicSamples}" varStatus="status" begin="0"
                            end="${model.maxRowNumberOfLatestItems-1}">
@@ -274,8 +289,8 @@
                            class="list_more">${sample.sampleName}</a>
                         <br/>
                         <span class="list_desc"><c:out value="${sample.shortSampleDescription} ..."/></span>
-                        <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>"
-                           class="more_view">view more</a>
+                        <br/>
+                        <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>" class="more_view">View more</a>
                         <c:choose>
                             <c:when test="${empty sample.analysisCompleted}">
                                 <%-- leave empty to be consistent with sample overview page
@@ -299,8 +314,5 @@
     </c:choose>
     <%@ include file="components/listNewsComponent.jsp" %>
 </section>
-
-
-</div>
 
 <%--<div id="sidebar"><tiles:insertAttribute name="loginForm"/></div>--%>

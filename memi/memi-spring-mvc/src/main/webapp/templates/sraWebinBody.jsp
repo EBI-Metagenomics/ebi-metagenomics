@@ -1,9 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>--%>
-
-<div id="content-full">
-
-    <%@ include file="components/sraWebinComponent.jsp" %>
+<%@ include file="components/sraWebinComponent.jsp" %>
 
     <p align="center">
 
@@ -15,4 +12,3 @@
     </div>
     </p>
 
-</div>

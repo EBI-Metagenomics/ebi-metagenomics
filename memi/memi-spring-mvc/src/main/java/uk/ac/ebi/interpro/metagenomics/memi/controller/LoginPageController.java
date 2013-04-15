@@ -70,7 +70,7 @@ public class LoginPageController extends LoginController {
      * Creates the home page model and adds it to the specified model map.
      */
     private void populateModel(final ModelMap model, final boolean display) {
-        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "Login, start submission process - EBI metagenomics", getBreadcrumbs(null), propertyContainer);
+        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "Login, start submission process", getBreadcrumbs(null), propertyContainer);
         final ViewModel viewModel = builder.getModel();
         //We only do highlighting the submission tab if the login is part of the submission process (clicked on submit data tab)
         if (display) {

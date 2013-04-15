@@ -40,7 +40,7 @@ public class HomePageViewModelBuilder extends AbstractViewModelBuilder<HomePageV
     /**
      * The number of latest project and samples to show on the home page. Used within this builder class, but also within the Java Server Page.
      */
-    private final int maxRowNumberOfLatestItems = 4;
+    private final int maxRowNumberOfLatestItems = 5;
 
 
     public HomePageViewModelBuilder(SessionManager sessionMgr, String pageTitle, List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer,
@@ -57,18 +57,23 @@ public class HomePageViewModelBuilder extends AbstractViewModelBuilder<HomePageV
     public HomePageViewModel getModel() {
         log.info("Building instance of " + HomePageViewModel.class + "...");
         Submitter submitter = getSessionSubmitter(sessionMgr);
+        final Long publicSamplesCount = sampleDAO.countAllPublic();
+        final Long privateSamplesCount = sampleDAO.countAllPrivate();
+        final Long publicStudiesCount = studyDAO.countAllPublic();
+        final Long privateStudiesCount = studyDAO.countAllPrivate();
 //        If case: if nobody is logged in
         if (submitter == null) {
             //retrieve public studies and order them by last meta data received
-            List<Study> studies = getPublicStudies(studyDAO);
-            Map<Study, Long> publicStudiesMap = getStudySampleSizeMap(studies, sampleDAO, new HomePageStudiesComparator());
+            List<Study> studies = getOrderedPublicStudies();
+            attachSampleSize(studies);
+//            Map<Study, Long> publicStudiesMap = getStudySampleSizeMap(studies, sampleDAO, new HomePageStudiesComparator());
             //retrieve public samples and order them by last meta data received
-            List<Sample> samples = getPublicSamples(sampleDAO);
+            List<Sample> samples = getPublicSamples();
             Collections.sort(samples, new HomePageSamplesComparator());
             samples = samples.subList(0, getToIndex(samples));
 
-            return new HomePageViewModel(submitter, publicStudiesMap, samples,
-                    pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems);
+            return new HomePageViewModel(submitter, samples,
+                    pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems, publicSamplesCount, privateSamplesCount, publicStudiesCount, privateStudiesCount, studies);
         }
 //        Else case: if somebody is logged in
         else {
@@ -82,28 +87,39 @@ public class HomePageViewModelBuilder extends AbstractViewModelBuilder<HomePageV
             mySamples = mySamples.subList(0, getToIndex(mySamples));
 
             //retrieve public studies and order them last meta data received
-            List<Study> publicStudies = getPublicStudiesWithoutSubId(submitter.getSubmitterId(), studyDAO);
-            Map<Study, Long> publicStudiesMap = getStudySampleSizeMap(publicStudies, sampleDAO, new HomePageStudiesComparator());
+//            List<Study> publicStudies = getPublicStudiesWithoutSubId(submitter.getSubmitterId(), studyDAO);
+//            Map<Study, Long> publicStudiesMap = getStudySampleSizeMap(publicStudies, sampleDAO, new HomePageStudiesComparator());
 
             //retrieve public samples and order them last meta data received
-            List<Sample> publicSamples = getOrderedPublicSamplesWithoutSubId(submitter.getSubmitterId(), sampleDAO);
-            Collections.sort(publicSamples, new HomePageSamplesComparator());
-            publicSamples = publicSamples.subList(0, getToIndex(publicSamples));
+//            List<Sample> publicSamples = getOrderedPublicSamplesWithoutSubId(submitter.getSubmitterId(), sampleDAO);
+//            Collections.sort(publicSamples, new HomePageSamplesComparator());
+//            publicSamples = publicSamples.subList(0, getToIndex(publicSamples));
 
-            return new HomePageViewModel(submitter, publicStudiesMap, publicSamples,
-                    myStudiesMap, mySamples, pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems);
+            final Long mySamplesCount = (mySamples != null ? new Long(mySamples.size()) : new Long(0));
+            final Long myStudiesCount = (myStudies != null ? new Long(myStudies.size()) : new Long(0));
+
+            return new HomePageViewModel(submitter, myStudiesMap, mySamples, pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems, mySamplesCount, myStudiesCount, publicSamplesCount, privateSamplesCount, publicStudiesCount, privateStudiesCount);
+        }
+    }
+
+    private void attachSampleSize(List<Study> studies) {
+        if (sampleDAO != null) {
+            for (Study study : studies) {
+                long sampleSize = sampleDAO.retrieveSampleSizeByStudyId(study.getId());
+                study.setSampleSize(new Long(sampleSize));
+            }
         }
     }
 
     /**
      * Returns a list of public studies limited by a specified number of rows and order by meta data received date.
      */
-    private List<Study> getPublicStudies(StudyDAO studyDAO) {
-        List<Study> studies = new ArrayList<Study>();
+    private List<Study> getOrderedPublicStudies() {
+        List<Study> studies = null;
         if (studyDAO != null) {
-            studies = studyDAO.retrievePublicStudies();
+            studies = studyDAO.retrieveOrderedPublicStudies("lastMetadataReceived", true);
         }
-        return studies;
+        return (studies != null ? studies : new ArrayList<Study>());
     }
 
     private Map<Study, Long> getStudySampleSizeMap(List<Study> studies, SampleDAO sampleDAO, Comparator<Study> comparator) {
@@ -119,7 +135,7 @@ public class HomePageViewModelBuilder extends AbstractViewModelBuilder<HomePageV
     /**
      * Returns a list of public sample limited by a specified number of rows and order by received date.
      */
-    public List<Sample> getPublicSamples(SampleDAO sampleDAO) {
+    public List<Sample> getPublicSamples() {
         List<Sample> samples = new ArrayList<Sample>();
         if (sampleDAO != null) {
             samples = sampleDAO.retrieveAllPublicSamples();

@@ -71,17 +71,6 @@ public class ViewSamplesController extends AbstractController implements IContro
         return new ModelAndView(VIEW_NAME, model);
     }
 
-//    @RequestMapping(value = "next", method = RequestMethod.GET)
-//    public ModelAndView doGetNext(ModelMap model,
-//                                  @RequestParam(required = false) final int startPosition) {
-//        log.info("Requesting doGet...");
-//        //build and add the page model
-//        populateModel(model, new SampleFilter(), new SamplesViewPagination(startPosition, 10));
-//        model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((SamplesViewModel) model.get(ViewModel.MODEL_ATTR_NAME)).getLoginForm());
-//        model.addAttribute(SampleFilter.MODEL_ATTR_NAME, ((SamplesViewModel) model.get(ViewModel.MODEL_ATTR_NAME)).getSampleFilter());
-//        return new ModelAndView(VIEW_NAME, model);
-//    }
-
 
     /**
      * Handles the export of the samples table.
@@ -189,7 +178,7 @@ public class ViewSamplesController extends AbstractController implements IContro
      * Creates the MG model and adds it to the specified model map.
      */
     private void populateModel(ModelMap model, SampleFilter filter, int startPosition) {
-        final ViewModelBuilder<SamplesViewModel> builder = new SamplesViewModelBuilder(sessionManager, "Samples list - EBI metagenomics",
+        final ViewModelBuilder<SamplesViewModel> builder = new SamplesViewModelBuilder(sessionManager, "Samples list",
                 getBreadcrumbs(null), propertyContainer, getTableHeaderNames(), sampleDAO, filter, startPosition);
         final SamplesViewModel samplesViewModel = builder.getModel();
         model.addAttribute("loginForm", new LoginForm());

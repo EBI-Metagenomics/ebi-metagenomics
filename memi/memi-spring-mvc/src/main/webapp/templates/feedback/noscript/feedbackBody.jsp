@@ -2,7 +2,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-<div id="content-full">
+
     <h3>Beta website feedback</h3>
 
     <p>If you have feedback about this new website, please use the form below to send us your
@@ -71,4 +71,3 @@
             </fieldset>
         </form:form>
     </div>
-</div>

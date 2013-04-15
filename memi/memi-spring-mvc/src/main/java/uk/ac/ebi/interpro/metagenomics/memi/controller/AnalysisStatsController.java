@@ -7,6 +7,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.EmgLogFileInfoDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAO;
@@ -20,6 +21,9 @@ import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.AnalysisStatsModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MGModelFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.DownloadLink;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.DownloadSection;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.FilePathNameBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.tools.MemiTools;
 
 import javax.annotation.Resource;
@@ -27,10 +31,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * The controller for analysis overview page.
@@ -56,9 +57,24 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
     @Resource
     private MemiDownloadService downloadService;
 
+    private final String[] requestParamValues = new String[]{"biom", "taxa", "tree"};
+
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView doGetSample(final ModelMap model, @PathVariable final String sampleId) {
+    public ModelAndView doGetSample(@PathVariable final String sampleId,
+                                    @RequestParam(required = false, value = "export") final String export,
+                                    final ModelMap model,
+                                    final HttpServletResponse response,
+                                    final HttpServletRequest request) {
         log.info("Checking if sample is accessible...");
+        if (export != null) {
+            if (export.equalsIgnoreCase(this.requestParamValues[0])) {
+                return handleExport(sampleId, response, request, EmgFile.ResultFileType.TAX_ANALYSIS_BIOM_FILE, "_otu.biom");
+            } else if (export.equalsIgnoreCase(this.requestParamValues[1])) {
+                return handleExport(sampleId, response, request, EmgFile.ResultFileType.TAX_ANALYSIS_TSV_FILE, "_otu.tsv");
+            } else if (export.equalsIgnoreCase(this.requestParamValues[2])) {
+                return handleExport(sampleId, response, request, EmgFile.ResultFileType.TAX_ANALYSIS_TREE_FILE, "_newick.tre");
+            }
+        }
         return checkAccessAndBuildModel(new ModelProcessingStrategy<Sample>() {
             @Override
             public void processModel(ModelMap model, Sample sample) {
@@ -69,81 +85,98 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
     }
 
     @RequestMapping(value = "/doExportGOSlimFile", method = RequestMethod.GET)
-    public ModelAndView doExportGOSlimFile(@PathVariable final String sampleId, ModelMap model,
+    public ModelAndView doExportGOSlimFile(@PathVariable final String sampleId,
                                            final HttpServletResponse response, final HttpServletRequest request) {
-        return handleExport(sampleId, model, response, request, EmgFile.EmgFileExtension.GO_SLIM.getFileExtension(), "_GO_slim.csv");
+        return handleExport(sampleId, response, request, EmgFile.ResultFileType.GO_SLIM, "_GO_slim.csv");
     }
 
     @RequestMapping(value = "/doExportGOFile", method = RequestMethod.GET)
-    public ModelAndView doExportGOFile(@PathVariable final String sampleId, final ModelMap model,
+    public ModelAndView doExportGOFile(@PathVariable final String sampleId,
                                        final HttpServletResponse response, final HttpServletRequest request) {
-        return handleExport(sampleId, model, response, request, EmgFile.EmgFileExtension.GO.getFileExtension(), "_GO.csv");
+        return handleExport(sampleId, response, request, EmgFile.ResultFileType.GO, "_GO.csv");
     }
 
     @RequestMapping(value = "/doExportMaskedFASTAFile", method = RequestMethod.GET)
-    public ModelAndView doExportMaskedFASTAFile(@PathVariable final String sampleId, final ModelMap model,
+    public ModelAndView doExportMaskedFASTAFile(@PathVariable final String sampleId,
                                                 final HttpServletResponse response, final HttpServletRequest request) {
-        return handleExport(sampleId, model, response, request, EmgFile.EmgFileExtension.MASKED_FASTA.getFileExtension(), "_nt_reads.fasta");
+        return handleExport(sampleId, response, request, EmgFile.ResultFileType.MASKED_FASTA, "_nt_reads.fasta");
     }
 
     @RequestMapping(value = "/doExportCDSFile", method = RequestMethod.GET)
-    public ModelAndView doExportCDSFile(@PathVariable final String sampleId, final ModelMap model,
+    public ModelAndView doExportCDSFile(@PathVariable final String sampleId,
                                         final HttpServletResponse response, final HttpServletRequest request) {
-        return handleExport(sampleId, model, response, request, EmgFile.EmgFileExtension.CDS_FAA.getFileExtension(), "_pCDS.fasta");
+        return handleExport(sampleId, response, request, EmgFile.ResultFileType.CDS_FAA, "_pCDS.fasta");
     }
 
     @RequestMapping(value = "/doExportI5TSVFile", method = RequestMethod.GET)
-    public ModelAndView doExportI5File(@PathVariable final String sampleId, final ModelMap model,
+    public ModelAndView doExportI5File(@PathVariable final String sampleId,
                                        final HttpServletResponse response, final HttpServletRequest request) {
-        return handleExport(sampleId, model, response, request, EmgFile.EmgFileExtension.I5_TSV.getFileExtension(), "_InterPro.tsv");
+        return handleExport(sampleId, response, request, EmgFile.ResultFileType.I5_TSV, "_InterPro.tsv");
     }
 
     @RequestMapping(value = "/doExportIPRFile", method = RequestMethod.GET)
-    public ModelAndView doExportIPRFile(@PathVariable final String sampleId, final ModelMap model,
+    public ModelAndView doExportIPRFile(@PathVariable final String sampleId,
                                         final HttpServletResponse response, final HttpServletRequest request) {
-        return handleExport(sampleId, model, response, request, EmgFile.EmgFileExtension.IPR.getFileExtension(), "_InterPro_sum.csv");
+        return handleExport(sampleId, response, request, EmgFile.ResultFileType.IPR, "_InterPro_sum.csv");
     }
 
     @RequestMapping(value = "/doExportIPRhitsFile", method = RequestMethod.GET)
-    public ModelAndView doExportIPRhitsFile(@PathVariable final String sampleId, final ModelMap model,
+    public ModelAndView doExportIPRhitsFile(@PathVariable final String sampleId,
                                             final HttpServletResponse response, final HttpServletRequest request) {
-        return handleExport(sampleId, model, response, request, EmgFile.EmgFileExtension.IPR_HITS.getFileExtension(), "_InterPro_hits.fasta");
+        return handleExport(sampleId, response, request, EmgFile.ResultFileType.IPR_HITS, "_InterPro_hits.fasta");
     }
 
     /**
      * @param sampleId
-     * @param model
      * @param response
      * @param request
-     * @param fileNameSuffix
-     * @param fileExtension  - Defines the file extension and a file name suffix for the download file itself.
+     * @param resultFileType
+     * @param fileNameEnd    - Defines the file name extension and a file name suffix for the download file itself.
      * @return
      */
     //TODO: Parameter name fileExtension is a bit misleading
-    private ModelAndView handleExport(final String sampleId, ModelMap model, final HttpServletResponse response,
-                                      final HttpServletRequest request, final String fileNameSuffix,
-                                      final String fileExtension) {
+    private ModelAndView handleExport(final String sampleId, final HttpServletResponse response,
+                                      final HttpServletRequest request, final EmgFile.ResultFileType resultFileType,
+                                      final String fileNameEnd) {
         log.info("Checking if sample is accessible...");
         return checkAccessAndBuildModel(new ModelProcessingStrategy<Sample>() {
             @Override
             public void processModel(ModelMap model, Sample sample) {
-                log.info("Building model...");
-                populateModel(model, sample);
-                EmgFile emgFile = ((AnalysisStatsModel) model.get(ViewModel.MODEL_ATTR_NAME)).getEmgFile();
-
-                String directoryName = emgFile.getFileIDInUpperCase().replace('.', '_');
-                File file = new File(propertyContainer.getPathToAnalysisDirectory() + directoryName + '/' + directoryName + fileNameSuffix);
-
-                if (downloadService != null) {
-                    //white spaces are replaced by underscores
-                    downloadService.openDownloadDialog(response, request, file, emgFile.getFileName().replace(" ", "_") + fileExtension, false);
+                log.info("Open download dialog...");
+                final EmgFile emgFile = getEmgFile(sample.getId());
+                if (emgFile != null) {
+                    String filePathName = FilePathNameBuilder.getFilePathNameByResultType(resultFileType, emgFile, propertyContainer);
+                    createFileObjectAndOpenDownloadDialog(response, request, emgFile, fileNameEnd, filePathName);
                 }
             }
-        }, model, sampleId, getModelViewName());
+        }, null, sampleId, getModelViewName());
+    }
+
+    private void createFileObjectAndOpenDownloadDialog(final HttpServletResponse response,
+                                                       final HttpServletRequest request,
+                                                       final EmgFile emgFile,
+                                                       final String fileNameEnd,
+                                                       final String filePathName) {
+        File file = new File(filePathName);
+        if (downloadService != null) {
+            //white spaces are replaced by underscores
+            final String fileNameForDownload = getFileName(emgFile, fileNameEnd);
+            downloadService.openDownloadDialog(response, request, file, fileNameForDownload, false);
+        }
+    }
+
+    private String getFileName(final EmgFile emgFile,
+                               final String fileNameEnd) {
+        return emgFile.getFileName().replace(" ", "_") + fileNameEnd;
+    }
+
+    private EmgFile getEmgFile(final long sampleId) {
+        List<EmgFile> emgFiles = fileInfoDAO.getFilesBySampleId(sampleId);
+        return (emgFiles.size() > 0 ? emgFiles.get(0) : null);
     }
 
     protected void populateModel(final ModelMap model, final Sample sample, boolean isReturnSizeLimit) {
-        String pageTitle = "Sample analysis results: " + sample.getSampleName() + " - EBI metagenomics";
+        String pageTitle = "Sample analysis results: " + sample.getSampleName() + "";
         populateModel(model, sample, isReturnSizeLimit, pageTitle);
     }
 
@@ -158,6 +191,9 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
         if (emgFile != null) {
             emgFile.addFileSizeMap(getFileSizeMap(emgFile));
         }
+        //Create a list of existing downloadable file for the download section on the analysis page
+        final List<File> downloadableFiles = FilePathNameBuilder.createListOfDownloadableFiles(emgFile, propertyContainer);
+
 //         TODO: The following 'if' case is a quick and dirty solution to solve the differentiation issue between genomic and transcriptomic analysis
         AnalysisStatsModel.ExperimentType experimentType = AnalysisStatsModel.ExperimentType.GENOMIC;
         if (sample.getId() == 367) {
@@ -165,11 +201,97 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
         }
         final AnalysisStatsModel mgModel = MGModelFactory.
                 getAnalysisStatsModel(sessionManager, sample, pageTitle, getBreadcrumbs(sample), emgFile,
-                        MemiTools.getArchivedSeqs(fileInfoDAO, sample), propertyContainer, isReturnSizeLimit, experimentType);
+                        MemiTools.getArchivedSeqs(fileInfoDAO, sample), propertyContainer, isReturnSizeLimit, experimentType, buildDownloadSection(sample.getSampleId(), sample.isPublic(), downloadableFiles));
         mgModel.changeToHighlightedClass(ViewModel.TAB_CLASS_SAMPLES_VIEW);
         model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, mgModel);
     }
+
+    private DownloadSection buildDownloadSection(final String sampleId, final boolean sampleIsPublic, final List<File> downloadableFiles) {
+        final List<DownloadLink> seqDataDownloadLinks = new ArrayList<DownloadLink>();
+        final List<DownloadLink> funcAnalysisDownloadLinks = new ArrayList<DownloadLink>();
+        final List<DownloadLink> taxaAnalysisDownloadLinks = new ArrayList<DownloadLink>();
+
+        final String linkURL = (sampleIsPublic ? "https://www.ebi.ac.uk/ena/data/view/" + sampleId + "?display=html" : "https://www.ebi.ac.uk/ena/submit/sra/#home");
+        seqDataDownloadLinks.add(new DownloadLink("Submitted nucleotide reads (ENA website)",
+                "Click to download all submitted nucleotide data on the ENA website",
+                linkURL,
+                true,
+                1));
+
+        for (File file : downloadableFiles) {
+            if (file.getName().endsWith(EmgFile.ResultFileType.MASKED_FASTA.getFileNameEnd())) {
+                seqDataDownloadLinks.add(new DownloadLink("Processed nucleotide reads (FASTA)",
+                        "Click to download processed fasta nucleotide sequences",
+                        "analysisStatsView/" + sampleId + "/doExportMaskedFASTAFile",
+                        2,
+                        getFileSize(file)));
+            } else if (file.getName().endsWith(EmgFile.ResultFileType.CDS_FAA.getFileNameEnd())) {
+                seqDataDownloadLinks.add(new DownloadLink("Predicted CDS (FASTA)",
+                        "Click to download predicted CDS in fasta format",
+                        "analysisStatsView/" + sampleId + "/doExportCDSFile",
+                        3,
+                        getFileSize(file)));
+            } else if (file.getName().endsWith(EmgFile.ResultFileType.I5_TSV.getFileNameEnd())) {
+                funcAnalysisDownloadLinks.add(new DownloadLink("InterPro matches (TSV)",
+                        "Click to download full InterPro matches table (TSV)",
+                        "analysisStatsView/" + sampleId + "/doExportI5TSVFile",
+                        4,
+                        getFileSize(file)));
+            } else if (file.getName().endsWith(EmgFile.ResultFileType.GO.getFileNameEnd())) {
+                funcAnalysisDownloadLinks.add(new DownloadLink("GO annotation result file (CSV)",
+                        "Click to download GO annotation result file (CSV)",
+                        "analysisStatsView/" + sampleId + "/doExportGOFile",
+                        5,
+                        getFileSize(file)));
+            } else if (file.getName().endsWith(EmgFile.ResultFileType.IPR_HITS.getFileNameEnd())) {
+                funcAnalysisDownloadLinks.add(new DownloadLink("pCDS with InterPro matches (FASTA)",
+                        "Click to download predicted CDS with InterPro matches (FASTA)",
+                        "analysisStatsView/" + sampleId + "/doExportIPRhitsFile",
+                        6,
+                        getFileSize(file)));
+            } else if (file.getName().endsWith(EmgFile.ResultFileType.TAX_ANALYSIS_BIOM_FILE.getFileNameEnd())) {
+                taxaAnalysisDownloadLinks.add(new DownloadLink("OTUs and taxonomic assignments (BIOM)",
+                        "Click to download the OTUs and taxonomic assignments (BIOM)",
+                        "analysisStatsView/" + sampleId + "?export=" + this.requestParamValues[0],
+                        1,
+                        getFileSize(file)));
+            } else if (file.getName().endsWith(EmgFile.ResultFileType.TAX_ANALYSIS_TSV_FILE.getFileNameEnd())) {
+                taxaAnalysisDownloadLinks.add(new DownloadLink("OTUs and taxonomic assignments (TSV)",
+                        "Click to download the OTUs and taxonomic assignments (TSV)",
+                        "analysisStatsView/" + sampleId + "?export=" + this.requestParamValues[1],
+                        2,
+                        getFileSize(file)));
+            } else if (file.getName().endsWith(EmgFile.ResultFileType.TAX_ANALYSIS_TREE_FILE.getFileNameEnd())) {
+                taxaAnalysisDownloadLinks.add(new DownloadLink("Phylogenetic tree (Newick format)",
+                        "Click to download the phylogenetic tree file (Newick format)",
+                        "analysisStatsView/" + sampleId + "?export=" + this.requestParamValues[2],
+                        3,
+                        getFileSize(file)));
+            }
+
+
+        }
+        Collections.sort(seqDataDownloadLinks, DownloadLink.DownloadLinkComparator);
+        Collections.sort(funcAnalysisDownloadLinks, DownloadLink.DownloadLinkComparator);
+        Collections.sort(taxaAnalysisDownloadLinks, DownloadLink.DownloadLinkComparator);
+        return new DownloadSection(seqDataDownloadLinks, funcAnalysisDownloadLinks, taxaAnalysisDownloadLinks);
+    }
+
+    private String getFileSize(final File file) {
+        if (file.canRead()) {
+            long cutoff = 1024 * 1024;
+            if (file.length() > cutoff) {
+                long fileSize = file.length() / (long) (1024 * 1024);
+                return fileSize + " MB";
+            } else {
+                long fileSize = file.length() / (long) 1024;
+                return fileSize + " KB";
+            }
+        }
+        return "";
+    }
+
 
     /**
      * Creates a map between file names and file sizes (for all downloadable files on analysis page). The file size of smaller files
@@ -178,16 +300,16 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
     private Map<String, String> getFileSizeMap(EmgFile emgFile) {
         Map<String, String> result = new HashMap<String, String>();
         String directoryName = emgFile.getFileIDInUpperCase().replace('.', '_');
-        for (EmgFile.EmgFileExtension fileExtension : EmgFile.EmgFileExtension.values()) {
+        for (EmgFile.ResultFileType fileExtension : EmgFile.ResultFileType.values()) {
             File file = new File(propertyContainer.getPathToAnalysisDirectory() + directoryName + '/' + directoryName + fileExtension);
             if (file.canRead()) {
                 long cutoff = 1024 * 1024;
                 if (file.length() > cutoff) {
                     long fileSize = file.length() / (long) (1024 * 1024);
-                    result.put(fileExtension.getFileExtension(), "(" + fileSize + " MB)");
+                    result.put(fileExtension.getFileNameEnd(), "(" + fileSize + " MB)");
                 } else {
                     long fileSize = file.length() / (long) 1024;
-                    result.put(fileExtension.getFileExtension(), "(" + fileSize + " KB)");
+                    result.put(fileExtension.getFileNameEnd(), "(" + fileSize + " KB)");
                 }
             }
         }
@@ -205,7 +327,7 @@ public class AnalysisStatsController extends SecuredAbstractController<Sample> {
 
 
     /**
-     * Creates the home page model and adds it to the specified model map.
+     * Creates the analysis page model and adds it to the specified model map.
      */
     private void populateModel(final ModelMap model, final Sample sample) {
         populateModel(model, sample, true);
