@@ -78,6 +78,9 @@ public abstract class SecuredAbstractController<T extends SecureEntity> extends 
             log.error("Check why study DAO is null!");
             throw new IllegalStateException("Configuration error - the Study DAO is null");
         }
+        if (model == null) {
+            return null;
+        }
         return new ModelAndView(viewName, model);
     }
 
@@ -93,7 +96,7 @@ public abstract class SecuredAbstractController<T extends SecureEntity> extends 
 
     private ModelAndView getModelAndView(String objectId, String viewName) {
         final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager,
-                "Error page - EBI metagenomics", null, propertyContainer);
+                "Error page", null, propertyContainer);
         final ViewModel viewModel = builder.getModel();
         ModelMap model = new ModelMap();
         model.addAttribute("objectId", objectId);

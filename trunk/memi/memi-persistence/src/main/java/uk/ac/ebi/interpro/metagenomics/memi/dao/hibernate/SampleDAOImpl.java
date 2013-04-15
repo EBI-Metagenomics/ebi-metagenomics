@@ -35,17 +35,17 @@ public class SampleDAOImpl implements SampleDAO {
     public SampleDAOImpl() {
     }
 
-    @Override
+    //TODO: Do implement
     public Sample insert(Sample newInstance) {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    @Override
+    //TODO: Do implement
     public Collection<Sample> insert(Collection<Sample> newInstances) {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    @Override
+    //TODO: Do implement
     public void update(Sample modifiedInstance) {
         //To change body of implemented methods use File | Settings | File Templates.
     }
@@ -102,21 +102,38 @@ public class SampleDAOImpl implements SampleDAO {
         return 0;
     }
 
-    @Override
+    //TODO: Do implement
     public Sample readDeep(Long id, String... deepFields) {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    @Override
+    //TODO: Do implement
     public void delete(Sample persistentObject) {
         //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Transactional(readOnly = true)
     public Long count() {
+        return getSampleCount(null);
+    }
+
+    @Transactional(readOnly = true)
+    public Long countAllPublic() {
+        return getSampleCount(new Boolean(true));
+    }
+
+    @Transactional(readOnly = true)
+    public Long countAllPrivate() {
+        return getSampleCount(new Boolean(false));
+    }
+
+    private Long getSampleCount(final Boolean isPublic) {
         Session session = sessionFactory.getCurrentSession();
         if (session != null) {
             Criteria criteria = session.createCriteria(Sample.class);
+            if (isPublic != null) {
+                criteria.add(Restrictions.eq("isPublic", isPublic));
+            }
             criteria.setProjection(Projections.rowCount());
             try {
                 return ((Long) criteria.list().get(0)).longValue();
@@ -124,7 +141,7 @@ public class SampleDAOImpl implements SampleDAO {
                 throw new HibernateException("Couldn't retrieve sample count!", e);
             }
         }
-        return new Long(0);  //To change body of implemented methods use File | Settings | File Templates.
+        return null;
     }
 
     @Transactional(readOnly = true)
@@ -343,7 +360,9 @@ public class SampleDAOImpl implements SampleDAO {
         return Collections.emptyList();
     }
 
-    private Criteria setUpFilteredSamplesCriteria(List<Criterion> crits, Class<? extends Sample> clazz, String orderedByColumnWithName) {
+    private Criteria setUpFilteredSamplesCriteria(final List<Criterion> crits,
+                                                  Class<? extends Sample> clazz,
+                                                  final String orderedByColumnWithName) {
         Session session = sessionFactory.getCurrentSession();
         Criteria criteria = null;
         if (session != null) {
@@ -352,7 +371,7 @@ public class SampleDAOImpl implements SampleDAO {
             for (Criterion crit : crits) {
                 criteria.add(crit);
             }
-            if (criteria != null) {
+            if (orderedByColumnWithName != null) {
                 criteria.addOrder(Order.asc(orderedByColumnWithName).ignoreCase());
             }
         }
@@ -387,15 +406,13 @@ public class SampleDAOImpl implements SampleDAO {
         return new Long(0);
     }
 
-    @Override
-    public int deleteAll
-            () {
+    //TODO: Do implement
+    public int deleteAll() {
         return 0;
     }
 
-    @Override
-    public Long getMaximumPrimaryKey
-            () {
+    //TODO: Do implement
+    public Long getMaximumPrimaryKey() {
         return null;
     }
 }

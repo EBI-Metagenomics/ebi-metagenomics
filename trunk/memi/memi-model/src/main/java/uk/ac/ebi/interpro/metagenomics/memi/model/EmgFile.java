@@ -3,7 +3,7 @@ package uk.ac.ebi.interpro.metagenomics.memi.model;
 import java.util.Map;
 
 /**
- * Represents a simple EMG file.
+ * Represents a simple EMG file (database model class).
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @version $Id$
@@ -50,23 +50,26 @@ public class EmgFile {
         return fileSizeMap;
     }
 
-    public enum EmgFileExtension {
+    public enum ResultFileType {
         GO_SLIM("_summary.go_slim"),
         GO("_summary.go"),
         MASKED_FASTA("_masked.fasta"),
         CDS_FAA("_CDS.faa"),
         I5_TSV("_I5.tsv"),
         IPR("_summary.ipr"),
-        IPR_HITS("_IPRhits.fasta");
+        IPR_HITS("_IPRhits.fasta"),
+        TAX_ANALYSIS_BIOM_FILE(".biom"),
+        TAX_ANALYSIS_TREE_FILE(".tre"),
+        TAX_ANALYSIS_TSV_FILE("_rRNAFiltered.fasta_rep_set_tax_assignments.txt");
 
-        private String fileExtension;
+        private String fileNameEnd;
 
-        private EmgFileExtension(String fileExtension) {
-            this.fileExtension = fileExtension;
+        private ResultFileType(String fileNameEnd) {
+            this.fileNameEnd = fileNameEnd;
         }
 
-        public String getFileExtension() {
-            return fileExtension;
+        public String getFileNameEnd() {
+            return fileNameEnd;
         }
     }
 }

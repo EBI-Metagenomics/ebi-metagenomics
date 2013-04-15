@@ -4,12 +4,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%--Page variable which is used several time within this page. Used for not specified study attributes.--%>
 <c:set var="notGivenId" value="(not given)"/>
-<div id="content-full">
 
 
 <c:choose>
     <c:when test="${not empty model.publications}">
-        <div id="sidebar-analysis">
+        <div id="sidebar-allrel">
             <div id="sidebar-related">
                 <h2>Related resources</h2>
                 <span class="separator"></span>
@@ -45,8 +44,7 @@
     </c:otherwise>
 </c:choose>
 
-<span class="subtitle">Sample overview <a href="<c:url value="${baseURL}/sample/${model.sample.sampleId}"/>"
-                                          style="font-size:90%;"> (${model.sample.sampleId})</a></span>
+<span class="subtitle">Sample overview (${model.sample.sampleId})</span>
 
 <c:choose>
     <c:when test="${not empty model.sample.sampleName}">
@@ -58,7 +56,7 @@
 <h2>${model.sample.sampleName}</h2>
 
 <c:if test="${!model.sample.public}">
-    Private data <img alt="private" src="${pageContext.request.contextPath}/img/icon_priv_private.gif">
+    <p>Private data <img alt="private" src="${pageContext.request.contextPath}/img/icon_priv_private.gif"> </p>
 </c:if>
 
 <%-- If analysis is completed a link to the analysis page is shown, otherwise you will see comment that the analysis is still in progress--%>
@@ -283,4 +281,3 @@
 </c:if>
 
 <div class="but_top"><a href="#top" title="back to the top page">Top</a></div>
-</div>

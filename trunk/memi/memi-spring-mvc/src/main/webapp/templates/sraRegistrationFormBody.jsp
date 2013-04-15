@@ -1,7 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>--%>
 
-<div id="content-full">
 
     <%@ include file="components/sraRegistrationFormComponent.jsp" %>
 
@@ -155,5 +154,3 @@
         please email us (<a href="mailto:datasubs@ebi.ac.uk?subject=EBI Metagenomics - data submission"
                             title="Send an enquiry about Metagenomics data submission">datasubs@ebi.ac.uk</a>).
     </div>
-
-</div>

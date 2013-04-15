@@ -35,7 +35,7 @@ public class ShowProteinMatchesController extends AnalysisStatsController {
             @Override
             public void processModel(ModelMap model, Sample sample) {
                 log.info("Building model...");
-                String pageTitle="InterPro match summary: "+ sample.getSampleName()+" - EBI metagenomics";
+                String pageTitle="InterPro match summary: "+ sample.getSampleName()+"";
                 populateModel(model, sample, false, pageTitle);
             }
         }, model, sampleId, "showProteinMatches");

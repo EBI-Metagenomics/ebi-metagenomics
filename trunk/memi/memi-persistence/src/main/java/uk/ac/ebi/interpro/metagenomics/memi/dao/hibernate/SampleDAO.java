@@ -98,4 +98,8 @@ public interface SampleDAO extends ISampleStudyDAO<Sample> {
     Sample readByStringId(String sampleId);
 
     long retrieveSampleSizeByStudyId(long studyId);
+
+    Long countAllPublic();
+
+    Long countAllPrivate();
 }

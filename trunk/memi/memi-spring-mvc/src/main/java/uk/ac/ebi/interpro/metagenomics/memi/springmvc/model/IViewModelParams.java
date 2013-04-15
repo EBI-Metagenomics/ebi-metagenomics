@@ -11,7 +11,7 @@ public interface IViewModelParams {
 
     public static final String DEFAULT_CLASS = "ebigrey";
 
-    public static final String HIGHLIGHTED_CLASS = "grey";
+    public static final String HIGHLIGHTED_CLASS = "active-trail";
 
     public static final String TAB_CLASS_HOME_VIEW = "tabClassHomeView";
 

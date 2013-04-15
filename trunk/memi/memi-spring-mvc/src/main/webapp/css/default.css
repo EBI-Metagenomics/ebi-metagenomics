@@ -1,43 +1,11 @@
 /* reset.css  */
-html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary,time, mark, audio, video{margin:0;padding:0;border:0;outline:0;font-size:100%;background:transparent;font: inherit; vertical-align: baseline;}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outline:3px solid #0092bf; }ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+html,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article, aside, canvas, details, embed, figure, figcaption, header, hgroup, menu, nav, output, ruby, section, summary,time, mark, audio, video{margin:0;padding:0;border:0;outline:0;font-size:100%;background:transparent;font: inherit; vertical-align: baseline;}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 /* END reset.css  */
 
 html, body {height: 100%;}
 
-@font-face {
-font-family: 'MyriadProRegular';
-src: url('../fonts/myriadpro-regular-webfont.eot'); /*to put first for IE*/
-src: local('?'),  /*The local values tell browsers to check first for your typeface on a visitors computer*/
-     url('../fonts/myriadpro-regular-webfont.woff') format('woff'),
-     url('../fonts/myriadpro-regular-webfont.ttf') format('truetype'),
-     url('../fonts/myriadpro-regular-webfont.svg#webfontZPnuZIZf') format('svg'); /*paths to SVG files include an ID*/
-font-weight: normal;
-font-style: normal;
-}
-@font-face {
-    font-family: 'DroidSansRegular';
-    src: url('../fonts/DroidSans-webfont.eot');
-    src: url('../fonts/DroidSans-webfont.eot?#iefix') format('eot'),
-         url('../fonts/DroidSans-webfont.woff') format('woff'),
-         url('../fonts/DroidSans-webfont.ttf') format('truetype'),
-         url('../fonts/DroidSans-webfont.svg#webfontw7zqO19G') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'DroidSansBold';
-    /* even absolute link is not working In FIREFoxhttp://mcgraw-tech.com/default/includes/themes/merced/css/fonts/Droid-Sans-fontfacekit/DroidSans-webfont.eot'*/
-    src: url('../fonts/DroidSans-Bold-webfont.eot');
-    src: url('../fonts/DroidSans-Bold-webfont.eot?#iefix') format('eot'),
-         url('../fonts/DroidSans-Bold-webfont.woff') format('woff'),
-         url('../fonts/DroidSans-Bold-webfont.ttf') format('truetype'),
-         url('../fonts/DroidSans-Bold-webfont.svg#webfontSOhoM6aS') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-
 body {
-    margin: 0; padding: 0; /*specified in EBI template.css */
+    padding: 0; /*specified in EBI template.css */
     /*font-family: 'Droid Sans', arial, serif;  link to GOOGLE  font  BUG with the no-Cleartype (standard) config on the PC */
     /*font-family: 'DroidSansRegular', Arial, sans-serif; @font-face TEMP not working with IE and firefox, use Arial by default*/
     font-family: helvetica, "trebuchet MS", arial, sans-serif;
@@ -47,11 +15,10 @@ body {
     letter-spacing: 0em;
     word-spacing: 0em;
     line-height: 1.59;
-     /* removed to make it EBI compliant
-      background: url(../img/bgd_main_grey.jpg); */
+     /* background: url(../img/bgd_main_grey.jpg); removed to make it EBI compliant*/
     }
 
-body.grey #wrapper, body.green #wrapper, body.ebigreen #wrapper, body.ebigrey #wrapper, body.blue #wrapper, body.greyblue #wrapper { background: #b5b5b5;}
+body.grey #wrapper, body.green #wrapper, body.ebigreen #wrapper, body.ebigrey #wrapper, body.blue #wrapper, body.greyblue #wrapper { background: #b5b5b5; /*#909FA8*/}
 body div.but_top  { background: #6b7380;}
 
 div.top-menu ul li.grey {background: #b5b5b5;}
@@ -69,8 +36,11 @@ body.black #wrapper, div.top-menu ul li.black { background: url(../img/bgd_main_
 body.orange #wrapper,div.top-menu ul li.orange  { background: url(../img/bgd_main_orange.jpg) #ff8400;}
 body.pink #wrapper, div.top-menu ul li.pink { background: url(../img/bgd_main_pink.jpg) #e80767;}
 */
+h1, h2, h3, h4, h5, h6, p, table {
+padding: 0 9px;
+}
 
-p { display: block;margin: 1em 0px; clear:none;}
+p { display: block; margin: 0 0 14px 0; clear:none;}
 
 strong, th {font-weight:bold;}
 small {font-size:80%;}
@@ -78,7 +48,7 @@ small {font-size:80%;}
 ul, ol {
 list-style: disc;
 display: block;
-margin:20px;
+
 }
 
 ol {list-style-type: decimal;}
@@ -97,7 +67,46 @@ list-style-type: disc;
 -webkit-padding-start: 0px;
 margin:15px;
 }
+/*suggested change to ebi-global.css */
+div#global-masthead { border-color: rgba(255, 255, 255, 0.4); } /*like BBC top line*/
+div#headerdiv div.nav ul {font-size: 90%;height: 100%;}/*smaller font for global navigation e.g. BBC & make the size of border full height in case the height of nav is changing*/
+div#local-masthead {background: #5f8694 url(../img/bgd_gd_banner_greyblue.png) repeat-y top left;/*border-bottom: 0px solid #EEE;box-shadow: 0px 2px 2px rgba(50, 50, 50, 0.2); -webkit-box-shadow: 0px 2px 2px rgba(50, 50, 50, 0.2); -moz-box-shadow: 0px 2px 2px rgba(50, 50, 50, 0.2);*/} /*cam't insert shadow - bug with right hand logout*/
+/*div#local-masthead {background-color: rgb(39, 168, 207);} *//*default #70BDBD*/
+div#local-masthead ul {height: auto;width: 100%;margin-top: 0; background-color: rgba(17, 17, 17, 0.2);} /*main navigation bar more transparent - softer and remove the negative margin...why? */
+div#local-masthead ul li {margin-bottom: 0; border-right: 1px solid rgba(255, 255, 255, 0.5);}/*change the dotted line*/
+div#local-masthead ul li a:link { text-shadow:  rgba(0, 0, 0, 0.2) 1px 1px 0px; font-size: 96%; font-family: Verdana, sans-serif;}/*make it similar to interpro menu*/
+div#local-masthead ul li a:hover, div#local-masthead ul li a:focus, div#local-masthead ul li a:active {border-bottom: 0px solid #71b360; background-color: rgba(0, 0, 0, 0.2);}
+div#local-title.logo-title img {margin: 18px 9px;} /*make the metagenomics logo more centered */
+/*/suggested change to ebi-global.css */
 
+/*change to ebi-mitigation.css*/
+div#headerdiv { background-color: #fff; font-size:100%; font-family: Verdana, sans-serif; }/*replace default font-size: 11px;*/
+div#local-masthead ul li.active-trail a:link, div#local-masthead ul li.active-trail a:visited {padding-top: 2px;border-bottom: 3px solid #666;background-color: #111;}/*style not defined in mitigation*/
+div#local-masthead ul li.active, div#local-masthead ul li.active-trail { background-color: #111; }  /*style not defined in mitigation*/
+/*/change to ebi-mitigation.css*/
+/*imported from ebi-visual.css*/
+@font-face {
+		font-family: 'EBI-Generic';
+		src:url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.eot'); /*was linked to ../../../fonts/EBI-Generic/fonts/EBI-Generic.eot*/
+		src:url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.eot?#iefix') format('embedded-opentype'),
+			url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.woff') format('woff'),
+			url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.svg#EBI-Generic') format('svg'),
+			url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.ttf') format('truetype');
+		font-weight: normal;
+		font-style: normal;
+	}
+
+@font-face{font-family:'EBI-Functional';src:url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.eot');src:url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.eot?#iefix') format('embedded-opentype'),
+url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.woff') format('woff'),
+local('☺'),
+url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional.svg#EBI-Functional') format('svg'),
+url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional.ttf') format('truetype');font-weight:normal;font-style:normal}
+
+.icon {text-decoration: none; font-style: normal;}
+.icon-functional:before {font-family: 'EBI-Functional'; font-size: 100%; color: #bbb; content: attr(data-icon);margin: 0 0.3em 0 0; }
+.icon-static:before, .icon-generic:before { font-family: 'EBI-Generic'; /* font-size: 123.1%; */ font-size: 100%;  color: #bbb;	content: attr(data-icon); margin: 0 0.3em 0 0; }
+
+/*/from ebi-visual.css*/
 img {border: none;}
 
 a {
@@ -111,18 +120,18 @@ a:hover,  a:focus { color: red; text-decoration:underline;}
 a:active { color: #647685;}
 
 #wrapper {
-overflow:auto; /*  To contain floated elements, apply overflow:auto; to the parent element, or place something to clear the floats at the bottom of the container, such as: <div style="clear:both;"></div>*/
-width: 958px;  /*was too much left aligned so removed 14px margin from 972px */
+/*overflow:auto;   To contain floated elements, apply overflow:auto; to the parent element, or place something to clear the floats at the bottom of the container, such as: <div style="clear:both;"></div>*/
+/*width: 958px;  was too much left aligned so removed 14px margin from 972px */
 /* removed to make it EBI compliant
 box-shadow: 0px 0px 70px #696969;
 -moz-box-shadow: 0px 0px 70px #696969;
 -khtml-box-shadow: 0px 0px 70px #696969;
 -webkit-box-shadow: 0px 0px 70px #696969;
 margin: 0px auto;    */
-margin-left:14px;  /*was too much left aligned */
-padding:14px 14px 0 14px;
+/*margin-left:14px; was too much left aligned - defined by added class grid 24*/
+padding:14px;
 z-index:20;
-position:relative; /*to make z-index work */
+/*position:relative; to make z-index work */
 /* background: transparent url(../img/bgd_earth.gif) no-repeat -180px -120px; artistic */
 border:0px #dddddd solid;
 }
@@ -187,24 +196,21 @@ z-index:1;
 border:0px black solid;
 }
 
-header, nav, .banner  { background-color: white;}
+header, .banner  { background-color: white;}
 
-nav { float: left; width:100%;}
+/*nav { float: left; width:100%;}*/
 
 footer {
-text-align:left; /* added to make it EBI compliant  */
-color:#3e3e3e;
-z-index:30;
-border:0px red solid;
-display:block; /* for IE*/
+    font-size: 13px;
+    font-family: Verdana, sans-serif; /*added to be compliant with EBI and to avoid table*/
 }
 
-footer #footer {
-padding: 4px 0 0 14px; /* added to make it EBI compliant  */
-height:30px;    /* was 60px modified to make it EBI compliant  */
-background: url(../img/bgd_white_op45_8.png) #c3c3c3;}
-footer #linec  { width:  100%; height:4px; background: url(../img/bgd_black_op20_8.png);}
-footer #lined  {width: 100%; height:8px;  background: url(../img/bgd_black_op40_8.png); }
+/*footer #footer {*/
+/*padding: 4px 0 0 14px; *//* added to make it EBI compliant  */
+/*height:30px;    *//* was 60px modified to make it EBI compliant  */
+/*background: url(../img/bgd_white_op45_8.png) #c3c3c3;}*/
+/*footer #linec  { width:  100%; height:4px; background: url(../img/bgd_black_op20_8.png);}*/
+/*footer #lined  {width: 100%; height:8px;  background: url(../img/bgd_black_op40_8.png); }*/
 
 div.banner {
 width: 100%;
@@ -250,6 +256,13 @@ float:right;
 margin:6px 28px 0 0;
 color:#666;
 }
+
+div#headerdiv .logout, div#headerdiv .login_name {float:right; margin-right: 9px; margin-top:4px; font-size: 90%;}
+div#headerdiv .login_name  {color:rgb(240, 240, 96);}
+div#headerdiv .login_name a {display:inline;color: white; border-bottom:0;}
+div#headerdiv .logout {font-weight: bold;}
+
+
 div.top-menu {
 border:0px red solid;
 float:left;
@@ -353,14 +366,8 @@ font-size:110%;
 text-decoration:underline;
 }
 
-a.ext, a.ext:link {
-    padding-left: 12px;
-    background: url(../img/ico_ext_link.png) no-repeat 0 3px;
-}
-
-a.ext:hover,a.ext:active, a.ext:focus {
-    background: url(../img/ico_ext_link_on.png) no-repeat 0 3px;
-}
+/*a.ext, a.ext:link {padding-left: 12px;background: url(../img/ico_ext_link.png) no-repeat 0 3px;}*/
+/*a.ext:hover,a.ext:active, a.ext:focus {background: url(../img/ico_ext_link_on.png) no-repeat 0 3px; }*/
 
 a.signup {
 width:166px;
@@ -401,14 +408,16 @@ a.twitter {
 display:block;
 height:30px;
 background: url(../img/icon_twitter.gif) no-repeat  left top;
-padding-left:40px;
+padding-left:34px;
+float:right;
+margin-left: 9px;
 }
-
+a.twitter .external {display: none;}
 div.but_top {
 border:0px green solid;
 width:40px;
 text-align:center;
-margin-top:26px;
+margin:26px 0 9px 9px;
 display:block;
 
 }
@@ -444,7 +453,7 @@ background: url(../img/bgd_main_grey.jpg) #b5b5b5;
 text-align:left;
 }
 
-#small {width:660px;}
+#small {width:70%;} /*table in analysis result changed in pourcentage for mitigation*/
 
 table.result {
 line-height: 1.4em;
@@ -530,19 +539,19 @@ font-family: helvetica, "trebuchet MS", arial, sans-serif;
 color:#066;
 font-size:190%;
 font-weight:normal;
-margin:0;
+margin:0.83em 0;/*added for compliance*/
 }
-
+#list-data h2 {margin:0;} /*added for compliance*/
 #go-chart h2 {font-size:140%;}
 
-.subtitle {font-size:150%;color: #066;}
+.subtitle {font-size:150%;color: #066; margin-left: 9px;margin-top:20px;}
 
 
 
 h3 {
 color:#7c8c99;
 font-size:160%;
-margin:14px 0 7px 0;
+margin:9px 0;
 }
 
 .form_row h3 {
@@ -574,11 +583,10 @@ padding-left:14px;
 .intro {
 font-size:120%;
 color:#445668;
-padding-bottom:14px;
+/*padding-bottom:14px;*/
 }
 
-#sidebar h2, #sidebar-steps h2, #sidebar-related h2 {
-padding:7px 0 0 0;
+#sidebar h2, #sidebar-related h2, #sidebar-steps h2 {
 color:#333333;
 font-size:150%;
 }
@@ -637,10 +645,10 @@ margin: 4px 10px 0 4px;
 
 #submit-data {
 border: solid 0px black;
-height:300px; /* was 288 for IE6*/
-padding:14px 14px 0 14px;  /*reduced for carousel*/
+ /*height:300px; /* was 288 for IE6*/
 display:block;
-overflow:auto;
+margin-top: 20px;
+/*overflow:auto;*/
 }
 
 #submit-data-display,#submit-data-description  {display:block; float:left;}
@@ -694,7 +702,7 @@ background: url(../img/arrow_link_click.jpg) no-repeat right center;
 #list-data {
 display:block;
 overflow:auto;
-margin-top:14px;
+margin-top:20px;
 }
 
 #list-data  a.all {
@@ -729,22 +737,22 @@ width:100%;
  /* height:100%;  */
 }
 
-#content {
+#memicontent {
 float:left;
 border: solid 0px green;
 width:100%;  /* was 556px when 2 columns*/
 /*width:682px;    *//* was 690 reduced because of IE */
 height:auto;
-margin:14px 0 14px 0;
+
 }
 
 #content-full  {
 border: solid 0px green;
-margin:14px 0 14px 0;
-padding:14px 14px 28px 14px;
+
+/*padding:14px 14px 28px 14px;*/
 background-color:white;
-min-height:580px;
-width:auto;
+min-height:380px;float:left;
+width:100%;
 }
 
 #sidebar {
@@ -763,14 +771,15 @@ border: solid 0px black;
 width:222px;
 }
 
+#sidebar-allrel {width: 26%;float: right; border: solid 0px black; padding: 9px;background-color: white;}
+#sidebar-download, #sidebar-analysis {width:30%;float:right;border: solid 0px black;}
 
-#sidebar-analysis {
-width:256px;float:right;border: solid 0px black; padding:0 0 14px 14px;
+#sidebar-analysis {clear: right;
  background-color:white;/*to deal with description box border*/}
 
 
 #sidebar-steps  ol {
-margin:0 6px;
+padding:9px; margin:0;
 counter-reset: section;
 list-style-type: none;
 }
@@ -782,8 +791,7 @@ list-style-type: none;
 
 #sidebar-nav, #sidebar-steps, #sidebar-related {
 float:right;
-width:240px;
-margin: 14px 14px 0 14px; padding:0px 7px;
+width: auto;
 font-weight:normal;
 border: 1px solid #E5E5E5;
 -moz-border-radius: 0 0 20px 0;
@@ -792,6 +800,10 @@ border-radius: 0 0 20px 0;
 background:  #F4F4F8;
 }
 
+#sidebar-nav {margin: 0 9px;/*padding: 0px 9px;*/ width:26%;}
+#sidebar-steps, #sidebar-related {font-size:90%;}
+
+#box-export ul {padding:0 9px;margin-left: 9px;}
 #box-export ul li {
 list-style-image:url(../img/arrow_menu_exp.gif);
 margin-left:7px;
@@ -813,43 +825,39 @@ margin-left:7px;
 list-style-type:square;
 color:#c3c3c3;}
 
-#sidebar-steps,#sidebar-related {
-margin: 20px 0 0 0;
-color:#3E3E3E;
-font-size:90%;
-padding:7px;
-}
+#sidebar-related {margin: 20px 0 0 0;color:#3E3E3E; padding:7px;}
+#sidebar-steps {color:#3E3E3E; margin:18px 9px 0 0 ;padding:0;}
 
 #sidebar-related {margin:0;}
-#sidebar-related  ul{ margin:14px;}
+#sidebar-related  ul{ margin:0;padding:9px; }
 
 #sidebar-related  ul  li {
 list-style: disc;
-border: 0px solid black;
+border: 0px solid black;list-style-position:inside;
 }
 
-#sidebar-nav  ul{ margin:10px;  font-weight:bold; font-size:110%;}
+#sidebar-nav ul{padding:9px; margin:9px 0;font-weight:bold; font-size:110%;}
 
-#sidebar-nav  ul  li {
+#sidebar-nav ul  li {
 list-style: none;
 border: 0px solid black;
 line-height:1.8;
 }
 
-#sidebar-nav  ul  li a {
+#sidebar-nav ul  li a {
 display:block;
 text-decoration:none;
 color:#445668;
 }
 
-#sidebar-nav  ul  li ul { margin: 0; font-weight:normal;font-size:90%;}
+#sidebar-nav ul  li ul { margin: 0; font-weight:normal;font-size:90%;}
 
-#sidebar-nav  ul  li a:hover {
+#sidebar-nav ul  li a:hover {
 color:#2b3743;
 background: url(../img/bgd_black_op05_8.png);
 }
 
-#sidebar-nav  ul  li ul li {
+#sidebar-nav ul  li ul li {
 list-style: square;
 margin-left:14px;
 color:#c3c3c3;
@@ -935,19 +943,18 @@ border-radius: 0 0 20px 0;
 }
 
 #list-data-study, #list-data-sample, #list-news  {
-float:left;
-width:282px;
-line-height:1.3;
+/*width:282px;*/
+line-height:1.3;   width:28.9%;
 _height:400px; /*to keep same height for IE6 */
 min-height:440px;
-padding:14px;
+padding: 0 9px 9px 9px;
 }
 
-#list-data-study h3, #list-data-sample h3, #list-news h3 {font-size:120%;color:#445668;  /*was  #7c8c99*/margin: 1em 0px; padding:0;}
+#list-data-study h3, #list-data-sample h3, #list-news h3 {font-size:120%;color:#445668;  /*was  #7c8c99*/margin: 1em 0px; /*padding:0;*/}
 
-#list-data-sample, #list-news {
-margin-left:14px;
-}
+/*#list-data-sample, #list-news {*/
+/*margin-left:14px;*/
+/*}*/
 
 
 
@@ -957,7 +964,7 @@ margin-left:14px;
 margin: 0px auto;*/
 width: 972px; text-align: left;}
 
-.separator {margin: 4px 0 4px 0; height:8px; width:194px; display:block; background: url(../img/bgd_sep_dot.gif) repeat-x;}
+.separator {margin: 20px 9px 9px 9px; height:1px; display:block; background: url(../img/bgd_sep_dot.gif) repeat-x 0 -5px;}
 
 /* FORMS */
 form legend {
@@ -1003,6 +1010,8 @@ font-family: helvetica, "trebuchet MS", arial, sans-serif;
 padding:4px;
 border:1px solid #abadb3;
 color: #445668;}
+
+#headerdiv input {border:0px; padding:0; }/*added for the mitigation template*/
 
 
 input {
@@ -1145,7 +1154,7 @@ border: 0px solid #ffaa22;
 
 /* END FORM */
 
-.table_opt {border:0px solid black;display:block; overflow:auto;}
+.table_opt {border:0px solid black;display:block;}
 
 .table_opt_pag {color: #424242; float:left; margin-left:14px; border:0px solid green;padding-top:8px;padding-bottom:4px;}
 .table_opt_pag_num {float:left; width:100px;margin-right:7px; font-size:90%; border:0px solid red;}
@@ -1177,38 +1186,14 @@ background: url(../img/icon_csv_plus.gif) no-repeat right top;
 
 /* END EXPORT OPTIONS */
 
-#breadcrumbs {
-display:block;
-border:0px red solid;  height:24px;
-/*position:relative; *//*to make z-index work *//*
-z-index:50;*/
-/* removed to make it EBI compliant
-background: url(../img/bgd_white_op45_8.png);                                     */
-padding: 8px 0 0 14px;/* added to make it EBI compliant*/
-}
-
-#breadcrumbs .ebi_breadcrumbs li   {display:inline; font-size:100%; background-color:transparent; } /*overwrite EBI style to Keep for IE6 and IE7*/
-#breadcrumbs .ebi_breadcrumbs a{ padding: 1px 0 0 12px;  margin: 0;  height: 14px; text-align: left;  background: transparent url(http://www.ebi.ac.uk/inc/images/bread_arrow2.gif) top left no-repeat;color:#999; font-size:86%; } /*overwrite EBI style to Keep for IE6 and IE7*/
-#breadcrumbs .ebi_breadcrumbs { border:0px solid red; margin: 0; padding: 0;} /*overwrite EBI style to Keep for IE6 and IE7*/
-#breadcrumbs .ebi_breadcrumbs li:first-child a { padding: 2px 0 0 0; height: 14px; text-align: left; background: white;} /*overwrite EBI style to Keep for IE6 and IE7*/
+#contents {background-color: #ffffff;}/*temp fix*/
 
 /* CAPTION for IMAGES */
-figure {
-  width: 103px;
-  float: left;
-  position: relative;
-  display: block;
-  border: 0px solid #c3c3c3;
-  margin: 5px 7px 0px 0;
-}
+figure {position: relative; display: block;  border: 0px solid #c3c3c3;}
+figure.fl {float: left;}
+figure.fr {float: right;}
 
-figcaption {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  color: #fff;
-  background-color: rgba(0,0,0,.7);
+figcaption {position: absolute; left: 0; bottom: 0; width: 100%; color: #fff; background-color: rgba(0,0,0,.7);
   opacity: 0;
   -webkit-transition: opacity .5s ease-in-out;
   -moz-transition: opacity .5s ease-in-out;
@@ -1216,9 +1201,7 @@ figcaption {
   transition: opacity .5s ease-in-out;
 }
 
-figure:hover figcaption {
-  opacity: 1;
-}
+figure:hover figcaption { opacity: 1;}
 
 figcaption * {
   padding: 0 10px;
@@ -1241,6 +1224,7 @@ figcaption {
 figure:hover figcaption {
 filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#aa000000,endColorstr=#aa000000);
 }
+
 figcaption h3 {
 color:white;
 font-weight:bold;
@@ -1305,7 +1289,7 @@ border:0px solid green; float:right; width:22px; height:22px; -moz-opacity:.5;op
 
 #ordered {font-weight: bold;}
 
-.ebi_contents { border:0px solid red; position:absolute; top:55px;margin:0;padding:0;width:100%;clear: both;z-index: 2;  }/*added because of the EBI header */
+/*.ebi_contents { border:0px solid red; position:absolute; top:55px;margin:0;padding:0;width:100%;clear: both;z-index: 2;  }*//*added because of the EBI header */
 
 .menu_bgd {
 background: url(../img/bgd_contentfull_menu.gif) -14px;
@@ -1313,7 +1297,6 @@ background: url(../img/bgd_contentfull_menu.gif) -14px;
 
 #go-chart {
 display:block;
-border:0px solid black;
 overflow:auto;
 width:100%;
 }
@@ -1328,13 +1311,8 @@ margin-right:7px; /*reduced because of IE6*/
 
 
 
-.output_form, .filter_form {
-padding:14px;
-border:1px solid #e5e5e5;
-margin:7px 0;
-display:block;
-}
-
+.output_form, .filter_form {padding:14px; border:1px solid #e5e5e5; margin:9px; display:block;}
+.output_form p {padding:0;}
 .filter_form {
 -moz-border-radius: 0 0 20px 0;
 -khtml-border-radius: 0 0 20px 0;
@@ -1355,6 +1333,8 @@ color: #445668; /* was #003798 or blue 4d68a1 */
 border: 0px solid #556f8c;
 }
 
+.output_form h4 {padding-left:0;}
+
 #large label {
 width: 140px;
 }
@@ -1372,13 +1352,13 @@ width:210px;
 height:140px;
 }
 
-.sub {display:block;overflow:auto;}
+.sub {display:block;overflow:auto;margin: 9px;}
 .sub_log, .sub_sign {-moz-border-radius: 20px;-khtml-border-radius: 20px;-webkit-border-radius: 20px;border-radius: 20px;float: left; display:block; border: 1px solid #e5e5e5;}
 .sub_log {width:340px; padding:0 14px;}
 .sub_sign {width:260px; padding:0 14px 14px 14px; margin-left:14px; text-align:center;}
 .sub_warn, .sub_ask  {display: block; padding: 14px; width: 712px; -moz-border-radius: 7px;-khtml-border-radius: 7px;-webkit-border-radius: 7px;border-radius: 7px;}
 .sub_warn { font-size: 110%;margin-bottom: 14px;color: #8c302c; background: #faefee;}
-.sub_ask { font-size: 90%;  margin-top: 21px; color: #455872; background: #f1f3f7; clear:both; /*for IE6*/}
+.sub_ask { font-size: 90%;  margin: 21px 9px 9px 9px; color: #455872; background: #f1f3f7; clear:both; /*for IE6*/}
 .sub_form {width:740px; float: left; display:block;}
 .sub_sign_text {font-size:160%; color:#333;}
 .sub_sign_note {color:#606060;}
@@ -1392,60 +1372,29 @@ span.form_help ul li{
  margin-left:14px;
 }
 
-.about_img {float:left;margin:7px 14px 0 0;}
-
-.funding_img {float:right;margin:7px 14px 0 0;}
+.about_img_l {float:left;margin:0px 14px 0 9px;}
+.about_img_r {float:right;margin:0px 9px 9px 18px;}
+.about_img_r img {vertical-align: top;}
 
  /*EBI Bread Crumbs */
-
-    .ebi_breadcrumbs li {
-        display: inline;
-        margin: 0;
-        padding: 0;
-        font-size: 8pt;
-        color: #999999;
-        background-color: #ffffff;
-    }
-
-    .ebi_breadcrumbs a {
-        padding: 1px 0 0 12px;
-        margin: 0;
-        height: 14px;
-        text-align: left;
-        background: #ffffff url(http://www.ebi.ac.uk/inc/images/bread_arrow2.gif) top left no-repeat;
-    }
-
-    .ebi_breadcrumbs li:first-child a {
-        padding: 2px 0 0 0px;
-        margin: 0;
-        height: 14px;
-        text-align: left;
-        background: #ffffff;
-    }
-
-    .ebi_breadcrumbs a:link,.ebi_breadcrumbs a:visited {
-        color: #999999;
-        text-decoration: none;
-    }
-
-    .ebi_breadcrumbs a:hover,.ebi_breadcrumbs a:active {
-        color: #e33e3e;
-        text-decoration: underline;
-    }
-
+#breadcrumb {display:block;padding:9px; color:#999; border:0px red solid;font-size:90%;}
+#breadcrumb p {margin:0; padding-left:0;}
+#breadcrumb a {color:#999; text-decoration: none;}
+#breadcrumb a:hover,#breadcrumb a:active {color:#999;text-decoration: underline;}
 
 /* carousel */
-.carousel {margin:0;border:0px green solid;zoom:1; font-size:110%;}
+.carousel {text-align:center; margin:0;border:0px green solid;zoom:1; font-size:110%;min-width:860px; /*padding:14px 14px 0 14px;*/  /*removed padding for EBI Mitigation*/}
 .carousel div{margin:0;padding:0;}
-
+.carousel:focus{outline:0px solid #0092bf;}/*removed the annoying effect on the slideshow*/
 .carousel-wrap{
 display:inline-block;
 vertical-align:middle;
-width:908px;/*628px for 2 slides*/margin:0;border:0px solid pink;
+/*908px for 3 slides; 628px for 2 slides*/margin:0;
+width:840px; /*for EBI compliant 1024px screen*/
 }
 
 /* pagination*/
-div.center-wrap{/*overflow:hidden; remove because of bug in Firefox*/ clear:both;zoom:1; text-align:center; line-height:1;}
+div.center-wrap{/*overflow:hidden; remove because of bug in Firefox*/ clear:both;zoom:1; text-align:center; margin-top: 14px;}
 div.center-wrap div{border:0px solid red;margin:2px 0; display:block; }
 div.center-wrap p{border:0;margin:0;}
 div.center-wrap a{
@@ -1515,7 +1464,7 @@ background:url(../img/carousel_l.png) 0 0 no-repeat; margin-right:-34px;}
 /*.pag-first a:active { background:url(../img/ico_pag_first_active.png) no-repeat left 2px;}*/
 .pag-first-off { background:url(../img/ico_pag_first_off.png) no-repeat 4px 2px;width:17px; height:18px;display:block;}
 /* modules */
-.module {width:292px; background:#fafafa url(../img/backgrounds/module_lge_bg.jpg) bottom left repeat-x; margin:0 6px ;line-height:1.2;}
+.module {width:274px;/*was 286*/ background:#fafafa url(../img/backgrounds/module_lge_bg.jpg) bottom left repeat-x; margin:0 6px ;line-height:1.2;}
 .module .top_corners {background:url(../img/backgrounds/module_explore_top.png) top left no-repeat; height:8px; overflow:hidden;}
 .module .bottom_corners {background:url(../img/backgrounds/module_explore_bottom.png) top left no-repeat; height:8px; overflow:hidden;}
 .module .content {height:250px !important; border:solid #e6e6e6; border-width:0 1px; min-height:240px; position:relative;  text-align:left;}
@@ -1531,7 +1480,7 @@ background:url(../img/carousel_l.png) 0 0 no-repeat; margin-right:-34px;}
 .js ul li{overflow:hidden;display:inline;float:left;width:500px;text-align:center;zoom:1;}
 
 .carousel ul{padding:0;list-style:none;}
-.carousel ul li{position:relative;width:307px; border:0px solid red;margin:0;
+.carousel ul li{position:relative;width:283px; border:0px solid red;margin:0;
  float:left; /* used for no-script version */}
 
 
@@ -1695,7 +1644,13 @@ background:none;
     }
 .selected {font-weight:bold; color:white;}
 
+.data-stat {margin-top: 1em;/*line-height: 1.8em;*/ }
+.data-stat .icon {font-size: 140%;}
+
 /* JQUERY TWEET */
-.tweet {color: #7E7E7E;font-size: 100%;}
-.tweet  ul {margin:0px;}
-.tweet  li {list-style-type: none; margin: 1em 0px;}
+.tweet {margin-top: 1em; }
+.tweet  ul {margin:0px; padding: 0px;}
+.tweet  li {list-style-type: none; margin:0 9px 20px 9px;}
+
+.lowercase {text-transform:lowercase;}
+

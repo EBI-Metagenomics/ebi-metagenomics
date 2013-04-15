@@ -3,12 +3,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%--Page variable which is used several time within this page. Used for not specified study attributes.--%>
 <c:set var="notGivenId" value="(not given)"/>
-<div id="content-full">
 
 <c:choose>
     <c:when test="${not empty model.study.publications}">
 
-        <div id="sidebar-analysis">
+        <div id="sidebar-allrel">
             <c:if test="${not empty model.relatedPublications}">
                 <div id="sidebar-related">
                     <h2>Related Publications</h2>
@@ -44,17 +43,16 @@
     </c:when>
 </c:choose>
 
-<span class="subtitle">Project overview <a href="<c:url value="${baseURL}/project/${model.study.studyId}"/>"
-                                           style="font-size:90%;"> (${model.study.studyId})</a></span>
+<span class="subtitle">Project overview (${model.study.studyId})</span>
 
 <h2>${model.study.studyName}</h2>
 
 
 <c:choose>
     <c:when test="${not empty model.study.ncbiProjectId && model.study.ncbiProjectId>0}">
-        <br/>BioProject ID: <a class="ext"
+      <p>BioProject ID: <a class="ext"
                                href="<c:url value="https://www.ebi.ac.uk/ena/data/view/Project:${model.study.ncbiProjectId}"/>"><c:out
-            value="${model.study.ncbiProjectId}"/></a>
+            value="${model.study.ncbiProjectId}"/></a></p>
     </c:when>
     <c:otherwise></c:otherwise>
 </c:choose>
@@ -98,7 +96,7 @@
                 <c:when test="${model.study.experimentalFactor=='none'}"></c:when>
                 <c:otherwise>
                     <c:set var="experimentalFactor" value="${model.study.experimentalFactor}"/>
-                    <p><h4>Experimental factor:</h4> <c:out value="${experimentalFactor}"/></p>
+                   <h4>Experimental factor: <c:out value="${experimentalFactor}"/></h4>
                 </c:otherwise></c:choose>
         </c:when>
         <c:otherwise>
@@ -126,21 +124,40 @@
     <%--Harvested: Nucleotid sequences submitted to the ENA.--%>
     <c:choose>
         <c:when test="${model.study.dataOrigination == 'SUBMITTED'}">
+
             <c:set var="contactName" value="${model.submitterName}" scope="page"/>
             <c:set var="contactMail" value="${model.emailAddress}" scope="page"/>
+
+            <c:if test="${not empty contactName && contactName != 'not available'}">
+            <div class="result_row"><label>Name:</label><span>${contactName}</span></div>
+            </c:if>
+            <c:if test="${not empty contactMail && contactMail != 'not available'}">
+            <div class="result_row"><label>Email:</label><span class="lowercase">${contactMail}</span></div>
+            </c:if>
         </c:when>
+
         <c:when test="${model.study.dataOrigination == 'HARVESTED'}">
-            <c:set var="contactName" value="${model.study.authorName}" scope="page"/>
-            <c:set var="contactMail" value="${model.study.authorEmailAddress}" scope="page"/>
+
+        <c:set var="contactName" value="${model.study.authorName}" scope="page"/>
+        <c:set var="contactMail" value="${model.study.authorEmailAddress}" scope="page"/>
+
+        <c:if test="${not empty contactName && contactName != 'not available'}">
+        <div class="result_row"><label>Name:</label><span>${contactName}</span></div>
+        </c:if>
+        <c:if test="${not empty contactMail && contactMail != 'not available'}">
+        <div class="result_row"><label>Email:</label><span class="lowercase">${contactMail}</span></div>
+        </c:if>
+
         </c:when>
+
         <%--The Otherwise case is for data origination MIRRORED OR NULL values--%>
         <c:otherwise>
-            <c:set var="contactName" value="not available" scope="page"/>
-            <c:set var="contactMail" value="not available" scope="page"/>
+
+            <div class="result_row"><label>Name:</label><span>not available</span></div>
+            <div class="result_row"><label>Email:</label><span>not available</span></div>
         </c:otherwise>
     </c:choose>
-    <div class="result_row"><label>Name:</label><span>${contactName}</span></div>
-    <div class="result_row"><label>Email:</label><span>${contactMail}</span></div>
+
 </div>
 
 
@@ -222,4 +239,3 @@ Contact name: (not given)
     <c:otherwise>No samples to display</c:otherwise>
 </c:choose>
 <div class="but_top"><a href="#top" title="back to the top page">Top</a></div>
-</div>

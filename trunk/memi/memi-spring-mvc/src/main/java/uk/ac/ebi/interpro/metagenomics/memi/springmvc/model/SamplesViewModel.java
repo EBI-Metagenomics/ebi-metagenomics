@@ -5,7 +5,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.forms.SampleFilter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -37,17 +37,17 @@ public class SamplesViewModel extends ViewModel {
      */
     private List<String> tableHeaderNames;
 
-    private SamplesViewPagination pagination;
+    private ViewPagination pagination;
 
 
     public SamplesViewModel(Submitter submitter, Collection<Sample> samples, Collection<Sample> downloadableSamples, String pageTitle, List<Breadcrumb> breadcrumbs,
-                            MemiPropertyContainer propertyContainer, List<String> tableHeaderNames, SamplesViewPagination pagination, SampleFilter filter) {
+                            MemiPropertyContainer propertyContainer, List<String> tableHeaderNames, ViewPagination pagination, SampleFilter filter) {
         this(submitter, samples, downloadableSamples, filter, pageTitle, breadcrumbs, propertyContainer, tableHeaderNames, pagination);
     }
 
     SamplesViewModel(Submitter submitter, Collection<Sample> samples, Collection<Sample> downloadableSamples, SampleFilter filter, String pageTitle,
                      List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer, List<String> tableHeaderNames,
-                     SamplesViewPagination pagination) {
+                     ViewPagination pagination) {
         super(submitter, pageTitle, breadcrumbs, propertyContainer);
         this.sampleFilter = filter;
         this.samples = samples;
@@ -94,11 +94,11 @@ public class SamplesViewModel extends ViewModel {
         this.sampleTypes = sampleTypes;
     }
 
-    public SamplesViewPagination getPagination() {
+    public ViewPagination getPagination() {
         return pagination;
     }
 
-    public void setPagination(SamplesViewPagination pagination) {
+    public void setPagination(ViewPagination pagination) {
         this.pagination = pagination;
     }
 
@@ -107,18 +107,11 @@ public class SamplesViewModel extends ViewModel {
     }
 
     private List<SampleFilter.SampleVisibility> getDefaultStudyVisibilityList() {
-        List<SampleFilter.SampleVisibility> result = new ArrayList<SampleFilter.SampleVisibility>();
-        for (SampleFilter.SampleVisibility vis : SampleFilter.SampleVisibility.values()) {
-            result.add(vis);
-        }
-        return result;
+        return Arrays.asList(SampleFilter.SampleVisibility.values());
     }
 
+
     private List<Sample.SampleType> getDefaultSampleTypes() {
-        List<Sample.SampleType> result = new ArrayList<Sample.SampleType>();
-        for (Sample.SampleType type : Sample.SampleType.values()) {
-            result.add(type);
-        }
-        return result;
+        return Arrays.asList(Sample.SampleType.values());
     }
 }
