@@ -8,8 +8,7 @@
     <div class="sub">
 
         <div class="sub_form">
-            <form:form id="sub_form" commandName="sraRegistrationForm" method="post" action="submit"
-                       enctype="multipart/form-data">
+            <form:form id="sub_form" commandName="sraRegistrationForm" method="post" action="submit">
                 <fieldset>
                     <legend>User details</legend>
                         <%--Email input field--%>
