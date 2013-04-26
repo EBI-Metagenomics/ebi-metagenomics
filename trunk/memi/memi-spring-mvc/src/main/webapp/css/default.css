@@ -828,7 +828,7 @@ color:#c3c3c3;}
 #sidebar-related {margin: 20px 0 0 0;color:#3E3E3E; padding:7px;}
 #sidebar-steps {color:#3E3E3E; margin:18px 9px 0 0 ;padding:0;}
 
-#sidebar-related {margin:0;}
+#sidebar-related {margin:0;width: 94.8%;}
 #sidebar-related  ul{ margin:0;padding:9px; }
 
 #sidebar-related  ul  li {
@@ -1623,7 +1623,7 @@ background:none;
 
     #moving_tab .content {
         /* enable absolute position for .panel */
-        position:relative; overflow:hidden;
+        position:relative; overf 94.8%low:hidden;
       /* background:#abe3eb;border-top:1px solid #d9fafa;border:1px solid #d9fafa; */ 
     }
 
@@ -1653,4 +1653,5 @@ background:none;
 .tweet  li {list-style-type: none; margin:0 9px 20px 9px;}
 
 .lowercase {text-transform:lowercase;}
-
+ .krona_chart {height:470px; width:100%; border:0px black solid;}
+ .krona_chart_small {height: 230px; width: 354px; border:0px pink solid;}
