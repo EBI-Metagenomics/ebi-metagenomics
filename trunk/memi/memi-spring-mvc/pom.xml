@@ -408,14 +408,14 @@
             <id>test-war</id>
             <properties>
                 <deployment.folder>/ebi/www/jtest/deploy/tc-interpro-das</deployment.folder>
-                <pathToAnalysisDirectory>/ebi/production/interpro/metagenomics/results/</pathToAnalysisDirectory>
-                <log4j.log.file>/nfs/nobackup2/interpro/development/metagenomics/web-logs/test/memi.log4j
+                <pathToAnalysisDirectory>nfs/nobackup2/interpro/metagenomics/web-app/test/results/</pathToAnalysisDirectory>
+                <log4j.log.file>/nfs/nobackup2/interpro/metagenomics/web-app/test/logs/memi.log4j
                 </log4j.log.file>
-                <dailyErrorAppParam>/nfs/nobackup2/interpro/development/metagenomics/web-logs/test/memi-ERROR.log4j
+                <dailyErrorAppParam>/nfs/nobackup2/interpro/metagenomics/web-app/test/logs/memi-ERROR.log4j
                 </dailyErrorAppParam>
-                <dailyDebugAppParam>/nfs/nobackup2/interpro/development/metagenomics/web-logs/test/memi-DEBUG.log4j
+                <dailyDebugAppParam>/nfs/nobackup2/interpro/metagenomics/web-app/test/logs/memi-DEBUG.log4j
                 </dailyDebugAppParam>
-                <dailyWarnAppParam>/nfs/nobackup2/interpro/development/metagenomics/web-logs/test/memi-WARN.log4j
+                <dailyWarnAppParam>/nfs/nobackup2/interpro/metagenomics/web-app/test/logs/memi-WARN.log4j
                 </dailyWarnAppParam>
                 <log4j.log.level>info</log4j.log.level>
             </properties>
@@ -428,13 +428,13 @@
             <properties>
                 <deployment.folder>/ebi/www/jlive/deploy/tc-interpro-das</deployment.folder>
                 <pathToAnalysisDirectory>/ebi/production/interpro/metagenomics/results/</pathToAnalysisDirectory>
-                <log4j.log.file>/nfs/nobackup2/interpro/development/metagenomics/web-logs/live/memi.log4j
+                <log4j.log.file>/nfs/nobackup2/interpro/metagenomics/web-app/live/logs/memi.log4j
                 </log4j.log.file>
-                <dailyErrorAppParam>/nfs/nobackup2/interpro/development/metagenomics/web-logs/live/memi-ERROR.log4j
+                <dailyErrorAppParam>/nfs/nobackup2/interpro/metagenomics/web-app/live/logs/memi-ERROR.log4j
                 </dailyErrorAppParam>
-                <dailyDebugAppParam>/nfs/nobackup2/interpro/development/metagenomics/web-logs/live/memi-DEBUG.log4j
+                <dailyDebugAppParam>/nfs/nobackup2/interpro/metagenomics/web-app/live/logs/memi-DEBUG.log4j
                 </dailyDebugAppParam>
-                <dailyWarnAppParam>/nfs/nobackup2/interpro/development/metagenomics/web-logs/live/memi-WARN.log4j
+                <dailyWarnAppParam>/nfs/nobackup2/interpro/metagenomics/web-app/live/logs/memi-WARN.log4j
                 </dailyWarnAppParam>
                 <log4j.log.level>WARN</log4j.log.level>
             </properties>
