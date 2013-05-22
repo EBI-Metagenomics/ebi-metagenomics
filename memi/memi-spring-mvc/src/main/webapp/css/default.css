@@ -1655,3 +1655,21 @@ background:none;
 .lowercase {text-transform:lowercase;}
  .krona_chart {height:470px; width:100%; border:0px black solid;}
  .krona_chart_small {height: 230px; width: 354px; border:0px pink solid;}
+
+/*JQUERY TABS*/
+.title_tab {margin:20px 0 0 9px;}
+.title_tab span a {font-size:80%;}
+.title_tab h2 {margin-top:0;}
+
+.sample_ana .ui-corner-top {border-top-right-radius: 0px;border-top-left-radius: 0px;}
+.sample_ana .ui-widget-content a {color:#188960;}
+.sample_ana .ui-widget-content {border: 0px solid #aaaaaa;background: none;color: #333333;margin: 0 9px;}
+.sample_ana .ui-tabs-nav { margin: 0px 0 -1px 9px;position: relative; z-index: 500;}
+.sample_ana .ui-tabs-nav li {border-color:#e5e5e5;}
+.sample_ana li.ui-tabs-selected {height: 28px; background: #fff; border-top: 1px solid rgb(213, 213, 213); border-right: 1px solid rgb(213, 213, 213); border-bottom: 0; border-left: 1px solid rgb(213, 213, 213);}
+.sample_ana li.ui-tabs-selected a:link{color: black;text-decoration: none;}
+.sample_ana .ui-state-disabled   a {color: grey;}
+.sample_ana .ui-state-default {background:none;}
+.sample_ana .ui-state-hover a:link {text-decoration: underline;}
+.sample_ana .ui-tabs-panel { margin: 0 0 0 -4px; position: relative; z-index: 400; /*background: url(images/epmc-ui-tabs-background-gradient.gif) 0 0 no-repeat;*/ border: 1px solid rgb(213, 213, 213);border-bottom-left-radius: 0px; border-bottom-right-radius: 0px; padding: 18px 9px;}
+.sample_ana .ui-state-disabled {opacity: .5;}
