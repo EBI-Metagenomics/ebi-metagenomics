@@ -368,8 +368,21 @@
                              title="${downloadLink.linkTitle}">
                                   ${downloadLink.linkText}</a><span
                               class="list_date"> - ${downloadLink.fileSize}</span>
+                         <%--to rename Complete Go Annotatio--%>
                       </li>
                   </c:forEach>
+                  <c:if test="${not empty model.pieChartBiologicalProcessURL}">
+                  <li>
+
+                    <a id="csv"
+                       title="<spring:message code="analysisStatsView.label.download.go.slim.anchor.title"/>"
+                       href="<c:url
+                        value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportGOSlimFile"/>">
+                        <spring:message
+                                code="analysisStatsView.label.download.go.slim.anchor.href.message"/></a>
+
+                  </li></c:if>
+
               </ul>
           </c:if>
 
@@ -380,24 +393,32 @@
 
       <h3>Functional analysis</h3>
 
-              <p>The entire InterProScan results file (<a title="Click to download full InterPro matches table (TSV)"
-                                                          href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportI5TSVFile"/>">download
-                  here</a>) has been used to produce the following summaries.</p>
+              <%--<p>The entire InterProScan results file (<a title="Click to download full InterPro matches table (TSV)"--%>
+                                                          <%--href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportI5TSVFile"/>">download--%>
+                  <%--here</a>) has been used to produce the following summaries.</p>--%>
 
               <h4>InterPro match summary</h4>
 
-              <p>Top five most frequently found InterPro matches to this sample:</p>
+              <p>Most frequently found InterPro matches to this sample:</p>
               <c:choose>
                   <c:when test="${not empty model.interProEntries}">
-                      <div id="small"> <div class="export">
-                          <a id="csv"
-                             href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportIPRFile"/>"
-                             title="<spring:message code="analysisStatsView.label.download.i5.table.view"/>">
-                              <spring:message code="analysisStatsView.label.download.i5.table.view"/><%-- <c:out
-                          value="${model.emgFile.fileSizeMap['_summary.ipr']}"/>--%>
-                          </a>
-                      </div>
-                      </div>
+
+
+                       <span style="padding-left:9px;"><a class="icon icon-functional" data-icon="=" id="csv" style="font-size: 180%;"
+                          href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportIPRFile"/>"
+                          title="<spring:message code="analysisStatsView.label.download.i5.table.view"/>">
+                       </a></span>
+
+                      <%--<div id="small"> <div class="export">--%>
+                          <%--<a id="csv"--%>
+                             <%--href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportIPRFile"/>"--%>
+                             <%--title="<spring:message code="analysisStatsView.label.download.i5.table.view"/>">--%>
+                              <%--<spring:message code="analysisStatsView.label.download.i5.table.view"/>&lt;%&ndash; <c:out--%>
+                          <%--value="${model.emgFile.fileSizeMap['_summary.ipr']}"/>&ndash;%&gt;--%>
+                          <%--</a>--%>
+                      <%--</div>--%>
+                      <%--</div>--%>
+
                       <table border="1" class="result" id="small">
                           <thead>
                           <tr>
@@ -422,12 +443,13 @@
                                   <td id="ordered">${entry.numOfEntryHits}</td>
                               </tr>
                           </c:forEach>
+                          <tr><td colspan="3" class="showHideRelated" ><c:set var="showFullTableID" value="View full table"/>
+                          <a title="<c:out value="${showFullTableID}"/>"
+                                                      href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/showProteinMatches"/>">
+                                                    <c:out value="${showFullTableID}"/></a></td></tr>
                           </tbody>
                       </table>
-                      <c:set var="showFullTableID" value="View full table"/>
-                      <p><a title="<c:out value="${showFullTableID}"/>"
-                            href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/showProteinMatches"/>">
-                          <c:out value="${showFullTableID}"/></a></p>
+
 
                   </c:when>
                   <c:otherwise>
@@ -436,29 +458,12 @@
               </c:choose>
 
 
-              <h4>Annotation by GO Terms</h4>
+              <h4>GO Terms annotation</h4>
 
-              <p>A summary of Gene Ontology (GO) terms derived from InterPro matches to your sample is provided in the chart
-                  below. You can view the complete list of GO terms by clicking on the download icon.</p>
-
-
-              <div class="export" style="float:none; margin-left:9px;">
-                  <c:if test="${not empty model.pieChartBiologicalProcessURL}">
-
-                      <%-- remove detailed TSV export : available on top
-                <a title="<spring:emailMessage code="analysisStatsView.label.download.goterms.full.csv"/>" href="<c:url
-                         value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportGOFile/${model.emgFile.fileName}"/>">
-                     <spring:emailMessage code="analysisStatsView.label.download.goterms.full.csv"/></a>--%>
+              <p>A summary of Gene Ontology (GO) terms derived from InterPro matches to your sample is provided in the chart below.</p>
 
 
-                      <a id="csv"
-                         title="<spring:message code="analysisStatsView.label.download.go.slim.anchor.title"/>"
-                         href="<c:url
-                          value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportGOSlimFile"/>">
-                          <spring:message
-                                  code="analysisStatsView.label.download.go.slim.anchor.href.message"/></a>
-                  </c:if>
-              </div>
+
               <table class="result">
                         <tr>
                           <td width="10%" style="background-color:white;padding:0;vertical-align: top;"><object class="krona_chart_small" style="height:323px;" data="<c:url value="${baseURL}/Krona_chart_function_simple?depth=1&font=11"/>" type="text/html"></object></td>
