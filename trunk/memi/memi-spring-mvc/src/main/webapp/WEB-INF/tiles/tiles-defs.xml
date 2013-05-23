@@ -131,11 +131,6 @@
         <put-attribute name="body" value="/templates/errors/errorBody.jsp"/>
     </definition>
 
-    <definition name="analysisStatsView" extends="rootTemplate">
-        <put-attribute name="bodyClass" type="string" value="greyblue"/>
-        <put-attribute name="body" value="/templates/analysisStatsBody.jsp"/>
-    </definition>
-
     <definition name="accessDenied" extends="rootTemplate">
         <put-attribute name="bodyClass" type="string" value="grey"/>
         <put-attribute name="body" value="/templates/accessDeniedBody.jsp"/>

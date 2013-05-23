@@ -12,19 +12,18 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Simple extension of {@link AnalysisStatsController}.
+ * Simple extension of {@link SampleViewController}.
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @version $Id$
  * @since 1.0-SNAPSHOT
  */
 @Controller
-@RequestMapping('/' + AnalysisStatsController.VIEW_NAME + "/{sampleId}/showProteinMatches")
-public class ShowProteinMatchesController extends AnalysisStatsController {
+@RequestMapping('/' + SampleViewController.VIEW_NAME + "/{sampleId}/showProteinMatches")
+public class ShowProteinMatchesController extends SampleViewController {
 
     private static final Log log = LogFactory.getLog(ShowProteinMatchesController.class);
 

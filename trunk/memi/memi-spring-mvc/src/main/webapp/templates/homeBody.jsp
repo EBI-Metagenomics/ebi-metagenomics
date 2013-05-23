@@ -221,7 +221,7 @@
                                         <%-- leave empty to be consistent with sample overview page
                                  - <img src="${pageContext.request.contextPath}/img/ico_analysis_chart_small_off.gif" alt="Analysis in progress" title="Analysis in progress">--%></c:when>
                                     <c:otherwise>
-                                        - <a href="<c:url value="${baseURL}/analysisStatsView/${sample.sampleId}"/>"
+                                        - <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>"
                                              class="list_sample"> <img
                                             src="${pageContext.request.contextPath}/img/ico_analysis_chart_small.gif"
                                             alt="Analysis finished - check the results"
@@ -297,7 +297,7 @@
                                  - <img src="${pageContext.request.contextPath}/img/ico_analysis_chart_small_off.gif" alt="Analysis in progress" title="Analysis in progress">--%>
                             </c:when>
                             <c:otherwise>
-                                - <a href="<c:url value="${baseURL}/analysisStatsView/${sample.sampleId}"/>"
+                                - <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>"
                                      class="list_sample"> <img
                                     src="${pageContext.request.contextPath}/img/ico_analysis_chart_small.gif"
                                     alt="Analysis finished - check the results"
