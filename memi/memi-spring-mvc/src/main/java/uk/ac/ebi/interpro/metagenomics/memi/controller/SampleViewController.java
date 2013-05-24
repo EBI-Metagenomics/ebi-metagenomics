@@ -258,7 +258,7 @@ public class SampleViewController extends SecuredAbstractController<Sample> {
                         4,
                         getFileSize(file)));
             } else if (file.getName().endsWith(EmgFile.ResultFileType.GO.getFileNameEnd())) {
-                funcAnalysisDownloadLinks.add(new DownloadLink("GO annotation result file (CSV)",
+                funcAnalysisDownloadLinks.add(new DownloadLink("Complete GO annotation (CSV)",
                         "Click to download GO annotation result file (CSV)",
                         "sample/" + sampleId + "/doExportGOFile",
                         5,
