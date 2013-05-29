@@ -57,4 +57,21 @@ public class DefaultController {
         }
         return new ModelAndView("redirect:" + referer);
     }
+
+    @RequestMapping(value = "/Krona_chart_taxonomy", method = RequestMethod.GET)
+       public String doGetKronataxo() {
+           return "Krona_chart_taxonomy";
+       }
+    @RequestMapping(value = "/Krona_chart_function", method = RequestMethod.GET)
+       public String doGetKronafunc() {
+           return "Krona_chart_function";
+       }
+    @RequestMapping(value = "/Krona_chart_taxonomy_simple", method = RequestMethod.GET)
+       public String doGetKronataxosimple() {
+           return "Krona_chart_taxonomy_simple";
+       }
+    @RequestMapping(value = "/Krona_chart_function_simple", method = RequestMethod.GET)
+       public String doGetKronafuncsimple() {
+           return "Krona_chart_function_simple";
+       }
 }
