@@ -7,7 +7,7 @@
 <c:choose>
     <c:when test="${not empty model.study.publications}">
 
-        <div id="sidebar-allrel">
+        <div class="sidebar-allrel">
             <c:if test="${not empty model.relatedPublications}">
                 <div id="sidebar-related">
                     <h2>Related Publications</h2>
