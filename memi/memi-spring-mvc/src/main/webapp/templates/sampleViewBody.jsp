@@ -1,6 +1,20 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#expandercontent').css('display','none');
+        $("#expanderhead").click(function(){
+            $("#expandercontent").slideToggle();
+            if ($("#expandersign").text() == "+"){
+                $("#expandersign").text("-")
+            }
+            else {
+                $("#expandersign").text("+")
+            }
+        });
+    });
+</script>
 
 <c:choose>
 <c:when test="${not empty model.sample}">
@@ -255,8 +269,8 @@
         <%--BEGIN OTHER INFO   --%>
 
     <c:if test="${not empty model.sampleAnnotations}">
-        <h3 id="expanderHead" style="">Other information <span id="expanderSign">+</span></h3>
-        <div id="expanderContent">
+        <h3 id="expanderhead" style="">Other information <span id="expandersign">+</span></h3>
+        <div id="expandercontent">
         <table border="1" class="result">
             <thead>
             <tr>
@@ -610,20 +624,7 @@
     $( "#tabs-taxchart" ).tabs({ disabled: [0,1,2,3,5] });
 </script>
 
-<script type="text/javascript">
-    $(document).ready(function(){
-        $('#expanderContent').css('display','none');
-        $("#expanderHead").click(function(){
-            $("#expanderContent").slideToggle();
-            if ($("#expanderSign").text() == "+"){
-                $("#expanderSign").text("-")
-            }
-            else {
-                $("#expanderSign").text("+")
-            }
-        });
-    });​
-</script>
+
 
 </c:when>
 <c:otherwise>
