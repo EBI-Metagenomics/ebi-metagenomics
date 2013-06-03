@@ -1314,6 +1314,7 @@ text-align: right;
 font-size: 110%;
 color: #445668; /* was #003798 or blue 4d68a1 */
 border: 0px solid #556f8c;
+line-height: 1.5;
 }
 
 .output_form h4 {padding-left:0;}
