@@ -133,7 +133,8 @@
             var myOptions = {
                 zoom:4,
                 center:latlng,
-                mapTypeId:google.maps.MapTypeId.ROADMAP
+                mapTypeId:google.maps.MapTypeId.ROADMAP,
+                streetViewControl: false
             };
             var map = new google.maps.Map(document.getElementById("map_canvas"),
                     myOptions);
