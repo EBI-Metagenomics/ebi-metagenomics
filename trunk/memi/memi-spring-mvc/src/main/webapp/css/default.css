@@ -1648,5 +1648,5 @@ li.ui-tabs-selected .ico-krona {background: url(../img/ico_graph_krona_on.png) n
 
 .main_tab_content {width:70%;}
 
-#expanderHead {cursor:pointer;}
-#expanderHead:hover {background-color: black; color:white;opacity: 0.2;} /*style for expander*/
+#expanderhead {cursor:pointer;}
+#expanderhead:hover {background-color: black; color:white;opacity: 0.3;} /*style for expander*/
