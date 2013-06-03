@@ -328,14 +328,17 @@
 
       <div id="#tax-Krona">
       <table class="result">
-        <tr>
-          <td width="10%" style="background-color:white;padding:0;"><object class="krona_chart_small" data="<c:url value="${baseURL}/Krona_chart_taxonomy_simple?depth=1&font=11"/>" type="text/html"></object></td>
-          <td rowspan="2" style="background-color:white;padding:0;"><object class="krona_chart" data="<c:url value="${baseURL}/Krona_chart_taxonomy?font=10"/>" type="text/html"></object></td>
-            <%--Z:\metagenomics\ERS089005_G_SFF\Krona_chart_taxonomy.html?font=10--%>
-        </tr>
           <tr>
-          <td style="background-color:white;padding:0;"><object class="krona_chart_small" data="<c:url value="${baseURL}/Krona_chart_taxonomy_simple?node=1&depth=2&font=11"/>" type="text/html"></object></td>
-        </tr>
+              <td width="10%" style="background-color:white;padding:0;">
+                  <object class="krona_chart_small" data="<c:url value="${baseURL}/sample/${model.sample.sampleId}/krona?taxonomy=true&slim=true&depth=1&font=11"/>" type="text/html"/>
+              </td>
+              <td rowspan="2" style="background-color:white;padding:0;">
+                  <object class="krona_chart" data="<c:url value="${baseURL}/sample/${model.sample.sampleId}/krona?taxonomy=true&font=10"/>" type="text/html"/>
+              </td>
+          </tr>
+          <tr>
+              <td style="background-color:white;padding:0;"><object class="krona_chart_small" data="<c:url value="${baseURL}/sample/${model.sample.sampleId}/krona?taxonomy=true&slim=true&node=1&depth=2&font=11"/>" type="text/html"/></td>
+          </tr>
       </table>
       </div>
 
@@ -524,10 +527,10 @@
     <div id="go-terms-Krona">
     <table class="result">
     <tr>
-    <td width="10%" style="background-color:white;padding:0;vertical-align: top;"><object class="krona_chart_small" style="height:323px;" data="<c:url value="${baseURL}/Krona_chart_function_simple?depth=1&font=11"/>" type="text/html"></object></td>
+    <td width="10%" style="background-color:white;padding:0;vertical-align: top;"><object class="krona_chart_small" style="height:323px;" data="<c:url value="${baseURL}/sample/${model.sample.sampleId}/krona?function=true&slim=true&depth=1&font=11"/>" type="text/html"></object></td>
     <td style="background-color:white;padding:0;">
     <%--<a href="http://localhost:8082/metagenomics/Krona_chart_function"  class="icon icon-functional" data-icon="F" title="Open full screen" style="float:right; margin: 10px 4px 0 0; font-size: 283%;"></a>--%>
-    <object class="krona_chart" data="<c:url value="${baseURL}/Krona_chart_function?font=10"/>" type="text/html"></object></td>
+    <object class="krona_chart" data="<c:url value="${baseURL}/sample/${model.sample.sampleId}/krona?function=true&font=10"/>" type="text/html"></object></td>
     </tr>
 
     </table>

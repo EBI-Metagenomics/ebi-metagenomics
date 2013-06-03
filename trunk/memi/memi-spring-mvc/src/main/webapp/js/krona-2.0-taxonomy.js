@@ -3580,7 +3580,7 @@ quality format that can be printed and saved (see Help for browser compatibility
 '<input type="button" id="help"  title="help" value="?"\
 	onclick="window.open(\'https://sourceforge.net/p/krona/wiki/Browsing%20Krona%20charts/\', \'help\')"/>\
 <input type="button" id="Full_screen" title="Open full screen" value="Full screen"\
-    	onclick="window.open(\'Krona_chart_taxonomy/\', \'Full screen\')"/>\
+    	onclick="window.open(\'krona?taxonomy=true\', \'Full screen\')"/>\
    '
     		);
 }

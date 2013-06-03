@@ -7,19 +7,15 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.EmgLogFileInfoDAO;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAO;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.ISampleStudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.temp.SampleAnnotationDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgFile;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgSampleAnnotation;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.*;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.SampleViewModel;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.DownloadLink;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.DownloadSection;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.FilePathNameBuilder;
@@ -31,6 +27,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.*;
 
@@ -38,22 +35,13 @@ import java.util.*;
  * The controller for analysis overview page.
  *
  * @author Phil Jones, EMBL-EBI, InterPro
+ * @author Maxim Scheremetjew
  * @since 1.0-SNAPSHOT
  */
 @Controller
 @RequestMapping('/' + SampleViewController.VIEW_NAME + "/{sampleId}")
-public class SampleViewController extends SecuredAbstractController<Sample> {
+public class SampleViewController extends AbstractSampleViewController {
     private static final Log log = LogFactory.getLog(SampleViewController.class);
-    /**
-     * View name of this controller which is used several times.
-     */
-    public static final String VIEW_NAME = "sample";
-
-    @Resource
-    private SampleDAO sampleDAO;
-
-    @Resource
-    private EmgLogFileInfoDAO fileInfoDAO;
 
     @Resource
     private SampleAnnotationDAO sampleAnnotationDAO;
@@ -65,20 +53,9 @@ public class SampleViewController extends SecuredAbstractController<Sample> {
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView doGetSample(@PathVariable final String sampleId,
-                                    @RequestParam(required = false, value = "export") final String export,
                                     final ModelMap model,
                                     final HttpServletResponse response,
-                                    final HttpServletRequest request) {
-        log.info("Checking if sample is accessible...");
-        if (export != null) {
-            if (export.equalsIgnoreCase(this.requestParamValues[0])) {
-                return handleExport(sampleId, response, request, EmgFile.ResultFileType.TAX_ANALYSIS_BIOM_FILE, "_otu.biom");
-            } else if (export.equalsIgnoreCase(this.requestParamValues[1])) {
-                return handleExport(sampleId, response, request, EmgFile.ResultFileType.TAX_ANALYSIS_TSV_FILE, "_otu.tsv");
-            } else if (export.equalsIgnoreCase(this.requestParamValues[2])) {
-                return handleExport(sampleId, response, request, EmgFile.ResultFileType.TAX_ANALYSIS_TREE_FILE, "_newick.tre");
-            }
-        }
+                                    final HttpServletRequest request) throws IOException {
         return checkAccessAndBuildModel(new ModelProcessingStrategy<Sample>() {
             @Override
             public void processModel(ModelMap model, Sample sample) {
@@ -86,6 +63,11 @@ public class SampleViewController extends SecuredAbstractController<Sample> {
                 populateModel(model, sample);
             }
         }, model, sampleId, getModelViewName());
+    }
+
+    @RequestMapping(value = "/accessDenied")
+    public ModelAndView doGetAccessDeniedPage(@PathVariable final String sampleId) {
+        return buildAccessDeniedModelAndView(sampleId);
     }
 
     @RequestMapping(value = "/doExportGOSlimFile", method = RequestMethod.GET)
@@ -138,7 +120,6 @@ public class SampleViewController extends SecuredAbstractController<Sample> {
      * @param fileNameEnd    - Defines the file name extension and a file name suffix for the download file itself.
      * @return
      */
-    //TODO: Parameter name fileExtension is a bit misleading
     private ModelAndView handleExport(final String sampleId, final HttpServletResponse response,
                                       final HttpServletRequest request, final EmgFile.ResultFileType resultFileType,
                                       final String fileNameEnd) {
@@ -156,28 +137,6 @@ public class SampleViewController extends SecuredAbstractController<Sample> {
         }, null, sampleId, getModelViewName());
     }
 
-    private void createFileObjectAndOpenDownloadDialog(final HttpServletResponse response,
-                                                       final HttpServletRequest request,
-                                                       final EmgFile emgFile,
-                                                       final String fileNameEnd,
-                                                       final String filePathName) {
-        File file = new File(filePathName);
-        if (downloadService != null) {
-            //white spaces are replaced by underscores
-            final String fileNameForDownload = getFileName(emgFile, fileNameEnd);
-            downloadService.openDownloadDialog(response, request, file, fileNameForDownload, false);
-        }
-    }
-
-    private String getFileName(final EmgFile emgFile,
-                               final String fileNameEnd) {
-        return emgFile.getFileName().replace(" ", "_") + fileNameEnd;
-    }
-
-    private EmgFile getEmgFile(final long sampleId) {
-        List<EmgFile> emgFiles = fileInfoDAO.getFilesBySampleId(sampleId);
-        return (emgFiles.size() > 0 ? emgFiles.get(0) : null);
-    }
 
     protected void populateModel(final ModelMap model, final Sample sample, boolean isReturnSizeLimit) {
         String pageTitle = "Sample analysis results: " + sample.getSampleName() + "";
@@ -272,19 +231,19 @@ public class SampleViewController extends SecuredAbstractController<Sample> {
             } else if (file.getName().endsWith(EmgFile.ResultFileType.TAX_ANALYSIS_BIOM_FILE.getFileNameEnd())) {
                 taxaAnalysisDownloadLinks.add(new DownloadLink("OTUs and taxonomic assignments (BIOM)",
                         "Click to download the OTUs and taxonomic assignments (BIOM)",
-                        "sample/" + sampleId + "?export=" + this.requestParamValues[0],
+                        "sample/" + sampleId + "/export?exportValue=" + this.requestParamValues[0],
                         1,
                         getFileSize(file)));
             } else if (file.getName().endsWith(EmgFile.ResultFileType.TAX_ANALYSIS_TSV_FILE.getFileNameEnd())) {
                 taxaAnalysisDownloadLinks.add(new DownloadLink("OTUs and taxonomic assignments (TSV)",
                         "Click to download the OTUs and taxonomic assignments (TSV)",
-                        "sample/" + sampleId + "?export=" + this.requestParamValues[1],
+                        "sample/" + sampleId + "/export?exportValue=" + this.requestParamValues[1],
                         2,
                         getFileSize(file)));
             } else if (file.getName().endsWith(EmgFile.ResultFileType.TAX_ANALYSIS_TREE_FILE.getFileNameEnd())) {
                 taxaAnalysisDownloadLinks.add(new DownloadLink("Phylogenetic tree (Newick format)",
                         "Click to download the phylogenetic tree file (Newick format)",
-                        "sample/" + sampleId + "?export=" + this.requestParamValues[2],
+                        "sample/" + sampleId + "/export?exportValue=" + this.requestParamValues[2],
                         3,
                         getFileSize(file)));
             }
@@ -316,6 +275,7 @@ public class SampleViewController extends SecuredAbstractController<Sample> {
      * Creates a map between file names and file sizes (for all downloadable files on analysis page). The file size of smaller files
      * (cutoff: 1024x1024 bytes) is shown in KB, for all the other files it is shown in MB.
      */
+    //TODO: Parameter name fileExtension is a bit misleading
     private Map<String, String> getFileSizeMap(EmgFile emgFile) {
         Map<String, String> result = new HashMap<String, String>();
         String directoryName = emgFile.getFileIDInUpperCase().replace('.', '_');
@@ -348,26 +308,7 @@ public class SampleViewController extends SecuredAbstractController<Sample> {
     /**
      * Creates the analysis page model and adds it to the specified model map.
      */
-    private void populateModel(final ModelMap model, final Sample sample) {
+    protected void populateModel(final ModelMap model, final Sample sample) {
         populateModel(model, sample, true);
-    }
-
-    @Override
-    ISampleStudyDAO<Sample> getDAO() {
-        return sampleDAO;
-    }
-
-    protected String getModelViewName() {
-        return VIEW_NAME;
-    }
-
-    protected List<Breadcrumb> getBreadcrumbs(SecureEntity entity) {
-        List<Breadcrumb> result = new ArrayList<Breadcrumb>();
-        if (entity != null && entity instanceof Sample) {
-            result.add(new Breadcrumb("Project: " + ((Sample) entity).getStudy().getStudyName(), "View project " + ((Sample) entity).getStudy().getStudyName(), StudyViewController.VIEW_NAME + '/' + ((Sample) entity).getStudy().getStudyId()));
-            result.add(new Breadcrumb("Sample: " + ((Sample) entity).getSampleName(), "View sample " + ((Sample) entity).getSampleName(), SampleViewController.VIEW_NAME + '/' + ((Sample) entity).getSampleId()));
-            result.add(new Breadcrumb("Analysis Results", "View analysis results", VIEW_NAME + '/' + ((Sample) entity).getSampleId()));
-        }
-        return result;
     }
 }
