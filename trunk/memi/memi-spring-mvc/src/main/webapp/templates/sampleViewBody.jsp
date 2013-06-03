@@ -11,68 +11,28 @@
 </div>
 
 <div class="sample_ana">
-<div id="tabs">
+<div id="navtabs">
 
-    <%--Tabs--%>
+<%--Main Tabs--%>
 <ul>
     <li><a href="#fragment-overview"><span>Overview</span></a></li>
     <li><a href="#fragment-taxonomy"><span>Taxonomy analysis</span></a></li>
-    <li><a href="#fragment-functional"><span>Functional analysis</span></a></li>
-    <li><a href="#fragment-functional"><span>Comparison tool</span></a></li>
-    <li><a href="#fragment-download"><span>Downloads</span></a></li>
+    <li><a href="#fragment-functional"><span>Function analysis</span></a></li>
+    <li><a href="#fragment-experimental"><span>Experimental factor</span></a></li>
+    <li><a href="#fragment-download"><span>Download</span></a></li>
 </ul>
 
 
 <div id="fragment-overview">
 
-<div id="sidebar-allrel">
-    <c:choose>
-        <c:when test="${not empty model.sample.analysisCompleted}">
+<div class="sidebar-allrel">
 
-            <h3>Data processed</h3>
-
-
-            <c:url var="statsImage" value="/getImage" scope="request">
-                <c:param name="imageName" value="_summary.png"/>
-                <c:param name="imageType" value="PNG"/>
-                <c:param name="dir" value="${model.emgFile.fileID}"/>
-            </c:url>
-            <p><img style="height:94px;" src="<c:out value="${statsImage}"/>"/></p>
-
-
-        </c:when>
-        <c:otherwise>
-            <h3>Analysis in progress!</h3>
-        </c:otherwise>
-    </c:choose>
-    <h3>Download</h3>
-
-    <div id="box-export">
-        <h4>Sequence data</h4>
-        <ul>
-            <c:forEach var="downloadLink" items="${model.downloadSection.seqDataDownloadLinks}" varStatus="loop">
-                <li>
-                    <c:choose>
-                        <c:when test="${downloadLink.externalLink}">
-                            <a href="${downloadLink.linkURL}"
-                               title="${downloadLink.linkTitle}">${downloadLink.linkText}</a>
-                        </c:when>
-                        <c:otherwise>
-                            <a href="<c:url value="${baseURL}/${downloadLink.linkURL}"/>"
-                               title="${downloadLink.linkTitle}">
-                                    ${downloadLink.linkText}</a><span
-                                class="list_date"> - ${downloadLink.fileSize}</span>
-                        </c:otherwise>
-                    </c:choose>
-                </li>
-            </c:forEach>
-        </ul>
-    </div>
+    <c:if test="${not empty model.publications}">
 
     <div id="sidebar-related">
+
         <h2>Related resources</h2>
-        <c:choose>
-            <c:when test="${not empty model.publications}">
+
                 <span class="separator"></span>
                 <ul>
                     <c:forEach var="pub" items="${model.publications}" varStatus="status">
@@ -90,15 +50,12 @@
                         </li>
                     </c:forEach>
                 </ul>
-            </c:when>
-            <c:otherwise>
-                <p>There are no resources available for this sample.<br/></p>
-            </c:otherwise>
-        </c:choose>
-    </div>
+
+        </div>
+    </c:if>
 </div>
 
-<div class="main_tab_content" style="border:0px red solid; width: 72%;">
+<div class="main_tab_content">
         <%--BEGIN DESCRIPTION--%>
     <h3 id="sample_desc">Description</h3>
 
@@ -132,15 +89,8 @@
             <h3>Host associated</h3>
 
             <div class="output_form" id="large">
-                <c:choose>
-                    <c:when test="${not empty model.sample.phenotype}">
-                        <c:set var="phenotype" value="${model.sample.phenotype}"/>
-                    </c:when>
-                    <c:otherwise>
-                        <c:set var="phenotype" value="${notGivenId}"/>
-                    </c:otherwise>
-                </c:choose>
-                <div class="result_row"><label>Species:</label>
+
+               <div class="result_row"><label>Species:</label>
                     <c:choose>
                     <c:when test="${not empty model.sample.hostTaxonomyId && model.sample.hostTaxonomyId>0}">
         <span><c:out value="${model.sample.species}"/> <a class="ext"
@@ -152,19 +102,26 @@
                 </c:otherwise>
                 </c:choose>
 
-                <c:choose>
-                    <c:when test="${not empty model.sample.hostSex}">
-                        <c:set var="hostSex" value="${model.sample.hostSex}"/>
-                    </c:when>
-                    <c:otherwise>
-                        <c:set var="hostSex" value="${notGivenId}"/>
-                    </c:otherwise>
-                </c:choose>
-                <div class="result_row"><label>Sex:</label> <span style="text-transform:lowercase;"><c:out
-                        value="${hostSex}"/></span></div>
 
-                <div class="result_row"><label>Phenotype:</label> <span><c:out value="${phenotype}"/></span></div>
-            </div>
+                    <c:if test="${not empty model.sample.hostSex}">
+                        <c:set var="hostSex" value="${model.sample.hostSex}"/>
+                        <div class="result_row"><label>Sex:</label> <span style="text-transform:lowercase;"><c:out
+                                                value="${hostSex}"/></span></div>
+                    </c:if>
+
+
+
+
+
+
+                        <c:if test="${not empty model.sample.phenotype}">
+                            <c:set var="phenotype" value="${model.sample.phenotype}"/>
+                <div class="result_row"><label>Phenotype:</label> <span><c:out value="${phenotype}"/></span> </div>
+                        </c:if>
+
+
+            </div>  <%--end div output_form--%>
+
         </c:when>
 
         <c:otherwise>
@@ -178,8 +135,7 @@
                     <c:otherwise>
                         <c:set var="environmentalBiome" value="${notGivenId}"/>
                     </c:otherwise>
-                </c:choose>
-                <div class="result_row"><label>Biome:</label> <span><c:out value="${environmentalBiome}"/></span>
+                </c:choose>                                  <div class="result_row"><label>Biome:</label> <span><c:out value="${environmentalBiome}"/></span>
                 </div>
 
                 <c:choose>
@@ -240,28 +196,67 @@
         <%--END LOCALISATION   --%>
 
         <%--BEGIN READS SECTION   --%>
-    <h3>Submitted nucleotide data</h3>
 
-    <div class="output_form" id="large">
-        <div class="result_row"><label>Raw sequence reads:</label>
-      <span>
-         <c:choose>
-             <c:when test="${not empty model.archivedSequences}">
-                 <c:forEach var="seqId" items="${model.archivedSequences}" varStatus="status">
-                     <a class="ext" href="<c:url value="https://www.ebi.ac.uk/ena/data/view/${seqId}"/>">
-                         <c:out value="${seqId}"/></a>
-                 </c:forEach> (ENA website)
-             </c:when>
-             <c:otherwise>(not given)</c:otherwise>
-         </c:choose></span></div>
-    </div>
+    <%--<h3>Submitted nucleotide data</h3>--%>
+    <c:choose>
+    <c:when test="${not empty model.sample.analysisCompleted}">
+
+       <h3>Data processed</h3>
+
+       <div class="output_form" id="large">
+       <c:url var="statsImage" value="/getImage" scope="request">
+           <c:param name="imageName" value="_summary.png"/>
+           <c:param name="imageType" value="PNG"/>
+           <c:param name="dir" value="${model.emgFile.fileID}"/>
+       </c:url>
+       <div style="float:left;"><img style="height:94px;" src="<c:out value="${statsImage}"/>"/></div>
+
+    </c:when>
+    <c:otherwise>
+        <h3>Data processed</h3> <p>Analysis in progress!</p>
+     </c:otherwise>
+    </c:choose>
+
+         <ul style="list-style-type: none;">
+            <c:forEach var="downloadLink" items="${model.downloadSection.seqDataDownloadLinks}" varStatus="loop">
+                <li>
+                    <c:choose>
+                        <c:when test="${downloadLink.externalLink}">
+                            <a href="${downloadLink.linkURL}"
+                               title="${downloadLink.linkTitle}">${downloadLink.linkText}</a>
+                        </c:when>
+                        <c:otherwise>
+                            <a href="<c:url value="${baseURL}/${downloadLink.linkURL}"/>"
+                               title="${downloadLink.linkTitle}">
+                                    ${downloadLink.linkText}</a><span
+                                class="list_date"> - ${downloadLink.fileSize}</span>
+                        </c:otherwise>
+                    </c:choose>
+                </li>
+            </c:forEach>
+        </ul>
+
+       </div>
+    <%--<div class="output_form" id="large">--%>
+        <%--<div class="result_row"><label>Raw sequence reads:</label>--%>
+      <%--<span>--%>
+         <%--<c:choose>--%>
+             <%--<c:when test="${not empty model.archivedSequences}">--%>
+                 <%--<c:forEach var="seqId" items="${model.archivedSequences}" varStatus="status">--%>
+                     <%--<a class="ext" href="<c:url value="https://www.ebi.ac.uk/ena/data/view/${seqId}"/>">--%>
+                         <%--<c:out value="${seqId}"/></a>--%>
+                 <%--</c:forEach> (ENA website)--%>
+             <%--</c:when>--%>
+             <%--<c:otherwise>(not given)</c:otherwise>--%>
+         <%--</c:choose></span></div>--%>
+    <%--</div>--%>
         <%--END READS SECTION   --%>
 
         <%--BEGIN OTHER INFO   --%>
 
     <c:if test="${not empty model.sampleAnnotations}">
-        <h3>Other information</h3>
-
+        <h3 id="expanderHead" style="">Other information <span id="expanderSign">+</span></h3>
+        <div id="expanderContent">
         <table border="1" class="result">
             <thead>
             <tr>
@@ -280,6 +275,7 @@
             </c:forEach>
             </tbody>
         </table>
+        </div>
     </c:if>
 
         <%--END OTHER INFO   --%>
@@ -290,12 +286,11 @@
 
 
 <div id="fragment-taxonomy">
-    <aside>
-        <div id="sidebar-download">
+<div class="sidebar-allrel">
 
             <h3>Download results</h3>
 
-            <div id="box-export">
+            <div class="box-export">
                 <c:if test="${not empty model.downloadSection.taxaAnalysisDownloadLinks}">
                     <h4>Taxonomic Analysis</h4>
                     <ul>
@@ -310,38 +305,51 @@
                         </c:forEach>
                     </ul>
                 </c:if>
-            </div>
-        </div>
 
-      </aside>
+</div>
+
+</div>
+<div class="main_tab_content">
       <h3>Taxonomy analysis</h3>
+
+        <div id="tabs-taxchart">
+
+                <%--Tabs--%>
+            <ul>
+                <li><a href="#tax-table" title="Table view"><span class="ico-table"></span></a></li>
+
+
+                <li><a href="#tax-pie" title="Pie chart view"><span class="ico-pie"></span></a></li>
+                <li><a href="#tax-bar" title="Bar chart view"><span class="ico-barh"></span></a></li>
+                <li><a href="#tax-col" title="Stacked column chart view"><span class="ico-col"></span></a></li>
+                <li><a href="#tax-Krona" title="Krona interactive chart view"><span class="ico-krona"></span></a></li>
+                <li class="ico-downl"><a class="icon icon-functional" data-icon="=" href="#download" title="Download image/table"></a></li>
+            </ul>
+
+      <div id="#tax-Krona">
       <table class="result">
         <tr>
           <td width="10%" style="background-color:white;padding:0;"><object class="krona_chart_small" data="<c:url value="${baseURL}/Krona_chart_taxonomy_simple?depth=1&font=11"/>" type="text/html"></object></td>
           <td rowspan="2" style="background-color:white;padding:0;"><object class="krona_chart" data="<c:url value="${baseURL}/Krona_chart_taxonomy?font=10"/>" type="text/html"></object></td>
+            <%--Z:\metagenomics\ERS089005_G_SFF\Krona_chart_taxonomy.html?font=10--%>
         </tr>
           <tr>
           <td style="background-color:white;padding:0;"><object class="krona_chart_small" data="<c:url value="${baseURL}/Krona_chart_taxonomy_simple?node=1&depth=2&font=11"/>" type="text/html"></object></td>
         </tr>
       </table>
+      </div>
+
+       </div>
   </div>
-
-
-
-
-
-
-
-
-
+</div>
 
 <div id="fragment-functional">
-    <aside>
-        <div id="sidebar-download">
+
+        <div class="sidebar-allrel">
 
             <h3>Download results</h3>
 
-            <div id="box-export">
+            <div class="box-export">
 
                 <c:if test="${not empty model.downloadSection.funcAnalysisDownloadLinks}">
                     <h4>Functional Analysis</h4>
@@ -374,7 +382,16 @@
       </div>
       </div>
 
-      </aside>
+      <div class="main_tab_content">
+          <%--<div id="small"> <div class="export">--%>
+                                <%--<a id="csv"--%>
+                                   <%--href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/doExportIPRFile"/>"--%>
+                                   <%--title="<spring:message code="analysisStatsView.label.download.i5.table.view"/>">--%>
+                                    <%--<spring:message code="analysisStatsView.label.download.i5.table.view"/>&lt;%&ndash; <c:out--%>
+                                <%--value="${model.emgFile.fileSizeMap['_summary.ipr']}"/>&ndash;%&gt;--%>
+                                <%--</a>--%>
+                            <%--</div>--%>
+                            <%--</div>--%>
 
       <h3>Functional analysis</h3>
 
@@ -388,120 +405,145 @@
               <c:choose>
                   <c:when test="${not empty model.interProEntries}">
 
+    <div id="interpro-chart">
 
-                       <span style="padding-left:9px;"><a class="icon icon-functional" data-icon="=" id="csv" style="font-size: 180%;"
-                          href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/doExportIPRFile"/>"
-                          title="<spring:message code="analysisStatsView.label.download.i5.table.view"/>">
-                       </a></span>
+                 <%--Tabs--%>
+             <ul>
+                 <li><a href="#InterPro-match-table" title="Table view"><span class="ico-table"></span></a></li>
+                 <li><a href="#InterPro-match-pie" title="Pie chart view"><span class="ico-pie"></span></a></li>
+                 <li><a href="#InterPro-match-bar" title="Bar chart view"><span class="ico-barh"></span></a></li>
+                 <li><a href="#InterPro-match-col" title="Stacked column chart view"><span class="ico-col"></span></a></li>
+                 <li><a href="#InterPro-match-Krona" title="Krona interactive chart view"><span class="ico-krona"></span></a></li>
+                 <li class="ico-downl followtablink"><a class="icon icon-functional" data-icon="=" id="csv" href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/doExportIPRFile"/>"   title="<spring:message code="analysisStatsView.label.download.i5.table.view"/>"></a></li>
+             </ul>
 
-                      <%--<div id="small"> <div class="export">--%>
-                          <%--<a id="csv"--%>
-                             <%--href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/doExportIPRFile"/>"--%>
-                             <%--title="<spring:message code="analysisStatsView.label.download.i5.table.view"/>">--%>
-                              <%--<spring:message code="analysisStatsView.label.download.i5.table.view"/>&lt;%&ndash; <c:out--%>
-                          <%--value="${model.emgFile.fileSizeMap['_summary.ipr']}"/>&ndash;%&gt;--%>
-                          <%--</a>--%>
-                      <%--</div>--%>
-                      <%--</div>--%>
+             <div id="#InterPro-match-table">
+                 <table border="1" class="result">
+                 <thead>
+                 <tr>
+                     <th scope="col" abbr="IEname" id="h_left">Entry name</th>
+                     <th scope="col" abbr="IEid" width="90px">ID</th>
+                     <th scope="col" abbr="IEnum" width="130px">Proteins matched</th>
+                 </tr>
+                 </thead>
+                 <tbody>
+                 <c:forEach var="entry" items="${model.interProEntries}" varStatus="status">
+                     <tr>
 
-            <table border="1" class="result" id="small">
-                <thead>
-                <tr>
-                    <th scope="col" abbr="IEid" width="90px">InterPro ID</th>
-                    <th scope="col" abbr="IEname" id="h_left">Entry name</th>
-                    <th scope="col" abbr="IEnum" width="130px">Proteins matched</th>
-                </tr>
-                </thead>
-                <tbody>
-                <c:forEach var="entry" items="${model.interProEntries}" varStatus="status">
-                    <tr>
-                        <td>
+                         <td style="text-align:left;">
+                            <a href="http://www.ebi.ac.uk/interpro/entry/${entry.entryID}"
+                                                       title="<c:out value="Link to ${entry.entryID}"/>" class="ext">${entry.entryDescription}</a></td>
+                         <td>
                             <%--<c:url var="linkToInterProSearch" value="http://www.ebi.ac.uk/interpro/search">--%>
                                 <%--<c:param name="q" value="${entry.entryID}"/>--%>
                             <%--</c:url>--%>
-                            <a href="http://www.ebi.ac.uk/interpro/entry/${entry.entryID}"
-                               title="<c:out value="Link to ${entry.entryID}"/>" class="ext">
+
                                 <c:out value="${entry.entryID}"/>
-                            </a>
+
                         </td>
-                        <td style="text-align:left;">${entry.entryDescription}</td>
-                        <td id="ordered">${entry.numOfEntryHits}</td>
-                    </tr>
-                </c:forEach>
-                          <tr><td colspan="3" class="showHideRelated" ><c:set var="showFullTableID" value="View full table"/>
-                          <a title="<c:out value="${showFullTableID}"/>"
-                                                      href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/showProteinMatches"/>">
-                                                    <c:out value="${showFullTableID}"/></a></td></tr>
-                          </tbody>
-                      </table>
-
-
-                  </c:when>
-                  <c:otherwise>
-                      <b><c:out value="${noDisplayID}"/></b>
-                  </c:otherwise>
-              </c:choose>
-
-
-              <h4>GO Terms annotation</h4>
-
-              <p>A summary of Gene Ontology (GO) terms derived from InterPro matches to your sample is provided in the chart below.</p>
+                         <td id="ordered">${entry.numOfEntryHits}</td>
+                     </tr>
+                 </c:forEach>
+                           <tr><td colspan="3" class="showHideRelated" ><c:set var="showFullTableID" value="View full table"/>
+                           <a title="<c:out value="${showFullTableID}"/>"
+                                                       href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/showProteinMatches"/>">
+                                                     <c:out value="${showFullTableID}"/></a></td></tr>
+                           </tbody>
+                       </table>
+             </div>
+          </div>
 
 
 
-              <table class="result">
-                        <tr>
-                          <td width="10%" style="background-color:white;padding:0;vertical-align: top;"><object class="krona_chart_small" style="height:323px;" data="<c:url value="${baseURL}/Krona_chart_function_simple?depth=1&font=11"/>" type="text/html"></object></td>
-                          <td style="background-color:white;padding:0;">
-               <%--<a href="http://localhost:8082/metagenomics/Krona_chart_function"  class="icon icon-functional" data-icon="F" title="Open full screen" style="float:right; margin: 10px 4px 0 0; font-size: 283%;"></a>--%>
-                              <object class="krona_chart" data="<c:url value="${baseURL}/Krona_chart_function?font=10"/>" type="text/html"></object></td>
-                        </tr>
+      </c:when>
+      <c:otherwise>
+          <b><c:out value="${noDisplayID}"/></b>
+      </c:otherwise>
+    </c:choose>
 
-                      </table>
+    <h4>GO Terms annotation</h4>
+    <p>A summary of Gene Ontology (GO) terms derived from InterPro matches to your sample is provided in the charts below.</p>
 
+    <div id="tabs-chart">
 
-                  <div id="go-chart">
-                      <div id="go-chart-process">
-                          <h2>Biological process</h2>
-                          <c:url var="bioImage" value="/getImage" scope="request">
-                              <c:param name="imageName" value="_summary_biological_process.png"/>
-                              <c:param name="imageType" value="PNG"/>
-                              <c:param name="dir" value="${model.emgFile.fileID}"/>
-                          </c:url>
-                          <p><img src="<c:out value="${bioImage}"/>"/></p>
-                              <%--<b><c:out value="${noDisplayID}"/></b>--%>
-                      </div>
-
-                      <div id="go-chart-molecular">
-                          <h2>Molecular function</h2>
-                          <c:url var="molecularImage" value="/getImage" scope="request">
-                              <c:param name="imageName" value="_summary_molecular_function.png"/>
-                              <c:param name="imageType" value="PNG"/>
-                              <c:param name="dir" value="${model.emgFile.fileID}"/>
-                          </c:url>
-                          <p><img src="<c:out value="${molecularImage}"/>"/></p>
-                      </div>
-                      <div id="go-chart-cellular">
-                          <h2>Cellular component</h2>
-                          <c:url var="cellImage" value="/getImage" scope="request">
-                              <c:param name="imageName" value="_summary_cellular_component.png"/>
-                              <c:param name="imageType" value="PNG"/>
-                              <c:param name="dir" value="${model.emgFile.fileID}"/>
-                          </c:url>
-                          <p><img src="<c:out value="${cellImage}"/>"/></p>
-                      </div>
-                  </div>
+        <%--Tabs--%>
+    <ul>
+        <li><a href="#go-terms-table" title="Table view"><span class="ico-table"></span></a></li>
 
 
-</div>
+        <li><a href="#go-terms-pie" title="Pie chart view"><span class="ico-pie"></span></a></li>
+        <li><a href="#go-terms-bar" title="Bar chart view"><span class="ico-barh"></span></a></li>
+        <li><a href="#go-terms-col" title="Stacked column chart view"><span class="ico-col"></span></a></li>
+        <li><a href="#go-terms-Krona" title="Krona interactive chart view"><span class="ico-krona"></span></a></li>
+        <li class="ico-downl"><a class="icon icon-functional" data-icon="=" href="#download" title="Download image/table"></a></li>
+    </ul>
 
+
+
+
+    <div id="go-terms-bar">
+
+
+        <div class="go-chart">
+          <div class="go_rotate">
+              <h2>Biological process</h2>
+              <c:url var="bioImage" value="/getImage" scope="request">
+                  <c:param name="imageName" value="_summary_biological_process.png"/>
+                  <c:param name="imageType" value="PNG"/>
+                  <c:param name="dir" value="${model.emgFile.fileID}"/>
+              </c:url>
+              <img src="<c:out value="${bioImage}"/>"/>  <br/>
+                  <%--<b><c:out value="${noDisplayID}"/></b>--%>
+          </div>
+
+          <div class="go_rotate">
+              <h2>Molecular function</h2>
+              <c:url var="molecularImage" value="/getImage" scope="request">
+                  <c:param name="imageName" value="_summary_molecular_function.png"/>
+                  <c:param name="imageType" value="PNG"/>
+                  <c:param name="dir" value="${model.emgFile.fileID}"/>
+              </c:url>
+             <img src="<c:out value="${molecularImage}"/>"/>  <br/>
+          </div>
+
+          <div class="go_rotate">
+              <h2>Cellular component</h2>
+              <c:url var="cellImage" value="/getImage" scope="request">
+                  <c:param name="imageName" value="_summary_cellular_component.png"/>
+                  <c:param name="imageType" value="PNG"/>
+                  <c:param name="dir" value="${model.emgFile.fileID}"/>
+              </c:url>
+              <img src="<c:out value="${cellImage}"/>"/> <br/>
+          </div>
+        </div>
+
+        </div>
+     <div id="go-terms-table"> this is a table</div>
+     <div id="go-terms-pie"> this is a pie chart</div>
+    <div id="go-terms-col"> this is a column</div>
+    <div id="go-terms-Krona">
+    <table class="result">
+    <tr>
+    <td width="10%" style="background-color:white;padding:0;vertical-align: top;"><object class="krona_chart_small" style="height:323px;" data="<c:url value="${baseURL}/Krona_chart_function_simple?depth=1&font=11"/>" type="text/html"></object></td>
+    <td style="background-color:white;padding:0;">
+    <%--<a href="http://localhost:8082/metagenomics/Krona_chart_function"  class="icon icon-functional" data-icon="F" title="Open full screen" style="float:right; margin: 10px 4px 0 0; font-size: 283%;"></a>--%>
+    <object class="krona_chart" data="<c:url value="${baseURL}/Krona_chart_function?font=10"/>" type="text/html"></object></td>
+    </tr>
+
+    </table>
+    </div>
+     </div>
+
+     </div>
+
+</div> <%--end div fragment functional--%>
 
 <div id="fragment-download">
 
 
     <h3>Download results</h3>
 
-    <div id="box-export">
+    <div class="box-export">
         <h4>Sequence data</h4>
         <ul>
             <c:forEach var="downloadLink" items="${model.downloadSection.seqDataDownloadLinks}" varStatus="loop">
@@ -552,15 +594,33 @@
 
     </div>
 </div>
-</div>
-</div>
 
+</div> <%--end navtabs--%>
+
+
+<%--script for tabs--%>
 <script>
-
-    $("#tabs").tabs({ disabled:[3] });
-
+    $( "#navtabs").tabs({ disabled: [3] });
+    $( "#interpro-chart" ).tabs({ disabled: [1,2,3,4] });
+    $( "#tabs-chart" ).tabs({ disabled: [0,1,3,5] });
+    $( "#tabs-chart" ).tabs({ selected: [2] });
+    $( "#tabs-taxchart" ).tabs({ disabled: [0,1,2,3,5] });
 </script>
 
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#expanderContent').css('display','none');
+        $("#expanderHead").click(function(){
+            $("#expanderContent").slideToggle();
+            if ($("#expanderSign").text() == "+"){
+                $("#expanderSign").text("-")
+            }
+            else {
+                $("#expanderSign").text("+")
+            }
+        });
+    });​
+</script>
 
 </c:when>
 <c:otherwise>
@@ -568,5 +628,5 @@
 </c:otherwise>
 </c:choose>
 
-
+</div>  <%--end sample_ana--%>
 <div class="but_top"><a href="#top" title="back to the top page">Top</a></div>
