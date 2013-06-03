@@ -27,6 +27,14 @@
         <property name="pathToAnalysisDirectory" value="${pathToAnalysisDirectory}"/>
         <property name="enaSubmissionURL" ref="enaSubmission"/>
         <property name="enaMasterUserEmail" value="${ena.master.user.email}"/>
+        <property name="kronaChartsFileNameMap">
+            <map>
+                <entry key="TAXONOMY_CHART_FULL_VERSION" value="/Krona_chart_taxonomy.html"/>
+                <entry key="TAXONOMY_CHART_SLIM_VERSION" value="/Krona_chart_taxonomy_simple.html"/>
+                <entry key="FUNCTION_CHART_FULL_VERSION" value="/Krona_chart_function.html"/>
+                <entry key="FUNCTION_CHART_SLIM_VERSION" value="/Krona_chart_function_simple.html"/>
+            </map>
+        </property>
     </bean>
 
     <bean id="enaSubmission" class="uk.ac.ebi.interpro.metagenomics.memi.basic.ENASubmissionURL">
