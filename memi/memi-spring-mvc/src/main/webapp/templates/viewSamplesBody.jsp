@@ -136,11 +136,11 @@
                             </c:when>
 
                             <c:when test="${headerName == 'Source'}">
-                                <c:set var="headerWidth" value="140px" scope="page"/>
+                                <c:set var="headerWidth" value="120px" scope="page"/>
                             </c:when>
                             <%--The Otherwise case is for header name Analysis--%>
                             <c:otherwise>
-                                <c:set var="headerWidth" value="80px" scope="page"/>
+                                <c:set var="headerWidth" value="170px" scope="page"/>
                             </c:otherwise>
                         </c:choose>
                         <th id="${headerId}" abbr="${headerName}" width="${headerWidth}" scope="col">${headerName}</th>
@@ -164,10 +164,12 @@
                                src="${pageContext.request.contextPath}/img/ico_IN_PROGRESS_25_8.png"
                                alt="Analysis in progress" title="Analysis in progress">--%></c:when>
                                 <c:otherwise>
-                                    <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>"><img
-                                            src="${pageContext.request.contextPath}/img/ico_analysis_chart.gif"
-                                            alt="Analysis finished - check the results"
-                                            title="Analysis finished - check the results"></a>
+                                    <%--<a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>"><img--%>
+                                            <%--src="${pageContext.request.contextPath}/img/ico_analysis_chart.gif"--%>
+                                            <%--alt="Analysis finished - check the results"--%>
+                                            <%--title="Analysis finished - check the results"></a>--%>
+                           <a href="<c:url value="${baseURL}/sample/${sample.sampleId}#fragment-taxonomy"/>" class="list_sample" title="Taxonomy analysis">Taxonomy </a>|
+                          <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>#fragment-functional" class="list_sample" title="Function analysis">Function </a>|  <a class="icon icon-functional list_sample" data-icon="=" href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>#fragment-download" class="list_sample" title="download results"></a>
                                 </c:otherwise>
                             </c:choose>
                         </td>
