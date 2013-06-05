@@ -16,8 +16,42 @@
     });
 </script>
 
+
+ <%-- <script>
+  $(function() {
+    $( "#rerun" )
+      .button()
+      .click(function() {
+        alert( "Running the last action" );
+      })
+      .next()
+        .button({
+          text: false,
+          icons: {
+            primary: "ui-icon-triangle-1-s"
+          }
+        })
+        .click(function() {
+          var menu = $( this ).parent().next().show().position({
+            my: "left top",
+            at: "left bottom",
+            of: this
+          });
+          $( document ).one( "click", function() {
+            menu.hide();
+          });
+          return false;
+        })
+        .parent()
+          .buttonset()
+          .next()
+            .hide()
+            .menu();
+  });
+  </script>--%>
 <c:choose>
 <c:when test="${not empty model.sample}">
+
 <div class="title_tab">
 <span class="subtitle">Sample <a href="<c:url value="${baseURL}/sample/${model.sample.sampleId}"/>"> (${model.sample.sampleId})</a></span>
 
@@ -32,8 +66,8 @@
     <li><a href="#fragment-overview"><span>Overview</span></a></li>
     <li><a href="#fragment-taxonomy"><span>Taxonomy analysis</span></a></li>
     <li><a href="#fragment-functional"><span>Function analysis</span></a></li>
-    <li><a href="#fragment-experimental"><span>Experimental factor</span></a></li>
     <li><a href="#fragment-download"><span>Download</span></a></li>
+    <%--<li><a href="#fragment-experimental"><span>Experimental factor</span></a></li>--%>
 </ul>
 
 
@@ -410,7 +444,7 @@
                             <%--</div>--%>
                             <%--</div>--%>
 
-      <h3>Functional analysis</h3>
+      <h3>Function analysis</h3>
 
               <%--<p>The entire InterProScan results file (<a title="Click to download full InterPro matches table (TSV)"--%>
                                                           <%--href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/doExportI5TSVFile"/>">download--%>
@@ -419,10 +453,21 @@
               <h4>InterPro match summary</h4>
 
               <p>Most frequently found InterPro matches to this sample:</p>
+              <%--<div>
+                <div>
+                  <button id="rerun" ><span class="icon icon-functional" data-icon="=" ></span></button>
+                  <button id="select">Select what to download</button>
+                </div>
+                <ul>
+                  <li><a href="#">Save chart image</a></li>
+                  <li><a href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/doExportIPRFile"/>"   title="<spring:message code="analysisStatsView.label.download.i5.table.view"/>">Save table</a></li>
+                  <li><a href="#">Save raw data</a></li>
+                </ul>
+              </div>--%>
               <c:choose>
                   <c:when test="${not empty model.interProEntries}">
 
-    <div id="interpro-chart">
+                   <div id="interpro-chart">
 
                  <%--Tabs--%>
              <ul>
@@ -431,7 +476,7 @@
                  <li><a href="#InterPro-match-bar" title="Bar chart view"><span class="ico-barh"></span></a></li>
                  <li><a href="#InterPro-match-col" title="Stacked column chart view"><span class="ico-col"></span></a></li>
                  <li><a href="#InterPro-match-Krona" title="Krona interactive chart view"><span class="ico-krona"></span></a></li>
-                 <li class="ico-downl followtablink"><a class="icon icon-functional" data-icon="=" id="csv" href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/doExportIPRFile"/>"   title="<spring:message code="analysisStatsView.label.download.i5.table.view"/>"></a></li>
+                 <li class="ico-downl"><a class="icon icon-functional" data-icon="=" id="csv" href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/doExportIPRFile"/>"   title="<spring:message code="analysisStatsView.label.download.i5.table.view"/>"></a></li>
              </ul>
 
              <div id="#InterPro-match-table">
@@ -617,11 +662,10 @@
 
 <%--script for tabs--%>
 <script>
-    $( "#navtabs").tabs({ disabled: [3] });
-    $( "#interpro-chart" ).tabs({ disabled: [1,2,3,4] });
-    $( "#tabs-chart" ).tabs({ disabled: [0,1,3,5] });
-    $( "#tabs-chart" ).tabs({ selected: [2] });
-    $( "#tabs-taxchart" ).tabs({ disabled: [0,1,2,3,5] });
+    $( "#navtabs").tabs({ disabled: [4] });
+    $( "#interpro-chart" ).tabs({ disabled: [1,2,3,4], selected: 0 });
+    $( "#tabs-chart" ).tabs({ disabled: [0,1,3,5], selected: 2 });
+    $( "#tabs-taxchart" ).tabs({ disabled: [0,1,2,3,5], selected: 4 });
 </script>
 
 
