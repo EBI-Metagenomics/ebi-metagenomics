@@ -1661,4 +1661,5 @@ li.ui-tabs-selected .ico-krona {background: url(../img/ico_graph_krona_on.png) n
 /*.sample_ana .ui-buttonset .ui-state-default .icon-functional:before { font-size: 175%;}*/
 /*.sample_ana .ui-buttonset .ui-button-text-only .ui-button-text {padding:1px 4px;}*/
 
-#list-data a.icon-functional:hover {text-decoration:none;}
+#list-data a.icon-functional:hover, #sample_list a.icon-functional:hover  {text-decoration:none;}
+#list-data a:hover.icon-functional:before, #sample_list a:hover.icon-functional:before {color:#725093;}
