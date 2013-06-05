@@ -25,8 +25,6 @@ import java.util.Locale;
 public class SampleViewExportController extends AbstractSampleViewController {
     private static final Log log = LogFactory.getLog(SampleViewExportController.class);
 
-    private final String[] requestParamValues = new String[]{"biom", "taxa", "tree"};
-
     @RequestMapping(value = '/' + SampleViewController.VIEW_NAME + "/{sampleId}/export")
     public void doHandleSampleViewExports(@PathVariable final String sampleId,
                                           @RequestParam(required = false, value = "exportValue") final String exportValue,

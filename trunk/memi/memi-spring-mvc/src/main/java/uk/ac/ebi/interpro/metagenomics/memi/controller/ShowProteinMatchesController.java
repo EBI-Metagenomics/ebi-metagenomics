@@ -22,12 +22,11 @@ import java.util.List;
  * @since 1.0-SNAPSHOT
  */
 @Controller
-@RequestMapping('/' + SampleViewController.VIEW_NAME + "/{sampleId}/showProteinMatches")
-public class ShowProteinMatchesController extends SampleViewController {
+public class ShowProteinMatchesController extends AbstractSampleViewController {
 
     private static final Log log = LogFactory.getLog(ShowProteinMatchesController.class);
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping('/' + SampleViewController.VIEW_NAME + "/{sampleId}/showProteinMatches")
     public ModelAndView showProteinMatches(final ModelMap model, @PathVariable final String sampleId) {
         log.info("Checking if sample is accessible...");
         return checkAccessAndBuildModel(new ModelProcessingStrategy<Sample>() {
