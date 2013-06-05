@@ -2,7 +2,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-
+ <div id="sample_list">
     <%--<h2>${pageTitle}</h2>--%>
     <h2>Samples list</h2>
 
@@ -182,4 +182,5 @@
             <div class="error">No data matching your search</div>
         </c:otherwise>
     </c:choose>
+</div>
     <div class="but_top"><a href="#top" title="back to the top page">Top</a></div>
