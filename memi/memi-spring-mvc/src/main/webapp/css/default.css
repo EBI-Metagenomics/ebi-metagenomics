@@ -1611,7 +1611,7 @@ background:none;
 .go_rotate img {width:98%;}
 
 .sample_ana #tabs-chart .ui-state-disabled, .sample_ana #interpro-chart .ui-state-disabled, .sample_ana #tabs-taxchart .ui-state-disabled {opacity:0.1;}
-
+.sample_ana #interpro-chart ul {float:left;}
 .sample_ana #tabs-chart .ui-tabs-nav, .sample_ana #interpro-chart .ui-tabs-nav, .sample_ana #tabs-taxchart .ui-tabs-nav { margin: 0px 0 9px 9px; padding:0;}
 .sample_ana #interpro-chart .ui-helper-clearfix, .sample_ana #tabs-taxchart .ui-helper-clearfix {display: inline-block;}
 .sample_ana #tabs-chart .ui-tabs-nav li a, .sample_ana #interpro-chart .ui-tabs-nav li a, .sample_ana #tabs-taxchart .ui-tabs-nav li a {border: 1px solid rgba(0,0,0,0.1);padding: .2em .2em;
@@ -1647,9 +1647,18 @@ li.ui-tabs-selected .ico-krona {background: url(../img/ico_graph_krona_on.png) n
 .ico-krona, .ico-table, .ico-col, .ico-barh, .ico-pie {width:27px; height:27px; display:block;}
 
 .main_tab_content {width:70%;}
+
+/*icon to download table, raw data or image*/
 .sample_ana #interpro-chart li.ico-downl.ui-tabs-selected {border:1px red solid; cursor:pointer;} /*keep click available for download*/
 .sample_ana #interpro-chart li.ico-downl.ui-tabs-selected a {cursor:pointer;} /*keep click available for download*/
-
+.ico-download a {font-size: 164%; border: 1px solid rgba(0,0,0,0.1); margin-top: 1px;padding: 0px 1px 0px 6px; float:left; margin-left: 40px;
+background-image: linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));
+background-image: -moz-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));
+background-image: -o-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));
+background-image: -webkit-gradient(linear,left top,left bottom,from(rgba(255,255,255,.85)),to(rgba(247,247,247,.85)));
+background-image: -webkit-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85)); }
+.ico-download a:before {color: #3b4043;width: 20px;}
+.ico-download a:hover {border: 1px solid #c6c6c6; box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3); -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);-khtml-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);-webkit-box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);text-decoration: none;  }
 #expanderhead {cursor:pointer;}
 #expanderhead:hover {background-color:#e5e5e5;} /*style for expander*/
 #Download_full_table_CSV {display:none;}
