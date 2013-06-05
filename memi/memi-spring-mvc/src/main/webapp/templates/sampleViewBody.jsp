@@ -476,9 +476,9 @@
                  <li><a href="#InterPro-match-bar" title="Bar chart view"><span class="ico-barh"></span></a></li>
                  <li><a href="#InterPro-match-col" title="Stacked column chart view"><span class="ico-col"></span></a></li>
                  <li><a href="#InterPro-match-Krona" title="Krona interactive chart view"><span class="ico-krona"></span></a></li>
-                 <li class="ico-downl"><a class="icon icon-functional" data-icon="=" id="csv" href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/doExportIPRFile"/>"   title="<spring:message code="analysisStatsView.label.download.i5.table.view"/>"></a></li>
-             </ul>
 
+             </ul>
+             <div class="ico-download"><a class="icon icon-functional" data-icon="=" id="csv" href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/doExportIPRFile"/>"   title="<spring:message code="analysisStatsView.label.download.i5.table.view"/>"></a></div>
              <div id="#InterPro-match-table">
                  <table border="1" class="result">
                  <thead>
