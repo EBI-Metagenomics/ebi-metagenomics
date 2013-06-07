@@ -1670,5 +1670,6 @@ background-image: -webkit-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247
 /*.sample_ana .ui-buttonset .ui-state-default .icon-functional:before { font-size: 175%;}*/
 /*.sample_ana .ui-buttonset .ui-button-text-only .ui-button-text {padding:1px 4px;}*/
 
-#list-data a.icon-functional:hover, #sample_list a.icon-functional:hover  {text-decoration:none;}
-#list-data a:hover.icon-functional:before, #sample_list a:hover.icon-functional:before {color:#725093;}
+#list-data a.icon-functional:hover, #sample_list a.icon-functional:hover, #project_ov a.icon-functional:hover {text-decoration:none;}
+#list-data a:hover.icon-functional:before, #sample_list a:hover.icon-functional:before, #project_ov a:hover.icon-functional:before {color:#725093;}
+#list-data a.list_sample:hover, #sample_list a.list_sample:hover, #project_ov a.list_sample:hover {color:#62388b;}
