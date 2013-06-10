@@ -125,8 +125,8 @@ public class StudiesViewModelBuilder extends AbstractViewModelBuilder<StudiesVie
         if (studyStatus != null) {
             crits.add(Restrictions.eq("studyStatus", studyStatus));
         }
-        //add is public criterion
-        if (submitterId > -1) {
+        //add is public and submitter identifier criteria
+        if (submitterId > -1 && visibility != null) {
             //SELECT * FROM HB_STUDY where submitter_id=?;
             if (visibility.equals(StudyFilter.StudyVisibility.MY_PROJECTS)) {
                 crits.add(Restrictions.eq("submitterId", submitterId));
