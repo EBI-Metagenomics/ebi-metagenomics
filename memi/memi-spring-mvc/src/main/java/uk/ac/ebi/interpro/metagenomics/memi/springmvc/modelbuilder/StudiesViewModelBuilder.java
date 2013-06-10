@@ -8,6 +8,7 @@ import org.hibernate.criterion.Restrictions;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.StudyDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.SampleFilter;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.StudyFilter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
@@ -114,7 +115,6 @@ public class StudiesViewModelBuilder extends AbstractViewModelBuilder<StudiesVie
     private static List<Criterion> buildFilterCriteria(final StudyFilter filter, final long submitterId) {
         String searchText = filter.getSearchTerm();
         Study.StudyStatus studyStatus = filter.getStudyStatus();
-        StudyFilter.StudyVisibility visibility = filter.getStudyVisibility();
 
         List<Criterion> crits = new ArrayList<Criterion>();
         //add search term criterion
@@ -126,7 +126,9 @@ public class StudiesViewModelBuilder extends AbstractViewModelBuilder<StudiesVie
             crits.add(Restrictions.eq("studyStatus", studyStatus));
         }
         //add is public and submitter identifier criteria
-        if (submitterId > -1 && visibility != null) {
+        if (submitterId > -1) {
+            //Set DEFAULT visibility if not defined
+            StudyFilter.StudyVisibility visibility = (filter.getStudyVisibility() == null ? StudyFilter.StudyVisibility.MY_PROJECTS: filter.getStudyVisibility());
             //SELECT * FROM HB_STUDY where submitter_id=?;
             if (visibility.equals(StudyFilter.StudyVisibility.MY_PROJECTS)) {
                 crits.add(Restrictions.eq("submitterId", submitterId));

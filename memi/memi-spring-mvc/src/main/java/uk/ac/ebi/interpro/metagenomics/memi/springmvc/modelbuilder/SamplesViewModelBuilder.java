@@ -102,12 +102,10 @@ public class SamplesViewModelBuilder extends AbstractViewModelBuilder<SamplesVie
         if (searchText != null && searchText.trim().length() > 0) {
             crits.add(Restrictions.or(Restrictions.ilike("sampleId", searchText, MatchMode.ANYWHERE), Restrictions.ilike("sampleName", searchText, MatchMode.ANYWHERE)));
         }
-        //add 'isPublic' criterion
+        //add 'isPublic' AND submitter identifier criteria
         if (submitterId > -1) {
-            SampleFilter.SampleVisibility visibility = filter.getSampleVisibility();
-            if (visibility == null) {
-                visibility = SampleFilter.SampleVisibility.MY_SAMPLES;
-            }
+            //Set DEFAULT visibility if not defined
+            SampleFilter.SampleVisibility visibility = (filter.getSampleVisibility() == null ? SampleFilter.SampleVisibility.MY_SAMPLES : filter.getSampleVisibility());
             //SELECT * FROM HB_STUDY where submitter_id=?;
             if (visibility.equals(SampleFilter.SampleVisibility.MY_SAMPLES)) {
                 crits.add(Restrictions.eq("submitterId", submitterId));
