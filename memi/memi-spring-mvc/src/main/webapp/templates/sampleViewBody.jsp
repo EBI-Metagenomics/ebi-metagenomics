@@ -31,8 +31,8 @@
 
             // Create the data table.
             var data = new google.visualization.DataTable();
-            data.addColumn('string', 'Topping');
-            data.addColumn('number', 'Slices');
+            data.addColumn('string', 'kingdom');
+            data.addColumn('number', 'Match');
             data.addRows([
               ['Bacteria', 201],
               ['Archaea', 28],
@@ -40,8 +40,8 @@
             ]);
 
             var data2 = new google.visualization.DataTable();
-            data2.addColumn('string', 'Topping');
-            data2.addColumn('number', 'Slices');
+            data2.addColumn('string', 'Phylum');
+            data2.addColumn('number', 'Match');
             data2.addRows([
               ['Proteobacteria', 146],
               ['Bacteroidetes', 11],
@@ -57,8 +57,8 @@
             ]);
 
             var data3 = new google.visualization.DataTable();
-            data3.addColumn('string', 'Topping');
-            data3.addColumn('number', 'Slices');
+            data3.addColumn('string', 'Phylum');
+            data3.addColumn('number', 'Match');
             data3.addRows([
               ['Proteobacteria', 146],
               ['Crenarchaeota', 17],
@@ -79,24 +79,35 @@
               ['Unassigned bacteria', 1]
             ]);
 
-            // Set chart options
-            var options = {'title':'Kingdom level',
+          var data4 = new google.visualization.DataTable();
+                          data4.addColumn('string', 'Phylum');
+                          data4.addColumn('number', 'Match');
+                          data4.addRows([
+                            ['Crenarchaeota', 17],
+                            ['Euryarchaeota', 11]
+                          ]);
+
+
+            // Kingdom level
+            var options = {'title':'Kingdom level (Total:229)',
                             'titleTextStyle': {fontSize:12},
                            'colors':['#058dc7','#50b432','#ed561b'],
-                           'width':120,
+//                           'width':120,
+                           'width':170,
                            'height':100,
                             'chartArea':{left:10,top:26,width:"100%",height:"55%"},
 //                        'chartArea.left':0,
 //                          'chartArea.top':0,
                            'pieSliceBorderColor':'none',
 //                           'pieSliceText': 'label',
-                            'legend':{position:'none',fontSize:10},
+//                            'legend':{position:'none',fontSize:10},
+                            'legend':{fontSize:10},
                            'pieSliceTextStyle':{color: 'white'}
 //                           'backgroundColor':'black'
                             };
 
-            // Set chart options
-            var options2 = {'title':'Bacteria level (Total: 151)',
+            // Bacteria level
+            var options2 = {'title':'Bacteria level (Total: 201)',
                             'titleTextStyle': {fontSize:12},
                             'colors':['#058dc7','#50b432','#ed561b','#edef00','#24cbe5','#64e572','#ff9655','#fff263','#6af9c4','#b2deff','#ccc','#ccc','#ccc'],
 //Krona style               'colors':['#d47f7f','#d1a575','#d4c97f','#99d47f','#7fd4a7','#7fc3d4','#7f8ad4','#a77fd4','#d47fd3','#d47faf','#ccc','#ccc','#ccc'],
@@ -107,29 +118,59 @@
                             'pieSliceBorderColor':'none'
 //Krona style               'pieSliceBorderColor':'#9c8989'
                             };
-
-            // Set chart options
-            var options3 = {'title':'Top taxonomy Hits (Total: 229)',
+             // Archea level
+            var options3 = {'title':'Archea level (Total: 28)',
                             'titleTextStyle': {fontSize:12},
-                            'colors':['#058dc7','#50b432','#ed561b','#edef00','#24cbe5','#64e572','#ff9655','#fff263','#6af9c4','#b2deff'],
+                            'colors':['#058dc7','#50b432','#ed561b','#edef00','#24cbe5','#64e572','#ff9655','#fff263','#6af9c4','#b2deff','#ccc','#ccc','#ccc'],
 //Krona style               'colors':['#d47f7f','#d1a575','#d4c97f','#99d47f','#7fd4a7','#7fc3d4','#7f8ad4','#a77fd4','#d47fd3','#d47faf','#ccc','#ccc','#ccc'],
                             'width':290,
                             'height':220,
                             'legend':{position:'right',fontSize:10},
                             'chartArea':{left:10,top:30,width:"100%",height:"100%"},
-                            'pieSliceBorderColor':'none',
-                            'sliceVisibilityThreshold':1/110
+                            'pieSliceBorderColor':'none'
                             };
+
+            // Top taxonomy Pie
+            var options4 = {'title':'Top taxonomy Hits (Total: 229)',
+                            'titleTextStyle': {fontSize:12},
+                            'colors':['#058dc7','#50b432','#ed561b','#edef00','#24cbe5','#64e572','#ff9655','#fff263','#6af9c4','#b2deff', '#ccc'],
+//Krona style               'colors':['#d47f7f','#d1a575','#d4c97f','#99d47f','#7fd4a7','#7fc3d4','#7f8ad4','#a77fd4','#d47fd3','#d47faf','#ccc','#ccc','#ccc'],
+                            'width':220,
+                            'height':220,
+//                            'legend':{position:'right',fontSize:10},
+                            'legend':{position:'none',fontSize:10},
+                            'chartArea':{left:10,top:30,width:"80%",height:"100%"},
+                            'pieSliceBorderColor':'none',
+                            'sliceVisibilityThreshold':1/115
+                            };
+
+              // Top taxonomy Bar
+              var options5 = {'title':'Top taxonomy Hits (Total: 229)',
+                                 'titleTextStyle': {fontSize:12},
+                                 'colors':['#058dc7','#50b432','#ed561b','#edef00','#24cbe5','#64e572','#ff9655','#fff263','#6af9c4','#b2deff'],
+     //Krona style               'colors':['#d47f7f','#d1a575','#d4c97f','#99d47f','#7fd4a7','#7fc3d4','#7f8ad4','#a77fd4','#d47fd3','#d47faf','#ccc','#ccc','#ccc'],
+                                 'width':400,
+                                 'height':220,
+                                 'legend':{position:'right',fontSize:10},
+                                 'chartArea':{left:120,top:20,width:"100%",height:"100%"},
+                                 'pieSliceBorderColor':'none',
+                                 'sliceVisibilityThreshold':1/110,
+                                  'legend':'none',
+                                 'isStacked': true
+                                 };
+
 
             // Instantiate and draw our chart, passing in some options.
             var chart = new google.visualization.PieChart(document.getElementById('tax_chart_div'));
             chart.draw(data, options);
             var chart2 = new google.visualization.PieChart(document.getElementById('tax_chart_div2'));
             chart2.draw(data2, options2);
+            var chart5 = new google.visualization.PieChart(document.getElementById('tax_chart_div5'));
+            chart5.draw(data4, options3);
             var chart3 = new google.visualization.PieChart(document.getElementById('tax_chart_div3'));
-            chart3.draw(data3, options3);
+            chart3.draw(data3, options4);
             var chart4 = new google.visualization.BarChart(document.getElementById('tax_chart_div4'));
-            chart4.draw(data3, options3);
+            chart4.draw(data3, options5);
           }
 
         </script>
@@ -161,40 +202,84 @@
         ]);
 
         var data2 = new google.visualization.DataTable();
+              data2.addColumn('string', '');
               data2.addColumn('string', 'Phylum');
               data2.addColumn('string', 'Kingdom');
               data2.addColumn('number', 'Hits');
               data2.addColumn('number', '%');
               data2.addColumn('number', 'Score');
               data2.addRows([
-              ['Proteobacteria','Bacteria', 146, 63.75, 0.779097085],
-              ['Crenarchaeota','Archaea', 17, 7.42, 0.587094017],
-              ['Euryarchaeota','Archaea', 11, 4.8, 0.62625],
-              ['Bacteroidetes','Bacteria', 11, 4.8, 0.9946875],
-              ['SAR406','Bacteria', 11, 4.8, 0.643888889],
-              ['Actinobacteria','Bacteria', 10, 4.37, 0.797833333],
-              ['Verrucomicrobia','Bacteria', 7, 1.31, 0.654],
-              ['Chloroflexi','Bacteria', 3, 1.31, 0.416666667],
-              ['NC10','Bacteria', 3, 1.31, 0.1475],
-              ['PAUC34f','Bacteria', 2, 0.87, 0.915],
-              ['Planctomycetes','Bacteria', 2, 0.87, 0.65],
-              ['Caldiserica','Bacteria', 1, 0.44, 0.1],
-              ['Cyanobacteria','Bacteria', 1, 0.44, 1],
-              ['Elusimicrobia','Bacteria', 1, 0.44, 0.36],
-              ['Firmicutes','Bacteria', 1, 0.44, 0.22],
-              ['OP11','Bacteria', 1, 0.44, 0.18],
-              ['Unassigned bacteria','Bacteria', 1, 0.44, 0.98]
+              ['<svg xmlns="http://www.w3.org/2000/svg" version="1.1" ><rect width="10" height="10" style="fill:#058dc7;"/></svg>','<a href="#">Proteobacteria</a>','Bacteria', 146, 63.75, 0.779097085],
+              ['<svg xmlns="http://www.w3.org/2000/svg" version="1.1" ><rect width="10" height="10" style="fill:#50b432;"/></svg>','<a href="#">Crenarchaeota</a>', 'Archaea', 17, 7.42, 0.587094017],
+              ['<svg xmlns="http://www.w3.org/2000/svg" version="1.1" ><rect width="10" height="10" style="fill:#ed561b;"/></svg>','<a href="#">Euryarchaeota</a>','Archaea', 11, 4.8, 0.62625],
+              ['<svg xmlns="http://www.w3.org/2000/svg" version="1.1" ><rect width="10" height="10" style="fill:#edef00;"/></svg>','<a href="#">Bacteroidetes</a>','Bacteria', 11, 4.8, 0.9946875],
+              ['<svg xmlns="http://www.w3.org/2000/svg" version="1.1" ><rect width="10" height="10" style="fill:#24cbe5;"/></svg>','<a href="#">SAR406</a>','Bacteria', 11, 4.8, 0.643888889],
+              ['<svg xmlns="http://www.w3.org/2000/svg" version="1.1" ><rect width="10" height="10" style="fill:#64e572;"/></svg>','<a href="#">Actinobacteria</a>','Bacteria', 10, 4.37, 0.797833333],
+              ['<svg xmlns="http://www.w3.org/2000/svg" version="1.1" ><rect width="10" height="10" style="fill:#ff9655;"/></svg>','<a href="#">Verrucomicrobia</a>','Bacteria', 7, 1.31, 0.654],
+              ['<svg xmlns="http://www.w3.org/2000/svg" version="1.1" ><rect width="10" height="10" style="fill:#fff263;"/></svg>','<a href="#">Chloroflexi</a>','Bacteria', 3, 1.31, 0.416666667],
+              ['<svg xmlns="http://www.w3.org/2000/svg" version="1.1" ><rect width="10" height="10" style="fill:#6af9c4;"/></svg>','<a href="#">NC10</a>','Bacteria', 3, 1.31, 0.1475],
+              ['<svg xmlns="http://www.w3.org/2000/svg" version="1.1" ><rect width="10" height="10" style="fill:#b2deff;"/></svg>','<a href="#">PAUC34f</a>','Bacteria', 2, 0.87, 0.915],
+              ['<svg xmlns="http://www.w3.org/2000/svg" version="1.1" ><rect width="10" height="10" style="fill:#ccc;"/></svg>','<a href="#">Planctomycetes</a>','Bacteria', 2, 0.87, 0.65],
+              ['<svg xmlns="http://www.w3.org/2000/svg" version="1.1" ><rect width="10" height="10" style="fill:#ccc;"/></svg>','<a href="#">Caldiserica</a>','Bacteria', 1, 0.44, 0.1],
+              ['<svg xmlns="http://www.w3.org/2000/svg" version="1.1" ><rect width="10" height="10" style="fill:#ccc;"/></svg>','<a href="#">Cyanobacteria</a>','Bacteria', 1, 0.44, 1],
+              ['<svg xmlns="http://www.w3.org/2000/svg" version="1.1" ><rect width="10" height="10" style="fill:#ccc;"/></svg>','<a href="#">Elusimicrobia</a>','Bacteria', 1, 0.44, 0.36],
+              ['<svg xmlns="http://www.w3.org/2000/svg" version="1.1" ><rect width="10" height="10" style="fill:#ccc;"/></svg>','<a href="#">Firmicutes</a>','Bacteria', 1, 0.44, 0.22],
+              ['<svg xmlns="http://www.w3.org/2000/svg" version="1.1" ><rect width="10" height="10" style="fill:#ccc;"/></svg>','<a href="#">OP11</a>','Bacteria', 1, 0.44, 0.18],
+              ['<svg xmlns="http://www.w3.org/2000/svg" version="1.1" ><rect width="10" height="10" style="fill:#ccc;"/></svg>','<a href="#">Unassigned bacteria</a>','Bacteria', 1, 0.44, 0.98]
         ]);
+          var data2b = new google.visualization.DataTable();
+                data2b.addColumn('string', 'Phylum');
+                data2b.addColumn('string', 'Kingdom');
+                data2b.addColumn('number', 'Hits');
+                data2b.addColumn('number', '%');
+                data2b.addColumn('number', 'Score');
+                data2b.addRows([
+                ['<a href="#">Proteobacteria</a>','Bacteria', 146, 63.75, 0.779097085],
+                ['<a href="#">Crenarchaeota</a>', 'Archaea', 17, 7.42, 0.587094017],
+                ['<a href="#">Euryarchaeota</a>','Archaea', 11, 4.8, 0.62625],
+                ['<a href="#">Bacteroidetes</a>','Bacteria', 11, 4.8, 0.9946875],
+                ['<a href="#">SAR406</a>','Bacteria', 11, 4.8, 0.643888889],
+                ['<a href="#">Actinobacteria</a>','Bacteria', 10, 4.37, 0.797833333],
+                ['<a href="#">Verrucomicrobia</a>','Bacteria', 7, 1.31, 0.654],
+                ['<a href="#">Chloroflexi</a>','Bacteria', 3, 1.31, 0.416666667],
+                ['<a href="#">NC10</a>','Bacteria', 3, 1.31, 0.1475],
+                ['<a href="#">PAUC34f</a>','Bacteria', 2, 0.87, 0.915],
+                ['<a href="#">Planctomycetes</a>','Bacteria', 2, 0.87, 0.65],
+                ['<a href="#">Caldiserica</a>','Bacteria', 1, 0.44, 0.1],
+                ['<a href="#">Cyanobacteria</a>','Bacteria', 1, 0.44, 1],
+                ['<a href="#">Elusimicrobia</a>','Bacteria', 1, 0.44, 0.36],
+                ['<a href="#">Firmicutes</a>','Bacteria', 1, 0.44, 0.22],
+                ['<a href="#">OP11</a>','Bacteria', 1, 0.44, 0.18],
+                ['<a href="#">Unassigned bacteria</a>','Bacteria', 1, 0.44, 0.98]
+          ]);
+          var data3 = new google.visualization.DataTable();
+                      data3.addColumn('string', 'Phylum');
+                      data3.addColumn('string', 'Kingdom');
+                      data3.addColumn('number', 'Hits');
+                      data3.addColumn('number', '%');
+                      data3.addColumn('number', 'Score');
+                      data3.addRows([
+                      ['Crenarchaeota','Archaea', 17, 60.71, 0.587094017],
+                      ['Euryarchaeota','Archaea', 11, 39.28, 0.62625]
+         ]);
+
         //Bacteria level
         var table = new google.visualization.Table(document.getElementById('tax_table_div'));
-        table.draw(data, { allowHtml:true, showRowNumber: true, page:'enable', pageSize:10, width:400, pagingSymbols:{prev: '<', next: '>'}, sortColumn:2,sortAscending:false });
+        table.draw(data, { allowHtml:true, showRowNumber: true, page:'enable', pageSize:10, pagingSymbols:{prev: '<', next: '>'}, sortColumn:2,sortAscending:false });
+
+        //Archea level
+        var table4 = new google.visualization.Table(document.getElementById('tax_table_div5'));
+        table4.draw(data3, { allowHtml:true, showRowNumber: true, page:'enable', pageSize:10, pagingSymbols:{prev: 'prev', next: 'next'}, sortColumn:2,sortAscending:false });
 
         //top hits table
         var table2 = new google.visualization.Table(document.getElementById('tax_table_div2'));
-        table2.draw(data2, { allowHtml:true, showRowNumber: true,  page:'enable', pageSize:10, pagingSymbols:{prev: 'prev', next: 'next'}, sortColumn:2,sortAscending:false});
+        table2.draw(data2, { allowHtml:true, showRowNumber: true,  page:'enable', pageSize:10, pagingSymbols:{prev: 'prev', next: 'next'}, sortColumn:3,sortAscending:false});
 
         var table3 = new google.visualization.Table(document.getElementById('tax_table_div3'));
-        table3.draw(data2, { allowHtml:true, showRowNumber: true,  page:'enable', pageSize:100, pagingSymbols:{prev: 'prev', next: 'next'}, sortColumn:2,sortAscending:false});
+        table3.draw(data2b, { allowHtml:true, showRowNumber: true,  page:'enable', pageSize:100, pagingSymbols:{prev: 'prev', next: 'next'}, sortColumn:2,sortAscending:false});
+
+        var table3 = new google.visualization.Table(document.getElementById('tax_table_div4'));
+        table3.draw(data2, { allowHtml:true, showRowNumber: true,  page:'enable', pageSize:10, pagingSymbols:{prev: 'prev', next: 'next'}, sortColumn:2,sortAscending:false});
 
 
       }
@@ -394,7 +479,7 @@
     </c:choose>
         <%--END ENVIRONMENTAL/HOST ASSOCIATED--%>
 
-        <%--BEGIN LOCALISATION   --%>
+    <%--BEGIN LOCALISATION   --%>
     <h3>Localisation</h3>
 
     <div class="output_form" id="large" style="overflow:auto;">
@@ -423,7 +508,7 @@
         </c:choose>
         <div class="result_row"><label>Geographic location:</label> <span><c:out value="${geoLocName}"/></span></div>
     </div>
-        <%--END LOCALISATION   --%>
+    <%--END LOCALISATION   --%>
 
         <%--BEGIN READS SECTION   --%>
 
@@ -560,8 +645,9 @@
 
                 <%--Taxonomy google chart--%>
                 <div id="tax-pie">
-                        <div style="display:block;overflow:auto;"><div id="tax_chart_div"></div>  <div id="tax_chart_div3"></div>
-                                                    <div id="tax_table_div2"></div><div style="float:right;"><form action="">
+                        <div class="chart_container">
+                            <div class="chart_container"><div id="tax_chart_div3"></div><div id="tax_table_div2"></div>
+                            <div style="float:right;"><form action="">
                                                   Show rows:
                                                   <select onChange="setOption('pageSize', parseInt(this.value, 10))">
                                                     <option value="0">0</option>
@@ -571,16 +657,19 @@
                                                     <option value="-1">-1</option>
                                                   </select>
                                                 </form></div>
-                            <h4>Taxonomy levels</h4>
+                              </div>
+                            <h4>Focus on taxonomy levels</h4>
                             <%--Bacteria level--%>
-                            <div id="tax_chart_div2"></div>
-                            <div id="tax_table_div"></div>
+                            <div id="tax_chart_div"></div><div id="tax_chart_div2"></div><div id="tax_table_div" style="display:none;"></div>
+                           <%--Archea level--%>
+                           <div id="tax_chart_div5"></div> <div id="tax_table_div5" style="display:none;"></div>
                         </div>
 
                 </div>
 
                 <div id="tax-bar">
-                    <div id="tax_chart_div4"></div>
+                    <div class="chart_container"><div id="tax_chart_div4"></div> <div id="tax_table_div4"></div></div>
+                    <h4>Taxonomy levels</h4>
                 </div>
 
                   <div id="tax-Krona">
