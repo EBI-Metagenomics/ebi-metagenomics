@@ -1683,9 +1683,10 @@ background-image: -webkit-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247
 #list-data a.list_sample:hover, #sample_list a.list_sample:hover, #project_ov a.list_sample:hover {color:#62388b;}
 
 /*GOOGLE CHART - ANALYSIS PAGE*/
-#tax_chart_div, #tax_chart_div2, #tax_chart_div3,#tax_chart_div4,#tax_chart_div5, #tax_table_div, #tax_table_div2, #tax_table_div4, #tax_table_div5 {/*border:1px red solid;*/float:left;}
+#tax_chart_div, #tax_chart_div2, #tax_chart_div3,#tax_chart_div4,#tax_chart_div5, #tax_chart_div6, #tax_chart_div7, #tax_chart_div8, #tax_table_div, #tax_table_div2, #tax_table_div4, #tax_table_div5 {/*border:1px red solid;*/float:left;}
 #tax_chart_div {margin-top: 5px;}
 #tax_chart_div2, #tax_chart_div3, #tax_chart_div5 {margin-right: 9px;}
+
 /*#tax_table_div3 {width:100%; border:1px red solid;}*/
 .chart_container {display:block;overflow:auto;}
 
