@@ -1681,3 +1681,13 @@ background-image: -webkit-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247
 #list-data a.icon-functional:hover, #sample_list a.icon-functional:hover, #project_ov a.icon-functional:hover {text-decoration:none;}
 #list-data a:hover.icon-functional:before, #sample_list a:hover.icon-functional:before, #project_ov a:hover.icon-functional:before {color:#725093;}
 #list-data a.list_sample:hover, #sample_list a.list_sample:hover, #project_ov a.list_sample:hover {color:#62388b;}
+
+/*GOOGLE CHART - ANALYSIS PAGE*/
+#tax_chart_div, #tax_chart_div2, #tax_chart_div3, #tax_table_div2 {/*border:1px red solid;*/float:left;}
+#tax_chart_div {margin-top: 60px;}
+#tax_chart_div2, #tax_chart_div3 {margin-right: 16px;}
+/*#tax_table_div3 {width:100%; border:1px red solid;}*/
+
+.sample_ana .google-visualization-table-table {font-size: 91%;}  /*reduce slightly font table*/
+
+.sample_ana .google-visualization-table-table .google-visualization-table-tr-head td {background: white; border:none;}
