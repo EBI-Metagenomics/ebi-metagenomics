@@ -158,8 +158,42 @@
                                   'legend':'none',
                                  'isStacked': true
                                  };
-
-
+              var options6 = {'title':'Kingdom level (Total: 229)',
+                                         'titleTextStyle': {fontSize:12},
+                                         'colors':['#058dc7','#50b432','#ed561b','#edef00','#24cbe5','#64e572','#ff9655','#fff263','#6af9c4','#b2deff'],
+                                         'width':200,
+                                         'height':220,
+                                         'legend':{position:'right',fontSize:10},
+                                         'chartArea':{left:60,top:20,width:"100%",height:"100%"},
+                                         'pieSliceBorderColor':'none',
+                                         'sliceVisibilityThreshold':1/110,
+                                          'legend':'none',
+                                         'isStacked': true
+                                         };
+              var options7 = {'title':'Bacteria level (Total: 201)',
+                                         'titleTextStyle': {fontSize:12},
+                                         'colors':['#058dc7','#50b432','#ed561b','#edef00','#24cbe5','#64e572','#ff9655','#fff263','#6af9c4','#b2deff'],
+                                         'width':300,
+                                         'height':220,
+                                         'legend':{position:'right',fontSize:10},
+                                         'chartArea':{left:120,top:20,width:"100%",height:"100%"},
+                                         'pieSliceBorderColor':'none',
+                                         'sliceVisibilityThreshold':1/110,
+                                          'legend':'none',
+                                         'isStacked': true
+                                         };
+              var options8 = {'title':'Archea level (Total: 28)',
+                                               'titleTextStyle': {fontSize:12},
+                                               'colors':['#058dc7','#50b432','#ed561b','#edef00','#24cbe5','#64e572','#ff9655','#fff263','#6af9c4','#b2deff'],
+                                               'width':300,
+                                               'height':220,
+                                               'legend':{position:'right',fontSize:10},
+                                               'chartArea':{left:120,top:20,width:"100%",height:"100%"},
+                                               'pieSliceBorderColor':'none',
+                                               'sliceVisibilityThreshold':1/110,
+                                                'legend':'none',
+                                               'isStacked': true
+                                               };
             // Instantiate and draw our chart, passing in some options.
             var chart = new google.visualization.PieChart(document.getElementById('tax_chart_div'));
             chart.draw(data, options);
@@ -171,6 +205,12 @@
             chart3.draw(data3, options4);
             var chart4 = new google.visualization.BarChart(document.getElementById('tax_chart_div4'));
             chart4.draw(data3, options5);
+            var chart6 = new google.visualization.BarChart(document.getElementById('tax_chart_div6'));
+            chart6.draw(data, options6);
+           var chart7 = new google.visualization.BarChart(document.getElementById('tax_chart_div7'));
+            chart7.draw(data3, options7);
+           var chart8 = new google.visualization.BarChart(document.getElementById('tax_chart_div8'));
+           chart8.draw(data4, options8);
           }
 
         </script>
@@ -279,7 +319,7 @@
         table3.draw(data2b, { allowHtml:true, showRowNumber: true,  page:'enable', pageSize:100, pagingSymbols:{prev: 'prev', next: 'next'}, sortColumn:2,sortAscending:false});
 
         var table3 = new google.visualization.Table(document.getElementById('tax_table_div4'));
-        table3.draw(data2, { allowHtml:true, showRowNumber: true,  page:'enable', pageSize:10, pagingSymbols:{prev: 'prev', next: 'next'}, sortColumn:2,sortAscending:false});
+        table3.draw(data2b, { allowHtml:true, showRowNumber: true,  page:'enable', pageSize:10, pagingSymbols:{prev: 'prev', next: 'next'}, sortColumn:2,sortAscending:false});
 
 
       }
@@ -660,7 +700,7 @@
                                                              </div>
                               </div>
                             <p><br/></p>
-                            <h4>Focus on 3 taxonomy levels</h4>
+                            <h4>Top taxonomy levels</h4>
                             <%--Bacteria level--%>
                             <div id="tax_chart_div"></div><div id="tax_chart_div2"></div><div id="tax_table_div" style="display:none;"></div>
                            <%--Archea level--%>
@@ -671,7 +711,8 @@
 
                 <div id="tax-bar">
                     <div class="chart_container"><div id="tax_chart_div4"></div> <div id="tax_table_div4"></div></div>
-                    <h4>Taxonomy levels</h4>
+                    <h4>Top taxonomy levels</h4>
+                    <div class="chart_container"><div id="tax_chart_div6"></div><div id="tax_chart_div7"></div><div id="tax_chart_div8"></div></div>
                 </div>
 
                   <div id="tax-Krona">
