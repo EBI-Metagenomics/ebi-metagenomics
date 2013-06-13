@@ -16,7 +16,189 @@
     });
 </script>
 
+    <script type="text/javascript">
 
+          // Load the Visualization API and the piechart package.
+          google.load('visualization', '1.0', {'packages':['corechart']});
+
+          // Set a callback to run when the Google Visualization API is loaded.
+          google.setOnLoadCallback(drawChart);
+
+          // Callback that creates and populates a data table,
+          // instantiates the pie chart, passes in the data and
+          // draws it.
+          function drawChart() {
+
+            // Create the data table.
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Topping');
+            data.addColumn('number', 'Slices');
+            data.addRows([
+              ['Bacteria', 201],
+              ['Archaea', 28],
+              ['Unknown', 1]
+            ]);
+
+            var data2 = new google.visualization.DataTable();
+            data2.addColumn('string', 'Topping');
+            data2.addColumn('number', 'Slices');
+            data2.addRows([
+              ['Proteobacteria', 146],
+              ['Bacteroidetes', 11],
+              ['SAR406', 11],
+              ['Actinobacteria',10],
+              ['Verrucomicrobia', 7],
+              ['Chloroflexi',3],
+              ['PAUC34f',2],
+              ['Planctomycetes', 2],
+              ['Firmicutes', 1],
+              ['Cyanobacteria', 1],
+              ['Unassigned bacteria', 1]
+            ]);
+
+            var data3 = new google.visualization.DataTable();
+            data3.addColumn('string', 'Topping');
+            data3.addColumn('number', 'Slices');
+            data3.addRows([
+              ['Proteobacteria', 146],
+              ['Crenarchaeota', 17],
+              ['Euryarchaeota', 11],
+              ['Bacteroidetes',11],
+              ['SAR406', 11],
+              ['Actinobacteria',10],
+              ['Verrucomicrobia',7],
+              ['Chloroflexi', 3],
+              ['NC10', 3],
+              ['PAUC34f', 2],
+              ['Planctomycetes', 2],
+              ['Caldiserica', 1],
+              ['Cyanobacteria', 1],
+              ['Elusimicrobia', 1],
+              ['Firmicutes', 1],
+              ['OP11', 1],
+              ['Unassigned bacteria', 1]
+            ]);
+
+            // Set chart options
+            var options = {'title':'Kingdom level',
+                            'titleTextStyle': {fontSize:12},
+                           'colors':['#058dc7','#50b432','#ed561b'],
+                           'width':120,
+                           'height':100,
+                            'chartArea':{left:10,top:26,width:"100%",height:"55%"},
+//                        'chartArea.left':0,
+//                          'chartArea.top':0,
+                           'pieSliceBorderColor':'none',
+//                           'pieSliceText': 'label',
+                            'legend':{position:'none',fontSize:10},
+                           'pieSliceTextStyle':{color: 'white'}
+//                           'backgroundColor':'black'
+                            };
+
+            // Set chart options
+            var options2 = {'title':'Bacteria level (Total: 151)',
+                            'titleTextStyle': {fontSize:12},
+                            'colors':['#058dc7','#50b432','#ed561b','#edef00','#24cbe5','#64e572','#ff9655','#fff263','#6af9c4','#b2deff','#ccc','#ccc','#ccc'],
+//Krona style               'colors':['#d47f7f','#d1a575','#d4c97f','#99d47f','#7fd4a7','#7fc3d4','#7f8ad4','#a77fd4','#d47fd3','#d47faf','#ccc','#ccc','#ccc'],
+                            'width':290,
+                            'height':220,
+                            'legend':{position:'right',fontSize:10},
+                            'chartArea':{left:10,top:30,width:"100%",height:"100%"},
+                            'pieSliceBorderColor':'none'
+//Krona style               'pieSliceBorderColor':'#9c8989'
+                            };
+
+            // Set chart options
+            var options3 = {'title':'Top taxonomy Hits (Total: 229)',
+                            'titleTextStyle': {fontSize:12},
+                            'colors':['#058dc7','#50b432','#ed561b','#edef00','#24cbe5','#64e572','#ff9655','#fff263','#6af9c4','#b2deff'],
+//Krona style               'colors':['#d47f7f','#d1a575','#d4c97f','#99d47f','#7fd4a7','#7fc3d4','#7f8ad4','#a77fd4','#d47fd3','#d47faf','#ccc','#ccc','#ccc'],
+                            'width':290,
+                            'height':220,
+                            'legend':{position:'right',fontSize:10},
+                            'chartArea':{left:10,top:30,width:"100%",height:"100%"},
+                            'pieSliceBorderColor':'none',
+                            'sliceVisibilityThreshold':1/110
+                            };
+
+            // Instantiate and draw our chart, passing in some options.
+            var chart = new google.visualization.PieChart(document.getElementById('tax_chart_div'));
+            chart.draw(data, options);
+            var chart2 = new google.visualization.PieChart(document.getElementById('tax_chart_div2'));
+            chart2.draw(data2, options2);
+            var chart3 = new google.visualization.PieChart(document.getElementById('tax_chart_div3'));
+            chart3.draw(data3, options3);
+            var chart4 = new google.visualization.BarChart(document.getElementById('tax_chart_div4'));
+            chart4.draw(data3, options3);
+          }
+
+        </script>
+<script type='text/javascript'>
+      google.load('visualization', '1', {packages:['table']});
+      google.setOnLoadCallback(drawTable);
+
+      function drawTable() {
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Phylum');
+        data.addColumn('string', 'Kingdom');
+        data.addColumn('number', 'Hits');
+        data.addColumn('number', '%');
+        data.addColumn('number', 'Score');
+        data.addRows([
+            ['Proteobacteria','Bacteria',  146, 73, 0.77909],
+             ['Bacteroidetes','Bacteria', 11, 5, 0.99468],
+             ['SAR406','Bacteria', 11, 5, 0.6438],
+             ['Actinobacteria','Bacteria', 10, 5, 0.79783],
+             ['Verrucomicrobia','Bacteria', 7, 3, 0.654],
+             ['Chloroflexi','Bacteria', 3, 1, 0.4166],
+             ['PAUC34f','Bacteria', 2,1, 0.915],
+             ['Planctomycetes','Bacteria', 2, 1, 0.65],
+             ['Firmicutes','Bacteria', 1, 0.5, 0.22],
+             ['Cyanobacteria','Bacteria', 1, 0.5, 1],
+             ['Unassigned bacteria','Bacteria', 1, 0.5, 0.98]
+
+        ]);
+
+        var data2 = new google.visualization.DataTable();
+              data2.addColumn('string', 'Phylum');
+              data2.addColumn('string', 'Kingdom');
+              data2.addColumn('number', 'Hits');
+              data2.addColumn('number', '%');
+              data2.addColumn('number', 'Score');
+              data2.addRows([
+              ['Proteobacteria','Bacteria', 146, 63.75, 0.779097085],
+              ['Crenarchaeota','Archaea', 17, 7.42, 0.587094017],
+              ['Euryarchaeota','Archaea', 11, 4.8, 0.62625],
+              ['Bacteroidetes','Bacteria', 11, 4.8, 0.9946875],
+              ['SAR406','Bacteria', 11, 4.8, 0.643888889],
+              ['Actinobacteria','Bacteria', 10, 4.37, 0.797833333],
+              ['Verrucomicrobia','Bacteria', 7, 1.31, 0.654],
+              ['Chloroflexi','Bacteria', 3, 1.31, 0.416666667],
+              ['NC10','Bacteria', 3, 1.31, 0.1475],
+              ['PAUC34f','Bacteria', 2, 0.87, 0.915],
+              ['Planctomycetes','Bacteria', 2, 0.87, 0.65],
+              ['Caldiserica','Bacteria', 1, 0.44, 0.1],
+              ['Cyanobacteria','Bacteria', 1, 0.44, 1],
+              ['Elusimicrobia','Bacteria', 1, 0.44, 0.36],
+              ['Firmicutes','Bacteria', 1, 0.44, 0.22],
+              ['OP11','Bacteria', 1, 0.44, 0.18],
+              ['Unassigned bacteria','Bacteria', 1, 0.44, 0.98]
+        ]);
+        //Bacteria level
+        var table = new google.visualization.Table(document.getElementById('tax_table_div'));
+        table.draw(data, { allowHtml:true, showRowNumber: true, page:'enable', pageSize:10, width:400, pagingSymbols:{prev: '<', next: '>'}, sortColumn:2,sortAscending:false });
+
+        //top hits table
+        var table2 = new google.visualization.Table(document.getElementById('tax_table_div2'));
+        table2.draw(data2, { allowHtml:true, showRowNumber: true,  page:'enable', pageSize:10, pagingSymbols:{prev: 'prev', next: 'next'}, sortColumn:2,sortAscending:false});
+
+        var table3 = new google.visualization.Table(document.getElementById('tax_table_div3'));
+        table3.draw(data2, { allowHtml:true, showRowNumber: true,  page:'enable', pageSize:100, pagingSymbols:{prev: 'prev', next: 'next'}, sortColumn:2,sortAscending:false});
+
+
+      }
+    </script>
  <%-- <script>
   $(function() {
     $( "#rerun" )
@@ -353,20 +535,17 @@
                         </c:forEach>
                     </ul>
                 </c:if>
-
-</div>
+            </div>
 
 </div>
 <div class="main_tab_content">
       <h3>Taxonomy analysis</h3>
-
+      <h4>Top taxonomy Hits (Total: 229)</h4>
         <div id="tabs-taxchart">
 
-                <%--Tabs--%>
+            <%--Tabs--%>
             <ul>
                 <li><a href="#tax-table" title="Table view"><span class="ico-table"></span></a></li>
-
-
                 <li><a href="#tax-pie" title="Pie chart view"><span class="ico-pie"></span></a></li>
                 <li><a href="#tax-bar" title="Bar chart view"><span class="ico-barh"></span></a></li>
                 <li><a href="#tax-col" title="Stacked column chart view"><span class="ico-col"></span></a></li>
@@ -374,21 +553,61 @@
                 <li class="ico-downl"><a class="icon icon-functional" data-icon="=" href="#download" title="Download image/table"></a></li>
             </ul>
 
-      <div id="#tax-Krona">
-      <table class="result">
-          <tr>
-              <td width="10%" style="background-color:white;padding:0;">
-                  <object class="krona_chart_small" data="<c:url value="${baseURL}/sample/${model.sample.sampleId}/krona?taxonomy=true&slim=true&depth=1&font=11"/>" type="text/html"/>
-              </td>
-              <td rowspan="2" style="background-color:white;padding:0;">
-                  <object class="krona_chart" data="<c:url value="${baseURL}/sample/${model.sample.sampleId}/krona?taxonomy=true&font=10"/>" type="text/html"/>
-              </td>
-          </tr>
-          <tr>
-              <td style="background-color:white;padding:0;"><object class="krona_chart_small" data="<c:url value="${baseURL}/sample/${model.sample.sampleId}/krona?taxonomy=true&slim=true&node=1&depth=2&font=11"/>" type="text/html"/></td>
-          </tr>
-      </table>
-      </div>
+                <div id="tax-table">
+                <div id="tax_table_div3"></div>
+                </div>
+
+
+                <%--Taxonomy google chart--%>
+                <div id="tax-pie">
+                        <div style="display:block;overflow:auto;"><div id="tax_chart_div"></div>  <div id="tax_chart_div3"></div>
+                                                    <div id="tax_table_div2"></div><div style="float:right;"><form action="">
+                                                  Show rows:
+                                                  <select onChange="setOption('pageSize', parseInt(this.value, 10))">
+                                                    <option value="0">0</option>
+                                                    <option value="3">3</option>
+                                                    <option selected=selected value="5">5</option>
+                                                    <option value="8">8</option>
+                                                    <option value="-1">-1</option>
+                                                  </select>
+                                                </form></div>
+                            <h4>Taxonomy levels</h4>
+                            <%--Bacteria level--%>
+                            <div id="tax_chart_div2"></div>
+                            <div id="tax_table_div"></div>
+                        </div>
+
+                </div>
+
+                <div id="tax-bar">
+                    <div id="tax_chart_div4"></div>
+                </div>
+
+                  <div id="tax-Krona">
+                      <table class="result">
+                          <tr>
+
+                              <td >
+                                  <object class="krona_chart" data="<c:url value="${baseURL}/sample/${model.sample.sampleId}/krona?taxonomy=true&font=10"/>" type="text/html"/>
+                              </td>
+                          </tr>
+                          <%--<table class="result">--%>
+                          <%--<tr>--%>
+                            <%--<td width="10%" style="background-color:white;padding:0;">--%>
+                                <%--&lt;%&ndash;Taxonomy google chart&ndash;%&gt;--%>
+
+                                <%--<object class="krona_chart_small" data="<c:url value="${baseURL}/sample/${model.sample.sampleId}/krona?taxonomy=true&slim=true&depth=1&font=11"/>" type="text/html"/>--%>
+                            <%--</td>--%>
+                            <%--<td rowspan="2" style="background-color:white;padding:0;">--%>
+                                <%--<object class="krona_chart" data="<c:url value="${baseURL}/sample/${model.sample.sampleId}/krona?taxonomy=true&font=10"/>" type="text/html"/>--%>
+                            <%--</td>--%>
+                        <%--</tr>--%>
+                        <%--<tr>--%>
+                            <%--<td style="background-color:white;padding:0;"><object class="krona_chart_small" data="<c:url value="${baseURL}/sample/${model.sample.sampleId}/krona?taxonomy=true&slim=true&node=1&depth=2&font=11"/>" type="text/html"/></td>--%>
+                        <%--</tr>--%>
+                      </table>
+                  </div>
+
 
        </div>
   </div>
@@ -467,19 +686,19 @@
               <c:choose>
                   <c:when test="${not empty model.interProEntries}">
 
-                   <div id="interpro-chart">
+          <div id="interpro-chart">
 
                  <%--Tabs--%>
              <ul>
-                 <li><a href="#InterPro-match-table" title="Table view"><span class="ico-table"></span></a></li>
-                 <li><a href="#InterPro-match-pie" title="Pie chart view"><span class="ico-pie"></span></a></li>
-                 <li><a href="#InterPro-match-bar" title="Bar chart view"><span class="ico-barh"></span></a></li>
-                 <li><a href="#InterPro-match-col" title="Stacked column chart view"><span class="ico-col"></span></a></li>
-                 <li><a href="#InterPro-match-Krona" title="Krona interactive chart view"><span class="ico-krona"></span></a></li>
+                 <li><a href="#interpro-match-table" title="Table view"><span class="ico-table"></span></a></li>
+                 <li><a href="#interpro-match-pie" title="Pie chart view"><span class="ico-pie"></span></a></li>
+                 <li><a href="#interpro-match-bar" title="Bar chart view"><span class="ico-barh"></span></a></li>
+                 <li><a href="#interpro-match-col" title="Stacked column chart view"><span class="ico-col"></span></a></li>
+                 <li><a href="#interpro-match-Krona" title="Krona interactive chart view"><span class="ico-krona"></span></a></li>
 
              </ul>
              <div class="ico-download"><a class="icon icon-functional" data-icon="=" id="csv" href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/doExportIPRFile"/>"   title="<spring:message code="analysisStatsView.label.download.i5.table.view"/>"></a></div>
-             <div id="#InterPro-match-table">
+             <div id="interpro-match-table">
                  <table border="1" class="result">
                  <thead>
                  <tr>
@@ -583,17 +802,18 @@
      <div id="go-terms-table"> this is a table</div>
      <div id="go-terms-pie"> this is a pie chart</div>
     <div id="go-terms-col"> this is a column</div>
-    <div id="go-terms-Krona">
-    <table class="result">
-    <tr>
-    <td width="10%" style="background-color:white;padding:0;vertical-align: top;"><object class="krona_chart_small" style="height:323px;" data="<c:url value="${baseURL}/sample/${model.sample.sampleId}/krona?function=true&slim=true&depth=1&font=11"/>" type="text/html"></object></td>
-    <td style="background-color:white;padding:0;">
-    <%--<a href="http://localhost:8082/metagenomics/Krona_chart_function"  class="icon icon-functional" data-icon="F" title="Open full screen" style="float:right; margin: 10px 4px 0 0; font-size: 283%;"></a>--%>
-    <object class="krona_chart" data="<c:url value="${baseURL}/sample/${model.sample.sampleId}/krona?function=true&font=10"/>" type="text/html"></object></td>
-    </tr>
 
-    </table>
-    </div>
+            <div id="go-terms-Krona">
+            <table class="result">
+            <tr>
+            <td width="10%" style="background-color:white;padding:0;vertical-align: top;"><object class="krona_chart_small" style="height:323px;" data="<c:url value="${baseURL}/sample/${model.sample.sampleId}/krona?function=true&slim=true&depth=1&font=11"/>" type="text/html"></object></td>
+            <td style="background-color:white;padding:0;">
+            <%--<a href="http://localhost:8082/metagenomics/Krona_chart_function"  class="icon icon-functional" data-icon="F" title="Open full screen" style="float:right; margin: 10px 4px 0 0; font-size: 283%;"></a>--%>
+            <object class="krona_chart" data="<c:url value="${baseURL}/sample/${model.sample.sampleId}/krona?function=true&font=10"/>" type="text/html"></object></td>
+            </tr>
+
+            </table>
+            </div>
      </div>
 
      </div>
@@ -663,9 +883,10 @@
 <%--script for tabs--%>
 <script>
     $( "#navtabs").tabs({ disabled: [4] });
+    $( "#navtabs").tabs({ selected: [1] });  /*temp for testing*/
     $( "#interpro-chart" ).tabs({ disabled: [1,2,3,4], selected: 0 });
     $( "#tabs-chart" ).tabs({ disabled: [0,1,3,5], selected: 2 });
-    $( "#tabs-taxchart" ).tabs({ disabled: [0,1,2,3,5], selected: 4 });
+    $( "#tabs-taxchart" ).tabs({ disabled: [3,5], selected: 1 });
 </script>
 
 
