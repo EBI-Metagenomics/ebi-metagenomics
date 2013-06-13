@@ -143,9 +143,10 @@
                 map:map
             });
         }
+
     </script>
 
-    <%-- script for carousel--%>
+    <!-- script for carousel -->
     <script src="${pageContext.request.contextPath}/js/jquery.carousel.min.js" type="text/javascript"></script>
     <script type="text/javascript">
         $(function () {
@@ -161,10 +162,12 @@
         });
     </script>
 
-    <!-- Script and noscript versions for feedback and login links -->
-    <script type="text/javascript">
-        document.write('<style type="text/css">#noscript_feedbackLink{display: none;}#noscript_loginLink{display: none;}</style>');
-    </script>
+      <%--WARNING this is inserting a character on top of the page--%>
+    <%--<!-- Script and noscript versions for feedback and login links --><script type="text/javascript">--%>
+    <%--document.write('<style type="text/css">#noscript_feedbackLink{display: none;}#noscript_loginLink{display: none;}</style>');--%>
+<%--</script>​--%>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
     <noscript>
         <style type="text/css">
             #script_feedbackLink {
