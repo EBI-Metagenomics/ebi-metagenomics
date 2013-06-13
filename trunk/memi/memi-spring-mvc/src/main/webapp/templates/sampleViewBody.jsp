@@ -93,8 +93,8 @@
                             'titleTextStyle': {fontSize:12},
                            'colors':['#058dc7','#50b432','#ed561b'],
 //                           'width':120,
-                           'width':170,
-                           'height':100,
+                            'width':200,
+                            'height':220,
                             'chartArea':{left:10,top:26,width:"100%",height:"55%"},
 //                        'chartArea.left':0,
 //                          'chartArea.top':0,
@@ -647,18 +647,20 @@
                 <div id="tax-pie">
                         <div class="chart_container">
                             <div class="chart_container"><div id="tax_chart_div3"></div><div id="tax_table_div2"></div>
-                            <div style="float:right;"><form action="">
-                                                  Show rows:
-                                                  <select onChange="setOption('pageSize', parseInt(this.value, 10))">
-                                                    <option value="0">0</option>
-                                                    <option value="3">3</option>
-                                                    <option selected=selected value="5">5</option>
-                                                    <option value="8">8</option>
-                                                    <option value="-1">-1</option>
-                                                  </select>
-                                                </form></div>
+                                <div style="float:left;margin-top: 272px; margin-left: -118px;"><form action="">
+                                                                 Show rows:
+                                                                 <select onChange="setOption('pageSize', parseInt(this.value, 10))">
+                                                                   <option selected=selected value="10">10</option>
+                                                                   <option value="50">50</option>
+                                                                   <option value="100">100</option>
+                                                                   <option value="1000">1000</option>
+                                                                   <option value="all">all</option>
+                                                                 </select>
+                                                               </form>
+                                                             </div>
                               </div>
-                            <h4>Focus on taxonomy levels</h4>
+                            <p><br/></p>
+                            <h4>Focus on 3 taxonomy levels</h4>
                             <%--Bacteria level--%>
                             <div id="tax_chart_div"></div><div id="tax_chart_div2"></div><div id="tax_table_div" style="display:none;"></div>
                            <%--Archea level--%>
