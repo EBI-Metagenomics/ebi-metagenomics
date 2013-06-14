@@ -201,7 +201,7 @@
               // Stacked graph
               var options9 = {'title':'Top taxonomy Hits (Total: 229)',
                                                'titleTextStyle': {fontSize:12},
-                                               'colors':['#058dc7','#50b432','#ed561b','#edef00','#24cbe5','#64e572','#ff9655','#fff263','#6af9c4','#b2deff'],
+                                               'colors':['#058dc7','#50b432','#ed561b','#edef00','#24cbe5','#64e572','#ff9655','#fff263','#6af9c4','#b2deff','#ccc','#ccc','#ccc','#ccc','#ccc','#ccc','#ccc'],
                    //Krona style               'colors':['#d47f7f','#d1a575','#d4c97f','#99d47f','#7fd4a7','#7fc3d4','#7f8ad4','#a77fd4','#d47fd3','#d47faf','#ccc','#ccc','#ccc'],
                                                'width':300,
                                                'height':400,
@@ -209,7 +209,7 @@
                                                'chartArea':{left:60,top:40,width:"20%",height:"100%"},
                                                'pieSliceBorderColor':'none',
                                                'sliceVisibilityThreshold':1/110,
-                                               'isStacked': true,
+                                               'isStacked': true
 //                                                'vAxis': {format:'#%'}
                                                };
 
@@ -739,17 +739,7 @@
                     <div class="chart_container"><div id="tax_chart_div6"></div><div id="tax_chart_div7"></div><div id="tax_chart_div8"></div></div>
                 </div>
                 <div id="tax-col">
-                  <div class="chart_container"><div id="tax_chart_div9"></div><div id="tax_table_div6"></div> <div style="float:right;margin-top: -31px;margin-right: 20px;"><form action="">
-                                                                                                       Show rows:
-                                                                                                       <select onChange="setOption('pageSize', parseInt(this.value, 10))">
-                                                                                                         <option selected=selected value="10">10</option>
-                                                                                                         <option value="50">50</option>
-                                                                                                         <option value="100">100</option>
-                                                                                                         <option value="1000">1000</option>
-                                                                                                         <option value="all">all</option>
-                                                                                                       </select>
-                                                                                                     </form>
-                                                                                                   </div>
+                  <div class="chart_container"><div id="tax_chart_div9"></div><div id="tax_table_div6"></div>
                   </div>
 
 
