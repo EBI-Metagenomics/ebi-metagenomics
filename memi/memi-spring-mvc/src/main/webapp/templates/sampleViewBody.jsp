@@ -967,15 +967,15 @@
     <div id="go-terms-col"> this is a column</div>
 
             <div id="go-terms-Krona">
-            <table class="result">
-            <tr>
-            <td width="10%" style="background-color:white;padding:0;vertical-align: top;"><object class="krona_chart_small" style="height:323px;" data="<c:url value="${baseURL}/sample/${model.sample.sampleId}/krona?function=true&slim=true&depth=1&font=11"/>" type="text/html"></object></td>
-            <td style="background-color:white;padding:0;">
-            <%--<a href="http://localhost:8082/metagenomics/Krona_chart_function"  class="icon icon-functional" data-icon="F" title="Open full screen" style="float:right; margin: 10px 4px 0 0; font-size: 283%;"></a>--%>
-            <object class="krona_chart" data="<c:url value="${baseURL}/sample/${model.sample.sampleId}/krona?function=true&font=10"/>" type="text/html"></object></td>
-            </tr>
+            <%--<table class="result">--%>
+            <%--<tr>--%>
+            <%--<td width="10%" style="background-color:white;padding:0;vertical-align: top;"><object class="krona_chart_small" style="height:323px;" data="<c:url value="${baseURL}/sample/${model.sample.sampleId}/krona?function=true&slim=true&depth=1&font=11"/>" type="text/html"></object></td>--%>
+            <%--<td style="background-color:white;padding:0;">--%>
+            <%--&lt;%&ndash;<a href="http://localhost:8082/metagenomics/Krona_chart_function"  class="icon icon-functional" data-icon="F" title="Open full screen" style="float:right; margin: 10px 4px 0 0; font-size: 283%;"></a>&ndash;%&gt;--%>
+            <%--<object class="krona_chart" data="<c:url value="${baseURL}/sample/${model.sample.sampleId}/krona?function=true&font=10"/>" type="text/html"></object></td>--%>
+            <%--</tr>--%>
 
-            </table>
+            <%--</table>--%>
             </div>
      </div>
 
@@ -1048,7 +1048,7 @@
     $( "#navtabs").tabs({ disabled: [4] });
     $( "#navtabs").tabs({ selected: [1] });  /*temp for testing*/
     $( "#interpro-chart" ).tabs({ disabled: [1,2,3,4], selected: 0 });
-    $( "#tabs-chart" ).tabs({ disabled: [0,1,3,5], selected: 2 });
+    $( "#tabs-chart" ).tabs({ disabled: [0,1,3,4,5], selected: 2 });
     $( "#tabs-taxchart" ).tabs({ disabled: [5], selected: 1 });
 </script>
 
