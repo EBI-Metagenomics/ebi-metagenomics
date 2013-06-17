@@ -36,8 +36,7 @@ public class KronaChartsController extends AbstractSampleViewController {
                                 @RequestParam(required = false, value = "function", defaultValue = "false") final boolean function,
                                 @RequestParam(required = false, value = "slim", defaultValue = "false") final boolean slim,
                                 final ModelMap model,
-                                final HttpServletResponse response,
-                                final HttpServletRequest request) throws IOException {
+                                final HttpServletResponse response) throws IOException {
         response.setContentType("text/html;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_OK);
         response.setLocale(Locale.ENGLISH);
