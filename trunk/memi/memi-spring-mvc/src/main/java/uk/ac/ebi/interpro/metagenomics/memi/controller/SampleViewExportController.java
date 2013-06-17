@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.Locale;
 
 /**
- * This controller handles the request for all exports on the sample view.
+ * This controller handles the request for some exports on the sample view.
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @since 1.0-SNAPSHOT
