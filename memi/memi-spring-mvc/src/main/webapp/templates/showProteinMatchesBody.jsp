@@ -10,11 +10,11 @@
         <c:when test="${not empty model.interProEntries}">
             <div class="export">
                <%-- remove detailed TSV export : available on top
-                <a href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/doExportI5File/${model.emgFile.fileName}"/>"
+                <a href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportI5File/${model.emgFile.fileName}"/>"
                    title="<spring:message code="analysisStatsView.label.download.i5.matches.detailed"/>"/>
                 <spring:message code="analysisStatsView.label.download.i5.matches.detailed"/>
                 </a>--%>
-                <a href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/doExportIPRFile/"/>"
+                <a href="<c:url value="${baseURL}/analysisStatsView/${model.sample.sampleId}/doExportIPRFile/"/>"
                    id="csv" title="<spring:message code="analysisStatsView.label.download.i5.table.view"/>"/>
                 <spring:message code="analysisStatsView.label.download.i5.table.view"/>
                 </a>
@@ -34,7 +34,10 @@
                 <c:forEach var="entry" items="${model.interProEntries}" varStatus="status">
                     <tr>
                         <td>
-                            <a href="http://www.ebi.ac.uk/interpro/entry/${entry.entryID}"
+                            <c:url var="linkToInterProSearch" value="https://www.ebi.ac.uk/interpro/search">
+                                <c:param name="q" value="${entry.entryID}"/>
+                            </c:url>
+                            <a href="<c:out value="${linkToInterProSearch}"/>"
                                title="<c:out value="Link to ${entry.entryID}"/>" class="ext">
                                 <c:out value="${entry.entryID}"/>
                             </a>

@@ -33,10 +33,7 @@ public abstract class SecuredAbstractController<T extends SecureEntity> extends 
      * @param secureEntity
      * @return
      */
-    protected boolean isAccessible(T secureEntity) {
-        if (secureEntity.isPublic()) {
-            return true;
-        }
+    private boolean isAccessible(T secureEntity) {
         String warningMsg = "Could not request security entity with ID " + secureEntity.getSecureEntityId() + "!";
         if (sessionManager != null && sessionManager.getSessionBean() != null) {
             Submitter submitter = sessionManager.getSessionBean().getSubmitter();
@@ -68,7 +65,7 @@ public abstract class SecuredAbstractController<T extends SecureEntity> extends 
             if (securedEntity == null) {
                 return getEntryNotExistMAV(stringId);
             } else if (securedEntity instanceof Study || securedEntity instanceof Sample) {
-                if (!isAccessible(securedEntity)) {
+                if (!securedEntity.isPublic() && !isAccessible(securedEntity)) {
                     log.info("Requesting private study with ID " + stringId + "...");
                     return buildAccessDeniedModelAndView(stringId);
                 }
@@ -78,8 +75,8 @@ public abstract class SecuredAbstractController<T extends SecureEntity> extends 
 
             modelProcessingStrategy.processModel(model, securedEntity);
         } else {
-            log.error("Check why the DAO is null!");
-            throw new IllegalStateException("Configuration error - the the DAO is null");
+            log.error("Check why study DAO is null!");
+            throw new IllegalStateException("Configuration error - the Study DAO is null");
         }
         if (model == null) {
             return null;
@@ -87,14 +84,13 @@ public abstract class SecuredAbstractController<T extends SecureEntity> extends 
         return new ModelAndView(viewName, model);
     }
 
-
     /**
      * This view is shown if somebody tries to access a private entry OR if session has timed out.
      *
      * @param objectId
      * @return Access denied model and view.
      */
-    protected ModelAndView buildAccessDeniedModelAndView(String objectId) {
+    private ModelAndView buildAccessDeniedModelAndView(String objectId) {
         return getModelAndView(objectId, DefaultController.ACCESS_DENIED_VIEW_NAME);
     }
 

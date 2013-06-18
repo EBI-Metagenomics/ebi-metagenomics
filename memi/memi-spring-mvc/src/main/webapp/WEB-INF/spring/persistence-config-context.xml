@@ -73,7 +73,7 @@
 
     <!-- Specification of version of control elements like e.g. data access objects -->
     <!-- List of data access objects -->
-    <!--<bean id="studyDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.StudyDAOImpl"/>-->
+    <bean id="studyDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.StudyDAOImpl"/>
 
     <bean id="sampleDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAOImpl"/>
 
@@ -95,8 +95,9 @@
         <property name="tableNamePrefix" value="EMG"/>
     </bean>
 
-    <bean name="sampleAnnotationDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.temp.SampleAnnotationDAOImpl">
+    <bean name="annotationDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.temp.SampleAnnotationDAOImpl">
         <property name="dataSource" ref="memiDataSource"/>
+        <property name="tableNamePrefix" value="EMG"/>
     </bean>
 
 </beans>
