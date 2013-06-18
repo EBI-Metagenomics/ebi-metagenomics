@@ -133,8 +133,7 @@
             var myOptions = {
                 zoom:4,
                 center:latlng,
-                mapTypeId:google.maps.MapTypeId.ROADMAP,
-                streetViewControl: false
+                mapTypeId:google.maps.MapTypeId.ROADMAP
             };
             var map = new google.maps.Map(document.getElementById("map_canvas"),
                     myOptions);
@@ -143,10 +142,9 @@
                 map:map
             });
         }
-
     </script>
 
-    <!-- script for carousel -->
+    <%-- script for carousel--%>
     <script src="${pageContext.request.contextPath}/js/jquery.carousel.min.js" type="text/javascript"></script>
     <script type="text/javascript">
         $(function () {
@@ -161,13 +159,34 @@
             });
         });
     </script>
+    <%-- script for tabs, doesn't work with login popup
 
-      <%--WARNING this is inserting a character on top of the page--%>
-    <%--<!-- Script and noscript versions for feedback and login links --><script type="text/javascript">--%>
-    <%--document.write('<style type="text/css">#noscript_feedbackLink{display: none;}#noscript_loginLink{display: none;}</style>');--%>
-<%--</script>​--%>
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
 
+            //set the default location (fix ie 6 issue)
+            $('.lava').css({left:$('span.item:first').position()['left']});
+
+            $('.item').click(function () {
+
+
+            $(this).addClass("selected");
+
+            //scroll the lava to current item position
+            $('.lava').stop().animate({left:$(this).position()['left']}, {duration:200});
+
+            //scroll the panel to the correct content
+            $('.panel').stop().animate({left:$(this).position()['left'] * (-6.2)}, {duration:200});
+
+            });
+
+        });
+    </script>
+     --%>
+    <!-- Script and noscript versions for feedback and login links -->
+    <script type="text/javascript">
+        document.write('<style type="text/css">#noscript_feedbackLink{display: none;}#noscript_loginLink{display: none;}</style>');
+    </script>
     <noscript>
         <style type="text/css">
             #script_feedbackLink {

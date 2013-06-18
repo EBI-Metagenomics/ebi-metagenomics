@@ -4,7 +4,7 @@ $(function() {
     dialog =
             $("#login_dialog_div").dialog({
                 autoOpen: false, // Avoids auto open after a new dialog instance is being created
-                title: '', //Dialog title
+                title: 'Login for EBI Metagenomics', //Dialog title
                 modal: true, //Dialog has modal behavior; other items on the page are disabled
                 closeOnEscape: true, //Dialog closes when it has focus and the user presses the esacpe (ESC) key
                 height: 400,

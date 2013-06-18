@@ -4,11 +4,10 @@
 <%--Page variable which is used several time within this page. Used for not specified study attributes.--%>
 <c:set var="notGivenId" value="(not given)"/>
 
-<div id="project_ov">
 <c:choose>
     <c:when test="${not empty model.study.publications}">
 
-        <div class="sidebar-allrel">
+        <div id="sidebar-allrel">
             <c:if test="${not empty model.relatedPublications}">
                 <div id="sidebar-related">
                     <h2>Related Publications</h2>
@@ -199,7 +198,7 @@ Contact name: (not given)
                 <th scope="col" abbr="Pname">Sample ID</th>
                 <th scope="col" abbr="Pname">Collection date</th>
                 <th scope="col" abbr="Source" width="140px">Source</th>
-                <th scope="col" abbr="Analysis" width="170px">Analysis results</th>
+                <th scope="col" abbr="Analysis" width="80px">Analysis</th>
             </tr>
             </thead>
             <tbody>
@@ -224,17 +223,11 @@ Contact name: (not given)
                                     src="${pageContext.request.contextPath}/img/ico_IN_PROGRESS_25_8.png"
                                     alt="Analysis in progress" title="Analysis in progress">--%>in progress</c:when>
                             <c:otherwise>
-
-                               <%--  ICON VERSION
-                                <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>"><img
+                                <a href="<c:url value="${baseURL}/analysisStatsView/${sample.sampleId}"/>"><img
                                         src="${pageContext.request.contextPath}/img/ico_analysis_chart.gif"
                                         alt="Analysis finished - check the results"
                                         title="Analysis finished - check the results"></a>
-                                  --%>
-                                <a href="<c:url value="${baseURL}/sample/${sample.sampleId}#fragment-taxonomy"/>" class="list_sample" title="Taxonomy analysis">Taxonomy </a>|
-                                <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>#fragment-functional" class="list_sample" title="Function analysis">Function </a>|  <a class="icon icon-functional list_sample" data-icon="=" href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>#fragment-download" class="list_sample" title="download results"></a>
                             </c:otherwise>
-
                         </c:choose>
                     </td>
                 </tr>
@@ -245,5 +238,4 @@ Contact name: (not given)
     </c:when>
     <c:otherwise>No samples to display</c:otherwise>
 </c:choose>
-</div>
 <div class="but_top"><a href="#top" title="back to the top page">Top</a></div>
