@@ -97,8 +97,8 @@
     <script src="${pageContext.request.contextPath}/js/feedback_script.js" type="text/javascript"></script>
 
    <%--Client-side twitter news feed - http://tweet.seaofclouds.com/--%>
-    <script src="${pageContext.request.contextPath}/js/tweet/jquery.tweet.js" type="text/javascript"></script>
-    <script src="${pageContext.request.contextPath}/js/tweet/tweet.instance.js" type="text/javascript"></script>
+    <%--<script src="${pageContext.request.contextPath}/js/tweet/jquery.tweet.js" type="text/javascript"></script>--%>
+    <%--<script src="${pageContext.request.contextPath}/js/tweet/tweet.instance.js" type="text/javascript"></script>--%>
 
     <!--[if lt IE 9]><%-- HTML5 tags working in IE8 by including this JavaScript in the head  --%>
 <script type="text/javascript">

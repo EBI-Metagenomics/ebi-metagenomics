@@ -11,8 +11,12 @@
                                     rel="alternate" type="application/rss+xml"
                                     title="Metagenomics RSS feeds"><img
                 src="${pageContext.request.contextPath}/img/icon_rss.gif" alt="Metagenomics RSS feeds" style="float:right;"/></a></h2>
-
-    <div class="tweet"></div>
+    <a class="twitter-timeline" data-dnt="true" href="https://twitter.com/EBImetagenomics"
+       data-widget-id="345516657369837568">Tweets by @EBImetagenomics</a>
+    <script>!function(d,s,id){var
+            js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+    <%--Old version--%>
+    <%--<div class="tweet"></div>--%>
     <p><a href="http://twitter.com/EBImetagenomics" alt="Follow us on Twitter">Follow us on Twitter</a></p>
 
     <%--<span class="separator"></span>--%>
