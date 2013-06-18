@@ -1,0 +1,53 @@
+<html>
+<body>
+<h3>New SRA account request through the MGPortal (Metagenomics web site)</h3>
+<table>
+    <tbody>
+    <tr>
+        <td><b>User details</b></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>CENTRE DETAILS:</td>
+        <td>$institute - $country</td>
+    </tr>
+    <tr>
+        <td>CENTRE ACRONYM:</td>
+        <td>Not provided</td>
+    </tr>
+    <tr>
+        <td>LABORATORY NAME:</td>
+        <td>$department</td>
+    </tr>
+    <tr>
+        <td>YOUR NAME:</td>
+        <td>$name</td>
+    </tr>
+    <tr>
+        <td>EMAIL ADDRESS:</td>
+        <td>$email</td>
+    </tr>
+    <tr>
+        <td><b>Project data</b></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Project title:</td>
+        <td>$title</td>
+    </tr>
+    <tr>
+        <td>Hold private until:</td>
+        <td>$releaseDate</td>
+    </tr>
+    <tr>
+        <td>SUMMARY:</td>
+        <td>$summary</td>
+    </tr>
+    <tr>
+        <td>No sensitive data:</td>
+        <td>Confirmed</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
