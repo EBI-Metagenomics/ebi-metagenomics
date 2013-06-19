@@ -1,13 +1,13 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
 
 /**
- * TODO: Description
+ * Simple representation of an InterPro entry.
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @version $Id$
  * @since 1.0-SNAPSHOT
  */
-public class InterProEntry {
+public class InterProEntry implements AnalysisResults {
 
     private String entryID;
 
