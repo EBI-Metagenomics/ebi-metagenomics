@@ -7,7 +7,7 @@ package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
  * @version $Id$
  * @since 1.0-SNAPSHOT
  */
-public class InterProEntry implements AnalysisResults {
+public class InterProEntry extends AnalysisResult {
 
     private String entryID;
 
