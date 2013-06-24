@@ -214,7 +214,7 @@
 <body class="<tiles:getAsString name='bodyClass'/>" id="top"  <%--onload="loaded()" onload="initialize()"--%>>
 
 
-<%-- EBI-Interpro main header - exactly same as Interpro header--%>
+<%-- EBI-Metagenomics main header - exactly same as Interpro header--%>
 <div class="headerdiv" id="headerdiv">
   <div class="header">
     <div id="global-masthead" class="masthead grid_24">
@@ -232,6 +232,8 @@
 				</ul>
       </div>
     </div>
+
+      <c:import url="../templates/components/ebeyeSearchFormComponent.jsp"/>
 
     <div id="local-masthead" class="masthead grid_24">
     <!-- local-title - logo only patterns, see http://frontier.ebi.ac.uk/web/style/patterns -->
