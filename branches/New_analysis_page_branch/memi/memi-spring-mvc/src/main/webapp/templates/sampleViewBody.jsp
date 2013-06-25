@@ -642,7 +642,7 @@
 
             <%--Tabs--%>
             <ul>
-                <li><a href="#tax-table" title="Table view"><span class="ico-table"></span></a></li>
+                <%--<li><a href="#tax-table" title="Table view"><span class="ico-table"></span></a></li>--%>
                 <li><a href="#tax-pie" title="Pie chart view"><span class="ico-pie"></span></a></li>
                 <li><a href="#tax-bar" title="Bar chart view"><span class="ico-barh"></span></a></li>
                 <li><a href="#tax-col" title="Stacked column chart view"><span class="ico-col"></span></a></li>
@@ -650,9 +650,9 @@
                 <li class="ico-downl"><a class="icon icon-functional" data-icon="=" href="#download" title="Download image/table"></a></li>
             </ul>
 
-                <div id="tax-table">
-                <div id="tax_table_div3"></div>
-                </div>
+                <%--<div id="tax-table">--%>
+                <%--<div id="tax_table_div3"></div>--%>
+                <%--</div>--%>
 
 
                 <%--Taxonomy google chart--%>
@@ -1057,7 +1057,7 @@
     $( "#navtabs").tabs({ selected: [0] });
     $( "#interpro-chart" ).tabs({ disabled: [1,2,3,4], selected: 0 });
     $( "#tabs-chart" ).tabs({ disabled: [0,1,3,5], selected: 2 });
-    $( "#tabs-taxchart" ).tabs({ disabled: [5], selected: 1 });
+    $( "#tabs-taxchart" ).tabs({ disabled: [5], selected: 0 });
 </script>
 
 
