@@ -1,20 +1,20 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<script type="text/javascript">
-    $(document).ready(function(){
-        $('#expandercontent').css('display','none');
-        $("#expanderhead").click(function(){
-            $("#expandercontent").slideToggle();
-            if ($("#expandersign").text() == "+"){
-                $("#expandersign").text("-")
-            }
-            else {
-                $("#expandersign").text("+")
-            }
-        });
-    });
-</script>
+<%--<script type="text/javascript">--%>
+    <%--$(document).ready(function(){--%>
+        <%--$('#expandercontent').css('display','none');--%>
+        <%--$("#expanderhead").click(function(){--%>
+            <%--$("#expandercontent").slideToggle();--%>
+            <%--if ($("#expandersign").text() == "+"){--%>
+                <%--$("#expandersign").text("-")--%>
+            <%--}--%>
+            <%--else {--%>
+                <%--$("#expandersign").text("+")--%>
+            <%--}--%>
+        <%--});--%>
+    <%--});--%>
+<%--</script>--%>
 
     <script type="text/javascript">
 
@@ -397,6 +397,7 @@
     <li><a href="#fragment-overview"><span>Overview</span></a></li>
     <li><a href="#fragment-taxonomy"><span>Taxonomy analysis</span></a></li>
     <li><a href="#fragment-functional"><span>Function analysis</span></a></li>
+    <li><a href="#fragment-quality"><span>Quality control</span></a></li>
     <li><a href="#fragment-download"><span>Download</span></a></li>
     <%--<li><a href="#fragment-experimental"><span>Experimental factor</span></a></li>--%>
 </ul>
@@ -574,67 +575,14 @@
     </div>
     <%--END LOCALISATION   --%>
 
-        <%--BEGIN READS SECTION   --%>
 
-    <%--<h3>Submitted nucleotide data</h3>--%>
-    <c:choose>
-    <c:when test="${not empty model.sample.analysisCompleted}">
-
-       <h3>Data processed</h3>
-
-       <div class="output_form" id="large">
-       <c:url var="statsImage" value="/getImage" scope="request">
-           <c:param name="imageName" value="_summary.png"/>
-           <c:param name="imageType" value="PNG"/>
-           <c:param name="dir" value="${model.emgFile.fileID}"/>
-       </c:url>
-       <div style="float:left;"><img style="height:94px;" src="<c:out value="${statsImage}"/>"/></div>
-
-    </c:when>
-    <c:otherwise>
-        <h3>Data processed</h3> <p>Analysis in progress!</p>
-     </c:otherwise>
-    </c:choose>
-
-         <ul style="list-style-type: none;">
-            <c:forEach var="downloadLink" items="${model.downloadSection.seqDataDownloadLinks}" varStatus="loop">
-                <li>
-                    <c:choose>
-                        <c:when test="${downloadLink.externalLink}">
-                            <a href="${downloadLink.linkURL}"
-                               title="${downloadLink.linkTitle}">${downloadLink.linkText}</a>
-                        </c:when>
-                        <c:otherwise>
-                            <a href="<c:url value="${baseURL}/${downloadLink.linkURL}"/>"
-                               title="${downloadLink.linkTitle}">
-                                    ${downloadLink.linkText}</a><span
-                                class="list_date"> - ${downloadLink.fileSize}</span>
-                        </c:otherwise>
-                    </c:choose>
-                </li>
-            </c:forEach>
-        </ul>
-
-       </div>
-    <%--<div class="output_form" id="large">--%>
-        <%--<div class="result_row"><label>Raw sequence reads:</label>--%>
-      <%--<span>--%>
-         <%--<c:choose>--%>
-             <%--<c:when test="${not empty model.archivedSequences}">--%>
-                 <%--<c:forEach var="seqId" items="${model.archivedSequences}" varStatus="status">--%>
-                     <%--<a class="ext" href="<c:url value="https://www.ebi.ac.uk/ena/data/view/${seqId}"/>">--%>
-                         <%--<c:out value="${seqId}"/></a>--%>
-                 <%--</c:forEach> (ENA website)--%>
-             <%--</c:when>--%>
-             <%--<c:otherwise>(not given)</c:otherwise>--%>
-         <%--</c:choose></span></div>--%>
-    <%--</div>--%>
-        <%--END READS SECTION   --%>
 
         <%--BEGIN OTHER INFO   --%>
 
     <c:if test="${not empty model.sampleAnnotations}">
-        <h3 id="expanderhead" style="">Other information <span id="expandersign">+</span></h3>
+        <h3 id="expanderhead" style="">Other information
+            <%--<span id="expandersign">+</span>--%>
+        </h3>
         <div id="expandercontent">
         <table border="1" class="result">
             <thead>
@@ -983,6 +931,66 @@
 
 </div> <%--end div fragment functional--%>
 
+<div id="fragment-quality">
+     <%--BEGIN READS SECTION   --%>
+
+    <%--<h3>Submitted nucleotide data</h3>--%>
+    <c:choose>
+    <c:when test="${not empty model.sample.analysisCompleted}">
+
+       <h3>Quality control</h3>
+
+       <div style="display:block; overflow: auto;">
+       <c:url var="statsImage" value="/getImage" scope="request">
+           <c:param name="imageName" value="_summary.png"/>
+           <c:param name="imageType" value="PNG"/>
+           <c:param name="dir" value="${model.emgFile.fileID}"/>
+       </c:url>
+       <div style="float:left; margin-left: 9px;"><img src="<c:out value="${statsImage}"/>"/></div>
+
+    </c:when>
+    <c:otherwise>
+        <h3>Data processed</h3> <p>Analysis in progress!</p>
+     </c:otherwise>
+    </c:choose>
+
+         <ul style="list-style-type: none; padding-top:0; margin-top:0; line-height: 2;">
+            <c:forEach var="downloadLink" items="${model.downloadSection.seqDataDownloadLinks}" varStatus="loop">
+                <li>
+                    <c:choose>
+                        <c:when test="${downloadLink.externalLink}">
+                            <a href="${downloadLink.linkURL}"
+                               title="${downloadLink.linkTitle}">${downloadLink.linkText}</a>
+                        </c:when>
+                        <c:otherwise>
+                            <a href="<c:url value="${baseURL}/${downloadLink.linkURL}"/>"
+                               title="${downloadLink.linkTitle}">
+                                    ${downloadLink.linkText}</a><span
+                                class="list_date"> - ${downloadLink.fileSize}</span>
+                        </c:otherwise>
+                    </c:choose>
+                </li>
+            </c:forEach>
+        </ul>
+
+       </div>
+    <%--<div class="output_form" id="large">--%>
+        <%--<div class="result_row"><label>Raw sequence reads:</label>--%>
+      <%--<span>--%>
+         <%--<c:choose>--%>
+             <%--<c:when test="${not empty model.archivedSequences}">--%>
+                 <%--<c:forEach var="seqId" items="${model.archivedSequences}" varStatus="status">--%>
+                     <%--<a class="ext" href="<c:url value="https://www.ebi.ac.uk/ena/data/view/${seqId}"/>">--%>
+                         <%--<c:out value="${seqId}"/></a>--%>
+                 <%--</c:forEach> (ENA website)--%>
+             <%--</c:when>--%>
+             <%--<c:otherwise>(not given)</c:otherwise>--%>
+         <%--</c:choose></span></div>--%>
+    <%--</div>--%>
+        <%--END READS SECTION   --%>
+
+</div>
+
 <div id="fragment-download">
 
 
@@ -1045,8 +1053,8 @@
 
 <%--script for tabs--%>
 <script>
-    $( "#navtabs").tabs({ disabled: [4] });
-    $( "#navtabs").tabs({ selected: [1] });  /*temp for testing*/
+    $( "#navtabs").tabs({ disabled: [5] });
+    $( "#navtabs").tabs({ selected: [0] });
     $( "#interpro-chart" ).tabs({ disabled: [1,2,3,4], selected: 0 });
     $( "#tabs-chart" ).tabs({ disabled: [0,1,3,5], selected: 2 });
     $( "#tabs-taxchart" ).tabs({ disabled: [5], selected: 1 });
