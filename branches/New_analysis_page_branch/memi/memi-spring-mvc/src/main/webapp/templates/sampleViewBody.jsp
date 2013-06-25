@@ -636,7 +636,7 @@
 
 </div>
 <div class="main_tab_content">
-      <h3>Taxonomy analysis</h3>
+      <%--<h3>Taxonomy analysis</h3>--%>
       <h4>Top taxonomy Hits (Total: 229)</h4>
         <div id="tabs-taxchart">
 
@@ -774,7 +774,7 @@
                             <%--</div>--%>
                             <%--</div>--%>
 
-      <h3>Function analysis</h3>
+      <%--<h3>Function analysis</h3>--%>
 
               <%--<p>The entire InterProScan results file (<a title="Click to download full InterPro matches table (TSV)"--%>
                                                           <%--href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/doExportI5TSVFile"/>">download--%>
@@ -938,7 +938,7 @@
     <c:choose>
     <c:when test="${not empty model.sample.analysisCompleted}">
 
-       <h3>Quality control</h3>
+       <%--<h3>Quality control</h3>--%>
 
        <div style="display:block; overflow: auto;">
        <c:url var="statsImage" value="/getImage" scope="request">
@@ -994,7 +994,7 @@
 <div id="fragment-download">
 
 
-    <h3>Download results</h3>
+    <%--<h3>Download results</h3>--%>
 
     <div class="box-export">
         <h4>Sequence data</h4>
