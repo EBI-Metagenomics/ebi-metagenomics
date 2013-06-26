@@ -92,9 +92,12 @@ function drawChart() {
     ]);
 
     // Kingdom level
-    var options = {'title':'Kingdom level (Total:229)',
+    var options = {'title':'Kingdom level',
         'titleTextStyle':{fontSize:12},
-        'colors':['#058dc7', '#50b432', '#ed561b'],
+// Krona colors       'colors':['#cf6f6f', '#cfc26f', '#8dcf6f'],
+         'colors':['#5f8694','#91d450', '#535353' ],
+//         'colors':['#5f8694','#91d450', '#d1dadd' ],
+//        'colors':['#058dc7', '#50b432', '#ed561b'],
 //                           'width':120,
         'width':200,
         'height':220,
@@ -380,9 +383,10 @@ $(function() {
     <%--Main Tabs--%>
 <ul>
     <li><a href="#fragment-overview"><span>Overview</span></a></li>
+    <li><a href="#fragment-quality"><span>Quality control</span></a></li>
     <li><a href="#fragment-taxonomy"><span>Taxonomy analysis</span></a></li>
     <li><a href="#fragment-functional"><span>Function analysis</span></a></li>
-    <li><a href="#fragment-quality"><span>Quality control</span></a></li>
+
     <li><a href="#fragment-download"><span>Download</span></a></li>
         <%--<li><a href="#fragment-experimental"><span>Experimental factor</span></a></li>--%>
 </ul>
