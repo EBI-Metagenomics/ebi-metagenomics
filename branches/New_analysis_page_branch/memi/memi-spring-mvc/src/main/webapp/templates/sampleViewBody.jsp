@@ -613,29 +613,29 @@
 
 
 <div id="fragment-taxonomy">
-<div class="sidebar-allrel">
+<%--<div class="sidebar-allrel">--%>
 
-            <h3>Download results</h3>
+            <%--<h3>Download results</h3>--%>
 
-            <div class="box-export">
-                <c:if test="${not empty model.downloadSection.taxaAnalysisDownloadLinks}">
-                    <h4>Taxonomic Analysis</h4>
-                    <ul>
-                        <c:forEach var="downloadLink" items="${model.downloadSection.taxaAnalysisDownloadLinks}"
-                                   varStatus="loop">
-                            <li>
-                                <a href="<c:url value="${baseURL}/${downloadLink.linkURL}"/>"
-                                   title="${downloadLink.linkTitle}">
-                                        ${downloadLink.linkText}</a><span
-                                    class="list_date"> - ${downloadLink.fileSize}</span>
-                            </li>
-                        </c:forEach>
-                    </ul>
-                </c:if>
-            </div>
+            <%--<div class="box-export">--%>
+                <%--<c:if test="${not empty model.downloadSection.taxaAnalysisDownloadLinks}">--%>
+                    <%--<h4>Taxonomic Analysis</h4>--%>
+                    <%--<ul>--%>
+                        <%--<c:forEach var="downloadLink" items="${model.downloadSection.taxaAnalysisDownloadLinks}"--%>
+                                   <%--varStatus="loop">--%>
+                            <%--<li>--%>
+                                <%--<a href="<c:url value="${baseURL}/${downloadLink.linkURL}"/>"--%>
+                                   <%--title="${downloadLink.linkTitle}">--%>
+                                        <%--${downloadLink.linkText}</a><span--%>
+                                    <%--class="list_date"> - ${downloadLink.fileSize}</span>--%>
+                            <%--</li>--%>
+                        <%--</c:forEach>--%>
+                    <%--</ul>--%>
+                <%--</c:if>--%>
+            <%--</div>--%>
 
-</div>
-<div class="main_tab_content">
+<%--</div>--%>
+<div class="main_tab_full_content">
       <%--<h3>Taxonomy analysis</h3>--%>
       <h4>Top taxonomy Hits (Total: 229)</h4>
         <div id="tabs-taxchart">
@@ -726,44 +726,44 @@
 
 <div id="fragment-functional">
 
-        <div class="sidebar-allrel">
+        <%--<div class="sidebar-allrel">--%>
 
-            <h3>Download results</h3>
+            <%--<h3>Download results</h3>--%>
 
-            <div class="box-export">
+            <%--<div class="box-export">--%>
 
-                <c:if test="${not empty model.downloadSection.funcAnalysisDownloadLinks}">
-                    <h4>Functional Analysis</h4>
-                    <ul>
-                        <c:forEach var="downloadLink" items="${model.downloadSection.funcAnalysisDownloadLinks}"
-                                   varStatus="loop">
-                            <li>
-                                <a href="<c:url value="${baseURL}/${downloadLink.linkURL}"/>"
-                                   title="${downloadLink.linkTitle}">
-                                        ${downloadLink.linkText}</a><span
-                                    class="list_date"> - ${downloadLink.fileSize}</span>
-                         <%--to rename Complete Go Annotatio--%>
-                      </li>
-                  </c:forEach>
-                  <c:if test="${not empty model.pieChartBiologicalProcessURL}">
-                  <li>
+                <%--<c:if test="${not empty model.downloadSection.funcAnalysisDownloadLinks}">--%>
+                    <%--<h4>Functional Analysis</h4>--%>
+                    <%--<ul>--%>
+                        <%--<c:forEach var="downloadLink" items="${model.downloadSection.funcAnalysisDownloadLinks}"--%>
+                                   <%--varStatus="loop">--%>
+                            <%--<li>--%>
+                                <%--<a href="<c:url value="${baseURL}/${downloadLink.linkURL}"/>"--%>
+                                   <%--title="${downloadLink.linkTitle}">--%>
+                                        <%--${downloadLink.linkText}</a><span--%>
+                                    <%--class="list_date"> - ${downloadLink.fileSize}</span>--%>
+                         <%--&lt;%&ndash;to rename Complete Go Annotatio&ndash;%&gt;--%>
+                      <%--</li>--%>
+                  <%--</c:forEach>--%>
+                  <%--<c:if test="${not empty model.pieChartBiologicalProcessURL}">--%>
+                  <%--<li>--%>
 
-                    <a id="csv"
-                       title="<spring:message code="analysisStatsView.label.download.go.slim.anchor.title"/>"
-                       href="<c:url
-                        value="${baseURL}/sample/${model.sample.sampleId}/doExportGOSlimFile"/>">
-                        <spring:message
-                                code="analysisStatsView.label.download.go.slim.anchor.href.message"/></a>
+                    <%--<a id="csv"--%>
+                       <%--title="<spring:message code="analysisStatsView.label.download.go.slim.anchor.title"/>"--%>
+                       <%--href="<c:url--%>
+                        <%--value="${baseURL}/sample/${model.sample.sampleId}/doExportGOSlimFile"/>">--%>
+                        <%--<spring:message--%>
+                                <%--code="analysisStatsView.label.download.go.slim.anchor.href.message"/></a>--%>
 
-                  </li></c:if>
+                  <%--</li></c:if>--%>
 
-              </ul>
-          </c:if>
+              <%--</ul>--%>
+          <%--</c:if>--%>
 
-      </div>
-      </div>
+      <%--</div>--%>
+      <%--</div>--%>
 
-      <div class="main_tab_content">
+      <div class="main_tab_full_content">
           <%--<div id="small"> <div class="export">--%>
                                 <%--<a id="csv"--%>
                                    <%--href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/doExportIPRFile"/>"--%>
