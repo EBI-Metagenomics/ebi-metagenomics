@@ -92,7 +92,7 @@ function drawChart() {
     ]);
 
     // Kingdom level
-    var options = {'title':'Kingdom level',
+    var options = {'title':'Domain composition',
         'titleTextStyle':{fontSize:12},
 // Krona colors       'colors':['#cf6f6f', '#cfc26f', '#8dcf6f'],
          'colors':['#5f8694','#91d450', '#535353' ],
@@ -137,7 +137,7 @@ function drawChart() {
     };
 
     // Top taxonomy Pie
-    var options4 = {'title':'Top taxonomy Hits (Total: 229)',
+    var options4 = {'title':'Phylum composition (Total: 229)',
         'titleTextStyle':{fontSize:12},
         'colors':['#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff', '#ccc'],
 //Krona style               'colors':['#d47f7f','#d1a575','#d4c97f','#99d47f','#7fd4a7','#7fc3d4','#7f8ad4','#a77fd4','#d47fd3','#d47faf','#ccc','#ccc','#ccc'],
@@ -152,7 +152,7 @@ function drawChart() {
     };
 
     // Top taxonomy Bar
-    var options5 = {'title':'Top taxonomy Hits (Total: 229)',
+    var options5 = {'title':'Phylum composition (Total: 229)',
         'titleTextStyle':{fontSize:12},
         'colors':['#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff'],
         //Krona style               'colors':['#d47f7f','#d1a575','#d4c97f','#99d47f','#7fd4a7','#7fc3d4','#7f8ad4','#a77fd4','#d47fd3','#d47faf','#ccc','#ccc','#ccc'],
@@ -165,7 +165,7 @@ function drawChart() {
         'legend':'none',
         'isStacked':true
     };
-    var options6 = {'title':'Kingdom level (Total: 229)',
+    var options6 = {'title':'Domain composition',
         'titleTextStyle':{fontSize:12},
         'colors':['#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff'],
         'width':200,
@@ -202,7 +202,7 @@ function drawChart() {
         'isStacked':true
     };
     // Stacked graph
-    var options9 = {'title':'Top taxonomy Hits (Total: 229)',
+    var options9 = {'title':'Phylum composition (Total: 229)',
         'titleTextStyle':{fontSize:12},
         'colors':['#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff', '#ccc', '#ccc', '#ccc', '#ccc', '#ccc', '#ccc', '#ccc'],
         //Krona style               'colors':['#d47f7f','#d1a575','#d4c97f','#99d47f','#7fd4a7','#7fc3d4','#7f8ad4','#a77fd4','#d47fd3','#d47faf','#ccc','#ccc','#ccc'],
@@ -264,7 +264,7 @@ function drawChart() {
         var data2 = new google.visualization.DataTable();
 //        data2.addColumn('string', '');
         data2.addColumn('string', 'Phylum');
-        data2.addColumn('string', 'Kingdom');
+        data2.addColumn('string', 'Domain');
         data2.addColumn('number', 'Hits');
         data2.addColumn('number', '%');
         data2.addRows([
