@@ -658,7 +658,7 @@
                 <%--Taxonomy google chart--%>
                 <div id="tax-pie">
                         <div class="chart_container">
-                            <div class="chart_container"><div id="tax_chart_div3"></div><div id="tax_table_div2"></div>
+                            <div class="chart_container"><div id="tax_chart_div"></div><div id="tax_chart_div3"></div><div id="tax_table_div2"></div>
                                 <div style="float:right;margin-top: -31px;margin-right: 20px;"><form action="">
                                                                  Show rows:
                                                                  <select onChange="setOption('pageSize', parseInt(this.value, 10))">
@@ -672,11 +672,11 @@
                                                              </div>
                               </div>
                             <p><br/></p>
-                            <h4>Top taxonomy levels</h4>
+                            <%--<h4>Top taxonomy levels</h4>--%>
                             <%--Bacteria level--%>
-                            <div id="tax_chart_div"></div><div id="tax_chart_div2"></div><div id="tax_table_div" style="display:none;"></div>
+                            <div id="tax_chart_div2" style="display:none;"></div><div id="tax_table_div" style="display:none;"></div>
                            <%--Archea level--%>
-                           <div id="tax_chart_div5"></div> <div id="tax_table_div5" style="display:none;"></div>
+                           <div id="tax_chart_div5" style="display:none;"></div> <div id="tax_table_div5" style="display:none;"></div>
                         </div>
 
                 </div>
