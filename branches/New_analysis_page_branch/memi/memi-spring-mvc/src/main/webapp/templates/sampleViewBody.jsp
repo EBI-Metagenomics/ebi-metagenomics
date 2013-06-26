@@ -16,390 +16,375 @@
     <%--});--%>
 <%--</script>--%>
 
-    <script type="text/javascript">
+<script type="text/javascript">
 
-          // Load the Visualization API and the piechart package.
-          google.load('visualization', '1.0', {'packages':['corechart']});
+// Load the Visualization API and the piechart package.
+google.load('visualization', '1.0', {'packages':['corechart']});
 
-          // Set a callback to run when the Google Visualization API is loaded.
-          google.setOnLoadCallback(drawChart);
+// Set a callback to run when the Google Visualization API is loaded.
+google.setOnLoadCallback(drawChart);
 
-          // Callback that creates and populates a data table,
-          // instantiates the pie chart, passes in the data and
-          // draws it.
-          function drawChart() {
+// Callback that creates and populates a data table,
+// instantiates the pie chart, passes in the data and
+// draws it.
+function drawChart() {
 
-            // Create the data table.
-            var data = new google.visualization.DataTable();
-            data.addColumn('string', 'kingdom');
-            data.addColumn('number', 'Match');
-            data.addRows([
-              ['Bacteria', 201],
-              ['Archaea', 28],
-              ['Unknown', 1]
-            ]);
+    // Create the data table.
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'kingdom');
+    data.addColumn('number', 'Match');
+    data.addRows([
+        ['Bacteria', 201],
+        ['Archaea', 28],
+        ['Unknown', 1]
+    ]);
 
-            var data2 = new google.visualization.DataTable();
-            data2.addColumn('string', 'Phylum');
-            data2.addColumn('number', 'Match');
-            data2.addRows([
-              ['Proteobacteria', 146],
-              ['Bacteroidetes', 11],
-              ['SAR406', 11],
-              ['Actinobacteria',10],
-              ['Verrucomicrobia', 7],
-              ['Chloroflexi',3],
-              ['PAUC34f',2],
-              ['Planctomycetes', 2],
-              ['Firmicutes', 1],
-              ['Cyanobacteria', 1],
-              ['Unassigned bacteria', 1]
-            ]);
+    var data2 = new google.visualization.DataTable();
+    data2.addColumn('string', 'Phylum');
+    data2.addColumn('number', 'Match');
+    data2.addRows([
+        ['Proteobacteria', 146],
+        ['Bacteroidetes', 11],
+        ['SAR406', 11],
+        ['Actinobacteria', 10],
+        ['Verrucomicrobia', 7],
+        ['Chloroflexi', 3],
+        ['PAUC34f', 2],
+        ['Planctomycetes', 2],
+        ['Firmicutes', 1],
+        ['Cyanobacteria', 1],
+        ['Unassigned bacteria', 1]
+    ]);
 
-            var data3 = new google.visualization.DataTable();
-            data3.addColumn('string', 'Phylum');
-            data3.addColumn('number', 'Match');
-            data3.addRows([
-              ['Proteobacteria', 146],
-              ['Crenarchaeota', 17],
-              ['Euryarchaeota', 11],
-              ['Bacteroidetes',11],
-              ['SAR406', 11],
-              ['Actinobacteria',10],
-              ['Verrucomicrobia',7],
-              ['Chloroflexi', 3],
-              ['NC10', 3],
-              ['PAUC34f', 2],
-              ['Planctomycetes', 2],
-              ['Caldiserica', 1],
-              ['Cyanobacteria', 1],
-              ['Elusimicrobia', 1],
-              ['Firmicutes', 1],
-              ['OP11', 1],
-              ['Unassigned bacteria', 1]
-            ]);
+    var data3 = new google.visualization.DataTable();
+    data3.addColumn('string', 'Phylum');
+    data3.addColumn('number', 'Match');
+    data3.addRows([
+        ['Proteobacteria', 146],
+        ['Crenarchaeota', 17],
+        ['Euryarchaeota', 11],
+        ['Bacteroidetes', 11],
+        ['SAR406', 11],
+        ['Actinobacteria', 10],
+        ['Verrucomicrobia', 7],
+        ['Chloroflexi', 3],
+        ['NC10', 3],
+        ['PAUC34f', 2],
+        ['Planctomycetes', 2],
+        ['Caldiserica', 1],
+        ['Cyanobacteria', 1],
+        ['Elusimicrobia', 1],
+        ['Firmicutes', 1],
+        ['OP11', 1],
+        ['Unassigned bacteria', 1]
+    ]);
 
-          var data4 = new google.visualization.DataTable();
-                          data4.addColumn('string', 'Phylum');
-                          data4.addColumn('number', 'Match');
-                          data4.addRows([
-                            ['Crenarchaeota', 17],
-                            ['Euryarchaeota', 11]
-                          ]);
-              var data5 = google.visualization.arrayToDataTable([
-                  ['','Proteobacteria', 'Crenarchaeota', 'Euryarchaeota', 'Bacteroidetes', 'SAR406', 'Actinobacteria','Verrucomicrobia', 'Chloroflexi', 'NC10', 'PAUC34f', 'Planctomycetes', 'Caldiserica', 'Cyanobacteria', 'Elusimicrobia', 'Firmicutes', 'OP11', 'Unassigned bacteria'],
-                  [ ,146, 17, 11, 11, 11, 10, 7, 3, 3, 2, 2, 1, 1, 1, 1, 1, 1]
-                     ]);
+    var data4 = new google.visualization.DataTable();
+    data4.addColumn('string', 'Phylum');
+    data4.addColumn('number', 'Match');
+    data4.addRows([
+        ['Crenarchaeota', 17],
+        ['Euryarchaeota', 11]
+    ]);
+    var data5 = google.visualization.arrayToDataTable([
+        ['', 'Proteobacteria', 'Crenarchaeota', 'Euryarchaeota', 'Bacteroidetes', 'SAR406', 'Actinobacteria', 'Verrucomicrobia', 'Chloroflexi', 'NC10', 'PAUC34f', 'Planctomycetes', 'Caldiserica', 'Cyanobacteria', 'Elusimicrobia', 'Firmicutes', 'OP11', 'Unassigned bacteria'],
+        [ , 146, 17, 11, 11, 11, 10, 7, 3, 3, 2, 2, 1, 1, 1, 1, 1, 1]
+    ]);
 
-            // Kingdom level
-            var options = {'title':'Kingdom level (Total:229)',
-                            'titleTextStyle': {fontSize:12},
-                           'colors':['#058dc7','#50b432','#ed561b'],
+    // Kingdom level
+    var options = {'title':'Kingdom level (Total:229)',
+        'titleTextStyle':{fontSize:12},
+        'colors':['#058dc7', '#50b432', '#ed561b'],
 //                           'width':120,
-                            'width':200,
-                            'height':220,
-                            'chartArea':{left:10,top:26,width:"100%",height:"55%"},
+        'width':200,
+        'height':220,
+        'chartArea':{left:10, top:26, width:"100%", height:"55%"},
 //                        'chartArea.left':0,
 //                          'chartArea.top':0,
-                           'pieSliceBorderColor':'none',
+        'pieSliceBorderColor':'none',
 //                           'pieSliceText': 'label',
 //                            'legend':{position:'none',fontSize:10},
-                            'legend':{fontSize:10},
-                            'pieSliceTextStyle':{color: 'white'}
+        'legend':{fontSize:10},
+        'pieSliceTextStyle':{color:'white'}
 //                           'backgroundColor':'black'
-                            };
+    };
 
-            // Bacteria level
-            var options2 = {'title':'Bacteria level (Total: 201)',
-                            'titleTextStyle': {fontSize:12},
-                            'colors':['#058dc7','#50b432','#ed561b','#edef00','#24cbe5','#64e572','#ff9655','#fff263','#6af9c4','#b2deff','#ccc','#ccc','#ccc'],
+    // Bacteria level
+    var options2 = {'title':'Bacteria level (Total: 201)',
+        'titleTextStyle':{fontSize:12},
+        'colors':['#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff', '#ccc', '#ccc', '#ccc'],
 //Krona style               'colors':['#d47f7f','#d1a575','#d4c97f','#99d47f','#7fd4a7','#7fc3d4','#7f8ad4','#a77fd4','#d47fd3','#d47faf','#ccc','#ccc','#ccc'],
-                            'width':290,
-                            'height':220,
-                            'legend':{position:'right',fontSize:10},
-                            'chartArea':{left:10,top:30,width:"100%",height:"100%"},
-                            'pieSliceBorderColor':'none'
+        'width':290,
+        'height':220,
+        'legend':{position:'right', fontSize:10},
+        'chartArea':{left:10, top:30, width:"100%", height:"100%"},
+        'pieSliceBorderColor':'none'
 //Krona style               'pieSliceBorderColor':'#9c8989'
-                            };
-             // Archea level
-            var options3 = {'title':'Archea level (Total: 28)',
-                            'titleTextStyle': {fontSize:12},
-                            'colors':['#058dc7','#50b432','#ed561b','#edef00','#24cbe5','#64e572','#ff9655','#fff263','#6af9c4','#b2deff','#ccc','#ccc','#ccc'],
+    };
+    // Archea level
+    var options3 = {'title':'Archea level (Total: 28)',
+        'titleTextStyle':{fontSize:12},
+        'colors':['#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff', '#ccc', '#ccc', '#ccc'],
 //Krona style               'colors':['#d47f7f','#d1a575','#d4c97f','#99d47f','#7fd4a7','#7fc3d4','#7f8ad4','#a77fd4','#d47fd3','#d47faf','#ccc','#ccc','#ccc'],
-                            'width':290,
-                            'height':220,
-                            'legend':{position:'right',fontSize:10},
-                            'chartArea':{left:10,top:30,width:"100%",height:"100%"},
-                            'pieSliceBorderColor':'none'
-                            };
+        'width':290,
+        'height':220,
+        'legend':{position:'right', fontSize:10},
+        'chartArea':{left:10, top:30, width:"100%", height:"100%"},
+        'pieSliceBorderColor':'none'
+    };
 
-            // Top taxonomy Pie
-            var options4 = {'title':'Top taxonomy Hits (Total: 229)',
-                            'titleTextStyle': {fontSize:12},
-                            'colors':['#058dc7','#50b432','#ed561b','#edef00','#24cbe5','#64e572','#ff9655','#fff263','#6af9c4','#b2deff', '#ccc'],
+    // Top taxonomy Pie
+    var options4 = {'title':'Top taxonomy Hits (Total: 229)',
+        'titleTextStyle':{fontSize:12},
+        'colors':['#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff', '#ccc'],
 //Krona style               'colors':['#d47f7f','#d1a575','#d4c97f','#99d47f','#7fd4a7','#7fc3d4','#7f8ad4','#a77fd4','#d47fd3','#d47faf','#ccc','#ccc','#ccc'],
 //                            'width':220,
-                            'width':290,
-                            'height':220,
-                            'legend':{position:'right',fontSize:10},
+        'width':290,
+        'height':220,
+        'legend':{position:'right', fontSize:10},
 //                            'legend':{position:'none',fontSize:10},
-                            'chartArea':{left:10,top:30,width:"100%",height:"100%"},
-                            'pieSliceBorderColor':'none',
-                            'sliceVisibilityThreshold':1/115
-                            };
+        'chartArea':{left:10, top:30, width:"100%", height:"100%"},
+        'pieSliceBorderColor':'none',
+        'sliceVisibilityThreshold':1 / 115
+    };
 
-              // Top taxonomy Bar
-              var options5 = {'title':'Top taxonomy Hits (Total: 229)',
-                                 'titleTextStyle': {fontSize:12},
-                                 'colors':['#058dc7','#50b432','#ed561b','#edef00','#24cbe5','#64e572','#ff9655','#fff263','#6af9c4','#b2deff'],
-     //Krona style               'colors':['#d47f7f','#d1a575','#d4c97f','#99d47f','#7fd4a7','#7fc3d4','#7f8ad4','#a77fd4','#d47fd3','#d47faf','#ccc','#ccc','#ccc'],
-                                 'width':400,
-                                 'height':220,
-                                 'legend':{position:'right',fontSize:10},
-                                 'chartArea':{left:120,top:20,width:"100%",height:"100%"},
-                                 'pieSliceBorderColor':'none',
-                                 'sliceVisibilityThreshold':1/110,
-                                  'legend':'none',
-                                 'isStacked': true
-                                 };
-              var options6 = {'title':'Kingdom level (Total: 229)',
-                                         'titleTextStyle': {fontSize:12},
-                                         'colors':['#058dc7','#50b432','#ed561b','#edef00','#24cbe5','#64e572','#ff9655','#fff263','#6af9c4','#b2deff'],
-                                         'width':200,
-                                         'height':220,
-                                         'legend':{position:'right',fontSize:10},
-                                         'chartArea':{left:60,top:20,width:"100%",height:"100%"},
-                                         'pieSliceBorderColor':'none',
-                                         'sliceVisibilityThreshold':1/110,
-                                          'legend':'none',
-                                         'isStacked': true
-                                         };
-              var options7 = {'title':'Bacteria level (Total: 201)',
-                                         'titleTextStyle': {fontSize:12},
-                                         'colors':['#058dc7','#50b432','#ed561b','#edef00','#24cbe5','#64e572','#ff9655','#fff263','#6af9c4','#b2deff'],
-                                         'width':300,
-                                         'height':220,
-                                         'legend':{position:'right',fontSize:10},
-                                         'chartArea':{left:120,top:20,width:"100%",height:"100%"},
-                                         'pieSliceBorderColor':'none',
-                                         'sliceVisibilityThreshold':1/110,
-                                          'legend':'none',
-                                         'isStacked': true
-                                         };
-              var options8 = {'title':'Archea level (Total: 28)',
-                                               'titleTextStyle': {fontSize:12},
-                                               'colors':['#058dc7','#50b432','#ed561b','#edef00','#24cbe5','#64e572','#ff9655','#fff263','#6af9c4','#b2deff'],
-                                               'width':300,
-                                               'height':220,
-                                               'legend':{position:'right',fontSize:10},
-                                               'chartArea':{left:120,top:20,width:"100%",height:"100%"},
-                                               'pieSliceBorderColor':'none',
-                                               'sliceVisibilityThreshold':1/110,
-                                                'legend':'none',
-                                               'isStacked': true
-                                               };
-              // Stacked graph
-              var options9 = {'title':'Top taxonomy Hits (Total: 229)',
-                                               'titleTextStyle': {fontSize:12},
-                                               'colors':['#058dc7','#50b432','#ed561b','#edef00','#24cbe5','#64e572','#ff9655','#fff263','#6af9c4','#b2deff','#ccc','#ccc','#ccc','#ccc','#ccc','#ccc','#ccc'],
-                   //Krona style               'colors':['#d47f7f','#d1a575','#d4c97f','#99d47f','#7fd4a7','#7fc3d4','#7f8ad4','#a77fd4','#d47fd3','#d47faf','#ccc','#ccc','#ccc'],
-                                               'width':300,
-                                               'height':400,
-                                               'legend':{position:'right',fontSize:10},
-                                               'chartArea':{left:60,top:40,width:"20%",height:"100%"},
-                                               'pieSliceBorderColor':'none',
-                                               'sliceVisibilityThreshold':1/110,
-                                               'isStacked': true
+    // Top taxonomy Bar
+    var options5 = {'title':'Top taxonomy Hits (Total: 229)',
+        'titleTextStyle':{fontSize:12},
+        'colors':['#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff'],
+        //Krona style               'colors':['#d47f7f','#d1a575','#d4c97f','#99d47f','#7fd4a7','#7fc3d4','#7f8ad4','#a77fd4','#d47fd3','#d47faf','#ccc','#ccc','#ccc'],
+        'width':400,
+        'height':220,
+        'legend':{position:'right', fontSize:10},
+        'chartArea':{left:120, top:20, width:"100%", height:"100%"},
+        'pieSliceBorderColor':'none',
+        'sliceVisibilityThreshold':1 / 110,
+        'legend':'none',
+        'isStacked':true
+    };
+    var options6 = {'title':'Kingdom level (Total: 229)',
+        'titleTextStyle':{fontSize:12},
+        'colors':['#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff'],
+        'width':200,
+        'height':220,
+        'legend':{position:'right', fontSize:10},
+        'chartArea':{left:60, top:20, width:"100%", height:"100%"},
+        'pieSliceBorderColor':'none',
+        'sliceVisibilityThreshold':1 / 110,
+        'legend':'none',
+        'isStacked':true
+    };
+    var options7 = {'title':'Bacteria level (Total: 201)',
+        'titleTextStyle':{fontSize:12},
+        'colors':['#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff'],
+        'width':300,
+        'height':220,
+        'legend':{position:'right', fontSize:10},
+        'chartArea':{left:120, top:20, width:"100%", height:"100%"},
+        'pieSliceBorderColor':'none',
+        'sliceVisibilityThreshold':1 / 110,
+        'legend':'none',
+        'isStacked':true
+    };
+    var options8 = {'title':'Archea level (Total: 28)',
+        'titleTextStyle':{fontSize:12},
+        'colors':['#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff'],
+        'width':300,
+        'height':220,
+        'legend':{position:'right', fontSize:10},
+        'chartArea':{left:120, top:20, width:"100%", height:"100%"},
+        'pieSliceBorderColor':'none',
+        'sliceVisibilityThreshold':1 / 110,
+        'legend':'none',
+        'isStacked':true
+    };
+    // Stacked graph
+    var options9 = {'title':'Top taxonomy Hits (Total: 229)',
+        'titleTextStyle':{fontSize:12},
+        'colors':['#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff', '#ccc', '#ccc', '#ccc', '#ccc', '#ccc', '#ccc', '#ccc'],
+        //Krona style               'colors':['#d47f7f','#d1a575','#d4c97f','#99d47f','#7fd4a7','#7fc3d4','#7f8ad4','#a77fd4','#d47fd3','#d47faf','#ccc','#ccc','#ccc'],
+        'width':300,
+        'height':400,
+        'legend':{position:'right', fontSize:10},
+        'chartArea':{left:60, top:40, width:"20%", height:"100%"},
+        'pieSliceBorderColor':'none',
+        'sliceVisibilityThreshold':1 / 110,
+        'isStacked':true
 //                                                'vAxis': {format:'#%'}
-                                               };
+    };
 
-            // Instantiate and draw our chart, passing in some options.
-            var chart = new google.visualization.PieChart(document.getElementById('tax_chart_div'));
-            chart.draw(data, options);
-            var chart2 = new google.visualization.PieChart(document.getElementById('tax_chart_div2'));
-            chart2.draw(data2, options2);
-            var chart5 = new google.visualization.PieChart(document.getElementById('tax_chart_div5'));
-            chart5.draw(data4, options3);
-            var chart3 = new google.visualization.PieChart(document.getElementById('tax_chart_div3'));
-            chart3.draw(data3, options4);
-            var chart4 = new google.visualization.BarChart(document.getElementById('tax_chart_div4'));
-            chart4.draw(data3, options5);
-            var chart6 = new google.visualization.BarChart(document.getElementById('tax_chart_div6'));
-            chart6.draw(data, options6);
-           var chart7 = new google.visualization.BarChart(document.getElementById('tax_chart_div7'));
-            chart7.draw(data3, options7);
-           var chart8 = new google.visualization.BarChart(document.getElementById('tax_chart_div8'));
-           chart8.draw(data4, options8);
-           var chart9 = new google.visualization.ColumnChart(document.getElementById('tax_chart_div9'));
-           chart9.draw(data5, options9);
-          }
+    // Instantiate and draw our chart, passing in some options.
+    var chart = new google.visualization.PieChart(document.getElementById('tax_chart_div'));
+    chart.draw(data, options);
+    var chart2 = new google.visualization.PieChart(document.getElementById('tax_chart_div2'));
+    chart2.draw(data2, options2);
+    var chart5 = new google.visualization.PieChart(document.getElementById('tax_chart_div5'));
+    chart5.draw(data4, options3);
+    var chart3 = new google.visualization.PieChart(document.getElementById('tax_chart_div3'));
+    chart3.draw(data3, options4);
+    var chart4 = new google.visualization.BarChart(document.getElementById('tax_chart_div4'));
+    chart4.draw(data3, options5);
+    var chart6 = new google.visualization.BarChart(document.getElementById('tax_chart_div6'));
+    chart6.draw(data, options6);
+    var chart7 = new google.visualization.BarChart(document.getElementById('tax_chart_div7'));
+    chart7.draw(data3, options7);
+    var chart8 = new google.visualization.BarChart(document.getElementById('tax_chart_div8'));
+    chart8.draw(data4, options8);
+    var chart9 = new google.visualization.ColumnChart(document.getElementById('tax_chart_div9'));
+    chart9.draw(data5, options9);
+}
 
-        </script>
+</script>
 <script type='text/javascript'>
-      google.load('visualization', '1', {packages:['table']});
-      google.setOnLoadCallback(drawTable);
+    google.load('visualization', '1', {packages:['table']});
+    google.setOnLoadCallback(drawTable);
 
-      function drawTable() {
+    function drawTable() {
 
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Phylum');
         data.addColumn('string', 'Kingdom');
         data.addColumn('number', 'Hits');
         data.addColumn('number', '%');
-        data.addColumn('number', 'Score');
         data.addRows([
-            ['Proteobacteria','Bacteria',  146, 73, 0.77909],
-             ['Bacteroidetes','Bacteria', 11, 5, 0.99468],
-             ['SAR406','Bacteria', 11, 5, 0.6438],
-             ['Actinobacteria','Bacteria', 10, 5, 0.79783],
-             ['Verrucomicrobia','Bacteria', 7, 3, 0.654],
-             ['Chloroflexi','Bacteria', 3, 1, 0.4166],
-             ['PAUC34f','Bacteria', 2,1, 0.915],
-             ['Planctomycetes','Bacteria', 2, 1, 0.65],
-             ['Firmicutes','Bacteria', 1, 0.5, 0.22],
-             ['Cyanobacteria','Bacteria', 1, 0.5, 1],
-             ['Unassigned bacteria','Bacteria', 1, 0.5, 0.98]
-
+            <c:set var="addComma" value="false"/>
+            <c:set var="colourCode" value="#058dc7" scope="page"/>
+            <c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResult.taxonomyDataSet}" varStatus="status">
+            <c:choose>
+            <c:when test="${addComma}">,
+            </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise>
+            </c:choose>
+            ['<a href="#">${taxonomyData.phylum}</a>', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}]
+            </c:forEach>
         ]);
 
         var data2 = new google.visualization.DataTable();
-              data2.addColumn('string', '');
-              data2.addColumn('string', 'Phylum');
-              data2.addColumn('string', 'Kingdom');
-              data2.addColumn('number', 'Hits');
-              data2.addColumn('number', '%');
-              data2.addColumn('number', 'Score');
-              data2.addRows([
-              ['<div style="float:left;"><ul class="color_legend"><li  style="color: #058dc7;"></li></ul></div>','<a href="#">Proteobacteria</a>','Bacteria', 146, 63.75, 0.779097085],
-              ['<ul class="color_legend"><li style="color: #50b432;"></li></ul>','<a href="#">Crenarchaeota</a>', 'Archaea', 17, 7.42, 0.587094017],
-              ['<ul class="color_legend"><li style="color: #ed561b;"></li></ul>','<a href="#">Euryarchaeota</a>','Archaea', 11, 4.8, 0.62625],
-              ['<ul class="color_legend"><li style="color: #edef00;"></li></ul>','<a href="#">Bacteroidetes</a>','Bacteria', 11, 4.8, 0.9946875],
-              ['<ul class="color_legend"><li style="color: #24cbe5;"></li></ul>','<a href="#">SAR406</a>','Bacteria', 11, 4.8, 0.643888889],
-              ['<ul class="color_legend"><li style="color: #64e572;"></li></ul>','<a href="#">Actinobacteria</a>','Bacteria', 10, 4.37, 0.797833333],
-              ['<ul class="color_legend"><li style="color: #ff9655;"></li></ul>','<a href="#">Verrucomicrobia</a>','Bacteria', 7, 1.31, 0.654],
-              ['<ul class="color_legend"><li style="color: #fff263;"></li></ul>','<a href="#">Chloroflexi</a>','Bacteria', 3, 1.31, 0.416666667],
-              ['<ul class="color_legend"><li style="color: #6af9c4;"></li></ul>','<a href="#">NC10</a>','Bacteria', 3, 1.31, 0.1475],
-              ['<ul class="color_legend"><li style="color: #b2deff;"></li></ul>','<a href="#">PAUC34f</a>','Bacteria', 2, 0.87, 0.915],
-              ['<ul class="color_legend"><li style="color: #ccc;"></li></ul>','<a href="#">Planctomycetes</a>','Bacteria', 2, 0.87, 0.65],
-              ['<ul class="color_legend"><li style="color: #ccc;"></li></ul>','<a href="#">Caldiserica</a>','Bacteria', 1, 0.44, 0.1],
-              ['<ul class="color_legend"><li style="color: #ccc;"></li></ul>','<a href="#">Cyanobacteria</a>','Bacteria', 1, 0.44, 1],
-              ['<ul class="color_legend"><li style="color: #ccc;"></li></ul>','<a href="#">Elusimicrobia</a>','Bacteria', 1, 0.44, 0.36],
-              ['<ul class="color_legend"><li style="color: #ccc;"></li></ul>','<a href="#">Firmicutes</a>','Bacteria', 1, 0.44, 0.22],
-              ['<ul class="color_legend"><li style="color: #ccc;"></li></ul>','<a href="#">OP11</a>','Bacteria', 1, 0.44, 0.18],
-              ['<ul class="color_legend"><li style="color: #ccc;"></li></ul>','<a href="#">Unassigned bacteria</a>','Bacteria', 1, 0.44, 0.98]
+        data2.addColumn('string', '');
+        data2.addColumn('string', 'Phylum');
+        data2.addColumn('string', 'Kingdom');
+        data2.addColumn('number', 'Hits');
+        data2.addColumn('number', '%');
+        data2.addRows([
+            <c:set var="addComma" value="false"/>
+            <c:set var="colourCode" value="#058dc7" scope="page"/>
+            <c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResult.taxonomyDataSet}" varStatus="status">
+            <c:choose>
+            <c:when test="${addComma}">,
+            </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise>
+            </c:choose>
+            ['<ul class="color_legend"><li  style="color: #${taxonomyData.colourCode};"></li></ul>', '<a href="#">${taxonomyData.phylum}</a>', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}]
+            </c:forEach>
         ]);
-          var data2b = new google.visualization.DataTable();
-                data2b.addColumn('string', 'Phylum');
-                data2b.addColumn('string', 'Kingdom');
-                data2b.addColumn('number', 'Hits');
-                data2b.addColumn('number', '%');
-                data2b.addColumn('number', 'Score');
-                data2b.addRows([
-                ['<a href="#">Proteobacteria</a>','Bacteria', 146, 63.75, 0.779097085],
-                ['<a href="#">Crenarchaeota</a>', 'Archaea', 17, 7.42, 0.587094017],
-                ['<a href="#">Euryarchaeota</a>','Archaea', 11, 4.8, 0.62625],
-                ['<a href="#">Bacteroidetes</a>','Bacteria', 11, 4.8, 0.9946875],
-                ['<a href="#">SAR406</a>','Bacteria', 11, 4.8, 0.643888889],
-                ['<a href="#">Actinobacteria</a>','Bacteria', 10, 4.37, 0.797833333],
-                ['<a href="#">Verrucomicrobia</a>','Bacteria', 7, 1.31, 0.654],
-                ['<a href="#">Chloroflexi</a>','Bacteria', 3, 1.31, 0.416666667],
-                ['<a href="#">NC10</a>','Bacteria', 3, 1.31, 0.1475],
-                ['<a href="#">PAUC34f</a>','Bacteria', 2, 0.87, 0.915],
-                ['<a href="#">Planctomycetes</a>','Bacteria', 2, 0.87, 0.65],
-                ['<a href="#">Caldiserica</a>','Bacteria', 1, 0.44, 0.1],
-                ['<a href="#">Cyanobacteria</a>','Bacteria', 1, 0.44, 1],
-                ['<a href="#">Elusimicrobia</a>','Bacteria', 1, 0.44, 0.36],
-                ['<a href="#">Firmicutes</a>','Bacteria', 1, 0.44, 0.22],
-                ['<a href="#">OP11</a>','Bacteria', 1, 0.44, 0.18],
-                ['<a href="#">Unassigned bacteria</a>','Bacteria', 1, 0.44, 0.98]
-          ]);
-          var data3 = new google.visualization.DataTable();
-                      data3.addColumn('string', 'Phylum');
-                      data3.addColumn('string', 'Kingdom');
-                      data3.addColumn('number', 'Hits');
-                      data3.addColumn('number', '%');
-                      data3.addColumn('number', 'Score');
-                      data3.addRows([
-                      ['Crenarchaeota','Archaea', 17, 60.71, 0.587094017],
-                      ['Euryarchaeota','Archaea', 11, 39.28, 0.62625]
-         ]);
+        var data2b = new google.visualization.DataTable();
+        data2b.addColumn('string', 'Phylum');
+        data2b.addColumn('string', 'Kingdom');
+        data2b.addColumn('number', 'Hits');
+        data2b.addColumn('number', '%');
+        data2b.addRows([
+            <c:set var="addComma" value="false"/>
+            <c:set var="colourCode" value="#058dc7" scope="page"/>
+            <c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResult.taxonomyDataSet}" varStatus="status">
+            <c:choose>
+            <c:when test="${addComma}">,
+            </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise>
+            </c:choose>
+            ['<a href="#">${taxonomyData.phylum}</a>', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}]
+            </c:forEach>
+        ]);
+        var data3 = new google.visualization.DataTable();
+        data3.addColumn('string', 'Phylum');
+        data3.addColumn('string', 'Kingdom');
+        data3.addColumn('number', 'Hits');
+        data3.addColumn('number', '%');
+        data3.addRows([
+            <c:set var="addComma" value="false"/>
+            <c:set var="colourCode" value="#058dc7" scope="page"/>
+            <c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResult.taxonomyDataSet}" varStatus="status">
+            <c:choose>
+            <c:when test="${addComma}">,
+            </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise>
+            </c:choose>
+            ['<a href="#">${taxonomyData.phylum}</a>', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}]
+            </c:forEach>
+        ]);
 
         //Bacteria level
         var table = new google.visualization.Table(document.getElementById('tax_table_div'));
-        table.draw(data, { allowHtml:true, showRowNumber: true, page:'enable', pageSize:10, pagingSymbols:{prev: '<', next: '>'}, sortColumn:2,sortAscending:false });
+        table.draw(data, { allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'<', next:'>'}, sortColumn:2, sortAscending:false });
 
         //Archea level
         var table4 = new google.visualization.Table(document.getElementById('tax_table_div5'));
-        table4.draw(data3, { allowHtml:true, showRowNumber: true, page:'enable', pageSize:10, pagingSymbols:{prev: 'prev', next: 'next'}, sortColumn:2,sortAscending:false });
+        table4.draw(data3, { allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false });
 
         //top hits table
         var table2 = new google.visualization.Table(document.getElementById('tax_table_div2'));
-        table2.draw(data2, { allowHtml:true, showRowNumber: true,  page:'enable', pageSize:10, pagingSymbols:{prev: 'prev', next: 'next'}, sortColumn:3,sortAscending:false});
+        table2.draw(data2, { allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:3, sortAscending:false});
 
         var table5 = new google.visualization.Table(document.getElementById('tax_table_div6'));
-        table5.draw(data2, { allowHtml:true, showRowNumber: true,  page:'enable', pageSize:10, pagingSymbols:{prev: 'prev', next: 'next'}, sortColumn:3,sortAscending:false});
+        table5.draw(data2, { allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:3, sortAscending:false});
 
         var table3 = new google.visualization.Table(document.getElementById('tax_table_div3'));
-        table3.draw(data2b, { allowHtml:true, showRowNumber: true,  page:'enable', pageSize:100, pagingSymbols:{prev: 'prev', next: 'next'}, sortColumn:2,sortAscending:false});
+        table3.draw(data2b, { allowHtml:true, showRowNumber:true, page:'enable', pageSize:100, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false});
 
         var table3 = new google.visualization.Table(document.getElementById('tax_table_div4'));
-        table3.draw(data2b, { allowHtml:true, showRowNumber: true,  page:'enable', pageSize:10, pagingSymbols:{prev: 'prev', next: 'next'}, sortColumn:2,sortAscending:false});
+        table3.draw(data2b, { allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false});
 
 
-      }
-    </script>
- <%-- <script>
-  $(function() {
-    $( "#rerun" )
-      .button()
-      .click(function() {
-        alert( "Running the last action" );
+    }
+</script>
+<%-- <script>
+$(function() {
+  $( "#rerun" )
+    .button()
+    .click(function() {
+      alert( "Running the last action" );
+    })
+    .next()
+      .button({
+        text: false,
+        icons: {
+          primary: "ui-icon-triangle-1-s"
+        }
       })
-      .next()
-        .button({
-          text: false,
-          icons: {
-            primary: "ui-icon-triangle-1-s"
-          }
-        })
-        .click(function() {
-          var menu = $( this ).parent().next().show().position({
-            my: "left top",
-            at: "left bottom",
-            of: this
-          });
-          $( document ).one( "click", function() {
-            menu.hide();
-          });
-          return false;
-        })
-        .parent()
-          .buttonset()
-          .next()
-            .hide()
-            .menu();
-  });
-  </script>--%>
+      .click(function() {
+        var menu = $( this ).parent().next().show().position({
+          my: "left top",
+          at: "left bottom",
+          of: this
+        });
+        $( document ).one( "click", function() {
+          menu.hide();
+        });
+        return false;
+      })
+      .parent()
+        .buttonset()
+        .next()
+          .hide()
+          .menu();
+});
+</script>--%>
 <c:choose>
 <c:when test="${not empty model.sample}">
 
 <div class="title_tab">
-<span class="subtitle">Sample <a href="<c:url value="${baseURL}/sample/${model.sample.sampleId}"/>"> (${model.sample.sampleId})</a></span>
+    <span class="subtitle">Sample <a href="<c:url value="${baseURL}/sample/${model.sample.sampleId}"/>">
+        (${model.sample.sampleId})</a></span>
 
-<h2>${model.sample.sampleName}</h2>
+    <h2>${model.sample.sampleName}</h2>
 </div>
 
 <div class="sample_ana">
 <div id="navtabs">
 
-<%--Main Tabs--%>
+    <%--Main Tabs--%>
 <ul>
     <li><a href="#fragment-overview"><span>Overview</span></a></li>
     <li><a href="#fragment-taxonomy"><span>Taxonomy analysis</span></a></li>
     <li><a href="#fragment-functional"><span>Function analysis</span></a></li>
     <li><a href="#fragment-quality"><span>Quality control</span></a></li>
     <li><a href="#fragment-download"><span>Download</span></a></li>
-    <%--<li><a href="#fragment-experimental"><span>Experimental factor</span></a></li>--%>
+        <%--<li><a href="#fragment-experimental"><span>Experimental factor</span></a></li>--%>
 </ul>
 
 
@@ -1048,7 +1033,8 @@
     </div>
 </div>
 
-</div> <%--end navtabs--%>
+</div>
+<%--end navtabs--%>
 
 
 <%--script for tabs--%>

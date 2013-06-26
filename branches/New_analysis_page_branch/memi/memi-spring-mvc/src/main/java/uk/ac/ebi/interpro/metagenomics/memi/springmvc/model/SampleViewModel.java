@@ -64,6 +64,8 @@ public class SampleViewModel extends ViewModel {
      */
     private final boolean isHostAssociated;
 
+    private TaxonomyAnalysisResult taxonomyAnalysisResult;
+
     public SampleViewModel(Submitter submitter,
                            String pageTitle,
                            List<Breadcrumb> breadcrumbs,
@@ -185,6 +187,14 @@ public class SampleViewModel extends ViewModel {
 
     public boolean isHostAssociated() {
         return isHostAssociated;
+    }
+
+    public TaxonomyAnalysisResult getTaxonomyAnalysisResult() {
+        return taxonomyAnalysisResult;
+    }
+
+    public void setTaxonomyAnalysisResult(TaxonomyAnalysisResult taxonomyAnalysisResult) {
+        this.taxonomyAnalysisResult = taxonomyAnalysisResult;
     }
 
     public enum ExperimentType {

@@ -90,9 +90,12 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
         final Submitter submitter = getSessionSubmitter(sessionMgr);
 
         if (emgFile != null) {
-            Map<Class, List<AbstractGOTerm>> goData = loadGODataFromCSV(propertyContainer.getPathToAnalysisDirectory(),
+            //Get GO results
+            final Map<Class, List<AbstractGOTerm>> goData = loadGODataFromCSV(propertyContainer.getPathToAnalysisDirectory(),
                     emgFile);
-            return new SampleViewModel(submitter,
+            //Get taxonomy result data
+
+            final SampleViewModel sampleViewModel = new SampleViewModel(submitter,
                     pageTitle,
                     breadcrumbs,
                     sample,
@@ -110,6 +113,9 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
                     publications,
                     isHostAssociated,
                     sampleAnnotations);
+            //Load and set taxonomy result data
+            sampleViewModel.setTaxonomyAnalysisResult(loadTaxonomyDataFromCSV(propertyContainer.getPathToAnalysisDirectory()));
+            return sampleViewModel;
         } else {
             return new SampleViewModel(submitter,
                     pageTitle,
@@ -124,6 +130,34 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
                     isHostAssociated,
                     sampleAnnotations);
         }
+    }
+
+    /**
+     * Loads taxonomy result data from a CSV file, which should be located
+     *
+     * @param pathToAnalysisDirectory
+     * @return
+     */
+    private TaxonomyAnalysisResult loadTaxonomyDataFromCSV(final String pathToAnalysisDirectory) {
+        final TaxonomyAnalysisResult taxonomyAnalysisResult = new TaxonomyAnalysisResult();
+        taxonomyAnalysisResult.addTaxonomyDataRow(new TaxonomyData("Bacteria", "Proteobacteria", 146, 63.75f, "058dc7"));
+        taxonomyAnalysisResult.addTaxonomyDataRow(new TaxonomyData("Archaea", "Crenarchaeota", 17, 7.42f, "50b432"));
+        taxonomyAnalysisResult.addTaxonomyDataRow(new TaxonomyData("Archaea", "Euryarchaeota", 11, 4.8f, "ed561b"));
+        taxonomyAnalysisResult.addTaxonomyDataRow(new TaxonomyData("Bacteria", "Bacteroidetes", 11, 4.8f, "edef00"));
+        taxonomyAnalysisResult.addTaxonomyDataRow(new TaxonomyData("Bacteria", "SAR406", 11, 4.8f, "24cbe5"));
+        taxonomyAnalysisResult.addTaxonomyDataRow(new TaxonomyData("Bacteria", "Actinobacteria", 10, 4.37f, "64e572"));
+        taxonomyAnalysisResult.addTaxonomyDataRow(new TaxonomyData("Bacteria", "Verrucomicrobia", 7, 1.31f, "ff9655"));
+        taxonomyAnalysisResult.addTaxonomyDataRow(new TaxonomyData("Bacteria", "Chloroflexi", 3, 1.31f, "fff263"));
+        taxonomyAnalysisResult.addTaxonomyDataRow(new TaxonomyData("Bacteria", "NC10", 3, 1.31f, "6af9c4"));
+        taxonomyAnalysisResult.addTaxonomyDataRow(new TaxonomyData("Bacteria", "PAUC34f", 2, 0.87f, "b2deff"));
+        taxonomyAnalysisResult.addTaxonomyDataRow(new TaxonomyData("Bacteria", "Planctomycetes", 2, 0.87f, "ccc"));
+        taxonomyAnalysisResult.addTaxonomyDataRow(new TaxonomyData("Bacteria", "Caldiserica", 2, 0.87f, "ccc"));
+        taxonomyAnalysisResult.addTaxonomyDataRow(new TaxonomyData("Bacteria", "Cyanobacteria", 2, 0.87f, "ccc"));
+        taxonomyAnalysisResult.addTaxonomyDataRow(new TaxonomyData("Bacteria", "Elusimicrobia", 2, 0.87f, "ccc"));
+        taxonomyAnalysisResult.addTaxonomyDataRow(new TaxonomyData("Bacteria", "Firmicutes", 2, 0.87f, "ccc"));
+        taxonomyAnalysisResult.addTaxonomyDataRow(new TaxonomyData("Bacteria", "OP11", 2, 0.87f, "ccc"));
+        taxonomyAnalysisResult.addTaxonomyDataRow(new TaxonomyData("Bacteria", "Unassigned bacteria", 2, 0.87f, "ccc"));
+        return taxonomyAnalysisResult;
     }
 
     private boolean isHostAssociated() {
