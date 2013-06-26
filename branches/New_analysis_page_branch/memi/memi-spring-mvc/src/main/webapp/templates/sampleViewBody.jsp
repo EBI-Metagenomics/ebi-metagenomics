@@ -154,28 +154,22 @@ function drawChart() {
     // Top taxonomy Bar
     var options5 = {'title':'Phylum composition (Total: 229)',
         'titleTextStyle':{fontSize:12},
-        'colors':['#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff'],
+        'colors':['#5f8694'],
         //Krona style               'colors':['#d47f7f','#d1a575','#d4c97f','#99d47f','#7fd4a7','#7fc3d4','#7f8ad4','#a77fd4','#d47fd3','#d47faf','#ccc','#ccc','#ccc'],
         'width':400,
-        'height':220,
-        'legend':{position:'right', fontSize:10},
-        'chartArea':{left:120, top:20, width:"100%", height:"100%"},
+        'height':320,
+        'chartArea':{left:120, top:40, width:"66%", height:"70%"},
         'pieSliceBorderColor':'none',
-        'sliceVisibilityThreshold':1 / 110,
-        'legend':'none',
-        'isStacked':true
+        'legend':'none'
     };
     var options6 = {'title':'Domain composition',
         'titleTextStyle':{fontSize:12},
-        'colors':['#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff'],
+        'colors':['#5f8694'],
         'width':200,
-        'height':220,
-        'legend':{position:'right', fontSize:10},
-        'chartArea':{left:60, top:20, width:"100%", height:"100%"},
+        'height':320,
+        'chartArea':{left:60, top:40, width:"66%", height:"70%"},
         'pieSliceBorderColor':'none',
-        'sliceVisibilityThreshold':1 / 110,
-        'legend':'none',
-        'isStacked':true
+        'legend':'none'
     };
     var options7 = {'title':'Bacteria level (Total: 201)',
         'titleTextStyle':{fontSize:12},
@@ -291,9 +285,10 @@ function drawChart() {
             <c:when test="${addComma}">,
             </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise>
             </c:choose>
-            ['<a href="#">${taxonomyData.phylum}</a>', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}]
+            ['${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}]
             </c:forEach>
         ]);
+
         var data3 = new google.visualization.DataTable();
         data3.addColumn('string', 'Phylum');
         data3.addColumn('string', 'Kingdom');
@@ -319,18 +314,20 @@ function drawChart() {
         var table4 = new google.visualization.Table(document.getElementById('tax_table_div5'));
         table4.draw(data3, { allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false });
 
-        //top hits table
+        //Pie top hits table
         var table2 = new google.visualization.Table(document.getElementById('tax_table_div2'));
         table2.draw(data2, { allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:3, sortAscending:false});
 
+        //Stacked column top hits table
         var table5 = new google.visualization.Table(document.getElementById('tax_table_div6'));
         table5.draw(data2, { allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:3, sortAscending:false});
 
-        var table3 = new google.visualization.Table(document.getElementById('tax_table_div3'));
-        table3.draw(data2b, { allowHtml:true, showRowNumber:true, page:'enable', pageSize:100, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false});
+//        var table3 = new google.visualization.Table(document.getElementById('tax_table_div3'));
+//        table3.draw(data2b, { allowHtml:true, showRowNumber:true, page:'enable', pageSize:100, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false});
 
-        var table3 = new google.visualization.Table(document.getElementById('tax_table_div4'));
-        table3.draw(data2b, { allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false});
+        //Bar top hits table
+        var table6 = new google.visualization.Table(document.getElementById('tax_table_div4'));
+        table6.draw(data2b, { allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false});
 
 
     }
@@ -671,10 +668,11 @@ $(function() {
                 </div>
 
                 <div id="tax-bar">
-                    <div class="chart_container"><div id="tax_chart_div4"></div> <div id="tax_table_div4"></div></div>
-                    <h4>Top taxonomy levels</h4>
-                    <div class="chart_container"><div id="tax_chart_div6"></div><div id="tax_chart_div7"></div><div id="tax_chart_div8"></div></div>
+                    <div class="chart_container"><div id="tax_chart_div6"></div><div id="tax_chart_div4"></div> <div id="tax_table_div4"></div></div>
+                    <%--<h4>Top taxonomy levels</h4>--%>
+                    <div class="chart_container"><div id="tax_chart_div7" style="display:none;"></div><div id="tax_chart_div8" style="display:none;"></div></div>
                 </div>
+
                 <div id="tax-col">
                   <div class="chart_container"><div id="tax_chart_div9"></div><div id="tax_table_div6"></div>
                   </div>
