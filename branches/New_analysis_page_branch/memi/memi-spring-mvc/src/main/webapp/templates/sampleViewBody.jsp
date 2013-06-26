@@ -262,7 +262,7 @@ function drawChart() {
         ]);
 
         var data2 = new google.visualization.DataTable();
-        data2.addColumn('string', '');
+//        data2.addColumn('string', '');
         data2.addColumn('string', 'Phylum');
         data2.addColumn('string', 'Kingdom');
         data2.addColumn('number', 'Hits');
@@ -274,8 +274,8 @@ function drawChart() {
             <c:choose>
             <c:when test="${addComma}">,
             </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise>
-            </c:choose>
-            ['<ul class="color_legend"><li  style="color: #${taxonomyData.colourCode};"></li></ul>', '<a href="#">${taxonomyData.phylum}</a>', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}]
+           </c:choose>
+            [<%--' <ul class="color_legend"><li  style="color: #${taxonomyData.colourCode};"></li></ul>',--%> '${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}]
             </c:forEach>
         ]);
         var data2b = new google.visualization.DataTable();
