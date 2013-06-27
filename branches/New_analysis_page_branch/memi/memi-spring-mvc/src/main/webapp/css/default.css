@@ -1611,10 +1611,7 @@ background:none;
     -o-transform: rotate(270deg);
     filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1); */
     z-index:inherit;
-    zoom:1;
-    width:266px;
-  ;}
-.go_rotate img {width:98%;}
+    zoom:1;}
 
 .sample_ana #tabs-chart .ui-state-disabled, .sample_ana #interpro-chart .ui-state-disabled, .sample_ana #tabs-taxchart .ui-state-disabled {opacity:0.1;}
 .sample_ana #interpro-chart ul {float:left;}
