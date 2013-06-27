@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 <%--<script type="text/javascript">--%>
     <%--$(document).ready(function(){--%>
         <%--$('#expandercontent').css('display','none');--%>
@@ -334,6 +335,30 @@ function drawChart() {
 
     }
 </script>
+<%--InterPro match summary table--%>
+<script type='text/javascript' src="">
+    google.load('visualization', '1', {packages:['table']});
+    google.setOnLoadCallback(drawTable);
+
+    function drawTable() {
+        var interProMatchesData = new google.visualization.DataTable();
+        interProMatchesData.addColumn('string', 'Entry name');
+        interProMatchesData.addColumn('string', 'ID');
+        interProMatchesData.addColumn('number', 'Proteins matched');
+        interProMatchesData.addRows([
+            <c:set var="addComma" value="false"/>
+            <c:forEach var="entry" items="${model.interProEntries}" varStatus="status">
+            <c:choose>
+            <c:when test="${addComma}">,
+            </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise>
+            </c:choose>
+            ['${entry.entryDescription}', '${entry.entryID}', ${entry.numOfEntryHits}]
+            </c:forEach>
+        ]);
+        var interProMatchesTable = new google.visualization.Table(document.getElementById('entry_table_div'));
+        interProMatchesTable.draw(interProMatchesData, { allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false });
+    }
+</script>
 <%-- <script>
 $(function() {
   $( "#rerun" )
@@ -393,35 +418,7 @@ $(function() {
 
 <div id="fragment-overview">
 
-<div class="sidebar-allrel">
-
-    <c:if test="${not empty model.publications}">
-
-    <div id="sidebar-related">
-
-        <h2>Related resources</h2>
-
-                <span class="separator"></span>
-                <ul>
-                    <c:forEach var="pub" items="${model.publications}" varStatus="status">
-                        <li>
-                            <c:if test="${pub.pubType == 'PUBLICATION'}">
-                                <a class="list_more" href="<c:url value="http://dx.doi.org/${pub.doi}"/>"><c:out
-                                        value="${pub.pubTitle}"/></a><br/>
-                                <i><c:out value="${pub.shortAuthors}"/></i><br/>
-                                <c:out value="${pub.year}"/> <c:out value="${pub.volume}"/><br/>
-                            </c:if>
-                            <c:if test="${pub.pubType == 'WEBSITE_LINK'}">
-                                <a class="list_more" href="<c:url value="${pub.url}"/>"><c:out
-                                        value="${pub.pubTitle}"/></a>
-                            </c:if>
-                        </li>
-                    </c:forEach>
-                </ul>
-
-        </div>
-    </c:if>
-</div>
+    <tags:publications publications="${model.sample.publications}" relatedPublications="${model.relatedPublications}" relatedLinks="${model.relatedLinks}" />
 
 <div class="main_tab_content">
         <%--BEGIN DESCRIPTION--%>
@@ -799,38 +796,40 @@ $(function() {
              </ul>
              <%--<div class="ico-download"><a class="icon icon-functional" data-icon="=" id="csv" href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/doExportIPRFile"/>"   title="<spring:message code="analysisStatsView.label.download.i5.table.view"/>"></a></div>--%>
              <div id="interpro-match-table">
-                 <table border="1" class="result">
-                 <thead>
-                 <tr>
-                     <th scope="col" abbr="IEname" id="h_left">Entry name</th>
-                     <th scope="col" abbr="IEid" width="90px">ID</th>
-                     <th scope="col" abbr="IEnum" width="130px">Proteins matched</th>
-                 </tr>
-                 </thead>
-                 <tbody>
-                 <c:forEach var="entry" items="${model.interProEntries}" varStatus="status">
-                     <tr>
+                 <div id="entry_table_div"></div>
+                 <%--<div id="tax_table_div2"></div>--%>
+                 <%--<table border="1" class="result">--%>
+                 <%--<thead>--%>
+                 <%--<tr>--%>
+                     <%--<th scope="col" abbr="IEname" id="h_left">Entry name</th>--%>
+                     <%--<th scope="col" abbr="IEid" width="90px">ID</th>--%>
+                     <%--<th scope="col" abbr="IEnum" width="130px">Proteins matched</th>--%>
+                 <%--</tr>--%>
+                 <%--</thead>--%>
+                 <%--<tbody>--%>
+                 <%--<c:forEach var="entry" items="${model.interProEntries}" varStatus="status">--%>
+                     <%--<tr>--%>
 
-                         <td style="text-align:left;">
-                            <a href="http://www.ebi.ac.uk/interpro/entry/${entry.entryID}"
-                                                       title="<c:out value="Link to ${entry.entryID}"/>" class="ext">${entry.entryDescription}</a></td>
-                         <td>
-                            <%--<c:url var="linkToInterProSearch" value="http://www.ebi.ac.uk/interpro/search">--%>
-                                <%--<c:param name="q" value="${entry.entryID}"/>--%>
-                            <%--</c:url>--%>
+                         <%--<td style="text-align:left;">--%>
+                            <%--<a href="http://www.ebi.ac.uk/interpro/entry/${entry.entryID}"--%>
+                                                       <%--title="<c:out value="Link to ${entry.entryID}"/>" class="ext">${entry.entryDescription}</a></td>--%>
+                         <%--<td>--%>
+                            <%--&lt;%&ndash;<c:url var="linkToInterProSearch" value="http://www.ebi.ac.uk/interpro/search">&ndash;%&gt;--%>
+                                <%--&lt;%&ndash;<c:param name="q" value="${entry.entryID}"/>&ndash;%&gt;--%>
+                            <%--&lt;%&ndash;</c:url>&ndash;%&gt;--%>
 
-                                <c:out value="${entry.entryID}"/>
+                                <%--<c:out value="${entry.entryID}"/>--%>
 
-                        </td>
-                         <td id="ordered">${entry.numOfEntryHits}</td>
-                     </tr>
-                 </c:forEach>
-                           <tr><td colspan="3" class="showHideRelated" ><c:set var="showFullTableID" value="View full table"/>
-                           <a title="<c:out value="${showFullTableID}"/>"
-                                                       href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/showProteinMatches"/>">
-                                                     <c:out value="${showFullTableID}"/></a></td></tr>
-                           </tbody>
-                       </table>
+                        <%--</td>--%>
+                         <%--<td id="ordered">${entry.numOfEntryHits}</td>--%>
+                     <%--</tr>--%>
+                 <%--</c:forEach>--%>
+                           <%--<tr><td colspan="3" class="showHideRelated" ><c:set var="showFullTableID" value="View full table"/>--%>
+                           <%--<a title="<c:out value="${showFullTableID}"/>"--%>
+                                                       <%--href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/showProteinMatches"/>">--%>
+                                                     <%--<c:out value="${showFullTableID}"/></a></td></tr>--%>
+                           <%--</tbody>--%>
+                       <%--</table>--%>
              </div>
           </div>
 
@@ -1040,8 +1039,8 @@ $(function() {
 
 <%--script for tabs--%>
 <script>
-    $( "#navtabs").tabs({ disabled: [5] });
-    $( "#navtabs").tabs({ selected: [0] });
+//    $( "#navtabs").tabs({ disabled: [5] });
+    $( "#navtabs").tabs({ ${model.analysisStatus.disabledAttribute} });
     $( "#interpro-chart" ).tabs({ disabled: [1,2,3,4], selected: 0 });
 //    $( "#tabs-chart" ).tabs({ disabled: [0,1,3,5], selected: 2 });
     $( "#tabs-taxchart" ).tabs({ disabled: [5], selected: 0 });
