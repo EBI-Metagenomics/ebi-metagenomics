@@ -87,8 +87,10 @@ function drawChart() {
         ['Euryarchaeota', 11]
     ]);
     var data5 = google.visualization.arrayToDataTable([
+//        [ '','Proteobacteria', 'Crenarchaeota', 'Euryarchaeota', 'Bacteroidetes', 'SAR406', 'Actinobacteria', 'Verrucomicrobia', 'Chloroflexi', 'NC10', 'PAUC34f', 'Planctomycetes', 'Caldiserica', 'Cyanobacteria', 'Elusimicrobia', 'Firmicutes', 'OP11', 'Unassigned bacteria'],
+//        ['', 146/229, 17/229, 11/229, 11/229, 11/229, 10/229, 7/229, 3/229, 3/229, 2/229, 2/229, 1/229, 1/229, 1/229, 1/229, 1/229, 1/229]
         [ '','Proteobacteria', 'Crenarchaeota', 'Euryarchaeota', 'Bacteroidetes', 'SAR406', 'Actinobacteria', 'Verrucomicrobia', 'Chloroflexi', 'NC10', 'PAUC34f', 'Planctomycetes', 'Caldiserica', 'Cyanobacteria', 'Elusimicrobia', 'Firmicutes', 'OP11', 'Unassigned bacteria'],
-        ['', 146/229, 17/229, 11/229, 11/229, 11/229, 10/229, 7/229, 3/229, 3/229, 2/229, 2/229, 1/229, 1/229, 1/229, 1/229, 1/229, 1/229]
+        ['', 146/229, 17/229, 11/229, 11/229, 11/229, 10/229, 7/229, 3/229, 3/229, 2/229, 2/229, 1/229, 1/229, 1/229, 1/229, 1/229 , 1/229 ]
     ]);
 
     // Kingdom level
@@ -180,8 +182,7 @@ function drawChart() {
         'chartArea':{left:120, top:20, width:"100%", height:"100%"},
         'pieSliceBorderColor':'none',
         'sliceVisibilityThreshold':1 / 110,
-        'legend':'none',
-        'isStacked':true
+        'legend':'none'
     };
     var options8 = {'title':'Archea level (Total: 28)',
         'titleTextStyle':{fontSize:12},
@@ -192,8 +193,7 @@ function drawChart() {
         'chartArea':{left:120, top:20, width:"100%", height:"100%"},
         'pieSliceBorderColor':'none',
         'sliceVisibilityThreshold':1 / 110,
-        'legend':'none',
-        'isStacked':true
+        'legend':'none'
     };
     // Stacked column graph
     var options9 = {'title':'Phylum composition (Total: 229)',
@@ -206,9 +206,8 @@ function drawChart() {
         'chartArea':{left:60, top:40, width:"20%", height:"86%"},
         'pieSliceBorderColor':'none',
         'sliceVisibilityThreshold':1 / 50,
-//        'vAxis': {title: 'Percentage', titleTextStyle: {color: '#FF0000'}},
-        'vAxis': {baselineColor: '#ccc', viewWindowMode:'maximized'},
-        'vAxis': {format:'#%'},
+        'vAxis': {viewWindowMode:'maximized'},//        important to keep viewWindowMode separated from the rest to keep the display of the value 100% on vaxis
+        'vAxis': {format:'#%', baselineColor: '#ccc'},
         'isStacked':true
     };
 
@@ -385,7 +384,7 @@ $(function() {
     <li><a href="#fragment-overview"><span>Overview</span></a></li>
     <li><a href="#fragment-quality"><span>Quality control</span></a></li>
     <li><a href="#fragment-taxonomy"><span>Taxonomy analysis</span></a></li>
-    <li><a href="#fragment-functional"><span>Function analysis</span></a></li>
+    <li><a href="#fragment-functional"><span>Functional analysis</span></a></li>
 
     <li><a href="#fragment-download"><span>Download</span></a></li>
         <%--<li><a href="#fragment-experimental"><span>Experimental factor</span></a></li>--%>
@@ -791,14 +790,14 @@ $(function() {
 
                  <%--Tabs--%>
              <ul>
-                 <li><a href="#interpro-match-table" title="Table view"><span class="ico-table"></span></a></li>
-                 <li><a href="#interpro-match-pie" title="Pie chart view"><span class="ico-pie"></span></a></li>
-                 <li><a href="#interpro-match-bar" title="Bar chart view"><span class="ico-barh"></span></a></li>
-                 <li><a href="#interpro-match-col" title="Stacked column chart view"><span class="ico-col"></span></a></li>
-                 <li><a href="#interpro-match-Krona" title="Krona interactive chart view"><span class="ico-krona"></span></a></li>
+                 <%--<li><a href="#interpro-match-table" title="Table view"><span class="ico-table"></span></a></li>--%>
+                 <%--<li><a href="#interpro-match-pie" title="Pie chart view"><span class="ico-pie"></span></a></li>--%>
+                 <%--<li><a href="#interpro-match-bar" title="Bar chart view"><span class="ico-barh"></span></a></li>--%>
+                 <%--<li><a href="#interpro-match-col" title="Stacked column chart view"><span class="ico-col"></span></a></li>--%>
+                 <%--<li><a href="#interpro-match-Krona" title="Krona interactive chart view"><span class="ico-krona"></span></a></li>--%>
 
              </ul>
-             <div class="ico-download"><a class="icon icon-functional" data-icon="=" id="csv" href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/doExportIPRFile"/>"   title="<spring:message code="analysisStatsView.label.download.i5.table.view"/>"></a></div>
+             <%--<div class="ico-download"><a class="icon icon-functional" data-icon="=" id="csv" href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/doExportIPRFile"/>"   title="<spring:message code="analysisStatsView.label.download.i5.table.view"/>"></a></div>--%>
              <div id="interpro-match-table">
                  <table border="1" class="result">
                  <thead>
@@ -850,14 +849,12 @@ $(function() {
 
         <%--Tabs--%>
     <ul>
-        <li><a href="#go-terms-table" title="Table view"><span class="ico-table"></span></a></li>
-
-
-        <li><a href="#go-terms-pie" title="Pie chart view"><span class="ico-pie"></span></a></li>
-        <li><a href="#go-terms-bar" title="Bar chart view"><span class="ico-barh"></span></a></li>
-        <li><a href="#go-terms-col" title="Stacked column chart view"><span class="ico-col"></span></a></li>
-        <li><a href="#go-terms-Krona" title="Krona interactive chart view"><span class="ico-krona"></span></a></li>
-        <li class="ico-downl"><a class="icon icon-functional" data-icon="=" href="#download" title="Download image/table"></a></li>
+        <%--<li><a href="#go-terms-table" title="Table view"><span class="ico-table"></span></a></li>--%>
+        <%--<li><a href="#go-terms-pie" title="Pie chart view"><span class="ico-pie"></span></a></li>--%>
+        <%--<li><a href="#go-terms-bar" title="Bar chart view"><span class="ico-barh"></span></a></li>--%>
+        <%--<li><a href="#go-terms-col" title="Stacked column chart view"><span class="ico-col"></span></a></li>--%>
+        <%--<li><a href="#go-terms-Krona" title="Krona interactive chart view"><span class="ico-krona"></span></a></li>--%>
+        <%--<li class="ico-downl"><a class="icon icon-functional" data-icon="=" href="#download" title="Download image/table"></a></li>--%>
     </ul>
 
 
@@ -900,21 +897,20 @@ $(function() {
         </div>
 
         </div>
-     <div id="go-terms-table"> this is a table</div>
-     <div id="go-terms-pie"> this is a pie chart</div>
-    <div id="go-terms-col"> this is a column</div>
 
-            <div id="go-terms-Krona">
-            <table class="result">
-            <tr>
-            <td width="10%" style="background-color:white;padding:0;vertical-align: top;"><object class="krona_chart_small" style="height:323px;" data="<c:url value="${baseURL}/sample/${model.sample.sampleId}/krona?function=true&slim=true&depth=1&font=11"/>" type="text/html"></object></td>
-            <td style="background-color:white;padding:0;">
-            <%--<a href="http://localhost:8082/metagenomics/Krona_chart_function"  class="icon icon-functional" data-icon="F" title="Open full screen" style="float:right; margin: 10px 4px 0 0; font-size: 283%;"></a>--%>
-            <object class="krona_chart" data="<c:url value="${baseURL}/sample/${model.sample.sampleId}/krona?function=true&font=10"/>" type="text/html"></object></td>
-            </tr>
 
-            </table>
-            </div>
+    <%--<div id="go-terms-Krona">--%>
+    <%--<table class="result">--%>
+    <%--<tr>--%>
+    <%--<td width="10%" style="background-color:white;padding:0;vertical-align: top;"><object class="krona_chart_small" style="height:323px;" data="<c:url value="${baseURL}/sample/${model.sample.sampleId}/krona?function=true&slim=true&depth=1&font=11"/>" type="text/html"></object></td>--%>
+    <%--<td style="background-color:white;padding:0;">--%>
+    <%--&lt;%&ndash;<a href="http://localhost:8082/metagenomics/Krona_chart_function"  class="icon icon-functional" data-icon="F" title="Open full screen" style="float:right; margin: 10px 4px 0 0; font-size: 283%;"></a>&ndash;%&gt;--%>
+    <%--<object class="krona_chart" data="<c:url value="${baseURL}/sample/${model.sample.sampleId}/krona?function=true&font=10"/>" type="text/html"></object></td>--%>
+    <%--</tr>--%>
+
+    <%--</table>--%>
+    <%--</div>--%>
+
      </div>
 
      </div>
@@ -1047,7 +1043,7 @@ $(function() {
     $( "#navtabs").tabs({ disabled: [5] });
     $( "#navtabs").tabs({ selected: [0] });
     $( "#interpro-chart" ).tabs({ disabled: [1,2,3,4], selected: 0 });
-    $( "#tabs-chart" ).tabs({ disabled: [0,1,3,5], selected: 2 });
+//    $( "#tabs-chart" ).tabs({ disabled: [0,1,3,5], selected: 2 });
     $( "#tabs-taxchart" ).tabs({ disabled: [5], selected: 0 });
 </script>
 
