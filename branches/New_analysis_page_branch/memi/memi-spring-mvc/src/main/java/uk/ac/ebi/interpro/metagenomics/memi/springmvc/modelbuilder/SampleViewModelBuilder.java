@@ -11,8 +11,10 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.EmgSampleAnnotation;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.HostSample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Publication;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.PublicationType;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.*;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.AnalysisStatus;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.DownloadSection;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
 
@@ -56,6 +58,12 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
 
     private boolean isReturnSizeLimit;
 
+    private final String resultFilesDirectoryPath;
+
+    private List<Publication> relatedLinks;
+
+    private List<Publication> relatedPublications;
+
 
     public SampleViewModelBuilder(SessionManager sessionMgr,
                                   Sample sample,
@@ -79,22 +87,31 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
         this.experimentType = experimentType;
         this.downloadSection = downloadSection;
         this.sampleAnnotations = sampleAnnotations;
+        //
+        this.relatedLinks = new ArrayList<Publication>();
+        this.relatedPublications = new ArrayList<Publication>();
+        //
+        final String directoryName = emgFile.getFileIDInUpperCase().replace('.', '_');
+        this.resultFilesDirectoryPath = propertyContainer.getPathToAnalysisDirectory() + directoryName;
     }
 
     @Override
     public SampleViewModel getModel() {
         log.info("Building instance of " + SampleViewModel.class + "...");
-        final List<Publication> publications = getSamplePublications();
-        final List<InterProEntry> interProEntries = getListOfInterProEntries(propertyContainer.getPathToAnalysisDirectory(), emgFile, isReturnSizeLimit);
+        final List<InterProEntry> interProEntries = getListOfInterProEntries(emgFile, isReturnSizeLimit);
         final boolean isHostAssociated = isHostAssociated();
         final Submitter submitter = getSessionSubmitter(sessionMgr);
+
+        buildPublicationLists();
+
+        //Get analysis status
+        AnalysisStatus analysisStatus = getAnalysisStatus();
+
 
         if (emgFile != null) {
             //Get GO results
             final Map<Class, List<AbstractGOTerm>> goData = loadGODataFromCSV(propertyContainer.getPathToAnalysisDirectory(),
                     emgFile);
-            //Get taxonomy result data
-
             final SampleViewModel sampleViewModel = new SampleViewModel(submitter,
                     pageTitle,
                     breadcrumbs,
@@ -110,9 +127,11 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
                     interProEntries,
                     experimentType,
                     downloadSection,
-                    publications,
+                    relatedLinks,
+                    relatedPublications,
                     isHostAssociated,
-                    sampleAnnotations);
+                    sampleAnnotations,
+                    analysisStatus);
             //Load and set taxonomy result data
             sampleViewModel.setTaxonomyAnalysisResult(loadTaxonomyDataFromCSV(propertyContainer.getPathToAnalysisDirectory()));
             return sampleViewModel;
@@ -126,10 +145,52 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
                     interProEntries,
                     experimentType,
                     downloadSection,
-                    publications,
+                    relatedLinks,
+                    relatedPublications,
                     isHostAssociated,
-                    sampleAnnotations);
+                    sampleAnnotations,
+                    analysisStatus);
         }
+    }
+
+    private AnalysisStatus getAnalysisStatus() {
+        boolean taxonomyTabDisabled = false;
+        boolean qualityControlTabDisabled = false;
+        boolean functionTabDisabled = false;
+        //Check completeness(existence) of taxonomy result files
+        File kronaFile = new File(resultFilesDirectoryPath + propertyContainer.getResultFileName(MemiPropertyContainer.FileNameIdentifier.TAXONOMY_CHART_FULL_VERSION));
+        if (!kronaFile.exists()) {
+            log.warn("Deactivating taxonomy result tab because file " + kronaFile.getAbsolutePath() + " doesn't exist!");
+            taxonomyTabDisabled = true;
+        }
+        if (!taxonomyTabDisabled) {
+            File phylumFile = new File(resultFilesDirectoryPath + propertyContainer.getResultFileName(MemiPropertyContainer.FileNameIdentifier.PHYLUM_COUNTS));
+            if (!phylumFile.exists()) {
+                log.warn("Deactivating taxonomy result tab because file " + phylumFile.getAbsolutePath() + " doesn't exist!");
+                taxonomyTabDisabled = true;
+            }
+        }
+        //Check completeness(existence) of quality control result files
+        String directoryName = emgFile.getFileIDInUpperCase().replace('.', '_');
+        File summaryPNGFile = new File(resultFilesDirectoryPath + '/' + directoryName + "_summary.png");
+        if (!summaryPNGFile.exists()) {
+            log.warn("Deactivating quality control tab because file " + summaryPNGFile.getAbsolutePath() + " doesn't exist!");
+            qualityControlTabDisabled = true;
+        }
+        //Check completeness(existence) of function analysis result files
+        File summaryIPRFile = new File(resultFilesDirectoryPath + '/' + directoryName + EmgFile.ResultFileType.IPR.getFileNameEnd());
+        if (!summaryIPRFile.exists()) {
+            log.warn("Deactivating functional analysis result tab because file " + summaryIPRFile.getAbsolutePath() + " doesn't exist!");
+            functionTabDisabled = true;
+        }
+        if (!functionTabDisabled) {
+            File googleImageFile = new File(resultFilesDirectoryPath + '/' + directoryName + "_summary_biological_process.png");
+            if (!googleImageFile.exists()) {
+                log.warn("Deactivating functional analysis result tab because file " + googleImageFile.getAbsolutePath() + " doesn't exist!");
+                functionTabDisabled = true;
+            }
+        }
+        return new AnalysisStatus(taxonomyTabDisabled, qualityControlTabDisabled, functionTabDisabled);
     }
 
     /**
@@ -140,23 +201,18 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
      */
     private TaxonomyAnalysisResult loadTaxonomyDataFromCSV(final String pathToAnalysisDirectory) {
         final TaxonomyAnalysisResult taxonomyAnalysisResult = new TaxonomyAnalysisResult();
-        taxonomyAnalysisResult.addTaxonomyDataRow(new TaxonomyData("Bacteria", "Proteobacteria", 146, 63.75f, "058dc7"));
-        taxonomyAnalysisResult.addTaxonomyDataRow(new TaxonomyData("Archaea", "Crenarchaeota", 17, 7.42f, "50b432"));
-        taxonomyAnalysisResult.addTaxonomyDataRow(new TaxonomyData("Archaea", "Euryarchaeota", 11, 4.8f, "ed561b"));
-        taxonomyAnalysisResult.addTaxonomyDataRow(new TaxonomyData("Bacteria", "Bacteroidetes", 11, 4.8f, "edef00"));
-        taxonomyAnalysisResult.addTaxonomyDataRow(new TaxonomyData("Bacteria", "SAR406", 11, 4.8f, "24cbe5"));
-        taxonomyAnalysisResult.addTaxonomyDataRow(new TaxonomyData("Bacteria", "Actinobacteria", 10, 4.37f, "64e572"));
-        taxonomyAnalysisResult.addTaxonomyDataRow(new TaxonomyData("Bacteria", "Verrucomicrobia", 7, 1.31f, "ff9655"));
-        taxonomyAnalysisResult.addTaxonomyDataRow(new TaxonomyData("Bacteria", "Chloroflexi", 3, 1.31f, "fff263"));
-        taxonomyAnalysisResult.addTaxonomyDataRow(new TaxonomyData("Bacteria", "NC10", 3, 1.31f, "6af9c4"));
-        taxonomyAnalysisResult.addTaxonomyDataRow(new TaxonomyData("Bacteria", "PAUC34f", 2, 0.87f, "b2deff"));
-        taxonomyAnalysisResult.addTaxonomyDataRow(new TaxonomyData("Bacteria", "Planctomycetes", 2, 0.87f, "ccc"));
-        taxonomyAnalysisResult.addTaxonomyDataRow(new TaxonomyData("Bacteria", "Caldiserica", 2, 0.87f, "ccc"));
-        taxonomyAnalysisResult.addTaxonomyDataRow(new TaxonomyData("Bacteria", "Cyanobacteria", 2, 0.87f, "ccc"));
-        taxonomyAnalysisResult.addTaxonomyDataRow(new TaxonomyData("Bacteria", "Elusimicrobia", 2, 0.87f, "ccc"));
-        taxonomyAnalysisResult.addTaxonomyDataRow(new TaxonomyData("Bacteria", "Firmicutes", 2, 0.87f, "ccc"));
-        taxonomyAnalysisResult.addTaxonomyDataRow(new TaxonomyData("Bacteria", "OP11", 2, 0.87f, "ccc"));
-        taxonomyAnalysisResult.addTaxonomyDataRow(new TaxonomyData("Bacteria", "Unassigned bacteria", 2, 0.87f, "ccc"));
+
+        File phylumFile = new File(resultFilesDirectoryPath + propertyContainer.getResultFileName(MemiPropertyContainer.FileNameIdentifier.PHYLUM_COUNTS));
+        if (!phylumFile.exists()) {
+            log.warn("Deactivating taxonomy result tab because file " + phylumFile.getAbsolutePath() + " doesn't exist!");
+        } else {
+            //Get the data
+            List<String[]> data = getRows(phylumFile, '\t');
+            for (String[] row : data) {
+                taxonomyAnalysisResult.addTaxonomyDataRow(new TaxonomyData(row[0], row[1], row[2], row[3], "058dc7"));
+            }
+            return taxonomyAnalysisResult;
+        }
         return taxonomyAnalysisResult;
     }
 
@@ -169,20 +225,8 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
         return false;
     }
 
-    private List<Publication> getSamplePublications() {
-        List<Publication> publications = new ArrayList<Publication>();
-        if (sample != null) {
-            Set<Publication> pubs = sample.getPublications();
-            if (pubs != null) {
-                publications.addAll(pubs);
-            }
-        }
-        Collections.sort(publications, new PublicationComparator());
-        return publications;
-    }
-
-    private static List<InterProEntry> getListOfInterProEntries(String pathToAnalysisDirectory, EmgFile emgFile, boolean isReturnSizeLimit) {
-        List<String[]> rows = getRawData(pathToAnalysisDirectory, emgFile, "_summary.ipr", ',');
+    private List<InterProEntry> getListOfInterProEntries(EmgFile emgFile, boolean isReturnSizeLimit) {
+        List<String[]> rows = getRawData(emgFile, "_summary.ipr", ',');
         return loadInterProMatchesFromCSV(rows, isReturnSizeLimit);
     }
 
@@ -204,7 +248,7 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
         if (rows != null) {
             //return size limitation the
             if (isReturnSizeLimit && rows.size() > 5) {
-                rows = rows.subList(0, 5);
+                rows = rows.subList(0, 50);
             }
             for (String[] row : rows) {
                 if (row.length == 3) {
@@ -283,7 +327,7 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
         return result;
     }
 
-    private static String getBarChartURL(String classPathToStatsFile, EmgFile emgFile) {
+    private String getBarChartURL(String classPathToStatsFile, EmgFile emgFile) {
         List<Integer> chartData = loadStatsFromCSV(classPathToStatsFile, emgFile);
         if (chartData != null && chartData.size() > 0) {
             Properties props = new Properties();
@@ -299,11 +343,11 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
         return null;
     }
 
-    private static List<Integer> loadStatsFromCSV(String classPathToStatsFile, EmgFile emgFile) {
+    private List<Integer> loadStatsFromCSV(String classPathToStatsFile, EmgFile emgFile) {
         List<Integer> result = new ArrayList<Integer>();
 
         log.info("Processing summary file...");
-        List<String[]> rows = getRawData(classPathToStatsFile, emgFile, "_summary", ',');
+        List<String[]> rows = getRawData(emgFile, "_summary", ',');
 
         if (rows != null && rows.size() >= 6) {
             int numSubmittedSeqs = getValueOfRow(rows, 0);
@@ -329,14 +373,14 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
         return -1;
     }
 
-    private static Map<Class, List<AbstractGOTerm>> loadGODataFromCSV(String classPathToStatsFile, EmgFile emgFile) {
+    private Map<Class, List<AbstractGOTerm>> loadGODataFromCSV(String classPathToStatsFile, EmgFile emgFile) {
         Map<Class, List<AbstractGOTerm>> result = new Hashtable<Class, List<AbstractGOTerm>>();
         result.put(BiologicalProcessGOTerm.class, new ArrayList<AbstractGOTerm>());
         result.put(CellularComponentGOTerm.class, new ArrayList<AbstractGOTerm>());
         result.put(MolecularFunctionGOTerm.class, new ArrayList<AbstractGOTerm>());
 
         log.info("Processing GO slim file...");
-        List<String[]> rows = getRawData(classPathToStatsFile, emgFile, "_summary.go_slim", ',');
+        List<String[]> rows = getRawData(emgFile, "_summary.go_slim", ',');
 
         if (rows != null) {
             for (String[] row : rows) {
@@ -374,15 +418,17 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
     /**
      * Reads raw data from the specified file by using a CSV reader. Possible to specify different delimiters.
      *
-     * @param classPathToStatsFile
      * @param emgFile
      * @return
      */
-    private static List<String[]> getRawData(String classPathToStatsFile, EmgFile emgFile, String fileExtension, char delimiter) {
-        List<String[]> rows = null;
-
+    private List<String[]> getRawData(EmgFile emgFile, String fileExtension, char delimiter) {
         String directoryName = emgFile.getFileIDInUpperCase().replace('.', '_');
-        File file = new File(classPathToStatsFile + directoryName + '/' + directoryName + fileExtension);
+        File file = new File(resultFilesDirectoryPath + '/' + directoryName + fileExtension);
+        return getRows(file, delimiter);
+    }
+
+    private List<String[]> getRows(final File file, final char delimiter) {
+        List<String[]> rows = null;
         CSVReader reader = null;
         try {
             reader = new CSVReader(new FileReader(file), delimiter);
@@ -397,5 +443,21 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
             }
         }
         return rows;
+    }
+
+    /**
+     * Divides the set of publications into 2 different types of publication sets.
+     */
+    private void buildPublicationLists() {
+        for (Publication pub : sample.getPublications()) {
+            if (pub.getPubType().equals(PublicationType.PUBLICATION)) {
+                relatedPublications.add(pub);
+            } else if (pub.getPubType().equals(PublicationType.WEBSITE_LINK)) {
+                relatedLinks.add(pub);
+            }
+        }
+        //Sorting lists
+        Collections.sort(relatedPublications, new PublicationComparator());
+        Collections.sort(relatedLinks, new PublicationComparator());
     }
 }
