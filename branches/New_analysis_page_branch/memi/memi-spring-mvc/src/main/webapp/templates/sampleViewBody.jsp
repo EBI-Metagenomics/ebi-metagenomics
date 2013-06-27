@@ -36,7 +36,7 @@ function drawChart() {
     data.addRows([
         ['Bacteria', 201],
         ['Archaea', 28],
-        ['Unknown', 1]
+        ['Unassigned', 1]
     ]);
 
     var data2 = new google.visualization.DataTable();
@@ -87,8 +87,8 @@ function drawChart() {
         ['Euryarchaeota', 11]
     ]);
     var data5 = google.visualization.arrayToDataTable([
-        ['', 'Proteobacteria', 'Crenarchaeota', 'Euryarchaeota', 'Bacteroidetes', 'SAR406', 'Actinobacteria', 'Verrucomicrobia', 'Chloroflexi', 'NC10', 'PAUC34f', 'Planctomycetes', 'Caldiserica', 'Cyanobacteria', 'Elusimicrobia', 'Firmicutes', 'OP11', 'Unassigned bacteria'],
-        [ , 146, 17, 11, 11, 11, 10, 7, 3, 3, 2, 2, 1, 1, 1, 1, 1, 1]
+        [ '','Proteobacteria', 'Crenarchaeota', 'Euryarchaeota', 'Bacteroidetes', 'SAR406', 'Actinobacteria', 'Verrucomicrobia', 'Chloroflexi', 'NC10', 'PAUC34f', 'Planctomycetes', 'Caldiserica', 'Cyanobacteria', 'Elusimicrobia', 'Firmicutes', 'OP11', 'Unassigned bacteria'],
+        ['', 146/229, 17/229, 11/229, 11/229, 11/229, 10/229, 7/229, 3/229, 3/229, 2/229, 2/229, 1/229, 1/229, 1/229, 1/229, 1/229, 1/229]
     ]);
 
     // Kingdom level
@@ -101,7 +101,7 @@ function drawChart() {
 //                           'width':120,
         'width':200,
         'height':220,
-        'chartArea':{left:10, top:26, width:"100%", height:"55%"},
+        'chartArea':{left:10, top:26, width:"80%", height:"55%"},
 //                        'chartArea.left':0,
 //                          'chartArea.top':0,
         'pieSliceBorderColor':'none',
@@ -195,7 +195,7 @@ function drawChart() {
         'legend':'none',
         'isStacked':true
     };
-    // Stacked graph
+    // Stacked column graph
     var options9 = {'title':'Phylum composition (Total: 229)',
         'titleTextStyle':{fontSize:12},
         'colors':['#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff', '#ccc', '#ccc', '#ccc', '#ccc', '#ccc', '#ccc', '#ccc'],
@@ -203,11 +203,13 @@ function drawChart() {
         'width':300,
         'height':400,
         'legend':{position:'right', fontSize:10},
-        'chartArea':{left:60, top:40, width:"20%", height:"100%"},
+        'chartArea':{left:60, top:40, width:"20%", height:"86%"},
         'pieSliceBorderColor':'none',
-        'sliceVisibilityThreshold':1 / 110,
+        'sliceVisibilityThreshold':1 / 50,
+//        'vAxis': {title: 'Percentage', titleTextStyle: {color: '#FF0000'}},
+        'vAxis': {baselineColor: '#ccc', viewWindowMode:'maximized'},
+        'vAxis': {format:'#%'},
         'isStacked':true
-//                                                'vAxis': {format:'#%'}
     };
 
     // Instantiate and draw our chart, passing in some options.
@@ -272,6 +274,7 @@ function drawChart() {
             [<%--' <ul class="color_legend"><li  style="color: #${taxonomyData.colourCode};"></li></ul>',--%> '${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}]
             </c:forEach>
         ]);
+
         var data2b = new google.visualization.DataTable();
         data2b.addColumn('string', 'Phylum');
         data2b.addColumn('string', 'Kingdom');
