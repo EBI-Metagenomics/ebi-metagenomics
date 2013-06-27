@@ -11,13 +11,13 @@ public class TaxonomyData {
 
     private String phylum;
 
-    private int numberOfHits;
+    private String numberOfHits;
 
-    private float percentage;
+    private String percentage;
 
     private String colourCode;
 
-    public TaxonomyData(String superKingdom, String phylum, int numberOfHits, float percentage, String colourCode) {
+    public TaxonomyData(String superKingdom, String phylum, String numberOfHits, String percentage, String colourCode) {
         this.superKingdom = superKingdom;
         this.phylum = phylum;
         this.numberOfHits = numberOfHits;
@@ -33,11 +33,11 @@ public class TaxonomyData {
         return phylum;
     }
 
-    public int getNumberOfHits() {
+    public String getNumberOfHits() {
         return numberOfHits;
     }
 
-    public float getPercentage() {
+    public String getPercentage() {
         return percentage;
     }
 

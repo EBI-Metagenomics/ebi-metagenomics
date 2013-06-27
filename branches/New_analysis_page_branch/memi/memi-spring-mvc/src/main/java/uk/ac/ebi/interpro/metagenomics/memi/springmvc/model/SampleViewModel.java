@@ -6,6 +6,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.EmgSampleAnnotation;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Publication;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.AnalysisStatus;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.DownloadSection;
 
 import java.text.DecimalFormat;
@@ -57,7 +58,9 @@ public class SampleViewModel extends ViewModel {
 
     private final List<EmgSampleAnnotation> sampleAnnotations;
 
-    private final List<Publication> publications;
+    private List<Publication> relatedLinks;
+
+    private List<Publication> relatedPublications;
 
     /**
      * Indicates if the sample of this model is host-associated OR not
@@ -65,6 +68,8 @@ public class SampleViewModel extends ViewModel {
     private final boolean isHostAssociated;
 
     private TaxonomyAnalysisResult taxonomyAnalysisResult;
+
+    private AnalysisStatus analysisStatus;
 
     public SampleViewModel(Submitter submitter,
                            String pageTitle,
@@ -81,9 +86,11 @@ public class SampleViewModel extends ViewModel {
                            List<InterProEntry> interProEntries,
                            ExperimentType experimentType,
                            final DownloadSection downloadSection,
-                           List<Publication> publications,
+                           List<Publication> relatedLinks,
+                           List<Publication> relatedPublications,
                            boolean isHostAssociated,
-                           List<EmgSampleAnnotation> sampleAnnotations) {
+                           List<EmgSampleAnnotation> sampleAnnotations,
+                           final AnalysisStatus analysisStatus) {
         super(submitter, pageTitle, breadcrumbs, propertyContainer);
         this.sample = sample;
         this.barChartURL = barChartURL;
@@ -96,9 +103,11 @@ public class SampleViewModel extends ViewModel {
         this.archivedSequences = archivedSequences;
         this.experimentType = experimentType;
         this.downloadSection = downloadSection;
-        this.publications = publications;
+        this.relatedLinks = relatedLinks;
+        this.relatedPublications = relatedPublications;
         this.isHostAssociated = isHostAssociated;
         this.sampleAnnotations = sampleAnnotations;
+        this.analysisStatus = analysisStatus;
     }
 
     public SampleViewModel(Submitter submitter,
@@ -110,9 +119,11 @@ public class SampleViewModel extends ViewModel {
                            List<InterProEntry> interProEntries,
                            ExperimentType experimentType,
                            final DownloadSection downloadSection,
-                           List<Publication> publications,
+                           List<Publication> relatedLinks,
+                           List<Publication> relatedPublications,
                            boolean isHostAssociated,
-                           List<EmgSampleAnnotation> sampleAnnotations) {
+                           List<EmgSampleAnnotation> sampleAnnotations,
+                           final AnalysisStatus analysisStatus) {
         this(submitter,
                 pageTitle,
                 breadcrumbs,
@@ -128,9 +139,11 @@ public class SampleViewModel extends ViewModel {
                 interProEntries,
                 experimentType,
                 downloadSection,
-                publications,
+                relatedLinks,
+                relatedPublications,
                 isHostAssociated,
-                sampleAnnotations);
+                sampleAnnotations,
+                analysisStatus);
     }
 
     public Sample getSample() {
@@ -181,8 +194,12 @@ public class SampleViewModel extends ViewModel {
         return sampleAnnotations;
     }
 
-    public List<Publication> getPublications() {
-        return publications;
+    public List<Publication> getRelatedLinks() {
+        return relatedLinks;
+    }
+
+    public List<Publication> getRelatedPublications() {
+        return relatedPublications;
     }
 
     public boolean isHostAssociated() {
@@ -195,6 +212,10 @@ public class SampleViewModel extends ViewModel {
 
     public void setTaxonomyAnalysisResult(TaxonomyAnalysisResult taxonomyAnalysisResult) {
         this.taxonomyAnalysisResult = taxonomyAnalysisResult;
+    }
+
+    public AnalysisStatus getAnalysisStatus() {
+        return analysisStatus;
     }
 
     public enum ExperimentType {
