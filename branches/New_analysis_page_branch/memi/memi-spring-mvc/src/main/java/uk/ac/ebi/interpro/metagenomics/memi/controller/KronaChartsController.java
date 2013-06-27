@@ -12,7 +12,6 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.EmgFile;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 
 import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
@@ -50,13 +49,13 @@ public class KronaChartsController extends AbstractSampleViewController {
                 final String rootDirPathName = propertyContainer.getPathToAnalysisDirectory() + directoryName;
                 final String filePath;
                 if (taxonomy && slim && !function) {
-                    filePath = rootDirPathName + propertyContainer.getKronaChartFileName(MemiPropertyContainer.KronaChartIdentifier.TAXONOMY_CHART_SLIM_VERSION);
+                    filePath = rootDirPathName + propertyContainer.getResultFileName(MemiPropertyContainer.FileNameIdentifier.TAXONOMY_CHART_SLIM_VERSION);
                 } else if (taxonomy && !slim && !function) {
-                    filePath = rootDirPathName + propertyContainer.getKronaChartFileName(MemiPropertyContainer.KronaChartIdentifier.TAXONOMY_CHART_FULL_VERSION);
+                    filePath = rootDirPathName + propertyContainer.getResultFileName(MemiPropertyContainer.FileNameIdentifier.TAXONOMY_CHART_FULL_VERSION);
                 } else if (function && slim && !taxonomy) {
-                    filePath = rootDirPathName + propertyContainer.getKronaChartFileName(MemiPropertyContainer.KronaChartIdentifier.FUNCTION_CHART_SLIM_VERSION);
+                    filePath = rootDirPathName + propertyContainer.getResultFileName(MemiPropertyContainer.FileNameIdentifier.FUNCTION_CHART_SLIM_VERSION);
                 } else if (function && !slim && !taxonomy) {
-                    filePath = rootDirPathName + propertyContainer.getKronaChartFileName(MemiPropertyContainer.KronaChartIdentifier.FUNCTION_CHART_FULL_VERSION);
+                    filePath = rootDirPathName + propertyContainer.getResultFileName(MemiPropertyContainer.FileNameIdentifier.FUNCTION_CHART_FULL_VERSION);
                 } else {
                     return;
                 }
