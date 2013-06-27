@@ -21,19 +21,19 @@ public class MemiPropertyContainer {
     private String enaMasterUserEmail;
 
     /**
-     * Maps string identifiers and Krona chart file names.
+     * Maps string identifiers and file names (like Krona chart file names).
      * e.g.
      * <p/>
      * TAXONOMY_CHART_FULL_VERSION->Krona_chart_taxonomy.html
      * TAXONOMY_CHART_SLIM_VERSION->Krona_chart_taxonomy_simple.html
      */
-    private Map<String, String> kronaChartsFileNameMap = new HashMap<String, String>();
+    private Map<String, String> resultFileNameMap = new HashMap<String, String>();
 
     /**
      * Collection of identifiers which is used for the Krona charts file name map.
      */
-    public enum KronaChartIdentifier {
-        TAXONOMY_CHART_FULL_VERSION, TAXONOMY_CHART_SLIM_VERSION, FUNCTION_CHART_FULL_VERSION, FUNCTION_CHART_SLIM_VERSION;
+    public enum FileNameIdentifier {
+        TAXONOMY_CHART_FULL_VERSION, TAXONOMY_CHART_SLIM_VERSION, FUNCTION_CHART_FULL_VERSION, FUNCTION_CHART_SLIM_VERSION,PHYLUM_COUNTS;
     }
 
     MemiPropertyContainer() {
@@ -63,11 +63,11 @@ public class MemiPropertyContainer {
         this.enaMasterUserEmail = enaMasterUserEmail;
     }
 
-    public void setKronaChartsFileNameMap(Map<String, String> kronaChartsFileNameMap) {
-        this.kronaChartsFileNameMap = kronaChartsFileNameMap;
+    public void setResultFileNameMap(Map<String, String> resultFileNameMap) {
+        this.resultFileNameMap = resultFileNameMap;
     }
 
-    public String getKronaChartFileName(KronaChartIdentifier identifier) {
-        return kronaChartsFileNameMap.get(identifier.name());
+    public String getResultFileName(FileNameIdentifier identifier) {
+        return resultFileNameMap.get(identifier.name());
     }
 }
