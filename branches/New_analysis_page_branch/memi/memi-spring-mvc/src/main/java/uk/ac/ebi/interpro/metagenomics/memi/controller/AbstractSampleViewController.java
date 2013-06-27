@@ -12,7 +12,9 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.EmgSampleAnnotation;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.*;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.SampleViewModel;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.DownloadLink;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.DownloadSection;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.FilePathNameBuilder;
@@ -62,7 +64,6 @@ public class AbstractSampleViewController extends SecuredAbstractController<Samp
         if (entity != null && entity instanceof Sample) {
             result.add(new Breadcrumb("Project: " + ((Sample) entity).getStudy().getStudyName(), "View project " + ((Sample) entity).getStudy().getStudyName(), StudyViewController.VIEW_NAME + '/' + ((Sample) entity).getStudy().getStudyId()));
             result.add(new Breadcrumb("Sample: " + ((Sample) entity).getSampleName(), "View sample " + ((Sample) entity).getSampleName(), SampleViewController.VIEW_NAME + '/' + ((Sample) entity).getSampleId()));
-            result.add(new Breadcrumb("Analysis Results", "View analysis results", VIEW_NAME + '/' + ((Sample) entity).getSampleId()));
         }
         return result;
     }
@@ -96,7 +97,7 @@ public class AbstractSampleViewController extends SecuredAbstractController<Samp
     protected void populateModel(final ModelMap model, final Sample sample, boolean isReturnSizeLimit, String pageTitle) {
         List<EmgFile> emgFiles = fileInfoDAO.getFilesBySampleId(sample.getId());
         //TODO: For the moment the system only allows to represent one file on the analysis page, but
-        //in the future it should be possible to represent all different data types (genomic, transcripomic)
+        //in the future it should be possible to represent all different data types (genomic, transcriptomic)
         EmgFile emgFile = (emgFiles.size() > 0 ? emgFiles.get(0) : null);
         if (emgFile != null) {
             emgFile.addFileSizeMap(getFileSizeMap(emgFile));
@@ -110,7 +111,7 @@ public class AbstractSampleViewController extends SecuredAbstractController<Samp
             experimentType = SampleViewModel.ExperimentType.TRANSCRIPTOMIC;
         }
         //New
-        List<EmgSampleAnnotation> sampleAnnotations = (List<EmgSampleAnnotation>) sampleAnnotationDAO.getSampleAnnotations(sample.getId());
+        final List<EmgSampleAnnotation> sampleAnnotations = (List<EmgSampleAnnotation>) sampleAnnotationDAO.getSampleAnnotations(sample.getId());
 
         final ViewModelBuilder<SampleViewModel> builder = new SampleViewModelBuilder(
                 sessionManager,
