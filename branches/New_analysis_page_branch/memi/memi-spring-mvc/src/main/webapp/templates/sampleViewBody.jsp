@@ -87,13 +87,36 @@ function drawChart() {
         ['Crenarchaeota', 17],
         ['Euryarchaeota', 11]
     ]);
+
+    // Stacked column
     var data5 = google.visualization.arrayToDataTable([
 //        [ '','Proteobacteria', 'Crenarchaeota', 'Euryarchaeota', 'Bacteroidetes', 'SAR406', 'Actinobacteria', 'Verrucomicrobia', 'Chloroflexi', 'NC10', 'PAUC34f', 'Planctomycetes', 'Caldiserica', 'Cyanobacteria', 'Elusimicrobia', 'Firmicutes', 'OP11', 'Unassigned bacteria'],
 //        ['', 146/229, 17/229, 11/229, 11/229, 11/229, 10/229, 7/229, 3/229, 3/229, 2/229, 2/229, 1/229, 1/229, 1/229, 1/229, 1/229, 1/229]
         [ '','Proteobacteria', 'Crenarchaeota', 'Euryarchaeota', 'Bacteroidetes', 'SAR406', 'Actinobacteria', 'Verrucomicrobia', 'Chloroflexi', 'NC10', 'PAUC34f', 'Planctomycetes', 'Caldiserica', 'Cyanobacteria', 'Elusimicrobia', 'Firmicutes', 'OP11', 'Unassigned bacteria'],
         ['', 146/229, 17/229, 11/229, 11/229, 11/229, 10/229, 7/229, 3/229, 3/229, 2/229, 2/229, 1/229, 1/229, 1/229, 1/229, 1/229 , 1/229 ]
     ]);
-
+    var data6 = new google.visualization.DataTable();
+    data6.addColumn('string', 'GO term');
+    data6.addColumn('number', 'Match');
+    data6.addRows([
+        ['Cell projection assembly', 37],
+        ['Crenarchaeota', 17],
+        ['Euryarchaeota', 11],
+        ['Bacteroidetes', 11],
+        ['SAR406', 11],
+        ['Actinobacteria', 10],
+        ['Verrucomicrobia', 7],
+        ['Chloroflexi', 3],
+        ['NC10', 3],
+        ['PAUC34f', 2],
+        ['Planctomycetes', 2],
+        ['Caldiserica', 1],
+        ['Cyanobacteria', 1],
+        ['Elusimicrobia', 1],
+        ['Firmicutes', 1],
+        ['OP11', 1],
+        ['Unassigned bacteria', 1]
+    ]);
     // Kingdom level
     var options = {'title':'Domain composition',
         'titleTextStyle':{fontSize:12},
@@ -148,7 +171,7 @@ function drawChart() {
         'width':290,
         'height':220,
         'legend':{position:'right', fontSize:10},
-//                            'legend':{position:'none',fontSize:10},
+//                            'legend':{p osition:'none',fontSize:10},
         'chartArea':{left:10, top:30, width:"100%", height:"100%"},
         'pieSliceBorderColor':'none',
         'sliceVisibilityThreshold':1 / 115
@@ -165,13 +188,16 @@ function drawChart() {
         'pieSliceBorderColor':'none',
         'legend':'none'
     };
+
     var options6 = {'title':'Domain composition',
         'titleTextStyle':{fontSize:12},
         'colors':['#5f8694'],
-        'width':200,
-        'height':320,
-        'chartArea':{left:60, top:40, width:"66%", height:"70%"},
+        'width':240,
+        'height':180,
+        'chartArea':{left:70, top:40, width:"66%", height:"70%"},
+        'vAxis':{textStyle:{fontSize:11}},
         'pieSliceBorderColor':'none',
+        'bar':{groupWidth:10},
         'legend':'none'
     };
     var options7 = {'title':'Bacteria level (Total: 201)',
@@ -201,17 +227,28 @@ function drawChart() {
         'titleTextStyle':{fontSize:12},
         'colors':['#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff', '#ccc', '#ccc', '#ccc', '#ccc', '#ccc', '#ccc', '#ccc'],
         //Krona style               'colors':['#d47f7f','#d1a575','#d4c97f','#99d47f','#7fd4a7','#7fc3d4','#7f8ad4','#a77fd4','#d47fd3','#d47faf','#ccc','#ccc','#ccc'],
-        'width':300,
+        'width':320,
         'height':400,
         'legend':{position:'right', fontSize:10},
-        'chartArea':{left:60, top:40, width:"20%", height:"86%"},
+        'chartArea':{left:80, top:40, width:"20%", height:"86%"},
         'pieSliceBorderColor':'none',
         'sliceVisibilityThreshold':1 / 50,
-        'vAxis': {viewWindowMode:'maximized'},//        important to keep viewWindowMode separated from the rest to keep the display of the value 100% on vaxis
-        'vAxis': {format:'#%', baselineColor: '#ccc'},
+        'vAxis': { viewWindowMode:'maximized'},//        important to keep viewWindowMode separated from the rest to keep the display of the value 100% on vaxis
+        'vAxis': {title:'Relative abundance', format:'#%', baselineColor: '#ccc'},
         'isStacked':true
     };
 
+    // GO TERM Biological Process
+    var options10 = {'title':'Biological Process (Total: x)',
+        'titleTextStyle':{fontSize:12},
+        'colors':['#5f8694'],
+        //Krona style               'colors':['#d47f7f','#d1a575','#d4c97f','#99d47f','#7fd4a7','#7fc3d4','#7f8ad4','#a77fd4','#d47fd3','#d47faf','#ccc','#ccc','#ccc'],
+        'width':400,
+        'height':320,
+        'chartArea':{left:120, top:40, width:"66%", height:"70%"},
+        'pieSliceBorderColor':'none',
+        'legend':'none'
+    };
     // Instantiate and draw our chart, passing in some options.
     var chart = new google.visualization.PieChart(document.getElementById('tax_chart_div'));
     chart.draw(data, options);
@@ -632,7 +669,7 @@ $(function() {
                 <li><a href="#tax-bar" title="Bar chart view"><span class="ico-barh"></span></a></li>
                 <li><a href="#tax-col" title="Stacked column chart view"><span class="ico-col"></span></a></li>
                 <li><a href="#tax-Krona" title="Krona interactive chart view"><span class="ico-krona"></span></a></li>
-                <li class="ico-downl"><a class="icon icon-functional" data-icon="=" href="#download" title="Download image/table"></a></li>
+                <%--<li class="ico-downl"><a class="icon icon-functional" data-icon="=" href="#download" title="Download image/table"></a></li>--%>
             </ul>
 
                 <%--<div id="tax-table">--%>
@@ -681,28 +718,7 @@ $(function() {
 
                  </div>
                   <div id="tax-Krona">
-                      <table class="result">
-                          <tr>
-
-                              <td >
-                                  <object class="krona_chart" data="<c:url value="${baseURL}/sample/${model.sample.sampleId}/krona?taxonomy=true&font=10"/>" type="text/html"/>
-                              </td>
-                          </tr>
-                          <%--<table class="result">--%>
-                          <%--<tr>--%>
-                            <%--<td width="10%" style="background-color:white;padding:0;">--%>
-                                <%--&lt;%&ndash;Taxonomy google chart&ndash;%&gt;--%>
-
-                                <%--<object class="krona_chart_small" data="<c:url value="${baseURL}/sample/${model.sample.sampleId}/krona?taxonomy=true&slim=true&depth=1&font=11"/>" type="text/html"/>--%>
-                            <%--</td>--%>
-                            <%--<td rowspan="2" style="background-color:white;padding:0;">--%>
-                                <%--<object class="krona_chart" data="<c:url value="${baseURL}/sample/${model.sample.sampleId}/krona?taxonomy=true&font=10"/>" type="text/html"/>--%>
-                            <%--</td>--%>
-                        <%--</tr>--%>
-                        <%--<tr>--%>
-                            <%--<td style="background-color:white;padding:0;"><object class="krona_chart_small" data="<c:url value="${baseURL}/sample/${model.sample.sampleId}/krona?taxonomy=true&slim=true&node=1&depth=2&font=11"/>" type="text/html"/></td>--%>
-                        <%--</tr>--%>
-                      </table>
+                  <object class="krona_chart" data="<c:url value="${baseURL}/sample/${model.sample.sampleId}/krona?taxonomy=true"/>" type="text/html"></object>
                   </div>
 
 
