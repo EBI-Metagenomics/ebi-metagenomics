@@ -167,6 +167,7 @@
     <%--document.write('<style type="text/css">#noscript_feedbackLink{display: none;}#noscript_loginLink{display: none;}</style>');--%>
 <%--</script>​--%>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/tablequerywrapper.js"></script>
 
     <noscript>
         <style type="text/css">
