@@ -95,28 +95,278 @@ function drawChart() {
         [ '','Proteobacteria', 'Crenarchaeota', 'Euryarchaeota', 'Bacteroidetes', 'SAR406', 'Actinobacteria', 'Verrucomicrobia', 'Chloroflexi', 'NC10', 'PAUC34f', 'Planctomycetes', 'Caldiserica', 'Cyanobacteria', 'Elusimicrobia', 'Firmicutes', 'OP11', 'Unassigned bacteria'],
         ['', 146/229, 17/229, 11/229, 11/229, 11/229, 10/229, 7/229, 3/229, 3/229, 2/229, 2/229, 1/229, 1/229, 1/229, 1/229, 1/229 , 1/229 ]
     ]);
+
+    // Bar GO terms
     var data6 = new google.visualization.DataTable();
     data6.addColumn('string', 'GO term');
     data6.addColumn('number', 'Match');
     data6.addRows([
-        ['Cell projection assembly', 37],
-        ['Crenarchaeota', 17],
-        ['Euryarchaeota', 11],
-        ['Bacteroidetes', 11],
-        ['SAR406', 11],
-        ['Actinobacteria', 10],
-        ['Verrucomicrobia', 7],
-        ['Chloroflexi', 3],
-        ['NC10', 3],
-        ['PAUC34f', 2],
-        ['Planctomycetes', 2],
-        ['Caldiserica', 1],
-        ['Cyanobacteria', 1],
-        ['Elusimicrobia', 1],
-        ['Firmicutes', 1],
-        ['OP11', 1],
-        ['Unassigned bacteria', 1]
+        ['cell projection assembly', 37],
+        ['cell wall organization or biogenesis', 340],
+        ['cellular component organization  ', 1068],
+                ['cell division', 105],
+                ['cell growth', 0],
+                ['cell motility ', 292],
+                ['transposition', 169],
+                ['ion transport', 2062],
+                ['protein secretion', 258],
+                ['transport ',8058 ],
+                ['ATP metabolic process', 443],
+                ['biosynthetic process', 21253],
+                ['carbohydrate metabolic process', 4158],
+                ['catabolic process', 2251],
+                ['cellular amino acid metabolic process', 6824],
+                ['cellular respiration', 1045],
+                ['cofactor metabolic process ', 2389],
+                ['DNA metabolic process', 5063],
+                ['electron transport chain', 595],
+                ['generation of precursor metabolites and energy', 1625],
+                ['GTP metabolic process', 115],
+                ['lipid metabolic process', 2039],
+                ['nitrogen compound metabolic process', 23093],
+                ['nitrogen cycle metabolic process', 27],
+                ['nucleotide metabolic process', 2356],
+                ['oxidation-reduction process', 14516],
+                ['phosphorylation', 1219],
+                ['photosynthesis', 44],
+                ['protein metabolic process', 8764],
+                ['RNA metabolic process', 7554],
+                ['small molecule metabolic process', 12914],
+                ['sulfur compound metabolic process', 560],
+                ['toxin metabolic process ', 19],
+                ['transcription, DNA-dependent', 3479],
+                ['translation', 4501],
+                ['cell communication', 1149],
+                ['chemotaxis ', 136],
+                ['response to stress', 1772],
+                ['signal transduction', 1071],
+                ['two-component signal transduction system (phosphorelay)', 477],
+                ['cell morphogenesis', 150],
+                ['conjugation', 11],
+                ['homeostatic process', 393],
+                ['immune system process', 4],
+                ['pathogenesis', 20],
+                ['sporulation', 0],
+                ['symbiosis, encompassing mutualism through parasitism', 4],
+                ['viral reproduction  ', 35]
     ]);
+
+    // Bar GO terms
+        var data7 = new google.visualization.DataTable();
+        data7.addColumn('string', 'GO term');
+        data7.addColumn('number', 'Match');
+        data7.addRows([
+            ['cofactor binding', 7883],
+            ['cytoskeletal protein binding', 4],
+            ['metal ion binding', 5540],
+            ['nucleic acid binding', 10224 ],
+            ['nucleotide binding', 15793],
+            ['receptor binding', 8],
+            [' transcription factor binding', 150],
+            ['unfolded protein binding', 246],
+            ['aminoacyl-tRNA ligase activity', 2382],
+            ['isomerase activity ',2425 ],
+            ['ligase activity', 5727],
+            ['lyase activity', 2867],
+            ['oxidoreductase activity', 15758],
+            ['ATPase activity', 2882],
+            ['GTPase activity', 553],
+            ['helicase activity', 1028],
+            ['hydrolase activity', 13262],
+            ['hydrolase activity, acting on carbon-nitrogen (but not peptide) bonds', 1010],
+            ['hydrolase activity, acting on ester bonds', 2911],
+            ['hydrolase activity, acting on glycosyl bonds', 521],
+            ['lipase activity', 36],
+            ['nuclease activity', 1431],
+            ['peptidase activity', 2493],
+            ['phosphatase activity', 200],
+            ['acetyltransferase activity', 189],
+            ['DNA polymerase activity', 752],
+            ['kinase activity', 1492],
+            ['protein kinase activity', 406],
+            ['RNA polymerase activity', 1176],
+            ['transferase activity', 11979 ],
+            ['transferase activity, transferring acyl groups', 1148],
+            ['transferase activity, transferring alkyl or aryl (other than methyl) groups', 865],
+            ['transferase activity, transferring glycosyl groups', 718],
+            ['enzyme regulator activity', 143],
+            ['motor activity', 158],
+            ['nucleic acid binding transcription factor activity', 999],
+            ['protein binding transcription factor activity', 323],
+            ['receptor activity', 950],
+            ['translation regulator activity', 0],
+            ['transporter activity', 6672],
+            ['two-component response regulator activity', 423]
+        ]);
+
+    // Bar GO terms
+            var data8 = new google.visualization.DataTable();
+            data8.addColumn('string', 'GO term');
+            data8.addColumn('number', 'Match');
+            data8.addRows([
+                ['DNA polymerase complex', 117],
+                ['proton-transporting two-sector ATPase complex', 538],
+                ['ribosome', 1865],
+                [' transcription factor complex', 0 ],
+                ['chromosome', 883],
+                ['cytoplasm', 7170],
+                ['cytoskeleton', 33],
+                ['endoplasmic reticulum', 24],
+                ['extrachromosomal circular DNA', 30],
+                ['Golgi apparatus ',2],
+                ['mitochondrion', 25],
+                ['nucleoid', 98],
+                ['nucleus', 31],
+                ['periplasmic space', 584],
+                ['thylakoid', 4],
+                ['vacuole', 3],
+                ['vesicle', 5],
+                ['ATP-binding cassette (ABC) transporter complex', 28],
+                ['cell wall', 162],
+                ['flagellum', 387],
+                ['membrane', 10552],
+                ['outer membrane', 317],
+                ['pilus', 8],
+                ['plasma membrane', 312],
+                ['respiratory chain', 15],
+                ['extracellular matrix', 18],
+                ['virion', 103]
+            ]);
+    // Bar GO terms
+        var data9 = new google.visualization.DataTable();
+        data9.addColumn('string', 'GO term');
+        data9.addColumn('number', 'Match');
+        data9.addRows([
+            ['nitrogen compound metabolic process', 23093],
+            ['biosynthetic process', 21253],
+            ['oxidation-reduction process', 14516],
+            ['small molecule metabolic process', 12914],
+            ['protein metabolic process', 8764],
+            ['transport ', 8058],
+            ['RNA metabolic process', 7554],
+            ['cellular amino acid metabolic process', 6824],
+            ['DNA metabolic process', 5063],
+            ['translation', 4501],
+            ['carbohydrate metabolic process', 4158],
+            ['transcription, DNA-dependent', 3479],
+            ['cofactor metabolic process ', 2389],
+            ['nucleotide metabolic process', 2356],
+            ['catabolic process', 2251],
+            ['ion transport', 2062],
+            ['lipid metabolic process', 2039],
+            ['response to stress', 1772],
+            ['generation of precursor metabolites and energy', 1625],
+            ['phosphorylation', 1219],
+            ['cell communication', 1149],
+            ['signal transduction', 1071],
+            ['cellular component organization  ', 1068],
+            ['cellular respiration', 1045],
+            ['electron transport chain', 595],
+            ['sulfur compound metabolic process', 560],
+            ['two-component signal transduction system (phosphorelay)', 477],
+            ['ATP metabolic process', 443],
+            ['homeostatic process', 393],
+            ['cell wall organization or biogenesis', 340],
+            ['cell motility ', 292],
+            ['protein secretion', 258],
+            ['transposition', 169],
+            ['cell morphogenesis', 150],
+            ['chemotaxis ', 136],
+            ['GTP metabolic process', 115],
+            ['cell division', 105],
+            ['photosynthesis', 44],
+            ['cell projection assembly', 37],
+            ['viral reproduction  ', 35],
+            ['nitrogen cycle metabolic process', 27],
+            ['pathogenesis', 20],
+            ['toxin metabolic process ', 19],
+            ['conjugation', 11],
+            ['immune system process', 4],
+            ['symbiosis, encompassing mutualism through parasitism', 4],
+            ['cell growth', 0],
+            ['sporulation', 0]
+        ]);
+
+    var data10 = new google.visualization.DataTable();
+            data10.addColumn('string', 'GO term');
+            data10.addColumn('number', 'Match');
+            data10.addRows([
+                ['nucleotide binding', 15793],
+                ['oxidoreductase activity', 15758],
+                ['hydrolase activity', 13262],
+                ['transferase activity', 11979 ],
+                ['nucleic acid binding', 10224 ],
+                ['cofactor binding', 7883],
+                ['transporter activity', 6672],
+                ['ligase activity', 5727],
+                ['metal ion binding', 5540],
+                ['hydrolase activity, acting on ester bonds', 2911],
+                ['ATPase activity', 2882],
+                ['lyase activity', 2867],
+                ['peptidase activity', 2493],
+                ['isomerase activity ',2425 ],
+                ['aminoacyl-tRNA ligase activity', 2382],
+                ['kinase activity', 1492],
+                ['nuclease activity', 1431],
+                ['RNA polymerase activity', 1176],
+                ['transferase activity, transferring acyl groups', 1148],
+                ['helicase activity', 1028],
+                ['hydrolase activity, acting on carbon-nitrogen (but not peptide) bonds', 1010],
+                ['nucleic acid binding transcription factor activity', 999],
+                ['receptor activity', 950],
+                ['transferase activity, transferring alkyl or aryl (other than methyl) groups', 865],
+                ['DNA polymerase activity', 752],
+                ['transferase activity, transferring glycosyl groups', 718],
+                ['protein kinase activity', 406],
+                ['GTPase activity', 553],
+                ['hydrolase activity, acting on glycosyl bonds', 521],
+                ['two-component response regulator activity', 423],
+                ['protein binding transcription factor activity', 323],
+                ['unfolded protein binding', 246],
+                ['phosphatase activity', 200],
+                ['acetyltransferase activity', 189],
+                ['motor activity', 158],
+                [' transcription factor binding', 150],
+                ['enzyme regulator activity', 143],
+                ['lipase activity', 36],
+                ['receptor binding', 8],
+                ['cytoskeletal protein binding', 4],
+                ['translation regulator activity', 0]
+            ]);
+
+    var data11 = new google.visualization.DataTable();
+    data11.addColumn('string', 'GO term');
+    data11.addColumn('number', 'Match');
+    data11.addRows([
+        ['membrane', 10552],
+        ['cytoplasm', 7170],
+        ['ribosome', 1865],
+        ['proton-transporting two-sector ATPase complex', 538],
+        ['chromosome', 883],
+        ['periplasmic space', 584],
+        ['flagellum', 387],
+        ['outer membrane', 317],
+        ['plasma membrane', 312],
+        ['cell wall', 162],
+        ['DNA polymerase complex', 117],
+        ['virion', 103],
+        ['nucleoid', 98],
+        ['cytoskeleton', 33],
+        ['nucleus', 31],
+        ['extrachromosomal circular DNA', 30],
+        ['ATP-binding cassette (ABC) transporter complex', 28],
+        ['mitochondrion', 25],
+        ['endoplasmic reticulum', 24],
+        ['extracellular matrix', 18],
+        ['respiratory chain', 15],
+        ['pilus', 8],
+        ['vesicle', 5],
+        ['thylakoid', 4],
+        ['vacuole', 3],
+        ['Golgi apparatus', 2],
+        [' transcription factor complex', 0]
+    ]);
+
     // Kingdom level
     var options = {'title':'Domain composition',
         'titleTextStyle':{fontSize:12},
@@ -150,6 +400,7 @@ function drawChart() {
         'pieSliceBorderColor':'none'
 //Krona style               'pieSliceBorderColor':'#9c8989'
     };
+
     // Archea level
     var options3 = {'title':'Archea level (Total: 28)',
         'titleTextStyle':{fontSize:12},
@@ -239,16 +490,84 @@ function drawChart() {
     };
 
     // GO TERM Biological Process
-    var options10 = {'title':'Biological Process (Total: x)',
+    var options10 = {'title':'Biological process',
         'titleTextStyle':{fontSize:12},
-        'colors':['#5f8694'],
-        //Krona style               'colors':['#d47f7f','#d1a575','#d4c97f','#99d47f','#7fd4a7','#7fc3d4','#7f8ad4','#a77fd4','#d47fd3','#d47faf','#ccc','#ccc','#ccc'],
-        'width':400,
-        'height':320,
-        'chartArea':{left:120, top:40, width:"66%", height:"70%"},
-        'pieSliceBorderColor':'none',
+        'colors':['#058dc7'],
+//        'colors':['#5f8694'],
+        'width':340,
+        'height':600,
+        'chartArea':{left:220, top:40, width:"100%", height:"100%"},
+        'vAxis':{textStyle:{fontSize:10}},
+//        'vAxis':{'textPosition':'in'},
+        'hAxis':{textPosition: 'none', gridlines:{color:'white'}},
+        'bar':{groupWidth:8},
         'legend':'none'
     };
+
+    // GO TERM Molecular Function
+    var options11 = {'title':'Molecular function',
+        'titleTextStyle':{fontSize:12},
+        'colors':['#50b432'],
+//        'colors':['#91d450'],
+        'width':340,
+        'height':600,
+        'chartArea':{left:220, top:40, width:"100%", height:"100%"},
+        'vAxis':{textStyle:{fontSize:10}},
+//        'vAxis':{'textPosition':'in'},
+        'hAxis':{textPosition: 'none', gridlines:{color:'white'}},
+        'bar':{groupWidth:8},
+        'legend':'none'
+    };
+        // GO TERM Cellular component
+    var options12 = {'title':'Cellular component',
+        'titleTextStyle':{fontSize:12},
+        'colors':['#ed561b'],
+//        'colors':['#535353'],
+        'width':320,
+        'height':600,
+        'chartArea':{left:220, top:40, width:"100%", height:"100%"},
+        'vAxis':{textStyle:{fontSize:10}},
+//        'vAxis':{'textPosition':'in'},
+        'hAxis':{textPosition: 'none', gridlines:{color:'white', count:15}},
+        'bar':{groupWidth:8},
+        'legend':'none'
+    };
+
+    // GO TERM Pie
+    var options13 = {'title':'Biological process',
+        'titleTextStyle':{fontSize:12},
+        'colors':['#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff'],
+        'width':340,
+        'height':220,
+        'legend':{position:'right', fontSize:10},
+        'chartArea':{left:0, top:30, width:"70%", height:"100%"},
+        'pieSliceBorderColor':'none',
+        'sliceVisibilityThreshold':1 / 30
+    };
+
+    var options14 = {'title':'Molecular function',
+        'titleTextStyle':{fontSize:12},
+        'colors':['#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff'],
+        'width':340,
+        'height':220,
+        'legend':{position:'right', fontSize:10},
+        'chartArea':{left:0, top:30, width:"70%", height:"100%"},
+        'pieSliceBorderColor':'none',
+        'sliceVisibilityThreshold':1 / 30
+    };
+
+    var options15 = {'title':'Cellular component',
+        'titleTextStyle':{fontSize:12},
+        'colors':['#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff'],
+        'width':340,
+        'height':220,
+        'legend':{position:'right', fontSize:10},
+        'chartArea':{left:0, top:30, width:"70%", height:"100%"},
+        'pieSliceBorderColor':'none',
+        'sliceVisibilityThreshold':1 / 100
+
+    };
+
     // Instantiate and draw our chart, passing in some options.
     var chart = new google.visualization.PieChart(document.getElementById('tax_chart_div'));
     chart.draw(data, options);
@@ -268,12 +587,52 @@ function drawChart() {
     chart8.draw(data4, options8);
     var chart9 = new google.visualization.ColumnChart(document.getElementById('tax_chart_div9'));
     chart9.draw(data5, options9);
+    var chart10 = new google.visualization.BarChart(document.getElementById('tax_chart_div10'));
+    chart10.draw(data6, options10);
+    var chart11 = new google.visualization.BarChart(document.getElementById('tax_chart_div11'));
+    chart11.draw(data7, options11);
+    var chart12 = new google.visualization.BarChart(document.getElementById('tax_chart_div12'));
+    chart12.draw(data8, options12);
+    var chart13 = new google.visualization.PieChart(document.getElementById('tax_chart_div13'));
+    chart13.draw(data9, options13);
+    var chart14 = new google.visualization.PieChart(document.getElementById('tax_chart_div14'));
+    chart14.draw(data10, options14);
+    var chart15 = new google.visualization.PieChart(document.getElementById('tax_chart_div15'));
+    chart15.draw(data11, options15);
 }
 
 </script>
 <script type='text/javascript'>
     google.load('visualization', '1', {packages:['table']});
+
+    google.setOnLoadCallback(init);
+
+    var dataSourceUrl = 'https://docs.google.com/spreadsheet/ccc?key=0AgWotcbTSSjYdGF6NjE0WGxGRmV5djJDWEZ6RzZhT2c&usp=sharing';
+    var query, options, container;
+
+       function init() {
+         query = new google.visualization.Query(dataSourceUrl);
+         container = document.getElementById("table");
+         options = {width:780, allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false};
+         sendAndDraw();
+       }
+
+       function sendAndDraw() {
+         query.abort();
+         var tableQueryWrapper = new TableQueryWrapper(query, container, options);
+         tableQueryWrapper.sendAndDraw();
+       }
+
+
+       function setOption(prop, value) {
+         options[prop] = value;
+         sendAndDraw();
+       }
+
+
     google.setOnLoadCallback(drawTable);
+
+
 
     function drawTable() {
 
@@ -308,24 +667,8 @@ function drawChart() {
             <c:when test="${addComma}">,
             </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise>
            </c:choose>
-            [<%--' <ul class="color_legend"><li  style="color: #${taxonomyData.colourCode};"></li></ul>',--%> '${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}]
-            </c:forEach>
-        ]);
 
-        var data2b = new google.visualization.DataTable();
-        data2b.addColumn('string', 'Phylum');
-        data2b.addColumn('string', 'Kingdom');
-        data2b.addColumn('number', 'Hits');
-        data2b.addColumn('number', '%');
-        data2b.addRows([
-            <c:set var="addComma" value="false"/>
-            <c:set var="colourCode" value="#058dc7" scope="page"/>
-            <c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResult.taxonomyDataSet}" varStatus="status">
-            <c:choose>
-            <c:when test="${addComma}">,
-            </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise>
-            </c:choose>
-            ['${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}]
+            [<%--' <ul class="color_legend"><li  style="color: #${taxonomyData.colourCode};"></li></ul>',--%> '${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}]
             </c:forEach>
         ]);
 
@@ -367,67 +710,92 @@ function drawChart() {
 
         //Bar top hits table
         var table6 = new google.visualization.Table(document.getElementById('tax_table_div4'));
-        table6.draw(data2b, { allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false});
-
-
+        table6.draw(data2, { allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false});
     }
-</script>
-<%--InterPro match summary table--%>
-<script type='text/javascript' src="">
-    google.load('visualization', '1', {packages:['table']});
-    google.setOnLoadCallback(drawTable);
+    <%--InterPro match summary table--%>
+        <%--function drawTable() {--%>
+            <%--// Create and populate the data table.--%>
+            <%--var interProMatchesData = new google.visualization.DataTable();--%>
+            <%--interProMatchesData.addColumn('string', 'Entry name');--%>
+            <%--interProMatchesData.addColumn('string', 'ID');--%>
+            <%--interProMatchesData.addColumn('number', 'Proteins matched');--%>
+            <%--interProMatchesData.addRows([--%>
+                <%--<c:set var="addComma" value="false"/>--%>
+                <%--<c:forEach var="entry" items="${model.interProEntries}" varStatus="status">--%>
+                <%--<c:choose>--%>
+                <%--<c:when test="${addComma}">,--%>
+                <%--</c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise>--%>
+                <%--</c:choose>--%>
+                <%--['<a href="http://www.ebi.ac.uk/interpro/entry/${entry.entryID}">${entry.entryDescription}</a>', '${entry.entryID}', ${entry.numOfEntryHits}]--%>
+                <%--</c:forEach>--%>
+            <%--]);--%>
+            <%--// Create and draw the visualization.--%>
+            <%--var interProMatchesTable = new google.visualization.Table(document.getElementById('entry_table_div'));--%>
+            <%--interProMatchesTable.draw(interProMatchesData, {width:780, allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false });--%>
 
-    function drawTable() {
-        var interProMatchesData = new google.visualization.DataTable();
-        interProMatchesData.addColumn('string', 'Entry name');
-        interProMatchesData.addColumn('string', 'ID');
-        interProMatchesData.addColumn('number', 'Proteins matched');
-        interProMatchesData.addRows([
-            <c:set var="addComma" value="false"/>
-            <c:forEach var="entry" items="${model.interProEntries}" varStatus="status">
-            <c:choose>
-            <c:when test="${addComma}">,
-            </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise>
-            </c:choose>
-            ['${entry.entryDescription}', '${entry.entryID}', ${entry.numOfEntryHits}]
-            </c:forEach>
-        ]);
-        var interProMatchesTable = new google.visualization.Table(document.getElementById('entry_table_div'));
-        interProMatchesTable.draw(interProMatchesData, { allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false });
-    }
+//            var title = "ID";
+//            var title1 = "Proteins matched";
+//            var width = "20px";
+//              $('.google-visualization-table-th:contains(' + title + ')').css('width', width);
+//              $('.google-visualization-table-th:contains(' + title1 + ')').css('width', width);
+//        }
 </script>
-<%-- <script>
-$(function() {
-  $( "#rerun" )
-    .button()
-    .click(function() {
-      alert( "Running the last action" );
-    })
-    .next()
-      .button({
-        text: false,
-        icons: {
-          primary: "ui-icon-triangle-1-s"
-        }
-      })
-      .click(function() {
-        var menu = $( this ).parent().next().show().position({
-          my: "left top",
-          at: "left bottom",
-          of: this
+
+
+
+
+
+
+    <script type="text/javascript">
+
+      google.load('visualization', '1.1', {packages: ['controls']});
+
+      function drawVisualization() {
+        // Prepare the data.
+          var interProMatchesData = new google.visualization.DataTable();
+            interProMatchesData.addColumn('string', 'Entry name');
+            interProMatchesData.addColumn('string', 'ID');
+            interProMatchesData.addColumn('number', 'Proteins matched');
+            interProMatchesData.addRows([
+                <c:set var="addComma" value="false"/>
+                <c:forEach var="entry" items="${model.interProEntries}" varStatus="status">
+                <c:choose>
+                <c:when test="${addComma}">,
+                </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise>
+                </c:choose>
+                //  !important TEMP solution - sorting order doesn't work properly for entry name when using HTML tags
+                ['${entry.entryDescription} (<a href="http://www.ebi.ac.uk/interpro/entry/${entry.entryID}">view</a>)', '${entry.entryID}', ${entry.numOfEntryHits}]
+                </c:forEach>
+            ]);
+
+        // Define a StringFilter control for the 'Name' column
+        var stringFilter = new google.visualization.ControlWrapper({
+          'controlType': 'StringFilter',
+          'containerId': 'control1',
+          'options': {
+          'filterColumnLabel': 'Entry name'
+          }
         });
-        $( document ).one( "click", function() {
-          menu.hide();
+
+        // Define a table visualization
+        var table8 = new google.visualization.ChartWrapper({
+          'chartType': 'Table',
+          'containerId': 'entry_table_div',
+          'options': {width:780, allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false }
         });
-        return false;
-      })
-      .parent()
-        .buttonset()
-        .next()
-          .hide()
-          .menu();
-});
-</script>--%>
+
+        // Create the dashboard.
+        var dashboard = new google.visualization.Dashboard(document.getElementById('dashboard')).
+          // Configure the string filter to affect the table contents
+          bind(stringFilter, table8).
+          // Draw the dashboard
+          draw(interProMatchesData);
+      }
+      google.setOnLoadCallback(drawVisualization);
+    </script>
+
+
+
 <c:choose>
 <c:when test="${not empty model.sample}">
 
@@ -454,6 +822,7 @@ $(function() {
 
 
 <div id="fragment-overview">
+
 
     <tags:publications publications="${model.sample.publications}" relatedPublications="${model.relatedPublications}" relatedLinks="${model.relatedLinks}" />
 
@@ -635,6 +1004,7 @@ $(function() {
 
 
 <div id="fragment-taxonomy">
+
 <%--<div class="sidebar-allrel">--%>
 
             <%--<h3>Download results</h3>--%>
@@ -659,7 +1029,7 @@ $(function() {
 <%--</div>--%>
 <div class="main_tab_full_content">
       <%--<h3>Taxonomy analysis</h3>--%>
-      <h4>Top taxonomy Hits (Total: 229)</h4>
+      <h3>Top taxonomy Hits</h3>
         <div id="tabs-taxchart">
 
             <%--Tabs--%>
@@ -681,17 +1051,7 @@ $(function() {
                 <div id="tax-pie">
                         <div class="chart_container">
                             <div class="chart_container"><div id="tax_chart_div"></div><div id="tax_chart_div3"></div><div id="tax_table_div2"></div>
-                                <div style="float:right;margin-top: -31px;margin-right: 20px;"><form action="">
-                                                                 Show rows:
-                                                                 <select onChange="setOption('pageSize', parseInt(this.value, 10))">
-                                                                   <option selected=selected value="10">10</option>
-                                                                   <option value="50">50</option>
-                                                                   <option value="100">100</option>
-                                                                   <option value="1000">1000</option>
-                                                                   <option value="all">all</option>
-                                                                 </select>
-                                                               </form>
-                                                             </div>
+
                               </div>
                             <p><br/></p>
                             <%--<h4>Top taxonomy levels</h4>--%>
@@ -782,7 +1142,7 @@ $(function() {
                                                           <%--href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/doExportI5TSVFile"/>">download--%>
                   <%--here</a>) has been used to produce the following summaries.</p>--%>
 
-              <h4>InterPro match summary</h4>
+              <h3>InterPro match summary</h3>
 
               <p>Most frequently found InterPro matches to this sample:</p>
               <%--<div>
@@ -812,7 +1172,40 @@ $(function() {
              </ul>
              <%--<div class="ico-download"><a class="icon icon-functional" data-icon="=" id="csv" href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/doExportIPRFile"/>"   title="<spring:message code="analysisStatsView.label.download.i5.table.view"/>"></a></div>--%>
              <div id="interpro-match-table">
-                 <div id="entry_table_div"></div>
+
+                 <div id="table"></div>
+                 <form action="" class="expandertable">
+                   Show rows:
+                    <select onChange="setOption('pageSize', parseInt(this.value, 10))">
+
+                      <option selected=selected value="10">10</option>
+
+                      <option value="25">25</option>
+                      <option value="50">50</option>
+                      <option value="100">100</option>
+                      <option value="1000">1000</option>
+                      <option value="10000">All</option>
+                    </select></form>
+                    <br />
+                 <div id="dashboard">
+
+                         <div id="control1"></div>
+                         <div id="entry_table_div"></div>
+                        <%--<div class="row_numb">--%>
+                        <%--<form action="">--%>
+                        <%--Show rows:--%>
+                        <%--<select onChange="setOption('pageSize', parseInt(this.value, 10))">--%>
+                        <%--<option selected=selected value="10">10</option>--%>
+                        <%--<option value="50">50</option>--%>
+                        <%--<option value="100">100</option>--%>
+                        <%--<option value="1000">1000</option>--%>
+                        <%--<option value="all">all</option>--%>
+                        <%--</select>--%>
+                        <%--</form>--%>
+                        <%--</div>--%>
+
+                 </div>
+                 <%--<div id="entry_table_div"></div>--%>
                  <%--<div id="tax_table_div2"></div>--%>
                  <%--<table border="1" class="result">--%>
                  <%--<thead>--%>
@@ -857,7 +1250,7 @@ $(function() {
       </c:otherwise>
     </c:choose>
 
-    <h4>GO Terms annotation</h4>
+    <h3>GO Terms annotation</h3>
     <p>A summary of Gene Ontology (GO) terms derived from InterPro matches to your sample is provided in the charts below.</p>
 
     <div id="tabs-chart">
@@ -865,8 +1258,8 @@ $(function() {
         <%--Tabs--%>
     <ul>
         <%--<li><a href="#go-terms-table" title="Table view"><span class="ico-table"></span></a></li>--%>
-        <%--<li><a href="#go-terms-pie" title="Pie chart view"><span class="ico-pie"></span></a></li>--%>
-        <%--<li><a href="#go-terms-bar" title="Bar chart view"><span class="ico-barh"></span></a></li>--%>
+        <li><a href="#go-terms-pie" title="Pie chart view"><span class="ico-pie"></span></a></li>
+        <li><a href="#go-terms-bar" title="Bar chart view"><span class="ico-barh"></span></a></li>
         <%--<li><a href="#go-terms-col" title="Stacked column chart view"><span class="ico-col"></span></a></li>--%>
         <%--<li><a href="#go-terms-Krona" title="Krona interactive chart view"><span class="ico-krona"></span></a></li>--%>
         <%--<li class="ico-downl"><a class="icon icon-functional" data-icon="=" href="#download" title="Download image/table"></a></li>--%>
@@ -877,8 +1270,9 @@ $(function() {
 
     <div id="go-terms-bar">
 
+        <div class="go-chart"><div id="tax_chart_div10"></div> <div id="tax_chart_div11"></div> <div id="tax_chart_div12"></div> </div>
 
-        <div class="go-chart">
+        <div class="go-chart" style="display:none;">
           <div class="go_rotate">
               <h2>Biological process</h2>
               <c:url var="bioImage" value="/getImage" scope="request">
@@ -913,7 +1307,9 @@ $(function() {
 
         </div>
 
-
+    <div id="go-terms-pie">
+            <div class="go-chart"><div id="tax_chart_div13"></div> <div id="tax_chart_div14"></div> <div id="tax_chart_div15"></div> </div>
+     </div>
     <%--<div id="go-terms-Krona">--%>
     <%--<table class="result">--%>
     <%--<tr>--%>
@@ -1059,7 +1455,14 @@ $(function() {
     $( "#navtabs").tabs({ ${model.analysisStatus.disabledAttribute} });
     $( "#interpro-chart" ).tabs({ disabled: [1,2,3,4], selected: 0 });
 //    $( "#tabs-chart" ).tabs({ disabled: [0,1,3,5], selected: 2 });
+    $( "#tabs-chart" ).tabs({ selected: 1  });
     $( "#tabs-taxchart" ).tabs({ disabled: [5], selected: 0 });
+  // fix the auto-scrolling issue when linking from homepage using htag
+setTimeout(function() {
+  if (location.hash) {
+    window.scrollTo(0, 0);
+  }
+}, 1);
 </script>
 
 
