@@ -368,8 +368,8 @@ font-size:110%;
 text-decoration:underline;
 }
 
-/*a.ext, a.ext:link {padding-left: 12px;background: url(../img/ico_ext_link.png) no-repeat 0 3px;}*/
-/*a.ext:hover,a.ext:active, a.ext:focus {background: url(../img/ico_ext_link_on.png) no-repeat 0 3px; }*/
+a.ext, a.ext:link {padding-left: 12px;background: url(../img/ico_ext_link.png) no-repeat 0 3px;}
+a.ext:hover,a.ext:active, a.ext:focus {background: url(../img/ico_ext_link_on.png) no-repeat 0 3px; }
 
 a.signup {
 width:166px;
@@ -1569,8 +1569,9 @@ background:none;
 .tweet  li {list-style-type: none; margin:0 9px 20px 9px;}
 
 .lowercase {text-transform:lowercase;}
- .krona_chart {height:470px; width:100%; border:0px black solid;}
- .krona_chart_small {height: 230px; width: 354px; border:0px pink solid;}
+
+.krona_chart {height:540px; width:100%; background-color: rgb(244, 244, 248);border:1px solid rgb(224, 224, 224);}
+.krona_chart_small {height: 230px; width: 354px; border:0px pink solid;}
 
 /*JQUERY TABS*/
 .title_tab {margin:20px 0 0 9px;}
@@ -1614,9 +1615,9 @@ background:none;
     zoom:1;}
 
 .sample_ana #tabs-chart .ui-state-disabled, .sample_ana #interpro-chart .ui-state-disabled, .sample_ana #tabs-taxchart .ui-state-disabled {opacity:0.1;}
-.sample_ana #interpro-chart ul {float:left;}
+
 .sample_ana #tabs-chart .ui-tabs-nav, .sample_ana #interpro-chart .ui-tabs-nav, .sample_ana #tabs-taxchart .ui-tabs-nav { margin: 0px 0 9px 9px; padding:0;}
-.sample_ana #interpro-chart .ui-helper-clearfix, .sample_ana #tabs-taxchart .ui-helper-clearfix {display: inline-block;}
+.sample_ana #tabs-taxchart .ui-helper-clearfix, .sample_ana #interpro-chart .ui-helper-clearfix  {display: inline-block;}
 .sample_ana #tabs-chart .ui-tabs-nav li a, .sample_ana #interpro-chart .ui-tabs-nav li a, .sample_ana #tabs-taxchart .ui-tabs-nav li a {border: 1px solid rgba(0,0,0,0.1);padding: .2em .2em;
 background-image: linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));
 background-image: -moz-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));
@@ -1626,7 +1627,7 @@ background-image: -webkit-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247
 .sample_ana #tabs-chart .ui-tabs-nav li.ui-state-hover a, .sample_ana #interpro-chart .ui-tabs-nav li.ui-state-hover a, .sample_ana #tabs-taxchart .ui-tabs-nav li.ui-state-hover a  {text-decoration: none;}
 .sample_ana #tabs-chart .ui-tabs-nav li a:hover, .sample_ana #interpro-chart .ui-tabs-nav li a:hover, .sample_ana #tabs-taxchart .ui-tabs-nav li a:hover  {border: 1px solid #c6c6c6;box-shadow:1px 1px 1px rgba(0, 0, 0, 0.3);-moz-box-shadow:1px 1px 1px rgba(0, 0, 0, 0.3); -khtml-box-shadow:1px 1px 1px rgba(0, 0, 0, 0.3); -webkit-box-shadow:0px 0px 3px rgba(0, 0, 0, 0.3) ; text-decoration:none;}
 .sample_ana #tabs-chart li.ui-tabs-selected, .sample_ana #interpro-chart li.ui-tabs-selected, .sample_ana #tabs-taxchart li.ui-tabs-selected {/*height: 37px;*/height: 28px;background: #fff; border: none; top:1px;}
-.sample_ana #tabs-chart .ui-tabs-panel, .sample_ana #interpro-chart .ui-tabs-panel,.sample_ana #tabs-taxchart .ui-tabs-panel  {margin: 0;  position: relative; z-index: 400; border: 0px solid rgb(213, 213, 213); border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;padding: 9px 0px;}
+.sample_ana #tabs-chart .ui-tabs-panel, .sample_ana #interpro-chart .ui-tabs-panel, .sample_ana #tabs-taxchart .ui-tabs-panel  {margin: 0;  position: relative; z-index: 400; border: 0px solid rgb(213, 213, 213); border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;}
 
 .ui-tabs .ui-tabs-nav li.ico-downl {margin-left:40px;}
 .ui-tabs .ui-tabs-nav li .icon-functional:before {color:#3b4043;font-size: 164%; width: 20px; font-weight: normal;  padding-left: 3px; }
@@ -1680,11 +1681,15 @@ background-image: -webkit-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247
 #list-data a.list_sample:hover, #sample_list a.list_sample:hover, #project_ov a.list_sample:hover {color:#62388b;}
 
 /*GOOGLE CHART - ANALYSIS PAGE*/
-#tax_chart_div, #tax_chart_div2, #tax_chart_div3,#tax_chart_div4,#tax_chart_div5, #tax_chart_div6, #tax_chart_div7, #tax_chart_div8, #tax_chart_div9, #tax_table_div, #tax_table_div2, #tax_table_div4, #tax_table_div5, #tax_table_div6 {/*border:1px red solid;*/float:left;}
+#tax_chart_div, #tax_chart_div2, #tax_chart_div3,#tax_chart_div4,#tax_chart_div5, #tax_chart_div6, #tax_chart_div7, #tax_chart_div8, #tax_chart_div9, #tax_chart_div10, #tax_chart_div11, #tax_chart_div12, #tax_chart_div13, #tax_chart_div14, #tax_chart_div15, #func_chart_div1, #tax_table_div, #tax_table_div2, #tax_table_div4, #tax_table_div5, #tax_table_div6, #func_table_div1 {/*border:1px red solid;*/float:left;}
 #tax_chart_div {margin-top: 3px;}
+
 #tax_chart_div2,  #tax_chart_div5 {margin-right: 9px;}
 /*#tax_chart_div3 {margin-right: 30px;}*/
-#tax_table_div2, #tax_table_div4, #tax_table_div6 {margin-left: 30px;}
+#tax_table_div2, #tax_table_div4, #tax_table_div6, #func_table_div1 {margin-left: 30px;}
+
+#entry_table_div div div table, #func_table_div1 div div table,  .row_numb {border:1px white solid; width:600px;} /*fix bug size after sorting - has to be the same as the size define on the page*/
+
 .chart_container {display:block;overflow:auto;}
 
 .sample_ana .google-visualization-table-table {font-size: 91%;}  /*reduce slightly font table*/
@@ -1692,3 +1697,11 @@ background-image: -webkit-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247
 .sample_ana .google-visualization-table-table .google-visualization-table-tr-head td {background: white; border:none;}
 
 ul.color_legend {list-style-type: square; list-style-position:inside;}
+/*GOOGLE CHART -TABLE  FILTER*/
+
+#dashboard #control1 {position: absolute;z-index: 1;left:1px;}
+#dashboard #control1 label {display: none;}
+#dashboard #control1 input {padding: 1px;margin-top: 6px;}
+
+.expandertable {float:left; margin-top: -32px; margin-left: 833px; z-index: 1;  position: relative;}
+#toolbar_div {border:1px red solid; display: block;}
