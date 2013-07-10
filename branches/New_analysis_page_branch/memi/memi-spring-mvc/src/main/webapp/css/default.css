@@ -1582,14 +1582,14 @@ background:none;
 .sample_ana .ui-widget-content a {color:#188960;}
 .sample_ana .ui-widget-content {border: 0px solid #aaaaaa;background: none;color: #333333;margin: 0 9px;}  /*margin for navigation tab*/
 .sample_ana .ui-widget-content .ui-widget-content {margin: 0;} /*non margin for graph tab*/
-.sample_ana .ui-tabs-nav { margin: 0px 0 -1px 9px;position: relative; z-index: 500;}
+.sample_ana .ui-tabs-nav { margin: 0px 0 -1px 9px;position: relative; z-index: 1;/*z-index: 500;*/}
 .sample_ana .ui-tabs-nav li {border-color: transparent /*was #e5e5e5*/;top:0px;}
 .sample_ana li.ui-tabs-selected {height: 30px; background: #fff; border-top: 1px solid rgb(213, 213, 213); border-right: 1px solid rgb(213, 213, 213); border-bottom: 0; border-left: 1px solid rgb(213, 213, 213);}
 .sample_ana li.ui-tabs-selected a:link{color: black;text-decoration: none;}
 .sample_ana .ui-state-disabled   a {color: grey;}
 .sample_ana .ui-state-default {background:none;}
 .sample_ana .ui-state-hover a:link {text-decoration: underline;}
-.sample_ana .ui-tabs-panel { margin: 0 0 0 -4px; position: relative; z-index: 400; /*background: url(images/epmc-ui-tabs-background-gradient.gif) 0 0 no-repeat;*/ border: 1px solid rgb(213, 213, 213);border-bottom-left-radius: 0px; border-bottom-right-radius: 0px; padding: 18px 4px;}
+.sample_ana .ui-tabs-panel { margin: 0 0 0 -4px; position: relative;/*z-index: 400;*/ /*background: url(images/epmc-ui-tabs-background-gradient.gif) 0 0 no-repeat;*/ border: 1px solid rgb(213, 213, 213);border-bottom-left-radius: 0px; border-bottom-right-radius: 0px; padding: 18px 4px;}
 .sample_ana .ui-state-disabled {opacity: .5;}
 /*IMAGE ANALYSIS PAGE*/
 .go-chart {display:block; border:0px red solid; overflow:auto; margin-left: 9px;}
@@ -1627,7 +1627,7 @@ background-image: -webkit-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247
 .sample_ana #tabs-chart .ui-tabs-nav li.ui-state-hover a, .sample_ana #interpro-chart .ui-tabs-nav li.ui-state-hover a, .sample_ana #tabs-taxchart .ui-tabs-nav li.ui-state-hover a  {text-decoration: none;}
 .sample_ana #tabs-chart .ui-tabs-nav li a:hover, .sample_ana #interpro-chart .ui-tabs-nav li a:hover, .sample_ana #tabs-taxchart .ui-tabs-nav li a:hover  {border: 1px solid #c6c6c6;box-shadow:1px 1px 1px rgba(0, 0, 0, 0.3);-moz-box-shadow:1px 1px 1px rgba(0, 0, 0, 0.3); -khtml-box-shadow:1px 1px 1px rgba(0, 0, 0, 0.3); -webkit-box-shadow:0px 0px 3px rgba(0, 0, 0, 0.3) ; text-decoration:none;}
 .sample_ana #tabs-chart li.ui-tabs-selected, .sample_ana #interpro-chart li.ui-tabs-selected, .sample_ana #tabs-taxchart li.ui-tabs-selected {/*height: 37px;*/height: 28px;background: #fff; border: none; top:1px;}
-.sample_ana #tabs-chart .ui-tabs-panel, .sample_ana #interpro-chart .ui-tabs-panel, .sample_ana #tabs-taxchart .ui-tabs-panel  {margin: 0;  position: relative; z-index: 400; border: 0px solid rgb(213, 213, 213); border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;}
+.sample_ana #tabs-chart .ui-tabs-panel, .sample_ana #interpro-chart .ui-tabs-panel, .sample_ana #tabs-taxchart .ui-tabs-panel  {margin: 0;  position: relative; /*z-index: 400;*/ border: 0px solid rgb(213, 213, 213); border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;}
 
 .ui-tabs .ui-tabs-nav li.ico-downl {margin-left:40px;}
 .ui-tabs .ui-tabs-nav li .icon-functional:before {color:#3b4043;font-size: 164%; width: 20px; font-weight: normal;  padding-left: 3px; }
@@ -1700,8 +1700,16 @@ ul.color_legend {list-style-type: square; list-style-position:inside;}
 /*GOOGLE CHART -TABLE  FILTER*/
 
 #dashboard #control1 {position: absolute;z-index: 1;left:1px;}
-#dashboard #control1 label {display: none;}
+/*#dashboard #control1 label {display: none;}*/
 #dashboard #control1 input {padding: 1px;margin-top: 6px;}
 
 .expandertable {float:left; margin-top: -32px; margin-left: 833px; z-index: 1;  position: relative;}
-#toolbar_div {border:1px red solid; display: block;}
+#toolbar_div, #visualization_div {display: block; float:left;}
+/*GOOGLE TOOLBAR*/
+.google-visualization-toolbar-triangle {display: none;}
+.goog-menu-button-caption span {display:none;}
+.goog-menu-button-inner-box {width: 15px;}
+.goog-menu-button {width: 24px;}
+.goog-menu-button-dropdown { height: 15px;  width: 11px; background: url('//ssl.gstatic.com/editor/editortoolbar.png') no-repeat -384px 0; }
+.google-visualization-toolbar-small-dialog-bg {z-index:2;}   /*important to avoid overlay with tabs*/
+.google-visualization-toolbar-small-dialog {z-index:2;}   /*important to avoid overlay with tabs*/
