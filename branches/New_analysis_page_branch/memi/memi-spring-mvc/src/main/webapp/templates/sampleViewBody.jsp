@@ -825,7 +825,7 @@ var visualization;
     }  //END function drawVisualization()
 
     function queryCallback(response) {
-      visualization.draw(response.getDataTable(), {is3D: false, title:'InterPro matches summary (Total:X)', titleTextStyle:{fontSize:12}, colors:['#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff', '#ccc'], width:500, height:240, legend:{position:'right', fontSize:10}, chartArea:{left:0, top:30, width:"42%", height:"100%"}, pieSliceBorderColor:'none',  sliceVisibilityThreshold:1 /160});
+      visualization.draw(response.getDataTable(), {is3D: false, title:'InterPro matches summary (Total: 51119)', titleTextStyle:{fontSize:12}, colors:['#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff', '#ccc'], width:500, height:240, legend:{position:'right', fontSize:10}, chartArea:{left:0, top:30, width:"42%", height:"100%"}, pieSliceBorderColor:'none',  sliceVisibilityThreshold:1 /160});
     }
     function drawToolbar() {
           var components = [
