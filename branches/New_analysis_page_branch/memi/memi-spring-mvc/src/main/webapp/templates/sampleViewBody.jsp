@@ -784,7 +784,7 @@ var visualization;
                 </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise>
                 </c:choose>
                 //  !important TEMP solution - sorting order doesn't work properly for entry name when using HTML tags
-                ['${entry.entryDescription} (<a href="http://www.ebi.ac.uk/interpro/entry/${entry.entryID}">view</a>)', '${entry.entryID}', ${entry.numOfEntryHits}]
+                ['${entry.entryDescription}', '<a href="http://www.ebi.ac.uk/interpro/entry/${entry.entryID}">${entry.entryID}</a>', ${entry.numOfEntryHits}]
                 </c:forEach>
     ]);
 
@@ -1245,11 +1245,15 @@ var visualization;
                 <div class="chart_container">
 
                      <%--<div id="func_chart_div1"></div>--%>
-                      <div id="visualization_div"></div>
+                     <div id="visualization_div"></div>
+                     <div id="dashboard">
+                     <div id="control1"></div>
+                     <div id="entry_table_div"></div>
+                     </div>
 
-                    <div id="func_table_div1"></div>
+                    <div id="func_table_div1" style="display:none;"></div>
 
-                    <form action="" class="expandertable">
+                    <form action="" class="expandertable" style="display:none;">
                     Show rows:
                     <select onChange="setOption('pageSize', parseInt(this.value, 10))">
 
@@ -1278,11 +1282,7 @@ var visualization;
                         <%--</div>--%>
 
                  </div>
-                     <div id="dashboard">
 
-                                             <div id="control1"></div>
-                                             <div id="entry_table_div"></div>
-                                    </div>
                  <%--<div id="entry_table_div"></div>--%>
                  <%--<div id="tax_table_div2"></div>--%>
                  <%--<table border="1" class="result">--%>
