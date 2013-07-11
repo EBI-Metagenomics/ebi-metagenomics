@@ -846,29 +846,7 @@ var visualization;
       }
 
       var data20 = response.getDataTable();
-      var chart20 = new google.visualization.PieChart(document.getElementById('func_chart_div1'));
-      chart20.draw(data20, {'title':'InterPro matches summary (Total:X)', 'titleTextStyle':{fontSize:12}, 'colors':['#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff', '#ccc'], 'width':340, 'height':220, 'legend':{position:'right', fontSize:10}, 'chartArea':{left:0, top:30, width:"70%", height:"100%"}, 'pieSliceBorderColor':'none',  'sliceVisibilityThreshold':1 /160 });
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+      }
 
 
 
@@ -1261,10 +1239,10 @@ var visualization;
 
 
                  <div id="interpro-match-pie">
-                 <div class="chart_container"><div id="visualization_div"></div> </div>
-                <div class="chart_container">
-                    <div id="func_chart_div1"></div>
 
+                <div class="chart_container">
+                    <%--<div id="func_chart_div1"></div>--%>
+                        <div id="visualization_div"></div>
 
                     <div id="func_table_div1"></div>
 
