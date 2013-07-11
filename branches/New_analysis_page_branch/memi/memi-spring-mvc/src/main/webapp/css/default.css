@@ -1698,8 +1698,8 @@ background-image: -webkit-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247
 
 ul.color_legend {list-style-type: square; list-style-position:inside;}
 /*GOOGLE CHART -TABLE  FILTER*/
-
-#dashboard #control1 {position: absolute;z-index: 1;left:1px;}
+#dashboard {float: left;}
+#dashboard #control1 {position: absolute;z-index: 1;eft:1px;}
 /*#dashboard #control1 label {display: none;}*/
 #dashboard #control1 input {padding: 1px;margin-top: 6px;}
 
