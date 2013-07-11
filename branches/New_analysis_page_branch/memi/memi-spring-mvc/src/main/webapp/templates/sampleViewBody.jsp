@@ -764,8 +764,10 @@ var visualization;
 
         var container = document.getElementById('visualization_div');
          visualization = new google.visualization.PieChart(container);
-         new google.visualization.Query('https://docs.google.com/spreadsheet/ccc?key=0AgWotcbTSSjYdGF6NjE0WGxGRmV5djJDWEZ6RzZhT2c&usp=sharing').
-         send(queryCallback);
+
+        var query2 = new google.visualization.Query('https://docs.google.com/spreadsheet/ccc?key=0AgWotcbTSSjYdGF6NjE0WGxGRmV5djJDWEZ6RzZhT2c&usp=sharing');
+        query2.setQuery('select A, C');
+        query2.send(queryCallback);
 
           // END PIe chart that works with toolbar element
 
@@ -1233,7 +1235,7 @@ var visualization;
                  <%--<li><a href="#interpro-match-bar" title="Bar chart view"><span class="ico-barh"></span></a></li>--%>
                  <%--<li><a href="#interpro-match-col" title="Stacked column chart view"><span class="ico-col"></span></a></li>--%>
                  <%--<li><a href="#interpro-match-Krona" title="Krona interactive chart view"><span class="ico-krona"></span></a></li>--%>
-                 <div class="ico-download" id="toolbar_div"><a class="icon icon-functional" data-icon="=" id="csv" href="#"   title=""></a></div>
+                 <div class="ico-download" id="toolbar_div" style="display:none;"><a class="icon icon-functional" data-icon="=" id="csv" href="#"   title=""></a></div>
              </ul>
 
 
@@ -1241,8 +1243,9 @@ var visualization;
                  <div id="interpro-match-pie">
 
                 <div class="chart_container">
-                    <%--<div id="func_chart_div1"></div>--%>
-                        <div id="visualization_div"></div>
+
+                     <%--<div id="func_chart_div1"></div>--%>
+                      <div id="visualization_div"></div>
 
                     <div id="func_table_div1"></div>
 
@@ -1258,11 +1261,9 @@ var visualization;
                     <option value="1000">1000</option>
                     <option value="10000">All</option>
                     </select></form>
-                </div>
-                 <div id="dashboard">
 
-                         <div id="control1"></div>
-                         <div id="entry_table_div"></div>
+
+
                         <%--<div class="row_numb">--%>
                         <%--<form action="">--%>
                         <%--Show rows:--%>
@@ -1277,6 +1278,11 @@ var visualization;
                         <%--</div>--%>
 
                  </div>
+                     <div id="dashboard">
+
+                                             <div id="control1"></div>
+                                             <div id="entry_table_div"></div>
+                                    </div>
                  <%--<div id="entry_table_div"></div>--%>
                  <%--<div id="tax_table_div2"></div>--%>
                  <%--<table border="1" class="result">--%>
