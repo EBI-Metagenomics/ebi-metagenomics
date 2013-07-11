@@ -21,6 +21,8 @@
 
 // Load the Visualization API and the piechart package.
 google.load('visualization', '1.0', {'packages':['corechart']});
+google.load('visualization', '1', {packages:['table']});
+google.load('visualization', '1.1', {packages: ['controls']});
 
 // Set a callback to run when the Google Visualization API is loaded.
 google.setOnLoadCallback(drawChart);
@@ -602,8 +604,9 @@ function drawChart() {
 }
 
 </script>
+
 <script type='text/javascript'>
-    google.load('visualization', '1', {packages:['table']});
+
 
     google.setOnLoadCallback(init);
 
@@ -612,8 +615,8 @@ function drawChart() {
 
        function init() {
          query = new google.visualization.Query(dataSourceUrl);
-         container = document.getElementById("table");
-         options = {width:780, allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false};
+         container = document.getElementById("func_table_div1");
+         options = {width:600, allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false};
          sendAndDraw();
        }
 
@@ -630,11 +633,11 @@ function drawChart() {
        }
 
 
-    google.setOnLoadCallback(drawTable);
+    google.setOnLoadCallback(drawTable);// Set a callback to run when the Google Visualization API is loaded.
 
 
 
-    function drawTable() {
+function drawTable() {
 
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Phylum');
@@ -748,14 +751,29 @@ function drawChart() {
 
     <script type="text/javascript">
 
-      google.load('visualization', '1.1', {packages: ['controls']});
+var visualization;
 
-      function drawVisualization() {
+    function draw() {
+      drawVisualization();
+      drawToolbar();
+    }
+
+    function drawVisualization() {
+
+        // BEGIN PIe chart that works with toolbar element
+
+        var container = document.getElementById('visualization_div');
+         visualization = new google.visualization.PieChart(container);
+         new google.visualization.Query('https://docs.google.com/spreadsheet/ccc?key=0AgWotcbTSSjYdGF6NjE0WGxGRmV5djJDWEZ6RzZhT2c&usp=sharing').
+         send(queryCallback);
+
+          // END PIe chart that works with toolbar element
+
         // Prepare the data.
           var interProMatchesData = new google.visualization.DataTable();
             interProMatchesData.addColumn('string', 'Entry name');
             interProMatchesData.addColumn('string', 'ID');
-            interProMatchesData.addColumn('number', 'Proteins matched');
+            interProMatchesData.addColumn('number', 'Hits');
             interProMatchesData.addRows([
                 <c:set var="addComma" value="false"/>
                 <c:forEach var="entry" items="${model.interProEntries}" varStatus="status">
@@ -766,14 +784,15 @@ function drawChart() {
                 //  !important TEMP solution - sorting order doesn't work properly for entry name when using HTML tags
                 ['${entry.entryDescription} (<a href="http://www.ebi.ac.uk/interpro/entry/${entry.entryID}">view</a>)', '${entry.entryID}', ${entry.numOfEntryHits}]
                 </c:forEach>
-            ]);
+    ]);
 
-        // Define a StringFilter control for the 'Name' column
+        // Define a StringFilter control for the 'Name'and 'ID' column
         var stringFilter = new google.visualization.ControlWrapper({
           'controlType': 'StringFilter',
           'containerId': 'control1',
-          'options': {
-          'filterColumnLabel': 'Entry name'
+          'options': { 'matchType':'any',
+          'filterColumnIndex': '0,1',
+           'ui': {label: '', labelSeparator: ':', 'ui.labelStacking':'vertical', 'ui.cssClass':'custom_col_search'}
           }
         });
 
@@ -781,7 +800,7 @@ function drawChart() {
         var table8 = new google.visualization.ChartWrapper({
           'chartType': 'Table',
           'containerId': 'entry_table_div',
-          'options': {width:780, allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false }
+          'options': {width:600, allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false }
         });
 
         // Create the dashboard.
@@ -790,10 +809,78 @@ function drawChart() {
           bind(stringFilter, table8).
           // Draw the dashboard
           draw(interProMatchesData);
-      }
-      google.setOnLoadCallback(drawVisualization);
-    </script>
 
+
+    // Pie chart produced from Google spreadsheet
+
+      var query = new google.visualization.Query('https://docs.google.com/spreadsheet/ccc?key=0AgWotcbTSSjYdGF6NjE0WGxGRmV5djJDWEZ6RzZhT2c&usp=sharing');
+
+       // Optional request to return only column A and C
+       query.setQuery('select A, B');
+
+      // Send the query with a callback function.
+      query.send(handleQueryResponse);
+    }  //END function drawVisualization()
+
+    function queryCallback(response) {
+      visualization.draw(response.getDataTable(), {is3D: false, title:'InterPro matches summary (Total:X)', titleTextStyle:{fontSize:12}, colors:['#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff', '#ccc'], width:420, height:240, legend:{position:'right', fontSize:10}, chartArea:{left:0, top:30, width:"60%", height:"100%"}, pieSliceBorderColor:'none',  sliceVisibilityThreshold:1 /160});
+    }
+    function drawToolbar() {
+          var components = [
+              {type: 'html', datasource: 'https://spreadsheets.google.com/tq?key=0AgWotcbTSSjYdGF6NjE0WGxGRmV5djJDWEZ6RzZhT2c'},
+              {type: 'csv', datasource: 'https://spreadsheets.google.com/tq?key=0AgWotcbTSSjYdGF6NjE0WGxGRmV5djJDWEZ6RzZhT2c'},
+              {type: 'htmlcode', datasource: 'https://spreadsheets.google.com/tq?key=0AgWotcbTSSjYdGF6NjE0WGxGRmV5djJDWEZ6RzZhT2c',
+               gadget: 'https://www.google.com/ig/modules/pie-chart.xml',
+
+               style: 'width: 800px; height: 700px; border: 1px solid black;'}
+          ];
+
+          var container1 = document.getElementById('toolbar_div');
+          google.visualization.drawToolbar(container1, components);
+        };
+
+    function handleQueryResponse(response) {
+      if (response.isError()) {
+        alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+        return;
+      }
+
+      var data20 = response.getDataTable();
+      var chart20 = new google.visualization.PieChart(document.getElementById('func_chart_div1'));
+      chart20.draw(data20, {'title':'InterPro matches summary (Total:X)', 'titleTextStyle':{fontSize:12}, 'colors':['#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff', '#ccc'], 'width':340, 'height':220, 'legend':{position:'right', fontSize:10}, 'chartArea':{left:0, top:30, width:"70%", height:"100%"}, 'pieSliceBorderColor':'none',  'sliceVisibilityThreshold':1 /160 });
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    google.setOnLoadCallback(draw);
+
+
+      // END Pie chart produced from Google spreadsheet
+      google.setOnLoadCallback(drawVisualization);  // Set a callback to run when the Google Visualization API is loaded.
+
+    </script>
 
 
 <c:choose>
@@ -1161,32 +1248,39 @@ function drawChart() {
 
           <div id="interpro-chart">
 
-                 <%--Tabs--%>
+             <%--Tabs--%>
              <ul>
                  <%--<li><a href="#interpro-match-table" title="Table view"><span class="ico-table"></span></a></li>--%>
-                 <%--<li><a href="#interpro-match-pie" title="Pie chart view"><span class="ico-pie"></span></a></li>--%>
+                 <li><a href="#interpro-match-pie" title="Pie chart view"><span class="ico-pie"></span></a></li>
                  <%--<li><a href="#interpro-match-bar" title="Bar chart view"><span class="ico-barh"></span></a></li>--%>
                  <%--<li><a href="#interpro-match-col" title="Stacked column chart view"><span class="ico-col"></span></a></li>--%>
                  <%--<li><a href="#interpro-match-Krona" title="Krona interactive chart view"><span class="ico-krona"></span></a></li>--%>
-
+                 <div class="ico-download" id="toolbar_div"><a class="icon icon-functional" data-icon="=" id="csv" href="#"   title=""></a></div>
              </ul>
-             <%--<div class="ico-download"><a class="icon icon-functional" data-icon="=" id="csv" href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/doExportIPRFile"/>"   title="<spring:message code="analysisStatsView.label.download.i5.table.view"/>"></a></div>--%>
-             <div id="interpro-match-table">
 
-                 <div id="table"></div>
-                 <form action="" class="expandertable">
-                   Show rows:
+
+
+                 <div id="interpro-match-pie">
+                 <div class="chart_container"><div id="visualization_div"></div> </div>
+                <div class="chart_container">
+                    <div id="func_chart_div1"></div>
+
+
+                    <div id="func_table_div1"></div>
+
+                    <form action="" class="expandertable">
+                    Show rows:
                     <select onChange="setOption('pageSize', parseInt(this.value, 10))">
 
-                      <option selected=selected value="10">10</option>
+                    <option selected=selected value="10">10</option>
 
-                      <option value="25">25</option>
-                      <option value="50">50</option>
-                      <option value="100">100</option>
-                      <option value="1000">1000</option>
-                      <option value="10000">All</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                    <option value="1000">1000</option>
+                    <option value="10000">All</option>
                     </select></form>
-                    <br />
+                </div>
                  <div id="dashboard">
 
                          <div id="control1"></div>
@@ -1240,6 +1334,7 @@ function drawChart() {
                            <%--</tbody>--%>
                        <%--</table>--%>
              </div>
+
           </div>
 
 
@@ -1453,11 +1548,13 @@ function drawChart() {
 <script>
 //    $( "#navtabs").tabs({ disabled: [5] });
     $( "#navtabs").tabs({ ${model.analysisStatus.disabledAttribute} });
-    $( "#interpro-chart" ).tabs({ disabled: [1,2,3,4], selected: 0 });
+//    $( "#interpro-chart" ).tabs({ disabled: [1,2,3,4], selected: 0 });
+    $( "#interpro-chart" ).tabs();
 //    $( "#tabs-chart" ).tabs({ disabled: [0,1,3,5], selected: 2 });
     $( "#tabs-chart" ).tabs({ selected: 1  });
     $( "#tabs-taxchart" ).tabs({ disabled: [5], selected: 0 });
-  // fix the auto-scrolling issue when linking from homepage using htag
+
+// fix the auto-scrolling issue when linking from homepage using htag
 setTimeout(function() {
   if (location.hash) {
     window.scrollTo(0, 0);
