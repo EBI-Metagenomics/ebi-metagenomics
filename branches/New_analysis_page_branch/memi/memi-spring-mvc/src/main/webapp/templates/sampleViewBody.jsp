@@ -394,7 +394,7 @@ function drawChart() {
     var options2 = {'title':'Bacteria level (Total: 201)',
         'titleTextStyle':{fontSize:12},
         'colors':['#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff', '#ccc', '#ccc', '#ccc'],
-//Krona style               'colors':['#d47f7f','#d1a575','#d4c97f','#99d47f','#7fd4a7','#7fc3d4','#7f8ad4','#a77fd4','#d47fd3','#d47faf','#ccc','#ccc','#ccc'],
+//Krona style 'colors':['#d47f7f','#d1a575','#d4c97f','#99d47f','#7fd4a7','#7fc3d4','#7f8ad4','#a77fd4','#d47fd3','#d47faf','#ccc','#ccc','#ccc'],
         'width':290,
         'height':220,
         'legend':{position:'right', fontSize:10},
@@ -794,8 +794,8 @@ var visualization;
           'controlType': 'StringFilter',
           'containerId': 'control1',
           'options': { 'matchType':'any',
-          'filterColumnIndex': '0,1',
-           'ui': {label: '', labelSeparator: ':', 'ui.labelStacking':'vertical', 'ui.cssClass':'custom_col_search'}
+                        'filterColumnIndex': '0,1',
+           'ui': {label: 'Filter', labelSeparator: ':', 'ui.labelStacking':'vertical', 'ui.cssClass':'custom_col_search'}
           }
         });
 
@@ -1547,8 +1547,6 @@ setTimeout(function() {
   }
 }, 1);
 </script>
-
-
 
 </c:when>
 <c:otherwise>
