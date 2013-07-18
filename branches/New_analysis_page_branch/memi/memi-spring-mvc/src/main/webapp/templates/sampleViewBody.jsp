@@ -511,9 +511,10 @@ function drawChart() {
         'titleTextStyle':{fontSize:12},
         'colors':['#50b432'],
 //        'colors':['#91d450'],
-        'width':340,
+        'width':230,
+//        'width':340,
         'height':600,
-        'chartArea':{left:220, top:40, width:"100%", height:"100%"},
+        'chartArea':{left:110, top:40, width:"100%", height:"100%"},
         'vAxis':{textStyle:{fontSize:10}},
 //        'vAxis':{'textPosition':'in'},
         'hAxis':{textPosition: 'none', gridlines:{color:'white'}},
@@ -1353,38 +1354,38 @@ var visualization;
 
         <div class="go-chart"><div id="tax_chart_div10"></div> <div id="tax_chart_div11"></div> <div id="tax_chart_div12"></div> </div>
 
-        <div class="go-chart" style="display:none;">
-          <div class="go_rotate">
-              <h2>Biological process</h2>
-              <c:url var="bioImage" value="/getImage" scope="request">
-                  <c:param name="imageName" value="_summary_biological_process.png"/>
-                  <c:param name="imageType" value="PNG"/>
-                  <c:param name="dir" value="${model.emgFile.fileID}"/>
-              </c:url>
-              <img src="<c:out value="${bioImage}"/>"/>  <br/>
-                  <%--<b><c:out value="${noDisplayID}"/></b>--%>
-          </div>
+        <%--<div class="go-chart" style="display:none;">--%>
+          <%--<div class="go_rotate">--%>
+              <%--<h2>Biological process</h2>--%>
+              <%--<c:url var="bioImage" value="/getImage" scope="request">--%>
+                  <%--<c:param name="imageName" value="_summary_biological_process.png"/>--%>
+                  <%--<c:param name="imageType" value="PNG"/>--%>
+                  <%--<c:param name="dir" value="${model.emgFile.fileID}"/>--%>
+              <%--</c:url>--%>
+              <%--<img src="<c:out value="${bioImage}"/>"/>  <br/>--%>
+                  <%--&lt;%&ndash;<b><c:out value="${noDisplayID}"/></b>&ndash;%&gt;--%>
+          <%--</div>--%>
 
-          <div class="go_rotate">
-              <h2>Molecular function</h2>
-              <c:url var="molecularImage" value="/getImage" scope="request">
-                  <c:param name="imageName" value="_summary_molecular_function.png"/>
-                  <c:param name="imageType" value="PNG"/>
-                  <c:param name="dir" value="${model.emgFile.fileID}"/>
-              </c:url>
-             <img src="<c:out value="${molecularImage}"/>"/>  <br/>
-          </div>
+          <%--<div class="go_rotate">--%>
+              <%--<h2>Molecular function</h2>--%>
+              <%--<c:url var="molecularImage" value="/getImage" scope="request">--%>
+                  <%--<c:param name="imageName" value="_summary_molecular_function.png"/>--%>
+                  <%--<c:param name="imageType" value="PNG"/>--%>
+                  <%--<c:param name="dir" value="${model.emgFile.fileID}"/>--%>
+              <%--</c:url>--%>
+             <%--<img src="<c:out value="${molecularImage}"/>"/>  <br/>--%>
+          <%--</div>--%>
 
-          <div class="go_rotate">
-              <h2>Cellular component</h2>
-              <c:url var="cellImage" value="/getImage" scope="request">
-                  <c:param name="imageName" value="_summary_cellular_component.png"/>
-                  <c:param name="imageType" value="PNG"/>
-                  <c:param name="dir" value="${model.emgFile.fileID}"/>
-              </c:url>
-              <img src="<c:out value="${cellImage}"/>"/> <br/>
-          </div>
-        </div>
+          <%--<div class="go_rotate">--%>
+              <%--<h2>Cellular component</h2>--%>
+              <%--<c:url var="cellImage" value="/getImage" scope="request">--%>
+                  <%--<c:param name="imageName" value="_summary_cellular_component.png"/>--%>
+                  <%--<c:param name="imageType" value="PNG"/>--%>
+                  <%--<c:param name="dir" value="${model.emgFile.fileID}"/>--%>
+              <%--</c:url>--%>
+              <%--<img src="<c:out value="${cellImage}"/>"/> <br/>--%>
+          <%--</div>--%>
+        <%--</div>--%>
 
         </div>
 
