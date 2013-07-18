@@ -642,8 +642,9 @@ function drawTable() {
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Phylum');
         data.addColumn('string', 'Kingdom');
-        data.addColumn('number', 'Hits');
-        data.addColumn('number', '%');
+        data.addColumn('number', 'Unique OTUs');
+        data.addColumn('number', 'Count of reads assigned');
+        data.addColumn('number', '% reads assigned');
         data.addRows([
             <c:set var="addComma" value="false"/>
             <c:set var="colourCode" value="#058dc7" scope="page"/>
@@ -652,7 +653,7 @@ function drawTable() {
             <c:when test="${addComma}">,
             </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise>
             </c:choose>
-            ['<a href="#">${taxonomyData.phylum}</a>', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}]
+            ['<a href="#">${taxonomyData.phylum}</a>', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ,  ${taxonomyData.percentage}]
             </c:forEach>
         ]);
 
@@ -660,8 +661,9 @@ function drawTable() {
 //        data2.addColumn('string', '');
         data2.addColumn('string', 'Phylum');
         data2.addColumn('string', 'Domain');
-        data2.addColumn('number', 'Hits');
-        data2.addColumn('number', '%');
+    data2.addColumn('number', 'Unique OTUs');
+    data2.addColumn('number', 'Count of reads assigned');
+    data2.addColumn('number', '% reads assigned');
         data2.addRows([
             <c:set var="addComma" value="false"/>
             <c:set var="colourCode" value="#058dc7" scope="page"/>
@@ -671,7 +673,7 @@ function drawTable() {
             </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise>
            </c:choose>
 
-            [<%--' <ul class="color_legend"><li  style="color: #${taxonomyData.colourCode};"></li></ul>',--%> '${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}]
+            [<%--' <ul class="color_legend"><li  style="color: #${taxonomyData.colourCode};"></li></ul>',--%> '${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits},,  ${taxonomyData.percentage}]
             </c:forEach>
         ]);
 
@@ -765,9 +767,8 @@ var visualization;
         var container = document.getElementById('visualization_div');
          visualization = new google.visualization.PieChart(container);
 
-        var query2 = new google.visualization.Query('https://docs.google.com/spreadsheet/ccc?key=0AgWotcbTSSjYdGF6NjE0WGxGRmV5djJDWEZ6RzZhT2c&usp=sharing');
-        query2.setQuery('select A, C');
-        query2.send(queryCallback);
+        new google.visualization.Query('https://docs.google.com/spreadsheet/ccc?key=0AgWotcbTSSjYdGF6NjE0WGxGRmV5djJDWEZ6RzZhT2c&usp=sharing').
+                 send(queryCallback);
 
           // END PIe chart that works with toolbar element
 
@@ -1100,7 +1101,7 @@ var visualization;
         <div id="tabs-taxchart">
 
             <%--Tabs--%>
-            <ul>
+            <ul> <li class="selector_tab">Switch view:</li>
                 <%--<li><a href="#tax-table" title="Table view"><span class="ico-table"></span></a></li>--%>
                 <li><a href="#tax-pie" title="Pie chart view"><span class="ico-pie"></span></a></li>
                 <li><a href="#tax-bar" title="Bar chart view"><span class="ico-barh"></span></a></li>
@@ -1231,7 +1232,8 @@ var visualization;
              <%--Tabs--%>
              <ul>
                  <%--<li><a href="#interpro-match-table" title="Table view"><span class="ico-table"></span></a></li>--%>
-                 <li><a href="#interpro-match-pie" title="Pie chart view"><span class="ico-pie"></span></a></li>
+                     <li class="selector_tab">Switch view:</li>
+                     <li><a href="#interpro-match-pie" title="Pie chart view"><span class="ico-pie"></span></a></li>
                  <%--<li><a href="#interpro-match-bar" title="Bar chart view"><span class="ico-barh"></span></a></li>--%>
                  <%--<li><a href="#interpro-match-col" title="Stacked column chart view"><span class="ico-col"></span></a></li>--%>
                  <%--<li><a href="#interpro-match-Krona" title="Krona interactive chart view"><span class="ico-krona"></span></a></li>--%>
@@ -1335,7 +1337,7 @@ var visualization;
     <div id="tabs-chart">
 
         <%--Tabs--%>
-    <ul>
+    <ul> <li class="selector_tab">Switch view:</li>
         <%--<li><a href="#go-terms-table" title="Table view"><span class="ico-table"></span></a></li>--%>
         <li><a href="#go-terms-pie" title="Pie chart view"><span class="ico-pie"></span></a></li>
         <li><a href="#go-terms-bar" title="Bar chart view"><span class="ico-barh"></span></a></li>
