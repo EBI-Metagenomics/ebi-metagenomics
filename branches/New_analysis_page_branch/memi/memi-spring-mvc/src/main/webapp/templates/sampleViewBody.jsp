@@ -2,6 +2,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%--<script type="text/javascript">--%>
     <%--$(document).ready(function(){--%>
         <%--$('#expandercontent').css('display','none');--%>
@@ -753,42 +754,62 @@ function drawTable() {
 
 
     <script type="text/javascript">
+        // This script produces the chart and the table for the 'InterPro match summary' section (functional analysis tab)
 
-var visualization;
+        //  Load the Visualization API and the chart package.
+        //  Line moved to rootTemplate.jsp
 
-    function draw() {
-      drawVisualization();
-      drawToolbar();
-    }
+        //  Set a callback to run when the Google Visualization API is loaded.
+        google.setOnLoadCallback(drawInterProMatchesTable);
+        google.setOnLoadCallback(drawInterProMatchesPieChart);
 
-    function drawVisualization() {
+        function drawInterProMatchesTable() {
+          drawVisualization();
+          drawToolbar();
+        }
 
-        // BEGIN PIe chart that works with toolbar element
+        function drawVisualization() {
 
-        var container = document.getElementById('visualization_div');
-         visualization = new google.visualization.PieChart(container);
+            // Functional analysis table - List of InterPro matches
+              var interProMatchesData = new google.visualization.DataTable();
+                interProMatchesData.addColumn('string', 'Entry name');
+                interProMatchesData.addColumn('string', 'ID');
+                interProMatchesData.addColumn('number', 'Hits');
+                interProMatchesData.addRows([
+                    <c:set var="addComma" value="false"/>
+                    <c:forEach var="entry" items="${model.interProEntries}" varStatus="status">
+                    <c:choose>
+                    <c:when test="${addComma}">,
+                    </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise>
+                    </c:choose>
+                    //  !important TEMP solution - sorting order doesn't work properly for entry name when using HTML tags
+                    ['${entry.entryDescription}', '<a target="_blank" href="http://www.ebi.ac.uk/interpro/entry/${entry.entryID}">${entry.entryID}</a>', ${entry.numOfEntryHits}]
+                    </c:forEach>
+                ]);
 
-        new google.visualization.Query('https://docs.google.com/spreadsheet/ccc?key=0AgWotcbTSSjYdGF6NjE0WGxGRmV5djJDWEZ6RzZhT2c&usp=sharing').
-                 send(queryCallback);
+            // Define a StringFilter control for the 'Name'and 'ID' column
+            var stringFilter = new google.visualization.ControlWrapper({
+              'controlType': 'StringFilter',
+              'containerId': 'control1',
+              'options': { 'matchType':'any',
+              'filterColumnIndex': '0,1',
+               'ui': {label: '', labelSeparator: ':', 'ui.labelStacking':'vertical', 'ui.cssClass':'custom_col_search'}
+              }
+            });
 
-          // END PIe chart that works with toolbar element
+            // Table visualization option
+            var interProMatchesTableOptions = new google.visualization.ChartWrapper({
+              'chartType': 'Table',
+              'containerId': 'entry_table_div',
+              'options': {width:600, allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false }
+            });
 
-        // Prepare the data.
-          var interProMatchesData = new google.visualization.DataTable();
-            interProMatchesData.addColumn('string', 'Entry name');
-            interProMatchesData.addColumn('string', 'ID');
-            interProMatchesData.addColumn('number', 'Hits');
-            interProMatchesData.addRows([
-                <c:set var="addComma" value="false"/>
-                <c:forEach var="entry" items="${model.interProEntries}" varStatus="status">
-                <c:choose>
-                <c:when test="${addComma}">,
-                </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise>
-                </c:choose>
-                //  !important TEMP solution - sorting order doesn't work properly for entry name when using HTML tags
-                ['${entry.entryDescription}', '<a href="http://www.ebi.ac.uk/interpro/entry/${entry.entryID}">${entry.entryID}</a>', ${entry.numOfEntryHits}]
-                </c:forEach>
-    ]);
+            // Create the dashboard.
+            var dashboard = new google.visualization.Dashboard(document.getElementById('dashboard')).
+              // Configure the string filter to affect the table contents
+              bind(stringFilter, interProMatchesTableOptions).
+              // Draw the dashboard
+              draw(interProMatchesData);
 
         // Define a StringFilter control for the 'Name'and 'ID' column
         var stringFilter = new google.visualization.ControlWrapper({
@@ -800,68 +821,91 @@ var visualization;
           }
         });
 
-        // Define a table visualization
-        var table8 = new google.visualization.ChartWrapper({
-          'chartType': 'Table',
-          'containerId': 'entry_table_div',
-          'options': {width:600, allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false }
-        });
+        // Pie chart produced from Google spreadsheet
 
-        // Create the dashboard.
-        var dashboard = new google.visualization.Dashboard(document.getElementById('dashboard')).
-          // Configure the string filter to affect the table contents
-          bind(stringFilter, table8).
-          // Draw the dashboard
-          draw(interProMatchesData);
+            //TODO: Do we need that?
+//          var query = new google.visualization.Query('https://docs.google.com/spreadsheet/ccc?key=0AgWotcbTSSjYdGF6NjE0WGxGRmV5djJDWEZ6RzZhT2c&usp=sharing');
+           // Optional request to return only column A and C
+//           query.setQuery('select A, B');
+          // Send the query with a callback function.
+//          query.send(handleQueryResponse);
+        }  //END function drawVisualization()
 
+        function drawToolbar() {
+            var components = [
+                {type: 'html', datasource: 'https://spreadsheets.google.com/tq?key=0AgWotcbTSSjYdGF6NjE0WGxGRmV5djJDWEZ6RzZhT2c'},
+                {type: 'csv', datasource: 'https://spreadsheets.google.com/tq?key=0AgWotcbTSSjYdGF6NjE0WGxGRmV5djJDWEZ6RzZhT2c'},
+                {type: 'htmlcode', datasource: 'https://spreadsheets.google.com/tq?key=0AgWotcbTSSjYdGF6NjE0WGxGRmV5djJDWEZ6RzZhT2c',
+                    gadget: 'https://www.google.com/ig/modules/pie-chart.xml',
 
-    // Pie chart produced from Google spreadsheet
+                    style: 'width: 800px; height: 700px; border: 1px solid black;'}
+            ];
 
-      var query = new google.visualization.Query('https://docs.google.com/spreadsheet/ccc?key=0AgWotcbTSSjYdGF6NjE0WGxGRmV5djJDWEZ6RzZhT2c&usp=sharing');
-
-       // Optional request to return only column A and C
-       query.setQuery('select A, B');
-
-      // Send the query with a callback function.
-      query.send(handleQueryResponse);
-    }  //END function drawVisualization()
-
-    function queryCallback(response) {
-      visualization.draw(response.getDataTable(), {is3D: false, title:'InterPro matches summary (Total: 51119)', titleTextStyle:{fontSize:12}, colors:['#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff', '#ccc'], width:500, height:240, legend:{position:'right', fontSize:10}, chartArea:{left:0, top:30, width:"42%", height:"100%"}, pieSliceBorderColor:'none',  sliceVisibilityThreshold:1 /160});
-    }
-    function drawToolbar() {
-          var components = [
-              {type: 'html', datasource: 'https://spreadsheets.google.com/tq?key=0AgWotcbTSSjYdGF6NjE0WGxGRmV5djJDWEZ6RzZhT2c'},
-              {type: 'csv', datasource: 'https://spreadsheets.google.com/tq?key=0AgWotcbTSSjYdGF6NjE0WGxGRmV5djJDWEZ6RzZhT2c'},
-              {type: 'htmlcode', datasource: 'https://spreadsheets.google.com/tq?key=0AgWotcbTSSjYdGF6NjE0WGxGRmV5djJDWEZ6RzZhT2c',
-               gadget: 'https://www.google.com/ig/modules/pie-chart.xml',
-
-               style: 'width: 800px; height: 700px; border: 1px solid black;'}
-          ];
-
-          var container1 = document.getElementById('toolbar_div');
-          google.visualization.drawToolbar(container1, components);
+            var container1 = document.getElementById('toolbar_div');
+            google.visualization.drawToolbar(container1, components);
         };
 
-    function handleQueryResponse(response) {
-      if (response.isError()) {
-        alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
-        return;
-      }
 
-      var data20 = response.getDataTable();
-      }
+        // Set a callback to run when the Google Visualization API is loaded.
+        google.setOnLoadCallback(drawInterProMatchesPieChart);
 
+        // Callback that creates and populates a data table,
+        // instantiates the pie chart, passes in the data and
+        // draws it.
+        function drawInterProMatchesPieChart() {
 
+            // Create the data table.
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Entry name');
+            data.addColumn('number', 'Hits');
+            data.addRows([
+                <c:set var="addComma" value="false"/>
+                <c:forEach var="entry" items="${model.interProEntries}" varStatus="status">
+                <c:choose>
+                <c:when test="${addComma}">,
+                </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise>
+                </c:choose>
+                ['${entry.entryDescription}', ${entry.numOfEntryHits}]
+                </c:forEach>
+            ]);
 
+            // Set chart options
+            var options = {is3D: false, title:'InterPro matches summary (Total: ${fn:length(model.interProEntries)})',
+                titleTextStyle:{fontSize:12},
+                colors:['#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff', '#ccc'],
+                width:500, height:240, legend:{position:'right', fontSize:10}, chartArea:{left:0, top:30, width:"42%", height:"100%"},
+                pieSliceBorderColor:'none',  sliceVisibilityThreshold:1 /160};
 
+            // Instantiate and draw our chart, passing in some options.
+            var chart = new google.visualization.PieChart(document.getElementById('visualization_div'));
+            chart.draw(data, options);
 
-    google.setOnLoadCallback(draw);
+          //TODO: Think we can delete that part
+            // // BEGIN pie chart that works with toolbar element
+//        var container = document.getElementById('visualization_div');
+//        var visualization = new google.visualization.PieChart(container);
+//
+//        // END PIe chart that works with toolbar element
+//        //TODO: Not used anywhere
+//        var query2 = new google.visualization.Query('https://docs.google.com/spreadsheet/ccc?key=0AgWotcbTSSjYdGF6NjE0WGxGRmV5djJDWEZ6RzZhT2c&usp=sharing');
+//        query2.setQuery('select A, C');
+//        query2.send(queryCallback);
+//
+//        function queryCallback(response) {
+//          visualization.draw(response.getDataTable(), {is3D: false, title:'InterPro matches summary (Total: 51119)', titleTextStyle:{fontSize:12}, colors:['#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff', '#ccc'], width:500, height:240, legend:{position:'right', fontSize:10}, chartArea:{left:0, top:30, width:"42%", height:"100%"}, pieSliceBorderColor:'none',  sliceVisibilityThreshold:1 /160});
+//        }
 
+        }
 
-      // END Pie chart produced from Google spreadsheet
-      google.setOnLoadCallback(drawVisualization);  // Set a callback to run when the Google Visualization API is loaded.
-
+        //TODO: Do we need that?
+//        function handleQueryResponse(response) {
+//          if (response.isError()) {
+//            alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+//            return;
+//          }
+//
+//          var data20 = response.getDataTable();
+//        }
     </script>
 
 

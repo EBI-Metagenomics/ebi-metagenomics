@@ -121,9 +121,12 @@ public class SampleViewController extends AbstractSampleViewController {
     }
 
 
-    protected void populateModel(final ModelMap model, final Sample sample, boolean isReturnSizeLimit) {
+    /**
+     * Creates the analysis page model and adds it to the specified model map.
+     */
+    protected void populateModel(final ModelMap model, final Sample sample) {
         String pageTitle = "Sample analysis results: " + sample.getSampleName() + "";
-        populateModel(model, sample, isReturnSizeLimit, pageTitle);
+        populateModel(model, sample, pageTitle);
     }
 
 
@@ -135,13 +138,5 @@ public class SampleViewController extends AbstractSampleViewController {
     private String getCustomFormat(String pattern, double value) {
         DecimalFormat myFormatter = new DecimalFormat(pattern);
         return myFormatter.format(value);
-    }
-
-
-    /**
-     * Creates the analysis page model and adds it to the specified model map.
-     */
-    protected void populateModel(final ModelMap model, final Sample sample) {
-        populateModel(model, sample, true);
     }
 }

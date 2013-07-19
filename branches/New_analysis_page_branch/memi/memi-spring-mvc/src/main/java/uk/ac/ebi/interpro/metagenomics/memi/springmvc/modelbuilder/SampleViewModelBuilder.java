@@ -56,8 +56,6 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
 
     private final List<String> archivedSequences;
 
-    private boolean isReturnSizeLimit;
-
     private final String resultFilesDirectoryPath;
 
     private List<Publication> relatedLinks;
@@ -72,7 +70,6 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
                                   EmgFile emgFile,
                                   List<String> archivedSequences,
                                   MemiPropertyContainer propertyContainer,
-                                  boolean isReturnSizeLimit,
                                   SampleViewModel.ExperimentType experimentType,
                                   final DownloadSection downloadSection,
                                   List<EmgSampleAnnotation> sampleAnnotations) {
@@ -83,7 +80,6 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
         this.emgFile = emgFile;
         this.archivedSequences = archivedSequences;
         this.propertyContainer = propertyContainer;
-        this.isReturnSizeLimit = isReturnSizeLimit;
         this.experimentType = experimentType;
         this.downloadSection = downloadSection;
         this.sampleAnnotations = sampleAnnotations;
@@ -98,7 +94,7 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
     @Override
     public SampleViewModel getModel() {
         log.info("Building instance of " + SampleViewModel.class + "...");
-        final List<InterProEntry> interProEntries = getListOfInterProEntries(emgFile, isReturnSizeLimit);
+        final List<InterProEntry> interProEntries = getListOfInterProEntries(emgFile);
         final boolean isHostAssociated = isHostAssociated();
         final Submitter submitter = getSessionSubmitter(sessionMgr);
 
@@ -225,35 +221,29 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
         return false;
     }
 
-    private List<InterProEntry> getListOfInterProEntries(EmgFile emgFile, boolean isReturnSizeLimit) {
+    private List<InterProEntry> getListOfInterProEntries(EmgFile emgFile) {
         List<String[]> rows = getRawData(emgFile, "_summary.ipr", ',');
-        return loadInterProMatchesFromCSV(rows, isReturnSizeLimit);
+        return loadInterProMatchesFromCSV(rows);
     }
 
 
     /**
      * Loads InterPro matches from the Python pipeline result file with file extension '_summary.ipr'.
-     * Please notice that the size of the returned list could be limited to 5 items.
-     * TODO: Size limitation is a temporary solution
      *
-     * @param rows              Parsed list of InterPro entries.
-     * @param isReturnSizeLimit Specifies if the size of the returned list is limited to 5.
+     * @param rows Parsed list of InterPro entries.
      * @return
      */
-    protected static List<InterProEntry> loadInterProMatchesFromCSV(List<String[]> rows,
-                                                                    final boolean isReturnSizeLimit) {
+    protected static List<InterProEntry> loadInterProMatchesFromCSV(List<String[]> rows) {
         List<InterProEntry> result = new ArrayList<InterProEntry>();
         log.info("Processing interpro result summary file...");
 
         if (rows != null) {
-            //return size limitation the
-            if (isReturnSizeLimit && rows.size() > 5) {
-                rows = rows.subList(0, 50);
-            }
             for (String[] row : rows) {
                 if (row.length == 3) {
                     String entryID = row[0];
                     String entryDesc = row[1];
+                    //Remove single quote marks
+                    entryDesc = entryDesc.replaceAll("\'", "");
                     int numOfEntryHits = Integer.parseInt(row[2]);
                     if (entryID != null && entryID.trim().length() > 0) {
                         result.add(new InterProEntry(entryID, entryDesc, numOfEntryHits));

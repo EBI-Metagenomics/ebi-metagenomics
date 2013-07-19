@@ -141,9 +141,4 @@
         <put-attribute name="body" value="/templates/entryNotFoundBody.jsp"/>
     </definition>
 
-    <definition name="showProteinMatchesView" extends="rootTemplate">
-        <put-attribute name="bodyClass" type="string" value="greyblue"/>
-        <put-attribute name="body" value="/templates/showProteinMatchesBody.jsp"/>
-    </definition>
-
 </tiles-definitions>

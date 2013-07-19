@@ -94,7 +94,7 @@ public class AbstractSampleViewController extends SecuredAbstractController<Samp
     /**
      * Creates the home page model and adds it to the specified model map.
      */
-    protected void populateModel(final ModelMap model, final Sample sample, boolean isReturnSizeLimit, String pageTitle) {
+    protected void populateModel(final ModelMap model, final Sample sample, String pageTitle) {
         List<EmgFile> emgFiles = fileInfoDAO.getFilesBySampleId(sample.getId());
         //TODO: For the moment the system only allows to represent one file on the analysis page, but
         //in the future it should be possible to represent all different data types (genomic, transcriptomic)
@@ -121,7 +121,6 @@ public class AbstractSampleViewController extends SecuredAbstractController<Samp
                 emgFile,
                 MemiTools.getArchivedSeqs(fileInfoDAO, sample),
                 propertyContainer,
-                isReturnSizeLimit,
                 experimentType,
                 buildDownloadSection(sample.getSampleId(), sample.isPublic(), downloadableFiles),
                 sampleAnnotations);
