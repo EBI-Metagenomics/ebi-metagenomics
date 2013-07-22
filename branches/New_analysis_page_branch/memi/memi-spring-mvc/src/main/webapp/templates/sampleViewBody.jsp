@@ -811,6 +811,53 @@ function drawTable() {
               draw(interProMatchesData);
 
 
+
+                    // Taxonomy analysis table
+                var taxMatchesData = new google.visualization.DataTable();
+                //          taxMatchesData.addColumn('string', '');
+                taxMatchesData.addColumn('string', 'Phylum');
+                taxMatchesData.addColumn('string', 'Domain');
+                taxMatchesData.addColumn('number', 'Unique OTUs');
+                taxMatchesData.addColumn('number', 'Count of reads assigned');
+                taxMatchesData.addColumn('number', '% reads assigned');
+                taxMatchesData.addRows([
+                            <c:set var="addComma" value="false"/>
+                            <c:set var="colourCode" value="#058dc7" scope="page"/>
+                            <c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResult.taxonomyDataSet}" varStatus="status">
+                            <c:choose>
+                            <c:when test="${addComma}">,
+                            </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise>
+                           </c:choose>
+
+                            [<%--' <ul class="color_legend"><li  style="color: #${taxonomyData.colourCode};"></li></ul>',--%> '${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits},,  ${taxonomyData.percentage}]
+                            </c:forEach>
+                        ]);
+
+
+                    // Define a StringFilter control for the 'Name'and 'ID' column
+                    var taxstringFilter = new google.visualization.ControlWrapper({
+                      'controlType': 'StringFilter',
+                      'containerId': 'tax_control',
+                      'options': { 'matchType':'any',
+                      'filterColumnIndex': '0,1',
+                      'ui': {'label': 'Filter', 'labelSeparator': ':', 'ui.labelStacking':'vertical', 'ui.cssClass':'custom_col_search'}
+                      }
+                    });
+
+                    // Table visualization option
+                    var taxTableOptions = new google.visualization.ChartWrapper({
+                      'chartType': 'Table',
+                      'containerId': 'tax_table_div2',
+                      'options': { allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false }
+                    });
+
+                    // Create the dashboard.
+                    var tax_dashboard = new google.visualization.Dashboard(document.getElementById('tax_dashboard')).
+                      // Configure the string filter to affect the table contents
+                      bind(taxstringFilter, taxTableOptions).
+                      // Draw the dashboard
+                      draw(taxMatchesData);
+
         // Pie chart produced from Google spreadsheet
 
             //TODO: Do we need that?
@@ -1153,7 +1200,13 @@ function drawTable() {
                 <%--Taxonomy google chart--%>
                 <div id="tax-pie">
                         <div class="chart_container">
-                            <div class="chart_container"><div id="tax_chart_div"></div><div id="tax_chart_div3"></div><div id="tax_table_div2"></div>
+                            <div class="chart_container">
+                                <div id="tax_chart_div"></div><div id="tax_chart_div3"></div>
+
+                                <div id="tax_dashboard">
+                                 <div id="tax_control"></div>
+                                 <div id="tax_table_div2"></div>
+                                 </div>
 
                               </div>
                             <p><br/></p>
