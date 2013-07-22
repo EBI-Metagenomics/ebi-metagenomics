@@ -21,9 +21,8 @@
 <script type="text/javascript">
 
 // Load the Visualization API and the piechart package.
-google.load('visualization', '1.0', {'packages':['corechart']});
-google.load('visualization', '1', {packages:['table']});
-google.load('visualization', '1.1', {packages: ['controls']});
+google.load('visualization', '1.1', {'packages':['corechart','table','controls'] });
+
 
 // Set a callback to run when the Google Visualization API is loaded.
 google.setOnLoadCallback(drawChart);
@@ -660,13 +659,13 @@ function drawTable() {
         ]);
 
         var data2 = new google.visualization.DataTable();
-//        data2.addColumn('string', '');
-        data2.addColumn('string', 'Phylum');
-        data2.addColumn('string', 'Domain');
-    data2.addColumn('number', 'Unique OTUs');
-    data2.addColumn('number', 'Count of reads assigned');
-    data2.addColumn('number', '% reads assigned');
-        data2.addRows([
+//          data2.addColumn('string', '');
+            data2.addColumn('string', 'Phylum');
+            data2.addColumn('string', 'Domain');
+            data2.addColumn('number', 'Unique OTUs');
+            data2.addColumn('number', 'Count of reads assigned');
+            data2.addColumn('number', '% reads assigned');
+            data2.addRows([
             <c:set var="addComma" value="false"/>
             <c:set var="colourCode" value="#058dc7" scope="page"/>
             <c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResult.taxonomyDataSet}" varStatus="status">
@@ -706,7 +705,7 @@ function drawTable() {
 
         //Pie top hits table
         var table2 = new google.visualization.Table(document.getElementById('tax_table_div2'));
-        table2.draw(data2, { allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:3, sortAscending:false});
+        table2.draw(data2, { allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false});
 
         //Stacked column top hits table
         var table5 = new google.visualization.Table(document.getElementById('tax_table_div6'));
@@ -793,7 +792,7 @@ function drawTable() {
               'containerId': 'control1',
               'options': { 'matchType':'any',
               'filterColumnIndex': '0,1',
-               'ui': {label: '', labelSeparator: ':', 'ui.labelStacking':'vertical', 'ui.cssClass':'custom_col_search'}
+              'ui': {'label': 'Filter', 'labelSeparator': ':', 'ui.labelStacking':'vertical', 'ui.cssClass':'custom_col_search'}
               }
             });
 
@@ -811,15 +810,6 @@ function drawTable() {
               // Draw the dashboard
               draw(interProMatchesData);
 
-        // Define a StringFilter control for the 'Name'and 'ID' column
-        var stringFilter = new google.visualization.ControlWrapper({
-          'controlType': 'StringFilter',
-          'containerId': 'control1',
-          'options': { 'matchType':'any',
-                        'filterColumnIndex': '0,1',
-           'ui': {label: 'Filter', labelSeparator: ':', 'ui.labelStacking':'vertical', 'ui.cssClass':'custom_col_search'}
-          }
-        });
 
         // Pie chart produced from Google spreadsheet
 
