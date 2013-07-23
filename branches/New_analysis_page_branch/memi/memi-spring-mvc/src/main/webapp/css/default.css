@@ -1715,4 +1715,7 @@ ul.color_legend {list-style-type: square; list-style-position:inside;}
 .sample_ana .google-visualization-toolbar-small-dialog {z-index:2;}   /*important to avoid overlay with tabs*/
 .sample_ana .goog-menu-button-inner-box {margin: 0 0px;}
 
-#6-input {}
+.sample_ana .google-visualization-table-page-numbers {border:0px red solid; text-align: center; width: 76%;}
+.sample_ana .google-visualization-table-page-numbers .page-number {display: inline-block; border: 0px solid #eee; border-radius: 0px;  color: #666;}
+.sample_ana .google-visualization-table-page-numbers .page-number.current {font-weight: bold; color:black;border:1px solid #c3c3c3;background-color: #fafafa;}
+.sample_ana .google-visualization-table-div-page .gradient { background: none;}
