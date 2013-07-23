@@ -798,7 +798,7 @@ function drawTable() {
             var interProMatchesTableOptions = new google.visualization.ChartWrapper({
               'chartType': 'Table',
               'containerId': 'entry_table_div',
-              'options': {width:'600', allowHtml:'true', showRowNumber:'true', page:'enable', pageSize:'10', pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false }
+              'options': {width:'600', allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false }
             });
 
             // Create the dashboard.
