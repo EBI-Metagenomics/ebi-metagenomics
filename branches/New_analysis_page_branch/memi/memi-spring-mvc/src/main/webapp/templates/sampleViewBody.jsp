@@ -782,7 +782,7 @@ function drawTable() {
                     </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise>
                     </c:choose>
                     //  !important TEMP solution - sorting order doesn't work properly for entry name when using HTML tags
-                    ['${entry.entryDescription}', '<a target="_blank" href="http://www.ebi.ac.uk/interpro/entry/${entry.entryID}">${entry.entryID}</a>', ${entry.numOfEntryHits}]
+                    ['<a title="${entry.entryDescription}" target="_blank" href="http://www.ebi.ac.uk/interpro/entry/${entry.entryID}">${entry.entryDescription}</a>', '${entry.entryID}', ${entry.numOfEntryHits}]
                     </c:forEach>
                 ]);
 
@@ -790,9 +790,7 @@ function drawTable() {
             var stringFilter = new google.visualization.ControlWrapper({
               'controlType': 'StringFilter',
               'containerId': 'control1',
-              'options': { 'matchType':'any',
-              'filterColumnIndex': '0,1',
-              'ui': {'label': 'Filter', 'labelSeparator': ':', 'ui.labelStacking':'vertical', 'ui.cssClass':'custom_col_search'}
+              'options': {'matchType':'any','filterColumnIndex': '0,1', 'ui': {'label': 'Filter', 'labelSeparator': ':', 'ui.labelStacking':'vertical', 'ui.cssClass':'custom_col_search'}
               }
             });
 
@@ -800,7 +798,7 @@ function drawTable() {
             var interProMatchesTableOptions = new google.visualization.ChartWrapper({
               'chartType': 'Table',
               'containerId': 'entry_table_div',
-              'options': {width:600, allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false }
+              'options': {width:'600', allowHtml:'true', showRowNumber:'true', page:'enable', pageSize:'10', pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false }
             });
 
             // Create the dashboard.
@@ -859,10 +857,10 @@ function drawTable() {
                       draw(taxMatchesData);
 
         // Pie chart produced from Google spreadsheet
-
-            //TODO: Do we need that?
 //          var query = new google.visualization.Query('https://docs.google.com/spreadsheet/ccc?key=0AgWotcbTSSjYdGF6NjE0WGxGRmV5djJDWEZ6RzZhT2c&usp=sharing');
            // Optional request to return only column A and C
+
+            //TODO: Do we need that?
 //           query.setQuery('select A, B');
           // Send the query with a callback function.
 //          query.send(handleQueryResponse);
