@@ -42,22 +42,6 @@ function drawChart() {
         ['Unassigned', 1]
     ]);
 
-    var data2 = new google.visualization.DataTable();
-    data2.addColumn('string', 'Phylum');
-    data2.addColumn('number', 'Match');
-    data2.addRows([
-        ['Proteobacteria', 146],
-        ['Bacteroidetes', 11],
-        ['SAR406', 11],
-        ['Actinobacteria', 10],
-        ['Verrucomicrobia', 7],
-        ['Chloroflexi', 3],
-        ['PAUC34f', 2],
-        ['Planctomycetes', 2],
-        ['Firmicutes', 1],
-        ['Cyanobacteria', 1],
-        ['Unassigned bacteria', 1]
-    ]);
 
     var data3 = new google.visualization.DataTable();
     data3.addColumn('string', 'Phylum');
@@ -574,8 +558,7 @@ function drawChart() {
     // Instantiate and draw our chart, passing in some options.
     var chart = new google.visualization.PieChart(document.getElementById('tax_chart_div'));
     chart.draw(data, options);
-    var chart2 = new google.visualization.PieChart(document.getElementById('tax_chart_div2'));
-    chart2.draw(data2, options2);
+
     var chart5 = new google.visualization.PieChart(document.getElementById('tax_chart_div5'));
     chart5.draw(data4, options3);
     var chart3 = new google.visualization.PieChart(document.getElementById('tax_chart_div3'));
@@ -905,10 +888,9 @@ function drawTable() {
             ]);
 
             // Set chart options
-            var options = {is3D: false, title:'InterPro matches summary (Total: ${fn:length(model.interProEntries)})',
-                titleTextStyle:{fontSize:12},
+            var options = {title:'InterPro matches summary (Total: ${fn:length(model.interProEntries)})',width:500, titleTextStyle:{fontSize:12},
                 colors:['#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff', '#ccc'],
-                width:500, height:240, legend:{position:'right', fontSize:10}, chartArea:{left:0, top:30, width:"42%", height:"100%"},
+                height:240, legend:{position:'right', fontSize:10}, chartArea:{left:0, top:30, width:"42%", height:"100%"},
                 pieSliceBorderColor:'none',  sliceVisibilityThreshold:1 /160};
 
             // Instantiate and draw our chart, passing in some options.
@@ -1210,7 +1192,7 @@ function drawTable() {
                             <p><br/></p>
                             <%--<h4>Top taxonomy levels</h4>--%>
                             <%--Bacteria level--%>
-                            <div id="tax_chart_div2" style="display:none;"></div><div id="tax_table_div" style="display:none;"></div>
+                            <div id="tax_table_div" style="display:none;"></div>
                            <%--Archea level--%>
                            <div id="tax_chart_div5" style="display:none;"></div> <div id="tax_table_div5" style="display:none;"></div>
                         </div>
