@@ -535,17 +535,17 @@ function drawChart() {
     chart6.draw(data, options6);
     var chart9 = new google.visualization.ColumnChart(document.getElementById('tax_chart_col'));
     chart9.draw(data5, options9);
-    var chart10 = new google.visualization.BarChart(document.getElementById('tax_chart_div10'));
+    var chart10 = new google.visualization.BarChart(document.getElementById('func_chart_bar_go_bp'));
     chart10.draw(data6, options10);
-    var chart11 = new google.visualization.BarChart(document.getElementById('tax_chart_div11'));
+    var chart11 = new google.visualization.BarChart(document.getElementById('func_chart_bar_go_mf'));
     chart11.draw(data7, options11);
-    var chart12 = new google.visualization.BarChart(document.getElementById('tax_chart_div12'));
+    var chart12 = new google.visualization.BarChart(document.getElementById('func_chart_bar_go_cc'));
     chart12.draw(data8, options12);
-    var chart13 = new google.visualization.PieChart(document.getElementById('tax_chart_div13'));
+    var chart13 = new google.visualization.PieChart(document.getElementById('func_chart_pie_go_bp'));
     chart13.draw(data9, options13);
-    var chart14 = new google.visualization.PieChart(document.getElementById('tax_chart_div14'));
+    var chart14 = new google.visualization.PieChart(document.getElementById('func_chart_pie_go_mf'));
     chart14.draw(data10, options14);
-    var chart15 = new google.visualization.PieChart(document.getElementById('tax_chart_div15'));
+    var chart15 = new google.visualization.PieChart(document.getElementById('func_chart_pie_go_cc'));
     chart15.draw(data11, options15);
 }
 
@@ -653,33 +653,7 @@ function drawTable() {
         var table6 = new google.visualization.Table(document.getElementById('tax_table_bar'));
         table6.draw(data2, { allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false});
     }
-    <%--InterPro match summary table--%>
-        <%--function drawTable() {--%>
-            <%--// Create and populate the data table.--%>
-            <%--var interProMatchesData = new google.visualization.DataTable();--%>
-            <%--interProMatchesData.addColumn('string', 'Entry name');--%>
-            <%--interProMatchesData.addColumn('string', 'ID');--%>
-            <%--interProMatchesData.addColumn('number', 'Proteins matched');--%>
-            <%--interProMatchesData.addRows([--%>
-                <%--<c:set var="addComma" value="false"/>--%>
-                <%--<c:forEach var="entry" items="${model.interProEntries}" varStatus="status">--%>
-                <%--<c:choose>--%>
-                <%--<c:when test="${addComma}">,--%>
-                <%--</c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise>--%>
-                <%--</c:choose>--%>
-                <%--['<a href="http://www.ebi.ac.uk/interpro/entry/${entry.entryID}">${entry.entryDescription}</a>', '${entry.entryID}', ${entry.numOfEntryHits}]--%>
-                <%--</c:forEach>--%>
-            <%--]);--%>
-            <%--// Create and draw the visualization.--%>
-            <%--var interProMatchesTable = new google.visualization.Table(document.getElementById('entry_table_div'));--%>
-            <%--interProMatchesTable.draw(interProMatchesData, {width:780, allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false });--%>
 
-//            var title = "ID";
-//            var title1 = "Proteins matched";
-//            var width = "20px";
-//              $('.google-visualization-table-th:contains(' + title + ')').css('width', width);
-//              $('.google-visualization-table-th:contains(' + title1 + ')').css('width', width);
-//        }
 </script>
 
 
@@ -732,12 +706,12 @@ function drawTable() {
             // Table visualization option
             var interProMatchesTableOptions = new google.visualization.ChartWrapper({
               'chartType': 'Table',
-              'containerId': 'entry_table_div',
+              'containerId': 'func_table_pie_interpro',
               'options': {width:'600', allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false }
             });
 
             // Create the dashboard.
-            var dashboard = new google.visualization.Dashboard(document.getElementById('dashboard')).
+            var dashboard = new google.visualization.Dashboard(document.getElementById('func_dashboard')).
               // Configure the string filter to affect the table contents
               bind(stringFilter, interProMatchesTableOptions).
               // Draw the dashboard
@@ -845,15 +819,16 @@ function drawTable() {
                 pieSliceBorderColor:'none',  sliceVisibilityThreshold:1 /160};
 
             // Instantiate and draw our chart, passing in some options.
-            var chart = new google.visualization.PieChart(document.getElementById('visualization_div'));
+            var chart = new google.visualization.PieChart(document.getElementById('func_chart_pie'));
             chart.draw(data, options);
 
           //TODO: Think we can delete that part
             // // BEGIN pie chart that works with toolbar element
-//        var container = document.getElementById('visualization_div');
+//        var container = document.getElementById('func_chart_pie');
 //        var visualization = new google.visualization.PieChart(container);
 //
 //        // END PIe chart that works with toolbar element
+
 //        //TODO: Not used anywhere
 //        var query2 = new google.visualization.Query('https://docs.google.com/spreadsheet/ccc?key=0AgWotcbTSSjYdGF6NjE0WGxGRmV5djJDWEZ6RzZhT2c&usp=sharing');
 //        query2.setQuery('select A, C');
@@ -1134,21 +1109,6 @@ function drawTable() {
 <div id="fragment-functional">
 
       <div class="main_tab_full_content">
-          <%--<div id="small"> <div class="export">--%>
-                                <%--<a id="csv"--%>
-                                   <%--href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/doExportIPRFile"/>"--%>
-                                   <%--title="<spring:message code="analysisStatsView.label.download.i5.table.view"/>">--%>
-                                    <%--<spring:message code="analysisStatsView.label.download.i5.table.view"/>&lt;%&ndash; <c:out--%>
-                                <%--value="${model.emgFile.fileSizeMap['_summary.ipr']}"/>&ndash;%&gt;--%>
-                                <%--</a>--%>
-                            <%--</div>--%>
-                            <%--</div>--%>
-
-      <%--<h3>Function analysis</h3>--%>
-
-              <%--<p>The entire InterProScan results file (<a title="Click to download full InterPro matches table (TSV)"--%>
-                                                          <%--href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/doExportI5TSVFile"/>">download--%>
-                  <%--here</a>) has been used to produce the following summaries.</p>--%>
 
               <h3>InterPro match summary</h3>
 
@@ -1187,10 +1147,12 @@ function drawTable() {
                 <div class="chart_container">
 
                      <%--<div id="func_chart_div1"></div>--%>
-                     <div id="visualization_div"></div>
-                     <div id="dashboard">
+
+                     <div id="func_chart_pie"></div>
+
+                     <div id="func_dashboard">
                      <div id="func_table_filter"></div>
-                     <div id="entry_table_div"></div>
+                     <div id="func_table_pie_interpro"></div>
                      </div>
 
                     <%--  BEGIN code used if we want to use the row number select option
@@ -1240,26 +1202,13 @@ function drawTable() {
     </ul>
 
 
-
-
     <div id="go-terms-bar">
-    <div class="go-chart"><div id="tax_chart_div10"></div> <div id="tax_chart_div11"></div> <div id="tax_chart_div12"></div> </div>
+    <div class="go-chart"><div id="func_chart_bar_go_bp"></div> <div id="func_chart_bar_go_mf"></div> <div id="func_chart_bar_go_cc"></div> </div>
     </div>
 
     <div id="go-terms-pie">
-            <div class="go-chart"><div id="tax_chart_div13"></div> <div id="tax_chart_div14"></div> <div id="tax_chart_div15"></div> </div>
-     </div>
-    <%--<div id="go-terms-Krona">--%>
-    <%--<table class="result">--%>
-    <%--<tr>--%>
-    <%--<td width="10%" style="background-color:white;padding:0;vertical-align: top;"><object class="krona_chart_small" style="height:323px;" data="<c:url value="${baseURL}/sample/${model.sample.sampleId}/krona?function=true&slim=true&depth=1&font=11"/>" type="text/html"></object></td>--%>
-    <%--<td style="background-color:white;padding:0;">--%>
-    <%--&lt;%&ndash;<a href="http://localhost:8082/metagenomics/Krona_chart_function"  class="icon icon-functional" data-icon="F" title="Open full screen" style="float:right; margin: 10px 4px 0 0; font-size: 283%;"></a>&ndash;%&gt;--%>
-    <%--<object class="krona_chart" data="<c:url value="${baseURL}/sample/${model.sample.sampleId}/krona?function=true&font=10"/>" type="text/html"></object></td>--%>
-    <%--</tr>--%>
-
-    <%--</table>--%>
-    <%--</div>--%>
+    <div class="go-chart"><div id="func_chart_pie_go_bp"></div> <div id="func_chart_pie_go_mf"></div> <div id="func_chart_pie_go_cc"></div> </div>
+    </div>
 
      </div>
 
@@ -1310,20 +1259,6 @@ function drawTable() {
         </ul>
 
        </div>
-    <%--<div class="output_form" id="large">--%>
-        <%--<div class="result_row"><label>Raw sequence reads:</label>--%>
-      <%--<span>--%>
-         <%--<c:choose>--%>
-             <%--<c:when test="${not empty model.archivedSequences}">--%>
-                 <%--<c:forEach var="seqId" items="${model.archivedSequences}" varStatus="status">--%>
-                     <%--<a class="ext" href="<c:url value="https://www.ebi.ac.uk/ena/data/view/${seqId}"/>">--%>
-                         <%--<c:out value="${seqId}"/></a>--%>
-                 <%--</c:forEach> (ENA website)--%>
-             <%--</c:when>--%>
-             <%--<c:otherwise>(not given)</c:otherwise>--%>
-         <%--</c:choose></span></div>--%>
-    <%--</div>--%>
-        <%--END READS SECTION   --%>
 
 </div>
 
@@ -1390,11 +1325,9 @@ function drawTable() {
 
 <%--script for tabs--%>
 <script>
-//    $( "#navtabs").tabs({ disabled: [5] });
     $( "#navtabs").tabs({ ${model.analysisStatus.disabledAttribute} });
-//    $( "#interpro-chart" ).tabs({ disabled: [1,2,3,4], selected: 0 });
     $( "#interpro-chart" ).tabs();
-//    $( "#tabs-chart" ).tabs({ disabled: [0,1,3,5], selected: 2 });
+//    $( "#interpro-chart" ).tabs({ disabled: [1,2,3,4], selected: 0 });
     $( "#tabs-chart" ).tabs({ selected: 1  });
     $( "#tabs-taxchart" ).tabs({ disabled: [5], selected: 0 });
 
