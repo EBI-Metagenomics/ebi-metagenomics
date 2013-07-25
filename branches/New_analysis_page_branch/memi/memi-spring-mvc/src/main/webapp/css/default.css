@@ -1681,14 +1681,14 @@ background-image: -webkit-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247
 #list-data a.list_sample:hover, #sample_list a.list_sample:hover, #project_ov a.list_sample:hover {color:#62388b;}
 
 /*GOOGLE CHART - ANALYSIS PAGE*/
-#tax_chart_pie_dom, #tax_chart_div2, #tax_chart_pie_phy, #tax_chart_div5, #tax_chart_div6, #tax_chart_div7, #tax_chart_div8, #tax_chart_col, #tax_chart_div10, #tax_chart_div11, #tax_chart_div12, #tax_chart_div13, #tax_chart_div14, #tax_chart_div15, #func_chart_div1, #tax_table_div, #tax_table_div2, #tax_table_bar, #tax_table_div5, #tax_table_pie, #tax_table_col, #tax_chart_bar_dom, #tax_chart_bar_phy, #func_table_div1 {float:left;}
+#tax_chart_pie_dom, #tax_chart_div2, #tax_chart_pie_phy, #tax_chart_div5, #tax_chart_div6, #tax_chart_div7, #tax_chart_div8, #tax_chart_col, #func_chart_bar_go_bp, #func_chart_bar_go_mf, #func_chart_bar_go_cc, #func_chart_pie_go_bp, #func_chart_pie_go_mf, #func_chart_pie_go_cc, #func_chart_div1, #tax_table_div, #tax_table_div2, #tax_table_bar, #tax_table_div5, #tax_table_pie, #tax_table_col, #tax_chart_bar_dom, #tax_chart_bar_phy, #func_chart_pie, #func_table_pie_interpro, #func_table_div1 {float:left;}
 #tax_chart_pie_dom {margin-top: 3px;}
 
 #tax_chart_div2,  #tax_chart_div5 {margin-right: 9px;}
-#tax_table_div2,   #tax_table_col, #func_table_div1 {margin-left: 30px;}
-#tax_table_pie, #tax_table_bar {margin-left: 18px;}
+#tax_table_div2,   #tax_table_col {margin-left: 30px;}
+#tax_table_pie, #tax_table_bar, #func_table_pie_interpro {margin-left: 18px;}
 
-#entry_table_div div div table, #func_table_div1 div div table,  .row_numb {border:1px white solid; width:600px;} /*fix bug size after sorting - has to be the same as the size define on the page*/
+#func_table_pie_interpro div div table, #tax_table_pie div div table {border:1px white solid; width:600px;} /*fix bug size after sorting - has to be the same as the size define on the page*/
 
 .chart_container {display:block;overflow:auto;}
 
@@ -1698,14 +1698,14 @@ background-image: -webkit-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247
 
 ul.color_legend {list-style-type: square; list-style-position:inside;}
 /*GOOGLE CHART -TABLE  FILTER*/
-#dashboard, #tax_dashboard {float: left;}
-#dashboard #func_table_filter {position: absolute;z-index: 1;left:1px;}
-#dashboard #func_table_filter input {padding: 1px;margin-top: 6px;}
-#tax_dashboard #tax_table_filter {position: absolute;z-index: 1;left:19px;}
+#func_dashboard, #tax_dashboard {float: left;}
+#func_dashboard #func_table_filter {position: absolute;z-index: 1;left:1px;}
+#func_dashboard #func_table_filter input {padding: 1px;margin-top: 6px;}
+#tax_dashboard #tax_table_filter {position: absolute;z-index: 1;left:19px;top: 9px;}
 #tax_dashboard #tax_table_filter input {padding: 1px;margin-top: 6px;width:84px;}
 
 .expandertable {float:left; margin-top: -32px; margin-left: 833px; z-index: 1;  position: relative;}
-#toolbar_div, #visualization_div {display: block; float:left;}
+#toolbar_div {display: block; float:left;}
 /*GOOGLE TOOLBAR*/
 .sample_ana .google-visualization-toolbar-triangle {display: none;}
 .sample_ana .goog-menu-button-caption span {display:none;}
