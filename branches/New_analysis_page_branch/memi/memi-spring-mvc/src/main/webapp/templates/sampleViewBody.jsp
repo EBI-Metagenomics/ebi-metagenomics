@@ -1284,40 +1284,7 @@ function drawTable() {
 
                  </div>
 
-                 <%--<div id="entry_table_div"></div>--%>
-                 <%--<div id="tax_table_div2"></div>--%>
-                 <%--<table border="1" class="result">--%>
-                 <%--<thead>--%>
-                 <%--<tr>--%>
-                     <%--<th scope="col" abbr="IEname" id="h_left">Entry name</th>--%>
-                     <%--<th scope="col" abbr="IEid" width="90px">ID</th>--%>
-                     <%--<th scope="col" abbr="IEnum" width="130px">Proteins matched</th>--%>
-                 <%--</tr>--%>
-                 <%--</thead>--%>
-                 <%--<tbody>--%>
-                 <%--<c:forEach var="entry" items="${model.interProEntries}" varStatus="status">--%>
-                     <%--<tr>--%>
 
-                         <%--<td style="text-align:left;">--%>
-                            <%--<a href="http://www.ebi.ac.uk/interpro/entry/${entry.entryID}"--%>
-                                                       <%--title="<c:out value="Link to ${entry.entryID}"/>" class="ext">${entry.entryDescription}</a></td>--%>
-                         <%--<td>--%>
-                            <%--&lt;%&ndash;<c:url var="linkToInterProSearch" value="http://www.ebi.ac.uk/interpro/search">&ndash;%&gt;--%>
-                                <%--&lt;%&ndash;<c:param name="q" value="${entry.entryID}"/>&ndash;%&gt;--%>
-                            <%--&lt;%&ndash;</c:url>&ndash;%&gt;--%>
-
-                                <%--<c:out value="${entry.entryID}"/>--%>
-
-                        <%--</td>--%>
-                         <%--<td id="ordered">${entry.numOfEntryHits}</td>--%>
-                     <%--</tr>--%>
-                 <%--</c:forEach>--%>
-                           <%--<tr><td colspan="3" class="showHideRelated" ><c:set var="showFullTableID" value="View full table"/>--%>
-                           <%--<a title="<c:out value="${showFullTableID}"/>"--%>
-                                                       <%--href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/showProteinMatches"/>">--%>
-                                                     <%--<c:out value="${showFullTableID}"/></a></td></tr>--%>
-                           <%--</tbody>--%>
-                       <%--</table>--%>
              </div>
 
           </div>
