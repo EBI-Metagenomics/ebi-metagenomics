@@ -380,18 +380,9 @@ function drawChart() {
         'sliceVisibilityThreshold':1 / 115
     };
 
-    // Top taxonomy Bar
-    var options5 = {'title':'Phylum composition (Total: 229)',
-        'titleTextStyle':{fontSize:12},
-        'colors':['#5f8694'],
-        //Krona style               'colors':['#d47f7f','#d1a575','#d4c97f','#99d47f','#7fd4a7','#7fc3d4','#7f8ad4','#a77fd4','#d47fd3','#d47faf','#ccc','#ccc','#ccc'],
-        'width':400,
-        'height':320,
-        'chartArea':{left:120, top:40, width:"66%", height:"70%"},
-        'pieSliceBorderColor':'none',
-        'legend':'none'
-    };
 
+
+     // Taxonomy Bar - domain
     var options6 = {'title':'Domain composition',
         'titleTextStyle':{fontSize:12},
         'colors':['#5f8694'],
@@ -403,6 +394,18 @@ function drawChart() {
         'bar':{groupWidth:10},
         'legend':'none'
     };
+
+    // Taxonomy Bar - phylum
+    var options5 = {'title':'Phylum composition (Total: 229)',
+        'titleTextStyle':{fontSize:12},
+        'colors':['#5f8694'],
+        'width':400,
+        'height':320,
+        'chartArea':{left:120, top:40, width:"66%", height:"70%"},
+        'pieSliceBorderColor':'none',
+        'legend':'none'
+    };
+
     var options7 = {'title':'Bacteria level (Total: 201)',
         'titleTextStyle':{fontSize:12},
         'colors':['#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff'],
@@ -522,15 +525,15 @@ function drawChart() {
     };
 
     // Instantiate and draw our chart, passing in some options.
-    var chart = new google.visualization.PieChart(document.getElementById('tax_chart_div'));
+    var chart = new google.visualization.PieChart(document.getElementById('tax_chart_pie_dom'));
     chart.draw(data, options);
-    var chart3 = new google.visualization.PieChart(document.getElementById('tax_chart_div3'));
+    var chart3 = new google.visualization.PieChart(document.getElementById('tax_chart_pie_phy'));
     chart3.draw(data3, options4);
-    var chart4 = new google.visualization.BarChart(document.getElementById('tax_chart_div4'));
+    var chart4 = new google.visualization.BarChart(document.getElementById('tax_chart_bar_phy'));
     chart4.draw(data3, options5);
-    var chart6 = new google.visualization.BarChart(document.getElementById('tax_chart_div6'));
+    var chart6 = new google.visualization.BarChart(document.getElementById('tax_chart_bar_dom'));
     chart6.draw(data, options6);
-    var chart9 = new google.visualization.ColumnChart(document.getElementById('tax_chart_stackcol'));
+    var chart9 = new google.visualization.ColumnChart(document.getElementById('tax_chart_col'));
     chart9.draw(data5, options9);
     var chart10 = new google.visualization.BarChart(document.getElementById('tax_chart_div10'));
     chart10.draw(data6, options10);
@@ -639,15 +642,15 @@ function drawTable() {
         ]);
 
         //Pie top hits table
-        var table2 = new google.visualization.Table(document.getElementById('tax_table_div2'));
+        var table2 = new google.visualization.Table(document.getElementById('tax_table_pie'));
         table2.draw(data2, { allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false});
 
         //TABLE top hits stacked column
-        var table5 = new google.visualization.Table(document.getElementById('tax_table_stackcol'));
+        var table5 = new google.visualization.Table(document.getElementById('tax_table_col'));
         table5.draw(data2, { allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:3, sortAscending:false});
 
         //TABLE top hits Bar
-        var table6 = new google.visualization.Table(document.getElementById('tax_table_div4'));
+        var table6 = new google.visualization.Table(document.getElementById('tax_table_bar'));
         table6.draw(data2, { allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false});
     }
     <%--InterPro match summary table--%>
@@ -721,7 +724,7 @@ function drawTable() {
             // Define a StringFilter control for the 'Name'and 'ID' column
             var stringFilter = new google.visualization.ControlWrapper({
               'controlType': 'StringFilter',
-              'containerId': 'control1',
+              'containerId': 'func_table_filter',
               'options': {'matchType':'any','filterColumnIndex': '0,1', 'ui': {'label': 'Filter', 'labelSeparator': ':', 'ui.labelStacking':'vertical', 'ui.cssClass':'custom_col_search'}
               }
             });
@@ -766,9 +769,9 @@ function drawTable() {
                     // Define a StringFilter control for the 'Name'and 'ID' column
                     var taxstringFilter = new google.visualization.ControlWrapper({
                       'controlType': 'StringFilter',
-                      'containerId': 'tax_control',
+                      'containerId': 'tax_table_filter',
                       'options': { 'matchType':'any',
-                      'filterColumnIndex': '0,1',
+                      'filterColumnIndex': '1',
                       'ui': {'label': 'Filter', 'labelSeparator': ':', 'ui.labelStacking':'vertical', 'ui.cssClass':'custom_col_search'}
                       }
                     });
@@ -776,7 +779,7 @@ function drawTable() {
                     // Table visualization option
                     var taxTableOptions = new google.visualization.ChartWrapper({
                       'chartType': 'Table',
-                      'containerId': 'tax_table_div2',
+                      'containerId': 'tax_table_pie',
                       'options': { allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false }
                     });
 
@@ -893,7 +896,6 @@ function drawTable() {
     <li><a href="#fragment-quality"><span>Quality control</span></a></li>
     <li><a href="#fragment-taxonomy"><span>Taxonomy analysis</span></a></li>
     <li><a href="#fragment-functional"><span>Functional analysis</span></a></li>
-
     <li><a href="#fragment-download"><span>Download</span></a></li>
         <%--<li><a href="#fragment-experimental"><span>Experimental factor</span></a></li>--%>
 </ul>
@@ -905,7 +907,7 @@ function drawTable() {
     <tags:publications publications="${model.sample.publications}" relatedPublications="${model.relatedPublications}" relatedLinks="${model.relatedLinks}" />
 
 <div class="main_tab_content">
-        <%--BEGIN DESCRIPTION--%>
+    <%--BEGIN DESCRIPTION--%>
     <h3 id="sample_desc">Description</h3>
 
     <div class="output_form">
@@ -929,9 +931,9 @@ function drawTable() {
         </div>
 
     </div>
-        <%--END DESCRIPTION--%>
+    <%--END DESCRIPTION--%>
 
-        <%--BEGIN ENVIRONMENTAL/HOST ASSOCIATED    --%>
+    <%--BEGIN ENVIRONMENTAL/HOST ASSOCIATED    --%>
     <c:choose>
 
         <c:when test="${model.hostAssociated}">
@@ -1011,7 +1013,7 @@ function drawTable() {
             </div>
         </c:otherwise>
     </c:choose>
-        <%--END ENVIRONMENTAL/HOST ASSOCIATED--%>
+    <%--END ENVIRONMENTAL/HOST ASSOCIATED--%>
 
     <%--BEGIN LOCALISATION   --%>
     <h3>Localisation</h3>
@@ -1044,10 +1046,7 @@ function drawTable() {
     </div>
     <%--END LOCALISATION   --%>
 
-
-
     <%--BEGIN OTHER INFO   --%>
-
     <c:if test="${not empty model.sampleAnnotations}">
         <h3 id="expanderhead" style="">Other information
             <%--<span id="expandersign">+</span>--%>
@@ -1103,32 +1102,28 @@ function drawTable() {
                 <div id="tax-pie">
                     <div class="chart_container">
                         <div class="chart_container">
-                            <div id="tax_chart_div"></div><div id="tax_chart_div3"></div>
+                            <div id="tax_chart_pie_dom"></div><div id="tax_chart_pie_phy"></div>
 
                             <div id="tax_dashboard">
-                             <div id="tax_control"></div>
-                             <div id="tax_table_div2"></div>
+                             <div id="tax_table_filter"></div>
+                             <div id="tax_table_pie"></div>
                              </div>
 
                           </div>
-
                     </div>
                 </div>
 
                 <div id="tax-bar">
-                    <div class="chart_container"><div id="tax_chart_div6"></div><div id="tax_chart_div4"></div> <div id="tax_table_div4"></div></div>
+                    <div class="chart_container"><div id="tax_chart_bar_dom"></div><div id="tax_chart_bar_phy"></div><div id="tax_table_bar"></div></div>
                 </div>
 
                 <div id="tax-col">
-                  <div class="chart_container"><div id="tax_chart_stackcol"></div><div id="tax_table_stackcol"></div>
-                  </div>
-
-
-
+                  <div class="chart_container"><div id="tax_chart_col"></div><div id="tax_table_col"></div>
+                </div>
 
                  </div>
                   <div id="tax-Krona">
-                  <object class="krona_chart" data="<c:url value="${baseURL}/sample/${model.sample.sampleId}/krona?taxonomy=true&font=10&collapse=false"/>" type="text/html"></object>
+                  <object class="krona_chart" data="<c:url value="${baseURL}/sample/${model.sample.sampleId}/krona?taxonomy=true&collapse=false"/>" type="text/html"></object>
                   </div>
 
 
@@ -1194,7 +1189,7 @@ function drawTable() {
                      <%--<div id="func_chart_div1"></div>--%>
                      <div id="visualization_div"></div>
                      <div id="dashboard">
-                     <div id="control1"></div>
+                     <div id="func_table_filter"></div>
                      <div id="entry_table_div"></div>
                      </div>
 
