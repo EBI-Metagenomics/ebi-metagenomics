@@ -32,7 +32,7 @@ google.setOnLoadCallback(drawChart);
 // draws it.
 function drawChart() {
 
-    // Create the data table.
+     // DATA taxonomy Pie+Bar chart Domain
     var data = new google.visualization.DataTable();
     data.addColumn('string', 'kingdom');
     data.addColumn('number', 'Match');
@@ -42,11 +42,11 @@ function drawChart() {
         ['Unassigned', 1]
     ]);
 
-
-    var data3 = new google.visualization.DataTable();
-    data3.addColumn('string', 'Phylum');
-    data3.addColumn('number', 'Match');
-    data3.addRows([
+    // DATA taxonomy Pie+Bar chart Phylum
+    var data2 = new google.visualization.DataTable();
+    data2.addColumn('string', 'Phylum');
+    data2.addColumn('number', 'Match');
+    data2.addRows([
         ['Proteobacteria', 146],
         ['Crenarchaeota', 17],
         ['Euryarchaeota', 11],
@@ -68,16 +68,16 @@ function drawChart() {
 
 
     // DATA taxonomy Stacked column
-    var data5 = google.visualization.arrayToDataTable([
+    var data3 = google.visualization.arrayToDataTable([
         [ '','Proteobacteria', 'Crenarchaeota', 'Euryarchaeota', 'Bacteroidetes', 'SAR406', 'Actinobacteria', 'Verrucomicrobia', 'Chloroflexi', 'NC10', 'PAUC34f', 'Planctomycetes', 'Caldiserica', 'Cyanobacteria', 'Elusimicrobia', 'Firmicutes', 'OP11', 'Unassigned bacteria'],
         ['', 146/229, 17/229, 11/229, 11/229, 11/229, 10/229, 7/229, 3/229, 3/229, 2/229, 2/229, 1/229, 1/229, 1/229, 1/229, 1/229 , 1/229 ]
     ]);
 
-    // Bar GO terms
-    var data6 = new google.visualization.DataTable();
-    data6.addColumn('string', 'GO term');
-    data6.addColumn('number', 'Match');
-    data6.addRows([
+    // DATA function Bar GO terms bp
+    var data4 = new google.visualization.DataTable();
+    data4.addColumn('string', 'GO term');
+    data4.addColumn('number', 'Match');
+    data4.addRows([
         ['cell projection assembly', 37],
         ['cell wall organization or biogenesis', 340],
         ['cellular component organization  ', 1068],
@@ -128,11 +128,11 @@ function drawChart() {
                 ['viral reproduction  ', 35]
     ]);
 
-    // Bar GO terms
-        var data7 = new google.visualization.DataTable();
-        data7.addColumn('string', 'GO term');
-        data7.addColumn('number', 'Match');
-        data7.addRows([
+    // DATA function Bar GO terms mf
+        var data5 = new google.visualization.DataTable();
+        data5.addColumn('string', 'GO term');
+        data5.addColumn('number', 'Match');
+        data5.addRows([
             ['cofactor binding', 7883],
             ['cytoskeletal protein binding', 4],
             ['metal ion binding', 5540],
@@ -176,11 +176,11 @@ function drawChart() {
             ['two-component response regulator activity', 423]
         ]);
 
-    // Bar GO terms
-            var data8 = new google.visualization.DataTable();
-            data8.addColumn('string', 'GO term');
-            data8.addColumn('number', 'Match');
-            data8.addRows([
+    // DATA function Bar GO terms cc
+            var data6 = new google.visualization.DataTable();
+            data6.addColumn('string', 'GO term');
+            data6.addColumn('number', 'Match');
+            data6.addRows([
                 ['DNA polymerase complex', 117],
                 ['proton-transporting two-sector ATPase complex', 538],
                 ['ribosome', 1865],
@@ -209,11 +209,12 @@ function drawChart() {
                 ['extracellular matrix', 18],
                 ['virion', 103]
             ]);
-    // Bar GO terms
-        var data9 = new google.visualization.DataTable();
-        data9.addColumn('string', 'GO term');
-        data9.addColumn('number', 'Match');
-        data9.addRows([
+
+   // DATA function PIE GO terms bp SORTED BY DECREASED NUMBER
+        var data7 = new google.visualization.DataTable();
+        data7.addColumn('string', 'GO term');
+        data7.addColumn('number', 'Match');
+        data7.addRows([
             ['nitrogen compound metabolic process', 23093],
             ['biosynthetic process', 21253],
             ['oxidation-reduction process', 14516],
@@ -264,10 +265,11 @@ function drawChart() {
             ['sporulation', 0]
         ]);
 
-    var data10 = new google.visualization.DataTable();
-            data10.addColumn('string', 'GO term');
-            data10.addColumn('number', 'Match');
-            data10.addRows([
+    // DATA function PIE GO terms mf SORTED BY DECREASED NUMBER
+    var data8 = new google.visualization.DataTable();
+            data8.addColumn('string', 'GO term');
+            data8.addColumn('number', 'Match');
+            data8.addRows([
                 ['nucleotide binding', 15793],
                 ['oxidoreductase activity', 15758],
                 ['hydrolase activity', 13262],
@@ -311,10 +313,11 @@ function drawChart() {
                 ['translation regulator activity', 0]
             ]);
 
-    var data11 = new google.visualization.DataTable();
-    data11.addColumn('string', 'GO term');
-    data11.addColumn('number', 'Match');
-    data11.addRows([
+    // DATA function PIE GO terms cc SORTED BY DECREASED NUMBER
+    var data9 = new google.visualization.DataTable();
+    data9.addColumn('string', 'GO term');
+    data9.addColumn('number', 'Match');
+    data9.addRows([
         ['membrane', 10552],
         ['cytoplasm', 7170],
         ['ribosome', 1865],
@@ -344,46 +347,25 @@ function drawChart() {
         [' transcription factor complex', 0]
     ]);
 
-    // Kingdom level
-    var options = {'title':'Domain composition',
-        'titleTextStyle':{fontSize:12},
-// Krona colors       'colors':['#cf6f6f', '#cfc26f', '#8dcf6f'],
-         'colors':['#5f8694','#91d450', '#535353' ],
-//         'colors':['#5f8694','#91d450', '#d1dadd' ],
-//        'colors':['#058dc7', '#50b432', '#ed561b'],
-//                           'width':120,
-        'width':200,
-        'height':220,
-        'chartArea':{left:10, top:26, width:"80%", height:"55%"},
-//                        'chartArea.left':0,
-//                          'chartArea.top':0,
-        'pieSliceBorderColor':'none',
-//                           'pieSliceText': 'label',
-//                            'legend':{position:'none',fontSize:10},
-        'legend':{fontSize:10},
-        'pieSliceTextStyle':{color:'white'}
-//                           'backgroundColor':'black'
-    };
+    // taxonomy Pie chart domain
+    var options = {'title':'Domain composition', 'titleTextStyle':{fontSize:12}, 'colors':['#5f8694','#91d450', '#535353' ],'width':200, 'height':220, 'chartArea':{left:10, top:26, width:"80%", height:"55%"}, 'pieSliceBorderColor':'none', 'legend':{fontSize:10}, 'pieSliceTextStyle':{color:'white'}};
 
-    // Top taxonomy Pie
-    var options4 = {'title':'Phylum composition (Total: 229)',
+    // taxonomy Pie chart Phylum
+    var options2 = {'title':'Phylum composition (Total: 229)',
         'titleTextStyle':{fontSize:12},
         'colors':['#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff', '#ccc'],
-//Krona style               'colors':['#d47f7f','#d1a575','#d4c97f','#99d47f','#7fd4a7','#7fc3d4','#7f8ad4','#a77fd4','#d47fd3','#d47faf','#ccc','#ccc','#ccc'],
-//                            'width':220,
+//Krona style      'colors':['#d47f7f','#d1a575','#d4c97f','#99d47f','#7fd4a7','#7fc3d4','#7f8ad4','#a77fd4','#d47fd3','#d47faf','#ccc','#ccc','#ccc'],
+//      'width':220,
         'width':290,
         'height':220,
         'legend':{position:'right', fontSize:10},
-//                            'legend':{p osition:'none',fontSize:10},
         'chartArea':{left:10, top:30, width:"100%", height:"100%"},
         'pieSliceBorderColor':'none',
         'sliceVisibilityThreshold':1 / 115
     };
 
-
-
      // Taxonomy Bar - domain
-    var options6 = {'title':'Domain composition',
+    var options3 = {'title':'Domain composition',
         'titleTextStyle':{fontSize:12},
         'colors':['#5f8694'],
         'width':240,
@@ -396,7 +378,7 @@ function drawChart() {
     };
 
     // Taxonomy Bar - phylum
-    var options5 = {'title':'Phylum composition (Total: 229)',
+    var options4 = {'title':'Phylum composition (Total: 229)',
         'titleTextStyle':{fontSize:12},
         'colors':['#5f8694'],
         'width':400,
@@ -406,33 +388,10 @@ function drawChart() {
         'legend':'none'
     };
 
-    var options7 = {'title':'Bacteria level (Total: 201)',
-        'titleTextStyle':{fontSize:12},
-        'colors':['#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff'],
-        'width':300,
-        'height':220,
-        'legend':{position:'right', fontSize:10},
-        'chartArea':{left:120, top:20, width:"100%", height:"100%"},
-        'pieSliceBorderColor':'none',
-        'sliceVisibilityThreshold':1 / 110,
-        'legend':'none'
-    };
-    var options8 = {'title':'Archea level (Total: 28)',
-        'titleTextStyle':{fontSize:12},
-        'colors':['#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff'],
-        'width':300,
-        'height':220,
-        'legend':{position:'right', fontSize:10},
-        'chartArea':{left:120, top:20, width:"100%", height:"100%"},
-        'pieSliceBorderColor':'none',
-        'sliceVisibilityThreshold':1 / 110,
-        'legend':'none'
-    };
     // Stacked column graph
-    var options9 = {'title':'Phylum composition (Total: 229)',
+    var options5 = {'title':'Phylum composition (Total: 229)',
         'titleTextStyle':{fontSize:12},
         'colors':['#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff', '#ccc', '#ccc', '#ccc', '#ccc', '#ccc', '#ccc', '#ccc'],
-        //Krona style               'colors':['#d47f7f','#d1a575','#d4c97f','#99d47f','#7fd4a7','#7fc3d4','#7f8ad4','#a77fd4','#d47fd3','#d47faf','#ccc','#ccc','#ccc'],
         'width':320,
         'height':400,
         'legend':{position:'right', fontSize:10},
@@ -444,53 +403,27 @@ function drawChart() {
         'isStacked':true
     };
 
-    // GO TERM Biological Process
-    var options10 = {'title':'Biological process',
-        'titleTextStyle':{fontSize:12},
-        'colors':['#058dc7'],
+    // GO TERM bar Biological Process
+    var options6 = {'title':'Biological process', 'titleTextStyle':{fontSize:12}, 'colors':['#058dc7'], 'width':340, 'height':600, 'chartArea':{left:220, top:40, width:"100%", height:"100%"}, 'vAxis':{textStyle:{fontSize:10}}, 'hAxis':{textPosition: 'none', gridlines:{color:'white'}}, 'bar':{groupWidth:8}, 'legend':'none'
 //        'colors':['#5f8694'],
-        'width':340,
-        'height':600,
-        'chartArea':{left:220, top:40, width:"100%", height:"100%"},
-        'vAxis':{textStyle:{fontSize:10}},
 //        'vAxis':{'textPosition':'in'},
-        'hAxis':{textPosition: 'none', gridlines:{color:'white'}},
-        'bar':{groupWidth:8},
-        'legend':'none'
     };
 
-    // GO TERM Molecular Function
-    var options11 = {'title':'Molecular function',
-        'titleTextStyle':{fontSize:12},
-        'colors':['#50b432'],
+    // GO TERM bar Molecular Function
+    var options7 = {'title':'Molecular function', 'titleTextStyle':{fontSize:12}, 'colors':['#50b432'], 'width':230, 'height':600, 'chartArea':{left:110, top:40, width:"100%", height:"100%"}, 'vAxis':{textStyle:{fontSize:10}},'hAxis':{textPosition: 'none', gridlines:{color:'white'}}, 'bar':{groupWidth:8}, 'legend':'none'
 //        'colors':['#91d450'],
-        'width':230,
 //        'width':340,
-        'height':600,
-        'chartArea':{left:110, top:40, width:"100%", height:"100%"},
-        'vAxis':{textStyle:{fontSize:10}},
 //        'vAxis':{'textPosition':'in'},
-        'hAxis':{textPosition: 'none', gridlines:{color:'white'}},
-        'bar':{groupWidth:8},
-        'legend':'none'
     };
-        // GO TERM Cellular component
-    var options12 = {'title':'Cellular component',
-        'titleTextStyle':{fontSize:12},
-        'colors':['#ed561b'],
+
+    // GO TERM bar Cellular component
+    var options8 = {'title':'Cellular component', 'titleTextStyle':{fontSize:12},'colors':['#ed561b'], 'width':320, 'height':600, 'chartArea':{left:220, top:40, width:"100%", height:"100%"}, 'vAxis':{textStyle:{fontSize:10}}, 'hAxis':{textPosition: 'none', gridlines:{color:'white', count:15}}, 'bar':{groupWidth:8}, 'legend':'none'
 //        'colors':['#535353'],
-        'width':320,
-        'height':600,
-        'chartArea':{left:220, top:40, width:"100%", height:"100%"},
-        'vAxis':{textStyle:{fontSize:10}},
 //        'vAxis':{'textPosition':'in'},
-        'hAxis':{textPosition: 'none', gridlines:{color:'white', count:15}},
-        'bar':{groupWidth:8},
-        'legend':'none'
     };
 
-    // GO TERM Pie
-    var options13 = {'title':'Biological process',
+    // GO TERM Pie Biological process
+    var options9 = {'title':'Biological process',
         'titleTextStyle':{fontSize:12},
         'colors':['#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff'],
         'width':340,
@@ -501,7 +434,8 @@ function drawChart() {
         'sliceVisibilityThreshold':1 / 30
     };
 
-    var options14 = {'title':'Molecular function',
+    // GO TERM Pie Molecular function
+    var options10 = {'title':'Molecular function',
         'titleTextStyle':{fontSize:12},
         'colors':['#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff'],
         'width':340,
@@ -512,7 +446,8 @@ function drawChart() {
         'sliceVisibilityThreshold':1 / 30
     };
 
-    var options15 = {'title':'Cellular component',
+    // GO TERM Pie Cellular component
+    var options11 = {'title':'Cellular component',
         'titleTextStyle':{fontSize:12},
         'colors':['#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff'],
         'width':340,
@@ -521,32 +456,31 @@ function drawChart() {
         'chartArea':{left:0, top:30, width:"70%", height:"100%"},
         'pieSliceBorderColor':'none',
         'sliceVisibilityThreshold':1 / 100
-
     };
 
     // Instantiate and draw our chart, passing in some options.
     var chart = new google.visualization.PieChart(document.getElementById('tax_chart_pie_dom'));
     chart.draw(data, options);
-    var chart3 = new google.visualization.PieChart(document.getElementById('tax_chart_pie_phy'));
-    chart3.draw(data3, options4);
+    var chart2 = new google.visualization.PieChart(document.getElementById('tax_chart_pie_phy'));
+    chart2.draw(data2, options2);
+    var chart3 = new google.visualization.BarChart(document.getElementById('tax_chart_bar_dom'));
+    chart3.draw(data, options3);
     var chart4 = new google.visualization.BarChart(document.getElementById('tax_chart_bar_phy'));
-    chart4.draw(data3, options5);
-    var chart6 = new google.visualization.BarChart(document.getElementById('tax_chart_bar_dom'));
-    chart6.draw(data, options6);
-    var chart9 = new google.visualization.ColumnChart(document.getElementById('tax_chart_col'));
-    chart9.draw(data5, options9);
-    var chart10 = new google.visualization.BarChart(document.getElementById('func_chart_bar_go_bp'));
-    chart10.draw(data6, options10);
-    var chart11 = new google.visualization.BarChart(document.getElementById('func_chart_bar_go_mf'));
-    chart11.draw(data7, options11);
-    var chart12 = new google.visualization.BarChart(document.getElementById('func_chart_bar_go_cc'));
-    chart12.draw(data8, options12);
-    var chart13 = new google.visualization.PieChart(document.getElementById('func_chart_pie_go_bp'));
-    chart13.draw(data9, options13);
-    var chart14 = new google.visualization.PieChart(document.getElementById('func_chart_pie_go_mf'));
-    chart14.draw(data10, options14);
-    var chart15 = new google.visualization.PieChart(document.getElementById('func_chart_pie_go_cc'));
-    chart15.draw(data11, options15);
+    chart4.draw(data2, options4);
+    var chart5 = new google.visualization.ColumnChart(document.getElementById('tax_chart_col'));
+    chart5.draw(data3, options5);
+    var chart6 = new google.visualization.BarChart(document.getElementById('func_chart_bar_go_bp'));
+    chart6.draw(data4, options6);
+    var chart7 = new google.visualization.BarChart(document.getElementById('func_chart_bar_go_mf'));
+    chart7.draw(data5, options7);
+    var chart8 = new google.visualization.BarChart(document.getElementById('func_chart_bar_go_cc'));
+    chart8.draw(data6, options8);
+    var chart9 = new google.visualization.PieChart(document.getElementById('func_chart_pie_go_bp'));
+    chart9.draw(data7, options9);
+    var chart10 = new google.visualization.PieChart(document.getElementById('func_chart_pie_go_mf'));
+    chart10.draw(data8, options10);
+    var chart11 = new google.visualization.PieChart(document.getElementById('func_chart_pie_go_cc'));
+    chart11.draw(data9, options11);
 }
 
 </script>
