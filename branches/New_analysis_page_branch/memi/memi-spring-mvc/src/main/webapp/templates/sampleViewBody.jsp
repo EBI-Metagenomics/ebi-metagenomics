@@ -66,13 +66,6 @@ function drawChart() {
         ['Unassigned bacteria', 1]
     ]);
 
-    var data4 = new google.visualization.DataTable();
-    data4.addColumn('string', 'Phylum');
-    data4.addColumn('number', 'Match');
-    data4.addRows([
-        ['Crenarchaeota', 17],
-        ['Euryarchaeota', 11]
-    ]);
 
     // Stacked column
     var data5 = google.visualization.arrayToDataTable([
@@ -374,31 +367,6 @@ function drawChart() {
 //                           'backgroundColor':'black'
     };
 
-    // Bacteria level
-    var options2 = {'title':'Bacteria level (Total: 201)',
-        'titleTextStyle':{fontSize:12},
-        'colors':['#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff', '#ccc', '#ccc', '#ccc'],
-//Krona style 'colors':['#d47f7f','#d1a575','#d4c97f','#99d47f','#7fd4a7','#7fc3d4','#7f8ad4','#a77fd4','#d47fd3','#d47faf','#ccc','#ccc','#ccc'],
-        'width':290,
-        'height':220,
-        'legend':{position:'right', fontSize:10},
-        'chartArea':{left:10, top:30, width:"100%", height:"100%"},
-        'pieSliceBorderColor':'none'
-//Krona style               'pieSliceBorderColor':'#9c8989'
-    };
-
-    // Archea level
-    var options3 = {'title':'Archea level (Total: 28)',
-        'titleTextStyle':{fontSize:12},
-        'colors':['#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff', '#ccc', '#ccc', '#ccc'],
-//Krona style               'colors':['#d47f7f','#d1a575','#d4c97f','#99d47f','#7fd4a7','#7fc3d4','#7f8ad4','#a77fd4','#d47fd3','#d47faf','#ccc','#ccc','#ccc'],
-        'width':290,
-        'height':220,
-        'legend':{position:'right', fontSize:10},
-        'chartArea':{left:10, top:30, width:"100%", height:"100%"},
-        'pieSliceBorderColor':'none'
-    };
-
     // Top taxonomy Pie
     var options4 = {'title':'Phylum composition (Total: 229)',
         'titleTextStyle':{fontSize:12},
@@ -558,19 +526,12 @@ function drawChart() {
     // Instantiate and draw our chart, passing in some options.
     var chart = new google.visualization.PieChart(document.getElementById('tax_chart_div'));
     chart.draw(data, options);
-
-    var chart5 = new google.visualization.PieChart(document.getElementById('tax_chart_div5'));
-    chart5.draw(data4, options3);
     var chart3 = new google.visualization.PieChart(document.getElementById('tax_chart_div3'));
     chart3.draw(data3, options4);
     var chart4 = new google.visualization.BarChart(document.getElementById('tax_chart_div4'));
     chart4.draw(data3, options5);
     var chart6 = new google.visualization.BarChart(document.getElementById('tax_chart_div6'));
     chart6.draw(data, options6);
-    var chart7 = new google.visualization.BarChart(document.getElementById('tax_chart_div7'));
-    chart7.draw(data3, options7);
-    var chart8 = new google.visualization.BarChart(document.getElementById('tax_chart_div8'));
-    chart8.draw(data4, options8);
     var chart9 = new google.visualization.ColumnChart(document.getElementById('tax_chart_div9'));
     chart9.draw(data5, options9);
     var chart10 = new google.visualization.BarChart(document.getElementById('tax_chart_div10'));
@@ -591,6 +552,7 @@ function drawChart() {
 
 <script type='text/javascript'>
 
+ //BEGIN code used to showroom the row number selection - TODO apply on the new table
 
     google.setOnLoadCallback(init);
 
@@ -619,6 +581,7 @@ function drawChart() {
 
     google.setOnLoadCallback(drawTable);// Set a callback to run when the Google Visualization API is loaded.
 
+ //END code used to showroom the row number selection - TODO apply on the new table
 
 
 function drawTable() {
@@ -641,8 +604,8 @@ function drawTable() {
             </c:forEach>
         ]);
 
+    // Table used for bar chart where we don't need to get colour for each row
         var data2 = new google.visualization.DataTable();
-//          data2.addColumn('string', '');
             data2.addColumn('string', 'Phylum');
             data2.addColumn('string', 'Domain');
             data2.addColumn('number', 'Unique OTUs');
@@ -655,9 +618,8 @@ function drawTable() {
             <c:choose>
             <c:when test="${addComma}">,
             </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise>
-           </c:choose>
-
-            [<%--' <ul class="color_legend"><li  style="color: #${taxonomyData.colourCode};"></li></ul>',--%> '${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits},,  ${taxonomyData.percentage}]
+            </c:choose>
+            ['${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits},,  ${taxonomyData.percentage}]
             </c:forEach>
         ]);
 
@@ -677,14 +639,6 @@ function drawTable() {
             ['<a href="#">${taxonomyData.phylum}</a>', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}]
             </c:forEach>
         ]);
-
-        //Bacteria level
-        var table = new google.visualization.Table(document.getElementById('tax_table_div'));
-        table.draw(data, { allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'<', next:'>'}, sortColumn:2, sortAscending:false });
-
-        //Archea level
-        var table4 = new google.visualization.Table(document.getElementById('tax_table_div5'));
-        table4.draw(data3, { allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false });
 
         //Pie top hits table
         var table2 = new google.visualization.Table(document.getElementById('tax_table_div2'));
@@ -795,7 +749,7 @@ function drawTable() {
 
                     // Taxonomy analysis table
                 var taxMatchesData = new google.visualization.DataTable();
-                //          taxMatchesData.addColumn('string', '');
+                taxMatchesData.addColumn('string', '');
                 taxMatchesData.addColumn('string', 'Phylum');
                 taxMatchesData.addColumn('string', 'Domain');
                 taxMatchesData.addColumn('number', 'Unique OTUs');
@@ -808,9 +762,8 @@ function drawTable() {
                             <c:choose>
                             <c:when test="${addComma}">,
                             </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise>
-                           </c:choose>
-
-                            [<%--' <ul class="color_legend"><li  style="color: #${taxonomyData.colourCode};"></li></ul>',--%> '${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits},,  ${taxonomyData.percentage}]
+                            </c:choose>
+                            ['<ul class="color_legend"><li  style="color: #${taxonomyData.colourCode};"></li></ul>','${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ,  ${taxonomyData.percentage}]
                             </c:forEach>
                         ]);
 
@@ -1179,30 +1132,22 @@ function drawTable() {
 
                 <%--Taxonomy google chart--%>
                 <div id="tax-pie">
+                    <div class="chart_container">
                         <div class="chart_container">
-                            <div class="chart_container">
-                                <div id="tax_chart_div"></div><div id="tax_chart_div3"></div>
+                            <div id="tax_chart_div"></div><div id="tax_chart_div3"></div>
 
-                                <div id="tax_dashboard">
-                                 <div id="tax_control"></div>
-                                 <div id="tax_table_div2"></div>
-                                 </div>
+                            <div id="tax_dashboard">
+                             <div id="tax_control"></div>
+                             <div id="tax_table_div2"></div>
+                             </div>
 
-                              </div>
-                            <p><br/></p>
-                            <%--<h4>Top taxonomy levels</h4>--%>
-                            <%--Bacteria level--%>
-                            <div id="tax_table_div" style="display:none;"></div>
-                           <%--Archea level--%>
-                           <div id="tax_chart_div5" style="display:none;"></div> <div id="tax_table_div5" style="display:none;"></div>
-                        </div>
+                          </div>
 
+                    </div>
                 </div>
 
                 <div id="tax-bar">
                     <div class="chart_container"><div id="tax_chart_div6"></div><div id="tax_chart_div4"></div> <div id="tax_table_div4"></div></div>
-                    <%--<h4>Top taxonomy levels</h4>--%>
-                    <div class="chart_container"><div id="tax_chart_div7" style="display:none;"></div><div id="tax_chart_div8" style="display:none;"></div></div>
                 </div>
 
                 <div id="tax-col">
@@ -1321,14 +1266,13 @@ function drawTable() {
                      <div id="entry_table_div"></div>
                      </div>
 
-                    <div id="func_table_div1" style="display:none;"></div>
+                    <%--  BEGIN code used if we want to use the row number select option
 
-                    <form action="" class="expandertable" style="display:none;">
+                    <div id="func_table_div1" style="display:none;"></div>
+                    <form action="" class="expandertable" >
                     Show rows:
                     <select onChange="setOption('pageSize', parseInt(this.value, 10))">
-
                     <option selected=selected value="10">10</option>
-
                     <option value="25">25</option>
                     <option value="50">50</option>
                     <option value="100">100</option>
@@ -1336,20 +1280,7 @@ function drawTable() {
                     <option value="10000">All</option>
                     </select></form>
 
-
-
-                        <%--<div class="row_numb">--%>
-                        <%--<form action="">--%>
-                        <%--Show rows:--%>
-                        <%--<select onChange="setOption('pageSize', parseInt(this.value, 10))">--%>
-                        <%--<option selected=selected value="10">10</option>--%>
-                        <%--<option value="50">50</option>--%>
-                        <%--<option value="100">100</option>--%>
-                        <%--<option value="1000">1000</option>--%>
-                        <%--<option value="all">all</option>--%>
-                        <%--</select>--%>
-                        <%--</form>--%>
-                        <%--</div>--%>
+                    END code used if we want to use the row number select option  --%>
 
                  </div>
 
