@@ -67,10 +67,8 @@ function drawChart() {
     ]);
 
 
-    // Stacked column
+    // DATA taxonomy Stacked column
     var data5 = google.visualization.arrayToDataTable([
-//        [ '','Proteobacteria', 'Crenarchaeota', 'Euryarchaeota', 'Bacteroidetes', 'SAR406', 'Actinobacteria', 'Verrucomicrobia', 'Chloroflexi', 'NC10', 'PAUC34f', 'Planctomycetes', 'Caldiserica', 'Cyanobacteria', 'Elusimicrobia', 'Firmicutes', 'OP11', 'Unassigned bacteria'],
-//        ['', 146/229, 17/229, 11/229, 11/229, 11/229, 10/229, 7/229, 3/229, 3/229, 2/229, 2/229, 1/229, 1/229, 1/229, 1/229, 1/229, 1/229]
         [ '','Proteobacteria', 'Crenarchaeota', 'Euryarchaeota', 'Bacteroidetes', 'SAR406', 'Actinobacteria', 'Verrucomicrobia', 'Chloroflexi', 'NC10', 'PAUC34f', 'Planctomycetes', 'Caldiserica', 'Cyanobacteria', 'Elusimicrobia', 'Firmicutes', 'OP11', 'Unassigned bacteria'],
         ['', 146/229, 17/229, 11/229, 11/229, 11/229, 10/229, 7/229, 3/229, 3/229, 2/229, 2/229, 1/229, 1/229, 1/229, 1/229, 1/229 , 1/229 ]
     ]);
@@ -532,7 +530,7 @@ function drawChart() {
     chart4.draw(data3, options5);
     var chart6 = new google.visualization.BarChart(document.getElementById('tax_chart_div6'));
     chart6.draw(data, options6);
-    var chart9 = new google.visualization.ColumnChart(document.getElementById('tax_chart_div9'));
+    var chart9 = new google.visualization.ColumnChart(document.getElementById('tax_chart_stackcol'));
     chart9.draw(data5, options9);
     var chart10 = new google.visualization.BarChart(document.getElementById('tax_chart_div10'));
     chart10.draw(data6, options10);
@@ -644,14 +642,11 @@ function drawTable() {
         var table2 = new google.visualization.Table(document.getElementById('tax_table_div2'));
         table2.draw(data2, { allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false});
 
-        //Stacked column top hits table
-        var table5 = new google.visualization.Table(document.getElementById('tax_table_div6'));
+        //TABLE top hits stacked column
+        var table5 = new google.visualization.Table(document.getElementById('tax_table_stackcol'));
         table5.draw(data2, { allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:3, sortAscending:false});
 
-//        var table3 = new google.visualization.Table(document.getElementById('tax_table_div3'));
-//        table3.draw(data2b, { allowHtml:true, showRowNumber:true, page:'enable', pageSize:100, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false});
-
-        //Bar top hits table
+        //TABLE top hits Bar
         var table6 = new google.visualization.Table(document.getElementById('tax_table_div4'));
         table6.draw(data2, { allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false});
     }
@@ -1051,7 +1046,7 @@ function drawTable() {
 
 
 
-        <%--BEGIN OTHER INFO   --%>
+    <%--BEGIN OTHER INFO   --%>
 
     <c:if test="${not empty model.sampleAnnotations}">
         <h3 id="expanderhead" style="">Other information
@@ -1078,8 +1073,7 @@ function drawTable() {
         </table>
         </div>
     </c:if>
-
-        <%--END OTHER INFO   --%>
+    <%--END OTHER INFO   --%>
 
 
 </div>
@@ -1088,28 +1082,6 @@ function drawTable() {
 
 <div id="fragment-taxonomy">
 
-<%--<div class="sidebar-allrel">--%>
-
-            <%--<h3>Download results</h3>--%>
-
-            <%--<div class="box-export">--%>
-                <%--<c:if test="${not empty model.downloadSection.taxaAnalysisDownloadLinks}">--%>
-                    <%--<h4>Taxonomic Analysis</h4>--%>
-                    <%--<ul>--%>
-                        <%--<c:forEach var="downloadLink" items="${model.downloadSection.taxaAnalysisDownloadLinks}"--%>
-                                   <%--varStatus="loop">--%>
-                            <%--<li>--%>
-                                <%--<a href="<c:url value="${baseURL}/${downloadLink.linkURL}"/>"--%>
-                                   <%--title="${downloadLink.linkTitle}">--%>
-                                        <%--${downloadLink.linkText}</a><span--%>
-                                    <%--class="list_date"> - ${downloadLink.fileSize}</span>--%>
-                            <%--</li>--%>
-                        <%--</c:forEach>--%>
-                    <%--</ul>--%>
-                <%--</c:if>--%>
-            <%--</div>--%>
-
-<%--</div>--%>
 <div class="main_tab_full_content">
       <%--<h3>Taxonomy analysis</h3>--%>
       <h3>Top taxonomy Hits</h3>
@@ -1125,9 +1097,6 @@ function drawTable() {
                 <%--<li class="ico-downl"><a class="icon icon-functional" data-icon="=" href="#download" title="Download image/table"></a></li>--%>
             </ul>
 
-                <%--<div id="tax-table">--%>
-                <%--<div id="tax_table_div3"></div>--%>
-                <%--</div>--%>
 
 
                 <%--Taxonomy google chart--%>
@@ -1151,7 +1120,7 @@ function drawTable() {
                 </div>
 
                 <div id="tax-col">
-                  <div class="chart_container"><div id="tax_chart_div9"></div><div id="tax_table_div6"></div>
+                  <div class="chart_container"><div id="tax_chart_stackcol"></div><div id="tax_table_stackcol"></div>
                   </div>
 
 
@@ -1159,7 +1128,7 @@ function drawTable() {
 
                  </div>
                   <div id="tax-Krona">
-                  <object class="krona_chart" data="<c:url value="${baseURL}/sample/${model.sample.sampleId}/krona?taxonomy=true"/>" type="text/html"></object>
+                  <object class="krona_chart" data="<c:url value="${baseURL}/sample/${model.sample.sampleId}/krona?taxonomy=true&font=10&collapse=false"/>" type="text/html"></object>
                   </div>
 
 
@@ -1168,43 +1137,6 @@ function drawTable() {
 </div>
 
 <div id="fragment-functional">
-
-        <%--<div class="sidebar-allrel">--%>
-
-            <%--<h3>Download results</h3>--%>
-
-            <%--<div class="box-export">--%>
-
-                <%--<c:if test="${not empty model.downloadSection.funcAnalysisDownloadLinks}">--%>
-                    <%--<h4>Functional Analysis</h4>--%>
-                    <%--<ul>--%>
-                        <%--<c:forEach var="downloadLink" items="${model.downloadSection.funcAnalysisDownloadLinks}"--%>
-                                   <%--varStatus="loop">--%>
-                            <%--<li>--%>
-                                <%--<a href="<c:url value="${baseURL}/${downloadLink.linkURL}"/>"--%>
-                                   <%--title="${downloadLink.linkTitle}">--%>
-                                        <%--${downloadLink.linkText}</a><span--%>
-                                    <%--class="list_date"> - ${downloadLink.fileSize}</span>--%>
-                         <%--&lt;%&ndash;to rename Complete Go Annotatio&ndash;%&gt;--%>
-                      <%--</li>--%>
-                  <%--</c:forEach>--%>
-                  <%--<c:if test="${not empty model.pieChartBiologicalProcessURL}">--%>
-                  <%--<li>--%>
-
-                    <%--<a id="csv"--%>
-                       <%--title="<spring:message code="analysisStatsView.label.download.go.slim.anchor.title"/>"--%>
-                       <%--href="<c:url--%>
-                        <%--value="${baseURL}/sample/${model.sample.sampleId}/doExportGOSlimFile"/>">--%>
-                        <%--<spring:message--%>
-                                <%--code="analysisStatsView.label.download.go.slim.anchor.href.message"/></a>--%>
-
-                  <%--</li></c:if>--%>
-
-              <%--</ul>--%>
-          <%--</c:if>--%>
-
-      <%--</div>--%>
-      <%--</div>--%>
 
       <div class="main_tab_full_content">
           <%--<div id="small"> <div class="export">--%>
