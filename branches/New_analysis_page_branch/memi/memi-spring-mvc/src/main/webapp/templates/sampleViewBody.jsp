@@ -1316,43 +1316,8 @@ function drawTable() {
 
 
     <div id="go-terms-bar">
-
-        <div class="go-chart"><div id="tax_chart_div10"></div> <div id="tax_chart_div11"></div> <div id="tax_chart_div12"></div> </div>
-
-        <%--<div class="go-chart" style="display:none;">--%>
-          <%--<div class="go_rotate">--%>
-              <%--<h2>Biological process</h2>--%>
-              <%--<c:url var="bioImage" value="/getImage" scope="request">--%>
-                  <%--<c:param name="imageName" value="_summary_biological_process.png"/>--%>
-                  <%--<c:param name="imageType" value="PNG"/>--%>
-                  <%--<c:param name="dir" value="${model.emgFile.fileID}"/>--%>
-              <%--</c:url>--%>
-              <%--<img src="<c:out value="${bioImage}"/>"/>  <br/>--%>
-                  <%--&lt;%&ndash;<b><c:out value="${noDisplayID}"/></b>&ndash;%&gt;--%>
-          <%--</div>--%>
-
-          <%--<div class="go_rotate">--%>
-              <%--<h2>Molecular function</h2>--%>
-              <%--<c:url var="molecularImage" value="/getImage" scope="request">--%>
-                  <%--<c:param name="imageName" value="_summary_molecular_function.png"/>--%>
-                  <%--<c:param name="imageType" value="PNG"/>--%>
-                  <%--<c:param name="dir" value="${model.emgFile.fileID}"/>--%>
-              <%--</c:url>--%>
-             <%--<img src="<c:out value="${molecularImage}"/>"/>  <br/>--%>
-          <%--</div>--%>
-
-          <%--<div class="go_rotate">--%>
-              <%--<h2>Cellular component</h2>--%>
-              <%--<c:url var="cellImage" value="/getImage" scope="request">--%>
-                  <%--<c:param name="imageName" value="_summary_cellular_component.png"/>--%>
-                  <%--<c:param name="imageType" value="PNG"/>--%>
-                  <%--<c:param name="dir" value="${model.emgFile.fileID}"/>--%>
-              <%--</c:url>--%>
-              <%--<img src="<c:out value="${cellImage}"/>"/> <br/>--%>
-          <%--</div>--%>
-        <%--</div>--%>
-
-        </div>
+    <div class="go-chart"><div id="tax_chart_div10"></div> <div id="tax_chart_div11"></div> <div id="tax_chart_div12"></div> </div>
+    </div>
 
     <div id="go-terms-pie">
             <div class="go-chart"><div id="tax_chart_div13"></div> <div id="tax_chart_div14"></div> <div id="tax_chart_div15"></div> </div>
