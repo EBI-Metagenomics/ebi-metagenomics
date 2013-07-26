@@ -509,7 +509,7 @@ function drawChart() {
         // Table visualization option
         var interProMatchesTableOptions = new google.visualization.ChartWrapper({
           'chartType': 'Table',
-          'containerId': 'func_table_pie_interpro',
+          'containerId': 'func_table_pie_ipro',
           'options': {width:'600', allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false }
         });
 
@@ -622,12 +622,12 @@ function drawChart() {
             pieSliceBorderColor:'none',  sliceVisibilityThreshold:1 /160};
 
         // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.PieChart(document.getElementById('func_chart_pie'));
+        var chart = new google.visualization.PieChart(document.getElementById('func_chart_pie_ipro'));
         chart.draw(data, options);
 
       //TODO: Think we can delete that part
         // // BEGIN pie chart that works with toolbar element
-//        var container = document.getElementById('func_chart_pie');
+//        var container = document.getElementById('func_chart_pie_ipro');
 //        var visualization = new google.visualization.PieChart(container);
 //
 //        // END PIe chart that works with toolbar element
@@ -1036,11 +1036,11 @@ function drawTable() {
 
                      <%--<div id="func_chart_div1"></div>--%>
 
-                     <div id="func_chart_pie"></div>
+                     <div id="func_chart_pie_ipro"></div>
 
                      <div id="func_dashboard">
                      <div id="func_table_filter"></div>
-                     <div id="func_table_pie_interpro"></div>
+                     <div id="func_table_pie_ipro"></div>
                      </div>
 
                     <%--  BEGIN code used if we want to use the row number select option
