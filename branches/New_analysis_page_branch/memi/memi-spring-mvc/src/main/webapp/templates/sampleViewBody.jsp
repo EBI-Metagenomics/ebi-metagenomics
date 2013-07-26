@@ -365,10 +365,10 @@ function drawChart() {
     };
 
      // Taxonomy Bar - domain
-    var options3 = {'title':'Domain composition','titleTextStyle':{fontSize:12}, 'colors':['#5f8694'], 'width':240, 'height':180, 'chartArea':{left:70, top:40, width:"66%", height:"70%"}, 'vAxis':{textStyle:{fontSize:11}}, 'pieSliceBorderColor':'none', 'bar':{groupWidth:10},'legend':'none'};
+    var options3 = {'title':'Domain composition','titleTextStyle':{fontSize:12}, 'colors':['#5f8694'], 'width':190, 'height':180, 'chartArea':{left:70, top:40, width:"56%", height:"70%"}, 'vAxis':{textStyle:{fontSize:11}}, 'pieSliceBorderColor':'none', 'bar':{groupWidth:10},'legend':'none'};
 
     // Taxonomy Bar - phylum
-    var options4 = {'title':'Phylum composition (Total: 229)', 'titleTextStyle':{fontSize:12}, 'colors':['#5f8694'],'width':400, 'height':320, 'chartArea':{left:120, top:40, width:"66%", height:"70%"}, 'pieSliceBorderColor':'none', 'legend':'none' };
+    var options4 = {'title':'Phylum composition (Total: 229)', 'titleTextStyle':{fontSize:12}, 'colors':['#5f8694'],'width':360, 'height':320, 'chartArea':{left:120, top:40, width:"60%", height:"70%"}, 'pieSliceBorderColor':'none', 'legend':'none' };
 
     // Stacked column graph
     var options5 = {'title':'Phylum composition (Total: 229)',
