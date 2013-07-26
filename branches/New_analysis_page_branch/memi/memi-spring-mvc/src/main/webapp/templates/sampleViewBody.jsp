@@ -386,18 +386,18 @@ function drawChart() {
     };
 
     // GO TERM bar Biological Process
-    var options6 = {'title':'Biological process', 'titleTextStyle':{fontSize:12}, 'colors':['#058dc7'], 'width':340, 'height':600, 'chartArea':{left:220, top:40, width:"100%", height:"100%"}, 'vAxis':{textStyle:{fontSize:10}}, 'hAxis':{textPosition: 'none', gridlines:{color:'white'}}, 'bar':{groupWidth:8}, 'legend':'none'
+    var options6 = {'title':'Biological process', 'titleTextStyle':{fontSize:12}, 'colors':['#058dc7'], 'width':330, 'height':600, 'chartArea':{left:220, top:40, width:"100%", height:"100%"}, 'vAxis':{textStyle:{fontSize:10}}, 'hAxis':{textPosition: 'none', gridlines:{color:'white'}}, 'bar':{groupWidth:8}, 'legend':'none'
 //        'colors':['#5f8694'],
 //        'vAxis':{'textPosition':'in'},
     };
 
     // GO TERM bar Molecular Function
-    var options7 = {'title':'Molecular function', 'titleTextStyle':{fontSize:12}, 'colors':['#50b432'], 'width':230, 'height':600, 'chartArea':{left:110, top:40, width:"100%", height:"100%"}, 'vAxis':{textStyle:{fontSize:10}},'hAxis':{textPosition: 'none', gridlines:{color:'white'}}, 'bar':{groupWidth:8}, 'legend':'none'
+    var options7 = {'title':'Molecular function', 'titleTextStyle':{fontSize:12}, 'colors':['#50b432'], 'width':300, 'height':600, 'chartArea':{left:170, top:40, width:"100%", height:"100%"}, 'vAxis':{textStyle:{fontSize:10}},'hAxis':{textPosition: 'none', gridlines:{color:'white'}}, 'bar':{groupWidth:8}, 'legend':'none'
 //        'colors':['#91d450'], 'width':340, 'vAxis':{'textPosition':'in'},
     };
 
     // GO TERM bar Cellular component
-    var options8 = {'title':'Cellular component', 'titleTextStyle':{fontSize:12},'colors':['#ed561b'], 'width':320, 'height':600, 'chartArea':{left:220, top:40, width:"100%", height:"100%"}, 'vAxis':{textStyle:{fontSize:10}}, 'hAxis':{textPosition: 'none', gridlines:{color:'white', count:15}}, 'bar':{groupWidth:8}, 'legend':'none'
+    var options8 = {'title':'Cellular component', 'titleTextStyle':{fontSize:12},'colors':['#ed561b'], 'width':270, 'height':600, 'chartArea':{left:160, top:40, width:"100%", height:"100%"}, 'vAxis':{textStyle:{fontSize:10}}, 'hAxis':{textPosition: 'none', gridlines:{color:'white', count:15}}, 'bar':{groupWidth:8}, 'legend':'none'
 //        'colors':['#535353'], 'vAxis':{'textPosition':'in'},
     };
 
