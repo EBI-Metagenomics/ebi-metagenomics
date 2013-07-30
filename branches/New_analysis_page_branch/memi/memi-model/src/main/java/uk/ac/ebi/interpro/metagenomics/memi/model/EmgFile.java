@@ -42,14 +42,6 @@ public class EmgFile {
         return fileName;
     }
 
-    public void addFileSizeMap(Map<String, String> fileSizeMap) {
-        this.fileSizeMap = fileSizeMap;
-    }
-
-    public Map<String, String> getFileSizeMap() {
-        return fileSizeMap;
-    }
-
     public enum ResultFileType {
         GO_SLIM("_summary.go_slim"),
         GO("_summary.go"),

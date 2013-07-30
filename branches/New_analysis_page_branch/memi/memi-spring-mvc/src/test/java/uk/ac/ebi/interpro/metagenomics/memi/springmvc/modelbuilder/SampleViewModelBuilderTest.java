@@ -19,9 +19,9 @@ public class SampleViewModelBuilderTest {
      * Tests if replaceAll method works as expected.
      */
     @Test
-    public void testReplaceAll() {
+    public void testEncodeSingleQuoteMarks() {
         String testStr = "2'-3'-beta-blah";
-        String expected = "2-3-beta-blah";
-        assertEquals("Result string differs from the expected one!", expected, testStr.replaceAll("\'", ""));
+        String expected = "2\\\'-3\\\'-beta-blah";
+        assertEquals("Result string differs from the expected one!", expected, SampleViewModelBuilder.encodeSingleQuoteMarks(testStr));
     }
 }

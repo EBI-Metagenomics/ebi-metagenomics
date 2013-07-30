@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+
+    <util:map id="fileDefinitionsMap" map-class="java.util.HashMap" key-type="java.lang.String"
+              value-type="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.DownloadableFileDefinition">
+        <!--sequence data-->
+        <entry key="MASKED_FASTA" value-ref="maskedReadsFile"/>
+        <entry key="CDS_FAA" value-ref="pCDSFile"/>
+        <entry key="READS_WITH_MATCHES_FASTA_FILE" value-ref="readsWithMatchesFile"/>
+        <entry key="READS_WITHOUT_MATCHES_FASTA_FILE" value-ref="readsWithoutMatchesFile"/>
+        <!--taxonomic data-->
+        <entry key="R_RNA_5S_FASTA_FILE" value-ref="rRNA5sFile"/>
+        <entry key="R_RNA_16S_FASTA_FILE" value-ref="rRNA16sFile"/>
+        <entry key="R_RNA_23S_FASTA_FILE" value-ref="rRNA23sFile"/>
+        <entry key="OTUS_BIOM_FORMAT_FILE" value-ref="otuBiomFile"/>
+        <entry key="TAX_ANALYSIS_TSV_FILE" value-ref="otuTsvFile"/>
+        <entry key="TAX_ANALYSIS_TREE_FILE" value-ref="newickFile"/>
+        <!--functional data-->
+        <entry key="I5_TSV_FILE" value-ref="interproscanMatchesFile"/>
+        <entry key="GO_FILE" value-ref="fullGOAnnotationFile"/>
+        <entry key="GO_SLIM_FILE" value-ref="goSlimAnnotationFile"/>
+    </util:map>
+
+    <!--sequence data-->
+
+    <bean id="maskedReadsFile"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.SequenceFileDefinition">
+        <property name="fileNameEnding" value="_masked.fasta"/>
+        <property name="description" value="Processed nucleotide reads."/>
+        <property name="downloadName" value="_nt_reads.fasta"/>
+        <property name="linkText" value="Processed nucleotide reads (FASTA)"/>
+        <property name="order" value="2"/>
+        <property name="linkTitle" value="Click to download processed fasta nucleotide sequences"/>
+        <property name="linkURL" value="/doExportMaskedFASTAFile"/>
+    </bean>
+
+    <bean id="pCDSFile"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.SequenceFileDefinition">
+        <property name="relativePath" value="/sequence-categorisation/pCDS.fasta"/>
+        <property name="description" value="All reads that have predicted CDS "/>
+        <property name="downloadName" value="_pCDS.fasta"/>
+        <property name="linkText" value="Processed reads with pCDS (FASTA)"/>
+        <property name="order" value="6"/>
+        <property name="linkTitle" value="Click to download processed reads with predicted CDS in FASTA format"/>
+        <property name="linkURL" value="/doExportCDSFile"/>
+    </bean>
+
+
+    <bean id="readsWithMatchesFile"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.SequenceFileDefinition">
+        <property name="relativePath" value="/sequence-categorisation/interproscan.fasta"/>
+        <property name="description" value="All reads with an interproscan match."/>
+        <property name="downloadName" value="_interproscan.fasta"/>
+        <property name="linkText" value="Processed reads with InterPro match (FASTA)"/>
+        <property name="order" value="7"/>
+        <property name="linkTitle" value="Click to download reads with an InterPro match (FASTA)"/>
+        <property name="linkURL" value="/export?exportValue=readsWithMatches"/>
+    </bean>
+
+    <bean id="readsWithoutMatchesFile"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.SequenceFileDefinition">
+        <property name="relativePath" value="/sequence-categorisation/noFunction.fasta"/>
+        <property name="description" value="All reads with a predicted CDS but no interproscan match."/>
+        <property name="downloadName" value="_noFunction.fasta"/>
+        <property name="linkText" value="Processed reads without InterPro match (FASTA)"/>
+        <property name="order" value="8"/>
+        <property name="linkTitle" value="Click to download reads with a predicted CDS but no InterPro match (FASTA)"/>
+        <property name="linkURL" value="/export?exportValue=readsWithoutMatches"/>
+    </bean>
+
+    <!--Taxonomic data file definitions-->
+
+    <bean id="rRNA5sFile"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.TaxonomicAnalysisFileDefinition">
+        <property name="relativePath" value="/sequence-categorisation/5S.fasta"/>
+        <property name="description" value="All reads encoding 5S rRNA."/>
+        <property name="downloadName" value="_5SrRNA.fasta"/>
+        <property name="linkText" value="Reads encoding 5S rRNA (FASTA)"/>
+        <property name="order" value="1"/>
+        <property name="linkTitle" value="Click to download reads encoding 5S rRNA (FASTA)"/>
+        <property name="linkURL" value="/export?exportValue=5SrRNA"/>
+    </bean>
+
+    <bean id="rRNA16sFile"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.TaxonomicAnalysisFileDefinition">
+        <property name="relativePath" value="/sequence-categorisation/16S.fasta"/>
+        <property name="description" value="All reads encoding 16S rRNA."/>
+        <property name="downloadName" value="_16SrRNA.fasta"/>
+        <property name="linkText" value="Reads encoding 16S rRNA (FASTA)"/>
+        <property name="order" value="2"/>
+        <property name="linkTitle" value="Click to download reads encoding 16S rRNA (FASTA)"/>
+        <property name="linkURL" value="/export?exportValue=16SrRNA"/>
+    </bean>
+
+    <bean id="rRNA23sFile"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.TaxonomicAnalysisFileDefinition">
+        <property name="relativePath" value="/sequence-categorisation/23S.fasta"/>
+        <property name="description" value="All reads encoding 23S rRNA."/>
+        <property name="downloadName" value="_23SrRNA.fasta"/>
+        <property name="linkText" value="Reads encoding 23S rRNA (FASTA)"/>
+        <property name="order" value="3"/>
+        <property name="linkTitle" value="Click to download reads encoding 23S rRNA (FASTA)"/>
+        <property name="linkURL" value="/export?exportValue=23SrRNA"/>
+    </bean>
+
+    <bean id="otuBiomFile"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.TaxonomicAnalysisFileDefinition">
+        <property name="relativePath" value="/otus/otu_table.biom"/>
+        <property name="description" value="OTUs and taxonomic assignments (BIOM format)."/>
+        <property name="downloadName" value="_otu.biom"/>
+        <property name="linkText" value="OTUs and taxonomic assignments (BIOM)"/>
+        <property name="order" value="4"/>
+        <property name="linkTitle" value="Click to download the OTUs and taxonomic assignments (BIOM)"/>
+        <property name="linkURL" value="/export?exportValue=biom"/>
+    </bean>
+
+    <bean id="newickFile"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.TaxonomicAnalysisFileDefinition">
+        <property name="relativePath" value="/otus/rep_set.tre"/>
+        <property name="description" value="Phylogenetic tree (Newick format)."/>
+        <property name="downloadName" value="_newick.tre"/>
+        <property name="linkText" value="Phylogenetic tree (Newick format)"/>
+        <property name="order" value="5"/>
+        <property name="linkTitle" value="Click to download the phylogenetic tree file (Newick format)"/>
+        <property name="linkURL" value="/export?exportValue=tree"/>
+    </bean>
+
+    <bean id="otuTsvFile"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.TaxonomicAnalysisFileDefinition">
+        <property name="fileNameEnding" value="_rRNAFiltered.fasta_rep_set_tax_assignments.txt"/>
+        <property name="relativePath" value="/otus/rdp_assigned_taxonomy/"/>
+        <property name="description" value="OTUs and taxonomic assignments (TSV)."/>
+        <property name="downloadName" value="_otu.tsv"/>
+        <property name="linkText" value="OTUs and taxonomic assignments (TSV)"/>
+        <property name="order" value="6"/>
+        <property name="linkTitle" value="Click to download the OTUs and taxonomic assignments (TSV)"/>
+        <property name="linkURL" value="/export?exportValue=taxa"/>
+    </bean>
+
+    <!--Functional data file definitions-->
+
+    <bean id="interproscanMatchesFile"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.FunctionalAnalysisFileDefinition">
+        <property name="fileNameEnding" value="_I5.tsv"/>
+        <property name="description" value="InterPro matches (TSV)"/>
+        <property name="downloadName" value="_InterPro.tsv"/>
+        <property name="linkText" value="InterPro matches (TSV)"/>
+        <property name="order" value="1"/>
+        <property name="linkTitle" value="Click to download full InterPro matches table (TSV)"/>
+        <property name="linkURL" value="/doExportI5TSVFile"/>
+    </bean>
+
+    <bean id="fullGOAnnotationFile"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.FunctionalAnalysisFileDefinition">
+        <property name="fileNameEnding" value="_summary.go"/>
+        <property name="description" value="Complete GO annotation."/>
+        <property name="downloadName" value="_GO.csv"/>
+        <property name="linkText" value="Complete GO annotation (CSV)"/>
+        <property name="order" value="2"/>
+        <property name="linkTitle" value="Click to download GO annotation result file (CSV)"/>
+        <property name="linkURL" value="/doExportGOFile"/>
+    </bean>
+
+    <bean id="goSlimAnnotationFile"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.FunctionalAnalysisFileDefinition">
+        <property name="fileNameEnding" value="_summary.go_slim"/>
+        <property name="description" value="GO slim annotation."/>
+        <property name="downloadName" value="_GO_slim.csv"/>
+        <property name="linkText" value="GO slim annotation (CSV)"/>
+        <property name="order" value="3"/>
+        <property name="linkTitle" value="Click to download GO slim annotation result file (CSV)"/>
+        <property name="linkURL" value="/doExportGOSlimFile"/>
+    </bean>
+
+</beans>

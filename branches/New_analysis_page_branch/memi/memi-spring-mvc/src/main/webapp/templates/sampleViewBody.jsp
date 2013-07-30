@@ -42,31 +42,6 @@ function drawChart() {
         ['Unassigned', 1]
     ]);
 
-    // DATA taxonomy Pie+Bar chart Phylum
-    var data2 = new google.visualization.DataTable();
-    data2.addColumn('string', 'Phylum');
-    data2.addColumn('number', 'Match');
-    data2.addRows([
-        ['Proteobacteria', 146],
-        ['Crenarchaeota', 17],
-        ['Euryarchaeota', 11],
-        ['Bacteroidetes', 11],
-        ['SAR406', 11],
-        ['Actinobacteria', 10],
-        ['Verrucomicrobia', 7],
-        ['Chloroflexi', 3],
-        ['NC10', 3],
-        ['PAUC34f', 2],
-        ['Planctomycetes', 2],
-        ['Caldiserica', 1],
-        ['Cyanobacteria', 1],
-        ['Elusimicrobia', 1],
-        ['Firmicutes', 1],
-        ['OP11', 1],
-        ['Unassigned bacteria', 1]
-    ]);
-
-
     // DATA taxonomy Stacked column
     var data3 = google.visualization.arrayToDataTable([
         [ '','Proteobacteria', 'Crenarchaeota', 'Euryarchaeota', 'Bacteroidetes', 'SAR406', 'Actinobacteria', 'Verrucomicrobia', 'Chloroflexi', 'NC10', 'PAUC34f', 'Planctomycetes', 'Caldiserica', 'Cyanobacteria', 'Elusimicrobia', 'Firmicutes', 'OP11', 'Unassigned bacteria'],
@@ -350,21 +325,7 @@ function drawChart() {
     // taxonomy Pie chart domain
     var options = {'title':'Domain composition', 'titleTextStyle':{fontSize:12}, 'colors':['#5f8694','#91d450', '#535353' ],'width':200, 'height':220, 'chartArea':{left:10, top:26, width:"80%", height:"55%"}, 'pieSliceBorderColor':'none', 'legend':{fontSize:10}, 'pieSliceTextStyle':{color:'white'}};
 
-    // taxonomy Pie chart Phylum
-    var options2 = {'title':'Phylum composition (Total: 229)',
-        'titleTextStyle':{fontSize:12},
-        'colors':['#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff', '#ccc'],
-//Krona style      'colors':['#d47f7f','#d1a575','#d4c97f','#99d47f','#7fd4a7','#7fc3d4','#7f8ad4','#a77fd4','#d47fd3','#d47faf','#ccc','#ccc','#ccc'],
-//      'width':220,
-        'width':290,
-        'height':220,
-        'legend':{position:'right', fontSize:10},
-        'chartArea':{left:10, top:30, width:"100%", height:"100%"},
-        'pieSliceBorderColor':'none',
-        'sliceVisibilityThreshold':1 / 115
-    };
-
-     // Taxonomy Bar - domain
+    // Taxonomy Bar - domain
     var options3 = {'title':'Domain composition','titleTextStyle':{fontSize:12}, 'colors':['#5f8694'], 'width':190, 'height':180, 'chartArea':{left:70, top:40, width:"56%", height:"70%"}, 'vAxis':{textStyle:{fontSize:11}}, 'pieSliceBorderColor':'none', 'bar':{groupWidth:10},'legend':'none'};
 
     // Taxonomy Bar - phylum
@@ -438,10 +399,10 @@ function drawChart() {
     };
 
     // Instantiate and draw our chart, passing in some options.
-    var chart = new google.visualization.PieChart(document.getElementById('tax_chart_pie_dom'));
-    chart.draw(data, options);
-    var chart2 = new google.visualization.PieChart(document.getElementById('tax_chart_pie_phy'));
-    chart2.draw(data2, options2);
+//    var chart = new google.visualization.PieChart(document.getElementById('tax_chart_pie_dom'));
+//    chart.draw(data, options);
+//    var chart2 = new google.visualization.PieChart(document.getElementById('tax_chart_pie_phy'));
+//    chart2.draw(data2, options2);
     var chart3 = new google.visualization.BarChart(document.getElementById('tax_chart_bar_dom'));
     chart3.draw(data, options3);
     var chart4 = new google.visualization.BarChart(document.getElementById('tax_chart_bar_phy'));
@@ -464,195 +425,8 @@ function drawChart() {
 
 </script>
 
-<script type="text/javascript">
-    // This script produces the chart and the table for the 'InterPro match summary' section (functional analysis tab)
-
-    //  Load the Visualization API and the chart package.
-    //  Line moved to rootTemplate.jsp
-
-    //  Set a callback to run when the Google Visualization API is loaded.
-    google.setOnLoadCallback(drawInterProMatchesTable);
-    google.setOnLoadCallback(drawInterProMatchesPieChart);
-
-    function drawInterProMatchesTable() {
-      drawVisualization();
-      drawToolbar();
-    }
-
-    function drawVisualization() {
-
-        // Functional analysis table - List of InterPro matches
-          var interProMatchesData = new google.visualization.DataTable();
-            interProMatchesData.addColumn('string', 'Entry name');
-            interProMatchesData.addColumn('string', 'ID');
-            interProMatchesData.addColumn('number', 'Hits');
-            interProMatchesData.addRows([
-                <c:set var="addComma" value="false"/>
-                <c:forEach var="entry" items="${model.interProEntries}" varStatus="status">
-                <c:choose>
-                <c:when test="${addComma}">,
-                </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise>
-                </c:choose>
-                //  !important TEMP solution - sorting order doesn't work properly for entry name when using HTML tags
-                ['<a title="${entry.entryDescription}" target="_blank" href="http://www.ebi.ac.uk/interpro/entry/${entry.entryID}">${entry.entryDescription}</a>', '${entry.entryID}', ${entry.numOfEntryHits}]
-                </c:forEach>
-            ]);
-
-        // Define a StringFilter control for the 'Name'and 'ID' column
-        var stringFilter = new google.visualization.ControlWrapper({
-          'controlType': 'StringFilter',
-          'containerId': 'func_table_filter',
-          'options': {'matchType':'any','filterColumnIndex': '0,1', 'ui': {'label': 'Filter', 'labelSeparator': ':', 'ui.labelStacking':'vertical', 'ui.cssClass':'custom_col_search'}
-          }
-        });
-
-        // Table visualization option
-        var interProMatchesTableOptions = new google.visualization.ChartWrapper({
-          'chartType': 'Table',
-          'containerId': 'func_table_pie_ipro',
-          'options': {width:'600', allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false }
-        });
-
-        // Create the dashboard.
-        var dashboard = new google.visualization.Dashboard(document.getElementById('func_dashboard')).
-          // Configure the string filter to affect the table contents
-          bind(stringFilter, interProMatchesTableOptions).
-          // Draw the dashboard
-          draw(interProMatchesData);
-
-
-
-            // Taxonomy top phylum table
-            var taxMatchesData = new google.visualization.DataTable();
-            taxMatchesData.addColumn('string', '');
-            taxMatchesData.addColumn('string', 'Phylum');
-            taxMatchesData.addColumn('string', 'Domain');
-            taxMatchesData.addColumn('number', 'Unique OTUs');
-            taxMatchesData.addColumn('number', 'Count of reads assigned');
-            taxMatchesData.addColumn('number', '% reads assigned');
-            taxMatchesData.addRows([
-            <c:set var="addComma" value="false"/>
-            <c:set var="colourCode" value="#058dc7" scope="page"/>
-            <c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResult.taxonomyDataSet}" varStatus="status">
-            <c:choose>
-            <c:when test="${addComma}">,
-            </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise>
-            </c:choose>
-            ['<ul class="color_legend"><li  style="color: #${taxonomyData.colourCode};"></li></ul>','${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ,  ${taxonomyData.percentage}]
-            </c:forEach>
-                    ]);
-
-
-                // Define a StringFilter control for the 'Phylum' column
-                var taxstringFilter = new google.visualization.ControlWrapper({
-                  'controlType': 'StringFilter',
-                  'containerId': 'tax_table_filter',
-                  'options': { 'matchType':'any',
-                  'filterColumnIndex': '1, 2',
-                  'ui': {'label': 'Filter', 'labelSeparator': ':', 'ui.labelStacking':'vertical', 'ui.cssClass':'custom_col_search'}
-                  }
-                });
-
-                // Table visualization option
-                var taxTableOptions = new google.visualization.ChartWrapper({
-                  'chartType': 'Table',
-                  'containerId': 'tax_table_pie',
-                  'options': { allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:3, sortAscending:false }
-                });
-
-                // Create the dashboard.
-                var tax_dashboard = new google.visualization.Dashboard(document.getElementById('tax_dashboard')).
-                  // Configure the string filter to affect the table contents
-                  bind(taxstringFilter, taxTableOptions).
-                  // Draw the dashboard
-                  draw(taxMatchesData);
-
-    // Pie chart produced from Google spreadsheet
-//          var query = new google.visualization.Query('https://docs.google.com/spreadsheet/ccc?key=0AgWotcbTSSjYdGF6NjE0WGxGRmV5djJDWEZ6RzZhT2c&usp=sharing');
-       // Optional request to return only column A and C
-
-        //TODO: Do we need that?
-//           query.setQuery('select A, B');
-      // Send the query with a callback function.
-//          query.send(handleQueryResponse);
-    }  //END function drawVisualization()
-
-    function drawToolbar() {
-        var components = [
-            {type: 'html', datasource: 'https://spreadsheets.google.com/tq?key=0AgWotcbTSSjYdGF6NjE0WGxGRmV5djJDWEZ6RzZhT2c'},
-            {type: 'csv', datasource: 'https://spreadsheets.google.com/tq?key=0AgWotcbTSSjYdGF6NjE0WGxGRmV5djJDWEZ6RzZhT2c'},
-            {type: 'htmlcode', datasource: 'https://spreadsheets.google.com/tq?key=0AgWotcbTSSjYdGF6NjE0WGxGRmV5djJDWEZ6RzZhT2c',
-                gadget: 'https://www.google.com/ig/modules/pie-chart.xml',
-
-                style: 'width: 800px; height: 700px; border: 1px solid black;'}
-        ];
-
-        var container1 = document.getElementById('toolbar_div');
-        google.visualization.drawToolbar(container1, components);
-    };
-
-
-    // Set a callback to run when the Google Visualization API is loaded.
-    google.setOnLoadCallback(drawInterProMatchesPieChart);
-
-    // Callback that creates and populates a data table,
-    // instantiates the pie chart, passes in the data and
-    // draws it.
-    function drawInterProMatchesPieChart() {
-
-        // Create the data table.
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Entry name');
-        data.addColumn('number', 'Hits');
-        data.addRows([
-            <c:set var="addComma" value="false"/>
-            <c:forEach var="entry" items="${model.interProEntries}" varStatus="status">
-            <c:choose>
-            <c:when test="${addComma}">,
-            </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise>
-            </c:choose>
-            ['${entry.entryDescription}', ${entry.numOfEntryHits}]
-            </c:forEach>
-        ]);
-
-        // Set chart options
-        var options = {title:'InterPro matches summary (Total: ${fn:length(model.interProEntries)})',width:500, titleTextStyle:{fontSize:12},
-            colors:['#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff', '#ccc'],
-            height:240, legend:{position:'right', fontSize:10}, chartArea:{left:0, top:30, width:"42%", height:"100%"},
-            pieSliceBorderColor:'none',  sliceVisibilityThreshold:1 /160};
-
-        // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.PieChart(document.getElementById('func_chart_pie_ipro'));
-        chart.draw(data, options);
-
-      //TODO: Think we can delete that part
-        // // BEGIN pie chart that works with toolbar element
-//        var container = document.getElementById('func_chart_pie_ipro');
-//        var visualization = new google.visualization.PieChart(container);
-//
-//        // END PIe chart that works with toolbar element
-
-//        //TODO: Not used anywhere
-//        var query2 = new google.visualization.Query('https://docs.google.com/spreadsheet/ccc?key=0AgWotcbTSSjYdGF6NjE0WGxGRmV5djJDWEZ6RzZhT2c&usp=sharing');
-//        query2.setQuery('select A, C');
-//        query2.send(queryCallback);
-//
-//        function queryCallback(response) {
-//          visualization.draw(response.getDataTable(), {is3D: false, title:'InterPro matches summary (Total: 51119)', titleTextStyle:{fontSize:12}, colors:['#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff', '#ccc'], width:500, height:240, legend:{position:'right', fontSize:10}, chartArea:{left:0, top:30, width:"42%", height:"100%"}, pieSliceBorderColor:'none',  sliceVisibilityThreshold:1 /160});
-//        }
-
-    }
-
-    //TODO: Do we need that?
-//        function handleQueryResponse(response) {
-//          if (response.isError()) {
-//            alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
-//            return;
-//          }
-//
-//          var data20 = response.getDataTable();
-//        }
-</script>
+<%@ include file="googleCharts/functionalAnalysisTab.jsp" %>
+<%@ include file="googleCharts/taxonomicAnalysisTab.jsp" %>
 
 <script type='text/javascript'>
 
@@ -1213,7 +987,8 @@ function drawTable() {
 
 <%--script for tabs--%>
 <script>
-    $( "#navtabs").tabs({ ${model.analysisStatus.disabledAttribute} });
+    <%--$( "#navtabs").tabs({ ${model.analysisStatus.disabledAttribute} });--%>
+    $( "#navtabs").tabs({});
     $( "#interpro-chart" ).tabs();
 //    $( "#interpro-chart" ).tabs({ disabled: [1,2,3,4], selected: 0 });
     $( "#tabs-chart" ).tabs({ selected: 1  });

@@ -11,13 +11,13 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.EmgFile;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgSampleAnnotation;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
+import uk.ac.ebi.interpro.metagenomics.memi.services.FileExistenceChecker;
+import uk.ac.ebi.interpro.metagenomics.memi.services.FileObjectBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.SampleViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.DownloadLink;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.DownloadSection;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.FilePathNameBuilder;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.*;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.SampleViewModelBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.tools.MemiTools;
@@ -49,7 +49,8 @@ public class AbstractSampleViewController extends SecuredAbstractController<Samp
     @Resource
     private MemiDownloadService downloadService;
 
-    protected final String[] requestParamValues = new String[]{"biom", "taxa", "tree"};
+    @Resource
+    protected Map<String, DownloadableFileDefinition> fileDefinitionsMap;
 
     ISampleStudyDAO<Sample> getDAO() {
         return sampleDAO;
@@ -73,16 +74,15 @@ public class AbstractSampleViewController extends SecuredAbstractController<Samp
         return (emgFiles.size() > 0 ? emgFiles.get(0) : null);
     }
 
-    protected void createFileObjectAndOpenDownloadDialog(final HttpServletResponse response,
+    protected void openDownloadDialog(final HttpServletResponse response,
                                                          final HttpServletRequest request,
                                                          final EmgFile emgFile,
                                                          final String fileNameEnd,
-                                                         final String filePathName) {
-        File file = new File(filePathName);
+                                                         final File fileObject) {
         if (downloadService != null) {
             //white spaces are replaced by underscores
             final String fileNameForDownload = getFileName(emgFile, fileNameEnd);
-            downloadService.openDownloadDialog(response, request, file, fileNameForDownload, false);
+            downloadService.openDownloadDialog(response, request, fileObject, fileNameForDownload, false);
         }
     }
 
@@ -95,22 +95,15 @@ public class AbstractSampleViewController extends SecuredAbstractController<Samp
      * Creates the home page model and adds it to the specified model map.
      */
     protected void populateModel(final ModelMap model, final Sample sample, String pageTitle) {
-        List<EmgFile> emgFiles = fileInfoDAO.getFilesBySampleId(sample.getId());
+        EmgFile emgFile = getEmgFile(sample.getId());
+
         //TODO: For the moment the system only allows to represent one file on the analysis page, but
         //in the future it should be possible to represent all different data types (genomic, transcriptomic)
-        EmgFile emgFile = (emgFiles.size() > 0 ? emgFiles.get(0) : null);
-        if (emgFile != null) {
-            emgFile.addFileSizeMap(getFileSizeMap(emgFile));
-        }
-        //Create a list of existing downloadable file for the download section on the analysis page
-        final List<File> downloadableFiles = FilePathNameBuilder.createListOfDownloadableFiles(emgFile, propertyContainer);
-
-//         TODO: The following 'if' case is a quick and dirty solution to solve the differentiation issue between genomic and transcriptomic analysis
+        //TODO: The following 'if' case is a quick and dirty solution to solve the differentiation issue between genomic and transcriptomic analysis
         SampleViewModel.ExperimentType experimentType = SampleViewModel.ExperimentType.GENOMIC;
         if (sample.getId() == 367) {
             experimentType = SampleViewModel.ExperimentType.TRANSCRIPTOMIC;
         }
-        //New
         final List<EmgSampleAnnotation> sampleAnnotations = (List<EmgSampleAnnotation>) sampleAnnotationDAO.getSampleAnnotations(sample.getId());
 
         final ViewModelBuilder<SampleViewModel> builder = new SampleViewModelBuilder(
@@ -122,7 +115,7 @@ public class AbstractSampleViewController extends SecuredAbstractController<Samp
                 MemiTools.getArchivedSeqs(fileInfoDAO, sample),
                 propertyContainer,
                 experimentType,
-                buildDownloadSection(sample.getSampleId(), sample.isPublic(), downloadableFiles),
+                buildDownloadSection(sample.getSampleId(), sample.isPublic(), fileDefinitionsMap, emgFile),
                 sampleAnnotations);
         final SampleViewModel sampleModel = builder.getModel();
         //End
@@ -132,31 +125,9 @@ public class AbstractSampleViewController extends SecuredAbstractController<Samp
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, sampleModel);
     }
 
-    /**
-     * Creates a map between file names and file sizes (for all downloadable files on analysis page). The file size of smaller files
-     * (cutoff: 1024x1024 bytes) is shown in KB, for all the other files it is shown in MB.
-     */
-    //TODO: Parameter name fileExtension is a bit misleading
-    private Map<String, String> getFileSizeMap(EmgFile emgFile) {
-        Map<String, String> result = new HashMap<String, String>();
-        String directoryName = emgFile.getFileIDInUpperCase().replace('.', '_');
-        for (EmgFile.ResultFileType fileExtension : EmgFile.ResultFileType.values()) {
-            File file = new File(propertyContainer.getPathToAnalysisDirectory() + directoryName + '/' + directoryName + fileExtension);
-            if (file.canRead()) {
-                long cutoff = 1024 * 1024;
-                if (file.length() > cutoff) {
-                    long fileSize = file.length() / (long) (1024 * 1024);
-                    result.put(fileExtension.getFileNameEnd(), "(" + fileSize + " MB)");
-                } else {
-                    long fileSize = file.length() / (long) 1024;
-                    result.put(fileExtension.getFileNameEnd(), "(" + fileSize + " KB)");
-                }
-            }
-        }
-        return result;
-    }
-
-    private DownloadSection buildDownloadSection(final String sampleId, final boolean sampleIsPublic, final List<File> downloadableFiles) {
+    private DownloadSection buildDownloadSection(final String sampleId, final boolean sampleIsPublic,
+                                                 final Map<String,DownloadableFileDefinition> fileDefinitionsMap,
+                                                 final EmgFile emgFile) {
         final List<DownloadLink> seqDataDownloadLinks = new ArrayList<DownloadLink>();
         final List<DownloadLink> funcAnalysisDownloadLinks = new ArrayList<DownloadLink>();
         final List<DownloadLink> taxaAnalysisDownloadLinks = new ArrayList<DownloadLink>();
@@ -168,57 +139,34 @@ public class AbstractSampleViewController extends SecuredAbstractController<Samp
                 true,
                 1));
 
-        for (File file : downloadableFiles) {
-            if (file.getName().endsWith(EmgFile.ResultFileType.MASKED_FASTA.getFileNameEnd())) {
-                seqDataDownloadLinks.add(new DownloadLink("Processed nucleotide reads (FASTA)",
-                        "Click to download processed fasta nucleotide sequences",
-                        "sample/" + sampleId + "/doExportMaskedFASTAFile",
-                        2,
-                        getFileSize(file)));
-            } else if (file.getName().endsWith(EmgFile.ResultFileType.CDS_FAA.getFileNameEnd())) {
-                seqDataDownloadLinks.add(new DownloadLink("Predicted CDS (FASTA)",
-                        "Click to download predicted CDS in fasta format",
-                        "sample/" + sampleId + "/doExportCDSFile",
-                        3,
-                        getFileSize(file)));
-            } else if (file.getName().endsWith(EmgFile.ResultFileType.I5_TSV.getFileNameEnd())) {
-                funcAnalysisDownloadLinks.add(new DownloadLink("InterPro matches (TSV)",
-                        "Click to download full InterPro matches table (TSV)",
-                        "sample/" + sampleId + "/doExportI5TSVFile",
-                        4,
-                        getFileSize(file)));
-            } else if (file.getName().endsWith(EmgFile.ResultFileType.GO.getFileNameEnd())) {
-                funcAnalysisDownloadLinks.add(new DownloadLink("Complete GO annotation (CSV)",
-                        "Click to download GO annotation result file (CSV)",
-                        "sample/" + sampleId + "/doExportGOFile",
-                        5,
-                        getFileSize(file)));
-            } else if (file.getName().endsWith(EmgFile.ResultFileType.IPR_HITS.getFileNameEnd())) {
-                funcAnalysisDownloadLinks.add(new DownloadLink("pCDS with InterPro matches (FASTA)",
-                        "Click to download predicted CDS with InterPro matches (FASTA)",
-                        "sample/" + sampleId + "/doExportIPRhitsFile",
-                        6,
-                        getFileSize(file)));
-            } else if (file.getName().endsWith(EmgFile.ResultFileType.TAX_ANALYSIS_BIOM_FILE.getFileNameEnd())) {
-                taxaAnalysisDownloadLinks.add(new DownloadLink("OTUs and taxonomic assignments (BIOM)",
-                        "Click to download the OTUs and taxonomic assignments (BIOM)",
-                        "sample/" + sampleId + "/export?exportValue=" + this.requestParamValues[0],
-                        1,
-                        getFileSize(file)));
-            } else if (file.getName().endsWith(EmgFile.ResultFileType.TAX_ANALYSIS_TSV_FILE.getFileNameEnd())) {
-                taxaAnalysisDownloadLinks.add(new DownloadLink("OTUs and taxonomic assignments (TSV)",
-                        "Click to download the OTUs and taxonomic assignments (TSV)",
-                        "sample/" + sampleId + "/export?exportValue=" + this.requestParamValues[1],
-                        2,
-                        getFileSize(file)));
-            } else if (file.getName().endsWith(EmgFile.ResultFileType.TAX_ANALYSIS_TREE_FILE.getFileNameEnd())) {
-                taxaAnalysisDownloadLinks.add(new DownloadLink("Phylogenetic tree (Newick format)",
-                        "Click to download the phylogenetic tree file (Newick format)",
-                        "sample/" + sampleId + "/export?exportValue=" + this.requestParamValues[2],
-                        3,
-                        getFileSize(file)));
-            }
+        for (DownloadableFileDefinition fileDefinition : fileDefinitionsMap.values()) {
+            File fileObject = FileObjectBuilder.createFileObject(emgFile, propertyContainer, fileDefinition);
+            boolean doesExist = FileExistenceChecker.checkFileExistence(fileObject);
 
+            if (doesExist) {
+                if (fileDefinition instanceof SequenceFileDefinition) {
+                    seqDataDownloadLinks.add(new DownloadLink(fileDefinition.getLinkText(),
+                            fileDefinition.getLinkTitle(),
+                            "sample/" + sampleId + fileDefinition.getLinkURL(),
+                            fileDefinition.getOrder(),
+                            getFileSize(fileObject)));
+                } else if (fileDefinition instanceof TaxonomicAnalysisFileDefinition) {
+                    taxaAnalysisDownloadLinks.add(new DownloadLink(fileDefinition.getLinkText(),
+                            fileDefinition.getLinkTitle(),
+                            "sample/" + sampleId + fileDefinition.getLinkURL(),
+                            fileDefinition.getOrder(),
+                            getFileSize(fileObject)));
+                } else if (fileDefinition instanceof FunctionalAnalysisFileDefinition) {
+                    funcAnalysisDownloadLinks.add(new DownloadLink(fileDefinition.getLinkText(),
+                            fileDefinition.getLinkTitle(),
+                            "sample/" + sampleId + fileDefinition.getLinkURL(),
+                            fileDefinition.getOrder(),
+                            getFileSize(fileObject)));
+
+                } else {
+                    //do nothing
+                }
+            }
 
         }
         Collections.sort(seqDataDownloadLinks, DownloadLink.DownloadLinkComparator);
@@ -229,13 +177,20 @@ public class AbstractSampleViewController extends SecuredAbstractController<Samp
 
     private String getFileSize(final File file) {
         if (file.canRead()) {
+            long fileLength = file.length();
             long cutoff = 1024 * 1024;
-            if (file.length() > cutoff) {
-                long fileSize = file.length() / (long) (1024 * 1024);
+            //If file size is bigger than 1MB
+            if (fileLength > cutoff) {
+                long fileSize = fileLength / (long) (1024 * 1024);
                 return fileSize + " MB";
             } else {
-                long fileSize = file.length() / (long) 1024;
-                return fileSize + " KB";
+                //If file size is bigger than 1KB
+                if (fileLength > 1024) {
+                    long fileSize = fileLength / (long) 1024;
+                    return fileSize + " KB";
+                } else {
+                    return fileLength + " bytes";
+                }
             }
         }
         return "";

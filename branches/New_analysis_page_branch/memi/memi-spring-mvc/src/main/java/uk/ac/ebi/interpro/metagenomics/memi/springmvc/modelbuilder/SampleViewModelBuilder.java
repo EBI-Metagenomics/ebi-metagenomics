@@ -197,16 +197,28 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
      */
     private TaxonomyAnalysisResult loadTaxonomyDataFromCSV(final String pathToAnalysisDirectory) {
         final TaxonomyAnalysisResult taxonomyAnalysisResult = new TaxonomyAnalysisResult();
+        final List<TaxonomyData> taxonomyDataSet = new ArrayList<TaxonomyData>();
 
         File phylumFile = new File(resultFilesDirectoryPath + propertyContainer.getResultFileName(MemiPropertyContainer.FileNameIdentifier.PHYLUM_COUNTS));
         if (!phylumFile.exists()) {
-            log.warn("Deactivating taxonomy result tab because file " + phylumFile.getAbsolutePath() + " doesn't exist!");
+            log.warn("Deactivating taxonomy result tab, because file " + phylumFile.getAbsolutePath() + " doesn't exist!");
         } else {
             //Get the data
             List<String[]> data = getRows(phylumFile, '\t');
             for (String[] row : data) {
-                taxonomyAnalysisResult.addTaxonomyDataRow(new TaxonomyData(row[0], row[1], row[2], row[3], "058dc7"));
+                try {
+                    TaxonomyData taxonomyData = new TaxonomyData(row[0], row[1], Integer.parseInt(row[2]), row[3], "058dc7");
+                    if (taxonomyData != null && taxonomyData.getPhylum() != null) {
+                        taxonomyDataSet.add(taxonomyData);
+                    }
+                } catch (NumberFormatException e) {
+                    log.warn("Cannot parse string '" + row[2] + "' into an integer!");
+                }
             }
+
+            Collections.sort(taxonomyDataSet, TaxonomyAnalysisResult.TaxonomyDataComparator);
+            taxonomyAnalysisResult.setTaxonomyDataSet(taxonomyDataSet);
+
             return taxonomyAnalysisResult;
         }
         return taxonomyAnalysisResult;
@@ -243,6 +255,7 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
                     String entryID = row[0];
                     String entryDesc = row[1];
                     //Remove single quote marks
+                    entryDesc = encodeSingleQuoteMarks(entryDesc);
                     entryDesc = entryDesc.replaceAll("\'", "");
                     int numOfEntryHits = Integer.parseInt(row[2]);
                     if (entryID != null && entryID.trim().length() > 0) {
@@ -257,6 +270,10 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
                     "(maybe in the near past), which affects this parsing process!");
         }
         return result;
+    }
+
+    protected static String encodeSingleQuoteMarks(String entryDesc) {
+        return entryDesc.replaceAll("\'", "\\\\'");
     }
 
     private static String getHBarChartURL(Class clazz, Map<Class, List<AbstractGOTerm>> goData) {

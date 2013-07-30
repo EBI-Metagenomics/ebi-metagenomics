@@ -10,12 +10,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgFile;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
+import uk.ac.ebi.interpro.metagenomics.memi.services.FileObjectBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.FilePathNameBuilder;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.DownloadableFileDefinition;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
 
@@ -56,56 +58,58 @@ public class SampleViewController extends AbstractSampleViewController {
     @RequestMapping(value = "/doExportGOSlimFile", method = RequestMethod.GET)
     public ModelAndView doExportGOSlimFile(@PathVariable final String sampleId,
                                            final HttpServletResponse response, final HttpServletRequest request) {
-        return handleExport(sampleId, response, request, EmgFile.ResultFileType.GO_SLIM, "_GO_slim.csv");
+        DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get("GO_SLIM_FILE");
+        return handleExport(sampleId, response, request, fileDefinition);
     }
 
     @RequestMapping(value = "/doExportGOFile", method = RequestMethod.GET)
     public ModelAndView doExportGOFile(@PathVariable final String sampleId,
                                        final HttpServletResponse response, final HttpServletRequest request) {
-        return handleExport(sampleId, response, request, EmgFile.ResultFileType.GO, "_GO.csv");
+        DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get("GO_FILE");
+        return handleExport(sampleId, response, request, fileDefinition);
     }
 
     @RequestMapping(value = "/doExportMaskedFASTAFile", method = RequestMethod.GET)
     public ModelAndView doExportMaskedFASTAFile(@PathVariable final String sampleId,
                                                 final HttpServletResponse response, final HttpServletRequest request) {
-        return handleExport(sampleId, response, request, EmgFile.ResultFileType.MASKED_FASTA, "_nt_reads.fasta");
+        DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get("MASKED_FASTA");
+        return handleExport(sampleId, response, request, fileDefinition);
     }
 
     @RequestMapping(value = "/doExportCDSFile", method = RequestMethod.GET)
     public ModelAndView doExportCDSFile(@PathVariable final String sampleId,
                                         final HttpServletResponse response, final HttpServletRequest request) {
-        return handleExport(sampleId, response, request, EmgFile.ResultFileType.CDS_FAA, "_pCDS.fasta");
+        DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get("CDS_FAA");
+        return handleExport(sampleId, response, request, fileDefinition);
     }
 
     @RequestMapping(value = "/doExportI5TSVFile", method = RequestMethod.GET)
     public ModelAndView doExportI5File(@PathVariable final String sampleId,
                                        final HttpServletResponse response, final HttpServletRequest request) {
-        return handleExport(sampleId, response, request, EmgFile.ResultFileType.I5_TSV, "_InterPro.tsv");
+        DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get("I5_TSV_FILE");
+        return handleExport(sampleId, response, request, fileDefinition);
     }
 
-    @RequestMapping(value = "/doExportIPRFile", method = RequestMethod.GET)
-    public ModelAndView doExportIPRFile(@PathVariable final String sampleId,
-                                        final HttpServletResponse response, final HttpServletRequest request) {
-        return handleExport(sampleId, response, request, EmgFile.ResultFileType.IPR, "_InterPro_sum.csv");
-    }
+//    @RequestMapping(value = "/doExportIPRFile", method = RequestMethod.GET)
+//    public ModelAndView doExportIPRFile(@PathVariable final String sampleId,
+//                                        final HttpServletResponse response, final HttpServletRequest request) {
+//        return handleExport(sampleId, response, request, EmgFile.ResultFileType.IPR, "_InterPro_sum.csv");
+//    }
 
-    @RequestMapping(value = "/doExportIPRhitsFile", method = RequestMethod.GET)
-    public ModelAndView doExportIPRhitsFile(@PathVariable final String sampleId,
-                                            final HttpServletResponse response, final HttpServletRequest request) {
-        return handleExport(sampleId, response, request, EmgFile.ResultFileType.IPR_HITS, "_InterPro_hits.fasta");
-    }
+//    @RequestMapping(value = "/doExportIPRhitsFile", method = RequestMethod.GET)
+//    public ModelAndView doExportIPRhitsFile(@PathVariable final String sampleId,
+//                                            final HttpServletResponse response, final HttpServletRequest request) {
+//        return handleExport(sampleId, response, request, fileDefinitionsMap.get(), "_InterPro_hits.fasta");
+//    }
 
     /**
      * @param sampleId
      * @param response
      * @param request
-     * @param resultFileType
-     * @param fileNameEnd    - Defines the file name extension and a file name suffix for the download file itself.
      * @return
      */
     private ModelAndView handleExport(final String sampleId, final HttpServletResponse response,
-                                      final HttpServletRequest request, final EmgFile.ResultFileType resultFileType,
-                                      final String fileNameEnd) {
+                                      final HttpServletRequest request, final DownloadableFileDefinition fileDefinition) {
         log.info("Checking if sample is accessible...");
         return checkAccessAndBuildModel(new ModelProcessingStrategy<Sample>() {
             @Override
@@ -113,8 +117,8 @@ public class SampleViewController extends AbstractSampleViewController {
                 log.info("Open download dialog...");
                 final EmgFile emgFile = getEmgFile(sample.getId());
                 if (emgFile != null) {
-                    String filePathName = FilePathNameBuilder.getFilePathNameByResultType(resultFileType, emgFile, propertyContainer);
-                    createFileObjectAndOpenDownloadDialog(response, request, emgFile, fileNameEnd, filePathName);
+                    File fileObject = FileObjectBuilder.createFileObject(emgFile, propertyContainer, fileDefinition);
+                    openDownloadDialog(response, request, emgFile, fileDefinition.getDownloadName(), fileObject);
                 }
             }
         }, null, sampleId, getModelViewName());
