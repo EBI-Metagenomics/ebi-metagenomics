@@ -27,7 +27,7 @@ public class DomainComposition {
         //
         this.colorCodeMap = new HashMap<String, String>(3);
         this.colorCodeMap.put("bacteria", "'#5f8694'");
-        this.colorCodeMap.put("archaea", "'#5f8694'");
+        this.colorCodeMap.put("archaea", "'#91d450'");
         this.colorCodeMap.put("unassigned", "'#535353'");
         //
         setColorCode();
