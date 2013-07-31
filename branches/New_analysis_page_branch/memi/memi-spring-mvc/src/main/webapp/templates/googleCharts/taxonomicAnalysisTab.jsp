@@ -29,7 +29,7 @@
             <c:when test="${addComma}">,
             </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise>
             </c:choose>
-            ['<ul class="color_legend"><li  style="color: #${taxonomyData.colourCode};"></li></ul>', '${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}, 0 , 0]
+            ['<ul class="color_legend"><li  style="color: #${taxonomyData.colorCode};"></li></ul>', '${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}, 0 , 0]
             </c:forEach>
         ]);
 
@@ -93,7 +93,7 @@
             'legend':{position:'right', fontSize:10},
             'chartArea':{left:10, top:30, width:"100%", height:"100%"},
             'pieSliceBorderColor':'none',
-            'sliceVisibilityThreshold':1 / 115
+            'sliceVisibilityThreshold':${model.taxonomyAnalysisResult.sliceVisibilityThreshold}
         };
 
         var phylumPieChart = new google.visualization.PieChart(document.getElementById('tax_chart_pie_phy'));

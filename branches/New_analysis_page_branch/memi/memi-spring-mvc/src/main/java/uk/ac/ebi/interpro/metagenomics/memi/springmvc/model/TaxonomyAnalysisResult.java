@@ -2,15 +2,11 @@ package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
 
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.DomainComposition;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * Represents a simple model object which is used to render the sample analysis page, more specifically the taxonomic analysis tab.
  * The taxonomy data set is used to render the phylum table and charts.
- *
  *
  * @author Maxim Scheremetjew
  */
@@ -21,6 +17,28 @@ public class TaxonomyAnalysisResult extends AnalysisResult {
     private DomainComposition domainComposition;
 
     private int uniqueUTUsTotalCount;
+
+    private float sliceVisibilityThreshold;
+
+    public TaxonomyAnalysisResult() {
+        this(new ArrayList<TaxonomyData>());
+    }
+
+    public TaxonomyAnalysisResult(List<TaxonomyData> taxonomyDataSet) {
+        this.taxonomyDataSet = taxonomyDataSet;
+        init();
+    }
+
+//    public String getColorCodePhylumTable() {
+//        StringBuilder result = new StringBuilder("'#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff'");
+//        if (taxonomyDataSet.size() > 10) {
+//            for (int i = 0; i < taxonomyDataSet.size() - 10; i++) {
+//                result.append(",'#ccc'");
+//            }
+//        }
+//        return result.toString();
+//    }
+
 
     public List<TaxonomyData> getTaxonomyDataSet() {
         return taxonomyDataSet;
@@ -34,6 +52,10 @@ public class TaxonomyAnalysisResult extends AnalysisResult {
         return uniqueUTUsTotalCount;
     }
 
+    public float getSliceVisibilityThreshold() {
+        return sliceVisibilityThreshold;
+    }
+
     private void setUniqueUTUsTotalCount(int uniqueUTUsTotalCount) {
         this.uniqueUTUsTotalCount = uniqueUTUsTotalCount;
     }
@@ -42,16 +64,18 @@ public class TaxonomyAnalysisResult extends AnalysisResult {
         this.domainComposition = domainComposition;
     }
 
-    public void setTaxonomyDataSet(List<TaxonomyData> taxonomyDataSet) {
-        this.taxonomyDataSet = taxonomyDataSet;
-        calculateDomainComposition();
+    private void setSliceVisibilityThreshold(float sliceVisibilityThreshold) {
+        this.sliceVisibilityThreshold = sliceVisibilityThreshold;
     }
 
     /**
-     * Super kingdom is the same as domain.
+     * Sets DomainComposition, UniqueUTUsTotalCount, color codes for taxonomy data as well as the sliceVisibilityThreshold.
+     * Super kingdom is the equivalent of domain.
      * //TODO: Write JUnit test
      */
-    private void calculateDomainComposition() {
+    private void init() {
+        Enumeration<String> colors = getColors();
+        //
         Map<String, Integer> domainMap = new TreeMap();
         int uniqueUTUsCounter = 0;
         for (TaxonomyData taxonomyData : taxonomyDataSet) {
@@ -62,9 +86,38 @@ public class TaxonomyAnalysisResult extends AnalysisResult {
                 value = value + domainMap.get(key).intValue();
             }
             domainMap.put(key, value);
+            //set the color code at the same time
+            if (colors.hasMoreElements()) {
+                taxonomyData.setColorCode(colors.nextElement());
+            } else {
+                taxonomyData.setColorCode("ccc");
+            }
         }
         setDomainComposition(new DomainComposition(domainMap));
         setUniqueUTUsTotalCount(uniqueUTUsCounter);
+        if (uniqueUTUsCounter > 0) {
+            float sliceVisibilityThreshold = 0f;
+            if (taxonomyDataSet.size() > 10) {
+                int numberOfHits = taxonomyDataSet.get(10).getNumberOfHits();
+                sliceVisibilityThreshold = numberOfHits / (float) getUniqueUTUsTotalCount();
+            }
+            setSliceVisibilityThreshold(sliceVisibilityThreshold);
+        }
+    }
+
+    private Enumeration<String> getColors() {
+        Vector<String> colors = new Vector<String>(10);
+        colors.add("058dc7");
+        colors.add("50b432");
+        colors.add("ed561b");
+        colors.add("edef00");
+        colors.add("24cbe5");
+        colors.add("64e572");
+        colors.add("ff9655");
+        colors.add("fff263");
+        colors.add("6af9c4");
+        colors.add("b2deff");
+        return colors.elements();
     }
 
     /**

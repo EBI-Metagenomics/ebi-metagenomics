@@ -15,14 +15,13 @@ public class TaxonomyData {
 
     private String percentage;
 
-    private String colourCode;
+    private String colorCode;
 
-    public TaxonomyData(String superKingdom, String phylum, Integer numberOfHits, String percentage, String colourCode) {
+    public TaxonomyData(String superKingdom, String phylum, Integer numberOfHits, String percentage) {
         this.superKingdom = superKingdom;
         this.phylum = phylum;
         this.numberOfHits = numberOfHits;
         this.percentage = percentage;
-        this.colourCode = colourCode;
     }
 
     public String getSuperKingdom() {
@@ -41,7 +40,11 @@ public class TaxonomyData {
         return percentage;
     }
 
-    public String getColourCode() {
-        return colourCode;
+    public String getColorCode() {
+        return colorCode;
+    }
+
+    public void setColorCode(String colorCode) {
+        this.colorCode = colorCode;
     }
 }

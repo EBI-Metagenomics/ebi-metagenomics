@@ -196,7 +196,7 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
      * @return
      */
     private TaxonomyAnalysisResult loadTaxonomyDataFromCSV(final String pathToAnalysisDirectory) {
-        final TaxonomyAnalysisResult taxonomyAnalysisResult = new TaxonomyAnalysisResult();
+        TaxonomyAnalysisResult taxonomyAnalysisResult = new TaxonomyAnalysisResult();
         final List<TaxonomyData> taxonomyDataSet = new ArrayList<TaxonomyData>();
 
         File phylumFile = new File(resultFilesDirectoryPath + propertyContainer.getResultFileName(MemiPropertyContainer.FileNameIdentifier.PHYLUM_COUNTS));
@@ -207,7 +207,16 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
             List<String[]> data = getRows(phylumFile, '\t');
             for (String[] row : data) {
                 try {
-                    TaxonomyData taxonomyData = new TaxonomyData(row[0], row[1], Integer.parseInt(row[2]), row[3], "058dc7");
+                    String superKingdom = row[0];
+                    String phylum = row[1];
+                    if (phylum.equalsIgnoreCase("Unassigned")) {
+                        if (superKingdom.equalsIgnoreCase("Bacteria")) {
+                            phylum = "Unclassified Bacteria";
+                        } else if (superKingdom.equalsIgnoreCase("Archaea")) {
+                            phylum = "Unclassified Archaea";
+                        }
+                    }
+                    TaxonomyData taxonomyData = new TaxonomyData(superKingdom, phylum, Integer.parseInt(row[2]), row[3]);
                     if (taxonomyData != null && taxonomyData.getPhylum() != null) {
                         taxonomyDataSet.add(taxonomyData);
                     }
@@ -217,7 +226,7 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
             }
 
             Collections.sort(taxonomyDataSet, TaxonomyAnalysisResult.TaxonomyDataComparator);
-            taxonomyAnalysisResult.setTaxonomyDataSet(taxonomyDataSet);
+            taxonomyAnalysisResult = new TaxonomyAnalysisResult(taxonomyDataSet);
 
             return taxonomyAnalysisResult;
         }
