@@ -121,7 +121,8 @@
         // Stacked column graph
         var options = {'title':'Phylum composition (Total: ${model.taxonomyAnalysisResult.uniqueUTUsTotalCount})',
             'titleTextStyle':{fontSize:12},
-            'colors':['#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff', '#ccc', '#ccc', '#ccc', '#ccc', '#ccc', '#ccc', '#ccc'],
+            'colors':[${model.taxonomyAnalysisResult.colorCodeForStackChart}],
+//            'colors':['#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff', '#ccc', '#ccc', '#ccc', '#ccc', '#ccc', '#ccc', '#ccc'],
             'width':320,
             'height':400,
             'legend':{position:'right', fontSize:10},

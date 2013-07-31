@@ -29,15 +29,15 @@ public class TaxonomyAnalysisResult extends AnalysisResult {
         init();
     }
 
-//    public String getColorCodePhylumTable() {
-//        StringBuilder result = new StringBuilder("'#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff'");
-//        if (taxonomyDataSet.size() > 10) {
-//            for (int i = 0; i < taxonomyDataSet.size() - 10; i++) {
-//                result.append(",'#ccc'");
-//            }
-//        }
-//        return result.toString();
-//    }
+    public String getColorCodeForStackChart() {
+        StringBuilder result = new StringBuilder("'#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff'");
+        if (taxonomyDataSet.size() > 10) {
+            for (int i = 0; i < taxonomyDataSet.size() - 10; i++) {
+                result.append(",'#ccc'");
+            }
+        }
+        return result.toString();
+    }
 
 
     public List<TaxonomyData> getTaxonomyDataSet() {
