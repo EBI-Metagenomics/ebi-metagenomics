@@ -32,22 +32,6 @@ google.setOnLoadCallback(drawChart);
 // draws it.
 function drawChart() {
 
-     // DATA taxonomy Pie+Bar chart Domain
-    var data = new google.visualization.DataTable();
-    data.addColumn('string', 'kingdom');
-    data.addColumn('number', 'Match');
-    data.addRows([
-        ['Bacteria', 201],
-        ['Archaea', 28],
-        ['Unassigned', 1]
-    ]);
-
-    // DATA taxonomy Stacked column
-    var data3 = google.visualization.arrayToDataTable([
-        [ '','Proteobacteria', 'Crenarchaeota', 'Euryarchaeota', 'Bacteroidetes', 'SAR406', 'Actinobacteria', 'Verrucomicrobia', 'Chloroflexi', 'NC10', 'PAUC34f', 'Planctomycetes', 'Caldiserica', 'Cyanobacteria', 'Elusimicrobia', 'Firmicutes', 'OP11', 'Unassigned bacteria'],
-        ['', 146/229, 17/229, 11/229, 11/229, 11/229, 10/229, 7/229, 3/229, 3/229, 2/229, 2/229, 1/229, 1/229, 1/229, 1/229, 1/229 , 1/229 ]
-    ]);
-
     // DATA function Bar GO terms bp
     var data4 = new google.visualization.DataTable();
     data4.addColumn('string', 'GO term');
@@ -322,30 +306,6 @@ function drawChart() {
         [' transcription factor complex', 0]
     ]);
 
-    // taxonomy Pie chart domain
-    var options = {'title':'Domain composition', 'titleTextStyle':{fontSize:12}, 'colors':['#5f8694','#91d450', '#535353' ],'width':200, 'height':220, 'chartArea':{left:10, top:26, width:"80%", height:"55%"}, 'pieSliceBorderColor':'none', 'legend':{fontSize:10}, 'pieSliceTextStyle':{color:'white'}};
-
-    // Taxonomy Bar - domain
-    var options3 = {'title':'Domain composition','titleTextStyle':{fontSize:12}, 'colors':['#5f8694'], 'width':190, 'height':180, 'chartArea':{left:70, top:40, width:"56%", height:"70%"}, 'vAxis':{textStyle:{fontSize:11}}, 'pieSliceBorderColor':'none', 'bar':{groupWidth:10},'legend':'none'};
-
-    // Taxonomy Bar - phylum
-    var options4 = {'title':'Phylum composition (Total: 229)', 'titleTextStyle':{fontSize:12}, 'colors':['#5f8694'],'width':360, 'height':320, 'chartArea':{left:120, top:40, width:"60%", height:"70%"}, 'pieSliceBorderColor':'none', 'legend':'none' };
-
-    // Stacked column graph
-    var options5 = {'title':'Phylum composition (Total: 229)',
-        'titleTextStyle':{fontSize:12},
-        'colors':['#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff', '#ccc', '#ccc', '#ccc', '#ccc', '#ccc', '#ccc', '#ccc'],
-        'width':320,
-        'height':400,
-        'legend':{position:'right', fontSize:10},
-        'chartArea':{left:80, top:40, width:"20%", height:"86%"},
-        'pieSliceBorderColor':'none',
-        'sliceVisibilityThreshold':1 / 50,
-        'vAxis': { viewWindowMode:'maximized'},//        important to keep viewWindowMode separated from the rest to keep the display of the value 100% on vaxis
-        'vAxis': {title:'Relative abundance', format:'#%', baselineColor: '#ccc'},
-        'isStacked':true
-    };
-
     // GO TERM bar Biological Process
     var options6 = {'title':'Biological process', 'titleTextStyle':{fontSize:12}, 'colors':['#058dc7'], 'width':330, 'height':600, 'chartArea':{left:220, top:40, width:"100%", height:"100%"}, 'vAxis':{textStyle:{fontSize:10}}, 'hAxis':{textPosition: 'none', gridlines:{color:'white'}}, 'bar':{groupWidth:8}, 'legend':'none'
 //        'colors':['#5f8694'],
@@ -399,16 +359,6 @@ function drawChart() {
     };
 
     // Instantiate and draw our chart, passing in some options.
-//    var chart = new google.visualization.PieChart(document.getElementById('tax_chart_pie_dom'));
-//    chart.draw(data, options);
-//    var chart2 = new google.visualization.PieChart(document.getElementById('tax_chart_pie_phy'));
-//    chart2.draw(data2, options2);
-    var chart3 = new google.visualization.BarChart(document.getElementById('tax_chart_bar_dom'));
-    chart3.draw(data, options3);
-    var chart4 = new google.visualization.BarChart(document.getElementById('tax_chart_bar_phy'));
-    chart4.draw(data2, options4);
-    var chart5 = new google.visualization.ColumnChart(document.getElementById('tax_chart_col'));
-    chart5.draw(data3, options5);
     var chart6 = new google.visualization.BarChart(document.getElementById('func_chart_bar_go_bp'));
     chart6.draw(data4, options6);
     var chart7 = new google.visualization.BarChart(document.getElementById('func_chart_bar_go_mf'));
@@ -432,85 +382,34 @@ function drawChart() {
 
  //BEGIN code used to showroom the row number selection - TODO apply on the new table
 
-    google.setOnLoadCallback(init);
+//    google.setOnLoadCallback(init);
+//
+//    var dataSourceUrl = 'https://docs.google.com/spreadsheet/ccc?key=0AgWotcbTSSjYdGF6NjE0WGxGRmV5djJDWEZ6RzZhT2c&usp=sharing';
+//    var query, options, container;
+//
+//       function init() {
+//         query = new google.visualization.Query(dataSourceUrl);
+//         container = document.getElementById("func_table_div1");
+//         options = {width:600, allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false};
+//         sendAndDraw();
+//       }
+//
+//       function sendAndDraw() {
+//         query.abort();
+//         var tableQueryWrapper = new TableQueryWrapper(query, container, options);
+//         tableQueryWrapper.sendAndDraw();
+//       }
+//
+//
+//       function setOption(prop, value) {
+//         options[prop] = value;
+//         sendAndDraw();
+//       }
 
-    var dataSourceUrl = 'https://docs.google.com/spreadsheet/ccc?key=0AgWotcbTSSjYdGF6NjE0WGxGRmV5djJDWEZ6RzZhT2c&usp=sharing';
-    var query, options, container;
 
-       function init() {
-         query = new google.visualization.Query(dataSourceUrl);
-         container = document.getElementById("func_table_div1");
-         options = {width:600, allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false};
-         sendAndDraw();
-       }
-
-       function sendAndDraw() {
-         query.abort();
-         var tableQueryWrapper = new TableQueryWrapper(query, container, options);
-         tableQueryWrapper.sendAndDraw();
-       }
-
-
-       function setOption(prop, value) {
-         options[prop] = value;
-         sendAndDraw();
-       }
-
-
-    google.setOnLoadCallback(drawTable);// Set a callback to run when the Google Visualization API is loaded.
+//    google.setOnLoadCallback(drawTable);// Set a callback to run when the Google Visualization API is loaded.
 
  //END code used to showroom the row number selection - TODO apply on the new table
-
-
-function drawTable() {
-   // Taxonomy top phylum table
-               var taxMatchesData = new google.visualization.DataTable();
-               taxMatchesData.addColumn('string', '');
-               taxMatchesData.addColumn('string', 'Phylum');
-               taxMatchesData.addColumn('string', 'Domain');
-               taxMatchesData.addColumn('number', 'Unique OTUs');
-               taxMatchesData.addColumn('number', 'Count of reads assigned');
-               taxMatchesData.addColumn('number', '% reads assigned');
-               taxMatchesData.addRows([
-               <c:set var="addComma" value="false"/>
-               <c:set var="colourCode" value="#058dc7" scope="page"/>
-               <c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResult.taxonomyDataSet}" varStatus="status">
-               <c:choose>
-               <c:when test="${addComma}">,
-               </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise>
-               </c:choose>
-               ['<ul class="color_legend"><li  style="color: #${taxonomyData.colourCode};"></li></ul>','${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ,  ${taxonomyData.percentage}]
-               </c:forEach>
-                       ]);
-
-   // Table used for bar chart where we don't need to get colour for each row
-        var data = new google.visualization.DataTable();
-            data.addColumn('string', 'Phylum');
-            data.addColumn('string', 'Domain');
-            data.addColumn('number', 'Unique OTUs');
-            data.addColumn('number', 'Count of reads assigned');
-            data.addColumn('number', '% reads assigned');
-            data.addRows([
-            <c:set var="addComma" value="false"/>
-            <c:set var="colourCode" value="#058dc7" scope="page"/>
-            <c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResult.taxonomyDataSet}" varStatus="status">
-            <c:choose>
-            <c:when test="${addComma}">,
-            </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise>
-            </c:choose>
-            ['${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits},,  ${taxonomyData.percentage}]
-            </c:forEach>
-        ]);
-
-
-         //TABLE top hits stacked column
-        var table = new google.visualization.Table(document.getElementById('tax_table_col'));
-        table.draw(taxMatchesData, { allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:3, sortAscending:false});
-
-        //TABLE top hits Bar
-        var table6 = new google.visualization.Table(document.getElementById('tax_table_bar'));
-        table6.draw(data, { allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false});
-    }
 
 </script>
 
@@ -757,6 +656,18 @@ function drawTable() {
                 <div id="tax-col">
                   <div class="chart_container"><div id="tax_chart_col"></div><div id="tax_table_col"></div>
                 </div>
+                <%--<div id="tax-col">--%>
+                    <%--<div class="chart_container">--%>
+                        <%--<div class="chart_container">--%>
+                            <%--<div id="tax_chart_col"></div>--%>
+                            <%--<div id="tax_table_col">--%>
+                                <%--&lt;%&ndash;<div class="tax_table_filter"></div>&ndash;%&gt;--%>
+                                <%--&lt;%&ndash;<div class="tax_table_pie"></div>&ndash;%&gt;--%>
+                            <%--</div>--%>
+
+                        <%--</div>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
 
                  </div>
                   <div id="tax-Krona">
