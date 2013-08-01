@@ -15,7 +15,6 @@
     function drawPhylumTable() {
         // Taxonomy top phylum table
         var taxMatchesData = new google.visualization.DataTable();
-        taxMatchesData.addColumn('string', '');
         taxMatchesData.addColumn('string', 'Phylum');
         taxMatchesData.addColumn('string', 'Domain');
         taxMatchesData.addColumn('number', 'Unique OTUs');
@@ -29,7 +28,7 @@
             <c:when test="${addComma}">,
             </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise>
             </c:choose>
-            ['<ul class="color_legend"><li  style="color: #${taxonomyData.colorCode};"></li></ul>', '${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}, 0 , 0]
+            ['<div title="${taxonomyData.phylum} color code" class="chart_color_leg" style="background-color: #${taxonomyData.colorCode}; margin: 4px 6px 0 2px;"></div> ${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}, 0 , 0]
             </c:forEach>
         ]);
 
