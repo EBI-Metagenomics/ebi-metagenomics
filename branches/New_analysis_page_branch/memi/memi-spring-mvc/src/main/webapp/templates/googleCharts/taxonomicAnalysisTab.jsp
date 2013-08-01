@@ -34,6 +34,26 @@
             </c:forEach>
         ]);
 
+          // Taxonomy top phylum table
+        var taxMatchesDatabar = new google.visualization.DataTable();
+        taxMatchesDatabar.addColumn('string', 'Phylum');
+        taxMatchesDatabar.addColumn('string', 'Domain');
+        taxMatchesDatabar.addColumn('number', 'Unique OTUs');
+        taxMatchesDatabar.addColumn('number', '%');
+//        taxMatchesData.addColumn('number', 'Count of reads assigned');
+//        taxMatchesData.addColumn('number', '% reads assigned');
+        taxMatchesDatabar.addRows([
+            <c:set var="addComma" value="false"/>
+            <c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResult.taxonomyDataSet}" varStatus="status">
+            <c:choose>
+            <c:when test="${addComma}">,
+            </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise>
+            </c:choose>
+            ['${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}
+//                , 0 , 0
+]
+            </c:forEach>
+        ]);
 
         // Define a StringFilter control for the 'Phylum' column
         var taxStringFilter = new google.visualization.ControlWrapper({
@@ -63,7 +83,7 @@
         new google.visualization.Table(document.getElementById('tax_table_col')).draw(taxMatchesData, { allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false});
 
         // Draw the phylum table on the bar chart tab
-        new google.visualization.Table(document.getElementById('tax_table_bar')).draw(taxMatchesData, { allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false});
+        new google.visualization.Table(document.getElementById('tax_table_bar')).draw(taxMatchesDatabar, { allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false});
     }  //END function drawPhylumTable()
 
     // DATA taxonomy Pie+Bar chart Phylum
