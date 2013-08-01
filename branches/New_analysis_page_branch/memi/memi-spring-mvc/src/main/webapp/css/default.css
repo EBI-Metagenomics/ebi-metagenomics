@@ -1696,6 +1696,7 @@ background-image: -webkit-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247
 .sample_ana .google-visualization-table-table .google-visualization-table-tr-head td {background: white; border:none;}
 
 ul.color_legend {list-style-type: square; list-style-position:inside;}
+
 /*GOOGLE CHART -TABLE  FILTER*/
 #func_dashboard, #tax_dashboard {float: left;}
 #func_dashboard #func_table_filter {position: absolute;z-index: 1;left:1px;}
@@ -1705,6 +1706,9 @@ ul.color_legend {list-style-type: square; list-style-position:inside;}
 
 .expandertable {float:left; margin-top: -32px; margin-left: 833px; z-index: 1;  position: relative;}
 #toolbar_div {display: block; float:left;}
+
+.chart_color_leg {width:6px; height:6px; display:block;float: left;}
+
 /*GOOGLE TOOLBAR*/
 .sample_ana .google-visualization-toolbar-triangle {display: none;}
 .sample_ana .goog-menu-button-caption span {display:none;}
