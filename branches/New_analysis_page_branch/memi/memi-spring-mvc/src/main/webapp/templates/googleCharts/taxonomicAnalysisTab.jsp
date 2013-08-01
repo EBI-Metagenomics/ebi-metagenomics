@@ -18,9 +18,9 @@
         taxMatchesData.addColumn('string', 'Phylum');
         taxMatchesData.addColumn('string', 'Domain');
         taxMatchesData.addColumn('number', 'Unique OTUs');
-        taxMatchesData.addColumn('number', '% unique OTUs');
-        taxMatchesData.addColumn('number', 'Count of reads assigned');
-        taxMatchesData.addColumn('number', '% reads assigned');
+        taxMatchesData.addColumn('number', '%');
+//        taxMatchesData.addColumn('number', 'Count of reads assigned');
+//        taxMatchesData.addColumn('number', '% reads assigned');
         taxMatchesData.addRows([
             <c:set var="addComma" value="false"/>
             <c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResult.taxonomyDataSet}" varStatus="status">
@@ -28,7 +28,9 @@
             <c:when test="${addComma}">,
             </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise>
             </c:choose>
-            ['<div title="${taxonomyData.phylum} color code" class="chart_color_leg" style="background-color: #${taxonomyData.colorCode}; margin: 4px 6px 0 2px;"></div> ${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}, 0 , 0]
+            ['<div title="${taxonomyData.phylum} color code" class="chart_color_leg" style="background-color: #${taxonomyData.colorCode}; margin: 4px 6px 0 2px;"></div> ${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}
+//                , 0 , 0
+]
             </c:forEach>
         ]);
 
@@ -47,7 +49,7 @@
         var taxTableOptions = new google.visualization.ChartWrapper({
             'chartType':'Table',
             'containerId':'tax_table_pie',
-            'options':{ allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:3, sortAscending:false }
+            'options':{ allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false }
         });
 
         // Draw the phylum table on the pie chart tab
@@ -58,10 +60,10 @@
                 draw(taxMatchesData);
 
         // Draw the phylum table on the stack chart tab
-        new google.visualization.Table(document.getElementById('tax_table_col')).draw(taxMatchesData, { allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:3, sortAscending:false});
+        new google.visualization.Table(document.getElementById('tax_table_col')).draw(taxMatchesData, { allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false});
 
         // Draw the phylum table on the bar chart tab
-        new google.visualization.Table(document.getElementById('tax_table_bar')).draw(taxMatchesData, { allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:3, sortAscending:false});
+        new google.visualization.Table(document.getElementById('tax_table_bar')).draw(taxMatchesData, { allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false});
     }  //END function drawPhylumTable()
 
     // DATA taxonomy Pie+Bar chart Phylum
