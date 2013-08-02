@@ -961,7 +961,7 @@ padding: 0 9px 9px 9px;
 margin: 0px auto;*/
 width: 972px; text-align: left;}
 
-.separator {margin: 20px 9px 9px 9px; height:1px; display:block; background: url(../img/bgd_sep_dot.gif) repeat-x 0 -5px;}
+.separator {margin: 20px 9px 9px 9px; height:1px; display:block; background: url(../img/bgd_sep_dot.gif) repeat-x 0 -5px; clear:right;}
 
 /* FORMS */
 form legend {
