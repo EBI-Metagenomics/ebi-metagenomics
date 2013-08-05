@@ -2,6 +2,7 @@ package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
 
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.DomainComposition;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -18,7 +19,7 @@ public class TaxonomyAnalysisResult extends AnalysisResult {
 
     private int uniqueUTUsTotalCount;
 
-    private float sliceVisibilityThreshold;
+    private BigDecimal sliceVisibilityThreshold;
 
     public TaxonomyAnalysisResult() {
         this(new ArrayList<TaxonomyData>());
@@ -52,7 +53,7 @@ public class TaxonomyAnalysisResult extends AnalysisResult {
         return uniqueUTUsTotalCount;
     }
 
-    public float getSliceVisibilityThreshold() {
+    public BigDecimal getSliceVisibilityThreshold() {
         return sliceVisibilityThreshold;
     }
 
@@ -64,7 +65,7 @@ public class TaxonomyAnalysisResult extends AnalysisResult {
         this.domainComposition = domainComposition;
     }
 
-    private void setSliceVisibilityThreshold(float sliceVisibilityThreshold) {
+    private void setSliceVisibilityThreshold(BigDecimal sliceVisibilityThreshold) {
         this.sliceVisibilityThreshold = sliceVisibilityThreshold;
     }
 
@@ -96,10 +97,10 @@ public class TaxonomyAnalysisResult extends AnalysisResult {
         setDomainComposition(new DomainComposition(domainMap));
         setUniqueUTUsTotalCount(uniqueUTUsCounter);
         if (uniqueUTUsCounter > 0) {
-            float sliceVisibilityThreshold = 0f;
+            BigDecimal sliceVisibilityThreshold = new BigDecimal(0f);
             if (taxonomyDataSet.size() > 10) {
-                int numberOfHits = taxonomyDataSet.get(10).getNumberOfHits();
-                sliceVisibilityThreshold = numberOfHits / (float) getUniqueUTUsTotalCount();
+                int numberOfHits = taxonomyDataSet.get(9).getNumberOfHits();
+                sliceVisibilityThreshold = new BigDecimal((double) numberOfHits / (double) getUniqueUTUsTotalCount());
             }
             setSliceVisibilityThreshold(sliceVisibilityThreshold);
         }
