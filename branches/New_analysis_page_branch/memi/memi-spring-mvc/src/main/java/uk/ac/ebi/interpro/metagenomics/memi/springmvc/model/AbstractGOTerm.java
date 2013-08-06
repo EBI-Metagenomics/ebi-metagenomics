@@ -1,7 +1,9 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
 
+import java.util.Comparator;
+
 /**
- * TODO: Description
+ * Simple model class which represents a GO term.
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @version $Id$
@@ -44,4 +46,11 @@ public abstract class AbstractGOTerm {
 //        GO:0003824 catalytic activity (190)
         return synonym + " (" + numberOfMatches + ")";
     }
+
+    public static Comparator<AbstractGOTerm> GoTermComparator
+            = new Comparator<AbstractGOTerm>() {
+        public int compare(AbstractGOTerm o1, AbstractGOTerm o2) {
+            return o2.getNumberOfMatches() - o1.getNumberOfMatches();
+        }
+    };
 }

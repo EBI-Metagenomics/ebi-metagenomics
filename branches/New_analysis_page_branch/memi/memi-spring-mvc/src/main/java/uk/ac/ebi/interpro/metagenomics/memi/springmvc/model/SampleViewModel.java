@@ -9,9 +9,10 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.AnalysisStatus;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.DownloadSection;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Model to hold statistics related to the analysis of a sample.
@@ -26,26 +27,12 @@ public class SampleViewModel extends ViewModel {
 
     private Sample sample;
 
-    // URLs to use the Google chart Tool
-
-    /* URL should display a bar chart about a statistical overview */
-    private String barChartURL;
-
-    /* URL should display a pie chart which includes GO annotations for biological process */
-    private String pieChartBiologicalProcessURL;
-
-    /* URL should display a pie chart which includes GO annotations for molecular function */
-    private String pieChartMolecularFunctionURL;
-
-    /* URL should display a pie chart which includes GO annotations for cellular component */
-    private String pieChartCellularComponentURL;
-
     /* List of InterPro entries. Loaded from the MG pipeline produced file with the IPR extension
      (summary of InterPro matches).
      */
     private List<InterProEntry> interProEntries;
 
-    private List<AbstractGOTerm> bioGOTerms;
+    private Map<Class, List<AbstractGOTerm>> goData;
 
     /* An EmgFile object holds two attributes of the */
     private EmgFile emgFile;
@@ -75,11 +62,7 @@ public class SampleViewModel extends ViewModel {
                            String pageTitle,
                            List<Breadcrumb> breadcrumbs,
                            Sample sample,
-                           String barChartURL,
-                           String pieChartBiologicalProcessURL,
-                           String pieChartCellularComponentURL,
-                           String pieChartMolecularFunctionURL,
-                           List<AbstractGOTerm> bioGOTerms,
+                           Map<Class, List<AbstractGOTerm>> goData,
                            EmgFile emgFile,
                            List<String> archivedSequences,
                            MemiPropertyContainer propertyContainer,
@@ -93,12 +76,8 @@ public class SampleViewModel extends ViewModel {
                            final AnalysisStatus analysisStatus) {
         super(submitter, pageTitle, breadcrumbs, propertyContainer);
         this.sample = sample;
-        this.barChartURL = barChartURL;
-        this.pieChartBiologicalProcessURL = pieChartBiologicalProcessURL;
-        this.pieChartMolecularFunctionURL = pieChartMolecularFunctionURL;
-        this.pieChartCellularComponentURL = pieChartCellularComponentURL;
         this.interProEntries = interProEntries;
-        this.bioGOTerms = bioGOTerms;
+        this.goData = goData;
         this.emgFile = emgFile;
         this.archivedSequences = archivedSequences;
         this.experimentType = experimentType;
@@ -130,10 +109,6 @@ public class SampleViewModel extends ViewModel {
                 sample,
                 null,
                 null,
-                null,
-                null,
-                null,
-                null,
                 archivedSequences,
                 propertyContainer,
                 interProEntries,
@@ -150,28 +125,54 @@ public class SampleViewModel extends ViewModel {
         return sample;
     }
 
-    public String getBarChartURL() {
-        return barChartURL;
-    }
-
-    public String getPieChartBiologicalProcessURL() {
-        return pieChartBiologicalProcessURL;
-    }
-
-    public String getPieChartMolecularFunctionURL() {
-        return pieChartMolecularFunctionURL;
-    }
-
-    public String getPieChartCellularComponentURL() {
-        return pieChartCellularComponentURL;
-    }
-
     public List<String> getArchivedSequences() {
         return archivedSequences;
     }
 
-    public List<AbstractGOTerm> getBioGOTerms() {
-        return bioGOTerms;
+    public List<AbstractGOTerm> getBiologicalProcessGOTerms() {
+        return getGOTerms(false, BiologicalProcessGOTerm.class);
+    }
+
+    /**
+     * Sorted by number of hits.
+     */
+    public List<AbstractGOTerm> getSortedBiologicalProcessGOTerms() {
+        return getGOTerms(true, BiologicalProcessGOTerm.class);
+    }
+
+    public List<AbstractGOTerm> getMolecularFunctionGOTerms() {
+        return getGOTerms(false, MolecularFunctionGOTerm.class);
+    }
+
+    /**
+     * Sorted by number of hits.
+     */
+    public List<AbstractGOTerm> getSortedMolecularFunctionGOTerms() {
+        return getGOTerms(true, MolecularFunctionGOTerm.class);
+    }
+
+    public List<AbstractGOTerm> getCellularComponentGOTerms() {
+        return getGOTerms(false, CellularComponentGOTerm.class);
+    }
+
+    /**
+     * Sorted by number of hits.
+     */
+    public List<AbstractGOTerm> getSortedCellularComponentGOTerms() {
+        return getGOTerms(true, CellularComponentGOTerm.class);
+    }
+
+    private List<AbstractGOTerm> getGOTerms(boolean doSortResultList, Class clazz) {
+        List<AbstractGOTerm> resultList;
+        if (goData != null && goData.containsKey(clazz)) {
+            resultList = new ArrayList<AbstractGOTerm>(goData.get(clazz));
+            if (doSortResultList) {
+                Collections.sort(resultList, AbstractGOTerm.GoTermComparator);
+            }
+            return resultList;
+        } else {
+            return new ArrayList<AbstractGOTerm>(0);
+        }
     }
 
     public EmgFile getEmgFile() {
