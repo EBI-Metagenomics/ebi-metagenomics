@@ -27,8 +27,6 @@
 <%@ include file="googleCharts/taxonomicAnalysisTab.jsp" %>
 
 <script type='text/javascript'>
-           //commetn
-
     //BEGIN code used to showroom the row number selection - TODO apply on the new table
 
     //    google.setOnLoadCallback(init);
@@ -296,6 +294,7 @@
                         <div id="tax_dashboard">
                             <div id="tax_table_filter"></div>
                             <div id="tax_table_pie"></div>
+                            <%--<div id="table_div"></div>--%>
                         </div>
 
                     </div>
@@ -366,7 +365,7 @@
                         <%--Tabs--%>
                     <ul>
                             <%--<li><a href="#interpro-match-table" title="Table view"><span class="ico-table"></span></a></li>--%>
-                        <li class="selector_tab">Switch view:</li>
+                        <li class="selector_tab"></li>
                         <li><a href="#interpro-match-pie" title="Pie chart view"><span class="ico-pie"></span></a></li>
                             <%--<li><a href="#interpro-match-bar" title="Bar chart view"><span class="ico-barh"></span></a></li>--%>
                             <%--<li><a href="#interpro-match-col" title="Stacked column chart view"><span class="ico-col"></span></a></li>--%>
