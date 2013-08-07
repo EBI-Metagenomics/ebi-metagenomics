@@ -106,15 +106,15 @@
         // taxonomy Pie chart Phylum
         var options = {'title':'Phylum composition (Total: ${model.taxonomyAnalysisResult.uniqueUTUsTotalCount})',
             'titleTextStyle':{fontSize:12},
-            'colors':['#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff', '#ccc'],
+            'colors':[${model.taxonomyAnalysisResult.colorCodeForPieChart}],
 //Krona style      'colors':['#d47f7f','#d1a575','#d4c97f','#99d47f','#7fd4a7','#7fc3d4','#7f8ad4','#a77fd4','#d47fd3','#d47faf','#ccc','#ccc','#ccc'],
 //      'width':220,
             'width':290,
             'height':220,
             'legend':{position:'right', fontSize:10},
             'chartArea':{left:10, top:30, width:"100%", height:"100%"},
-            'pieSliceBorderColor':'none',
-            'sliceVisibilityThreshold':${model.taxonomyAnalysisResult.sliceVisibilityThreshold}
+            'pieSliceBorderColor':'none'
+            <%--'sliceVisibilityThreshold':${model.taxonomyAnalysisResult.sliceVisibilityThreshold}--%>
         };
 
         var phylumPieChart = new google.visualization.PieChart(document.getElementById('tax_chart_pie_phy'));

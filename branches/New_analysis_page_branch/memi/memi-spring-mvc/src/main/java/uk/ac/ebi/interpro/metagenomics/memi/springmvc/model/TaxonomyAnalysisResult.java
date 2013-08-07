@@ -69,6 +69,16 @@ public class TaxonomyAnalysisResult extends AnalysisResult {
         this.sliceVisibilityThreshold = sliceVisibilityThreshold;
     }
 
+    public String getColorCodeForPieChart() {
+        StringBuilder sb = new StringBuilder("'#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff'");
+        if (taxonomyDataSet.size() > 10) {
+            for (int i = 0; i < taxonomyDataSet.size() - 10; i++) {
+                sb.append(",'#ccc'");
+            }
+        }
+        return sb.toString();
+    }
+
     /**
      * Sets DomainComposition, UniqueUTUsTotalCount, color codes for taxonomy data as well as the sliceVisibilityThreshold.
      * Super kingdom is the equivalent of domain.
