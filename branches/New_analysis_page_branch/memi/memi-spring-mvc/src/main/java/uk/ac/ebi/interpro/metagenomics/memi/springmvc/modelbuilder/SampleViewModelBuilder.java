@@ -207,9 +207,9 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
                     String phylum = row[1];
                     if (phylum.equalsIgnoreCase("Unassigned")) {
                         if (superKingdom.equalsIgnoreCase("Bacteria")) {
-                            phylum = "Unclassified Bacteria";
+                            phylum = "Unassigned Bacteria";
                         } else if (superKingdom.equalsIgnoreCase("Archaea")) {
-                            phylum = "Unclassified Archaea";
+                            phylum = "Unassigned Archaea";
                         }
                     }
                     TaxonomyData taxonomyData = new TaxonomyData(superKingdom, phylum, Integer.parseInt(row[2]), row[3]);
