@@ -97,7 +97,16 @@ function drawInterProMatchesPieChart() {
 
     // Set chart options
     var options = {title:'InterPro matches summary (Total: ${fn:length(model.interProEntries)})', width:500, titleTextStyle:{fontSize:12},
-        colors:['#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff', '#ccc'],
+        colors:[
+            <c:set var="addComma" value="false"/>
+            <c:forEach var="entry" items="${model.interProEntries}" varStatus="status">
+            <c:choose>
+            <c:when test="${addComma}">,
+            </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise>
+            </c:choose>
+                <c:choose><c:when test="${status.index>9}">'#ccc'</c:when><c:otherwise>'<c:out value="${colorCodeList[status.index]}"/>'</c:otherwise></c:choose>
+            </c:forEach>
+        ],
         height:240, legend:{position:'right', fontSize:10}, chartArea:{left:0, top:30, width:"42%", height:"100%"},
         pieSliceBorderColor:'none'};
 
