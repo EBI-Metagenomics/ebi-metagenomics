@@ -100,8 +100,8 @@ div#local-masthead ul li.active, div#local-masthead ul li.active-trail { backgro
 @font-face{font-family:'EBI-Functional';src:url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.eot');src:url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.eot?#iefix') format('embedded-opentype'),
 url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.woff') format('woff'),
 local('☺'),
-url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/EBI-Functional.svg#EBI-Functional') format('svg'),
-url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/EBI-Functional.ttf') format('truetype');font-weight:normal;font-style:normal}
+url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.svg#EBI-Functional') format('svg'),
+url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.ttf') format('truetype');font-weight:normal;font-style:normal}
 
 .icon {text-decoration: none; font-style: normal;}
 .icon-functional:before {font-family: 'EBI-Functional'; font-size: 100%; color: #bbb; content: attr(data-icon);margin: 0 0.3em 0 0; }
