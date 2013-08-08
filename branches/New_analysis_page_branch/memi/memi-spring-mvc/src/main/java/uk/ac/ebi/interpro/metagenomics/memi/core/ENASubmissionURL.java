@@ -1,4 +1,4 @@
-package uk.ac.ebi.interpro.metagenomics.memi.basic;
+package uk.ac.ebi.interpro.metagenomics.memi.core;
 
 /**
  * Represents a simple object to save all ENA related submission URLs.

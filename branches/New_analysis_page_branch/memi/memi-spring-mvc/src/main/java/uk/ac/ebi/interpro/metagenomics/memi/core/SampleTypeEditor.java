@@ -1,4 +1,4 @@
-package uk.ac.ebi.interpro.metagenomics.memi.basic;
+package uk.ac.ebi.interpro.metagenomics.memi.core;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

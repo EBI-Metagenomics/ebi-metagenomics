@@ -1,4 +1,4 @@
-package uk.ac.ebi.interpro.metagenomics.memi.basic;
+package uk.ac.ebi.interpro.metagenomics.memi.core;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.transaction.TransactionException;
@@ -9,7 +9,6 @@ import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 import uk.ac.ebi.interpro.metagenomics.memi.controller.HomePageController;
 import uk.ac.ebi.interpro.metagenomics.memi.controller.ModelPopulator;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.services.INotificationService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.HomePageErrorViewModel;
@@ -23,7 +22,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Represents a customized exception resolver.

@@ -23,7 +23,7 @@
     </bean>
 
     <!-- Please use this bean to specify the path to the analysis files -->
-    <bean id="propContainer" class="uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer">
+    <bean id="propContainer" class="uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer">
         <property name="pathToAnalysisDirectory" value="${pathToAnalysisDirectory}"/>
         <property name="enaSubmissionURL" ref="enaSubmission"/>
         <property name="enaMasterUserEmail" value="${ena.master.user.email}"/>
@@ -38,7 +38,7 @@
         </property>
     </bean>
 
-    <bean id="enaSubmission" class="uk.ac.ebi.interpro.metagenomics.memi.basic.ENASubmissionURL">
+    <bean id="enaSubmission" class="uk.ac.ebi.interpro.metagenomics.memi.core.ENASubmissionURL">
         <property name="mainURL" value="http://www.ebi.ac.uk/embl/genomes/submission/"/>
         <property name="registrationPageName" value="external-reg-link.jsf"/>
         <property name="editPrefsPageName" value="external-update-link.jsf"/>

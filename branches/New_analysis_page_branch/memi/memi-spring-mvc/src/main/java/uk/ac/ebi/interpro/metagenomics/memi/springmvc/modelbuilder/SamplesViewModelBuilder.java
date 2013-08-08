@@ -5,7 +5,7 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
-import uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer;
+import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.SampleFilter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;

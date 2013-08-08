@@ -11,7 +11,7 @@
  * Feedback is always welcome !
  *
  */
-package uk.ac.ebi.interpro.metagenomics.memi.basic;
+package uk.ac.ebi.interpro.metagenomics.memi.core;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;

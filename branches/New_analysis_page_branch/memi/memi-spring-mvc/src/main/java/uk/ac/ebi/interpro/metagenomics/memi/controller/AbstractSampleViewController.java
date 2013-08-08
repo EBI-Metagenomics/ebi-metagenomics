@@ -20,7 +20,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.*;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.SampleViewModelBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder;
-import uk.ac.ebi.interpro.metagenomics.memi.tools.MemiTools;
+import uk.ac.ebi.interpro.metagenomics.memi.core.tools.MemiTools;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -52,6 +52,12 @@ public class AbstractSampleViewController extends SecuredAbstractController<Samp
     @Resource
     protected Map<String, DownloadableFileDefinition> fileDefinitionsMap;
 
+    @Resource(name = "sequenceFileDefinitions")
+    private List<SequenceFileDefinition> sequenceFileDefinitions;
+
+    @Resource(name = "functionalAnalysisFileDefinitions")
+    private List<FunctionalAnalysisFileDefinition> functionalAnalysisFileDefinitions;
+
     ISampleStudyDAO<Sample> getDAO() {
         return sampleDAO;
     }
@@ -75,10 +81,10 @@ public class AbstractSampleViewController extends SecuredAbstractController<Samp
     }
 
     protected void openDownloadDialog(final HttpServletResponse response,
-                                                         final HttpServletRequest request,
-                                                         final EmgFile emgFile,
-                                                         final String fileNameEnd,
-                                                         final File fileObject) {
+                                      final HttpServletRequest request,
+                                      final EmgFile emgFile,
+                                      final String fileNameEnd,
+                                      final File fileObject) {
         if (downloadService != null) {
             //white spaces are replaced by underscores
             final String fileNameForDownload = getFileName(emgFile, fileNameEnd);
@@ -116,7 +122,9 @@ public class AbstractSampleViewController extends SecuredAbstractController<Samp
                 propertyContainer,
                 experimentType,
                 buildDownloadSection(sample.getSampleId(), sample.isPublic(), fileDefinitionsMap, emgFile),
-                sampleAnnotations);
+                sampleAnnotations,
+                sequenceFileDefinitions,
+                functionalAnalysisFileDefinitions);
         final SampleViewModel sampleModel = builder.getModel();
         //End
 
@@ -126,7 +134,7 @@ public class AbstractSampleViewController extends SecuredAbstractController<Samp
     }
 
     private DownloadSection buildDownloadSection(final String sampleId, final boolean sampleIsPublic,
-                                                 final Map<String,DownloadableFileDefinition> fileDefinitionsMap,
+                                                 final Map<String, DownloadableFileDefinition> fileDefinitionsMap,
                                                  final EmgFile emgFile) {
         final List<DownloadLink> seqDataDownloadLinks = new ArrayList<DownloadLink>();
         final List<DownloadLink> funcAnalysisDownloadLinks = new ArrayList<DownloadLink>();

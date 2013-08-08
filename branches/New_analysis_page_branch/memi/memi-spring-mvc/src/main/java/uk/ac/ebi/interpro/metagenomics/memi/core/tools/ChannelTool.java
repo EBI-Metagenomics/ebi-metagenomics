@@ -1,4 +1,4 @@
-package uk.ac.ebi.interpro.metagenomics.memi.tools;
+package uk.ac.ebi.interpro.metagenomics.memi.core.tools;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;

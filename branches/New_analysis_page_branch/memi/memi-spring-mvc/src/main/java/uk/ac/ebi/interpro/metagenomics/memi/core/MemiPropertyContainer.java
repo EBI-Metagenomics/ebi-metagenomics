@@ -1,4 +1,4 @@
-package uk.ac.ebi.interpro.metagenomics.memi.basic;
+package uk.ac.ebi.interpro.metagenomics.memi.core;
 
 import java.util.HashMap;
 import java.util.Map;

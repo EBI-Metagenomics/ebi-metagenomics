@@ -3,6 +3,24 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ page language="java" contentType="text/html" %>
+<%@ page import="java.util.*" %>
+
+<%
+    //Use in functionalAnalysisTab.jsp to set the color code of the first 10 entries in the InterPro matches table
+    ArrayList colorCodeList = new ArrayList();
+    colorCodeList.add("#058dc7");
+    colorCodeList.add("#50b432");
+    colorCodeList.add("#ed561b");
+    colorCodeList.add("#edef00");
+    colorCodeList.add("#24cbe5");
+    colorCodeList.add("#64e572");
+    colorCodeList.add("#ff9655");
+    colorCodeList.add("#fff263");
+    colorCodeList.add("#6af9c4");
+    colorCodeList.add("#b2deff");
+    pageContext.setAttribute("colorCodeList", colorCodeList);
+%>
 <%--<script type="text/javascript">--%>
 <%--$(document).ready(function(){--%>
 <%--$('#expandercontent').css('display','none');--%>
@@ -294,7 +312,7 @@
                         <div id="tax_dashboard">
                             <div id="tax_table_filter"></div>
                             <div id="tax_table_pie"></div>
-                            <%--<div id="table_div"></div>--%>
+                                <%--<div id="table_div"></div>--%>
                         </div>
 
                     </div>
@@ -358,8 +376,10 @@
               </ul>
             </div>--%>
         <c:choose>
-            <c:when test="${not empty model.interProEntries}">
-
+            <c:when test="${model.analysisStatus.functionalAnalysisTab.interProMatchSectionDisabled}">
+                <b>No data available</b>
+            </c:when>
+            <c:otherwise>
                 <div id="interpro-chart">
 
                         <%--Tabs--%>
@@ -411,11 +431,6 @@
                     </div>
 
                 </div>
-
-
-            </c:when>
-            <c:otherwise>
-                <b>No data available</b>
             </c:otherwise>
         </c:choose>
 
@@ -424,37 +439,44 @@
         <p>A summary of Gene Ontology (GO) terms derived from InterPro matches to your sample is provided in the charts
             below.</p>
 
-        <div id="tabs-chart">
+        <c:choose>
+            <c:when test="${model.analysisStatus.functionalAnalysisTab.goSectionDisabled}">
+                <b>No data available</b>
+            </c:when>
+            <c:otherwise>
+                <div id="tabs-chart">
 
-                <%--Tabs--%>
-            <ul>
-                <li class="selector_tab">Switch view:</li>
-                    <%--<li><a href="#go-terms-table" title="Table view"><span class="ico-table"></span></a></li>--%>
-                <li><a href="#go-terms-pie" title="Pie chart view"><span class="ico-pie"></span></a></li>
-                <li><a href="#go-terms-bar" title="Bar chart view"><span class="ico-barh"></span></a></li>
-                    <%--<li><a href="#go-terms-col" title="Stacked column chart view"><span class="ico-col"></span></a></li>--%>
-                    <%--<li><a href="#go-terms-Krona" title="Krona interactive chart view"><span class="ico-krona"></span></a></li>--%>
-                    <%--<li class="ico-downl"><a class="icon icon-functional" data-icon="=" href="#download" title="Download image/table"></a></li>--%>
-            </ul>
+                        <%--Tabs--%>
+                    <ul>
+                        <li class="selector_tab">Switch view:</li>
+                            <%--<li><a href="#go-terms-table" title="Table view"><span class="ico-table"></span></a></li>--%>
+                        <li><a href="#go-terms-pie" title="Pie chart view"><span class="ico-pie"></span></a></li>
+                        <li><a href="#go-terms-bar" title="Bar chart view"><span class="ico-barh"></span></a></li>
+                            <%--<li><a href="#go-terms-col" title="Stacked column chart view"><span class="ico-col"></span></a></li>--%>
+                            <%--<li><a href="#go-terms-Krona" title="Krona interactive chart view"><span class="ico-krona"></span></a></li>--%>
+                            <%--<li class="ico-downl"><a class="icon icon-functional" data-icon="=" href="#download" title="Download image/table"></a></li>--%>
+                    </ul>
 
 
-            <div id="go-terms-bar">
-                <div class="go-chart">
-                    <div id="func_chart_bar_go_bp"></div>
-                    <div id="func_chart_bar_go_mf"></div>
-                    <div id="func_chart_bar_go_cc"></div>
+                    <div id="go-terms-bar">
+                        <div class="go-chart">
+                            <div id="func_chart_bar_go_bp"></div>
+                            <div id="func_chart_bar_go_mf"></div>
+                            <div id="func_chart_bar_go_cc"></div>
+                        </div>
+                    </div>
+
+                    <div id="go-terms-pie">
+                        <div class="go-chart">
+                            <div id="func_chart_pie_go_bp"></div>
+                            <div id="func_chart_pie_go_mf"></div>
+                            <div id="func_chart_pie_go_cc"></div>
+                        </div>
+                    </div>
+
                 </div>
-            </div>
-
-            <div id="go-terms-pie">
-                <div class="go-chart">
-                    <div id="func_chart_pie_go_bp"></div>
-                    <div id="func_chart_pie_go_mf"></div>
-                    <div id="func_chart_pie_go_cc"></div>
-                </div>
-            </div>
-
-        </div>
+            </c:otherwise>
+        </c:choose>
 
     </div>
 
@@ -572,12 +594,10 @@
 
 <%--script for tabs--%>
 <script>
-    <%--$( "#navtabs").tabs({ ${model.analysisStatus.disabledAttribute} });--%>
-    $("#navtabs").tabs({});
+    $("#navtabs").tabs({${model.analysisStatus.disabledOption}});
     $("#interpro-chart").tabs();
-    //    $( "#interpro-chart" ).tabs({ disabled: [1,2,3,4], selected: 0 });
     $("#tabs-chart").tabs({ selected:1  });
-    $("#tabs-taxchart").tabs({ disabled:[5], selected:0 });
+    $("#tabs-taxchart").tabs({${model.analysisStatus.taxonomicAnalysisTab.tabsOptions}});
 
     // fix the auto-scrolling issue when linking from homepage using htag
     setTimeout(function () {

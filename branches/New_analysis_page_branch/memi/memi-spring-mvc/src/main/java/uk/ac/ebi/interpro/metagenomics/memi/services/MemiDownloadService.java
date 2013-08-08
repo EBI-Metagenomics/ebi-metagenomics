@@ -10,8 +10,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.EngineeredSample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.EnvironmentSample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.HostSample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
-import uk.ac.ebi.interpro.metagenomics.memi.tools.MemiTools;
-import uk.ac.ebi.interpro.metagenomics.memi.tools.StreamCopyUtil;
+import uk.ac.ebi.interpro.metagenomics.memi.core.tools.StreamCopyUtil;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletOutputStream;

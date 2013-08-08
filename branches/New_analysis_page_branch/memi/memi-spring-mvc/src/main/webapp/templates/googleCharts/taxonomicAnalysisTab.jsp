@@ -114,7 +114,6 @@
             'legend':{position:'right', fontSize:10},
             'chartArea':{left:10, top:30, width:"100%", height:"100%"},
             'pieSliceBorderColor':'none'
-            <%--'sliceVisibilityThreshold':${model.taxonomyAnalysisResult.sliceVisibilityThreshold}--%>
         };
 
         var phylumPieChart = new google.visualization.PieChart(document.getElementById('tax_chart_pie_phy'));

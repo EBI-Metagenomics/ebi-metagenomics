@@ -11,7 +11,7 @@
     <!--</bean>-->
 
     <bean id="customizedExceptionHandler"
-          class="uk.ac.ebi.interpro.metagenomics.memi.basic.CustomizedExceptionResolver">
+          class="uk.ac.ebi.interpro.metagenomics.memi.core.CustomizedExceptionResolver">
         <property name="exceptionMappings">
             <props>
                 <prop key="org.springframework.web.bind.MissingServletRequestParameterException">

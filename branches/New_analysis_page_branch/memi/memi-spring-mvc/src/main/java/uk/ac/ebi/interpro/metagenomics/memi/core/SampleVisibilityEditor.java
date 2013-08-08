@@ -1,8 +1,8 @@
-package uk.ac.ebi.interpro.metagenomics.memi.basic;
+package uk.ac.ebi.interpro.metagenomics.memi.core;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import uk.ac.ebi.interpro.metagenomics.memi.forms.StudyFilter;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.SampleFilter;
 
 import java.beans.PropertyEditorSupport;
 
@@ -14,8 +14,8 @@ import java.beans.PropertyEditorSupport;
  * @version $Id$
  * @since 1.0-SNAPSHOT
  */
-public class StudyVisibilityEditor extends PropertyEditorSupport {
-    private final static Log log = LogFactory.getLog(StudyVisibilityEditor.class);
+public class SampleVisibilityEditor extends PropertyEditorSupport {
+    private final static Log log = LogFactory.getLog(SampleVisibilityEditor.class);
 
     @Override
     public void setAsText(String text) {
@@ -24,13 +24,13 @@ public class StudyVisibilityEditor extends PropertyEditorSupport {
             text = text.toUpperCase();
         }
 
-        StudyFilter.StudyVisibility vis;
+        SampleFilter.SampleVisibility vis;
 
         try {
-            vis = StudyFilter.StudyVisibility.valueOf(text);
+            vis = SampleFilter.SampleVisibility.valueOf(text);
             setValue(vis);
         } catch (Exception e) {
-            log.warn("Could not find any study type value for name: " + text);
+            log.warn("Could not find any sample visibility value for name: " + text);
         }
     }
 

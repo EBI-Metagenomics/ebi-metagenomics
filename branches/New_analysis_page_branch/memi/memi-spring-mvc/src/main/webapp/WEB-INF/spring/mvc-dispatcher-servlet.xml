@@ -17,6 +17,7 @@
     <import resource="session-manager-context.xml"/>
     <import resource="exception-handling-context.xml"/>
     <import resource="downloadable-files-context.xml"/>
+    <import resource="result-files-context.xml"/>
 
     <!-- Configures the @Controller programming spring_model -->
     <mvc:annotation-driven/>

@@ -1,4 +1,4 @@
-package uk.ac.ebi.interpro.metagenomics.memi.tools;
+package uk.ac.ebi.interpro.metagenomics.memi.core.tools;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -100,5 +100,13 @@ public class MemiTools {
         // Close the input stream and return bytes
         is.close();
         return bytes;
+    }
+
+
+    public static void addIndex(StringBuilder indexes, int index) {
+        if (indexes.length() > 0) {
+            indexes.append(",");
+        }
+        indexes.append(index);
     }
 }

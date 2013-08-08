@@ -3,8 +3,8 @@ package uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder;
 import au.com.bytecode.opencsv.CSVReader;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer;
-import uk.ac.ebi.interpro.metagenomics.memi.basic.comparators.PublicationComparator;
+import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
+import uk.ac.ebi.interpro.metagenomics.memi.core.comparators.PublicationComparator;
 import uk.ac.ebi.interpro.metagenomics.memi.googlechart.GoogleChartFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgFile;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgSampleAnnotation;
@@ -13,9 +13,12 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.HostSample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Publication;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.PublicationType;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
+import uk.ac.ebi.interpro.metagenomics.memi.services.FileExistenceChecker;
+import uk.ac.ebi.interpro.metagenomics.memi.services.FileObjectBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.*;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.AnalysisStatus;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.DownloadSection;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.*;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.tabActivation.FunctionalAnalysisTab;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.tabActivation.TaxonomicAnalysisTab;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
 
 import java.io.File;
@@ -62,6 +65,10 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
 
     private List<Publication> relatedPublications;
 
+    private List<SequenceFileDefinition> sequenceFileDefinitions;
+
+    private List<FunctionalAnalysisFileDefinition> functionalAnalysisFileDefinitions;
+
 
     public SampleViewModelBuilder(SessionManager sessionMgr,
                                   Sample sample,
@@ -72,7 +79,9 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
                                   MemiPropertyContainer propertyContainer,
                                   SampleViewModel.ExperimentType experimentType,
                                   final DownloadSection downloadSection,
-                                  List<EmgSampleAnnotation> sampleAnnotations) {
+                                  List<EmgSampleAnnotation> sampleAnnotations,
+                                  List<SequenceFileDefinition> sequenceFileDefinitions,
+                                  List<FunctionalAnalysisFileDefinition> functionalAnalysisFileDefinitions) {
         super(sessionMgr);
         this.sample = sample;
         this.pageTitle = pageTitle;
@@ -83,6 +92,8 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
         this.experimentType = experimentType;
         this.downloadSection = downloadSection;
         this.sampleAnnotations = sampleAnnotations;
+        this.sequenceFileDefinitions = sequenceFileDefinitions;
+        this.functionalAnalysisFileDefinitions = functionalAnalysisFileDefinitions;
         //
         this.relatedLinks = new ArrayList<Publication>();
         this.relatedPublications = new ArrayList<Publication>();
@@ -147,7 +158,6 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
 
     private AnalysisStatus getAnalysisStatus() {
         boolean taxonomyTabDisabled = false;
-        boolean qualityControlTabDisabled = false;
         boolean functionTabDisabled = false;
         //Check completeness(existence) of taxonomy result files
         File kronaFile = new File(resultFilesDirectoryPath + propertyContainer.getResultFileName(MemiPropertyContainer.FileNameIdentifier.TAXONOMY_CHART_FULL_VERSION));
@@ -167,7 +177,6 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
         File summaryPNGFile = new File(resultFilesDirectoryPath + '/' + directoryName + "_summary.png");
         if (!summaryPNGFile.exists()) {
             log.warn("Deactivating quality control tab because file " + summaryPNGFile.getAbsolutePath() + " doesn't exist!");
-            qualityControlTabDisabled = true;
         }
         //Check completeness(existence) of function analysis result files
         File summaryIPRFile = new File(resultFilesDirectoryPath + '/' + directoryName + EmgFile.ResultFileType.IPR.getFileNameEnd());
@@ -182,7 +191,38 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
                 functionTabDisabled = true;
             }
         }
-        return new AnalysisStatus(taxonomyTabDisabled, qualityControlTabDisabled, functionTabDisabled);
+        //
+        //Set qualityControlTab value
+        //If one of the quality control files does exist the tab gets activated
+        boolean qualityControlTabDisabled = true;
+        for (SequenceFileDefinition fileDefinition : sequenceFileDefinitions) {
+            File fileObject = FileObjectBuilder.createFileObject(emgFile, propertyContainer, fileDefinition);
+            boolean doesExist = FileExistenceChecker.checkFileExistence(fileObject);
+            if (doesExist) {
+                qualityControlTabDisabled = false;
+                break;
+            }
+        }
+        //
+        //Set functional analysis tab object
+        boolean isInterProMatchSectionDisabled = true;
+        boolean isGoSectionDisabled = true;
+        for (FunctionalAnalysisFileDefinition fileDefinition : functionalAnalysisFileDefinitions) {
+            File fileObject = FileObjectBuilder.createFileObject(emgFile, propertyContainer, fileDefinition);
+            boolean doesExist = FileExistenceChecker.checkFileExistence(fileObject);
+            if (doesExist) {
+                if (fileDefinition.getIdentifier().equalsIgnoreCase(FileDefinitionId.INTERPROSCAN_MATCHES_FILE.toString())) {
+                    isInterProMatchSectionDisabled = false;
+                } else if (fileDefinition.getIdentifier().equalsIgnoreCase(FileDefinitionId.GO_SLIM_FILE.toString())) {
+                    isGoSectionDisabled = false;
+                }
+            }
+        }
+
+        return new AnalysisStatus(
+                new TaxonomicAnalysisTab(false, false, false, false),
+                qualityControlTabDisabled,
+                new FunctionalAnalysisTab(isInterProMatchSectionDisabled, isGoSectionDisabled));
     }
 
     /**
@@ -191,6 +231,7 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
      * @param pathToAnalysisDirectory
      * @return
      */
+
     private TaxonomyAnalysisResult loadTaxonomyDataFromCSV(final String pathToAnalysisDirectory) {
         TaxonomyAnalysisResult taxonomyAnalysisResult = new TaxonomyAnalysisResult();
         final List<TaxonomyData> taxonomyDataSet = new ArrayList<TaxonomyData>();

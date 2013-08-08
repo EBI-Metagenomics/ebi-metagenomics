@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Required;
  * @author Maxim Scheremetjew
  */
 public abstract class DownloadableFileDefinition implements ResultFileDefinition {
+    private String identifier;
+
     private String description;
 
     /**
@@ -28,6 +30,14 @@ public abstract class DownloadableFileDefinition implements ResultFileDefinition
     private String linkURL;
 
     private int order;
+
+    public String getIdentifier() {
+        return identifier;
+    }
+
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
+    }
 
     public String getDescription() {
         return description;

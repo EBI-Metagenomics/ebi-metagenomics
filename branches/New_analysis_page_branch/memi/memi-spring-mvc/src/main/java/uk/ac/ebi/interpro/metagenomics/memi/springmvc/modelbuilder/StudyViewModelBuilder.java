@@ -2,8 +2,8 @@ package uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer;
-import uk.ac.ebi.interpro.metagenomics.memi.basic.comparators.PublicationComparator;
+import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
+import uk.ac.ebi.interpro.metagenomics.memi.core.comparators.PublicationComparator;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.apro.SubmitterDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
