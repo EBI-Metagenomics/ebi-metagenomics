@@ -28,7 +28,7 @@
             <c:when test="${addComma}">,
             </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise>
             </c:choose>
-            ['<div title="${taxonomyData.phylum} color code" class="chart_color_leg" style="background-color: #${taxonomyData.colorCode}; margin: 4px 6px 0 2px;"></div> ${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}
+            ['<div title="${taxonomyData.phylum}" class="_cc" style="background-color: #${taxonomyData.colorCode};"></div> ${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}
 //                , 0 , 0
 ]
             </c:forEach>
@@ -59,9 +59,7 @@
         var taxStringFilter = new google.visualization.ControlWrapper({
             'controlType':'StringFilter',
             'containerId':'tax_table_filter',
-            'options':{ 'matchType':'any',
-                'filterColumnIndex':'1, 2',
-                'ui':{'label':'Filter', 'labelSeparator':':', 'ui.labelStacking':'vertical', 'ui.cssClass':'custom_col_search'}
+            'options':{'matchType':'any', 'filterColumnIndex':'0', 'ui':{'label':'Filter', 'labelSeparator':':', 'ui.labelStacking':'vertical', 'ui.cssClass':'custom_col_search'}
             }
         });
 
@@ -116,8 +114,40 @@
             'pieSliceBorderColor':'none'
         };
 
-        var phylumPieChart = new google.visualization.PieChart(document.getElementById('tax_chart_pie_phy'));
+          // Taxonomy top phylum table 2
+        var taxMatchesData2 = new google.visualization.DataTable();
+        taxMatchesData2.addColumn('string', 'Phylum');
+        taxMatchesData2.addColumn('string', 'Domain');
+        taxMatchesData2.addColumn('number', 'Unique OTUs');
+        taxMatchesData2.addColumn('number', '%');
+        taxMatchesData2.addRows([
+            <c:set var="addComma" value="false"/>
+            <c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResult.taxonomyDataSet}" varStatus="status">
+            <c:choose>
+            <c:when test="${addComma}">,
+            </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise>
+            </c:choose>
+            ['<div title="${taxonomyData.phylum}" class="_cc" style="background-color: #${taxonomyData.colorCode}; margin: 4px 6px 0 2px;"></div> ${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}
+]
+            </c:forEach>
+        ]);
+         var phylumPieChart = new google.visualization.PieChart(document.getElementById('tax_chart_pie_phy'));
         phylumPieChart.draw(phylumBarChartPieChartData, options);
+
+        var table = new google.visualization.Table(document.getElementById('table_div'));
+           table.draw(taxMatchesData2, { allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false});
+
+        // When the table is selected, update the phylumPieChart.
+          google.visualization.events.addListener(table, 'select', function() {
+              phylumPieChart.setSelection(table.getSelection());
+          });
+
+          // When the phylumPieChart is selected, update the table visualization.
+          google.visualization.events.addListener(phylumPieChart, 'select', function() {
+            table.setSelection(phylumPieChart.getSelection());
+          });
+
+
     }
 
     function drawPhylumBarChart() {
