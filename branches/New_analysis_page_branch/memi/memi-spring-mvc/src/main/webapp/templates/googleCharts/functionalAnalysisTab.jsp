@@ -33,7 +33,7 @@ function drawVisualization() {
         </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise>
         </c:choose>
         //  !important TEMP solution - sorting order doesn't work properly for entry name when using HTML tags
-        ['<div title="${entry.entryDescription} color code" class="chart_color_leg" style="background-color: <c:choose><c:when test="${status.index>9}">#ccc</c:when><c:otherwise><c:out value="${colorCodeList[status.index]}"/></c:otherwise></c:choose>; margin: 4px 6px 0 2px;"></div> <a title="${entry.entryDescription}" target="_blank" href="http://www.ebi.ac.uk/interpro/entry/${entry.entryID}">${entry.entryDescription}</a>', '${entry.entryID}', ${entry.numOfEntryHits}]
+        ['<div title="${entry.entryDescription}" class="_cc" style="background-color:<c:choose><c:when test="${status.index>9}">#b9b9b9</c:when><c:otherwise><c:out value="${colorCodeList[status.index]}"/></c:otherwise></c:choose>; margin: 4px 6px 0 2px;"></div> <a title="${entry.entryDescription}" target="_blank" href="http://www.ebi.ac.uk/interpro/entry/${entry.entryID}">${entry.entryDescription}</a>', '${entry.entryID}', ${entry.numOfEntryHits}]
         </c:forEach>
     ]);
 
@@ -104,10 +104,10 @@ function drawInterProMatchesPieChart() {
             <c:when test="${addComma}">,
             </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise>
             </c:choose>
-                <c:choose><c:when test="${status.index>9}">'#ccc'</c:when><c:otherwise>'<c:out value="${colorCodeList[status.index]}"/>'</c:otherwise></c:choose>
+                <c:choose><c:when test="${status.index>9}">'#b9b9b9'</c:when><c:otherwise>'<c:out value="${colorCodeList[status.index]}"/>'</c:otherwise></c:choose>
             </c:forEach>
         ],
-        height:240, legend:{position:'right', fontSize:10}, chartArea:{left:0, top:30, width:"42%", height:"100%"},
+        height:240, pieSliceText:'none', legend:{position:'right', fontSize:10}, chartArea:{left:0, top:30, width:"42%", height:"100%"},
         pieSliceBorderColor:'none'};
 
     // Instantiate and draw our chart, passing in some options.
