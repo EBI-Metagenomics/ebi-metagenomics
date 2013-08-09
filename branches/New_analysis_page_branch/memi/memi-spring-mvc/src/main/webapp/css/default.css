@@ -1707,7 +1707,7 @@ ul.color_legend {list-style-type: square; list-style-position:inside;}
 .expandertable {float:left; margin-top: -32px; margin-left: 833px; z-index: 1;  position: relative;}
 #toolbar_div {display: block; float:left;}
 
-.chart_color_leg {width:6px; height:6px; display:block;float: left;}
+.google-visualization-table-table ._cc {margin: 4px 6px 0 2px; width:6px; height:6px; display:inline-block;}
 
 /*GOOGLE TOOLBAR*/
 .sample_ana .google-visualization-toolbar-triangle {display: none;}
