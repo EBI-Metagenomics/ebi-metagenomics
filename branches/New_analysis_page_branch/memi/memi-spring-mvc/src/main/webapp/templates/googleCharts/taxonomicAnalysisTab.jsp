@@ -112,6 +112,7 @@
             'legend':{position:'right', fontSize:10},
             'chartArea':{left:10, top:30, width:"100%", height:"100%"},
             'pieSliceBorderColor':'none'
+            <c:if test="${fn:length(model.taxonomyAnalysisResult.taxonomyDataSet)>10}">,'sliceVisibilityThreshold':${model.taxonomyAnalysisResult.sliceVisibilityThresholdNumerator} / ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator}</c:if>
         };
 
           // Taxonomy top phylum table 2

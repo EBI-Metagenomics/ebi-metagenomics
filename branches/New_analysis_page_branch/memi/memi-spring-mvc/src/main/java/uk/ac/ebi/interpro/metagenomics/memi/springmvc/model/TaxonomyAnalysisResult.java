@@ -21,6 +21,10 @@ public class TaxonomyAnalysisResult extends AnalysisResult {
 
     private BigDecimal sliceVisibilityThreshold;
 
+    private int sliceVisibilityThresholdNumerator;
+
+    private int sliceVisibilityThresholdDenominator;
+
     public TaxonomyAnalysisResult() {
         this(new ArrayList<TaxonomyData>());
     }
@@ -106,10 +110,12 @@ public class TaxonomyAnalysisResult extends AnalysisResult {
         }
         setDomainComposition(new DomainComposition(domainMap));
         setUniqueUTUsTotalCount(uniqueUTUsCounter);
+        setSliceVisibilityThresholdDenominator(uniqueUTUsCounter);
         if (uniqueUTUsCounter > 0) {
             BigDecimal sliceVisibilityThreshold = new BigDecimal(0f);
             if (taxonomyDataSet.size() > 10) {
                 int numberOfHits = taxonomyDataSet.get(9).getNumberOfHits();
+                setSliceVisibilityThresholdNumerator(numberOfHits);
                 sliceVisibilityThreshold = new BigDecimal((double) numberOfHits / (double) getUniqueUTUsTotalCount());
             }
             setSliceVisibilityThreshold(sliceVisibilityThreshold);
@@ -140,4 +146,20 @@ public class TaxonomyAnalysisResult extends AnalysisResult {
             return o2.getNumberOfHits() - o1.getNumberOfHits();
         }
     };
+
+    public int getSliceVisibilityThresholdNumerator() {
+        return sliceVisibilityThresholdNumerator;
+    }
+
+    public void setSliceVisibilityThresholdNumerator(int sliceVisibilityThresholdNumerator) {
+        this.sliceVisibilityThresholdNumerator = sliceVisibilityThresholdNumerator;
+    }
+
+    public int getSliceVisibilityThresholdDenominator() {
+        return sliceVisibilityThresholdDenominator;
+    }
+
+    public void setSliceVisibilityThresholdDenominator(int sliceVisibilityThresholdDenominator) {
+        this.sliceVisibilityThresholdDenominator = sliceVisibilityThresholdDenominator;
+    }
 }
