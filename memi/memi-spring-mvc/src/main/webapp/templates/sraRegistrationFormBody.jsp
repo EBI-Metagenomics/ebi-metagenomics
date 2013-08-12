@@ -64,8 +64,8 @@
                                 code="registrationForm.inputField.centreAcronym.label"/></label><br/>
                         <form:input id="centreAcronym" path="centreAcronym" cssErrorClass="error"
                                     title="Please enter your centre acronym"/>
-                                <%--<span class="form_help"><spring:message--%>
-                                        <%--code="registrationForm.inputField.centreAcronym.help"/></span>--%>
+                                <span class="form_help"><spring:message
+                                        code="registrationForm.inputField.centreAcronym.help"/></span>
                         <form:errors path="centreAcronym" cssClass="error"/></div>
                         <%--Postal address input field--%>
                     <div class="form_row">
