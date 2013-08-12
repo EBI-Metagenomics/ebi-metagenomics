@@ -167,11 +167,13 @@ public class SubmissionController extends CheckLoginController implements IContr
         model.put("institute", registrationForm.getInstitute());
         model.put("country", registrationForm.getCountry());
         model.put("department", registrationForm.getDepartment());
+        model.put("centreAcronym", registrationForm.getCentreAcronym());
         model.put("name", registrationForm.getFirstName() + " " + registrationForm.getLastName());
         model.put("email", registrationForm.getEmail());
         model.put("summary", registrationForm.getDataDesc());
         model.put("title", registrationForm.getSubTitle());
         model.put("releaseDate", registrationForm.getReleaseDate());
+        model.put("telephoneNumber", registrationForm.getTelephoneNumber());
 
         return VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "sra-registration-email.vm", model);
     }
@@ -204,22 +206,20 @@ public class SubmissionController extends CheckLoginController implements IContr
         if (submitter != null) {
             log.info("Pre fill the SRA registration form with submitter details.");
             String email = submitter.getEmailAddress();
-            //trim email address
-            if (email != null)
-                email.trim();
+            if (email != null) {
+                email = email.trim();
+            }
             registrationForm.setEmail(email);
             //
             String firstName = submitter.getFirstName();
-            //trim email address
             if (firstName != null) {
-                firstName.trim();
+                firstName = firstName.trim();
             }
-            //
             registrationForm.setFirstName(firstName);
+            //
             String lastName = submitter.getSurname();
-            //trim last name
             if (lastName != null) {
-                lastName.trim();
+                lastName = lastName.trim();
             }
             registrationForm.setLastName(lastName);
             //
@@ -228,6 +228,12 @@ public class SubmissionController extends CheckLoginController implements IContr
             }
             //
             registrationForm.setCountry(submitter.getCountry());
+            //
+            String telNo = submitter.getTelNO();
+            if (telNo != null) {
+                telNo = telNo.trim();
+            }
+            registrationForm.setTelephoneNumber(telNo);
         } else {
             log.info("No submitter attached to the session. Therefore no submitter details to pre fill the registration form.");
         }
