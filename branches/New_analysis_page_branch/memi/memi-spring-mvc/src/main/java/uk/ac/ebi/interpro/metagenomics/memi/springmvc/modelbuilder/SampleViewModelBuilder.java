@@ -69,6 +69,8 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
 
     private List<FunctionalAnalysisFileDefinition> functionalAnalysisFileDefinitions;
 
+    private List<ResultFileDefinitionImpl> taxonomicAnalysisFileDefinitions;
+
 
     public SampleViewModelBuilder(SessionManager sessionMgr,
                                   Sample sample,
@@ -81,7 +83,8 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
                                   final DownloadSection downloadSection,
                                   List<EmgSampleAnnotation> sampleAnnotations,
                                   List<SequenceFileDefinition> sequenceFileDefinitions,
-                                  List<FunctionalAnalysisFileDefinition> functionalAnalysisFileDefinitions) {
+                                  List<FunctionalAnalysisFileDefinition> functionalAnalysisFileDefinitions,
+                                  List<ResultFileDefinitionImpl> taxonomicAnalysisFileDefinitions) {
         super(sessionMgr);
         this.sample = sample;
         this.pageTitle = pageTitle;
@@ -94,6 +97,7 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
         this.sampleAnnotations = sampleAnnotations;
         this.sequenceFileDefinitions = sequenceFileDefinitions;
         this.functionalAnalysisFileDefinitions = functionalAnalysisFileDefinitions;
+        this.taxonomicAnalysisFileDefinitions = taxonomicAnalysisFileDefinitions;
         //
         this.relatedLinks = new ArrayList<Publication>();
         this.relatedPublications = new ArrayList<Publication>();
@@ -157,41 +161,6 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
     }
 
     private AnalysisStatus getAnalysisStatus() {
-        boolean taxonomyTabDisabled = false;
-        boolean functionTabDisabled = false;
-        //Check completeness(existence) of taxonomy result files
-        File kronaFile = new File(resultFilesDirectoryPath + propertyContainer.getResultFileName(MemiPropertyContainer.FileNameIdentifier.TAXONOMY_CHART_FULL_VERSION));
-        if (!kronaFile.exists()) {
-            log.warn("Deactivating taxonomy result tab because file " + kronaFile.getAbsolutePath() + " doesn't exist!");
-            taxonomyTabDisabled = true;
-        }
-        if (!taxonomyTabDisabled) {
-            File phylumFile = new File(resultFilesDirectoryPath + propertyContainer.getResultFileName(MemiPropertyContainer.FileNameIdentifier.PHYLUM_COUNTS));
-            if (!phylumFile.exists()) {
-                log.warn("Deactivating taxonomy result tab because file " + phylumFile.getAbsolutePath() + " doesn't exist!");
-                taxonomyTabDisabled = true;
-            }
-        }
-        //Check completeness(existence) of quality control result files
-        String directoryName = emgFile.getFileIDInUpperCase().replace('.', '_');
-        File summaryPNGFile = new File(resultFilesDirectoryPath + '/' + directoryName + "_summary.png");
-        if (!summaryPNGFile.exists()) {
-            log.warn("Deactivating quality control tab because file " + summaryPNGFile.getAbsolutePath() + " doesn't exist!");
-        }
-        //Check completeness(existence) of function analysis result files
-        File summaryIPRFile = new File(resultFilesDirectoryPath + '/' + directoryName + EmgFile.ResultFileType.IPR.getFileNameEnd());
-        if (!summaryIPRFile.exists()) {
-            log.warn("Deactivating functional analysis result tab because file " + summaryIPRFile.getAbsolutePath() + " doesn't exist!");
-            functionTabDisabled = true;
-        }
-        if (!functionTabDisabled) {
-            File googleImageFile = new File(resultFilesDirectoryPath + '/' + directoryName + "_summary_biological_process.png");
-            if (!googleImageFile.exists()) {
-                log.warn("Deactivating functional analysis result tab because file " + googleImageFile.getAbsolutePath() + " doesn't exist!");
-                functionTabDisabled = true;
-            }
-        }
-        //
         //Set qualityControlTab value
         //If one of the quality control files does exist the tab gets activated
         boolean qualityControlTabDisabled = true;
@@ -218,9 +187,27 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
                 }
             }
         }
-
+        //
+        //Set taxonomic analysis tab object
+        boolean isPieChartTabDisabled = true;
+        boolean isBarChartTabDisabled = true;
+        boolean isStackChartTabDisabled = true;
+        boolean isKronaTabDisabled = true;
+        for (ResultFileDefinitionImpl fileDefinition : taxonomicAnalysisFileDefinitions) {
+            File fileObject = FileObjectBuilder.createFileObject(emgFile, propertyContainer, fileDefinition);
+            boolean doesExist = FileExistenceChecker.checkFileExistence(fileObject);
+            if (doesExist) {
+                if (fileDefinition.getIdentifier().equalsIgnoreCase(FileDefinitionId.KRONA_HTML_FILE.toString())) {
+                    isKronaTabDisabled = false;
+                } else if (fileDefinition.getIdentifier().equalsIgnoreCase(FileDefinitionId.KINGDOM_COUNTS_FILE.toString())) {
+                    isPieChartTabDisabled = false;
+                    isBarChartTabDisabled = false;
+                    isStackChartTabDisabled = false;
+                }
+            }
+        }
         return new AnalysisStatus(
-                new TaxonomicAnalysisTab(false, false, false, false),
+                new TaxonomicAnalysisTab(isPieChartTabDisabled, isBarChartTabDisabled, isStackChartTabDisabled, isKronaTabDisabled),
                 qualityControlTabDisabled,
                 new FunctionalAnalysisTab(isInterProMatchSectionDisabled, isGoSectionDisabled));
     }

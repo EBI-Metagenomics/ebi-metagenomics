@@ -27,5 +27,14 @@
         </constructor-arg>
     </bean>
 
+    <bean name="taxonomicAnalysisFileDefinitions" class="java.util.ArrayList">
+        <constructor-arg>
+            <list>
+                <ref bean="kingdomCountsFile"/>
+                <ref bean="kronaHtmlFile"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
 
 </beans>

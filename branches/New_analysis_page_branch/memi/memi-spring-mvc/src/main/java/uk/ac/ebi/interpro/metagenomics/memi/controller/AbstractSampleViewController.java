@@ -58,6 +58,9 @@ public class AbstractSampleViewController extends SecuredAbstractController<Samp
     @Resource(name = "functionalAnalysisFileDefinitions")
     private List<FunctionalAnalysisFileDefinition> functionalAnalysisFileDefinitions;
 
+    @Resource(name = "taxonomicAnalysisFileDefinitions")
+    private List<ResultFileDefinitionImpl> taxonomicAnalysisFileDefinitions;
+
     ISampleStudyDAO<Sample> getDAO() {
         return sampleDAO;
     }
@@ -124,7 +127,8 @@ public class AbstractSampleViewController extends SecuredAbstractController<Samp
                 buildDownloadSection(sample.getSampleId(), sample.isPublic(), fileDefinitionsMap, emgFile),
                 sampleAnnotations,
                 sequenceFileDefinitions,
-                functionalAnalysisFileDefinitions);
+                functionalAnalysisFileDefinitions,
+                taxonomicAnalysisFileDefinitions);
         final SampleViewModel sampleModel = builder.getModel();
         //End
 

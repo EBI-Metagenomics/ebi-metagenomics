@@ -4,7 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgFile;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.ResultFileDefinition;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.IResultFileDefinition;
 
 import java.io.File;
 
@@ -15,7 +15,7 @@ public final class FileObjectBuilder {
     //TODO: Describe how some file names are generated
     public static File createFileObject(final EmgFile emgFile,
                                         final MemiPropertyContainer propertyContainer,
-                                        final ResultFileDefinition resultFile) {
+                                        final IResultFileDefinition resultFile) {
         //Get directory name + root path
         final String directoryName = emgFile.getFileIDInUpperCase().replace('.', '_');
         final String rootDirPathName = propertyContainer.getPathToAnalysisDirectory() + directoryName;

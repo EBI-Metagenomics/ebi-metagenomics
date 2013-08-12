@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Required;
 /**
  * @author Maxim Scheremetjew
  */
-public abstract class DownloadableFileDefinition implements ResultFileDefinition {
+public abstract class DownloadableFileDefinition implements IResultFileDefinition {
     private String identifier;
 
     private String description;
