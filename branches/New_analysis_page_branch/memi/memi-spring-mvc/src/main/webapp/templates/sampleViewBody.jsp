@@ -288,8 +288,16 @@
             <%--<h3>Taxonomy analysis</h3>--%>
         <h3>Top taxonomy Hits</h3>
 
-        <div id="tabs-taxchart">
 
+
+        <div id="tabs-taxchart">
+            <%--<c:choose>--%>
+            <%--<c:when test="${model.analysisStatus.taxonomicAnalysisTab.isPieChartTabDisabled}">--%>
+                <%--&lt;%&ndash;&& model.analysisStatus.taxonomicAnalysisTab.isBarChartTabDisabled&ndash;%&gt;--%>
+                <%--&lt;%&ndash;&& model.analysisStatus.taxonomicAnalysisTab.isStackChartTabDisabled && model.analysisStatus.taxonomicAnalysisTab.isKronaTabDisabled&ndash;%&gt;--%>
+                <%--<b>No data available</b>--%>
+            <%--</c:when>--%>
+            <%--<c:otherwise>--%>
                 <%--Tabs--%>
             <ul>
                 <li class="selector_tab">Switch view:</li>
@@ -352,8 +360,10 @@
                         type="text/html"></object>
             </div>
 
-
+            <%--</c:otherwise>--%>
+            <%--</c:choose>--%>
         </div>
+
     </div>
 </div>
 
@@ -488,46 +498,40 @@
 
         <%--<h3>Submitted nucleotide data</h3>--%>
     <c:choose>
-    <c:when test="${not empty model.sample.analysisCompleted}">
+        <c:when test="${not empty model.sample.analysisCompleted || !model.analysisStatus.qualityControlTabDisabled}">
+            <div style="display:block; overflow: auto;">
+                <c:url var="statsImage" value="/getImage" scope="request">
+                    <c:param name="imageName" value="_summary.png"/>
+                    <c:param name="imageType" value="PNG"/>
+                    <c:param name="dir" value="${model.emgFile.fileID}"/>
+                </c:url>
+                <div style="float:left; margin-left: 9px;"><img src="<c:out value="${statsImage}"/>"/></div>
 
-        <%--<h3>Quality control</h3>--%>
+                <ul style="list-style-type: none; padding-top:0; margin-top:0; line-height: 2;">
+                    <c:forEach var="downloadLink" items="${model.downloadSection.seqDataDownloadLinks}" varStatus="loop">
+                        <li>
+                            <c:choose>
+                                <c:when test="${downloadLink.externalLink}">
+                                    <a href="${downloadLink.linkURL}"
+                                       title="${downloadLink.linkTitle}">${downloadLink.linkText}</a>
+                                </c:when>
+                                <c:otherwise>
+                                    <a href="<c:url value="${baseURL}/${downloadLink.linkURL}"/>"
+                                       title="${downloadLink.linkTitle}">
+                                            ${downloadLink.linkText}</a><span
+                                        class="list_date"> - ${downloadLink.fileSize}</span>
+                                </c:otherwise>
+                            </c:choose>
+                        </li>
+                    </c:forEach>
+                </ul>
 
-    <div style="display:block; overflow: auto;">
-        <c:url var="statsImage" value="/getImage" scope="request">
-            <c:param name="imageName" value="_summary.png"/>
-            <c:param name="imageType" value="PNG"/>
-            <c:param name="dir" value="${model.emgFile.fileID}"/>
-        </c:url>
-        <div style="float:left; margin-left: 9px;"><img src="<c:out value="${statsImage}"/>"/></div>
-
+            </div>
         </c:when>
         <c:otherwise>
-            <h3>Data processed</h3>
-
             <p>Analysis in progress!</p>
         </c:otherwise>
-        </c:choose>
-
-        <ul style="list-style-type: none; padding-top:0; margin-top:0; line-height: 2;">
-            <c:forEach var="downloadLink" items="${model.downloadSection.seqDataDownloadLinks}" varStatus="loop">
-                <li>
-                    <c:choose>
-                        <c:when test="${downloadLink.externalLink}">
-                            <a href="${downloadLink.linkURL}"
-                               title="${downloadLink.linkTitle}">${downloadLink.linkText}</a>
-                        </c:when>
-                        <c:otherwise>
-                            <a href="<c:url value="${baseURL}/${downloadLink.linkURL}"/>"
-                               title="${downloadLink.linkTitle}">
-                                    ${downloadLink.linkText}</a><span
-                                class="list_date"> - ${downloadLink.fileSize}</span>
-                        </c:otherwise>
-                    </c:choose>
-                </li>
-            </c:forEach>
-        </ul>
-
-    </div>
+    </c:choose>
 
 </div>
 
