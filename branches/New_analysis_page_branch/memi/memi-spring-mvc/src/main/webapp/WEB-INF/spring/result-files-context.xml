@@ -7,13 +7,10 @@
 
     <import resource="file-definitions-context.xml"/>
 
-    <bean name="sequenceFileDefinitions" class="java.util.ArrayList">
+    <bean name="qualityControlFileDefinitions" class="java.util.ArrayList">
         <constructor-arg>
             <list>
-                <ref bean="maskedReadsFile"/>
-                <ref bean="pCDSFile"/>
-                <ref bean="readsWithMatchesFile"/>
-                <ref bean="readsWithoutMatchesFile"/>
+                <ref bean="qualityControlSummaryFile"/>
             </list>
         </constructor-arg>
     </bean>

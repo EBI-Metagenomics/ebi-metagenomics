@@ -65,7 +65,7 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
 
     private List<Publication> relatedPublications;
 
-    private List<SequenceFileDefinition> sequenceFileDefinitions;
+    private List<ResultFileDefinitionImpl> qualityControlFileDefinitions;
 
     private List<FunctionalAnalysisFileDefinition> functionalAnalysisFileDefinitions;
 
@@ -82,7 +82,7 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
                                   SampleViewModel.ExperimentType experimentType,
                                   final DownloadSection downloadSection,
                                   List<EmgSampleAnnotation> sampleAnnotations,
-                                  List<SequenceFileDefinition> sequenceFileDefinitions,
+                                  List<ResultFileDefinitionImpl> qualityControlFileDefinitions,
                                   List<FunctionalAnalysisFileDefinition> functionalAnalysisFileDefinitions,
                                   List<ResultFileDefinitionImpl> taxonomicAnalysisFileDefinitions) {
         super(sessionMgr);
@@ -95,7 +95,7 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
         this.experimentType = experimentType;
         this.downloadSection = downloadSection;
         this.sampleAnnotations = sampleAnnotations;
-        this.sequenceFileDefinitions = sequenceFileDefinitions;
+        this.qualityControlFileDefinitions = qualityControlFileDefinitions;
         this.functionalAnalysisFileDefinitions = functionalAnalysisFileDefinitions;
         this.taxonomicAnalysisFileDefinitions = taxonomicAnalysisFileDefinitions;
         //
@@ -116,7 +116,7 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
         buildPublicationLists();
 
         //Get analysis status
-        AnalysisStatus analysisStatus = getAnalysisStatus();
+        AnalysisStatus analysisStatus = getAnalysisStatus((sample.getAnalysisCompleted() == null ? false : true));
 
 
         if (emgFile != null) {
@@ -160,11 +160,17 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
         }
     }
 
-    private AnalysisStatus getAnalysisStatus() {
+    private AnalysisStatus getAnalysisStatus(boolean isAnalysisCompleted) {
+        if (!isAnalysisCompleted) {
+            return new AnalysisStatus(
+                    new TaxonomicAnalysisTab(true, true, true, true),
+                    true,
+                    new FunctionalAnalysisTab(true, true));
+        }
         //Set qualityControlTab value
         //If one of the quality control files does exist the tab gets activated
         boolean qualityControlTabDisabled = true;
-        for (SequenceFileDefinition fileDefinition : sequenceFileDefinitions) {
+        for (IResultFileDefinition fileDefinition : qualityControlFileDefinitions) {
             File fileObject = FileObjectBuilder.createFileObject(emgFile, propertyContainer, fileDefinition);
             boolean doesExist = FileExistenceChecker.checkFileExistence(fileObject);
             if (doesExist) {

@@ -285,19 +285,22 @@
 <div id="fragment-taxonomy">
 
     <div class="main_tab_full_content">
+        <p>These are the results from the taxonomic analysis steps of our pipeline. You can switch between
+            different views of the data using the menu of icons below (pie, bar, stacked and interactive krona
+            charts).  If you wish to download the full set of results, all files are listed under the
+            "Downloads" tab.</p>
             <%--<h3>Taxonomy analysis</h3>--%>
         <h3>Top taxonomy Hits</h3>
 
 
-
         <div id="tabs-taxchart">
-            <%--<c:choose>--%>
-            <%--<c:when test="${model.analysisStatus.taxonomicAnalysisTab.isPieChartTabDisabled}">--%>
+                <%--<c:choose>--%>
+                <%--<c:when test="${model.analysisStatus.taxonomicAnalysisTab.isPieChartTabDisabled}">--%>
                 <%--&lt;%&ndash;&& model.analysisStatus.taxonomicAnalysisTab.isBarChartTabDisabled&ndash;%&gt;--%>
                 <%--&lt;%&ndash;&& model.analysisStatus.taxonomicAnalysisTab.isStackChartTabDisabled && model.analysisStatus.taxonomicAnalysisTab.isKronaTabDisabled&ndash;%&gt;--%>
                 <%--<b>No data available</b>--%>
-            <%--</c:when>--%>
-            <%--<c:otherwise>--%>
+                <%--</c:when>--%>
+                <%--<c:otherwise>--%>
                 <%--Tabs--%>
             <ul>
                 <li class="selector_tab">Switch view:</li>
@@ -360,8 +363,8 @@
                         type="text/html"></object>
             </div>
 
-            <%--</c:otherwise>--%>
-            <%--</c:choose>--%>
+                <%--</c:otherwise>--%>
+                <%--</c:choose>--%>
         </div>
 
     </div>
@@ -370,6 +373,11 @@
 <div id="fragment-functional">
 
     <div class="main_tab_full_content">
+        <p>Functional analysis has 3 outputs: the prediction of different coding features in the original reads
+            (shown in the top bar chart); the matches of predicted protein coding sequences to the InterPro
+            database (<-link to InterPro website) and a chart of the GO terms that summarise the functional
+            content of the sample's sequences. If you wish to download the full set of results, all files are
+            listed under the "Downloads" tab.</p>
 
         <h3>InterPro match summary</h3>
 
@@ -387,7 +395,7 @@
             </div>--%>
         <c:choose>
             <c:when test="${model.analysisStatus.functionalAnalysisTab.interProMatchSectionDisabled}">
-                <b>No data available</b>
+                <b>No functional result files have been associated with this sample.</b>
             </c:when>
             <c:otherwise>
                 <div id="interpro-chart">
@@ -451,7 +459,7 @@
 
         <c:choose>
             <c:when test="${model.analysisStatus.functionalAnalysisTab.goSectionDisabled}">
-                <b>No data available</b>
+                <b>No functional result files have been associated with this sample.</b>
             </c:when>
             <c:otherwise>
                 <div id="tabs-chart">
@@ -497,8 +505,15 @@
         <%--BEGIN READS SECTION   --%>
 
         <%--<h3>Submitted nucleotide data</h3>--%>
+    <p>The chart below shows the number of sequence reads which pass each of the quality control steps we
+        have implemented in our pipeline. Note that, for paired-end data, sequence merging may have
+        occurred and so the initial number of reads may differ from what is in the ENA. For more details
+        about the data processing we employ, please see the "About" page.</p>
     <c:choose>
-        <c:when test="${not empty model.sample.analysisCompleted || !model.analysisStatus.qualityControlTabDisabled}">
+        <c:when test="${empty model.sample.analysisCompleted}">
+            <b>Analysis in progress</b>
+        </c:when>
+        <c:when test="${not empty model.sample.analysisCompleted && !model.analysisStatus.qualityControlTabDisabled}">
             <div style="display:block; overflow: auto;">
                 <c:url var="statsImage" value="/getImage" scope="request">
                     <c:param name="imageName" value="_summary.png"/>
@@ -506,30 +521,10 @@
                     <c:param name="dir" value="${model.emgFile.fileID}"/>
                 </c:url>
                 <div style="float:left; margin-left: 9px;"><img src="<c:out value="${statsImage}"/>"/></div>
-
-                <ul style="list-style-type: none; padding-top:0; margin-top:0; line-height: 2;">
-                    <c:forEach var="downloadLink" items="${model.downloadSection.seqDataDownloadLinks}" varStatus="loop">
-                        <li>
-                            <c:choose>
-                                <c:when test="${downloadLink.externalLink}">
-                                    <a href="${downloadLink.linkURL}"
-                                       title="${downloadLink.linkTitle}">${downloadLink.linkText}</a>
-                                </c:when>
-                                <c:otherwise>
-                                    <a href="<c:url value="${baseURL}/${downloadLink.linkURL}"/>"
-                                       title="${downloadLink.linkTitle}">
-                                            ${downloadLink.linkText}</a><span
-                                        class="list_date"> - ${downloadLink.fileSize}</span>
-                                </c:otherwise>
-                            </c:choose>
-                        </li>
-                    </c:forEach>
-                </ul>
-
             </div>
         </c:when>
         <c:otherwise>
-            <p>Analysis in progress!</p>
+            <p>No result files have been associated with this sample.</p>
         </c:otherwise>
     </c:choose>
 
@@ -537,30 +532,27 @@
 
 <div id="fragment-download">
 
-
-        <%--<h3>Download results</h3>--%>
-
     <div class="box-export">
+        <p>Here you can download the full set of analysis results files and the original raw sequence reads.</p>
         <h4>Sequence data</h4>
         <ul>
             <c:forEach var="downloadLink" items="${model.downloadSection.seqDataDownloadLinks}" varStatus="loop">
                 <li>
                     <c:choose>
-                        <c:when test="${downloadLink.externalLink}">
-                            <a href="${downloadLink.linkURL}"
-                               title="${downloadLink.linkTitle}">${downloadLink.linkText}</a>
+                        <c:when test="${!downloadLink.externalLink && not empty model.sample.analysisCompleted}">
+                            <a href="<c:url value="${baseURL}/${downloadLink.linkURL}"/>"
+                               title="${downloadLink.linkTitle}">${downloadLink.linkText}</a><span
+                                class="list_date"> - ${downloadLink.fileSize}</span>
                         </c:when>
                         <c:otherwise>
-                            <a href="<c:url value="${baseURL}/${downloadLink.linkURL}"/>"
-                               title="${downloadLink.linkTitle}">
-                                    ${downloadLink.linkText}</a><span
-                                class="list_date"> - ${downloadLink.fileSize}</span>
+                            <a href="${downloadLink.linkURL}"
+                               title="${downloadLink.linkTitle}">${downloadLink.linkText}</a>
                         </c:otherwise>
                     </c:choose>
                 </li>
             </c:forEach>
         </ul>
-        <c:if test="${not empty model.downloadSection.funcAnalysisDownloadLinks}">
+        <c:if test="${not empty model.downloadSection.funcAnalysisDownloadLinks && not empty model.sample.analysisCompleted}">
             <h4>Functional Analysis</h4>
             <ul>
                 <c:forEach var="downloadLink" items="${model.downloadSection.funcAnalysisDownloadLinks}"
@@ -574,7 +566,7 @@
                 </c:forEach>
             </ul>
         </c:if>
-        <c:if test="${not empty model.downloadSection.taxaAnalysisDownloadLinks}">
+        <c:if test="${not empty model.downloadSection.taxaAnalysisDownloadLinks && not empty model.sample.analysisCompleted}">
             <h4>Taxonomic Analysis</h4>
             <ul>
                 <c:forEach var="downloadLink" items="${model.downloadSection.taxaAnalysisDownloadLinks}"

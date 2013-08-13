@@ -5,7 +5,8 @@ package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage;
  */
 public enum FileDefinitionId {
     MASKED_FASTA,
-    CDS_FAA,
+    READS_WITH_PREDICTED_CDS_FILE,
+    PREDICTED_CDS_FILE,
     OTUS_BIOM_FORMAT_FILE,
     TAX_ANALYSIS_TSV_FILE,
     TAX_ANALYSIS_TREE_FILE,
@@ -15,6 +16,7 @@ public enum FileDefinitionId {
     READS_WITH_MATCHES_FASTA_FILE,
     READS_WITHOUT_MATCHES_FASTA_FILE,
     INTERPROSCAN_MATCHES_FILE,
+    PREDICTED_CDS_WITH_INTERPRO_MATCHES_FILE,
     GO_SLIM_FILE,
     GO_COMPLETE_FILE,
     KRONA_HTML_FILE,

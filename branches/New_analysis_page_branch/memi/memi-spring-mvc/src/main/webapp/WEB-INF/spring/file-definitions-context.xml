@@ -18,38 +18,63 @@
         <property name="linkURL" value="/doExportMaskedFASTAFile"/>
     </bean>
 
-    <bean id="pCDSFile" autowire-candidate="false"
+    <bean id="readsWithPredictedCDSFile" autowire-candidate="false"
           class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.SequenceFileDefinition">
+        <property name="identifier" value="READS_WITH_PREDICTED_CDS_FILE"/>
         <property name="relativePath" value="/sequence-categorisation/pCDS.fasta"/>
         <property name="description" value="All reads that have predicted CDS "/>
-        <property name="downloadName" value="_pCDS.fasta"/>
+        <property name="downloadName" value="_readsWithpCDS.fasta"/>
         <property name="linkText" value="Processed reads with pCDS (FASTA)"/>
-        <property name="order" value="6"/>
+        <property name="order" value="3"/>
         <property name="linkTitle" value="Click to download processed reads with predicted CDS in FASTA format"/>
-        <property name="linkURL" value="/doExportCDSFile"/>
+        <property name="linkURL" value="/doExportReadsWithCDSFile"/>
     </bean>
 
-
-    <bean id="readsWithMatchesFile" autowire-candidate="false"
+    <bean id="readsWithInterProMatchesFile" autowire-candidate="false"
           class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.SequenceFileDefinition">
+        <property name="identifier" value="READS_WITHOUT_PREDICTED_CDS_FILE"/>
         <property name="relativePath" value="/sequence-categorisation/interproscan.fasta"/>
         <property name="description" value="All reads with an interproscan match."/>
         <property name="downloadName" value="_interproscan.fasta"/>
-        <property name="linkText" value="Processed reads with InterPro match (FASTA)"/>
-        <property name="order" value="7"/>
+        <property name="linkText" value="Processed reads with InterPro matches (FASTA)"/>
+        <property name="order" value="4"/>
         <property name="linkTitle" value="Click to download reads with an InterPro match (FASTA)"/>
         <property name="linkURL" value="/export?exportValue=readsWithMatches"/>
     </bean>
 
-    <bean id="readsWithoutMatchesFile" autowire-candidate="false"
+    <bean id="readsWithoutInterProMatchesFile" autowire-candidate="false"
           class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.SequenceFileDefinition">
         <property name="relativePath" value="/sequence-categorisation/noFunction.fasta"/>
         <property name="description" value="All reads with a predicted CDS but no interproscan match."/>
         <property name="downloadName" value="_noFunction.fasta"/>
         <property name="linkText" value="Processed reads without InterPro match (FASTA)"/>
-        <property name="order" value="8"/>
+        <property name="order" value="5"/>
         <property name="linkTitle" value="Click to download reads with a predicted CDS but no InterPro match (FASTA)"/>
         <property name="linkURL" value="/export?exportValue=readsWithoutMatches"/>
+    </bean>
+
+    <bean id="predictedCDSFile" autowire-candidate="false"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.SequenceFileDefinition">
+        <property name="identifier" value="PREDICTED_CDS_FILE"/>
+        <property name="fileNameEnding" value="_CDS.faa"/>
+        <property name="description" value="All predicted CDS."/>
+        <property name="downloadName" value="_pCDS.faa"/>
+        <property name="linkText" value="Predicted CDS (FASTA)"/>
+        <property name="order" value="6"/>
+        <property name="linkTitle" value="Click to download all predicted CDS in FASTA format"/>
+        <property name="linkURL" value="/doExportCDSFile"/>
+    </bean>
+
+    <bean id="predictedCDSWithInterProMatchesFile" autowire-candidate="false"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.SequenceFileDefinition">
+        <property name="identifier" value="PREDICTED_CDS_WITH_INTERPRO_MATCHES_FILE"/>
+        <property name="fileNameEnding" value="_IPRhits.fasta"/>
+        <property name="description" value="Predicted coding sequences with InterPro matches (FASTA)"/>
+        <property name="downloadName" value="_InterPro_hits.fasta"/>
+        <property name="linkText" value="Predicted CDS with InterPro matches (FASTA)"/>
+        <property name="order" value="7"/>
+        <property name="linkTitle" value="Click to download predicted CDS with InterPro matches (FASTA)"/>
+        <property name="linkURL" value="/doExportIPRhitsFile"/>
     </bean>
 
     <!--Taxonomic data file definitions-->
@@ -145,7 +170,7 @@
         <property name="description" value="InterPro matches (TSV)"/>
         <property name="downloadName" value="_InterPro.tsv"/>
         <property name="linkText" value="InterPro matches (TSV)"/>
-        <property name="order" value="1"/>
+        <property name="order" value="2"/>
         <property name="linkTitle" value="Click to download full InterPro matches table (TSV)"/>
         <property name="linkURL" value="/doExportI5TSVFile"/>
     </bean>
@@ -157,7 +182,7 @@
         <property name="description" value="Complete GO annotation."/>
         <property name="downloadName" value="_GO.csv"/>
         <property name="linkText" value="Complete GO annotation (CSV)"/>
-        <property name="order" value="2"/>
+        <property name="order" value="3"/>
         <property name="linkTitle" value="Click to download GO annotation result file (CSV)"/>
         <property name="linkURL" value="/doExportGOFile"/>
     </bean>
@@ -169,9 +194,18 @@
         <property name="description" value="GO slim annotation."/>
         <property name="downloadName" value="_GO_slim.csv"/>
         <property name="linkText" value="GO slim annotation (CSV)"/>
-        <property name="order" value="3"/>
+        <property name="order" value="4"/>
         <property name="linkTitle" value="Click to download GO slim annotation result file (CSV)"/>
         <property name="linkURL" value="/doExportGOSlimFile"/>
+    </bean>
+
+    <!--Other-->
+
+    <bean id="qualityControlSummaryFile" autowire-candidate="false"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.ResultFileDefinitionImpl">
+        <property name="identifier" value="QUALITY_CONTROL_SUMMARY_FILE"/>
+        <property name="fileNameEnding" value="_summary.png"/>
+        <property name="description" value="Quality control image produced with Google chart's API."/>
     </bean>
 
 </beans>

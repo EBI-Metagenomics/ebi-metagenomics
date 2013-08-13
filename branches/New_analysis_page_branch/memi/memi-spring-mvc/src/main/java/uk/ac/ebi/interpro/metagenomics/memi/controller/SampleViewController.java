@@ -13,6 +13,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.services.FileObjectBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.DownloadableFileDefinition;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.FileDefinitionId;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -58,35 +59,42 @@ public class SampleViewController extends AbstractSampleViewController {
     @RequestMapping(value = "/doExportGOSlimFile", method = RequestMethod.GET)
     public ModelAndView doExportGOSlimFile(@PathVariable final String sampleId,
                                            final HttpServletResponse response, final HttpServletRequest request) {
-        DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get("GO_SLIM_FILE");
+        DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(FileDefinitionId.GO_SLIM_FILE.name());
         return handleExport(sampleId, response, request, fileDefinition);
     }
 
     @RequestMapping(value = "/doExportGOFile", method = RequestMethod.GET)
     public ModelAndView doExportGOFile(@PathVariable final String sampleId,
                                        final HttpServletResponse response, final HttpServletRequest request) {
-        DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get("GO_FILE");
+        DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(FileDefinitionId.GO_COMPLETE_FILE.name());
         return handleExport(sampleId, response, request, fileDefinition);
     }
 
     @RequestMapping(value = "/doExportMaskedFASTAFile", method = RequestMethod.GET)
     public ModelAndView doExportMaskedFASTAFile(@PathVariable final String sampleId,
                                                 final HttpServletResponse response, final HttpServletRequest request) {
-        DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get("MASKED_FASTA");
+        DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(FileDefinitionId.MASKED_FASTA.name());
         return handleExport(sampleId, response, request, fileDefinition);
     }
 
     @RequestMapping(value = "/doExportCDSFile", method = RequestMethod.GET)
     public ModelAndView doExportCDSFile(@PathVariable final String sampleId,
                                         final HttpServletResponse response, final HttpServletRequest request) {
-        DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get("CDS_FAA");
+        DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(FileDefinitionId.PREDICTED_CDS_FILE.name());
+        return handleExport(sampleId, response, request, fileDefinition);
+    }
+
+    @RequestMapping(value = "/doExportReadsWithCDSFile", method = RequestMethod.GET)
+    public ModelAndView doExportReadsWithCDSFile(@PathVariable final String sampleId,
+                                        final HttpServletResponse response, final HttpServletRequest request) {
+        DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(FileDefinitionId.READS_WITH_PREDICTED_CDS_FILE.name());
         return handleExport(sampleId, response, request, fileDefinition);
     }
 
     @RequestMapping(value = "/doExportI5TSVFile", method = RequestMethod.GET)
     public ModelAndView doExportI5File(@PathVariable final String sampleId,
                                        final HttpServletResponse response, final HttpServletRequest request) {
-        DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get("I5_TSV_FILE");
+        DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(FileDefinitionId.INTERPROSCAN_MATCHES_FILE.name());
         return handleExport(sampleId, response, request, fileDefinition);
     }
 
@@ -96,11 +104,12 @@ public class SampleViewController extends AbstractSampleViewController {
 //        return handleExport(sampleId, response, request, EmgFile.ResultFileType.IPR, "_InterPro_sum.csv");
 //    }
 
-//    @RequestMapping(value = "/doExportIPRhitsFile", method = RequestMethod.GET)
-//    public ModelAndView doExportIPRhitsFile(@PathVariable final String sampleId,
-//                                            final HttpServletResponse response, final HttpServletRequest request) {
-//        return handleExport(sampleId, response, request, fileDefinitionsMap.get(), "_InterPro_hits.fasta");
-//    }
+    @RequestMapping(value = "/doExportIPRhitsFile", method = RequestMethod.GET)
+    public ModelAndView doExportIPRhitsFile(@PathVariable final String sampleId,
+                                            final HttpServletResponse response, final HttpServletRequest request) {
+        DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(FileDefinitionId.PREDICTED_CDS_WITH_INTERPRO_MATCHES_FILE.name());
+        return handleExport(sampleId, response, request, fileDefinition);
+    }
 
     /**
      * @param sampleId
@@ -134,8 +143,7 @@ public class SampleViewController extends AbstractSampleViewController {
     }
 
 
-
-   /**
+    /**
      * Example for pattern '000000.000':<br>
      * 123.78  000000.000  000123.780
      */

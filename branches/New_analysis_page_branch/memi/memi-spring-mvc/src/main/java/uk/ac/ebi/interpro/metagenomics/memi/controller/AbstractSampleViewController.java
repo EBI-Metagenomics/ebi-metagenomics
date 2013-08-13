@@ -52,8 +52,8 @@ public class AbstractSampleViewController extends SecuredAbstractController<Samp
     @Resource
     protected Map<String, DownloadableFileDefinition> fileDefinitionsMap;
 
-    @Resource(name = "sequenceFileDefinitions")
-    private List<SequenceFileDefinition> sequenceFileDefinitions;
+    @Resource(name = "qualityControlFileDefinitions")
+    private List<ResultFileDefinitionImpl> qualityControlFileDefinitions;
 
     @Resource(name = "functionalAnalysisFileDefinitions")
     private List<FunctionalAnalysisFileDefinition> functionalAnalysisFileDefinitions;
@@ -126,7 +126,7 @@ public class AbstractSampleViewController extends SecuredAbstractController<Samp
                 experimentType,
                 buildDownloadSection(sample.getSampleId(), sample.isPublic(), fileDefinitionsMap, emgFile),
                 sampleAnnotations,
-                sequenceFileDefinitions,
+                qualityControlFileDefinitions,
                 functionalAnalysisFileDefinitions,
                 taxonomicAnalysisFileDefinitions);
         final SampleViewModel sampleModel = builder.getModel();

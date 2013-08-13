@@ -10,6 +10,8 @@ public class ResultFileDefinitionImpl implements IResultFileDefinition {
 
     private String description;
 
+    private String fileNameEnding;
+
     /**
      * Is used to build the absolute file path.
      */
@@ -42,6 +44,10 @@ public class ResultFileDefinitionImpl implements IResultFileDefinition {
     }
 
     public String getFileNameEnding() {
-        return null;
+        return fileNameEnding;
+    }
+
+    public void setFileNameEnding(String fileNameEnding) {
+        this.fileNameEnding = fileNameEnding;
     }
 }
