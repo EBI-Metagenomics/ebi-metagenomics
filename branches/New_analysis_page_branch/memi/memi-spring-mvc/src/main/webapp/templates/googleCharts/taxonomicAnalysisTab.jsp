@@ -12,59 +12,58 @@
     google.setOnLoadCallback(drawDomainCompositionPieChart);
     google.setOnLoadCallback(drawDomainCompositionBarChart);
 
-    <%--Globale page properties--%>
-    <c:set var="phylumCompositionTitle" scope="page" value="Phylum composition (Total: ${model.taxonomyAnalysisResult.uniqueUTUsTotalCount} OTUs)"/>
-
     function drawPhylumTable() {
         // Taxonomy top phylum table
-        var taxMatchesData = new google.visualization.DataTable();
-        taxMatchesData.addColumn('string', 'Phylum');
-        taxMatchesData.addColumn('string', 'Domain');
-        taxMatchesData.addColumn('number', 'Unique OTUs');
-        taxMatchesData.addColumn('number', '% unique OTUs');
-//        taxMatchesData.addColumn('number', 'Count of reads assigned');
-//        taxMatchesData.addColumn('number', '% reads assigned');
-        taxMatchesData.addRows([
-            <c:set var="addComma" value="false"/>
-            <c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResult.taxonomyDataSet}" varStatus="status">
-            <c:choose>
-            <c:when test="${addComma}">,
-            </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise>
-            </c:choose>
-            ['<div title="${taxonomyData.phylum}" class="_cc" style="background-color: #${taxonomyData.colorCode};"></div> ${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}
-//                , 0 , 0
-]
-            </c:forEach>
-        ]);
+               var taxMatchesData = new google.visualization.DataTable();
+               taxMatchesData.addColumn('string', 'Phylum');
+               taxMatchesData.addColumn('string', 'Domain');
+               taxMatchesData.addColumn('number', 'Unique OTUs');
+               taxMatchesData.addColumn('number', '%');
+       //        taxMatchesData.addColumn('number', 'Count of reads assigned');
+       //        taxMatchesData.addColumn('number', '% reads assigned');
+               taxMatchesData.addRows([
+                   <c:set var="addComma" value="false"/>
+                   <c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResult.taxonomyDataSet}" varStatus="status">
+                   <c:choose>
+                   <c:when test="${addComma}">,
+                   </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise>
+                   </c:choose>
+                   ['<div title="${taxonomyData.phylum}" class="_cc" style="background-color: #${taxonomyData.colorCode};"></div> ${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}
+       //                , 0 , 0
+       ]
+                   </c:forEach>
+               ]);
 
-          // Taxonomy top phylum table
-        var taxMatchesDatabar = new google.visualization.DataTable();
-        taxMatchesDatabar.addColumn('string', 'Phylum');
-        taxMatchesDatabar.addColumn('string', 'Domain');
-        taxMatchesDatabar.addColumn('number', 'Unique OTUs');
-        taxMatchesDatabar.addColumn('number', '% unique OTUs');
-//        taxMatchesData.addColumn('number', 'Count of reads assigned');
-//        taxMatchesData.addColumn('number', '% reads assigned');
-        taxMatchesDatabar.addRows([
-            <c:set var="addComma" value="false"/>
-            <c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResult.taxonomyDataSet}" varStatus="status">
-            <c:choose>
-            <c:when test="${addComma}">,
-            </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise>
-            </c:choose>
-            ['${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}
-//                , 0 , 0
-]
-            </c:forEach>
-        ]);
+                 // Taxonomy top phylum table
+               var taxMatchesDatabar = new google.visualization.DataTable();
+               taxMatchesDatabar.addColumn('string', 'Phylum');
+               taxMatchesDatabar.addColumn('string', 'Domain');
+               taxMatchesDatabar.addColumn('number', 'Unique OTUs');
+               taxMatchesDatabar.addColumn('number', '%');
+       //        taxMatchesData.addColumn('number', 'Count of reads assigned');
+       //        taxMatchesData.addColumn('number', '% reads assigned');
+               taxMatchesDatabar.addRows([
+                   <c:set var="addComma" value="false"/>
+                   <c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResult.taxonomyDataSet}" varStatus="status">
+                   <c:choose>
+                   <c:when test="${addComma}">,
+                   </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise>
+                   </c:choose>
+                   ['${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}
+       //                , 0 , 0
+       ]
+                   </c:forEach>
+               ]);
 
-        // Define a StringFilter control for the 'Phylum' column
-        var taxStringFilter = new google.visualization.ControlWrapper({
-            'controlType':'StringFilter',
-            'containerId':'tax_table_filter',
-            'options':{'matchType':'any', 'filterColumnIndex':'0', 'ui':{'label':'Filter', 'labelSeparator':':', 'ui.labelStacking':'vertical', 'ui.cssClass':'custom_col_search'}
-            }
-        });
+               // Define a StringFilter control for the 'Phylum' column
+               var taxStringFilter = new google.visualization.ControlWrapper({
+                   'controlType':'StringFilter',
+                   'containerId':'tax_table_filter',
+                   'options':{'matchType':'any', 'filterColumnIndex':'0', 'ui':{'label':'Filter', 'labelSeparator':':', 'ui.labelStacking':'vertical', 'ui.cssClass':'custom_col_search'}
+                   }
+               });
+
+
 
         // Table visualization option
         var taxTableOptions = new google.visualization.ChartWrapper({
@@ -105,7 +104,7 @@
     function drawPhylumPieChart() {
 
         // taxonomy Pie chart Phylum
-        var options = {'title':'${phylumCompositionTitle}',
+        var options = {'title':'Phylum composition (Total: ${model.taxonomyAnalysisResult.uniqueUTUsTotalCount})',
             'titleTextStyle':{fontSize:12},
             'colors':[${model.taxonomyAnalysisResult.colorCodeForPieChart}],
 //Krona style      'colors':['#d47f7f','#d1a575','#d4c97f','#99d47f','#7fd4a7','#7fc3d4','#7f8ad4','#a77fd4','#d47fd3','#d47faf','#ccc','#ccc','#ccc'],
@@ -115,7 +114,7 @@
             'legend':{position:'right', fontSize:10},
             'chartArea':{left:10, top:30, width:"100%", height:"100%"},
             'pieSliceBorderColor':'none'
-            <c:if test="${fn:length(model.taxonomyAnalysisResult.taxonomyDataSet)>10}">,'sliceVisibilityThreshold':${model.taxonomyAnalysisResult.sliceVisibilityThresholdNumerator} / ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator}</c:if>
+            <c:if test="${fn:length(model.taxonomyAnalysisResult.taxonomyDataSet)>10}">,'sliceVisibilityThreshold':(${model.taxonomyAnalysisResult.sliceVisibilityThresholdNumerator}) / ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator}</c:if>
         };
 
           // Taxonomy top phylum table 2
@@ -123,7 +122,7 @@
         taxMatchesData2.addColumn('string', 'Phylum');
         taxMatchesData2.addColumn('string', 'Domain');
         taxMatchesData2.addColumn('number', 'Unique OTUs');
-        taxMatchesData2.addColumn('number', '% unique OTUs');
+        taxMatchesData2.addColumn('number', '%');
         taxMatchesData2.addRows([
             <c:set var="addComma" value="false"/>
             <c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResult.taxonomyDataSet}" varStatus="status">
@@ -156,7 +155,7 @@
 
     function drawPhylumBarChart() {
         // Taxonomy Bar - phylum
-        var options = {'title':'${phylumCompositionTitle}', 'titleTextStyle':{fontSize:12}, 'colors':['#5f8694'], 'width':360, 'height':320, 'chartArea':{left:120, top:40, width:"60%", height:"70%"}, 'pieSliceBorderColor':'none', 'legend':'none' };
+        var options = {'title':'Phylum composition (Total: ${model.taxonomyAnalysisResult.uniqueUTUsTotalCount})', 'titleTextStyle':{fontSize:12}, 'colors':['#5f8694'], 'width':360, 'height':320, 'chartArea':{left:120, top:40, width:"60%", height:"70%"}, 'pieSliceBorderColor':'none', 'legend':'none' };
         var phylumBarChart = new google.visualization.BarChart(document.getElementById('tax_chart_bar_phy'));
         phylumBarChart.draw(phylumBarChartPieChartData, options);
     }
@@ -173,7 +172,7 @@
         ]);
 
         // Stacked column graph
-        var options = {'title':'${phylumCompositionTitle}',
+        var options = {'title':'Phylum composition (Total: ${model.taxonomyAnalysisResult.uniqueUTUsTotalCount})',
             'titleTextStyle':{fontSize:12},
             'colors':[${model.taxonomyAnalysisResult.colorCodeForStackChart}],
 //            'colors':['#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff', '#ccc', '#ccc', '#ccc', '#ccc', '#ccc', '#ccc', '#ccc'],
@@ -223,3 +222,5 @@
         domainBarChart.draw(domainBarChartPieChartData, options);
     }
 </script>
+<%--Remove the filter box for taxonomy table when  the total number of phylum is less than 10--%>
+<c:if test="${fn:length(model.taxonomyAnalysisResult.taxonomyDataSet)<10}"><style>#tax_table_filter {display:none;}</style></c:if>
