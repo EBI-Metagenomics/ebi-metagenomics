@@ -288,20 +288,16 @@
         <p>These are the results from the taxonomic analysis steps of our pipeline. You can switch between
             different views of the data using the menu of icons below (pie, bar, stacked and interactive krona
             charts).  If you wish to download the full set of results, all files are listed under the
-            "Downloads" tab.</p>
+            "Download" tab.</p>
             <%--<h3>Taxonomy analysis</h3>--%>
         <h3>Top taxonomy Hits</h3>
 
-
+        <c:choose>
+        <c:when test="${empty model.sample.analysisCompleted}">
+            <b>Analysis in progress</b>
+        </c:when>
+        <c:when test="${not empty model.sample.analysisCompleted && !model.analysisStatus.taxonomicAnalysisTabDisabled}">
         <div id="tabs-taxchart">
-                <%--<c:choose>--%>
-                <%--<c:when test="${model.analysisStatus.taxonomicAnalysisTab.isPieChartTabDisabled}">--%>
-                <%--&lt;%&ndash;&& model.analysisStatus.taxonomicAnalysisTab.isBarChartTabDisabled&ndash;%&gt;--%>
-                <%--&lt;%&ndash;&& model.analysisStatus.taxonomicAnalysisTab.isStackChartTabDisabled && model.analysisStatus.taxonomicAnalysisTab.isKronaTabDisabled&ndash;%&gt;--%>
-                <%--<b>No data available</b>--%>
-                <%--</c:when>--%>
-                <%--<c:otherwise>--%>
-                <%--Tabs--%>
             <ul>
                 <li class="selector_tab">Switch view:</li>
                     <%--<li><a href="#tax-table" title="Table view"><span class="ico-table"></span></a></li>--%>
@@ -362,11 +358,12 @@
                         data="<c:url value="${baseURL}/sample/${model.sample.sampleId}/krona?taxonomy=true&collapse=false"/>"
                         type="text/html"></object>
             </div>
-
-                <%--</c:otherwise>--%>
-                <%--</c:choose>--%>
         </div>
-
+            </c:when>
+            <c:otherwise>
+                <b>No taxonomy result files have been associated with this sample.</b>
+            </c:otherwise>
+        </c:choose>
     </div>
 </div>
 
@@ -374,10 +371,8 @@
 
     <div class="main_tab_full_content">
         <p>Functional analysis has 3 outputs: the prediction of different coding features in the original reads
-            (shown in the top bar chart); the matches of predicted protein coding sequences to the InterPro
-            database (<-link to InterPro website) and a chart of the GO terms that summarise the functional
-            content of the sample's sequences. If you wish to download the full set of results, all files are
-            listed under the "Downloads" tab.</p>
+            (shown in the top bar chart); the matches of predicted protein coding sequences to the <a href="http://www.ebi.ac.uk/interpro"  title="InterPro website">InterPro database</a>
+            and a chart of the GO terms that summarise the functional content of the sample's sequences. If you wish to download the full set of results, all files are listed under the "Download" tab.</p>
 
         <h3>InterPro match summary</h3>
 
@@ -394,10 +389,10 @@
               </ul>
             </div>--%>
         <c:choose>
-            <c:when test="${model.analysisStatus.functionalAnalysisTab.interProMatchSectionDisabled}">
-                <b>No functional result files have been associated with this sample.</b>
+            <c:when test="${empty model.sample.analysisCompleted}">
+                <b>Analysis in progress</b>
             </c:when>
-            <c:otherwise>
+            <c:when test="${not empty model.sample.analysisCompleted && !model.analysisStatus.functionalAnalysisTab.interProMatchSectionDisabled}">
                 <div id="interpro-chart">
 
                         <%--Tabs--%>
@@ -449,6 +444,9 @@
                     </div>
 
                 </div>
+            </c:when>
+            <c:otherwise>
+                <b>No functional result files have been associated with this sample.</b>
             </c:otherwise>
         </c:choose>
 
@@ -458,19 +456,20 @@
             below.</p>
 
         <c:choose>
-            <c:when test="${model.analysisStatus.functionalAnalysisTab.goSectionDisabled}">
-                <b>No functional result files have been associated with this sample.</b>
+            <c:when test="${empty model.sample.analysisCompleted}">
+                <b>Analysis in progress</b>
             </c:when>
-            <c:otherwise>
+            <c:when test="${not empty model.sample.analysisCompleted && !model.analysisStatus.functionalAnalysisTab.goSectionDisabled}">
                 <div id="tabs-chart">
 
                         <%--Tabs--%>
                     <ul>
                         <li class="selector_tab">Switch view:</li>
                             <%--<li><a href="#go-terms-table" title="Table view"><span class="ico-table"></span></a></li>--%>
-                        <li><a href="#go-terms-pie" title="Pie chart view"><span class="ico-pie"></span></a></li>
                         <li><a href="#go-terms-bar" title="Bar chart view"><span class="ico-barh"></span></a></li>
-                            <%--<li><a href="#go-terms-col" title="Stacked column chart view"><span class="ico-col"></span></a></li>--%>
+                        <li><a href="#go-terms-pie" title="Pie chart view"><span class="ico-pie"></span></a></li>
+
+                    <%--<li><a href="#go-terms-col" title="Stacked column chart view"><span class="ico-col"></span></a></li>--%>
                             <%--<li><a href="#go-terms-Krona" title="Krona interactive chart view"><span class="ico-krona"></span></a></li>--%>
                             <%--<li class="ico-downl"><a class="icon icon-functional" data-icon="=" href="#download" title="Download image/table"></a></li>--%>
                     </ul>
@@ -493,6 +492,9 @@
                     </div>
 
                 </div>
+            </c:when>
+            <c:otherwise>
+                <b>No functional result files have been associated with this sample.</b>
             </c:otherwise>
         </c:choose>
 
@@ -508,7 +510,7 @@
     <p>The chart below shows the number of sequence reads which pass each of the quality control steps we
         have implemented in our pipeline. Note that, for paired-end data, sequence merging may have
         occurred and so the initial number of reads may differ from what is in the ENA. For more details
-        about the data processing we employ, please see the "About" page.</p>
+        about the data processing we employ, please see the <a href="<c:url value="${baseURL}/info"/>"  title="About Metagenomics">about page</a>.</p>
     <c:choose>
         <c:when test="${empty model.sample.analysisCompleted}">
             <b>Analysis in progress</b>
@@ -537,19 +539,23 @@
         <h4>Sequence data</h4>
         <ul>
             <c:forEach var="downloadLink" items="${model.downloadSection.seqDataDownloadLinks}" varStatus="loop">
-                <li>
                     <c:choose>
+                        <c:when test="${downloadLink.externalLink}">
+                            <li>
+                                <a href="${downloadLink.linkURL}"
+                                   title="${downloadLink.linkTitle}">${downloadLink.linkText}</a>
+                            </li>
+                        </c:when>
                         <c:when test="${!downloadLink.externalLink && not empty model.sample.analysisCompleted}">
-                            <a href="<c:url value="${baseURL}/${downloadLink.linkURL}"/>"
-                               title="${downloadLink.linkTitle}">${downloadLink.linkText}</a><span
-                                class="list_date"> - ${downloadLink.fileSize}</span>
+                            <li>
+                                <a href="<c:url value="${baseURL}/${downloadLink.linkURL}"/>"
+                                   title="${downloadLink.linkTitle}">${downloadLink.linkText}</a><span
+                                    class="list_date"> - ${downloadLink.fileSize}</span>
+                            </li>
                         </c:when>
                         <c:otherwise>
-                            <a href="${downloadLink.linkURL}"
-                               title="${downloadLink.linkTitle}">${downloadLink.linkText}</a>
                         </c:otherwise>
                     </c:choose>
-                </li>
             </c:forEach>
         </ul>
         <c:if test="${not empty model.downloadSection.funcAnalysisDownloadLinks && not empty model.sample.analysisCompleted}">
@@ -592,7 +598,7 @@
 <script>
     $("#navtabs").tabs({${model.analysisStatus.disabledOption}});
     $("#interpro-chart").tabs();
-    $("#tabs-chart").tabs({ selected:1  });
+    $("#tabs-chart").tabs({ selected:0  });
     $("#tabs-taxchart").tabs({${model.analysisStatus.taxonomicAnalysisTab.tabsOptions}});
 
     // fix the auto-scrolling issue when linking from homepage using htag
