@@ -2,12 +2,11 @@ package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
 
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.DomainComposition;
 
-import java.math.BigDecimal;
 import java.util.*;
 
 /**
  * Represents a simple model object which is used to render the sample analysis page, more specifically the taxonomic analysis tab.
- * The taxonomy data set is used to render the phylum table and charts.
+ * The taxonomy data set is used to render the phylum table and phylum charts.
  *
  * @author Maxim Scheremetjew
  */
@@ -17,31 +16,21 @@ public class TaxonomyAnalysisResult extends AnalysisResult {
 
     private DomainComposition domainComposition;
 
-    private int uniqueUTUsTotalCount;
+    private PhylumChartOptions phylumChartOptions;
 
-    private BigDecimal sliceVisibilityThreshold;
-
-    private int sliceVisibilityThresholdNumerator;
-
-    private int sliceVisibilityThresholdDenominator;
-
+    /**
+     * Empty constructor to avoid NPE.
+     */
     public TaxonomyAnalysisResult() {
         this(new ArrayList<TaxonomyData>());
+        this.domainComposition = new DomainComposition(new HashMap<String, Integer>(0));
+        this.phylumChartOptions = new PhylumChartOptions();
     }
 
     public TaxonomyAnalysisResult(List<TaxonomyData> taxonomyDataSet) {
         this.taxonomyDataSet = taxonomyDataSet;
-        init();
-    }
-
-    public String getColorCodeForStackChart() {
-        StringBuilder result = new StringBuilder("'#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff'");
-        if (taxonomyDataSet.size() > 10) {
-            for (int i = 0; i < taxonomyDataSet.size() - 10; i++) {
-                result.append(",'#ccc'");
-            }
-        }
-        return result.toString();
+        if (taxonomyDataSet.size() > 0)
+            init();
     }
 
 
@@ -53,26 +42,30 @@ public class TaxonomyAnalysisResult extends AnalysisResult {
         return domainComposition;
     }
 
-    public int getUniqueUTUsTotalCount() {
-        return uniqueUTUsTotalCount;
-    }
-
-    public BigDecimal getSliceVisibilityThreshold() {
-        return sliceVisibilityThreshold;
-    }
-
-    private void setUniqueUTUsTotalCount(int uniqueUTUsTotalCount) {
-        this.uniqueUTUsTotalCount = uniqueUTUsTotalCount;
-    }
-
     private void setDomainComposition(DomainComposition domainComposition) {
         this.domainComposition = domainComposition;
     }
 
-    private void setSliceVisibilityThreshold(BigDecimal sliceVisibilityThreshold) {
-        this.sliceVisibilityThreshold = sliceVisibilityThreshold;
+    /**
+     * Used in JSP 'taxonomy analysis tab'.
+     * <p/>
+     * Used to set the colors option for the stack chart
+     */
+    public String getColorCodeForStackChart() {
+        StringBuilder result = new StringBuilder("'#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff'");
+        if (taxonomyDataSet.size() > 10) {
+            for (int i = 0; i < taxonomyDataSet.size() - 10; i++) {
+                result.append(",'#ccc'");
+            }
+        }
+        return result.toString();
     }
 
+    /**
+     * Used in JSP 'taxonomy analysis tab'.
+     * <p/>
+     * Used to set the colors option for the pie chart.
+     */
     public String getColorCodeForPieChart() {
         StringBuilder sb = new StringBuilder("'#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff'");
         if (taxonomyDataSet.size() > 10) {
@@ -89,41 +82,72 @@ public class TaxonomyAnalysisResult extends AnalysisResult {
      * //TODO: Write JUnit test
      */
     private void init() {
-        Enumeration<String> colors = getColors();
-        //
-        Map<String, Integer> domainMap = new TreeMap();
+        List<String> colors = getColors();
+        //maps domains (Bacteria, Archaea, unassigned)
+        Map<String, Integer> domainCompositionMap = new TreeMap();
+        //Counts all unique UTU values
         int uniqueUTUsCounter = 0;
-        for (TaxonomyData taxonomyData : taxonomyDataSet) {
-            String key = taxonomyData.getSuperKingdom();
-            int value = taxonomyData.getNumberOfHits().intValue();
-            uniqueUTUsCounter += value;
-            if (domainMap.containsKey(key)) {
-                value = value + domainMap.get(key).intValue();
+        //The next 3 variables are used for the colour code algorithm
+        int previousNumberOfHits = 0;
+        int nextNumberOfHits = 0;
+        boolean colourCodeTrigger = false;
+
+        for (int index = taxonomyDataSet.size() - 1; index >= 0; index--) {
+            TaxonomyData taxonomyData = taxonomyDataSet.get(index);
+            String superKingdom = taxonomyData.getSuperKingdom();
+            int currentNumberOfHits = taxonomyData.getNumberOfHits().intValue();
+            uniqueUTUsCounter += currentNumberOfHits;
+            int domainValue = currentNumberOfHits;
+            if (domainCompositionMap.containsKey(superKingdom)) {
+                domainValue = currentNumberOfHits + domainCompositionMap.get(superKingdom).intValue();
             }
-            domainMap.put(key, value);
-            //set the color code at the same time
-            if (colors.hasMoreElements()) {
-                taxonomyData.setColorCode(colors.nextElement());
-            } else {
-                taxonomyData.setColorCode("ccc");
+            domainCompositionMap.put(superKingdom, domainValue);
+            //set the colour code at the same time
+
+            if (index >= 1) {
+                nextNumberOfHits = taxonomyDataSet.get(index - 1).getNumberOfHits().intValue();
             }
+            colourCodeTrigger = setColourCodeForTaxonomyDataObject(taxonomyData, index, currentNumberOfHits, previousNumberOfHits, nextNumberOfHits, colourCodeTrigger, colors);
+            previousNumberOfHits = currentNumberOfHits;
         }
-        setDomainComposition(new DomainComposition(domainMap));
-        setUniqueUTUsTotalCount(uniqueUTUsCounter);
-        setSliceVisibilityThresholdDenominator(uniqueUTUsCounter);
-        if (uniqueUTUsCounter > 0) {
-            BigDecimal sliceVisibilityThreshold = new BigDecimal(0f);
-            if (taxonomyDataSet.size() > 10) {
-                int numberOfHits = taxonomyDataSet.get(9).getNumberOfHits();
-                setSliceVisibilityThresholdNumerator(numberOfHits);
-                sliceVisibilityThreshold = new BigDecimal((double) numberOfHits / (double) getUniqueUTUsTotalCount());
-            }
-            setSliceVisibilityThreshold(sliceVisibilityThreshold);
-        }
+        setDomainComposition(new DomainComposition(domainCompositionMap));
+        setPhylumChartOptions(new PhylumChartOptions(uniqueUTUsCounter, taxonomyDataSet.size() - 1));
     }
 
-    private Enumeration<String> getColors() {
-        Vector<String> colors = new Vector<String>(10);
+    private boolean setColourCodeForTaxonomyDataObject(final TaxonomyData taxonomyData, final int index,
+                                                       final int currentNumberOfHits, final int previousNumberOfHits, final int nextNumberOfHits,
+                                                       final boolean colourCodeTrigger, final List<String> colors) {
+        if (index > 9) {
+            taxonomyData.setColorCode("ccc");
+            return false;
+        } else //i<=9
+        {
+            if (colourCodeTrigger) {
+                taxonomyData.setColorCode(colors.get(index));
+            }// 10th == 11th && 10th != 9th
+            //Nr    Phylum 	Domain 	Unique OTUs
+            //9 Euryarchaeota   Archaea 2
+            //10    SAR406	Bacteria	1
+            //11    Chloroflexi	Bacteria	1
+            else if (currentNumberOfHits == previousNumberOfHits && currentNumberOfHits != nextNumberOfHits) {
+                taxonomyData.setColorCode("ccc");
+            }// 10th == 11th && 10th == 9th
+            //Nr    Phylum 	Domain 	Unique OTUs
+            //9 Euryarchaeota   Archaea 1
+            //10    SAR406	Bacteria	1
+            //11    Chloroflexi	Bacteria	1
+            else if (currentNumberOfHits == previousNumberOfHits && currentNumberOfHits == nextNumberOfHits) {
+                taxonomyData.setColorCode("ccc");
+                return false;
+            } else {
+                taxonomyData.setColorCode(colors.get(index));
+            }
+        }
+        return true;
+    }
+
+    private List<String> getColors() {
+        List<String> colors = new ArrayList<String>(10);
         colors.add("058dc7");
         colors.add("50b432");
         colors.add("ed561b");
@@ -134,7 +158,7 @@ public class TaxonomyAnalysisResult extends AnalysisResult {
         colors.add("fff263");
         colors.add("6af9c4");
         colors.add("b2deff");
-        return colors.elements();
+        return colors;
     }
 
     /**
@@ -147,19 +171,59 @@ public class TaxonomyAnalysisResult extends AnalysisResult {
         }
     };
 
-    public int getSliceVisibilityThresholdNumerator() {
-        return sliceVisibilityThresholdNumerator;
+    private class PhylumChartOptions {
+        private float sliceVisibilityThresholdNumerator;
+
+        /* Which is the same as uniqueUTUsTotalCount */
+        private int sliceVisibilityThresholdDenominator;
+
+        private PhylumChartOptions() {
+        }
+
+        private PhylumChartOptions(int sliceVisibilityThresholdDenominator, int indexOfLastTaxonomyDataSetEntry) {
+            this.sliceVisibilityThresholdDenominator = sliceVisibilityThresholdDenominator;
+            init(indexOfLastTaxonomyDataSetEntry);
+        }
+
+        private void init(int indexOfLastTaxonomyDataSetEntry) {
+            if (taxonomyDataSet.size() > 10) {
+                TaxonomyData taxonomyDataEntry10 = taxonomyDataSet.get(9);
+                TaxonomyData taxonomyDataEntry11 = taxonomyDataSet.get(10);
+                if (!taxonomyDataEntry10.getNumberOfHits().equals(taxonomyDataEntry11.getNumberOfHits())) {
+                    this.sliceVisibilityThresholdNumerator = taxonomyDataEntry10.getNumberOfHits() - 0.5f;
+                } else {
+                    //If the number of hits is the same
+                    this.sliceVisibilityThresholdNumerator = taxonomyDataEntry10.getNumberOfHits() + 0.5f;
+                }
+            } else {
+                //If the size of taxonomy data set is less then 10
+                this.sliceVisibilityThresholdNumerator = taxonomyDataSet.get(indexOfLastTaxonomyDataSetEntry).getNumberOfHits() - 0.5f;
+            }
+        }
+
+        public float getSliceVisibilityThresholdNumerator() {
+            return sliceVisibilityThresholdNumerator;
+        }
+
+        public int getSliceVisibilityThresholdDenominator() {
+            return sliceVisibilityThresholdDenominator;
+        }
+
     }
 
-    public void setSliceVisibilityThresholdNumerator(int sliceVisibilityThresholdNumerator) {
-        this.sliceVisibilityThresholdNumerator = sliceVisibilityThresholdNumerator;
+    public float getSliceVisibilityThresholdNumerator() {
+        return getPhylumChartOptions().getSliceVisibilityThresholdNumerator();
     }
 
     public int getSliceVisibilityThresholdDenominator() {
-        return sliceVisibilityThresholdDenominator;
+        return getPhylumChartOptions().getSliceVisibilityThresholdDenominator();
     }
 
-    public void setSliceVisibilityThresholdDenominator(int sliceVisibilityThresholdDenominator) {
-        this.sliceVisibilityThresholdDenominator = sliceVisibilityThresholdDenominator;
+    public PhylumChartOptions getPhylumChartOptions() {
+        return phylumChartOptions;
+    }
+
+    public void setPhylumChartOptions(PhylumChartOptions phylumChartOptions) {
+        this.phylumChartOptions = phylumChartOptions;
     }
 }

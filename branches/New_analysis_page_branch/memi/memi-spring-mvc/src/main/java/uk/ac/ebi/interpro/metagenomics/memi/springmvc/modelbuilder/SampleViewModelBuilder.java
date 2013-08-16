@@ -226,7 +226,6 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
      */
 
     private TaxonomyAnalysisResult loadTaxonomyDataFromCSV(final String pathToAnalysisDirectory) {
-        TaxonomyAnalysisResult taxonomyAnalysisResult = new TaxonomyAnalysisResult();
         final List<TaxonomyData> taxonomyDataSet = new ArrayList<TaxonomyData>();
 
         File phylumFile = new File(resultFilesDirectoryPath + propertyContainer.getResultFileName(MemiPropertyContainer.FileNameIdentifier.PHYLUM_COUNTS));
@@ -256,11 +255,9 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
             }
 
             Collections.sort(taxonomyDataSet, TaxonomyAnalysisResult.TaxonomyDataComparator);
-            taxonomyAnalysisResult = new TaxonomyAnalysisResult(taxonomyDataSet);
-
-            return taxonomyAnalysisResult;
+            return new TaxonomyAnalysisResult(taxonomyDataSet);
         }
-        return taxonomyAnalysisResult;
+        return new TaxonomyAnalysisResult();
     }
 
     private boolean isHostAssociated() {
