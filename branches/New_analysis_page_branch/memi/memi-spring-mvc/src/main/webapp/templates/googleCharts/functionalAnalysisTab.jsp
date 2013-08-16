@@ -80,30 +80,15 @@ function drawInterProMatchesPieChart() {
     data.addColumn('number', 'Hits');
     data.addRows([
         <c:set var="addComma" value="false"/>
-        <c:forEach var="entry" items="${model.interProEntries}" varStatus="status">
-        <c:choose>
-        <c:when test="${addComma}">,
-        </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise>
-        </c:choose>
-        ['${entry.entryDescription}', ${entry.numOfEntryHits}]
-        </c:forEach>
-    ]);
-
+        <c:forEach var="entry" items="${model.interProEntries}" varStatus="status"><c:choose><c:when test="${addComma}">,</c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>['${entry.entryDescription}', ${entry.numOfEntryHits}]</c:forEach>]);
     // Set chart options
     var options = {title:'InterPro matches summary (Total: ${fn:length(model.interProEntries)})', width:500, titleTextStyle:{fontSize:12},
         colors:[
             <c:set var="addComma" value="false"/>
-            <c:forEach var="entry" items="${model.interProEntries}" varStatus="status">
-            <c:choose>
-            <c:when test="${addComma}">,
-            </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise>
-            </c:choose>
-                <c:choose><c:when test="${status.index>9}">'#b9b9b9'</c:when><c:otherwise>'<c:out value="${colorCodeList[status.index]}"/>'</c:otherwise></c:choose>
-            </c:forEach>
+            <c:forEach var="entry" items="${model.interProEntries}" varStatus="status"><c:choose><c:when test="${addComma}">,</c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose><c:choose><c:when test="${status.index>9}">'#b9b9b9'</c:when><c:otherwise>'<c:out value="${colorCodeList[status.index]}"/>'</c:otherwise></c:choose></c:forEach>
         ],
         height:240, pieSliceText:'none', legend:{position:'right', fontSize:10}, chartArea:{left:0, top:30, width:"42%", height:"100%"},
         pieSliceBorderColor:'none'};
-
     // Instantiate and draw our chart, passing in some options.
     var chart = new google.visualization.PieChart(document.getElementById('func_chart_pie_ipro'));
     chart.draw(data, options);
