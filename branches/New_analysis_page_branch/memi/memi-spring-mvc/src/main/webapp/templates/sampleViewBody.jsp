@@ -372,7 +372,7 @@
 
     <div class="main_tab_full_content">
         <p>Functional analysis has 3 outputs: the prediction of different coding features in the original reads
-            (shown in the top bar chart); the matches of predicted protein coding sequences to the <a href="http://www.ebi.ac.uk/interpro"  title="InterPro website">InterPro database</a>
+            (shown in the top bar chart); the matches of predicted protein coding sequences to the <a href="http://www.ebi.ac.uk/interpro"  title="InterPro website" class="ext">InterPro database</a>
             and a chart of the GO terms that summarise the functional content of the sample's sequences. If you wish to download the full set of results, all files are listed under the "Download" tab.</p>
 
         <h3>InterPro match summary</h3>
