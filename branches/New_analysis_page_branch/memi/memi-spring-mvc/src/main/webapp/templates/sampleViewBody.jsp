@@ -290,13 +290,14 @@
             charts).  If you wish to download the full set of results, all files are listed under the
             "Download" tab.</p>
             <%--<h3>Taxonomy analysis</h3>--%>
-        <h3>Top taxonomy Hits</h3>
+
 
         <c:choose>
         <c:when test="${empty model.sample.analysisCompleted}">
-            <b>Analysis in progress</b>
+            <div class="error">Analysis in progress</div>
         </c:when>
         <c:when test="${not empty model.sample.analysisCompleted && !model.analysisStatus.taxonomicAnalysisTabDisabled}">
+        <h3>Top taxonomy Hits</h3>
         <div id="tabs-taxchart">
             <ul>
                 <li class="selector_tab">Switch view:</li>
@@ -361,7 +362,7 @@
         </div>
             </c:when>
             <c:otherwise>
-                <b>No taxonomy result files have been associated with this sample.</b>
+                <div class="error">No taxonomy result files have been associated with this sample.</div>
             </c:otherwise>
         </c:choose>
     </div>
@@ -446,7 +447,7 @@
                 </div>
             </c:when>
             <c:otherwise>
-                <b>No functional result files have been associated with this sample.</b>
+                <div class="error">No functional result files have been associated with this sample.</div>
             </c:otherwise>
         </c:choose>
 
