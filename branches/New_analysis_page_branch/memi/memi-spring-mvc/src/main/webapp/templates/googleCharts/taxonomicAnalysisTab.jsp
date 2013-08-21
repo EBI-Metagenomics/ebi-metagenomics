@@ -21,7 +21,7 @@
                taxMatchesDataPieChart.addColumn('string', 'Phylum');
                taxMatchesDataPieChart.addColumn('string', 'Domain');
                taxMatchesDataPieChart.addColumn('number', 'Unique OTUs');
-        taxMatchesDataPieChart.addColumn('number', '% unique OTUs');
+        taxMatchesDataPieChart.addColumn('number', '%');
        //        taxMatchesData.addColumn('number', 'Count of reads assigned');
        //        taxMatchesData.addColumn('number', '% reads assigned');
                taxMatchesDataPieChart.addRows([
@@ -37,7 +37,7 @@
         taxMatchesDataColumnChart.addColumn('string', 'Phylum');
         taxMatchesDataColumnChart.addColumn('string', 'Domain');
         taxMatchesDataColumnChart.addColumn('number', 'Unique OTUs');
-        taxMatchesDataColumnChart.addColumn('number', '% unique OTUs');
+        taxMatchesDataColumnChart.addColumn('number', '%');
         //        taxMatchesData.addColumn('number', 'Count of reads assigned');
         //        taxMatchesData.addColumn('number', '% reads assigned');
         taxMatchesDataColumnChart.addRows([
@@ -50,7 +50,7 @@
                taxMatchesDataBarChart.addColumn('string', 'Phylum');
                taxMatchesDataBarChart.addColumn('string', 'Domain');
                taxMatchesDataBarChart.addColumn('number', 'Unique OTUs');
-        taxMatchesDataBarChart.addColumn('number', '% unique OTUs');
+        taxMatchesDataBarChart.addColumn('number', '%');
        //        taxMatchesData.addColumn('number', 'Count of reads assigned');
        //        taxMatchesData.addColumn('number', '% reads assigned');
                taxMatchesDataBarChart.addRows([
@@ -125,7 +125,7 @@
         taxMatchesData2.addColumn('string', 'Phylum');
         taxMatchesData2.addColumn('string', 'Domain');
         taxMatchesData2.addColumn('number', 'Unique OTUs');
-        taxMatchesData2.addColumn('number', '% unique OTUs');
+        taxMatchesData2.addColumn('number', '%');
         taxMatchesData2.addRows([
             <c:set var="addComma" value="false"/>
             <c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResult.taxonomyDataSet}" varStatus="status">
