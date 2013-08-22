@@ -35,7 +35,7 @@ function drawVisualization() {
     var stringFilter = new google.visualization.ControlWrapper({
         'controlType':'StringFilter',
         'containerId':'func_table_filter',
-        'options':{'matchType':'any', 'filterColumnIndex':'0,1', 'ui':{'label':'Filter', 'labelSeparator':':', 'ui.labelStacking':'vertical', 'ui.cssClass':'custom_col_search'}
+        'options':{'matchType':'any', 'filterColumnIndex':'0,1', 'ui':{'label':'Filter table', 'labelSeparator':':', 'ui.labelStacking':'vertical', 'ui.cssClass':'custom_col_search'}
         }
     });
 
