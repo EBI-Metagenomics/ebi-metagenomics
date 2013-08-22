@@ -1699,7 +1699,7 @@ ul.color_legend {list-style-type: square; list-style-position:inside;}
 
 /*GOOGLE CHART -TABLE  FILTER*/
 #func_dashboard, #tax_dashboard {float: left;}
-#tax_dashboard #tax_table_filter, #func_dashboard #func_table_filter {margin-left: 18px;padding-left: 9px;background-color: #E6E6E6;}
+#tax_dashboard #tax_table_filter, #func_dashboard #func_table_filter {margin-left: 18px; padding-left: 9px; background-color: #E6E6E6;}
 #tax_dashboard #tax_table_filter input, #func_dashboard #func_table_filter input {padding: 1px;margin: 3px 0;}
 
 .expandertable {float:left; margin-top: -32px; margin-left: 833px; z-index: 1;  position: relative;}
