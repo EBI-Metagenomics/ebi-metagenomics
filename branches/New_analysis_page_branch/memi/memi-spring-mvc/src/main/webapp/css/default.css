@@ -1698,9 +1698,9 @@ background-image: -webkit-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247
 ul.color_legend {list-style-type: square; list-style-position:inside;}
 
 /*GOOGLE CHART -TABLE  FILTER*/
-#func_dashboard, #tax_dashboard, #tax_dashboard_col  {float: left;}
-#tax_table_filter, #tax_table_col_filter, #func_table_filter {margin-left: 18px; padding-left: 9px; background-color: #E6E6E6;}
-#tax_table_filter input, #tax_table_col_filter input, #func_table_filter input {padding: 1px;margin: 3px 0;}
+#func_dashboard, #tax_dashboard, #tax_dashboard_col, #tax_dashboard_bar  {float: left;}
+#tax_table_filter, #tax_table_col_filter, #tax_table_bar_filter, #func_table_filter {margin-left: 18px; padding-left: 9px; background-color: #E6E6E6;}
+#tax_table_filter input, #tax_table_col_filter input, #tax_table_bar_filter input, #func_table_filter input {padding: 1px;margin: 3px 0;}
 
 .expandertable {float:left; margin-top: -32px; margin-left: 833px; z-index: 1;  position: relative;}
 #toolbar_div {display: block; float:left;}
