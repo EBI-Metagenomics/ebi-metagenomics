@@ -350,18 +350,6 @@
                      </div>
 
                 </div>
-                    <%--<div id="tax-col">--%>
-                    <%--<div class="chart_container">--%>
-                    <%--<div class="chart_container">--%>
-                    <%--<div id="tax_chart_col"></div>--%>
-                    <%--<div id="tax_table_col">--%>
-                    <%--&lt;%&ndash;<div class="tax_table_filter"></div>&ndash;%&gt;--%>
-                    <%--&lt;%&ndash;<div class="tax_table_pie"></div>&ndash;%&gt;--%>
-                    <%--</div>--%>
-
-                    <%--</div>--%>
-                    <%--</div>--%>
-                    <%--</div>--%>
 
             </div>
             <div id="tax-Krona">
