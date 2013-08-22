@@ -65,11 +65,17 @@
                    'options':{'matchType':'any', 'filterColumnIndex':'0', 'ui':{'label':'Filter table', 'labelSeparator':':', 'ui.labelStacking':'vertical', 'ui.cssClass':'custom_col_search'}
                    }
                });
-
               // Define a StringFilter control for the 'Phylum' column - Stacked column table
                var taxcolStringFilter = new google.visualization.ControlWrapper({
                    'controlType':'StringFilter',
                    'containerId':'tax_table_col_filter',
+                   'options':{'matchType':'any', 'filterColumnIndex':'0', 'ui':{'label':'Filter table', 'labelSeparator':':', 'ui.labelStacking':'vertical', 'ui.cssClass':'custom_col_search'}
+                   }
+               });
+          // Define a StringFilter control for the 'Phylum' column - Stacked column table
+               var taxbarStringFilter = new google.visualization.ControlWrapper({
+                   'controlType':'StringFilter',
+                   'containerId':'tax_table_bar_filter',
                    'options':{'matchType':'any', 'filterColumnIndex':'0', 'ui':{'label':'Filter table', 'labelSeparator':':', 'ui.labelStacking':'vertical', 'ui.cssClass':'custom_col_search'}
                    }
                });
@@ -87,30 +93,35 @@
             'options':{ allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false }
         });
 
-        // Draw the phylum table on the pie chart tab
+         // Table visualization option - Bar chart table
+        var taxbarTableOptions = new google.visualization.ChartWrapper({
+            'chartType':'Table',
+            'containerId':'tax_table_bar',
+            'options':{ allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false }
+        });
+
+        // Draw the Dashboard for the pie chart
         new google.visualization.Dashboard(document.getElementById('tax_dashboard')).
             // Configure the string filter to affect the table contents
                 bind(taxStringFilter, taxTableOptions).
             // Draw the dashboard
                 draw(taxMatchesDataPieChart);
 
-           // Draw the table for the Stacked column table
+        // Draw the Dashboard for the Stacked column
         new google.visualization.Dashboard(document.getElementById('tax_dashboard_col')).
             // Configure the string filter to affect the table contents
                 bind(taxcolStringFilter, taxcolTableOptions).
             // Draw the dashboard
                 draw(taxMatchesDataColumnChart);
 
+        // Draw the Dashboard for the Bar chart
+        new google.visualization.Dashboard(document.getElementById('tax_dashboard_bar')).
+            // Configure the string filter to affect the table contents
+                bind(taxbarStringFilter, taxbarTableOptions).
+            // Draw the dashboard
+                draw(taxMatchesDataBarChart);
 
-
-
-
-        // Draw the phylum table on the stack chart tab
-        new google.visualization.Table(document.getElementById('tax_table_col')).draw(taxMatchesDataColumnChart, { allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false});
-
-        // Draw the phylum table on the bar chart tab
-        new google.visualization.Table(document.getElementById('tax_table_bar')).draw(taxMatchesDataBarChart, { allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false});
-    }  //END function drawPhylumTable()
+ }  //END function drawPhylumTable()
 
     // DATA taxonomy Pie+Bar chart Phylum
     var phylumBarChartPieChartData = new google.visualization.DataTable();
