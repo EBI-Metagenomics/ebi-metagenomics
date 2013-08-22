@@ -1,4 +1,4 @@
-<%-- This script produces the charts (pie, bar and stack chart) and the table for the taxonomic analysis tab--%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %><%-- This script produces the charts (pie, bar and stack chart) and the table for the taxonomic analysis tab--%>
 <script type="text/javascript">
 
     //  Load the Visualization API and the chart package.
@@ -204,7 +204,7 @@
                 , '${taxonomyData.phylum}'
                 </c:forEach>],
             [''<c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResult.taxonomyDataSet}" varStatus="status">
-                , ${taxonomyData.numberOfHits / model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator}
+                , <fmt:formatNumber type="number" maxFractionDigits="3" value="${taxonomyData.numberOfHits *100/ model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator}" />
                 </c:forEach>]
         ]);
 
@@ -218,7 +218,7 @@
             'chartArea':{left:80, top:40, width:"20%", height:"86%"},
             'pieSliceBorderColor':'none',
             'vAxis':{ viewWindowMode:'maximized'}, //  important to keep viewWindowMode separated from the rest to keep the display of the value 100% on vaxis
-            'vAxis':{title:'Relative abundance', format:'#%', baselineColor:'#ccc'},
+            'vAxis':{title:'Relative abundance (%)',  baselineColor:'#ccc'},
             'isStacked':true
         };
 
@@ -258,4 +258,4 @@
     }
 </script>
 <%--Remove the filter box for taxonomy table when  the total number of phylum is less than 10--%>
-<c:if test="${fn:length(model.taxonomyAnalysisResult.taxonomyDataSet)<10}"><style>#tax_table_filter {display:none;}</style></c:if>
+<c:if test="${fn:length(model.taxonomyAnalysisResult.taxonomyDataSet)<10}"><style>#tax_table_filter, #tax_table_col_filter, #tax_table_bar_filter {display:none;}</style></c:if>
