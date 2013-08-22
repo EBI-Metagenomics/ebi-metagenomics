@@ -45,7 +45,7 @@
             <c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResult.taxonomyDataSet}" varStatus="status">
             <c:choose><c:when test="${addComma}">,</c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>['<div title="${taxonomyData.phylum}" class="_cc" style="background-color: <c:choose><c:when test="${status.index>9}">#b9b9b9</c:when><c:otherwise><c:out value="${colorCodeList[status.index]}"/></c:otherwise></c:choose>;"></div> ${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}]</c:forEach>]);
 
-                 // Taxonomy top phylum table - Bar chart
+               // Taxonomy top phylum table - Bar chart
                var taxMatchesDataBarChart = new google.visualization.DataTable();
                taxMatchesDataBarChart.addColumn('string', 'Phylum');
                taxMatchesDataBarChart.addColumn('string', 'Domain');
@@ -58,7 +58,7 @@
                    <c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResult.taxonomyDataSet}" varStatus="status">
                    <c:choose><c:when test="${addComma}">,</c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>['${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}]</c:forEach>]);
 
-               // Define a StringFilter control for the 'Phylum' column
+               // Define a StringFilter control for the 'Phylum' column - Pie chart table
                var taxStringFilter = new google.visualization.ControlWrapper({
                    'controlType':'StringFilter',
                    'containerId':'tax_table_filter',
@@ -66,12 +66,24 @@
                    }
                });
 
-
-
-        // Table visualization option
+              // Define a StringFilter control for the 'Phylum' column - Stacked column table
+               var taxcolStringFilter = new google.visualization.ControlWrapper({
+                   'controlType':'StringFilter',
+                   'containerId':'tax_table_col_filter',
+                   'options':{'matchType':'any', 'filterColumnIndex':'0', 'ui':{'label':'Filter table', 'labelSeparator':':', 'ui.labelStacking':'vertical', 'ui.cssClass':'custom_col_search'}
+                   }
+               });
+        // Table visualization option  - Pie chart table
         var taxTableOptions = new google.visualization.ChartWrapper({
             'chartType':'Table',
             'containerId':'tax_table_pie',
+            'options':{ allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false }
+        });
+
+        // Table visualization option - Stacked column table
+        var taxcolTableOptions = new google.visualization.ChartWrapper({
+            'chartType':'Table',
+            'containerId':'tax_table_col',
             'options':{ allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false }
         });
 
@@ -81,6 +93,17 @@
                 bind(taxStringFilter, taxTableOptions).
             // Draw the dashboard
                 draw(taxMatchesDataPieChart);
+
+           // Draw the table for the Stacked column table
+        new google.visualization.Dashboard(document.getElementById('tax_dashboard_col')).
+            // Configure the string filter to affect the table contents
+                bind(taxcolStringFilter, taxcolTableOptions).
+            // Draw the dashboard
+                draw(taxMatchesDataColumnChart);
+
+
+
+
 
         // Draw the phylum table on the stack chart tab
         new google.visualization.Table(document.getElementById('tax_table_col')).draw(taxMatchesDataColumnChart, { allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false});
