@@ -338,7 +338,12 @@
             <div id="tax-col">
                 <div class="chart_container">
                     <div id="tax_chart_col"></div>
-                    <div id="tax_table_col"></div>
+
+                    <div id="tax_dashboard_col">
+                           <div id="tax_table_col_filter"></div>
+                            <div id="tax_table_col"></div>
+                     </div>
+
                 </div>
                     <%--<div id="tax-col">--%>
                     <%--<div class="chart_container">--%>
