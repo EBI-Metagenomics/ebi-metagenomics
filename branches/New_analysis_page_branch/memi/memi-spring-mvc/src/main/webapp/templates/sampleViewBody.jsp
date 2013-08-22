@@ -331,7 +331,12 @@
                 <div class="chart_container">
                     <div id="tax_chart_bar_dom"></div>
                     <div id="tax_chart_bar_phy"></div>
-                    <div id="tax_table_bar"></div>
+
+                    <div id="tax_dashboard_bar">
+                                         <div id="tax_table_bar_filter"></div>
+                                          <div id="tax_table_bar"></div>
+                    </div>
+
                 </div>
             </div>
 
