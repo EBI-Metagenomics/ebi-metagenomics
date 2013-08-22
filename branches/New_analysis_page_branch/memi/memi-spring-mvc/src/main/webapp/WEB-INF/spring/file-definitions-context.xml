@@ -163,9 +163,9 @@
 
     <!--Functional data file definitions-->
 
-    <bean id="interProScanMatchesFile" autowire-candidate="false"
+    <bean id="interProScanResultFile" autowire-candidate="false"
           class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.FunctionalAnalysisFileDefinition">
-        <property name="identifier" value="INTERPROSCAN_MATCHES_FILE"/>
+        <property name="identifier" value="INTERPROSCAN_RESULT_FILE"/>
         <property name="fileNameEnding" value="_I5.tsv"/>
         <property name="description" value="InterPro matches (TSV)"/>
         <property name="downloadName" value="_InterPro.tsv"/>
@@ -206,6 +206,14 @@
         <property name="identifier" value="QUALITY_CONTROL_SUMMARY_FILE"/>
         <property name="fileNameEnding" value="_summary.png"/>
         <property name="description" value="Quality control image produced with Google chart's API."/>
+    </bean>
+
+    <bean id="interProMatchesSummaryFile" autowire-candidate="false"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.ResultFileDefinitionImpl">
+        <property name="identifier" value="INTERPRO_MATCHES_SUMMARY_FILE"/>
+        <property name="fileNameEnding" value="_summary.ipr"/>
+        <property name="description"
+                  value="InterPro summary file. This files contains all InterPro matches (entries) for a particular sample"/>
     </bean>
 
 </beans>

@@ -1,5 +1,8 @@
 package uk.ac.ebi.interpro.metagenomics.memi.core;
 
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.FileDefinitionId;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.IResultFileDefinition;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,21 +23,8 @@ public class MemiPropertyContainer {
 
     private String enaMasterUserEmail;
 
-    /**
-     * Maps string identifiers and file names (like Krona chart file names).
-     * e.g.
-     * <p/>
-     * TAXONOMY_CHART_FULL_VERSION->Krona_chart_taxonomy.html
-     * TAXONOMY_CHART_SLIM_VERSION->Krona_chart_taxonomy_simple.html
-     */
-    private Map<String, String> resultFileNameMap = new HashMap<String, String>();
-
-    /**
-     * Collection of identifiers which is used for the Krona charts file name map.
-     */
-    public enum FileNameIdentifier {
-        TAXONOMY_CHART_FULL_VERSION, TAXONOMY_CHART_SLIM_VERSION, FUNCTION_CHART_FULL_VERSION, FUNCTION_CHART_SLIM_VERSION,PHYLUM_COUNTS;
-    }
+    /* Map of result file definitions. */
+    private Map<FileDefinitionId, IResultFileDefinition> resultFileDefinitionMap = new HashMap<FileDefinitionId, IResultFileDefinition>();
 
     MemiPropertyContainer() {
     }
@@ -63,11 +53,11 @@ public class MemiPropertyContainer {
         this.enaMasterUserEmail = enaMasterUserEmail;
     }
 
-    public void setResultFileNameMap(Map<String, String> resultFileNameMap) {
-        this.resultFileNameMap = resultFileNameMap;
+    public IResultFileDefinition getResultFileDefinition(FileDefinitionId fileDefinitionId) {
+        return resultFileDefinitionMap.get(fileDefinitionId);
     }
 
-    public String getResultFileName(FileNameIdentifier identifier) {
-        return resultFileNameMap.get(identifier.name());
+    public void setResultFileDefinitionMap(Map<FileDefinitionId, IResultFileDefinition> resultFileDefinitionMap) {
+        this.resultFileDefinitionMap = resultFileDefinitionMap;
     }
 }

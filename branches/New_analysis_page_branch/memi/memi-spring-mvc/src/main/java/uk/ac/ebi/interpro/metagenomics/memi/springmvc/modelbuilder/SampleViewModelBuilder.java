@@ -59,8 +59,6 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
 
     private final List<String> archivedSequences;
 
-    private final String resultFilesDirectoryPath;
-
     private List<Publication> relatedLinks;
 
     private List<Publication> relatedPublications;
@@ -101,15 +99,12 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
         //
         this.relatedLinks = new ArrayList<Publication>();
         this.relatedPublications = new ArrayList<Publication>();
-        //
-        final String directoryName = emgFile.getFileIDInUpperCase().replace('.', '_');
-        this.resultFilesDirectoryPath = propertyContainer.getPathToAnalysisDirectory() + directoryName;
     }
 
     @Override
     public SampleViewModel getModel() {
         log.info("Building instance of " + SampleViewModel.class + "...");
-        final List<InterProEntry> interProEntries = getListOfInterProEntries(emgFile);
+        final List<InterProEntry> interProEntries = getListOfInterProEntries();
         final boolean isHostAssociated = isHostAssociated();
         final Submitter submitter = getSessionSubmitter(sessionMgr);
 
@@ -121,8 +116,7 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
 
         if (emgFile != null) {
             //Get GO results
-            final Map<Class, List<AbstractGOTerm>> goData = loadGODataFromCSV(propertyContainer.getPathToAnalysisDirectory(),
-                    emgFile);
+            final Map<Class, List<AbstractGOTerm>> goData = loadGODataFromCSV();
             final SampleViewModel sampleViewModel = new SampleViewModel(submitter,
                     pageTitle,
                     breadcrumbs,
@@ -140,7 +134,7 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
                     sampleAnnotations,
                     analysisStatus);
             //Load and set taxonomy result data
-            sampleViewModel.setTaxonomyAnalysisResult(loadTaxonomyDataFromCSV(propertyContainer.getPathToAnalysisDirectory()));
+            sampleViewModel.setTaxonomyAnalysisResult(loadTaxonomyDataFromCSV());
             return sampleViewModel;
         } else {
             return new SampleViewModel(submitter,
@@ -186,7 +180,7 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
             File fileObject = FileObjectBuilder.createFileObject(emgFile, propertyContainer, fileDefinition);
             boolean doesExist = FileExistenceChecker.checkFileExistence(fileObject);
             if (doesExist) {
-                if (fileDefinition.getIdentifier().equalsIgnoreCase(FileDefinitionId.INTERPROSCAN_MATCHES_FILE.toString())) {
+                if (fileDefinition.getIdentifier().equalsIgnoreCase(FileDefinitionId.INTERPROSCAN_RESULT_FILE.toString())) {
                     isInterProMatchSectionDisabled = false;
                 } else if (fileDefinition.getIdentifier().equalsIgnoreCase(FileDefinitionId.GO_SLIM_FILE.toString())) {
                     isGoSectionDisabled = false;
@@ -221,19 +215,18 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
     /**
      * Loads taxonomy result data from a CSV file, which should be located
      *
-     * @param pathToAnalysisDirectory
-     * @return
+     * @return TaxonomyAnalysisResult.
      */
 
-    private TaxonomyAnalysisResult loadTaxonomyDataFromCSV(final String pathToAnalysisDirectory) {
+    private TaxonomyAnalysisResult loadTaxonomyDataFromCSV() {
         final List<TaxonomyData> taxonomyDataSet = new ArrayList<TaxonomyData>();
 
-        File phylumFile = new File(resultFilesDirectoryPath + propertyContainer.getResultFileName(MemiPropertyContainer.FileNameIdentifier.PHYLUM_COUNTS));
+        File phylumFile = FileObjectBuilder.createFileObject(emgFile, propertyContainer, propertyContainer.getResultFileDefinition(FileDefinitionId.KINGDOM_COUNTS_FILE));
         if (!phylumFile.exists()) {
             log.warn("Deactivating taxonomy result tab, because file " + phylumFile.getAbsolutePath() + " doesn't exist!");
         } else {
             //Get the data
-            List<String[]> data = getRows(phylumFile, '\t');
+            List<String[]> data = getRawData(phylumFile, '\t');
             for (String[] row : data) {
                 try {
                     String superKingdom = row[0];
@@ -269,9 +262,14 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
         return false;
     }
 
-    private List<InterProEntry> getListOfInterProEntries(EmgFile emgFile) {
-        List<String[]> rows = getRawData(emgFile, "_summary.ipr", ',');
-        return loadInterProMatchesFromCSV(rows);
+    private List<InterProEntry> getListOfInterProEntries() {
+        File interProMatchesSummaryFile = FileObjectBuilder.createFileObject(emgFile, propertyContainer, propertyContainer.getResultFileDefinition(FileDefinitionId.INTERPRO_MATCHES_SUMMARY_FILE));
+        if (FileExistenceChecker.checkFileExistence(interProMatchesSummaryFile)) {
+            List<String[]> rows = getRawData(interProMatchesSummaryFile, ',');
+            return loadInterProMatchesFromCSV(rows);
+        } else {
+            return new ArrayList<InterProEntry>();
+        }
     }
 
 
@@ -312,165 +310,54 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
         return entryDesc.replaceAll("\'", "\\\\'");
     }
 
-    private static String getHBarChartURL(Class clazz, Map<Class, List<AbstractGOTerm>> goData) {
-
-        List<Integer> data = getGOData(clazz, goData);
-        List<String> labels = getGOLabels(clazz, goData);
-        Properties props = new Properties();
-
-        props.put(GoogleChartFactory.CHART_MARGIN, "0,40,0,0");
-        props.put(GoogleChartFactory.CHART_SIZE, "300x440");
-        props.put(GoogleChartFactory.CHART_COLOUR, "ff0a00,ff4700,ff4700,ffb444,ffb444,ffd088,ffd088," +
-                "ffebcc,b8b082,b8b082,b8b082,b8b082,b8b082,b8b082,b8b082,b8b082");
-        props.put("chxt", "x");
-        props.put("chxs", "0,ffffff,0,0,_");
-
-        props.put("chds", "0,600");
-        props.put("chxr", "0,0,600");
-        props.put("chxs", "0,ffffff,0,0,_");
-
-        return GoogleChartFactory.buildHorizontalBarChartURL(props, data, labels);
-    }
-
-    private static List<Integer> getGOData(Class clazz, Map<Class, List<AbstractGOTerm>> goData) {
-        List<Integer> result = new ArrayList<Integer>();
-        List<AbstractGOTerm> goTerms = null;
-        if (clazz.equals(BiologicalProcessGOTerm.class)) {
-            goTerms = goData.get(BiologicalProcessGOTerm.class);
-        } else if (clazz.equals(CellularComponentGOTerm.class)) {
-            goTerms = goData.get(CellularComponentGOTerm.class);
-        } else {
-            goTerms = goData.get(MolecularFunctionGOTerm.class);
-        }
-        if (goTerms != null) {
-            //the second iteration is to calculate the pie chart data
-            for (AbstractGOTerm term : goTerms) {
-                result.add(term.getNumberOfMatches());
-            }
-        }
-        return result;
-    }
-
-    private static List<String> getGOLabels(Class clazz, Map<Class, List<AbstractGOTerm>> goData) {
-        List<String> result = new ArrayList<String>();
-        List<AbstractGOTerm> goTerms = null;
-        if (clazz.equals(BiologicalProcessGOTerm.class)) {
-            goTerms = goData.get(BiologicalProcessGOTerm.class);
-        } else if (clazz.equals(CellularComponentGOTerm.class)) {
-            goTerms = goData.get(CellularComponentGOTerm.class);
-        } else {
-            goTerms = goData.get(MolecularFunctionGOTerm.class);
-        }
-        if (goTerms != null) {
-            //the second iteration is to calculate the pie chart data
-            for (AbstractGOTerm term : goTerms) {
-                result.add(term.toString());
-            }
-        }
-        return result;
-    }
-
-    private String getBarChartURL(String classPathToStatsFile, EmgFile emgFile) {
-        List<Integer> chartData = loadStatsFromCSV(classPathToStatsFile, emgFile);
-        if (chartData != null && chartData.size() > 0) {
-            Properties props = new Properties();
-            props.put(GoogleChartFactory.CHART_TYPE, "bhs");
-            props.put(GoogleChartFactory.CHART_SIZE, "450x200");
-            props.put(GoogleChartFactory.CHART_AXES, "y");
-            props.put(GoogleChartFactory.CHART_LEGEND_TEXT, "total number of submitted reads|total number of processed reads|reads with at least 1 pCDS|reads with at least 1 InterPro match");
-            props.put(GoogleChartFactory.CHART_COLOUR, "FF0000|00FF00|0000FF|FFFF10");
-            props.put(GoogleChartFactory.CHART_MARKER, "N,000000,0,-1,11");
-            props.put(GoogleChartFactory.CHART_DATA_SCALE, "0," + chartData.get(0));
-            return GoogleChartFactory.buildChartURL(props, chartData);
-        }
-        return null;
-    }
-
-    private List<Integer> loadStatsFromCSV(String classPathToStatsFile, EmgFile emgFile) {
-        List<Integer> result = new ArrayList<Integer>();
-
-        log.info("Processing summary file...");
-        List<String[]> rows = getRawData(emgFile, "_summary", ',');
-
-        if (rows != null && rows.size() >= 6) {
-            int numSubmittedSeqs = getValueOfRow(rows, 0);
-            int numSeqsOfProcessedSeqs = getValueOfRow(rows, 3);
-            int numSeqsWithPredicatedCDS = getValueOfRow(rows, 4);
-            int numSeqsWithInterProScanMatch = getValueOfRow(rows, 5);
-            result.add(numSubmittedSeqs);
-            result.add(numSeqsOfProcessedSeqs);
-            result.add(numSeqsWithPredicatedCDS);
-            result.add(numSeqsWithInterProScanMatch);
-        } else {
-            log.warn("Didn't get any data from summary file. There might be some fundamental change to this file" +
-                    "(maybe in the near past), which affects this parsing process!");
-        }
-        return result;
-    }
-
-    private static int getValueOfRow(List<String[]> rows, int i) {
-        String[] row = rows.get(i);
-        if (row.length > 1) {
-            return Integer.parseInt(row[1]);
-        }
-        return -1;
-    }
-
-    private Map<Class, List<AbstractGOTerm>> loadGODataFromCSV(String classPathToStatsFile, EmgFile emgFile) {
+    private Map<Class, List<AbstractGOTerm>> loadGODataFromCSV() {
         Map<Class, List<AbstractGOTerm>> result = new Hashtable<Class, List<AbstractGOTerm>>();
         result.put(BiologicalProcessGOTerm.class, new ArrayList<AbstractGOTerm>());
         result.put(CellularComponentGOTerm.class, new ArrayList<AbstractGOTerm>());
         result.put(MolecularFunctionGOTerm.class, new ArrayList<AbstractGOTerm>());
 
         log.info("Processing GO slim file...");
-        List<String[]> rows = getRawData(emgFile, "_summary.go_slim", ',');
-
-        if (rows != null) {
-            for (String[] row : rows) {
-                if (row.length == 4) {
-                    String ontology = row[2];
-                    if (ontology != null && ontology.trim().length() > 0) {
-                        String accession = row[0];
-                        String synonym = row[1];
-                        int numberOfMatches = Integer.parseInt(row[3]);
-                        if (ontology.equals("biological_process")) {
-                            BiologicalProcessGOTerm instance = new BiologicalProcessGOTerm(accession,
-                                    synonym, numberOfMatches);
-                            result.get(BiologicalProcessGOTerm.class).add(instance);
-                        } else if (ontology.equals("cellular_component")) {
-                            CellularComponentGOTerm instance = new CellularComponentGOTerm(accession,
-                                    synonym, numberOfMatches);
-                            result.get(CellularComponentGOTerm.class).add(instance);
-                        } else {
-                            MolecularFunctionGOTerm instance = new MolecularFunctionGOTerm(accession,
-                                    synonym, numberOfMatches);
-                            result.get(MolecularFunctionGOTerm.class).add(instance);
+        File goSlimFile = FileObjectBuilder.createFileObject(emgFile, propertyContainer, propertyContainer.getResultFileDefinition(FileDefinitionId.GO_SLIM_FILE));
+        if (FileExistenceChecker.checkFileExistence(goSlimFile)) {
+            List<String[]> rows = getRawData(goSlimFile, ',');
+            if (rows != null) {
+                for (String[] row : rows) {
+                    if (row.length == 4) {
+                        String ontology = row[2];
+                        if (ontology != null && ontology.trim().length() > 0) {
+                            String accession = row[0];
+                            String synonym = row[1];
+                            int numberOfMatches = Integer.parseInt(row[3]);
+                            if (ontology.equals("biological_process")) {
+                                BiologicalProcessGOTerm instance = new BiologicalProcessGOTerm(accession,
+                                        synonym, numberOfMatches);
+                                result.get(BiologicalProcessGOTerm.class).add(instance);
+                            } else if (ontology.equals("cellular_component")) {
+                                CellularComponentGOTerm instance = new CellularComponentGOTerm(accession,
+                                        synonym, numberOfMatches);
+                                result.get(CellularComponentGOTerm.class).add(instance);
+                            } else {
+                                MolecularFunctionGOTerm instance = new MolecularFunctionGOTerm(accession,
+                                        synonym, numberOfMatches);
+                                result.get(MolecularFunctionGOTerm.class).add(instance);
+                            }
                         }
+                    } else {
+                        log.warn("Row size is not the expected one.");
                     }
-                } else {
-                    log.warn("Row size is not the expected one.");
                 }
+            } else {
+                log.warn("Didn't get any data from GO term file. There might be some fundamental change to this file" +
+                        "(maybe in the near past), which affects this parsing process!");
             }
-        } else {
-            log.warn("Didn't get any data from GO term file. There might be some fundamental change to this file" +
-                    "(maybe in the near past), which affects this parsing process!");
         }
         return result;
     }
 
     /**
      * Reads raw data from the specified file by using a CSV reader. Possible to specify different delimiters.
-     *
-     * @param emgFile
-     * @return
      */
-    private List<String[]> getRawData(EmgFile emgFile, String fileExtension, char delimiter) {
-        String directoryName = emgFile.getFileIDInUpperCase().replace('.', '_');
-        File file = new File(resultFilesDirectoryPath + '/' + directoryName + fileExtension);
-        return getRows(file, delimiter);
-    }
-
-    private List<String[]> getRows(final File file, final char delimiter) {
+    private List<String[]> getRawData(final File file, final char delimiter) {
         List<String[]> rows = null;
         CSVReader reader = null;
         try {

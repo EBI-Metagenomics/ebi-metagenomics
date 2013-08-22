@@ -41,27 +41,4 @@ public class EmgFile {
     public String getFileName() {
         return fileName;
     }
-
-    public enum ResultFileType {
-        GO_SLIM("_summary.go_slim"),
-        GO("_summary.go"),
-        MASKED_FASTA("_masked.fasta"),
-        CDS_FAA("_CDS.faa"),
-        I5_TSV("_I5.tsv"),
-        IPR("_summary.ipr"),
-        IPR_HITS("_IPRhits.fasta"),
-        TAX_ANALYSIS_BIOM_FILE(".biom"),
-        TAX_ANALYSIS_TREE_FILE(".tre"),
-        TAX_ANALYSIS_TSV_FILE("_rRNAFiltered.fasta_rep_set_tax_assignments.txt");
-
-        private String fileNameEnd;
-
-        private ResultFileType(String fileNameEnd) {
-            this.fileNameEnd = fileNameEnd;
-        }
-
-        public String getFileNameEnd() {
-            return fileNameEnd;
-        }
-    }
 }

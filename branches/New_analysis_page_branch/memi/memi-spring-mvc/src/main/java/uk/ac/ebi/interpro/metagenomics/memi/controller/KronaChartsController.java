@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgFile;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
+import uk.ac.ebi.interpro.metagenomics.memi.services.FileObjectBuilder;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.FileDefinitionId;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
@@ -32,8 +34,6 @@ public class KronaChartsController extends AbstractSampleViewController {
     @RequestMapping(value = '/' + SampleViewController.VIEW_NAME + "/{sampleId}/krona")
     public void doGetKronaChart(@PathVariable final String sampleId,
                                 @RequestParam(required = false, value = "taxonomy", defaultValue = "false") final boolean taxonomy,
-                                @RequestParam(required = false, value = "function", defaultValue = "false") final boolean function,
-                                @RequestParam(required = false, value = "slim", defaultValue = "false") final boolean slim,
                                 final ModelMap model,
                                 final HttpServletResponse response) throws IOException {
         response.setContentType("text/html;charset=utf-8");
@@ -45,21 +45,12 @@ public class KronaChartsController extends AbstractSampleViewController {
             if (isAccessible(sample)) {
                 log.debug("Building file path to the Krona HTML file...");
                 EmgFile emgFile = getEmgFile(sample.getId());
-                final String directoryName = emgFile.getFileIDInUpperCase().replace('.', '_');
-                final String rootDirPathName = propertyContainer.getPathToAnalysisDirectory() + directoryName;
-                final String filePath;
-                if (taxonomy && slim && !function) {
-                    filePath = rootDirPathName + propertyContainer.getResultFileName(MemiPropertyContainer.FileNameIdentifier.TAXONOMY_CHART_SLIM_VERSION);
-                } else if (taxonomy && !slim && !function) {
-                    filePath = rootDirPathName + propertyContainer.getResultFileName(MemiPropertyContainer.FileNameIdentifier.TAXONOMY_CHART_FULL_VERSION);
-                } else if (function && slim && !taxonomy) {
-                    filePath = rootDirPathName + propertyContainer.getResultFileName(MemiPropertyContainer.FileNameIdentifier.FUNCTION_CHART_SLIM_VERSION);
-                } else if (function && !slim && !taxonomy) {
-                    filePath = rootDirPathName + propertyContainer.getResultFileName(MemiPropertyContainer.FileNameIdentifier.FUNCTION_CHART_FULL_VERSION);
+                File fileToStream;
+                if (taxonomy && emgFile != null) {
+                    fileToStream = FileObjectBuilder.createFileObject(emgFile, propertyContainer, propertyContainer.getResultFileDefinition(FileDefinitionId.KRONA_HTML_FILE));
                 } else {
                     return;
                 }
-                File fileToStream = new File(filePath);
                 log.debug("Checking if Krona result file does exit before streaming it...");
                 if (!fileToStream.exists()) {
                     log.warn(fileToStream.getAbsolutePath() + " doesn't exist!");
@@ -68,7 +59,7 @@ public class KronaChartsController extends AbstractSampleViewController {
                     log.debug("Streaming Krona chart...");
                     ServletOutputStream servletOut = response.getOutputStream();
                     byte[] buffer = new byte[4096];
-                    InputStream inputStream = new FileInputStream(new File(filePath));
+                    InputStream inputStream = new FileInputStream(fileToStream);
                     int contentLengthCounter = 0;
                     int read;
                     while ((read = inputStream.read(buffer)) != -1) {

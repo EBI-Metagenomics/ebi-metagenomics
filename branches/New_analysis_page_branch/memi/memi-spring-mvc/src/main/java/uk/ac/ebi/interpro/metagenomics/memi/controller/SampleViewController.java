@@ -94,7 +94,7 @@ public class SampleViewController extends AbstractSampleViewController {
     @RequestMapping(value = "/doExportI5TSVFile", method = RequestMethod.GET)
     public ModelAndView doExportI5File(@PathVariable final String sampleId,
                                        final HttpServletResponse response, final HttpServletRequest request) {
-        DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(FileDefinitionId.INTERPROSCAN_MATCHES_FILE.name());
+        DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(FileDefinitionId.INTERPROSCAN_RESULT_FILE.name());
         return handleExport(sampleId, response, request, fileDefinition);
     }
 
