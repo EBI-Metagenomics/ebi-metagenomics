@@ -52,7 +52,7 @@ public class TaxonomyAnalysisResult extends AnalysisResult {
      * Used to set the colors option for the stack chart
      */
     public String getColorCodeForStackChart() {
-        StringBuilder result = new StringBuilder("'#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff'");
+        StringBuilder result = new StringBuilder("'#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#dabe88'");
         if (taxonomyDataSet.size() > 10) {
             for (int i = 0; i < taxonomyDataSet.size() - 10; i++) {
                 result.append(",'#ccc'");
@@ -67,7 +67,7 @@ public class TaxonomyAnalysisResult extends AnalysisResult {
      * Used to set the colors option for the pie chart.
      */
     public String getColorCodeForPieChart() {
-        StringBuilder sb = new StringBuilder("'#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff'");
+        StringBuilder sb = new StringBuilder("'#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#dabe88'");
         if (taxonomyDataSet.size() > 10) {
             for (int i = 0; i < taxonomyDataSet.size() - 10; i++) {
                 sb.append(",'#ccc'");
@@ -157,7 +157,7 @@ public class TaxonomyAnalysisResult extends AnalysisResult {
         colors.add("ff9655");
         colors.add("fff263");
         colors.add("6af9c4");
-        colors.add("b2deff");
+        colors.add("dabe88");
         return colors;
     }
 
