@@ -178,16 +178,14 @@
         var options = {'title':'${phylumCompositionTitle}',
             'titleTextStyle':{fontSize:12},
             'colors':[${model.taxonomyAnalysisResult.colorCodeForStackChart}],
-//            'colors':['#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#b2deff', '#ccc', '#ccc', '#ccc', '#ccc', '#ccc', '#ccc', '#ccc'],
             'width':320,
-            'height':470,
+            'height':420,
             'legend':{position:'right', textStyle:{fontSize:10}},
             'chartArea':{left:80, top:40, width:"20%", height:"86%"},
             'pieSliceBorderColor':'none',
-            'vAxis':{ viewWindowMode:'maximized'}, //        important to keep viewWindowMode separated from the rest to keep the display of the value 100% on vaxis
+            'vAxis':{ viewWindowMode:'maximized'}, //  important to keep viewWindowMode separated from the rest to keep the display of the value 100% on vaxis
             'vAxis':{title:'Relative abundance', format:'#%', baselineColor:'#ccc'},
             'isStacked':true
-            <%--'sliceVisibilityThreshold':${model.taxonomyAnalysisResult.sliceVisibilityThresholdNumerator / model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator}--%>
         };
 
         var phylumStackChart = new google.visualization.ColumnChart(document.getElementById('tax_chart_col'));
