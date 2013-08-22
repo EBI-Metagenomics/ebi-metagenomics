@@ -18,7 +18,7 @@
     colorCodeList.add("#ff9655");
     colorCodeList.add("#fff263");
     colorCodeList.add("#6af9c4");
-    colorCodeList.add("#b2deff");
+    colorCodeList.add("#dabe88");
     pageContext.setAttribute("colorCodeList", colorCodeList);
 %>
 <%--<script type="text/javascript">--%>
