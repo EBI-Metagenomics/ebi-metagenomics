@@ -1701,8 +1701,8 @@ ul.color_legend {list-style-type: square; list-style-position:inside;}
 #func_dashboard, #tax_dashboard {float: left;}
 #func_dashboard #func_table_filter {position: absolute;z-index: 1;left:1px;}
 #func_dashboard #func_table_filter input {padding: 1px;margin-top: 6px;}
-#tax_dashboard #tax_table_filter {margin-left:18px;}
-#tax_dashboard #tax_table_filter input {padding: 1px;margin-top: 4px;}
+#tax_dashboard #tax_table_filter {margin-left: 18px;padding-left: 9px;background-color: #ccc;}
+#tax_dashboard #tax_table_filter input {padding: 1px;margin: 3px 0;}
 
 .expandertable {float:left; margin-top: -32px; margin-left: 833px; z-index: 1;  position: relative;}
 #toolbar_div {display: block; float:left;}
