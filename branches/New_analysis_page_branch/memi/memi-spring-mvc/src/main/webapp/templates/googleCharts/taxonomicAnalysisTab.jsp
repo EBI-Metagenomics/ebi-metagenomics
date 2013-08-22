@@ -62,7 +62,7 @@
                var taxStringFilter = new google.visualization.ControlWrapper({
                    'controlType':'StringFilter',
                    'containerId':'tax_table_filter',
-                   'options':{'matchType':'any', 'filterColumnIndex':'0', 'ui':{'label':'Filter', 'labelSeparator':':', 'ui.labelStacking':'vertical', 'ui.cssClass':'custom_col_search'}
+                   'options':{'matchType':'any', 'filterColumnIndex':'0', 'ui':{'label':'Filter table', 'labelSeparator':':', 'ui.labelStacking':'vertical', 'ui.cssClass':'custom_col_search'}
                    }
                });
 
