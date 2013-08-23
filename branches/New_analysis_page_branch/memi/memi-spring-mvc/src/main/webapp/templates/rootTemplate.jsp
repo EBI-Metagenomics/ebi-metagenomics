@@ -171,19 +171,9 @@
 
     <noscript>
         <style type="text/css">
-            #script_feedbackLink {
-                display: none;
-            }
-
-            #script_loginLink {
-                display: none;
-            }
-
-            #mod4 {
-                display: none;
-            }
-
-                /* remove one slide for carousel for no java */
+            #script_feedbackLink {display: none;}/*remove the feedback button when no javascript*/
+            #script_loginLink {display: none;}  /*remove the login button when no javascript*/
+            #mod4 {display: none;} /* remove the last item - jumping line - of the carousel when no javascript */
         </style>
     </noscript>
 </head>
