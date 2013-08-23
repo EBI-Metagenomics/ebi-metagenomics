@@ -86,26 +86,6 @@ div#local-masthead ul li.active-trail a:link, div#local-masthead ul li.active-tr
 div#local-masthead ul li.active, div#local-masthead ul li.active-trail { background-color: #111; }  /*style not defined in mitigation*/
 /*/change to ebi-mitigation.css*/
 /*imported from ebi-visual.css*/
-@font-face {
-		font-family: 'EBI-Generic';
-		src:url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.eot'); /*was linked to ../../../fonts/EBI-Generic/fonts/EBI-Generic.eot*/
-		src:url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.eot?#iefix') format('embedded-opentype'),
-			url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.woff') format('woff'),
-			url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.svg#EBI-Generic') format('svg'),
-			url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.ttf') format('truetype');
-		font-weight: normal;
-		font-style: normal;
-	}
-
-@font-face{font-family:'EBI-Functional';src:url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.eot');src:url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.eot?#iefix') format('embedded-opentype'),
-url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.woff') format('woff'),
-local('☺'),
-url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.svg#EBI-Functional') format('svg'),
-url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.ttf') format('truetype');font-weight:normal;font-style:normal}
-
-.icon {text-decoration: none; font-style: normal;}
-.icon-functional:before {font-family: 'EBI-Functional'; font-size: 100%; color: #bbb; content: attr(data-icon);margin: 0 0.3em 0 0; }
-.icon-static:before, .icon-generic:before { font-family: 'EBI-Generic'; /* font-size: 123.1%; */ font-size: 100%;  color: #bbb;	content: attr(data-icon); margin: 0 0.3em 0 0; }
 /*/from ebi-visual.css*/
 
 .icon-generic:before {color: #3b4043;}
@@ -947,7 +927,7 @@ min-height:440px;
 padding: 0 9px 9px 9px;
 }
 
-#list-data-study h3, #list-data-sample h3, #list-news h3 {font-size:131%;color:#445668;  /*was  #7c8c99*/margin: 1em 0px; /*padding:0;*/font-weight: bold;}
+#list-data-study h3, #list-data-sample h3, #list-news h3 {font-size:123%;color:#445668;  /*was  #7c8c99*/margin: 1em 0px; /*padding:0;*/font-weight: bold;}
 
 /*#list-data-sample, #list-news {*/
 /*margin-left:14px;*/
@@ -1243,12 +1223,11 @@ display:block;
 
 #feedback_form label,  #feedback_form_no label {font-weight:bold;font-size:110%;color:#445668;}
 #login_form label, #sub_form label {font-weight:bold;font-size:110%;color:#605F5F;}
-
+#login_form label {display:block;}
 
 #feedback_form #required, #feedback_form_no #required,  #sub_form  #required  {background: url(../img/ico_form_required.png) no-repeat right center; padding-right:14px; border: 0px red solid; zoom:1; /* for IE7 and IE6 to visualise the span and background without content*/}
 
 label.error, span.error, #feedback_form label.error, #feedback_form_no label.error, #login_form label.error {
-display:block;
 font-weight:normal;
 color: #ff0000;
 font-size:100%;
@@ -1258,6 +1237,9 @@ margin:7px 2px;
 clear:left;
 }
 
+label.error  {border:none; display:block;}
+
+
 input.error, textarea.error {
 background: #FFCFCF url(../img/ico_form_cancel.png) no-repeat right top;
 color: #8C302C;
@@ -1265,7 +1247,8 @@ border:1px #ff918e solid;
 margin:0;
 }
 
-.error {background-color: #FFCFCF;color: #8C302C;border:1px #ff918e solid; margin: 0px auto;font-size: 118%; margin-top:27px;padding: 14px;width: 712px;
+.msg_error {
+background-color: #FFCFCF; color: #8C302C;border:1px #ff918e solid; margin: 0px auto;font-size: 118%; margin-top:27px;padding: 14px;width: 712px;
 -moz-border-radius: 7px;
 -khtml-border-radius: 7px;
 -webkit-border-radius: 7px;
@@ -1345,7 +1328,7 @@ height:140px;
 
 .sub {display:block;overflow:auto;margin: 9px;}
 .sub_log, .sub_sign {-moz-border-radius: 20px;-khtml-border-radius: 20px;-webkit-border-radius: 20px;border-radius: 20px;float: left; display:block; border: 1px solid #e5e5e5;}
-.sub_log {width:340px; padding:0 14px;}
+.sub_log {width:330px; padding:0 14px;}
 .sub_sign {width:260px; padding:0 14px 14px 14px; margin-left:14px; text-align:center;}
 .sub_warn, .sub_ask  {display: block; padding: 14px; width: 712px; -moz-border-radius: 7px;-khtml-border-radius: 7px;-webkit-border-radius: 7px;border-radius: 7px;}
 .sub_warn { font-size: 110%;margin-bottom: 14px;color: #8c302c; background: #faefee;}
