@@ -139,7 +139,7 @@ function drawBiologicalProcessBarChart() {
         </c:forEach>
     ]);
     // GO TERM bar Biological Process
-    var options = {'title':'Biological process', 'titleTextStyle':{fontSize:12}, 'colors':['#058dc7'], 'width':330, 'height':600, 'chartArea':{left:220, top:40, width:"100%", height:"100%"}, 'vAxis':{textStyle:{fontSize:10}}, 'hAxis':{textPosition:'none', gridlines:{color:'white'}}, 'bar':{groupWidth:8}, 'legend':'none'
+    var options = {'title':'Biological process', 'titleTextStyle':{fontSize:12}, 'colors':['#058dc7'], 'width':360, 'height':600, 'chartArea':{left:250, top:40, width:"100%", height:"100%"}, 'vAxis':{textStyle:{fontSize:10}}, 'hAxis':{textPosition:'none', gridlines:{color:'white'}}, 'bar':{groupWidth:8}, 'legend':'none'
 //        'colors':['#5f8694'],
 //        'vAxis':{'textPosition':'in'},
     };
@@ -197,8 +197,8 @@ function drawMolecularFunctionBarChart() {
     ]);
 
     // GO TERM bar Molecular Function
-    var options = {'title':'Molecular function', 'titleTextStyle':{fontSize:12}, 'colors':['#50b432'], 'width':300, 'height':600, 'chartArea':{left:170, top:40, width:"100%", height:"100%"}, 'vAxis':{textStyle:{fontSize:10}}, 'hAxis':{textPosition:'none', gridlines:{color:'white'}}, 'bar':{groupWidth:8}, 'legend':'none'
-//        'colors':['#91d450'], 'width':340, 'vAxis':{'textPosition':'in'},
+    var options = {'title':'Molecular function', 'titleTextStyle':{fontSize:12}, 'colors':['#50b432'], 'width':360, 'height':600, 'chartArea':{left:230, top:40, width:"100%", height:"100%"}, 'vAxis':{textStyle:{fontSize:10}}, 'hAxis':{textPosition:'none', gridlines:{color:'white'}}, 'bar':{groupWidth:8}, 'legend':'none'
+//        'colors':['#91d450'], 'width':300, 'vAxis':{'textPosition':'in'},
     };
 
     var barChart = new google.visualization.BarChart(document.getElementById('func_chart_bar_go_mf'));
