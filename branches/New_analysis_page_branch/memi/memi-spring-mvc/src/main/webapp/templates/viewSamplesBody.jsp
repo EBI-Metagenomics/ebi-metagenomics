@@ -179,7 +179,7 @@
             </table>
         </c:when>
         <c:otherwise>
-            <div class="error">No data matching your search</div>
+            <div class="msg_error">No data matching your search</div>
         </c:otherwise>
     </c:choose>
 </div>
