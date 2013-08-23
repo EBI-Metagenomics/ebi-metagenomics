@@ -294,7 +294,7 @@
 
         <c:choose>
         <c:when test="${empty model.sample.analysisCompleted}">
-            <div class="error">Analysis in progress</div>
+            <div class="msg_error">Analysis in progress</div> <%--Can this happen?--%>
         </c:when>
         <c:when test="${not empty model.sample.analysisCompleted && !model.analysisStatus.taxonomicAnalysisTabDisabled}">
         <h3>Top taxonomy Hits</h3>
@@ -360,7 +360,7 @@
         </div>
             </c:when>
             <c:otherwise>
-                <div class="error">No taxonomy result files have been associated with this sample.</div>
+                <div class="msg_error">No taxonomy result files have been associated with this sample.</div>
             </c:otherwise>
         </c:choose>
     </div>
@@ -445,7 +445,7 @@
                 </div>
             </c:when>
             <c:otherwise>
-                <div class="error">No functional result files have been associated with this sample.</div>
+                <div class="msg_error">No functional result files have been associated with this sample.</div>
             </c:otherwise>
         </c:choose>
 
