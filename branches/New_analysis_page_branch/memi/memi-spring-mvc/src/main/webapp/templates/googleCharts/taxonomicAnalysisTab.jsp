@@ -163,12 +163,15 @@
             'titleTextStyle':{fontSize:12},
             'colors':[${model.taxonomyAnalysisResult.colorCodeForPieChart}],
 //Krona style 'colors':['#d47f7f','#d1a575','#d4c97f','#99d47f','#7fd4a7','#7fc3d4','#7f8ad4','#a77fd4','#d47fd3','#d47faf','#ccc','#ccc','#ccc'],
-            'width':290,
-            'height':220,
+            'width':250,
+            'height':290,
+            'pieSliceTextStyle':{bold: true, color:'white'},
+//            'pieSliceText:'none',
             'legend':'none',
-            'chartArea':{left:10, top:30, width:"100%", height:"100%"},
+            'chartArea':{left:20, top:30, width:"82%", height:"100%"},
 //          WITH CAPTION 'legend':{position:'right', fontSize:10}, 'chartArea':{left:10, top:30, width:"100%", height:"100%"},
             'pieSliceBorderColor':'none',
+//            'backgroundColor':'red',
             'sliceVisibilityThreshold':${model.taxonomyAnalysisResult.sliceVisibilityThresholdNumerator / model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator}
         };
 
@@ -193,7 +196,7 @@
 
     function drawPhylumBarChart() {
         // Taxonomy Bar - phylum
-        var options = {'title':'${phylumCompositionTitle}', 'titleTextStyle':{fontSize:12}, 'colors':['#5f8694'], 'width':360, 'height':320, 'chartArea':{left:120, top:40, width:"60%", height:"70%"}, 'pieSliceBorderColor':'none', 'legend':'none' };
+        var options = {'title':'${phylumCompositionTitle}', 'titleTextStyle':{fontSize:12}, 'colors':['#5f8694'], 'width':360, 'height':380, 'chartArea':{left:120, top:30, width:"60%", height:"70%"}, 'pieSliceBorderColor':'none', 'legend':'none' };
         var phylumBarChart = new google.visualization.BarChart(document.getElementById('tax_chart_bar_phy'));
         phylumBarChart.draw(phylumBarChartPieChartData, options);
     }
@@ -216,7 +219,7 @@
             'width':320,
             'height':420,
             'legend':{position:'right', textStyle:{fontSize:10}},
-            'chartArea':{left:80, top:40, width:"20%", height:"86%"},
+            'chartArea':{left:80, top:30, width:"20%", height:"86%"},
             'pieSliceBorderColor':'none',
             'vAxis':{ viewWindowMode:'maximized'}, //  important to keep viewWindowMode separated from the rest to keep the display of the value 100% on vaxis
             'vAxis':{title:'Relative abundance (%)',  baselineColor:'#ccc'},
@@ -244,7 +247,7 @@
 
     function drawDomainCompositionPieChart() {
         // taxonomy Pie chart domain
-        var options = {'title':'Domain composition', 'titleTextStyle':{fontSize:12}, 'colors':[${model.taxonomyAnalysisResult.domainComposition.colorCode}], 'width':200, 'height':220, 'chartArea':{left:10, top:26, width:"80%", height:"55%"}, 'pieSliceBorderColor':'none', 'legend':{fontSize:10}, 'pieSliceTextStyle':{color:'white'}};
+        var options = {'title':'Domain composition', 'titleTextStyle':{fontSize:12}, 'colors':[${model.taxonomyAnalysisResult.domainComposition.colorCode}], 'width':200, 'height':200, 'chartArea':{left:9, top:30, width:"80%", height:"55%"},  'pieSliceBorderColor':'none', 'legend':{fontSize:10, alignment:'center', 'textStyle': {'fontSize':10}}, 'pieSliceTextStyle':{ bold: true, color:'white'}};
 
         var domainPieChart = new google.visualization.PieChart(document.getElementById('tax_chart_pie_dom'));
         domainPieChart.draw(domainBarChartPieChartData, options);
@@ -252,7 +255,7 @@
 
     function drawDomainCompositionBarChart() {
         // Taxonomy Bar - domain
-        var options = {'title':'Domain composition', 'titleTextStyle':{fontSize:12}, 'colors':['#5f8694'], 'width':190, 'height':180, 'chartArea':{left:70, top:40, width:"56%", height:"70%"}, 'vAxis':{textStyle:{fontSize:11}}, 'pieSliceBorderColor':'none', 'bar':{groupWidth:10}, 'legend':'none'};
+        var options = {'title':'Domain composition', 'titleTextStyle':{fontSize:12}, 'colors':['#5f8694'], 'width':190, 'height':100, 'chartArea':{left:70, top:30, width:"56%", height:"70%"}, 'vAxis':{textStyle:{fontSize:11}}, 'pieSliceBorderColor':'none', 'bar':{groupWidth:10}, 'legend':'none'};
 
         var domainBarChart = new google.visualization.BarChart(document.getElementById('tax_chart_bar_dom'));
         domainBarChart.draw(domainBarChartPieChartData, options);
