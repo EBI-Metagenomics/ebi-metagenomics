@@ -1681,8 +1681,8 @@ background-image: -webkit-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247
 
 #tax_table_pie, #tax_table_bar, #func_table_pie_ipro, #tax_table_col {margin-left: 9px;}
 
-#func_table_pie_ipro div div table, #tax_table_pie div div table, #tax_table_bar div div table, #tax_table_col div div table {border:1px white solid; width:400px;} /*fix bug size after sorting - has to be the same as the size define on the page*/
-
+#tax_table_pie div div table, #tax_table_bar div div table, #tax_table_col div div table {border:1px white solid; width:400px;} /*fix bug size after sorting - has to be the same as the size define on the page*/
+#func_table_pie_ipro div div table {border:1px white solid; width: 520px;}
 .chart_container {display:block;overflow:auto;}
 
 .sample_ana .google-visualization-table-table {font-size: 91%;}  /*reduce slightly font table*/
