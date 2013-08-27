@@ -1680,8 +1680,7 @@ background-image: -webkit-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247
 #tax_chart_pie_dom, #tax_chart_pie_phy, #tax_chart_bar_dom, #tax_chart_bar_phy, #tax_chart_col,  #tax_table_bar, #tax_table_pie, #tax_table_col, #func_chart_bar_go_bp, #func_chart_bar_go_mf, #func_chart_bar_go_cc, #func_chart_pie_go_bp, #func_chart_pie_go_mf, #func_chart_pie_go_cc, #func_chart_div1, #func_chart_pie_ipro, #func_table_pie_interpro, #func_table_div1 {float:left;}
 #tax_chart_pie_dom {margin-top: 3px;}
 
-#tax_table_col {margin-left: 30px;}
-#tax_table_pie, #tax_table_bar, #func_table_pie_ipro {margin-left: 18px;}
+#tax_table_pie, #tax_table_bar, #func_table_pie_ipro, #tax_table_col {margin-left: 9px;}
 
 #func_table_pie_ipro div div table, #tax_table_pie div div table {border:1px white solid; width:600px;} /*fix bug size after sorting - has to be the same as the size define on the page*/
 
@@ -1695,7 +1694,7 @@ ul.color_legend {list-style-type: square; list-style-position:inside;}
 
 /*GOOGLE CHART -TABLE  FILTER*/
 #func_dashboard, #tax_dashboard, #tax_dashboard_col, #tax_dashboard_bar  {float: left;}
-#tax_table_filter, #tax_table_col_filter, #tax_table_bar_filter, #func_table_filter {margin-left: 18px; padding-left: 9px; background-color: #E6E6E6;}
+#tax_table_filter, #tax_table_col_filter, #tax_table_bar_filter, #func_table_filter {margin-left: 9px; padding-left: 9px; background-color: #E6E6E6;}
 #tax_table_filter input, #tax_table_col_filter input, #tax_table_bar_filter input, #func_table_filter input {padding: 1px;margin: 3px 0;}
 
 .expandertable {float:left; margin-top: -32px; margin-left: 833px; z-index: 1;  position: relative;}
