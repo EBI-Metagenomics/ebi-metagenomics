@@ -43,7 +43,7 @@ function drawVisualization() {
     var interProMatchesTableOptions = new google.visualization.ChartWrapper({
         'chartType':'Table',
         'containerId':'func_table_pie_ipro',
-        'options':{width:'500', allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false }
+        'options':{width:'520', allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false }
     });
 
     // Create the dashboard.
