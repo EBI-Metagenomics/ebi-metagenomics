@@ -140,21 +140,7 @@
 
     function drawPhylumPieChart() {
 
-        // taxonomy Pie chart Phylum
-        var options = {'title':'${phylumCompositionTitle}',
-            'titleTextStyle':{fontSize:12},
-            'colors':[${model.taxonomyAnalysisResult.colorCodeForPieChart}],
-//Krona style      'colors':['#d47f7f','#d1a575','#d4c97f','#99d47f','#7fd4a7','#7fc3d4','#7f8ad4','#a77fd4','#d47fd3','#d47faf','#ccc','#ccc','#ccc'],
-//      'width':220,
-            'width':290,
-            'height':220,
-            'legend':{position:'right', fontSize:10},
-            'chartArea':{left:10, top:30, width:"100%", height:"100%"},
-            'pieSliceBorderColor':'none',
-            'sliceVisibilityThreshold':${model.taxonomyAnalysisResult.sliceVisibilityThresholdNumerator / model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator}
-        };
-
-          // Taxonomy top phylum table 2
+        // Taxonomy top phylum table 2
         var taxMatchesData2 = new google.visualization.DataTable();
         taxMatchesData2.addColumn('string', 'Phylum');
         taxMatchesData2.addColumn('string', 'Domain');
@@ -171,6 +157,21 @@
 ]
             </c:forEach>
         ]);
+
+         // taxonomy Pie chart Phylum
+        var options = {'title':'${phylumCompositionTitle}',
+            'titleTextStyle':{fontSize:12},
+            'colors':[${model.taxonomyAnalysisResult.colorCodeForPieChart}],
+//Krona style 'colors':['#d47f7f','#d1a575','#d4c97f','#99d47f','#7fd4a7','#7fc3d4','#7f8ad4','#a77fd4','#d47fd3','#d47faf','#ccc','#ccc','#ccc'],
+            'width':290,
+            'height':220,
+            'legend':'none',
+            'chartArea':{left:10, top:30, width:"100%", height:"100%"},
+//          WITH CAPTION 'legend':{position:'right', fontSize:10}, 'chartArea':{left:10, top:30, width:"100%", height:"100%"},
+            'pieSliceBorderColor':'none',
+            'sliceVisibilityThreshold':${model.taxonomyAnalysisResult.sliceVisibilityThresholdNumerator / model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator}
+        };
+
          var phylumPieChart = new google.visualization.PieChart(document.getElementById('tax_chart_pie_phy'));
         phylumPieChart.draw(phylumBarChartPieChartData, options);
 
