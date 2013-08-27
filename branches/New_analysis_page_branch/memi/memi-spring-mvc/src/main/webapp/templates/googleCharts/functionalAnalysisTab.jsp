@@ -43,7 +43,7 @@ function drawVisualization() {
     var interProMatchesTableOptions = new google.visualization.ChartWrapper({
         'chartType':'Table',
         'containerId':'func_table_pie_ipro',
-        'options':{width:'600', allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false }
+        'options':{width:'500', allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false }
     });
 
     // Create the dashboard.
@@ -81,17 +81,27 @@ function drawInterProMatchesPieChart() {
     data.addRows([
         <c:set var="addComma" value="false"/>
         <c:forEach var="entry" items="${model.interProEntries}" varStatus="status"><c:choose><c:when test="${addComma}">,</c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>['${entry.entryDescription}', ${entry.numOfEntryHits}]</c:forEach>]);
+
     // Set chart options
-    var options = {title:'InterPro matches summary (Total: ${fn:length(model.interProEntries)})', width:500, titleTextStyle:{fontSize:12},
+    var options = {title:'InterPro matches summary (Total: ${fn:length(model.interProEntries)})',
+        titleTextStyle:{fontSize:12}, width:340, height:290,
         colors:[
             <c:set var="addComma" value="false"/>
             <c:forEach var="entry" items="${model.interProEntries}" varStatus="status"><c:choose><c:when test="${addComma}">,</c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose><c:choose><c:when test="${status.index>9}">'#b9b9b9'</c:when><c:otherwise>'<c:out value="${colorCodeList[status.index]}"/>'</c:otherwise></c:choose></c:forEach>
         ],
-        height:240, pieSliceText:'none', legend:{position:'right', fontSize:10}, chartArea:{left:0, top:30, width:"42%", height:"100%"},
-        pieSliceBorderColor:'none'};
+        pieSliceText:'none',
+        legend:'none',
+//        'backgroundColor':'red',
+//       WITH CAPTION - legend:{position:'right', fontSize:10}, chartArea:{left:0, top:30, width:"42%", height:"100%"},
+        chartArea:{left:20, top:30, width:"60%", height:"100%"},
+        pieSliceBorderColor:'none',
+       // 'sliceVisibilityThreshold':8.1/1251
+      'sliceVisibilityThreshold':0.0066
+    };
+
     // Instantiate and draw our chart, passing in some options.
-    var chart = new google.visualization.PieChart(document.getElementById('func_chart_pie_ipro'));
-    chart.draw(data, options);
+    var func_chart = new google.visualization.PieChart(document.getElementById('func_chart_pie_ipro'));
+    func_chart.draw(data, options);
 }
 
 //Draws GO term pie chart for Biological process
