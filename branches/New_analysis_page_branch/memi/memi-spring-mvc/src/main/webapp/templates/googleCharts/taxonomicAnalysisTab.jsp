@@ -247,7 +247,7 @@
 
     function drawDomainCompositionPieChart() {
         // taxonomy Pie chart domain
-        var options = {'title':'Domain composition', 'titleTextStyle':{fontSize:12}, 'colors':[${model.taxonomyAnalysisResult.domainComposition.colorCode}], 'width':200, 'height':200, 'chartArea':{left:9, top:30, width:"80%", height:"55%"},  'pieSliceBorderColor':'none', 'legend':{fontSize:10, alignment:'center', 'textStyle': {'fontSize':10}}, 'pieSliceTextStyle':{ bold: true, color:'white'}};
+        var options = {'title':'Domain composition', 'titleTextStyle':{fontSize:12}, 'colors':[${model.taxonomyAnalysisResult.domainComposition.colorCode}], 'width':200, 'height':280, 'chartArea':{left:9, top:30, width:"80%", height:"55%"},  'pieSliceBorderColor':'none', 'legend':{fontSize:10, alignment:'center', 'textStyle': {'fontSize':10}}, 'pieSliceTextStyle':{ bold: true, color:'white'}};
 
         var domainPieChart = new google.visualization.PieChart(document.getElementById('tax_chart_pie_dom'));
         domainPieChart.draw(domainBarChartPieChartData, options);
