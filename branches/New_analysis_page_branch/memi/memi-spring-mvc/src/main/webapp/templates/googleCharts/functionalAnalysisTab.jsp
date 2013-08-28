@@ -27,8 +27,7 @@ function drawVisualization() {
     interProMatchesData.addColumn('number', 'Hits');
     interProMatchesData.addRows([
     <c:set var="addComma" value="false"/><c:forEach var="entry" items="${model.interProEntries}" varStatus="status"><c:choose><c:when test="${addComma}">,</c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>
-    ['<div title="${entry.entryDescription}" class="_cc" style="background-color:<c:choose><c:when test="${status.index>9}">#b9b9b9</c:when><c:otherwise><c:out value="${colorCodeList[status.index]}"/></c:otherwise></c:choose>;"></div> <a title="${entry.entryDescription}" target="_blank" href="http://www.ebi.ac.uk/interpro/entry/${entry.entryID}">${entry.entryDescription}</a>', '${entry.entryID}', ${entry.numOfEntryHits}]</c:forEach>
-    ]);
+    ['<div title="${entry.entryDescription}" class="_cc" style="background-color:<c:choose><c:when test="${status.index>9}">#b9b9b9</c:when><c:otherwise><c:out value="${colorCodeList[status.index]}"/></c:otherwise></c:choose>;"></div> <a title="${entry.entryDescription}" target="_blank" href="http://www.ebi.ac.uk/interpro/entry/${entry.entryID}">${entry.entryDescription}</a>', '${entry.entryID}', ${entry.numOfEntryHits}]</c:forEach>]);
 
     // Define a StringFilter control for the 'Name'and 'ID' column
     var stringFilter = new google.visualization.ControlWrapper({
@@ -107,8 +106,7 @@ function drawInterProMatchesPieChart() {
     sortedBiologicalProcessGOTerms.addColumn('number', 'Match');
     sortedBiologicalProcessGOTerms.addRows([
     <c:set var="addComma" value="false"/><c:forEach var="goTerm" items="${model.sortedBiologicalProcessGOTerms}" varStatus="status"><c:choose><c:when test="${addComma}">,</c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>
-    ['${goTerm.synonym}', ${goTerm.numberOfMatches}]</c:forEach>
-    ]);
+    ['${goTerm.synonym}', ${goTerm.numberOfMatches}]</c:forEach>]);
 
     var options = {'title':'Biological process',
         'titleTextStyle':{fontSize:12},
@@ -132,8 +130,8 @@ function drawInterProMatchesPieChart() {
     biologicalProcessGOTerms.addColumn('number', 'Match');
     biologicalProcessGOTerms.addRows([
     <c:set var="addComma" value="false"/><c:forEach var="goTerm" items="${model.biologicalProcessGOTerms}" varStatus="status"><c:choose><c:when test="${addComma}">,</c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>
-    ['${goTerm.synonym}', ${goTerm.numberOfMatches}]</c:forEach>
-    ]);
+    ['${goTerm.synonym}', ${goTerm.numberOfMatches}]</c:forEach>]);
+
     // GO TERM bar Biological Process
     var options = {'title':'Biological process', 'titleTextStyle':{fontSize:12}, 'colors':['#058dc7'], 'width':360, 'height':600, 'chartArea':{left:250, top:40, width:"100%", height:"100%"}, 'vAxis':{textStyle:{fontSize:10}}, 'hAxis':{textPosition:'none', gridlines:{color:'white'}}, 'bar':{groupWidth:8}, 'legend':'none'
 //        'vAxis':{'textPosition':'in'},
@@ -151,8 +149,7 @@ function drawInterProMatchesPieChart() {
     sortedMolecularFunctionGOTerms.addColumn('number', 'Match');
     sortedMolecularFunctionGOTerms.addRows([
     <c:set var="addComma" value="false"/><c:forEach var="goTerm" items="${model.sortedMolecularFunctionGOTerms}" varStatus="status"><c:choose><c:when test="${addComma}">,</c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>
-    ['${goTerm.synonym}', ${goTerm.numberOfMatches}]</c:forEach>
-    ]);
+    ['${goTerm.synonym}', ${goTerm.numberOfMatches}]</c:forEach>]);
 
     // GO TERM Pie Molecular function
     var options = {'title':'Molecular function',
@@ -176,8 +173,7 @@ function drawMolecularFunctionBarChart() {
     molecularFunctionGOTerms.addColumn('number', 'Match');
     molecularFunctionGOTerms.addRows([
     <c:set var="addComma" value="false"/><c:forEach var="goTerm" items="${model.molecularFunctionGOTerms}" varStatus="status"><c:choose><c:when test="${addComma}">,</c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>
-    ['${goTerm.synonym}', ${goTerm.numberOfMatches}]</c:forEach>
-    ]);
+    ['${goTerm.synonym}', ${goTerm.numberOfMatches}]</c:forEach>]);
 
     // GO TERM bar Molecular Function
     var options = {'title':'Molecular function', 'titleTextStyle':{fontSize:12}, 'colors':['#50b432'], 'width':360, 'height':600, 'chartArea':{left:230, top:40, width:"100%", height:"100%"}, 'vAxis':{textStyle:{fontSize:10}}, 'hAxis':{textPosition:'none', gridlines:{color:'white'}}, 'bar':{groupWidth:8}, 'legend':'none'
@@ -195,8 +191,7 @@ function drawCellularComponentPieChart() {
     sortedCellularComponentGOTerms.addColumn('number', 'Match');
     sortedCellularComponentGOTerms.addRows([
     <c:set var="addComma" value="false"/><c:forEach var="goTerm" items="${model.sortedCellularComponentGOTerms}" varStatus="status"><c:choose> <c:when test="${addComma}">,</c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>
-    ['${goTerm.synonym}', ${goTerm.numberOfMatches}]</c:forEach>
-    ]);
+    ['${goTerm.synonym}', ${goTerm.numberOfMatches}]</c:forEach>]);
 
     // GO TERM Pie Cellular component
     var options = {'title':'Cellular component',
@@ -220,8 +215,7 @@ function drawCellularComponentBarChart() {
     cellularComponentGOTerms.addColumn('number', 'Match');
     cellularComponentGOTerms.addRows([
     <c:set var="addComma" value="false"/><c:forEach var="goTerm" items="${model.cellularComponentGOTerms}" varStatus="status"><c:choose><c:when test="${addComma}">,</c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>
-    ['${goTerm.synonym}', ${goTerm.numberOfMatches}]</c:forEach>
-    ]);
+    ['${goTerm.synonym}', ${goTerm.numberOfMatches}]</c:forEach>]);
 
     // GO TERM bar Cellular component
     var options = {'title':'Cellular component', 'titleTextStyle':{fontSize:12}, 'colors':['#ed561b'], 'width':270, 'height':600, 'chartArea':{left:160, top:40, width:"100%", height:"100%"}, 'vAxis':{textStyle:{fontSize:10}}, 'hAxis':{textPosition:'none', gridlines:{color:'white', count:15}}, 'bar':{groupWidth:8}, 'legend':'none'
