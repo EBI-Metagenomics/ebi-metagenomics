@@ -26,7 +26,8 @@ function drawVisualization() {
     interProMatchesData.addColumn('string', 'ID');
     interProMatchesData.addColumn('number', 'Hits');
     interProMatchesData.addRows([
-    <c:set var="addComma" value="false"/><c:forEach var="entry" items="${model.interProEntries}" varStatus="status"><c:choose><c:when test="${addComma}">,</c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>['<div title="${entry.entryDescription}" class="_cc" style="background-color:<c:choose><c:when test="${status.index>9}">#b9b9b9</c:when><c:otherwise><c:out value="${colorCodeList[status.index]}"/></c:otherwise></c:choose>;"></div> <a title="${entry.entryDescription}" target="_blank" href="http://www.ebi.ac.uk/interpro/entry/${entry.entryID}">${entry.entryDescription}</a>', '${entry.entryID}', ${entry.numOfEntryHits}]</c:forEach>
+    <c:set var="addComma" value="false"/><c:forEach var="entry" items="${model.interProEntries}" varStatus="status"><c:choose><c:when test="${addComma}">,</c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>
+    ['<div title="${entry.entryDescription}" class="_cc" style="background-color:<c:choose><c:when test="${status.index>9}">#b9b9b9</c:when><c:otherwise><c:out value="${colorCodeList[status.index]}"/></c:otherwise></c:choose>;"></div> <a title="${entry.entryDescription}" target="_blank" href="http://www.ebi.ac.uk/interpro/entry/${entry.entryID}">${entry.entryDescription}</a>', '${entry.entryID}', ${entry.numOfEntryHits}]</c:forEach>
     ]);
 
     // Define a StringFilter control for the 'Name'and 'ID' column
@@ -82,9 +83,7 @@ function drawInterProMatchesPieChart() {
     // Set chart options
     var options = {title:'InterPro matches summary (Total: ${fn:length(model.interProEntries)})',
         titleTextStyle:{fontSize:12}, width:340, height:290,
-        colors:[
-        <c:set var="addComma" value="false"/><c:forEach var="entry" items="${model.interProEntries}" varStatus="status"><c:choose><c:when test="${addComma}">,</c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose><c:choose><c:when test="${status.index>9}">'#b9b9b9'</c:when><c:otherwise>'<c:out value="${colorCodeList[status.index]}"/>'</c:otherwise></c:choose></c:forEach>
-        ],
+        colors:[ <c:set var="addComma" value="false"/><c:forEach var="entry" items="${model.interProEntries}" varStatus="status"><c:choose><c:when test="${addComma}">,</c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose><c:choose><c:when test="${status.index>9}">'#b9b9b9'</c:when><c:otherwise>'<c:out value="${colorCodeList[status.index]}"/>'</c:otherwise></c:choose></c:forEach>],
         pieSliceText:'none',
         legend:'none',
 //        'backgroundColor':'red',
@@ -132,8 +131,8 @@ function drawInterProMatchesPieChart() {
     biologicalProcessGOTerms.addColumn('string', 'GO term');
     biologicalProcessGOTerms.addColumn('number', 'Match');
     biologicalProcessGOTerms.addRows([
-        <c:set var="addComma" value="false"/><c:forEach var="goTerm" items="${model.biologicalProcessGOTerms}" varStatus="status"><c:choose><c:when test="${addComma}">,</c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>
-        ['${goTerm.synonym}', ${goTerm.numberOfMatches}]</c:forEach>
+    <c:set var="addComma" value="false"/><c:forEach var="goTerm" items="${model.biologicalProcessGOTerms}" varStatus="status"><c:choose><c:when test="${addComma}">,</c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>
+    ['${goTerm.synonym}', ${goTerm.numberOfMatches}]</c:forEach>
     ]);
     // GO TERM bar Biological Process
     var options = {'title':'Biological process', 'titleTextStyle':{fontSize:12}, 'colors':['#058dc7'], 'width':360, 'height':600, 'chartArea':{left:250, top:40, width:"100%", height:"100%"}, 'vAxis':{textStyle:{fontSize:10}}, 'hAxis':{textPosition:'none', gridlines:{color:'white'}}, 'bar':{groupWidth:8}, 'legend':'none'
