@@ -1588,7 +1588,7 @@ background:none;
 .sample_ana .ui-tabs-panel { margin: 0 0 0 -4px; position: relative;/*z-index: 400;*/ /*background: url(images/epmc-ui-tabs-background-gradient.gif) 0 0 no-repeat;*/ border: 1px solid rgb(213, 213, 213);border-bottom-left-radius: 0px; border-bottom-right-radius: 0px; padding: 18px 4px;}
 .sample_ana .ui-state-disabled {opacity: .5;}
 /*IMAGE ANALYSIS PAGE*/
-.go-chart {display:block; border:0px red solid; overflow:auto; margin-left: 9px;}
+.go-chart {display:block; border:0px red solid; overflow:auto;}
 .go-chart h2 {margin:0 0 18px 0; font-size:138%; padding:0;}
 
 /*#go-chart-process, #go-chart-molecular, #go-chart-cellular {*/
@@ -1715,3 +1715,5 @@ ul.color_legend {list-style-type: square; list-style-position:inside;}
 .sample_ana .google-visualization-table-page-numbers .page-number {display: inline-block; border: 1px solid #eee; border-radius: 0px;  color: #666; padding: 0.7em 0.5em 0.7em 0.5em;}
 .sample_ana .google-visualization-table-page-numbers .page-number.current {font-weight: bold; color:black;border:1px solid #c3c3c3;background-color: #fafafa;}
 .sample_ana .google-visualization-table-div-page .gradient { background: none;}
+
+/*.ui-tabs .ui-tabs-hide {display:none;}*/
