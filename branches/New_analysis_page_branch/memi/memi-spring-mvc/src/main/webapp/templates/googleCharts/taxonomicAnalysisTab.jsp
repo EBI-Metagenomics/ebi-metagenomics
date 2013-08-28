@@ -196,7 +196,7 @@
 
     function drawPhylumBarChart() {
         // Taxonomy Bar - phylum
-        var options = {'title':'${phylumCompositionTitle}', 'titleTextStyle':{fontSize:12}, 'colors':['#5f8694'], 'width':360, 'height':380, 'chartArea':{left:120, top:30, width:"60%", height:"70%"}, 'pieSliceBorderColor':'none', 'legend':'none' };
+        var options = {'title':'${phylumCompositionTitle}', 'titleTextStyle':{fontSize:12}, 'colors':['#5f8694'], 'width':346, 'height':380, 'chartArea':{left:120, top:30, width:"60%", height:"70%"}, 'pieSliceBorderColor':'none', 'legend':'none' };
         var phylumBarChart = new google.visualization.BarChart(document.getElementById('tax_chart_bar_phy'));
         phylumBarChart.draw(phylumBarChartPieChartData, options);
     }
