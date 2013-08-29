@@ -80,6 +80,11 @@
     <!--[if lt IE 7]>
     <style type="text/css"> #feedback_div {display: none;}
     #feedback_no_div {display: block;}</style><![endif]-->
+
+    <!--[if IE]>
+    <style type="text/css"> li.but_krona {display: none;}</style>
+    <![endif]--> <%-- Hide the Krona tab for IE users - temp solution to solve krona div not appearing on load--%>
+
     <!-- JQuery and JQuery UI source-->
     <script src="${pageContext.request.contextPath}/js/jquery-1.4.4.min.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/js/jquery-ui-1.8.8.custom.min.js" type="text/javascript"></script>
