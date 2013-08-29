@@ -352,10 +352,7 @@
                 </div>
 
             </div>
-            <div id="tax-Krona">
-                <object class="krona_chart"
-                        data="<c:url value="${baseURL}/sample/${model.sample.sampleId}/krona?taxonomy=true&collapse=false"/>"
-                        type="text/html"></object>
+            <div id="tax-Krona"><object class="krona_chart" data="<c:url value="${baseURL}/sample/${model.sample.sampleId}/krona?taxonomy=true&collapse=false"/>" type="text/html"></object>
             </div>
         </div>
             </c:when>
@@ -421,8 +418,7 @@
                                 <div id="func_table_pie_ipro"></div>
                             </div>
 
-                                <%--  BEGIN code used if we want to use the row number select option
-
+                  <%--  BEGIN code used if we want to use the row number select option
                   <div id="func_table_div1" style="display:none;"></div>
                   <form action="" class="expandertable" >
                   Show rows:
@@ -434,7 +430,6 @@
                   <option value="1000">1000</option>
                   <option value="10000">All</option>
                   </select></form>
-
                   END code used if we want to use the row number select option  --%>
 
                         </div>
@@ -596,9 +591,13 @@
 <%--script for tabs--%>
 <script>
     $("#navtabs").tabs({${model.analysisStatus.disabledOption}});
+//    $("#navtabs").tabs({ selected:2 });
     $("#interpro-chart").tabs();
     $("#tabs-chart").tabs({ selected:0  });
     $("#tabs-taxchart").tabs({${model.analysisStatus.taxonomicAnalysisTab.tabsOptions}});
+//    $("#tabs-taxchart").tabs({ selected:3  });
+
+
 
     // fix the auto-scrolling issue when linking from homepage using htag
     setTimeout(function () {
