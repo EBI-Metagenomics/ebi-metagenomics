@@ -305,7 +305,7 @@
                 <li><a href="#tax-pie" title="Pie chart view"><span class="ico-pie"></span></a></li>
                 <li><a href="#tax-bar" title="Bar chart view"><span class="ico-barh"></span></a></li>
                 <li><a href="#tax-col" title="Stacked column chart view"><span class="ico-col"></span></a></li>
-                <li><a href="#tax-Krona" title="Krona interactive chart view"><span class="ico-krona"></span></a></li>
+                <li class="but_krona"><a href="#tax-Krona" title="Krona interactive chart view"><span class="ico-krona"></span></a></li>
                     <%--<li class="ico-downl"><a class="icon icon-functional" data-icon="=" href="#download" title="Download image/table"></a></li>--%>
             </ul>
 
@@ -366,8 +366,7 @@
 <div id="fragment-functional">
 
     <div class="main_tab_full_content">
-        <p>Functional analysis has 3 outputs: the prediction of different coding features in the original reads
-            (shown in the top bar chart); the matches of predicted protein coding sequences to the <a href="http://www.ebi.ac.uk/interpro"  title="InterPro website" class="ext">InterPro database</a>
+        <p>Functional analysis has 2 outputs: the matches of predicted protein coding sequences to the <a href="http://www.ebi.ac.uk/interpro"  title="InterPro website" class="ext">InterPro database</a>
             and a chart of the GO terms that summarise the functional content of the sample's sequences. If you wish to download the full set of results, all files are listed under the "Download" tab.</p>
 
         <h3>InterPro match summary</h3>
