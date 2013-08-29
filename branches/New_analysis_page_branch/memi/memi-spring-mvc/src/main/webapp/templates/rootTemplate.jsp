@@ -83,7 +83,9 @@
 
     <!--[if IE]>
     <style type="text/css"> li.but_krona {display: none;}</style>
-    <![endif]--> <%-- Hide the Krona tab for IE users - temp solution to solve krona div not appearing on load--%>
+    <![endif]--> <%-- Hide the Krona tab for IE users - TEMP solution to solve krona div not appearing on load--%>
+
+
 
     <!-- JQuery and JQuery UI source-->
     <script src="${pageContext.request.contextPath}/js/jquery-1.4.4.min.js" type="text/javascript"></script>
@@ -176,6 +178,7 @@
 
     <noscript>
         <style type="text/css">
+            #tax-Krona, #tabs-chart, #interpro-chart, #tabs-taxchart {display: none;}/*remove the Krona box  and all charts tabs when no javascript*/
             #script_feedbackLink {display: none;}/*remove the feedback button when no javascript*/
             #script_loginLink {display: none;}  /*remove the login button when no javascript*/
             #mod4 {display: none;} /* remove the last item - jumping line - of the carousel when no javascript */
