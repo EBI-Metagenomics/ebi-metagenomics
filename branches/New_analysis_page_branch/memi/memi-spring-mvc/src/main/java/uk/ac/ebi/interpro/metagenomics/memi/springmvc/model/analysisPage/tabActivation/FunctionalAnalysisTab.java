@@ -13,9 +13,12 @@ public class FunctionalAnalysisTab {
 
     private boolean isInterProMatchSectionDisabled;
 
-    public FunctionalAnalysisTab(boolean interProMatchSectionDisabled, boolean goSectionDisabled) {
-        isGoSectionDisabled = goSectionDisabled;
-        isInterProMatchSectionDisabled = interProMatchSectionDisabled;
+    private boolean isSequenceFeatureSectionDisabled;
+
+    public FunctionalAnalysisTab(boolean interProMatchSectionDisabled, boolean goSectionDisabled, boolean isSequenceFeatureSectionDisabled) {
+        this.isGoSectionDisabled = goSectionDisabled;
+        this.isInterProMatchSectionDisabled = interProMatchSectionDisabled;
+        this.isSequenceFeatureSectionDisabled = isSequenceFeatureSectionDisabled;
     }
 
     public boolean isGoSectionDisabled() {
@@ -24,5 +27,9 @@ public class FunctionalAnalysisTab {
 
     public boolean isInterProMatchSectionDisabled() {
         return isInterProMatchSectionDisabled;
+    }
+
+    public boolean isSequenceFeatureSectionDisabled() {
+        return isSequenceFeatureSectionDisabled;
     }
 }

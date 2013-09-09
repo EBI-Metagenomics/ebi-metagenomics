@@ -5,7 +5,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.core.comparators.PublicationComparator;
-import uk.ac.ebi.interpro.metagenomics.memi.googlechart.GoogleChartFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgFile;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgSampleAnnotation;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
@@ -159,7 +158,7 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
             return new AnalysisStatus(
                     new TaxonomicAnalysisTab(true, true, true, true),
                     true,
-                    new FunctionalAnalysisTab(true, true));
+                    new FunctionalAnalysisTab(true, true, true));
         }
         //Set qualityControlTab value
         //If one of the quality control files does exist the tab gets activated
@@ -176,6 +175,7 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
         //Set functional analysis tab object
         boolean isInterProMatchSectionDisabled = true;
         boolean isGoSectionDisabled = true;
+        boolean isSequenceFeatureSectionDisabled = true;
         for (FunctionalAnalysisFileDefinition fileDefinition : functionalAnalysisFileDefinitions) {
             File fileObject = FileObjectBuilder.createFileObject(emgFile, propertyContainer, fileDefinition);
             boolean doesExist = FileExistenceChecker.checkFileExistence(fileObject);
@@ -184,6 +184,8 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
                     isInterProMatchSectionDisabled = false;
                 } else if (fileDefinition.getIdentifier().equalsIgnoreCase(FileDefinitionId.GO_SLIM_FILE.toString())) {
                     isGoSectionDisabled = false;
+                } else if (fileDefinition.getIdentifier().equalsIgnoreCase(FileDefinitionId.SEQUENCE_FEATURE_SUMMARY_FILE.toString())) {
+                    isSequenceFeatureSectionDisabled = false;
                 }
             }
         }
@@ -209,7 +211,7 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
         return new AnalysisStatus(
                 new TaxonomicAnalysisTab(isPieChartTabDisabled, isBarChartTabDisabled, isStackChartTabDisabled, isKronaTabDisabled),
                 qualityControlTabDisabled,
-                new FunctionalAnalysisTab(isInterProMatchSectionDisabled, isGoSectionDisabled));
+                new FunctionalAnalysisTab(isInterProMatchSectionDisabled, isGoSectionDisabled, isSequenceFeatureSectionDisabled));
     }
 
     /**

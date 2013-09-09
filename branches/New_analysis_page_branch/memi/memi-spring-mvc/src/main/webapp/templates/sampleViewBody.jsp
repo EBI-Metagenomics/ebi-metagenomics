@@ -366,8 +366,29 @@
 <div id="fragment-functional">
 
     <div class="main_tab_full_content">
-        <p>Functional analysis has 2 outputs: the matches of predicted protein coding sequences to the <a href="http://www.ebi.ac.uk/interpro"  title="InterPro website" class="ext">InterPro database</a>
+        <p>Functional analysis has 3 main outputs: a sequence features summary, showing the number of reads with predicted coding sequences (pCDS), the number of pCDS with InterPro matches, and so on; the matches of pCDS to the <a href="http://www.ebi.ac.uk/interpro"  title="InterPro website" class="ext">InterPro database</a>
             and a chart of the GO terms that summarise the functional content of the sample's sequences. If you wish to download the full set of results, all files are listed under the "Download" tab.</p>
+
+        <h3>Sequence feature summary</h3>
+        <c:choose>
+            <c:when test="${empty model.sample.analysisCompleted}">
+                <b>Analysis in progress</b>
+            </c:when>
+            <c:when test="${not empty model.sample.analysisCompleted && !model.analysisStatus.functionalAnalysisTab.sequenceFeatureSectionDisabled}">
+                <div style="display:block; overflow: auto;">
+                    <c:url var="sequenceFeatureImage" value="/getImage" scope="request">
+                        <c:param name="imageName" value="/charts/seq-feat.png"/>
+                        <c:param name="imageType" value="PNG"/>
+                        <c:param name="dir" value="${model.emgFile.fileID}"/>
+                    </c:url>
+                    <div style="float:left; margin-left: 9px;"><img src="<c:out value="${sequenceFeatureImage}"/>"/></div>
+                </div>
+                    </c:when>
+            <c:otherwise>
+                <div class="msg_error">No sequence feature result files have been associated with this sample.</div>
+            </c:otherwise>
+        </c:choose>
+
 
         <h3>InterPro match summary</h3>
 
@@ -487,7 +508,7 @@
                 </div>
             </c:when>
             <c:otherwise>
-                <b>No functional result files have been associated with this sample.</b>
+                <div class="msg_error">No functional result files have been associated with this sample.</div>
             </c:otherwise>
         </c:choose>
 
@@ -503,7 +524,7 @@
     <p>The chart below shows the number of sequence reads which pass each of the quality control steps we
         have implemented in our pipeline. Note that, for paired-end data, sequence merging may have
         occurred and so the initial number of reads may differ from what is in the ENA. For more details
-        about the data processing we employ, please see the <a href="<c:url value="${baseURL}/info"/>"  title="About Metagenomics">about page</a>.</p>
+        about the data processing we employ, please see the <a href="<c:url value="${baseURL}/info#analysis"/>"  title="About Metagenomics">about page</a>.</p>
     <c:choose>
         <c:when test="${empty model.sample.analysisCompleted}">
             <b>Analysis in progress</b>
@@ -511,7 +532,7 @@
         <c:when test="${not empty model.sample.analysisCompleted && !model.analysisStatus.qualityControlTabDisabled}">
             <div style="display:block; overflow: auto;">
                 <c:url var="statsImage" value="/getImage" scope="request">
-                    <c:param name="imageName" value="_summary.png"/>
+                    <c:param name="imageName" value="/charts/qc.png"/>
                     <c:param name="imageType" value="PNG"/>
                     <c:param name="dir" value="${model.emgFile.fileID}"/>
                 </c:url>

@@ -49,7 +49,7 @@ public class ImageController extends AbstractController {
         }
 
         directoryName = directoryName.toUpperCase().replace('.', '_');
-        imageName = directoryName + imageName;
+//        imageName = directoryName + imageName;
         log.info("Creating servlet output stream for image " + imageName);
         File inputFile = new File(propertyContainer.getPathToAnalysisDirectory() + directoryName + '/' + imageName);
 
