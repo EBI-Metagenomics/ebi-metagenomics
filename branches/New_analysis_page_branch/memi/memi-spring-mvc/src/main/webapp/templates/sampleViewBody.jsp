@@ -372,15 +372,15 @@
         <c:choose>
         <c:when test="${not empty model.sample.analysisCompleted && !model.analysisStatus.functionalAnalysisTab.interProMatchSectionDisabled && !model.analysisStatus.functionalAnalysisTab.goSectionDisabled}">
 
-            <h3>Sequence feature summary</h3>
-
-
            <c:choose>
                <%--Do we still need those ??? --%>
                <%--<c:when test="${empty model.sample.analysisCompleted}">--%>
                    <%--<b>Analysis in progress</b>--%>
                <%--</c:when>--%>
                <c:when test="${not empty model.sample.analysisCompleted && !model.analysisStatus.functionalAnalysisTab.sequenceFeatureSectionDisabled}">
+
+                   <h3>Sequence feature summary</h3>
+
                    <div style="display:block; overflow: auto;">
                        <c:url var="sequenceFeatureImage" value="/getImage" scope="request">
                            <c:param name="imageName" value="/charts/seq-feat.png"/>
