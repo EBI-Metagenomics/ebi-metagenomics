@@ -312,8 +312,8 @@
                             <%--BEGIN TEXT VERSION--%>
 
                              <c:otherwise>
-                                - <a href="<c:url value="${baseURL}/sample/${sample.sampleId}#fragment-taxonomy"/>" class="list_sample" title="Taxonomy analysis">Taxonomy </a> | <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>#fragment-functional"
-                                                                                                                                               class="list_sample" title="Function analysis">Function results</a> | <a class="icon icon-functional" data-icon="=" href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>#fragment-download" class="list_sample" title="download results"></a>
+                                - <a href="<c:url value="${baseURL}/sample/${sample.sampleId}#Taxonomy-Analysis"/>" class="list_sample" title="Taxonomy analysis">Taxonomy </a> | <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>#Functional-Analysis"
+                                                                                                                                               class="list_sample" title="Function analysis">Function results</a> | <a class="icon icon-functional" data-icon="=" href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>#Download" class="list_sample" title="download results"></a>
 
                             </c:otherwise>
                             <%--END TEXT VERSION--%>
