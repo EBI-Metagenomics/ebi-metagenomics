@@ -275,8 +275,8 @@
                     <tr>
                         <c:set var="headerWidth" value="" scope="page"/>
                         <c:set var="headerId" value="" scope="page"/>
-                        <th id="${headerId}" abbr="${headerName}" width="${headerWidth}" scope="col">Annotation</th>
-                        <th id="${headerId}" abbr="${headerName}" width="${headerWidth}" scope="col">Value</th>
+                        <th class="h_left" id="${headerId}" abbr="${headerName}" width="${headerWidth}" scope="col">Annotation</th>
+                        <th class="h_left" id="${headerId}" abbr="${headerName}" width="${headerWidth}" scope="col">Value</th>
                     </tr>
                     </thead>
                     <tbody>
