@@ -140,13 +140,6 @@
             });
             //  Load the Visualization API and the chart package.
             google.load('visualization', '1.1', {'packages':['corechart', 'table', 'controls'] });
-
-            //Fixes the auto-scrolling issue when linking from homepage using hash tag
-            setTimeout(function () {
-                if (location.hash) {
-                    window.scrollTo(0, 0);
-                }
-            }, 1);
         </script>
 
     </c:when>
