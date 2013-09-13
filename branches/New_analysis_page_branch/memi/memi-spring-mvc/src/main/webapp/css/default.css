@@ -447,6 +447,7 @@ background:url(../img/bgd_black_op20_8.png);
 /* TABLE */
 
 .h_left {text-align:left;}
+table.result td.h_left {text-align:left;}
 
 table.results {
 background: url(../img/bgd_main_grey.jpg) #b5b5b5;
