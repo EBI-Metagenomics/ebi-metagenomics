@@ -108,6 +108,28 @@ public class SampleViewController extends AbstractSampleViewController {
         return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, sampleId, "tabs/overviewTab");
     }
 
+    /**
+     * Request method for the GO bar chart tab on the functional analysis tab.
+     *
+     * @throws IOException
+     */
+    @RequestMapping(value = "/goBarChartTab")
+    public ModelAndView ajaxLoadGoBarChartTab(@PathVariable final String sampleId,
+                                            final ModelMap model) throws IOException {
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, sampleId, "tabs/goBarChartTab");
+    }
+
+    /**
+     * Request method for the GO pie chart tab on the functional analysis tab.
+     *
+     * @throws IOException
+     */
+    @RequestMapping(value = "/goPieChartTab")
+    public ModelAndView ajaxLoadGoPieChartTab(@PathVariable final String sampleId,
+                                              final ModelMap model) throws IOException {
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, sampleId, "tabs/goPieChartTab");
+    }
+
     @RequestMapping(value = "/accessDenied")
     public ModelAndView doGetAccessDeniedPage(@PathVariable final String sampleId) {
         return buildAccessDeniedModelAndView(sampleId);

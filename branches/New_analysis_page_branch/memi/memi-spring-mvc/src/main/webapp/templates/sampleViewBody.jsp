@@ -94,18 +94,18 @@
                 <%--Main Tabs--%>
             <ul>
                 <li>
-                    <a href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/overviewTab"/>"><span>Overview</span></a>
+                    <a title="Overview" href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/overviewTab"/>"><span>Overview</span></a>
                 </li>
                 <li>
-                    <a href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/qualityControlTab"/>"><span>Quality control</span></a>
+                    <a title="Quality-Control" href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/qualityControlTab"/>"><span>Quality control</span></a>
                 </li>
-                <li><a href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/taxonomicTab"/>"><span>Taxonomy analysis</span></a>
-                </li>
-                <li>
-                    <a href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/functionalTab"/>"><span>Functional analysis</span></a>
+                <li><a title="Taxonomy-Analysis" href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/taxonomicTab"/>"><span>Taxonomy analysis</span></a>
                 </li>
                 <li>
-                    <a href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/downloadTab"/>"><span>Download</span></a>
+                    <a title="Functional-Analysis" href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/functionalTab"/>"><span>Functional analysis</span></a>
+                </li>
+                <li>
+                    <a title="Download" href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/downloadTab"/>"><span>Download</span></a>
                 </li>
                     <%--<li><a href="#fragment-experimental"><span>Experimental factor</span></a></li>--%>
             </ul>
@@ -136,7 +136,6 @@
                         window.location.hash = ui.tab.hash;
                     }
                 });
-//            google.load("visualization", "1", {packages:["corechart"]});
             });
             //  Load the Visualization API and the chart package.
             google.load('visualization', '1.1', {'packages':['corechart', 'table', 'controls'] });

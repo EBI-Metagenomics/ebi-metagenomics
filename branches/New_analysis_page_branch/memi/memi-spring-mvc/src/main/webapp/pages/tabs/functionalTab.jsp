@@ -120,8 +120,8 @@
                             <ul>
                                 <li class="selector_tab">Switch view:</li>
                                     <%--<li><a href="#go-terms-table" title="Table view"><span class="ico-table"></span></a></li>--%>
-                                <li><a href="#go-terms-bar" title="Bar chart view"><span class="ico-barh"></span></a></li>
-                                <li><a href="#go-terms-pie" title="Pie chart view"><span class="ico-pie"></span></a></li>
+                                <li><a href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/goBarChartTab"/>" title="Bar-Chart-View"><span class="ico-barh"></span></a></li>
+                                <li><a href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/goPieChartTab"/>" title="Pie-Chart-View"><span class="ico-pie"></span></a></li>
 
                                     <%--<li><a href="#go-terms-col" title="Stacked column chart view"><span class="ico-col"></span></a></li>--%>
                                     <%--<li><a href="#go-terms-Krona" title="Krona interactive chart view"><span class="ico-krona"></span></a></li>--%>
@@ -129,21 +129,21 @@
                             </ul>
 
 
-                            <div id="go-terms-bar">
-                                <div class="go-chart">
-                                    <div id="func_chart_bar_go_bp"></div>
-                                    <div id="func_chart_bar_go_mf"></div>
-                                    <div id="func_chart_bar_go_cc"></div>
-                                </div>
-                            </div>
+                            <%--<div id="go-terms-bar">--%>
+                                <%--<div class="go-chart">--%>
+                                    <%--<div id="func_chart_bar_go_bp"></div>--%>
+                                    <%--<div id="func_chart_bar_go_mf"></div>--%>
+                                    <%--<div id="func_chart_bar_go_cc"></div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
 
-                            <div id="go-terms-pie">
-                                <div class="go-chart">
-                                    <div id="func_chart_pie_go_bp"></div>
-                                    <div id="func_chart_pie_go_mf"></div>
-                                    <div id="func_chart_pie_go_cc"></div>
-                                </div>
-                            </div>
+                            <%--<div id="go-terms-pie">--%>
+                                <%--<div class="go-chart">--%>
+                                    <%--<div id="func_chart_pie_go_bp"></div>--%>
+                                    <%--<div id="func_chart_pie_go_mf"></div>--%>
+                                    <%--<div id="func_chart_pie_go_cc"></div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
 
                         </div>
                     </c:when>
@@ -168,7 +168,23 @@
     $(document).ready(function () {
         // Functional analysis tab navigation
         $("#interpro-chart").tabs();
-        $("#tabs-chart").tabs({ selected:0  });
+        //Ajax load approach as described here: http://jqueryui.com/tabs/#ajax
+        $(document).ready(function () {
+            $("#tabs-chart").tabs({
+                ajaxOptions:{
+                    error:function (xhr, status, index, anchor) {
+                        $(anchor.hash).html("Couldn't load this tab. We'll try to fix this as soon as possible.");
+                    }
+                },
+                spinner: false,
+                select: function(event, ui) {
+                    var tabID = "#ui-tabs-" + (ui.index + 1);
+                    $(tabID).html("<b>Loading Data.... Please wait....</b>");
+                }
+            });
+            //Default functionality
+            $("#tabs-chart").tabs({ selected:0  });
+        });
     });
 </script>
 <%@ include file="googleCharts/functionalAnalysisTab.jsp" %>
