@@ -293,9 +293,7 @@
 
 
         <c:choose>
-        <%--<c:when test="${empty model.sample.analysisCompleted}">--%>
-            <%--<div class="msg_error">Analysis in progress</div>--%>
-        <%--</c:when>--%>
+        <c:when test="${empty model.sample.analysisCompleted}"><div class="msg_error">Analysis in progress.</div></c:when>
         <c:when test="${not empty model.sample.analysisCompleted && !model.analysisStatus.taxonomicAnalysisTabDisabled}">
         <h3>Top taxonomy Hits</h3>
         <div id="tabs-taxchart">
@@ -370,13 +368,11 @@
             and a chart of the GO terms that summarise the functional content of the sample's sequences. If you wish to download the full set of results, all files are listed under the "Download" tab.</p>
 
         <c:choose>
+        <c:when test="${empty model.sample.analysisCompleted}"><div class="msg_error">Analysis in progress.</div></c:when>
         <c:when test="${not empty model.sample.analysisCompleted && !model.analysisStatus.functionalAnalysisTab.interProMatchSectionDisabled && !model.analysisStatus.functionalAnalysisTab.goSectionDisabled}">
 
            <c:choose>
-               <%--Do we still need those ??? --%>
-               <%--<c:when test="${empty model.sample.analysisCompleted}">--%>
-                   <%--<b>Analysis in progress</b>--%>
-               <%--</c:when>--%>
+
                <c:when test="${not empty model.sample.analysisCompleted && !model.analysisStatus.functionalAnalysisTab.sequenceFeatureSectionDisabled}">
 
                    <h3>Sequence feature summary</h3>
@@ -413,9 +409,7 @@
                </div>--%>
 
            <c:choose>
-               <%--<c:when test="${empty model.sample.analysisCompleted}">--%>
-                   <%--<b>Analysis in progress</b>--%>
-               <%--</c:when>--%>
+               <c:when test="${empty model.sample.analysisCompleted}"><div class="msg_error">Analysis in progress.</div></c:when>
                <c:when test="${not empty model.sample.analysisCompleted && !model.analysisStatus.functionalAnalysisTab.interProMatchSectionDisabled}">
                    <div id="interpro-chart">
 
@@ -478,9 +472,7 @@
                below.</p>
 
            <c:choose>
-               <%--<c:when test="${empty model.sample.analysisCompleted}">--%>
-                   <%--<b>Analysis in progress</b>--%>
-               <%--</c:when>--%>
+               <c:when test="${empty model.sample.analysisCompleted}"><div class="msg_error">Analysis in progress.</div></c:when>
                <c:when test="${not empty model.sample.analysisCompleted && !model.analysisStatus.functionalAnalysisTab.goSectionDisabled}">
                    <div id="tabs-chart">
 
@@ -542,21 +534,19 @@
         occurred and so the initial number of reads may differ from what is in the ENA. For more details
         about the data processing we employ, please see the <a href="<c:url value="${baseURL}/info#analysis"/>"  title="About Metagenomics">about page</a>.</p>
     <c:choose>
-        <%--<c:when test="${empty model.sample.analysisCompleted}">--%>
-            <%--<b>Analysis in progress</b>--%>
-        <%--</c:when>--%>
+        <c:when test="${empty model.sample.analysisCompleted}"><div class="msg_error">Analysis in progress.</div></c:when>
         <c:when test="${not empty model.sample.analysisCompleted && !model.analysisStatus.qualityControlTabDisabled}">
-            <div style="display:block; overflow: auto;">
+
                 <c:url var="statsImage" value="/getImage" scope="request">
                     <c:param name="imageName" value="/charts/qc.png"/>
                     <c:param name="imageType" value="PNG"/>
                     <c:param name="dir" value="${model.emgFile.fileID}"/>
                 </c:url>
-                <div style="float:left; margin-left: 9px;"><img src="<c:out value="${statsImage}"/>"/></div>
-            </div>
+                <p><img src="<c:out value="${statsImage}"/>"/></p>
+
         </c:when>
         <c:otherwise>
-            <p>No result files have been associated with this sample.</p>
+            <div class="msg_error">No result files have been associated with this sample.</div>
         </c:otherwise>
     </c:choose>
 
