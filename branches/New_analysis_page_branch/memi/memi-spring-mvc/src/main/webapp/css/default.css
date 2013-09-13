@@ -446,7 +446,7 @@ background:url(../img/bgd_black_op20_8.png);
 
 /* TABLE */
 
-#h_left {text-align:left;}
+.h_left {text-align:left;}
 
 table.results {
 background: url(../img/bgd_main_grey.jpg) #b5b5b5;
@@ -458,14 +458,7 @@ text-align:left;
 
 #small {width:70%;} /*table in analysis result changed in pourcentage for mitigation*/
 
-table.result {
-line-height: 1.2em;
-border-collapse:separate;
-border:0px solid red;
-width:100%;
-border-spacing:4px;
-padding-left:2px;/*to align with the text*/
-}
+table.result {line-height: 1.2em; border-collapse:separate; width:100%; border-spacing:4px; padding-left:2px;}
 
 /*
 table.result thead th{
@@ -707,7 +700,7 @@ background: url(../img/arrow_link_click.jpg) no-repeat right center;
 
 #list-data {
 display:block;
-overflow:auto;
+/*overflow:auto; remove to see if there is any impact*/
 margin-top:20px;
 }
 
@@ -1716,4 +1709,5 @@ ul.color_legend {list-style-type: square; list-style-position:inside;}
 .sample_ana .google-visualization-table-page-numbers .page-number.current {font-weight: bold; color:black;border:1px solid #c3c3c3;background-color: #fafafa;}
 .sample_ana .google-visualization-table-div-page .gradient { background: none;}
 
-/*.ui-tabs .ui-tabs-hide {display:none;}*/
+/*.sample_ana .ui-tabs .ui-tabs-hide {display: block;}*/
+/*#tax-pie, #tax-bar, #tax-col, #tax-Krona, #fragment-overview, #fragment-quality,#fragment-taxonomy, #fragment-functional, #fragment-download {display:block;} *//*attempt to solve bug loading Jquery tab content*/
