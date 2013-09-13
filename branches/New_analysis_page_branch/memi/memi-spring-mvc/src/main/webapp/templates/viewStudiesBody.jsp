@@ -139,7 +139,7 @@
                 <tbody>
                 <c:forEach var="study" items="${model.studies}" varStatus="status">
                     <tr>
-                        <td style="text-align:left;" id="ordered">
+                        <td class="h_left" id="ordered">
                             <c:if test="${!study.public}"><img alt="private"
                                                                    src="${pageContext.request.contextPath}/img/icon_priv_private.gif">&nbsp;&nbsp;</c:if>
                             <a href="<c:url value="${baseURL}/project/${study.studyId}"/>">${study.studyName}</a>
