@@ -39,16 +39,73 @@ public class SampleViewController extends AbstractSampleViewController {
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView doGetSample(@PathVariable final String sampleId,
-                                    final ModelMap model,
-                                    final HttpServletResponse response,
-                                    final HttpServletRequest request) throws IOException {
-        return checkAccessAndBuildModel(new ModelProcessingStrategy<Sample>() {
+                                    final ModelMap model) throws IOException {
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, sampleId, getModelViewName());
+    }
+
+    private ModelProcessingStrategy<Sample> createNewModelProcessingStrategy() {
+        return new ModelProcessingStrategy<Sample>() {
             @Override
             public void processModel(ModelMap model, Sample sample) {
                 log.info("Building model...");
                 populateModel(model, sample);
             }
-        }, model, sampleId, getModelViewName());
+        };
+    }
+
+    /**
+     * Request method for the download tab on the sample view page.
+     *
+     * @throws IOException
+     */
+    @RequestMapping(value = "/downloadTab")
+    public ModelAndView ajaxLoadDownloadTab(@PathVariable final String sampleId,
+                                            final ModelMap model) throws IOException {
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, sampleId, "tabs/downloadTab");
+    }
+
+    /**
+     * Request method for the quality control tab on the sample view page.
+     *
+     * @throws IOException
+     */
+    @RequestMapping(value = "/qualityControlTab")
+    public ModelAndView ajaxLoadQualityControlTab(@PathVariable final String sampleId,
+                                                  final ModelMap model) throws IOException {
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, sampleId, "tabs/qualityControlTab");
+    }
+
+    /**
+     * Request method for the taxonomic analysis tab on the sample view page.
+     *
+     * @throws IOException
+     */
+    @RequestMapping(value = "/taxonomicTab")
+    public ModelAndView ajaxLoadTaxonomyTab(@PathVariable final String sampleId,
+                                            final ModelMap model) throws IOException {
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, sampleId, "tabs/taxonomicTab");
+    }
+
+    /**
+     * Request method for the functional analysis tab on the sample view page.
+     *
+     * @throws IOException
+     */
+    @RequestMapping(value = "/functionalTab")
+    public ModelAndView ajaxLoadFunctionalTab(@PathVariable final String sampleId,
+                                              final ModelMap model) throws IOException {
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, sampleId, "tabs/functionalTab");
+    }
+
+    /**
+     * Request method for the overview tab on the sample view page.
+     *
+     * @throws IOException
+     */
+    @RequestMapping(value = "/overviewTab")
+    public ModelAndView ajaxLoadOverviewTab(@PathVariable final String sampleId,
+                                            final ModelMap model) throws IOException {
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, sampleId, "tabs/overviewTab");
     }
 
     @RequestMapping(value = "/accessDenied")
@@ -86,7 +143,7 @@ public class SampleViewController extends AbstractSampleViewController {
 
     @RequestMapping(value = "/doExportReadsWithCDSFile", method = RequestMethod.GET)
     public ModelAndView doExportReadsWithCDSFile(@PathVariable final String sampleId,
-                                        final HttpServletResponse response, final HttpServletRequest request) {
+                                                 final HttpServletResponse response, final HttpServletRequest request) {
         DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(FileDefinitionId.READS_WITH_PREDICTED_CDS_FILE.name());
         return handleExport(sampleId, response, request, fileDefinition);
     }

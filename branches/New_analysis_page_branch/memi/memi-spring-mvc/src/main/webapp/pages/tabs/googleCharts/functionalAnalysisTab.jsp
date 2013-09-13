@@ -1,18 +1,30 @@
 <%-- This script produces the chart and the table for the 'InterPro match summary' section (functional analysis tab)--%>
+<%@ page language="java" contentType="text/html" %>
+<%@ page import="java.util.*" %>
+<%
+    //Use in functionalAnalysisTab.jsp to set the color code of the first 10 entries in the InterPro matches table
+    ArrayList colorCodeList = new ArrayList();
+    colorCodeList.add("#058dc7");
+    colorCodeList.add("#50b432");
+    colorCodeList.add("#ed561b");
+    colorCodeList.add("#edef00");
+    colorCodeList.add("#24cbe5");
+    colorCodeList.add("#64e572");
+    colorCodeList.add("#ff9655");
+    colorCodeList.add("#fff263");
+    colorCodeList.add("#6af9c4");
+    colorCodeList.add("#dabe88");
+    pageContext.setAttribute("colorCodeList", colorCodeList);
+%>
 <script type="text/javascript">
-
-//  Load the Visualization API and the chart package.
-//  Line moved to rootTemplate.jsp
-
-//  Set a callback to run when the Google Visualization API is loaded.
-google.setOnLoadCallback(drawInterProMatchesTable);
-google.setOnLoadCallback(drawInterProMatchesPieChart);
-google.setOnLoadCallback(drawBiologicalProcessPieChart);
-google.setOnLoadCallback(drawMolecularFunctionPieChart);
-google.setOnLoadCallback(drawCellularComponentPieChart);
-google.setOnLoadCallback(drawBiologicalProcessBarChart);
-google.setOnLoadCallback(drawMolecularFunctionBarChart);
-google.setOnLoadCallback(drawCellularComponentBarChart);
+drawInterProMatchesTable();
+drawInterProMatchesPieChart();
+drawBiologicalProcessPieChart();
+drawMolecularFunctionPieChart();
+drawCellularComponentPieChart();
+drawBiologicalProcessBarChart();
+drawMolecularFunctionBarChart();
+drawCellularComponentBarChart();
 
 function drawInterProMatchesTable() {
     drawVisualization();
@@ -26,8 +38,10 @@ function drawVisualization() {
     interProMatchesData.addColumn('string', 'ID');
     interProMatchesData.addColumn('number', 'Hits');
     interProMatchesData.addRows([
-    <c:set var="addComma" value="false"/><c:forEach var="entry" items="${model.interProEntries}" varStatus="status"><c:choose><c:when test="${addComma}">,</c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>
-    ['<div title="${entry.entryDescription}" class="_cc" style="background-color:<c:choose><c:when test="${status.index>9}">#b9b9b9</c:when><c:otherwise><c:out value="${colorCodeList[status.index]}"/></c:otherwise></c:choose>;"></div> <a title="${entry.entryDescription}" target="_blank" href="http://www.ebi.ac.uk/interpro/entry/${entry.entryID}">${entry.entryDescription}</a>', '${entry.entryID}', ${entry.numOfEntryHits}]</c:forEach>]);
+        <c:set var="addComma" value="false"/><c:forEach var="entry" items="${model.interProEntries}" varStatus="status"><c:choose><c:when test="${addComma}">,
+        </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>
+        ['<div title="${entry.entryDescription}" class="_cc" style="background-color:<c:choose><c:when test="${status.index>9}">#b9b9b9</c:when><c:otherwise><c:out value="${colorCodeList[status.index]}"/></c:otherwise></c:choose>;"></div> <a title="${entry.entryDescription}" target="_blank" href="http://www.ebi.ac.uk/interpro/entry/${entry.entryID}">${entry.entryDescription}</a>', '${entry.entryID}', ${entry.numOfEntryHits}]</c:forEach>
+    ]);
 
     // Define a StringFilter control for the 'Name'and 'ID' column
     var stringFilter = new google.visualization.ControlWrapper({
@@ -76,21 +90,23 @@ function drawInterProMatchesPieChart() {
     data.addColumn('string', 'Entry name');
     data.addColumn('number', 'Hits');
     data.addRows([
-    <c:set var="addComma" value="false"/><c:forEach var="entry" items="${model.interProEntries}" varStatus="status"><c:choose><c:when test="${addComma}">,</c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>
-    ['${entry.entryDescription}', ${entry.numOfEntryHits}]</c:forEach>]);
+        <c:set var="addComma" value="false"/><c:forEach var="entry" items="${model.interProEntries}" varStatus="status"><c:choose><c:when test="${addComma}">,
+        </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>
+        ['${entry.entryDescription}', ${entry.numOfEntryHits}]</c:forEach>
+    ]);
 
     // Set chart options
     var options = {title:'InterPro matches summary (Total: ${fn:length(model.interProEntries)})',
         titleTextStyle:{fontSize:12}, width:340, height:290,
-        colors:[ <c:set var="addComma" value="false"/><c:forEach var="entry" items="${model.interProEntries}" varStatus="status"><c:choose><c:when test="${addComma}">,</c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose><c:choose><c:when test="${status.index>9}">'#b9b9b9'</c:when><c:otherwise>'<c:out value="${colorCodeList[status.index]}"/>'</c:otherwise></c:choose></c:forEach>],
+        colors:[ <c:set var="addComma" value="false"/><c:forEach var="entry" items="${model.interProEntries}" varStatus="status"><c:choose><c:when test="${addComma}">, </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose><c:choose><c:when test="${status.index>9}">'#b9b9b9'</c:when><c:otherwise>'<c:out value="${colorCodeList[status.index]}"/>'</c:otherwise></c:choose></c:forEach>],
         pieSliceText:'none',
         legend:'none',
 //        'backgroundColor':'red',
 //       WITH CAPTION - legend:{position:'right', fontSize:10}, chartArea:{left:0, top:30, width:"42%", height:"100%"},
         chartArea:{left:20, top:30, width:"60%", height:"100%"},
         pieSliceBorderColor:'none',
-       // 'sliceVisibilityThreshold':8.1/1251
-      'sliceVisibilityThreshold':0.0066
+        // 'sliceVisibilityThreshold':8.1/1251
+        'sliceVisibilityThreshold':0.0066
     };
 
     // Instantiate and draw our chart, passing in some options.
@@ -98,15 +114,17 @@ function drawInterProMatchesPieChart() {
     func_chart.draw(data, options);
 }
 
-    //Draws GO term pie chart for Biological process
-    function drawBiologicalProcessPieChart() {
+//Draws GO term pie chart for Biological process
+function drawBiologicalProcessPieChart() {
 
     var sortedBiologicalProcessGOTerms = new google.visualization.DataTable();
     sortedBiologicalProcessGOTerms.addColumn('string', 'GO term');
     sortedBiologicalProcessGOTerms.addColumn('number', 'Match');
     sortedBiologicalProcessGOTerms.addRows([
-    <c:set var="addComma" value="false"/><c:forEach var="goTerm" items="${model.sortedBiologicalProcessGOTerms}" varStatus="status"><c:choose><c:when test="${addComma}">,</c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>
-    ['${goTerm.synonym}', ${goTerm.numberOfMatches}]</c:forEach>]);
+        <c:set var="addComma" value="false"/><c:forEach var="goTerm" items="${model.sortedBiologicalProcessGOTerms}" varStatus="status"><c:choose><c:when test="${addComma}">,
+        </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>
+        ['${goTerm.synonym}', ${goTerm.numberOfMatches}]</c:forEach>
+    ]);
 
     var options = {'title':'Biological process',
         'titleTextStyle':{fontSize:12},
@@ -123,14 +141,16 @@ function drawInterProMatchesPieChart() {
     pieChart.draw(sortedBiologicalProcessGOTerms, options);
 }
 
-    function drawBiologicalProcessBarChart() {
+function drawBiologicalProcessBarChart() {
 
     var biologicalProcessGOTerms = new google.visualization.DataTable();
     biologicalProcessGOTerms.addColumn('string', 'GO term');
     biologicalProcessGOTerms.addColumn('number', 'Match');
     biologicalProcessGOTerms.addRows([
-    <c:set var="addComma" value="false"/><c:forEach var="goTerm" items="${model.biologicalProcessGOTerms}" varStatus="status"><c:choose><c:when test="${addComma}">,</c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>
-    ['${goTerm.synonym}', ${goTerm.numberOfMatches}]</c:forEach>]);
+        <c:set var="addComma" value="false"/><c:forEach var="goTerm" items="${model.biologicalProcessGOTerms}" varStatus="status"><c:choose><c:when test="${addComma}">,
+        </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>
+        ['${goTerm.synonym}', ${goTerm.numberOfMatches}]</c:forEach>
+    ]);
 
     // GO TERM bar Biological Process
     var options = {'title':'Biological process', 'titleTextStyle':{fontSize:12}, 'colors':['#058dc7'], 'width':360, 'height':600, 'chartArea':{left:250, top:40, width:"100%", height:"100%"}, 'vAxis':{textStyle:{fontSize:10}}, 'hAxis':{textPosition:'none', gridlines:{color:'white'}}, 'bar':{groupWidth:8}, 'legend':'none'
@@ -139,17 +159,19 @@ function drawInterProMatchesPieChart() {
 
     var barChart = new google.visualization.BarChart(document.getElementById('func_chart_bar_go_bp'));
     barChart.draw(biologicalProcessGOTerms, options);
-    }
+}
 
-    //Draws GO term pie chart for Molecular Function
-    function drawMolecularFunctionPieChart() {
+//Draws GO term pie chart for Molecular Function
+function drawMolecularFunctionPieChart() {
 
     var sortedMolecularFunctionGOTerms = new google.visualization.DataTable();
     sortedMolecularFunctionGOTerms.addColumn('string', 'GO term');
     sortedMolecularFunctionGOTerms.addColumn('number', 'Match');
     sortedMolecularFunctionGOTerms.addRows([
-    <c:set var="addComma" value="false"/><c:forEach var="goTerm" items="${model.sortedMolecularFunctionGOTerms}" varStatus="status"><c:choose><c:when test="${addComma}">,</c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>
-    ['${goTerm.synonym}', ${goTerm.numberOfMatches}]</c:forEach>]);
+        <c:set var="addComma" value="false"/><c:forEach var="goTerm" items="${model.sortedMolecularFunctionGOTerms}" varStatus="status"><c:choose><c:when test="${addComma}">,
+        </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>
+        ['${goTerm.synonym}', ${goTerm.numberOfMatches}]</c:forEach>
+    ]);
 
     // GO TERM Pie Molecular function
     var options = {'title':'Molecular function',
@@ -172,8 +194,10 @@ function drawMolecularFunctionBarChart() {
     molecularFunctionGOTerms.addColumn('string', 'GO term');
     molecularFunctionGOTerms.addColumn('number', 'Match');
     molecularFunctionGOTerms.addRows([
-    <c:set var="addComma" value="false"/><c:forEach var="goTerm" items="${model.molecularFunctionGOTerms}" varStatus="status"><c:choose><c:when test="${addComma}">,</c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>
-    ['${goTerm.synonym}', ${goTerm.numberOfMatches}]</c:forEach>]);
+        <c:set var="addComma" value="false"/><c:forEach var="goTerm" items="${model.molecularFunctionGOTerms}" varStatus="status"><c:choose><c:when test="${addComma}">,
+        </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>
+        ['${goTerm.synonym}', ${goTerm.numberOfMatches}]</c:forEach>
+    ]);
 
     // GO TERM bar Molecular Function
     var options = {'title':'Molecular function', 'titleTextStyle':{fontSize:12}, 'colors':['#50b432'], 'width':360, 'height':600, 'chartArea':{left:230, top:40, width:"100%", height:"100%"}, 'vAxis':{textStyle:{fontSize:10}}, 'hAxis':{textPosition:'none', gridlines:{color:'white'}}, 'bar':{groupWidth:8}, 'legend':'none'
@@ -190,8 +214,10 @@ function drawCellularComponentPieChart() {
     sortedCellularComponentGOTerms.addColumn('string', 'GO term');
     sortedCellularComponentGOTerms.addColumn('number', 'Match');
     sortedCellularComponentGOTerms.addRows([
-    <c:set var="addComma" value="false"/><c:forEach var="goTerm" items="${model.sortedCellularComponentGOTerms}" varStatus="status"><c:choose> <c:when test="${addComma}">,</c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>
-    ['${goTerm.synonym}', ${goTerm.numberOfMatches}]</c:forEach>]);
+        <c:set var="addComma" value="false"/><c:forEach var="goTerm" items="${model.sortedCellularComponentGOTerms}" varStatus="status"><c:choose> <c:when test="${addComma}">,
+        </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>
+        ['${goTerm.synonym}', ${goTerm.numberOfMatches}]</c:forEach>
+    ]);
 
     // GO TERM Pie Cellular component
     var options = {'title':'Cellular component',
@@ -214,8 +240,10 @@ function drawCellularComponentBarChart() {
     cellularComponentGOTerms.addColumn('string', 'GO term');
     cellularComponentGOTerms.addColumn('number', 'Match');
     cellularComponentGOTerms.addRows([
-    <c:set var="addComma" value="false"/><c:forEach var="goTerm" items="${model.cellularComponentGOTerms}" varStatus="status"><c:choose><c:when test="${addComma}">,</c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>
-    ['${goTerm.synonym}', ${goTerm.numberOfMatches}]</c:forEach>]);
+        <c:set var="addComma" value="false"/><c:forEach var="goTerm" items="${model.cellularComponentGOTerms}" varStatus="status"><c:choose><c:when test="${addComma}">,
+        </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>
+        ['${goTerm.synonym}', ${goTerm.numberOfMatches}]</c:forEach>
+    ]);
 
     // GO TERM bar Cellular component
     var options = {'title':'Cellular component', 'titleTextStyle':{fontSize:12}, 'colors':['#ed561b'], 'width':270, 'height':600, 'chartArea':{left:160, top:40, width:"100%", height:"100%"}, 'vAxis':{textStyle:{fontSize:10}}, 'hAxis':{textPosition:'none', gridlines:{color:'white', count:15}}, 'bar':{groupWidth:8}, 'legend':'none'
