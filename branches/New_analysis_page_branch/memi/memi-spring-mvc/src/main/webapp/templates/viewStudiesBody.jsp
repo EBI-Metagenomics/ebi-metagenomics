@@ -132,7 +132,7 @@
                                 <c:set var="headerWidth" value="120px" scope="page"/>
                             </c:otherwise>
                         </c:choose>
-                        <th id="${headerId}" abbr="${headerName}" width="${headerWidth}" scope="col">${headerName}</th>
+                        <th class="${headerId}" abbr="${headerName}" width="${headerWidth}" scope="col">${headerName}</th>
                     </c:forEach>
                 </tr>
                 </thead>
