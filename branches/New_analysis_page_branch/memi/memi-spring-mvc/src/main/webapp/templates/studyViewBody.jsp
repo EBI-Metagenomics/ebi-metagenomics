@@ -159,7 +159,7 @@ Contact name: (not given)
         <table border="1" class="result">
             <thead>
             <tr>
-                <th scope="col" abbr="Sname" id="h_left">Sample name</th>
+                <th scope="col" abbr="Sname" class="h_left">Sample name</th>
                 <th scope="col" abbr="Pname">Sample ID</th>
                 <th scope="col" abbr="Pname">Collection date</th>
                 <th scope="col" abbr="Source" width="140px">Source</th>
