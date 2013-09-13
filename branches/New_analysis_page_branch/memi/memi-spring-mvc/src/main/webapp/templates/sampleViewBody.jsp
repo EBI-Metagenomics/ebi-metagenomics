@@ -158,8 +158,7 @@
 
                     <c:if test="${not empty model.sample.hostSex}">
                         <c:set var="hostSex" value="${model.sample.hostSex}"/>
-                        <div class="result_row"><label>Sex:</label> <span style="text-transform:lowercase;"><c:out
-                                value="${hostSex}"/></span></div>
+                        <div class="result_row"><label>Sex:</label> <span style="text-transform: capitalize;">${fn:toLowerCase(hostSex)}</span></div>
                     </c:if>
 
 
@@ -223,6 +222,11 @@
 
             <c:if test="${!model.hostAssociated}">
                 <c:choose>
+                <c:when test="${empty model.sample.latitude}">
+                <%--remove the label when emtpy otherwise make alignment problem--%>
+                </c:when>
+                <c:otherwise>
+                <c:choose>
                     <c:when test="${not empty model.sample.latitude}">
                         <c:set var="latLon" value="${model.sample.latitude} , ${model.sample.longitude}"/>
                         <div id="map_canvas"></div>
@@ -233,18 +237,29 @@
                     </c:otherwise>
                 </c:choose>
                 <div class="result_row"><label>Latitude/Longitude:</label> <span><c:out value="${latLon}"/></span></div>
+                </c:otherwise>
+                </c:choose>
             </c:if>
 
             <c:choose>
+
+            <c:when test="${empty model.sample.geoLocName}">
+            <%--remove the label when emtpy otherwise make alignment problem--%>
+            </c:when>
+                <c:otherwise>
+                    <c:choose>
                 <c:when test="${not empty model.sample.geoLocName}">
                     <c:set var="geoLocName" value="${model.sample.geoLocName}"/>
+                    <div class="result_row"><label>Geographic location:</label> <span><c:out value="${geoLocName}"/></span></div>
                 </c:when>
                 <c:otherwise>
                     <c:set var="geoLocName" value="${notGivenId}"/>
                 </c:otherwise>
+                    </c:choose>
+                </c:otherwise>
             </c:choose>
-            <div class="result_row"><label>Geographic location:</label> <span><c:out value="${geoLocName}"/></span>
-            </div>
+
+
         </div>
             <%--END LOCALISATION   --%>
 
