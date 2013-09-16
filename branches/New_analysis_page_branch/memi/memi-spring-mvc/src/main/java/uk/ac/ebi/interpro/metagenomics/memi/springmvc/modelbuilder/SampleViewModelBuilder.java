@@ -103,7 +103,7 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
     @Override
     public SampleViewModel getModel() {
         log.info("Building instance of " + SampleViewModel.class + "...");
-        final List<InterProEntry> interProEntries = getListOfInterProEntries();
+        final FunctionalAnalysisResult functionalAnalysisResult = getListOfInterProEntries();
         final boolean isHostAssociated = isHostAssociated();
         final Submitter submitter = getSessionSubmitter(sessionMgr);
 
@@ -124,7 +124,7 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
                     emgFile,
                     archivedSequences,
                     propertyContainer,
-                    interProEntries,
+                    functionalAnalysisResult,
                     experimentType,
                     downloadSection,
                     relatedLinks,
@@ -142,7 +142,7 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
                     sample,
                     archivedSequences,
                     propertyContainer,
-                    interProEntries,
+                    functionalAnalysisResult,
                     experimentType,
                     downloadSection,
                     relatedLinks,
@@ -264,13 +264,13 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
         return false;
     }
 
-    private List<InterProEntry> getListOfInterProEntries() {
+    private FunctionalAnalysisResult getListOfInterProEntries() {
         File interProMatchesSummaryFile = FileObjectBuilder.createFileObject(emgFile, propertyContainer, propertyContainer.getResultFileDefinition(FileDefinitionId.INTERPRO_MATCHES_SUMMARY_FILE));
         if (FileExistenceChecker.checkFileExistence(interProMatchesSummaryFile)) {
             List<String[]> rows = getRawData(interProMatchesSummaryFile, ',');
             return loadInterProMatchesFromCSV(rows);
         } else {
-            return new ArrayList<InterProEntry>();
+            return new FunctionalAnalysisResult();
         }
     }
 
@@ -281,10 +281,11 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
      * @param rows Parsed list of InterPro entries.
      * @return
      */
-    protected static List<InterProEntry> loadInterProMatchesFromCSV(List<String[]> rows) {
+    protected static FunctionalAnalysisResult loadInterProMatchesFromCSV(List<String[]> rows) {
         List<InterProEntry> result = new ArrayList<InterProEntry>();
         log.info("Processing interpro result summary file...");
 
+        int totalReadsCount = 0;
         if (rows != null) {
             for (String[] row : rows) {
                 if (row.length == 3) {
@@ -297,6 +298,7 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
                     if (entryID != null && entryID.trim().length() > 0) {
                         result.add(new InterProEntry(entryID, entryDesc, numOfEntryHits));
                     }
+                    totalReadsCount += numOfEntryHits;
                 } else {
                     log.warn("Row size is not the expected one.");
                 }
@@ -305,7 +307,7 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
             log.warn("Didn't get any data from InterPro result summary file. There might be some fundamental change to this file" +
                     "(maybe in the near past), which affects this parsing process!");
         }
-        return result;
+        return new FunctionalAnalysisResult(result, totalReadsCount);
     }
 
     protected static String encodeSingleQuoteMarks(String entryDesc) {

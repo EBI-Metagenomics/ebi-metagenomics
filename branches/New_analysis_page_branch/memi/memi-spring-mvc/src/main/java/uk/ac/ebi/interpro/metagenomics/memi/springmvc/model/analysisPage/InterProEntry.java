@@ -1,4 +1,6 @@
-package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
+package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage;
+
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.AnalysisResult;
 
 /**
  * Simple representation of an InterPro entry.

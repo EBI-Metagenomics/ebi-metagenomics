@@ -1,5 +1,7 @@
-package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
+package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage;
 
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.AnalysisResult;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.TaxonomyData;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.DomainComposition;
 
 import java.util.*;

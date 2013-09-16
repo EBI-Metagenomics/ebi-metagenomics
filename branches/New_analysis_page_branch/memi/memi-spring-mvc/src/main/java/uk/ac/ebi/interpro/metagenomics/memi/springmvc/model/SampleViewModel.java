@@ -6,8 +6,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.EmgSampleAnnotation;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Publication;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.AnalysisStatus;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.DownloadSection;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.*;
 
 import java.util.*;
 
@@ -24,10 +23,10 @@ public class SampleViewModel extends ViewModel {
 
     private Sample sample;
 
-    /* List of InterPro entries. Loaded from the MG pipeline produced file with the IPR extension
+    /* This object contains a list of InterPro entries. Loaded from the MG pipeline produced file with the IPR extension
      (summary of InterPro matches).
      */
-    private List<InterProEntry> interProEntries;
+    private FunctionalAnalysisResult functionalAnalysisResult;
 
     private Map<Class, List<AbstractGOTerm>> goData;
 
@@ -63,7 +62,7 @@ public class SampleViewModel extends ViewModel {
                            EmgFile emgFile,
                            List<String> archivedSequences,
                            MemiPropertyContainer propertyContainer,
-                           List<InterProEntry> interProEntries,
+                           FunctionalAnalysisResult functionalAnalysisResult,
                            ExperimentType experimentType,
                            final DownloadSection downloadSection,
                            List<Publication> relatedLinks,
@@ -73,7 +72,7 @@ public class SampleViewModel extends ViewModel {
                            final AnalysisStatus analysisStatus) {
         super(submitter, pageTitle, breadcrumbs, propertyContainer);
         this.sample = sample;
-        this.interProEntries = interProEntries;
+        this.functionalAnalysisResult = functionalAnalysisResult;
         this.goData = goData;
         this.emgFile = emgFile;
         this.archivedSequences = archivedSequences;
@@ -92,7 +91,7 @@ public class SampleViewModel extends ViewModel {
                            Sample sample,
                            List<String> archivedSequences,
                            MemiPropertyContainer propertyContainer,
-                           List<InterProEntry> interProEntries,
+                           FunctionalAnalysisResult functionalAnalysisResult,
                            ExperimentType experimentType,
                            final DownloadSection downloadSection,
                            List<Publication> relatedLinks,
@@ -108,7 +107,7 @@ public class SampleViewModel extends ViewModel {
                 null,
                 archivedSequences,
                 propertyContainer,
-                interProEntries,
+                functionalAnalysisResult,
                 experimentType,
                 downloadSection,
                 relatedLinks,
@@ -176,8 +175,8 @@ public class SampleViewModel extends ViewModel {
         return emgFile;
     }
 
-    public List<InterProEntry> getInterProEntries() {
-        return interProEntries;
+    public FunctionalAnalysisResult getFunctionalAnalysisResult() {
+        return functionalAnalysisResult;
     }
 
     public ExperimentType getExperimentType() {

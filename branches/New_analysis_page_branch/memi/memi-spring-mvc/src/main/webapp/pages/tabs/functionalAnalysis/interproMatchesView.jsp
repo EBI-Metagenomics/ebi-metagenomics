@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <script type="text/javascript">
     drawInterProMatchesTable();
     drawInterProMatchesPieChart();
@@ -14,10 +15,11 @@
         interProMatchesData.addColumn('string', 'Entry name');
         interProMatchesData.addColumn('string', 'ID');
         interProMatchesData.addColumn('number', 'Hits');
+        interProMatchesData.addColumn('number', '%');
         interProMatchesData.addRows([
-                <c:set var="addComma" value="false"/><c:forEach var="entry" items="${model.interProEntries}" varStatus="status"><c:choose><c:when test="${addComma}">,
+                <c:set var="addComma" value="false"/><c:forEach var="entry" items="${model.functionalAnalysisResult.interProEntryList}" varStatus="status"><c:choose><c:when test="${addComma}">,
     </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>
-                ['<div title="${entry.entryDescription}" class="_cc" style="background-color:<c:choose><c:when test="${status.index>9}">#b9b9b9</c:when><c:otherwise><c:out value="${colorCodeList[status.index]}"/></c:otherwise></c:choose>;"></div> <a title="${entry.entryDescription}" target="_blank" href="http://www.ebi.ac.uk/interpro/entry/${entry.entryID}">${entry.entryDescription}</a>', '${entry.entryID}', ${entry.numOfEntryHits}]</c:forEach>
+                ['<div title="${entry.entryDescription}" class="_cc" style="background-color:<c:choose><c:when test="${status.index>9}">#b9b9b9</c:when><c:otherwise><c:out value="${colorCodeList[status.index]}"/></c:otherwise></c:choose>;"></div> <a title="${entry.entryDescription}" href="http://www.ebi.ac.uk/interpro/entry/${entry.entryID}">${entry.entryDescription}</a>', '${entry.entryID}', ${entry.numOfEntryHits}, <fmt:formatNumber type="number" maxFractionDigits="1" value="${entry.numOfEntryHits*100 / model.functionalAnalysisResult.totalReadsCount}" />]</c:forEach>
     ]);
 
         // Define a StringFilter control for the 'Name'and 'ID' column
@@ -67,17 +69,17 @@
         data.addColumn('string', 'Entry name');
         data.addColumn('number', 'Hits');
         data.addRows([
-                <c:set var="addComma" value="false"/><c:forEach var="entry" items="${model.interProEntries}" varStatus="status"><c:choose><c:when test="${addComma}">,
+                <c:set var="addComma" value="false"/><c:forEach var="entry" items="${model.functionalAnalysisResult.interProEntryList}" varStatus="status"><c:choose><c:when test="${addComma}">,
     </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>
                 ['${entry.entryDescription}', ${entry.numOfEntryHits}]</c:forEach>
     ]);
 
         // Set chart options
-        var options = {title:'InterPro matches summary (Total: ${fn:length(model.interProEntries)})',
+        var options = {title:'InterPro matches summary (Total: ${fn:length(model.functionalAnalysisResult.interProEntryList)})',
                titleTextStyle:{fontSize:12},
                width:310, // bigger width to let the info window display correctly
                height:299,
-               colors:[ <c:set var="addComma" value="false"/><c:forEach var="entry" items="${model.interProEntries}" varStatus="status"><c:choose><c:when test="${addComma}">, </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose><c:choose><c:when test="${status.index>9}">'#ccc'</c:when><c:otherwise>'<c:out value="${colorCodeList[status.index]}"/>'</c:otherwise></c:choose></c:forEach>],
+               colors:[ <c:set var="addComma" value="false"/><c:forEach var="entry" items="${model.functionalAnalysisResult.interProEntryList}" varStatus="status"><c:choose><c:when test="${addComma}">, </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose><c:choose><c:when test="${status.index>9}">'#ccc'</c:when><c:otherwise>'<c:out value="${colorCodeList[status.index]}"/>'</c:otherwise></c:choose></c:forEach>],
                pieSliceText:'none',
                legend:'none',
 //               'backgroundColor':'green',
