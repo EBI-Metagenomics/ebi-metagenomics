@@ -79,7 +79,7 @@
         <script type="text/javascript">
             //Main navigation tabs - overview, quality control, taxonomic analysis, functional analysis, downloads
             //Ajax load approach as described here: http://jqueryui.com/tabs/#ajax
-            $(document).ready(function () {
+
                 $("#navtabs").tabs({
                     cache:true,
                     ajaxOptions:{
@@ -98,7 +98,7 @@
                         window.location.hash = ui.tab.hash;
                     }
                 });
-            });
+
             //  Load the Visualization API and the chart package.
             google.load('visualization', '1.1', {'packages':['corechart', 'table', 'controls'] });
         </script>
