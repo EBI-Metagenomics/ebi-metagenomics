@@ -33,7 +33,7 @@
             ['${domainEntry.key}', ${domainEntry.value}]</c:forEach>
         ]);
         // taxonomy Pie chart domain
-        var options = {'title':'Domain composition', 'titleTextStyle':{fontSize:12}, 'colors':[${model.taxonomyAnalysisResult.domainComposition.colorCode}], 'width':200, 'height':290, 'chartArea':{left:9, top:30, width:"80%", height:"80%"}, 'pieSliceBorderColor':'none', 'legend':{fontSize:10, alignment:'center', 'textStyle':{'fontSize':10}}, 'pieSliceTextStyle':{ bold:true, color:'white'}};
+        var options = {'title':'Domain composition', 'titleTextStyle':{fontSize:12}, 'colors':[${model.taxonomyAnalysisResult.domainComposition.colorCode}], 'width':250, 'height':299,  'chartArea':{left:9, top:30, width:"100%", height:"80%"}, 'pieSliceBorderColor':'none', 'legend':{fontSize:10, alignment:'center', 'textStyle':{'fontSize':10}}, 'pieSliceTextStyle':{ bold:true, color:'white'}};
 
         var domainPieChart = new google.visualization.PieChart(document.getElementById('tax_chart_pie_dom'));
         domainPieChart.draw(domainBarChartPieChartData, options);
@@ -93,14 +93,14 @@
         var options = {'title':'${phylumCompositionTitle}',
             'titleTextStyle':{fontSize:12},
             'colors':[${model.taxonomyAnalysisResult.colorCodeForPieChart}],
-//Krona style 'colors':['#d47f7f','#d1a575','#d4c97f','#99d47f','#7fd4a7','#7fc3d4','#7f8ad4','#a77fd4','#d47fd3','#d47faf','#ccc','#ccc','#ccc'],
-            'width':250,
-            'height':290,
+    //Krona style 'colors':['#d47f7f','#d1a575','#d4c97f','#99d47f','#7fd4a7','#7fc3d4','#7f8ad4','#a77fd4','#d47fd3','#d47faf','#ccc','#ccc','#ccc'],
+            'width':272,
+            'height':299,
             'pieSliceTextStyle':{bold:true, color:'white'},
-//            'pieSliceText:'none',
+    //            'pieSliceText:'none',
             'legend':'none',
-            'chartArea':{left:20, top:30, width:"82%", height:"100%"},
-//          WITH CAPTION 'legend':{position:'right', fontSize:10}, 'chartArea':{left:10, top:30, width:"100%", height:"100%"},
+            'chartArea':{left:20, top:30, width:"84%", height:"100%"},
+    //          WITH CAPTION 'legend':{position:'right', fontSize:10}, 'chartArea':{left:10, top:30, width:"100%", height:"100%"},
             'pieSliceBorderColor':'none',
 //            'backgroundColor':'red',
             'sliceVisibilityThreshold':${model.taxonomyAnalysisResult.sliceVisibilityThresholdNumerator / model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator}
