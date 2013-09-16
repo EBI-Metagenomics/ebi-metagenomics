@@ -91,16 +91,16 @@ function drawInterProMatchesPieChart() {
 
     // Set chart options
     var options = {title:'InterPro matches summary (Total: ${fn:length(model.interProEntries)})',
-        titleTextStyle:{fontSize:12}, width:340, height:290,
+        titleTextStyle:{fontSize:12}, width:390, height:290,
         colors:[ <c:set var="addComma" value="false"/><c:forEach var="entry" items="${model.interProEntries}" varStatus="status"><c:choose><c:when test="${addComma}">, </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose><c:choose><c:when test="${status.index>9}">'#b9b9b9'</c:when><c:otherwise>'<c:out value="${colorCodeList[status.index]}"/>'</c:otherwise></c:choose></c:forEach>],
         pieSliceText:'none',
         legend:'none',
-//        'backgroundColor':'red',
+        'backgroundColor':'green',
 //       WITH CAPTION - legend:{position:'right', fontSize:10}, chartArea:{left:0, top:30, width:"42%", height:"100%"},
         chartArea:{left:20, top:30, width:"60%", height:"100%"},
         pieSliceBorderColor:'none',
         // 'sliceVisibilityThreshold':8.1/1251
-        'sliceVisibilityThreshold':0.0066
+        'sliceVisibilityThreshold':0.0058
     };
 
     // Instantiate and draw our chart, passing in some options.
