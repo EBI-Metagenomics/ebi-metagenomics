@@ -32,7 +32,7 @@
 
                         <%--Taxonomy google chart--%>
                     <div id="tax-pie">
-                        <div class="chart_container">
+
                             <div class="chart_container">
                                 <div id="tax_chart_pie_dom"></div>
                                 <div id="tax_chart_pie_phy"></div>
@@ -44,7 +44,7 @@
                                 </div>
 
                             </div>
-                        </div>
+
                     </div>
 
                     <div id="tax-bar">
