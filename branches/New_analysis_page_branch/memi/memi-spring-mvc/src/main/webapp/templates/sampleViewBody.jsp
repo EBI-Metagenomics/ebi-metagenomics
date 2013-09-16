@@ -1,49 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%--<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>--%>
-<%--<%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>--%>
-<%--<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>--%>
-<%--<%@ page language="java" contentType="text/html" %>--%>
-<%--<%@ page import="java.util.*" %>--%>
-
-<%--<%--%>
-<%--//Use in functionalAnalysisTab.jsp to set the color code of the first 10 entries in the InterPro matches table--%>
-<%--ArrayList colorCodeList = new ArrayList();--%>
-<%--colorCodeList.add("#058dc7");--%>
-<%--colorCodeList.add("#50b432");--%>
-<%--colorCodeList.add("#ed561b");--%>
-<%--colorCodeList.add("#edef00");--%>
-<%--colorCodeList.add("#24cbe5");--%>
-<%--colorCodeList.add("#64e572");--%>
-<%--colorCodeList.add("#ff9655");--%>
-<%--colorCodeList.add("#fff263");--%>
-<%--colorCodeList.add("#6af9c4");--%>
-<%--colorCodeList.add("#dabe88");--%>
-<%--pageContext.setAttribute("colorCodeList", colorCodeList);--%>
-<%--%>--%>
-<%--<script type="text/javascript">--%>
-<%--$(document).ready(function(){--%>
-<%--$('#expandercontent').css('display','none');--%>
-<%--$("#expanderhead").click(function(){--%>
-<%--$("#expandercontent").slideToggle();--%>
-<%--if ($("#expandersign").text() == "+"){--%>
-<%--$("#expandersign").text("-")--%>
-<%--}--%>
-<%--else {--%>
-<%--$("#expandersign").text("+")--%>
-<%--}--%>
-<%--});--%>
-<%--});--%>
-<%--</script>--%>
-
-<%--<script type="text/javascript">--%>
-<%--// Load the Visualization API and the piechart package.--%>
-<%--google.load('visualization', '1.1', {'packages':['corechart', 'table', 'controls'] });--%>
-<%--</script>--%>
-
-<%--<%@ include file="googleCharts/functionalAnalysisTab.jsp" %>--%>
-<%--<%@ include file="googleCharts/taxonomicAnalysisTab.jsp" %>--%>
-
 <script type='text/javascript'>
     //BEGIN code used to showroom the row number selection - TODO apply on the new table
 
@@ -94,18 +50,23 @@
                 <%--Main Tabs--%>
             <ul>
                 <li>
-                    <a title="Overview" href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/overviewTab"/>"><span>Overview</span></a>
+                    <a title="Overview"
+                       href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/overview"/>"><span>Overview</span></a>
                 </li>
                 <li>
-                    <a title="Quality-Control" href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/qualityControlTab"/>"><span>Quality control</span></a>
+                    <a title="Quality-Control"
+                       href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/qualityControl"/>"><span>Quality control</span></a>
                 </li>
-                <li><a title="Taxonomy-Analysis" href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/taxonomicTab"/>"><span>Taxonomy analysis</span></a>
+                <li><a title="Taxonomy-Analysis"
+                       href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/taxonomic"/>"><span>Taxonomy analysis</span></a>
                 </li>
                 <li>
-                    <a title="Functional-Analysis" href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/functionalTab"/>"><span>Functional analysis</span></a>
+                    <a title="Functional-Analysis"
+                       href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/functional"/>"><span>Functional analysis</span></a>
                 </li>
                 <li>
-                    <a title="Download" href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/downloadTab"/>"><span>Download</span></a>
+                    <a title="Download"
+                       href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/download"/>"><span>Download</span></a>
                 </li>
                     <%--<li><a href="#fragment-experimental"><span>Experimental factor</span></a></li>--%>
             </ul>
@@ -120,6 +81,7 @@
             //Ajax load approach as described here: http://jqueryui.com/tabs/#ajax
             $(document).ready(function () {
                 $("#navtabs").tabs({
+                    cache:true,
                     ajaxOptions:{
                         error:function (xhr, status, index, anchor) {
                             $(anchor.hash).html("Couldn't load this tab. We'll try to fix this as soon as possible.");

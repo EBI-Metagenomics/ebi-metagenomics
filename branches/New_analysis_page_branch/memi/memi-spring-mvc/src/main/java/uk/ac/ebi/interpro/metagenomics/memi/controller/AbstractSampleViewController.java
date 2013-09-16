@@ -132,6 +132,19 @@ public class AbstractSampleViewController extends SecuredAbstractController<Samp
         final SampleViewModel sampleModel = builder.getModel();
         //End
 
+        List<String> colorCodeList = new ArrayList<String>();
+        colorCodeList.add("#058dc7");
+        colorCodeList.add("#50b432");
+        colorCodeList.add("#ed561b");
+        colorCodeList.add("#edef00");
+        colorCodeList.add("#24cbe5");
+        colorCodeList.add("#64e572");
+        colorCodeList.add("#ff9655");
+        colorCodeList.add("#fff263");
+        colorCodeList.add("#6af9c4");
+        colorCodeList.add("#dabe88");
+        model.addAttribute("colorCodeList",colorCodeList);
+
         sampleModel.changeToHighlightedClass(ViewModel.TAB_CLASS_SAMPLES_VIEW);
         model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, sampleModel);

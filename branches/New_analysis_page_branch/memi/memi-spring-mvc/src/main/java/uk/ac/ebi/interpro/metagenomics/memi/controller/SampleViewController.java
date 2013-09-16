@@ -58,10 +58,10 @@ public class SampleViewController extends AbstractSampleViewController {
      *
      * @throws IOException
      */
-    @RequestMapping(value = "/downloadTab")
+    @RequestMapping(value = "/download")
     public ModelAndView ajaxLoadDownloadTab(@PathVariable final String sampleId,
                                             final ModelMap model) throws IOException {
-        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, sampleId, "tabs/downloadTab");
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, sampleId, "tabs/mainNavigation/download");
     }
 
     /**
@@ -69,10 +69,10 @@ public class SampleViewController extends AbstractSampleViewController {
      *
      * @throws IOException
      */
-    @RequestMapping(value = "/qualityControlTab")
+    @RequestMapping(value = "/qualityControl")
     public ModelAndView ajaxLoadQualityControlTab(@PathVariable final String sampleId,
                                                   final ModelMap model) throws IOException {
-        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, sampleId, "tabs/qualityControlTab");
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, sampleId, "tabs/mainNavigation/qualityControl");
     }
 
     /**
@@ -80,10 +80,10 @@ public class SampleViewController extends AbstractSampleViewController {
      *
      * @throws IOException
      */
-    @RequestMapping(value = "/taxonomicTab")
+    @RequestMapping(value = "/taxonomic")
     public ModelAndView ajaxLoadTaxonomyTab(@PathVariable final String sampleId,
                                             final ModelMap model) throws IOException {
-        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, sampleId, "tabs/taxonomicTab");
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, sampleId, "tabs/mainNavigation/taxonomic");
     }
 
     /**
@@ -91,10 +91,10 @@ public class SampleViewController extends AbstractSampleViewController {
      *
      * @throws IOException
      */
-    @RequestMapping(value = "/functionalTab")
+    @RequestMapping(value = "/functional")
     public ModelAndView ajaxLoadFunctionalTab(@PathVariable final String sampleId,
                                               final ModelMap model) throws IOException {
-        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, sampleId, "tabs/functionalTab");
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, sampleId, "tabs/mainNavigation/functional");
     }
 
     /**
@@ -102,10 +102,10 @@ public class SampleViewController extends AbstractSampleViewController {
      *
      * @throws IOException
      */
-    @RequestMapping(value = "/overviewTab")
+    @RequestMapping(value = "/overview")
     public ModelAndView ajaxLoadOverviewTab(@PathVariable final String sampleId,
                                             final ModelMap model) throws IOException {
-        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, sampleId, "tabs/overviewTab");
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, sampleId, "tabs/mainNavigation/overview");
     }
 
     /**
@@ -113,10 +113,10 @@ public class SampleViewController extends AbstractSampleViewController {
      *
      * @throws IOException
      */
-    @RequestMapping(value = "/goBarChartTab")
+    @RequestMapping(value = "/goBarChartView")
     public ModelAndView ajaxLoadGoBarChartTab(@PathVariable final String sampleId,
                                             final ModelMap model) throws IOException {
-        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, sampleId, "tabs/goBarChartTab");
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, sampleId, "tabs/functionalAnalysis/goBarChartView");
     }
 
     /**
@@ -124,10 +124,34 @@ public class SampleViewController extends AbstractSampleViewController {
      *
      * @throws IOException
      */
-    @RequestMapping(value = "/goPieChartTab")
+    @RequestMapping(value = "/goPieChartView")
     public ModelAndView ajaxLoadGoPieChartTab(@PathVariable final String sampleId,
                                               final ModelMap model) throws IOException {
-        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, sampleId, "tabs/goPieChartTab");
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, sampleId, "tabs/functionalAnalysis/goPieChartView");
+    }
+
+    @RequestMapping(value = "/kronaChartView")
+    public ModelAndView ajaxLoadKronaChartView(@PathVariable final String sampleId,
+                                              final ModelMap model) throws IOException {
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, sampleId, "tabs/taxonomicAnalysis/kronaChartView");
+    }
+
+    @RequestMapping(value = "/taxPieChartView")
+    public ModelAndView ajaxLoadTaxPieChartView(@PathVariable final String sampleId,
+                                              final ModelMap model) throws IOException {
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, sampleId, "tabs/taxonomicAnalysis/taxPieChartView");
+    }
+
+    @RequestMapping(value = "/taxBarChartView")
+    public ModelAndView ajaxLoadTaxBarChartView(@PathVariable final String sampleId,
+                                              final ModelMap model) throws IOException {
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, sampleId, "tabs/taxonomicAnalysis/taxBarChartView");
+    }
+
+    @RequestMapping(value = "/taxColumnChartView")
+    public ModelAndView ajaxLoadTaxColumnChartView(@PathVariable final String sampleId,
+                                              final ModelMap model) throws IOException {
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, sampleId, "tabs/taxonomicAnalysis/taxColumnChartView");
     }
 
     @RequestMapping(value = "/accessDenied")
