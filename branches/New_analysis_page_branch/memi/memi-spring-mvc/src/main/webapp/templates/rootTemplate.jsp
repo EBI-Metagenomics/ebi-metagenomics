@@ -81,9 +81,9 @@
     <style type="text/css"> #feedback_div {display: none;}
     #feedback_no_div {display: block;}</style><![endif]-->
 
-    <!--[if IE]>
+    <!--[if lt IE 9]>
     <style type="text/css"> li.but_krona {display: none;}</style>
-    <![endif]--> <%-- Hide the Krona tab for IE users - TEMP solution to solve krona div not appearing on load--%>
+    <![endif]--> <%-- Hide the Krona tab for IE users (lower version than IE9) as Krona is not working for IE8, IE7, IE6--%>
 
 
 
