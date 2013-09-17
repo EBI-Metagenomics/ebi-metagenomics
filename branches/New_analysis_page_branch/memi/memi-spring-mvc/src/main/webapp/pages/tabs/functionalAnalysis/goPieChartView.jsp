@@ -27,11 +27,13 @@ function drawBiologicalProcessPieChart() {
     var options = {'title':'Biological process',
         'titleTextStyle':{fontSize:12},
         'colors':['#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#dabe88'],
-        'width':300,
-        'height':220,
-        'legend':{position:'right', fontSize:10},
-        'chartArea':{left:9, top:30, width:"70%", height:"100%"},
+        'width':420,
+        'height':240,
+        'legend':{position:'right', 'textStyle':{'fontSize':10}},
+//        'legend':{position:'right', fontSize:10},
+        'chartArea':{left:9, top:30, width:"100%", height:"80%"},
         'pieSliceBorderColor':'none',
+//         'backgroundColor':'green',
         'sliceVisibilityThreshold':1 / 30
     };
 
@@ -55,11 +57,12 @@ function drawMolecularFunctionPieChart() {
     var options = {'title':'Molecular function',
         'titleTextStyle':{fontSize:12},
         'colors':['#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#dabe88'],
-        'width':300,
-        'height':220,
-        'legend':{position:'right', fontSize:10},
-        'chartArea':{left:9, top:30, width:"70%", height:"100%"},
+        'width':360,
+        'height':240,
+        'legend':{position:'right', 'textStyle':{'fontSize':10}},
+        'chartArea':{left:9, top:30, width:"100%", height:"80%"},
         'pieSliceBorderColor':'none',
+//                       'backgroundColor':'blue',
         'sliceVisibilityThreshold':1 / 30
     };
 
@@ -84,11 +87,12 @@ function drawCellularComponentPieChart() {
     var options = {'title':'Cellular component',
         'titleTextStyle':{fontSize:12},
         'colors':['#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#dabe88'],
-        'width':300,
-        'height':220,
-        'legend':{position:'right', fontSize:10},
-        'chartArea':{left:9, top:30, width:"70%", height:"100%"},
+        'width':360,
+        'height':240,
+        'legend':{position:'right', 'textStyle':{'fontSize':10}},
+        'chartArea':{left:9, top:30, width:"100%", height:"80%"},
         'pieSliceBorderColor':'none',
+//         'backgroundColor':'yellow',
         'sliceVisibilityThreshold':1 / 100
     };
 
