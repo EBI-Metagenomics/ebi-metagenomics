@@ -180,7 +180,7 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
             File fileObject = FileObjectBuilder.createFileObject(emgFile, propertyContainer, fileDefinition);
             boolean doesExist = FileExistenceChecker.checkFileExistence(fileObject);
             if (doesExist) {
-                if (fileDefinition.getIdentifier().equalsIgnoreCase(FileDefinitionId.INTERPROSCAN_RESULT_FILE.toString())) {
+                if (fileDefinition.getIdentifier().equalsIgnoreCase(FileDefinitionId.INTERPRO_MATCHES_SUMMARY_FILE.toString())) {
                     isInterProMatchSectionDisabled = false;
                 } else if (fileDefinition.getIdentifier().equalsIgnoreCase(FileDefinitionId.GO_SLIM_FILE.toString())) {
                     isGoSectionDisabled = false;

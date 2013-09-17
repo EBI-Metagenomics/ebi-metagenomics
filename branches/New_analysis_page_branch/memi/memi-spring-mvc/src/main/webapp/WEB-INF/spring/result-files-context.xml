@@ -18,7 +18,7 @@
     <bean name="functionalAnalysisFileDefinitions" class="java.util.ArrayList">
         <constructor-arg>
             <list>
-                <ref bean="interProScanResultFile"/>
+                <ref bean="interProMatchesSummaryFile"/>
                 <ref bean="goSlimAnnotationFile"/>
                 <ref bean="sequenceFeatureSummaryFile"/>
             </list>

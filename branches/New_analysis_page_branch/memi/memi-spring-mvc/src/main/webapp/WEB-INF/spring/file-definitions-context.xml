@@ -221,11 +221,16 @@
     </bean>
 
     <bean id="interProMatchesSummaryFile" autowire-candidate="false"
-          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.ResultFileDefinitionImpl">
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.FunctionalAnalysisFileDefinition">
         <property name="identifier" value="INTERPRO_MATCHES_SUMMARY_FILE"/>
         <property name="fileNameEnding" value="_summary.ipr"/>
         <property name="description"
                   value="InterPro summary file. This files contains all InterPro matches (entries) for a particular sample"/>
+        <property name="linkText" value="N/A"/>
+        <property name="order" value="0"/>
+        <property name="downloadName" value="N/A"/>
+        <property name="linkURL" value="N/A"/>
+        <property name="linkTitle" value="N/A"/>
     </bean>
 
 </beans>
