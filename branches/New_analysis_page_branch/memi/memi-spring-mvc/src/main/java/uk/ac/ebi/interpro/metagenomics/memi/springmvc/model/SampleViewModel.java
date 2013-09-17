@@ -28,8 +28,6 @@ public class SampleViewModel extends ViewModel {
      */
     private FunctionalAnalysisResult functionalAnalysisResult;
 
-    private Map<Class, List<AbstractGOTerm>> goData;
-
     /* An EmgFile object holds two attributes of the */
     private EmgFile emgFile;
 
@@ -58,7 +56,6 @@ public class SampleViewModel extends ViewModel {
                            String pageTitle,
                            List<Breadcrumb> breadcrumbs,
                            Sample sample,
-                           Map<Class, List<AbstractGOTerm>> goData,
                            EmgFile emgFile,
                            List<String> archivedSequences,
                            MemiPropertyContainer propertyContainer,
@@ -73,7 +70,6 @@ public class SampleViewModel extends ViewModel {
         super(submitter, pageTitle, breadcrumbs, propertyContainer);
         this.sample = sample;
         this.functionalAnalysisResult = functionalAnalysisResult;
-        this.goData = goData;
         this.emgFile = emgFile;
         this.archivedSequences = archivedSequences;
         this.experimentType = experimentType;
@@ -104,7 +100,6 @@ public class SampleViewModel extends ViewModel {
                 breadcrumbs,
                 sample,
                 null,
-                null,
                 archivedSequences,
                 propertyContainer,
                 functionalAnalysisResult,
@@ -125,50 +120,43 @@ public class SampleViewModel extends ViewModel {
         return archivedSequences;
     }
 
-    public List<AbstractGOTerm> getBiologicalProcessGOTerms() {
-        return getGOTerms(false, BiologicalProcessGOTerm.class);
+    public List<BiologicalProcessGOTerm> getBiologicalProcessGOTerms() {
+        return functionalAnalysisResult.getGoTermSection().getBiologicalProcessGoTerms().getBiologicalProcessGOTermList();
     }
 
     /**
      * Sorted by number of hits.
      */
-    public List<AbstractGOTerm> getSortedBiologicalProcessGOTerms() {
-        return getGOTerms(true, BiologicalProcessGOTerm.class);
+    public List<BiologicalProcessGOTerm> getSortedBiologicalProcessGOTerms() {
+        List<BiologicalProcessGOTerm> result = functionalAnalysisResult.getGoTermSection().getBiologicalProcessGoTerms().getBiologicalProcessGOTermList();
+        Collections.sort(result, AbstractGOTerm.GoTermComparator);
+        return result;
     }
 
-    public List<AbstractGOTerm> getMolecularFunctionGOTerms() {
-        return getGOTerms(false, MolecularFunctionGOTerm.class);
-    }
-
-    /**
-     * Sorted by number of hits.
-     */
-    public List<AbstractGOTerm> getSortedMolecularFunctionGOTerms() {
-        return getGOTerms(true, MolecularFunctionGOTerm.class);
-    }
-
-    public List<AbstractGOTerm> getCellularComponentGOTerms() {
-        return getGOTerms(false, CellularComponentGOTerm.class);
+    public List<MolecularFunctionGOTerm> getMolecularFunctionGOTerms() {
+        return functionalAnalysisResult.getGoTermSection().getMolecularFunctionGoTerms().getMolecularFunctionGOTermList();
     }
 
     /**
      * Sorted by number of hits.
      */
-    public List<AbstractGOTerm> getSortedCellularComponentGOTerms() {
-        return getGOTerms(true, CellularComponentGOTerm.class);
+    public List<MolecularFunctionGOTerm> getSortedMolecularFunctionGOTerms() {
+        List<MolecularFunctionGOTerm> result = functionalAnalysisResult.getGoTermSection().getMolecularFunctionGoTerms().getMolecularFunctionGOTermList();
+        Collections.sort(result, AbstractGOTerm.GoTermComparator);
+        return result;
     }
 
-    private List<AbstractGOTerm> getGOTerms(boolean doSortResultList, Class clazz) {
-        List<AbstractGOTerm> resultList;
-        if (goData != null && goData.containsKey(clazz)) {
-            resultList = new ArrayList<AbstractGOTerm>(goData.get(clazz));
-            if (doSortResultList) {
-                Collections.sort(resultList, AbstractGOTerm.GoTermComparator);
-            }
-            return resultList;
-        } else {
-            return new ArrayList<AbstractGOTerm>(0);
-        }
+    public List<CellularComponentGOTerm> getCellularComponentGOTerms() {
+        return functionalAnalysisResult.getGoTermSection().getCellularComponentGoTerms().getCellularComponentGOTermList();
+    }
+
+    /**
+     * Sorted by number of hits.
+     */
+    public List<CellularComponentGOTerm> getSortedCellularComponentGOTerms() {
+        List<CellularComponentGOTerm> result = functionalAnalysisResult.getGoTermSection().getCellularComponentGoTerms().getCellularComponentGOTermList();
+        Collections.sort(result, AbstractGOTerm.GoTermComparator);
+        return result;
     }
 
     public EmgFile getEmgFile() {

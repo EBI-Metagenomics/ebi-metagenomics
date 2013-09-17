@@ -1,8 +1,6 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage;
 
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.AnalysisResult;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.tabActivation.FunctionalAnalysisTab;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.tabActivation.TaxonomicAnalysisTab;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +17,9 @@ public class FunctionalAnalysisResult extends AnalysisResult {
 
     private int totalReadsCount;
 
+    private GoTermSection goTermSection;
+
+
     public FunctionalAnalysisResult() {
         this(new ArrayList<InterProEntry>(0), 0);
     }
@@ -34,5 +35,13 @@ public class FunctionalAnalysisResult extends AnalysisResult {
 
     public int getTotalReadsCount() {
         return totalReadsCount;
+    }
+
+    public GoTermSection getGoTermSection() {
+        return goTermSection;
+    }
+
+    public void setGoTermSection(GoTermSection goTermSection) {
+        this.goTermSection = goTermSection;
     }
 }

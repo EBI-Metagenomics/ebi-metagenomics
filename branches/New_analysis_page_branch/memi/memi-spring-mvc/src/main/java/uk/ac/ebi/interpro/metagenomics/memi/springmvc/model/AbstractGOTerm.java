@@ -1,6 +1,7 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
 
 import java.util.Comparator;
+import java.util.List;
 
 /**
  * Simple model class which represents a GO term.
@@ -17,6 +18,8 @@ public abstract class AbstractGOTerm {
     private int numberOfMatches;
 
     private String ontology;
+
+    public final static float DEFAULT_SLICE_VISIBILITY_THRESHOLD = 1 / 30f;
 
     AbstractGOTerm(String accessionID, String synonym, int numberOfMatches, String ontology) {
         this.accessionID = accessionID;

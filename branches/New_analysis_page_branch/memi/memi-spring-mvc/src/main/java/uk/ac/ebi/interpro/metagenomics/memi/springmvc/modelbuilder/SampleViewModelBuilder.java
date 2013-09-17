@@ -103,7 +103,7 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
     @Override
     public SampleViewModel getModel() {
         log.info("Building instance of " + SampleViewModel.class + "...");
-        final FunctionalAnalysisResult functionalAnalysisResult = getListOfInterProEntries();
+        FunctionalAnalysisResult functionalAnalysisResult = getListOfInterProEntries();
         final boolean isHostAssociated = isHostAssociated();
         final Submitter submitter = getSessionSubmitter(sessionMgr);
 
@@ -114,13 +114,12 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
 
 
         if (emgFile != null) {
-            //Get GO results
-            final Map<Class, List<AbstractGOTerm>> goData = loadGODataFromCSV();
+            //Add GO results
+            functionalAnalysisResult = loadGODataFromCSV(functionalAnalysisResult);
             final SampleViewModel sampleViewModel = new SampleViewModel(submitter,
                     pageTitle,
                     breadcrumbs,
                     sample,
-                    goData,
                     emgFile,
                     archivedSequences,
                     propertyContainer,
@@ -314,17 +313,18 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
         return entryDesc.replaceAll("\'", "\\\\'");
     }
 
-    private Map<Class, List<AbstractGOTerm>> loadGODataFromCSV() {
-        Map<Class, List<AbstractGOTerm>> result = new Hashtable<Class, List<AbstractGOTerm>>();
-        result.put(BiologicalProcessGOTerm.class, new ArrayList<AbstractGOTerm>());
-        result.put(CellularComponentGOTerm.class, new ArrayList<AbstractGOTerm>());
-        result.put(MolecularFunctionGOTerm.class, new ArrayList<AbstractGOTerm>());
-
+    private FunctionalAnalysisResult loadGODataFromCSV(final FunctionalAnalysisResult functionalAnalysisResult) {
         log.info("Processing GO slim file...");
         File goSlimFile = FileObjectBuilder.createFileObject(emgFile, propertyContainer, propertyContainer.getResultFileDefinition(FileDefinitionId.GO_SLIM_FILE));
         if (FileExistenceChecker.checkFileExistence(goSlimFile)) {
             List<String[]> rows = getRawData(goSlimFile, ',');
             if (rows != null) {
+                final List<BiologicalProcessGOTerm> biologicalProcessGOTermList = new ArrayList<BiologicalProcessGOTerm>();
+                final List<CellularComponentGOTerm> cellularComponentGOTermList = new ArrayList<CellularComponentGOTerm>();
+                final List<MolecularFunctionGOTerm> molecularFunctionGOTermList = new ArrayList<MolecularFunctionGOTerm>();
+                int totalHitsCountBioProcess = 0;
+                int totalHitsCountCellComponent = 0;
+                int totalHitsCountMolFunction = 0;
                 for (String[] row : rows) {
                     if (row.length == 4) {
                         String ontology = row[2];
@@ -335,27 +335,34 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
                             if (ontology.equals("biological_process")) {
                                 BiologicalProcessGOTerm instance = new BiologicalProcessGOTerm(accession,
                                         synonym, numberOfMatches);
-                                result.get(BiologicalProcessGOTerm.class).add(instance);
+                                totalHitsCountBioProcess += numberOfMatches;
+                                biologicalProcessGOTermList.add(instance);
                             } else if (ontology.equals("cellular_component")) {
                                 CellularComponentGOTerm instance = new CellularComponentGOTerm(accession,
                                         synonym, numberOfMatches);
-                                result.get(CellularComponentGOTerm.class).add(instance);
+                                totalHitsCountCellComponent += numberOfMatches;
+                                cellularComponentGOTermList.add(instance);
                             } else {
                                 MolecularFunctionGOTerm instance = new MolecularFunctionGOTerm(accession,
                                         synonym, numberOfMatches);
-                                result.get(MolecularFunctionGOTerm.class).add(instance);
+                                totalHitsCountMolFunction += numberOfMatches;
+                                molecularFunctionGOTermList.add(instance);
                             }
                         }
                     } else {
                         log.warn("Row size is not the expected one.");
                     }
                 }
+                GoTermSection goTermSection = new GoTermSection(new BiologicalProcessGoTerms(totalHitsCountBioProcess, biologicalProcessGOTermList),
+                        new CellularComponentGoTerms(totalHitsCountCellComponent, cellularComponentGOTermList),
+                        new MolecularFunctionGoTerms(totalHitsCountMolFunction, molecularFunctionGOTermList));
+                functionalAnalysisResult.setGoTermSection(goTermSection);
             } else {
                 log.warn("Didn't get any data from GO term file. There might be some fundamental change to this file" +
                         "(maybe in the near past), which affects this parsing process!");
             }
         }
-        return result;
+        return functionalAnalysisResult;
     }
 
     /**
