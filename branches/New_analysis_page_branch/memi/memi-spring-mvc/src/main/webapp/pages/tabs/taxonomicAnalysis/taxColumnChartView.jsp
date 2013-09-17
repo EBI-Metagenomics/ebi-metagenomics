@@ -71,11 +71,9 @@
         ]);
 
 // Stacked column graph
-        var options = {'title':'${phylumCompositionTitle}',
-            'titleTextStyle':{fontSize:12},
+        var options = {'title':'${phylumCompositionTitle}', 'titleTextStyle':{fontSize:12},'fontName': '"Arial"',
             'colors':[${model.taxonomyAnalysisResult.colorCodeForStackChart}],
-            'width':320,
-            'height':420,
+            'width':320, 'height':420,
             'legend':{position:'right', textStyle:{fontSize:10}},
             'chartArea':{left:80, top:30, width:"20%", height:"86%"},
             'pieSliceBorderColor':'none',
