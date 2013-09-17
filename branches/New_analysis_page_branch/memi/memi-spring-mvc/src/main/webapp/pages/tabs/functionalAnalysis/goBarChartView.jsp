@@ -24,8 +24,8 @@ function drawBiologicalProcessBarChart() {
     ]);
 
     // GO TERM bar Biological Process
-    var options = {'title':'Biological process', 'titleTextStyle':{fontSize:12}, 'colors':['#058dc7'], 'width':360, 'height':600, 'chartArea':{left:250, top:40, width:"100%", height:"100%"}, 'vAxis':{textStyle:{fontSize:10}}, 'hAxis':{textPosition:'none', gridlines:{color:'white'}}, 'bar':{groupWidth:8}, 'legend':'none'
-//        'vAxis':{'textPosition':'in'},
+    var options = {'title':'Biological process', 'titleTextStyle':{fontSize:12}, 'fontName': '"Arial"', 'colors':['#058dc7'], 'width':360, 'height':600, 'chartArea':{left:250, top:40, width:"100%", height:"100%"}, 'vAxis':{textStyle:{fontSize:10}}, 'hAxis':{textPosition:'none', gridlines:{color:'white'}}, 'bar':{groupWidth:8}, 'legend':'none'
+//  'vAxis':{'textPosition':'in'},
     };
 
     var barChart = new google.visualization.BarChart(document.getElementById('func_chart_bar_go_bp'));
@@ -43,9 +43,7 @@ function drawMolecularFunctionBarChart() {
     ]);
 
     // GO TERM bar Molecular Function
-    var options = {'title':'Molecular function', 'titleTextStyle':{fontSize:12}, 'colors':['#50b432'], 'width':360, 'height':600, 'chartArea':{left:230, top:40, width:"100%", height:"100%"}, 'vAxis':{textStyle:{fontSize:10}}, 'hAxis':{textPosition:'none', gridlines:{color:'white'}}, 'bar':{groupWidth:8}, 'legend':'none'
-//        'colors':['#91d450'], 'width':300, 'vAxis':{'textPosition':'in'},
-    };
+    var options = {'title':'Molecular function', 'titleTextStyle':{fontSize:12}, 'fontName': '"Arial"', 'colors':['#50b432'], 'width':360, 'height':600, 'chartArea':{left:230, top:40, width:"100%", height:"100%"}, 'vAxis':{textStyle:{fontSize:10}}, 'hAxis':{textPosition:'none', gridlines:{color:'white'}}, 'bar':{groupWidth:8}, 'legend':'none' };
 
     var barChart = new google.visualization.BarChart(document.getElementById('func_chart_bar_go_mf'));
     barChart.draw(molecularFunctionGOTerms, options);
@@ -62,9 +60,7 @@ function drawCellularComponentBarChart() {
     ]);
 
     // GO TERM bar Cellular component
-    var options = {'title':'Cellular component', 'titleTextStyle':{fontSize:12}, 'colors':['#ed561b'], 'width':270, 'height':600, 'chartArea':{left:160, top:40, width:"100%", height:"100%"}, 'vAxis':{textStyle:{fontSize:10}}, 'hAxis':{textPosition:'none', gridlines:{color:'white', count:15}}, 'bar':{groupWidth:8}, 'legend':'none'
-//        'colors':['#535353'], 'vAxis':{'textPosition':'in'},
-    };
+    var options = {'title':'Cellular component', 'titleTextStyle':{fontSize:12}, 'fontName': '"Arial"', 'colors':['#ed561b'], 'width':270, 'height':600, 'chartArea':{left:160, top:40, width:"100%", height:"100%"}, 'vAxis':{textStyle:{fontSize:10}}, 'hAxis':{textPosition:'none', gridlines:{color:'white', count:15}}, 'bar':{groupWidth:8}, 'legend':'none'};
 
     var barChart = new google.visualization.BarChart(document.getElementById('func_chart_bar_go_cc'));
     barChart.draw(cellularComponentGOTerms, options);
