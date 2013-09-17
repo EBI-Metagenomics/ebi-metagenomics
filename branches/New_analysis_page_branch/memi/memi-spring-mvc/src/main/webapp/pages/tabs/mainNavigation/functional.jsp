@@ -65,8 +65,7 @@
                             <ul>
                                     <%--<li><a href="#interpro-match-table" title="Table view"><span class="ico-table"></span></a></li>--%>
                                 <li class="selector_tab"></li>
-                                <li><a href="#interpro-match-pie" title="Pie chart view"><span
-                                        class="ico-pie"></span></a></li>
+                                <%--<li><a href="#interpro-match-pie" title="Pie chart view"><span class="ico-pie"></span></a></li>--%>
                                     <%--<li><a href="#interpro-match-bar" title="Bar chart view"><span class="ico-barh"></span></a></li>--%>
                                     <%--<li><a href="#interpro-match-col" title="Stacked column chart view"><span class="ico-col"></span></a></li>--%>
                                     <%--<li><a href="#interpro-match-Krona" title="Krona interactive chart view"><span class="ico-krona"></span></a></li>--%>
