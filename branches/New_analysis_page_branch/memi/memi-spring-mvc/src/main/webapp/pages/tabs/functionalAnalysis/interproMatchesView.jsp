@@ -19,7 +19,7 @@
         interProMatchesData.addRows([
                 <c:set var="addComma" value="false"/><c:forEach var="entry" items="${model.functionalAnalysisResult.interProMatchesSection.interProEntryList}" varStatus="status"><c:choose><c:when test="${addComma}">,
     </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>
-                ['<div title="${entry.entryDescription}" class="_cc" style="background-color:<c:choose><c:when test="${status.index>9}">#b9b9b9</c:when><c:otherwise><c:out value="${colorCodeList[status.index]}"/></c:otherwise></c:choose>;"></div> <a title="${entry.entryDescription}" href="http://www.ebi.ac.uk/interpro/entry/${entry.entryID}">${entry.entryDescription}</a>', '${entry.entryID}', ${entry.numOfEntryHits}, <fmt:formatNumber type="number" maxFractionDigits="1" value="${entry.numOfEntryHits*100 / model.functionalAnalysisResult.interProMatchesSection.totalReadsCount}" />]</c:forEach>
+    ['<div title="${entry.entryDescription}" class="_cc" style="background-color:<c:choose><c:when test="${status.index>9}">#b9b9b9</c:when><c:otherwise><c:out value="${colorCodeList[status.index]}"/></c:otherwise></c:choose>;"></div> <a title="${entry.entryDescription}" href="http://www.ebi.ac.uk/interpro/entry/${entry.entryID}" target="_blank">${entry.entryDescription}', '${entry.entryID}', ${entry.numOfEntryHits}, <fmt:formatNumber type="number" maxFractionDigits="1" value="${entry.numOfEntryHits*100 / model.functionalAnalysisResult.interProMatchesSection.totalReadsCount}" />]</c:forEach> //re-insert target="_blank" for interpro links as charts disappear when linked in the same window and coming back
     ]);
 
         // Define a StringFilter control for the 'Name'and 'ID' column
