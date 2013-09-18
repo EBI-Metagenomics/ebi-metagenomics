@@ -7,10 +7,11 @@
 
 <div id="project_ov">
 
+<div class="title_tab_p">
+<span class="subtitle">Project overview <span>(${model.study.studyId})</span></span>
+<h2 class="fl_uppercase_title">${model.study.studyName}</h2>
+</div>
 
-<span class="subtitle">Project overview (${model.study.studyId})</span>
-
-<h2>${model.study.studyName}</h2>
 <tags:publications publications="${model.study.publications}" relatedPublications="${model.relatedPublications}" relatedLinks="${model.relatedLinks}" />
 
 <c:choose>
@@ -40,7 +41,7 @@
 
 <p><span>Submitted date: ${model.study.formattedLastReceived}</span></p>
 
-<h3 id="study_desc" style="margin-top:40px;">Description </h3>
+<h3 id="study_desc" style="margin-top:30px;">Description </h3>
 
 <div class="output_form">
     <c:choose>
