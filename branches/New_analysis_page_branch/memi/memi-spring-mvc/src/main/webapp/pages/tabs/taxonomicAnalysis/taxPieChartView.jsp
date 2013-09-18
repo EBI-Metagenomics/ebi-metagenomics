@@ -92,7 +92,7 @@
 
         var options = {'title':'${phylumCompositionTitle}', 'titleTextStyle':{fontSize:12}, 'fontName': '"Arial"', 'colors':[${model.taxonomyAnalysisResult.colorCodeForPieChart}],
             //Krona style 'colors':['#d47f7f','#d1a575','#d4c97f','#99d47f','#7fd4a7','#7fc3d4','#7f8ad4','#a77fd4','#d47fd3','#d47faf','#ccc','#ccc','#ccc'],
-            'width':272,
+            'width':274,
             'height':299,
             'pieSliceTextStyle':{bold:true, color:'white'},
             'legend':'none',
