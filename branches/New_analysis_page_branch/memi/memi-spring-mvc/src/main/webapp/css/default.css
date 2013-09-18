@@ -1664,8 +1664,8 @@ background-image: -webkit-gradient(linear,left top,left bottom,from(rgba(255,255
 background-image: -webkit-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85)); }
 .ico-download a:before {color: #3b4043;width: 20px;}
 .ico-download a:hover {border: 1px solid #c6c6c6; box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3); -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);-khtml-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);-webkit-box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);text-decoration: none;  }
-#expanderhead {cursor:pointer;}
-#expanderhead:hover {background-color:#e5e5e5;} /*style for expander*/
+/*#expanderhead {cursor:pointer;}*/
+/*#expanderhead:hover {background-color:#e5e5e5;} *//*style for expander*/
 #Download_full_table_CSV {display:none;}
 
 #noscript_feedbackLink {display: none;}
