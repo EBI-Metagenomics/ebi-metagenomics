@@ -543,10 +543,8 @@ margin:0.83em 0;/*added for compliance*/
 }
 #list-data h2 {margin:0;} /*added for compliance*/
 
-
 .subtitle {font-size:150%;color: #066; margin-left: 9px;margin-top:20px;}
-
-
+.subtitle span {font-size:80%; color: #7c8c99;}
 
 h3 {
 color:#7c8c99;
@@ -630,6 +628,14 @@ border-radius: 10px;
 -webkit-border-radius: 10px;
 font-size:110%;
 }
+
+/*.fls_uppercase {text-transform: capitalize;} *//*transform first letter words in uppercase letter - floating elements*/
+.fl_uppercase {display: inline-block;}
+.fl_uppercase:first-letter {text-transform: uppercase;}  /*transform first letter words in uppercase letter - block elements*/
+.fl_uppercase_title {display: block;}
+.fl_uppercase_title:first-letter {text-transform: uppercase;}
+
+.sample_desc {font-size:110%;} /*sample description*/
 
 /* END TITLE */
 
@@ -1566,7 +1572,6 @@ background:none;
 
 /*JQUERY TABS*/
 .title_tab {margin:20px 0 0 9px;}
-.title_tab span a {font-size:80%;}
 .title_tab h2 {margin-top:0;}
 
 .sample_ana .ui-corner-top {border-top-right-radius: 0px;border-top-left-radius: 0px;}
