@@ -1574,6 +1574,9 @@ background:none;
 .title_tab {margin:20px 0 0 9px;}
 .title_tab h2 {margin-top:0; margin-bottom:9px;}
 
+.title_tab_p {margin:20px 0 0 0px;}
+.title_tab_p h2 {margin-top:0;}
+
 .sample_ana .ui-corner-top {border-top-right-radius: 0px;border-top-left-radius: 0px;}
 .sample_ana .ui-widget-content a {color:#188960;}
 .sample_ana .ui-widget-content {border: 0px solid #aaaaaa;background: none;color: #333333;margin: 0 9px;}  /*margin for navigation tab*/
