@@ -1,6 +1,38 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<script type='text/javascript'>
+    //BEGIN code used to showroom the row number selection - TODO apply on the new table
 
+    //    google.setOnLoadCallback(init);
+    //
+    //    var dataSourceUrl = 'https://docs.google.com/spreadsheet/ccc?key=0AgWotcbTSSjYdGF6NjE0WGxGRmV5djJDWEZ6RzZhT2c&usp=sharing';
+    //    var query, options, container;
+    //
+    //       function init() {
+    //         query = new google.visualization.Query(dataSourceUrl);
+    //         container = document.getElementById("func_table_div1");
+    //         options = {width:600, allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false};
+    //         sendAndDraw();
+    //       }
+    //
+    //       function sendAndDraw() {
+    //         query.abort();
+    //         var tableQueryWrapper = new TableQueryWrapper(query, container, options);
+    //         tableQueryWrapper.sendAndDraw();
+    //       }
+    //
+    //
+    //       function setOption(prop, value) {
+    //         options[prop] = value;
+    //         sendAndDraw();
+    //       }
+
+
+    //    google.setOnLoadCallback(drawTable);// Set a callback to run when the Google Visualization API is loaded.
+
+    //END code used to showroom the row number selection - TODO apply on the new table
+
+</script>
 <div id="fragment-functional">
 
     <div class="main_tab_full_content">
