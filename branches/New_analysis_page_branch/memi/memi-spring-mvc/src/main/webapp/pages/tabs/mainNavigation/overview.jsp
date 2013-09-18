@@ -171,28 +171,17 @@
 
         <%--BEGIN OTHER INFO   --%>
         <c:if test="${not empty model.sampleAnnotations}">
-            <h3 id="expanderhead" style="">Other information
+            <h3 style="">Other information
                     <%--<span id="expandersign">+</span>--%>
             </h3>
 
-            <div id="expandercontent">
-                <table border="1" class="result">
-                    <thead>
-                    <tr>
-                        <c:set var="headerWidth" value="" scope="page"/>
-                        <c:set var="headerId" value="" scope="page"/>
-                        <th class="h_left" id="${headerId}" abbr="${headerName}" width="${headerWidth}" scope="col">
-                            Annotation
-                        </th>
-                        <th class="h_left" id="${headerId}" abbr="${headerName}" width="${headerWidth}" scope="col">
-                            Value
-                        </th>
-                    </tr>
-                    </thead>
+            <div class="output_form">
+                <table class="simple_table">
                     <tbody>
                     <c:forEach var="annotation" items="${model.sampleAnnotations}" varStatus="status">
                         <tr>
                             <td class="h_left" id="ordered">${annotation.annotationName}</td>
+                            <td width="9px"></td>
                             <td class="h_left">${annotation.annotationValue} ${annotation.unit}</td>
                         </tr>
                     </c:forEach>
