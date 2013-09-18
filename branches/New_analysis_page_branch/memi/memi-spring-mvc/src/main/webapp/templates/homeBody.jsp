@@ -258,8 +258,8 @@
                            end="${model.maxRowNumberOfLatestItems-1}">
                     <p><%--<span class="list_date">${entry.key.lastMetadataReceived}:</span> --%>
                         <a href="<c:url value="${baseURL}/project/${study.studyId}"/>"
-                           class="list_more">${study.studyName}</a>
-                        <br/>
+                           class="list_more fl_uppercase_title">${study.studyName}</a>
+
                         <span class="list_desc"><c:out value="${study.shortStudyAbstract} ..."/></span>
                         <br/>
                         <a href="<c:url value="${baseURL}/project/${study.studyId}"/>"
@@ -286,8 +286,8 @@
                            end="${model.maxRowNumberOfLatestItems-1}">
                     <p><%--<span class="list_date">${sample.metadataReceived}:</span>--%>
                         <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>"
-                           class="list_more">${sample.sampleName}</a>
-                        <br/>
+                           class="list_more fl_uppercase_title">${sample.sampleName}</a>
+
                         <span class="list_desc"><c:out value="${sample.shortSampleDescription} ..."/></span>
                         <br/>
                         <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>" class="more_view">View more</a>
