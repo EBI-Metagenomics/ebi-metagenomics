@@ -7,7 +7,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MolecularFunctionGOT
 import java.util.ArrayList;
 
 /**
- * Simple model class which is part of {@link FunctionalAnalysisResult}.
+ * Simple model class which is part of {@link FunctionalAnalysisResult}. Holds data to render the GO term charts.
  *
  * @author Maxim Scheremetjew
  */
