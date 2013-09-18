@@ -41,7 +41,7 @@
     <span class="subtitle">Sample <a href="<c:url value="${baseURL}/sample/${model.sample.sampleId}"/>">
         (${model.sample.sampleId})</a></span>
 
-            <h2>${model.sample.sampleName}</h2>
+            <h2 class="fl_uppercase_title">${model.sample.sampleName}</h2>
         </div>
 
         <div class="sample_ana">
