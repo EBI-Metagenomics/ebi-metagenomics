@@ -17,7 +17,7 @@
             <c:choose>
                 <c:when test="${not empty model.sample.sampleDescription}">
                     <c:set var="sampleDescription" value="${model.sample.sampleDescription}"/>
-                    <p style="font-size:110%;"><c:out value="${sampleDescription}"/></p>
+                    <p class="fl_uppercase sample_desc">${fn:toLowerCase(sampleDescription)}</p>
                 </c:when>
             </c:choose>
 
@@ -88,7 +88,7 @@
                             <c:set var="environmentalBiome" value="${notGivenId}"/>
                         </c:otherwise>
                     </c:choose>
-                    <div class="result_row"><label>Biome:</label> <span><c:out value="${environmentalBiome}"/></span>
+                    <div class="result_row"><label>Biome:</label> <span class="fl_uppercase">${fn:toLowerCase(environmentalBiome)}</span>
                     </div>
 
                     <c:choose>
@@ -99,9 +99,10 @@
                             <c:set var="environmentalFeature" value="${notGivenId}"/>
                         </c:otherwise>
                     </c:choose>
-                    <div class="result_row"><label>Experimental feature:</label> <span><c:out
-                            value="${environmentalFeature}"/></span></div>
-                    <c:choose>
+                    <div class="result_row"><label>Experimental feature:</label><span class="fl_uppercase">${fn:toLowerCase(environmentalFeature)}</span>
+                    </div>
+
+                        <c:choose>
                         <c:when test="${not empty model.sample.environmentalMaterial}">
                             <c:set var="environmentalMaterial" value="${model.sample.environmentalMaterial}"/>
                         </c:when>
@@ -109,9 +110,10 @@
                             <c:set var="environmentalMaterial" value="${notGivenId}"/>
                         </c:otherwise>
                     </c:choose>
-                    <div class="result_row"><label>Material:</label> <span><c:out
-                            value="${environmentalMaterial}"/></span>
+
+                    <div class="result_row"><label>Material:</label><span class="fl_uppercase">${fn:toLowerCase(environmentalMaterial)}</span>
                     </div>
+
                 </div>
             </c:otherwise>
         </c:choose>
