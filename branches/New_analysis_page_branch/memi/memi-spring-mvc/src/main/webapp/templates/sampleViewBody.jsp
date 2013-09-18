@@ -1,47 +1,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<script type='text/javascript'>
-    //BEGIN code used to showroom the row number selection - TODO apply on the new table
-
-    //    google.setOnLoadCallback(init);
-    //
-    //    var dataSourceUrl = 'https://docs.google.com/spreadsheet/ccc?key=0AgWotcbTSSjYdGF6NjE0WGxGRmV5djJDWEZ6RzZhT2c&usp=sharing';
-    //    var query, options, container;
-    //
-    //       function init() {
-    //         query = new google.visualization.Query(dataSourceUrl);
-    //         container = document.getElementById("func_table_div1");
-    //         options = {width:600, allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false};
-    //         sendAndDraw();
-    //       }
-    //
-    //       function sendAndDraw() {
-    //         query.abort();
-    //         var tableQueryWrapper = new TableQueryWrapper(query, container, options);
-    //         tableQueryWrapper.sendAndDraw();
-    //       }
-    //
-    //
-    //       function setOption(prop, value) {
-    //         options[prop] = value;
-    //         sendAndDraw();
-    //       }
-
-
-    //    google.setOnLoadCallback(drawTable);// Set a callback to run when the Google Visualization API is loaded.
-
-    //END code used to showroom the row number selection - TODO apply on the new table
-
-</script>
 
 <c:choose>
     <c:when test="${not empty model.sample}">
 
     <div class="title_tab">
     <span class="subtitle">Sample <span>(${model.sample.sampleId})</span></span>
-
-            <h2 class="fl_uppercase_title">${model.sample.sampleName}</h2>
-        </div>
+    <h2 class="fl_uppercase_title">${model.sample.sampleName}</h2>
+    </div>
 
         <div class="sample_ana">
         <div id="navtabs">
