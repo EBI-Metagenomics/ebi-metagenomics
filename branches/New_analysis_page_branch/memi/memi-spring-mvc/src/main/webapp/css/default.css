@@ -1571,7 +1571,7 @@ background:none;
 .krona_chart_small {height: 230px; width: 354px; border:0px pink solid;}
 
 /*JQUERY TABS*/
-.title_tab {margin:20px 0 0 9px;}
+.title_tab {margin:9px 0 0 9px;}
 .title_tab h2 {margin-top:0;}
 
 .sample_ana .ui-corner-top {border-top-right-radius: 0px;border-top-left-radius: 0px;}
