@@ -13,28 +13,26 @@ import java.util.List;
  */
 public class FunctionalAnalysisResult extends AnalysisResult {
 
-    private List<InterProEntry> interProEntryList;
-
-    private int totalReadsCount;
+    private InterProMatchesSection interProMatchesSection;
 
     private GoTermSection goTermSection;
 
 
     public FunctionalAnalysisResult() {
-        this(new ArrayList<InterProEntry>(0), 0);
+        this(new InterProMatchesSection(new ArrayList<InterProEntry>(0), 0));
     }
 
-    public FunctionalAnalysisResult(List<InterProEntry> interProEntryList, int totalReadsCount) {
-        this.interProEntryList = interProEntryList;
-        this.totalReadsCount = totalReadsCount;
+    public FunctionalAnalysisResult(InterProMatchesSection interProMatchesSection) {
+        this.interProMatchesSection = interProMatchesSection;
+        this.goTermSection = new GoTermSection();
     }
 
-    public List<InterProEntry> getInterProEntryList() {
-        return interProEntryList;
+    public InterProMatchesSection getInterProMatchesSection() {
+        return interProMatchesSection;
     }
 
-    public int getTotalReadsCount() {
-        return totalReadsCount;
+    public void setInterProMatchesSection(InterProMatchesSection interProMatchesSection) {
+        this.interProMatchesSection = interProMatchesSection;
     }
 
     public GoTermSection getGoTermSection() {

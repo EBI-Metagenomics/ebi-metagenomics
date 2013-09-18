@@ -306,7 +306,7 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
             log.warn("Didn't get any data from InterPro result summary file. There might be some fundamental change to this file" +
                     "(maybe in the near past), which affects this parsing process!");
         }
-        return new FunctionalAnalysisResult(result, totalReadsCount);
+        return new FunctionalAnalysisResult(new InterProMatchesSection(result, totalReadsCount));
     }
 
     protected static String encodeSingleQuoteMarks(String entryDesc) {
