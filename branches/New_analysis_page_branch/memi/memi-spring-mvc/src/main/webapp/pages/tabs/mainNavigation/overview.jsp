@@ -33,6 +33,8 @@
             <div class="result_row"><label>Classification:</label><span> <c:out value="${sampleClassification}"/></span>
             </div>
 
+            <div class="result_row"><label>Project:</label><span>?</span>
+                       </div>
         </div>
         <%--END DESCRIPTION--%>
 
