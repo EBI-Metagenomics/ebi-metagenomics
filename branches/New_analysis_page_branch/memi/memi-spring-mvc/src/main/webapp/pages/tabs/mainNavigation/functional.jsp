@@ -47,12 +47,12 @@
                 <div class="msg_error">Analysis in progress.</div>
             </c:when>
             <c:when test="${not empty model.sample.analysisCompleted && !model.analysisStatus.functionalAnalysisTab.interProMatchSectionDisabled && !model.analysisStatus.functionalAnalysisTab.goSectionDisabled}">
-
+                <h3>Sequence feature summary</h3>
                 <c:choose>
 
                     <c:when test="${not empty model.sample.analysisCompleted && !model.analysisStatus.functionalAnalysisTab.sequenceFeatureSectionDisabled}">
 
-                        <h3>Sequence feature summary</h3>
+
 
                         <div style="display:block; overflow: auto;">
                             <c:url var="sequenceFeatureImage" value="/getImage" scope="request">
@@ -65,8 +65,8 @@
                         </div>
                     </c:when>
                     <c:otherwise>
-                        <%-- remove the section if empty
-             <div class="msg_error">No sequence feature result files have been associated with this sample.</div>--%>
+                        <%-- message when section if empty - shouldn't happen --%>
+             <div class="msg_error">No sequence feature result files have been associated with this sample.</div>
                     </c:otherwise>
                 </c:choose>
 
