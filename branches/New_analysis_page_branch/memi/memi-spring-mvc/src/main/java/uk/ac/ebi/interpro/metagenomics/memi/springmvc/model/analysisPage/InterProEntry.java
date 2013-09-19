@@ -1,7 +1,5 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage;
 
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.AnalysisResult;
-
 /**
  * Simple representation of an InterPro entry.
  *
@@ -9,7 +7,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.AnalysisResult;
  * @version $Id$
  * @since 1.0-SNAPSHOT
  */
-public class InterProEntry extends AnalysisResult {
+public class InterProEntry {
 
     private String entryID;
 

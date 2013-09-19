@@ -1,9 +1,6 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage;
 
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.AnalysisResult;
-
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Represents a simple model object which is used to render the sample analysis page, more specifically the functional analysis tab.
@@ -11,7 +8,7 @@ import java.util.List;
  *
  * @author Maxim Scheremetjew
  */
-public class FunctionalAnalysisResult extends AnalysisResult {
+public class FunctionalAnalysisResult {
 
     private InterProMatchesSection interProMatchesSection;
 

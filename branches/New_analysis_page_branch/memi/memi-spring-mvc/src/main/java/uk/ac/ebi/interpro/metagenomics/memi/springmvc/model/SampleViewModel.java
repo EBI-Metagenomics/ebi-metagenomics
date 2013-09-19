@@ -23,11 +23,6 @@ public class SampleViewModel extends ViewModel {
 
     private Sample sample;
 
-    /* This object contains a list of InterPro entries. Loaded from the MG pipeline produced file with the IPR extension
-     (summary of InterPro matches).
-     */
-    private FunctionalAnalysisResult functionalAnalysisResult;
-
     /* An EmgFile object holds two attributes of the */
     private EmgFile emgFile;
 
@@ -48,9 +43,7 @@ public class SampleViewModel extends ViewModel {
      */
     private final boolean isHostAssociated;
 
-    private TaxonomyAnalysisResult taxonomyAnalysisResult;
-
-    private AnalysisStatus analysisStatus;
+    private AnalysisResult analysisResult;
 
     public SampleViewModel(Submitter submitter,
                            String pageTitle,
@@ -69,7 +62,6 @@ public class SampleViewModel extends ViewModel {
                            final AnalysisStatus analysisStatus) {
         super(submitter, pageTitle, breadcrumbs, propertyContainer);
         this.sample = sample;
-        this.functionalAnalysisResult = functionalAnalysisResult;
         this.emgFile = emgFile;
         this.archivedSequences = archivedSequences;
         this.experimentType = experimentType;
@@ -78,7 +70,9 @@ public class SampleViewModel extends ViewModel {
         this.relatedPublications = relatedPublications;
         this.isHostAssociated = isHostAssociated;
         this.sampleAnnotations = sampleAnnotations;
-        this.analysisStatus = analysisStatus;
+        //
+        this.analysisResult = new AnalysisResult(analysisStatus);
+        this.analysisResult.setFunctionalAnalysisResult(functionalAnalysisResult);
     }
 
     public SampleViewModel(Submitter submitter,
@@ -121,40 +115,40 @@ public class SampleViewModel extends ViewModel {
     }
 
     public List<BiologicalProcessGOTerm> getBiologicalProcessGOTerms() {
-        return functionalAnalysisResult.getGoTermSection().getBiologicalProcessGoTerms().getBiologicalProcessGOTermList();
+        return this.analysisResult.getFunctionalAnalysisResult().getGoTermSection().getBiologicalProcessGoTerms().getBiologicalProcessGOTermList();
     }
 
     /**
      * Sorted by number of hits.
      */
     public List<BiologicalProcessGOTerm> getSortedBiologicalProcessGOTerms() {
-        List<BiologicalProcessGOTerm> result = functionalAnalysisResult.getGoTermSection().getBiologicalProcessGoTerms().getBiologicalProcessGOTermList();
+        List<BiologicalProcessGOTerm> result = this.analysisResult.getFunctionalAnalysisResult().getGoTermSection().getBiologicalProcessGoTerms().getBiologicalProcessGOTermList();
         Collections.sort(result, AbstractGOTerm.GoTermComparator);
         return result;
     }
 
     public List<MolecularFunctionGOTerm> getMolecularFunctionGOTerms() {
-        return functionalAnalysisResult.getGoTermSection().getMolecularFunctionGoTerms().getMolecularFunctionGOTermList();
+        return this.analysisResult.getFunctionalAnalysisResult().getGoTermSection().getMolecularFunctionGoTerms().getMolecularFunctionGOTermList();
     }
 
     /**
      * Sorted by number of hits.
      */
     public List<MolecularFunctionGOTerm> getSortedMolecularFunctionGOTerms() {
-        List<MolecularFunctionGOTerm> result = functionalAnalysisResult.getGoTermSection().getMolecularFunctionGoTerms().getMolecularFunctionGOTermList();
+        List<MolecularFunctionGOTerm> result = this.analysisResult.getFunctionalAnalysisResult().getGoTermSection().getMolecularFunctionGoTerms().getMolecularFunctionGOTermList();
         Collections.sort(result, AbstractGOTerm.GoTermComparator);
         return result;
     }
 
     public List<CellularComponentGOTerm> getCellularComponentGOTerms() {
-        return functionalAnalysisResult.getGoTermSection().getCellularComponentGoTerms().getCellularComponentGOTermList();
+        return this.analysisResult.getFunctionalAnalysisResult().getGoTermSection().getCellularComponentGoTerms().getCellularComponentGOTermList();
     }
 
     /**
      * Sorted by number of hits.
      */
     public List<CellularComponentGOTerm> getSortedCellularComponentGOTerms() {
-        List<CellularComponentGOTerm> result = functionalAnalysisResult.getGoTermSection().getCellularComponentGoTerms().getCellularComponentGOTermList();
+        List<CellularComponentGOTerm> result = this.analysisResult.getFunctionalAnalysisResult().getGoTermSection().getCellularComponentGoTerms().getCellularComponentGOTermList();
         Collections.sort(result, AbstractGOTerm.GoTermComparator);
         return result;
     }
@@ -164,7 +158,7 @@ public class SampleViewModel extends ViewModel {
     }
 
     public FunctionalAnalysisResult getFunctionalAnalysisResult() {
-        return functionalAnalysisResult;
+        return this.analysisResult.getFunctionalAnalysisResult();
     }
 
     public ExperimentType getExperimentType() {
@@ -192,15 +186,19 @@ public class SampleViewModel extends ViewModel {
     }
 
     public TaxonomyAnalysisResult getTaxonomyAnalysisResult() {
-        return taxonomyAnalysisResult;
+        return this.analysisResult.getTaxonomyAnalysisResult();
     }
 
     public void setTaxonomyAnalysisResult(TaxonomyAnalysisResult taxonomyAnalysisResult) {
-        this.taxonomyAnalysisResult = taxonomyAnalysisResult;
+        this.analysisResult.setTaxonomyAnalysisResult(taxonomyAnalysisResult);
     }
 
     public AnalysisStatus getAnalysisStatus() {
-        return analysisStatus;
+        return this.analysisResult.getAnalysisStatus();
+    }
+
+    public AnalysisResult getAnalysisResult() {
+        return analysisResult;
     }
 
     public enum ExperimentType {

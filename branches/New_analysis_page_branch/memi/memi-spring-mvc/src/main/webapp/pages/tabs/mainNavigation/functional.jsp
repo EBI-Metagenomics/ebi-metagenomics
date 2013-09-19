@@ -38,7 +38,7 @@
     <div class="main_tab_full_content">
         <p>Functional analysis has 3 main outputs: a sequence features summary, showing the number of reads with
             predicted coding sequences (pCDS), the number of pCDS with InterPro matches, and so on; the matches of pCDS
-            to the <a href="http://www.ebi.ac.uk/interpro" title="InterPro website" class="ext">InterPro database</a>
+            to the <a href="http://www.ebi.ac.uk/interpro" target="_blank" title="InterPro website" class="ext">InterPro database</a>
             and a chart of the GO terms that summarise the functional content of the sample's sequences. If you wish to
             download the full set of results, all files are listed under the "Download" tab.</p>
 

@@ -1,8 +1,6 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage;
 
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.AnalysisResult;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.TaxonomyData;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.DomainComposition;
 
 import java.util.*;
 
@@ -12,7 +10,7 @@ import java.util.*;
  *
  * @author Maxim Scheremetjew
  */
-public class TaxonomyAnalysisResult extends AnalysisResult {
+public class TaxonomyAnalysisResult {
 
     private List<TaxonomyData> taxonomyDataSet;
 
@@ -84,7 +82,7 @@ public class TaxonomyAnalysisResult extends AnalysisResult {
      * //TODO: Write JUnit test
      */
     private void init() {
-        List<String> colors = getColors();
+        List<String> colors = AnalysisResult.colorCodeList;
         //maps domains (Bacteria, Archaea, unassigned)
         Map<String, Integer> domainCompositionMap = new TreeMap();
         //Counts all unique UTU values
@@ -146,21 +144,6 @@ public class TaxonomyAnalysisResult extends AnalysisResult {
             }
         }
         return true;
-    }
-
-    private List<String> getColors() {
-        List<String> colors = new ArrayList<String>(10);
-        colors.add("058dc7");
-        colors.add("50b432");
-        colors.add("ed561b");
-        colors.add("edef00");
-        colors.add("24cbe5");
-        colors.add("64e572");
-        colors.add("ff9655");
-        colors.add("fff263");
-        colors.add("6af9c4");
-        colors.add("dabe88");
-        return colors;
     }
 
     /**
