@@ -13,6 +13,9 @@
         <%--BEGIN DESCRIPTION--%>
         <h3 id="sample_desc">Description</h3>
 
+            <a title="${model.sample.study.studyName}"
+               href="<c:url value="${baseURL}/project/${model.sample.study.studyId}"/>"><span>${model.sample.study.studyId}</span></a>
+
         <div class="output_form">
             <c:choose>
                 <c:when test="${not empty model.sample.sampleDescription}">
