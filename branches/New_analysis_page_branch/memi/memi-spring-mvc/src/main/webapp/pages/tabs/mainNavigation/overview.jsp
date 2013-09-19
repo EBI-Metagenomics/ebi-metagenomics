@@ -13,8 +13,6 @@
         <%--BEGIN DESCRIPTION--%>
         <h3 id="sample_desc">Description</h3>
 
-            <a title="${model.sample.study.studyName}"
-               href="<c:url value="${baseURL}/project/${model.sample.study.studyId}"/>"><span>${model.sample.study.studyId}</span></a>
 
         <div class="output_form">
             <c:choose>
@@ -36,7 +34,7 @@
             <div class="result_row"><label>Classification:</label><span> <c:out value="${sampleClassification}"/></span>
             </div>
 
-            <div class="result_row"><label>Project:</label><span>?</span>
+            <div class="result_row"><label>Project:</label><span><a title="${model.sample.study.studyName}" href="<c:url value="${baseURL}/project/${model.sample.study.studyId}"/>">${model.sample.study.studyName} (${model.sample.study.studyId})</a></span>
                        </div>
         </div>
         <%--END DESCRIPTION--%>
