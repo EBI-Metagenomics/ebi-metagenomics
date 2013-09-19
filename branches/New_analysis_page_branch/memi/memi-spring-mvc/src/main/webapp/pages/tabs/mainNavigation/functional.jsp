@@ -73,7 +73,6 @@
 
                 <h3>InterPro match summary</h3>
 
-                <p>Most frequently found InterPro matches to this sample:</p>
                 <%--<div>
                   <div>
                     <button id="rerun" ><span class="icon icon-functional" data-icon="=" ></span></button>
@@ -94,9 +93,9 @@
                         <div id="interpro-chart">
 
                                 <%--Tabs--%>
-                            <ul>
+                            <%--<ul>--%>
                                     <%--<li><a href="#interpro-match-table" title="Table view"><span class="ico-table"></span></a></li>--%>
-                                <li class="selector_tab"></li>
+                                <%--<li class="selector_tab"></li>--%>
                                 <%--<li><a href="#interpro-match-pie" title="Pie chart view"><span class="ico-pie"></span></a></li>--%>
                                     <%--<li><a href="#interpro-match-bar" title="Bar chart view"><span class="ico-barh"></span></a></li>--%>
                                     <%--<li><a href="#interpro-match-col" title="Stacked column chart view"><span class="ico-col"></span></a></li>--%>
@@ -105,7 +104,7 @@
                                         class="icon icon-functional"
                                         data-icon="=" id="csv"
                                         href="#" title=""></a></div>
-                            </ul>
+                            <%--</ul>--%>
 
 
                             <div id="interpro-match-pie">
