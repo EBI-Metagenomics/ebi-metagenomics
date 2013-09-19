@@ -69,7 +69,7 @@
             ['${taxonomyData.phylum}', ${taxonomyData.numberOfHits}]</c:forEach>
         ]);
 // Taxonomy Bar - phylum
-        var options = {'title':'${phylumCompositionTitle}', 'titleTextStyle':{fontSize:12}, 'fontName': '"Arial"', 'colors':['#5f8694'], 'width':370, 'height':380, 'chartArea':{left:120, top:30, width:"60%", height:"70%"},'hAxis':{textStyle:{color:'#a8a8a8'}}, 'pieSliceBorderColor':'none', 'legend':'none' };
+        var options = {'title':'${phylumCompositionTitle}', 'titleTextStyle':{fontSize:12}, 'fontName': '"Arial"', 'colors':['#5f8694'], 'width':370, 'height':380, 'chartArea':{left:120, top:30, width:"60%", height:"70%"},'hAxis':{textStyle:{color:'#a8a8a8'}, format:'#'}, 'pieSliceBorderColor':'none', 'legend':'none' };
         var phylumBarChart = new google.visualization.BarChart(document.getElementById('tax_chart_bar_phy'));
         phylumBarChart.draw(phylumBarChartPieChartData, options);
     }
