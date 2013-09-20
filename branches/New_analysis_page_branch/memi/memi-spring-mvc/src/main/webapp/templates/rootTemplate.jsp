@@ -82,8 +82,9 @@
     #feedback_no_div {display: block;}</style><![endif]-->
 
     <!--[if lt IE 9]>
-    <style type="text/css"> li.but_krona {display: none;}</style>
-    <![endif]--> <%-- Hide the Krona tab for IE users (lower version than IE9) as Krona is not working for IE8, IE7, IE6--%>
+    <style type="text/css"> .krona_chart {display: none;}</style>
+    <style type="text/css"> #ie_krona {display: block;}</style>
+    <![endif]--> <%-- Add a message to the Krona tab for IE users (lower version than IE9) as Krona is not working for IE8, IE7, IE6--%>
 
 
 
