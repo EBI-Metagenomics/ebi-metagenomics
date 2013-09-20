@@ -1569,6 +1569,7 @@ background:none;
 
 .krona_chart {height:540px; width:100%; background-color: rgb(244, 244, 248);border:1px solid rgb(224, 224, 224);}
 .krona_chart_small {height: 230px; width: 354px; border:0px pink solid;}
+#ie_krona {display:none;}
 
 /*JQUERY TABS*/
 .title_tab {margin:20px 0 0 9px;}
