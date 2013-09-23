@@ -109,8 +109,6 @@ url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functio
 .icon-static:before, .icon-generic:before { font-family: 'EBI-Generic'; /* font-size: 123.1%; */ font-size: 100%;  color: #bbb;	content: attr(data-icon); margin: 0 0.3em 0 0; }
 /*/from ebi-visual.css*/
 
-.icon-generic:before {color: #3b4043;}
-
 img {border: none;}
 
 a {
