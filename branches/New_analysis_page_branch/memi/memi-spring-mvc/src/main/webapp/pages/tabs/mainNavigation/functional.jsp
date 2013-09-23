@@ -114,6 +114,7 @@
                                         <%--<div id="func_chart_div1"></div>--%>
 
                                     <div id="func_chart_pie_ipro"></div>
+                                    <div class="func_chart_caption"><div class="puce_chart"></div>Other matches</div>
 
                                     <div id="func_dashboard">
                                         <div id="func_table_filter"></div>
