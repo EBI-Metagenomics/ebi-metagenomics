@@ -66,7 +66,8 @@ public class StudyViewModelBuilder extends AbstractViewModelBuilder<StudyViewMod
         Submitter submitter = getSessionSubmitter(sessionMgr);
         List<Sample> samples = getSamplesForStudyViewModel(submitter);
         buildPublicationLists();
-        Submitter studyOwner = submitterDAO.getSubmitterById(study.getSubmitterId());
+        Long submitterId = study.getSubmitterId();
+        Submitter studyOwner = submitterDAO.getSubmitterById((submitterId == null ? 0 : submitterId));
         if (studyOwner != null) {
             String submitterName = studyOwner.getFirstName() + " " + studyOwner.getSurname();
             return new StudyViewModel(submitter, study, samples, pageTitle,
