@@ -5,4 +5,4 @@
   * Developer Documentation
    * [HowToRunTheWebApplication Building and Running Memi from Source]
   * User Documentation
-   * [Release Notes]
+   * [EbiMetagenomicsReleaseNotes Release Notes]
