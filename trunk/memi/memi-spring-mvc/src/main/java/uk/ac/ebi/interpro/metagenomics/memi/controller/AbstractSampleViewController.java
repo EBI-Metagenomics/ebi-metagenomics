@@ -155,7 +155,8 @@ public class AbstractSampleViewController extends SecuredAbstractController<Samp
             File fileObject = FileObjectBuilder.createFileObject(emgFile, propertyContainer, fileDefinition);
             boolean doesExist = FileExistenceChecker.checkFileExistence(fileObject);
 
-            if (doesExist) {
+            //Check if file exists and if it is not empty
+            if (doesExist && fileObject.length() > 0) {
                 if (fileDefinition instanceof SequenceFileDefinition) {
                     seqDataDownloadLinks.add(new DownloadLink(fileDefinition.getLinkText(),
                             fileDefinition.getLinkTitle(),
