@@ -1,7 +1,0 @@
-<html>
-<body>
-<div>
-    ${emailMessage}
-</div>
-</body>
-</html>
