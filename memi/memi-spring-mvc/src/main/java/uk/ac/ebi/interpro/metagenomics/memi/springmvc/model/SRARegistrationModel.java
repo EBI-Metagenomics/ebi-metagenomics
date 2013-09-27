@@ -1,7 +1,6 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
 
-import uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer;
-import uk.ac.ebi.interpro.metagenomics.memi.forms.SRARegistrationForm;
+import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Country;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 

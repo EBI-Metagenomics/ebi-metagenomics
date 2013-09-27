@@ -58,15 +58,6 @@
                                 <%--<span class="form_help"><spring:message--%>
                                         <%--code="registrationForm.inputField.institute.help"/></span>--%>
                         <form:errors path="institute" cssClass="error"/></div>
-                        <%--Centre acronym input field--%>
-                    <div class="form_row">
-                        <label for="centreAcronym" id="required"><spring:message
-                                code="registrationForm.inputField.centreAcronym.label"/></label><br/>
-                        <form:input id="centreAcronym" path="centreAcronym" cssErrorClass="error"
-                                    title="Please enter your centre acronym"/>
-                                <span class="form_help"><spring:message
-                                        code="registrationForm.inputField.centreAcronym.help"/></span>
-                        <form:errors path="centreAcronym" cssClass="error"/></div>
                         <%--Postal address input field--%>
                     <div class="form_row">
                         <label for="postalAddress" id="required"><spring:message
@@ -97,15 +88,6 @@
                                 <%--<span class="form_help"><spring:message--%>
                                         <%--code="registrationForm.inputField.country.help"/></span>--%>
                         <form:errors path="country" cssClass="error"/></div>
-                        <%--Telephone number input field--%>
-                    <div class="form_row">
-                        <label for="telephoneNumber"><spring:message
-                                code="registrationForm.inputField.telephoneNumber.label"/></label><br/>
-                        <form:input id="telephoneNumber" path="telephoneNumber" cssErrorClass="error"
-                                    title="Please enter your telephone number"/>
-                                <%--<span class="form_help"><spring:message--%>
-                                        <%--code="registrationForm.inputField.telephoneNumber.help"/></span>--%>
-                        <form:errors path="telephoneNumber" cssClass="error"/></div>
 
 
                 </fieldset>

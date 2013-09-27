@@ -1,7 +1,6 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
 
-import com.sun.syndication.feed.synd.SyndEntry;
-import uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer;
+import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 
 import java.util.List;

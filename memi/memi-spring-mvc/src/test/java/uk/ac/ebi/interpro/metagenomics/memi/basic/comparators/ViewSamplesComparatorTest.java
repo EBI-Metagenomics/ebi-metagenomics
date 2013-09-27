@@ -3,13 +3,14 @@ package uk.ac.ebi.interpro.metagenomics.memi.basic.comparators;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import uk.ac.ebi.interpro.metagenomics.memi.core.comparators.ViewSamplesComparator;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.HostSample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 
 import java.util.*;
 
 /**
- * Test for {@link ViewSamplesComparator}.
+ * Test for {@link uk.ac.ebi.interpro.metagenomics.memi.core.comparators.ViewSamplesComparator}.
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @version $Id$

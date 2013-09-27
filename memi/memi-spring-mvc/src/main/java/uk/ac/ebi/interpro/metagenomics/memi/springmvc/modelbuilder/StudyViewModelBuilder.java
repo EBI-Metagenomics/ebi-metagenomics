@@ -2,8 +2,8 @@ package uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer;
-import uk.ac.ebi.interpro.metagenomics.memi.basic.comparators.PublicationComparator;
+import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
+import uk.ac.ebi.interpro.metagenomics.memi.core.comparators.PublicationComparator;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.apro.SubmitterDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
@@ -66,7 +66,8 @@ public class StudyViewModelBuilder extends AbstractViewModelBuilder<StudyViewMod
         Submitter submitter = getSessionSubmitter(sessionMgr);
         List<Sample> samples = getSamplesForStudyViewModel(submitter);
         buildPublicationLists();
-        Submitter studyOwner = submitterDAO.getSubmitterById(study.getSubmitterId());
+        Long submitterId = study.getSubmitterId();
+        Submitter studyOwner = submitterDAO.getSubmitterById((submitterId == null ? 0 : submitterId));
         if (studyOwner != null) {
             String submitterName = studyOwner.getFirstName() + " " + studyOwner.getSurname();
             return new StudyViewModel(submitter, study, samples, pageTitle,

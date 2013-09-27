@@ -2,7 +2,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-
+ <div id="sample_list">
     <%--<h2>${pageTitle}</h2>--%>
     <h2>Samples list</h2>
 
@@ -136,26 +136,26 @@
                             </c:when>
 
                             <c:when test="${headerName == 'Source'}">
-                                <c:set var="headerWidth" value="140px" scope="page"/>
+                                <c:set var="headerWidth" value="120px" scope="page"/>
                             </c:when>
                             <%--The Otherwise case is for header name Analysis--%>
                             <c:otherwise>
-                                <c:set var="headerWidth" value="80px" scope="page"/>
+                                <c:set var="headerWidth" value="170px" scope="page"/>
                             </c:otherwise>
                         </c:choose>
-                        <th id="${headerId}" abbr="${headerName}" width="${headerWidth}" scope="col">${headerName}</th>
+                        <th class="${headerId}" abbr="${headerName}" width="${headerWidth}" scope="col">${headerName}</th>
                     </c:forEach>
                 </tr>
                 </thead>
                 <tbody>
                 <c:forEach var="sample" items="${model.samples}" varStatus="status">
                     <tr>
-                        <td style="text-align:left;" id="ordered">
+                        <td class="h_left" id="ordered">
                             <c:if test="${!sample.public}"><img alt="private"
                                                                 src="${pageContext.request.contextPath}/img/icon_priv_private.gif">&nbsp;&nbsp;</c:if>
-                            <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>">${sample.sampleName}</a>
+                            <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>" class="fl_uppercase_title">${sample.sampleName}</a>
                         </td>
-                        <td style="text-align:left;" width="240px">${sample.study.studyName}</td>
+                        <td class="h_left" width="240px">${sample.study.studyName}</td>
                         <td>${sample.sampleTypeAsString}</td>
                         <td>
                             <c:choose>
@@ -164,10 +164,13 @@
                                src="${pageContext.request.contextPath}/img/ico_IN_PROGRESS_25_8.png"
                                alt="Analysis in progress" title="Analysis in progress">--%></c:when>
                                 <c:otherwise>
-                                    <a href="<c:url value="${baseURL}/analysisStatsView/${sample.sampleId}"/>"><img
-                                            src="${pageContext.request.contextPath}/img/ico_analysis_chart.gif"
-                                            alt="Analysis finished - check the results"
-                                            title="Analysis finished - check the results"></a>
+                                    <%--<a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>"><img--%>
+                                            <%--src="${pageContext.request.contextPath}/img/ico_analysis_chart.gif"--%>
+                                            <%--alt="Analysis finished - check the results"--%>
+                                            <%--title="Analysis finished - check the results"></a>--%>
+                           <a href="<c:url value="${baseURL}/sample/${sample.sampleId}#Taxonomy-Analysis"/>" class="list_sample" title="Taxonomy analysis">Taxonomy </a>|
+                          <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>#Functional-Analysis" class="list_sample" title="Function analysis">Function </a>|
+                          <a class="icon icon-functional list_sample" data-icon="=" href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>#Download" class="list_sample" title="download results"></a>
                                 </c:otherwise>
                             </c:choose>
                         </td>
@@ -177,7 +180,8 @@
             </table>
         </c:when>
         <c:otherwise>
-            <div class="error">No data matching your search</div>
+            <div class="msg_error">No data matching your search</div>
         </c:otherwise>
     </c:choose>
+</div>
     <div class="but_top"><a href="#top" title="back to the top page">Top</a></div>

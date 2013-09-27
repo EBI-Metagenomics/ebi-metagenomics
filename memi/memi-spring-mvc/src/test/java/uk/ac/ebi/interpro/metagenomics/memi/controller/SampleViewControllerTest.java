@@ -43,7 +43,7 @@ public class SampleViewControllerTest {
     @Ignore("Needs re-writing.  Note the argument '1' to the doGetStudy method is nonsense.")
     public void testInitPage() throws Exception {
         ModelMap model = new ModelMap();
-        assertEquals("sampleOverview", controller.doGetSample(model, "1"));
+        assertEquals("sampleOverview", controller.doGetSample("1", model));
         //check model
         assertEquals(1, model.size());
         assertTrue(model.containsKey("sample"));
