@@ -7,12 +7,12 @@
     <parent>
         <artifactId>memi</artifactId>
         <groupId>uk.ac.ebi.interpro.metagenomics</groupId>
-        <version>1.0</version>
+        <version>1.1</version>
     </parent>
 
     <groupId>uk.ac.ebi.interpro.metagenomics</groupId>
     <artifactId>memi-persistence</artifactId>
-    <version>1.0</version>
+    <version>1.1</version>
     <name>memi-persistence</name>
     <url>http://maven.apache.org</url>
 
@@ -21,7 +21,7 @@
         <dependency>
             <groupId>uk.ac.ebi.interpro.metagenomics</groupId>
             <artifactId>memi-model</artifactId>
-            <version>1.0</version>
+            <version>1.1</version>
         </dependency>
         <!-- Packages for Hibernate support -->
         <dependency>

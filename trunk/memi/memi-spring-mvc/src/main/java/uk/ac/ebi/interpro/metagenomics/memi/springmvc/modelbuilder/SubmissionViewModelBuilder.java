@@ -2,7 +2,7 @@ package uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import uk.ac.ebi.interpro.metagenomics.memi.basic.MemiPropertyContainer;
+import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.SubmissionModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;

@@ -2,127 +2,256 @@ package uk.ac.ebi.interpro.metagenomics.memi.controller;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.velocity.app.VelocityEngine;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import uk.ac.ebi.interpro.metagenomics.memi.basic.comparators.EmgSampleAnnComparator;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.EmgLogFileInfoDAO;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAO;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.ISampleStudyDAO;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.temp.SampleAnnotationDAO;
-import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
-import uk.ac.ebi.interpro.metagenomics.memi.model.EmgSampleAnnotation;
+import uk.ac.ebi.interpro.metagenomics.memi.model.EmgFile;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
+import uk.ac.ebi.interpro.metagenomics.memi.services.FileObjectBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.SampleViewModel;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.SampleViewModelBuilder;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder;
-import uk.ac.ebi.interpro.metagenomics.memi.tools.MemiTools;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.DownloadableFileDefinition;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.FileDefinitionId;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.*;
+import java.io.File;
+import java.io.IOException;
+import java.text.DecimalFormat;
 
 /**
- * Represents the controller for sample overview page.
+ * The controller for analysis overview page.
  *
- * @author Maxim Scheremetjew, EMBL-EBI, InterPro
+ * @author Phil Jones, EMBL-EBI, InterPro
+ * @author Maxim Scheremetjew
  * @since 1.0-SNAPSHOT
  */
 @Controller
-@RequestMapping("/" + SampleViewController.VIEW_NAME + "/{sampleId}")
-public class SampleViewController extends SecuredAbstractController<Sample> {
+@RequestMapping('/' + SampleViewController.VIEW_NAME + "/{sampleId}")
+public class SampleViewController extends AbstractSampleViewController {
     private static final Log log = LogFactory.getLog(SampleViewController.class);
-    /**
-     * View name of this controller which is used several times.
-     */
-    public static final String VIEW_NAME = "sample";
-
-    @Resource
-    private SampleDAO sampleDAO;
-
-    @Resource
-    private EmgLogFileInfoDAO fileInfoDAO;
-
-    @Resource
-    private VelocityEngine velocityEngine;
 
     @Resource
     private MemiDownloadService downloadService;
 
-    @Resource(name = "annotationDAO")
-    private SampleAnnotationDAO sampleAnnotationDAO;
-
-    //GET request method
-
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView doGetSample(final ModelMap model, @PathVariable final String sampleId) {
-        log.info("Checking if sample is accessible...");
-        return checkAccessAndBuildModel(new ModelProcessingStrategy<Sample>() {
-            @Override
-            public void processModel(ModelMap model, Sample sample) {
-                log.info("Building model...");
-                populateModel(model, sample);
-            }
-        }, model, sampleId, getModelViewName());
+    public ModelAndView doGetSample(@PathVariable final String sampleId,
+                                    final ModelMap model) throws IOException {
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, sampleId, getModelViewName());
     }
 
-
-    @RequestMapping(value = "/doExportDetails", method = RequestMethod.GET)
-    public ModelAndView doExportDetails(@PathVariable final String sampleId, ModelMap model, final HttpServletResponse response) {
-        log.info("Checking if sample is accessible...");
-        return checkAccessAndBuildModel(new ModelProcessingStrategy<Sample>() {
+    private ModelProcessingStrategy<Sample> createNewModelProcessingStrategy() {
+        return new ModelProcessingStrategy<Sample>() {
             @Override
             public void processModel(ModelMap model, Sample sample) {
                 log.info("Building model...");
                 populateModel(model, sample);
-                if (downloadService != null) {
-                    Set<String> samplesIDs = new HashSet<String>();
-                    samplesIDs.add(sampleId);
-                    boolean isDialogOpen = downloadService.openDownloadDialog(response, sample.getClazz(), samplesIDs);
-                    model.addAttribute("isDialogOpen", isDialogOpen);
-                }
             }
-        }, model, sampleId, getModelViewName());
+        };
     }
 
     /**
-     * Creates the home page model and adds it to the specified model map.
+     * Request method for the download tab on the sample view page.
+     *
+     * @throws IOException
      */
-    private void populateModel(final ModelMap model, final Sample sample) {
-        final String pageTitle = "Sample overview: " + sample.getSampleName() + "";
-        List<EmgSampleAnnotation> sampleAnnotations = (List<EmgSampleAnnotation>) sampleAnnotationDAO.getSampleAnnotations(sample.getId());
-        Collections.sort(sampleAnnotations, new EmgSampleAnnComparator());
-        final ViewModelBuilder<SampleViewModel> builder = new SampleViewModelBuilder(sessionManager,
-                pageTitle, getBreadcrumbs(sample), propertyContainer, sample,
-                MemiTools.getArchivedSeqs(fileInfoDAO, sample), sampleAnnotations);
-        final SampleViewModel sampleModel = builder.getModel();
-        sampleModel.changeToHighlightedClass(ViewModel.TAB_CLASS_SAMPLES_VIEW);
-        model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
-        model.addAttribute(ViewModel.MODEL_ATTR_NAME, sampleModel);
+    @RequestMapping(value = "/download")
+    public ModelAndView ajaxLoadDownloadTab(@PathVariable final String sampleId,
+                                            final ModelMap model) throws IOException {
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, sampleId, "tabs/mainNavigation/download");
     }
 
-    ISampleStudyDAO<Sample> getDAO() {
-        return sampleDAO;
+    /**
+     * Request method for the quality control tab on the sample view page.
+     *
+     * @throws IOException
+     */
+    @RequestMapping(value = "/qualityControl")
+    public ModelAndView ajaxLoadQualityControlTab(@PathVariable final String sampleId,
+                                                  final ModelMap model) throws IOException {
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, sampleId, "tabs/mainNavigation/qualityControl");
     }
 
-    protected String getModelViewName() {
-        return VIEW_NAME;
+    /**
+     * Request method for the taxonomic analysis tab on the sample view page.
+     *
+     * @throws IOException
+     */
+    @RequestMapping(value = "/taxonomic")
+    public ModelAndView ajaxLoadTaxonomyTab(@PathVariable final String sampleId,
+                                            final ModelMap model) throws IOException {
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, sampleId, "tabs/mainNavigation/taxonomic");
     }
 
-    protected List<Breadcrumb> getBreadcrumbs(SecureEntity entity) {
-        List<Breadcrumb> result = new ArrayList<Breadcrumb>();
-        if (entity != null && entity instanceof Sample) {
-            result.add(new Breadcrumb("Project: " + ((Sample) entity).getStudy().getStudyName(), "View project " + ((Sample) entity).getStudy().getStudyName(), StudyViewController.VIEW_NAME + '/' + ((Sample) entity).getStudy().getStudyId()));
-            result.add(new Breadcrumb("Sample: " + ((Sample) entity).getSampleName(), "View project " + ((Sample) entity).getSampleName(), VIEW_NAME + '/' + ((Sample) entity).getSampleId()));
-        }
-        return result;
+    /**
+     * Request method for the functional analysis tab on the sample view page.
+     *
+     * @throws IOException
+     */
+    @RequestMapping(value = "/functional")
+    public ModelAndView ajaxLoadFunctionalTab(@PathVariable final String sampleId,
+                                              final ModelMap model) throws IOException {
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, sampleId, "tabs/mainNavigation/functional");
+    }
+
+    /**
+     * Request method for the overview tab on the sample view page.
+     *
+     * @throws IOException
+     */
+    @RequestMapping(value = "/overview")
+    public ModelAndView ajaxLoadOverviewTab(@PathVariable final String sampleId,
+                                            final ModelMap model) throws IOException {
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, sampleId, "tabs/mainNavigation/overview");
+    }
+
+    /**
+     * Request method for the GO bar chart tab on the functional analysis tab.
+     *
+     * @throws IOException
+     */
+    @RequestMapping(value = "/goBarChartView")
+    public ModelAndView ajaxLoadGoBarChartTab(@PathVariable final String sampleId,
+                                            final ModelMap model) throws IOException {
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, sampleId, "tabs/functionalAnalysis/goBarChartView");
+    }
+
+    /**
+     * Request method for the GO pie chart tab on the functional analysis tab.
+     *
+     * @throws IOException
+     */
+    @RequestMapping(value = "/goPieChartView")
+    public ModelAndView ajaxLoadGoPieChartTab(@PathVariable final String sampleId,
+                                              final ModelMap model) throws IOException {
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, sampleId, "tabs/functionalAnalysis/goPieChartView");
+    }
+
+    @RequestMapping(value = "/kronaChartView")
+    public ModelAndView ajaxLoadKronaChartView(@PathVariable final String sampleId,
+                                              final ModelMap model) throws IOException {
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, sampleId, "tabs/taxonomicAnalysis/kronaChartView");
+    }
+
+    @RequestMapping(value = "/taxPieChartView")
+    public ModelAndView ajaxLoadTaxPieChartView(@PathVariable final String sampleId,
+                                              final ModelMap model) throws IOException {
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, sampleId, "tabs/taxonomicAnalysis/taxPieChartView");
+    }
+
+    @RequestMapping(value = "/taxBarChartView")
+    public ModelAndView ajaxLoadTaxBarChartView(@PathVariable final String sampleId,
+                                              final ModelMap model) throws IOException {
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, sampleId, "tabs/taxonomicAnalysis/taxBarChartView");
+    }
+
+    @RequestMapping(value = "/taxColumnChartView")
+    public ModelAndView ajaxLoadTaxColumnChartView(@PathVariable final String sampleId,
+                                              final ModelMap model) throws IOException {
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, sampleId, "tabs/taxonomicAnalysis/taxColumnChartView");
+    }
+
+    @RequestMapping(value = "/accessDenied")
+    public ModelAndView doGetAccessDeniedPage(@PathVariable final String sampleId) {
+        return buildAccessDeniedModelAndView(sampleId);
+    }
+
+    @RequestMapping(value = "/doExportGOSlimFile", method = RequestMethod.GET)
+    public ModelAndView doExportGOSlimFile(@PathVariable final String sampleId,
+                                           final HttpServletResponse response, final HttpServletRequest request) {
+        DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(FileDefinitionId.GO_SLIM_FILE.name());
+        return handleExport(sampleId, response, request, fileDefinition);
+    }
+
+    @RequestMapping(value = "/doExportGOFile", method = RequestMethod.GET)
+    public ModelAndView doExportGOFile(@PathVariable final String sampleId,
+                                       final HttpServletResponse response, final HttpServletRequest request) {
+        DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(FileDefinitionId.GO_COMPLETE_FILE.name());
+        return handleExport(sampleId, response, request, fileDefinition);
+    }
+
+    @RequestMapping(value = "/doExportMaskedFASTAFile", method = RequestMethod.GET)
+    public ModelAndView doExportMaskedFASTAFile(@PathVariable final String sampleId,
+                                                final HttpServletResponse response, final HttpServletRequest request) {
+        DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(FileDefinitionId.MASKED_FASTA.name());
+        return handleExport(sampleId, response, request, fileDefinition);
+    }
+
+    @RequestMapping(value = "/doExportCDSFile", method = RequestMethod.GET)
+    public ModelAndView doExportCDSFile(@PathVariable final String sampleId,
+                                        final HttpServletResponse response, final HttpServletRequest request) {
+        DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(FileDefinitionId.PREDICTED_CDS_FILE.name());
+        return handleExport(sampleId, response, request, fileDefinition);
+    }
+
+    @RequestMapping(value = "/doExportReadsWithCDSFile", method = RequestMethod.GET)
+    public ModelAndView doExportReadsWithCDSFile(@PathVariable final String sampleId,
+                                                 final HttpServletResponse response, final HttpServletRequest request) {
+        DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(FileDefinitionId.READS_WITH_PREDICTED_CDS_FILE.name());
+        return handleExport(sampleId, response, request, fileDefinition);
+    }
+
+    @RequestMapping(value = "/doExportI5TSVFile", method = RequestMethod.GET)
+    public ModelAndView doExportI5File(@PathVariable final String sampleId,
+                                       final HttpServletResponse response, final HttpServletRequest request) {
+        DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(FileDefinitionId.INTERPROSCAN_RESULT_FILE.name());
+        return handleExport(sampleId, response, request, fileDefinition);
+    }
+
+//    @RequestMapping(value = "/doExportIPRFile", method = RequestMethod.GET)
+//    public ModelAndView doExportIPRFile(@PathVariable final String sampleId,
+//                                        final HttpServletResponse response, final HttpServletRequest request) {
+//        return handleExport(sampleId, response, request, EmgFile.ResultFileType.IPR, "_InterPro_sum.csv");
+//    }
+
+    @RequestMapping(value = "/doExportIPRhitsFile", method = RequestMethod.GET)
+    public ModelAndView doExportIPRhitsFile(@PathVariable final String sampleId,
+                                            final HttpServletResponse response, final HttpServletRequest request) {
+        DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(FileDefinitionId.PREDICTED_CDS_WITH_INTERPRO_MATCHES_FILE.name());
+        return handleExport(sampleId, response, request, fileDefinition);
+    }
+
+    /**
+     * @param sampleId
+     * @param response
+     * @param request
+     * @return
+     */
+    private ModelAndView handleExport(final String sampleId, final HttpServletResponse response,
+                                      final HttpServletRequest request, final DownloadableFileDefinition fileDefinition) {
+        log.info("Checking if sample is accessible...");
+        return checkAccessAndBuildModel(new ModelProcessingStrategy<Sample>() {
+            @Override
+            public void processModel(ModelMap model, Sample sample) {
+                log.info("Open download dialog...");
+                final EmgFile emgFile = getEmgFile(sample.getId());
+                if (emgFile != null) {
+                    File fileObject = FileObjectBuilder.createFileObject(emgFile, propertyContainer, fileDefinition);
+                    openDownloadDialog(response, request, emgFile, fileDefinition.getDownloadName(), fileObject);
+                }
+            }
+        }, null, sampleId, getModelViewName());
+    }
+
+
+    /**
+     * Creates the analysis page model and adds it to the specified model map.
+     */
+    protected void populateModel(final ModelMap model, final Sample sample) {
+        String pageTitle = "Sample analysis results: " + sample.getSampleName() + "";
+        populateModel(model, sample, pageTitle);
+    }
+
+
+    /**
+     * Example for pattern '000000.000':<br>
+     * 123.78  000000.000  000123.780
+     */
+    private String getCustomFormat(String pattern, double value) {
+        DecimalFormat myFormatter = new DecimalFormat(pattern);
+        return myFormatter.format(value);
     }
 }

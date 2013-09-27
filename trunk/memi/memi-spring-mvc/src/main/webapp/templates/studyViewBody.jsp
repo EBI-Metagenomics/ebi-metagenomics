@@ -1,58 +1,24 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 <%--Page variable which is used several time within this page. Used for not specified study attributes.--%>
 <c:set var="notGivenId" value="(not given)"/>
 
-<c:choose>
-    <c:when test="${not empty model.study.publications}">
+<div id="project_ov">
 
-        <div id="sidebar-allrel">
-            <c:if test="${not empty model.relatedPublications}">
-                <div id="sidebar-related">
-                    <h2>Related Publications</h2>
-                    <span class="separator"></span>
-                    <ul>
-                        <c:forEach var="pub" items="${model.relatedPublications}" varStatus="status">
-                            <li>
-                                <a class="list_more" href="<c:url value="http://dx.doi.org/${pub.doi}"/>"><c:out
-                                        value="${pub.pubTitle}"/></a><br/>
-                                <i><c:out value="${pub.shortAuthors}"/></i><br/>
-                                <c:out value="${pub.year}"/> <c:out value="${pub.volume}"/><br/>
-                            </li>
-                        </c:forEach>
-                    </ul>
-                </div>
-            </c:if>
+<div class="title_tab_p">
+<span class="subtitle">Project overview <span>(${model.study.studyId})</span></span>
+<h2 class="fl_uppercase_title">${model.study.studyName}</h2>
+</div>
 
-            <c:if test="${not empty model.relatedLinks}">
-                <div id="sidebar-related" style="margin-top:14px;">
-                    <h2>Related resources</h2>
-                    <span class="separator"></span>
-                    <ul>
-                        <c:forEach var="pub" items="${model.relatedLinks}" varStatus="status">
-                            <li>
-                                <a class="list_more" href="<c:url value="${pub.url}"/>"><c:out
-                                        value="${pub.pubTitle}"/></a>
-                            </li>
-                        </c:forEach>
-                    </ul>
-                </div>
-            </c:if>
-        </div>
-    </c:when>
-</c:choose>
-
-<span class="subtitle">Project overview (${model.study.studyId})</span>
-
-<h2>${model.study.studyName}</h2>
-
+<tags:publications publications="${model.study.publications}" relatedPublications="${model.relatedPublications}" relatedLinks="${model.relatedLinks}" />
 
 <c:choose>
     <c:when test="${not empty model.study.ncbiProjectId && model.study.ncbiProjectId>0}">
-      <p>BioProject ID: <a class="ext"
-                               href="<c:url value="https://www.ebi.ac.uk/ena/data/view/Project:${model.study.ncbiProjectId}"/>"><c:out
-            value="${model.study.ncbiProjectId}"/></a></p>
+        <p>BioProject ID: <a class="ext"
+                             href="<c:url value="https://www.ebi.ac.uk/ena/data/view/Project:${model.study.ncbiProjectId}"/>"><c:out
+                value="${model.study.ncbiProjectId}"/></a></p>
     </c:when>
     <c:otherwise></c:otherwise>
 </c:choose>
@@ -75,7 +41,7 @@
 
 <p><span>Submitted date: ${model.study.formattedLastReceived}</span></p>
 
-<h3 id="study_desc" style="margin-top:40px;">Description </h3>
+<h3 id="study_desc" style="margin-top:30px;">Description </h3>
 
 <div class="output_form">
     <c:choose>
@@ -96,7 +62,7 @@
                 <c:when test="${model.study.experimentalFactor=='none'}"></c:when>
                 <c:otherwise>
                     <c:set var="experimentalFactor" value="${model.study.experimentalFactor}"/>
-                   <h4>Experimental factor: <c:out value="${experimentalFactor}"/></h4>
+                    <h4>Experimental factor: <c:out value="${experimentalFactor}"/></h4>
                 </c:otherwise></c:choose>
         </c:when>
         <c:otherwise>
@@ -129,24 +95,24 @@
             <c:set var="contactMail" value="${model.emailAddress}" scope="page"/>
 
             <c:if test="${not empty contactName && contactName != 'not available'}">
-            <div class="result_row"><label>Name:</label><span>${contactName}</span></div>
+                <div class="result_row"><label>Name:</label><span>${contactName}</span></div>
             </c:if>
             <c:if test="${not empty contactMail && contactMail != 'not available'}">
-            <div class="result_row"><label>Email:</label><span class="lowercase">${contactMail}</span></div>
+                <div class="result_row"><label>Email:</label><span class="lowercase">${contactMail}</span></div>
             </c:if>
         </c:when>
 
         <c:when test="${model.study.dataOrigination == 'HARVESTED'}">
 
-        <c:set var="contactName" value="${model.study.authorName}" scope="page"/>
-        <c:set var="contactMail" value="${model.study.authorEmailAddress}" scope="page"/>
+            <c:set var="contactName" value="${model.study.authorName}" scope="page"/>
+            <c:set var="contactMail" value="${model.study.authorEmailAddress}" scope="page"/>
 
-        <c:if test="${not empty contactName && contactName != 'not available'}">
-        <div class="result_row"><label>Name:</label><span>${contactName}</span></div>
-        </c:if>
-        <c:if test="${not empty contactMail && contactMail != 'not available'}">
-        <div class="result_row"><label>Email:</label><span class="lowercase">${contactMail}</span></div>
-        </c:if>
+            <c:if test="${not empty contactName && contactName != 'not available'}">
+                <div class="result_row"><label>Name:</label><span>${contactName}</span></div>
+            </c:if>
+            <c:if test="${not empty contactMail && contactMail != 'not available'}">
+                <div class="result_row"><label>Email:</label><span class="lowercase">${contactMail}</span></div>
+            </c:if>
 
         </c:when>
 
@@ -194,20 +160,20 @@ Contact name: (not given)
         <table border="1" class="result">
             <thead>
             <tr>
-                <th scope="col" abbr="Sname" id="h_left">Sample name</th>
+                <th scope="col" abbr="Sname" class="h_left">Sample name</th>
                 <th scope="col" abbr="Pname">Sample ID</th>
                 <th scope="col" abbr="Pname">Collection date</th>
                 <th scope="col" abbr="Source" width="140px">Source</th>
-                <th scope="col" abbr="Analysis" width="80px">Analysis</th>
+                <th scope="col" abbr="Analysis" width="170px">Analysis results</th>
             </tr>
             </thead>
             <tbody>
             <c:forEach var="sample" items="${model.samples}" varStatus="status">
                 <tr>
-                    <td style="text-align:left;" id="ordered">
+                    <td class="h_left" id="ordered">
                         <c:if test="${!sample.public}"><img alt="private"
                                                             src="${pageContext.request.contextPath}/img/icon_priv_private.gif">&nbsp;&nbsp;</c:if>
-                        <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>">${sample.sampleName}</a>
+                        <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>" class="fl_uppercase_title">${sample.sampleName}</a>
                     </td>
                     <td style="width:94px;">${sample.sampleId}</td>
                     <td style="width:130px;">
@@ -223,11 +189,22 @@ Contact name: (not given)
                                     src="${pageContext.request.contextPath}/img/ico_IN_PROGRESS_25_8.png"
                                     alt="Analysis in progress" title="Analysis in progress">--%>in progress</c:when>
                             <c:otherwise>
-                                <a href="<c:url value="${baseURL}/analysisStatsView/${sample.sampleId}"/>"><img
-                                        src="${pageContext.request.contextPath}/img/ico_analysis_chart.gif"
-                                        alt="Analysis finished - check the results"
-                                        title="Analysis finished - check the results"></a>
+
+                                <%--  ICON VERSION
+                              <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>"><img
+                                      src="${pageContext.request.contextPath}/img/ico_analysis_chart.gif"
+                                      alt="Analysis finished - check the results"
+                                      title="Analysis finished - check the results"></a>
+                                --%>
+                                <a href="<c:url value="${baseURL}/sample/${sample.sampleId}#Taxonomy-Analysis"/>"
+                                   class="list_sample" title="Taxonomy analysis">Taxonomy </a>|
+                                <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>#Functional-Analysis"
+                                   class="list_sample" title="Function analysis">Function </a>| <a
+                                    class="icon icon-functional list_sample" data-icon="="
+                                    href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>#Download"
+                                    class="list_sample" title="download results"></a>
                             </c:otherwise>
+
                         </c:choose>
                     </td>
                 </tr>
@@ -238,4 +215,5 @@ Contact name: (not given)
     </c:when>
     <c:otherwise>No samples to display</c:otherwise>
 </c:choose>
+</div>
 <div class="but_top"><a href="#top" title="back to the top page">Top</a></div>

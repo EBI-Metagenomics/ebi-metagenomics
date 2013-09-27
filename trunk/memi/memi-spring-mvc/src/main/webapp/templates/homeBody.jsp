@@ -221,7 +221,7 @@
                                         <%-- leave empty to be consistent with sample overview page
                                  - <img src="${pageContext.request.contextPath}/img/ico_analysis_chart_small_off.gif" alt="Analysis in progress" title="Analysis in progress">--%></c:when>
                                     <c:otherwise>
-                                        - <a href="<c:url value="${baseURL}/analysisStatsView/${sample.sampleId}"/>"
+                                        - <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>"
                                              class="list_sample"> <img
                                             src="${pageContext.request.contextPath}/img/ico_analysis_chart_small.gif"
                                             alt="Analysis finished - check the results"
@@ -258,8 +258,8 @@
                            end="${model.maxRowNumberOfLatestItems-1}">
                     <p><%--<span class="list_date">${entry.key.lastMetadataReceived}:</span> --%>
                         <a href="<c:url value="${baseURL}/project/${study.studyId}"/>"
-                           class="list_more">${study.studyName}</a>
-                        <br/>
+                           class="list_more fl_uppercase_title">${study.studyName}</a>
+
                         <span class="list_desc"><c:out value="${study.shortStudyAbstract} ..."/></span>
                         <br/>
                         <a href="<c:url value="${baseURL}/project/${study.studyId}"/>"
@@ -286,8 +286,8 @@
                            end="${model.maxRowNumberOfLatestItems-1}">
                     <p><%--<span class="list_date">${sample.metadataReceived}:</span>--%>
                         <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>"
-                           class="list_more">${sample.sampleName}</a>
-                        <br/>
+                           class="list_more fl_uppercase_title">${sample.sampleName}</a>
+
                         <span class="list_desc"><c:out value="${sample.shortSampleDescription} ..."/></span>
                         <br/>
                         <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>" class="more_view">View more</a>
@@ -296,28 +296,44 @@
                                 <%-- leave empty to be consistent with sample overview page
                                  - <img src="${pageContext.request.contextPath}/img/ico_analysis_chart_small_off.gif" alt="Analysis in progress" title="Analysis in progress">--%>
                             </c:when>
-                            <c:otherwise>
-                                - <a href="<c:url value="${baseURL}/analysisStatsView/${sample.sampleId}"/>"
-                                     class="list_sample"> <img
-                                    src="${pageContext.request.contextPath}/img/ico_analysis_chart_small.gif"
-                                    alt="Analysis finished - check the results"
-                                    title="Analysis finished - check the results"></a>
+
+                           <%--BEGIN ICON VERSION--%>
+
+                            <%--<c:otherwise>--%>
+                                <%--- <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>"--%>
+                                     <%--class="list_sample"> <img--%>
+                                    <%--src="${pageContext.request.contextPath}/img/ico_analysis_chart_small.gif"--%>
+                                    <%--alt="Analysis finished - check the results"--%>
+                                    <%--title="Analysis finished - check the results"></a>--%>
+                                <%----%>
+                            <%--</c:otherwise>--%>
+                            <%--END ICON VERSION--%>
+
+                            <%--BEGIN TEXT VERSION--%>
+
+                             <c:otherwise>
+                                - <a href="<c:url value="${baseURL}/sample/${sample.sampleId}#Taxonomy-Analysis"/>" class="list_sample" title="Taxonomy analysis">Taxonomy </a> | <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>#Functional-Analysis"
+                                                                                                                                               class="list_sample" title="Function analysis">Function results</a> | <a class="icon icon-functional" data-icon="=" href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>#Download" class="list_sample" title="download results"></a>
+
                             </c:otherwise>
+                            <%--END TEXT VERSION--%>
                         </c:choose>
                     </p>
                 </c:forEach>
+
                 <p>
                     <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search&startPosition=0"/>"
                        title="View all public samples" class="all">View all samples</a></p>
                 <span class="separator"></span>
-                <h2>Mailing list</h2>
 
-                                  <p><span class="list_desc"><a
-                                                                href="http://listserver.ebi.ac.uk/mailman/listinfo/metagenomics">Subscribe</a> to the EBI metagenomics mailing list to receive update information. </span>
+                    <h2>Mailing list</h2>
 
+                    <p><span class="list_desc"><a
+                                                  href="http://listserver.ebi.ac.uk/mailman/listinfo/metagenomics">Subscribe</a> to the EBI metagenomics mailing list to receive update information. </span>
 
 
             </div>
+
         </c:otherwise>
     </c:choose>
     <%@ include file="components/listNewsComponent.jsp" %>

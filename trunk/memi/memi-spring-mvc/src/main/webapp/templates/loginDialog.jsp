@@ -10,17 +10,15 @@
 <div id="login_dialog_div" class="sub">
     <div class="sub_log">
         <form:form id="login_form" action="**/doLogin" commandName="loginForm">
-            <fieldset>
+
                 <div class="form_row"><h3>Login</h3></div>
                 <div class="form_row">
-                    <label for="loginDialog_emailAddress"><spring:message
-                            code="email.label"/></label>
-                    <form:input id="loginDialog_emailAddress" path="emailAddress" cssStyle="width:313px;"/>
+                    <label for="loginDialog_emailAddress"><spring:message code="email.label"/></label>
+                    <form:input id="loginDialog_emailAddress" path="emailAddress" cssStyle="width:260px;"/>
                 </div>
                 <div class="form_row">
-                    <label for="loginDialog_password"><spring:message
-                            code="loginForm.inputField.password.label"/></label>
-                    <form:password id="loginDialog_password" path="password" cssStyle="width:313px;"/>
+                    <label for="loginDialog_password"><spring:message code="loginForm.inputField.password.label"/></label>
+                    <form:password id="loginDialog_password" path="password" cssStyle="width:260px;"/>
                     <span id="loginDialog_emailAddress.errors" class="error"></span>
                 </div>
                     <%--ENA URL parameter: Neccessary for the ENA implementation to redirect back to the Metagenomics website for instance if somebody wants to create a new account--%>
@@ -38,7 +36,7 @@
                     <span class="clear_but">| <a href="javascript:closeLoginDialogForm()"
                                                  title="Cancel">Cancel</a></span>
                 </div>
-            </fieldset>
+
         </form:form>
     </div>
 

@@ -54,14 +54,10 @@ public class SRARegistrationForm {
     private String department;
 
     //CENTRE DETAILS : <Please provide your Institute's full name and Country>
+    //CENTRE ACRONYM : <Please provide the preferred acronym of your institute. This is used in the XMLs as a shorthand form of the centre details. We now provide a unique acronym per submission account so if your institute's acronym has already been used in another account, we will provide a similar one. Note that this acronym is only used as a controlled vocabulary in order to display the full centre details in the ENA browser.>
     @NotEmpty(message = "{form.sra.registration.institute.notEmpty}")
     @Length(min = 3, max = 100, message = "{form.sra.registration.institute.size}")
     private String institute;
-
-    //CENTRE ACRONYM : <Please provide the preferred acronym of your institute. This is used in the XMLs as a shorthand form of the centre details. We now provide a unique acronym per submission account so if your institute's acronym has already been used in another account, we will provide a similar one. Note that this acronym is only used as a controlled vocabulary in order to display the full centre details in the ENA browser.>
-    @NotEmpty(message = "{form.sra.registration.centreAcronym.notEmpty}")
-    @Length(max = 100, message = "{form.sra.registration.centreAcronym.size}")
-    private String centreAcronym;
 
     @NotEmpty(message = "{form.sra.registration.postalAddress.notEmpty}")
     @Length(min = 5, message = "{form.sra.registration.postalAddress.size}")
@@ -88,9 +84,6 @@ public class SRARegistrationForm {
     @Length(min = 3, max = 50, message = "{form.sra.registration.lastName.size}")
     private String lastName;
 
-    @Length(max = 50, message = "{form.sra.registration.telephoneNumber.size}")
-    private String telephoneNumber;
-
     //DATA: Please confirm that the data submitted through this account is NOT sensitive, restricted-access or human-identifiable.
     private boolean isNotSensitiveData;
 
@@ -102,6 +95,7 @@ public class SRARegistrationForm {
         //add time to 1 year in advance
         time = time + 1000L * 60L * 60L * 24L * 365L * 2L;
         this.releaseDate = new Date(time);
+//        this.lastName="Scheremetjew";
     }
 
     public String getSubTitle() {
@@ -150,14 +144,6 @@ public class SRARegistrationForm {
         this.institute = institute;
     }
 
-    public String getCentreAcronym() {
-        return centreAcronym;
-    }
-
-    public void setCentreAcronym(String centreAcronym) {
-        this.centreAcronym = centreAcronym;
-    }
-
     public String getPostalAddress() {
         return postalAddress;
     }
@@ -204,14 +190,6 @@ public class SRARegistrationForm {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public String getTelephoneNumber() {
-        return telephoneNumber;
-    }
-
-    public void setTelephoneNumber(String telephoneNumber) {
-        this.telephoneNumber = telephoneNumber;
     }
 
     @AssertTrue(message = "{form.sra.registration.sensitiveData}")

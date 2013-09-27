@@ -132,14 +132,14 @@
                                 <c:set var="headerWidth" value="120px" scope="page"/>
                             </c:otherwise>
                         </c:choose>
-                        <th id="${headerId}" abbr="${headerName}" width="${headerWidth}" scope="col">${headerName}</th>
+                        <th class="${headerId}" abbr="${headerName}" width="${headerWidth}" scope="col">${headerName}</th>
                     </c:forEach>
                 </tr>
                 </thead>
                 <tbody>
                 <c:forEach var="study" items="${model.studies}" varStatus="status">
                     <tr>
-                        <td style="text-align:left;" id="ordered">
+                        <td class="h_left" id="ordered">
                             <c:if test="${!study.public}"><img alt="private"
                                                                    src="${pageContext.request.contextPath}/img/icon_priv_private.gif">&nbsp;&nbsp;</c:if>
                             <a href="<c:url value="${baseURL}/project/${study.studyId}"/>">${study.studyName}</a>
@@ -154,7 +154,7 @@
             </table>
         </c:when>
         <c:otherwise>
-            <div class="error">No data matching your search</div>
+            <div class="msg_error">No data matching your search</div>
         </c:otherwise>
     </c:choose>
 <div class="but_top"><a href="#top" title="back to the top page">Top</a></div>

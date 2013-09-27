@@ -13,7 +13,7 @@
     </tr>
     <tr>
         <td>CENTRE ACRONYM:</td>
-        <td>$centreAcronym</td>
+        <td>Not provided</td>
     </tr>
     <tr>
         <td>LABORATORY NAME:</td>
@@ -26,16 +26,6 @@
     <tr>
         <td>EMAIL ADDRESS:</td>
         <td>$email</td>
-    </tr>
-    <tr>
-        <td>TELEPHONE NUMBER:</td>
-        <td>
-            #if($telephoneNumber && ("$telephoneNumber" != ""))
-                $telephoneNumber
-            #else
-                Not provided
-            #end
-        </td>
     </tr>
     <tr>
         <td><b>Project data</b></td>

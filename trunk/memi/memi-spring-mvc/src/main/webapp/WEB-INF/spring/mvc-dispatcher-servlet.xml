@@ -16,6 +16,8 @@
     <import resource="persistence-config-context.xml"/>
     <import resource="session-manager-context.xml"/>
     <import resource="exception-handling-context.xml"/>
+    <import resource="downloadable-files-context.xml"/>
+    <import resource="result-files-context.xml"/>
 
     <!-- Configures the @Controller programming spring_model -->
     <mvc:annotation-driven/>
@@ -36,6 +38,7 @@
     <mvc:resources mapping="/img/*.*" location="/img/"/>
     <mvc:resources mapping="/img/jquery/overcast/*.*" location="/img/jquery/overcast/"/>
     <mvc:resources mapping="/img/jquery/smoothness/*.*" location="/img/jquery/smoothness/"/>
+    <mvc:resources mapping="/img/krona/*.*" location="/img/krona/"/>
     <!--<mvc:resources mapping="/fonts/*.svg" location="/fonts/"/>-->
     <mvc:resources mapping="/fonts/*.*" location="/fonts/"/>
     <mvc:resources mapping="/css/*.*" location="/css/"/>

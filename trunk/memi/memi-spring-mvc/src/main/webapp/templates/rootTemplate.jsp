@@ -80,6 +80,14 @@
     <!--[if lt IE 7]>
     <style type="text/css"> #feedback_div {display: none;}
     #feedback_no_div {display: block;}</style><![endif]-->
+
+    <!--[if lt IE 9]>
+    <style type="text/css"> .krona_chart {display: none;}</style>
+    <style type="text/css"> #ie_krona {display: block;}</style>
+    <![endif]--> <%-- Add a message to the Krona tab for IE users (lower version than IE9) as Krona is not working for IE8, IE7, IE6--%>
+
+
+
     <!-- JQuery and JQuery UI source-->
     <script src="${pageContext.request.contextPath}/js/jquery-1.4.4.min.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/js/jquery-ui-1.8.8.custom.min.js" type="text/javascript"></script>
@@ -97,8 +105,8 @@
     <script src="${pageContext.request.contextPath}/js/feedback_script.js" type="text/javascript"></script>
 
    <%--Client-side twitter news feed - http://tweet.seaofclouds.com/--%>
-    <%--<script src="${pageContext.request.contextPath}/js/tweet/jquery.tweet.js" type="text/javascript"></script>--%>
-    <%--<script src="${pageContext.request.contextPath}/js/tweet/tweet.instance.js" type="text/javascript"></script>--%>
+    <script src="${pageContext.request.contextPath}/js/tweet/jquery.tweet.js" type="text/javascript"></script>
+    <script src="${pageContext.request.contextPath}/js/tweet/tweet.instance.js" type="text/javascript"></script>
 
     <!--[if lt IE 9]><%-- HTML5 tags working in IE8 by including this JavaScript in the head  --%>
 <script type="text/javascript">
@@ -133,7 +141,8 @@
             var myOptions = {
                 zoom:4,
                 center:latlng,
-                mapTypeId:google.maps.MapTypeId.ROADMAP
+                mapTypeId:google.maps.MapTypeId.ROADMAP,
+                streetViewControl: false
             };
             var map = new google.maps.Map(document.getElementById("map_canvas"),
                     myOptions);
@@ -142,9 +151,10 @@
                 map:map
             });
         }
+
     </script>
 
-    <%-- script for carousel--%>
+    <!-- script for carousel -->
     <script src="${pageContext.request.contextPath}/js/jquery.carousel.min.js" type="text/javascript"></script>
     <script type="text/javascript">
         $(function () {
@@ -159,49 +169,24 @@
             });
         });
     </script>
-    <%-- script for tabs, doesn't work with login popup
 
-    <script type="text/javascript">
-        $(document).ready(function () {
+      <%--WARNING this is inserting a character on top of the page--%>
+    <%--<!-- Script and noscript versions for feedback and login links --><script type="text/javascript">--%>
+    <%--document.write('<style type="text/css">#noscript_feedbackLink{display: none;}#noscript_loginLink{display: none;}</style>');--%>
+<%--</script>​--%>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <%--<script type="text/javascript">--%>
+        <%--//Load the Visualization API and the chart package.--%>
+        <%--google.load("visualization", "1", {packages:["corechart","table","controls"]});--%>
+    <%--</script>--%>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/tablequerywrapper.js"></script>
 
-            //set the default location (fix ie 6 issue)
-            $('.lava').css({left:$('span.item:first').position()['left']});
-
-            $('.item').click(function () {
-
-
-            $(this).addClass("selected");
-
-            //scroll the lava to current item position
-            $('.lava').stop().animate({left:$(this).position()['left']}, {duration:200});
-
-            //scroll the panel to the correct content
-            $('.panel').stop().animate({left:$(this).position()['left'] * (-6.2)}, {duration:200});
-
-            });
-
-        });
-    </script>
-     --%>
-    <!-- Script and noscript versions for feedback and login links -->
-    <script type="text/javascript">
-        document.write('<style type="text/css">#noscript_feedbackLink{display: none;}#noscript_loginLink{display: none;}</style>');
-    </script>
     <noscript>
         <style type="text/css">
-            #script_feedbackLink {
-                display: none;
-            }
-
-            #script_loginLink {
-                display: none;
-            }
-
-            #mod4 {
-                display: none;
-            }
-
-                /* remove one slide for carousel for no java */
+            #tax-Krona, #tabs-chart, #interpro-chart, #tabs-taxchart {display: none;}/*remove the Krona box  and all charts tabs when no javascript*/
+            #script_feedbackLink {display: none;}/*remove the feedback button when no javascript*/
+            #script_loginLink {display: none;}  /*remove the login button when no javascript*/
+            #mod4 {display: none;} /* remove the last item - jumping line - of the carousel when no javascript */
         </style>
     </noscript>
 </head>

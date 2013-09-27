@@ -7,12 +7,12 @@
     <parent>
         <artifactId>memi</artifactId>
         <groupId>uk.ac.ebi.interpro.metagenomics</groupId>
-        <version>1.0</version>
+        <version>1.1</version>
     </parent>
 
     <groupId>uk.ac.ebi.interpro.metagenomics</groupId>
     <artifactId>memi-spring-mvc</artifactId>
-    <version>1.0</version>
+    <version>1.1</version>
     <name>memi-spring-mvc</name>
     <packaging>war</packaging>
 
@@ -51,13 +51,13 @@
         <dependency>
             <groupId>uk.ac.ebi.interpro.metagenomics</groupId>
             <artifactId>memi-model</artifactId>
-            <version>1.0</version>
+            <version>1.1</version>
         </dependency>
 
         <dependency>
             <groupId>uk.ac.ebi.interpro.metagenomics</groupId>
             <artifactId>memi-persistence</artifactId>
-            <version>1.0</version>
+            <version>1.1</version>
         </dependency>
 
         <dependency>
@@ -408,7 +408,8 @@
             <id>test-war</id>
             <properties>
                 <deployment.folder>/ebi/www/jtest/deploy/tc-interpro-das</deployment.folder>
-                <pathToAnalysisDirectory>/nfs/nobackup2/interpro/metagenomics/web-app/test/results/</pathToAnalysisDirectory>
+                <pathToAnalysisDirectory>/nfs/nobackup2/interpro/metagenomics/web-app/test/results/
+                </pathToAnalysisDirectory>
                 <log4j.log.file>/nfs/nobackup2/interpro/metagenomics/web-app/test/logs/memi.log4j
                 </log4j.log.file>
                 <dailyErrorAppParam>/nfs/nobackup2/interpro/metagenomics/web-app/test/logs/memi-ERROR.log4j
