@@ -7,7 +7,7 @@
             <li class="${model.tabClasses["tabClassSubmitView"]}"><a href="<c:url value="${baseURL}/submit"/>"
                                                                      class="more_desc" title="Submit data">Submit
                 data</a></li>
-            <%--changed to make it EBI compliant --%>
+
             <li class="${model.tabClasses["tabClassProjectsView"]}">
                 <c:choose>
                     <c:when test="${empty model.submitter}">
@@ -38,8 +38,7 @@
                                                                     title="About us">About Metagenomics</a></li>
             <li class="${model.tabClasses["tabClassContactView"]}"><a href="<c:url value="${baseURL}/contact"/>"
                                                                       title="Contact us">Contact</a></li>
-            <%--changed to make it EBI compliant --%>
-            </li>
+
             <c:choose>
             <c:when test="${empty model.submitter}">
                 <%--<li class="functional last"><a href="#" class="icon icon-static" data-icon="\">Feedback</a></li>--%>
@@ -49,27 +48,28 @@
 
                                    <a  class="icon icon-functional" data-icon="l" id="noscript_loginLink" href="<c:url value="${baseURL}/login?display=false"/>" title="Login">Login</a>
                                </li>
-               <span class="logout"> Not logged in </span>
+               <li class="logout"> Not logged in </li>
             </c:when>
-                       <c:otherwise>
-                        <li class="functional last">
-                        <%--<a class="icon icon-functional" data-icon="l" href="<c:url value="${baseURL}/logout"/>" title="logout">logout</a>--%>
-                        <a href="<c:url value="${baseURL}/logout"/>" title="logout">logout</a>
-                        </li>
-                        <span class="login_name"><c:out value="${model.submitter.firstName} ${model.submitter.surname}"/>
-                        <c:url var="editPrefsUrl" value="${model.propertyContainer.enaSubmissionURL.editPrefsLink}"><c:param name="url" value="${enaUrlParam}"/></c:url>
-                        &nbsp;<a href="<c:out value="${editPrefsUrl}"/>" title="Edit preferences">(edit)</a></span>
 
-                           <%--<li class="functional" id="logout"><c:out value="${model.submitter.firstName} ${model.submitter.surname}"/></li>--%>
-                           <%--<c:url var="editPrefsUrl"--%>
-                                  <%--value="${model.propertyContainer.enaSubmissionURL.editPrefsLink}">--%>
-                               <%--<c:param name="url" value="${enaUrlParam}"/>--%>
-                           <%--</c:url>--%>
-                           <%--(<a href="<c:out value="${editPrefsUrl}"/>" title="Edit preferences">edit</a>)--%>
-                           <%--<li class="functional" id="logout">--%>
-                              <%--|  <a href="<c:url value="${baseURL}/logout"/>" title="logout">logout</a>--%>
-                           <%--</li>--%>
-                       </c:otherwise>
+           <c:otherwise>
+            <li class="functional last">
+            <%--<a class="icon icon-functional" data-icon="l" href="<c:url value="${baseURL}/logout"/>" title="logout">logout</a>--%>
+            <a href="<c:url value="${baseURL}/logout"/>" title="logout">logout</a>
+            </li>
+            <li class="login_name"><c:out value="${model.submitter.firstName} ${model.submitter.surname}"/>
+            <c:url var="editPrefsUrl" value="${model.propertyContainer.enaSubmissionURL.editPrefsLink}"><c:param name="url" value="${enaUrlParam}"/></c:url>
+            &nbsp;<a href="<c:out value="${editPrefsUrl}"/>" title="Edit preferences">(edit)</a></li>
+
+               <%--<li class="functional" id="logout"><c:out value="${model.submitter.firstName} ${model.submitter.surname}"/></li>--%>
+               <%--<c:url var="editPrefsUrl"--%>
+                      <%--value="${model.propertyContainer.enaSubmissionURL.editPrefsLink}">--%>
+                   <%--<c:param name="url" value="${enaUrlParam}"/>--%>
+               <%--</c:url>--%>
+               <%--(<a href="<c:out value="${editPrefsUrl}"/>" title="Edit preferences">edit</a>)--%>
+               <%--<li class="functional" id="logout">--%>
+                  <%--|  <a href="<c:url value="${baseURL}/logout"/>" title="logout">logout</a>--%>
+               <%--</li>--%>
+           </c:otherwise>
             </c:choose>
 
         </ul>
