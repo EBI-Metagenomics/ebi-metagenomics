@@ -526,6 +526,9 @@ box-shadow:0px 1px 1px #adadad;
 table.result td.showHideRelated { font-weight: bold;}
 table.result td.showHideRelated:hover {background-color: #006666; }
 
+.simple_table  {padding: 0px;}
+.simple_table td {vertical-align: top;}
+
 /* END TABLE */
 
 /* TITLE + TEXT*/
