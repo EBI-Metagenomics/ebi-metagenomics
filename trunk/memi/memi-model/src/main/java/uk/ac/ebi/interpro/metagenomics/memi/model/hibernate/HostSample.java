@@ -23,7 +23,7 @@ public class HostSample extends Sample {
      * Host taxonomy ID (e.g. 9606 for Homo sapiens)
      */
     @Column(name = "HOST_TAX_ID")
-    private int hostTaxonomyId;
+    private Integer hostTaxonomyId;
 
 
     /**
@@ -57,11 +57,11 @@ public class HostSample extends Sample {
         this.phenotype = phenotype;
     }
 
-    public int getHostTaxonomyId() {
+    public Integer getHostTaxonomyId() {
         return hostTaxonomyId;
     }
 
-    public void setHostTaxonomyId(int hostTaxonomyId) {
+    public void setHostTaxonomyId(Integer hostTaxonomyId) {
         this.hostTaxonomyId = hostTaxonomyId;
     }
 

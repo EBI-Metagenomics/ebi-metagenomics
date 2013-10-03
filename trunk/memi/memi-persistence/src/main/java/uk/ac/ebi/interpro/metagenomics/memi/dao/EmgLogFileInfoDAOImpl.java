@@ -77,8 +77,8 @@ public class EmgLogFileInfoDAOImpl implements EmgLogFileInfoDAO {
         try {
             List<Map<String, Object>> rows = this.jdbcTemplate.queryForList("select file_id, file_name from " + EmgFile.TABLE_NAME + " where " + EmgFile.SAMPLE_ID + "=?", new Long[]{sampleId});
             for (Map row : rows) {
-                String fileName = (String) row.get("FILE_NAME");
-                String fileID = (String) row.get("FILE_ID");
+                String fileName = (String) row.get(EmgFile.FILE_NAME);
+                String fileID = (String) row.get(EmgFile.FILE_ID);
                 result.add(new EmgFile(fileID, fileName));
             }
         } catch (Exception e) {
