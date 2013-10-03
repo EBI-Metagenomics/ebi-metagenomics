@@ -52,7 +52,7 @@
                     <div class="result_row"><label>Species:</label>
                         <c:choose>
                         <c:when test="${not empty model.sample.hostTaxonomyId && model.sample.hostTaxonomyId>0}">
-        <span><c:out value="${model.sample.species}"/> <a class="ext"
+        <span><em><c:out value="${model.sample.species}"/></em> <a class="ext"
                                                           href="<c:url value="http://www.uniprot.org/taxonomy/${model.sample.hostTaxonomyId}"/>">Tax
             ID <c:out value="${model.sample.hostTaxonomyId}"/></a> </span>
                     </c:when>
@@ -125,53 +125,62 @@
         <%--END ENVIRONMENTAL/HOST ASSOCIATED--%>
 
         <%--BEGIN LOCALISATION   --%>
-        <h3>Localisation</h3>
+        <c:choose>
+        <c:when test="${empty model.sample.geoLocName && empty model.sample.longitude && empty model.sample.latitude}">
+        <%--don't show the localisation box if empty--%>
+        </c:when>
+        <c:otherwise>
+            <h3>Localisation</h3>
 
-        <div class="output_form" id="large" style="overflow:auto;">
+                    <div class="output_form" id="large" style="overflow:auto;">
 
-            <c:if test="${!model.hostAssociated}">
-                <c:choose>
-                    <c:when test="${empty model.sample.latitude}">
-                        <%--remove the label when emtpy otherwise make alignment problem--%>
-                    </c:when>
-                    <c:otherwise>
+                        <c:if test="${!model.hostAssociated}">
+                            <c:choose>
+                                <c:when test="${empty model.sample.latitude}">
+                                    <%--remove the label when emtpy otherwise make alignment problem--%>
+                                </c:when>
+                                <c:otherwise>
+                                    <c:choose>
+                                        <c:when test="${not empty model.sample.latitude}">
+                                            <c:set var="latLon" value="${model.sample.latitude} , ${model.sample.longitude}"/>
+                                            <div id="map_canvas"></div>
+                                            <script language="javascript"> initialize(${model.sample.latitude}, ${model.sample.longitude})</script>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <c:set var="latLon" value="${notGivenId}"/>
+                                        </c:otherwise>
+                                    </c:choose>
+                                    <div class="result_row"><label>Latitude/Longitude:</label> <span><c:out
+                                            value="${latLon}"/></span></div>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:if>
+
                         <c:choose>
-                            <c:when test="${not empty model.sample.latitude}">
-                                <c:set var="latLon" value="${model.sample.latitude} , ${model.sample.longitude}"/>
-                                <div id="map_canvas"></div>
-                                <script language="javascript"> initialize(${model.sample.latitude}, ${model.sample.longitude})</script>
+
+                            <c:when test="${empty model.sample.geoLocName}">
+                                <%--remove the label when emtpy otherwise make alignment problem--%>
                             </c:when>
                             <c:otherwise>
-                                <c:set var="latLon" value="${notGivenId}"/>
+                                <c:choose>
+                                    <c:when test="${not empty model.sample.geoLocName}">
+                                        <c:set var="geoLocName" value="${model.sample.geoLocName}"/>
+                                        <div class="result_row"><label>Geographic location:</label> <span><c:out
+                                                value="${geoLocName}"/></span></div>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:set var="geoLocName" value="${notGivenId}"/>
+                                    </c:otherwise>
+                                </c:choose>
                             </c:otherwise>
                         </c:choose>
-                        <div class="result_row"><label>Latitude/Longitude:</label> <span><c:out
-                                value="${latLon}"/></span></div>
-                    </c:otherwise>
-                </c:choose>
-            </c:if>
-
-            <c:choose>
-
-                <c:when test="${empty model.sample.geoLocName}">
-                    <%--remove the label when emtpy otherwise make alignment problem--%>
-                </c:when>
-                <c:otherwise>
-                    <c:choose>
-                        <c:when test="${not empty model.sample.geoLocName}">
-                            <c:set var="geoLocName" value="${model.sample.geoLocName}"/>
-                            <div class="result_row"><label>Geographic location:</label> <span><c:out
-                                    value="${geoLocName}"/></span></div>
-                        </c:when>
-                        <c:otherwise>
-                            <c:set var="geoLocName" value="${notGivenId}"/>
-                        </c:otherwise>
-                    </c:choose>
-                </c:otherwise>
-            </c:choose>
 
 
-        </div>
+                    </div>
+        </c:otherwise>
+        </c:choose>
+
+
         <%--END LOCALISATION   --%>
 
         <%--BEGIN OTHER INFO   --%>
