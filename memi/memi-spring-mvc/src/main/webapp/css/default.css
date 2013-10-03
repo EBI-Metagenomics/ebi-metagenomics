@@ -1312,7 +1312,7 @@ border-radius: 0 0 20px 0;
 float: left;
 clear: left;
 margin:0;
-width: 80px;
+ width: 86px;
 text-align: right;
 font-size: 110%;
 color: #445668; /* was #003798 or blue 4d68a1 */
@@ -1328,7 +1328,7 @@ width: 140px;
 
 .output_form  span, .filter_form span {
 border: 0px solid #556f8c;
-margin-left:14px;
+margin-left:9px;
 }
 
 #map_canvas {
