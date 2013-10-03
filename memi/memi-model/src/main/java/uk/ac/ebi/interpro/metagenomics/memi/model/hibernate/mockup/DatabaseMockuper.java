@@ -199,7 +199,7 @@ public class DatabaseMockuper {
                             ((HostSample) s).setHostSex((row[41].equals("female") ? HostSample.HostSex.FEMALE : HostSample.HostSex.MALE));
                             String taxonId = row[17];
                             if (taxonId != null && taxonId.trim().length() > 0) {
-                                ((HostSample) s).setHostTaxonomyId(Integer.parseInt(taxonId));
+                                ((HostSample) s).setHostTaxonomyId(new Integer(Integer.parseInt(taxonId)));
                             }
                             ((HostSample) s).setPhenotype(row[47]);
                         }
@@ -340,7 +340,7 @@ public class DatabaseMockuper {
             tx = session.beginTransaction();
             List studies = session.createCriteria(Study.class).list();
 //            List honeys = new ArrayList();
-            for (Iterator iter = studies.iterator(); iter.hasNext();) {
+            for (Iterator iter = studies.iterator(); iter.hasNext(); ) {
                 Study element = (Study) iter.next();
             }
             tx.commit();

@@ -3,6 +3,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 
+<c:set var="notGivenId" value="(not given)" scope="session"/>
+
 <div id="fragment-overview">
 
 
@@ -52,13 +54,13 @@
                         <c:when test="${not empty model.sample.hostTaxonomyId && model.sample.hostTaxonomyId>0}">
         <span><c:out value="${model.sample.species}"/> <a class="ext"
                                                           href="<c:url value="http://www.uniprot.org/taxonomy/${model.sample.hostTaxonomyId}"/>">Tax
-            ID <c:out value="${model.sample.hostTaxonomyId}"/></a> </span></div>
+            ID <c:out value="${model.sample.hostTaxonomyId}"/></a> </span>
                     </c:when>
                     <c:otherwise>
                         <c:out value="${notGivenId}"/>
                     </c:otherwise>
                     </c:choose>
-
+                    </div>
 
                     <c:if test="${not empty model.sample.hostSex}">
                         <c:set var="hostSex" value="${model.sample.hostSex}"/>

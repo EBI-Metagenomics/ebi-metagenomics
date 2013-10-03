@@ -1,11 +1,14 @@
 package uk.ac.ebi.interpro.metagenomics.memi.controller;
 
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.ui.ModelMap;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.EmgLogFileInfoDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.ISampleStudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.temp.SampleAnnotationDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.exceptionHandling.ExceptionTag;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgFile;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgSampleAnnotation;
@@ -32,6 +35,8 @@ import java.util.*;
  * This class extends {@link SampleViewController}, {@link KronaChartsController} and {@link SampleViewExportController}.
  */
 public class AbstractSampleViewController extends SecuredAbstractController<Sample> {
+
+    private static final Log log = LogFactory.getLog(AbstractSampleViewController.class);
     /**
      * View name of this controller which is used several times.
      */
@@ -80,7 +85,13 @@ public class AbstractSampleViewController extends SecuredAbstractController<Samp
 
     protected EmgFile getEmgFile(final long sampleId) {
         List<EmgFile> emgFiles = fileInfoDAO.getFilesBySampleId(sampleId);
-        return (emgFiles.size() > 0 ? emgFiles.get(0) : null);
+        if (emgFiles.size() > 0) {
+            return emgFiles.get(0);
+        } else {
+            final String errorMessage = ExceptionTag.DATABASE_CURATION_ISSUE.toString() + "No log_file_info entry (EMG schema) for sample with id " + sampleId + " exists!";
+            log.error(errorMessage);
+            throw new IllegalStateException(errorMessage);
+        }
     }
 
     protected void openDownloadDialog(final HttpServletResponse response,
@@ -105,7 +116,6 @@ public class AbstractSampleViewController extends SecuredAbstractController<Samp
      */
     protected void populateModel(final ModelMap model, final Sample sample, String pageTitle) {
         EmgFile emgFile = getEmgFile(sample.getId());
-
         //TODO: For the moment the system only allows to represent one file on the analysis page, but
         //in the future it should be possible to represent all different data types (genomic, transcriptomic)
         //TODO: The following 'if' case is a quick and dirty solution to solve the differentiation issue between genomic and transcriptomic analysis

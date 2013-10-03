@@ -11,19 +11,36 @@ import java.util.Map;
  */
 public class EmgFile {
 
+    /**
+     * Table name in the EMG schema.
+     */
     public final static String TABLE_NAME = "log_file_info";
 
+    /**
+     * Column name in the log_file_info table.
+     */
     public final static String SAMPLE_ID = "sample_id";
+
+    /**
+     * Column name in the log_file_info table.
+     */
+    public final static String FILE_NAME = "FILE_NAME";
+
+    /**
+     * Column name in the log_file_info table.
+     */
+    public final static String FILE_ID = "FILE_ID";
 
     private String fileID;
 
     private String fileName;
 
-    private Map<String, String> fileSizeMap;
+    /**
+     * Prevents an calls from outside the package.
+     */
+    private EmgFile() {
 
-//    public static String[] fileExtensions = new String[]
-//            {"_summary.go_slim", "_summary.go", "_masked.fasta",
-//                    "_CDS.faa", "_I5.tsv", "_summary.ipr"};
+    }
 
     public EmgFile(String fileID, String fileName) {
         this.fileID = fileID;
