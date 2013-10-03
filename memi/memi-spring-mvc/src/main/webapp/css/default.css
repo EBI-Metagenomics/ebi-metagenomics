@@ -262,6 +262,7 @@ color:#666;
 div#headerdiv .logout, div#headerdiv .login_name {float:right; margin-right: 9px; margin-top:4px; font-size: 90%;}
 div#headerdiv .login_name  {color:rgb(240, 240, 96);}
 div#headerdiv .login_name a {display:inline;color: white; border-bottom:0;}
+div#headerdiv .login_name a:active, div#headerdiv .login_name a:hover, div#headerdiv .login_name a:focus {background-color: transparent;}
 div#headerdiv .logout {font-weight: bold;}
 
 
