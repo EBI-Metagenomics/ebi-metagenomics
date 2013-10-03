@@ -194,7 +194,7 @@
                     <tbody>
                     <c:forEach var="annotation" items="${model.sampleAnnotations}" varStatus="status">
                         <tr>
-                            <td class="h_left" id="ordered" width="250px"><span class="fl_uppercase">${annotation.annotationName}</span></td>
+                            <td class="h_left" id="ordered" width="250px"><div class="fl_uppercase">${annotation.annotationName}</div></td>
                             <td class="h_left">${annotation.annotationValue} ${annotation.unit}</td>
                         </tr>
                     </c:forEach>
