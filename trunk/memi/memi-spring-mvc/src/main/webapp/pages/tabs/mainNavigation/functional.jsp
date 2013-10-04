@@ -60,8 +60,8 @@
                                 <c:param name="imageType" value="PNG"/>
                                 <c:param name="dir" value="${model.emgFile.fileID}"/>
                             </c:url>
-                            <div style="float:left; margin-left: 9px;"><img
-                                    src="<c:out value="${sequenceFeatureImage}"/>"/></div>
+                            <p><img
+                                    src="<c:out value="${sequenceFeatureImage}"/>"/></p>
                         </div>
                     </c:when>
                     <c:otherwise>
