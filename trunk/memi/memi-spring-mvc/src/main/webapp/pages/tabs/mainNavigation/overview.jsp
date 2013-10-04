@@ -20,7 +20,7 @@
             <c:choose>
                 <c:when test="${not empty model.sample.sampleDescription}">
                     <c:set var="sampleDescription" value="${model.sample.sampleDescription}"/>
-                    <p class="fl_uppercase sample_desc">${fn:toLowerCase(sampleDescription)}</p>
+                    <p class="fl_uppercase sample_desc"><c:out value="${sampleDescription}"/></p>
                 </c:when>
             </c:choose>
 
