@@ -44,7 +44,7 @@
 </div>
 
 <script type="text/javascript">
-    $(document).ready(function () {
+
         //Ajax load approach as described here: http://jqueryui.com/tabs/#ajax
         $("#tabs-taxchart").tabs({
             cache:true,
@@ -61,7 +61,7 @@
         });
         //Default functionality
         $("#tabs-taxchart").tabs({${model.analysisStatus.taxonomicAnalysisTab.tabsOptions}});
-    });
+
 
 </script>
 <%--Remove the filter box for taxonomy table when the total number of phylum is less than 10--%>
