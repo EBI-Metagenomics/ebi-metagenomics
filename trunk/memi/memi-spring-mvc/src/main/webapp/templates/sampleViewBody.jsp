@@ -39,12 +39,22 @@
         </div>
         <%--end navtabs--%>
 
-
+        <script type="text/javascript">
+            $(function () {
+           //   IMPORTANT TO keep at bottom as it should be rendered last - anchor “jump” when loading a page from http://stackoverflow.com/questions/3659072/jquery-disable-anchor-jump-when-loading-a-page
+               setTimeout(function() {
+                 if (location.hash) {
+//                   $('#local-masthead').fadeOut();
+                   window.scrollTo(0, 0);
+                 }
+               }, 1000);
+            });
+        </script>
         <%--script for tabs--%>
         <script type="text/javascript">
             //Main navigation tabs - overview, quality control, taxonomic analysis, functional analysis, downloads
             //Ajax load approach as described here: http://jqueryui.com/tabs/#ajax
-
+            $(function () {
                 $("#navtabs").tabs({
                     cache:true,
                     ajaxOptions:{
@@ -63,7 +73,7 @@
                         window.location.hash = ui.tab.hash;
                     }
                 });
-
+            });
             //  Load the Visualization API and the chart package.
             google.load('visualization', '1.1', {'packages':['corechart', 'table', 'controls'] });
         </script>
