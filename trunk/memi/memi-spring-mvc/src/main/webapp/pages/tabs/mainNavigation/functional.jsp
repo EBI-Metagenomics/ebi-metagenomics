@@ -212,7 +212,7 @@
 </div>
 <%--end div fragment functional--%>
 <script type="text/javascript">
-    $(document).ready(function () {
+
         // Functional analysis tab navigation
         $("#interpro-chart").tabs();
         //Ajax load approach as described here: http://jqueryui.com/tabs/#ajax
@@ -230,6 +230,6 @@
         });
         //Default functionality
         $("#tabs-chart").tabs({ selected:0  });
-    });
+
 </script>
 <%@ include file="../functionalAnalysis/interproMatchesView.jsp" %>
