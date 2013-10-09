@@ -210,22 +210,18 @@
                                 <c:if test="${!sample.public}"><img alt="private"
                                                                     src="${pageContext.request.contextPath}/img/icon_priv_private.gif"></c:if>&nbsp;&nbsp;
                                 <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>"
-                                   class="list_more">${sample.sampleName}</a>
-                                <br/>
+                                   class="list_more fl_uppercase_title">${sample.sampleName}</a>
                                 <span class="list_desc"><c:out value="${sample.shortSampleDescription} ..."/></span>
                                 <br/>
-                                <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>"
-                                   class="more_view">View more</a>
+                                <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>" class="more_view">View more</a>
                                 <c:choose>
                                     <c:when test="${empty sample.analysisCompleted}">
                                         <%-- leave empty to be consistent with sample overview page
                                  - <img src="${pageContext.request.contextPath}/img/ico_analysis_chart_small_off.gif" alt="Analysis in progress" title="Analysis in progress">--%></c:when>
                                     <c:otherwise>
-                                        - <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>"
-                                             class="list_sample"> <img
-                                            src="${pageContext.request.contextPath}/img/ico_analysis_chart_small.gif"
-                                            alt="Analysis finished - check the results"
-                                            title="Analysis finished - check the results"></a>
+                                        - <a href="<c:url value="${baseURL}/sample/${sample.sampleId}#Taxonomy-Analysis"/>" class="list_sample" title="Taxonomy analysis">Taxonomy </a> | <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>#Functional-Analysis"
+                                                                                                                                                                                             class="list_sample" title="Function analysis">Function results</a> | <a class="icon icon-functional" data-icon="=" href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>#Download" class="list_sample" title="download results"></a>
+
                                     </c:otherwise>
                                 </c:choose>
                             </p>
