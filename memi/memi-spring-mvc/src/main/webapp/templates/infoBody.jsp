@@ -128,8 +128,7 @@ The SRA only accepts data that is intended for public release. However, any data
 
 <p>We intend to make frequent updates to the interfaces and services provided. The following features are planned for future releases of the resource:<br/>
 <ul>
-    <li>Better information visualisations, including comparative analysis of results</li>
-    <li>Interactive visualisation of InterPro matches with links to InterPro entries</li>
+    <li>Including comparative analysis of results</li>
     <li>Human contaminant filtering</li>
 </ul>
 </p>
@@ -157,13 +156,13 @@ The SRA only accepts data that is intended for public release. However, any data
 <h4 id="credits_1">The team</h4>
 
 <p>This new resource for metagenomics is supported by the <a
-        href="https://www.ebi.ac.uk/Information/Staff/searchx.php?s_keyword=&s_group=28"
-        title="The InterPro team at EBI" class="ext">InterPro Team</a> at EBI, in collaboration with the <a href="http://www.ebi.ac.uk/ena/" class="ext"> ENA</a> and
+        href="https://www.ebi.ac.uk/services/teams/metagenomics"
+        title="The EBI Metagenomics team" class="ext">EBI Metagenomics Team</a>, in collaboration with the <a href="http://www.ebi.ac.uk/ena/" class="ext"> ENA</a> and
     <a href="http://www.uniprot.org/" class="ext"> UniProt</a> groups.</p>
 
 <h4 id="credits_2">Photos</h4>
 
-<p>We would like to thank the following authors for their contribution related to the top banner pictures:</p>
+<p>We would like to thank the following authors for their contribution related to the pictures used on the website:</p>
 <ul>
     <li>Image: A Blue Starfish (Linckia laevigata) resting on hard Acropora coral. Lighthouse, Ribbon Reefs, Great
         Barrier Reef, by Richard Ling [<a href="http://www.rling.com" class="ext" rel="nofollow">Copyright (c)
