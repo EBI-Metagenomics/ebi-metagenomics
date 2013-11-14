@@ -26,7 +26,7 @@
             </ul>
         </li>
         <li><a href="#analysis">How we analyse the data</a></li>
-        <li><a href="#how_to_cite">How to cite</a></li>
+        <li><a href="#h_cite">How to cite</a></li>
         <li><a href="#p_features">Planned features</a></li>
         <li><a href="#funding">Funding</a></li>
         <li><a href="#mail">Mailing list</a></li>
@@ -92,10 +92,8 @@ The SRA only accepts data that is intended for public release. However, any data
             <%--href="http://nar.oxfordjournals.org/content/early/2010/08/29/nar.gkq747.abstract" class="ext">FragGeneScan article</a>) to predict coding sequences (pCDS). </p>--%>
 <%--<p>These are then analysed using InterProScan and results (including processed reads, pCDS, InterProScan results and GO term annotation results) are returned. Results are also downloadable for further interrogation.</p>--%>
 <p>Data processing steps:</p>
-    <div id="sidebar-steps" style="margin:0 9px 9px 9px;">
 
-
-        <ol>
+        <ol id="p-steps">
             <li>1. Reads submitted</li>
 
             <li>2. Nucleotide sequences processed
@@ -123,9 +121,8 @@ The SRA only accepts data that is intended for public release. However, any data
                 patterns, Gene3d). The Gene Ontology term summary was generated using the following GO slim: goslim_goa
             </li>
         </ol>
-    </div>
 
-<h3 id="how_to_cite">How to cite</h3>
+<h3 id="h_cite">How to cite</h3>
 
 <p>To cite EBI Metagenomics, please refer to the following publication:<br/><br/>
 Sarah Hunter, Matthew Corbett, Hubert Denise, Matthew Fraser, Alejandra Gonzalez-Beltran, Christopher Hunter, Philip Jones, Rasko Leinonen, Craig McAnulla, Eamonn Maguire, John Maslen, Alex Mitchell, Gift Nuka, Arnaud Oisel, Sebastien Pesseat, Rajesh Radhakrishnan, Philippe Rocca-Serra, Maxim Scheremetjew, Peter Sterk, Daniel Vaughan, Guy Cochrane, Dawn Field and Susanna-Assunta Sansone (2013).<br/>
