@@ -26,6 +26,7 @@
             </ul>
         </li>
         <li><a href="#analysis">How we analyse the data</a></li>
+        <li><a href="#how_to_cite">How to cite</a></li>
         <li><a href="#p_features">Planned features</a></li>
         <li><a href="#funding">Funding</a></li>
         <li><a href="#mail">Mailing list</a></li>
@@ -123,6 +124,14 @@ The SRA only accepts data that is intended for public release. However, any data
             </li>
         </ol>
     </div>
+
+<h3 id="how_to_cite">How to cite</h3>
+
+<p>To cite EBI Metagenomics, please refer to the following publication:<br/><br/>
+Sarah Hunter, Matthew Corbett, Hubert Denise, Matthew Fraser, Alejandra Gonzalez-Beltran, Christopher Hunter, Philip Jones, Rasko Leinonen, Craig McAnulla, Eamonn Maguire, John Maslen, Alex Mitchell, Gift Nuka, Arnaud Oisel, Sebastien Pesseat, Rajesh Radhakrishnan, Philippe Rocca-Serra, Maxim Scheremetjew, Peter Sterk, Daniel Vaughan, Guy Cochrane, Dawn Field and Susanna-Assunta Sansone (2013).<br/>
+<strong>EBI metagenomics - a new resource for the analysis and archiving of metagenomic data.</strong> Nucleic Acids Research (2013) doi: <a title="EBI metagenomics - a new resource for the analysis and archiving of metagenomic data" href="http://dx.doi.org/10.1093/nar/gkt961" class="ext">10.1093/nar/gkt961</a>
+</p>
+
 
 <h3 id="p_features">Planned features</h3>
 
