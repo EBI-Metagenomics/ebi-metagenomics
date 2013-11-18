@@ -113,17 +113,17 @@ url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functio
 img {border: none;}
 
 a {
-/*color:#188960;*/
+color:#188960;
 /*color: #3DA4CE;*/
-color: #158DEB;
+/*color: #158DEB;     new*/
 text-decoration: none;
 }
 
 /*a:hover,  a:focus { color: red; text-decoration:underline;}*/
 a:hover,  a:focus { text-decoration:underline;}
 
-/*a:active { color: #647685;}*/
-a:active {color: #3D809B;}
+a:active { color: #647685;}
+/*a:active {color: #3D809B;}   new */
 
 #wrapper {
 /*overflow:auto;   To contain floated elements, apply overflow:auto; to the parent element, or place something to clear the floats at the bottom of the container, such as: <div style="clear:both;"></div>*/
@@ -506,7 +506,7 @@ color:#424242;/* text-shadow:1px 1px 1px #fff;  */
 
 table.result tbody td a:hover{
 text-decoration:underline;
-color:red;
+/*color:red;*/
 }
 
 table.result thead th:empty{background:transparent;border:none;}
@@ -1721,14 +1721,14 @@ ul.color_legend {list-style-type: square; list-style-position:inside;}
 
 /*GOOGLE TOOLBAR*/
 .sample_ana .google-visualization-toolbar-triangle {display: none;}
-.sample_ana .goog-menu-button-caption span {display:none;}
+.sample_ana .goog-menu-button-caption span {display:none;}/*hide chart option obligatory text*/
 .sample_ana .goog-menu-button-inner-box {width: 15px;}
 .sample_ana .goog-menu-button {width: 24px;}
 .sample_ana .goog-menu-button-dropdown { height: 15px;  width: 11px; background: url('//ssl.gstatic.com/editor/editortoolbar.png') no-repeat -384px 0; }
 .sample_ana .google-visualization-toolbar-small-dialog-bg {z-index:2;}   /*important to avoid overlay with tabs*/
 .sample_ana .google-visualization-toolbar-small-dialog {z-index:2;}   /*important to avoid overlay with tabs*/
 .sample_ana .goog-menu-button-inner-box {margin: 0 0px;}
-
+/*GOOGLE TABLE PAGINATION*/
 .sample_ana .google-visualization-table-page-numbers {border:0px red solid; text-align: center; width: 88%;}
 .sample_ana .google-visualization-table-page-numbers .page-number {display: inline-block; border: 1px solid #eee; border-radius: 0px;  color: #666; padding: 0.7em 0.5em 0.7em 0.5em;}
 .sample_ana .google-visualization-table-page-numbers .page-number.current {font-weight: bold; color:black;border:1px solid #c3c3c3;background-color: #fafafa;}
