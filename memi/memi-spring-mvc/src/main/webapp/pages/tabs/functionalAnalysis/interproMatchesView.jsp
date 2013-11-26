@@ -1,5 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+
 <script type="text/javascript">
     drawInterProMatchesTable();
     drawInterProMatchesPieChart();
@@ -50,18 +52,18 @@
             {type:'html', datasource:'https://spreadsheets.google.com/tq?key=0AgWotcbTSSjYdGF6NjE0WGxGRmV5djJDWEZ6RzZhT2c'},
             {type:'csv', datasource:'https://spreadsheets.google.com/tq?key=0AgWotcbTSSjYdGF6NjE0WGxGRmV5djJDWEZ6RzZhT2c'},
             {type:'htmlcode', datasource:'https://spreadsheets.google.com/tq?key=0AgWotcbTSSjYdGF6NjE0WGxGRmV5djJDWEZ6RzZhT2c',
-                gadget:'https://www.google.com/ig/modules/pie-chart.xml',
-                style:'width: 800px; height: 700px; border: 1px solid black;'}
+                gadget:'https://www.google.com/ig/modules/pie-chart.xml'
+             }
         ];
 
         var container1 = document.getElementById('toolbar_div');
         google.visualization.drawToolbar(container1, components);
     }
 
-
     // Callback that creates and populates a data table,
     // instantiates the pie chart, passes in the data and
     // draws it.
+
     function drawInterProMatchesPieChart() {
 
         // Create the data table.
@@ -94,3 +96,31 @@
     func_chart.draw(data, options);
     }
 </script>
+<script>
+              $(function() {
+                $( "#func-ip-pie" )
+                  .next()
+                    .button({
+                      text: true,
+                      icons: {
+                      secondary: "ui-icon-triangle-1-s"
+                      }
+                    })
+                    .click(function() {
+                      var menu = $( this ).parent().next().show().position({
+                        my: "left top",
+                        at: "left bottom",
+                        of: this
+                      });
+                      $( document ).one( "click", function() {
+                        menu.hide();
+                      });
+                      return false;
+                    })
+                    .parent()
+                      .buttonset()
+                      .next()
+                        .hide()
+                        .menu();
+              });
+              </script>
