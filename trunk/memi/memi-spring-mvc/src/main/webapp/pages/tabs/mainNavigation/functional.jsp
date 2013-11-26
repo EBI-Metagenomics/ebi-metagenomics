@@ -100,45 +100,66 @@
                                     <%--<li><a href="#interpro-match-bar" title="Bar chart view"><span class="ico-barh"></span></a></li>--%>
                                     <%--<li><a href="#interpro-match-col" title="Stacked column chart view"><span class="ico-col"></span></a></li>--%>
                                     <%--<li><a href="#interpro-match-Krona" title="Krona interactive chart view"><span class="ico-krona"></span></a></li>--%>
-                                <div class="ico-download" id="toolbar_div" style="display:none;"><a
-                                        class="icon icon-functional"
-                                        data-icon="=" id="csv"
-                                        href="#" title=""></a></div>
+
                             <%--</ul>--%>
 
 
                             <div id="interpro-match-pie">
 
-                                <div class="chart_container">
 
-                                        <%--<div id="func_chart_div1"></div>--%>
+                                                            <div class="chart_container">
+                                                              <div class="chart-block">
+                                                                  <div class="but_chart_export">
+                                                                  <button id="func-ip-pie" style="display: none;"></button>
+                                                                  <button id="select">Export</button>
+                                                                  </div>
 
-                                    <div id="func_chart_pie_ipro"></div>
-                                    <div class="func_chart_caption"><div class="puce_chart"></div>Other matches</div>
+                                                                  <ul class="export_list">
+                                                                  <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('func_chart_pie_ipro')), menu.hide;">Save PNG Image</a></li><li> <a onclick="toImg(document.getElementById('func_chart_pie_ipro'), document.getElementById('img_div')), menu.hide;">Snapshot</a></li>
+                                                                  </ul>
 
-                                    <div id="func_dashboard">
-                                        <div id="func_table_filter"></div>
-                                        <div id="func_table_pie_ipro"></div>
-                                    </div>
+                                                                  <div id="func_chart_pie_ipro"></div>
+                                                              </div>
 
-                                        <%--  BEGIN code used if we want to use the row number select option
-                          <div id="func_table_div1" style="display:none;"></div>
-                          <form action="" class="expandertable" >
-                          Show rows:
-                          <select onChange="setOption('pageSize', parseInt(this.value, 10))">
-                          <option selected=selected value="10">10</option>
-                          <option value="25">25</option>
-                          <option value="50">50</option>
-                          <option value="100">100</option>
-                          <option value="1000">1000</option>
-                          <option value="10000">All</option>
-                          </select></form>
-                          END code used if we want to use the row number select option  --%>
-
-                                </div>
+                                         <%--BEGIN http://jsfiddle.net/SCjm8/1/--%>
+                                        <%--<div style="float:left; width:312px; border:0px red solid;" class="chart-export-but">--%>
+                                        <%--<button onclick="saveAsImg(document.getElementById('func_chart_pie_ipro'));">Save as PNG Image</button>--%>
+                                        <%--<button onclick="toImg(document.getElementById('func_chart_pie_ipro'), document.getElementById('img_div'));">Convert to image</button>--%>
+                                            <%--<div id="func_chart_pie_ipro"></div></div>                       &lt;%&ndash; END http://jsfiddle.net/SCjm8/1/&ndash;%&gt;--%>
 
 
-                            </div>
+                                                                    <%--<div id="func_chart_div1"></div>--%>
+
+
+                                                                 <%-- BEGIN Toolbar - to export chart--%>
+                                                                <div class="ico-download" id="toolbar_div" style="display:none;" ><a class="icon icon-functional"  data-icon="=" id="csv"  href="#" title=""></a></div>
+                                                                 <%-- END Toolbar--%>
+
+                                                                <div class="func_chart_caption"><div class="puce_chart"></div>Other matches</div>
+
+                                                                <div id="func_dashboard">
+                                                                    <div id="func_table_filter"></div>
+                                                                    <div id="func_table_pie_ipro"></div>
+                                                                </div>
+
+                                                                    <%--  BEGIN code used if we want to use the row number select option
+                                                      <div id="func_table_div1" style="display:none;"></div>
+                                                      <form action="" class="expandertable" >
+                                                      Show rows:
+                                                      <select onChange="setOption('pageSize', parseInt(this.value, 10))">
+                                                      <option selected=selected value="10">10</option>
+                                                      <option value="25">25</option>
+                                                      <option value="50">50</option>
+                                                      <option value="100">100</option>
+                                                      <option value="1000">1000</option>
+                                                      <option value="10000">All</option>
+                                                      </select></form>
+                                                      END code used if we want to use the row number select option  --%>
+
+                                                            </div>
+
+
+                                                        </div>
 
                         </div>
                     </c:when>
@@ -232,4 +253,5 @@
         $("#tabs-chart").tabs({ selected:0  });
 
 </script>
+
 <%@ include file="../functionalAnalysis/interproMatchesView.jsp" %>

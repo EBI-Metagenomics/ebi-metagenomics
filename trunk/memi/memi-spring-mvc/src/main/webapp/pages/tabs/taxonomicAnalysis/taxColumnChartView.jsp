@@ -2,7 +2,17 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <div id="tax-col">
     <div class="chart_container">
+        <div class="chart-block">
+          <div class="but_chart_export">
+          <button id="taxcolumn" style="display: none;"></button>
+          <button id="select">Export</button>
+          </div>
+
+          <ul class="export_list">
+          <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('tax_chart_col')), menu.hide;">Save PNG Image</a></li><li> <a onclick="toImg(document.getElementById('tax_chart_col'), document.getElementById('img_div')), menu.hide;">Snapshot</a></li>
+          </ul>
         <div id="tax_chart_col"></div>
+        </div>
 
         <div id="tax_dashboard_col">
             <div id="tax_table_col_filter"></div>
@@ -15,7 +25,34 @@
 
 <%--Globale page properties--%>
 <c:set var="phylumCompositionTitle" scope="request" value="Phylum composition (Total: ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator} OTUs)"/>
-
+<script>
+              $(function() {
+                $( "#taxcolumn" )
+                  .next()
+                    .button({
+                      text: true,
+                      icons: {
+                      secondary: "ui-icon-triangle-1-s"
+                      }
+                    })
+                    .click(function() {
+                      var menu = $( this ).parent().next().show().position({
+                        my: "left top",
+                        at: "left bottom",
+                        of: this
+                      });
+                      $( document ).one( "click", function() {
+                        menu.hide();
+                      });
+                      return false;
+                    })
+                    .parent()
+                      .buttonset()
+                      .next()
+                        .hide()
+                        .menu();
+              });
+              </script>
 <script type="text/javascript">
     drawPhylumStackChart();
     drawPhylumTable();

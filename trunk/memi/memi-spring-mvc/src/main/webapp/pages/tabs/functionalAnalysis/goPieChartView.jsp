@@ -1,9 +1,33 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div id="go-terms-pie">
     <div class="go-chart">
+        <div class="chart-block">
+         <div class="but_chart_export">
+         <button id="func-go-pie" style="display: none;"></button>
+         <button id="select">Export</button>
+         </div>
+
+         <ul class="export_list">
+         <li>Biological process</li>
+         <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('func_chart_pie_go_bp')), menu.hide;">Save PNG Image</a></li><li> <a onclick="toImg(document.getElementById('func_chart_pie_go_bp'), document.getElementById('img_div')), menu.hide;">Snapshot</a></li>
+         <li>---------------------------</li>
+         <li>Molecular function</li>
+         <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('func_chart_pie_go_mf')), menu.hide;">Save PNG Image</a></li><li> <a onclick="toImg(document.getElementById('func_chart_pie_go_mf'), document.getElementById('img_div')), menu.hide;">Snapshot</a></li>
+         <li>---------------------------</li>
+         <li>Cellular component</li>
+         <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('func_chart_pie_go_cc')), menu.hide;">Save PNG Image</a></li><li> <a onclick="toImg(document.getElementById('func_chart_pie_go_cc'), document.getElementById('img_div')), menu.hide;">Snapshot</a></li>
+         </ul>
+
         <div id="func_chart_pie_go_bp"></div>
+        </div>
+        <div class="chart-block">
+
         <div id="func_chart_pie_go_mf"></div>
+        </div>
+        <div class="chart-block">
+
         <div id="func_chart_pie_go_cc"></div>
+        </div>
     </div>
 </div>
 <script type="text/javascript">
@@ -82,4 +106,32 @@
         var pieChart = new google.visualization.PieChart(document.getElementById('func_chart_pie_go_cc'));
         pieChart.draw(sortedCellularComponentGOTerms, options);
     }
+</script>
+<script>
+     $(function() {
+       $( "#func-go-pie" )
+         .next()
+           .button({
+             text: true,
+             icons: {
+             secondary: "ui-icon-triangle-1-s"
+             }
+           })
+           .click(function() {
+             var menu = $( this ).parent().next().show().position({
+               my: "left top",
+               at: "left bottom",
+               of: this
+             });
+             $( document ).one( "click", function() {
+               menu.hide();
+             });
+             return false;
+           })
+           .parent()
+             .buttonset()
+             .next()
+               .hide()
+               .menu();
+     });
 </script>

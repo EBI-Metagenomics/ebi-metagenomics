@@ -1,9 +1,24 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div id="tax-bar">
     <div class="chart_container">
+        <div class="chart-block">
         <div id="tax_chart_bar_dom"></div>
-        <div id="tax_chart_bar_phy"></div>
+        </div>
+        <div class="chart-block">
+          <div class="but_chart_export">
+          <button id="taxbar" style="display: none;"></button>
+          <button id="select">Export</button>
+          </div>
 
+          <ul class="export_list">
+          <li>Domain composition</li>
+          <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('tax_chart_bar_dom')), menu.hide;">Save PNG Image</a></li><li> <a onclick="toImg(document.getElementById('tax_chart_bar_dom'), document.getElementById('img_div')), menu.hide;">Snapshot</a></li>
+          <li>---------------------------</li>
+          <li>Phylum composition</li>
+          <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('tax_chart_bar_phy')), menu.hide;">Save PNG Image</a></li><li> <a onclick="toImg(document.getElementById('tax_chart_bar_phy'), document.getElementById('img_div')), menu.hide;">Snapshot</a></li>
+          </ul>
+        <div id="tax_chart_bar_phy"></div>
+        </div>
         <div id="tax_dashboard_bar">
             <div id="tax_table_bar_filter"></div>
             <div id="tax_table_bar"></div>
@@ -13,7 +28,35 @@
 </div>
 <%--Globale page properties--%>
 <c:set var="phylumCompositionTitle" scope="request" value="Phylum composition (Total: ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator} OTUs)"/>
-
+<script>
+    var menu;
+              $(function() {
+                $( "#taxbar" )
+                  .next()
+                    .button({
+                      text: true,
+                      icons: {
+                      secondary: "ui-icon-triangle-1-s"
+                      }
+                    })
+                    .click(function() {
+                      var menu = $( this ).parent().next().show().position({
+                        my: "left top",
+                        at: "left bottom",
+                        of: this
+                      });
+                      $( document ).one( "click", function() {
+                        menu.hide();
+                      });
+                      return false;
+                    })
+                    .parent()
+                      .buttonset()
+                      .next()
+                        .hide()
+                        .menu();
+              });
+              </script>
 <script type="text/javascript">
     drawDomainCompositionBarChart();
     drawPhylumBarChart();

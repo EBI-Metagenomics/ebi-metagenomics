@@ -2,9 +2,24 @@
 <div id="tax-pie">
     <div class="chart_container">
         <div class="chart_container">
+            <div class="chart-block">
             <div id="tax_chart_pie_dom"></div>
-            <div id="tax_chart_pie_phy"></div>
+            </div>
+            <div class="chart-block">
+              <div class="but_chart_export">
+              <button id="taxpie" style="display: none;"></button>
+              <button id="select">Export</button>
+              </div>
 
+              <ul class="export_list">
+              <li>Domain composition</li>
+              <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('tax_chart_pie_dom'));">Save PNG Image</a></li><li> <a onclick="toImg(document.getElementById('tax_chart_pie_dom'), document.getElementById('img_div'));">Snapshot</a></li>
+              <li>---------------------------</li>
+              <li>Phylum composition</li>
+              <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('tax_chart_pie_phy'));">Save PNG Image</a></li><li> <a onclick="toImg(document.getElementById('tax_chart_pie_phy'), document.getElementById('img_div'));">Snapshot</a></li>
+              </ul>
+            <div id="tax_chart_pie_phy"></div>
+            </div>
             <div id="tax_dashboard">
             <div id="tax_table_filter"></div>
             <div id="tax_table_pie"></div>
@@ -17,7 +32,35 @@
 
 <%--Globale page properties--%>
 <c:set var="phylumCompositionTitle" scope="request" value="Phylum composition (Total: ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator} OTUs)"/>
+<script>
+              $(function() {
 
+                $( "#taxpie" )
+                  .next()
+                    .button({
+                      text: true,
+                      icons: {
+                      secondary: "ui-icon-triangle-1-s"
+                      }
+                    })
+                    .click(function() {
+                      var menu = $( this ).parent().next().show().position({
+                        my: "left top",
+                        at: "left bottom",
+                        of: this
+                      });
+                      $( document ).one( "click", function() {
+                        menu.hide();
+                      });
+                      return false;
+                    })
+                    .parent()
+                      .buttonset()
+                      .next()
+                        .hide()
+                        .menu();
+              });
+              </script>
 <script type="text/javascript">
     drawDomainCompositionPieChartView();
     drawPhylumPieChart();
