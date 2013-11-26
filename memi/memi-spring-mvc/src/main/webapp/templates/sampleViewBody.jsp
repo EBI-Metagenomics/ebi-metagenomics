@@ -9,6 +9,8 @@
     <h2 class="fl_uppercase_title">${model.sample.sampleName}</h2>
     </div>
 
+        <div id="img_div" style="position: fixed; top: 9px; right: 38px; z-index: 10; "></div><%--container used to convert   google chart into image--%>
+
         <div class="sample_ana">
         <div id="navtabs">
 
@@ -86,3 +88,51 @@
 
 </div>  <%--end sample_ana--%>
 <div class="but_top"><a href="#top" title="back to the top page">Top</a></div>
+<!-- Script needed to convert Google chart images into Canvas/image elements-->
+<script type="text/javascript">
+
+    function getImgData(chartContainer) {
+//        extract the svg code for the chart you want to serialize (assuming chartContainer points to the html element containing the chart):
+         var chartArea = chartContainer.getElementsByTagName('svg')[0].parentNode;
+         var svg = chartArea.innerHTML;
+         var doc = chartContainer.ownerDocument;
+//        create a canvas element and position it offscreen for the user not to see it
+        var canvas = doc.createElement('canvas');
+         canvas.setAttribute('width', chartArea.offsetWidth);
+         canvas.setAttribute('height', chartArea.offsetHeight);
+         canvas.setAttribute(
+             'style',
+             'position: absolute; ' +
+             'top: ' + (-chartArea.offsetHeight * 2) + 'px;' +
+             'left: ' + (-chartArea.offsetWidth * 2) + 'px;');
+         doc.body.appendChild(canvas);
+//        transform the svg instructions into a canvas
+         canvg(canvas, svg);
+//        extract the image data (as a base64 encoded string
+         var imgData = canvas.toDataURL('image/png');
+         canvas.parentNode.removeChild(canvas);
+         return imgData;
+       }
+
+       function saveAsImg(chartContainer) {
+         var imgData = getImgData(chartContainer);
+
+         // Download image - Replacing the mime-type will force the browser to trigger a download rather than displaying the image in the browser window.
+         window.location = imgData.replace('image/png', 'image/octet-stream');
+       }
+
+       function toImg(chartContainer, imgContainer) {
+         var doc = chartContainer.ownerDocument;
+         var img = doc.createElement('img');
+         img.src = getImgData(chartContainer);
+
+         while (imgContainer.firstChild) {
+           imgContainer.removeChild(imgContainer.firstChild);
+         }
+         imgContainer.appendChild(img);
+       }
+
+</script>
+
+<script type="text/javascript" src="http://canvg.googlecode.com/svn/trunk/rgbcolor.js"></script>
+<script type="text/javascript" src="http://canvg.googlecode.com/svn/trunk/canvg.js"></script>

@@ -84,9 +84,12 @@
     <!--[if lt IE 9]>
     <style type="text/css"> .krona_chart {display: none;}</style>
     <style type="text/css"> #ie_krona {display: block;}</style>
-    <![endif]--> <%-- Add a message to the Krona tab for IE users (lower version than IE9) as Krona is not working for IE8, IE7, IE6--%>
+    <style type="text/css">.but_chart_export {display: none;}</style>
+    <![endif]--> <%-- Add a message to the Krona tab for IE users (lower version than IE9)+ remove the export button as Krona and export to img function is not working for IE8, IE7, IE6--%>
 
-
+    <!--[if gte IE 9]>
+    <style type="text/css">.chart_exp_png {display: none;}</style>
+    <![endif]-->  <%-- remove the save img as PNG option for  IE9 IE10--%>
 
     <!-- JQuery and JQuery UI source-->
     <script src="${pageContext.request.contextPath}/js/jquery-1.4.4.min.js" type="text/javascript"></script>
@@ -108,7 +111,7 @@
     <script src="${pageContext.request.contextPath}/js/tweet/jquery.tweet.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/js/tweet/tweet.instance.js" type="text/javascript"></script>
 
-    <!--[if lt IE 9]><%-- HTML5 tags working in IE8 by including this JavaScript in the head  --%>
+    <!--[if lt IE 9]>
 <script type="text/javascript">
     document.createElement('header');
     document.createElement('hgroup');
@@ -121,7 +124,7 @@
     document.createElement('figure');
     document.createElement('figcaption');
 </script>
-    <![endif]-->
+    <![endif]-->  <%-- HTML5 tags working in IE8 by including this JavaScript in the head  --%>
 
     <%-- simple script for alternate row in a table color was #EFF1F1 originally--%>
     <script>
@@ -197,7 +200,6 @@
 <c:set var="baseURL" value="" scope="session"/>
 
 <body class="<tiles:getAsString name='bodyClass'/>" id="top"  <%--onload="loaded()" onload="initialize()"--%>>
-
 
 <%-- EBI-Interpro main header - exactly same as Interpro header--%>
 <div class="headerdiv" id="headerdiv">
