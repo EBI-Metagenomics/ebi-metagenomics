@@ -115,7 +115,7 @@
                                                                   </div>
 
                                                                   <ul class="export_list">
-                                                                  <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('func_chart_pie_ipro')), menu.hide;">Save PNG Image</a></li><li> <a onclick="toImg(document.getElementById('func_chart_pie_ipro'), document.getElementById('img_div')), menu.hide;">Snapshot</a></li>
+                                                                  <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('func_chart_pie_ipro'));">Save PNG Image</a></li><li> <a onclick="toImg(document.getElementById('func_chart_pie_ipro'), document.getElementById('img_div'));">Snapshot</a></li>
                                                                   </ul>
 
                                                                   <div id="func_chart_pie_ipro"></div>
