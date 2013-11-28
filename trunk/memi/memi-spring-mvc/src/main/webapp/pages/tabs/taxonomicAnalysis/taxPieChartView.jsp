@@ -1,29 +1,43 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <div id="tax-pie">
     <div class="chart_container">
         <div class="chart_container">
             <div class="chart-block">
-            <div id="tax_chart_pie_dom"></div>
+                <div id="tax_chart_pie_dom"></div>
             </div>
             <div class="chart-block">
-              <div class="but_chart_export">
-              <button id="taxpie" style="display: none;"></button>
-              <button id="select">Export</button>
-              </div>
+                <div class="but_chart_export">
+                    <button id="taxpie" style="display: none;"></button>
+                    <button id="select">Export</button>
+                </div>
 
-              <ul class="export_list">
-              <li>Domain composition</li>
-              <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('tax_chart_pie_dom'));">Save PNG Image</a></li><li> <a onclick="toImg(document.getElementById('tax_chart_pie_dom'), document.getElementById('img_div'));">Snapshot</a></li>
-              <li>---------------------------</li>
-              <li>Phylum composition</li>
-              <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('tax_chart_pie_phy'));">Save PNG Image</a></li><li> <a onclick="toImg(document.getElementById('tax_chart_pie_phy'), document.getElementById('img_div'));">Snapshot</a></li>
-              </ul>
-            <div id="tax_chart_pie_phy"></div>
+                <ul class="export_list">
+                    <li>Domain composition</li>
+                    <%--<li class="chart_exp_png"><a download="abcd.cer" onclick="saveAsImg(document.getElementById('tax_chart_pie_dom'));">Save PNG Image</a></li><li> <a onclick="toImg(document.getElementById('tax_chart_pie_dom'), document.getElementById('img_div'));">Snapshot</a></li>--%>
+                    <li class="chart_exp_png">
+                        <a onclick="saveAsImg(document.getElementById('tax_chart_pie_dom'),'<spring:message code="file.name.tax.pie.chart.domain"/>');">Save
+                            PNG Image</a>
+                    </li>
+                    <li>
+                        <a onclick="toImg(document.getElementById('tax_chart_pie_dom'), document.getElementById('img_div'));">Snapshot</a>
+                    </li>
+                    <li>---------------------------</li>
+                    <li>Phylum composition</li>
+                    <li class="chart_exp_png"><a
+                            onclick="saveAsImg(document.getElementById('tax_chart_pie_phy'),'<spring:message code="file.name.tax.pie.chart.phylum"/>');">Save
+                        PNG Image</a></li>
+                    <li>
+                        <a onclick="toImg(document.getElementById('tax_chart_pie_phy'), document.getElementById('img_div'));">Snapshot</a>
+                    </li>
+                </ul>
+                <div id="tax_chart_pie_phy"></div>
             </div>
             <div id="tax_dashboard">
-            <div id="tax_table_filter"></div>
-            <div id="tax_table_pie"></div>
-            <%--<div id="table_div"></div>--%>
+                <div id="tax_table_filter"></div>
+                <div id="tax_table_pie"></div>
+                <%--<div id="table_div"></div>--%>
             </div>
 
         </div>
@@ -31,36 +45,38 @@
 </div>
 
 <%--Globale page properties--%>
-<c:set var="phylumCompositionTitle" scope="request" value="Phylum composition (Total: ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator} OTUs)"/>
+<c:set var="phylumCompositionTitle" scope="request"
+       value="Phylum composition (Total: ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator} OTUs)"/>
 <script>
-              $(function() {
+    $(function () {
 
-                $( "#taxpie" )
-                  .next()
-                    .button({
-                      text: true,
-                      icons: {
-                      secondary: "ui-icon-triangle-1-s"
-                      }
-                    })
-                    .click(function() {
-                      var menu = $( this ).parent().next().show().position({
-                        my: "left top",
-                        at: "left bottom",
-                        of: this
-                      });
-                      $( document ).one( "click", function() {
+        $("#taxpie")
+                .next()
+                .button({
+                    text:true,
+                    icons:{
+                        secondary:"ui-icon-triangle-1-s"
+                    }
+                })
+                .click(function () {
+                    var menu = $(this).parent().next().show().position({
+                        my:"left top",
+                        at:"left bottom",
+                        of:this
+                    });
+                    $(document).one("click", function () {
                         menu.hide();
-                      });
-                      return false;
-                    })
-                    .parent()
-                      .buttonset()
-                      .next()
-                        .hide()
-                        .menu();
-              });
-              </script>
+                    });
+                    return false;
+                })
+                .parent()
+                .buttonset()
+                .next()
+                .hide()
+                .menu();
+    });
+
+</script>
 <script type="text/javascript">
     drawDomainCompositionPieChartView();
     drawPhylumPieChart();
@@ -76,7 +92,7 @@
             ['${domainEntry.key}', ${domainEntry.value}]</c:forEach>
         ]);
         // taxonomy Pie chart domain
-        var options = {'title':'Domain composition', 'titleTextStyle':{fontSize:12}, 'fontName': '"Arial"', 'colors':[${model.taxonomyAnalysisResult.domainComposition.colorCode}], 'width':250, 'height':299,  'chartArea':{left:9, top:30, width:"100%", height:"80%"}, 'pieSliceBorderColor':'none', 'legend':{fontSize:10, alignment:'center', 'textStyle':{'fontSize':10}}, 'pieSliceTextStyle':{ bold:true, color:'white'}};
+        var options = {'title':'Domain composition', 'titleTextStyle':{fontSize:12}, 'fontName':'"Arial"', 'colors':[${model.taxonomyAnalysisResult.domainComposition.colorCode}], 'width':250, 'height':299, 'chartArea':{left:9, top:30, width:"100%", height:"80%"}, 'pieSliceBorderColor':'none', 'legend':{fontSize:10, alignment:'center', 'textStyle':{'fontSize':10}}, 'pieSliceTextStyle':{ bold:true, color:'white'}};
 
         var domainPieChart = new google.visualization.PieChart(document.getElementById('tax_chart_pie_dom'));
         domainPieChart.draw(domainBarChartPieChartData, options);
@@ -133,7 +149,7 @@
             ['<div title="${taxonomyData.phylum}" class="_cc" style="background-color: #${taxonomyData.colorCode};"></div> ${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}]</c:forEach>
         ]);
 
-        var options = {'title':'${phylumCompositionTitle}', 'titleTextStyle':{fontSize:12}, 'fontName': '"Arial"', 'colors':[${model.taxonomyAnalysisResult.colorCodeForPieChart}],
+        var options = {'title':'${phylumCompositionTitle}', 'titleTextStyle':{fontSize:12}, 'fontName':'"Arial"', 'colors':[${model.taxonomyAnalysisResult.colorCodeForPieChart}],
             //Krona style 'colors':['#d47f7f','#d1a575','#d4c97f','#99d47f','#7fd4a7','#7fc3d4','#7f8ad4','#a77fd4','#d47fd3','#d47faf','#ccc','#ccc','#ccc'],
             'width':274,
             'height':299,
@@ -141,7 +157,7 @@
             'legend':'none',
             'chartArea':{left:20, top:30, width:"84%", height:"100%"},
             'pieSliceBorderColor':'none',
- //          WITH CAPTION 'legend':{position:'right', fontSize:10}, 'chartArea':{left:10, top:30, width:"100%", height:"100%"},
+            //          WITH CAPTION 'legend':{position:'right', fontSize:10}, 'chartArea':{left:10, top:30, width:"100%", height:"100%"},
 //            'backgroundColor':'red',
             'sliceVisibilityThreshold':${model.taxonomyAnalysisResult.sliceVisibilityThresholdNumerator / model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator}
         };

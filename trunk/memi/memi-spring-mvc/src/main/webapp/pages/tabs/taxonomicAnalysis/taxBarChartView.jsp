@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <div id="tax-bar">
     <div class="chart_container">
         <div class="chart-block">
@@ -12,10 +13,10 @@
 
           <ul class="export_list">
           <li>Domain composition</li>
-          <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('tax_chart_bar_dom')), menu.hide;">Save PNG Image</a></li><li> <a onclick="toImg(document.getElementById('tax_chart_bar_dom'), document.getElementById('img_div')), menu.hide;">Snapshot</a></li>
+          <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('tax_chart_bar_dom'),'<spring:message code="file.name.tax.bar.chart.domain"/>'), menu.hide;">Save PNG Image</a></li><li> <a onclick="toImg(document.getElementById('tax_chart_bar_dom'), document.getElementById('img_div')), menu.hide;">Snapshot</a></li>
           <li>---------------------------</li>
           <li>Phylum composition</li>
-          <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('tax_chart_bar_phy')), menu.hide;">Save PNG Image</a></li><li> <a onclick="toImg(document.getElementById('tax_chart_bar_phy'), document.getElementById('img_div')), menu.hide;">Snapshot</a></li>
+          <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('tax_chart_bar_phy'),'<spring:message code="file.name.tax.bar.chart.phylum"/>'), menu.hide;">Save PNG Image</a></li><li> <a onclick="toImg(document.getElementById('tax_chart_bar_phy'), document.getElementById('img_div')), menu.hide;">Snapshot</a></li>
           </ul>
         <div id="tax_chart_bar_phy"></div>
         </div>
