@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <div id="tax-col">
     <div class="chart_container">
         <div class="chart-block">
@@ -9,7 +10,7 @@
           </div>
 
           <ul class="export_list">
-          <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('tax_chart_col')), menu.hide;">Save PNG Image</a></li><li> <a onclick="toImg(document.getElementById('tax_chart_col'), document.getElementById('img_div')), menu.hide;">Snapshot</a></li>
+          <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('tax_chart_col'),'<spring:message code="file.name.tax.col.chart.phylum"/>'), menu.hide;">Save PNG Image</a></li><li> <a onclick="toImg(document.getElementById('tax_chart_col'), document.getElementById('img_div')), menu.hide;">Snapshot</a></li>
           </ul>
         <div id="tax_chart_col"></div>
         </div>

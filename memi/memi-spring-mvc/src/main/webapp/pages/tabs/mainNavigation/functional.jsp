@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <script type='text/javascript'>
     //BEGIN code used to showroom the row number selection - TODO apply on the new table
 
@@ -115,7 +116,7 @@
                                                                   </div>
 
                                                                   <ul class="export_list">
-                                                                  <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('func_chart_pie_ipro'));">Save PNG Image</a></li><li> <a onclick="toImg(document.getElementById('func_chart_pie_ipro'), document.getElementById('img_div'));">Snapshot</a></li>
+                                                                  <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('func_chart_pie_ipro'),'<spring:message code="file.name.func.ip.pie.chart"/>');">Save PNG Image</a></li><li> <a onclick="toImg(document.getElementById('func_chart_pie_ipro'), document.getElementById('img_div'));">Snapshot</a></li>
                                                                   </ul>
 
                                                                   <div id="func_chart_pie_ipro"></div>

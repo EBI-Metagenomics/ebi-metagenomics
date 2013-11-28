@@ -39,7 +39,7 @@
         <property name="linkText" value="Processed reads with InterPro matches (FASTA)"/>
         <property name="order" value="4"/>
         <property name="linkTitle" value="Click to download reads with an InterPro match (FASTA)"/>
-        <property name="linkURL" value="/export?exportValue=readsWithMatches"/>
+        <property name="linkURL" value="/export?contentType=text&amp;exportValue=readsWithMatches"/>
     </bean>
 
     <bean id="readsWithoutInterProMatchesFile" autowire-candidate="false"
@@ -50,7 +50,7 @@
         <property name="linkText" value="Processed reads without InterPro match (FASTA)"/>
         <property name="order" value="5"/>
         <property name="linkTitle" value="Click to download reads with a predicted CDS but no InterPro match (FASTA)"/>
-        <property name="linkURL" value="/export?exportValue=readsWithoutMatches"/>
+        <property name="linkURL" value="/export?contentType=text&amp;exportValue=readsWithoutMatches"/>
     </bean>
 
     <bean id="predictedCDSFile" autowire-candidate="false"
@@ -87,7 +87,7 @@
         <property name="linkText" value="Reads encoding 5S rRNA (FASTA)"/>
         <property name="order" value="1"/>
         <property name="linkTitle" value="Click to download reads encoding 5S rRNA (FASTA)"/>
-        <property name="linkURL" value="/export?exportValue=5SrRNA"/>
+        <property name="linkURL" value="/export?contentType=text&amp;exportValue=5SrRNA"/>
     </bean>
 
     <bean id="rRNA16sFile" autowire-candidate="false"
@@ -98,7 +98,7 @@
         <property name="linkText" value="Reads encoding 16S rRNA (FASTA)"/>
         <property name="order" value="2"/>
         <property name="linkTitle" value="Click to download reads encoding 16S rRNA (FASTA)"/>
-        <property name="linkURL" value="/export?exportValue=16SrRNA"/>
+        <property name="linkURL" value="/export?contentType=text&amp;exportValue=16SrRNA"/>
     </bean>
 
     <bean id="rRNA23sFile" autowire-candidate="false"
@@ -109,7 +109,7 @@
         <property name="linkText" value="Reads encoding 23S rRNA (FASTA)"/>
         <property name="order" value="3"/>
         <property name="linkTitle" value="Click to download reads encoding 23S rRNA (FASTA)"/>
-        <property name="linkURL" value="/export?exportValue=23SrRNA"/>
+        <property name="linkURL" value="/export?contentType=text&amp;exportValue=23SrRNA"/>
     </bean>
 
     <bean id="otuBiomFile" autowire-candidate="false"
@@ -120,7 +120,7 @@
         <property name="linkText" value="OTUs and taxonomic assignments (BIOM)"/>
         <property name="order" value="4"/>
         <property name="linkTitle" value="Click to download the OTUs and taxonomic assignments (BIOM)"/>
-        <property name="linkURL" value="/export?exportValue=biom"/>
+        <property name="linkURL" value="/export?contentType=text&amp;exportValue=biom"/>
     </bean>
 
     <bean id="newickFile" autowire-candidate="false"
@@ -131,7 +131,7 @@
         <property name="linkText" value="Phylogenetic tree (Newick format)"/>
         <property name="order" value="5"/>
         <property name="linkTitle" value="Click to download the phylogenetic tree file (Newick format)"/>
-        <property name="linkURL" value="/export?exportValue=tree"/>
+        <property name="linkURL" value="/export?contentType=text&amp;exportValue=tree"/>
     </bean>
 
     <bean id="otuTsvFile" autowire-candidate="false"
@@ -143,7 +143,7 @@
         <property name="linkText" value="OTUs and taxonomic assignments (TSV)"/>
         <property name="order" value="6"/>
         <property name="linkTitle" value="Click to download the OTUs and taxonomic assignments (TSV)"/>
-        <property name="linkURL" value="/export?exportValue=taxa"/>
+        <property name="linkURL" value="/export?contentType=text&amp;exportValue=taxa"/>
     </bean>
 
     <bean id="kingdomCountsFile" autowire-candidate="false"

@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <div id="go-terms-bar">
     <div class="go-chart">
         <div class="chart-block">
@@ -10,13 +11,13 @@
 
              <ul class="export_list">
              <li>Biological process</li>
-             <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('func_chart_bar_go_bp')), menu.hide;">Save PNG Image</a></li><li> <a onclick="toImg(document.getElementById('func_chart_bar_go_bp'), document.getElementById('img_div')), menu.hide;">Snapshot</a></li>
+             <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('func_chart_bar_go_bp'),'<spring:message code="file.name.func.go.bar.chart.bp"/>'), menu.hide;">Save PNG Image</a></li><li> <a onclick="toImg(document.getElementById('func_chart_bar_go_bp'), document.getElementById('img_div')), menu.hide;">Snapshot</a></li>
              <li>---------------------------</li>
              <li>Molecular function</li>
-             <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('func_chart_bar_go_mf')), menu.hide;">Save PNG Image</a></li><li> <a onclick="toImg(document.getElementById('func_chart_bar_go_mf'), document.getElementById('img_div')), menu.hide;">Snapshot</a></li>
+             <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('func_chart_bar_go_mf'),'<spring:message code="file.name.func.go.bar.chart.mf"/>'), menu.hide;">Save PNG Image</a></li><li> <a onclick="toImg(document.getElementById('func_chart_bar_go_mf'), document.getElementById('img_div')), menu.hide;">Snapshot</a></li>
              <li>---------------------------</li>
              <li>Cellular component</li>
-             <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('func_chart_bar_go_cc')), menu.hide;">Save PNG Image</a></li><li> <a onclick="toImg(document.getElementById('func_chart_bar_go_cc'), document.getElementById('img_div')), menu.hide;">Snapshot</a></li>
+             <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('func_chart_bar_go_cc'),'<spring:message code="file.name.func.go.bar.chart.cc"/>'), menu.hide;">Save PNG Image</a></li><li> <a onclick="toImg(document.getElementById('func_chart_bar_go_cc'), document.getElementById('img_div')), menu.hide;">Snapshot</a></li>
              </ul>
         <div id="func_chart_bar_go_bp"></div>
         </div>

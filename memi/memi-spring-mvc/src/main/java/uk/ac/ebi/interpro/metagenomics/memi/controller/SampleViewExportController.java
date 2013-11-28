@@ -1,21 +1,21 @@
 package uk.ac.ebi.interpro.metagenomics.memi.controller;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import uk.ac.ebi.interpro.metagenomics.memi.core.tools.StreamCopyUtil;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgFile;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.services.FileObjectBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.DownloadableFileDefinition;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.FileDefinitionId;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.Locale;
 
 /**
@@ -73,9 +73,73 @@ public class SampleViewExportController extends AbstractSampleViewController {
                     File fileObject = FileObjectBuilder.createFileObject(emgFile, propertyContainer, fileDefinition);
                     openDownloadDialog(response, request, emgFile, fileDefinition.getDownloadName(), fileObject);
                 }
+            } else {//access denied
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.sendRedirect("/metagenomics/sample/" + sampleId + "/accessDenied");
             }
-        } else {//access denied
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+        } else {//sample not found
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            response.sendRedirect("/metagenomics/sample/" + sampleId + "/accessDenied");
+        }
+    }
+
+    @RequestMapping(value = '/' + SampleViewController.VIEW_NAME + "/{sampleId}/export", method = RequestMethod.POST)
+    public void doHandleSampleViewPostExports(@PathVariable final String sampleId,
+                                              @RequestBody String imageData,
+                                              final HttpServletResponse response) throws IOException {
+        Sample sample = sampleDAO.readByStringId(sampleId);
+        if (sample != null) {
+            log.debug("Checking accessibility before streaming Krona result charts...");
+            if (isAccessible(sample)) {
+                BufferedReader reader = new BufferedReader(new StringReader(imageData));
+                String line;
+                String dataUrl = "";
+                String fileName = "";
+                while ((line = reader.readLine()) != null) {
+                    int index = line.indexOf("=") + 1;
+                    if (index > 1 && line.length() > index) {
+                        if (line.startsWith("fileName=")) {
+                            fileName = line.substring(index);
+                        } else if (line.startsWith("dataUrl=")) {
+                            dataUrl = line.substring(index);
+                        }
+                    }
+                }
+                String encodingPrefix = "base64,";
+                int contentStartIndex = dataUrl.indexOf(encodingPrefix) + encodingPrefix.length();
+                byte[] imageDataByteArray = Base64.decodeBase64(dataUrl.substring(contentStartIndex));
+                InputStream is = new ByteArrayInputStream(imageDataByteArray);
+                response.setHeader("Content-Disposition", "attachment; filename=\"" + sample.getSampleId() + "_" + fileName + "\"");
+                response.setContentLength(imageDataByteArray.length);
+                response.setHeader("Accept-Ranges", "bytes");
+                response.setBufferSize(2048000);
+                //Get and set content size
+                response.setContentType("image/png;charset=UTF-8");
+                response.setStatus(HttpServletResponse.SC_OK);
+                response.setLocale(Locale.ENGLISH);
+                ServletOutputStream sot = null;
+                try {
+                    sot = response.getOutputStream();
+                    StreamCopyUtil.copy(is, sot);
+                    sot.flush();
+                } catch (IOException e) {
+                    log.error("Could not stream image to output stream!", e);
+                } finally {
+                    if (sot != null)
+                        try {
+                            sot.close();
+                        } catch (IOException e) {
+                            log.error("Could not close input stream correctly!", e);
+                        }
+                }
+            } else {//access denied
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.sendRedirect("/metagenomics/sample/" + sampleId + "/accessDenied");
+            }
+        } else
+
+        {//sample not found
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
             response.sendRedirect("/metagenomics/sample/" + sampleId + "/accessDenied");
         }
     }
