@@ -10,13 +10,13 @@
 
          <ul class="export_list">
          <li>Biological process</li>
-         <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('func_chart_pie_go_bp'),'<spring:message code="file.name.func.go.pie.chart.bp"/>'), menu.hide;">Save PNG Image</a></li><li> <a onclick="toImg(document.getElementById('func_chart_pie_go_bp'), document.getElementById('img_div')), menu.hide;">Snapshot</a></li>
+         <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('func_chart_pie_go_bp'),'<spring:message code="file.name.func.go.pie.chart.bp"/>'), menu.hide;">Save PNG Image</a></li><li class="chart_exp_snap"> <a onclick="toImg(document.getElementById('func_chart_pie_go_bp'), document.getElementById('img_div')), menu.hide;">Snapshot</a></li>
          <li>---------------------------</li>
          <li>Molecular function</li>
-         <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('func_chart_pie_go_mf'),'<spring:message code="file.name.func.go.pie.chart.mf"/>'), menu.hide;">Save PNG Image</a></li><li> <a onclick="toImg(document.getElementById('func_chart_pie_go_mf'), document.getElementById('img_div')), menu.hide;">Snapshot</a></li>
+         <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('func_chart_pie_go_mf'),'<spring:message code="file.name.func.go.pie.chart.mf"/>'), menu.hide;">Save PNG Image</a></li><li class="chart_exp_snap"> <a onclick="toImg(document.getElementById('func_chart_pie_go_mf'), document.getElementById('img_div')), menu.hide;">Snapshot</a></li>
          <li>---------------------------</li>
          <li>Cellular component</li>
-         <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('func_chart_pie_go_cc'),'<spring:message code="file.name.func.go.pie.chart.cc"/>'), menu.hide;">Save PNG Image</a></li><li> <a onclick="toImg(document.getElementById('func_chart_pie_go_cc'), document.getElementById('img_div')), menu.hide;">Snapshot</a></li>
+         <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('func_chart_pie_go_cc'),'<spring:message code="file.name.func.go.pie.chart.cc"/>'), menu.hide;">Save PNG Image</a></li><li class="chart_exp_snap"> <a onclick="toImg(document.getElementById('func_chart_pie_go_cc'), document.getElementById('img_div')), menu.hide;">Snapshot</a></li>
          </ul>
 
         <div id="func_chart_pie_go_bp"></div>
