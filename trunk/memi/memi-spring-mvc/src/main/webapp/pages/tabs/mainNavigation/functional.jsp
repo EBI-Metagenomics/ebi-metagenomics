@@ -123,6 +123,7 @@
                                                                   </ul>
 
                                                                   <div id="func_chart_pie_ipro"></div>
+                                                                  <div class="func_chart_caption"><div class="puce_chart"></div>Other matches</div>
                                                               </div>
 
                                          <%--BEGIN http://jsfiddle.net/SCjm8/1/--%>
@@ -139,7 +140,7 @@
                                                                 <div class="ico-download" id="toolbar_div" style="display:none;" ><a class="icon icon-functional"  data-icon="=" id="csv"  href="#" title=""></a></div>
                                                                  <%-- END Toolbar--%>
 
-                                                                <div class="func_chart_caption"><div class="puce_chart"></div>Other matches</div>
+
 
                                                                 <div id="func_dashboard">
                                                                     <div id="func_table_filter"></div>
