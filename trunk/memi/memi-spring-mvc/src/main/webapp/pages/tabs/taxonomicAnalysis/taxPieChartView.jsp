@@ -20,7 +20,7 @@
                         <a onclick="saveAsImg(document.getElementById('tax_chart_pie_dom'),'<spring:message code="file.name.tax.pie.chart.domain"/>');">Save
                             PNG Image</a>
                     </li>
-                    <li>
+                    <li class="chart_exp_snap">
                         <a onclick="toImg(document.getElementById('tax_chart_pie_dom'), document.getElementById('img_div'));">Snapshot</a>
                     </li>
                     <li>---------------------------</li>
@@ -28,7 +28,7 @@
                     <li class="chart_exp_png"><a
                             onclick="saveAsImg(document.getElementById('tax_chart_pie_phy'),'<spring:message code="file.name.tax.pie.chart.phylum"/>');">Save
                         PNG Image</a></li>
-                    <li>
+                    <li class="chart_exp_snap">
                         <a onclick="toImg(document.getElementById('tax_chart_pie_phy'), document.getElementById('img_div'));">Snapshot</a>
                     </li>
                 </ul>
