@@ -91,7 +91,10 @@
                         <div class="msg_error">Analysis in progress.</div>
                     </c:when>
                     <c:when test="${not empty model.sample.analysisCompleted && !model.analysisStatus.functionalAnalysisTab.interProMatchSectionDisabled}">
-                        <div id="interpro-chart">
+
+
+                        <%--JQuery tabs DIV and UL definition for the InterPro match summary section--%>
+                        <%--<div id="interpro-chart">--%>
 
                                 <%--Tabs--%>
                             <%--<ul>--%>
@@ -159,10 +162,7 @@
 
                                                             </div>
 
-
                                                         </div>
-
-                        </div>
                     </c:when>
                     <c:otherwise>
                         <div class="msg_error">No InterPro match result files have been associated with this sample.
@@ -235,8 +235,9 @@
 <%--end div fragment functional--%>
 <script type="text/javascript">
 
-        // Functional analysis tab navigation
-        $("#interpro-chart").tabs();
+        //Ajax function for InterPro matches JQuery tabs
+        //$("#interpro-chart").tabs();
+        //Ajax function for GO annotation JQuery tabs (switch from pie to bar chart)
         //Ajax load approach as described here: http://jqueryui.com/tabs/#ajax
         $("#tabs-chart").tabs({
             ajaxOptions:{
