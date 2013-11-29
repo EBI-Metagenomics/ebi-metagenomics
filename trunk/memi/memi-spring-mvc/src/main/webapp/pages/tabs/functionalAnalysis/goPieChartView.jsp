@@ -109,30 +109,6 @@
     }
 </script>
 <script>
-     $(function() {
-       $( "#func-go-pie" )
-         .next()
-           .button({
-             text: true,
-             icons: {
-             secondary: "ui-icon-triangle-1-s"
-             }
-           })
-           .click(function() {
-             var menu = $( this ).parent().next().show().position({
-               my: "left top",
-               at: "left bottom",
-               of: this
-             });
-             $( document ).one( "click", function() {
-               menu.hide();
-             });
-             return false;
-           })
-           .parent()
-             .buttonset()
-             .next()
-               .hide()
-               .menu();
-     });
+    <%--You will find the method definition in the file sampleViewBody.jsp--%>
+    loadCssStyleForExportSelection('#func-go-pie');
 </script>

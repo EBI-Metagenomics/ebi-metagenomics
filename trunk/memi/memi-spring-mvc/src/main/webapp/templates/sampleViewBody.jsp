@@ -122,56 +122,57 @@
     /**
      * Save image function for Google charts.
      *
-     * How does it work? Opens a download dialog.
+     * How does it work? Sends a POST request to the server with the dataURL and the filename and the server creates an HTTP response with opens a download dialog.
      **/
     function saveAsImg(chartContainer, fileName) {
-//        var dataUrl = getImgData(chartContainer);
-//        window.location = dataUrl.replace('image/png', 'image/octet-stream');
-
         var dataUrl = getImgData(chartContainer);
         var form = $('<form/>', {
             action:"<c:url value="${baseURL}/sample/${model.sample.sampleId}/export"/>",
-//            command:'imageData',
             method:'POST',
             enctype:'text/plain',
             css:{ display:'none' }
-//            html: $('<input/>', {name: 'dataUrl', value: dataUrl}),
-//            html:$('<input/>', {name:'fileName', value:fileName})
-
         });
         form.append($('<input/>', {name:'fileName', value:fileName}));
         form.append($('<input/>', {name:'dataUrl', value:dataUrl}));
         $('body').append(form);
         form.submit();
-
-        <%--The ajax post request didn't work unfortunately--%>
-    <%--$.ajax({--%>
-    <%--url:"<c:url value="${baseURL}/sample/${model.sample.sampleId}/canvas"/>",--%>
-    <%--type:"GET",--%>
-    <%--data:{dataUrl:"test"},--%>
-    <%--dataType:"text",--%>
-    <%--success: function(data, textStatus, jqXHR)--%>
-    <%--{--%>
-    <%--//data - response from server--%>
-    <%--}--%>
-    <%--//            contentType (default: 'application/x-www-form-urlencoded; charset=UTF-8')--%>
-    <%--});--%>
     }
 
     //Creates a snapshot of a Google chart
     function toImg(chartContainer, imgContainer) {
         window.open(getImgData(chartContainer), '_blank');
-
-//        var doc = chartContainer.ownerDocument;
-//        var img = doc.createElement('img');
-//        img.src = getImgData(chartContainer);
-//
-//        while (imgContainer.firstChild) {
-//            imgContainer.removeChild(imgContainer.firstChild);
-//        }
-//        imgContainer.appendChild(img);
     }
 
+    <%--This method is widely used on the sample page--%>
+    <%--Looks like this method only sets CSS styling--%>
+    function loadCssStyleForExportSelection(elementIdentifier) {
+        $(function () {
+            $(elementIdentifier)
+                    .next()
+                    .button({
+                        text:true,
+                        icons:{
+                            secondary:"ui-icon-triangle-1-s"
+                        }
+                    })
+                    .click(function () {
+                        var menu = $(this).parent().next().show().position({
+                            my:"left top",
+                            at:"left bottom",
+                            of:this
+                        });
+                        $(document).one("click", function () {
+                            menu.hide();
+                        });
+                        return false;
+                    })
+                    .parent()
+                    .buttonset()
+                    .next()
+                    .hide()
+                    .menu();
+        });
+    }
 </script>
 
 <script type="text/javascript" src="http://canvg.googlecode.com/svn/trunk/rgbcolor.js"></script>

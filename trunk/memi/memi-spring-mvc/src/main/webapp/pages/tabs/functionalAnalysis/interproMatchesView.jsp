@@ -1,7 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
-
 <script type="text/javascript">
     drawInterProMatchesTable();
     drawInterProMatchesPieChart();
@@ -19,10 +17,10 @@
         interProMatchesData.addColumn('number', 'pCDS matched');
         interProMatchesData.addColumn('number', '%');
         interProMatchesData.addRows([
-                <c:set var="addComma" value="false"/><c:forEach var="entry" items="${model.functionalAnalysisResult.interProMatchesSection.interProEntryList}" varStatus="status"><c:choose><c:when test="${addComma}">,
-    </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>
-                ['<div title="${entry.entryDescription}" class="_cc" style="background-color:<c:choose><c:when test="${status.index>9}">#b9b9b9</c:when><c:otherwise>#<c:out value="${model.functionalAnalysisResult.interProMatchesSection.colorCodeList[status.index]}"/></c:otherwise></c:choose>;"></div> <a title="${entry.entryDescription}" href="http://www.ebi.ac.uk/interpro/entry/${entry.entryID}" >${entry.entryDescription}</a>', '${entry.entryID}', ${entry.numOfEntryHits}, <fmt:formatNumber type="number" maxFractionDigits="2" value="${entry.numOfEntryHits*100 / model.functionalAnalysisResult.interProMatchesSection.totalReadsCount}" />]</c:forEach>
-    ]);
+            <c:set var="addComma" value="false"/><c:forEach var="entry" items="${model.functionalAnalysisResult.interProMatchesSection.interProEntryList}" varStatus="status"><c:choose><c:when test="${addComma}">,
+            </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>
+            ['<div title="${entry.entryDescription}" class="_cc" style="background-color:<c:choose><c:when test="${status.index>9}">#b9b9b9</c:when><c:otherwise>#<c:out value="${model.functionalAnalysisResult.interProMatchesSection.colorCodeList[status.index]}"/></c:otherwise></c:choose>;"></div> <a title="${entry.entryDescription}" href="http://www.ebi.ac.uk/interpro/entry/${entry.entryID}" >${entry.entryDescription}</a>', '${entry.entryID}', ${entry.numOfEntryHits}, <fmt:formatNumber type="number" maxFractionDigits="2" value="${entry.numOfEntryHits*100 / model.functionalAnalysisResult.interProMatchesSection.totalReadsCount}" />]</c:forEach>
+        ]);
 
         // Define a StringFilter control for the 'Name'and 'ID' column
         var stringFilter = new google.visualization.ControlWrapper({
@@ -53,7 +51,7 @@
             {type:'csv', datasource:'https://spreadsheets.google.com/tq?key=0AgWotcbTSSjYdGF6NjE0WGxGRmV5djJDWEZ6RzZhT2c'},
             {type:'htmlcode', datasource:'https://spreadsheets.google.com/tq?key=0AgWotcbTSSjYdGF6NjE0WGxGRmV5djJDWEZ6RzZhT2c',
                 gadget:'https://www.google.com/ig/modules/pie-chart.xml'
-             }
+            }
         ];
 
         var container1 = document.getElementById('toolbar_div');
@@ -71,56 +69,32 @@
         data.addColumn('string', 'Entry name');
         data.addColumn('number', 'Hits');
         data.addRows([
-                <c:set var="addComma" value="false"/><c:forEach var="entry" items="${model.functionalAnalysisResult.interProMatchesSection.interProEntryList}" varStatus="status"><c:choose><c:when test="${addComma}">,
-    </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>
-                ['${entry.entryDescription}', ${entry.numOfEntryHits}]</c:forEach>
-    ]);
+            <c:set var="addComma" value="false"/><c:forEach var="entry" items="${model.functionalAnalysisResult.interProMatchesSection.interProEntryList}" varStatus="status"><c:choose><c:when test="${addComma}">,
+            </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>
+            ['${entry.entryDescription}', ${entry.numOfEntryHits}]</c:forEach>
+        ]);
 
         // Set chart options
-        var options = {title:'InterPro matches summary (Total: ${fn:length(model.functionalAnalysisResult.interProMatchesSection.interProEntryList)})', 'fontName': '"Arial"',
-               titleTextStyle:{fontSize:12},
-               width:310, // bigger width to let the info window display correctly
-               height:299,
-               colors:[ <c:set var="addComma" value="false"/><c:forEach var="entry" items="${model.functionalAnalysisResult.interProMatchesSection.interProEntryList}" varStatus="status"><c:choose><c:when test="${addComma}">, </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose><c:choose><c:when test="${status.index>9}">'#ccc'</c:when><c:otherwise>'<c:out value="${model.analysisResult.colorCodeList[status.index]}"/>'</c:otherwise></c:choose></c:forEach>],
+        var options = {title:'InterPro matches summary (Total: ${fn:length(model.functionalAnalysisResult.interProMatchesSection.interProEntryList)})', 'fontName':'"Arial"',
+            titleTextStyle:{fontSize:12},
+            width:310, // bigger width to let the info window display correctly
+            height:299,
+            colors:[ <c:set var="addComma" value="false"/><c:forEach var="entry" items="${model.functionalAnalysisResult.interProMatchesSection.interProEntryList}" varStatus="status"><c:choose><c:when test="${addComma}">, </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose><c:choose><c:when test="${status.index>9}">'#ccc'</c:when><c:otherwise>'<c:out value="${model.analysisResult.colorCodeList[status.index]}"/>'</c:otherwise></c:choose></c:forEach>],
 //               pieSliceText:'none',
-               legend:'none',
-               chartArea:{left:20, top:30, width:"74%", height:"100%"},
-               pieSliceBorderColor:'none',
+            legend:'none',
+            chartArea:{left:20, top:30, width:"74%", height:"100%"},
+            pieSliceBorderColor:'none',
 //             WITH CAPTION - legend:{position:'right', fontSize:10}, chartArea:{left:0, top:30, width:"42%", height:"100%"},
 //             'backgroundColor':'green',
-               'sliceVisibilityThreshold':${model.functionalAnalysisResult.interProMatchesSection.sliceVisibilityThresholdValue}
-           };
+            'sliceVisibilityThreshold':${model.functionalAnalysisResult.interProMatchesSection.sliceVisibilityThresholdValue}
+        };
 
-    // Instantiate and draw our chart, passing in some options.
-    var func_chart = new google.visualization.PieChart(document.getElementById('func_chart_pie_ipro'));
-    func_chart.draw(data, options);
+        // Instantiate and draw our chart, passing in some options.
+        var func_chart = new google.visualization.PieChart(document.getElementById('func_chart_pie_ipro'));
+        func_chart.draw(data, options);
     }
 </script>
-<script>
-              $(function() {
-                $( "#func-ip-pie" )
-                  .next()
-                    .button({
-                      text: true,
-                      icons: {
-                      secondary: "ui-icon-triangle-1-s"
-                      }
-                    })
-                    .click(function() {
-                      var menu = $( this ).parent().next().show().position({
-                        my: "left top",
-                        at: "left bottom",
-                        of: this
-                      });
-                      $( document ).one( "click", function() {
-                        menu.hide();
-                      });
-                      return false;
-                    })
-                    .parent()
-                      .buttonset()
-                      .next()
-                        .hide()
-                        .menu();
-              });
-              </script>
+<script type="text/javascript">
+    <%--You will find the method definition in the file sampleViewBody.jsp--%>
+    loadCssStyleForExportSelection('#func-ip-pie');
+</script>
