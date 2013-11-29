@@ -87,9 +87,10 @@
     <style type="text/css">.but_chart_export {display: none;}</style>
     <![endif]--> <%-- Add a message to the Krona tab for IE users (lower version than IE9)+ remove the export button as Krona and export to img function is not working for IE8, IE7, IE6--%>
 
-    <!--[if gte IE 9]>
-    <style type="text/css">.chart_exp_png {display: none;}</style>
-    <![endif]-->  <%-- remove the save img as PNG option for  IE9 IE10--%>
+    <!--[if IE]>
+    <style type="text/css">.chart_exp_snap {display: none;}</style>
+    <![endif]-->  <%-- remove the save img as PNG option for all IE--%>
+
 
     <!-- JQuery and JQuery UI source-->
     <script src="${pageContext.request.contextPath}/js/jquery-1.4.4.min.js" type="text/javascript"></script>
