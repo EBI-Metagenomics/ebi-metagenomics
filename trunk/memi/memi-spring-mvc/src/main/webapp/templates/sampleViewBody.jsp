@@ -141,6 +141,8 @@
     //Creates a snapshot of a Google chart
     function toImg(chartContainer, imgContainer) {
         window.open(getImgData(chartContainer), '_blank');
+
+
     }
 
     <%--This method is widely used on the sample page--%>
