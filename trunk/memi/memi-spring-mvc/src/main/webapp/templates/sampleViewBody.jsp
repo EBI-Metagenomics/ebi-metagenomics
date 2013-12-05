@@ -100,9 +100,14 @@
         var document = chartContainer.ownerDocument;
 //        create a canvas element and position it offscreen for the user not to see it
         var canvas = document.createElement('canvas');
-        canvas.setAttribute('width', chartArea.offsetWidth);
-        canvas.setAttribute('height', chartArea.offsetHeight);
-//        canvas.setAttribute('id', 'myCanvas');
+//        canvas.setAttribute('width', chartArea.offsetWidth);
+//        canvas.setAttribute('height', chartArea.offsetHeight);
+        // Get chart aspect ratio
+        var c_ar = chartArea.offsetHeight / chartArea.offsetWidth;
+        var newCanvasWidth = 2610;
+        // Set canvas size
+        canvas.setAttribute('width', newCanvasWidth);
+        canvas.setAttribute('height', newCanvasWidth * c_ar);
         canvas.setAttribute(
                 'style',
                 'position: absolute; ' +
@@ -112,20 +117,59 @@
 //        transform the svg instructions into a canvas
         //TODO: Where do I find the transformation function called 'canvg'?
         //Answer: Looks like it is in here: http://canvg.googlecode.com/svn/trunk/canvg.js
-        canvg(canvas, svg);
+
+        canvg(canvas, svg, {
+//            http://stackoverflow.com/questions/15642145/highcharts-and-canvg-scaling-issue
+            ignoreDimensions:true,
+            scaleWidth:canvas.getAttribute('width'),
+            scaleHeight:canvas.getAttribute('height')
+        });
         canvas.parentNode.removeChild(canvas);
         //extract the image data (as a base64 encoded string)
         // Download image - Replacing the mime-type will force the browser to trigger a download rather than displaying the image in the browser window.
         return canvas.toDataURL('image/png');
     }
 
-    /**
-     * Save image function for Google charts.
-     *
-     * How does it work? Sends a POST request to the server with the dataURL and the filename and the server creates an HTTP response with opens a download dialog.
-     **/
-    function saveAsImg(chartContainer, fileName) {
-        var dataUrl = getImgData(chartContainer);
+//    /**
+//     * Returns SVG element as String representation (extracted from the chart container).
+//     * @param chartContainer
+//     * @return {String}
+//     */
+    function getSVGDocumentAsString(chartContainer) {
+//        extract the svg code for the chart you want to serialize (assuming chartContainer points to the html element containing the chart):
+        var chartArea = chartContainer.getElementsByTagName('svg')[0].parentNode;
+        var svgDocumentAsString = chartArea.innerHTML;
+        return svgDocumentAsString;
+    }
+
+//    /**
+//     * Save image function for Google charts.
+//     *
+//     * How does it work? Sends a POST request to the server with the dataURL and the filename and the server creates an HTTP response with opens a download dialog.
+//     **/
+    <%--function saveAsImg(chartContainer, fileName) {--%>
+        <%--var dataUrl = getImgData(chartContainer);--%>
+        <%--var form = $('<form/>', {--%>
+            <%--action:"<c:url value="${baseURL}/sample/${model.sample.sampleId}/export"/>",--%>
+            <%--method:'POST',--%>
+            <%--enctype:'text/plain',--%>
+            <%--css:{ display:'none' }--%>
+        <%--});--%>
+        <%--form.append($('<input/>', {name:'fileName', value:fileName}));--%>
+        <%--form.append($('<input/>', {name:'dataUrl', value:dataUrl}));--%>
+        <%--$('body').append(form);--%>
+        <%--form.submit();--%>
+    <%--}--%>
+
+//    /**
+//     * Save Google chart as SVG function.
+//     *
+//     * How does it work? Sends a POST request to the server with the dataURL and the filename and the server creates an HTTP response with opens a download dialog.
+//     * @param chartContainer
+//     * @param fileName
+//     */
+    function saveAsSVG(chartContainer, fileName) {
+        var svgDocumentAsString = getSVGDocumentAsString(chartContainer);
         var form = $('<form/>', {
             action:"<c:url value="${baseURL}/sample/${model.sample.sampleId}/export"/>",
             method:'POST',
@@ -133,7 +177,7 @@
             css:{ display:'none' }
         });
         form.append($('<input/>', {name:'fileName', value:fileName}));
-        form.append($('<input/>', {name:'dataUrl', value:dataUrl}));
+        form.append($('<input/>', {name:'svgDocumentAsString', value:svgDocumentAsString}));
         $('body').append(form);
         form.submit();
     }

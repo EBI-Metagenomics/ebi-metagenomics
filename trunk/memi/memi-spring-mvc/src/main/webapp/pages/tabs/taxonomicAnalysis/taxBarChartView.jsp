@@ -13,10 +13,10 @@
 
           <ul class="export_list">
           <li>Domain composition</li>
-          <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('tax_chart_bar_dom'),'<spring:message code="file.name.tax.bar.chart.domain"/>');">Save PNG Image</a></li><li class="chart_exp_snap"><a onclick="toImg(document.getElementById('tax_chart_bar_dom'), document.getElementById('img_div'));">Snapshot</a></li>
+          <li class="chart_exp_png"><a onclick="saveAsSVG(document.getElementById('tax_chart_bar_dom'),'<spring:message code="file.name.tax.bar.chart.domain"/>');">Save as SVG</a></li><li class="chart_exp_snap"><a onclick="toImg(document.getElementById('tax_chart_bar_dom'), document.getElementById('img_div'));">Snapshot</a></li>
           <li>---------------------------</li>
           <li>Phylum composition</li>
-          <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('tax_chart_bar_phy'),'<spring:message code="file.name.tax.bar.chart.phylum"/>');">Save PNG Image</a></li><li class="chart_exp_snap"><a onclick="toImg(document.getElementById('tax_chart_bar_phy'), document.getElementById('img_div'));">Snapshot</a></li>
+          <li class="chart_exp_png"><a onclick="saveAsSVG(document.getElementById('tax_chart_bar_phy'),'<spring:message code="file.name.tax.bar.chart.phylum"/>');">Save as SVG</a></li><li class="chart_exp_snap"><a onclick="toImg(document.getElementById('tax_chart_bar_phy'), document.getElementById('img_div'));">Snapshot</a></li>
           </ul>
         <div id="tax_chart_bar_phy"></div>
         </div>

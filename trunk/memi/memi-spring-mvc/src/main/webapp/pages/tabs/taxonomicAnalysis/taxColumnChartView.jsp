@@ -10,7 +10,7 @@
           </div>
 
           <ul class="export_list">
-          <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('tax_chart_col'),'<spring:message code="file.name.tax.col.chart.phylum"/>');">Save PNG Image</a></li><li class="chart_exp_snap"> <a onclick="toImg(document.getElementById('tax_chart_col'), document.getElementById('img_div'));">Snapshot</a></li>
+          <li class="chart_exp_png"><a onclick="saveAsSVG(document.getElementById('tax_chart_col'),'<spring:message code="file.name.tax.col.chart.phylum"/>');">Save as SVG</a></li><li class="chart_exp_snap"> <a onclick="toImg(document.getElementById('tax_chart_col'), document.getElementById('img_div'));">Snapshot</a></li>
           </ul>
         <div id="tax_chart_col"></div>
         </div>
