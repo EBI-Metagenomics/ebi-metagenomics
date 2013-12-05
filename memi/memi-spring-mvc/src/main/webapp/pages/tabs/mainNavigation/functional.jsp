@@ -119,7 +119,7 @@
                                                                   </div>
 
                                                                   <ul class="export_list">
-                                                                  <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('func_chart_pie_ipro'),'<spring:message code="file.name.func.ip.pie.chart"/>');">Save PNG Image</a></li><li class="chart_exp_snap"> <a onclick="toImg(document.getElementById('func_chart_pie_ipro'), document.getElementById('img_div'));">Snapshot</a></li>
+                                                                  <li class="chart_exp_png"><a onclick="saveAsSVG(document.getElementById('func_chart_pie_ipro'),'<spring:message code="file.name.func.ip.pie.chart"/>');">Save as SVG</a></li><li class="chart_exp_snap"> <a onclick="toImg(document.getElementById('func_chart_pie_ipro'), document.getElementById('img_div'));">Snapshot</a></li>
                                                                   </ul>
 
                                                                   <div id="func_chart_pie_ipro"></div>
