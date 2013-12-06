@@ -11,17 +11,17 @@
 
              <ul class="export_list">
              <li>Biological process</li>
-             <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('func_chart_bar_go_bp'),'<spring:message code="file.name.func.go.bar.chart.bp.svg"/>');">Save as SVG</a></li>
+             <li class="chart_exp_png"><a onclick="saveAsSVG(document.getElementById('func_chart_bar_go_bp'),'<spring:message code="file.name.func.go.bar.chart.bp.svg"/>');">Save as SVG</a></li>
              <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('func_chart_bar_go_bp'),'<spring:message code="file.name.func.go.bar.chart.bp.png"/>');">Save as PNG</a></li>
              <li class="chart_exp_snap"> <a onclick="toImg(document.getElementById('func_chart_bar_go_bp'), document.getElementById('img_div'));">Snapshot</a></li>
              <li>---------------------------</li>
              <li>Molecular function</li>
-             <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('func_chart_bar_go_mf'),'<spring:message code="file.name.func.go.bar.chart.mf.svg"/>');">Save as SVG</a></li>
+             <li class="chart_exp_png"><a onclick="saveAsSVG(document.getElementById('func_chart_bar_go_mf'),'<spring:message code="file.name.func.go.bar.chart.mf.svg"/>');">Save as SVG</a></li>
              <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('func_chart_bar_go_mf'),'<spring:message code="file.name.func.go.bar.chart.mf.png"/>');">Save as PNG</a></li>
              <li class="chart_exp_snap"> <a onclick="toImg(document.getElementById('func_chart_bar_go_mf'), document.getElementById('img_div'));">Snapshot</a></li>
              <li>---------------------------</li>
              <li>Cellular component</li>
-             <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('func_chart_bar_go_cc'),'<spring:message code="file.name.func.go.bar.chart.cc.svg"/>');">Save as SVG</a></li>
+             <li class="chart_exp_png"><a onclick="saveAsSVG(document.getElementById('func_chart_bar_go_cc'),'<spring:message code="file.name.func.go.bar.chart.cc.svg"/>');">Save as SVG</a></li>
              <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('func_chart_bar_go_cc'),'<spring:message code="file.name.func.go.bar.chart.cc.png"/>');">Save as PNG</a></li>
              <li class="chart_exp_snap"> <a onclick="toImg(document.getElementById('func_chart_bar_go_cc'), document.getElementById('img_div'));">Snapshot</a></li>
              </ul>
