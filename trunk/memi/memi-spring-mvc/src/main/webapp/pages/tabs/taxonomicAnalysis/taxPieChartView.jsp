@@ -16,16 +16,15 @@
                 <ul class="export_list">
                     <li>Domain composition</li>
                     <%--<li class="chart_exp_png"><a download="abcd.cer" onclick="saveAsImg(document.getElementById('tax_chart_pie_dom'));">Save PNG Image</a></li><li> <a onclick="toImg(document.getElementById('tax_chart_pie_dom'), document.getElementById('img_div'));">Snapshot</a></li>--%>
-                    <li class="chart_exp_png">
-                        <a onclick="saveAsSVG(document.getElementById('tax_chart_pie_dom'),'<spring:message code="file.name.tax.pie.chart.domain"/>');">Save as SVG</a>
-                    </li>
+                    <li class="chart_exp_png"><a onclick="saveAsSVG(document.getElementById('tax_chart_pie_dom'),'<spring:message code="file.name.tax.pie.chart.domain.svg"/>');">Save as SVG</a></li>
+                    <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('tax_chart_pie_dom'),'<spring:message code="file.name.tax.pie.chart.domain.png"/>');">Save as PNG</a></li>
                     <li class="chart_exp_snap">
                         <a onclick="toImg(document.getElementById('tax_chart_pie_dom'), document.getElementById('img_div'));">Snapshot</a>
                     </li>
                     <li>---------------------------</li>
                     <li>Phylum composition</li>
-                    <li class="chart_exp_png"><a
-                            onclick="saveAsSVG(document.getElementById('tax_chart_pie_phy'),'<spring:message code="file.name.tax.pie.chart.phylum"/>');">Save as SVG</a></li>
+                    <li class="chart_exp_png"><a onclick="saveAsSVG(document.getElementById('tax_chart_pie_phy'),'<spring:message code="file.name.tax.pie.chart.phylum.svg"/>');">Save as SVG</a></li>
+                    <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('tax_chart_pie_phy'),'<spring:message code="file.name.tax.pie.chart.phylum.png"/>');">Save as PNG</a></li>
                     <li class="chart_exp_snap">
                         <a onclick="toImg(document.getElementById('tax_chart_pie_phy'), document.getElementById('img_div'));">Snapshot</a>
                     </li>
