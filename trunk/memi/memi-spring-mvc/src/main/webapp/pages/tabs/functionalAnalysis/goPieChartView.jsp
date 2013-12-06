@@ -10,13 +10,19 @@
 
          <ul class="export_list">
          <li>Biological process</li>
-         <li class="chart_exp_png"><a onclick="saveAsSVG(document.getElementById('func_chart_pie_go_bp'),'<spring:message code="file.name.func.go.pie.chart.bp"/>');">Save as SVG</a></li><li class="chart_exp_snap"> <a onclick="toImg(document.getElementById('func_chart_pie_go_bp'), document.getElementById('img_div'));">Snapshot</a></li>
+         <li class="chart_exp_png"><a onclick="saveAsSVG(document.getElementById('func_chart_pie_go_bp'),'<spring:message code="file.name.func.go.pie.chart.bp.svg"/>');">Save as SVG</a></li>
+         <li class="chart_exp_png"><a onclick="saveAsSVG(document.getElementById('func_chart_pie_go_bp'),'<spring:message code="file.name.func.go.pie.chart.bp.png"/>');">Save as PNG</a></li>
+         <li class="chart_exp_snap"> <a onclick="toImg(document.getElementById('func_chart_pie_go_bp'), document.getElementById('img_div'));">Snapshot</a></li>
          <li>---------------------------</li>
          <li>Molecular function</li>
-         <li class="chart_exp_png"><a onclick="saveAsSVG(document.getElementById('func_chart_pie_go_mf'),'<spring:message code="file.name.func.go.pie.chart.mf"/>');">Save as SVG</a></li><li class="chart_exp_snap"> <a onclick="toImg(document.getElementById('func_chart_pie_go_mf'), document.getElementById('img_div'));">Snapshot</a></li>
+         <li class="chart_exp_png"><a onclick="saveAsSVG(document.getElementById('func_chart_pie_go_mf'),'<spring:message code="file.name.func.go.pie.chart.mf.svg"/>');">Save as SVG</a></li>
+         <li class="chart_exp_png"><a onclick="saveAsSVG(document.getElementById('func_chart_pie_go_mf'),'<spring:message code="file.name.func.go.pie.chart.mf.png"/>');">Save as PNG</a></li>
+         <li class="chart_exp_snap"> <a onclick="toImg(document.getElementById('func_chart_pie_go_mf'), document.getElementById('img_div'));">Snapshot</a></li>
          <li>---------------------------</li>
          <li>Cellular component</li>
-         <li class="chart_exp_png"><a onclick="saveAsSVG(document.getElementById('func_chart_pie_go_cc'),'<spring:message code="file.name.func.go.pie.chart.cc"/>');">Save as SVG</a></li><li class="chart_exp_snap"> <a onclick="toImg(document.getElementById('func_chart_pie_go_cc'), document.getElementById('img_div'));">Snapshot</a></li>
+         <li class="chart_exp_png"><a onclick="saveAsSVG(document.getElementById('func_chart_pie_go_cc'),'<spring:message code="file.name.func.go.pie.chart.cc.svg"/>');">Save as SVG</a></li>
+         <li class="chart_exp_png"><a onclick="saveAsSVG(document.getElementById('func_chart_pie_go_cc'),'<spring:message code="file.name.func.go.pie.chart.cc.png"/>');">Save as PNG</a></li>
+         <li class="chart_exp_snap"> <a onclick="toImg(document.getElementById('func_chart_pie_go_cc'), document.getElementById('img_div'));">Snapshot</a></li>
          </ul>
 
         <div id="func_chart_pie_go_bp"></div>
