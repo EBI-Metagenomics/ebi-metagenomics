@@ -1,5 +1,6 @@
 package uk.ac.ebi.interpro.metagenomics.memi.controller;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
@@ -82,113 +83,72 @@ public class SampleViewExportController extends AbstractSampleViewController {
         }
     }
 
-//    @RequestMapping(value = '/' + SampleViewController.VIEW_NAME + "/{sampleId}/export", method = RequestMethod.POST)
-//    public void doHandleSampleViewPostExports(@PathVariable final String sampleId,
-//                                              @RequestBody String responseBody,
-//                                              final HttpServletResponse response) throws IOException {
-//        Sample sample = sampleDAO.readByStringId(sampleId);
-//        if (sample != null) {
-//            log.debug("Checking accessibility before streaming image data...");
-//            if (isAccessible(sample)) {
-//                BufferedReader reader = new BufferedReader(new StringReader(responseBody));
-//                String line;
-//                String dataUrl = "";
-//                String fileName = "";
-//                while ((line = reader.readLine()) != null) {
-//                    int index = line.indexOf("=") + 1;
-//                    if (index > 1 && line.length() > index) {
-//                        if (line.startsWith("fileName=")) {
-//                            fileName = line.substring(index);
-//                        } else if (line.startsWith("dataUrl=")) {
-//                            dataUrl = line.substring(index);
-//                        }
-//                    }
-//                }
-//                String encodingPrefix = "base64,";
-//                int contentStartIndex = dataUrl.indexOf(encodingPrefix) + encodingPrefix.length();
-//                byte[] imageDataByteArray = Base64.decodeBase64(dataUrl.substring(contentStartIndex));
-//                InputStream is = new ByteArrayInputStream(imageDataByteArray);
-//                response.setHeader("Content-Disposition", "attachment; filename=\"" + sample.getSampleId() + "_" + fileName + "\"");
-//                response.setContentLength(imageDataByteArray.length);
-//                response.setHeader("Accept-Ranges", "bytes");
-//                response.setBufferSize(2048000);
-//                //Get and set content size
-//                response.setContentType("image/png;charset=UTF-8");
-//                response.setStatus(HttpServletResponse.SC_OK);
-//                response.setLocale(Locale.ENGLISH);
-//                ServletOutputStream sot = null;
-//                try {
-//                    sot = response.getOutputStream();
-//                    StreamCopyUtil.copy(is, sot);
-//                    sot.flush();
-//                } catch (IOException e) {
-//                    log.error("Could not stream image to output stream!", e);
-//                } finally {
-//                    if (sot != null)
-//                        try {
-//                            sot.close();
-//                        } catch (IOException e) {
-//                            log.error("Could not close input stream correctly!", e);
-//                        }
-//                }
-//            } else {//access denied
-//                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-//                response.sendRedirect("/metagenomics/sample/" + sampleId + "/accessDenied");
-//            }
-//        } else
-//
-//        {//sample not found
-//            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-//            response.sendRedirect("/metagenomics/sample/" + sampleId + "/accessDenied");
-//        }
-//    }
-
+    /**
+     * @param sampleId
+     * @param requestBody The response body should contain 3 attributes (file type, file name and image or SVG document as plain text)
+     * @param response
+     * @throws IOException
+     */
     @RequestMapping(value = '/' + SampleViewController.VIEW_NAME + "/{sampleId}/export", method = RequestMethod.POST)
     public void doHandleSampleViewPostExports(@PathVariable final String sampleId,
-                                              @RequestBody String responseBody,
+                                              @RequestBody String requestBody,
                                               final HttpServletResponse response) throws IOException {
         Sample sample = sampleDAO.readByStringId(sampleId);
         if (sample != null) {
             log.debug("Checking accessibility before streaming SVG data...");
             if (isAccessible(sample)) {
-                BufferedReader reader = new BufferedReader(new StringReader(responseBody));
-                String line;
-                String svgDocument = "";
-                String fileName = "";
-                while ((line = reader.readLine()) != null) {
+                BufferedReader reader = new BufferedReader(new StringReader(requestBody));
+                //First of all get the first line from the request body and determine the file type (SVG or PNG)
+                String line = reader.readLine();
+                if (line != null) {
+                    //Parse out the file type
                     int index = line.indexOf("=") + 1;
-                    if (index > 1 && line.length() > index) {
-                        if (line.startsWith("fileName=")) {
-                            fileName = line.substring(index);
-                        } else if (line.startsWith("svgDocumentAsString=")) {
-                            svgDocument = line.substring(index);
+                    final String fileType = line.substring(index);
+
+                    String svgDocument = "";
+                    String dataUrl = "";
+                    String fileName = "";
+                    while ((line = reader.readLine()) != null) {
+                        index = line.indexOf("=") + 1;
+                        if (index > 1 && line.length() > index) {
+                            if (line.startsWith("fileName=")) {
+                                fileName = line.substring(index);
+                            } else if (line.startsWith("svgDocumentAsString=")) {
+                                svgDocument = line.substring(index);
+                            } else if (line.startsWith("dataUrl=")) {
+                                dataUrl = line.substring(index);
+                            }
                         }
                     }
-                }
-                svgDocument = svgDocument.replace("<svg ", "<svg xmlns=\"http://www.w3.org/2000/svg\" ");
-                InputStream is = new ByteArrayInputStream(svgDocument.getBytes());
-                response.setHeader("Content-Disposition", "attachment; filename=\"" + sample.getSampleId() + "_" + fileName + "\"");
-                response.setContentLength(svgDocument.length());
-                response.setHeader("Accept-Ranges", "bytes");
-                response.setBufferSize(2048000);
-                //Get and set content size
-                response.setContentType("image/png;charset=UTF-8");
-                response.setStatus(HttpServletResponse.SC_OK);
-                response.setLocale(Locale.ENGLISH);
-                ServletOutputStream sot = null;
-                try {
-                    sot = response.getOutputStream();
-                    StreamCopyUtil.copy(is, sot);
-                    sot.flush();
-                } catch (IOException e) {
-                    log.error("Could not stream image to output stream!", e);
-                } finally {
-                    if (sot != null)
-                        try {
-                            sot.close();
-                        } catch (IOException e) {
-                            log.error("Could not close input stream correctly!", e);
-                        }
+                    //Set HTTP response header attributes
+                    response.setHeader("Content-Disposition", "attachment; filename=\"" + sample.getSampleId() + "_" + fileName + "\"");
+                    response.setHeader("Accept-Ranges", "bytes");
+                    response.setBufferSize(2048000);
+                    response.setStatus(HttpServletResponse.SC_OK);
+                    response.setLocale(Locale.ENGLISH);
+
+                    if (fileType.equalsIgnoreCase("svg")) {
+                        svgDocument = svgDocument.replace("<svg ", "<svg xmlns=\"http://www.w3.org/2000/svg\" ");
+                        //Set HTTP response header attributes
+                        response.setContentLength(svgDocument.length());
+                        response.setContentType("image/svg+xml");
+
+                        InputStream is = new ByteArrayInputStream(svgDocument.getBytes());
+                        copyBytesToServletOutputStream(response, is);
+                    } else if (fileType.equalsIgnoreCase("png")) {
+                        String encodingPrefix = "base64,";
+                        int contentStartIndex = dataUrl.indexOf(encodingPrefix) + encodingPrefix.length();
+                        byte[] imageDataByteArray = Base64.decodeBase64(dataUrl.substring(contentStartIndex));
+                        //Set HTTP response header attributes
+                        response.setContentLength(imageDataByteArray.length);
+                        response.setContentType("image/png");
+
+                        InputStream is = new ByteArrayInputStream(imageDataByteArray);
+                        copyBytesToServletOutputStream(response, is);
+                    } else {
+                        //unknown file type
+                        log.warn("Unknown file type posted! Detected file type=" + fileType);
+                    }
                 }
             } else {//access denied
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -199,6 +159,24 @@ public class SampleViewExportController extends AbstractSampleViewController {
         {//sample not found
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
             response.sendRedirect("/metagenomics/sample/" + sampleId + "/accessDenied");
+        }
+    }
+
+    private void copyBytesToServletOutputStream(final HttpServletResponse response, InputStream is) {
+        ServletOutputStream sot = null;
+        try {
+            sot = response.getOutputStream();
+            StreamCopyUtil.copy(is, sot);
+            sot.flush();
+        } catch (IOException e) {
+            log.error("Could not stream image to output stream!", e);
+        } finally {
+            if (sot != null)
+                try {
+                    sot.close();
+                } catch (IOException e) {
+                    log.error("Could not close input stream correctly!", e);
+                }
         }
     }
 }
