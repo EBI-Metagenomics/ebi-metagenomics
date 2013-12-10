@@ -144,11 +144,11 @@ public class ViewStudiesController extends AbstractController implements IContro
                 fileContent.append(study.getLastMetadataReceived()).append(',');
                 fileContent.append(study.getStudyStatus()).append(',');
 
-                long npi = study.getNcbiProjectId();
-                if (npi == 0) {
+                Long ncbiProjectId = study.getNcbiProjectId();
+                if (ncbiProjectId == null) {
                     fileContent.append(',');
                 } else {
-                    fileContent.append(npi).append(',');
+                    fileContent.append(ncbiProjectId).append(',');
                 }
 
                 Date prd = study.getPublicReleaseDate();
