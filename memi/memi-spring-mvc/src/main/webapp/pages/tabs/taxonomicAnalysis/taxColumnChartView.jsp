@@ -4,16 +4,16 @@
 <div id="tax-col">
     <div class="chart_container">
         <div class="chart-block">
-          <div class="but_chart_export">
-          <button id="taxcolumn" style="display: none;"></button>
-          <button id="select">Export</button>
-          </div>
+          <%--<div class="but_chart_export">--%>
+          <%--<button id="taxcolumn" style="display: none;"></button>--%>
+          <%--<button id="select">Export</button>--%>
+          <%--</div>--%>
 
-          <ul class="export_list">
-          <li class="chart_exp_png"><a onclick="saveAsSVG(document.getElementById('tax_chart_col'),'<spring:message code="file.name.tax.col.chart.phylum.svg"/>');">Save as SVG</a></li>
-          <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('tax_chart_col'),'<spring:message code="file.name.tax.col.chart.phylum.png"/>');">Save as PNG</a></li>
-          <li class="chart_exp_snap"> <a onclick="toImg(document.getElementById('tax_chart_col'), document.getElementById('img_div'));">Snapshot</a></li>
-          </ul>
+          <%--<ul class="export_list">--%>
+          <%--<li class="chart_exp_png"><a onclick="saveAsSVG(document.getElementById('tax_chart_col'),'<spring:message code="file.name.tax.col.chart.phylum.svg"/>');">Save as SVG</a></li>--%>
+          <%--<li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('tax_chart_col'),'<spring:message code="file.name.tax.col.chart.phylum.png"/>');">Save as PNG</a></li>--%>
+          <%--<li class="chart_exp_snap"> <a onclick="toImg(document.getElementById('tax_chart_col'), document.getElementById('img_div'));">Snapshot</a></li>--%>
+          <%--</ul>--%>
         <div id="tax_chart_col"></div>
         </div>
 
@@ -28,10 +28,10 @@
 
 <%--Globale page properties--%>
 <c:set var="phylumCompositionTitle" scope="request" value="Phylum composition (Total: ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator} OTUs)"/>
-<script>
-    <%--You will find the method definition in the file sampleViewBody.jsp--%>
-    loadCssStyleForExportSelection('#taxcolumn');
-</script>
+<%--<script>--%>
+    <%--&lt;%&ndash;You will find the method definition in the file sampleViewBody.jsp&ndash;%&gt;--%>
+    <%--loadCssStyleForExportSelection('#taxcolumn');--%>
+<%--</script>--%>
 <script type="text/javascript">
     drawPhylumStackChart();
     drawPhylumTable();
