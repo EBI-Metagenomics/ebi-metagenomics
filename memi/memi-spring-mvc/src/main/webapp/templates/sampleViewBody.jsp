@@ -197,8 +197,8 @@
     function saveAsSVG(chartContainer, fileName) {
         var svgDocumentAsString = getSVGDocumentAsString(chartContainer);
         var form = $('<form/>', {
-            id:'svgExportForm' + counter,
-            name:'svgExportForm' + counter,
+            id:'svgExportForm',
+            name:'svgExportForm',
             action:"<c:url value="${baseURL}/sample/${model.sample.sampleId}/export"/>",
             method:'POST',
             enctype:'text/plain',
