@@ -65,17 +65,14 @@
                         error:function (xhr, status, index, anchor) {
                             $(anchor.hash).html("<div class='msg_error'>Couldn't load this tab. We'll try to fix this as soon as possible.</div>");
                         }
-                    }
-                });
-                //Default functionality
-                //Set the disable option
-                $("#navtabs").tabs({${model.analysisStatus.disabledOption}});
-                //Change the Hashtag on Select
-                //Described here: http://imdev.in/jquery-ui-tabs-with-hashtags/
-                $("#navtabs").tabs({
+                    },
+                    //Change the Hashtag on Select
+                    //Described here: http://imdev.in/jquery-ui-tabs-with-hashtags/
                     select:function (event, ui) {
                         window.location.hash = ui.tab.hash;
-                    }
+                    },
+                    //Set the disable option
+                    ${model.analysisStatus.disabledOption}
                 });
             });
             //  Load the Visualization API and the chart package.
@@ -156,11 +153,11 @@
         return canvas.toDataURL('image/png');
     }
 
-//    /**
-//     * Returns SVG element as String representation (extracted from the chart container).
-//     * @param chartContainer
-//     * @return {String}
-//     */
+    //    /**
+    //     * Returns SVG element as String representation (extracted from the chart container).
+    //     * @param chartContainer
+    //     * @return {String}
+    //     */
     function getSVGDocumentAsString(chartContainer) {
 //        extract the svg code for the chart you want to serialize (assuming chartContainer points to the html element containing the chart):
         var chartArea = chartContainer.getElementsByTagName('svg')[0].parentNode;
@@ -168,11 +165,11 @@
         return svgDocumentAsString;
     }
 
-//    /**
-//     * Save image function for Google charts.
-//     *
-//     * How does it work? Sends a POST request to the server with the dataURL and the filename and the server creates an HTTP response with opens a download dialog.
-//     **/
+    //    /**
+    //     * Save image function for Google charts.
+    //     *
+    //     * How does it work? Sends a POST request to the server with the dataURL and the filename and the server creates an HTTP response with opens a download dialog.
+    //     **/
     function saveAsImg(chartContainer, fileName) {
         var dataUrl = getImgData(chartContainer);
         var form = $('<form/>', {
@@ -190,18 +187,18 @@
         form.submit();
     }
 
-//    /**
-//     * Save Google chart as SVG function.
-//     *
-//     * How does it work? Sends a POST request to the server with the dataURL and the filename and the server creates an HTTP response with opens a download dialog.
-//     * @param chartContainer
-//     * @param fileName
-//     */
+    //    /**
+    //     * Save Google chart as SVG function.
+    //     *
+    //     * How does it work? Sends a POST request to the server with the dataURL and the filename and the server creates an HTTP response with opens a download dialog.
+    //     * @param chartContainer
+    //     * @param fileName
+    //     */
     function saveAsSVG(chartContainer, fileName) {
         var svgDocumentAsString = getSVGDocumentAsString(chartContainer);
         var form = $('<form/>', {
-            id:'svgExportForm',
-            name:'svgExportForm',
+            id:'svgExportForm' + counter,
+            name:'svgExportForm' + counter,
             action:"<c:url value="${baseURL}/sample/${model.sample.sampleId}/export"/>",
             method:'POST',
             enctype:'text/plain',
