@@ -31,10 +31,10 @@ public class SampleViewExportController extends AbstractSampleViewController {
     private final String[] exportRequestParamValues = new String[]{"biom", "taxa", "tree", "5SrRNA", "16SrRNA", "23SrRNA", "readsWithMatches", "readsWithoutMatches"};
 
     @RequestMapping(value = '/' + SampleViewController.VIEW_NAME + "/{sampleId}/export")
-    public void doHandleSampleViewExports(@PathVariable final String sampleId,
-                                          @RequestParam(required = false, value = "exportValue") final String exportValue,
-                                          final HttpServletResponse response,
-                                          final HttpServletRequest request) throws IOException {
+    public void doHandleSampleViewGetExports(@PathVariable final String sampleId,
+                                             @RequestParam(required = true, value = "exportValue") final String exportValue,
+                                             final HttpServletResponse response,
+                                             final HttpServletRequest request) throws IOException {
         response.setContentType("text/html;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_OK);
         response.setLocale(Locale.ENGLISH);

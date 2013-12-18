@@ -94,7 +94,7 @@
             ['${taxonomyData.phylum}', ${taxonomyData.numberOfHits}]</c:forEach>
         ]);
 // Taxonomy Bar - phylum
-        var options = {'title':'${phylumCompositionTitle}', 'titleTextStyle':{fontSize:12}, 'fontName': '"Arial"', 'colors':['#5f8694'], 'width':370, 'height':380, 'chartArea':{left:120, top:30, width:"60%", height:"70%"},'hAxis':{textStyle:{color:'#a8a8a8'}, gridlines:{count:4}}, 'pieSliceBorderColor':'none', 'legend':'none' };
+        var options = {'title':'${phylumCompositionTitle}', 'titleTextStyle':{fontSize:12}, 'fontName':'"Arial"', 'colors':['#5f8694'], 'width':370, 'height':380, 'chartArea':{left:120, top:30, width:"60%", height:"70%"}, 'hAxis':{textStyle:{color:'#a8a8a8'}, gridlines:{count:4}}, 'pieSliceBorderColor':'none', 'legend':'none' };
         var phylumBarChart = new google.visualization.BarChart(document.getElementById('tax_chart_bar_phy'));
         phylumBarChart.draw(phylumBarChartPieChartData, options);
     }
@@ -111,7 +111,7 @@
         ]);
 
 // Taxonomy Bar - domain
-        var options = {'title':'Domain composition', 'titleTextStyle':{fontSize:12}, 'fontName': '"Arial"', 'colors':['#5f8694'], 'width':212, 'height':140, 'chartArea':{left:70, top:30, width:"56%", height:"60%"},  'hAxis':{textStyle:{color:'#a8a8a8'}, gridlines:{count:3}}, 'vAxis':{textStyle:{fontSize:11}}, 'pieSliceBorderColor':'none', 'bar':{groupWidth:10}, 'legend':'none'};
+        var options = {'title':'Domain composition', 'titleTextStyle':{fontSize:12}, 'fontName':'"Arial"', 'colors':['#5f8694'], 'width':212, 'height':140, 'chartArea':{left:70, top:30, width:"56%", height:"60%"}, 'hAxis':{textStyle:{color:'#a8a8a8'}, gridlines:{count:3}}, 'vAxis':{textStyle:{fontSize:11}}, 'pieSliceBorderColor':'none', 'bar':{groupWidth:10}, 'legend':'none'};
 
         var domainBarChart = new google.visualization.BarChart(document.getElementById('tax_chart_bar_dom'));
         domainBarChart.draw(domainBarChartPieChartData, options);
