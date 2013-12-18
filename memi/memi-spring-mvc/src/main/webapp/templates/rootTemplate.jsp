@@ -87,9 +87,9 @@
     <style type="text/css">.but_chart_export {display: none;}</style>
     <![endif]--> <%-- Add a message to the Krona tab for IE users (lower version than IE9)+ remove the export button as Krona and export to img function is not working for IE8, IE7, IE6--%>
 
-    <!--[if IE]>
+
     <style type="text/css">.chart_exp_snap {display: none;}</style>
-    <![endif]-->  <%-- remove the save img as PNG option for all IE--%>
+    <%-- remove the snapshot option for all browsers - temp - to remove the snapshot option completely from the pages when we are sure about it--%>
 
 
     <!-- JQuery and JQuery UI source-->
@@ -193,6 +193,27 @@
             #mod4 {display: none;} /* remove the last item - jumping line - of the carousel when no javascript */
         </style>
     </noscript>
+
+
+    <%--<script type="text/javascript">--%>
+
+        <%--$("#local-masthead-container-btn").click(function(){--%>
+                <%--var json = JSON.parse($("#local-masthead-json-configuration").val());--%>
+                <%--$.ajax({--%>
+                    <%--type: 'POST',--%>
+                    <%--url:"http://wwwint.ebi.ac.uk/web/template-service/prod/templates/compliance/masthead/local/",--%>
+                    <%--data: '{"name":"jonas"}',--%>
+                    <%--success: function(data, textStatus, jqXHR){--%>
+                        <%--$("#local-masthead-container").html(data);--%>
+                    <%--},--%>
+                    <%--fail: function(){--%>
+                        <%--alert ("fuck")--%>
+                    <%--},--%>
+                    <%--dataType: "html"--%>
+                <%--});--%>
+            <%--});--%>
+    <%--</script>--%>
+
 </head>
 
 <%@ include file="scriptlets/_getActivePage.jsp" %>
@@ -205,13 +226,17 @@
 <%-- EBI-Interpro main header - exactly same as Interpro header--%>
 <div class="headerdiv" id="headerdiv">
   <div class="header">
-    <div id="global-masthead" class="masthead grid_24">
-      <!--This has to be one line and no newline characters-->
+      <%--<div id="global-masthead-container"></div>--%>
+      <%--<div id="local-masthead-container"></div>--%>
+
+
+      <div id="global-masthead" class="masthead grid_24">
+
 			<a href="//www.ebi.ac.uk/" title="Go to the EMBL-EBI homepage"><img src="//www.ebi.ac.uk/web_guidelines/images/logos/EMBL-EBI/EMBL_EBI_Logo_white.png" alt="EMBL European Bioinformatics Institute" /></a>
 
       <div class="nav">
 				<ul id="global-nav">
-          <!-- set active class as appropriate -->
+
           <li class="first active" id="services"><a href="//www.ebi.ac.uk/services">Services</a></li>
 					<li id="research"><a href="//www.ebi.ac.uk/research">Research</a></li>
 					<li id="training"><a href="//www.ebi.ac.uk/training">Training</a></li>
@@ -222,13 +247,8 @@
     </div>
 
     <div id="local-masthead" class="masthead grid_24">
-    <!-- local-title - logo only patterns, see http://frontier.ebi.ac.uk/web/style/patterns -->
+    <!-- local-title - logo only patterns, see http://www.ebi.ac.uk/web/style/patterns -->
     <div class="logo-title" id="local-title"> <h1 class="visuallyhidden">EBI metagenomics</h1> <a href="<c:url value="/"/>" title="Back to EBI metagenomics homepage"><img src="${pageContext.request.contextPath}/img/logo_metagenomics_white_web.png" alt="EBI metagenomics logo"></a> </div>
-    <!-- /local-title -->
-
-    <!-- alternative - just text-->
-    <%--<div class="grid_24 alpha omega" id="local-title"><h1>EBI metagenomics</h1></div>--%>
-    <!-- /alternative - just text-->
 
         <nav>
             <tiles:insertAttribute name="mainMenu"/>
@@ -255,6 +275,7 @@
     </div>
 
     <footer>
+    <%--<div id="global-footer-container"></div>--%>
        <tiles:insertAttribute name="footer"/>
     </footer>
 </div>
