@@ -76,7 +76,7 @@
                 });
             });
             //  Load the Visualization API and the chart package.
-            google.load('visualization', '1.1', {'packages':['corechart', 'table', 'controls'] });
+            google.load('visualization', '1', {'packages':['corechart', 'table', 'controls'] });
         </script>
 
     </c:when>
@@ -90,7 +90,7 @@
 <!-- Script needed to convert Google chart images into Canvas/image elements-->
 <script type="text/javascript">
 
-    function getImgData(chartContainer) {
+    function getImgData(chartContainer,dpiFactor) {
 //        extract the svg code for the chart you want to serialize (assuming chartContainer points to the html element containing the chart):
         var chartArea = chartContainer.getElementsByTagName('svg')[0].parentNode;
         var svg = chartArea.innerHTML;
@@ -101,7 +101,7 @@
 //        canvas.setAttribute('height', chartArea.offsetHeight);
         // Get chart aspect ratio
         var c_ar = chartArea.offsetHeight / chartArea.offsetWidth;
-        var newCanvasWidth = 2610;
+        var newCanvasWidth = chartArea.offsetWidth*dpiFactor;
         // Set canvas size
         canvas.setAttribute('width', newCanvasWidth);
         canvas.setAttribute('height', newCanvasWidth * c_ar);
@@ -170,8 +170,8 @@
     //     *
     //     * How does it work? Sends a POST request to the server with the dataURL and the filename and the server creates an HTTP response with opens a download dialog.
     //     **/
-    function saveAsImg(chartContainer, fileName) {
-        var dataUrl = getImgData(chartContainer);
+    function saveAsImg(chartContainer, fileName,dpiFactor) {
+        var dataUrl = getImgData(chartContainer,dpiFactor);
         var form = $('<form/>', {
             id:'pngExportForm',
             name:'pngExportForm',
