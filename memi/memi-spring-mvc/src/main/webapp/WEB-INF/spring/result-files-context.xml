@@ -19,7 +19,7 @@
         <constructor-arg>
             <list>
                 <ref bean="interProMatchesSummaryFile"/>
-                <ref bean="goSlimAnnotationFile"/>
+                <ref bean="fullGOAnnotationFile"/>
                 <ref bean="sequenceFeatureSummaryFile"/>
             </list>
         </constructor-arg>

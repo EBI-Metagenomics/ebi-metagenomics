@@ -181,7 +181,7 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
             if (doesExist) {
                 if (fileDefinition.getIdentifier().equalsIgnoreCase(FileDefinitionId.INTERPRO_MATCHES_SUMMARY_FILE.toString())) {
                     isInterProMatchSectionDisabled = false;
-                } else if (fileDefinition.getIdentifier().equalsIgnoreCase(FileDefinitionId.GO_SLIM_FILE.toString())) {
+                } else if (fileDefinition.getIdentifier().equalsIgnoreCase(FileDefinitionId.GO_COMPLETE_FILE.toString())) {
                     isGoSectionDisabled = false;
                 } else if (fileDefinition.getIdentifier().equalsIgnoreCase(FileDefinitionId.SEQUENCE_FEATURE_SUMMARY_FILE.toString())) {
                     isSequenceFeatureSectionDisabled = false;

@@ -16,7 +16,7 @@
             </c:when>
             <c:when test="${not empty model.sample.analysisCompleted && !model.analysisStatus.taxonomicAnalysisTabDisabled}">
                 <h3>Top taxonomy Hits</h3>
-
+              
                 <div id="tabs-taxchart">
                     <ul>
                         <li class="selector_tab">Switch view:</li>
@@ -63,8 +63,6 @@
     });
     //Default functionality
     $("#tabs-taxchart").tabs({${model.analysisStatus.taxonomicAnalysisTab.tabsOptions}});
-
-
 </script>
 
 <%--Remove the filter box for taxonomy table when the total number of phylum is less than 10--%>

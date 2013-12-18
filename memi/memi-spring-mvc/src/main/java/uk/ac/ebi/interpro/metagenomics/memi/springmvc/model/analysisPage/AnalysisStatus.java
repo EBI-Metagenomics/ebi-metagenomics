@@ -39,7 +39,8 @@ public class AnalysisStatus {
     }
 
     public boolean isFunctionalAnalysisTabDisabled() {
-        if (functionalAnalysisTab.isGoSectionDisabled() && functionalAnalysisTab.isInterProMatchSectionDisabled()) {
+        if (functionalAnalysisTab.isGoSectionDisabled() && functionalAnalysisTab.isInterProMatchSectionDisabled()
+                && functionalAnalysisTab.isSequenceFeatureSectionDisabled()) {
             return true;
         }
         return false;

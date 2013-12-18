@@ -1,5 +1,4 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <div id="tax-pie">
 
@@ -52,16 +51,25 @@
     drawPhylumTablePieChartView();
 
     function drawDomainCompositionPieChartView() {
-        var domainBarChartPieChartData = new google.visualization.DataTable();
-        domainBarChartPieChartData.addColumn('string', 'kingdom');
-        domainBarChartPieChartData.addColumn('number', 'Match');
-        domainBarChartPieChartData.addRows([
+        var domainBarChartPieChartData = google.visualization.arrayToDataTable([
+            ['kingdom', 'Match'],
             <c:set var="addComma" value="false"/><c:forEach var="domainEntry" items="${model.taxonomyAnalysisResult.domainComposition.domainMap}"><c:choose><c:when test="${addComma}">,
             </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>
             ['${domainEntry.key}', ${domainEntry.value}]</c:forEach>
         ]);
+
         // taxonomy Pie chart domain
-        var options = {'title':'Domain composition', 'titleTextStyle':{fontSize:12}, 'fontName':'"Arial"', 'colors':[${model.taxonomyAnalysisResult.domainComposition.colorCode}], 'width':250, 'height':299, 'chartArea':{left:9, top:30, width:"100%", height:"80%"}, 'pieSliceBorderColor':'none', 'legend':{fontSize:10, alignment:'center', 'textStyle':{'fontSize':10}}, 'pieSliceTextStyle':{ bold:true, color:'white'}};
+        var options = {
+            'title':'Domain composition',
+            'titleTextStyle':{fontSize:12},
+            'fontName':'"Arial"',
+            'colors':[${model.taxonomyAnalysisResult.domainComposition.colorCode}],
+            'width':250, 'height':299,
+            'chartArea':{left:9, top:30, width:"100%", height:"80%"},
+            'pieSliceBorderColor':'none',
+            'legend':{fontSize:10, alignment:'center', 'textStyle':{'fontSize':10}},
+            'pieSliceTextStyle':{ bold:true, color:'white'}
+        };
 
         var domainPieChart = new google.visualization.PieChart(document.getElementById('tax_chart_pie_dom'));
         domainPieChart.draw(domainBarChartPieChartData, options);
