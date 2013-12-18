@@ -128,7 +128,7 @@ public class SampleViewExportController extends AbstractSampleViewController {
                     response.setLocale(Locale.ENGLISH);
 
                     if (fileType.equalsIgnoreCase("svg")) {
-                        svgDocument = svgDocument.replace("<svg ", "<svg xmlns=\"http://www.w3.org/2000/svg\" ");
+//                        svgDocument = svgDocument.replace("<svg ", "<svg xmlns=\"http://www.w3.org/2000/svg\" ");
                         //Set HTTP response header attributes
                         response.setContentLength(svgDocument.length());
                         response.setContentType("image/svg+xml");
