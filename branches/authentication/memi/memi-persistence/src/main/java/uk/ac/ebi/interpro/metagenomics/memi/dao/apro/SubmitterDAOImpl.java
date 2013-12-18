@@ -1,0 +1,129 @@
+package uk.ac.ebi.interpro.metagenomics.memi.dao.apro;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
+import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
+
+import javax.annotation.Resource;
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
+/**
+ * Represents the implementation class of {@link SubmitterDAO}.
+ * The Repository annotation makes it a candidate for component-scanning.
+ * TODO: Associate with Hibernate (all methods still return mock-up objects)
+ *
+ * @author Maxim Scheremetjew, EMBL-EBI, InterPro
+ * @version $Id$
+ * @since 1.0-SNAPSHOT
+ */
+@Repository
+public class SubmitterDAOImpl implements SubmitterDAO {
+
+    private JdbcTemplate jdbcTemplate;
+
+    private final static Log log = LogFactory.getLog(SubmitterDAOImpl.class);
+
+    @Resource
+    public void setDataSource(DataSource dataSource) {
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
+    }
+
+    public SubmitterDAOImpl() {
+    }
+
+    /**
+     * Queries submitter by submitter ID.
+     *
+     * @param submitterId submitter ID.
+     * @return Submitter.
+     */
+    @Override
+    public Submitter getSubmitterById(long submitterId) {
+        if (submitterId == 0)
+            return null;
+        Submitter submitter = null;
+        try {
+            submitter = this.jdbcTemplate.queryForObject("SELECT submitterid, first_name, surname, password, email_address, country, address FROM " + Submitter.TABLE_NAME + " WHERE ACTIVE='Y' AND submitterid=?",
+                    new Object[]{submitterId}, new SubmitterRowMapper());
+
+        } catch (Exception e) {
+            log.warn("Could not perform database query. It might be that the JDBC connection could not build" +
+                    " or is wrong configured. For more info take a look at the stack trace!", e);
+        }
+        return submitter;
+    }
+
+    @Override
+    // TODO: Implement
+    public void deleteSubmitter(Submitter submitter) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public Submitter getSubmitterByEmailAddress(String emailAddress) {
+        if (emailAddress == null)
+            return null;
+        Submitter submitter = null;
+        try {
+            submitter = this.jdbcTemplate.queryForObject("SELECT submitterid, first_name, surname, password, email_address, country, address FROM " + Submitter.TABLE_NAME + " WHERE ACTIVE='Y' AND email_address=?",
+                    new Object[]{emailAddress.toUpperCase()}, new SubmitterRowMapper());
+
+        } catch (Exception e) {
+            log.warn("Could not perform database query. It might be that the JDBC connection could not build" +
+                    " or is wrong configured. For more info take a look at the stack trace!", e);
+        }
+        return submitter;
+    }
+
+    public boolean isDatabaseAlive() {
+        try {
+            Connection con = jdbcTemplate.getDataSource().getConnection();
+            return true;
+        } catch (SQLException e) {
+            log.error("Database is down! Could not perform any SQL query!", e);
+        }
+        return false;
+    }
+
+    @Override
+    public String getMasterPasswordByEmailAddress(String emailAddress) {
+        if (emailAddress == null)
+            return null;
+        try {
+            return this.jdbcTemplate.queryForObject("SELECT password FROM " + Submitter.TABLE_NAME + " WHERE ACTIVE='Y' AND email_address=?",
+                    new Object[]{emailAddress.toUpperCase()}, String.class);
+        } catch (Exception e) {
+            log.warn("Could not perform database query. It might be that the JDBC connection could not build" +
+                    " or is wrong configured. For more info take a look at the stack trace!", e);
+        }
+        return null;
+    }
+
+    @Override
+    // TODO: Implement
+    public List<Submitter> getSubmitters() {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    class SubmitterRowMapper implements RowMapper<Submitter> {
+
+        public Submitter mapRow(ResultSet rs, int rowNum) throws SQLException {
+            Submitter submitter = new Submitter();
+            submitter.setSubmitterId(Integer.parseInt(rs.getString("submitterid")));
+            submitter.setFirstName(rs.getString("first_name"));
+            submitter.setSurname(rs.getString("surname"));
+            submitter.setEmailAddress(rs.getString("email_address"));
+            submitter.setPassword(rs.getString("password"));
+            submitter.setCountry(rs.getString("country"));
+            submitter.setAddress(rs.getString("address"));
+            return submitter;
+        }
+    }
+}
