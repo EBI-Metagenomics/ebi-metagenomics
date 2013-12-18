@@ -6,22 +6,24 @@
         <div id="tax_chart_bar_dom"></div>
         </div>
         <div class="chart-block">
-          <%--<div class="but_chart_export">--%>
-          <%--<button id="taxbar" style="display: none;"></button>--%>
-          <%--<button id="select">Export</button>--%>
-          <%--</div>--%>
+          <div class="but_chart_export">
+          <button id="taxbar" style="display: none;"></button>
+          <button id="select">Export</button>
+          </div>
 
-          <%--<ul class="export_list">--%>
-          <%--<li>Domain composition</li>--%>
-          <%--<li class="chart_exp_png"><a onclick="saveAsSVG(document.getElementById('tax_chart_bar_dom'),'<spring:message code="file.name.tax.bar.chart.domain.svg"/>');">Save as SVG</a></li>--%>
-          <%--<li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('tax_chart_bar_dom'),'<spring:message code="file.name.tax.bar.chart.domain.png"/>');">Save as PNG</a></li>--%>
-          <%--<li class="chart_exp_snap"><a onclick="toImg(document.getElementById('tax_chart_bar_dom'), document.getElementById('img_div'));">Snapshot</a></li>--%>
-          <%--<li>---------------------------</li>--%>
-          <%--<li>Phylum composition</li>--%>
-          <%--<li class="chart_exp_png"><a onclick="saveAsSVG(document.getElementById('tax_chart_bar_phy'),'<spring:message code="file.name.tax.bar.chart.phylum.svg"/>');">Save as SVG</a></li>--%>
-          <%--<li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('tax_chart_bar_phy'),'<spring:message code="file.name.tax.bar.chart.phylum.png"/>');">Save as PNG</a></li>--%>
-              <%--<li class="chart_exp_snap"><a onclick="toImg(document.getElementById('tax_chart_bar_phy'), document.getElementById('img_div'));">Snapshot</a></li>--%>
-          <%--</ul>--%>
+          <ul class="export_list">
+          <li>Domain composition</li>
+          <li class="chart_exp_snap"><a onclick="toImg(document.getElementById('tax_chart_bar_dom'), document.getElementById('img_div'));">Snapshot</a></li>
+          <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('tax_chart_bar_dom'),'<spring:message code="file.name.tax.bar.chart.domain.png"/>',1);">PNG</a></li>
+          <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('tax_chart_bar_dom'),'<spring:message code="file.name.tax.bar.chart.domain.high.png"/>',300/72);">PNG (Higher quality)</a></li>
+          <li class="chart_exp_png"><a onclick="saveAsSVG(document.getElementById('tax_chart_bar_dom'),'<spring:message code="file.name.tax.bar.chart.domain.svg"/>');">SVG</a></li>
+          <li>---------------------------</li>
+          <li>Phylum composition</li>
+          <li class="chart_exp_snap"><a onclick="toImg(document.getElementById('tax_chart_bar_phy'), document.getElementById('img_div'));">Snapshot</a></li>
+          <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('tax_chart_bar_phy'),'<spring:message code="file.name.tax.bar.chart.phylum.png"/>',1);">PNG</a></li>
+          <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('tax_chart_bar_phy'),'<spring:message code="file.name.tax.bar.chart.phylum.high.png"/>',300/72);">PNG (Higher quality)</a></li>
+          <li class="chart_exp_png"><a onclick="saveAsSVG(document.getElementById('tax_chart_bar_phy'),'<spring:message code="file.name.tax.bar.chart.phylum.svg"/>');">SVG</a></li>
+          </ul>
         <div id="tax_chart_bar_phy"></div>
         </div>
         <div id="tax_dashboard_bar">
@@ -33,10 +35,10 @@
 </div>
 <%--Globale page properties--%>
 <c:set var="phylumCompositionTitle" scope="request" value="Phylum composition (Total: ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator} OTUs)"/>
-<%--<script>--%>
-    <%--&lt;%&ndash;You will find the method definition in the file sampleViewBody.jsp&ndash;%&gt;--%>
-    <%--loadCssStyleForExportSelection('#taxbar');--%>
-<%--</script>--%>
+<script>
+    <%--You will find the method definition in the file sampleViewBody.jsp--%>
+    loadCssStyleForExportSelection('#taxbar');
+</script>
 <script type="text/javascript">
     drawDomainCompositionBarChart();
     drawPhylumBarChart();
