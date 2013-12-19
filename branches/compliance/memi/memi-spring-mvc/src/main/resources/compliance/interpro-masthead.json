@@ -1,0 +1,99 @@
+{   "globalTemplate": {
+        "title": "This title has to change for each page &lt; EBI metagenomics &lt; EMBL-EBI ",
+        "javascriptList": [
+            {"url": "https://www.ebi.ac.uk/metagenomics/js/jquery.validate-1.9.js","url":"https://www.ebi.ac.uk/metagenomics/js/jquery.form-2.85.js","url":"https://www.ebi.ac.uk/metagenomics/js/datepicker.js","url":"https://www.ebi.ac.uk/metagenomics/js/autocompletion.js","url":"https://www.ebi.ac.uk/metagenomics/js/formclearer.js","url":"https://www.ebi.ac.uk/metagenomics/js/smoothscrol.js","url":"https://www.ebi.ac.uk/metagenomics/js/feedback_script.js","url":"https://www.ebi.ac.uk/metagenomics/js/tweet/jquery.tweet.js","url":"https://www.ebi.ac.uk/metagenomics/js/tweet/tweet.instance.js"
+            }
+        ],
+        "cssList": [
+            {"url": "https://www.ebi.ac.uk/metagenomics/css/jquery-ui-1.8.11.custom.css", "url": "https://www.ebi.ac.uk/metagenomics/css/default.css"
+            }
+        ],
+        "lastInBody": true,  // add a specific string (##lastInBody##) before the closing body tag
+        "rightSidebar": false,
+        "menuLinks": [
+            {
+            "selected": true,
+            "title": "",
+            "href": "",
+            "id": "",
+            "tooltip": ""
+            }
+        ],
+        "breadcrumbItems": [
+            {
+            "title": "EBI Metagenomics",  // breadcrumb is dynamic on memi
+            "href": "/metagenomics/"
+            }
+        ],
+        "placeHolder": "my string placeHolder" // add a specific string before content
+    },
+    "localMasthead": {
+       "style":"logo-only",
+       "title": "EBI Metagenomics",
+       "homepageUrl":"https://www.ebi.ac.uk/metagenomics/",
+       "logo": {  
+                "src":"https://wwwdev.ebi.ac.uk/metagenomics/img/logo_metagenomics_white_web.png",
+                "alt":"EBI Metagenomics",
+                "width":410,
+                "height": 70
+        },
+        "navigationTabs": [{
+            "selected": true,
+            "title": "Home",
+            "href": "#"
+            },{
+            "selected": false,
+            "title": "Sumit data",
+            "tooltip": "Submit data",
+            "href": "#"
+            },{
+            "selected": false,
+            "title": "Projects",
+            "tooltip": "View projects",
+            "href": "#"
+            },{
+            "selected": false,
+            "title": "Samples",
+            "tooltip": "View samples",
+            "href": "#"
+            },{
+            "selected": false,
+            "title": "About EBI Metagenomics",
+            "tooltip": "About EBI Metagenomics ",
+            "href": "#"
+        },{
+            "selected": false,
+            "title": "Contact",
+            "tooltip": " Contact us ",
+            "href": "#"
+            }],
+        "functionalTabs": [{
+            "title": "Login",
+            "href": "#",
+            "id": "id_login",
+            "iconFontSet": "icon-functional",
+            "dataIcon": ""
+            },{
+            "title": "Feedback",
+            "href": "#",
+            "iconFontSet": "icon-static",
+            "dataIcon": ""
+            }],
+        "search": {
+            "action": "[search-action]",
+            "method": "post",
+            "inputName": "name_input_form_search",
+            "examples": [{
+                "title": "SRP008047",
+                "href": "https://www.ebi.ac.uk/metagenomics/projects/doSearch?searchTerm=srp008047&search=Search"
+                },{
+                "title": "NOF008",
+                "href": "https://www.ebi.ac.uk/metagenomics/samples/doSearch?searchTerm=nof008&sampleType=&search=Search&startPosition=0"
+                },{
+                "title": "gut",
+                "href": "https://www.ebi.ac.uk/metagenomics/samples/doSearch?searchTerm=gut&sampleType=&search=Search&startPosition=0"
+            }]
+        }
+    },
+    "globalFooter":true
+}

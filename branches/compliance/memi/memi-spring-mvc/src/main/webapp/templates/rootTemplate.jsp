@@ -1,3 +1,9 @@
+<%@ page import="java.net.URL" %>
+<%@ page import="java.net.HttpURLConnection" %>
+<%@ page import="java.util.Scanner" %>
+<%@ page import="java.io.*" %>
+<%@ page import="uk.ac.ebi.interpro.metagenomics.memi.services.TemplateService"%>
+
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
@@ -200,44 +206,57 @@
 <%-- The following variable saves and provides the base URL for the whole application --%>
 <c:set var="baseURL" value="" scope="session"/>
 
+<jsp:useBean id="mastHead" scope="session" class="uk.ac.ebi.interpro.metagenomics.memi.services.TemplateService" />
+
 <body class="<tiles:getAsString name='bodyClass'/>" id="top"  <%--onload="loaded()" onload="initialize()"--%>>
 
 <%-- EBI-Interpro main header - exactly same as Interpro header--%>
 <div class="headerdiv" id="headerdiv">
   <div class="header">
-    <div id="global-masthead" class="masthead grid_24">
-      <!--This has to be one line and no newline characters-->
-			<a href="//www.ebi.ac.uk/" title="Go to the EMBL-EBI homepage"><img src="//www.ebi.ac.uk/web_guidelines/images/logos/EMBL-EBI/EMBL_EBI_Logo_white.png" alt="EMBL European Bioinformatics Institute" /></a>
+    <div id="global-masthead-container" class="masthead grid_24">
+        ${mastHead.globalMastHead}
+        <%
+//            try{
+//                URL oracle = new URL("http://wwwint.ebi.ac.uk/web/template-service/prod/templates/compliance/masthead/global/services");
+//                BufferedReader in = new BufferedReader(
+//                        new InputStreamReader(oracle.openStream()));
+//
+//                String inputLine;
+//                while ((inputLine = in.readLine()) != null)
+//                    System.out.println(inputLine);
+//                in.close();
+//            }catch(Exception ex){
+//                System.out.println("<p>Exception thrown</p>");
+//            }
+        %>
+        <%----%>
+        <%--HttpClient client = new DefaultHttpClient();--%>
+        <%--HttpGet request = new HttpGet("http://www.yahoo.com");--%>
+        <%--HttpResponse response = client.execute(request);--%>
 
-      <div class="nav">
-				<ul id="global-nav">
-          <!-- set active class as appropriate -->
-          <li class="first active" id="services"><a href="//www.ebi.ac.uk/services">Services</a></li>
-					<li id="research"><a href="//www.ebi.ac.uk/research">Research</a></li>
-					<li id="training"><a href="//www.ebi.ac.uk/training">Training</a></li>
-					<li id="industry"><a href="//www.ebi.ac.uk/industry">Industry</a></li>
-					<li id="about" class="last"><a href="//www.ebi.ac.uk/about">About us</a></li>
-				</ul>
-      </div>
+        <%--// Get the response--%>
+        <%--BufferedReader rd = new BufferedReader--%>
+        <%--(new InputStreamReader(response.getEntity().getContent()));--%>
+
+        <%--String line = "";--%>
+        <%--while ((line = rd.readLine()) != null) {--%>
+        <%--textView.append(line);--%>
+        <%--}--%>
+        <%--%>--%>
     </div>
 
-    <div id="local-masthead" class="masthead grid_24">
-    <!-- local-title - logo only patterns, see http://frontier.ebi.ac.uk/web/style/patterns -->
-    <div class="logo-title" id="local-title"> <h1 class="visuallyhidden">EBI metagenomics</h1> <a href="<c:url value="/"/>" title="Back to EBI metagenomics homepage"><img src="${pageContext.request.contextPath}/img/logo_metagenomics_white_web.png" alt="EBI metagenomics logo"></a> </div>
-    <!-- /local-title -->
+    <div id="local-masthead-container" class="masthead grid_24">
+        <%--${mastHead.localMastHead}--%>
 
-    <!-- alternative - just text-->
-    <%--<div class="grid_24 alpha omega" id="local-title"><h1>EBI metagenomics</h1></div>--%>
-    <!-- /alternative - just text-->
-
-        <nav>
-            <tiles:insertAttribute name="mainMenu"/>
-        </nav>
-
+        <%
+//
+        %>
     </div>
   </div>
 </div>
 <%-- END EBI main header --%>
+<%--<script src="${pageContext.request.contextPath}/js/compliance.js" type="text/javascript"></script>--%>
+
 <div class="ebi_contents" id="contents"> <%-- style="margin:0; width:100%;"--%>
     <div id="content-full">
     <div class="grid_24">
@@ -254,8 +273,10 @@
     </div>
     </div>
 
+
     <footer>
-       <tiles:insertAttribute name="footer"/>
+       <%--<tiles:insertAttribute name="footer"/>--%>
+        ${mastHead.globalFooter}
     </footer>
 </div>
 <%-- END div contents --%>
