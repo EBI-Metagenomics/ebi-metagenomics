@@ -222,6 +222,15 @@
             <version>${tiles.version}</version>
         </dependency>
 
+        <!--apache http components -->
+
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.3.1</version>
+        </dependency>
+
+
         <!-- Jackson JSON Mapper -->
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
