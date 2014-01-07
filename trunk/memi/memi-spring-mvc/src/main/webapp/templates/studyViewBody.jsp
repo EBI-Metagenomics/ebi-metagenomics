@@ -139,9 +139,10 @@ Contact name: (not given)
 
 <%--<h3>Other information</h3>--%>
 
-<h3 id="samples_id">Associated samples</h3>
+
 <c:choose>
     <c:when test="${not empty model.samples}">
+        <h3 id="samples_id">Associated samples</h3>
         <%-- <c:if test="${isDialogOpen==false}">
             <p><span style="color:red">No export data available for that(these) sample(s)!</span></p>
         </c:if>
@@ -213,7 +214,9 @@ Contact name: (not given)
         </table>
 
     </c:when>
-    <c:otherwise>No samples to display</c:otherwise>
+    <c:otherwise>
+        <%--<p>No samples to display</p>--%>
+    </c:otherwise>
 </c:choose>
 </div>
 <div class="but_top"><a href="#top" title="back to the top page">Top</a></div>
