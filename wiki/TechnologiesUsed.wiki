@@ -3,10 +3,20 @@
 = Technologies used =
 
 List of technologies used for the MGportal:
-  * Spring Framework (version 3)
-  * Apache Velocity (templating engine)
-  * Apache Tiles (templating framework)
+  * [http://docs.spring.io/spring/docs/3.0.5.RELEASE/spring-framework-reference/html/mvc.html Spring Web MVC]
+  * [http://velocity.apache.org/] Apache Velocity
+  * [https://tiles.apache.org/ Apache Tiles]
   * [http://hibernate.org/ Hibernate]
-  * JavaScript libraries:
+  * !JavaScript libraries:
     * [http://jquery.com/ JQuery]
     * [https://developers.google.com/chart/?hl=de Google Charts]
+
+
+|| *Technology* || *Version used* || *Latest release version* ||
+|| Spring || 3.0.5.RELEASE || 4.0.0.RELEASE ||
+|| Apache Tiles || 2.2.2 || ? ||
+|| Apache Velocity || 1.7 || ? ||
+|| Hibernate Core || 3.5.1-Final || ? ||
+|| Hibernate Validator || 4.3.0.Final || ? ||
+|| JQuery || 1.4.4 || ? ||
+|| Google Charts || ? || ? ||
