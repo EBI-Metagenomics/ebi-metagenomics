@@ -18,5 +18,5 @@ List of technologies used to develop the MGportal web application:
 || Apache Velocity || 1.7 || 1.7 ||
 || Hibernate Core || 3.5.1-Final || 4.2.8.Final ||
 || Hibernate Validator || 4.3.0.Final || 5.0.2.Final ||
-|| JQuery || 1.4.4 || 1.10.2 ||
+|| JQuery || 1.4.4 || 2.0.3 ||
 || Google Charts || 1 || 1 ||
