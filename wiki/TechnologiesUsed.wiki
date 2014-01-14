@@ -12,7 +12,7 @@ List of technologies used to develop the MGportal web application:
     * [https://developers.google.com/chart/?hl=de Google Charts]
 
 
-|| *Technology* || *Version used* || *Latest release version* ||
+|| *Technology* || *Version used* || *Latest released version* ||
 || Spring || 3.0.5.RELEASE || 4.0.0.RELEASE ||
 || Apache Tiles || 2.2.2 || 3.0.3 ||
 || Apache Velocity || 1.7 || 1.7 ||
