@@ -1,4 +1,4 @@
-  * Introductory
+  * [http://code.google.com/p/ebi-metagenomics/ Project Home]
    * [http://code.google.com/p/ebi-metagenomics/ Project Home]
    * [Technologies used]  
   * Developers Documentation
