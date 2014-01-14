@@ -1,8 +1,5 @@
   * Introductory
    * [http://code.google.com/p/ebi-metagenomics/ Project Home]
-   * [Documentation Documentation Home]
-   * [Requirements User Requirements]   
-  * Developer Documentation
+   * [Technologies used]  
+  * Developers Documentation
    * [HowToRunTheWebApplication Building and Running Memi from Source]
-  * User Documentation
-   * [EbiMetagenomicsReleaseNotes Sept 2013, Release Notes]
