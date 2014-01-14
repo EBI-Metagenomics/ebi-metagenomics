@@ -2,7 +2,7 @@
 
 = Technologies used =
 
-List of technologies used for the MGportal:
+List of technologies used to develop the MGportal web application:
   * [http://docs.spring.io/spring/docs/3.0.5.RELEASE/spring-framework-reference/html/mvc.html Spring Web MVC]
   * [http://velocity.apache.org/ Apache Velocity]
   * [https://tiles.apache.org/ Apache Tiles]
