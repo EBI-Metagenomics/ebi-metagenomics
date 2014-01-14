@@ -1,5 +1,4 @@
   * [http://code.google.com/p/ebi-metagenomics/ Project Home]
-   * [http://code.google.com/p/ebi-metagenomics/ Project Home]
-   * [Technologies used]  
+  * [Technologies used]  
   * Developers Documentation
    * [HowToRunTheWebApplication Building and Running Memi from Source]
