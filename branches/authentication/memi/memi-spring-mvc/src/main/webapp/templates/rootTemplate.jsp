@@ -93,7 +93,8 @@
 
 
     <!-- JQuery and JQuery UI source-->
-    <script src="${pageContext.request.contextPath}/js/jquery-1.4.4.min.js" type="text/javascript"></script>
+    <script src="https://code.jquery.com/jquery-1.6.4.js" type="text/javascript"></script>
+    <%--<script src="${pageContext.request.contextPath}/js/jquery-1.4.4.min.js" type="text/javascript"></script>--%>
     <script src="${pageContext.request.contextPath}/js/jquery-ui-1.8.8.custom.min.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/js/jquery.validate-1.9.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/js/jquery.form-2.85.js" type="text/javascript"></script>
@@ -296,5 +297,29 @@
 
 <!-- The following line includes the feedback DIV and the feedback FORM -->
 <%@ include file="feedback/script/feedbackDiv.jsp" %>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#enaPost").click(function () {
+            var loginDetails = [
+                {"username":"metagenomics.ebi@gmail.com", "password":"testtest", "rememberMe":true}
+            ];
+
+            $.ajax({
+                url:"/ena/submit/sra/srawebin/proxy",
+                type:"POST",
+                // The key needs to match your method's input parameter (case-sensitive).
+                data:JSON.stringify({"username":"metagenomics.ebi@gmail.com", "password":"testtest", "rememberMe":true}),
+                contentType:"application/json; charset=utf-8",
+                dataType:"json",
+                success:function (data) {
+                    alert(data);
+                },
+                failure:function (errMsg) {
+                    alert(errMsg);
+                }
+            });
+        });
+    });//end document ready method
+</script>
 </body>
 </html>
