@@ -39,9 +39,9 @@ public interface StudyDAO extends ISampleStudyDAO<Study> {
     /**
      * Returns a list of public studies where the submitter ID IS equal the specified submitter ID.
      *
-     * @param submitterId Submitter ID for the IS equal restriction.
+     * @param submissionAccountId Submitter ID for the IS equal restriction.
      */
-    List<Study> retrieveStudiesBySubmitter(long submitterId);
+    List<Study> retrieveStudiesBySubmitter(String submissionAccountId);
 
     /**
      * Returns an ordered list of public studies where the submitter ID IS NOT equal the specified submitter ID.

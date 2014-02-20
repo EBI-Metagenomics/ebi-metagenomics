@@ -136,7 +136,7 @@
         <module>memi-model</module>
         <module>memi-business</module>
         <module>memi-persistence</module>
-        <module>memi-spring-mvc</module>
+        <module>memi-web</module>
     </modules>
 
     <build>

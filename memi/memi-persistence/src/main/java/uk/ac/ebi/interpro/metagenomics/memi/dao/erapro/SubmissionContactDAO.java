@@ -14,4 +14,8 @@ import java.util.List;
 public interface SubmissionContactDAO {
 
     public boolean checkAccountByEmailAddress(String emailAddress);
+
+    public String getSubmissionAccountIdByEmail(final String emailAddress);
+
+    public Submitter getSubmitterBySubmissionAccountId(final String submissionAccountId);
 }

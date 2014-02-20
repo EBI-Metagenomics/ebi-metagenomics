@@ -270,18 +270,18 @@ public class SampleDAOImpl implements SampleDAO {
     }
 
     @Transactional(readOnly = true)
-    public List<Sample> retrieveSamplesBySubmitter(long submitterId) {
+    public List<Sample> retrieveSamplesBySubmitter(String submissionAccountId) {
         Session session = sessionFactory.getCurrentSession();
         if (session != null) {
             Criteria crit = session.createCriteria(Sample.class);
             //add WHERE clause
-            crit.add(Restrictions.eq("submitterId", submitterId));
+            crit.add(Restrictions.eq("submissionAccountId", submissionAccountId));
             //Add distinct criterion
             crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
             try {
                 return crit.list();
             } catch (HibernateException e) {
-                throw new HibernateException("Couldn't retrieve samples by submitter ID " + submitterId, e);
+                throw new HibernateException("Couldn't retrieve samples by submitter ID " + submissionAccountId, e);
             }
         }
         return Collections.emptyList();

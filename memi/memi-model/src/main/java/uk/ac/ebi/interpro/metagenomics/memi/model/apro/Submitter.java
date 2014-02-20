@@ -4,23 +4,15 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * Should represents the submitter object from the ENA database,
- * but at the moment it is a much simpler version.
- * TODO: Should be exactly mapped with the ENA submitter object
+ * Represents a logged in user object.
  * TODO: Add JPA and Hibernate annotations - Why? The submitter is requested by plain Jdbc.
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
- * @version $Id$
  * @since 1.0-SNAPSHOT
  */
 public class Submitter implements Serializable {
 
-    //TODO: This variable shouldn't be visible on Google code
-    public final static String TABLE_NAME = "spin2006.submitter";
-
-    private long submitterId;
-
-    private String password;
+//    private long submitterId;
 
     private String firstName;
 
@@ -44,25 +36,20 @@ public class Submitter implements Serializable {
 
     private char active;
 
+    private String loginName;
+
+    private String sessionId;
+
+    private String submissionAccountId;
+
 
     public Submitter() {
     }
 
-    public Submitter(String firstName, String surname, String emailAddress, String password) {
-        this();
-        this.firstName = firstName;
-        this.surname = surname;
-        this.emailAddress = emailAddress;
-        this.password = password;
-    }
-
-
-    public long getSubmitterId() {
-        return submitterId;
-    }
-
-    public void setSubmitterId(long submitterId) {
-        this.submitterId = submitterId;
+    public Submitter(String loginName, String sessionId, String submissionAccountId) {
+        this.loginName = loginName;
+        this.sessionId = sessionId;
+        this.submissionAccountId = submissionAccountId;
     }
 
     public String getFirstName() {
@@ -87,14 +74,6 @@ public class Submitter implements Serializable {
 
     public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getMiddleInitials() {
@@ -159,5 +138,29 @@ public class Submitter implements Serializable {
 
     public void setActive(char active) {
         this.active = active;
+    }
+
+    public String getLoginName() {
+        return loginName;
+    }
+
+    public void setLoginName(String loginName) {
+        this.loginName = loginName;
+    }
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
+
+    public String getSubmissionAccountId() {
+        return submissionAccountId;
+    }
+
+    public void setSubmissionAccountId(String submissionAccountId) {
+        this.submissionAccountId = submissionAccountId;
     }
 }

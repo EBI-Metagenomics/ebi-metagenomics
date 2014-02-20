@@ -38,8 +38,12 @@ public class Study implements SecureEntity {
     @Column(name = "NCBI_PROJECT_ID")
     private Long ncbiProjectId;
 
-    @Column(name = "SUBMITTER_ID")
-    private Long submitterId;
+    //Deprecated - Replaced by  submissionAccountId
+//    @Column(name = "SUBMITTER_ID")
+//    private Long submitterId;
+
+    @Column(name = "SUBMISSION_ACCOUNT_ID")
+    private String submissionAccountId;
 
     @Column(name = "STUDY_Status", length = 30)
     @Enumerated(EnumType.STRING)
@@ -157,12 +161,21 @@ public class Study implements SecureEntity {
         this.ncbiProjectId = ncbiProjectId;
     }
 
-    public Long getSubmitterId() {
-        return submitterId;
+//    public Long getSubmitterId() {
+//        return submitterId;
+//    }
+//
+//    public void setSubmitterId(Long submitterId) {
+//        this.submitterId = submitterId;
+//    }
+
+
+    public String getSubmissionAccountId() {
+        return submissionAccountId;
     }
 
-    public void setSubmitterId(Long submitterId) {
-        this.submitterId = submitterId;
+    public void setSubmissionAccountId(String submissionAccountId) {
+        this.submissionAccountId = submissionAccountId;
     }
 
     public String getStudyStatusAsString() {
@@ -349,7 +362,7 @@ public class Study implements SecureEntity {
         if (id != study.id) return false;
         if (isPublic != study.isPublic) return false;
         if (ncbiProjectId.equals(study.ncbiProjectId)) return false;
-        if (submitterId.equals(study.submitterId)) return false;
+        if (submissionAccountId.equals(study.submissionAccountId)) return false;
         if (!centreName.equals(study.centreName)) return false;
         if (!experimentalFactor.equals(study.experimentalFactor)) return false;
         if (!lastMetadataReceived.equals(study.lastMetadataReceived)) return false;
@@ -372,7 +385,7 @@ public class Study implements SecureEntity {
         result = 31 * result + (studyId == null ? 0 : studyId.hashCode());
         result = 31 * result + (studyName == null ? 0 : studyName.hashCode());
         result = 31 * result + (ncbiProjectId == null ? 0 : ncbiProjectId.hashCode());
-        result = 31 * result + (submitterId == null ? 0 : submitterId.hashCode());
+        result = 31 * result + (submissionAccountId == null ? 0 : submissionAccountId.hashCode());
         result = 31 * result + (studyStatus == null ? 0 : studyStatus.hashCode());
         result = 31 * result + (publicReleaseDate == null ? 0 : publicReleaseDate.hashCode());
         result = 31 * result + (lastMetadataReceived == null ? 0 : lastMetadataReceived.hashCode());

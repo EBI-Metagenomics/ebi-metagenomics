@@ -43,9 +43,9 @@ public interface SampleDAO extends ISampleStudyDAO<Sample> {
     /**
      * Returns a list of public samples where the submitter ID IS equal the specified submitter ID.
      *
-     * @param submitterId Submitter ID for the IS equal restriction.
+     * @param submissionAccountId Submitter ID for the IS equal restriction.
      */
-    List<Sample> retrieveSamplesBySubmitter(long submitterId);
+    List<Sample> retrieveSamplesBySubmitter(String submissionAccountId);
 
     /**
      * Returns an ordered list of public samples where the submitter ID IS NOT equal the specified submitter ID.
