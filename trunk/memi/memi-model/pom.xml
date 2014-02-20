@@ -12,7 +12,7 @@
 
     <groupId>uk.ac.ebi.interpro.metagenomics</groupId>
     <artifactId>memi-model</artifactId>
-    <version>1.1</version>
+    <version>1.2-SNAPSHOT</version>
     <name>memi-model</name>
     <url>http://maven.apache.org</url>
 

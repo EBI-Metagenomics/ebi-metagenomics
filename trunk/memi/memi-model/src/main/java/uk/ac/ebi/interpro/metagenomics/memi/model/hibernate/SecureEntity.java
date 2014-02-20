@@ -23,5 +23,7 @@ public interface SecureEntity {
     /**
      * Defines the Id of the ENA submitter.
      */
-    public Long getSubmitterId();
+//    public Long getSubmitterId();
+
+    public String getSubmissionAccountId();
 }

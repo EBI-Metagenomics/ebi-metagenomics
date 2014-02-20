@@ -80,8 +80,8 @@ public abstract class Sample implements SecureEntity {
     @Column(name = "IS_PUBLIC")
     private boolean isPublic;
 
-    @Column(name = "SUBMITTER_ID")
-    private Long submitterId;
+    @Column(name = "SUBMISSION_ACCOUNT_ID")
+    private String submissionAccountId;
 
     @Column(name = "MISC")
     @Lob
@@ -223,12 +223,12 @@ public abstract class Sample implements SecureEntity {
         this.analysisCompleted = analysisCompleted;
     }
 
-    public Long getSubmitterId() {
-        return submitterId;
+    public String getSubmissionAccountId() {
+        return submissionAccountId;
     }
 
-    public void setSubmitterId(Long submitterId) {
-        this.submitterId = submitterId;
+    public void setSubmissionAccountId(String submissionAccountId) {
+        this.submissionAccountId = submissionAccountId;
     }
 
     public Set<Publication> getPublications() {

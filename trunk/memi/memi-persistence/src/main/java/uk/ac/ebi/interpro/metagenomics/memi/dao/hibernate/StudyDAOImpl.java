@@ -236,12 +236,12 @@ public class StudyDAOImpl implements StudyDAO {
     }
 
     @Transactional(readOnly = true)
-    public List<Study> retrieveStudiesBySubmitter(long submitterId) {
+    public List<Study> retrieveStudiesBySubmitter(String submissionAccountId) {
         Session session = sessionFactory.getCurrentSession();
         if (session != null) {
             Criteria crit = session.createCriteria(Study.class);
             //add WHERE clause
-            crit.add(Restrictions.eq("submitterId", submitterId));
+            crit.add(Restrictions.eq("submissionAccountId", submissionAccountId));
             try {
                 return crit.list();
             } catch (HibernateException e) {

@@ -108,7 +108,7 @@ public class DatabaseMockuper {
             } else if (studyId.equals("SRP000240")) {
                 publicStudy.addPublication(p8);
             } else if (studyId.equals("study_placeholder1")) {
-                publicStudy.setSubmitterId(new Long(50));
+                publicStudy.setSubmissionAccountId("Webin-10");
             }
             publicStudy.setLastMetadataReceived(dateCreator.getNextDate());
             createObject(publicStudy);
@@ -122,7 +122,7 @@ public class DatabaseMockuper {
             for (Sample sample : sampleMap.get(studyId)) {
                 String sampleId = sample.getSampleId();
                 if (sampleId.equals("Sample_place_holder1")) {
-                    sample.setSubmitterId(new Long(50));
+                    sample.setSubmissionAccountId("Webin-10");
                 }
                 createObject(sample);
             }
@@ -145,7 +145,7 @@ public class DatabaseMockuper {
     private static void mockupPrivateStudies(DateCreator dateCreator) {
         List<Study> privateStudies = parseStudies("PRIVATE_STUDIES.csv");
         for (Study study : privateStudies) {
-            study.setSubmitterId(new Long(50));
+            study.setSubmissionAccountId("Webin-10");
             study.setStudyStatus(getRandomStudyStatus());
             study.setLastMetadataReceived(dateCreator.getNextDate());
             if (study.getStudyId().equals("SRP001111")) {
@@ -162,7 +162,7 @@ public class DatabaseMockuper {
             for (Sample sample : sampleMap.get(studyId)) {
                 sample.setMetadataReceived(dateCreator.getNextDate());
                 sample.setPublic(false);
-                sample.setSubmitterId(new Long(50));
+                sample.setSubmissionAccountId("Webin-10");
                 createObject(sample);
             }
         }
