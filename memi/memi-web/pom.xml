@@ -283,10 +283,18 @@
             <version>2.1</version>
         </dependency>
 
+        <!--TODO: There is an urgency to fix the issue that dependencies with versions 1.3.1-PROD.+ cannot be resolved by Apache Maven 2.2.1 -->
+        <!-- ena-account-model is an dependency of ena-account-admin-client, but it cannot be resolved, that's why the exclusion-->
         <dependency>
             <groupId>uk.ac.ebi</groupId>
             <artifactId>ena-account-admin-client</artifactId>
             <version>1.3.1-PROD.1</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>ena-account-model</artifactId>
+                    <groupId>uk.ac.ebi</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
