@@ -32,6 +32,13 @@
             <name>Maven Repository for iText</name>
             <url>http://maven.itextpdf.com/</url>
         </repository>
+
+        <!--ENA repository-->
+        <repository>
+            <id>ves-ebi-de.ebi.ac.uk</id>
+            <name>ENA's Maven, Ivy or Gradle Maven repository</name>
+            <url>http://ves-ebi-de.ebi.ac.uk:8081/artifactory/gradle/</url>
+        </repository>
     </repositories>
 
 
@@ -280,6 +287,12 @@
             <groupId>uk.ac.ebi</groupId>
             <artifactId>ena-account-admin-client</artifactId>
             <version>1.3.1-PROD.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>uk.ac.ebi</groupId>
+            <artifactId>ena-account-model</artifactId>
+            <version>1.3.1-PROD.173</version>
         </dependency>
 
     </dependencies>
