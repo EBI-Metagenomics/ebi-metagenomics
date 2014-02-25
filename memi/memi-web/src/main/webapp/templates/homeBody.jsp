@@ -104,16 +104,13 @@
                                 <div class="cent"><img src="${pageContext.request.contextPath}/img/icons_submit.png"
                                                        alt=""
                                                        width="71" height="71"/></div>
-                                <c:url var="enaRegistrationUrl"
-                                       value="${model.propertyContainer.enaSubmissionURL.registrationLink}">
-                                    <c:param name="url" value="${enaUrlParam}"/>
-                                </c:url>
+                                <%--</c:url>--%>
                                 <p style="padding-bottom:7px; "> You can click on <a href="<c:url value="${baseURL}/submit"/>"
                                                                                      title="Submit data">Submit data</a>
                                     to send us your nucleotide sequences for analysis.
                                     (Note: you will need to <a href="javascript:openLoginDialogForm()"
                                                                title="Login">login</a>
-                                    or <a href="<c:out value="${enaRegistrationUrl}"/>"
+                                    or <a href="<c:url value="/register"/>"
                                           title="Registration">register</a>
                                     first). </p>
                                 <c:choose>
