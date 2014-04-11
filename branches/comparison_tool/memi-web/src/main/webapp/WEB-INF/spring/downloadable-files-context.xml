@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+
+    <import resource="file-definitions-context.xml"/>
+
+    <util:map id="fileDefinitionsMap" map-class="java.util.HashMap" key-type="java.lang.String"
+              value-type="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.DownloadableFileDefinition">
+        <!--sequence data-->
+        <entry key="MASKED_FASTA" value-ref="maskedReadsFile"/>
+        <entry key="READS_WITH_PREDICTED_CDS_FILE" value-ref="readsWithPredictedCDSFile"/>
+        <entry key="READS_WITH_MATCHES_FASTA_FILE" value-ref="readsWithInterProMatchesFile"/>
+        <entry key="READS_WITHOUT_MATCHES_FASTA_FILE" value-ref="readsWithoutInterProMatchesFile"/>
+        <entry key="PREDICTED_CDS_FILE" value-ref="predictedCDSFile"/>
+        <entry key="PREDICTED_CDS_WITH_INTERPRO_MATCHES_FILE" value-ref="predictedCDSWithInterProMatchesFile"/>
+        <!--<entry key="READS_WITHOUT_MATCHES_FASTA_FILE" value-ref="readsWithoutMatchesFile"/>-->
+        <!--taxonomic data-->
+        <entry key="R_RNA_5S_FASTA_FILE" value-ref="rRNA5sFile"/>
+        <entry key="R_RNA_16S_FASTA_FILE" value-ref="rRNA16sFile"/>
+        <entry key="R_RNA_23S_FASTA_FILE" value-ref="rRNA23sFile"/>
+        <entry key="OTUS_BIOM_FORMAT_FILE" value-ref="otuBiomFile"/>
+        <entry key="TAX_ANALYSIS_TSV_FILE" value-ref="otuTsvFile"/>
+        <entry key="TAX_ANALYSIS_TREE_FILE" value-ref="newickFile"/>
+        <!--functional data-->
+        <entry key="INTERPROSCAN_RESULT_FILE" value-ref="interProScanResultFile"/>
+        <entry key="GO_COMPLETE_FILE" value-ref="fullGOAnnotationFile"/>
+        <entry key="GO_SLIM_FILE" value-ref="goSlimAnnotationFile"/>
+    </util:map>
+
+</beans>
