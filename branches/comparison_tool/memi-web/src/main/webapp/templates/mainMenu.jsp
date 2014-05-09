@@ -34,9 +34,14 @@
     </li>
 
 
+    <li class="${model.tabClasses["tabClassCompareView"]}"><a href="<c:url value="${baseURL}/compare"/>"
+                                                              title="Compare samples of same project">Comparison tool</a></li>
+
     <li class="${model.tabClasses["tabClassAboutView"]}"><a href="<c:url value="${baseURL}/info"/>"
                                                             title="About EBI Metagenomics">About EBI Metagenomics</a>
     </li>
+
+
     <li class="${model.tabClasses["tabClassContactView"]} last"><a href="<c:url value="${baseURL}/contact"/>"
                                                                    title="Contact us">Contact</a></li>
 

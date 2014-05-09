@@ -54,6 +54,7 @@ public class ViewModel implements IViewModelParams {
         result.put(TAB_CLASS_PROJECTS_VIEW, DEFAULT_CLASS);
         result.put(TAB_CLASS_SAMPLES_VIEW, DEFAULT_CLASS);
         result.put(TAB_CLASS_ABOUT_VIEW, DEFAULT_CLASS);
+        result.put(TAB_CLASS_COMPARE_VIEW, DEFAULT_CLASS);
         result.put(TAB_CLASS_CONTACT_VIEW, DEFAULT_CLASS);
         result.put(TAB_CLASS_FEEDBACK_VIEW, DEFAULT_CLASS);
         return result;
