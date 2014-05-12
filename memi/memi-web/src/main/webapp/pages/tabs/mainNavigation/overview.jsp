@@ -104,7 +104,7 @@
                             <c:set var="environmentalFeature" value="${notGivenId}"/>
                         </c:otherwise>
                     </c:choose>
-                    <div class="result_row"><label>Environmental feature:</label><span class="fl_uppercase">${fn:toLowerCase(environmentalFeature)}</span>
+                    <div class="result_row"><label>Feature:</label><span class="fl_uppercase">${fn:toLowerCase(environmentalFeature)}</span>
                     </div>
 
                         <c:choose>
