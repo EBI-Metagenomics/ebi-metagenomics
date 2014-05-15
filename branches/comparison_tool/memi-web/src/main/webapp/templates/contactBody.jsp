@@ -7,4 +7,3 @@
 <h3>Follow us on Twitter</h3>
 
 <p>Follow us on Twitter using <a href="http://twitter.com/EBImetagenomics">@EBImetagenomics</a></p>
-<script src="/rshiny.js"></script>
