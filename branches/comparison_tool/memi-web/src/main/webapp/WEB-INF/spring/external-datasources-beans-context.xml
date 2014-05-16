@@ -9,18 +9,18 @@
     <!--data source APRO-->
     <bean id="aproDataSource"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="${jcp.jdbc.oracle.driverClassName}"/>
-        <property name="url" value="${jcp.jdbc.oracle.apro.url}"/>
-        <property name="username" value="${jcp.jdbc.oracle.apro.username}"/>
-        <property name="password" value="${jcp.jdbc.oracle.apro.password}"/>
+        <property name="driverClassName" value="oracle.jdbc.OracleDriver"/>
+        <property name="url" value="jdbc:oracle:thin:@drambuie.ebi.ac.uk:1551:APRO"/>
+        <property name="username" value="spin2006read"/>
+        <property name="password" value="spin2006read"/>
     </bean>
 
     <!--data source ERAPRO-->
     <bean id="eraProDataSource"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="${jcp.jdbc.oracle.driverClassName}"/>
-        <property name="url" value="${jcp.jdbc.oracle.erapro.url}"/>
-        <property name="username" value="${jcp.jdbc.oracle.erapro.username}"/>
-        <property name="password" value="${jcp.jdbc.oracle.erapro.password}"/>
+        <property name="driverClassName" value="oracle.jdbc.OracleDriver"/>
+        <property name="url" value="jdbc:oracle:thin:@ora-vm-009.ebi.ac.uk:1541:ERAPRO"/>
+        <property name="username" value="era_reader"/>
+        <property name="password" value="reader"/>
     </bean>
 </beans>

@@ -26,9 +26,9 @@
 
     <!-- Please use this bean to specify the path to the analysis files -->
     <bean id="propContainer" class="uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer">
-        <property name="pathToAnalysisDirectory" value="${pathToAnalysisDirectory}"/>
+        <property name="pathToAnalysisDirectory" value="/home/fbuccini/data/metagenomics/results/"/>
         <property name="enaSubmissionURL" ref="enaSubmission"/>
-        <property name="enaMasterUserEmail" value="${ena.master.user.email}"/>
+        <property name="enaMasterUserEmail" value="datasubs@ebi.ac.uk"/>
         <property name="resultFileDefinitionMap">
             <map>
                 <!--Maps FileDefinitionIds to result file definitions -->

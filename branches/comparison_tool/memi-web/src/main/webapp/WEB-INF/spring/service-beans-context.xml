@@ -8,7 +8,7 @@
 
     <!-- The next 3 beans belong to the email notification service which is currently used in the submission form  -->
     <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-        <property name="host" value="${javamail.sender.host}"/>
+        <property name="host" value="smtp.ebi.ac.uk"/>
         <property name="port" value="25"/>
     </bean>
 
@@ -16,8 +16,8 @@
     <bean name="emailNotificationServiceExceptionResolver"
           class="uk.ac.ebi.interpro.metagenomics.memi.services.EmailNotificationService">
         <constructor-arg ref="mailSender"/>
-        <property name="receiver" value="${emailService.exceptionResolver.receiver}"/>
-        <property name="sender" value="${emailService.exceptionResolver.sender}"/>
+        <property name="receiver" value="fbuccini@ebi.ac.uk"/>
+        <property name="sender" value="mg-portal-fbuccini@ebi.ac.uk"/>
         <property name="emailSubject" value="DEVELOPERS [MG portal] Exception occurred"/>
     </bean>
 
@@ -28,10 +28,10 @@
         <property name="receiver" value="${emailService.sraRegistration.receiver}"/>
         <property name="receiverCCList">
             <list>
-                <value type="java.lang.String">${emailService.sraRegistration.receiverCC_1}</value>
-                <value type="java.lang.String">${emailService.sraRegistration.receiverCC_2}</value>
-                <value type="java.lang.String">${emailService.sraRegistration.receiverCC_3}</value>
-                <value type="java.lang.String">${emailService.sraRegistration.receiverCC_4}</value>
+                <value type="java.lang.String">fbuccini@ebi.ac.uk</value>
+                <value type="java.lang.String">fbuccini@ebi.ac.uk</value>
+                <value type="java.lang.String">fbuccini@ebi.ac.uk</value>
+                <value type="java.lang.String">fbuccini@ebi.ac.uk</value>
             </list>
         </property>
         <property name="emailSubject" value="New SRA account request from the MGPortal"/>
@@ -41,7 +41,7 @@
     <bean name="emailNotificationServiceFeedbackPage"
           class="uk.ac.ebi.interpro.metagenomics.memi.services.EmailNotificationService">
         <constructor-arg ref="mailSender"/>
-        <property name="receiver" value="${emailService.feedbackForm.receiver}"/>
+        <property name="receiver" value="beta-ebi-metagenomics-feedback@googlegroups.com"/>
     </bean>
 
     <!-- Default email notification service without any specific properties-->
@@ -62,11 +62,11 @@
     </bean>
 
     <bean id="enaWebServiceUrlTomcat9" class="java.lang.String">
-        <constructor-arg value="${ena.authentication.service.url.tomcat-9}"/>
+        <constructor-arg value="http://tomcat-9.ebi.ac.uk:21560/ena/account/admin/"/>
     </bean>
 
     <bean id="enaWebServiceUrlTomcat10" class="java.lang.String">
-        <constructor-arg value="${ena.authentication.service.url.tomcat-10}"/>
+        <constructor-arg value="http://tomcat-10.ebi.ac.uk:21560/ena/account/admin/"/>
     </bean>
 
     <bean id="authenticationService" class="uk.ac.ebi.interpro.metagenomics.memi.authentication.AuthenticationService"/>
