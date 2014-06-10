@@ -1,57 +1,63 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
-<!-- A bit of CSS to improve page display -->
+<!-- A bit of CSS to improve page display. Yay. Dubugging css is cool when you apply different colors on background -->
 <style type="text/css">
 
-#selection-row{
-width:100%;
-align-self: center;
-
+a:hover {
+    cursor:pointer;
 }
 
-#selection-row .container{
-    vertical-align:top;
-    width:48%;
-    margin: auto;
-    padding:10px;
-    display:inline-block;
-
-}
-
-#samples-settings-row{
+#row-wrapper{
     width:100%;
-    align-self: center;
-
+    height:250px;
+    background: transparent;
 }
 
-#samples-settings-row .container{
-    vertical-align: top;
-    width:48%;
-    margin: auto;
-    padding:10px;
-    display:inline-block;
+#final-buttons-wrapper{
+    width:11%;
+    margin: 0 auto;
+    background: transparent;
+}
 
+#settings-wrapper{
+    background: transparent;
+    height:150px;
+}
+
+#settings-wrapper .settings-div {
+    float:left;
+    background: transparent;
+    padding: 10px;
+}
+
+#project-div {
+    float:left;
+    width: 45%;
+    height: 100%;
+    padding-left: 20px;
+}
+
+#samples-div {
+    float:left;
+    width: 45%;
+    height: 100%;
+    padding-left: 20px;
 }
 
 </style>
 
-<h2>Sample Comparison Tool</h2>
-
-<p>EBI Metagenomics offers a web tool to compare and visualize metagenomics data from same projects. Start by selecting a project. To do : documentation for users.</p>
+<h2>Sample comparison tool</h2>
 
 <div id="demo"></div>
 
-<form:form id="comparison-tool-form-id" method="post" action="compare" commandName="comparisonForm">
-    <div id="selection-row">
+<form:form id="comparison-tool-form-id" method="post" commandName="comparisonForm">
+    <div id="row-wrapper">
 
-        <h3>1. Select a Project</h3>
-        <div id="project-choice" class="container">
-            <h4>List of projects</h4>
+        <div id="project-div">
+            <h4>Project list</h4>
                 <%--<form:option value="-" label="--Select project"/>--%>
-                <form:select path="study" size="9" id="projects">
-
+                <form:select path="study" size="9" id="projects" style="width:100%;">
                     <c:forEach var="study" items="${studies}">
                         <c:if test="${fn:length(study.samples) gt 2}">
                         <form:option id="${study.studyId}" value="${study.id}" title="Project ${study.studyId} | ${study.studyName}">${study.studyName}</form:option>
@@ -59,72 +65,95 @@ align-self: center;
                     </c:forEach>
                 </form:select>
             <form:errors path="study" cssClass="error"/>
-
-
-        </div>
-        <div id="project-description" class="container">
-            <h4>Selected Project Information</h4>
-            <div class="output_form" id="description-content" style="overflow-y:scroll; height:150px;">
-                <i>Select a project in the menu on the left to display info about it.</i>
+            <div id="project-description" title="Project description">
+                <div id="description-content" style="height:30px;">
+                    <i>Select a project in the menu above.</i>
+                </div>
             </div>
-
         </div>
-    </div>
-    <div>
-        <button id="choose-project" type="button">Choose project (next step)</button>
+
+            <div id="samples-div">
+                <h4 id="selected-samples">Sample list (0 selected)</h4>
+                <form:select path="samples" multiple="true" size="9" id="samples" style="width:100%;">
+                </form:select>
+                <div id="samples-control"><a id="select-all-button" onclick="SelectAllSamples()">Select all</a> | <a id="unselect-all-button" onclick="UnselectAllSamples()">Unselect all </a></div>
+            </div>
     </div>
 
-
-    <div id="samples-settings-row">
-    <div id="settings" class="container">
-        <h3>2. Select Data & Visualization</h3>
-        <div>
+    <div id="settings-wrapper">
+        <div class="settings-div">
             <h4>Data</h4>
             <form:select path="usedData" id="data-choice">
-                <form:option value="nothing">Choose your data</form:option>
-                <form:option value="GO">Full GO annotation</form:option>
+                <form:option value="nothing">Select data</form:option>
+                <form:option value="GO" disabled="true">Full GO annotation</form:option>
                 <form:option value="GOslim">GO slim annotation</form:option>
-                <form:option value="IPR">InterPro matches</form:option>
-                <form:option value="IPRcol">Collapsed InterPro matches</form:option>
+                <form:option value="IPR" disabled="true">InterPro matches</form:option>
+                <form:option value="IPRcol" disabled="true">Collapsed InterPro matches</form:option>
             </form:select>
         </div>
-        <div>
+        <%--div class="settings-div">
             <h4>Visualization</h4>
             <form:select path="usedVis" id="vis-choice">
-                <form:option value="nothing">Choose your visualization</form:option>
-                <form:option value="bar">Barcharts (2-10 samples only)</form:option>
-                <form:option value="heatmap">Heatmap</form:option>
-                <form:option value="pca">Principal Components analysis</form:option>
-                <form:option value="table">Abundance table only</form:option>
+                <form:option value="nothing">Select a visualization</form:option>
+                <form:option value="all">All available visualizations</form:option>
+                <form:option value="pie" disabled="true">Overview</form:option>
+                <form:option value="bar" disabled="true">Barcharts</form:option>
+                <form:option value="stackbar" disabled="true">Stacked bars</form:option>
+                <form:option value="heatmap" disabled="true">Heatmap</form:option>
+                <form:option value="int-heatmap" disabled="true">Javascript Heatmap</form:option>
+                <form:option value="table" disabled="true">Table</form:option>
+                <form:option value="pca" disabled="true">Principal Components analysis</form:option>
             </form:select>
+        </div--%>
+        <div class="settings-div" style="position:relative; bottom: 0;">
+            <h4>Advanced settings</h4>
+            <p><a id="advanced-settings-link">Show / hide advanced settings</a></p>
+            <!-- Advanced settings div, that should be hidden at the beginning -->
         </div>
-        <div>
-            <h4>Extra settings</h4>
-            <form:checkbox path="keepNames" title="Check to keep sample ID" value="keeping-names"/><strong>Keep samples ID during pre-processing?</strong>
+        <div id="advanced-settings-div" class="settings-div" title="Advanced settings">
+            <ul>
+                <li><strong>General</strong>
+                <ul>
+                    <li><form:checkbox path="keepNames" title="Check to keep sample ID"/><strong>Keep samples ID?</strong></li>
+                </ul></li>
+                <li><strong>Stacked columns</strong>
+                    <ul>
+                        <li><form:input path="stackThreshold" type="number" min="0" max="50" step="0.1"/> Stacking threshold (%)</li>
+                    </ul>
+                </li>
+                <li><strong>Heatmap</strong><ul>
+                    <li><form:checkbox path="hmLegend"/>Show legend<br></li>
+                    <li><form:select path="hmClust">
+                        <form:option value="none">No clustering</form:option>
+                        <form:option value="row">Observations (X axis)</form:option>
+                        <form:option value="column">Samples (Y axis)</form:option>
+                        <form:option value="both">Both</form:option>
+                    </form:select>Hierarchical clustering</li>
+                    <li><form:select path="hmDendrogram">
+                        <form:option value="none">No dendrograms</form:option>
+                        <form:option value="row">Observations (X axis)</form:option>
+                        <form:option value="column">Samples (Y axis)</form:option>
+                        <form:option value="both">Both</form:option>
+                    </form:select>Show dendrograms (if clustering)</li>
+                </ul>
+                </li>
+
+            </ul>
         </div>
     </div>
-    <div id="sample-choice" class="container">
-    <h3>3. Select Samples & Run</h3>
-    <form:select path="samples" multiple="true" size="8" id="samples">
-    </form:select>
-    <p id="selected-samples">No selected samples</p>
-        <div id="samples-buttons">
-            <button id="remove" type="button" onclick="$('#samples option:selected').remove()">Remove selected</button>
-            <button id="clearAll" type="button" onclick="$('#samples').empty()">Clear all</button>
-            <input class="main_button" type="submit" value="Submit" name="search" id="run-button"/>
-        </div>
+    <div id="final-buttons-wrapper">
+        <input class="main_button" type="submit" value="Compare" name="search" id="run-button"/>
+        <div id="loading"><img src="${pageContext.request.contextPath}/img/compare_load.gif"></div>
+        |
+        <a id="clear-all-button" type="button" onclick="ClearAll()">Clear all</a>
     </div>
-
-
 </form:form>
-</div>
-
-<br><br>
-
+<br>
 <%--TODO: Clean up code a bit--%>
+
 <script type="text/javascript" defer="defer">
     $(document).ready(function () {
-        $('#choose-project').click(function()
+        $('#projects').change(function()
         {
             var studyId = $('#projects').val();
             $.ajax({
@@ -139,10 +168,33 @@ align-self: center;
                     alert("Request failed: " + textStatus);
                 }
             });//end ajax method
-//            alert(studyId);
         });
     });
 </script>
+
+<%--script type="text/javascript" defer="defer">//Try of return of post request with AJAX...
+/*    $(document).ready(function () {
+        $('#comparison-tool-form-id').submit(function(event)
+        {
+            var requestText = $("#comparison-tool-form-id").serialize();
+            alert(requestText);
+            $.ajax({
+                url:jQuery(this).attr("action"),
+                type:"POST",
+                data:requestText,
+                success:function (response) {
+                    alert("Hi");
+                    $("#demo").html("Hey coucou toi.");
+                },
+                error:function (jqXHR, textStatus, errorThrown) {
+                    alert("Request failed: " + textStatus);
+                }
+            });//end ajax method
+//            alert(studyId);
+        });
+    });*/
+
+</script--%>
 
 <script type="text/javascript" defer="defer">
     $(document).ready(function () {
@@ -164,103 +216,95 @@ align-self: center;
     });
 </script>
 
-
 <script defer="defer">
-    // Replace long text by substring + dots
+    // Visual details and various utility javascript
+    $('#sample-choice').hide();
+    // Select all samples in the sample selection box
+    function SelectAllSamples() {
+        $('#samples option').each(function () {
+            $(this).attr('selected', true);
+        });
+    }
+
+    // Unselect all samples in the sample selection box
+    function UnselectAllSamples() {
+        $('#samples option').each(function () {
+            $(this).attr('selected', false);
+        });
+    }
+
+    // Clear all : deselect project, clear sample selection box, clear all settings.
+    function ClearAll() {
+        // Settings first
+        $('#vis-choice').val('nothing').trigger('change');
+        $('#data-choice').val('nothing').trigger('change');
+        // Samples emptying
+        $('#samples').empty();
+        // Now the project
+        $('#projects option').attr('selected', false);
+
+    }
+    // Replace too long text with a shorter one + '...'
+    var maxLength = 90;
+
+    // Replace long text by substring + dots in both project and sample select
     $("#projects option").each(function()
-{
-    if($(this).text().length>80)
+            {
+                if ($(this).text().length > maxLength) {
+                    $(this).text($(this).text().substring(0, (maxLength - 3)) + "...");
+                }
+                else {
+                    $(this).text($(this).text());
+                }
+            });
+
+    $("#samples option").each(function()
     {
-        $(this).text($(this).text().substring(0, 77)+"...");
-    }
-    else
-    {
-        $(this).text($(this).text());
-    }
-});</script>
-
-<script>
-    $(document).ready(function () {
-        // Elements are disabled and hidden at start and enabled and displayed if certain conditions are matched
-        document.getElementById('data-choice').disabled = true;
-        document.getElementById('vis-choice').disabled = true;
-        document.getElementById('samples').disabled = true;
-        document.getElementById('clearAll').disabled = true;
-        document.getElementById('remove').disabled = true;
-        document.getElementById('run-button').disabled = true;
-        $('#settings').hide();
-        $('#sample-choice').hide();
-
-        $('#choose-project').click(function () {
-            document.getElementById('data-choice').disabled = false;
-            $('#settings').fadeIn('slow');
-
-        });
-
-        // Data choice
-        $('#data-choice').change(function() {       if($('#data-choice').val() !== "nothing") {
-            document.getElementById('vis-choice').disabled = false;
-        }
-            else {
-            document.getElementById('vis-choice').disabled = true;
-            }
-        });
-
-        // Visualization choice
-        $('#vis-choice').change(function() {       if($('#vis-choice').val() !== "nothing") {
-            document.getElementById('samples').disabled = false;
-            document.getElementById('clearAll').disabled = false;
-            document.getElementById('remove').disabled = false;
-            $('#sample-choice').fadeIn('slow');
+        if ($(this).text().length > maxLength) {
+            $(this).text($(this).text().substring(0, (maxLength - 3)) + "...");
         }
         else {
-            document.getElementById('samples').disabled = true;
-            document.getElementById('clearAll').disabled = true;
-            document.getElementById('remove').disabled = true;
+            $(this).text($(this).text());
         }
-        });
-
-        // Samples
-        $('#samples').change(function() {
-            var numberSelected = $("#samples option:selected").length;
-            document.getElementById("selected-samples").innerHTML = numberSelected+" selected samples.";
-            if(numberSelected < 2) {
-            document.getElementById('run-button').disabled = true;
-        }
-            else {
-                document.getElementById('run-button').disabled = false;
-            }
-        });
-        // Run
-        $('#run-button').click(function() {
-            alert("I have been enabled and clicked.");
-        });
-
-
-    });
-       // document.getElementById('clearAll').disabled;
-       // document.getElementById('remove').disabled;
-</script>
-
-<script>
-
-
-</script>
-<!-- script>
-    var names = $('#samples option').clone();
-    $('#samples').empty();
-    $('#projects').change(function() {
-        var val = $(this).val();
-        $('#samples').empty();
-        names.filter(function(idx, el) {
-            return $(el).text().indexOf('(' + val + ')') >= 0;
-        }).appendTo('#samples');
     });
 
-    function DisplayText() {
-var texto = "coucou";
+    // Loading div when AJAX request is requested (useless at the moment because not using any ajax request).
+    $('#loading').hide(); //initially hide the loading icon
 
-        document.getElementById("demo").innerHTML = texto;
+    $('#loading').ajaxStart(function(){
+        $(this).show();
+        //console.log('shown');
+    });
+    $("#loading").ajaxStop(function(){
+        $(this).hide();
+        //  console.log('hidden');
+    });
+    // Selected samples number
+    $('#samples-control').click(function() {
+        var numberSelected = $('#samples :selected').length;
+        document.getElementById("selected-samples").innerHTML = "Sample list (" + numberSelected + " selected)";
+    });
+    $('#samples').change(function() {
+        var numberSelected = $('#samples :selected').length;
+        document.getElementById("selected-samples").innerHTML = "Sample list (" + numberSelected + " selected)";
+    });
 
-    }
-</script-->
+    // Filter options of visualization according to the chosen data STILL TO DO
+    $('#data-choice').change(function() {
+        var selectedData = $('#data-choice').children(":selected").attr("value");
+        if (selectedData === "nothing") {
+           // $("#vis-choice option[value='table']").prop("disabled", true);
+        }
+        else {
+
+        }
+    });
+
+    // Show / hide advanced settings
+    $(function(){
+        $('#advanced-settings-div').hide();
+        $('#advanced-settings-link').click(function() {
+            $('#advanced-settings-div').toggle(200);
+        });
+    });
+</script>

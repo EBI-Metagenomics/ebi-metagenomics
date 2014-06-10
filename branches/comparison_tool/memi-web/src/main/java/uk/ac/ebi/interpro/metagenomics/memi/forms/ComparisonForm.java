@@ -20,18 +20,23 @@ public class ComparisonForm {
     @NotEmpty(message = "Please select a project")
     private String study;
 
-    @NotEmpty(message = "Please select data")
+    @NotEmpty(message = "Please select some data")
     private String usedData;
 
-    @NotEmpty(message = "Please select visualization")
-    private String usedVis;
+    private boolean keepNames = true;
 
-    private boolean keepNames;
-
+    @NotEmpty(message = "Please select samples to compare (at least two)")
     private List<Long> samples = new ArrayList<Long>();
 
+    private double stackThreshold = 1.0;
 
-//TODO: Implement other selection attribute + getter and setter methods
+    private String hmClust;
+
+    private String hmDendrogram;
+
+    private boolean hmLegend = true;
+
+    //TODO: Implement other selection attribute + getter and setter methods
 
     public boolean isKeepNames() {
         return keepNames;
@@ -49,14 +54,6 @@ public class ComparisonForm {
         this.samples = samples;
     }
 
-    public String getUsedVis() {
-        return usedVis;
-    }
-
-    public void setUsedVis(String usedVis) {
-        this.usedVis = usedVis;
-    }
-
     public String getStudy() {
         return study;
     }
@@ -71,5 +68,37 @@ public class ComparisonForm {
 
     public void setUsedData(String usedData) {
         this.usedData = usedData;
+    }
+
+    public double getStackThreshold() {
+        return stackThreshold;
+    }
+
+    public void setStackThreshold(long stackThreshold) {
+        this.stackThreshold = stackThreshold;
+    }
+
+    public String getHmClust() {
+        return hmClust;
+    }
+
+    public void setHmClust(String hmClust) {
+        this.hmClust = hmClust;
+    }
+
+    public boolean isHmLegend() {
+        return hmLegend;
+    }
+
+    public void setHmLegend(boolean hmLegend) {
+        this.hmLegend = hmLegend;
+    }
+
+    public String getHmDendrogram() {
+        return hmDendrogram;
+    }
+
+    public void setHmDendrogram(String hmDendrogram) {
+        this.hmDendrogram = hmDendrogram;
     }
 }

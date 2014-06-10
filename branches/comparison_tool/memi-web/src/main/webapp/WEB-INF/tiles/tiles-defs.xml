@@ -91,6 +91,11 @@
         <put-attribute name="body" value="/templates/compareBody.jsp"/>
     </definition>
 
+    <definition name="compareResult" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="ebigreen"/>
+        <put-attribute name="body" value="/templates/compareResultBody.jsp"/>
+    </definition>
+
     <definition name="contact" extends="rootTemplate">
         <put-attribute name="bodyClass" type="string" value="ebigreen"/>
         <put-attribute name="body" value="/templates/contactBody.jsp"/>
