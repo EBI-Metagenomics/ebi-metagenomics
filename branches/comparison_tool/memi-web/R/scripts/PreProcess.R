@@ -71,7 +71,6 @@ CreateAbTable <- function(outputName, fileList, usedData = c('GO','GOslim','IPR'
   
   # If size is too large (10 samples or more), divide into chunks of five.
   if(size>=10) {
-    
     mergedNumber = as.integer(size/5)
     subTableList <- list()
     for (j in 1:(mergedNumber)) {
@@ -111,7 +110,7 @@ CreateAbTable <- function(outputName, fileList, usedData = c('GO','GOslim','IPR'
   
   # Save the matrix in a file with a custom filename
   # fileName = paste('abundance',usedData,Sys.Date(),sep='_')
-  write.table(abTable,paste('R/tables/',outputName,'.txt',sep=''),sep='\t',col.names=NA,quote=FALSE)
+  # write.table(abTable,paste('R/tables/',outputName,'.txt',sep=''),sep='\t',col.names=NA,quote=FALSE)
   return(abTable)
   } 
 

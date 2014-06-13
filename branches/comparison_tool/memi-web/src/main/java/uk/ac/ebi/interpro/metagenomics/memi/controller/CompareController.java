@@ -141,7 +141,7 @@ public class CompareController extends AbstractController implements IController
         // Creation of unique file name/id used during the whole procedure
             final String uniqueOutputName = usedData+"_"+System.currentTimeMillis();
         // Print the command we will use to see if it's correct (format / order of parameters)
-            System.out.println("Rscript R/launch_v7.R "+uniqueOutputName+" "+rFriendlyFileList+" "+comparisonForm.getUsedData()+" "+rFriendlySampleNames+" "+comparisonForm.getStackThreshold()+" "+hmPar);
+            System.out.println("Rscript R/launch_v8.R "+uniqueOutputName+" "+rFriendlyFileList+" "+comparisonForm.getUsedData()+" "+rFriendlySampleNames+" "+comparisonForm.getStackThreshold()+" "+hmPar);
 
         // First try: run shell script with test files (so without using form data)
         String s = null;
@@ -149,7 +149,7 @@ public class CompareController extends AbstractController implements IController
         try {
 
             // use the Runtime exec method:
-            Process p = Runtime.getRuntime().exec("Rscript R/launch_v7.R "+uniqueOutputName+" "+rFriendlyFileList+" "+comparisonForm.getUsedData()+" "+rFriendlySampleNames+" "+comparisonForm.getStackThreshold()+" "+hmPar);
+            Process p = Runtime.getRuntime().exec("Rscript R/launch_v8.R "+uniqueOutputName+" "+rFriendlyFileList+" "+comparisonForm.getUsedData()+" "+rFriendlySampleNames+" "+comparisonForm.getStackThreshold()+" "+hmPar);
             //Other method ? Not working...Process p = Runtime.getRuntime().exec("R CMD BATCH --no-save --no-restore '--args "+rFriendlyFileList+" "+comparisonForm.getUsedData()+" "+comparisonForm.isKeepNames()+" "+abundanceTableName+" 0' R/launch.R output.out");
 
             BufferedReader stdInput = new BufferedReader(new

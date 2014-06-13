@@ -85,7 +85,7 @@ a:hover {
             <h4>Data</h4>
             <form:select path="usedData" id="data-choice">
                 <form:option value="nothing">Select data</form:option>
-                <form:option value="GO" disabled="true">Full GO annotation</form:option>
+                <form:option value="GO">Full GO annotation</form:option>
                 <form:option value="GOslim">GO slim annotation</form:option>
                 <form:option value="IPR" disabled="true">InterPro matches</form:option>
                 <form:option value="IPRcol" disabled="true">Collapsed InterPro matches</form:option>
@@ -118,7 +118,7 @@ a:hover {
                 </ul></li>
                 <li><strong>Stacked columns</strong>
                     <ul>
-                        <li><form:input path="stackThreshold" type="number" min="0" max="50" step="0.1"/> Stacking threshold (%)</li>
+                        <li><form:input path="stackThreshold" type="number" min="0" max="50" step="0.1" value="1"/> Stacking threshold (%)</li>
                     </ul>
                 </li>
                 <li><strong>Heatmap</strong><ul>
@@ -137,6 +137,11 @@ a:hover {
                     </form:select>Show dendrograms (if clustering)</li>
                 </ul>
                 </li>
+                <%--li><strong>Full GO annotation</strong>
+                    <ul>
+
+                    </ul>
+                </li--%>
 
             </ul>
         </div>
