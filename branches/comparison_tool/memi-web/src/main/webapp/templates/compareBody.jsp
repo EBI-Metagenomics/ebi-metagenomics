@@ -137,11 +137,12 @@ a:hover {
                     </form:select>Show dendrograms (if clustering)</li>
                 </ul>
                 </li>
-                <%--li><strong>Full GO annotation</strong>
+                <li><strong>Full GO annotation</strong>
                     <ul>
+                        <li> Show the <form:input path="GOnumber" type="number" min="20" max="250" step="1"/> GO terms which vary the most</li>
 
                     </ul>
-                </li--%>
+                </li>
 
             </ul>
         </div>

@@ -149,7 +149,7 @@ public class CompareController extends AbstractController implements IController
         try {
 
             // use the Runtime exec method:
-            Process p = Runtime.getRuntime().exec("Rscript R/launch_v8.R "+uniqueOutputName+" "+rFriendlyFileList+" "+comparisonForm.getUsedData()+" "+rFriendlySampleNames+" "+comparisonForm.getStackThreshold()+" "+hmPar);
+            Process p = Runtime.getRuntime().exec("Rscript R/launch_v8.R "+uniqueOutputName+" "+rFriendlyFileList+" "+comparisonForm.getUsedData()+" "+rFriendlySampleNames+" "+comparisonForm.getStackThreshold()+" "+hmPar+" "+comparisonForm.getGOnumber());
             //Other method ? Not working...Process p = Runtime.getRuntime().exec("R CMD BATCH --no-save --no-restore '--args "+rFriendlyFileList+" "+comparisonForm.getUsedData()+" "+comparisonForm.isKeepNames()+" "+abundanceTableName+" 0' R/launch.R output.out");
 
             BufferedReader stdInput = new BufferedReader(new

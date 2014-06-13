@@ -10,7 +10,7 @@ library(methods)
 library(rCharts)
 
 # A boolean to disable heatmap generation as it doesn't work on the server ...
-commit = TRUE
+commit = FALSE
 
 # Allow R to read command arguments
 parameters <- commandArgs(TRUE)
@@ -51,7 +51,7 @@ abTable = CreateAbTable(name, files, data, sampleNames)
 # First try to deal with the full GO stuff ...
 if(data=='GO') {
   mostVarNames = names(sort(apply(abTable, 2, var),decreasing=TRUE))
-  abTable = abTable [,c(mostVarNames[1:120])]
+  abTable = abTable [,c(mostVarNames[1:as.integer(parameters[7])])]
 }
 
 # Dealing with all visualizations
@@ -133,7 +133,7 @@ write(c(totalCode),paste('R/tmpGraph/',name,'_stack','.htm',sep=''))
 #########################################
 ########### Static Heatmap ##############
 #########################################
-hmCode = '<p><i>Generation of PNG heatmaps is not working on the server ...</i></p>'
+# hmCode = '<p><i>Generation of PNG heatmaps is not working on the server ...</i></p>'
 if(!commit) {
 source('R/scripts/StaticHeatmap_v3.R')
 pathAndName = paste('src/main/webapp/img/comparison/',c('bio_','cell_','mol_'),name,'.png',sep='')

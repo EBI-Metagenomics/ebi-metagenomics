@@ -30,6 +30,8 @@ public class ComparisonForm {
 
     private double stackThreshold = 1.0;
 
+    private int GOnumber = 150;
+
     private String hmClust;
 
     private String hmDendrogram;
@@ -76,6 +78,14 @@ public class ComparisonForm {
 
     public void setStackThreshold(long stackThreshold) {
         this.stackThreshold = stackThreshold;
+    }
+
+    public int getGOnumber() {
+        return GOnumber;
+    }
+
+    public void setGOnumber(int GOnumber) {
+        this.GOnumber = GOnumber;
     }
 
     public String getHmClust() {
