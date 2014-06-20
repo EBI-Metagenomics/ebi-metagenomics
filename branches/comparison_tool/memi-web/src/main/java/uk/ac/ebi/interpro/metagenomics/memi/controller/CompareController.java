@@ -1,5 +1,7 @@
 package uk.ac.ebi.interpro.metagenomics.memi.controller;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -28,7 +30,6 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -36,11 +37,14 @@ import java.util.Map;
  * Represents the controller for the MG portal home page.
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
+ * @author Francois Bucchini, trainee@EMBL-EBI
  * @since 1.0-SNAPSHOT
  */
 @Controller(value = "compareController")
 @RequestMapping('/' + CompareController.VIEW_NAME)
 public class CompareController extends AbstractController implements IController {
+
+    private final Log log = LogFactory.getLog(CompareController.class);
 
     /**
      * View name of this controller which is used several times.
@@ -69,10 +73,10 @@ public class CompareController extends AbstractController implements IController
                         defaultViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_COMPARE_VIEW);
 
                         // Retrieving list of public studies and samples + add attributes
-                        List<Study> studyList = studyDAO.retrieveOrderedPublicStudies("studyName",false);
+                        List<Study> studyList = studyDAO.retrieveOrderedPublicStudies("studyName", false);
                         model.addAttribute(ViewModel.MODEL_ATTR_NAME, defaultViewModel);
-                        model.addAttribute("studies",studyList);
-                        model.addAttribute("comparisonForm",new ComparisonForm());
+                        model.addAttribute("studies", studyList);
+                        model.addAttribute("comparisonForm", new ComparisonForm());
                     }
                 });
     }
@@ -82,6 +86,7 @@ public class CompareController extends AbstractController implements IController
                                                  BindingResult result,
                                                  ModelMap model) throws IOException {
         model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
+        //Build model and view for error page
         if (result.hasErrors()) {
             return buildModelAndView(
                     getModelViewName(),
@@ -93,63 +98,63 @@ public class CompareController extends AbstractController implements IController
                             final ViewModel defaultViewModel = builder.getModel();
                             defaultViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_COMPARE_VIEW);
                             // Retrieving list of public studies and samples + add attributes
-                            List<Study> studyList = studyDAO.retrieveOrderedPublicStudies("studyName",false);
+                            List<Study> studyList = studyDAO.retrieveOrderedPublicStudies("studyName", false);
                             model.addAttribute(ViewModel.MODEL_ATTR_NAME, defaultViewModel);
-                            model.addAttribute("studies",studyList);
-                            //model.addAttribute("comparisonForm",comparisonForm);
+                            model.addAttribute("studies", studyList);
                         }
                     });
         }
-        String usedData = comparisonForm.getUsedData();
-        List<String> inputFilePaths = new ArrayList<String>();
-        for(Long sampleId : comparisonForm.getSamples()) {
-            final EmgFile emgFile = getEmgFile(sampleId);
+        //Get form input data
+        final String usedData = comparisonForm.getUsedData();
+        final List<Long> allSamples = comparisonForm.getSamples();
 
-            if (emgFile != null) {
-                // If statements depending on the nature of the data type chosen by the user
-                DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(FileDefinitionId.INTERPRO_MATCHES_SUMMARY_FILE.name());
-                if(usedData.equals("GO"))
-                    fileDefinition = fileDefinitionsMap.get(FileDefinitionId.GO_COMPLETE_FILE.name());
-                if(usedData.equals("GOslim"))
-                    fileDefinition = fileDefinitionsMap.get(FileDefinitionId.GO_SLIM_FILE.name());
-                File fileObject = FileObjectBuilder.createFileObject(emgFile, propertyContainer, fileDefinition);
-                String absoluteFilePath = fileObject.getAbsolutePath();
-                inputFilePaths.add(absoluteFilePath);
-            }
-        }
+        //Get input file paths, which are used to generate abundance table
+        final List<String> inputFilePaths = getInputFilePaths(usedData, allSamples);
 
         // Samples instead of retrieved ID.
-        List <Sample> sampleList = new ArrayList<Sample>();
-        List<Long> allSamples = comparisonForm.getSamples();
+        List<Sample> sampleList = new ArrayList<Sample>();
         List<String> sampleTextId = new ArrayList<String>();
-        for(int i=0;i<allSamples.size();i++){
+        for (int i = 0; i < allSamples.size(); i++) {
             sampleList.add(sampleDAO.read(allSamples.get(i)));
-            if(comparisonForm.isKeepNames())
-                sampleTextId.add("S" + String.format("%02d", i+1) + "(" + sampleList.get(i).getSampleId() + ")");
+            if (comparisonForm.isKeepNames())
+                sampleTextId.add("S" + String.format("%02d", i + 1) + "(" + sampleList.get(i).getSampleId() + ")");
             else
-                sampleTextId.add("Sample"+String.format("%02d", i+1));
+                sampleTextId.add("Sample" + String.format("%02d", i + 1));
         }
 
         // Print working directory, just to see what's happening
-        System.out.println("Working Directory = " + System.getProperty("user.dir"));
+        log.info("Creating abundance table and visualisations...");
+        log.info("Working Directory = " + System.getProperty("user.dir"));
+        final String htmlResultFileDirectory = "R/tmpGraph/";
+        //absolute path of the R script
+        final String rScriptPath = "R/launch_v8.R";
+        //Check if R script exists and if it is executable
+        doCheckScriptFile(rScriptPath);
 
         // Creation of 'R friendly' String objects containing : absolute paths to the files used by the R script, correct samples names if we want to keep them, heatmap parameters.
         String rFriendlyFileList = inputFilePaths.toString().replace("[", "").replace("]", "").replace(", ", ",");
         String rFriendlySampleNames = sampleTextId.toString().replace("[", "").replace("]", "").replace(", ", ",");
-        String hmPar = comparisonForm.isHmLegend()+","+comparisonForm.getHmClust()+","+comparisonForm.getHmDendrogram();
+        String hmPar = comparisonForm.isHmLegend() + "," + comparisonForm.getHmClust() + "," + comparisonForm.getHmDendrogram();
 
         // Creation of unique file name/id used during the whole procedure
-            final String uniqueOutputName = usedData+"_"+System.currentTimeMillis();
-        // Print the command we will use to see if it's correct (format / order of parameters)
-            System.out.println("Rscript R/launch_v8.R "+uniqueOutputName+" "+rFriendlyFileList+" "+comparisonForm.getUsedData()+" "+rFriendlySampleNames+" "+comparisonForm.getStackThreshold()+" "+hmPar);
+        final String uniqueOutputName = usedData + "_" + System.currentTimeMillis();
 
         // First try: run shell script with test files (so without using form data)
         String s = null;
 
         try {
 
+            final char WHITESPACE = ' ';
+            String executionCommand;
+            executionCommand = "Rscript" + WHITESPACE + rScriptPath + WHITESPACE + uniqueOutputName + WHITESPACE + rFriendlyFileList +
+                    WHITESPACE + comparisonForm.getUsedData() + WHITESPACE + rFriendlySampleNames + WHITESPACE + comparisonForm.getStackThreshold() +
+                    WHITESPACE + hmPar + " " + comparisonForm.getGOnumber();
+//            executionCommand = "Rscript R/simple.R";
+            // Print the command we will use to see if it's correct (format / order of parameters)
+            log.info("Running the following R command to generate abundance table and visualisations:\n"+executionCommand);
+
             // use the Runtime exec method:
-            Process p = Runtime.getRuntime().exec("Rscript R/launch_v8.R "+uniqueOutputName+" "+rFriendlyFileList+" "+comparisonForm.getUsedData()+" "+rFriendlySampleNames+" "+comparisonForm.getStackThreshold()+" "+hmPar+" "+comparisonForm.getGOnumber());
+            Process p = Runtime.getRuntime().exec(executionCommand);
             //Other method ? Not working...Process p = Runtime.getRuntime().exec("R CMD BATCH --no-save --no-restore '--args "+rFriendlyFileList+" "+comparisonForm.getUsedData()+" "+comparisonForm.isKeepNames()+" "+abundanceTableName+" 0' R/launch.R output.out");
 
             BufferedReader stdInput = new BufferedReader(new
@@ -181,7 +186,7 @@ public class CompareController extends AbstractController implements IController
         // We have HTML parts (different files), it would be cool to store it as a string array.
         String tmpGraphDir = "R/tmpGraph/";
         final String[] htmlFile = {
-                ReadFile(tmpGraphDir+uniqueOutputName+"_overview.htm"),
+                ReadFile(tmpGraphDir + uniqueOutputName + "_overview.htm"),
                 ReadFile(tmpGraphDir + uniqueOutputName + "_bar.htm"),
                 ReadFile(tmpGraphDir + uniqueOutputName + "_stack.htm"),
                 ReadFile(tmpGraphDir + uniqueOutputName + "_hm.htm"),
@@ -190,31 +195,69 @@ public class CompareController extends AbstractController implements IController
 
 
         ModelAndView mav = new ModelAndView("/compareResult");
-        mav.addObject("graphCode",htmlFile);
+        mav.addObject("graphCode", htmlFile);
         // Result Header elements
-        mav.addObject("study",studyDAO.read(Long.valueOf(comparisonForm.getStudy())));
-        mav.addObject("samples",sampleList);
-        mav.addObject("data",comparisonForm.getUsedData());
+        mav.addObject("study", studyDAO.read(Long.valueOf(comparisonForm.getStudy())));
+        mav.addObject("samples", sampleList);
+        mav.addObject("data", usedData);
         return mav;
     }
 
-        @RequestMapping(value = "/samples")
+    private void doCheckScriptFile(String rScriptPath) {
+        File rScriptFile = new File(rScriptPath);
+        log.info("Running some checks on the R script before execution (checking existence and whether the application can read the file)...");
+        log.info("Checking file:\n" + rScriptFile.getAbsolutePath());
+        if (!rScriptFile.canRead()) {
+            log.warn("The R script isn't readable! Make sure you set the right permission.");
+        } else {
+            log.info("Successfully ran all tests.");
+        }
+    }
+
+    /**
+     * Get input file paths, which are used to generate the abundance table.
+     *
+     * @param usedData
+     * @param allSamples
+     * @return List of input file paths.
+     */
+    private List<String> getInputFilePaths(String usedData, List<Long> allSamples) {
+        List<String> inputFilePaths = new ArrayList<String>();
+        for (Long sampleId : allSamples) {
+            final EmgFile emgFile = getEmgFile(sampleId);
+
+            if (emgFile != null) {
+                // If statements depending on the nature of the data type chosen by the user
+                DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(FileDefinitionId.INTERPRO_MATCHES_SUMMARY_FILE.name());
+                if (usedData.equals("GO"))
+                    fileDefinition = fileDefinitionsMap.get(FileDefinitionId.GO_COMPLETE_FILE.name());
+                if (usedData.equals("GOslim"))
+                    fileDefinition = fileDefinitionsMap.get(FileDefinitionId.GO_SLIM_FILE.name());
+                File fileObject = FileObjectBuilder.createFileObject(emgFile, propertyContainer, fileDefinition);
+                String absoluteFilePath = fileObject.getAbsolutePath();
+                inputFilePaths.add(absoluteFilePath);
+            }
+        }
+        return inputFilePaths;
+    }
+
+    @RequestMapping(value = "/samples")
     public ModelAndView getSamplesByID(
             @RequestParam(value = "studyId", required = true) final long studyId
-    ){
-            ModelAndView mav = new ModelAndView("/compareSamples");
+    ) {
+        ModelAndView mav = new ModelAndView("/compareSamples");
         List<Sample> sampleListForId = sampleDAO.retrievePublicSamplesByStudyId(studyId);
-        mav.addObject("samples",sampleListForId);
+        mav.addObject("samples", sampleListForId);
         return mav;
     }
 
     @RequestMapping(value = "/studies")
     public ModelAndView getStudyDescription(
             @RequestParam(value = "studyId", required = true) final String studyId
-    ){
+    ) {
         ModelAndView mav = new ModelAndView("/compareStudies");
         Study currentStudy = studyDAO.readByStringId(studyId);
-        mav.addObject("study",currentStudy);
+        mav.addObject("study", currentStudy);
         return mav;
     }
 
@@ -243,9 +286,9 @@ public class CompareController extends AbstractController implements IController
         } finally {
             br.close();
             // Remove the temporary files, we don't want to keep them once they are displayed
-            boolean success = (new File (fileName)).delete();
-            if(success){
-                System.out.println("Temporary file deleted ("+fileName+")");
+            boolean success = (new File(fileName)).delete();
+            if (success) {
+                System.out.println("Temporary file deleted (" + fileName + ")");
             }
         }
 
