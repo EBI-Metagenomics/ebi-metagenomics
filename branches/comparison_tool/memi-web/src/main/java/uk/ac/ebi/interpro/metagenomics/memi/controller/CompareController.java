@@ -130,7 +130,7 @@ public class CompareController extends AbstractController implements IController
         log.info("Working Directory = " + System.getProperty("user.dir"));
         final String htmlResultFileDirectory = "R/tmpGraph/";
         //absolute path of the R script
-        final String rScriptPath = "R/launch_v8.R";
+        final String rScriptPath = "R/launch_v9.R";
         //Check if R script exists and if it is executable
         doCheckScriptFile(rScriptPath);
 

@@ -24,10 +24,6 @@
         display:inline-block;
     }
 
-    #overview .rChart {
-        display:inline-block;
-    }
-
 </style>
 
 <h3><p>Functional analysis result: ${data}</p></h3>
@@ -45,6 +41,7 @@
         <li><a href="#bars">Barcharts</a></li>
         <li><a href="#stack">Stacked columns</a></li>
         <li><a href="#heatmap">Heatmap</a></li>
+        <li><a href="#pca">Principal Components Analysis</a></li>
         <li><a href="#jstable">Table</a></li>
     </ul>
     <div id="overview">
@@ -53,31 +50,32 @@
     <div id="bars">
         <div>${graphCode[1]}</div>
     </div>
-    <div id="stack">
-    <select id="stack_select">
-        <option value="">Choose a GO type</option>
-        <option value="bio">Biological process</option>
-        <option value="cell">Cellular component</option>
-        <option value="mol">Molecular function</option>
-    </select>
-    Select the stacked columns chart you want to show (1 per GO type)
-${graphCode[2]}
+    <div id="stack">Select category
+        <select id="stack_select">
+            <option value="">Choose a GO type</option>
+            <option value="bio">Biological process</option>
+            <option value="cell">Cellular component</option>
+            <option value="mol">Molecular function</option>
+        </select>
+        ${graphCode[2]}
     </div>
-    <div id="heatmap">
+    <div id="heatmap">Select category
         <select id="hm_select">
             <option value="">Choose a GO type</option>
             <option value="bio">Biological process</option>
             <option value="cell">Cellular component</option>
             <option value="mol">Molecular function</option>
         </select>
-Select the heatmap you want to show (1 per GO type)
         ${graphCode[3]}
+    </div>
+    <div id="pca">
+        PCA should go there. It won't be long now ...
     </div>
     <div id="jstable">
         <p>${graphCode[4]}</p>
     </div>
 </div>
-    <%--/div--%>
+<%--/div--%>
 <script>
     // jQuery FTW !!! Hiding / showing div for heatmaps and stacked columns
 
@@ -116,9 +114,9 @@ Select the heatmap you want to show (1 per GO type)
 
     // Then stacked columns
     hideAllStackDivs = function () {
-        $("#stack_bio").hide();
-        $("#stack_cell").hide();
-        $("#stack_mol").hide();
+        $("#stack_biological_process").hide();
+        $("#stack_cellular_component").hide();
+        $("#stack_molecular_function").hide();
     };
 
     handleNewStackSelection = function () {
@@ -127,13 +125,13 @@ Select the heatmap you want to show (1 per GO type)
 
         switch ($(this).val()) {
             case 'bio':
-                $("#stack_bio").show();
+                $("#stack_biological_process").show();
                 break;
             case 'cell':
-                $("#stack_cell").show();
+                $("#stack_cellular_component").show();
                 break;
             case 'mol':
-                $("#stack_mol").show();
+                $("#stack_molecular_function").show();
                 break;
         }
     };
