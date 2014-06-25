@@ -126,6 +126,7 @@ public class CompareController extends AbstractController implements IController
 
         // Print working directory, just to see what's happening
         log.info("Creating abundance table and visualisations...");
+        //TODO: We should make all these directories configurable in a Spring context file (working dir, temp dir, path to the script etc.)
         log.info("Working Directory = " + System.getProperty("user.dir"));
         final String htmlResultFileDirectory = "R/tmpGraph/";
         //absolute path of the R script
