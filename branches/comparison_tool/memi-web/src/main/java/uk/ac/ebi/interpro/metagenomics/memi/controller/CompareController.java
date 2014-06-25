@@ -42,6 +42,7 @@ import java.util.Map;
  */
 @Controller(value = "compareController")
 @RequestMapping('/' + CompareController.VIEW_NAME)
+//TODO: Use the logger instead of system out as much as possible (e.g. log.info("some useful message") or debug, warning, error)
 public class CompareController extends AbstractController implements IController {
 
     private final Log log = LogFactory.getLog(CompareController.class);
@@ -82,6 +83,7 @@ public class CompareController extends AbstractController implements IController
     }
 
     @RequestMapping(method = RequestMethod.POST)
+    //TODO: Either throw an exception OR use a try-catch block, but I wouldn't recommend using both
     public ModelAndView doPostComparisonToolForm(@Valid @ModelAttribute("comparisonForm") final ComparisonForm comparisonForm,
                                                  BindingResult result,
                                                  ModelMap model) throws IOException {
@@ -180,9 +182,8 @@ public class CompareController extends AbstractController implements IController
             e.printStackTrace();
         }
 
-        //TODO: 3. Check status of R script (RUNNING or FINISHED)
 
-        //TODO: 4. Consume abundance file and render the page
+        //Consume abundance file and render the page
         // We have HTML parts (different files), it would be cool to store it as a string array.
         String tmpGraphDir = "R/tmpGraph/";
         final String[] htmlFile = {
@@ -271,6 +272,8 @@ public class CompareController extends AbstractController implements IController
         return result;
     }
 
+    //TODO: Either throw an exception OR use a try-catch block, but I wouldn't recommend using both (Note, if you throw an exception you would have to catch that somewhere else)
+    //TODO: The naming convention for method names is that they start with a lower case character
     String ReadFile(String fileName) throws IOException {
         BufferedReader br = new BufferedReader(new FileReader(fileName));
         try {
