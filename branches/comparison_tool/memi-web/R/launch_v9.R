@@ -25,7 +25,7 @@ EMGcolors <- c('#058DC7','#50B432','#ED561B','#EDEF00','#24CBE5','#64E572','#FF9
 "%w/o%" <- function(x, y) x[!x %in% y] # ->  x without y 
 
 # Create table to retrieve names and type from a GO slim term
-GOslimTable <- read.table("R/ressources/GOslim_names.csv", sep = ",", quote = "\"", 
+GOslimTable <- read.table("R/resources/GOslim_names.csv", sep = ",", quote = "\"",
                           col.names = c("GO", "function", "type"), colClasses = c("character", "character", "character"))
 
 # Small check to see number of arguments. Uncomment to use.

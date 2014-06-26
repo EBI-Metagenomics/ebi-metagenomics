@@ -27,6 +27,12 @@ public class MemiPropertyContainer {
     /* Map of result file definitions. */
     private Map<FileDefinitionId, IResultFileDefinition> resultFileDefinitionMap = new HashMap<FileDefinitionId, IResultFileDefinition>();
 
+    private String rScriptLocation;
+
+    private String rInstallationLocation;
+
+    private String rOutputDir;
+
     MemiPropertyContainer() {
     }
 
@@ -60,5 +66,29 @@ public class MemiPropertyContainer {
 
     public void setResultFileDefinitionMap(Map<FileDefinitionId, IResultFileDefinition> resultFileDefinitionMap) {
         this.resultFileDefinitionMap = resultFileDefinitionMap;
+    }
+
+    public String getRScriptLocation() {
+        return rScriptLocation;
+    }
+
+    public void setRScriptLocation(String rScriptLocation) {
+        this.rScriptLocation = rScriptLocation;
+    }
+
+    public String getRInstallationLocation() {
+        return rInstallationLocation;
+    }
+
+    public void setRInstallationLocation(String rInstallationLocation) {
+        this.rInstallationLocation = rInstallationLocation;
+    }
+
+    public String getROutputDir() {
+        return rOutputDir;
+    }
+
+    public void setROutputDir(String rOutputDir) {
+        this.rOutputDir = rOutputDir;
     }
 }

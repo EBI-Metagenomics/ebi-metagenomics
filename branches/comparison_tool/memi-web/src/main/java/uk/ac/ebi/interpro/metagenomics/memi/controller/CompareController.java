@@ -128,9 +128,10 @@ public class CompareController extends AbstractController implements IController
         log.info("Creating abundance table and visualisations...");
         //TODO: We should make all these directories configurable in a Spring context file (working dir, temp dir, path to the script etc.)
         log.info("Working Directory = " + System.getProperty("user.dir"));
-        final String htmlResultFileDirectory = "R/tmpGraph/";
+        final String rTmpFileDirectory = propertyContainer.getROutputDir();
         //absolute path of the R script
-        final String rScriptPath = "R/launch_v9.R";
+        final String rScriptPath = propertyContainer.getRScriptLocation();
+        final String rInstallationLocation = propertyContainer.getRInstallationLocation();
         //Check if R script exists and if it is executable
         doCheckScriptFile(rScriptPath);
 
@@ -143,50 +144,47 @@ public class CompareController extends AbstractController implements IController
         final String uniqueOutputName = usedData + "_" + System.currentTimeMillis();
 
         // First try: run shell script with test files (so without using form data)
-        String s = null;
 
-        try {
-
-            final char WHITESPACE = ' ';
-            String executionCommand;
-            executionCommand = "Rscript" + WHITESPACE + rScriptPath + WHITESPACE + uniqueOutputName + WHITESPACE + rFriendlyFileList +
-                    WHITESPACE + comparisonForm.getUsedData() + WHITESPACE + rFriendlySampleNames + WHITESPACE + comparisonForm.getStackThreshold() +
-                    WHITESPACE + hmPar + " " + comparisonForm.getGOnumber();
+        final char WHITESPACE = ' ';
+        String executionCommand;
+        executionCommand = rInstallationLocation + WHITESPACE + rScriptPath + WHITESPACE + uniqueOutputName + WHITESPACE + rFriendlyFileList +
+                WHITESPACE + comparisonForm.getUsedData() + WHITESPACE + rFriendlySampleNames + WHITESPACE + comparisonForm.getStackThreshold() +
+                WHITESPACE + hmPar + " " + comparisonForm.getGOnumber();
 //            executionCommand = "Rscript R/simple.R";
-            // Print the command we will use to see if it's correct (format / order of parameters)
-            log.info("Running the following R command to generate abundance table and visualisations:\n"+executionCommand);
+        // Print the command we will use to see if it's correct (format / order of parameters)
+        log.info("Running the following R command to generate abundance table and visualisations:\n" + executionCommand);
 
-            // use the Runtime exec method:
-            Process p = Runtime.getRuntime().exec(executionCommand);
-            //Other method ? Not working...Process p = Runtime.getRuntime().exec("R CMD BATCH --no-save --no-restore '--args "+rFriendlyFileList+" "+comparisonForm.getUsedData()+" "+comparisonForm.isKeepNames()+" "+abundanceTableName+" 0' R/launch.R output.out");
+        // use the Runtime exec method:
+        Process p = Runtime.getRuntime().exec(executionCommand);
+        //Other method ? Not working...Process p = Runtime.getRuntime().exec("R CMD BATCH --no-save --no-restore '--args "+rFriendlyFileList+" "+comparisonForm.getUsedData()+" "+comparisonForm.isKeepNames()+" "+abundanceTableName+" 0' R/launch.R output.out");
 
-            BufferedReader stdInput = new BufferedReader(new
-                    InputStreamReader(p.getInputStream()));
+        BufferedReader stdInput = new BufferedReader(new
+                InputStreamReader(p.getInputStream()));
 
-            BufferedReader stdError = new BufferedReader(new
-                    InputStreamReader(p.getErrorStream()));
+        BufferedReader stdError = new BufferedReader(new
+                InputStreamReader(p.getErrorStream()));
 
-            // read the output from the command
-            System.out.println("Command output:\n");
-            while ((s = stdInput.readLine()) != null) {
-                System.out.println(s);
-            }
-
-            // read any errors from the attempted command
-            System.out.println("Command error (if any):\n");
-            while ((s = stdError.readLine()) != null) {
-                System.out.println(s);
-            }
-
-        } catch (IOException e) {
-            System.out.println("Exception! What happened? ");
-            e.printStackTrace();
+        // read the output from the command
+        System.out.println("Command output:\n");
+        String stdOutput = null;
+        while ((stdOutput = stdInput.readLine()) != null) {
+            System.out.println(stdOutput);
         }
 
+        // read any errors from the attempted command
+        System.out.println("Command error (if any):\n");
+        String stdErrorOuput = null;
+        while ((stdErrorOuput = stdError.readLine()) != null) {
+            System.out.println(stdError);
+        }
+        //Throw exception if stdError output (from running R) isn't NULL
+        if (stdErrorOuput != null) {
+            throw new IllegalStateException("R has thrown an exception:\n" + stdErrorOuput);
+        }
 
         //Consume abundance file and render the page
         // We have HTML parts (different files), it would be cool to store it as a string array.
-        String tmpGraphDir = "R/tmpGraph/";
+        String tmpGraphDir = rTmpFileDirectory;
         final String[] htmlFile = {
                 ReadFile(tmpGraphDir + uniqueOutputName + "_overview.htm"),
                 ReadFile(tmpGraphDir + uniqueOutputName + "_bar.htm"),
@@ -290,10 +288,10 @@ public class CompareController extends AbstractController implements IController
         } finally {
             br.close();
             // Remove the temporary files, we don't want to keep them once they are displayed
-            boolean success = (new File(fileName)).delete();
-            if (success) {
-                System.out.println("Temporary file deleted (" + fileName + ")");
-            }
+            //boolean success = (new File(fileName)).delete();
+            //if (success) {
+            //    System.out.println("Temporary file deleted (" + fileName + ")");
+            //}
         }
 
     }
