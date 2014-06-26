@@ -190,6 +190,7 @@ public class CompareController extends AbstractController implements IController
                 ReadFile(tmpGraphDir + uniqueOutputName + "_bar.htm"),
                 ReadFile(tmpGraphDir + uniqueOutputName + "_stack.htm"),
                 ReadFile(tmpGraphDir + uniqueOutputName + "_hm.htm"),
+                ReadFile(tmpGraphDir + uniqueOutputName + "_pca.htm"),
                 ReadFile(tmpGraphDir + uniqueOutputName + "_table.htm")
         };
 

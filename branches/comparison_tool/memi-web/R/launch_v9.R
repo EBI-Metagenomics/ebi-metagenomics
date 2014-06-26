@@ -116,6 +116,13 @@ hmCode = paste('<div id="hm_bio"><img src=\"','/metagenomics/img/comparison/',pa
 write(hmCode,paste('R/tmpGraph/',name,'_hm','.htm',sep=''))
 
 #########################################
+################# PCA ###################
+#########################################
+source('R/scripts/PCA.R')
+PCAcode = PCApage(abTable)
+write(PCAcode,paste('R/tmpGraph/',name,'_pca','.htm',sep=''))
+
+#########################################
 ################ Table ##################
 #########################################
 source('R/scripts/Table_v2.R')

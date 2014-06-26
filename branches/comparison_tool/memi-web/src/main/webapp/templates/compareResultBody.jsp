@@ -24,6 +24,10 @@
         display:inline-block;
     }
 
+    #pca .rChart {
+        display:inline-block;
+    }
+
 </style>
 
 <h3><p>Functional analysis result: ${data}</p></h3>
@@ -69,10 +73,12 @@
         ${graphCode[3]}
     </div>
     <div id="pca">
-        PCA should go there. It won't be long now ...
+        Principal Component 1 <input id="pc1" type="number" name="Principal Component 1" min="1" max="3" value="1" disabled>
+        Principal Component 2 <input id="pc2" type="number" name="Principal Component 2" min="1" max="3" value="2" disabled> <br>
+        <p>${graphCode[4]}</p>
     </div>
     <div id="jstable">
-        <p>${graphCode[4]}</p>
+        <p>${graphCode[5]}</p>
     </div>
 </div>
 <%--/div--%>
@@ -114,6 +120,39 @@
 
     // Then stacked columns
     hideAllStackDivs = function () {
+        $("#stack_biological_process").hide();
+        $("#stack_cellular_component").hide();
+        $("#stack_molecular_function").hide();
+    };
+
+    handleNewStackSelection = function () {
+
+        hideAllStackDivs();
+
+        switch ($(this).val()) {
+            case 'bio':
+                $("#stack_biological_process").show();
+                break;
+            case 'cell':
+                $("#stack_cellular_component").show();
+                break;
+            case 'mol':
+                $("#stack_molecular_function").show();
+                break;
+        }
+    };
+
+    $(document).ready(function() {
+
+        $("#stack_select").change(handleNewStackSelection);
+
+        // Run the event handler once now to ensure everything is as it should be
+        handleNewStackSelection.apply($("#stack_select"));
+
+    });
+
+    // Then stacked columns
+    hideAllPCA = function () {
         $("#stack_biological_process").hide();
         $("#stack_cellular_component").hide();
         $("#stack_molecular_function").hide();
