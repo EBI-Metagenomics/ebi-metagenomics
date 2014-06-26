@@ -175,7 +175,7 @@ public class CompareController extends AbstractController implements IController
         System.out.println("Command error (if any):\n");
         String stdErrorOuput = null;
         while ((stdErrorOuput = stdError.readLine()) != null) {
-            System.out.println(stdError);
+            System.out.println(stdErrorOuput);
         }
         //Throw exception if stdError output (from running R) isn't NULL
         if (stdErrorOuput != null) {
