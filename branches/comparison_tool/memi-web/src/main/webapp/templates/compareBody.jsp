@@ -4,49 +4,63 @@
 <!-- A bit of CSS to improve page display. Yay. Dubugging css is cool when you apply different colors on background -->
 <style type="text/css">
 
+.sample_comp h4 {margin-top:0;margin-bottom: 0; padding-left:0px;}  /*remove space for the label*/
+
 a:hover {
     cursor:pointer;
 }
 
 #row-wrapper{
-    width:100%;
-    height:250px;
-    background: transparent;
+    margin: 9px;
+    overflow: auto;
+    /*border: 1px #F00 solid;*/
 }
 
-#final-buttons-wrapper{
-    width:11%;
-    margin: 0 auto;
-    background: transparent;
+#buttons-wrapper{
+    margin: 0 9px 18px 0; /*add space below*/
+    text-align: center;
+    /*background: transparent;*/
+    /*border: 1px #adff2f solid;*/
 }
 
 #settings-wrapper{
-    background: transparent;
-    height:150px;
+    margin: 0 9px;
+    overflow: auto;
+    /*border: 1px #008000 solid;*/
 }
 
-#settings-wrapper .settings-div {
+#settings-wrapper .settings-div-data {
     float:left;
-    background: transparent;
-    padding: 10px;
+    /*background: transparent;*/
+    /*padding: 10px;*/
 }
+#settings-wrapper .settings-div-adv {float:left; margin-left: 18px;}
+
+#advanced-settings-wrapper { margin: 0 9px;
+    border: 1px #CCC solid;
+    background-color: #DDE6E6;  /*to define a better style for adv options*/
+}
+#advanced-settings-wrapper ul {padding-left:9px;}
+#advanced-settings-wrapper ul li {list-style-type:none;}
+#advanced-settings-wrapper ul li input {width:auto;}
 
 #project-div {
     float:left;
-    width: 45%;
-    height: 100%;
-    padding-left: 20px;
+    width: 48%;
+    /*height: 100%;*/
+    /*padding-left: 20px;*/
 }
 
 #samples-div {
     float:left;
-    width: 45%;
-    height: 100%;
-    padding-left: 20px;
+    width: 48%;
+    /*height: 100%;*/
+    margin-left: 18px;
 }
 
 </style>
 
+<div class="sample_comp">
 <h2>Sample comparison tool</h2>
 
 <div id="demo"></div>
@@ -74,6 +88,8 @@ a:hover {
 
             <div id="samples-div">
                 <h4 id="selected-samples">Sample list (0 selected)</h4>
+                <%-- Is the loading icon necessary? quite fast to load samples in the box
+                <div id="loading"><img src="${pageContext.request.contextPath}/img/compare_load.gif"></div>--%>
                 <form:select path="samples" multiple="true" size="9" id="samples" style="width:100%;">
                 </form:select>
                 <div id="samples-control"><a id="select-all-button" onclick="SelectAllSamples()">Select all</a> | <a id="unselect-all-button" onclick="UnselectAllSamples()">Unselect all </a></div>
@@ -81,14 +97,14 @@ a:hover {
     </div>
 
     <div id="settings-wrapper">
-        <div class="settings-div">
+        <div class="settings-div-data">
             <h4>Data</h4>
             <form:select path="usedData" id="data-choice">
                 <form:option value="nothing">Select data</form:option>
-                <form:option value="GO">Full GO annotation</form:option>
                 <form:option value="GOslim">GO slim annotation</form:option>
-                <form:option value="IPR" disabled="true">InterPro matches</form:option>
-                <form:option value="IPRcol" disabled="true">Collapsed InterPro matches</form:option>
+                <form:option value="GO">Full GO annotation</form:option>
+                <%--<form:option value="IPR" disabled="true">InterPro matches</form:option>--%>
+                <%--<form:option value="IPRcol" disabled="true">InterPro slim matches</form:option>--%>
             </form:select>
         </div>
         <%--div class="settings-div">
@@ -105,56 +121,60 @@ a:hover {
                 <form:option value="pca" disabled="true">Principal Components analysis</form:option>
             </form:select>
         </div--%>
-        <div class="settings-div" style="position:relative; bottom: 0;">
+        <div class="settings-div-adv">
             <h4>Advanced settings</h4>
-            <p><a id="advanced-settings-link">Show / hide advanced settings</a></p>
+            <a id="advanced-settings-link">Show / hide advanced settings</a>
             <!-- Advanced settings div, that should be hidden at the beginning -->
         </div>
-        <div id="advanced-settings-div" class="settings-div" title="Advanced settings">
-            <ul>
-                <li><strong>General</strong>
-                <ul>
-                    <li><form:checkbox path="keepNames" title="Check to keep sample ID"/><strong>Keep samples ID?</strong></li>
-                </ul></li>
-                <li><strong>Stacked columns</strong>
-                    <ul>
-                        <li><form:input path="stackThreshold" type="number" min="0" max="50" step="0.1" value="1"/> Stacking threshold (%)</li>
-                    </ul>
-                </li>
-                <li><strong>Heatmap</strong><ul>
-                    <li><form:checkbox path="hmLegend"/>Show legend<br></li>
-                    <li><form:select path="hmClust">
-                        <form:option value="none">No clustering</form:option>
-                        <form:option value="row">Observations (X axis)</form:option>
-                        <form:option value="column">Samples (Y axis)</form:option>
-                        <form:option value="both">Both</form:option>
-                    </form:select>Hierarchical clustering</li>
-                    <li><form:select path="hmDendrogram">
-                        <form:option value="none">No dendrograms</form:option>
-                        <form:option value="row">Observations (X axis)</form:option>
-                        <form:option value="column">Samples (Y axis)</form:option>
-                        <form:option value="both">Both</form:option>
-                    </form:select>Show dendrograms (if clustering)</li>
-                </ul>
-                </li>
-                <li><strong>Full GO annotation</strong>
-                    <ul>
-                        <li> Show the <form:input path="GOnumber" type="number" min="20" max="250" step="1"/> GO terms which vary the most</li>
 
-                    </ul>
-                </li>
 
-            </ul>
-        </div>
     </div>
-    <div id="final-buttons-wrapper">
+    <div id="advanced-settings-wrapper" title="Advanced settings">
+                <ul>
+                    <%--<li><strong>General</strong>--%>
+                    <%--<ul>--%>
+                        <%--<li><form:checkbox path="keepNames" title="Check to keep sample ID"/><strong>Keep samples ID?</strong></li>--%>
+                    <%--</ul></li>--%>
+                    <li><strong>Stacked columns</strong>
+                        <ul>
+                            <li>Stacking threshold (%): <form:input path="stackThreshold" type="number" min="0" max="50" step="0.1" value="1"/> </li>
+                        </ul>
+                    </li>
+                    <li><strong>Heatmap</strong><ul>
+                        <li>Show legend <form:checkbox path="hmLegend"/></li>
+                        <li>Hierarchical clustering: <form:select path="hmClust" id="heat-clust">
+                            <form:option value="none">No clustering</form:option>
+                            <form:option value="row">Observations (X axis)</form:option>
+                            <form:option value="column">Samples (Y axis)</form:option>
+                            <form:option value="both">Both</form:option>
+                        </form:select></li>
+                        <li>Show dendrograms (if clustering): <form:select path="hmDendrogram" id="heat-dendo">
+                            <form:option value="none">No dendrograms</form:option>
+                            <form:option value="row">Observations (X axis)</form:option>
+                            <form:option value="column">Samples (Y axis)</form:option>
+                            <form:option value="both">Both</form:option>
+                        </form:select></li>
+                    </ul>
+                    </li>
+                    <li><strong>Full GO annotation</strong>
+                        <ul>
+                            <li> Show the <form:input path="GOnumber" type="number" min="20" max="250" step="1"/> GO terms which vary the most</li>
+
+                        </ul>
+                    </li>
+
+                </ul>
+            </div>
+    <div id="buttons-wrapper">
         <input class="main_button" type="submit" value="Compare" name="search" id="run-button"/>
-        <div id="loading"><img src="${pageContext.request.contextPath}/img/compare_load.gif"></div>
+
         |
         <a id="clear-all-button" type="button" onclick="ClearAll()">Clear all</a>
     </div>
 </form:form>
-<br>
+
+</div>
+
 <%--TODO: Clean up code a bit--%>
 
 <script type="text/javascript" defer="defer">
@@ -244,6 +264,8 @@ a:hover {
         // Settings first
         $('#vis-choice').val('nothing').trigger('change');
         $('#data-choice').val('nothing').trigger('change');
+        $('#heat-clust').val('nothing').trigger('change');
+        $('#heat-dendo').val('nothing').trigger('change');
         // Samples emptying
         $('#samples').empty();
         // Now the project
@@ -279,10 +301,12 @@ a:hover {
 
     $('#loading').ajaxStart(function(){
         $(this).show();
+       // $('#samples').hide();
         //console.log('shown');
     });
     $("#loading").ajaxStop(function(){
         $(this).hide();
+       // $('#samples').show();
         //  console.log('hidden');
     });
     // Selected samples number
@@ -308,9 +332,9 @@ a:hover {
 
     // Show / hide advanced settings
     $(function(){
-        $('#advanced-settings-div').hide();
+        $('#advanced-settings-wrapper').hide();
         $('#advanced-settings-link').click(function() {
-            $('#advanced-settings-div').toggle(200);
+            $('#advanced-settings-wrapper').slideToggle(200);
         });
     });
 </script>
