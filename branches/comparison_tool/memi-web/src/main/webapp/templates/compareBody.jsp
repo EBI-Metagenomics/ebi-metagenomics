@@ -181,6 +181,9 @@ a:hover {
     $(document).ready(function () {
         $('#projects').change(function()
         {
+            UnselectAllSamples();
+            var numberSelected = $('#samples :selected').length;
+            document.getElementById("selected-samples").innerHTML = "Sample list (" + numberSelected + " selected)";
             var studyId = $('#projects').val();
             $.ajax({
                 url:"<c:url value="${baseURL}/compare/samples"/>",
@@ -225,6 +228,7 @@ a:hover {
 <script type="text/javascript" defer="defer">
     $(document).ready(function () {
         $('#projects').change(function() {
+
             var textId = $('#projects').children(":selected").attr("id");
             $.ajax({
                 url:"<c:url value="${baseURL}/compare/studies"/>",
@@ -272,6 +276,21 @@ a:hover {
         $('#projects option').attr('selected', false);
 
     }
+
+    // Order text of the samples select tag alphabetically.
+    function SortSamplesByText() {
+
+        $('#samples').each(function() {
+            var selectedValue = $(this).val();
+            // Sort all the options by text. It could easily be sorted by value.
+            $(this).html($('option', $(this)).sort(function(a, b) {
+                return a.text.toUpperCase() == b.text.toUpperCase() ? 0 : a.text.toUpperCase() < b.text.toUpperCase() ? -1 : 1
+            }));
+            // Select one option
+            $(this).val(selectedValue);
+        });
+    }
+
     // Replace too long text with a shorter one + '...'
     var maxLength = 90;
 

@@ -131,6 +131,7 @@ public class CompareController extends AbstractController implements IController
         final String rTmpFileDirectory = propertyContainer.getROutputDir();
         //absolute path of the R script
         final String rScriptPath = propertyContainer.getRScriptLocation();
+        final String rScriptName = propertyContainer.getRScriptName();
         final String rInstallationLocation = propertyContainer.getRInstallationLocation();
         //Check if R script exists and if it is executable
         doCheckScriptFile(rScriptPath);
@@ -147,12 +148,12 @@ public class CompareController extends AbstractController implements IController
 
         final char WHITESPACE = ' ';
         String executionCommand;
-        executionCommand = rInstallationLocation + WHITESPACE + rScriptPath + WHITESPACE + uniqueOutputName + WHITESPACE + rFriendlyFileList +
-                WHITESPACE + comparisonForm.getUsedData() + WHITESPACE + rFriendlySampleNames + WHITESPACE + comparisonForm.getStackThreshold() +
-                WHITESPACE + hmPar + " " + comparisonForm.getGOnumber();
+        executionCommand = rInstallationLocation + WHITESPACE + rScriptPath + "/" + rScriptName + WHITESPACE + rTmpFileDirectory + WHITESPACE +
+                rScriptPath + WHITESPACE + uniqueOutputName + WHITESPACE + rFriendlyFileList + WHITESPACE + comparisonForm.getUsedData() +
+                WHITESPACE + rFriendlySampleNames + WHITESPACE + comparisonForm.getStackThreshold() + WHITESPACE + hmPar + WHITESPACE + comparisonForm.getGOnumber();
 //            executionCommand = "Rscript R/simple.R";
         // Print the command we will use to see if it's correct (format / order of parameters)
-        log.info("Running the following R command to generate abundance table and visualisations:\n" + executionCommand);
+        log.info("Running the following R command to generate abundance table and visualizations:\n" + executionCommand);
 
         // use the Runtime exec method:
         Process p = Runtime.getRuntime().exec(executionCommand);

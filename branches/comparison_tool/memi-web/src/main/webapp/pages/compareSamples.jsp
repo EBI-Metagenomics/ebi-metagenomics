@@ -5,3 +5,7 @@
 <c:forEach var="sample" items="${samples}">
         <option value="${sample.id}" title="Sample ${sample.sampleId} | ${sample.sampleName} | ${sample.sampleAlias}">${sample.sampleName}</option>
     </c:forEach>
+
+<script>
+    SortSamplesByText(); // Function defined in compareBody.jsp. Could be moved in another place ?
+</script>

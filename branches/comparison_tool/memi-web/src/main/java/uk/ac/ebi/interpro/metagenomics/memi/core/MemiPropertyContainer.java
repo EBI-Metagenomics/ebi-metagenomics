@@ -29,6 +29,8 @@ public class MemiPropertyContainer {
 
     private String rScriptLocation;
 
+    private String rScriptName;
+
     private String rInstallationLocation;
 
     private String rOutputDir;
@@ -90,5 +92,13 @@ public class MemiPropertyContainer {
 
     public void setROutputDir(String rOutputDir) {
         this.rOutputDir = rOutputDir;
+    }
+
+    public String getRScriptName() {
+        return rScriptName;
+    }
+
+    public void setRScriptName(String rScriptName) {
+        this.rScriptName = rScriptName;
     }
 }
