@@ -77,7 +77,7 @@ tableJSON = toJSON(tableJSON)
 
 
 # Headers to JSON, dirty style !
-headers = paste('[ \n { \"title\": \"',colnames(newTable)[1],'\" },\n','{ \"title\": \"',colnames(newTable)[2],'\" },\n','{ \"title\": \"',colnames(newTable)[3],'\" },\n','{ \"title\":  \"',colnames(newTable)[4],' \" } \n ]',sep='')
+headers = paste('[ \n { \"title\": \"',colnames(newTable)[1],'\" },\n','{ \"title\": \"',colnames(newTable)[2],'\" },\n','{ \"title\": \"',colnames(newTable)[3],'\" },\n','{ \"title\": \"',colnames(newTable)[4],'\" },\n','{ \"title\": \"',colnames(newTable)[5],'\" },\n','{ \"title\":  \"',colnames(newTable)[6],' \" } \n ]',sep='')
 
 # Add the needed HTML code around: header, etc.
 
