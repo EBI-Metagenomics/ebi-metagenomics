@@ -38,9 +38,10 @@
                 <entry key="KRONA_HTML_FILE" value-ref="kronaHtmlFile"/>
             </map>
         </property>
-        <property name="rInstallationLocation" value="${r.installation.location}"/>
-        <property name="rScriptLocation" value="${r.script.location}"/>
-        <property name="rOutputDir" value="${r.output.dir}"/>
+        <property name="RInstallationLocation" value="${r.installation.location}"/>
+        <property name="RScriptLocation" value="${r.script.location}"/>
+        <property name="ROutputDir" value="${r.output.dir}"/>
+        <property name="RScriptName" value="${r.script.name}"/>
     </bean>
 
     <bean id="enaSubmission" class="uk.ac.ebi.interpro.metagenomics.memi.core.ENASubmissionURL">
