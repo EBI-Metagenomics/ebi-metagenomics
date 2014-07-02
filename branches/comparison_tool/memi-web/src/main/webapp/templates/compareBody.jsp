@@ -87,7 +87,7 @@ a:hover {
         </div>
 
             <div id="samples-div">
-                <h4 id="selected-samples">Sample list (0 selected)</h4>
+                <h4 id="selected-samples">Sample list</h4>
                 <%-- Is the loading icon necessary? quite fast to load samples in the box
                 <div id="loading"><img src="${pageContext.request.contextPath}/img/compare_load.gif"></div>--%>
                 <form:select path="samples" multiple="true" size="9" id="samples" style="width:100%;">
@@ -183,7 +183,6 @@ a:hover {
         {
             UnselectAllSamples();
             var numberSelected = $('#samples :selected').length;
-            document.getElementById("selected-samples").innerHTML = "Sample list (" + numberSelected + " selected)";
             var studyId = $('#projects').val();
             $.ajax({
                 url:"<c:url value="${baseURL}/compare/samples"/>",
@@ -192,6 +191,8 @@ a:hover {
                 data:{studyId:studyId},
                 success:function (data) {
                     $("#samples").html(data);
+                    var numberTotal = $('#samples option').length;
+                    document.getElementById("selected-samples").innerHTML = "Sample list (" + numberSelected + " selected out of " + numberTotal + ")";
                 },
                 error:function (jqXHR, textStatus, errorThrown) {
                     alert("Request failed: " + textStatus);
@@ -331,11 +332,13 @@ a:hover {
     // Selected samples number
     $('#samples-control').click(function() {
         var numberSelected = $('#samples :selected').length;
-        document.getElementById("selected-samples").innerHTML = "Sample list (" + numberSelected + " selected)";
+        var numberTotal = $('#samples option').length;
+        document.getElementById("selected-samples").innerHTML = "Sample list (" + numberSelected + " selected out of " + numberTotal + ")";
     });
     $('#samples').change(function() {
         var numberSelected = $('#samples :selected').length;
-        document.getElementById("selected-samples").innerHTML = "Sample list (" + numberSelected + " selected)";
+        var numberTotal = $('#samples option').length;
+        document.getElementById("selected-samples").innerHTML = "Sample list (" + numberSelected + " selected out of " + numberTotal + ")";
     });
 
     // Filter options of visualization according to the chosen data STILL TO DO

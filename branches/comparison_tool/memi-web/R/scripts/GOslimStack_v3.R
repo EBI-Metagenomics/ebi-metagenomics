@@ -68,16 +68,17 @@ rChartsStacked = function(abundanceTable,threshold){
 # Final function. Yay. For one category, from general table. Cool.
 CreateStackColForCategory = function(abundanceTable,threshold,category) {
 
-  # Correct names according to category of GO Slim
+  # Correct names and h3 id according to category of GO Slim
   categoryIndice = 0
   if(category=='biological_process') categoryIndice = 1
   if(category=='cellular_component') categoryIndice = 2
   if(category=='molecular_function') categoryIndice = 3
   correctNames = c('Biological process','Cellular component','Molecular function')
+  h3Id = c('stack_bio_title','stack_cell_title','stack_mol_title')
 
   dataChart = rChartsStacked(divideAbTable(abundanceTable,category),threshold)
   chartWidth = 900+length(unique(dataChart$sample))*50
-  chart <- hPlot(value~sample,data = dataChart[dataChart$GOname!='Other'], group='GOname',type = 'column',group.na = 'NA\'s',title = 'Most frequent GO slim terms', subtitle = correctNames[categoryIndice])
+  chart <- hPlot(value~sample,data = dataChart[dataChart$GOname!='Other'], group='GOname',type = 'column',group.na = 'NA\'s',title = 'Most frequent GO terms') # , subtitle = correctNames[categoryIndice])
   chart$chart(width = chartWidth, height = 700)
   chart$series(data = dataChart$value[dataChart$GOname=='Other'], name = paste('other (less than ',as.character(threshold),'%)',sep=''),type='column', color = '#B9B9B9')
   chart$plotOptions(column = list(stacking = "percent")) 
@@ -87,5 +88,6 @@ CreateStackColForCategory = function(abundanceTable,threshold,category) {
   chart$colors(EMGcolors)
   chart$exporting(enabled = T)
   chartCode <- paste(capture.output(chart$print(paste0('stack_',category))),collapse = '\n')
+  chartCode <- paste(paste0('<h3 id=\"',h3Id[categoryIndice],'\">',correctNames[categoryIndice],'</h3>'),chartCode,sep='\n')
   return(chartCode)
 }

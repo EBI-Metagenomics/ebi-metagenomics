@@ -3,6 +3,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/comparison-table.css" type="text/css" media="all"/>
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 <script src='http://github.highcharts.com/master/highcharts.src.js' type='text/javascript'></script>
@@ -30,7 +31,18 @@
 
 </style>
 
-<h3><p>Functional analysis result: ${data}</p></h3>
+<h3><p>Functional analysis result:
+
+        <%--c:if test="${data==GOslim}">
+            InterPro matches
+        </c:if--%>
+        <c:if test="${data=='GO'}">
+            Complete GO annotation
+        </c:if>
+        <c:if test="${data=='GOslim'}">
+            GO slim annotation
+        </c:if>
+</p></h3>
 <ul>
     <li>Project: <a href="<c:url value="${baseURL}/project/${study.studyId}"/>" target="_blank" title="View project page">${study.studyId}</a> - ${study.studyName}</li>
     <li>Samples: <c:forEach var="sample" items="${samples}">
@@ -183,5 +195,17 @@
         handleNewStackSelection.apply($("#stack_select"));
 
     });
+
+    // Enable selection of rows in the table visualization
+    $(document).ready(function() {
+        $('#table tbody').on( 'click', 'tr', function () {
+            if ( $(this).hasClass('selected') ) {
+                $(this).removeClass('selected');
+            }
+            else {
+                $('#table tr.selected').removeClass('selected');
+                $(this).addClass('selected');
+            }});
+        });
 
 </script>

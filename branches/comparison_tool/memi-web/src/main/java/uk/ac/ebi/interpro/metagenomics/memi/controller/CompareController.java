@@ -119,7 +119,7 @@ public class CompareController extends AbstractController implements IController
         for (int i = 0; i < allSamples.size(); i++) {
             sampleList.add(sampleDAO.read(allSamples.get(i)));
             if (comparisonForm.isKeepNames())
-                sampleTextId.add("S" + String.format("%02d", i + 1) + "(" + sampleList.get(i).getSampleId() + ")");
+                sampleTextId.add(sampleList.get(i).getSampleId());
             else
                 sampleTextId.add("Sample" + String.format("%02d", i + 1));
         }
