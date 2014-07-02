@@ -80,7 +80,7 @@ a:hover {
                 </form:select>
             <form:errors path="study" cssClass="error"/>
             <div id="project-description" title="Project description">
-                <div id="description-content" style="height:30px;">
+                <div id="description-content">
                     <i>Select a project in the menu above.</i>
                 </div>
             </div>
