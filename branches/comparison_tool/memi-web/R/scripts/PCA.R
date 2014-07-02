@@ -1,5 +1,5 @@
 # Console log
-message(paste(Sys.time(),'[R - Message] Launched R script PCA.R'))
+#message(paste(Sys.time(),'[R - Message] Launched R script PCA.R'))
 
 divideAbTable = function(abTable,category) {
   abTableCategory <- abTable[,grepl(category,colnames(abTable))]
