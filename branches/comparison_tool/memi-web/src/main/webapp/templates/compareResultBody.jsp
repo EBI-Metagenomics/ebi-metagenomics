@@ -18,9 +18,7 @@
 </script>
 
 <style>
-    #bars {
-
-    }
+    /*#bars { }*/
     #bars .rChart {
         display:inline-block;
     }
@@ -31,25 +29,28 @@
 
 </style>
 
-<h3><p>Functional analysis result:
+<div class="back_ban"><div class="back_button"><a href="<c:url value="${baseURL}/compare"/>"><span>Back to query page</span></a></div><div class="back_title">Sample comparison tool:
 
         <%--c:if test="${data==GOslim}">
             InterPro matches
         </c:if--%>
         <c:if test="${data=='GO'}">
-            Complete GO annotation
+            Complete GO annotation (functional analysis)
         </c:if>
         <c:if test="${data=='GOslim'}">
-            GO slim annotation
+            GO slim annotation (functional analysis)
         </c:if>
-</p></h3>
-<ul>
-    <li>Project: <a href="<c:url value="${baseURL}/project/${study.studyId}"/>" target="_blank" title="View project page">${study.studyId}</a> - ${study.studyName}</li>
-    <li>Samples: <c:forEach var="sample" items="${samples}">
-        <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>" target="_blank">${sample.sampleId}</a>
-    </c:forEach></li>
+</div>
+</div>
+
+<ul><li>Samples:
+<c:forEach var="sample" items="${samples}">
+<a class="sample_list" href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>" target="_blank" title="${sample.sampleName} (${sample.sampleId})">${sample.sampleId}</a>
+</c:forEach>
+<li> Project: <a href="<c:url value="${baseURL}/project/${study.studyId}"/>" target="_blank" title="${study.studyName} (${study.studyId})">${study.studyName}</a> (${study.studyId})</li>
+ </li>
 </ul>
-<p>Use tabs below to switch between available visualizations.</p>
+<%--<p>Use tabs below to switch between available visualizations.</p>--%>
 <%--div class="sample_ana"--%>
 <div id="tabs">
     <ul>
@@ -66,22 +67,29 @@
     <div id="bars">
         <div>${graphCode[1]}</div>
     </div>
-    <div id="stack">Select category
-        <select id="stack_select">
-            <option value="">Choose a GO type</option>
-            <option value="bio">Biological process</option>
-            <option value="cell">Cellular component</option>
-            <option value="mol">Molecular function</option>
-        </select>
-        ${graphCode[2]}
+    <div id="stack">
+        <%--Select category--%>
+        <%--<select id="stack_select">--%>
+            <%--<option value="">Choose a GO type</option>--%>
+            <%--<option value="bio">Biological process</option>--%>
+            <%--<option value="cell">Cellular component</option>--%>
+            <%--<option value="mol">Molecular function</option>--%>
+        <%--</select>--%>
+           Jump to: <a href="#stack_bio_title"> Biological process</a> | <a href="#stack_cell_title">Cellular component</a> | <a href="#stack_mol_title">Molecular function</a>
+
+             ${graphCode[2]}
     </div>
-    <div id="heatmap">Select category
-        <select id="hm_select">
-            <option value="">Choose a GO type</option>
-            <option value="bio">Biological process</option>
-            <option value="cell">Cellular component</option>
-            <option value="mol">Molecular function</option>
-        </select>
+    <div id="heatmap">
+        <%--Select category--%>
+        <%--<select id="hm_select">--%>
+            <%--<option value="">Choose a GO type</option>--%>
+            <%--<option value="bio">Biological process</option>--%>
+            <%--<option value="cell">Cellular component</option>--%>
+            <%--<option value="mol">Molecular function</option>--%>
+        <%--</select>--%>
+   Jump to GO category: <a href="#heatmap_bio_title"> Biological process</a> | <a href="#heatmap_cell_title">Cellular component</a> | <a href="#heatmap_mol_title">Molecular function</a>
+
+       <%--<h3> Biological process</h3>--%>
         ${graphCode[3]}
     </div>
     <div id="pca">
@@ -95,6 +103,15 @@
 </div>
 <%--/div--%>
 <script>
+     // to remove the last comma in the sample list
+    $(document).ready(function() {
+    $(' a.sample_list:not(:last-child)').each(function () {
+                        $(this).append(',');
+                    });
+    });
+</script>
+<script>
+
     // jQuery FTW !!! Hiding / showing div for heatmaps and stacked columns
 
     // Heatmap first
@@ -123,35 +140,35 @@
 
     $(document).ready(function() {
 
-        $("#hm_select").change(handleNewHMSelection);
+            $("#hm_select").change(handleNewHMSelection);
 
-        // Run the event handler once now to ensure everything is as it should be
-        handleNewHMSelection.apply($("#hm_select"));
+            // Run the event handler once now to ensure everything is as it should be
+            handleNewHMSelection.apply($("#hm_select"));
 
-    });
+        });
 
     // Then stacked columns
     hideAllStackDivs = function () {
-        $("#stack_biological_process").hide();
-        $("#stack_cellular_component").hide();
-        $("#stack_molecular_function").hide();
+//        $("#stack_biological_process").hide();
+//        $("#stack_cellular_component").hide();
+//        $("#stack_molecular_function").hide();
     };
 
     handleNewStackSelection = function () {
 
-        hideAllStackDivs();
-
-        switch ($(this).val()) {
-            case 'bio':
-                $("#stack_biological_process").show();
-                break;
-            case 'cell':
-                $("#stack_cellular_component").show();
-                break;
-            case 'mol':
-                $("#stack_molecular_function").show();
-                break;
-        }
+//        hideAllStackDivs();
+//
+//        switch ($(this).val()) {
+//            case 'bio':
+//                $("#stack_biological_process").show();
+//                break;
+//            case 'cell':
+//                $("#stack_cellular_component").show();
+//                break;
+//            case 'mol':
+//                $("#stack_molecular_function").show();
+//                break;
+//        }
     };
 
     $(document).ready(function() {
@@ -172,19 +189,20 @@
 
     handleNewStackSelection = function () {
 
-        hideAllStackDivs();
-
-        switch ($(this).val()) {
-            case 'bio':
-                $("#stack_biological_process").show();
-                break;
-            case 'cell':
-                $("#stack_cellular_component").show();
-                break;
-            case 'mol':
-                $("#stack_molecular_function").show();
-                break;
-        }
+//
+//       hideAllStackDivs();
+//
+//        switch ($(this).val()) {
+//            case 'bio':
+//                $("#stack_biological_process").show();
+//                break;
+//            case 'cell':
+//                $("#stack_cellular_component").show();
+//                break;
+//            case 'mol':
+//                $("#stack_molecular_function").show();
+//                break;
+//        }
     };
 
     $(document).ready(function() {
