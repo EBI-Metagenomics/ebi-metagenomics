@@ -34,7 +34,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Represents the controller for the MG portal home page.
+ * Represents the controller for the comparison tool.
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @author Francois Bucchini, trainee@EMBL-EBI
@@ -69,7 +69,7 @@ public class CompareController extends AbstractController implements IController
                 new ModelPopulator() {
                     @Override
                     public void populateModel(ModelMap model) {
-                        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "Compare samples of same project", getBreadcrumbs(null), propertyContainer);
+                        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "Compare samples of the same project", getBreadcrumbs(null), propertyContainer);
                         final ViewModel defaultViewModel = builder.getModel();
                         defaultViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_COMPARE_VIEW);
 
@@ -114,7 +114,7 @@ public class CompareController extends AbstractController implements IController
         final List<String> inputFilePaths = getInputFilePaths(usedData, allSamples);
 
         // Samples instead of retrieved ID.
-        List<Sample> sampleList = new ArrayList<Sample>();
+        final List<Sample> sampleList = new ArrayList<Sample>();
         List<String> sampleTextId = new ArrayList<String>();
         for (int i = 0; i < allSamples.size(); i++) {
             sampleList.add(sampleDAO.read(allSamples.get(i)));
@@ -195,13 +195,23 @@ public class CompareController extends AbstractController implements IController
                 ReadFile(tmpGraphDir + uniqueOutputName + "_table.htm")
         };
 
-
-        ModelAndView mav = new ModelAndView("/compareResult");
-        mav.addObject("graphCode", htmlFile);
-        // Result Header elements
-        mav.addObject("study", studyDAO.read(Long.valueOf(comparisonForm.getStudy())));
-        mav.addObject("samples", sampleList);
-        mav.addObject("data", usedData);
+        ModelAndView mav = buildModelAndView(
+                "/compareResult",
+                model,
+                new ModelPopulator() {
+                    @Override
+                    public void populateModel(ModelMap model) {
+                        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "Sample comparison results", getBreadcrumbsForResultPage(), propertyContainer);
+                        final ViewModel defaultViewModel = builder.getModel();
+                        defaultViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_COMPARE_VIEW);
+                        model.addAttribute(ViewModel.MODEL_ATTR_NAME, defaultViewModel);
+                        model.addAttribute("graphCode", htmlFile);
+                        // Result Header elements
+                        model.addAttribute("study", studyDAO.read(Long.valueOf(comparisonForm.getStudy())));
+                        model.addAttribute("samples", sampleList);
+                        model.addAttribute("data", usedData);
+                    }
+                });
         return mav;
     }
 
@@ -267,9 +277,22 @@ public class CompareController extends AbstractController implements IController
         return VIEW_NAME;
     }
 
+    /**
+     * @return Breadcrumbs for the compare page.
+     */
     protected List<Breadcrumb> getBreadcrumbs(SecureEntity entity) {
         List<Breadcrumb> result = new ArrayList<Breadcrumb>();
-        result.add(new Breadcrumb("Comparison tool", "Compare samples of same project", VIEW_NAME));
+        result.add(new Breadcrumb("Comparison tool", "Compare samples of the same project", VIEW_NAME));
+        return result;
+    }
+
+    /**
+     * @return Breadcrumbs for the compareResult page.
+     */
+    private List<Breadcrumb> getBreadcrumbsForResultPage() {
+        List<Breadcrumb> result = new ArrayList<Breadcrumb>();
+        result.add(new Breadcrumb("Comparison tool", "Compare samples of the same project", VIEW_NAME));
+        result.add(new Breadcrumb("Comparison results", "View comparison tool results", "compare"));
         return result;
     }
 
