@@ -1757,3 +1757,55 @@ ul.color_legend {list-style-type: square; list-style-position:inside;}
 
 /*.sample_ana .ui-tabs .ui-tabs-hide {display: block;}*/
 /*#tax-pie, #tax-bar, #tax-col, #tax-Krona, #fragment-overview, #fragment-quality,#fragment-taxonomy, #fragment-functional, #fragment-download {display:block;} *//*attempt to solve bug loading Jquery tab content*/
+
+/*Back to top BUTTON - same as InterPro*/
+.anim {-webkit-transition: all .3s; /* Safari */ -moz-transition: all .3s; -o-transition: all .3s; -ms-transition: all .3s; transition: all .3s;}
+#toTop {cursor: pointer; display: none; opacity: 0.7; filter: alpha(opacity = 70); width: 40px; height: 40px; position: fixed; bottom: 4px; right: 40px; /* bottom right corner*/}
+#toTop:hover {padding-bottom: 14px; /*make the movement*/ opacity: 1; filter: alpha(opacity = 100); }
+.scroll {visibility: hidden; opacity: 0; font-size: 85%; width:100px; color:grey;}
+#toTop:hover .scroll {display:block;float:left;text-decoration:none;visibility:visible;opacity:.95;}
+
+
+/*Sample comparison form*/
+.sample_comp h4 {margin-top:0;margin-bottom: 0; padding-left:0px;}  /*remove space for the label*/
+.sample_comp a:hover {cursor:pointer;}  /*show right icon for jquery button*/
+.sample_comp #row-wrapper{margin: 9px;overflow: auto;}
+.sample_comp #row-wrapper #project-div {float:left; width: 48%;}
+.sample_comp #row-wrapper #samples-div {float:left; width: 48%; margin-left: 18px;}
+.sample_comp #settings-wrapper{margin: 0 9px;overflow: auto;}
+.sample_comp #settings-wrapper .settings-div-data {float:left;}
+.sample_comp #settings-wrapper .settings-div-adv {float:left; margin-left: 18px;}
+.sample_comp #buttons-wrapper{margin: 0 9px 18px 0; /*add space below*/text-align: center;}
+.sample_comp #advanced-settings-wrapper { margin: 0 9px; border: 1px #CCC solid;   background-color: #DDE6E6;  /*to define a better style for adv options*/}
+.sample_comp #advanced-settings-wrapper ul {padding-left:9px;}
+.sample_comp #advanced-settings-wrapper ul li {list-style-type:none;}
+.sample_comp #advanced-settings-wrapper ul li input {width:auto;}
+
+/*Sample comparison page*/
+ul.sample_list  {list-style: disc; padding-left:18px;}
+ul.sample_list li {list-style: none; display: inline;}
+
+.back_ban {overflow: auto;}
+.back_ban .back_title {float: left;color: #0F6D99; font-size: 190%; margin: 20px 0 9px 0;padding: 0 9px;}
+.back_ban .back_button { float: left; margin-top:14px;padding: 9px;}
+.back_ban .back_button a {text-decoration: none;background: white; border: solid #dedede; display: inline-block;height: 28px; line-height: 28px; margin-left: 20px; margin-right: 2px; padding: 0 7px 0 3px;
+position: relative;
+border-width: 1px 1px 1px 0;
+-moz-border-radius: 0 2px 2px 0;
+-webkit-border-radius: 0 2px 2px 0;
+border-radius: 0 2px 2px 0;}
+
+.back_ban .back_button a:before {border: solid #dedede;display: block; height: 21px; left: -11px; position: absolute; top: 3px;  width: 21px;
+border-width: 0 0 1px 1px;
+border-radius: 2px 0 2px 2px;
+content: '';
+-moz-transform: rotate(45deg);
+-webkit-transform: rotate(45deg);
+-o-transform: rotate(45deg);
+transform: rotate(45deg);
+-ms-transform:rotate(45deg); /* IE 9 */
+}
+
+.back_ban .back_button a:hover, .back_ban .back_button a:focus { background: #f0f0f0; color:white;}
+.back_ban .back_button a:hover:before, .back_ban .back_button a:focus:before { background: #f0f0f0;  color:white;}
+.back_ban .back_button a span {color: grey; font-weight: bold;  position: relative;}
