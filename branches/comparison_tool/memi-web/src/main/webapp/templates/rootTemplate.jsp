@@ -296,5 +296,23 @@
 
 <!-- The following line includes the feedback DIV and the feedback FORM -->
 <%@ include file="feedback/script/feedbackDiv.jsp" %>
+<div id="toTop" class="anim"><img src="${pageContext.request.contextPath}/img/ico_scroll_top.png" alt="Scroll to top" ><span class="scroll anim">To top </span></div>
+<!--Back top jQuery plugin-->
+       <script type="text/javascript">
+           $(document).ready(function () {
+               $(window).scroll(function () {
+                   if ($(this).scrollTop() != 0) {
+                       $('#toTop').fadeIn();
+                   } else {
+                       $('#toTop').fadeOut();
+                   }
+               });
+
+               $('#toTop').click(function () {
+                   $('body,html').animate({scrollTop:0}, 800);
+               });
+           });
+       </script>
+<!-- End Back top jQuery plugin-->
 </body>
 </html>
