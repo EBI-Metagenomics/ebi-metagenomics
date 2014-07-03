@@ -1,64 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<!-- A bit of CSS to improve page display. Yay. Dubugging css is cool when you apply different colors on background -->
-<style type="text/css">
-
-.sample_comp h4 {margin-top:0;margin-bottom: 0; padding-left:0px;}  /*remove space for the label*/
-
-a:hover {
-    cursor:pointer;
-}
-
-#row-wrapper{
-    margin: 9px;
-    overflow: auto;
-    /*border: 1px #F00 solid;*/
-}
-
-#buttons-wrapper{
-    margin: 0 9px 18px 0; /*add space below*/
-    text-align: center;
-    /*background: transparent;*/
-    /*border: 1px #adff2f solid;*/
-}
-
-#settings-wrapper{
-    margin: 0 9px;
-    overflow: auto;
-    /*border: 1px #008000 solid;*/
-}
-
-#settings-wrapper .settings-div-data {
-    float:left;
-    /*background: transparent;*/
-    /*padding: 10px;*/
-}
-#settings-wrapper .settings-div-adv {float:left; margin-left: 18px;}
-
-#advanced-settings-wrapper { margin: 0 9px;
-    border: 1px #CCC solid;
-    background-color: #DDE6E6;  /*to define a better style for adv options*/
-}
-#advanced-settings-wrapper ul {padding-left:9px;}
-#advanced-settings-wrapper ul li {list-style-type:none;}
-#advanced-settings-wrapper ul li input {width:auto;}
-
-#project-div {
-    float:left;
-    width: 48%;
-    /*height: 100%;*/
-    /*padding-left: 20px;*/
-}
-
-#samples-div {
-    float:left;
-    width: 48%;
-    /*height: 100%;*/
-    margin-left: 18px;
-}
-
-</style>
 
 <div class="sample_comp">
 <h2>Sample comparison tool</h2>
