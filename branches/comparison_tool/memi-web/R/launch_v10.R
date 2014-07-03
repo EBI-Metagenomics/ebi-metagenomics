@@ -42,7 +42,7 @@ hmParameters <- (strsplit(parameters[8],split=',')[[1]]) #Heatmap parameters
 pathSep = '/'
 if(.Platform$OS.type != 'unix') pathSep = '\\'
 
-setwd(workDir) # Set working directory. Maybe not need as paths are always given as absolute paths now ?
+# setwd(workDir) # Set working directory. Maybe not needed as paths are always given as absolute paths now ?
 scriptsDir = paste(workDir,'scripts',sep = pathSep) # Name of the directory containing the used R scripts
 resourcesDir = paste(workDir,'resources', sep = pathSep) # Name of the directory containing various ressources (Hierarchy file, etc.)
 
@@ -50,7 +50,7 @@ resourcesDir = paste(workDir,'resources', sep = pathSep) # Name of the directory
 scriptList <- list(
   preProcess = 'PreProcess_v11.R',
   overview = 'Overview_v5.R',
-  bars = 'GOslimBar_v4.R',
+  bars = 'GOslimBar_v5.R',
   stacked = 'GOslimStack_v3.R',
   heatmap = 'StaticHeatmap_v3.R',
   pca = 'PCA.R',
@@ -145,7 +145,10 @@ GenerateHeatmap(abTable,'cellular_component',pathAndName[2],hmParameters)
 GenerateHeatmap(abTable,'molecular_function',pathAndName[3],hmParameters)
 
 # A bit tricky with the JSTL paths ... But display this anyway
-hmCode = paste('<div id="hm_bio"><img src=\"','/metagenomics/img/comparison/',paste0('bio_',name),'.png\"></div>','<div id="hm_cell"><img src=\"','/metagenomics/img/comparison/',paste0('cell_',name),'.png\"></div>','<div id="hm_mol"><img src=\"','/metagenomics/img/comparison/',paste0('mol_',name),'.png\"></div>',sep='')
+hmCode = paste('<h3 id=\"hm_bio_title\">Biological process</h3><div id="hm_bio"><img src=\"','/metagenomics/img/comparison/',paste0('bio_',name),'.png\"></div>',
+               '<h3 id=\"hm_cell_title\">Cellular component</h3><div id="hm_cell"><img src=\"','/metagenomics/img/comparison/',paste0('cell_',name),'.png\"></div>',
+               '<h3 id=\"hm_mol_title\">Molecular function</h3><div id="hm_mol"><img src=\"','/metagenomics/img/comparison/',paste0('mol_',name),'.png\"></div>',
+               sep='')
 }
 write(hmCode,paste(tempDir,pathSep,name,'_hm','.htm',sep=''))
 
