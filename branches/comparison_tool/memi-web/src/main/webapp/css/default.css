@@ -462,7 +462,7 @@ text-align:left;
 
 #small {width:70%;} /*table in analysis result changed in pourcentage for mitigation*/
 
-table.result {line-height: 1.2em; border-collapse:separate; width:100%; border-spacing:4px; padding-left:2px;}
+table.result {line-height: 1.2em; border-collapse:separate; width:100%; border-spacing:4px; padding-left:2px; margin-bottom: 18px;}
 
 /*
 table.result thead th{
