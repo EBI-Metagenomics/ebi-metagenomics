@@ -157,5 +157,4 @@
             <div class="msg_error">No data matching your search</div>
         </c:otherwise>
     </c:choose>
-<div class="but_top"><a href="#top" title="back to the top page">Top</a></div>
 
