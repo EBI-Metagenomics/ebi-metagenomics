@@ -134,7 +134,7 @@
                 success:function (data) {
                     $("#samples").html(data);
                     var numberTotal = $('#samples option').length;
-                    document.getElementById("selected-samples").innerHTML = "Sample list (" + numberSelected + " selected out of " + numberTotal + ")";
+                    document.getElementById("selected-samples").innerHTML = "Sample list <span>(" + numberSelected + " selected out of " + numberTotal + ")</span>";
                 },
                 error:function (jqXHR, textStatus, errorThrown) {
                     alert("Request failed: " + textStatus);
@@ -275,12 +275,12 @@
     $('#samples-control').click(function() {
         var numberSelected = $('#samples :selected').length;
         var numberTotal = $('#samples option').length;
-        document.getElementById("selected-samples").innerHTML = "Sample list (" + numberSelected + " selected out of " + numberTotal + ")";
+        document.getElementById("selected-samples").innerHTML = "Sample list <span>(" + numberSelected + " selected out of " + numberTotal + ")</span>";
     });
     $('#samples').change(function() {
         var numberSelected = $('#samples :selected').length;
         var numberTotal = $('#samples option').length;
-        document.getElementById("selected-samples").innerHTML = "Sample list (" + numberSelected + " selected out of " + numberTotal + ")";
+        document.getElementById("selected-samples").innerHTML = "Sample list <span>(" + numberSelected + " selected out of " + numberTotal + ")</span>";
     });
 
     // Filter options of visualization according to the chosen data STILL TO DO
