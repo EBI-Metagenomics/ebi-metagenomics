@@ -69,7 +69,7 @@ public class CompareController extends AbstractController implements IController
                 new ModelPopulator() {
                     @Override
                     public void populateModel(ModelMap model) {
-                        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "Compare samples of the same project", getBreadcrumbs(null), propertyContainer);
+                        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "Sample comparison tool", getBreadcrumbs(null), propertyContainer);
                         final ViewModel defaultViewModel = builder.getModel();
                         defaultViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_COMPARE_VIEW);
 
@@ -96,7 +96,7 @@ public class CompareController extends AbstractController implements IController
                     new ModelPopulator() {
                         @Override
                         public void populateModel(ModelMap model) {
-                            final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "Compare samples of same project", getBreadcrumbs(null), propertyContainer);
+                            final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "Sample comparison tool", getBreadcrumbs(null), propertyContainer);
                             final ViewModel defaultViewModel = builder.getModel();
                             defaultViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_COMPARE_VIEW);
                             // Retrieving list of public studies and samples + add attributes
@@ -148,7 +148,7 @@ public class CompareController extends AbstractController implements IController
 
         final char WHITESPACE = ' ';
         String executionCommand;
-        executionCommand = rInstallationLocation + WHITESPACE + rScriptPath + "/" + rScriptName + WHITESPACE + rTmpFileDirectory + WHITESPACE +
+        executionCommand = rInstallationLocation + WHITESPACE + rScriptPath + rScriptName + WHITESPACE + rTmpFileDirectory + WHITESPACE +
                 rScriptPath + WHITESPACE + uniqueOutputName + WHITESPACE + rFriendlyFileList + WHITESPACE + comparisonForm.getUsedData() +
                 WHITESPACE + rFriendlySampleNames + WHITESPACE + comparisonForm.getStackThreshold() + WHITESPACE + hmPar + WHITESPACE + comparisonForm.getGOnumber();
 //            executionCommand = "Rscript R/simple.R";
@@ -282,7 +282,7 @@ public class CompareController extends AbstractController implements IController
      */
     protected List<Breadcrumb> getBreadcrumbs(SecureEntity entity) {
         List<Breadcrumb> result = new ArrayList<Breadcrumb>();
-        result.add(new Breadcrumb("Comparison tool", "Compare samples of the same project", VIEW_NAME));
+        result.add(new Breadcrumb("Sample comparison tool", "Sample comparison tool", VIEW_NAME));
         return result;
     }
 
@@ -291,8 +291,8 @@ public class CompareController extends AbstractController implements IController
      */
     private List<Breadcrumb> getBreadcrumbsForResultPage() {
         List<Breadcrumb> result = new ArrayList<Breadcrumb>();
-        result.add(new Breadcrumb("Comparison tool", "Compare samples of the same project", VIEW_NAME));
-        result.add(new Breadcrumb("Comparison results", "View comparison tool results", "compare"));
+        result.add(new Breadcrumb("Sample comparison tool", "Sample comparison tool", VIEW_NAME));
+        result.add(new Breadcrumb("Comparison results", "Comparison results", "compare"));  /*to remove the link from breadcrumbs for comparison results*/
         return result;
     }
 
