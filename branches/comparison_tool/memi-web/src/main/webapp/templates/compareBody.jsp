@@ -2,7 +2,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<div class="sample_comp">
+<div class="sample_comp_form">
 <h2>Sample comparison tool</h2>
 
 <div id="demo"></div>
