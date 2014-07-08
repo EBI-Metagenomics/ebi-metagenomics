@@ -1672,13 +1672,19 @@ li.ui-tabs-selected .ico-barh {background: url(../img/ico_graph_barh_on.png) no-
 .ico-col {background: url(../img/ico_graph_col.png) no-repeat  1px 2px;}
 li.ui-tabs-selected .ico-col {background: url(../img/ico_graph_col_on.png) no-repeat 1px 2px; }
 
+.ico-heatmap {background: url(../img/ico_graph_heatmap.png) no-repeat 1px 0px;}
+li.ui-tabs-selected .ico-heatmap {background: url(../img/ico_graph_heatmap_on.png) no-repeat 1px 0px; }
+
+.ico-pca {background: url(../img/ico_graph_pca.png) no-repeat 1px 0px;}
+li.ui-tabs-selected .ico-heatmap {background: url(../img/ico_graph_pca_on.png) no-repeat 1px 0px; }
+
 .ico-table {background: url(../img/ico_graph_table.png) no-repeat 1px 0px;}
 li.ui-tabs-selected .ico-table {background: url(../img/ico_graph_table_on.png) no-repeat 1px 0px; }
 
 .ico-krona {background: url(../img/ico_graph_krona.png) no-repeat 1px 2px;}
 li.ui-tabs-selected .ico-krona {background: url(../img/ico_graph_krona_on.png) no-repeat 1px 2px; }
 
-.ico-krona, .ico-table, .ico-col, .ico-barh, .ico-pie {width:27px; height:27px; display:block;}
+.ico-krona, .ico-table, .ico-col, .ico-barh, .ico-pie, .ico-heatmap, .ico-pca   {width:27px; height:27px; display:block;}
 
 .main_tab_content {width:70%;}
 
