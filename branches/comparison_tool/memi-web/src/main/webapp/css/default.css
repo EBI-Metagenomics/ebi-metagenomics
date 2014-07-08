@@ -1781,7 +1781,7 @@ ul.color_legend {list-style-type: square; list-style-position:inside;}
 .sample_comp #advanced-settings-wrapper ul {padding-left:9px;}
 .sample_comp #advanced-settings-wrapper ul li {list-style-type:none;}
 .sample_comp #advanced-settings-wrapper ul li input {width:auto;}
-
+.sample_comp div.error {color: #F00;}
 /*Sample comparison page*/
 ul.sample_list  {list-style: disc; padding-left:18px;}
 ul.sample_list li {list-style: none; display: inline;}
