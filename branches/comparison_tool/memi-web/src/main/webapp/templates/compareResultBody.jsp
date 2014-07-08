@@ -14,12 +14,13 @@
     // Could I have some tabs please ?
     $(function() {
         $( '#tabs' ).tabs();
+        $( '#tabs-chart' ).tabs();
     });
 </script>
 
 <style>
     /*#bars { }*/
-    #bars .rChart {
+    #bars .rChart, #goBarChartView .rChart {
         display:inline-block;
     }
 
@@ -28,6 +29,7 @@
     }
 
 </style>
+<div class="sample_comp_result">
 
 <div class="back_ban"><div class="back_button"><a href="<c:url value="${baseURL}/compare"/>"><span>Back to query page</span></a></div><div class="back_title">Sample comparison tool:
 
@@ -52,20 +54,49 @@
 </ul>
 <%--<p>Use tabs below to switch between available visualizations.</p>--%>
 <%--div class="sample_ana"--%>
+<div id="tabs-chart">
+
+<%-- type 01 Tabs - only image without line separator - THIS IS A TEST VERSION - STILL NEED TO DO MORE TABS OPTIONS--%>
+<ul>
+    <li class="selector_tab">Switch view</li>
+    <%--<li><a href="#goPieChartView" title="Pie-Chart-View"><span class="ico-pie"></span></a></li>--%>
+    <li><a href="#goBarChartView" title="Bar-Chart-View"><span class="ico-barh"></span></a></li>
+    <li><a href="#go-terms-col" title="Stacked column chart view"><span class="ico-col"></span></a></li>
+    <li><a href="#go-terms-heatmap" title="Heatmap view"><span class="ico-heatmap"></span></a></li>
+    <li><a href="#go-terms-pca" title="Principal component analysis view"><span class="ico-pca"></span></a></li>
+    <li><a href="#go-terms-table" title="Table view"><span class="ico-table"></span></a></li>
+<%--<li class="ico-downl"><a class="icon icon-functional" data-icon="=" href="#download" title="Download image/table"></a></li>--%>
+</ul>
+    <div id="goBarChartView">${graphCode[1]}</div>
+    <div id="go-terms-col">
+    Jump to: <a href="#stack_bio_title"> Biological process</a> | <a href="#stack_cell_title">Cellular component</a> | <a href="#stack_mol_title">Molecular function</a>
+    ${graphCode[2]}</div>
+    <div id="go-terms-heatmap">
+    Jump to: <a href="#heatmap_bio_title"> Biological process</a> | <a href="#heatmap_cell_title">Cellular component</a> | <a href="#heatmap_mol_title">Molecular function</a>
+    ${graphCode[3]}</div>
+    <div id="go-terms-pca">${graphCode[4]}</div>
+    <div id="go-terms-table">${graphCode[5]}</div>
+</div>
+
+<%-- type 02 Tabs - only image with lineseparator HAVETODO--%>
+<%-- type 03 Tabs - mix image/text with lineseparator HAVETODO--%>
+<%-- type 04 Tabs - only text with line separator--%>
+
 <div id="tabs">
     <ul>
-        <li><a href="#overview">Overview</a></li>
+        <%--<li><a href="#overview">Overview</a></li>--%>
         <li><a href="#bars">Barcharts</a></li>
         <li><a href="#stack">Stacked columns</a></li>
         <li><a href="#heatmap">Heatmap</a></li>
-        <li><a href="#pca">Principal Components Analysis</a></li>
+        <li><a href="#pca">Principal Component Analysis</a></li>
         <li><a href="#jstable">Table</a></li>
     </ul>
-    <div id="overview">
-        <p>${graphCode[0]}</p>
-    </div>
+
+    <%--<div id="overview"></div>--%>
+
     <div id="bars">
         <div>${graphCode[1]}</div>
+        <%--${graphCode[0]}--%>
     </div>
     <div id="stack">
         <%--Select category--%>
@@ -101,7 +132,9 @@
         <p>${graphCode[5]}</p>
     </div>
 </div>
-<%--/div--%>
+
+</div><%--/sample_comp_result--%>
+
 <script>
      // to remove the last comma in the sample list
     $(document).ready(function() {
