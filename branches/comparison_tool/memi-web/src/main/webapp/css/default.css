@@ -1768,7 +1768,7 @@ ul.color_legend {list-style-type: square; list-style-position:inside;}
 
 /*Sample comparison form*/
 .sample_comp h4 {margin-top:0;margin-bottom: 0; padding-left:0px;}  /*remove space for the label*/
-.sample_comp h4 span {font-size: 95%;padding-left: 9px;}  /*reduced text size for sub text*/
+.sample_comp h4 span {font-size: 95%;padding-left: 4px;}  /*reduced text size for sub text*/
 .sample_comp a:hover {cursor:pointer;}  /*show right icon for jquery button*/
 .sample_comp #row-wrapper{margin: 9px;overflow: auto;}
 .sample_comp #row-wrapper #project-div {float:left; width: 48%;}
