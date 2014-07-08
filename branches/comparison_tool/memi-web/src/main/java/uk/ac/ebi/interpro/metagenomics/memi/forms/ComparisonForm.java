@@ -17,7 +17,7 @@ import java.util.List;
 public class ComparisonForm {
     public final static String MODEL_ATTR_NAME = "comparisonForm";
 
-    @NotEmpty(message = "Please select a project")
+    @NotEmpty(message = "Please select one project in the list above.")
     private String study;
 
     @NotEmpty(message = "Please select some data")
