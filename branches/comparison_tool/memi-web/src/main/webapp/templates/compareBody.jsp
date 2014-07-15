@@ -2,7 +2,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<div class="sample_comp_form">
+<div class="sample_comp">
 <h2>Sample comparison tool</h2>
 
 <div id="demo"></div>
@@ -20,20 +20,12 @@
                         </c:if>
                     </c:forEach>
                 </form:select>
-
-              <div id="project-description" title="Project description">
-                   <div id="description-content">
-                       <i>Select a project in the menu above.</i>
-                   </div>
-               </div>
-            <c:set var="domainNameErrors"><form:errors path="study" cssClass="error" element="div"/></c:set>
-            <c:if test="${not empty domainNameErrors}">
-            <script>
-                //replace info message by error message
-                $( "#description-content" ).replaceWith( "<div class='error' id='description-content study.errors'>Please select one project in the list above.</div>" ); </script>
-            </c:if>
-
-
+            <form:errors path="study" cssClass="error"/>
+            <div id="project-description" title="Project description">
+                <div id="description-content">
+                    <i>Select a project in the menu above.</i>
+                </div>
+            </div>
         </div>
 
             <div id="samples-div">
@@ -47,16 +39,16 @@
     </div>
 
     <div id="settings-wrapper">
-        <div class="settings-div-data">
-            <h4>Data</h4>
-            <form:select path="usedData" id="data-choice">
-                <form:option value="nothing">Select data</form:option>
-                <form:option value="GOslim">GO slim annotation</form:option>
-                <form:option value="GO">Full GO annotation</form:option>
-                <%--<form:option value="IPR" disabled="true">InterPro matches</form:option>--%>
-                <%--<form:option value="IPRcol" disabled="true">InterPro slim matches</form:option>--%>
-            </form:select>
-        </div>
+        <%--<div class="settings-div-data">--%>
+            <%--<h4>Data</h4>--%>
+            <%--<form:select path="usedData" id="data-choice">--%>
+                <%--<form:option value="nothing">Select data</form:option>--%>
+                <%--<form:option value="GOslim" selected="true">GO slim annotation</form:option>--%>
+                <%--<form:option value="GO">Full GO annotation</form:option>--%>
+                <%--&lt;%&ndash;<form:option value="IPR" disabled="true">InterPro matches</form:option>&ndash;%&gt;--%>
+                <%--&lt;%&ndash;<form:option value="IPRcol" disabled="true">InterPro slim matches</form:option>&ndash;%&gt;--%>
+            <%--</form:select>--%>
+        <%--</div>--%>
         <%--div class="settings-div">
             <h4>Visualization</h4>
             <form:select path="usedVis" id="vis-choice">
@@ -69,8 +61,8 @@
                 <form:option value="int-heatmap" disabled="true">Javascript Heatmap</form:option>
                 <form:option value="table" disabled="true">Table</form:option>
                 <form:option value="pca" disabled="true">Principal Components analysis</form:option>
-            </form:select>
-        </div--%>
+            </form:select--%>
+        <%--</div>--%>
         <div class="settings-div-adv">
             <h4>Advanced settings</h4>
             <a id="advanced-settings-link">Show / hide advanced settings</a>
@@ -87,7 +79,7 @@
                     <%--</ul></li>--%>
                     <li><strong>Stacked columns</strong>
                         <ul>
-                            <li>Stacking threshold (%): <form:input path="stackThreshold" type="number" min="0" max="50" step="0.1" value="1"/> </li>
+                            <li>Show terms below <form:input path="stackThreshold" type="number" min="0" max="50" step="0.1" value="1" cssStyle="width:60px;"/> % as 'other'. </li>
                         </ul>
                     </li>
                     <li><strong>Heatmap</strong><ul>
@@ -122,7 +114,6 @@
         <a id="clear-all-button" type="button" onclick="ClearAll()">Clear all</a>
     </div>
 </form:form>
-
 </div>
 
 <%--TODO: Clean up code a bit--%>
@@ -142,7 +133,7 @@
                 success:function (data) {
                     $("#samples").html(data);
                     var numberTotal = $('#samples option').length;
-                    document.getElementById("selected-samples").innerHTML = "Sample list <span>(" + numberSelected + " selected out of " + numberTotal + ")</span>";
+                    document.getElementById("selected-samples").innerHTML = "Sample list (" + numberSelected + " selected out of " + numberTotal + ")";
                 },
                 error:function (jqXHR, textStatus, errorThrown) {
                     alert("Request failed: " + textStatus);
@@ -283,12 +274,12 @@
     $('#samples-control').click(function() {
         var numberSelected = $('#samples :selected').length;
         var numberTotal = $('#samples option').length;
-        document.getElementById("selected-samples").innerHTML = "Sample list <span>(" + numberSelected + " selected out of " + numberTotal + ")</span>";
+        document.getElementById("selected-samples").innerHTML = "Sample list (" + numberSelected + " selected out of " + numberTotal + ")";
     });
     $('#samples').change(function() {
         var numberSelected = $('#samples :selected').length;
         var numberTotal = $('#samples option').length;
-        document.getElementById("selected-samples").innerHTML = "Sample list <span>(" + numberSelected + " selected out of " + numberTotal + ")</span>";
+        document.getElementById("selected-samples").innerHTML = "Sample list (" + numberSelected + " selected out of " + numberTotal + ")";
     });
 
     // Filter options of visualization according to the chosen data STILL TO DO

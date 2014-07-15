@@ -1,11 +1,5 @@
 # Console log
-message(paste(Sys.time(),'[R - Message] Launched R script GOslimStack_v3.R'))
-
-# A small operator that is quite useful
-"%w/o%" <- function(x, y) x[!x %in% y] # ->  x without y 
-
-# Load libraries
-library(data.table)
+message(paste(Sys.time(),'[R - Message] Launched R script GOslimStack_v4.R'))
 
 divideAbTable = function(abTable,category) {
   abTableCategory <- abTable[,grepl(category,colnames(abTable))]
@@ -79,13 +73,14 @@ CreateStackColForCategory = function(abundanceTable,threshold,category) {
   dataChart = rChartsStacked(divideAbTable(abundanceTable,category),threshold)
   chartWidth = 900+length(unique(dataChart$sample))*50
   chart <- hPlot(value~sample,data = dataChart[dataChart$GOname!='Other'], group='GOname',type = 'column',group.na = 'NA\'s',title = paste0('Most frequent GO terms',' (',correctNames[categoryIndice],')')) # , subtitle = correctNames[categoryIndice])
-  chart$chart(height = 500)
+  # chart$chart(height = 500)
   chart$series(data = dataChart$value[dataChart$GOname=='Other'], name = paste('other (less than ',as.character(threshold),'%)',sep=''),type='column', color = '#B9B9B9')
   chart$plotOptions(column = list(stacking = "percent")) 
-  chart$xAxis(categories=c(unique(dataChart$sample)))
+  chart$xAxis(categories=c(unique(dataChart$sample)), lineColor = '#595959', tickColor = '')
   chart$yAxis(title=list(text='Relative abundance (%)'))
-  chart$legend(layout='vertical',align='right',verticalAlign='top',x=-10,y=100)
+  chart$legend(layout='vertical',align='right',verticalAlign='top',x=-10,y=100, itemStyle=list(fontSize='11px', fontWeight='regular', color='#606060'), title = list(text='GO terms list<br/><span style="font-size: 9px; color: #666; font-weight: normal">(Click to hide)</span>', style = list(fontStyle='regular')))
   chart$colors(EMGcolors)
+  chart$addParams(width=NULL, height = NULL)
   chart$exporting(enabled = T)
   chartCode <- paste(capture.output(chart$print(paste0('stack_',category))),collapse = '\n')
   chartCode <- paste(paste0('<h3 id=\"',h3Id[categoryIndice],'\">',correctNames[categoryIndice],'</h3>'),chartCode,sep='\n')

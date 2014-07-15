@@ -1,9 +1,6 @@
 # Console log
 message(paste(Sys.time(),'[R - Message] Launched R script Overview_v5.R'))
 
-# A small operator that is quite useful
-"%w/o%" <- function(x, y) x[!x %in% y] # ->  x without y 
-
 # Function to divide abundance table for each category
 divideAbTable = function(abTable,category) {
   abTableCategory <- abTable[,grepl(category,colnames(abTable))]

@@ -6,8 +6,6 @@
 # Console log
 message(paste(Sys.time(),'[R - Message] Launched R script Table_v3.R'))
 
-library(RJSONIO)
-
 # Returns a list composed of the sums of all matches for all samples, for each GO category.
 # Used to display percentage in the table
 MaxForCategory = function(abTable){
@@ -73,7 +71,7 @@ importJS = '<script src=\"https://cdn.datatables.net/1.10.0/js/jquery.dataTables
 
 
   jQueryFuncBegin = "$(document).ready(function() { $('#table-container').html(\'<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" class=\"display\" id=\"table\"></table>\' ); \n $('#table').dataTable( { \"data\": dataSet, \"columns\": \n"
-  jQueryFuncEnd = "\n } ); \n } );"
+  jQueryFuncEnd = ",\n \"order\": [[ 4, \"desc\" ]] } ); \n } );"
 
 
   fullHtmlCode = paste(importJS,'<div id=\"table-container\"></div>','<script>','\n','var dataSet = ',tableJSON,'; \n',jQueryFuncBegin,headers,jQueryFuncEnd,'</script>',sep='')

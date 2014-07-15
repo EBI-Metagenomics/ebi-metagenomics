@@ -125,7 +125,7 @@ write(PCAcode,paste('R/tmpGraph/',name,'_pca','.htm',sep=''))
 #########################################
 ################ Table ##################
 #########################################
-source('R/scripts/Table_v2.R')
+source('R/scripts/Table_v3.R')
 coucou = DataTableGen(abTable)
 write(coucou,paste('R/tmpGraph/',name,'_table','.htm',sep=''))
 

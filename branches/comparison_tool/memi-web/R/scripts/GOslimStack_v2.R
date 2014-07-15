@@ -69,9 +69,17 @@ rChartsStacked = function(abundanceTable,threshold){
 
 # Final function. Yay. For one category, from general table. Cool.
 CreateGraph = function(abundanceTable,threshold,category) {
+
+  # Correct names according to category of GO Slim
+  categoryIndice = 0
+  if(category=='biological_process') categoryIndice = 1
+  if(category=='cellular_component') categoryIndice = 2
+  if(category=='molecular_function') categoryIndice = 3
+  correctNames = c('Biological process','Cellular component','Molecular function')
+
   dataChart = rChartsStacked(divideAbTable(abundanceTable,category),threshold)
   chartWidth = 900+length(unique(dataChart$sample))*50
-  chart <- hPlot(value~sample,data = dataChart[dataChart$GOname!='Other'], group='GOname',type = 'column',group.na = 'NA\'s',title = 'Most frequent GO slim by sample', subtitle = category)
+  chart <- hPlot(value~sample,data = dataChart[dataChart$GOname!='Other'], group='GOname',type = 'column',group.na = 'NA\'s',title = 'Most frequent GO slim terms', subtitle = correctNames[categoryIndice])
   chart$chart(width = chartWidth, height = 700)
   chart$series(data = dataChart$value[dataChart$GOname=='Other'], name = paste('other (less than ',as.character(threshold),'%)',sep=''),type='column', color = '#B9B9B9')
   chart$plotOptions(column = list(stacking = "percent")) 

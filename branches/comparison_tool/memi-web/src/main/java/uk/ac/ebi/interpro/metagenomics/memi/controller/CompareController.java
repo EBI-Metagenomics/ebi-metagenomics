@@ -69,7 +69,7 @@ public class CompareController extends AbstractController implements IController
                 new ModelPopulator() {
                     @Override
                     public void populateModel(ModelMap model) {
-                        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "Sample comparison tool", getBreadcrumbs(null), propertyContainer);
+                        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "Compare samples of the same project", getBreadcrumbs(null), propertyContainer);
                         final ViewModel defaultViewModel = builder.getModel();
                         defaultViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_COMPARE_VIEW);
 
@@ -96,7 +96,7 @@ public class CompareController extends AbstractController implements IController
                     new ModelPopulator() {
                         @Override
                         public void populateModel(ModelMap model) {
-                            final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "Sample comparison tool", getBreadcrumbs(null), propertyContainer);
+                            final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "Compare samples of same project", getBreadcrumbs(null), propertyContainer);
                             final ViewModel defaultViewModel = builder.getModel();
                             defaultViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_COMPARE_VIEW);
                             // Retrieving list of public studies and samples + add attributes
@@ -138,7 +138,7 @@ public class CompareController extends AbstractController implements IController
 
         // Creation of 'R friendly' String objects containing : absolute paths to the files used by the R script, correct samples names if we want to keep them, heatmap parameters.
         String rFriendlyFileList = inputFilePaths.toString().replace("[", "").replace("]", "").replace(", ", ",");
-        String rFriendlySampleNames = sampleTextId.toString().replace("[", "").replace("]", "").replace(", ", ",");
+        final String rFriendlySampleNames = sampleTextId.toString().replace("[", "").replace("]", "").replace(", ", ",");
         String hmPar = comparisonForm.isHmLegend() + "," + comparisonForm.getHmClust() + "," + comparisonForm.getHmDendrogram();
 
         // Creation of unique file name/id used during the whole procedure
@@ -148,7 +148,7 @@ public class CompareController extends AbstractController implements IController
 
         final char WHITESPACE = ' ';
         String executionCommand;
-        executionCommand = rInstallationLocation + WHITESPACE + rScriptPath + rScriptName + WHITESPACE + rTmpFileDirectory + WHITESPACE +
+        executionCommand = rInstallationLocation + WHITESPACE + rScriptPath + "/" + rScriptName + WHITESPACE + rTmpFileDirectory + WHITESPACE +
                 rScriptPath + WHITESPACE + uniqueOutputName + WHITESPACE + rFriendlyFileList + WHITESPACE + comparisonForm.getUsedData() +
                 WHITESPACE + rFriendlySampleNames + WHITESPACE + comparisonForm.getStackThreshold() + WHITESPACE + hmPar + WHITESPACE + comparisonForm.getGOnumber();
 //            executionCommand = "Rscript R/simple.R";
@@ -209,6 +209,7 @@ public class CompareController extends AbstractController implements IController
                         // Result Header elements
                         model.addAttribute("study", studyDAO.read(Long.valueOf(comparisonForm.getStudy())));
                         model.addAttribute("samples", sampleList);
+                        model.addAttribute("sampleString",rFriendlySampleNames);
                         model.addAttribute("data", usedData);
                     }
                 });
@@ -282,7 +283,7 @@ public class CompareController extends AbstractController implements IController
      */
     protected List<Breadcrumb> getBreadcrumbs(SecureEntity entity) {
         List<Breadcrumb> result = new ArrayList<Breadcrumb>();
-        result.add(new Breadcrumb("Sample comparison tool", "Sample comparison tool", VIEW_NAME));
+        result.add(new Breadcrumb("Sample comparison tool", "Compare samples of the same project", VIEW_NAME));
         return result;
     }
 
@@ -291,8 +292,8 @@ public class CompareController extends AbstractController implements IController
      */
     private List<Breadcrumb> getBreadcrumbsForResultPage() {
         List<Breadcrumb> result = new ArrayList<Breadcrumb>();
-        result.add(new Breadcrumb("Sample comparison tool", "Sample comparison tool", VIEW_NAME));
-        result.add(new Breadcrumb("Comparison results", "Comparison results", "compare"));  /*to remove the link from breadcrumbs for comparison results*/
+        result.add(new Breadcrumb("Comparison tool", "Compare samples of the same project", VIEW_NAME));
+        result.add(new Breadcrumb("Comparison results", "View comparison tool results", "compare"));
         return result;
     }
 
@@ -312,11 +313,11 @@ public class CompareController extends AbstractController implements IController
             return sb.toString();
         } finally {
             br.close();
-            // Remove the temporary files, we don't want to keep them once they are displayed
-            //boolean success = (new File(fileName)).delete();
-            //if (success) {
-            //    System.out.println("Temporary file deleted (" + fileName + ")");
-            //}
+//            Remove the temporary files, we don't want to keep them once they are displayed
+            boolean success = (new File(fileName)).delete();
+            if (success) {
+                System.out.println("Temporary file deleted (" + fileName + ")");
+            }
         }
 
     }

@@ -21,7 +21,7 @@ public class ComparisonForm {
     private String study;
 
     @NotEmpty(message = "Please select some data")
-    private String usedData;
+    private String usedData = "GOslim";
 
     private boolean keepNames = true;
 
@@ -32,9 +32,9 @@ public class ComparisonForm {
 
     private int GOnumber = 150;
 
-    private String hmClust;
+    private String hmClust = "both";
 
-    private String hmDendrogram;
+    private String hmDendrogram = "both";
 
     private boolean hmLegend = true;
 

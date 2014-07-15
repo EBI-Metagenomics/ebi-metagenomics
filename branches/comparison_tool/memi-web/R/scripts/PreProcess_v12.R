@@ -8,16 +8,8 @@
 # Can be used for GO annotation summaries (.csv files) and IPR summaries (.csv files)
 
 # Console log
-message(paste(Sys.time(),'[R - Message] Launched R script PreProcess.R'))
+message(paste(Sys.time(),'[R - Message] Launched R script PreProcess_v12.R'))
 
-# Import of needed packages: data.table
-#if (!require("data.table")) {
-#  install.packages("data.table", dependencies = TRUE, repos = 'http://mirrors.ebi.ac.uk/CRAN/')
-#  library(data.table)
-#  }
-
-# Import of required functions from 'IPRHierarchy.R'
-# source("R/scripts/IPRHierarchy.R")
 
 CreateAbTable <- function(outputName, fileList, usedData = c('GO','GOslim','IPR','IPRcol'), sampleNames = c()) {
   # Create the abundance table needed for statistics from a file vector. If wanted, the hierarchy of
@@ -183,11 +175,4 @@ ReplaceIPR = function(IPR,childrenString) {
     result <- regmatches(searchResult, regexpr("^IPR\\d{6}", searchResult))
   }
   return(result)
-}
-
-# Retrieving sample names from a path. Works only if hierarchyList and fullChildrenString are defined before.
-# Not used anymore as soon as sample names are retrieved from submitted form data and in parameters for the abundance table creation function.
-RetrieveSampleNames = function(fileList) {
-  grabbedNames <- regmatches(fileList, regexpr('[^/]+\\.', fileList))
-  grabbedNames <- gsub('_.+','\\1',grabbedNames)
 }

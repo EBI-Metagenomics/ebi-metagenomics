@@ -2,36 +2,20 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/comparison-table.css" type="text/css" media="all"/>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/comparison-style.css" type="text/css" media="all"/>
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-<script src='http://github.highcharts.com/master/highcharts.src.js' type='text/javascript'></script>
-<script src='http://github.highcharts.com/master/highcharts-more.js' type='text/javascript'></script>
-<script src='http://github.highcharts.com/master/modules/exporting.src.js' type='text/javascript'></script>
-
-<script>
-    // Could I have some tabs please ?
-    $(function() {
-        $( '#tabs' ).tabs();
-        $( '#tabs-chart' ).tabs();
-    });
-</script>
+<script src='http://code.highcharts.com/highcharts.src.js' type='text/javascript'></script>
+<script src='http://code.highcharts.com/highcharts-more.js' type='text/javascript'></script>
+<script src='http://code.highcharts.com/modules/exporting.src.js' type='text/javascript'></script>
 
 <style>
-    /*#bars { }*/
-    #bars .rChart, #goBarChartView .rChart {
-        display:inline-block;
-    }
 
-    #pca .rChart {
-        display:inline-block;
-    }
 
 </style>
-<div class="sample_comp_result">
 
-<div class="back_ban"><div class="back_button"><a href="<c:url value="${baseURL}/compare"/>"><span>Back to query page</span></a></div><div class="back_title">Sample comparison tool:
+<div class="back_ban"><div class="back_button"><a href="<c:url value="${baseURL}/compare"/>"><span>Back to query page</span></a></div>
+    <div class="back_title">Sample comparison tool:
 
         <%--c:if test="${data==GOslim}">
             InterPro matches
@@ -44,7 +28,6 @@
         </c:if>
 </div>
 </div>
-
 <ul><li>Samples:
 <c:forEach var="sample" items="${samples}">
 <a class="sample_list" href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>" target="_blank" title="${sample.sampleName} (${sample.sampleId})">${sample.sampleId}</a>
@@ -53,89 +36,86 @@
  </li>
 </ul>
 <%--<p>Use tabs below to switch between available visualizations.</p>--%>
-<%--div class="sample_ana"--%>
-<div id="tabs-chart">
-
-<%-- type 01 Tabs - only image without line separator - THIS IS A TEST VERSION - STILL NEED TO DO MORE TABS OPTIONS--%>
-<ul>
-    <li class="selector_tab">Switch view</li>
-    <%--<li><a href="#goPieChartView" title="Pie-Chart-View"><span class="ico-pie"></span></a></li>--%>
-    <li><a href="#goBarChartView" title="Bar-Chart-View"><span class="ico-barh"></span></a></li>
-    <li><a href="#go-terms-col" title="Stacked column chart view"><span class="ico-col"></span></a></li>
-    <li><a href="#go-terms-heatmap" title="Heatmap view"><span class="ico-heatmap"></span></a></li>
-    <li><a href="#go-terms-pca" title="Principal component analysis view"><span class="ico-pca"></span></a></li>
-    <li><a href="#go-terms-table" title="Table view"><span class="ico-table"></span></a></li>
-<%--<li class="ico-downl"><a class="icon icon-functional" data-icon="=" href="#download" title="Download image/table"></a></li>--%>
-</ul>
-    <div id="goBarChartView">${graphCode[1]}</div>
-    <div id="go-terms-col">
-    Jump to: <a href="#stack_bio_title"> Biological process</a> | <a href="#stack_cell_title">Cellular component</a> | <a href="#stack_mol_title">Molecular function</a>
-    ${graphCode[2]}</div>
-    <div id="go-terms-heatmap">
-    Jump to: <a href="#heatmap_bio_title"> Biological process</a> | <a href="#heatmap_cell_title">Cellular component</a> | <a href="#heatmap_mol_title">Molecular function</a>
-    ${graphCode[3]}</div>
-    <div id="go-terms-pca">${graphCode[4]}</div>
-    <div id="go-terms-table">${graphCode[5]}</div>
-</div>
-
-<%-- type 02 Tabs - only image with lineseparator HAVETODO--%>
-<%-- type 03 Tabs - mix image/text with lineseparator HAVETODO--%>
-<%-- type 04 Tabs - only text with line separator--%>
-
+<div class="comp_result">
 <div id="tabs">
     <ul>
-        <%--<li><a href="#overview">Overview</a></li>--%>
+        <%--li><a href="#overview">Overview</a></li--%>
         <li><a href="#bars">Barcharts</a></li>
         <li><a href="#stack">Stacked columns</a></li>
         <li><a href="#heatmap">Heatmap</a></li>
-        <li><a href="#pca">Principal Component Analysis</a></li>
+        <li><a href="#pca">Principal Components Analysis</a></li>
         <li><a href="#jstable">Table</a></li>
     </ul>
-
-    <%--<div id="overview"></div>--%>
-
+    <%--div id="overview">
+        <p>${graphCode[0]}</p>
+    </div--%>
     <div id="bars">
-        <div>${graphCode[1]}</div>
-        <%--${graphCode[0]}--%>
+        <div id="export_div_bars" class="style-export">
+        <select id="bars_export" title="Export" class="export-select">
+            <option selected>Export</option>
+            <optgroup label="Biological process">
+                <option value="bp_png">PNG</option>
+                <option value="bp_pdf">PDF</option>
+                <option value="bp_svg">SVG</option>
+            </optgroup>
+            <optgroup label="Molecular function">
+                <option value="mf_png">PNG</option>
+                <option value="mf_pdf">PDF</option>
+                <option value="mf_svg">SVG</option>
+            </optgroup>
+            <optgroup label="Cellular component">
+                <option value="cc_png">PNG</option>
+                <option value="cc_pdf">PDF</option>
+                <option value="cc_svg">SVG</option>
+            </optgroup>
+        </select>
+            <br>
+            </div>
+        <div id="sticky-leg-anchor"></div>
+        <div id="barcharts_legend"><strong>Sample list</strong><br><font size="9" color="#666"><i>Click to hide sample</i></font><br></div>
+        <div id="bars-wrapper">${graphCode[1]}</div>
     </div>
     <div id="stack">
-        <%--Select category--%>
-        <%--<select id="stack_select">--%>
-            <%--<option value="">Choose a GO type</option>--%>
-            <%--<option value="bio">Biological process</option>--%>
-            <%--<option value="cell">Cellular component</option>--%>
-            <%--<option value="mol">Molecular function</option>--%>
-        <%--</select>--%>
-           Jump to: <a href="#stack_bio_title"> Biological process</a> | <a href="#stack_cell_title">Cellular component</a> | <a href="#stack_mol_title">Molecular function</a>
+           <div id="stack-jump-anchor"></div>
+           <div id="stack_jump">Jump to: <a href="#stack_bio_title"> Biological process</a> | <a href="#stack_cell_title">Cellular component</a> | <a href="#stack_mol_title">Molecular function</a></div>
 
-             ${graphCode[2]}
+            <div id="stack_wrapper">${graphCode[2]}</div>
     </div>
     <div id="heatmap">
-        <%--Select category--%>
-        <%--<select id="hm_select">--%>
-            <%--<option value="">Choose a GO type</option>--%>
-            <%--<option value="bio">Biological process</option>--%>
-            <%--<option value="cell">Cellular component</option>--%>
-            <%--<option value="mol">Molecular function</option>--%>
-        <%--</select>--%>
-   Jump to GO category: <a href="#heatmap_bio_title"> Biological process</a> | <a href="#heatmap_cell_title">Cellular component</a> | <a href="#heatmap_mol_title">Molecular function</a>
+   <div id="hm-jump-anchor"></div>
+   <div id="hm_jump">Jump to GO category: <a href="#hm_bio_title"> Biological process</a> | <a href="#hm_cell_title">Cellular component</a> | <a href="#hm_mol_title">Molecular function</a></div>
 
        <%--<h3> Biological process</h3>--%>
         ${graphCode[3]}
     </div>
     <div id="pca">
-        Principal Component 1 <input id="pc1" type="number" name="Principal Component 1" min="1" max="3" value="1" disabled>
-        Principal Component 2 <input id="pc2" type="number" name="Principal Component 2" min="1" max="3" value="2" disabled> <br>
-        <p>${graphCode[4]}</p>
+        <div id="export_pca_div" class="style-export">
+            <select id="pca_export" title="Export" class="export-select">
+                <option selected>Export</option>
+                <optgroup label="Biological process">
+                    <option value="bp_png">PNG</option>
+                    <option value="bp_pdf">PDF</option>
+                    <option value="bp_svg">SVG</option>
+                </optgroup>
+                <optgroup label="Molecular function">
+                    <option value="mf_png">PNG</option>
+                    <option value="mf_pdf">PDF</option>
+                    <option value="mf_svg">SVG</option>
+                </optgroup>
+            </select>
+            <br>
+        </div>
+        <%--Principal Component 1 <input id="pc1" type="number" name="Principal Component 1" min="1" max="3" value="1" disabled>
+        Principal Component 2 <input id="pc2" type="number" name="Principal Component 2" min="1" max="3" value="2" disabled> <br>--%>
+        <div id="plots-wrapper">${graphCode[4]}</div>
     </div>
     <div id="jstable">
         <p>${graphCode[5]}</p>
     </div>
 </div>
+</div>
 
-</div><%--/sample_comp_result--%>
-
-<script>
+<script type="text/javascript">
      // to remove the last comma in the sample list
     $(document).ready(function() {
     $(' a.sample_list:not(:last-child)').each(function () {
@@ -143,110 +123,8 @@
                     });
     });
 </script>
-<script>
 
-    // jQuery FTW !!! Hiding / showing div for heatmaps and stacked columns
-
-    // Heatmap first
-    hideAllHMDivs = function () {
-        $("#hm_bio").hide();
-        $("#hm_cell").hide();
-        $("#hm_mol").hide();
-    };
-
-    handleNewHMSelection = function () {
-
-        hideAllHMDivs();
-
-        switch ($(this).val()) {
-            case 'bio':
-                $("#hm_bio").show();
-                break;
-            case 'cell':
-                $("#hm_cell").show();
-                break;
-            case 'mol':
-                $("#hm_mol").show();
-                break;
-        }
-    };
-
-    $(document).ready(function() {
-
-            $("#hm_select").change(handleNewHMSelection);
-
-            // Run the event handler once now to ensure everything is as it should be
-            handleNewHMSelection.apply($("#hm_select"));
-
-        });
-
-    // Then stacked columns
-    hideAllStackDivs = function () {
-//        $("#stack_biological_process").hide();
-//        $("#stack_cellular_component").hide();
-//        $("#stack_molecular_function").hide();
-    };
-
-    handleNewStackSelection = function () {
-
-//        hideAllStackDivs();
-//
-//        switch ($(this).val()) {
-//            case 'bio':
-//                $("#stack_biological_process").show();
-//                break;
-//            case 'cell':
-//                $("#stack_cellular_component").show();
-//                break;
-//            case 'mol':
-//                $("#stack_molecular_function").show();
-//                break;
-//        }
-    };
-
-    $(document).ready(function() {
-
-        $("#stack_select").change(handleNewStackSelection);
-
-        // Run the event handler once now to ensure everything is as it should be
-        handleNewStackSelection.apply($("#stack_select"));
-
-    });
-
-    // Then stacked columns
-    hideAllPCA = function () {
-        $("#stack_biological_process").hide();
-        $("#stack_cellular_component").hide();
-        $("#stack_molecular_function").hide();
-    };
-
-    handleNewStackSelection = function () {
-
-//
-//       hideAllStackDivs();
-//
-//        switch ($(this).val()) {
-//            case 'bio':
-//                $("#stack_biological_process").show();
-//                break;
-//            case 'cell':
-//                $("#stack_cellular_component").show();
-//                break;
-//            case 'mol':
-//                $("#stack_molecular_function").show();
-//                break;
-//        }
-    };
-
-    $(document).ready(function() {
-
-        $("#stack_select").change(handleNewStackSelection);
-
-        // Run the event handler once now to ensure everything is as it should be
-        handleNewStackSelection.apply($("#stack_select"));
-
-    });
-
+<script type="text/javascript">
     // Enable selection of rows in the table visualization
     $(document).ready(function() {
         $('#table tbody').on( 'click', 'tr', function () {
@@ -259,4 +137,248 @@
             }});
         });
 
+    // Barcharts export module
+        $('#bars_export').change(function() {
+            var exportValue = $( "#bars_export" ).val();
+            var exportArray = exportValue.split('_');
+            var goType = "";
+            var format = "";
+            switch(exportArray[0]) {
+                case "bp":
+                    goType = "biological_process";
+                    break;
+                case "mf":
+                    goType = "molecular_function";
+                    break;
+                case "cc":
+                    goType = "cellular_component";
+                    break;
+            }
+
+            if(exportArray[1]!=null) {
+                switch(exportArray[1]) {
+                    case "png":
+                        format = "image/png";
+                        break;
+                    case "pdf":
+                        format = "application/pdf";
+                        break;
+                    case "svg":
+                        format = "image/svg+xml";
+                        break;
+                }
+
+                var chartId = "#"+goType+"_bars";
+                var date = new Date();
+                var mmddyyyyDate = (date.getMonth()+1).toString() +'-'+ date.getDate() +'-'+ date.getFullYear();
+                var fileName = "${study.studyId}"+"_"+mmddyyyyDate+"_comp_func_go"+"_barcharts_"+exportArray[0];
+                var chart = $(chartId).highcharts();
+                chart.redraw();
+                chart.exportChart({
+                    type: format,
+                    filename: fileName
+                });
+            }
+            $('#bars_export').val('Export');
+        });
+
+    // PCA export module
+    $('#pca_export').change(function() {
+        var exportValue = $( "#pca_export" ).val();
+        var exportArray = exportValue.split('_');
+        var goType = "";
+        var format = "";
+        switch(exportArray[0]) {
+            case "bp":
+                goType = "biological_process";
+                break;
+            case "mf":
+                goType = "molecular_function";
+                break;
+        }
+
+        if(exportArray[1]!=null) {
+            switch(exportArray[1]) {
+                case "png":
+                    format = "image/png";
+                    break;
+                case "pdf":
+                    format = "application/pdf";
+                    break;
+                case "svg":
+                    format = "image/svg+xml";
+                    break;
+            }
+            var chartId = "#"+goType+"_pca_12"; // Need to find a way to see which PCs are drawn. Could be cleaner
+            var date = new Date();
+            var mmddyyyyDate = (date.getMonth()+1).toString() +'-'+ date.getDate() +'-'+ date.getFullYear();
+            var fileName = "${study.studyId}"+"_"+mmddyyyyDate+"_comp_func_go"+"_PCA_"+exportArray[0];
+            var chart = $(chartId).highcharts();
+            chart.redraw();
+            chart.exportChart({
+                type: format,
+                filename: fileName
+            });
+        }
+        $('#pca_export').val('Export');
+    });
+
+    // Sticky div relocation function to let the barchart legend stay on top
+    function sticky_bar_relocate() {
+        var window_top = $(window).scrollTop();
+        var barcharts_leg_top = $('#sticky-leg-anchor').offset().top;
+        if (window_top > barcharts_leg_top) {
+            $('#barcharts_legend').addClass('stick');
+            // Quick fix to make the div-width equal to its tab width
+            $("#barcharts_legend").css("width", $("#bars").width());
+        } else {
+            $('#barcharts_legend').removeClass('stick');
+        }
+    }
+
+    $(function() {
+        $(window).scroll(sticky_bar_relocate);
+        sticky_bar_relocate();
+    });
+
+    // Sticky div relocation function to let the heatmap 'Jump to' div stay on top
+    function sticky_hm_relocate() {
+        var window_top = $(window).scrollTop();
+        var hm_jump_top = $('#hm-jump-anchor').offset().top;
+        if (window_top > hm_jump_top) {
+            $('#hm_jump').addClass('stick');
+            // Quick fix to make the div-width equal to its tab width
+            $("#hm_jump").css("width", $("#heatmap").width());
+        } else {
+            $('#hm_jump').removeClass('stick');
+        }
+    }
+
+    $(function() {
+        $(window).scroll(sticky_hm_relocate);
+        sticky_hm_relocate();
+    });
+
+    // Sticky div relocation function to let the stacked columns 'Jump to' div stay on top
+    function sticky_stack_relocate() {
+        var window_top = $(window).scrollTop();
+        var stack_jump_top = $('#stack-jump-anchor').offset().top;
+        if (window_top > stack_jump_top) {
+            $('#stack_jump').addClass('stick');
+            // Quick fix to make the div-width equal to its tab width
+            $("#stack_jump").css("width", $("#stack").width());
+        } else {
+            $('#stack_jump').removeClass('stick');
+        }
+    }
+
+    $(function() {
+        $(window).scroll(sticky_stack_relocate);
+        sticky_stack_relocate();
+    });
+
 </script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        if($('#biological_process_bars').length != 0) {
+        var sampleNum = "${fn:length(samples)}";
+        var sampleString = "${sampleString}";
+        var sampleArr = sampleString.split(',');
+        var i;
+        var bioChart = $('#biological_process_bars').highcharts();
+        var molChart = $('#molecular_function_bars').highcharts();
+        var cellChart = $('#cellular_component_bars').highcharts();
+        var bioChartSeries = bioChart.series;
+        var molChartSeries = molChart.series;
+        var cellChartSeries = cellChart.series;
+        for (i = 0; i < sampleNum; i++)
+        {
+            var currentColor = cellChartSeries[i].color;
+        $('<div/>', {
+            'id': 'legend_'+i,
+            'class': 'legend-item',
+            'html': '<div class="legend-rectangle" style="margin:4px; width: 16px;height:12px; background:'+ currentColor + '; float:left;"></div><span> '+sampleArr[i]+'</span>',
+            'click': function () {
+                var legInd = this.id.split('_')[1];
+                // Set to biological process chart but could be whatever we want
+                if(bioChartSeries[legInd].visible){
+                    bioChartSeries[legInd].hide();
+                    molChartSeries[legInd].hide();
+                    cellChartSeries[legInd].hide();
+                    // Changing color to grey (for the rectangle too!)
+                    $(this).css('color', '#D1D1D1');
+                    $(this).children('.legend-rectangle').css('background', '#D1D1D1');
+                }
+                else {
+                    bioChartSeries[legInd].show();
+                    molChartSeries[legInd].show();
+                    cellChartSeries[legInd].show();
+                    // Changing color to normal display (could be cleaner?)
+                    $(this).css('color', '#606068');
+                    $(this).children('.legend-rectangle').css('background', cellChartSeries[legInd].color);
+                }
+            },
+            'mouseenter': function () {
+               // $(this).css('color', 'blue');
+            },
+            'mouseleave': function () {
+               // $(this).css('color', 'black');
+            }
+        }).appendTo('#barcharts_legend');
+        }
+        }
+        else {
+            // No barcharts? Empty the legend and disable export so the user is not confused
+            $( "#barcharts_legend" ).empty();
+
+        //    $("#bars_export").disable(); // Could be better to hide the element instead of disabling it.
+        }
+    });
+</script>
+
+<script type="text/javascript" defer="defer">
+    // Could I have some tabs please ?
+    $( document ).ready(function() {
+        $(function () {
+           $('#tabs').tabs();
+//           $('.rChart').each(function() {
+//                if($(this).is(':visible')) {
+//                    var chartContainerName = this.id;
+                    $(window).trigger('resize');
+//                    $('#'+chartContainerName).highcharts().reflow();
+//                }
+        });
+       // $('#molecular_function_bars').hide();
+        });
+//    });
+
+    $('#tabs').on('tabsactivate', function (event, ui) {
+        $('.rChart').each(function() {
+        if($(this).is(':visible')) {
+        var chartContainerName = this.id;
+        $('#'+chartContainerName).highcharts().reflow();
+        }
+    });
+    $(window).trigger('resize');
+     });
+</script>
+
+<%--<script type="text/javascript" defer="defer">--%>
+    <%--$('#tabs').click(function() {--%>
+    <%--$('.rChart').each(function() {--%>
+        <%--if($(this).is(':visible')) {--%>
+            <%--var chartContainerName = this.id;--%>
+            <%--$('#'+chartContainerName).highcharts().reflow();--%>
+        <%--}--%>
+    <%--});--%>
+    <%--});--%>
+    <%--$( window ).resize(function() {--%>
+    <%--$('.rChart').each(function() {--%>
+        <%--if($(this).is(':visible')) {--%>
+            <%--var chartContainerName = this.id;--%>
+            <%--$('#'+chartContainerName).highcharts().reflow();--%>
+        <%--}--%>
+    <%--});--%>
+    <%--});--%>
+<%--</script>--%>

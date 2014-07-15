@@ -133,7 +133,7 @@ write(c(totalCode),paste('R/tmpGraph/',name,'_stack','.htm',sep=''))
 #########################################
 ########### Static Heatmap ##############
 #########################################
-# hmCode = '<p><i>Generation of PNG heatmaps is not working on the server ...</i></p>'
+hmCode = '<p><i>Generation of PNG heatmaps is not working on the server ...</i></p>'
 if(!commit) {
 source('R/scripts/StaticHeatmap_v3.R')
 pathAndName = paste('src/main/webapp/img/comparison/',c('bio_','cell_','mol_'),name,'.png',sep='')
@@ -155,7 +155,7 @@ write(coucou,paste('R/tmpGraph/',name,'_table','.htm',sep=''))
 
 
 # Delete table 
-file.remove(paste('R/tables/',name,'.txt',sep=''))
+# file.remove(paste('R/tables/',name,'.txt',sep=''))
 
 # Console log
 message(paste(Sys.time(),'[R - Message] R scripts over.'))
