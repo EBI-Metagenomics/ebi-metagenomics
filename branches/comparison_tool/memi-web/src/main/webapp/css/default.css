@@ -1790,7 +1790,7 @@ ul.color_legend {list-style-type: square; list-style-position:inside;}
 .sample_comp #row-wrapper #samples-div {float:left; width: 48%; margin-left: 18px;}
 .sample_comp #settings-wrapper{margin: 0 9px;overflow: auto;}
 .sample_comp #settings-wrapper .settings-div-data {float:left;}
-.sample_comp #settings-wrapper .settings-div-adv {float:left; margin-left: 18px;}
+.sample_comp #settings-wrapper .settings-div-adv {float:left; /*margin-left: 18px;*/}
 .sample_comp #buttons-wrapper{margin: 0 9px 18px 0; /*add space below*/text-align: center;}
 .sample_comp #advanced-settings-wrapper { margin: 0 9px; border: 1px #CCC solid;   background-color: #DDE6E6;  /*to define a better style for adv options*/}
 .sample_comp #advanced-settings-wrapper ul {padding-left:9px;}
