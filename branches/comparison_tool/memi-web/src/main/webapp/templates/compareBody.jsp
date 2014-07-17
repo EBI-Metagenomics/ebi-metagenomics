@@ -4,7 +4,7 @@
 
 <div class="sample_comp">
 <h2>Sample comparison tool</h2>
-
+<p>The comparison is currently based on a summary of Gene Ontology (GO) terms derived from InterPro matches to the selected samples.</p>
 <form:form id="comparison-tool-form-id" method="post" commandName="comparisonForm">
     <div id="row-wrapper">
 
@@ -84,7 +84,7 @@
                     <%--</ul></li>--%>
                     <li><strong>Stacked columns</strong>
                         <ul>
-                            <li>Show terms below <form:input path="stackThreshold" type="number" min="0" max="50" step="0.1" value="1" cssStyle="width:60px;"/> % as 'other'. </li>
+                            <li>GO terms below <form:input path="stackThreshold" type="number" min="0" max="50" step="0.1" value="1" cssStyle="width:60px;"/> % match included in 'other'. </li>
                         </ul>
                     </li>
                     <li><strong>Heatmap</strong><ul>
