@@ -5,8 +5,6 @@
 <div class="sample_comp">
 <h2>Sample comparison tool</h2>
 
-<div id="demo"></div>
-
 <form:form id="comparison-tool-form-id" method="post" commandName="comparisonForm">
     <div id="row-wrapper">
 
@@ -20,12 +18,20 @@
                         </c:if>
                     </c:forEach>
                 </form:select>
-            <form:errors path="study" cssClass="error"/>
-            <div id="project-description" title="Project description">
-                <div id="description-content">
-                    <i>Select a project in the menu above.</i>
-                </div>
-            </div>
+
+              <div id="project-description" title="Project description">
+                   <div id="description-content">
+                       <i>Select a project in the menu above.</i>
+                   </div>
+               </div>
+            <c:set var="domainNameErrors"><form:errors path="study" cssClass="error" element="div"/></c:set>
+            <c:if test="${not empty domainNameErrors}">
+            <script>
+                //replace info message by error message
+                $( "#description-content" ).replaceWith( "<div class='error' id='description-content study.errors'>Please select one project in the list above.</div>" ); </script>
+            </c:if>
+
+
         </div>
 
             <div id="samples-div">
@@ -68,9 +74,8 @@
             <a id="advanced-settings-link">Show / hide advanced settings</a>
             <!-- Advanced settings div, that should be hidden at the beginning -->
         </div>
-
-
     </div>
+
     <div id="advanced-settings-wrapper" title="Advanced settings">
                 <ul>
                     <%--<li><strong>General</strong>--%>
@@ -114,6 +119,7 @@
         <a id="clear-all-button" type="button" onclick="ClearAll()">Clear all</a>
     </div>
 </form:form>
+
 </div>
 
 <%--TODO: Clean up code a bit--%>
@@ -133,7 +139,7 @@
                 success:function (data) {
                     $("#samples").html(data);
                     var numberTotal = $('#samples option').length;
-                    document.getElementById("selected-samples").innerHTML = "Sample list (" + numberSelected + " selected out of " + numberTotal + ")";
+                    document.getElementById("selected-samples").innerHTML = "Sample list <span>(" + numberSelected + " selected out of " + numberTotal + ")</span>";
                 },
                 error:function (jqXHR, textStatus, errorThrown) {
                     alert("Request failed: " + textStatus);
@@ -274,12 +280,12 @@
     $('#samples-control').click(function() {
         var numberSelected = $('#samples :selected').length;
         var numberTotal = $('#samples option').length;
-        document.getElementById("selected-samples").innerHTML = "Sample list (" + numberSelected + " selected out of " + numberTotal + ")";
+        document.getElementById("selected-samples").innerHTML = "Sample list <span>(" + numberSelected + " selected out of " + numberTotal + ")</span>";
     });
     $('#samples').change(function() {
         var numberSelected = $('#samples :selected').length;
         var numberTotal = $('#samples option').length;
-        document.getElementById("selected-samples").innerHTML = "Sample list (" + numberSelected + " selected out of " + numberTotal + ")";
+        document.getElementById("selected-samples").innerHTML = "Sample list <span>(" + numberSelected + " selected out of " + numberTotal + ")</span>";
     });
 
     // Filter options of visualization according to the chosen data STILL TO DO
