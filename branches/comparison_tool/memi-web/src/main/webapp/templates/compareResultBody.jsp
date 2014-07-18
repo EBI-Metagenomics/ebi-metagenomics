@@ -72,7 +72,7 @@
             <br>
             </div>
         <div id="sticky-leg-anchor"></div>
-        <div id="barcharts_legend"><strong>Sample list</strong><br><font size="9" color="#666"><i>Click to hide sample</i></font><br></div>
+        <div id="barcharts_legend"><strong>Sample list</strong> (<span class="barcharts_legend_info">click to hide sample</span>)<br/></div>
         <div id="bars-wrapper">${graphCode[1]}</div>
     </div>
     <div id="stack">
@@ -298,7 +298,7 @@
         $('<div/>', {
             'id': 'legend_'+i,
             'class': 'legend-item',
-            'html': '<div class="legend-rectangle" style="margin:4px; width: 16px;height:12px; background:'+ currentColor + '; float:left;"></div><span> '+sampleArr[i]+'</span>',
+            'html': '<div class="legend-rectangle" style="background:'+ currentColor + ';"></div><span> '+sampleArr[i]+'</span>',
             'click': function () {
                 var legInd = this.id.split('_')[1];
                 // Set to biological process chart but could be whatever we want
