@@ -493,16 +493,9 @@ table.dataTable td {/*
 #bars #barcharts_legend .legend-item:hover { color: #1A1A1A ;}
 #bars #barcharts_legend .legend-item .legend-rectangle {margin: 4px;width: 12px; height: 12px;float: left;}
 
-.stick {
-    position: fixed;
-    top: 0;
-    z-index: 10000;
-    /*background: linear-gradient(to top, transparent 10%, white 25%);*/
-    /*padding-bottom: 5px;*/
-    background: white;
-    /*border: 1px #DFDFDF solid; PREVIOUS VERSION*/
+#bars .stick {position: fixed;top: 0;  z-index: 10000; background: rgba(255, 255, 255, 0.77);  /*sticky legend*/}
 
-}
+
 #bars  #bars-wrapper {
     /*border:1px deeppink solid;*/
     position: relative;
