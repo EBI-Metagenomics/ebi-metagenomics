@@ -24,7 +24,7 @@
             Complete GO annotation (functional analysis)
         </c:if>
         <c:if test="${data=='GOslim'}">
-            GO slim annotation (functional analysis)
+            GO term annotation (functional analysis)   <%--hide GO slim notion as we do on the analysis result page --%>
         </c:if>
 </div>
 </div>
