@@ -1,5 +1,5 @@
 # Console log
-message(paste(Sys.time(), "[R - Message] Launched R script GOslimStack_v5.R"))
+# message(paste(Sys.time(), "[R - Message] Launched R script GOslimStack_v5.R"))
 
 FixRchartsStacked <- function(abundanceTable, threshold) {
   newTable <- abundanceTable
@@ -57,7 +57,9 @@ CreateStackColForCategory <- function(abundanceTable, threshold, category) {
   chart$legend(layout = "vertical", align = "right", verticalAlign = "top", x = -10, y = 100, itemStyle = list(fontSize = "11px", 
     fontWeight = "regular", color = "#606060"), title = list(text = "GO terms list<br/><span style=\"font-size: 9px; color: #666; font-weight: normal; font-style: italic;\">Click to hide</span>",
     style = list(fontStyle = "regular")))
-  chart$tooltip(backgroundColor = "white")
+  chart$tooltip(backgroundColor = "white", headerFormat = "{point.x}<br/>",
+     pointFormat = "<span style=\"color:{series.color}\">&#9632;</span> {series.name}: <strong>{point.y} %</strong><br/>",
+     useHTML = TRUE)  #, formatter = tooltipFormat, positioner = tooltipPosition
   chart$colors(EMGcolors)
   chart$addParams(width = NULL, height = NULL)
   chart$exporting(enabled = T)
