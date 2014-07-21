@@ -34,7 +34,7 @@ CreateBarsForCategory <- function(abTable, category) {
     width = labelSize[categoryIndice]), formatter = axisFormat), lineColor = "#595959", tickColor = "")
   chart$yAxis(title = list(text = "Match (%)"), endOnTick = FALSE, maxPadding = 0)
   chart$tooltip(backgroundColor = "white", headerFormat = "{point.x}<br/>", 
-    pointFormat = "<span style=\"color:{series.color}\">■</span> {series.name}: <strong>{point.y} %</strong><br/>", 
+    pointFormat = "<span style=\"color:{series.color}\">&#9632;</span> {series.name}: <strong>{point.y} %</strong><br/>",
     useHTML = TRUE)  #, formatter = tooltipFormat, positioner = tooltipPosition
   chart$chart(zoomType = "x", spacingLeft = 20, height = chartHeight, animation = FALSE)
   chart$colors(EMGcolors)
