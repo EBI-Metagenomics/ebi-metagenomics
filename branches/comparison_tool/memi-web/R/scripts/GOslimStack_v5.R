@@ -48,13 +48,13 @@ CreateStackColForCategory <- function(abundanceTable, threshold, category) {
   chartWidth <- 900 + length(unique(dataChart$sample)) * 50
   chart <- hPlot(value ~ sample, data = dataChart[dataChart$GOname != "Other"], group = "GOname", type = "column", group.na = "NA's", 
     title = paste0("Most frequent GO terms", " (", correctNames[categoryIndice], ")"))  # , subtitle = correctNames[categoryIndice])
-  # chart$chart(height = 500)
+  chart$chart(height = 444)
   chart$series(data = dataChart$value[dataChart$GOname == "Other"], name = paste("other (less than ", as.character(threshold), 
     "%)", sep = ""), type = "column", color = "#B9B9B9")
   chart$plotOptions(column = list(stacking = "percent"))
   chart$xAxis(categories = c(unique(dataChart$sample)), lineColor = "#595959", tickColor = "")
   chart$yAxis(title = list(text = "Relative abundance (%)"))
-  chart$legend(layout = "vertical", align = "right", verticalAlign = "top", x = -10, y = 100, itemStyle = list(fontSize = "11px", 
+  chart$legend(layout = "vertical", align = "right", verticalAlign = "top", x = 0, y = 26, itemStyle = list(fontSize = "11px",
     fontWeight = "regular", color = "#606060"), title = list(text = "GO terms list<br/><span style=\"font-size: 9px; color: #666; font-weight: normal; font-style: italic;\">Click to hide</span>",
     style = list(fontStyle = "regular")))
   chart$tooltip(backgroundColor = "white", headerFormat = "{point.x}<br/>",
