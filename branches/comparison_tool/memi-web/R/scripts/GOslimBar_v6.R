@@ -14,7 +14,7 @@ CreateBarsForCategory <- function(abTable, category) {
   if (category == "molecular_function") 
     categoryIndice <- 3
   correctNames <- c("Biological process", "Cellular component", "Molecular function")
-  labelSize <- c(260, 168, 230)
+  labelSize <- c(200, 200, 200)
   
   # Used data
   dataChart <- RchartsFix(AbTablePercent(DivideAbTable(abTable, category)))
@@ -27,12 +27,12 @@ CreateBarsForCategory <- function(abTable, category) {
   # Actual chart creation
   chart <- hPlot(value ~ GO, data = dataChart, group = "sample", type = "bar")
   
-  chart$title(text = correctNames[categoryIndice], floating = FALSE, y= 9, margin= -12, style = list(fontSize = 13, fontWeight = "bold"))
+  chart$title(text = correctNames[categoryIndice], floating = FALSE, margin= 0, style = list(fontSize = 13, fontWeight = "bold"))
   chart$legend(enabled = FALSE)
   chart$plotOptions(series = list(borderWidth = 1, borderColor = "#686868", pointPadding = 0, groupPadding = 0.1))
   chart$xAxis(categories = c(unique(dataChart$GOname)), labels = list(step = 1, rotation = 0, style = list(fontSize = "11px",
-    width = labelSize[categoryIndice]), formatter = axisFormat), lineColor = "#595959", tickColor = "")
-  chart$yAxis(opposite = TRUE, gridLineColor = "#e0e0e0", title = list(text = "Match (%)", style = list(color = "#ccc"), align = "high"), endOnTick = FALSE, maxPadding = 0, y = -40, labels = list( y=-6,  style = list(color = "#ccc")))
+    width = labelSize[categoryIndice])), lineColor = "#595959", tickColor = "")
+  chart$yAxis(opposite = TRUE, gridLineColor = "#e0e0e0", title = list(text = "Match (%)", style = list(color = "#a0a0a0")), endOnTick = FALSE, maxPadding = 0,  labels = list( y=-6,  style = list(color = "#a0a0a0")))
   chart$tooltip(backgroundColor = "white", headerFormat = "{point.x}<br/>", 
     pointFormat = "<span style=\"color:{series.color}\">&#9632;</span> {series.name}: <strong>{point.y} %</strong><br/>",
     useHTML = TRUE)  #, formatter = tooltipFormat, positioner = tooltipPosition
