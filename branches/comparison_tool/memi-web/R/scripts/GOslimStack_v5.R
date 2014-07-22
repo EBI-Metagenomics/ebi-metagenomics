@@ -49,12 +49,13 @@ CreateStackColForCategory <- function(abundanceTable, threshold, category) {
   chart <- hPlot(value ~ sample, data = dataChart[dataChart$GOname != "Other"], group = "GOname", type = "column", group.na = "NA's", 
     title = paste0("Most frequent GO terms", " (", correctNames[categoryIndice], ")"))  # , subtitle = correctNames[categoryIndice])
   chart$chart(height = 444)
+  chart$title(text = paste0("Most frequent GO terms", " (", correctNames[categoryIndice], ")"), floating = FALSE, style = list(fontSize = 13, fontWeight = "bold"))
   chart$series(data = dataChart$value[dataChart$GOname == "Other"], name = paste("other (less than ", as.character(threshold), 
     "%)", sep = ""), type = "column", color = "#B9B9B9")
   chart$plotOptions(column = list(stacking = "percent"))
   chart$xAxis(categories = c(unique(dataChart$sample)), lineColor = "#595959", tickColor = "")
   chart$yAxis(title = list(text = "Relative abundance (%)"))
-  chart$legend(layout = "vertical", align = "right", verticalAlign = "top", x = 0, y = 26, itemStyle = list(fontSize = "11px",
+  chart$legend(layout = "vertical", align = "right", verticalAlign = "top", x = 0, y = 26, width = 360, itemStyle = list(fontSize = "11px",
     fontWeight = "regular", color = "#606060"), title = list(text = "GO terms list<br/><span style=\"font-size: 9px; color: #666; font-weight: normal; font-style: italic;\">Click to hide</span>",
     style = list(fontStyle = "regular")))
   chart$tooltip(backgroundColor = "white", headerFormat = "{point.x}<br/>",
@@ -64,6 +65,6 @@ CreateStackColForCategory <- function(abundanceTable, threshold, category) {
   chart$addParams(width = NULL, height = NULL)
   chart$exporting(enabled = T)
   chartCode <- paste(capture.output(chart$print(paste0("stack_", category))), collapse = "\n")
-  chartCode <- paste(paste0("<h3 id=\"", h3Id[categoryIndice], "\">", h3Names[categoryIndice], "</h3>"), chartCode, sep = "\n")
+  chartCode <- paste(paste0("<h4 id=\"", h3Id[categoryIndice], "\">", h3Names[categoryIndice], "</h3>"), chartCode, sep = "\n")
   return(chartCode)
 }
