@@ -48,15 +48,16 @@ CreateStackColForCategory <- function(abundanceTable, threshold, category) {
   chartWidth <- 900 + length(unique(dataChart$sample)) * 50
   chart <- hPlot(value ~ sample, data = dataChart[dataChart$GOname != "Other"], group = "GOname", type = "column", group.na = "NA's", 
     title = paste0("Most frequent GO terms", " (", correctNames[categoryIndice], ")"))  # , subtitle = correctNames[categoryIndice])
-  chart$chart(height = 444)
+  #chart$chart(height = 444)  When no vertical label
+  chart$chart(height = 484)
   chart$title(text = paste0("Most frequent GO terms", " (", correctNames[categoryIndice], ")"), floating = FALSE, style = list(fontSize = 13, fontWeight = "bold"))
   chart$series(data = dataChart$value[dataChart$GOname == "Other"], name = paste("other (less than ", as.character(threshold), 
     "%)", sep = ""), type = "column", color = "#B9B9B9")
   chart$plotOptions(column = list(stacking = "percent"))
   chart$xAxis(categories = c(unique(dataChart$sample)), lineColor = "#595959", tickColor = "", labels = list (rotation =-90))
-  chart$yAxis(title = list(text = "Relative abundance (%)"))
-  chart$legend(layout = "vertical", align = "right", verticalAlign = "top", x = 0, y = 26, width = 360, itemStyle = list(fontSize = "11px",
-    fontWeight = "regular", color = "#606060"), title = list(text = "GO terms list<br/><span style=\"font-size: 9px; color: #666; font-weight: normal; font-style: italic;\">Click to hide</span>",
+  chart$yAxis(gridLineColor = "#e0e0e0", title = list(text = "Relative abundance (%)"))
+  chart$legend(layout = "vertical", align = "right", verticalAlign = "top", x = 0, y = 20, width = 360, itemStyle = list(fontSize = "11px",
+    fontWeight = "regular", color = "#606060"), title = list(text = "GO terms list <span style=\"font-size: 9px; color: #666; font-weight: normal; font-style: italic;\">(click to hide)</span>",
     style = list(fontStyle = "regular")))
   chart$tooltip(backgroundColor = "white", headerFormat = "{point.x}<br/>",
      pointFormat = "<span style=\"color:{series.color}\">&#9632;</span> {series.name}: <strong>{point.y} %</strong><br/>",
