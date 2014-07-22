@@ -53,7 +53,7 @@ CreateStackColForCategory <- function(abundanceTable, threshold, category) {
   chart$series(data = dataChart$value[dataChart$GOname == "Other"], name = paste("other (less than ", as.character(threshold), 
     "%)", sep = ""), type = "column", color = "#B9B9B9")
   chart$plotOptions(column = list(stacking = "percent"))
-  chart$xAxis(categories = c(unique(dataChart$sample)), lineColor = "#595959", tickColor = "")
+  chart$xAxis(categories = c(unique(dataChart$sample)), lineColor = "#595959", tickColor = "", labels = list (rotation =-90))
   chart$yAxis(title = list(text = "Relative abundance (%)"))
   chart$legend(layout = "vertical", align = "right", verticalAlign = "top", x = 0, y = 26, width = 360, itemStyle = list(fontSize = "11px",
     fontWeight = "regular", color = "#606060"), title = list(text = "GO terms list<br/><span style=\"font-size: 9px; color: #666; font-weight: normal; font-style: italic;\">Click to hide</span>",
