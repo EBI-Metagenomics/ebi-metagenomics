@@ -72,7 +72,7 @@
             <br>
             </div>
         <div id="sticky-leg-anchor"></div>
-        <div id="barcharts_legend"><strong>Sample list</strong> (<span class="barcharts_legend_info">click to hide sample</span>)<br/></div>
+        <div id="barcharts_legend"><strong>Sample list</strong> <span class="barcharts_legend_info">(click to hide)</span><br/></div>
         <div id="bars-wrapper">${graphCode[1]}</div>
     </div>
     <div id="stack">
