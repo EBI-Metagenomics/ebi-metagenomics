@@ -66,6 +66,6 @@ CreateStackColForCategory <- function(abundanceTable, threshold, category) {
   chart$addParams(width = NULL, height = NULL)
   chart$exporting(enabled = T)
   chartCode <- paste(capture.output(chart$print(paste0("stack_", category))), collapse = "\n")
-  chartCode <- paste(paste0("<h4 id=\"", h3Id[categoryIndice], "\">", h3Names[categoryIndice], "</h3>"), chartCode, sep = "\n")
+  chartCode <- paste(paste0("<h3 id=\"", h3Id[categoryIndice], "\">", h3Names[categoryIndice], "</h3>"), chartCode, sep = "\n")
   return(chartCode)
 }
