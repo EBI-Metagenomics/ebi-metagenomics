@@ -1557,10 +1557,7 @@ background-color:white;
 
 
 /******************** customize Jquery style **********/
-.sample_comp_result .ui-widget-header, .ui-widget-header {
-border: 0px solid #BBB;
-background:none;
-}
+.sample_comp_result .ui-widget-header, .ui-widget-header {border: 0px solid #BBB;background:none;} /*remove style top ban widget*/
 
 .ui-corner-all {border-radius: 12px;}
 .ui-datepicker { font-size:90%;}
@@ -1588,10 +1585,10 @@ background:none;
 .title_tab_p {margin:20px 0 0 0px;}
 .title_tab_p h2 {margin-top:0;}
 
-.sample_comp_result .ui-corner-top, .sample_ana .ui-corner-top {border-top-right-radius: 0px;border-top-left-radius: 0px;}
+/*.sample_comp_result .ui-corner-top,*/ .sample_ana .ui-corner-top {border-top-right-radius: 0px;border-top-left-radius: 0px;}
 .sample_ana .ui-widget-content a {color:#188960;}
 .sample_comp_result .ui-widget-content, .sample_ana .ui-widget-content {border: 0px solid #aaaaaa;background: none;color: #333333;margin: 0 9px;}  /*margin for navigation tab*/
-.sample_comp .ui-widget-content .ui-widget-content, .sample_ana .ui-widget-content .ui-widget-content {margin: 0;} /*non margin for graph tab*/
+/*.sample_comp .ui-widget-content .ui-widget-content, .sample_ana .ui-widget-content .ui-widget-content {margin: 0;} *//*non margin for graph tab*/
 .sample_ana .ui-tabs-nav { margin: 0px 0 -1px 9px;position: relative; z-index: 1;/*z-index: 500;*/}
 .sample_ana .ui-tabs-nav li {border-color: transparent /*was #e5e5e5*/;top:0px;}
 .sample_ana li.ui-tabs-selected {height: 30px; background: #fff; border-top: 1px solid rgb(213, 213, 213); border-right: 1px solid rgb(213, 213, 213); border-bottom: 0; border-left: 1px solid rgb(213, 213, 213);}
@@ -1644,25 +1641,25 @@ background-image: -webkit-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247
     z-index:inherit;
     zoom:1;}
 
-.sample_comp_result #tabs-chart .ui-state-disabled, .sample_ana #tabs-chart .ui-state-disabled, .sample_ana #interpro-chart .ui-state-disabled, .sample_ana #tabs-taxchart .ui-state-disabled {opacity:0.1;}
+/*.sample_comp_result #tabs-chart .ui-state-disabled,*/ .sample_ana #tabs-chart .ui-state-disabled, .sample_ana #interpro-chart .ui-state-disabled, .sample_ana #tabs-taxchart .ui-state-disabled {opacity:0.1;}
 
 .sample_ana #tabs-chart .ui-tabs-nav, .sample_ana #interpro-chart .ui-tabs-nav, .sample_ana #tabs-taxchart .ui-tabs-nav { margin: 0px 0 9px 9px; padding:0;}
-.sample_comp_result #tabs-chart .ui-tabs-nav {margin: 0px 0 0px 18px; padding:0;}
+/*.sample_comp_result #tabs-chart .ui-tabs-nav {margin: 0px 0 0px 18px; padding:0;}    */
 .sample_ana #tabs-taxchart .ui-helper-clearfix, .sample_ana #interpro-chart .ui-helper-clearfix  {display: inline-block;}
 .sample_comp_result #tabs-chart .ui-tabs-nav li a, .sample_ana #tabs-chart .ui-tabs-nav li a, .sample_ana #interpro-chart .ui-tabs-nav li a, .sample_ana #tabs-taxchart .ui-tabs-nav li a {border: 1px solid rgba(0,0,0,0.1);padding: .2em .2em;
 background-image: -moz-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));
 background-image: -o-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));
 background-image: -webkit-gradient(linear,left top,left bottom,from(rgba(255,255,255,.85)),to(rgba(247,247,247,.85)));
 background-image: -webkit-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85)); }
-.sample_comp_result #tabs-chart .ui-tabs-nav li.ui-state-hover a, .sample_ana #tabs-chart .ui-tabs-nav li.ui-state-hover a, .sample_ana #interpro-chart .ui-tabs-nav li.ui-state-hover a, .sample_ana #tabs-taxchart .ui-tabs-nav li.ui-state-hover a  {text-decoration: none;}
-.sample_comp_result #tabs-chart .ui-tabs-nav li a:hover, .sample_ana #tabs-chart .ui-tabs-nav li a:hover, .sample_ana #interpro-chart .ui-tabs-nav li a:hover, .sample_ana #tabs-taxchart .ui-tabs-nav li a:hover  {border: 1px solid #c6c6c6;box-shadow:1px 1px 1px rgba(0, 0, 0, 0.3);-moz-box-shadow:1px 1px 1px rgba(0, 0, 0, 0.3); -khtml-box-shadow:1px 1px 1px rgba(0, 0, 0, 0.3); -webkit-box-shadow:0px 0px 3px rgba(0, 0, 0, 0.3) ; text-decoration:none;}
-.sample_comp_result #tabs-chart li.ui-tabs-selected, .sample_ana #tabs-chart li.ui-tabs-selected, .sample_ana #interpro-chart li.ui-tabs-selected, .sample_ana #tabs-taxchart li.ui-tabs-selected {/*height: 37px;*/height: 28px;background: #fff; border: none; top:1px;}
-.sample_comp_result #tabs-chart .ui-tabs-panel, .sample_ana #tabs-chart .ui-tabs-panel, .sample_ana #interpro-chart .ui-tabs-panel, .sample_ana #tabs-taxchart .ui-tabs-panel  {margin: 0;  position: relative; /*z-index: 400;*/ border: 0px solid rgb(213, 213, 213); border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;}
-.sample_comp_result .ui-widget-header .selector_tab, .sample_ana .ui-widget-header .selector_tab {font-weight:normal;padding-top: 9px;}
-.sample_comp_result .ui-widget-header .selector_tab {font-weight:normal;padding-top: 9px; font-size: 83%; padding-right: 4px;}
-.sample_comp_result  .ui-tabs-nav {border-bottom: #BBB solid 1px;border-bottom-right-radius: 0; border-bottom-left-radius: 0;}
-.sample_comp_result #tabs-chart .ui-state-default, .sample_comp_result #tabs-chart .ui-widget-content .ui-state-default, .sample_comp_result #tabs-chart .ui-widget-header .ui-state-default {border: 0px solid #D3D3D3}
-.sample_comp_result #tabs-chart .ui-tabs-nav li {margin-right: 4px;}
+/*.sample_comp_result #tabs-chart .ui-tabs-nav li.ui-state-hover a,*/ .sample_ana #tabs-chart .ui-tabs-nav li.ui-state-hover a, .sample_ana #interpro-chart .ui-tabs-nav li.ui-state-hover a, .sample_ana #tabs-taxchart .ui-tabs-nav li.ui-state-hover a  {text-decoration: none;}
+/*.sample_comp_result #tabs-chart .ui-tabs-nav li a:hover,*/ .sample_ana #tabs-chart .ui-tabs-nav li a:hover, .sample_ana #interpro-chart .ui-tabs-nav li a:hover, .sample_ana #tabs-taxchart .ui-tabs-nav li a:hover  {border: 1px solid #c6c6c6;box-shadow:1px 1px 1px rgba(0, 0, 0, 0.3);-moz-box-shadow:1px 1px 1px rgba(0, 0, 0, 0.3); -khtml-box-shadow:1px 1px 1px rgba(0, 0, 0, 0.3); -webkit-box-shadow:0px 0px 3px rgba(0, 0, 0, 0.3) ; text-decoration:none;}
+/*.sample_comp_result #tabs-chart li.ui-tabs-selected,*/ .sample_ana #tabs-chart li.ui-tabs-selected, .sample_ana #interpro-chart li.ui-tabs-selected, .sample_ana #tabs-taxchart li.ui-tabs-selected {/*height: 37px;*/height: 28px;background: #fff; border: none; top:1px;}
+/*.sample_comp_result #tabs-chart .ui-tabs-panel,*/ .sample_ana #tabs-chart .ui-tabs-panel, .sample_ana #interpro-chart .ui-tabs-panel, .sample_ana #tabs-taxchart .ui-tabs-panel  {margin: 0;  position: relative; /*z-index: 400;*/ border: 0px solid rgb(213, 213, 213); border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;}
+/*.sample_comp_result .ui-widget-header .selector_tab,*/ .sample_ana .ui-widget-header .selector_tab {font-weight:normal;padding-top: 9px;}
+/*.sample_comp_result .ui-widget-header .selector_tab {font-weight:normal;padding-top: 9px; font-size: 83%; padding-right: 4px;} */
+/*.sample_comp_result  .ui-tabs-nav {border-bottom: #BBB solid 1px;border-bottom-right-radius: 0; border-bottom-left-radius: 0;}*/
+/*.sample_comp_result #tabs-chart .ui-state-default, .sample_comp_result #tabs-chart .ui-widget-content .ui-state-default, .sample_comp_result #tabs-chart .ui-widget-header .ui-state-default {border: 0px solid #D3D3D3} */
+/*.sample_comp_result #tabs-chart .ui-tabs-nav li {margin-right: 4px;}*/
 .ui-tabs .ui-tabs-nav li.ico-downl {margin-left:16px;}
 .ui-tabs .ui-tabs-nav li .icon-functional:before {color:#3b4043;font-size: 164%; width: 20px; font-weight: normal;  padding-left: 3px; }
 
@@ -1674,17 +1671,17 @@ li.ui-tabs-selected .ico-pie {background: url(../img/ico_graph_pie_on.png) no-re
 li.ui-tabs-selected .ico-barh {background: url(../img/ico_graph_barh_on.png) no-repeat 1px 0px; }
 li.ui-tabs-active .ico-barh {background: url(../img/ico_graph_barh_on.png) no-repeat 1px 0px; }
 
-.ico-col {background: url(../img/ico_graph_col.png) no-repeat  1px 2px;}
-li.ui-tabs-selected .ico-col {background: url(../img/ico_graph_col_on.png) no-repeat 1px 2px; }
-li.ui-tabs-active .ico-col {background: url(../img/ico_graph_col_on.png) no-repeat 1px 2px; }
+.ico-col {background: url(../img/ico_graph_col.png) no-repeat  1px 1px;}
+li.ui-tabs-selected .ico-col {background: url(../img/ico_graph_col_on.png) no-repeat 1px 1px; }
+li.ui-tabs-active .ico-col {background: url(../img/ico_graph_col_on.png) no-repeat 1px 1px; }
 
-.ico-heatmap {background: url(../img/ico_graph_heatmap.png) no-repeat 1px 0px;}
-li.ui-tabs-selected .ico-heatmap {background: url(../img/ico_graph_heatmap_on.png) no-repeat 1px 0px; }
-li.ui-tabs-active .ico-heatmap {background: url(../img/ico_graph_heatmap_on.png) no-repeat 1px 0px; }
+.ico-heatmap {background: url(../img/ico_graph_heatmap.png) no-repeat 0px 1px;}
+li.ui-tabs-selected .ico-heatmap {background: url(../img/ico_graph_heatmap_on.png) no-repeat 0px 1px; }
+li.ui-tabs-active .ico-heatmap {background: url(../img/ico_graph_heatmap_on.png) no-repeat 0px 1px; }
 
-.ico-pca {background: url(../img/ico_graph_pca.png) no-repeat 1px 0px;}
-li.ui-tabs-selected .ico-pca {background: url(../img/ico_graph_pca_on.png) no-repeat 1px 0px; }
-li.ui-tabs-active .ico-pca {background: url(../img/ico_graph_pca_on.png) no-repeat 1px 0px; }
+.ico-pca {background: url(../img/ico_graph_pca.png) no-repeat 0px 1px;}
+li.ui-tabs-selected .ico-pca {background: url(../img/ico_graph_pca_on.png) no-repeat 0px 1px; }
+li.ui-tabs-active .ico-pca {background: url(../img/ico_graph_pca_on.png) no-repeat 0px 1px; }
 
 .ico-table {background: url(../img/ico_graph_table.png) no-repeat 1px 0px;}
 li.ui-tabs-selected .ico-table {background: url(../img/ico_graph_table_on.png) no-repeat 1px 0px; }
@@ -1694,6 +1691,8 @@ li.ui-tabs-active .ico-table {background: url(../img/ico_graph_table_on.png) no-
 li.ui-tabs-selected .ico-krona {background: url(../img/ico_graph_krona_on.png) no-repeat 1px 2px; }
 
 .ico-krona, .ico-table, .ico-col, .ico-barh, .ico-pie, .ico-heatmap, .ico-pca   {width:27px; height:27px; display:block;}
+.sample_comp_result .ico-table, .sample_comp_result .ico-col, .sample_comp_result .ico-barh, .sample_comp_result .ico-heatmap, .sample_comp_result .ico-pca {margin-right: 4px; width:26px; height:26px; display:block;float:left; border:0px red solid;}/*icon used in tabs on the comparison result page*/
+.sample_comp_result .tab-text {float: left; padding-top: 6px; display: block;}
 
 .main_tab_content {width:70%;}
 
