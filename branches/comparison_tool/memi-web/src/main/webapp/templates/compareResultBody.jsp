@@ -36,15 +36,15 @@
  </li>
 </ul>
 <%--<p>Use tabs below to switch between available visualizations.</p>--%>
-<div class="comp_result">
+<div class="sample_comp_result">
 <div id="tabs">
     <ul>
         <%--li><a href="#overview">Overview</a></li--%>
-        <li><a href="#bars">Barcharts</a></li>
-        <li><a href="#stack">Stacked columns</a></li>
-        <li><a href="#heatmap">Heatmap</a></li>
-        <li><a href="#pca">Principal Components Analysis</a></li>
-        <li><a href="#jstable">Table</a></li>
+        <li><a href="#bars" title="view results as bar chart"><span class="ico-barh"></span> <span class="tab-text">Barcharts</span></a></li>
+        <li><a href="#stack" title="view results as stacked column"><span class="ico-col"></span> <span class="tab-text">Stacked columns</span></a></li>
+        <li><a href="#heatmap" title="view results as heatmap"><span class="ico-heatmap"></span><span class="tab-text">Heatmap</span></a></li>
+        <li><a href="#pca" title="view results as principal components analysis"><span class="ico-pca"></span><span class="tab-text">Principal Components Analysis</span></a></li>
+        <li><a href="#jstable" title="view results in a table"><span class="ico-table"></span><span class="tab-text">Table</span></a></li>
     </ul>
     <%--div id="overview">
         <p>${graphCode[0]}</p>
