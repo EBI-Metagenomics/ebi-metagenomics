@@ -59,9 +59,10 @@ CreateStackColForCategory <- function(abundanceTable, threshold, category) {
   chart$legend(layout = "vertical", align = "right", verticalAlign = "top", x = 0, y = 20, width = 360, itemStyle = list(fontSize = "11px",
     fontWeight = "regular", color = "#606060"), title = list(text = "GO terms list <span style=\"font-size: 9px; color: #666; font-weight: normal; font-style: italic;\">(click to hide)</span>",
     style = list(fontStyle = "regular")))
-  chart$tooltip(backgroundColor = "white", headerFormat = "{point.x}<br/>",
-     pointFormat = "<span style=\"color:{series.color}\">&#9632;</span> {series.name}: <strong>{point.y} %</strong><br/>",
-     useHTML = TRUE)  #, formatter = tooltipFormat, positioner = tooltipPosition
+
+  chart$tooltip(backgroundColor = "white", headerFormat = "{series.name}<br/>",
+    pointFormat = "<span style=\"color:{series.color}\">&#9632;</span> <span style=\"font-size:88%;\">{point.category}: <strong>{point.y} %</strong></span>",
+        useHTML = TRUE)  #, formatter = tooltipFormat
   chart$colors(EMGcolors)
   chart$addParams(width = NULL, height = NULL)
   chart$exporting(enabled = T)
