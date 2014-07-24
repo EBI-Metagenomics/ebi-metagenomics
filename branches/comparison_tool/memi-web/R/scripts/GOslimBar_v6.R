@@ -34,9 +34,9 @@ CreateBarsForCategory <- function(abTable, category) {
   chart$xAxis(categories = c(unique(dataChart$GOname)), labels = list(step = 1, rotation = 0, style = list(fontSize = "11px",
     width = labelSize[categoryIndice])), lineColor = "#595959", tickColor = "")
   chart$yAxis(opposite = TRUE, gridLineColor = "#e0e0e0", title = list(text = "Match (%)", style = list(color = "#a0a0a0")), endOnTick = TRUE, maxPadding = 0,  labels = list( y=-6,  style = list(color = "#a0a0a0")))
-  chart$tooltip(backgroundColor = "white", headerFormat = "{point.x}<br/>", 
+  chart$tooltip(backgroundColor = "white", headerFormat = "{point.x}<br/>",
     pointFormat = "<span style=\"color:{series.color}\">&#9632;</span> <span style=\"font-size:88%;\">{series.name}: <strong>{point.y} %</strong></span>",
-    useHTML = TRUE , positioner = tooltipPosition)  #, formatter = tooltipFormat
+    useHTML = TRUE)  #, formatter = tooltipFormat         , positioner = tooltipPosition
   chart$chart(zoomType = "x", spacingLeft = 20, height = chartHeight, animation = FALSE)
   chart$colors(EMGcolors)
   chart$addParams(width = NULL, height = chartHeight)
