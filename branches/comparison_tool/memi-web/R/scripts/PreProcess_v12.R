@@ -22,7 +22,7 @@ CreateAbTable <- function(outputName, fileList, usedData = c('GO','GOslim','IPR'
   #   sampleNames: a vector of sample names, should come form the java web app.
   #   outputName: name of the output file
   # 
-  # Returns: The abundance table of GO/IPR for selected samples. Rows: Samples, Columns: IPR.
+  # Returns: The abundance table of GO/IPR for selected samples. Rows: Samples, Columns: GO/IPR.
   
   tableList <- list()
   size <- length(fileList)

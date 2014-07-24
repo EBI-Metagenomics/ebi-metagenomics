@@ -26,7 +26,7 @@ GenerateHeatmap <- function(generalAbTable, category, filePathAndName, hmParamet
     categoryIndice <- 3
   correctNames <- c("Biological process", "Cellular component", "Molecular function")
   
-  tmpPathAndName <- paste("src/main/webapp/img/comparison/", name, "_tmp.pdf", sep = "")
+  tmpPathAndName <- paste(imgDir, name, "_tmp.pdf", sep = "")
   abTable <- abTableToFraction(DivideAbTable(generalAbTable, category))
   # print(abTable) Changing colnames to have GO names only (instead of all) and cut them if they are
   # too long

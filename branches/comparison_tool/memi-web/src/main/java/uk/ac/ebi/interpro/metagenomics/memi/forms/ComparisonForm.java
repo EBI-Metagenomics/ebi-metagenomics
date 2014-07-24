@@ -26,9 +26,10 @@ public class ComparisonForm {
     private boolean keepNames = true;
 
     @NotEmpty(message = "Please select samples to compare (at least two)")
+    @Size(min=2, message = "It's a shark attack")
     private List<Long> samples = new ArrayList<Long>();
 
-    private double stackThreshold = 1.0;
+    private double stackThreshold = 2;
 
     private int GOnumber = 150;
 
@@ -76,7 +77,7 @@ public class ComparisonForm {
         return stackThreshold;
     }
 
-    public void setStackThreshold(long stackThreshold) {
+    public void setStackThreshold(double stackThreshold) {
         this.stackThreshold = stackThreshold;
     }
 

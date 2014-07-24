@@ -5,7 +5,10 @@
 <c:forEach var="sample" items="${samples}">
         <option value="${sample.id}" title="Sample ${sample.sampleId} | ${sample.sampleName} | ${sample.sampleAlias}">${sample.sampleName}</option>
     </c:forEach>
+<c:forEach var="sample" items="${missingSamples}">
+    <option value="${sample.id}" title="Sample ${sample.sampleId} | ${sample.sampleName} | ${sample.sampleAlias}. No data found for this sample." disabled>${sample.sampleName}</option>
+</c:forEach>
 
 <script>
-    SortSamplesByText(); // Function defined in compareBody.jsp. Could be moved in another place ?
+    SortSamplesByText(); // Function defined in compareBody.jsp. Could be moved to another place?
 </script>

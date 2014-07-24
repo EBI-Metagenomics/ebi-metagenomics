@@ -464,7 +464,7 @@ table.dataTable td {/*
 
 .style-export select {
     background: linear-gradient(to top, #f8f8f8 , #ffffff); /* Standard syntax. Compatibility with older browsers to fix */
-    width: 75px;
+    width: 85px;
     padding: 7px;
     font-size: 12px;
     line-height: 1;
@@ -493,8 +493,14 @@ table.dataTable td {/*
 /*legend barchart*/
 #bars #barcharts_legend .barcharts_legend_info {color:#666; font-style: italic; font-size: 84%;}
 #bars #barcharts_legend .legend-item {padding: 0px 6px 0 0;  display:inline-block; cursor:pointer; color: #606068; font-size: 90%;}
-#bars #barcharts_legend .legend-item:hover { color: #1A1A1A ;}
+#bars #barcharts_legend .legend-item:hover { color: #1A1A1A !important;}
 #bars #barcharts_legend .legend-item .legend-rectangle {margin: 4px;width: 12px; height: 12px;float: left;}
+
+/*legend pca*/
+#pca #pca_legend .barcharts_legend_info {color:#666; font-style: italic;}
+#pca #pca_legend .legend-item {padding: 0px 6px 0 0;  display:inline-block; cursor:pointer; color: #606068; font-size: 90%;}
+#pca #pca_legend .legend-item:hover { color: #1A1A1A !important;}
+#pca #pca_legend .legend-item .legend-rectangle {border-radius: 50%; margin: 4px;width: 8px; height: 8px;float: left;}
 
 
 #bars  #bars-wrapper {position: relative; width:100%; overflow:hidden;margin-top:9px;/*add some space between charts and legend*/}
@@ -538,4 +544,5 @@ table.dataTable td {/*
 #heatmap img {
     max-width: 100%;
     height: auto;
+    width:850px;
 }

@@ -24,8 +24,8 @@
                        <i>Select a project in the menu above.</i>
                    </div>
                </div>
-            <c:set var="domainNameErrors"><form:errors path="study" cssClass="error" element="div"/></c:set>
-            <c:if test="${not empty domainNameErrors}">
+            <c:set var="noStudyError"><form:errors path="study" cssClass="error" element="div"/></c:set>
+            <c:if test="${not empty noStudyError}">
             <script>
                 //replace info message by error message
                 $( "#description-content" ).replaceWith( "<div class='error' id='description-content study.errors'>Please select one project in the list above.</div>" ); </script>
@@ -40,7 +40,13 @@
                 <div id="loading"><img src="${pageContext.request.contextPath}/img/compare_load.gif"></div>--%>
                 <form:select path="samples" multiple="true" size="9" id="samples" style="width:100%;">
                 </form:select>
-                <div id="samples-control"><a id="select-all-button" onclick="SelectAllSamples()">Select all</a> | <a id="unselect-all-button" onclick="UnselectAllSamples()">Unselect all </a></div>
+                <div id="samples-control"><a id="select-all-button" onclick="SelectAllSamples()">Select all</a> | <a id="unselect-all-button" onclick="UnselectAllSamples()">Unselect all </a>
+                    <c:set var="sampleError"><form:errors path="samples" cssClass="error" element="div"/></c:set>
+                    <c:if test="${not empty sampleError}">
+                        <script>
+                            //replace info message by error message
+                            $( "#description-content" ).replaceWith( "<div class='error' id='description-content samples.errors'>Please select at least two samples to launch comparison.</div>" ); </script>
+                    </c:if></div>
             </div>
     </div>
 
@@ -84,7 +90,7 @@
                     <%--</ul></li>--%>
                     <li><strong>Stacked columns</strong>
                         <ul>
-                            <li>GO terms below <form:input path="stackThreshold" type="number" min="0" max="50" step="0.1" value="1" cssStyle="width:60px;"/> % match included in 'other'. </li>
+                            <li>GO terms below <form:input path="stackThreshold" type="number" min="0" max="50" step="0.1" cssStyle="width:60px;"/> % match included in 'other'. </li>
                         </ul>
                     </li>
                     <li><strong>Heatmap</strong><ul>
@@ -103,7 +109,8 @@
                         </form:select></li>
                     </ul>
                     </li>
-                    <li><strong>Full GO annotation</strong>
+                    <li>
+                        <strong>Full GO annotation</strong>
                         <ul>
                             <li> Show the <form:input path="GOnumber" type="number" min="20" max="250" step="1"/> GO terms which vary the most</li>
 
@@ -125,27 +132,38 @@
 <%--TODO: Clean up code a bit--%>
 
 <script type="text/javascript" defer="defer">
+    // Function cleaning selected samples, getting samples for given project and updating the number of samples
+    function GetSamplesOfSelectedProject() {
+        UnselectAllSamples(); // Clean the samples
+        var numberSelected = $('#samples :selected').length;
+        var studyId = $('#projects').val();
+        // Show a nice loading text so the user won't break his computer.
+        $('#samples').html('<option disabled>'+'Retrieving samples from server...'+'</option>');
+        $.ajax({
+            url:"<c:url value="${baseURL}/compare/samples"/>",
+            type:"GET",
+            cache:false,
+            data:{studyId:studyId},
+            success:function (data) {
+                $("#samples").html(data);
+                var numberTotal = $('#samples option').length;
+                document.getElementById("selected-samples").innerHTML = "Sample list <span>(" + numberSelected + " selected out of " + numberTotal + ")</span>";
+            },
+            error:function (jqXHR, textStatus, errorThrown) {
+                alert("Request failed (unable to retrieve samples): " + textStatus);
+            }
+        });//end ajax method
+    }
     $(document).ready(function () {
+        // Get samples of selected project on change of project
         $('#projects').change(function()
         {
-            UnselectAllSamples();
-            var numberSelected = $('#samples :selected').length;
-            var studyId = $('#projects').val();
-            $.ajax({
-                url:"<c:url value="${baseURL}/compare/samples"/>",
-                type:"GET",
-                cache:false,
-                data:{studyId:studyId},
-                success:function (data) {
-                    $("#samples").html(data);
-                    var numberTotal = $('#samples option').length;
-                    document.getElementById("selected-samples").innerHTML = "Sample list <span>(" + numberSelected + " selected out of " + numberTotal + ")</span>";
-                },
-                error:function (jqXHR, textStatus, errorThrown) {
-                    alert("Request failed: " + textStatus);
-                }
-            });//end ajax method
+            GetSamplesOfSelectedProject();
         });
+        // Get samples of selected project if a project is already selected (e. g. after refreshing the page)
+        if($('#projects').val() != null) {
+            GetSamplesOfSelectedProject();
+        }
     });
 </script>
 
@@ -187,7 +205,7 @@
                     $("#project-description").html(data);
                 },
                 error:function (jqXHR, textStatus, errorThrown) {
-                    alert("Request failed: " + textStatus);
+                    alert("Request failed (unable to retrieve project info): " + textStatus);
                 }
             });//end ajax method
         });
@@ -200,6 +218,7 @@
     // Select all samples in the sample selection box
     function SelectAllSamples() {
         $('#samples option').each(function () {
+            if(! $(this).attr('disabled'))
             $(this).attr('selected', true);
         });
     }

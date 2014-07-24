@@ -29,9 +29,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuil
 import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Represents the controller for the comparison tool.
@@ -113,6 +111,8 @@ public class CompareController extends AbstractController implements IController
         //Get input file paths, which are used to generate abundance table
         final List<String> inputFilePaths = getInputFilePaths(usedData, allSamples);
 
+
+
         // Samples instead of retrieved ID.
         final List<Sample> sampleList = new ArrayList<Sample>();
         List<String> sampleTextId = new ArrayList<String>();
@@ -124,14 +124,28 @@ public class CompareController extends AbstractController implements IController
                 sampleTextId.add("Sample" + String.format("%02d", i + 1));
         }
 
+        // Check if one of those is empty and catching empty files so we can display a nice error message on result page
+        // Store missing samples to explain what is WRONG with them
+//        final List<Sample> missingSampleList = new ArrayList<Sample>();
+//        for(int i = 0;i < inputFilePaths.size(); i++) {
+//            File f = new File(inputFilePaths.get(i));
+//            if(!f.exists()){
+//                inputFilePaths.remove(i); // Remove the missing samples from the file paths list
+//                sampleTextId.remove(i); // ... and the sample identifiers list
+//                missingSampleList.add(sampleList.get(i));
+//                sampleList.remove(i);  // ... and the sample list used on the webpage
+//            }
+//        }
+
         // Print working directory, just to see what's happening
-        log.info("Creating abundance table and visualisations...");
+        log.info("Creating abundance table and visualizations...");
         //TODO: We should make all these directories configurable in a Spring context file (working dir, temp dir, path to the script etc.)
         log.info("Working Directory = " + System.getProperty("user.dir"));
         final String rTmpFileDirectory = propertyContainer.getROutputDir();
         //absolute path of the R script
         final String rScriptPath = propertyContainer.getRScriptLocation();
         final String rScriptName = propertyContainer.getRScriptName();
+        final String rImgDirectory = propertyContainer.getRTmpImgDir();
         final String rInstallationLocation = propertyContainer.getRInstallationLocation();
         //Check if R script exists and if it is executable
         doCheckScriptFile(rScriptPath);
@@ -149,7 +163,7 @@ public class CompareController extends AbstractController implements IController
         final char WHITESPACE = ' ';
         String executionCommand;
         executionCommand = rInstallationLocation + WHITESPACE + rScriptPath + "/" + rScriptName + WHITESPACE + rTmpFileDirectory + WHITESPACE +
-                rScriptPath + WHITESPACE + uniqueOutputName + WHITESPACE + rFriendlyFileList + WHITESPACE + comparisonForm.getUsedData() +
+                rScriptPath + WHITESPACE + rImgDirectory + WHITESPACE + uniqueOutputName + WHITESPACE + rFriendlyFileList + WHITESPACE + comparisonForm.getUsedData() +
                 WHITESPACE + rFriendlySampleNames + WHITESPACE + comparisonForm.getStackThreshold() + WHITESPACE + hmPar + WHITESPACE + comparisonForm.getGOnumber();
 //            executionCommand = "Rscript R/simple.R";
         // Print the command we will use to see if it's correct (format / order of parameters)
@@ -166,14 +180,14 @@ public class CompareController extends AbstractController implements IController
                 InputStreamReader(p.getErrorStream()));
 
         // read the output from the command
-        System.out.println("Command output:\n");
+        log.info("Command output:\n");
         String stdOutput = null;
         while ((stdOutput = stdInput.readLine()) != null) {
             System.out.println(stdOutput);
         }
 
         // read any errors from the attempted command
-        System.out.println("Command error (if any):\n");
+        log.info("Command error (if any):\n");
         String stdErrorOuput = null;
         while ((stdErrorOuput = stdError.readLine()) != null) {
             System.out.println(stdErrorOuput);
@@ -209,6 +223,7 @@ public class CompareController extends AbstractController implements IController
                         // Result Header elements
                         model.addAttribute("study", studyDAO.read(Long.valueOf(comparisonForm.getStudy())));
                         model.addAttribute("samples", sampleList);
+//                        model.addAttribute("missingSamples", missingSampleList);
                         model.addAttribute("sampleString",rFriendlySampleNames);
                         model.addAttribute("data", usedData);
                     }
@@ -256,11 +271,28 @@ public class CompareController extends AbstractController implements IController
 
     @RequestMapping(value = "/samples")
     public ModelAndView getSamplesByID(
-            @RequestParam(value = "studyId", required = true) final long studyId
+            @RequestParam(value = "studyId", required = true) final long studyId,
+            @ModelAttribute("comparisonForm") final ComparisonForm comparisonForm
     ) {
         ModelAndView mav = new ModelAndView("/compareSamples");
+
         List<Sample> sampleListForId = sampleDAO.retrievePublicSamplesByStudyId(studyId);
+        List<Sample> missingSamples = new ArrayList<Sample>();
+        List<Long> sampleIdListForId = new ArrayList<Long>();
+        for (Sample currentSample : sampleListForId) {
+            sampleIdListForId.add(currentSample.getId());
+        }
+
+        final List<String> inputFilePathsForId = getInputFilePaths(comparisonForm.getUsedData(), sampleIdListForId);
+        for(int i = 0;i < inputFilePathsForId.size(); i++) {
+            File f = new File(inputFilePathsForId.get(i));
+            if(!f.exists()){
+                missingSamples.add(sampleListForId.get(i));
+                sampleListForId.remove(i);
+            }
+        }
         mav.addObject("samples", sampleListForId);
+        mav.addObject("missingSamples",missingSamples);
         return mav;
     }
 

@@ -32,8 +32,13 @@
 <c:forEach var="sample" items="${samples}">
 <a class="sample_list" href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>" target="_blank" title="${sample.sampleName} (${sample.sampleId})">${sample.sampleId}</a>
 </c:forEach>
+    <%--<c:if test="${not empty missingSamples}">--%>
+    <%--<br>No data was available for sample(s): <c:forEach var="sample" items="${missingSamples}">--%>
+        <%--<a class="sample_list" href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>" target="_blank" title="${sample.sampleName} (${sample.sampleId})">${sample.sampleId}</a>--%>
+    <%--</c:forEach>--%>
+    <%--</c:if>--%>
+    </li>
 <li> Project: <a href="<c:url value="${baseURL}/project/${study.studyId}"/>" target="_blank" title="${study.studyName} (${study.studyId})">${study.studyName}</a> (${study.studyId})</li>
- </li>
 </ul>
 <%--<p>Use tabs below to switch between available visualizations.</p>--%>
 <div class="sample_comp_result">
@@ -76,14 +81,35 @@
         <div id="bars-wrapper">${graphCode[1]}</div>
     </div>
     <div id="stack">
+        <div id="export_stack_div" class="style-export">
+            <select id="stack_export" title="Export" class="export-select">
+                <option selected>Export</option>
+                <optgroup label="Biological process">
+                    <option value="bp_png">PNG</option>
+                    <option value="bp_pdf">PDF</option>
+                    <option value="bp_svg">SVG</option>
+                </optgroup>
+                <optgroup label="Molecular function">
+                    <option value="mf_png">PNG</option>
+                    <option value="mf_pdf">PDF</option>
+                    <option value="mf_svg">SVG</option>
+                </optgroup>
+                <optgroup label="Cellular component">
+                    <option value="cc_png">PNG</option>
+                    <option value="cc_pdf">PDF</option>
+                    <option value="cc_svg">SVG</option>
+                </optgroup>
+            </select>
+            <br>
+        </div>
            <div id="stack-jump-anchor"></div>
-           <div id="stack_jump">Jump to: <a href="#stack_bio_title"> Biological process</a> | <a href="#stack_cell_title">Cellular component</a> | <a href="#stack_mol_title">Molecular function</a></div>
+           <div id="stack_jump">Jump to: <a href="#stack_bio_title"> Biological process</a> | <a href="#stack_mol_title">Molecular function</a> | <a href="#stack_cell_title">Cellular component</a></div>
 
             <div id="stack_wrapper">${graphCode[2]}</div>
     </div>
     <div id="heatmap">
    <div id="hm-jump-anchor"></div>
-   <div id="hm_jump">Jump to GO category: <a href="#hm_bio_title"> Biological process</a> | <a href="#hm_cell_title">Cellular component</a> | <a href="#hm_mol_title">Molecular function</a></div>
+   <div id="hm_jump">Jump to GO category: <a href="#hm_bio_title"> Biological process</a> | <a href="#hm_mol_title">Molecular function</a> | <a href="#hm_cell_title">Cellular component</a></div>
 
        <%--<h3> Biological process</h3>--%>
         ${graphCode[3]}
@@ -102,9 +128,16 @@
                     <option value="mf_pdf">PDF</option>
                     <option value="mf_svg">SVG</option>
                 </optgroup>
+                <optgroup label="Cellular component">
+                    <option value="cc_png">PNG</option>
+                    <option value="cc_pdf">PDF</option>
+                    <option value="cc_svg">SVG</option>
+                </optgroup>
             </select>
             <br>
         </div>
+        <div id="pca-leg-anchor"></div>
+        <div id="pca_legend"><strong>Sample list</strong> (<span class="barcharts_legend_info">click to hide sample</span>)<br/></div>
         <%--Principal Component 1 <input id="pc1" type="number" name="Principal Component 1" min="1" max="3" value="1" disabled>
         Principal Component 2 <input id="pc2" type="number" name="Principal Component 2" min="1" max="3" value="2" disabled> <br>--%>
         <div id="plots-wrapper">${graphCode[4]}</div>
@@ -182,6 +215,51 @@
             $('#bars_export').val('Export');
         });
 
+    // Stacked columns export module
+    $('#stack_export').change(function() {
+        var exportValue = $( "#stack_export" ).val();
+        var exportArray = exportValue.split('_');
+        var goType = "";
+        var format = "";
+        switch(exportArray[0]) {
+            case "bp":
+                goType = "biological_process";
+                break;
+            case "mf":
+                goType = "molecular_function";
+                break;
+            case "cc":
+                goType = "cellular_component";
+                break;
+        }
+
+        if(exportArray[1]!=null) {
+            switch(exportArray[1]) {
+                case "png":
+                    format = "image/png";
+                    break;
+                case "pdf":
+                    format = "application/pdf";
+                    break;
+                case "svg":
+                    format = "image/svg+xml";
+                    break;
+            }
+
+            var chartId = "#" + "stack_" + goType;
+            var date = new Date();
+            var mmddyyyyDate = (date.getMonth()+1).toString() +'-'+ date.getDate() +'-'+ date.getFullYear();
+            var fileName = "${study.studyId}"+"_"+mmddyyyyDate+"_comp_func_go_stacked_"+exportArray[0];
+            var chart = $(chartId).highcharts();
+            chart.redraw();
+            chart.exportChart({
+                type: format,
+                filename: fileName
+            });
+        }
+        $('#stack_export').val('Export');
+    });
+
     // PCA export module
     $('#pca_export').change(function() {
         var exportValue = $( "#pca_export" ).val();
@@ -194,6 +272,9 @@
                 break;
             case "mf":
                 goType = "molecular_function";
+                break;
+            case "cc":
+                goType = "cellular_component";
                 break;
         }
 
@@ -241,6 +322,24 @@
         sticky_bar_relocate();
     });
 
+    // Sticky div relocation function to let the pca legend stay on top
+    function sticky_pca_relocate() {
+        var window_top = $(window).scrollTop();
+        var pca_leg_top = $('#pca-leg-anchor').offset().top;
+        if (window_top > pca_leg_top) {
+            $('#pca_legend').addClass('stick');
+            // Quick fix to make the div-width equal to its tab width
+            $("#pca_legend").css("width", $("#pca").width());
+        } else {
+            $('#pca_legend').removeClass('stick');
+        }
+    }
+
+    $(function() {
+        $(window).scroll(sticky_pca_relocate);
+        sticky_pca_relocate();
+    });
+
     // Sticky div relocation function to let the heatmap 'Jump to' div stay on top
     function sticky_hm_relocate() {
         var window_top = $(window).scrollTop();
@@ -282,57 +381,124 @@
 <script type="text/javascript">
     $(document).ready(function() {
         if($('#biological_process_bars').length != 0) {
-        var sampleNum = "${fn:length(samples)}";
-        var sampleString = "${sampleString}";
-        var sampleArr = sampleString.split(',');
-        var i;
-        var bioChart = $('#biological_process_bars').highcharts();
-        var molChart = $('#molecular_function_bars').highcharts();
-        var cellChart = $('#cellular_component_bars').highcharts();
-        var bioChartSeries = bioChart.series;
-        var molChartSeries = molChart.series;
-        var cellChartSeries = cellChart.series;
-        for (i = 0; i < sampleNum; i++)
-        {
-            var currentColor = cellChartSeries[i].color;
-        $('<div/>', {
-            'id': 'legend_'+i,
-            'class': 'legend-item',
-            'html': '<div class="legend-rectangle" style="background:'+ currentColor + ';"></div><span> '+sampleArr[i]+'</span>',
-            'click': function () {
-                var legInd = this.id.split('_')[1];
-                // Set to biological process chart but could be whatever we want
-                if(bioChartSeries[legInd].visible){
-                    bioChartSeries[legInd].hide();
-                    molChartSeries[legInd].hide();
-                    cellChartSeries[legInd].hide();
-                    // Changing color to grey (for the rectangle too!)
-                    $(this).css('color', '#D1D1D1');
-                    $(this).children('.legend-rectangle').css('background', '#D1D1D1');
-                }
-                else {
-                    bioChartSeries[legInd].show();
-                    molChartSeries[legInd].show();
-                    cellChartSeries[legInd].show();
-                    // Changing color to normal display (could be cleaner?)
-                    $(this).css('color', '#606068');
-                    $(this).children('.legend-rectangle').css('background', cellChartSeries[legInd].color);
-                }
-            },
-            'mouseenter': function () {
-               // $(this).css('color', 'blue');
-            },
-            'mouseleave': function () {
-               // $(this).css('color', 'black');
+            var sampleNum = "${fn:length(samples)}";
+            var sampleString = "${sampleString}";
+            var sampleArr = sampleString.split(',');
+            var i;
+            var bioChart = $('#biological_process_bars').highcharts();
+            var molChart = $('#molecular_function_bars').highcharts();
+            var cellChart = $('#cellular_component_bars').highcharts();
+            var bioChartSeries = bioChart.series;
+            var molChartSeries = molChart.series;
+            var cellChartSeries = cellChart.series;
+            for (i = 0; i < sampleNum; i++)
+            {
+                var currentColor = cellChartSeries[i].color;
+                $('<div/>', {
+                    'id': 'legend_'+i,
+                    'class': 'legend-item',
+                    'html': '<div class="legend-rectangle" style="background:'+ currentColor + ';"></div><span> '+sampleArr[i]+'</span>',
+                    'click': function () {
+                        var legInd = this.id.split('_')[1];
+                        // Set to biological process chart but could be whatever we want
+                        if(bioChartSeries[legInd].visible){
+                            bioChartSeries[legInd].hide();
+                            molChartSeries[legInd].hide();
+                            cellChartSeries[legInd].hide();
+                            // Changing color to grey (for the rectangle too!)
+                            $(this).css('color', '#D1D1D1');
+                            $(this).children('.legend-rectangle').css('background', '#D1D1D1');
+                        }
+                        else {
+                            bioChartSeries[legInd].show();
+                            molChartSeries[legInd].show();
+                            cellChartSeries[legInd].show();
+                            // Changing color to normal display (could be cleaner?)
+                            $(this).css('color', '#606068');
+                            $(this).children('.legend-rectangle').css('background', cellChartSeries[legInd].color);
+                        }
+                    },
+                    'mouseenter': function () {
+                        // $(this).css('color', 'blue');
+                    },
+                    'mouseleave': function () {
+                        // $(this).css('color', 'black');
+                    }
+                }).appendTo('#barcharts_legend');
             }
-        }).appendTo('#barcharts_legend');
-        }
         }
         else {
             // No barcharts? Empty the legend and disable export so the user is not confused
             $( "#barcharts_legend" ).empty();
 
-        //    $("#bars_export").disable(); // Could be better to hide the element instead of disabling it.
+            //    $("#bars_export").disable(); // Could be better to hide the element instead of disabling it.
+        }
+    });
+
+    $(document).ready(function() {
+        if($('#biological_process_pca_12').length != 0) {
+            var sampleNum = "${fn:length(samples)}";
+            var sampleString = "${sampleString}";
+            var sampleArr = sampleString.split(',');
+            var i;
+            var bioChart = $('#biological_process_pca_12').highcharts();
+            var molChart = $('#molecular_function_pca_12').highcharts();
+            var cellChart = $('#cellular_component_pca_12').highcharts();
+            var bioChartSeries = bioChart.series;
+            var molChartSeries = molChart.series;
+            var cellChartSeries = cellChart.series;
+            // These two lines are really ugly but allow to correct the 'moving axis' display bug
+            bioChartSeries[0].hide();
+            bioChartSeries[0].show();
+            for (i = 0; i < sampleNum; i++)
+            {
+                var currentColor = bioChartSeries[i].color;
+                $('<div/>', {
+                    'id': 'pca_legend_'+i,
+                    'class': 'legend-item',
+                    'html': '<div class="legend-rectangle" style="background:'+ currentColor + ';"></div><span> '+sampleArr[i]+'</span>',
+                    'click': function () {
+                        var legInd = this.id.split('_')[2];
+                        // Set to biological process chart but could be whatever we want
+                        if(bioChartSeries[legInd].visible){
+                            bioChartSeries[legInd].hide();
+                            molChartSeries[legInd].hide();
+                            cellChartSeries[legInd].hide();
+                            // Changing color to grey (for the rectangle too!)
+                            $(this).css('color', '#D1D1D1');
+                            $(this).children('.legend-rectangle').css('background', '#D1D1D1');
+                        }
+                        else {
+                            bioChartSeries[legInd].show();
+                            molChartSeries[legInd].show();
+                            cellChartSeries[legInd].show();
+                            // Changing color to normal display (could be cleaner?)
+                            $(this).css('color', '#606068');
+                            $(this).children('.legend-rectangle').css('background', cellChartSeries[legInd].color);
+                        }
+                    },
+                    'mouseenter': function () {
+                        var legInd = this.id.split('_')[2];
+                        //if(bioChartSeries[legInd].visible){
+                        bioChartSeries[legInd].data[0].setState('hover');
+                        molChartSeries[legInd].data[0].setState('hover');
+                        cellChartSeries[legInd].data[0].setState('hover');
+                        //}
+                    },
+                    'mouseleave': function () {
+                        var legInd = this.id.split('_')[2];
+                        bioChartSeries[legInd].data[0].setState();
+                        molChartSeries[legInd].data[0].setState();
+                        cellChartSeries[legInd].data[0].setState();
+                    }
+                }).appendTo('#pca_legend');
+            }
+        }
+        else {
+            // No PCA? Sounds weird but... empty the legend and disable export so the user is not confused
+            $( "#pca_legend" ).empty();
+
+            //    $("#bars_export").disable(); // Could be better to hide the element instead of disabling it.
         }
     });
 </script>
