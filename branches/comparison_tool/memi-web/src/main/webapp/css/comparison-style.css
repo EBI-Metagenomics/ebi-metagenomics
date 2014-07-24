@@ -448,19 +448,19 @@ table.dataTable td {/*
 }
 
 /* Adapted from the style for 'sample_ana' div class in default.css ... Some lines might not be needed. */
-.comp_result .ui-corner-top {border-top-right-radius: 0px;border-top-left-radius: 0px;}
-.comp_result .ui-widget-content a {color:#188960;}
-.comp_result .ui-widget-content {border: 0px solid #aaaaaa;background: none;color: #333333;margin: 0 9px;}  /*margin for navigation tab*/
-.comp_result .ui-widget-content .ui-widget-content {margin: 0;} /*non margin for graph tab*/
-.comp_result .ui-tabs-nav { margin: 0px 0 -1px 9px;position: relative; z-index: 1;/*z-index: 500;*/}
-.comp_result .ui-tabs-nav li {border-color: transparent /*was #e5e5e5*/;top:0px; margin-bottom: 0px;}
-.comp_result li.ui-tabs-active {height: 30px; background: #fff; border-top: 1px solid rgb(213, 213, 213); border-right: 1px solid rgb(213, 213, 213); border-bottom: 0; border-left: 1px solid rgb(213, 213, 213);}
-.comp_result li.ui-tabs-active a:link, .comp_result li.ui-tabs-active a:visited {color: black;text-decoration: none;} /*works for overview*/
-.comp_result .ui-state-disabled   a {color: grey;}
-.comp_result .ui-state-default {background:none;}
-.comp_result .ui-state-hover a:link {text-decoration: underline;}
-.comp_result .ui-tabs-panel { margin: 0 0 0 -4px; position: relative;/*z-index: 400;*/ /*background: url(images/epmc-ui-tabs-background-gradient.gif) 0 0 no-repeat;*/ border: 1px solid rgb(213, 213, 213);border-bottom-left-radius: 0px; border-bottom-right-radius: 0px; padding: 18px 4px;}
-.comp_result .ui-state-disabled {opacity: .5;}
+.sample_comp_result .ui-corner-top {border-top-right-radius: 0px;border-top-left-radius: 0px;}
+.sample_comp_result .ui-widget-content a {color:#188960;}
+.sample_comp_result .ui-widget-content {border: 0px solid #aaaaaa;background: none;color: #333333;margin: 0 9px;}  /*margin for navigation tab*/
+.sample_comp_result .ui-widget-content .ui-widget-content {margin: 0;} /*non margin for graph tab*/
+.sample_comp_result .ui-tabs-nav { margin: 0px 0 -1px 9px;position: relative; z-index: 1;/*z-index: 500;*/}
+.sample_comp_result .ui-tabs-nav li {border-color: transparent /*was #e5e5e5*/;top:0px; margin-bottom: 0px;}
+.sample_comp_result li.ui-tabs-active {background: #fff; border-top: 1px solid rgb(213, 213, 213); border-right: 1px solid rgb(213, 213, 213); border-bottom: 0; border-left: 1px solid rgb(213, 213, 213);}
+.sample_comp_result li.ui-tabs-active a:link, .sample_comp_result li.ui-tabs-active a:visited {color: black;text-decoration: none;} /*works for overview*/
+.sample_comp_result .ui-state-disabled   a {color: grey;}
+.sample_comp_result .ui-state-default {background:none;}
+.sample_comp_result .ui-state-hover a:link {text-decoration: underline;}
+.sample_comp_result .ui-tabs-panel { margin: 0 0 0 -4px; position: relative;/*z-index: 400;*/ /*background: url(images/epmc-ui-tabs-background-gradient.gif) 0 0 no-repeat;*/ border: 1px solid rgb(213, 213, 213);border-bottom-left-radius: 0px; border-bottom-right-radius: 0px; padding: 18px 4px;}
+.sample_comp_result .ui-state-disabled {opacity: .5;}
 
 .style-export select {
     background: linear-gradient(to top, #f8f8f8 , #ffffff); /* Standard syntax. Compatibility with older browsers to fix */
@@ -497,12 +497,8 @@ table.dataTable td {/*
 #bars #barcharts_legend .legend-item .legend-rectangle {margin: 4px;width: 12px; height: 12px;float: left;}
 
 
-#bars  #bars-wrapper {
-    /*border:1px deeppink solid;*/
-    position: relative;
-    width:100%;
-    overflow:hidden;
-}
+#bars  #bars-wrapper {position: relative; width:100%; overflow:hidden;margin-top:9px;/*add some space between charts and legend*/}
+
 #bars .rChart {
     float: left;
     overflow:visible!important;
