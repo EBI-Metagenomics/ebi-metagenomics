@@ -55,34 +55,14 @@
         <p>${graphCode[0]}</p>
     </div--%>
     <div id="bars">
-        <div id="export_div_bars" class="style-export">
-        <select id="bars_export" title="Export" class="export-select">
-            <option selected>Export</option>
-            <optgroup label="Biological process">
-                <option value="bp_png">PNG</option>
-                <option value="bp_pdf">PDF</option>
-                <option value="bp_svg">SVG</option>
-            </optgroup>
-            <optgroup label="Molecular function">
-                <option value="mf_png">PNG</option>
-                <option value="mf_pdf">PDF</option>
-                <option value="mf_svg">SVG</option>
-            </optgroup>
-            <optgroup label="Cellular component">
-                <option value="cc_png">PNG</option>
-                <option value="cc_pdf">PDF</option>
-                <option value="cc_svg">SVG</option>
-            </optgroup>
-        </select>
-            <br>
-            </div>
+
+
+
         <div id="sticky-leg-anchor"></div>
-        <div id="barcharts_legend"><strong>Sample list</strong> <span class="barcharts_legend_info">(click to hide)</span><br/></div>
-        <div id="bars-wrapper">${graphCode[1]}</div>
-    </div>
-    <div id="stack">
-        <div id="export_stack_div" class="style-export">
-            <select id="stack_export" title="Export" class="export-select">
+       <div id="barcharts_legend"><strong>Sample list</strong> <span class="barcharts_legend_info">(click to hide)</span><br/>
+
+            <div id="export_div_bars" class="chart-but-export">
+            <select id="bars_export" title="Export" class="export-select">
                 <option selected>Export</option>
                 <optgroup label="Biological process">
                     <option value="bp_png">PNG</option>
@@ -100,22 +80,70 @@
                     <option value="cc_svg">SVG</option>
                 </optgroup>
             </select>
-            <br>
+                <br>
+
+            </div>
         </div>
+        <div id="bars-wrapper">${graphCode[1]}</div>
+    </div>
+    <div id="stack">
+
            <div id="stack-jump-anchor"></div>
-           <div id="stack_jump">Jump to: <a href="#stack_bio_title"> Biological process</a> | <a href="#stack_mol_title">Molecular function</a> | <a href="#stack_cell_title">Cellular component</a></div>
+           <div id="stack_jump"><div class="jump_anchor_text">Jump to: <a href="#stack_bio_title"> Biological process</a> | <a href="#stack_mol_title">Molecular function</a> | <a href="#stack_cell_title">Cellular component</a></div>
+               <div id="export_stack_div" class="chart-but-export">
+               <select id="stack_export" title="Export" class="export-select">
+                   <option selected>Export</option>
+                   <optgroup label="Biological process">
+                       <option value="bp_png">PNG</option>
+                       <option value="bp_pdf">PDF</option>
+                       <option value="bp_svg">SVG</option>
+                   </optgroup>
+                   <optgroup label="Molecular function">
+                       <option value="mf_png">PNG</option>
+                       <option value="mf_pdf">PDF</option>
+                       <option value="mf_svg">SVG</option>
+                   </optgroup>
+                   <optgroup label="Cellular component">
+                       <option value="cc_png">PNG</option>
+                       <option value="cc_pdf">PDF</option>
+                       <option value="cc_svg">SVG</option>
+                   </optgroup>
+               </select>
+               <br>
+           </div>
+           </div>
 
             <div id="stack_wrapper">${graphCode[2]}</div>
     </div>
     <div id="heatmap">
    <div id="hm-jump-anchor"></div>
-   <div id="hm_jump">Jump to GO category: <a href="#hm_bio_title"> Biological process</a> | <a href="#hm_mol_title">Molecular function</a> | <a href="#hm_cell_title">Cellular component</a></div>
+   <div id="hm_jump"><div class="jump_anchor_text">Jump to GO category: <a href="#hm_bio_title"> Biological process</a> | <a href="#hm_mol_title">Molecular function</a> | <a href="#hm_cell_title">Cellular component</a></div>
+
+      <div id="export_heatmap_div" class="chart-but-export">
+
+
+      <select id="heatmap_export"  title="Export">
+      <option selected="">Export</option>
+      <optgroup label="Biological process">
+      <option value="">SVG</option>
+      </optgroup>
+      <optgroup label="Molecular function">
+      <option value="">SVG</option>
+      </optgroup>
+      <optgroup label="Cellular component">
+      <option value="">SVG</option>
+      </optgroup>
+      </select>
+
+
+      </div>
+       </div>
 
        <%--<h3> Biological process</h3>--%>
         ${graphCode[3]}
     </div>
     <div id="pca">
-        <div id="export_pca_div" class="style-export">
+        <div id="export_pca_div" class="chart-but-export">
             <select id="pca_export" title="Export" class="export-select">
                 <option selected>Export</option>
                 <optgroup label="Biological process">
@@ -137,7 +165,7 @@
             <br>
         </div>
         <div id="pca-leg-anchor"></div>
-        <div id="pca_legend"><strong>Sample list</strong> (<span class="barcharts_legend_info">click to hide sample</span>)<br/></div>
+        <div id="pca_legend"><strong>Sample list</strong> <span class="pca_legend_info">(click to hide)</span><br/></div>
         <%--Principal Component 1 <input id="pc1" type="number" name="Principal Component 1" min="1" max="3" value="1" disabled>
         Principal Component 2 <input id="pc2" type="number" name="Principal Component 2" min="1" max="3" value="2" disabled> <br>--%>
         <div id="plots-wrapper">${graphCode[4]}</div>
@@ -424,7 +452,7 @@
                     'mouseleave': function () {
                         // $(this).css('color', 'black');
                     }
-                }).appendTo('#barcharts_legend');
+                }).appendTo('#barcharts_legend');  //where the color puce are
             }
         }
         else {
