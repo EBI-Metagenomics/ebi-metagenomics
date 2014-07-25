@@ -6,7 +6,7 @@
         <option value="${sample.id}" title="Sample ${sample.sampleId} | ${sample.sampleName} | ${sample.sampleAlias}">${sample.sampleName}</option>
     </c:forEach>
 <c:forEach var="sample" items="${missingSamples}">
-    <option value="${sample.id}" title="Sample ${sample.sampleId} | ${sample.sampleName} | ${sample.sampleAlias}. No data found for this sample." disabled>${sample.sampleName}</option>
+    <option value="${sample.id}" title="Sample ${sample.sampleId} | ${sample.sampleName} | ${sample.sampleAlias}." disabled>${sample.sampleName} - NO DATA AVAILABLE</option>
 </c:forEach>
 
 <script>
