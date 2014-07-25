@@ -59,7 +59,7 @@
 
 
         <div id="sticky-leg-anchor"></div>
-       <div id="barcharts_legend"><strong>Sample list</strong> <span class="barcharts_legend_info">(click to hide)</span><br/>
+       <div id="barcharts_legend"><div id="barcharts_legend_title"><strong>Sample list</strong> <span class="barcharts_legend_info">(click to hide)</span></div>
        <div id="barcharts_legend_list_items"></div>
             <div id="export_div_bars" class="chart-but-export">
             <select id="bars_export" title="Export" class="export-select">
@@ -145,7 +145,7 @@
     <div id="pca">
 
         <div id="pca-leg-anchor"></div>
-        <div id="pca_legend"><strong>Sample list</strong> <span class="pca_legend_info">(click to hide)</span><br/>
+        <div id="pca_legend"><div id="pca_legend_title"><strong>Sample list</strong> <span class="pca_legend_info">(click to hide)</span></div>
         <div id="pca_legend_list_items"></div>
             <div id="export_pca_div" class="chart-but-export">
 
