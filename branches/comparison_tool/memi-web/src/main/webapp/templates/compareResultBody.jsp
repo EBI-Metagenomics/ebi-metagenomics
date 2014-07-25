@@ -60,7 +60,7 @@
 
         <div id="sticky-leg-anchor"></div>
        <div id="barcharts_legend"><strong>Sample list</strong> <span class="barcharts_legend_info">(click to hide)</span><br/>
-
+       <div id="barcharts_legend_list_items"></div>
             <div id="export_div_bars" class="chart-but-export">
             <select id="bars_export" title="Export" class="export-select">
                 <option selected>Export</option>
@@ -143,29 +143,32 @@
         ${graphCode[3]}
     </div>
     <div id="pca">
-        <div id="export_pca_div" class="chart-but-export">
-            <select id="pca_export" title="Export" class="export-select">
-                <option selected>Export</option>
-                <optgroup label="Biological process">
-                    <option value="bp_png">PNG</option>
-                    <option value="bp_pdf">PDF</option>
-                    <option value="bp_svg">SVG</option>
-                </optgroup>
-                <optgroup label="Molecular function">
-                    <option value="mf_png">PNG</option>
-                    <option value="mf_pdf">PDF</option>
-                    <option value="mf_svg">SVG</option>
-                </optgroup>
-                <optgroup label="Cellular component">
-                    <option value="cc_png">PNG</option>
-                    <option value="cc_pdf">PDF</option>
-                    <option value="cc_svg">SVG</option>
-                </optgroup>
-            </select>
-            <br>
-        </div>
+
         <div id="pca-leg-anchor"></div>
-        <div id="pca_legend"><strong>Sample list</strong> <span class="pca_legend_info">(click to hide)</span><br/></div>
+        <div id="pca_legend"><strong>Sample list</strong> <span class="pca_legend_info">(click to hide)</span><br/>
+        <div id="pca_legend_list_items"></div>
+            <div id="export_pca_div" class="chart-but-export">
+
+                        <select id="pca_export" title="Export" class="export-select">
+                                    <option selected>Export</option>
+                                    <optgroup label="Biological process">
+                                        <option value="bp_png">PNG</option>
+                                        <option value="bp_pdf">PDF</option>
+                                        <option value="bp_svg">SVG</option>
+                                    </optgroup>
+                                    <optgroup label="Molecular function">
+                                        <option value="mf_png">PNG</option>
+                                        <option value="mf_pdf">PDF</option>
+                                        <option value="mf_svg">SVG</option>
+                                    </optgroup>
+                                    <optgroup label="Cellular component">
+                                        <option value="cc_png">PNG</option>
+                                        <option value="cc_pdf">PDF</option>
+                                        <option value="cc_svg">SVG</option>
+                                    </optgroup>
+                                </select>
+                    </div>
+        </div>
         <%--Principal Component 1 <input id="pc1" type="number" name="Principal Component 1" min="1" max="3" value="1" disabled>
         Principal Component 2 <input id="pc2" type="number" name="Principal Component 2" min="1" max="3" value="2" disabled> <br>--%>
         <div id="plots-wrapper">${graphCode[4]}</div>
@@ -452,7 +455,7 @@
                     'mouseleave': function () {
                         // $(this).css('color', 'black');
                     }
-                }).appendTo('#barcharts_legend');  //where the color puce are
+                }).appendTo('#barcharts_legend_list_items');  //where the color puce are
             }
         }
         else {
@@ -519,7 +522,7 @@
                         molChartSeries[legInd].data[0].setState();
                         cellChartSeries[legInd].data[0].setState();
                     }
-                }).appendTo('#pca_legend');
+                }).appendTo('#pca_legend_list_items');
             }
         }
         else {
