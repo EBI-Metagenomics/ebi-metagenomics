@@ -137,7 +137,7 @@
         UnselectAllSamples(); // Clean the samples
         var numberSelected = $('#samples :selected').length;
         var studyId = $('#projects').val();
-        // Show a nice loading text so the user won't break his computer.
+        // Show a nice loading text so the user won't break his computer.... is this necessary... TODO some speed test once on the server - if no speed issue remove the message
         $('#samples').html('<option disabled>'+'Retrieving samples from server...'+'</option>');
         $.ajax({
             url:"<c:url value="${baseURL}/compare/samples"/>",
