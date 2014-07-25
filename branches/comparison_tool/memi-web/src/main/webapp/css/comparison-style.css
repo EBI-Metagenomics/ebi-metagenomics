@@ -492,8 +492,8 @@ table.dataTable td {/*
 .stick .jump_anchor_text {margin-top:9px;} /*increase margin on top text only when stick on*/
 .jump_anchor_text {margin-left:9px;}
 /*legend barchart*/
-#bars #barcharts_legend, #pca #pca_legend  {margin-left: 9px;}
-#bars #barcharts_legend_list_items, #pca #pca_legend_list_items  { width: 85%;border:0px solid olive;}/*reduce width not to overlap with export button*/
+#bars #barcharts_legend #barcharts_legend_title, #pca #pca_legend  #pca_legend_title {margin-left: 9px;}
+#bars #barcharts_legend_list_items, #pca #pca_legend_list_items  {margin-left: 9px; width: 85%;border:0px solid olive;}/*reduce width not to overlap with export button*/
 #bars #barcharts_legend .barcharts_legend_info, #pca #pca_legend .pca_legend_info {color:#666; font-style: italic; font-size: 84%;}
 #bars #barcharts_legend .legend-item {padding: 0px 6px 0 0;  display:inline-block; cursor:pointer; color: #606068; font-size: 90%;}
 #bars #barcharts_legend .legend-item:hover { color: #1A1A1A !important;}
