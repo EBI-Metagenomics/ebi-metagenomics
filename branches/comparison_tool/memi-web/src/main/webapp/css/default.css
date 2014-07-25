@@ -1695,6 +1695,7 @@ li.ui-tabs-selected .ico-krona {background: url(../img/ico_graph_krona_on.png) n
 .ico-krona, .ico-table, .ico-col, .ico-barh, .ico-pie, .ico-heatmap, .ico-pca   {width:27px; height:27px; display:block;}
 .sample_comp_result .ico-table, .sample_comp_result .ico-col, .sample_comp_result .ico-barh, .sample_comp_result .ico-heatmap, .sample_comp_result .ico-pca {margin-right: 4px; width:26px; height:26px; display:block;float:left; border:0px red solid;}/*icon used in tabs on the comparison result page*/
 .sample_comp_result .tab-text {float: left; padding-top: 6px; display: block;}
+.sample_comp option:disabled {color: #b6b6b6;}
 
 .main_tab_content {width:70%;}
 
