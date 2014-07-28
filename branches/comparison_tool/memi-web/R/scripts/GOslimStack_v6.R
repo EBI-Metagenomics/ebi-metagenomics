@@ -98,7 +98,7 @@ CreateStackColForCategory <- function(abundanceTable, threshold, category) {
   chart$title(text = paste0("Most frequent GO terms", " (", correctNames[categoryIndice], ")"), # Title text
               floating = FALSE, # Avoid overlapping of chart and title
               style = list(fontSize = 13, fontWeight = "bold")) # Title style
-  chart$plotOptions(column = list(stacking = "normal")) # Stacking the columns. Valid values are 'normal' or 'percent'.
+  chart$plotOptions(column = list(stacking = "percent")) # Stacking the columns. Valid values are 'normal' or 'percent'.
   chart$xAxis(categories = c(unique(dataChart$sample)), # Display sample identifiers on x axis 
               lineColor = "#595959", # Color of the axis
               tickColor = "", # Needed to delete ticks

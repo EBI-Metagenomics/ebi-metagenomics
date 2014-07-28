@@ -13,7 +13,8 @@
                 <%--<form:option value="-" label="--Select project"/>--%>
                 <form:select path="study" size="10" id="projects" style="width:100%;">
                     <c:forEach var="study" items="${studies}">
-                        <c:if test="${fn:length(study.samples) gt 2}">
+                        <%-- Only show the projects with two samples or more in the list. --%>
+                        <c:if test="${fn:length(study.samples) gt 1}">
                         <form:option id="${study.studyId}" value="${study.id}" title="Project ${study.studyId} | ${study.studyName}">${study.studyName}</form:option>
                         </c:if>
                     </c:forEach>
@@ -129,6 +130,7 @@
 
 </div>
 
+
 <%--TODO: Clean up code a bit--%>
 
 <script type="text/javascript" defer="defer">
@@ -167,30 +169,6 @@
     });
 </script>
 
-<%--script type="text/javascript" defer="defer">//Try of return of post request with AJAX...
-/*    $(document).ready(function () {
-        $('#comparison-tool-form-id').submit(function(event)
-        {
-            var requestText = $("#comparison-tool-form-id").serialize();
-            alert(requestText);
-            $.ajax({
-                url:jQuery(this).attr("action"),
-                type:"POST",
-                data:requestText,
-                success:function (response) {
-                    alert("Hi");
-                    $("#demo").html("Hey coucou toi.");
-                },
-                error:function (jqXHR, textStatus, errorThrown) {
-                    alert("Request failed: " + textStatus);
-                }
-            });//end ajax method
-//            alert(studyId);
-        });
-    });*/
-
-</script--%>
-
 <script type="text/javascript" defer="defer">
     $(document).ready(function () {
         $('#projects').change(function() {
@@ -207,7 +185,7 @@
                 error:function (jqXHR, textStatus, errorThrown) {
                     alert("Request failed (unable to retrieve project info): " + textStatus);
                 }
-            });//end ajax method
+            }); //end ajax method
         });
     });
 </script>
@@ -218,7 +196,7 @@
     // Select all samples in the sample selection box
     function SelectAllSamples() {
         $('#samples option').each(function () {
-            if(! $(this).attr('disabled'))
+            if(! $(this).attr('disabled')) // Disabled samples must not be selected
             $(this).attr('selected', true);
         });
     }
@@ -282,19 +260,6 @@
         }
     });
 
-    // Loading div when AJAX request is requested (useless at the moment because not using any ajax request).
-    $('#loading').hide(); //initially hide the loading icon
-
-    $('#loading').ajaxStart(function(){
-        $(this).show();
-       // $('#samples').hide();
-        //console.log('shown');
-    });
-    $("#loading").ajaxStop(function(){
-        $(this).hide();
-       // $('#samples').show();
-        //  console.log('hidden');
-    });
     // Selected samples number
     $('#samples-control').click(function() {
         var numberSelected = $('#samples :selected').length;
@@ -307,17 +272,6 @@
         document.getElementById("selected-samples").innerHTML = "Sample list <span>(" + numberSelected + " selected out of " + numberTotal + ")</span>";
     });
 
-    // Filter options of visualization according to the chosen data STILL TO DO
-    $('#data-choice').change(function() {
-        var selectedData = $('#data-choice').children(":selected").attr("value");
-        if (selectedData === "nothing") {
-           // $("#vis-choice option[value='table']").prop("disabled", true);
-        }
-        else {
-
-        }
-    });
-
     // Show / hide advanced settings
     $(function(){
         $('#advanced-settings-wrapper').hide();
@@ -325,4 +279,16 @@
             $('#advanced-settings-wrapper').slideToggle(200);
         });
     });
+
+    // Uncomment these lines in the future to trigger checking of files when selecting samples
+    //    // Load samples / check availability of files for chosen data when changing it
+    //    $('#data-choice').change(function() {
+    //        var projectId = $('#projects').val();
+    //        var selectedData = $('#data-choice').children(":selected").attr("value");
+    //        if (selectedData != "nothing" && projectId != null) {
+    //            alert('dsdsds');
+    //            GetSamplesOfSelectedProject();
+    //           // $("#vis-choice option[value='table']").prop("disabled", true);
+    //        }
+    //    });
 </script>

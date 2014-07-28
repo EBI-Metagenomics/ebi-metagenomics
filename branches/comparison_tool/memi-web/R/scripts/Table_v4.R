@@ -21,7 +21,6 @@ DataTableGen <- function(abTable) {
   # Nb: Original abundance have to be in absolute value.  TODO: Handle other data types
   
   # Import of needed JS / CSS (jQuery is already inside !)
-  importJS <- "<script src=\"https://cdn.datatables.net/1.10.0/js/jquery.dataTables.js\"></script>"
   goLink <- "http://www.ebi.ac.uk/QuickGO/GTerm?id=" # Beginning of the URL to access quickGO webpage for a GO term. Could be replaced by anything else.
   
   # Steps Going from simple abundance table to the table we want to display.
@@ -83,7 +82,7 @@ DataTableGen <- function(abTable) {
   jQueryFuncEnd <- ",\n \"order\": [[ 4, \"desc\" ]] } ); \n } );"
   
   
-  fullHtmlCode <- paste(importJS, "<div id=\"table-container\"></div>", "<script>", "\n", "var dataSet = ", 
+  fullHtmlCode <- paste("<div id=\"table-container\"></div>", "<script>", "\n", "var dataSet = ", 
     tableJSON, "; \n", jQueryFuncBegin, headers, jQueryFuncEnd, "</script>", sep = "")
   
   # Return this text

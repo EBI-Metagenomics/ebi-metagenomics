@@ -168,7 +168,7 @@ source(paste(scriptsDir,scriptList$preProcess,sep = pathSep))
 
 # Launch abundance table creation script and print it for debugging.
 abTable = CreateAbTable(name, files, data, sampleNames)
-
+# write.table(abTable,paste(tempDir,pathSep,name,'_table','.tsv',sep=''),sep='\t',col.names=NA,quote=FALSE)
 # print(abTable) # Uncomment line to print
 
 

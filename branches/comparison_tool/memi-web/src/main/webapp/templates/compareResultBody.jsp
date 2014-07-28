@@ -2,19 +2,23 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
+<%-- Special CSS stylesheet for the comparison tool --%>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/comparison-style.css" type="text/css" media="all"/>
-<script src="//code.jquery.com/jquery-1.10.2.js"></script>
-<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
+<%-- Needed JS to display results
+     - jQuery and jQuery UI
+     - Highcharts / Highcharts more / Highcharts export module
+     - jQuery dataTables
+Note: it could be better to have these JS files locally instead of relying on external sources. --%>
+<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 <script src='http://code.highcharts.com/highcharts.src.js' type='text/javascript'></script>
 <script src='http://code.highcharts.com/highcharts-more.js' type='text/javascript'></script>
 <script src='http://code.highcharts.com/modules/exporting.src.js' type='text/javascript'></script>
+<script src="https://cdn.datatables.net/1.10.0/js/jquery.dataTables.js"></script>
 
-<style>
-
-
-</style>
-
-<div class="back_ban"><div class="back_button"><a href="<c:url value="${baseURL}/compare"/>"><span>Back to query page</span></a></div>
+<div class="back_ban">
+    <div class="back_button"><a href="<c:url value="${baseURL}/compare"/>"><span>Back to query page</span></a></div>
     <div class="back_title">Sample comparison tool:
 
         <%--c:if test="${data==GOslim}">
@@ -26,21 +30,25 @@
         <c:if test="${data=='GOslim'}">
             GO term annotation (functional analysis)   <%--hide GO slim notion as we do on the analysis result page --%>
         </c:if>
+    </div>
 </div>
-</div>
-<ul><li>Samples:
-<c:forEach var="sample" items="${samples}">
-<a class="sample_list" href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>" target="_blank" title="${sample.sampleName} (${sample.sampleId})">${sample.sampleId}</a>
-</c:forEach>
-    <%--<c:if test="${not empty missingSamples}">--%>
+<ul>
+    <li>Samples:
+        <c:forEach var="sample" items="${samples}">
+            <a class="sample_list" href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>" target="_blank" title="${sample.sampleName} (${sample.sampleId})">${sample.sampleId}</a>
+        </c:forEach>
+    <%-- Uncomment these lines if you plan to handle the 'file is empty' error by showing missing samples on the result page
+    <%-- <c:if test="${not empty missingSamples}">--%>
     <%--<br>No data was available for sample(s): <c:forEach var="sample" items="${missingSamples}">--%>
         <%--<a class="sample_list" href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>" target="_blank" title="${sample.sampleName} (${sample.sampleId})">${sample.sampleId}</a>--%>
     <%--</c:forEach>--%>
     <%--</c:if>--%>
     </li>
-<li> Project: <a href="<c:url value="${baseURL}/project/${study.studyId}"/>" target="_blank" title="${study.studyName} (${study.studyId})">${study.studyName}</a> (${study.studyId})</li>
+    <li> Project: <a href="<c:url value="${baseURL}/project/${study.studyId}"/>" target="_blank" title="${study.studyName} (${study.studyId})">${study.studyName}</a> (${study.studyId})</li>
 </ul>
 <%--<p>Use tabs below to switch between available visualizations.</p>--%>
+
+<%-- jQuery UI tabs  --%>
 <div class="sample_comp_result">
 <div id="tabs">
     <ul>
@@ -51,13 +59,11 @@
         <li><a href="#pca" title="view results as principal components analysis"><span class="ico-pca"></span><span class="tab-text">Principal Components Analysis</span></a></li>
         <li><a href="#jstable" title="view results in a table"><span class="ico-table"></span><span class="tab-text">Table</span></a></li>
     </ul>
+    <%-- Tabs content --%>
     <%--div id="overview">
         <p>${graphCode[0]}</p>
     </div--%>
     <div id="bars">
-
-
-
         <div id="sticky-leg-anchor"></div>
        <div id="barcharts_legend"><div id="barcharts_legend_title"><strong>Sample list</strong> <span class="barcharts_legend_info">(click to hide)</span></div>
        <div id="barcharts_legend_list_items"></div>
@@ -84,6 +90,10 @@
 
             </div>
         </div>
+        <%-- THIS FEATURE IS STILL EXPERIMENTAL.
+             Allows user to redraw the stacked columns visualization with changed settings.
+             See Confluence page of the tool for more details on how to enable it --%>
+        <%--<div class="redraw_settings">Change threshold: <input id="stackThreshold" type="number" min="0" max="90" step="0.1" value="2" style="width:60px;"/> <button id="redrawStackButton">Redraw chart</button></div>--%>
         <div id="bars-wrapper">${graphCode[1]}</div>
     </div>
     <div id="stack">
@@ -204,6 +214,7 @@
     // Barcharts export module
         $('#bars_export').change(function() {
             var exportValue = $( "#bars_export" ).val();
+            // exportArray: array containing information on GO type and wanted output format based on the value of the selected option
             var exportArray = exportValue.split('_');
             var goType = "";
             var format = "";
@@ -218,7 +229,7 @@
                     goType = "cellular_component";
                     break;
             }
-
+            // if no valid export option is selected exportArray[1] should be null and export won't be performed
             if(exportArray[1]!=null) {
                 switch(exportArray[1]) {
                     case "png":
@@ -232,26 +243,31 @@
                         break;
                 }
 
-                var chartId = "#"+goType+"_bars";
+                var chartId = "#" + goType + "_bars"; // Rebuilds chart div id from retrieved GO type
+
+                // Creation of a unique file name
                 var date = new Date();
-                var mmddyyyyDate = (date.getMonth()+1).toString() +'-'+ date.getDate() +'-'+ date.getFullYear();
-                var fileName = "${study.studyId}"+"_"+mmddyyyyDate+"_comp_func_go"+"_barcharts_"+exportArray[0];
+                var mmddyyyyDate = (date.getMonth()+1).toString() + '-' + date.getDate() + '-' + date.getFullYear();
+                var fileName = "${study.studyId}" + "_" + mmddyyyyDate + "_comp_func_go" + "_barcharts_" + goType;
+                // Export
                 var chart = $(chartId).highcharts();
-                chart.redraw();
+                // chart.redraw();
                 chart.exportChart({
                     type: format,
                     filename: fileName
                 });
             }
-            $('#bars_export').val('Export');
+            $('#bars_export').val('Export'); // Resets the export option
         });
 
     // Stacked columns export module
     $('#stack_export').change(function() {
         var exportValue = $( "#stack_export" ).val();
+        // exportArray: array containing information on GO type and wanted output format based on the value of the selected option
         var exportArray = exportValue.split('_');
         var goType = "";
         var format = "";
+
         switch(exportArray[0]) {
             case "bp":
                 goType = "biological_process";
@@ -263,7 +279,7 @@
                 goType = "cellular_component";
                 break;
         }
-
+        // if no valid export option is selected exportArray[1] should be null
         if(exportArray[1]!=null) {
             switch(exportArray[1]) {
                 case "png":
@@ -276,24 +292,27 @@
                     format = "image/svg+xml";
                     break;
             }
+            var chartId = "#" + "stack_" + goType; // Rebuilds chart div id from retrieved GO type
 
-            var chartId = "#" + "stack_" + goType;
+            // Creation of a unique file name
             var date = new Date();
-            var mmddyyyyDate = (date.getMonth()+1).toString() +'-'+ date.getDate() +'-'+ date.getFullYear();
-            var fileName = "${study.studyId}"+"_"+mmddyyyyDate+"_comp_func_go_stacked_"+exportArray[0];
+            var mmddyyyyDate = (date.getMonth()+1).toString() + '-' + date.getDate() + '-' + date.getFullYear();
+            var fileName = "${study.studyId}" + "_" + mmddyyyyDate + "_comp_func_go_stacked_" + goType;
+            // Export
             var chart = $(chartId).highcharts();
-            chart.redraw();
+            // chart.redraw();
             chart.exportChart({
                 type: format,
                 filename: fileName
             });
         }
-        $('#stack_export').val('Export');
+        $('#stack_export').val('Export'); // Resets the export option
     });
 
     // PCA export module
     $('#pca_export').change(function() {
         var exportValue = $( "#pca_export" ).val();
+        // exportArray: array containing information on GO type and wanted output format based on the value of the selected option
         var exportArray = exportValue.split('_');
         var goType = "";
         var format = "";
@@ -308,7 +327,7 @@
                 goType = "cellular_component";
                 break;
         }
-
+        // if no valid export option is selected exportArray[1] should be null
         if(exportArray[1]!=null) {
             switch(exportArray[1]) {
                 case "png":
@@ -321,10 +340,13 @@
                     format = "image/svg+xml";
                     break;
             }
-            var chartId = "#"+goType+"_pca_12"; // Need to find a way to see which PCs are drawn. Could be cleaner
+            var chartId = "#" + goType + "_pca_12"; // Rebuilds chart div id from retrieved GO type. It may be good to find a way to see which PCs are drawn (not hard coded)
+
+            // Creation of a unique file name
             var date = new Date();
-            var mmddyyyyDate = (date.getMonth()+1).toString() +'-'+ date.getDate() +'-'+ date.getFullYear();
-            var fileName = "${study.studyId}"+"_"+mmddyyyyDate+"_comp_func_go"+"_PCA_"+exportArray[0];
+            var mmddyyyyDate = (date.getMonth()+1).toString() + '-' + date.getDate() + '-' + date.getFullYear();
+            var fileName = "${study.studyId}" + "_" + mmddyyyyDate + "_comp_func_go" + "_PCA_" + goType;
+            // Export
             var chart = $(chartId).highcharts();
             chart.redraw();
             chart.exportChart({
@@ -332,13 +354,19 @@
                 filename: fileName
             });
         }
-        $('#pca_export').val('Export');
+        $('#pca_export').val('Export'); // Resets the export option
     });
 
-    // Sticky div relocation function to let the barchart legend stay on top
+    /*
+    Sticky divs functions ('Jump to...' and single legends for barcharts / PCA visualizations.
+    All these functions are working in a similar way (only div ids change)
+     */
+
+    // Sticky div relocation function to let the barcharts legend stay on top
     function sticky_bar_relocate() {
-        var window_top = $(window).scrollTop();
-        var barcharts_leg_top = $('#sticky-leg-anchor').offset().top;
+        var window_top = $(window).scrollTop(); // Position of 'top of window'
+        var barcharts_leg_top = $('#sticky-leg-anchor').offset().top; // Position of top of div
+        // If the div top position is lower than the window top position (which means that the div is visually 'higher'), stick it!
         if (window_top > barcharts_leg_top) {
             $('#barcharts_legend').addClass('stick');
             // Quick fix to make the div-width equal to its tab width
@@ -348,9 +376,9 @@
         }
     }
 
+    // Triggers barcharts legend div relocation function on scroll event
     $(function() {
         $(window).scroll(sticky_bar_relocate);
-        sticky_bar_relocate();
     });
 
     // Sticky div relocation function to let the pca legend stay on top
@@ -366,12 +394,12 @@
         }
     }
 
+    // Triggers pca legend div relocation function on scroll event
     $(function() {
         $(window).scroll(sticky_pca_relocate);
-        sticky_pca_relocate();
     });
 
-    // Sticky div relocation function to let the heatmap 'Jump to' div stay on top
+    // Sticky div relocation function to let the heatmaps 'Jump to...' div stay on top
     function sticky_hm_relocate() {
         var window_top = $(window).scrollTop();
         var hm_jump_top = $('#hm-jump-anchor').offset().top;
@@ -384,12 +412,12 @@
         }
     }
 
+    // Triggers heatmaps 'Jump to...' div relocation function on scroll event
     $(function() {
         $(window).scroll(sticky_hm_relocate);
-        sticky_hm_relocate();
     });
 
-    // Sticky div relocation function to let the stacked columns 'Jump to' div stay on top
+    // Sticky div relocation function to let the stacked columns 'Jump to...' div stay on top
     function sticky_stack_relocate() {
         var window_top = $(window).scrollTop();
         var stack_jump_top = $('#stack-jump-anchor').offset().top;
@@ -402,36 +430,39 @@
         }
     }
 
+    // Triggers stacked columns 'Jump to...' div relocation function on scroll event
     $(function() {
         $(window).scroll(sticky_stack_relocate);
-        sticky_stack_relocate();
     });
-
 </script>
 
 <script type="text/javascript">
+    // Creation of legend items for barcharts visualization
     $(document).ready(function() {
+        // Creation of legend items only if the charts exist (if the barchart for biological process exists others should exist as well)
         if($('#biological_process_bars').length != 0) {
-            var sampleNum = "${fn:length(samples)}";
-            var sampleString = "${sampleString}";
-            var sampleArr = sampleString.split(',');
-            var i;
+            var sampleNum = "${fn:length(samples)}"; // Retrieving number of samples
+            var sampleString = "${sampleString}"; // Retrieving identifiers of samples
+            var sampleArr = sampleString.split(','); // Creation of an array of sample identifiers
+            // Retrieving charts and charts series as JS vars
             var bioChart = $('#biological_process_bars').highcharts();
             var molChart = $('#molecular_function_bars').highcharts();
             var cellChart = $('#cellular_component_bars').highcharts();
             var bioChartSeries = bioChart.series;
             var molChartSeries = molChart.series;
             var cellChartSeries = cellChart.series;
+            // Creation of the legend items for each sample
+            var i;
             for (i = 0; i < sampleNum; i++)
             {
                 var currentColor = cellChartSeries[i].color;
                 $('<div/>', {
-                    'id': 'legend_'+i,
+                    'id': 'legend_' + i,
                     'class': 'legend-item',
                     'html': '<div class="legend-rectangle" style="background:'+ currentColor + ';"></div><span> '+sampleArr[i]+'</span>',
                     'click': function () {
-                        var legInd = this.id.split('_')[1];
-                        // Set to biological process chart but could be whatever we want
+                        var legInd = this.id.split('_')[1]; // Gives the indice of the series to hide / show when clicking on the legend item
+                        // Check if element is visible on biological process chart but could be whatever we want
                         if(bioChartSeries[legInd].visible){
                             bioChartSeries[legInd].hide();
                             molChartSeries[legInd].hide();
@@ -444,28 +475,23 @@
                             bioChartSeries[legInd].show();
                             molChartSeries[legInd].show();
                             cellChartSeries[legInd].show();
-                            // Changing color to normal display (could be cleaner?)
+                            // Changing color to normal display
                             $(this).css('color', '#606068');
                             $(this).children('.legend-rectangle').css('background', cellChartSeries[legInd].color);
                         }
-                    },
-                    'mouseenter': function () {
-                        // $(this).css('color', 'blue');
-                    },
-                    'mouseleave': function () {
-                        // $(this).css('color', 'black');
-                    }
+                    } // Adding legend item to legend div
                 }).appendTo('#barcharts_legend_list_items');  //where the color puce are
             }
         }
         else {
             // No barcharts? Empty the legend and disable export so the user is not confused
             $( "#barcharts_legend" ).empty();
-
-            //    $("#bars_export").disable(); // Could be better to hide the element instead of disabling it.
+            // $("#bars_export").disable(); // Trying to hide the export button when nothing is displayed but 'disable()' does not seem to work.
         }
     });
 
+    // Creation of legend items for PCA visualization
+    // This function is similar to the previous one, the only difference being the 'mouseenter' and 'mouseleave' functions.
     $(document).ready(function() {
         if($('#biological_process_pca_12').length != 0) {
             var sampleNum = "${fn:length(samples)}";
@@ -491,7 +517,7 @@
                     'click': function () {
                         var legInd = this.id.split('_')[2];
                         // Set to biological process chart but could be whatever we want
-                        if(bioChartSeries[legInd].visible){
+                        if(bioChartSeries[legInd].visible){ // Gives the indice of the series to hide / show when clicking on the legend item
                             bioChartSeries[legInd].hide();
                             molChartSeries[legInd].hide();
                             cellChartSeries[legInd].hide();
@@ -510,14 +536,16 @@
                     },
                     'mouseenter': function () {
                         var legInd = this.id.split('_')[2];
-                        //if(bioChartSeries[legInd].visible){
+                        // Highlights PCA chart points when mousing over
+                        // if(bioChartSeries[legInd].visible){
                         bioChartSeries[legInd].data[0].setState('hover');
                         molChartSeries[legInd].data[0].setState('hover');
                         cellChartSeries[legInd].data[0].setState('hover');
-                        //}
+                        // }
                     },
                     'mouseleave': function () {
                         var legInd = this.id.split('_')[2];
+                        // PCA points back to normal state when mousing over
                         bioChartSeries[legInd].data[0].setState();
                         molChartSeries[legInd].data[0].setState();
                         cellChartSeries[legInd].data[0].setState();
@@ -526,30 +554,25 @@
             }
         }
         else {
-            // No PCA? Sounds weird but... empty the legend and disable export so the user is not confused
+            // No PCA? Empty the legend and disable export so the user is not confused
             $( "#pca_legend" ).empty();
-
-            //    $("#bars_export").disable(); // Could be better to hide the element instead of disabling it.
+            // $("#bars_export").disable(); // Trying to hide the export button when nothing is displayed but 'disable()' does not seem to work.
         }
     });
 </script>
 
 <script type="text/javascript" defer="defer">
-    // Could I have some tabs please ?
+    // Enable jQuery tabs
     $( document ).ready(function() {
         $(function () {
            $('#tabs').tabs();
-//           $('.rChart').each(function() {
-//                if($(this).is(':visible')) {
-//                    var chartContainerName = this.id;
+                    // Triggering the resize event after tab loading to debug display of charts (blurry charts on firefox)
                     $(window).trigger('resize');
-//                    $('#'+chartContainerName).highcharts().reflow();
-//                }
         });
-       // $('#molecular_function_bars').hide();
         });
-//    });
 
+    // Correcting display error of highcharts charts when working with jQuery tabs
+    // Because of the 'display:none' style applied on hidden tabs, highcharts cannot render the charts properly.
     $('#tabs').on('tabsactivate', function (event, ui) {
         $('.rChart').each(function() {
         if($(this).is(':visible')) {
@@ -561,21 +584,28 @@
      });
 </script>
 
+<%-- THIS FEATURE IS STILL EXPERIMENTAL.
+     Sends reauest when user redraw the stacked columns.
+     See Confluence page of the tool for more details on how to enable it --%>
 <%--<script type="text/javascript" defer="defer">--%>
-    <%--$('#tabs').click(function() {--%>
-    <%--$('.rChart').each(function() {--%>
-        <%--if($(this).is(':visible')) {--%>
-            <%--var chartContainerName = this.id;--%>
-            <%--$('#'+chartContainerName).highcharts().reflow();--%>
-        <%--}--%>
-    <%--});--%>
-    <%--});--%>
-    <%--$( window ).resize(function() {--%>
-    <%--$('.rChart').each(function() {--%>
-        <%--if($(this).is(':visible')) {--%>
-            <%--var chartContainerName = this.id;--%>
-            <%--$('#'+chartContainerName).highcharts().reflow();--%>
-        <%--}--%>
-    <%--});--%>
+    <%--$(document).ready(function () {--%>
+        <%--$('#redrawStackButton').click(function() {--%>
+
+            <%--var outputName = "${outputName}";--%>
+            <%--var newThreshold = $('#stackThreshold').val();--%>
+            <%--$.ajax({--%>
+                <%--url:"<c:url value="${baseURL}/compare/stack"/>",--%>
+                <%--type:"GET",--%>
+                <%--cache:false,--%>
+                <%--data:{outputName:outputName,--%>
+                <%--newThreshold:newThreshold},--%>
+                <%--success:function (data) {--%>
+                    <%--$("#stack_wrapper").html(data);--%>
+                <%--},--%>
+                <%--error:function (jqXHR, textStatus, errorThrown) {--%>
+                    <%--alert("Request failed: " + textStatus);--%>
+                <%--}--%>
+            <%--});//end ajax method--%>
+        <%--});--%>
     <%--});--%>
 <%--</script>--%>

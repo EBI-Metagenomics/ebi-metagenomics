@@ -26,7 +26,7 @@ public class ComparisonForm {
     private boolean keepNames = true;
 
     @NotEmpty(message = "Please select samples to compare (at least two)")
-    @Size(min=2, message = "It's a shark attack")
+    @Size(min=2)
     private List<Long> samples = new ArrayList<Long>();
 
     private double stackThreshold = 2;

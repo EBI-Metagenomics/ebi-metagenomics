@@ -113,7 +113,7 @@ public class CompareController extends AbstractController implements IController
 
 
 
-        // Samples instead of retrieved ID.
+        // Get ID for each sample to use it as sample names for the R scripts
         final List<Sample> sampleList = new ArrayList<Sample>();
         List<String> sampleTextId = new ArrayList<String>();
         for (int i = 0; i < allSamples.size(); i++) {
@@ -124,30 +124,32 @@ public class CompareController extends AbstractController implements IController
                 sampleTextId.add("Sample" + String.format("%02d", i + 1));
         }
 
+/*        Uncomment these lines if you plan to handle the 'file is empty' error by showing missing samples on the result page
         // Check if one of those is empty and catching empty files so we can display a nice error message on result page
-        // Store missing samples to explain what is WRONG with them
-//        final List<Sample> missingSampleList = new ArrayList<Sample>();
-//        for(int i = 0;i < inputFilePaths.size(); i++) {
-//            File f = new File(inputFilePaths.get(i));
-//            if(!f.exists()){
-//                inputFilePaths.remove(i); // Remove the missing samples from the file paths list
-//                sampleTextId.remove(i); // ... and the sample identifiers list
-//                missingSampleList.add(sampleList.get(i));
-//                sampleList.remove(i);  // ... and the sample list used on the webpage
-//            }
-//        }
+        // Store missing samples
+        final List<Sample> missingSampleList = new ArrayList<Sample>();
+        for(int i = 0;i < inputFilePaths.size(); i++) {
+            File f = new File(inputFilePaths.get(i));
+            if(!f.exists()){
+                inputFilePaths.remove(i); // Remove the missing samples from the file paths list
+                sampleTextId.remove(i); // ... and the sample identifiers list
+                missingSampleList.add(sampleList.get(i));
+                sampleList.remove(i);  // ... and the sample list used on the webpage
+            }
+        }*/
 
         // Print working directory, just to see what's happening
         log.info("Creating abundance table and visualizations...");
-        //TODO: We should make all these directories configurable in a Spring context file (working dir, temp dir, path to the script etc.)
         log.info("Working Directory = " + System.getProperty("user.dir"));
-        final String rTmpFileDirectory = propertyContainer.getROutputDir();
-        //absolute path of the R script
-        final String rScriptPath = propertyContainer.getRScriptLocation();
-        final String rScriptName = propertyContainer.getRScriptName();
-        final String rImgDirectory = propertyContainer.getRTmpImgDir();
-        final String rInstallationLocation = propertyContainer.getRInstallationLocation();
-        //Check if R script exists and if it is executable
+
+        // These variables have to be defined in the 'session-manager-context.xml' file
+        final String rTmpFileDirectory = propertyContainer.getROutputDir(); // Directory to store temporary graphs
+        final String rScriptPath = propertyContainer.getRScriptLocation(); // Directory for R scripts
+        final String rScriptName = propertyContainer.getRScriptName(); // Name of the script to launch
+        final String rImgDirectory = propertyContainer.getRTmpImgDir(); // Directory for images (heatmaps)
+        final String rInstallationLocation = propertyContainer.getRInstallationLocation(); // Name of the command to use
+
+        // Check if R script exists and if it is executable
         doCheckScriptFile(rScriptPath);
 
         // Creation of 'R friendly' String objects containing : absolute paths to the files used by the R script, correct samples names if we want to keep them, heatmap parameters.
@@ -158,8 +160,7 @@ public class CompareController extends AbstractController implements IController
         // Creation of unique file name/id used during the whole procedure
         final String uniqueOutputName = usedData + "_" + System.currentTimeMillis();
 
-        // First try: run shell script with test files (so without using form data)
-
+        // Execution command to launch the comparison job
         final char WHITESPACE = ' ';
         String executionCommand;
         executionCommand = rInstallationLocation + WHITESPACE + rScriptPath + "/" + rScriptName + WHITESPACE + rTmpFileDirectory + WHITESPACE +
@@ -192,13 +193,13 @@ public class CompareController extends AbstractController implements IController
         while ((stdErrorOuput = stdError.readLine()) != null) {
             System.out.println(stdErrorOuput);
         }
-        //Throw exception if stdError output (from running R) isn't NULL
+        // Throw exception if stdError output (from running R) isn't NULL
         if (stdErrorOuput != null) {
             throw new IllegalStateException("R has thrown an exception:\n" + stdErrorOuput);
         }
 
-        //Consume abundance file and render the page
-        // We have HTML parts (different files), it would be cool to store it as a string array.
+        // Consume abundance file and render the page
+        // We have HTML parts (different files), store them as a string array.
         String tmpGraphDir = rTmpFileDirectory;
         final String[] htmlFile = {
                 ReadFile(tmpGraphDir + uniqueOutputName + "_overview.htm"),
@@ -223,9 +224,13 @@ public class CompareController extends AbstractController implements IController
                         // Result Header elements
                         model.addAttribute("study", studyDAO.read(Long.valueOf(comparisonForm.getStudy())));
                         model.addAttribute("samples", sampleList);
-//                        model.addAttribute("missingSamples", missingSampleList);
+                        // Atribute needed for functions of the result page
                         model.addAttribute("sampleString",rFriendlySampleNames);
                         model.addAttribute("data", usedData);
+                        // Enable this if you plan to handle the 'file is empty' error by showing missing samples on the result page
+                        //  model.addAttribute("missingSamples", missingSampleList);
+                        // Output name is required is you want te enable redrawing of charts. Uncomment to use (still an experimental functionality)
+                        // model.addAttribute("outputName",uniqueOutputName);
                     }
                 });
         return mav;
@@ -245,8 +250,8 @@ public class CompareController extends AbstractController implements IController
     /**
      * Get input file paths, which are used to generate the abundance table.
      *
-     * @param usedData
-     * @param allSamples
+     * @param usedData - type of data chosen by the user for the comparison
+     * @param allSamples - samples selected by the user for the comparison
      * @return List of input file paths.
      */
     private List<String> getInputFilePaths(String usedData, List<Long> allSamples) {
@@ -275,16 +280,17 @@ public class CompareController extends AbstractController implements IController
             @ModelAttribute("comparisonForm") final ComparisonForm comparisonForm
     ) {
         ModelAndView mav = new ModelAndView("/compareSamples");
-
         List<Sample> sampleListForId = sampleDAO.retrievePublicSamplesByStudyId(studyId);
+        // Checking if requested samples have data for selected data type on the comparison tool submission page (handling of the 'file is empty' error)
+        // If they don't have any data, remove them from the sample list and add them to another list for missing samples
         List<Sample> missingSamples = new ArrayList<Sample>();
-        List<Long> sampleIdListForId = new ArrayList<Long>();
+        List<Long> sampleIdList = new ArrayList<Long>();
         for (Sample currentSample : sampleListForId) {
-            sampleIdListForId.add(currentSample.getId());
+            sampleIdList.add(currentSample.getId());
         }
 
-        final List<String> inputFilePathsForId = getInputFilePaths(comparisonForm.getUsedData(), sampleIdListForId);
-        for(int i = 0;i < inputFilePathsForId.size(); i++) {
+        final List<String> inputFilePathsForId = getInputFilePaths(comparisonForm.getUsedData(), sampleIdList);
+        for(int i = 0; i < inputFilePathsForId.size() ; i++) {
             File f = new File(inputFilePathsForId.get(i));
             if(!f.exists()){
                 missingSamples.add(sampleListForId.get(i));
@@ -305,6 +311,52 @@ public class CompareController extends AbstractController implements IController
         mav.addObject("study", currentStudy);
         return mav;
     }
+
+/*  THIS FEATURE IS STILL EXPERIMENTAL. I did not have time to write it properly (with good paths etc.).
+    However, this works on my local machine and gives the logic to be able to redraw samples. To do so, here are the steps:
+    - Save the abundance table
+    - Get the ouput ID with JSTL on the result page so you can retrieve the table
+    - Do a R script reading the output and the new value to redraw the chart (here the threshold), loading needed packages and call the visualization script.
+    - Store the result as html file, read it and replace html of wanted div with ajax method
+    @RequestMapping(value = "/stack")
+    public ModelAndView getNewStack(
+            @RequestParam(value = "outputName", required = true) final String outputName,
+            @RequestParam(value = "newThreshold", required = true) final double newThreshold) throws IOException{
+        // use the Runtime exec method:
+        Process p = Runtime.getRuntime().exec("Rscript R/redrawStack.R "+outputName+" "+newThreshold);
+
+        BufferedReader stdInput = new BufferedReader(new
+                InputStreamReader(p.getInputStream()));
+
+        BufferedReader stdError = new BufferedReader(new
+                InputStreamReader(p.getErrorStream()));
+
+        // read the output from the command
+        log.info("Command output:\n");
+        String stdOutput = null;
+        while ((stdOutput = stdInput.readLine()) != null) {
+            System.out.println(stdOutput);
+        }
+
+        // read any errors from the attempted command
+        log.info("Command error (if any):\n");
+        String stdErrorOuput = null;
+        while ((stdErrorOuput = stdError.readLine()) != null) {
+            System.out.println(stdErrorOuput);
+        }
+        //Throw exception if stdError output (from running R) isn't NULL
+        if (stdErrorOuput != null) {
+            throw new IllegalStateException("R has thrown an exception:\n" + stdErrorOuput);
+        }
+
+        String tmpGraphDir = "R/tmpGraph/";
+        final String stackCode= ReadFile(tmpGraphDir + outputName + "_stack.htm");
+
+        ModelAndView mav = new ModelAndView("/redrawStack");
+        mav.addObject("newStackCode", stackCode);
+        return mav;
+    }
+*/
 
     protected String getModelViewName() {
         return VIEW_NAME;

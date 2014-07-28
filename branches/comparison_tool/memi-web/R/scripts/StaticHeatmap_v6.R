@@ -102,7 +102,9 @@ GenerateHeatmap <- function(generalAbTable, category, filePath, fileName, hmPara
 
   # Change the font size of row if there are only a few samples (less than 4 currently)
   rowFontSize <- 1.2 
-  if(ncol(abTable) < 4) rowFontSize <- 1.0
+  if(nrow(abTable) < 4) rowFontSize <- 1.0
+  if(nrow(abTable) > 100) rowFontSize <- 0.7
+
 
   # SVG device opening. Should work on the server. 
   # pathSep should be defined in the 'launch' script

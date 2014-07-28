@@ -34,6 +34,7 @@ public class MemiPropertyContainer {
     private String rInstallationLocation;
 
     private String rOutputDir;
+    private String rTmpImgDir;
 
     MemiPropertyContainer() {
     }
@@ -100,5 +101,13 @@ public class MemiPropertyContainer {
 
     public void setRScriptName(String rScriptName) {
         this.rScriptName = rScriptName;
+    }
+
+    public void setRTmpImgDir(String RTmpImgDir) {
+        rTmpImgDir = RTmpImgDir;
+    }
+
+    public String getRTmpImgDir() {
+        return rTmpImgDir;
     }
 }
