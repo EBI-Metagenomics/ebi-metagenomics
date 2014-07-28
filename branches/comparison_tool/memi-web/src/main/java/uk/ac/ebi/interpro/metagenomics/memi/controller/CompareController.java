@@ -81,7 +81,6 @@ public class CompareController extends AbstractController implements IController
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    //TODO: Either throw an exception OR use a try-catch block, but I wouldn't recommend using both
     public ModelAndView doPostComparisonToolForm(@Valid @ModelAttribute("comparisonForm") final ComparisonForm comparisonForm,
                                                  BindingResult result,
                                                  ModelMap model) throws IOException {
