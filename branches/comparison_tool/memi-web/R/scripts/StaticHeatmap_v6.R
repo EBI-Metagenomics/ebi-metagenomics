@@ -25,6 +25,7 @@ AbTableToFraction <- function(abTable) {
   return(fracAbTable)
 }
 
+
 ReplaceIfTooLong = function(string, maxChar, afterCut) {  
   # Checks the size of the string placed in parameter. If it is too long (more characters than 'maxChar'), 
   # it is cut and replaced by a substring followed by additional characters ('afterCut').
@@ -41,6 +42,7 @@ ReplaceIfTooLong = function(string, maxChar, afterCut) {
     string) # Keeps the original string otherwise
   return(newString)
 }
+
 
 GenerateHeatmap <- function(generalAbTable, category, filePath, fileName, hmParametersVector) {
   # Generates a heatmap for the selected GO category from an abundance table and returns all needed

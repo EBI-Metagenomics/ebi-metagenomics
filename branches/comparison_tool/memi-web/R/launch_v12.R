@@ -2,8 +2,8 @@
 # It reads command line parameters and launchs external scripts for pre-processing (abundance table) and each visualization
 # Each visualization is saved as an HTML file which can be read and displayed by the Java web application.
 
-##### Console log #####
-message(paste(Sys.time(),'[R - Message] Launched general R script launch.R'))
+# Console log
+message(paste(Sys.time(),'[R - Message] Launched general R script launch_v12.R'))
 
 
 ##########################################
@@ -113,46 +113,80 @@ commit = FALSE
 
 # These methods are used in various visualization scripts. They are defined here. 
 # - Divide abundance table into subtable for given GO category
-# - Go from abundance table to flat table edible by rCharts
 # - Conversion of abundance table values to percentages
+# - Go from abundance table to flat table edible by rCharts
 
-# Divide abundance table for each category
+
 DivideAbTable = function(abTable,category) {
+  # Divides the general abundance table to create a new table containing information 
+  # for a single GO category.
+  #
+  # Args:
+  #   abTable: An abundance table for selected samples. Rows: samples, Columns: observations. 
+  #   category: The GO category for which we want to generate a table
+  #
+  # Returns:
+  #   A table containing information for the given GO category only. 
+
   abTableCategory <- abTable[,grepl(category,colnames(abTable))]
   return(abTableCategory)
 }
 
-# Go from divided abundance table to edible data for rChart (flat table)
+
+AbTablePercent = function(abundanceTable){
+  # Converts abundance table values into percentages. 
+  # This function is supposed to be used on divided abundance tables as GO categories are independent.
+  #
+  # Args:
+  #   abundanceTable: An abundance table for selected samples. Rows: samples, Columns: observations. 
+  #
+  # Returns:
+  #   A table with percentages instead of absolute values.
+
+  pcAbTable <- abundanceTable
+  maxOfAll <- rowSums(pcAbTable) # Get total number of matches to calculate percentages
+  for(i in 1:length(maxOfAll)) {
+    pcAbTable[i,] = round(((pcAbTable[i,]/maxOfAll[i])*100),2) # Replace values in the new table
+  }
+  return(pcAbTable)
+}
+
+
 RchartsFix = function(abundanceTable){
-  nbSamples = nrow(abundanceTable)
-  nbObs = ncol(abundanceTable)
-  maxOfAll = rowSums(abundanceTable)
-  recordGO=c()
-  recordName= c()
-  recordSample=c()
-  recordValue=c()
+  # Function to go from an abundance table to a flat table (edible data for the 'hPlot()' function from rCharts)
+  # In the context of the comparison tool this function is used on tables:
+  #       - divided with the DivideAbTable() function (only one category of GO terms)
+  #       - with values converted to percentages.
+  #
+  # Args:
+  #   abundanceTable: An abundance table for selected samples. Rows: samples, Columns: observations. 
+  #
+  # Returns:
+  #   A flat table (rCharts-edible table) containing matches for each sample and GO, 
+  #   plus GO name and identifier. 
+
+  # Variables to store all information
+  nbSamples = nrow(abundanceTable) # Number of samples
+  nbObs = ncol(abundanceTable) # Number of terms
+  maxOfAll = rowSums(abundanceTable) # Sum of all matches for each term of the table
+  recordGO=c() # GO identifiers
+  recordName= c() # GO names
+  recordSample=c() # Sample identifiers
+  recordValue=c() # Matches (number or percent if the values have been converted before)
+  # Retrieves information from abundance table 
   for(i in 1:nbObs){
     for(j in 1:nbSamples) {
       recordGO = c(recordGO,strsplit(colnames(abundanceTable)[i],split='\\|')[[1]][1])
-      # GO names in a separate place ? Could be changed in the future
       recordName <- c(recordName,strsplit(colnames(abundanceTable)[i],split='\\|')[[1]][2])
       recordSample = c(recordSample,rownames(abundanceTable)[j])
       recordValue=c(recordValue,abundanceTable[j,i])
     }
   }
+  # Stores all retrieved information in a flat table
   newTable=data.table(recordSample,recordGO,recordName,recordValue)
+  # Changes column names
   setnames(newTable,colnames(newTable),c('sample','GO','GOname','value'))
   return(newTable)
-}
-
-# Convert abundance table values into percentages. Use it on divided abundance tables.
-AbTablePercent = function(abundanceTable){
-  pcAbTable = abundanceTable
-  maxOfAll = rowSums(pcAbTable)
-  for(i in 1:length(maxOfAll)) {
-    pcAbTable[i,] = round(((pcAbTable[i,]/maxOfAll[i])*100),2)
-  }
-  return(pcAbTable)
 }
 
 
@@ -168,10 +202,12 @@ source(paste(scriptsDir,scriptList$preProcess,sep = pathSep))
 
 # Launch abundance table creation script and print it for debugging.
 abTable = CreateAbTable(name, files, data, sampleNames)
+# Uncomment the following line to save the table in the 'tempDir' directory (needed if you want to enable the 'Redraw' function).
 # write.table(abTable,paste(tempDir,pathSep,name,'_table','.tsv',sep=''),sep='\t',col.names=NA,quote=FALSE)
 # print(abTable) # Uncomment line to print
 
-
+# Only takes a certain number of terms if working with full GO annotation files.
+# Currently it will select the terms with the highest variance. 
 if(data=='GO') {
   mostVarNames = names(sort(apply(abTable, 2, var),decreasing=TRUE))
   abTable = abTable [,c(mostVarNames[1:as.integer(parameters[9])])]
@@ -186,7 +222,7 @@ if(data=='GO') {
 
 # Call needed methods
 source(paste(scriptsDir,scriptList$overview,sep = pathSep))
-# Use methods (generate, grab useful data)
+# Use methods (generate HTML code for the visualization)
 overviewCode = GenerateOverview(abTable)
 # Write final result file
 write(overviewCode,paste(tempDir,pathSep,name,'_overview','.htm',sep=''))
@@ -202,16 +238,14 @@ maxSampleNumber = 25
 fullBarsCode <- paste('You selected more than', maxSampleNumber, 'samples, cannot display bar chart visualization.')
 
 if(length(files) <= maxSampleNumber) {
-source(paste(scriptsDir,scriptList$bars,sep = pathSep))
-bioBars = CreateBarsForCategory(abTable,'biological_process')
-molBars = CreateBarsForCategory(abTable,'molecular_function')
-cellBars = CreateBarsForCategory(abTable,'cellular_component')
-
+source(paste(scriptsDir,scriptList$bars,sep = pathSep)) # Call needed methods
+bioBars = CreateBarsForCategory(abTable,'biological_process') # biological process barcharts
+molBars = CreateBarsForCategory(abTable,'molecular_function') # molecular function barcharts
+cellBars = CreateBarsForCategory(abTable,'cellular_component') # cellular component barcharts
 fullBarsCode <- c(bioBars, molBars, cellBars)
 }
 
-write(fullBarsCode,paste(tempDir,pathSep,name,'_bar','.htm',sep=''))
-
+write(fullBarsCode,paste(tempDir,pathSep,name,'_bar','.htm',sep='')) # Write all code 
 
 
 #########################################
@@ -220,11 +254,11 @@ write(fullBarsCode,paste(tempDir,pathSep,name,'_bar','.htm',sep=''))
 
 # Call needed methods
 source(paste(scriptsDir,scriptList$stacked,sep = pathSep))
-# Use methods, save, grab useful data
-stackedCols = c(CreateStackColForCategory(abTable,stack,'biological_process'),
-  CreateStackColForCategory(abTable,stack,'molecular_function'),
-  CreateStackColForCategory(abTable,stack,'cellular_component'))
-# Write final result file
+# Use methods (generate HTML code)
+stackedCols = c(CreateStackColForCategory(abTable,stack,'biological_process'), # BP stacked columns
+  CreateStackColForCategory(abTable,stack,'molecular_function'), # MF stacked columns
+  CreateStackColForCategory(abTable,stack,'cellular_component')) # CC stacked columns
+# Write generated code
 write(stackedCols,paste(tempDir,pathSep,name,'_stack','.htm',sep=''))
 
 
@@ -234,16 +268,17 @@ write(stackedCols,paste(tempDir,pathSep,name,'_stack','.htm',sep=''))
 # The link between path and URL of images is a bit tricky. If no image is displayed, it could be worth it to check the path for heatmaps.
 hmCode = '<p><i>Generation of PNG heatmaps is not working on the server ...</i></p>'
 imgExt = '.svg' # Extension of images
+
+# Change value of 'commit' to TRUE if you do not want to generate heatmaps. 
 if(!commit) {
-source(paste(scriptsDir,scriptList$heatmap,sep = pathSep))
+source(paste(scriptsDir,scriptList$heatmap,sep = pathSep)) # Call needed methods
 bioHM <- GenerateHeatmap(abTable,'biological_process',imgDir, paste0('bio_', name, imgExt), hmParameters)
 molHM <- GenerateHeatmap(abTable,'molecular_function',imgDir, paste0('mol_', name, imgExt), hmParameters)
 cellHM <- GenerateHeatmap(abTable,'cellular_component',imgDir, paste0('cell_', name, imgExt), hmParameters)
- 
 hmCode = c(bioHM, molHM, cellHM)
 }
 
-write(hmCode,paste(tempDir,pathSep,name,'_hm','.htm',sep=''))
+write(hmCode,paste(tempDir,pathSep,name,'_hm','.htm',sep='')) # Write code
 
 
 #########################################
@@ -260,6 +295,7 @@ write(PCAcode,paste(tempDir,pathSep,name,'_pca','.htm',sep=''))
 source(paste(scriptsDir,scriptList$jsTable,sep = pathSep))
 tableCode = DataTableGen(abTable)
 write(tableCode, paste(tempDir,pathSep,name,'_table','.htm',sep=''))
+
 
 # Console log
 message(paste(Sys.time(),'[R - Message] R scripts over.'))

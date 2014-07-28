@@ -73,16 +73,16 @@ CreateAbTable <- function(outputName, fileList, usedData = c('GO','GOslim','IPR'
 
   # If used data is 'GOslim', re-order rows following the order of GOslimTable (table defined in launch script)
   # There is surely a much more legant way of doing this but this one seems cool. Doesn't work at the moment.
-  #if (usedData=='GOslim') {
-  #namesVector = sapply(sapply((abTable)[[1]],strsplit,split='\\|',USE.NAMES=FALSE),"[[", 1)
-  #print(namesVector)
-  #GOslimVector = GOslimTable$GO
-  #rightOrder = sapply(namesVector, grep, x = GOslimVector, USE.NAMES=FALSE)
-  #print(rightOrder)
-  #abTable = abTable[c(rightOrder),,drop=FALSE]
-  #namesVector = sapply(sapply((abTable)[[1]],strsplit,split='\\|',USE.NAMES=FALSE),"[[", 1)
-  #print(namesVector)
-  #}  
+  #   if (usedData=='GOslim') {
+  #     namesVector = sapply(sapply((abTable)[[1]],strsplit,split='\\|',USE.NAMES=FALSE),"[[", 1)
+  #     print(namesVector)
+  #     GOslimVector = GOslimTable$GO
+  #     rightOrder = sapply(namesVector, grep, x = GOslimVector, USE.NAMES=FALSE)
+  #     print(rightOrder)
+  #     abTable = abTable[c(rightOrder),,drop=FALSE]
+  #     namesVector = sapply(sapply((abTable)[[1]],strsplit,split='\\|',USE.NAMES=FALSE),"[[", 1)
+  #     print(namesVector)
+  #   }  
 
   # Make the table suitable for use (2d table + conversion to matrix)
   rownames(abTable) <- abTable[[1]]
@@ -106,8 +106,8 @@ CreateAbTable <- function(outputName, fileList, usedData = c('GO','GOslim','IPR'
   return(abTable)
   } 
 
-################# GO SLIM AND GO #################
 
+# GO slim and GO (.csv summary files)
 NewGOTable <- function(goFile) {
   # Extracts the occurrence of each GO term in a sample from a complete GO annotation or a GO slim
   # annotation file and store this data as a table.  
@@ -127,8 +127,7 @@ NewGOTable <- function(goFile) {
   return(newTable)
 }
 
-################# IPR IN SUMMARY CSV FILES #################
-
+# IPR (.csv summary files)
 NewIPRTable <- function(iprSummaryFile) {
   # Extracts the occurrence of each IPR in a sample from an 'InterPro matches summary' file (CSV) and store
   # this data as a table.  

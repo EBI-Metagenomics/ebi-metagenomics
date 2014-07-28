@@ -1,9 +1,9 @@
 # This code contains the functions needed to handle the collapsing of IPR (which may be useful
 # to extract relevant information) during the pre-processing of the data.
+# Note: If ths code comes to be used with the comparison tool, replace paths by absolute paths. 
 
 # Read the hierarchy file, line by line.  If the file is not found, the program stops running.
 hierarchyFile <- readLines("R/ressources/ParentChildTreeFile.txt")
-
 
 
 CreateHierarchyList <- function(level) {

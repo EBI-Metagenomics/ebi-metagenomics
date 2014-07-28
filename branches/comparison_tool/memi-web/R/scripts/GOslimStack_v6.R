@@ -1,5 +1,9 @@
+# This script is used to generate stacked columns visualizations. 
+# Note: From this version now, a GO term will be considered as 'other' only if it is present below a certain percentage in ALL samples.
+
 # Console log
 message(paste(Sys.time(), "[R - Message] Launched R script GOslimStack_v6.R"))
+
 
 FixRchartsStacked <- function(abundanceTable, threshold) {
   # Function to make the data compliant with the stacked columns visualization. 
@@ -42,6 +46,7 @@ FixRchartsStacked <- function(abundanceTable, threshold) {
   return(newTable)
 }
 
+
 CreateStackColForCategory <- function(abundanceTable, threshold, category) {
   # Creates a chart for a category of GO terms given a general abundance table and a threshold
   #
@@ -53,11 +58,12 @@ CreateStackColForCategory <- function(abundanceTable, threshold, category) {
   #   category: The GO category for which we want to generate a stacked columns visualization.
   #
   # Returns:
-  #   Needed HTML code to insert a heatmap on the result page (h3 tags + div and JS)
-  
+  #   Needed HTML code to insert a stacked columns visualization on the result page 
+  #   (h3 tags + div and JS)
+
   # Correct names, h3 names and h3 id according to category of GO Slim
   # 'categoryIndice' gives an 'indice' depending on the current GO category.
-  # Used to know which title / h3 id / h3 text has to be used for the current heatmap
+  # Used to know which title / h3 id / h3 text has to be used for the current chart
   categoryIndice <- 0
   if (category == "biological_process") 
     categoryIndice <- 1
@@ -116,7 +122,9 @@ CreateStackColForCategory <- function(abundanceTable, threshold, category) {
                 headerFormat = "{series.name}<br/>", # Tooltip header
                 pointFormat = "<span style=\"color:{series.color}\">&#9632;</span> <span style=\"font-size:88%;\">{point.category}: <strong>{point.y} %</strong></span>", # Tooltip content
                 useHTML = TRUE)
-  chart$colors(EMGcolors)
+  chart$colors(EMGcolors) # Using EMG website colors (defined in the launch script)
+  # Setting width / height parameters to NULL disable the default size given to charts
+  # Dimensions can therefore be controlled with css. 
   chart$addParams(width = NULL, height = NULL)
 
   #######################
