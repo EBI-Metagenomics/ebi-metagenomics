@@ -8,17 +8,14 @@
 <%-- Needed JS to display results
      - jQuery and jQuery UI
      - Highcharts / Highcharts more / Highcharts export module
-     - jQuery dataTables
 Note: it could be better to have these JS files locally instead of relying on external sources. --%>
-<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
 <script src='http://code.highcharts.com/highcharts.src.js' type='text/javascript'></script>
 <script src='http://code.highcharts.com/highcharts-more.js' type='text/javascript'></script>
 <script src='http://code.highcharts.com/modules/exporting.src.js' type='text/javascript'></script>
-<script src="https://cdn.datatables.net/1.10.0/js/jquery.dataTables.js"></script>
 
-<div class="back_ban">
-    <div class="back_button"><a href="<c:url value="${baseURL}/compare"/>"><span>Back to query page</span></a></div>
+<div class="back_ban"><div class="back_button"><a href="<c:url value="${baseURL}/compare"/>"><span>Back to query page</span></a></div>
     <div class="back_title">Sample comparison tool:
 
         <%--c:if test="${data==GOslim}">
@@ -30,15 +27,14 @@ Note: it could be better to have these JS files locally instead of relying on ex
         <c:if test="${data=='GOslim'}">
             GO term annotation (functional analysis)   <%--hide GO slim notion as we do on the analysis result page --%>
         </c:if>
-    </div>
 </div>
-<ul>
-    <li>Samples:
-        <c:forEach var="sample" items="${samples}">
-            <a class="sample_list" href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>" target="_blank" title="${sample.sampleName} (${sample.sampleId})">${sample.sampleId}</a>
-        </c:forEach>
+</div>
+<ul><li>Samples:
+<c:forEach var="sample" items="${samples}">
+<a class="sample_list" href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>" target="_blank" title="${sample.sampleName} (${sample.sampleId})">${sample.sampleId}</a>
+</c:forEach>
     <%-- Uncomment these lines if you plan to handle the 'file is empty' error by showing missing samples on the result page
-    <%-- <c:if test="${not empty missingSamples}">--%>
+    <%--<c:if test="${not empty missingSamples}">--%>
     <%--<br>No data was available for sample(s): <c:forEach var="sample" items="${missingSamples}">--%>
         <%--<a class="sample_list" href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>" target="_blank" title="${sample.sampleName} (${sample.sampleId})">${sample.sampleId}</a>--%>
     <%--</c:forEach>--%>
@@ -65,30 +61,33 @@ Note: it could be better to have these JS files locally instead of relying on ex
     </div--%>
     <div id="bars">
         <div id="sticky-leg-anchor"></div>
-       <div id="barcharts_legend"><div id="barcharts_legend_title"><strong>Sample list</strong> <span class="barcharts_legend_info">(click to hide)</span></div>
-       <div id="barcharts_legend_list_items"></div>
-            <div id="export_div_bars" class="chart-but-export">
-            <select id="bars_export" title="Export" class="export-select">
-                <option selected>Export</option>
-                <optgroup label="Biological process">
-                    <option value="bp_png">PNG</option>
-                    <option value="bp_pdf">PDF</option>
-                    <option value="bp_svg">SVG</option>
-                </optgroup>
-                <optgroup label="Molecular function">
-                    <option value="mf_png">PNG</option>
-                    <option value="mf_pdf">PDF</option>
-                    <option value="mf_svg">SVG</option>
-                </optgroup>
-                <optgroup label="Cellular component">
-                    <option value="cc_png">PNG</option>
-                    <option value="cc_pdf">PDF</option>
-                    <option value="cc_svg">SVG</option>
-                </optgroup>
-            </select>
-                <br>
+       <div id="barcharts_legend">
+           <div id="export_div_bars" class="chart-but-export">
+             <select id="bars_export" title="Export" class="export-select">
+                 <option selected>Export</option>
+                 <optgroup label="Biological process">
+                     <option value="bp_png">PNG</option>
+                     <option value="bp_pdf">PDF</option>
+                     <option value="bp_svg">SVG</option>
+                 </optgroup>
+                 <optgroup label="Molecular function">
+                     <option value="mf_png">PNG</option>
+                     <option value="mf_pdf">PDF</option>
+                     <option value="mf_svg">SVG</option>
+                 </optgroup>
+                 <optgroup label="Cellular component">
+                     <option value="cc_png">PNG</option>
+                     <option value="cc_pdf">PDF</option>
+                     <option value="cc_svg">SVG</option>
+                 </optgroup>
+             </select>
+             </div>
 
-            </div>
+       <div id="barcharts_legend_title"><strong>Sample list</strong> <span class="barcharts_legend_info">(click to hide)</span></div>
+       <div id="barcharts_legend_list_items"></div>
+
+
+        </div>
         </div>
         <%-- THIS FEATURE IS STILL EXPERIMENTAL.
              Allows user to redraw the stacked columns visualization with changed settings.
@@ -99,54 +98,58 @@ Note: it could be better to have these JS files locally instead of relying on ex
     <div id="stack">
 
            <div id="stack-jump-anchor"></div>
-           <div id="stack_jump"><div class="jump_anchor_text">Jump to: <a href="#stack_bio_title"> Biological process</a> | <a href="#stack_mol_title">Molecular function</a> | <a href="#stack_cell_title">Cellular component</a></div>
-               <div id="export_stack_div" class="chart-but-export">
-               <select id="stack_export" title="Export" class="export-select">
-                   <option selected>Export</option>
-                   <optgroup label="Biological process">
-                       <option value="bp_png">PNG</option>
-                       <option value="bp_pdf">PDF</option>
-                       <option value="bp_svg">SVG</option>
-                   </optgroup>
-                   <optgroup label="Molecular function">
-                       <option value="mf_png">PNG</option>
-                       <option value="mf_pdf">PDF</option>
-                       <option value="mf_svg">SVG</option>
-                   </optgroup>
-                   <optgroup label="Cellular component">
-                       <option value="cc_png">PNG</option>
-                       <option value="cc_pdf">PDF</option>
-                       <option value="cc_svg">SVG</option>
-                   </optgroup>
-               </select>
-               <br>
-           </div>
+           <div id="stack_jump">
+           <div id="export_stack_div" class="chart-but-export">
+                      <select id="stack_export" title="Export" class="export-select">
+                          <option selected>Export</option>
+                          <optgroup label="Biological process">
+                              <option value="bp_png">PNG</option>
+                              <option value="bp_pdf">PDF</option>
+                              <option value="bp_svg">SVG</option>
+                          </optgroup>
+                          <optgroup label="Molecular function">
+                              <option value="mf_png">PNG</option>
+                              <option value="mf_pdf">PDF</option>
+                              <option value="mf_svg">SVG</option>
+                          </optgroup>
+                          <optgroup label="Cellular component">
+                              <option value="cc_png">PNG</option>
+                              <option value="cc_pdf">PDF</option>
+                              <option value="cc_svg">SVG</option>
+                          </optgroup>
+                      </select>
+                  </div>
+
+               <div class="jump_anchor_text">Jump to: <a href="#stack_bio_title"> Biological process</a> | <a href="#stack_mol_title">Molecular function</a> | <a href="#stack_cell_title">Cellular component</a></div>
+
+
+
            </div>
 
             <div id="stack_wrapper">${graphCode[2]}</div>
     </div>
     <div id="heatmap">
    <div id="hm-jump-anchor"></div>
-   <div id="hm_jump"><div class="jump_anchor_text">Jump to GO category: <a href="#hm_bio_title"> Biological process</a> | <a href="#hm_mol_title">Molecular function</a> | <a href="#hm_cell_title">Cellular component</a></div>
+   <div id="hm_jump">
 
-      <div id="export_heatmap_div" class="chart-but-export">
+       <%--no export working for heatmap - we could use absolute link--%>
+       <%--<div id="export_heatmap_div" class="chart-but-export">--%>
+             <%--<select id="heatmap_export"  title="Export">--%>
+             <%--<option selected="">Export</option>--%>
+             <%--<optgroup label="Biological process">--%>
+             <%--<option value="/metagenomics/tmp/comparison/bio_GOslim_1406639941340.svg">SVG</option>--%>
+             <%--</optgroup>--%>
+             <%--<optgroup label="Molecular function">--%>
+             <%--<option value="/metagenomics/tmp/comparison/mol_GOslim_1406639941340.svg">SVG</option>--%>
+             <%--</optgroup>--%>
+             <%--<optgroup label="Cellular component">--%>
+             <%--<option value="/metagenomics/tmp/comparison/cell_GOslim_1406639941340.svg">SVG</option>--%>
+             <%--</optgroup>--%>
+             <%--</select>--%>
+             <%--</div>--%>
 
+       <div class="jump_anchor_text">Jump to GO category: <a href="#hm_bio_title"> Biological process</a> | <a href="#hm_mol_title">Molecular function</a> | <a href="#hm_cell_title">Cellular component</a></div>
 
-      <select id="heatmap_export"  title="Export">
-      <option selected="">Export</option>
-      <optgroup label="Biological process">
-      <option value="">SVG</option>
-      </optgroup>
-      <optgroup label="Molecular function">
-      <option value="">SVG</option>
-      </optgroup>
-      <optgroup label="Cellular component">
-      <option value="">SVG</option>
-      </optgroup>
-      </select>
-
-
-      </div>
        </div>
 
        <%--<h3> Biological process</h3>--%>
@@ -155,29 +158,31 @@ Note: it could be better to have these JS files locally instead of relying on ex
     <div id="pca">
 
         <div id="pca-leg-anchor"></div>
-        <div id="pca_legend"><div id="pca_legend_title"><strong>Sample list</strong> <span class="pca_legend_info">(click to hide)</span></div>
-        <div id="pca_legend_list_items"></div>
+        <div id="pca_legend">
             <div id="export_pca_div" class="chart-but-export">
 
-                        <select id="pca_export" title="Export" class="export-select">
-                                    <option selected>Export</option>
-                                    <optgroup label="Biological process">
-                                        <option value="bp_png">PNG</option>
-                                        <option value="bp_pdf">PDF</option>
-                                        <option value="bp_svg">SVG</option>
-                                    </optgroup>
-                                    <optgroup label="Molecular function">
-                                        <option value="mf_png">PNG</option>
-                                        <option value="mf_pdf">PDF</option>
-                                        <option value="mf_svg">SVG</option>
-                                    </optgroup>
-                                    <optgroup label="Cellular component">
-                                        <option value="cc_png">PNG</option>
-                                        <option value="cc_pdf">PDF</option>
-                                        <option value="cc_svg">SVG</option>
-                                    </optgroup>
-                                </select>
-                    </div>
+                    <select id="pca_export" title="Export" class="export-select">
+                        <option selected>Export</option>
+                        <optgroup label="Biological process">
+                            <option value="bp_png">PNG</option>
+                            <option value="bp_pdf">PDF</option>
+                            <option value="bp_svg">SVG</option>
+                        </optgroup>
+                        <optgroup label="Molecular function">
+                            <option value="mf_png">PNG</option>
+                            <option value="mf_pdf">PDF</option>
+                            <option value="mf_svg">SVG</option>
+                        </optgroup>
+                        <optgroup label="Cellular component">
+                            <option value="cc_png">PNG</option>
+                            <option value="cc_pdf">PDF</option>
+                            <option value="cc_svg">SVG</option>
+                        </optgroup>
+                    </select>
+            </div>
+        <div id="pca_legend_title"><strong>Sample list</strong> <span class="pca_legend_info">(click to hide)</span></div>
+        <div id="pca_legend_list_items"></div>
+
         </div>
         <%--Principal Component 1 <input id="pc1" type="number" name="Principal Component 1" min="1" max="3" value="1" disabled>
         Principal Component 2 <input id="pc2" type="number" name="Principal Component 2" min="1" max="3" value="2" disabled> <br>--%>
@@ -211,57 +216,62 @@ Note: it could be better to have these JS files locally instead of relying on ex
             }});
         });
 
-    // Barcharts export module
-        $('#bars_export').change(function() {
-            var exportValue = $( "#bars_export" ).val();
+    $( "#bars_export" ).selectmenu({
+      change: function( event, ui ) { {
+                  var exportValue = $( "#bars_export" ).val();
             // exportArray: array containing information on GO type and wanted output format based on the value of the selected option
-            var exportArray = exportValue.split('_');
-            var goType = "";
-            var format = "";
-            switch(exportArray[0]) {
-                case "bp":
-                    goType = "biological_process";
-                    break;
-                case "mf":
-                    goType = "molecular_function";
-                    break;
-                case "cc":
-                    goType = "cellular_component";
-                    break;
-            }
+                  var exportArray = exportValue.split('_');
+                  var goType = "";
+                  var format = "";
+                  switch(exportArray[0]) {
+                      case "bp":
+                          goType = "biological_process";
+                          break;
+                      case "mf":
+                          goType = "molecular_function";
+                          break;
+                      case "cc":
+                          goType = "cellular_component";
+                          break;
+                  }
             // if no valid export option is selected exportArray[1] should be null and export won't be performed
-            if(exportArray[1]!=null) {
-                switch(exportArray[1]) {
-                    case "png":
-                        format = "image/png";
-                        break;
-                    case "pdf":
-                        format = "application/pdf";
-                        break;
-                    case "svg":
-                        format = "image/svg+xml";
-                        break;
-                }
+                  if(exportArray[1]!=null) {
+                      switch(exportArray[1]) {
+                          case "png":
+                              format = "image/png";
+                              break;
+                          case "pdf":
+                              format = "application/pdf";
+                              break;
+                          case "svg":
+                              format = "image/svg+xml";
+                              break;
+                      }
 
                 var chartId = "#" + goType + "_bars"; // Rebuilds chart div id from retrieved GO type
 
                 // Creation of a unique file name
-                var date = new Date();
-                var mmddyyyyDate = (date.getMonth()+1).toString() + '-' + date.getDate() + '-' + date.getFullYear();
-                var fileName = "${study.studyId}" + "_" + mmddyyyyDate + "_comp_func_go" + "_barcharts_" + goType;
-                // Export
-                var chart = $(chartId).highcharts();
-                // chart.redraw();
-                chart.exportChart({
-                    type: format,
-                    filename: fileName
-                });
-            }
-            $('#bars_export').val('Export'); // Resets the export option
-        });
+                      var date = new Date();
+                      var mmddyyyyDate = (date.getMonth()+1).toString() +'-'+ date.getDate() +'-'+ date.getFullYear();
+                      var fileName = "${study.studyId}"+"_"+mmddyyyyDate+"_comp_func_go"+"_barcharts_"+exportArray[0];
+                      var chart = $(chartId).highcharts();
+                      chart.redraw();
+                      chart.exportChart({
+                          type: format,
+                          filename: fileName
+                      });
+                  }
+                  $('#bars_export').val('Export');
+              }
+
+      }
+    });
+
+
 
     // Stacked columns export module
-    $('#stack_export').change(function() {
+    $('#stack_export').selectmenu({
+        change:function( event, ui ) { {
         var exportValue = $( "#stack_export" ).val();
         // exportArray: array containing information on GO type and wanted output format based on the value of the selected option
         var exportArray = exportValue.split('_');
@@ -296,21 +306,24 @@ Note: it could be better to have these JS files locally instead of relying on ex
 
             // Creation of a unique file name
             var date = new Date();
-            var mmddyyyyDate = (date.getMonth()+1).toString() + '-' + date.getDate() + '-' + date.getFullYear();
-            var fileName = "${study.studyId}" + "_" + mmddyyyyDate + "_comp_func_go_stacked_" + goType;
-            // Export
+            var mmddyyyyDate = (date.getMonth()+1).toString() +'-'+ date.getDate() +'-'+ date.getFullYear();
+            var fileName = "${study.studyId}"+"_"+mmddyyyyDate+"_comp_func_go_col_"+exportArray[0];
             var chart = $(chartId).highcharts();
-            // chart.redraw();
+            chart.redraw();
             chart.exportChart({
                 type: format,
                 filename: fileName
             });
         }
-        $('#stack_export').val('Export'); // Resets the export option
-    });
+        $('#stack_export').val('Export');
+        }
+
+          }
+        });
 
     // PCA export module
-    $('#pca_export').change(function() {
+    $('#pca_export').selectmenu({
+            change:function( event, ui ) { {
         var exportValue = $( "#pca_export" ).val();
         // exportArray: array containing information on GO type and wanted output format based on the value of the selected option
         var exportArray = exportValue.split('_');
@@ -344,9 +357,8 @@ Note: it could be better to have these JS files locally instead of relying on ex
 
             // Creation of a unique file name
             var date = new Date();
-            var mmddyyyyDate = (date.getMonth()+1).toString() + '-' + date.getDate() + '-' + date.getFullYear();
-            var fileName = "${study.studyId}" + "_" + mmddyyyyDate + "_comp_func_go" + "_PCA_" + goType;
-            // Export
+            var mmddyyyyDate = (date.getMonth()+1).toString() +'-'+ date.getDate() +'-'+ date.getFullYear();
+            var fileName = "${study.studyId}"+"_"+mmddyyyyDate+"_comp_func_go"+"_PCA_"+exportArray[0];
             var chart = $(chartId).highcharts();
             chart.redraw();
             chart.exportChart({
@@ -354,19 +366,16 @@ Note: it could be better to have these JS files locally instead of relying on ex
                 filename: fileName
             });
         }
-        $('#pca_export').val('Export'); // Resets the export option
-    });
+        $('#pca_export').val('Export');
+            }
 
-    /*
-    Sticky divs functions ('Jump to...' and single legends for barcharts / PCA visualizations.
-    All these functions are working in a similar way (only div ids change)
-     */
+                 }
+               });
 
-    // Sticky div relocation function to let the barcharts legend stay on top
+    // Sticky div relocation function to let the barchart legend stay on top
     function sticky_bar_relocate() {
-        var window_top = $(window).scrollTop(); // Position of 'top of window'
-        var barcharts_leg_top = $('#sticky-leg-anchor').offset().top; // Position of top of div
-        // If the div top position is lower than the window top position (which means that the div is visually 'higher'), stick it!
+        var window_top = $(window).scrollTop();
+        var barcharts_leg_top = $('#sticky-leg-anchor').offset().top;
         if (window_top > barcharts_leg_top) {
             $('#barcharts_legend').addClass('stick');
             // Quick fix to make the div-width equal to its tab width
@@ -379,6 +388,7 @@ Note: it could be better to have these JS files locally instead of relying on ex
     // Triggers barcharts legend div relocation function on scroll event
     $(function() {
         $(window).scroll(sticky_bar_relocate);
+        sticky_bar_relocate();
     });
 
     // Sticky div relocation function to let the pca legend stay on top
@@ -397,6 +407,7 @@ Note: it could be better to have these JS files locally instead of relying on ex
     // Triggers pca legend div relocation function on scroll event
     $(function() {
         $(window).scroll(sticky_pca_relocate);
+        sticky_pca_relocate();
     });
 
     // Sticky div relocation function to let the heatmaps 'Jump to...' div stay on top
@@ -415,6 +426,7 @@ Note: it could be better to have these JS files locally instead of relying on ex
     // Triggers heatmaps 'Jump to...' div relocation function on scroll event
     $(function() {
         $(window).scroll(sticky_hm_relocate);
+        sticky_hm_relocate();
     });
 
     // Sticky div relocation function to let the stacked columns 'Jump to...' div stay on top
@@ -433,6 +445,7 @@ Note: it could be better to have these JS files locally instead of relying on ex
     // Triggers stacked columns 'Jump to...' div relocation function on scroll event
     $(function() {
         $(window).scroll(sticky_stack_relocate);
+        sticky_stack_relocate();
     });
 </script>
 
@@ -556,6 +569,7 @@ Note: it could be better to have these JS files locally instead of relying on ex
         else {
             // No PCA? Empty the legend and disable export so the user is not confused
             $( "#pca_legend" ).empty();
+
             // $("#bars_export").disable(); // Trying to hide the export button when nothing is displayed but 'disable()' does not seem to work.
         }
     });
