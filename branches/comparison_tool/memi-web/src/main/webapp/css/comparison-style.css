@@ -462,33 +462,24 @@ table.dataTable td {/*
 .sample_comp_result .ui-tabs-panel { margin: 0 0 0 -4px; position: relative;/*z-index: 400;*/ /*background: url(images/epmc-ui-tabs-background-gradient.gif) 0 0 no-repeat;*/ border: 1px solid rgb(213, 213, 213);border-bottom-left-radius: 0px; border-bottom-right-radius: 0px; padding: 18px 4px;}
 .sample_comp_result .ui-state-disabled {opacity: .5;}
 
-.chart-but-export select {
-    background: linear-gradient(to top, #f8f8f8 , #ffffff); /* Standard syntax. Compatibility with older browsers to fix */
-    /*width: 85px;*/
-    padding: 7px;
-    font-size: 12px;
-    line-height: 1;
-    height: 30px;
-    -webkit-appearance: none;
-    border:1px transparent;
-}
+/*BEGIN export button select field */
+.sample_comp_result .ui-selectmenu-button {z-index:89;}
+.sample_comp_result select {width: 84px;}
+.sample_comp_result #bars_export-button, .sample_comp_result #stack_export-button, .sample_comp_result #heatmap_export-button, .sample_comp_result #pca_export-button {
+    background-image: -moz-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));
+    background-image: -o-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));
+    background-image: -webkit-gradient(linear,left top,left bottom,from(rgba(255, 255, 255, 0.85)),to(rgba(247, 247, 247, 0.85)));
+    background-image: -webkit-linear-gradient(top,rgba(255, 255, 255, 0.85),rgba(247, 247, 247, 0.85));
+border-radius: 0px;}
+.sample_comp_result .ui-state-hover span.ui-selectmenu-text {color:#3482bc;} /*replace red by default on mouse over*/
+.ui-selectmenu-menu {z-index:90;}
+.ui-selectmenu-menu .ui-widget-content   {background-color:white;}
+.ui-selectmenu-menu .ui-corner-bottom   {border-bottom-right-radius: 0px; border-bottom-left-radius: 0px;}
+.ui-selectmenu-menu .ui-menu .ui-menu-item, .ui-selectmenu-menu .ui-menu .ui-selectmenu-optgroup {background-color: #FFF;} /*solve a bug background  remaining greyfor last items*/
+.sample_comp_result #bars .chart-but-export {float:right; margin: 9px 18px;}
+/*END export button select field */
 
-.chart-but-export {
-    width:62px;
-    position:absolute;
-    top:0;
-    right:0;
-    margin: 9px 18px;
-    border: 1px #DFDFDF solid;
-    overflow: hidden;
-}
-
-#biological_process_bars {
-    z-index:1000;
-}
-
-
-.stick {position: fixed;top: 0;  z-index: 10000; background: rgba(255, 255, 255, 0.9); min-height: 45px; border-bottom: 1px #d5d5d5 solid; /*sticky legend all chart*/}
+.stick {position: fixed;top: 0;  z-index: 88; background: rgba(255, 255, 255, 0.9); min-height: 45px; border-bottom: 1px #d5d5d5 solid; /*sticky legend all chart*/}
 .stick .jump_anchor_text {margin-top:9px;} /*increase margin on top text only when stick on*/
 .jump_anchor_text {margin-left:9px;}
 /*legend barchart*/
