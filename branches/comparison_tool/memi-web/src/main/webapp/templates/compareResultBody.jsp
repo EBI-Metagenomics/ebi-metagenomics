@@ -8,26 +8,25 @@
 <%-- Needed JS to display results
      - jQuery and jQuery UI
      - Highcharts / Highcharts more / Highcharts export module
+     - jQuery dataTables
 Note: it could be better to have these JS files locally instead of relying on external sources. --%>
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 <script src="//code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
 <script src='http://code.highcharts.com/highcharts.src.js' type='text/javascript'></script>
 <script src='http://code.highcharts.com/highcharts-more.js' type='text/javascript'></script>
 <script src='http://code.highcharts.com/modules/exporting.src.js' type='text/javascript'></script>
+<script src="https://cdn.datatables.net/1.10.0/js/jquery.dataTables.js"></script>
 
 <div class="back_ban"><div class="back_button"><a href="<c:url value="${baseURL}/compare"/>"><span>Back to query page</span></a></div>
     <div class="back_title">Sample comparison tool:
 
-        <%--c:if test="${data==GOslim}">
-            InterPro matches
-        </c:if--%>
         <c:if test="${data=='GO'}">
             Complete GO annotation (functional analysis)
         </c:if>
         <c:if test="${data=='GOslim'}">
-            GO term annotation (functional analysis)   <%--hide GO slim notion as we do on the analysis result page --%>
+            GO term annotation (functional analysis)   <%--hide "GO slim" notion as we do on the analysis result page --%>
         </c:if>
-</div>
+    </div>
 </div>
 <ul><li>Samples:
 <c:forEach var="sample" items="${samples}">
@@ -88,7 +87,7 @@ Note: it could be better to have these JS files locally instead of relying on ex
 
 
         </div>
-        </div>
+
         <%-- THIS FEATURE IS STILL EXPERIMENTAL.
              Allows user to redraw the stacked columns visualization with changed settings.
              See Confluence page of the tool for more details on how to enable it --%>
@@ -267,8 +266,6 @@ Note: it could be better to have these JS files locally instead of relying on ex
       }
     });
 
-
-
     // Stacked columns export module
     $('#stack_export').selectmenu({
         change:function( event, ui ) { {
@@ -372,10 +369,16 @@ Note: it could be better to have these JS files locally instead of relying on ex
                  }
                });
 
-    // Sticky div relocation function to let the barchart legend stay on top
+    /*
+    Sticky divs functions ('Jump to...' and single legends for barcharts / PCA visualizations.
+    All these functions are working in a similar way (only div ids change)
+     */
+
+    // Sticky div relocation function to let the barcharts legend stay on top
     function sticky_bar_relocate() {
-        var window_top = $(window).scrollTop();
-        var barcharts_leg_top = $('#sticky-leg-anchor').offset().top;
+        var window_top = $(window).scrollTop(); // Position of 'top of window'
+        var barcharts_leg_top = $('#sticky-leg-anchor').offset().top; // Position of top of div
+        // If the div top position is lower than the window top position (which means that the div is visually 'higher'), stick it!
         if (window_top > barcharts_leg_top) {
             $('#barcharts_legend').addClass('stick');
             // Quick fix to make the div-width equal to its tab width
@@ -569,7 +572,6 @@ Note: it could be better to have these JS files locally instead of relying on ex
         else {
             // No PCA? Empty the legend and disable export so the user is not confused
             $( "#pca_legend" ).empty();
-
             // $("#bars_export").disable(); // Trying to hide the export button when nothing is displayed but 'disable()' does not seem to work.
         }
     });
