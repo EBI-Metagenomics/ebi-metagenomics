@@ -1596,8 +1596,8 @@ background-color:white;
 .sample_ana .ui-state-disabled   a {color: grey;}
 .sample_ana .ui-state-default {background:none;}
 .sample_ana .ui-state-hover a:link {text-decoration: underline;}
-.sample_comp_result .ui-state-hover span {text-decoration: underline;}  /*add underline for span - not a href*/
-.sample_comp_result .ui-tabs-active span {text-decoration: none;}/*remove decoration for selected tab*/
+.sample_comp_result .ui-state-hover .tab-text {text-decoration: underline;}  /*add underline for span - not a href*/
+.sample_comp_result .ui-tabs-active .tab-text  {text-decoration: none;}/*remove decoration for selected tab*/
 .sample_ana .ui-tabs-panel { margin: 0 0 0 -4px; position: relative;/*z-index: 400;*/ /*background: url(images/epmc-ui-tabs-background-gradient.gif) 0 0 no-repeat;*/ border: 1px solid rgb(213, 213, 213);border-bottom-left-radius: 0px; border-bottom-right-radius: 0px; padding: 18px 4px;}
 .sample_ana #tabs-taxchart .ui-tabs-panel {padding:0px;}
 .sample_ana .ui-state-disabled {opacity: .5;}
@@ -1606,20 +1606,22 @@ background-color:white;
 .go-chart h2 {margin:0 0 18px 0; font-size:138%; padding:0;}
 .chart-block {display: block; float: left; border:0px red solid; }
 
-/*EXPORT BUTTON*/
+/*EXPORT BUTTON - ANALYSIS PAGE*/
 .export_list {z-index: 1;}
 .sample_comp_result .chart-block .ui-buttonset, .sample_ana .chart-block .ui-buttonset {margin-right: 30px; text-align: right; }
 .sample_ana .chart-block .ui-widget-content, .sample_ana .chart-block .ui-widget-content {border:1px solid #949494; width: 128px; position: absolute; top: 20px;left: 88px; background-color:rgba(255, 255, 255, 1);border-radius: 0px;}
-.sample_ana  .chart-block .ui-menu {padding:5px;}
-.sample_ana  .chart-block .ui-widget-content li {padding:0;}
-.sample_ana  .chart-block .ui-widget-content li a {padding:0; color:#2B8A97; }
-.sample_ana  .chart-block .ui-widget-content .ui-state-hover {cursor:default; border: 1px solid #d6e9f8; color:#525252; background-color: #d6e9f8;background-image: none;border-radius: 0px;}
-.sample_comp_result .chart-block .ui-button, .sample_ana .chart-block .ui-button {margin:0; border: 1px solid rgba(0,0,0,0.1);
+.sample_ana .chart-block .ui-menu {padding:5px;}
+.sample_ana .chart-block .ui-widget-content li {padding:0;}
+.sample_ana .chart-block .ui-widget-content li a {padding:0; color:#2B8A97; display: block;}
+.sample_ana .chart-block .ui-widget-content li a:hover {text-decoration: none; }
+.sample_ana .chart-block .ui-widget-content .ui-state-hover {cursor:default; border: 0px solid #d6e9f8; color:#525252; background-color: #d6e9f8;background-image: none;border-radius: 0px;}
+.sample_comp_result #bars .ui-button, .sample_ana .chart-block .ui-button {margin:0; border: 1px solid rgba(0,0,0,0.1);
 background-image: linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));
 background-image: -moz-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));
 background-image: -o-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));
 background-image: -webkit-gradient(linear,left top,left bottom,from(rgba(255,255,255,.85)),to(rgba(247,247,247,.85)));
 background-image: -webkit-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));  border-radius: 0px;}
+.sample_comp_result #bars .ui-state-hover {color:red;}
 .sample_comp_result .chart-block .ui-button .ui-button-text, .sample_ana .chart-block .ui-button .ui-button-text {color: #525252;}
 /*.sample_ana .chart-block .ui-state-default .ui-icon {background-image: url(../img/jquery/overcast/ico_jquery.png);}*/
 
