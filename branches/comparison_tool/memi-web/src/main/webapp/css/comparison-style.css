@@ -462,7 +462,7 @@ table.dataTable td {/*
 .sample_comp_result .ui-tabs-panel { margin: 0 0 0 -4px; position: relative;/*z-index: 400;*/ /*background: url(images/epmc-ui-tabs-background-gradient.gif) 0 0 no-repeat;*/ border: 1px solid rgb(213, 213, 213);border-bottom-left-radius: 0px; border-bottom-right-radius: 0px; padding: 18px 4px;}
 .sample_comp_result .ui-state-disabled {opacity: .5;}
 
-/*BEGIN export button select field */
+/*BEGIN EXPORT BUTTON - SAMPLE COMPARISON RESULT PAGE */
 .sample_comp_result .ui-selectmenu-button {z-index:89;}
 .sample_comp_result select {width: 84px;}
 .sample_comp_result #bars_export-button, .sample_comp_result #stack_export-button, .sample_comp_result #heatmap_export-button, .sample_comp_result #pca_export-button {
@@ -473,11 +473,15 @@ table.dataTable td {/*
 border-radius: 0px;}
 .sample_comp_result .ui-state-hover span.ui-selectmenu-text {color:#3482bc;} /*replace red by default on mouse over*/
 .ui-selectmenu-menu {z-index:90;}
-.ui-selectmenu-menu .ui-widget-content   {background-color:white;}
+.ui-selectmenu-menu .ui-widget-content {background:none;background-color:white;}
 .ui-selectmenu-menu .ui-corner-bottom   {border-bottom-right-radius: 0px; border-bottom-left-radius: 0px;}
-.ui-selectmenu-menu .ui-menu .ui-menu-item, .ui-selectmenu-menu .ui-menu .ui-selectmenu-optgroup {background-color: #FFF;} /*solve a bug background  remaining greyfor last items*/
-.sample_comp_result #bars .chart-but-export {float:right; margin: 9px 18px;}
-/*END export button select field */
+.ui-selectmenu-menu .ui-menu {padding: 5px; }
+.ui-selectmenu-menu .ui-menu .ui-menu-item, .ui-selectmenu-menu .ui-menu .ui-selectmenu-optgroup {padding: 0px;}
+.ui-selectmenu-menu .ui-menu .ui-menu-item {color: #2B8A97;}
+.ui-selectmenu-menu .ui-menu li.ui-state-focus {border:none; background-image: none; color: #525252;background-color:#d6e9f8;margin:0;}
+
+.sample_comp_result .chart-but-export {float:right; margin: 9px 18px;}
+/*END EXPORT BUTTON - SAMPLE COMPARISON RESULT PAGE*/
 
 .stick {position: fixed;top: 0;  z-index: 88; background: rgba(255, 255, 255, 0.9); min-height: 45px; border-bottom: 1px #d5d5d5 solid; /*sticky legend all chart*/}
 .stick .jump_anchor_text {margin-top:9px;} /*increase margin on top text only when stick on*/
@@ -487,7 +491,7 @@ border-radius: 0px;}
 #bars #barcharts_legend_list_items, #pca #pca_legend_list_items  {margin-left: 9px; width: 85%;border:0px solid olive;}/*reduce width not to overlap with export button*/
 #bars #barcharts_legend .barcharts_legend_info, #pca #pca_legend .pca_legend_info {color:#666; font-style: italic; font-size: 84%;}
 #bars #barcharts_legend .legend-item {padding: 0px 6px 0 0;  display:inline-block; cursor:pointer; color: #606068; font-size: 90%;}
-#bars #barcharts_legend .legend-item:hover { color: #1A1A1A !important;}
+#bars #barcharts_legend .legend-item:hover { color: #000 !important;}
 #bars #barcharts_legend .legend-item .legend-rectangle {margin: 4px;width: 12px; height: 12px;float: left;}
 
 /*legend pca*/
