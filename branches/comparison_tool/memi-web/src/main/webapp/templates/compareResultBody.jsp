@@ -10,11 +10,11 @@
      - Highcharts / Highcharts more / Highcharts export module
      - jQuery dataTables
 Note: it could be better to have these JS files locally instead of relying on external sources. --%>
-<script src="//code.jquery.com/jquery-1.10.2.js"></script>
-<script src="//code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
-<script src='http://code.highcharts.com/highcharts.src.js' type='text/javascript'></script>
-<script src='http://code.highcharts.com/highcharts-more.js' type='text/javascript'></script>
-<script src='http://code.highcharts.com/modules/exporting.src.js' type='text/javascript'></script>
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="https://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+<script src='https://code.highcharts.com/highcharts.src.js' type='text/javascript'></script>
+<script src='https://code.highcharts.com/highcharts-more.js' type='text/javascript'></script>
+<script src='https://code.highcharts.com/modules/exporting.src.js' type='text/javascript'></script>
 <script src="https://cdn.datatables.net/1.10.0/js/jquery.dataTables.js"></script>
 
 <div class="back_ban"><div class="back_button"><a href="<c:url value="${baseURL}/compare"/>"><span>Back to query page</span></a></div>
