@@ -2,14 +2,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<%-- Special CSS stylesheet for the comparison tool --%>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/comparison-style.css" type="text/css" media="all"/>
-
-<%-- Needed JS to display results
-     - jQuery and jQuery UI
-     - Highcharts / Highcharts more / Highcharts export module
-     - jQuery dataTables
-Note: it could be better to have these JS files locally instead of relying on external sources. --%>
+<%-- Note: it could be better to have these JS files locally instead of relying on external sources. --%>
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 <script src="https://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
 <script src='https://code.highcharts.com/highcharts.src.js' type='text/javascript'></script>
