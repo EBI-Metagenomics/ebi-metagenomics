@@ -1,5 +1,5 @@
 # Console log
-message(paste(Sys.time(), "[R - Message] Launched R script PCA_v4_transparency.R"))
+#message(paste(Sys.time(), "[R - Message] Launched R script PCA_v4_transparency.R"))
 
 
 PerformPCA <- function(abTable, category) {
@@ -88,8 +88,9 @@ DrawPCAPlot <- function(outputPCA, comp1, comp2) {
                                           paste0("(", outputPCA$vars[comp2], "% of variance)"))),
                 gridLineWidth = 1, 
                 min = axisY$minimum, max = axisY$maximum)
-  PCAplot$title(text = "Principal Component Analysis")
-  PCAplot$subtitle(text = correctNames[categoryIndice])
+  PCAplot$title(text = correctNames[categoryIndice])
+  #PCAplot$title(text = "Principal Component Analysis")
+  #PCAplot$subtitle(text = correctNames[categoryIndice])
   PCAplot$tooltip(backgroundColor = "white", # Tooltip backgound color
                 headerFormat = "<span style=\"color:{series.color}\">\u25CF</span> {series.name}", # Tooltip header
                 pointFormat = "", # Tooltip content (contains nothing)
