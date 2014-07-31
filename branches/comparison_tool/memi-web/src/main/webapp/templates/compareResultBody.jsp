@@ -188,7 +188,7 @@ Note: it could be better to have these JS files locally instead of relying on ex
         <div id="plots-wrapper">${graphCode[4]}</div>
     </div>
     <div id="jstable">
-        <p>${graphCode[5]}</p>
+        ${graphCode[5]}
     </div>
 </div>
 </div>
