@@ -36,7 +36,7 @@
     <!-- This Spring MVC tag allows you to request any files in the specified directories -->
     <!-- E.g. using URL: http://localhost:8082/metagenomics/img/logo_8.png-->
     <mvc:resources mapping="/img/*.*" location="/img/"/>
-    <mvc:resources mapping="/img/comparison/*.*" location="/img/comparison/"/>
+    <mvc:resources mapping="/tmp/*.*" location="/tmp/"/>
     <mvc:resources mapping="/img/jquery/overcast/*.*" location="/img/jquery/overcast/"/>
     <mvc:resources mapping="/img/jquery/smoothness/*.*" location="/img/jquery/smoothness/"/>
     <mvc:resources mapping="/img/krona/*.*" location="/img/krona/"/>
