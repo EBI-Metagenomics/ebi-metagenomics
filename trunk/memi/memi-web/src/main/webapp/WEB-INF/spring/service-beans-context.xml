@@ -29,9 +29,6 @@
         <property name="receiverCCList">
             <list>
                 <value type="java.lang.String">${emailService.sraRegistration.receiverCC_1}</value>
-                <value type="java.lang.String">${emailService.sraRegistration.receiverCC_2}</value>
-                <value type="java.lang.String">${emailService.sraRegistration.receiverCC_3}</value>
-                <value type="java.lang.String">${emailService.sraRegistration.receiverCC_4}</value>
             </list>
         </property>
         <property name="emailSubject" value="New SRA account request from the MGPortal"/>
