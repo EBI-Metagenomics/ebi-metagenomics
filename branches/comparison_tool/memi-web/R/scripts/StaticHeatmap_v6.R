@@ -77,7 +77,7 @@ GenerateHeatmap <- function(generalAbTable, category, filePath, fileName, hmPara
   h3Names <- c("Biological process", "Cellular component", "Molecular function") # Text for the h3 HTML tags
   h3Id <- c("hm_bio_title", "hm_cell_title", "hm_mol_title") # Identifier for the h3 HTML tags
   divId <- c("hm_bio","hm_cell","hm_mol") # Identifier for the heatmap divs
-  hmUrl <- "/metagenomics/tmp/comparison/" # The URL path where heatmaps 
+  hmUrl <- "/metagenomics/tmp/" # The URL path where heatmaps
   
 
   # Changes column names to have GO names only (instead of all) and cut them if they are too long.

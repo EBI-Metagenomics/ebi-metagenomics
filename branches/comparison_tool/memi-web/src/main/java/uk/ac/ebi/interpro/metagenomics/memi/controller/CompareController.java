@@ -20,10 +20,14 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.services.FileObjectBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.CompareViewModel;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.StudiesViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.DownloadableFileDefinition;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.FileDefinitionId;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.CompareViewModelBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.DefaultViewModelBuilder;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.StudiesViewModelBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder;
 
 import javax.annotation.Resource;
@@ -67,14 +71,11 @@ public class CompareController extends AbstractController implements IController
                 new ModelPopulator() {
                     @Override
                     public void populateModel(ModelMap model) {
-                        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "Compare samples of the same project", getBreadcrumbs(null), propertyContainer);
-                        final ViewModel defaultViewModel = builder.getModel();
-                        defaultViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_COMPARE_VIEW);
+                        final ViewModelBuilder<CompareViewModel> builder = new CompareViewModelBuilder(sessionManager, "Compare samples of the same project", getBreadcrumbs(null), propertyContainer, studyDAO);
+                        final CompareViewModel compareViewModel = builder.getModel();
+                        compareViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_COMPARE_VIEW);
 
-                        // Retrieving list of public studies and samples + add attributes
-                        List<Study> studyList = studyDAO.retrieveOrderedPublicStudies("studyName", false);
-                        model.addAttribute(ViewModel.MODEL_ATTR_NAME, defaultViewModel);
-                        model.addAttribute("studies", studyList);
+                        model.addAttribute(ViewModel.MODEL_ATTR_NAME, compareViewModel);
                         model.addAttribute("comparisonForm", new ComparisonForm());
                     }
                 });
@@ -109,7 +110,6 @@ public class CompareController extends AbstractController implements IController
 
         //Get input file paths, which are used to generate abundance table
         final List<String> inputFilePaths = getInputFilePaths(usedData, allSamples);
-
 
 
         // Get ID for each sample to use it as sample names for the R scripts
@@ -224,7 +224,7 @@ public class CompareController extends AbstractController implements IController
                         model.addAttribute("study", studyDAO.read(Long.valueOf(comparisonForm.getStudy())));
                         model.addAttribute("samples", sampleList);
                         // Atribute needed for functions of the result page
-                        model.addAttribute("sampleString",rFriendlySampleNames);
+                        model.addAttribute("sampleString", rFriendlySampleNames);
                         model.addAttribute("data", usedData);
                         // Enable this if you plan to handle the 'file is empty' error by showing missing samples on the result page
                         //  model.addAttribute("missingSamples", missingSampleList);
@@ -244,6 +244,33 @@ public class CompareController extends AbstractController implements IController
         } else {
             log.info("Successfully ran all tests.");
         }
+    }
+
+    /**
+     * Get input file paths, which are used to generate the abundance table.
+     *
+     * @param usedData   - type of data chosen by the user for the comparison
+     * @param sampleList - samples selected by the user for the comparison
+     * @return Map of sample IDs and the corresponding input file paths.
+     */
+    private Map<Sample, String> getInputFilePathMap(String usedData, List<Sample> sampleList) {
+        Map<Sample, String> resultMap = new HashMap<Sample, String>();
+        for (Sample sample : sampleList) {
+            final EmgFile emgFile = getEmgFile(sample.getId());
+
+            if (emgFile != null) {
+                // If statements depending on the nature of the data type chosen by the user
+                DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(FileDefinitionId.INTERPRO_MATCHES_SUMMARY_FILE.name());
+                if (usedData.equals("GO"))
+                    fileDefinition = fileDefinitionsMap.get(FileDefinitionId.GO_COMPLETE_FILE.name());
+                if (usedData.equals("GOslim"))
+                    fileDefinition = fileDefinitionsMap.get(FileDefinitionId.GO_SLIM_FILE.name());
+                File fileObject = FileObjectBuilder.createFileObject(emgFile, propertyContainer, fileDefinition);
+                String absoluteFilePath = fileObject.getAbsolutePath();
+                resultMap.put(sample, absoluteFilePath);
+            }
+        }
+        return resultMap;
     }
 
     /**
@@ -279,25 +306,17 @@ public class CompareController extends AbstractController implements IController
             @ModelAttribute("comparisonForm") final ComparisonForm comparisonForm
     ) {
         ModelAndView mav = new ModelAndView("/compareSamples");
-        List<Sample> sampleListForId = sampleDAO.retrievePublicSamplesByStudyId(studyId);
-        // Checking if requested samples have data for selected data type on the comparison tool submission page (handling of the 'file is empty' error)
+        List<Sample> sampleList = sampleDAO.retrieveAllSamplesByStudyId(studyId);
+        // Checking if requested samples have data for the selected data type on the comparison tool submission page (handling of the 'file is empty' error)
         // If they don't have any data, remove them from the sample list and add them to another list for missing samples
-        List<Sample> missingSamples = new ArrayList<Sample>();
-        List<Long> sampleIdList = new ArrayList<Long>();
-        for (Sample currentSample : sampleListForId) {
-            sampleIdList.add(currentSample.getId());
-        }
+        Map<Sample, String> sampleToFilePathMap = getInputFilePathMap(comparisonForm.getUsedData(), sampleList);
 
-        final List<String> inputFilePathsForId = getInputFilePaths(comparisonForm.getUsedData(), sampleIdList);
-        for(int i = 0; i < inputFilePathsForId.size() ; i++) {
-            File f = new File(inputFilePathsForId.get(i));
-            if(!f.exists()){
-                missingSamples.add(sampleListForId.get(i));
-                sampleListForId.remove(i);
-            }
-        }
-        mav.addObject("samples", sampleListForId);
-        mav.addObject("missingSamples",missingSamples);
+        List<Sample> deactiveSamples = new ArrayList<Sample>();
+        List<Sample> activeSamples = new ArrayList<Sample>();
+        doFileExistenceCheck(sampleToFilePathMap, activeSamples, deactiveSamples);
+
+        mav.addObject("samples", activeSamples);
+        mav.addObject("missingSamples", deactiveSamples);
         return mav;
     }
 
@@ -309,6 +328,22 @@ public class CompareController extends AbstractController implements IController
         Study currentStudy = studyDAO.readByStringId(studyId);
         mav.addObject("study", currentStudy);
         return mav;
+    }
+
+    protected void doFileExistenceCheck(final Map<Sample, String> sampleToFilePathMap,
+                                        final List<Sample> activeSamples,
+                                        final List<Sample> deactiveSamples) {
+        if (sampleToFilePathMap == null || activeSamples == null || deactiveSamples == null) {
+            throw new IllegalStateException("Input arguments of this method cannot be NULL!");
+        }
+        for (Sample sample : sampleToFilePathMap.keySet()) {
+            String filePath = sampleToFilePathMap.get(sample);
+            if (!new File(filePath).exists()) {
+                deactiveSamples.add(sample);
+            } else {
+                activeSamples.add(sample);
+            }
+        }
     }
 
 /*  THIS FEATURE IS STILL EXPERIMENTAL. I did not have time to write it properly (with good paths etc.).

@@ -12,7 +12,7 @@
             <h4>Project list</h4>
                 <%--<form:option value="-" label="--Select project"/>--%>
                 <form:select path="study" size="10" id="projects" style="width:100%;">
-                    <c:forEach var="study" items="${studies}">
+                    <c:forEach var="study" items="${model.filteredStudies}">
                         <%-- Only show the projects with two samples or more in the list. --%>
                         <c:if test="${fn:length(study.samples) gt 1}">
                         <form:option id="${study.studyId}" value="${study.id}" title="Project ${study.studyId} | ${study.studyName}">${study.studyName}</form:option>
