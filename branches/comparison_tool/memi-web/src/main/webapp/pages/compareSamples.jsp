@@ -4,7 +4,7 @@
 
 <%-- Creates HTML select option for each sample of selected project that have data (sample selection - comparison tool submission page) --%>
 <c:forEach var="sample" items="${samples}">
-        <option value="${sample.id}" title="Sample ${sample.sampleId} | ${sample.sampleName} | ${sample.sampleAlias}">${sample.sampleName}</option>
+        <option value="${sample.id}" title="Sample ${sample.sampleId} | ${sample.sampleName} | ${sample.sampleAlias}">${sample.sampleName} - ${sample.sampleId}</option>
     </c:forEach>
 
 <%-- Creates HTML select option for each sample of selected project that have no data (sample selection - comparison tool submission page) --%>
