@@ -172,7 +172,7 @@
                         </optgroup>
                     </select>
             </div>
-        <div id="pca_legend_title"><strong>Sample list</strong> <span class="pca_legend_info">(click to hide)</span></div>
+        <div id="pca_legend_title"><strong>Sample list</strong> <span class="pca_legend_info">(mouse over to highlight and click to hide)</span></div>
         <div id="pca_legend_list_items"></div>
 
         </div>
