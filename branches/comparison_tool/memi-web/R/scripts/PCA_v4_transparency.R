@@ -72,17 +72,18 @@ DrawPCAPlot <- function(outputPCA, comp1, comp2) {
   for (i in 1:nrow(outputPCA$PCs)) {
     # Draw a point for each sample
     PCAplot$series(list(list(name = rownames(outputPCA$PCs)[i], 
-                             data = list(c(outputPCA$PCs[i, comp1], outputPCA$PCs[i, comp2])), 
+                             data = list(c(outputPCA$PCs[i, comp1], outputPCA$PCs[i, comp2])),
                              color = "rgba(5, 141, 199, 0.70)", 
                              marker = list(symbol = "circle"))))
+    PCAplot$plotOptions(series= list (states = list (hover = list (halo = list (size = 9, opacity = 1, attributes = list (fill = "#dedede") )))), scatter = list(marker = list (radius = 5, states = list (hover = list (fillColor ="#ee551b", lineColor = "#000", lineWidth = 0, lineWidthPlus = 0, radius = 0, radiusPlus = 0)))))
   }
 
   ########################
   #### Chart settings ####
   ########################
-  PCAplot$xAxis(title = list(text = paste("Principal component", comp1, 
+   PCAplot$xAxis(title = list(text = paste("Principal component", comp1,
                                           paste0("(", outputPCA$vars[comp1], "% of variance)"))),
-                gridLineWidth = 1, 
+                gridLineWidth = 1,
                 min = axisX$minimum, max = axisX$maximum)
   PCAplot$yAxis(title = list(text = paste("Principal component", comp2, 
                                           paste0("(", outputPCA$vars[comp2], "% of variance)"))),
@@ -96,7 +97,7 @@ DrawPCAPlot <- function(outputPCA, comp1, comp2) {
                 pointFormat = "", # Tooltip content (contains nothing)
                 useHTML = TRUE)
 
-  PCAplot$legend(enabled = FALSE) # itemStyle = list(fontSize = "11px", 
+  PCAplot$legend(enabled = FALSE) # itemStyle = list(fontSize = "11px",
     # fontWeight = "regular", color = "#606060"), title = list(text = "Sample list<br/><span style=\"font-size: 9px; color: #666; font-weight: normal; font-style: italic;\">Click to hide</span>",
     # style = list(fontStyle = "regular"))) # Uncomment if you want one legend for each chart
   PCAplot$colors(PCAcolors)
