@@ -23,7 +23,7 @@
 </div>
 <ul><li>Samples:
 <c:forEach var="sample" items="${samples}">
-<a class="sample_list" href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>" target="_blank" title="${sample.sampleName} (${sample.sampleId})">${sample.sampleId}</a>
+<a class="sample_list" href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>" title="${sample.sampleName} (${sample.sampleId})">${sample.sampleId}</a>
 </c:forEach>
     <%-- Uncomment these lines if you plan to handle the 'file is empty' error by showing missing samples on the result page
     <%--<c:if test="${not empty missingSamples}">--%>
@@ -32,7 +32,7 @@
     <%--</c:forEach>--%>
     <%--</c:if>--%>
     </li>
-    <li> Project: <a href="<c:url value="${baseURL}/project/${study.studyId}"/>" target="_blank" title="${study.studyName} (${study.studyId})">${study.studyName}</a> (${study.studyId})</li>
+    <li> Project: <a href="<c:url value="${baseURL}/project/${study.studyId}"/>" title="${study.studyName} (${study.studyId})">${study.studyName}</a> (${study.studyId})</li>
 </ul>
 <%--<p>Use tabs below to switch between available visualizations.</p>--%>
 
