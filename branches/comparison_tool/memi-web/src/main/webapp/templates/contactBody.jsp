@@ -1,4 +1,4 @@
-<h2>Contact Francois</h2>
+<h2>Contact us</h2>
 
 <p>If you have any questions related to the EBI metagenomics resource, please <a title="EBI's support & feedback form"
                                                                                  href="http://www.ebi.ac.uk/support/metagenomics"
