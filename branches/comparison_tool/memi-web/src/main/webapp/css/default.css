@@ -1200,7 +1200,7 @@ border: 0px solid #ffaa22;
 .table_opt {border:0px solid black;display:block;}
 
 .table_opt_pag {color: #424242; float:left; margin-left:14px; border:0px solid green;padding-top:8px;padding-bottom:4px;}
-.table_opt_pag_num {float:left; width:100px;margin-right:7px; font-size:90%; border:0px solid red;}
+.table_opt_pag_num {float:left; width:120px;margin-right:9px; font-size:90%; border:0px solid red;}
 .table_opt_pag_arr  {float:left;  font-size:90%; border:0px solid red;}
 
 /* EXPORT OPTIONS */
