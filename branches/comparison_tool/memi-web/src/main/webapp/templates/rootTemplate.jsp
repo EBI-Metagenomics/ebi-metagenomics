@@ -92,9 +92,15 @@
     <%-- remove the snapshot option for all browsers - temp - to remove the snapshot option completely from the pages when we are sure about it--%>
 
 
-    <!-- JQuery and JQuery UI source-->
-    <script src="${pageContext.request.contextPath}/js/jquery-1.4.4.min.js" type="text/javascript"></script>
-    <script src="${pageContext.request.contextPath}/js/jquery-ui-1.8.8.custom.min.js" type="text/javascript"></script>
+    <!-- JQuery v1.11.1 and JQuery UI source-->
+    <script src="${pageContext.request.contextPath}/js/jquery-1.11.1/jquery.js" type="text/javascript"></script>
+    <script src="${pageContext.request.contextPath}/js/jquery-1.11.1/jquery-ui.min.js"></script>
+    <%--<script src="${pageContext.request.contextPath}/js/jquery-1.4.4.min.js" type="text/javascript"></script>--%>
+    <%--<script src="${pageContext.request.contextPath}/js/jquery-ui-1.8.8.custom.min.js" type="text/javascript"></script>--%>
+
+    <!--detect and restore APIs or features that have been deprecated in jQuery see https://github.com/jquery/jquery-migrate (temp solution while we remove code using old Jquery-->
+    <script src="${pageContext.request.contextPath}/js/jquery-migrate-1.2.1.js"></script>
+
     <script src="${pageContext.request.contextPath}/js/jquery.validate-1.9.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/js/jquery.form-2.85.js" type="text/javascript"></script>
     <!-- The date picker is used within the submission page -->
@@ -161,7 +167,7 @@
     <!-- script for carousel -->
     <script src="${pageContext.request.contextPath}/js/jquery.carousel.min.js" type="text/javascript"></script>
     <script type="text/javascript">
-        $(function () {
+        $(document).ready(function () {
             $("div.carousel").carousel({pagination:true, autoSlide:true, autoSlideInterval:15000, delayAutoSlide:2000, loop:true });
 
         });
