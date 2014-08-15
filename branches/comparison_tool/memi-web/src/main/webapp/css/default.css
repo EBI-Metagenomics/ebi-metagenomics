@@ -505,7 +505,10 @@ text-align:left;
 
 #small {width:70%;} /*table in analysis result changed in pourcentage for mitigation*/
 
+/*table used on the feedback form, project and sample list*/
 table.result {line-height: 1.2em; border-collapse:separate; width:100%; border-spacing:4px; padding-left:2px; margin-bottom: 18px;}
+#feedback_form table.result { margin-bottom: 0px;}
+
 
 /*
 table.result thead th{
@@ -1337,7 +1340,7 @@ border:0px solid green; float:right; width:22px; height:22px; -moz-opacity:.5;op
 -moz-opacity:.9;opacity:0.90;filter:alpha(opacity=90);
 }
 
-.clear_but {color: #CECECE; /*float:none;*/}
+.clear_but {color: #606060;} /*used for login form on both submit page and popup page*/
 
 
 #ordered {font-weight: bold;}
@@ -1393,16 +1396,22 @@ width:210px;
 height:140px;
 }
 
-.sub {display:block;overflow:auto;margin: 9px;}
-.sub_log, .sub_sign {-moz-border-radius: 20px;-khtml-border-radius: 20px;-webkit-border-radius: 20px;border-radius: 20px;float: left; display:block; border: 1px solid #e5e5e5;}
-.sub_log {width:330px; padding:0 14px;}
-.sub_sign {width:260px; padding:0 14px 14px 14px; margin-left:14px; text-align:center;}
+.sub {display:block;overflow:auto;}
+.sub .sub_log, .sub .sub_sign {-moz-border-radius: 20px;-khtml-border-radius: 20px;-webkit-border-radius: 20px;border-radius: 20px;float: left; display:block; border: 1px solid #e5e5e5;}
+.sub .sub_log {width:330px; padding:0 14px;text-align:left;margin: 18px; }
+.sub .sub_sign {width:260px; padding:0 14px 14px 14px;margin:18px 9px 18px 0px; text-align: center; }
 .sub_warn, .sub_ask  {display: block; padding: 14px; width: 712px; -moz-border-radius: 7px;-khtml-border-radius: 7px;-webkit-border-radius: 7px;border-radius: 7px;}
 .sub_warn { font-size: 110%;margin-bottom: 14px;color: #8c302c; background: #faefee;}
 .sub_ask { font-size: 90%;  margin: 21px 9px 9px 9px; color: #455872; background: #f1f3f7; clear:both; /*for IE6*/}
 .sub_form {width:740px; float: left; display:block;}
 .sub_sign_text {font-size:160%; color:#333;}
 .sub_sign_note {color:#606060;}
+.ui-widget-content .sub_log a { color: #188960;}  /*link cancel button*/
+
+/*Popup blockUI and datatable style*/
+.blockUI .close_window {/*border: 1px #F00 solid;*/ display: block; float: right; cursor:pointer;position: absolute; right: 2px; top:-5px;font-size: 172%;padding: 4px; color:rgba(0, 0, 0, 0.3);-webkit-backface-visibility: hidden;-webkit-transform: translateZ(0) scale(1.0, 1.0);/*remove bug scale changing when transition*/}
+.blockUI .close_window:hover {color: rgba(0, 0, 0, 0.7); transfom:rotate(180deg) scale(1);-moz-transform: rotate(180deg) scale(1);-ms-transform:rotate(180deg) scale(1); -webkit-transform:rotate(180deg) scale(1); -o-transform: rotate(180deg) scale(1);}
+.blockUI .form_row {overflow: inherit;}
 
 span.form_help ul{
     margin:0;
@@ -1633,9 +1642,13 @@ background-color:white;
 .sample_comp_result .ui-widget-content, .sample_ana .ui-widget-content {border: 0px solid #aaa;background: none;color: #333333;margin: 0 9px;}  /*margin for navigation tab*/
 /*.sample_comp .ui-widget-content .ui-widget-content, .sample_ana .ui-widget-content .ui-widget-content {margin: 0;} *//*non margin for graph tab*/
 .sample_ana .ui-tabs-nav { margin: 0px 0 -1px 9px;position: relative; z-index: 1;/*z-index: 500;*/}
-.sample_ana .ui-tabs-nav li {border-color: transparent /*was #e5e5e5*/;top:0px;}
+.sample_ana .ui-tabs-nav li {border-color: transparent /*was #e5e5e5*/;/*top:0px;*/ /*not needed anymore?*/}
 .sample_ana li.ui-tabs-selected {height: 30px; background: #fff; border-top: 1px solid rgb(213, 213, 213); border-right: 1px solid rgb(213, 213, 213); border-bottom: 0; border-left: 1px solid rgb(213, 213, 213);}
 .sample_ana li.ui-tabs-selected a:link, .sample_ana li.ui-tabs-selected a:visited {color: black;text-decoration: none;} /*works for overview*/
+.sample_ana li.ui-tabs-active {height: 30px; background: #fff; border-top: 1px solid rgb(213, 213, 213); border-right: 1px solid rgb(213, 213, 213); border-bottom: 0; border-left: 1px solid rgb(213, 213, 213);}
+.sample_ana #tabs-taxchart li.ui-tabs-active {border: 0px solid rgb(213, 213, 213);} /* remove duplicate border on switch view button - tax chart*/
+.sample_ana #tabs-chart li.ui-tabs-active {border: 0px solid rgb(213, 213, 213);}/*remove duplicate border on switch view button - interpro chart*/
+.sample_ana li.ui-tabs-active a:link, .sample_ana li.ui-tabs-active a:visited {color: black;text-decoration: none;} /*works for overview*/
 .sample_ana .ui-state-disabled   a {color: grey;}
 .sample_ana .ui-state-default {background:none;}
 .sample_ana .ui-state-hover a:link {text-decoration: underline;}
@@ -1652,12 +1665,14 @@ background-color:white;
 /*EXPORT BUTTON - ANALYSIS PAGE*/
 .export_list {z-index: 1;}
 .sample_comp_result .chart-block .ui-buttonset, .sample_ana .chart-block .ui-buttonset {margin-right: 30px; text-align: right; }
-.sample_ana .chart-block .ui-widget-content, .sample_ana .chart-block .ui-widget-content {border:1px solid #949494; width: 128px; position: absolute; top: 20px;left: 88px; background-color:rgba(255, 255, 255, 1);border-radius: 0px;}
+.sample_ana .chart-block .ui-widget-content {border:1px solid #949494; /*width: 128px;*/ /*remove width - why defining a width for the export menu?*/ position: absolute; top: 20px;left: 88px; background-color:rgba(255, 255, 255, 1);border-radius: 0px;}
 .sample_ana .chart-block .ui-menu {padding:5px;}
 .sample_ana .chart-block .ui-widget-content li {padding:0;}
 .sample_ana .chart-block .ui-widget-content li a {padding:0; color:#2B8A97; display: block;}
 .sample_ana .chart-block .ui-widget-content li a:hover {text-decoration: none; }
 .sample_ana .chart-block .ui-widget-content .ui-state-hover {cursor:default; border: 0px solid #d6e9f8; color:#525252; background-color: #d6e9f8;background-image: none;border-radius: 0px;}
+.sample_ana .chart-block .ui-widget-content .ui-state-focus {cursor:default; border: 0px solid #d6e9f8; color:#525252; background-color: #d6e9f8;background-image: none;border-radius: 0px;}
+.sample_ana .chart-block .ui-menu .ui-state-focus {margin: 0px;}
 .sample_comp_result #bars .ui-button, .sample_ana .chart-block .ui-button {margin:0; border: 1px solid rgba(0,0,0,0.1);
 background-image: linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));
 background-image: -moz-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));
@@ -1713,29 +1728,31 @@ background-image: -webkit-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247
 
 .ico-pie {background: url(../img/ico_graph_pie.png) no-repeat 1px 2px;}
 li.ui-tabs-selected .ico-pie {background: url(../img/ico_graph_pie_on.png) no-repeat 1px 2px; }
+li.ui-tabs-active .ico-pie {background: url(../img/ico_graph_pie_on.png) no-repeat 1px 2px; }
 
 .ico-barh {background: url(../img/ico_graph_barh.png) no-repeat  1px 0px; }
-li.ui-tabs-selected .ico-barh {background: url(../img/ico_graph_barh_on.png) no-repeat 1px 0px; }
+li.ui-tabs-selected .ico-barh {background: url(../img/ico_graph_barh_on.png) no-repeat 1px 0px; }/*not used anymore - old tab?*/
 li.ui-tabs-active .ico-barh {background: url(../img/ico_graph_barh_on.png) no-repeat 1px 0px; }
 
 .ico-col {background: url(../img/ico_graph_col.png) no-repeat  1px 1px;}
-li.ui-tabs-selected .ico-col {background: url(../img/ico_graph_col_on.png) no-repeat 1px 1px; }
+li.ui-tabs-selected .ico-col {background: url(../img/ico_graph_col_on.png) no-repeat 1px 1px; }/*not used anymore - old tab?*/
 li.ui-tabs-active .ico-col {background: url(../img/ico_graph_col_on.png) no-repeat 1px 1px; }
 
 .ico-heatmap {background: url(../img/ico_graph_heatmap.png) no-repeat 0px 1px;}
-li.ui-tabs-selected .ico-heatmap {background: url(../img/ico_graph_heatmap_on.png) no-repeat 0px 1px; }
+li.ui-tabs-selected .ico-heatmap {background: url(../img/ico_graph_heatmap_on.png) no-repeat 0px 1px; }/*not used anymore - old tab?*/
 li.ui-tabs-active .ico-heatmap {background: url(../img/ico_graph_heatmap_on.png) no-repeat 0px 1px; }
 
 .ico-pca {background: url(../img/ico_graph_pca.png) no-repeat 0px 1px;}
-li.ui-tabs-selected .ico-pca {background: url(../img/ico_graph_pca_on.png) no-repeat 0px 1px; }
+li.ui-tabs-selected .ico-pca {background: url(../img/ico_graph_pca_on.png) no-repeat 0px 1px; }/*not used anymore - old tab?*/
 li.ui-tabs-active .ico-pca {background: url(../img/ico_graph_pca_on.png) no-repeat 0px 1px; }
 
 .ico-table {background: url(../img/ico_graph_table.png) no-repeat 1px 0px;}
-li.ui-tabs-selected .ico-table {background: url(../img/ico_graph_table_on.png) no-repeat 1px 0px; }
+li.ui-tabs-selected .ico-table {background: url(../img/ico_graph_table_on.png) no-repeat 1px 0px; }  /*not used anymore - old tab?*/
 li.ui-tabs-active .ico-table {background: url(../img/ico_graph_table_on.png) no-repeat 1px 0px; }
 
 .ico-krona {background: url(../img/ico_graph_krona.png) no-repeat 1px 2px;}
-li.ui-tabs-selected .ico-krona {background: url(../img/ico_graph_krona_on.png) no-repeat 1px 2px; }
+li.ui-tabs-selected .ico-krona {background: url(../img/ico_graph_krona_on.png) no-repeat 1px 2px; } /*not used anymore - old tab?*/
+li.ui-tabs-active .ico-krona {background: url(../img/ico_graph_krona_on.png) no-repeat 1px 2px; }
 
 .ico-krona, .ico-table, .ico-col, .ico-barh, .ico-pie, .ico-heatmap, .ico-pca   {width:27px; height:27px; display:block;}
 .sample_comp_result .ico-table, .sample_comp_result .ico-col, .sample_comp_result .ico-barh, .sample_comp_result .ico-heatmap, .sample_comp_result .ico-pca {margin-right: 4px; width:26px; height:26px; display:block;float:left; border:0px red solid;}/*icon used in tabs on the comparison result page*/
@@ -1883,7 +1900,7 @@ ul.sample_list li {list-style: none; display: inline;}
 .ui-selectmenu-menu {z-index:90;}
 .ui-selectmenu-menu .ui-widget-content {background:none;background-color:white;}
 .ui-selectmenu-menu .ui-corner-bottom   {border-bottom-right-radius: 0px; border-bottom-left-radius: 0px;}
-.ui-selectmenu-menu .ui-menu {padding: 5px; }
+.ui-selectmenu-menu .ui-menu {padding: 5px; border:1px solid #949494;}
 .ui-selectmenu-menu .ui-menu .ui-menu-item, .ui-selectmenu-menu .ui-menu .ui-selectmenu-optgroup {padding: 0px;}
 .ui-selectmenu-menu .ui-menu .ui-menu-item {color: #2B8A97;}
 .ui-selectmenu-menu .ui-menu li.ui-state-focus {border:none; background-image: none; color: #525252;background-color:#d6e9f8;margin:0;}
