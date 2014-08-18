@@ -2,12 +2,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<%-- Note: it could be better to have these JS files locally instead of relying on external sources. --%>
-<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-<script src="https://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
-<script src='https://code.highcharts.com/highcharts.src.js' type='text/javascript'></script>
-<script src='https://code.highcharts.com/highcharts-more.js' type='text/javascript'></script>
-<script src='https://code.highcharts.com/modules/exporting.src.js' type='text/javascript'></script>
+<script src='${pageContext.request.contextPath}/js/highcharts-4.0.3/highcharts.src.js' type='text/javascript'></script>
+<script src='${pageContext.request.contextPath}/js/highcharts-4.0.3/highcharts-more.js' type='text/javascript'></script>
+<script src='${pageContext.request.contextPath}/js/highcharts-4.0.3/exporting.src.js' type='text/javascript'></script>
 <script src="https://cdn.datatables.net/1.10.0/js/jquery.dataTables.js"></script>
 
 <div class="back_ban"><div class="back_button"><a href="<c:url value="${baseURL}/compare"/>"><span>Back to query page</span></a></div>
