@@ -111,8 +111,8 @@
                                     </c:url>
                                     <p style="padding-bottom:7px; "> You can click on &quot;submit your data&quot; to
                                         send us your nucleotide sequences for analysis.
-                                        (Note: you will need to <a href="javascript:openLoginDialogForm()"
-                                                                   title="Login">login</a>
+                                        <%--(Note: you will need to <a href="javascript:openLoginDialogForm()" title="Login">login</a>--%>
+                                        (Note: you will need to <a id="LoginBlockUI" href="" title="Login">login</a>
                                         or <a href="<c:out value="${enaRegistrationUrl}"/>"
                                               title="Registration">register</a>
                                         first). </p>
