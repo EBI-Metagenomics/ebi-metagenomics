@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * TODO: Description
+ * DAO for emg_log_file_info table.
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @version $Id$
@@ -40,39 +40,8 @@ public class EmgLogFileInfoDAOImpl implements EmgLogFileInfoDAO {
         this.tableNamePrefix = tableNamePrefix;
     }
 
-    /**
-     * Returns a list of file IDs by the specified sample ID.
-     */
-    public List<String> getFileIdsBySampleId(long sampleId) {
-        log.info("Querying file IDs by sample ID: " + sampleId + " from table EMGLogFileInfo...");
-        List<String> result = new ArrayList<String>();
-        try {
-            List<Map<String, Object>> rows = this.jdbcTemplate.queryForList("select file_id from " + tableNamePrefix + "." + EmgFile.TABLE_NAME + "where" + EmgFile.SAMPLE_ID + " = ? ", new Long[]{sampleId});
-            for (Map row : rows) {
-                result.add((String) row.get("FILE_ID"));
-            }
-        } catch (Exception e) {
-            log.warn("Could not query file IDs!", e);
-        }
-        return result;
-    }
-
-    public List<String> getFileNamesBySampleId(long sampleId) {
-        log.info("Querying file IDs by sample ID: " + sampleId + " from table EMGLogFileInfo...");
-        List<String> result = new ArrayList<String>();
-        try {
-            List<Map<String, Object>> rows = this.jdbcTemplate.queryForList("select file_name from " + EmgFile.TABLE_NAME + " where " + EmgFile.SAMPLE_ID + "=?", new Long[]{sampleId});
-            for (Map row : rows) {
-                result.add((String) row.get("FILE_NAME"));
-            }
-        } catch (Exception e) {
-            log.warn("Could not query file names!", e);
-        }
-        return result;
-    }
-
     public List<EmgFile> getFilesBySampleId(long sampleId) {
-        log.info("Querying file IDs by sample ID: " + sampleId + " from table EMGLogFileInfo...");
+        log.debug("Querying file IDs by sample ID: " + sampleId + " from table EMGLogFileInfo...");
         List<EmgFile> result = new ArrayList<EmgFile>();
         try {
             List<Map<String, Object>> rows = this.jdbcTemplate.queryForList("select file_id, file_name from " + EmgFile.TABLE_NAME + " where " + EmgFile.SAMPLE_ID + "=?", new Long[]{sampleId});
@@ -88,7 +57,7 @@ public class EmgLogFileInfoDAOImpl implements EmgLogFileInfoDAO {
     }
 
     public List<String> getSraIDs(long sampleId) {
-        log.info("Querying SRA IDs by sample ID: " + sampleId + " from table EMGLogFileInfo...");
+        log.debug("Querying SRA IDs by sample ID: " + sampleId + " from table EMGLogFileInfo...");
         List<String> result = new ArrayList<String>();
         try {
 //            TODO: The following 'if else' case is a quick and dirty solution to solve the differentiation issue between genomic and transcriptomic analysis

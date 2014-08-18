@@ -1,5 +1,5 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<h2>Submit data</h2>
+<h2><spring:message code="submitView.title"/></h2>
 
 <p class="intro">
 
