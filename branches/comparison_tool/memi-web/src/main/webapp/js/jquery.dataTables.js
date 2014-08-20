@@ -10708,7 +10708,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sInfo": "Showing _START_ to _END_ of _TOTAL_ entries",
+			"sInfo": "Showing _START_ to _END_ of _TOTAL_ results",
 	
 	
 			/**
@@ -10751,7 +10751,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sInfoFiltered": "(filtered from _MAX_ total entries)",
+			"sInfoFiltered": "(filtered from _MAX_ total)",
 	
 	
 			/**
@@ -10869,7 +10869,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sLengthMenu": "Show _MENU_ entries",
+			"sLengthMenu": "Show _MENU_ results",
 	
 	
 			/**
