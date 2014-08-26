@@ -3,7 +3,7 @@
 # Each visualization is saved as an HTML file which can be read and displayed by the Java web application.
 
 # Console log
-message(paste(Sys.time(),'[R - Message] Launched general R script launch_v12.R'))
+#message(paste(Sys.time(),'[R - Message] Launched general R script launch_v12.R'))
 
 
 ##########################################
@@ -62,24 +62,24 @@ scriptList <- list(
 # Perform checks to see if everything needed is present
 
 # Packages check
-message(paste(Sys.time(), "[R - Initial checks] Check if needed R packages are installed."))
+#message(paste(Sys.time(), "[R - Initial checks] Check if needed R packages are installed."))
 availablePackages = rownames(installed.packages())
 if(FALSE %in% (usedPackages %in% availablePackages)) {
   missingPackages <- usedPackages[! usedPackages %in% availablePackages]
-  message(paste(Sys.time(), "[R - Error] Check over. Missing package(s):"), paste(missingPackages))
+#  message(paste(Sys.time(), "[R - Error] Check over. Missing package(s):"), paste(missingPackages))
   stop()
   }
-  message(paste(Sys.time(), "[R - Initial checks] Check over. All packages are installed."))
+#  message(paste(Sys.time(), "[R - Initial checks] Check over. All packages are installed."))
 
-# Directories check
-message(paste(Sys.time(), "[R - Initial checks] Check if needed directories exist."))
-dirList = c(tempDir, imgDir, workDir)
-if(FALSE %in% (file.exists(dirList))) {
-  missingDir <- dirList[! file.exists(dirList)]
-  message(paste(Sys.time(), "[R - Error] Check over.", paste(missingDir,sep=', '),'not found.'))
-  stop()
-  }
-  message(paste(Sys.time(), "[R - Initial checks] Check over. All needed directories exist."))
+# Directories check - removed on Windows - doesn't work
+#message(paste(Sys.time(), "[R - Initial checks] Check if needed directories exist."))
+#dirList = c(tempDir, imgDir, workDir)
+#if(FALSE %in% (file.exists(dirList))) {
+  #missingDir <- dirList[! file.exists(dirList)]
+ # message(paste(Sys.time(), "[R - Error] Check over.", paste(missingDir,sep=', '),'not found.'))
+  #stop()
+  #}
+ # message(paste(Sys.time(), "[R - Initial checks] Check over. All needed directories exist."))
 
 # Loading all packages at once. The invisible() function remove the messages.
 invisible(sapply(usedPackages, library, character.only=TRUE, USE.NAMES=FALSE, quietly=TRUE)) 
@@ -178,12 +178,13 @@ RchartsFix = function(abundanceTable){
     for(j in 1:nbSamples) {
       recordGO = c(recordGO,strsplit(colnames(abundanceTable)[i],split='\\|')[[1]][1])
       recordName <- c(recordName,strsplit(colnames(abundanceTable)[i],split='\\|')[[1]][2])
+
       recordSample = c(recordSample,rownames(abundanceTable)[j])
       recordValue=c(recordValue,abundanceTable[j,i])
     }
   }
   # Stores all retrieved information in a flat table
-  newTable=data.table(recordSample,recordGO,recordName,recordValue)
+  newTable=data.table(recordSample,recordGO, tolower (recordName),recordValue) #fast bug fix - remove capital letters that were making sorting wrong
   # Changes column names
   setnames(newTable,colnames(newTable),c('sample','GO','GOname','value'))
   return(newTable)
