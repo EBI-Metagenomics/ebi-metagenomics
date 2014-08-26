@@ -32,7 +32,7 @@ CreateBarsForCategory <- function(abTable, category) {
   dataChart <- RchartsFix(AbTablePercent(DivideAbTable(abTable, category)))
   # Initially the data is ordered by GO term identifier,
   # the 'setkey()' function enables ordering of the data by GO name (alphabetical order) instead of GO identifier.
-  setkey(dataChart, GOname)
+  setkey(dataChart,GOname) # THIS IS WHERE IT BUGS AS CAPITAL LETTERS FIRST IN ORDER  SEB
 
   ########################
   #### Chart creation ####
@@ -59,11 +59,11 @@ CreateBarsForCategory <- function(abTable, category) {
               margin= 0, # No margin
               style = list(fontSize = 13, fontWeight = "bold")) # Title style
   chart$legend(enabled = FALSE) # Legend is enabled as another one is created in the result page
-  chart$plotOptions(series = list(borderWidth = 1, 
-                                  borderColor = "#686868", 
+  chart$plotOptions(series = list(borderWidth = 1,
+                                  borderColor = "#686868",
                                   pointPadding = 0, # Space between the bars of a same GO term
-                                  groupPadding = 0.1)) # Space between two GO terms 
-  chart$xAxis(categories = c(unique(dataChart$GOname)), # Correct name on X axis
+                                  groupPadding = 0.1)) # Space between two GO terms
+  chart$xAxis(categories = c(unique(dataChart$GOname)), # Correct name on X axis  THIS IS WHERE IT BUG SEB
               labels = list(step = 1, # Every GO term displayed 
                             rotation = 0, # labels written horizontally
                             formatter = axisFormat, # Format of X axis label's text
@@ -76,7 +76,7 @@ CreateBarsForCategory <- function(abTable, category) {
               endOnTick = TRUE, 
               maxPadding = 0,  
               labels = list(y=-6, style = list(color = "#a0a0a0"))) # Label position and style
-  chart$tooltip(backgroundColor = "white", 
+  chart$tooltip(backgroundColor = "white",
                 headerFormat = "{point.x}<br/>", # Tootltip header
                 pointFormat = "<span style=\"color:{series.color}\">&#9632;</span> <span style=\"font-size:88%;\">{series.name}: <strong>{point.y} %</strong></span>", # Tootltip content
                 useHTML = TRUE)  # Uncomment to use: , formatter = tooltipFormat         , positioner = tooltipPosition
@@ -88,7 +88,7 @@ CreateBarsForCategory <- function(abTable, category) {
   # Setting width parameter to NULL disable the default width given to charts
   # Dimensions can therefore be controlled with css and charts can be resizable.
   chart$addParams(width = NULL, height = chartHeight)
-  # chart$exporting(enabled = T) # Uncomment to enable export
+  #chart$exporting(enabled = T) # Uncomment to enable export
 
   #######################
   ###### HTML code ######
