@@ -39,7 +39,7 @@ CreateBarsForCategory <- function(abTable, category) {
   ########################
   chart <- hPlot(value ~ GOname, # Match percentage for each GO term
                  data = dataChart, # ... from the 'dataChart' object
-                 group = "sample", # Group the data by by sample
+                 group = "sample", # Group the data by sample
                  type = "bar") # Chart type
   
   ########################
@@ -59,11 +59,11 @@ CreateBarsForCategory <- function(abTable, category) {
               margin= 0, # No margin
               style = list(fontSize = 13, fontWeight = "bold")) # Title style
   chart$legend(enabled = FALSE) # Legend is enabled as another one is created in the result page
-  chart$plotOptions(series = list(borderWidth = 1,
+  chart$plotOptions(bar = list (dataLabels = list (enabled = FALSE, color = "#a0a0a0")), series = list(borderWidth = 1,
                                   borderColor = "#686868",
                                   pointPadding = 0, # Space between the bars of a same GO term
                                   groupPadding = 0.1)) # Space between two GO terms
-  chart$xAxis(categories = c(unique(dataChart$GOname)), # Correct name on X axis  THIS IS WHERE IT BUG SEB
+  chart$xAxis(categories = c(unique(dataChart$GOname)), # Correct name on X axis
               labels = list(step = 1, # Every GO term displayed 
                             rotation = 0, # labels written horizontally
                             formatter = axisFormat, # Format of X axis label's text
