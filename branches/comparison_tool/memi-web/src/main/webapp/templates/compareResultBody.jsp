@@ -528,7 +528,7 @@
                             molChartSeries[legInd].hide();
                             cellChartSeries[legInd].hide();
                             // Changing color to grey (for the rectangle too!)
-                            $(this).css('color', '#D1D1D1');
+                            $(this).toggleClass('legend-item-off');
                             $(this).children('.legend-rectangle').css('background', '#D1D1D1');
                         }
                         else {
@@ -536,7 +536,7 @@
                             molChartSeries[legInd].show();
                             cellChartSeries[legInd].show();
                             // Changing color to normal display (could be cleaner?)
-                            $(this).css('color', '#606068');
+                            $(this).toggleClass('legend-item-off');
                             $(this).children('.legend-rectangle').css('background', cellChartSeries[legInd].color);
                         }
                     },
