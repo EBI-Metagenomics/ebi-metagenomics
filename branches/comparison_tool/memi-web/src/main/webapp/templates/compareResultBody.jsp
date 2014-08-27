@@ -75,8 +75,7 @@
 
        <div id="barcharts_legend_title"><strong>Sample list</strong> <span class="barcharts_legend_info">(click to hide)</span></div>
        <div id="barcharts_legend_list_items"></div>
-
-
+<%--${sampleString}--%>
         </div>
 
         <%-- THIS FEATURE IS STILL EXPERIMENTAL.
@@ -468,26 +467,26 @@
                     'class': 'legend-item',
                     'html': '<div class="legend-rectangle" style="background:'+ currentColor + ';"></div><span> '+sampleArr[i]+'</span>',
                     'click': function () {
-                        var legInd = this.id.split('_')[1]; // Gives the indice of the series to hide / show when clicking on the legend item
+                        var legInd = this.id.split('_')[1]; // Gives the series index to hide / show when clicking on the legend item
                         // Check if element is visible on biological process chart but could be whatever we want
                         if(bioChartSeries[legInd].visible){
                             bioChartSeries[legInd].hide();
                             molChartSeries[legInd].hide();
                             cellChartSeries[legInd].hide();
-                            // Changing color to grey (for the rectangle too!)
-                            $(this).css('color', '#D1D1D1');
-                            $(this).children('.legend-rectangle').css('background', '#D1D1D1');
+                            // Changing color to disabled grey for text and icon
+                            $(this).toggleClass('legend-item-off');
+                            $(this).children('.legend-rectangle').css('background', '#D1D1D1');//have to keep that to force the color
                         }
                         else {
                             bioChartSeries[legInd].show();
                             molChartSeries[legInd].show();
                             cellChartSeries[legInd].show();
-                            // Changing color to normal display
-                            $(this).css('color', '#606068');
+                            // Changing color back to normal display
+                            $(this).toggleClass('legend-item-off');
                             $(this).children('.legend-rectangle').css('background', cellChartSeries[legInd].color);
                         }
                     } // Adding legend item to legend div
-                }).appendTo('#barcharts_legend_list_items');  //where the color puce are
+                }).appendTo('#barcharts_legend_list_items'); //where the color puce are
             }
         }
         else {
