@@ -1924,6 +1924,7 @@ ul.sample_list li {list-style: none; display: inline;}
 /*CAPTION pca - sample comparison tool*/
 #pca #pca_legend .barcharts_legend_info {color:#666; font-style: italic;}
 #pca #pca_legend .legend-item {padding: 0px 6px 0 0;  display:inline-block; cursor:pointer; color: #606068; font-size: 90%;}
+#pca #pca .legend-item-off {color:#D1D1D1;}
 #pca #pca_legend .legend-item:hover { color: #1A1A1A !important;} /* '!important' allows to keep the :hover style even when messing with the css in jQuery functions */
 #pca #pca_legend .legend-item .legend-rectangle {border-radius: 50%; margin: 4px;width: 8px; height: 8px;float: left;}
 
