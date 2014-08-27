@@ -229,7 +229,10 @@
             var selectedValue = $(this).val();
             // Sort all the options by text. It could easily be sorted by value.
             $(this).html($('option', $(this)).sort(function(a, b) {
-                return a.text.toUpperCase() == b.text.toUpperCase() ? 0 : a.text.toUpperCase() < b.text.toUpperCase() ? -1 : 1
+//  to sort samples by alphabetical order - IMPORTANT was bugging, as it doesn't change the sample order in the bar chart
+// return a.text.toUpperCase() == b.text.toUpperCase() ? 0 : a.text.toUpperCase() < b.text.toUpperCase() ? -1 : 1
+//  to sort samples by ID order
+                return a.value == b.value ? 0 : a.value < b.value ? -1 : 1
             }));
             // Select one option
             $(this).val(selectedValue);
