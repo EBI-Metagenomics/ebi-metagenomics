@@ -268,7 +268,7 @@ write(stackedCols,paste(tempDir,pathSep,name,'_stack','.htm',sep=''))
 #########################################
 # The link between path and URL of images is a bit tricky. If no image is displayed, it could be worth it to check the path for heatmaps.
 hmCode = '<p><i>Generation of PNG heatmaps is not working on the server ...</i></p>'
-imgExt = '.svg' # Extension of images
+imgExt = '.png' # Extension of images
 
 # Change value of 'commit' to TRUE if you do not want to generate heatmaps. 
 if(!commit) {
