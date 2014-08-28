@@ -2,7 +2,7 @@
 # Note: This version generates a SVG output for heatmaps and uses a different logic than older versions. It has to be used with 'launch_v12.R' and won't work with previous versions. 
 
 # Console log
-message(paste(Sys.time(), "[R - Message] Launched R script StaticHeatmap_v6.R"))
+# message(paste(Sys.time(), "[R - Message] Launched R script StaticHeatmap_v6.R"))
 
 
 AbTableToFraction <- function(abTable) {
@@ -110,19 +110,19 @@ GenerateHeatmap <- function(generalAbTable, category, filePath, fileName, hmPara
 
   # SVG device opening. Should work on the server. 
   # pathSep should be defined in the 'launch' script
-  CairoSVG(file = paste(filePath, fileName, sep = pathSep), pointsize = 5)
+  CairoPNG(file = paste(filePath, fileName, sep = pathSep), onefile = TRUE, bg = "transparent", pointsize = 7)
   # Creation of the heatmap
   heatmap.2(data.matrix(abTable), 
             main = correctNames[categoryIndice], # Title displayed on the heatmap image (clean GO category currently)
             cexRow = rowFontSize,  # cexCol = 1, # Changes size of font for rows and columns respectively
             col = greenToRed, breaks = colBreaks, # Colors (green to red currently) and color breaks
-            trace = "none", density.info = "none", # Disable display of the trace and density information (unreadable but enabled by default...)
+            trace = "none", density.info = "none", tracecol="black", # Disable display of the trace and density information (unreadable but enabled by default...)
             Rowv = boolClust[1], Colv = boolClust[2],  # Clustering control (boolean for rows and columns respectively)
             key = as.logical(hmParametersVector[1]), # Color key control (boolean, display or not)
             dendrogram = hmParametersVector[3], # Dendrogram control (valid values : 'row','column' or 'both')
             lwid = c(2, 8), lhei = c(2, 8), # Organization of the space on the image (2x2 matrix, see Confluence page for more details)
             margins = c(13, 13)) # Image margins (should be large enough to display labels)
-  dev.off() # Close SVG device and save image
+  #dev.off() # Close SVG device and save image
 
   # Read the newly created file and returns it : <svg> ... </svg> basically.
   h3Tag <- paste0("<h3 id=\"",h3Id[categoryIndice],"\">",h3Names[categoryIndice],"</h3>") # Creates the h3 HTML tag with correct name / id
