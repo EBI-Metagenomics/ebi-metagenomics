@@ -89,6 +89,7 @@ GenerateHeatmap <- function(generalAbTable, category, filePath, fileName, hmPara
   # Colors
   maxMatches <- max(abTable)
   greenToRed <- colorRampPalette(c("green", "yellow", "red"))(n = 299) # Number of color has to be shorter than the number of breaks
+  yellowToRed <- colorRampPalette(c("white", "yellow", "red"))(n = 299) # Number of color has to be shorter than the number of breaks
   colBreaks <- c(seq(0, (0.25 * maxMatches), length = 100), # First color range
                   seq((0.25 * maxMatches), (0.75 * maxMatches), length = 100), # Second color range
                   seq((0.75 * maxMatches), maxMatches, length = 100)) # Third color range
@@ -120,7 +121,7 @@ GenerateHeatmap <- function(generalAbTable, category, filePath, fileName, hmPara
   heatmap.2(data.matrix(abTable), 
             main = correctNames[categoryIndice], # Title displayed on the heatmap image (clean GO category currently)
             cexRow = rowFontSize, cexCol = 1, # Changes size of font for rows and columns respectively
-            #col = greenToRed,   # use default colors makes it easier to read
+            #col = yellowToRed, # use default
              breaks = colBreaks, # Colors (green to red currently) and color breaks
             trace = "none", density.info = "none", tracecol="black", # Disable display of the trace and density information (unreadable but enabled by default...)
             Rowv = boolClust[1], Colv = boolClust[2],  # Clustering control (boolean for rows and columns respectively)
