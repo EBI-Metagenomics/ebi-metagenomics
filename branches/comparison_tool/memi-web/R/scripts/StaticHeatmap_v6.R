@@ -103,25 +103,30 @@ GenerateHeatmap <- function(generalAbTable, category, filePath, fileName, hmPara
     boolClust <- c(FALSE, FALSE)
 
   # Change the font size of row if there are only a few samples (less than 4 currently)
-  rowFontSize <- 1.2 
-  if(nrow(abTable) < 4) rowFontSize <- 1.0
+  rowFontSize <- 0.9
+  if(nrow(abTable) < 10) rowFontSize <- 1.0
   if(nrow(abTable) > 100) rowFontSize <- 0.7
 
+  # Change the height of the chart depending on number of samples selected
+  chartHeight <- 650
+  if(nrow(abTable) > 50) chartHeight <- 850
+  if(nrow(abTable) > 80) chartHeight <- 1250
+  if(nrow(abTable) > 120) chartHeight <- 1450
 
   # SVG device opening. Should work on the server. 
   # pathSep should be defined in the 'launch' script
-  CairoPNG(file = paste(filePath, fileName, sep = pathSep), onefile = TRUE, bg = "transparent", pointsize = 7)
+  CairoPNG(file = paste(filePath, fileName, sep = pathSep), onefile = TRUE, bg = "transparent", pointsize = 11, width=780, height = chartHeight)
   # Creation of the heatmap
   heatmap.2(data.matrix(abTable), 
             main = correctNames[categoryIndice], # Title displayed on the heatmap image (clean GO category currently)
-            cexRow = rowFontSize,  # cexCol = 1, # Changes size of font for rows and columns respectively
+            cexRow = rowFontSize, cexCol = 1, # Changes size of font for rows and columns respectively
             col = greenToRed, breaks = colBreaks, # Colors (green to red currently) and color breaks
             trace = "none", density.info = "none", tracecol="black", # Disable display of the trace and density information (unreadable but enabled by default...)
             Rowv = boolClust[1], Colv = boolClust[2],  # Clustering control (boolean for rows and columns respectively)
             key = as.logical(hmParametersVector[1]), # Color key control (boolean, display or not)
             dendrogram = hmParametersVector[3], # Dendrogram control (valid values : 'row','column' or 'both')
             lwid = c(2, 8), lhei = c(2, 8), # Organization of the space on the image (2x2 matrix, see Confluence page for more details)
-            margins = c(13, 13)) # Image margins (should be large enough to display labels)
+            margins = c(13, 13)) # Image margins (should be large enough to display all labels)
   #dev.off() # Close SVG device and save image
 
   # Read the newly created file and returns it : <svg> ... </svg> basically.
