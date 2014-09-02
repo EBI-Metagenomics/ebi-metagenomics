@@ -1856,7 +1856,7 @@ ul.color_legend {list-style-type: square; list-style-position:inside;}
 .sample_comp #settings-wrapper .settings-div-data {float:left;}
 .sample_comp #settings-wrapper .settings-div-adv {float:left; /*margin-left: 18px;*/}
 .sample_comp #buttons-wrapper{margin: 0 9px 18px 0; /*add space below*/text-align: center;}
-.sample_comp #advanced-settings-wrapper { margin: 0 9px; border: 1px #CCC solid;   background-color: #DDE6E6;  /*to define a better style for adv options*/}
+.sample_comp #advanced-settings-wrapper {display:none; margin: 0 9px; border: 1px #CCC solid;   background-color: #DDE6E6;  /*to define a better style for adv options*/}
 .sample_comp #advanced-settings-wrapper ul {padding-left:9px;}
 .sample_comp #advanced-settings-wrapper ul li {list-style-type:none;}
 .sample_comp #advanced-settings-wrapper ul li input {width:auto;}
@@ -1933,4 +1933,4 @@ ul.sample_list li {list-style: none; display: inline;}
 #bars .rChart {float: left;  overflow:visible!important; width:33%; /*border:1px red solid;*/}/* Height of charts is calculated in the R script */
 #pca .rChart {float: left; width:33%;/*height:500px;*/border:0px red solid;}
 #stack .rChart {/*border:1px red solid;*/}
-#heatmap img { max-width: 100%; height: auto; width:850px;}
+#heatmap img { max-width: 100%; height: auto; /*width:850px;*/ /*remove width from there as it should be defined right in the export parameters of R*/}
