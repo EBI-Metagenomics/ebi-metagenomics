@@ -55,21 +55,20 @@ scriptList <- list(
   pca = 'PCA_v4_transparency.R',
   jsTable = 'Table_v4.R')
 
-
 ##########################################
 ############ Initial checks ##############
 ##########################################
 # Perform checks to see if everything needed is present
 
 # Packages check
-#message(paste(Sys.time(), "[R - Initial checks] Check if needed R packages are installed."))
+# message(paste(Sys.time(), "[R - Initial checks] Check if needed R packages are installed."))
 availablePackages = rownames(installed.packages())
 if(FALSE %in% (usedPackages %in% availablePackages)) {
   missingPackages <- usedPackages[! usedPackages %in% availablePackages]
-#  message(paste(Sys.time(), "[R - Error] Check over. Missing package(s):"), paste(missingPackages))
+  print(paste(Sys.time(), "[R - Error] Check over. Missing package(s):"), paste(missingPackages))
   stop()
   }
-#  message(paste(Sys.time(), "[R - Initial checks] Check over. All packages are installed."))
+  print(paste(Sys.time(), "[R - Initial checks] Check over. All packages are installed."))
 
 # Directories check - removed on Windows - doesn't work
 #message(paste(Sys.time(), "[R - Initial checks] Check if needed directories exist."))
