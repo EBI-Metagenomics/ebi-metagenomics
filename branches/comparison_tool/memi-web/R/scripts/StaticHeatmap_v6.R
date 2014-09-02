@@ -116,11 +116,12 @@ GenerateHeatmap <- function(generalAbTable, category, filePath, fileName, hmPara
   # SVG device opening. Should work on the server. 
   # pathSep should be defined in the 'launch' script
   CairoPNG(file = paste(filePath, fileName, sep = pathSep), onefile = TRUE, bg = "transparent", pointsize = 11, width=780, height = chartHeight)
-  # Creation of the heatmap
+  # Creation of the heatmap - http://www.inside-r.org/packages/cran/gplots/docs/heatmap.2
   heatmap.2(data.matrix(abTable), 
             main = correctNames[categoryIndice], # Title displayed on the heatmap image (clean GO category currently)
             cexRow = rowFontSize, cexCol = 1, # Changes size of font for rows and columns respectively
-            col = greenToRed, breaks = colBreaks, # Colors (green to red currently) and color breaks
+            #col = greenToRed,   # use default colors makes it easier to read
+             breaks = colBreaks, # Colors (green to red currently) and color breaks
             trace = "none", density.info = "none", tracecol="black", # Disable display of the trace and density information (unreadable but enabled by default...)
             Rowv = boolClust[1], Colv = boolClust[2],  # Clustering control (boolean for rows and columns respectively)
             key = as.logical(hmParametersVector[1]), # Color key control (boolean, display or not)
