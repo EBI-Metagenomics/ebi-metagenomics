@@ -277,7 +277,7 @@
 
     // Show / hide advanced settings
     $(function(){
-        $('#advanced-settings-wrapper').hide();
+//        $('#advanced-settings-wrapper').hide();
         $('#advanced-settings-link').click(function() {
             $('#advanced-settings-wrapper').slideToggle(200);
         });
