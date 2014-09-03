@@ -231,8 +231,8 @@
             $(this).html($('option', $(this)).sort(function(a, b) {
 //  to sort samples by alphabetical order - IMPORTANT was bugging, as it doesn't change the sample order in the bar chart
 // return a.text.toUpperCase() == b.text.toUpperCase() ? 0 : a.text.toUpperCase() < b.text.toUpperCase() ? -1 : 1
-//  to sort samples by ID order
-                return a.value == b.value ? 0 : a.value < b.value ? -1 : 1
+//  to sort samples by ID order : in reality the sorting is by "select option title" where you have the sample ID
+                return a.title == b.title ? 0 : a.title < b.title ? -1 : 1
             }));
             // Select one option
             $(this).val(selectedValue);
