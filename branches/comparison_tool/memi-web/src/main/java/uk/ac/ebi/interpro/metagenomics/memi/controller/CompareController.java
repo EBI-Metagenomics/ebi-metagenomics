@@ -94,13 +94,14 @@ public class CompareController extends AbstractController implements IController
                     new ModelPopulator() {
                         @Override
                         public void populateModel(ModelMap model) {
-                            final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "Compare samples of same project", getBreadcrumbs(null), propertyContainer);
-                            final ViewModel defaultViewModel = builder.getModel();
-                            defaultViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_COMPARE_VIEW);
+                            final ViewModelBuilder<CompareViewModel> builder = new CompareViewModelBuilder(sessionManager, "Compare samples of same project", getBreadcrumbs(null), propertyContainer,studyDAO);
+                            final ViewModel compareViewModel = builder.getModel();
+                            compareViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_COMPARE_VIEW);
                             // Retrieving list of public studies and samples + add attributes
-                            List<Study> studyList = studyDAO.retrieveOrderedPublicStudies("studyName", false);
-                            model.addAttribute(ViewModel.MODEL_ATTR_NAME, defaultViewModel);
-                            model.addAttribute("studies", studyList);
+//                            List<Study> studyList = studyDAO.retrieveOrderedPublicStudies("studyName", false);
+                            model.addAttribute(ViewModel.MODEL_ATTR_NAME, compareViewModel);
+//                            model.addAttribute("studies", studyList);
+                            model.addAttribute("comparisonForm", comparisonForm);
                         }
                     });
         }
@@ -162,8 +163,8 @@ public class CompareController extends AbstractController implements IController
         // Execution command to launch the comparison job
         final char WHITESPACE = ' ';
         String executionCommand;
-        executionCommand = rInstallationLocation + WHITESPACE + rScriptPath + "/" + rScriptName + WHITESPACE + rTmpFileDirectory + WHITESPACE +
-                rScriptPath + WHITESPACE + rImgDirectory + WHITESPACE + uniqueOutputName + WHITESPACE + rFriendlyFileList + WHITESPACE + comparisonForm.getUsedData() +
+        executionCommand = "\"" + rInstallationLocation + "\"" + WHITESPACE + rScriptPath.replace("\\","\\") + "" + rScriptName + WHITESPACE + rTmpFileDirectory.replace("\\","\\") + WHITESPACE +
+                rScriptPath.replace("\\","\\") + WHITESPACE +  rImgDirectory.replace("\\","\\") + WHITESPACE + uniqueOutputName + WHITESPACE + rFriendlyFileList.replace("\\","\\") + WHITESPACE + comparisonForm.getUsedData() +
                 WHITESPACE + rFriendlySampleNames + WHITESPACE + comparisonForm.getStackThreshold() + WHITESPACE + hmPar + WHITESPACE + comparisonForm.getGOnumber();
 //            executionCommand = "Rscript R/simple.R";
         // Print the command we will use to see if it's correct (format / order of parameters)
