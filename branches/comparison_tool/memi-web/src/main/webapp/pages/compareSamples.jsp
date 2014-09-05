@@ -9,7 +9,7 @@
 
 <%-- Creates HTML select option for each sample of selected project that have no data (sample selection - comparison tool submission page) --%>
 <c:forEach var="sample" items="${missingSamples}">
-    <option value="${sample.id}" title="Sample ${sample.sampleId} | ${sample.sampleName} | ${sample.sampleAlias}." disabled>${sample.sampleName} - NO DATA AVAILABLE</option>
+    <option value="${sample.id}" title="Sample ${sample.sampleId} | ${sample.sampleName} | ${sample.sampleAlias}." disabled>${sample.sampleName} - ${sample.sampleId} - NO DATA AVAILABLE</option>
 </c:forEach>
 
 <%-- Sorts HTML select options alphabetically (sample selection - comparison tool submission page) --%>
