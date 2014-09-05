@@ -160,6 +160,10 @@ cursor:pointer; /* for IE7 */
 height:  68px;
 }
 
+.icon_beta_menu, .icon_beta_title {color:white; border-radius: 4px;-moz-border-radius: 4px;-khtml-border-radius: 4px;-webkit-border-radius: 4px;background-color:#F08989;font-weight: bold; margin-left: 2px}
+.icon_beta_menu {font-size: 10px;padding: 2px 3px;}
+.icon_beta_title {font-size: 64%;padding: 0px 3px; vertical-align: text-top;}
+
 #extra_feedback {z-index:92;position:relative;}
 
 #extra_feedback h1 a{
