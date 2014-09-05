@@ -461,7 +461,8 @@
             var i;
             for (i = 0; i < sampleNum; i++)
             {
-                var currentColor = cellChartSeries[i].color;
+//                var currentColor = cellChartSeries[i].color;
+                var currentColor = bioChartSeries[i].color;
                 $('<div/>', {
                     'id': 'legend_' + i,
                     'class': 'legend-item',
