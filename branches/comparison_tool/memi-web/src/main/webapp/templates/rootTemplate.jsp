@@ -73,7 +73,7 @@
     <%-- END JQuery CSS--%>
 
     <%--<link href="https://fonts.googleapis.com/css?family=Droid+Sans:regular,bold" rel="stylesheet" type="text/css"/>--%>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/default.css" type="text/css" media="all"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/default.css?v1.1" type="text/css" media="all"/>
 
     <!--[if lt IE 8]>
     <style type="text/css"> table.result tbody tr td {background-color: #F4F4F8;}</style> <![endif]-->
