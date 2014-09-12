@@ -137,7 +137,7 @@ public class AbstractSampleViewController extends SecuredAbstractController<Samp
         final List<DownloadLink> funcAnalysisDownloadLinks = new ArrayList<DownloadLink>();
         final List<DownloadLink> taxaAnalysisDownloadLinks = new ArrayList<DownloadLink>();
 
-        final String linkURL = (sampleIsPublic ? "https://www.ebi.ac.uk/ena/data/view/" + sampleId + "?display=html" : "https://www.ebi.ac.uk/ena/submit/sra/#home");
+        final String linkURL = (sampleIsPublic ? "https://www.ebi.ac.uk/ena/data/view/" + sampleId : "https://www.ebi.ac.uk/ena/submit/sra/#home");
         seqDataDownloadLinks.add(new DownloadLink("Submitted nucleotide reads (ENA website)",
                 "Click to download all submitted nucleotide data on the ENA website",
                 linkURL,
