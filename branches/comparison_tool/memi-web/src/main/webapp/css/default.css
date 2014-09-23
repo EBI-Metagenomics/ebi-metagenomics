@@ -1296,9 +1296,10 @@ display:block;
 
 #feedback_form label,  #feedback_form_no label {font-weight:bold;font-size:110%;color:#445668;}
 #login_form label, #submit_form label {display:block; font-weight:bold;font-size:110%;color:#605F5F;}
+.sub_form {margin-left:9px;}
 #sub_form label {font-weight:bold;font-size:110%;color:#605F5F;}
 
-#sub_form #required, #feedback_form #required, #feedback_form_no #required  {background: url(../img/ico_form_required.png) no-repeat right center; padding-right:14px; border: 0px red solid; zoom:1; /* for IE7 and IE6 to visualise the span and background without content*/}
+#required {background: url(../img/ico_form_required.png) no-repeat right center; padding-right:14px; border: 0px red solid; zoom:1; /* for IE7 and IE6 to visualise the span and background without content*/}
 
 label.error, span.error, #feedback_form label.error, #feedback_form_no label.error, #login_form label.error {
 font-weight:normal;
