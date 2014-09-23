@@ -25,7 +25,7 @@
                             <div class="close_wind">
                                 <a href="javascript:slideFeedbackForm()" title="Close this window"></a>
                             </div>
-                            <label for="feedbackForm_emailAddress" id="required"><spring:message
+                            <label for="feedbackForm_emailAddress" class="required><spring:message
                                     code="email.label"/></label>
                         </td>
                     </tr>
@@ -36,7 +36,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <label for="feedbackForm_emailSubject" id="required"><spring:message
+                            <label for="feedbackForm_emailSubject" class="required><spring:message
                                     code="feedbackForm.inputField.subject.label"/></label>
                         </td>
                     </tr>
@@ -46,7 +46,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><label for="feedbackForm_emailMessage" id="required"><spring:message
+                        <td><label for="feedbackForm_emailMessage" class="required><spring:message
                                 code="feedbackForm.inputField.message.label"/></label>
                             <br/><textarea id="feedbackForm_emailMessage" name="emailMessage"></textarea>
                         </td>
@@ -60,7 +60,7 @@
                     <input type="hidden" name="leaveIt" id="leaveIt"/>
                     <tr>
                         <td>
-                            <span id="required"></span>&nbsp;
+                            <span class="required></span>&nbsp;
                             <small>required</small>
                         </td>
                     </tr>
