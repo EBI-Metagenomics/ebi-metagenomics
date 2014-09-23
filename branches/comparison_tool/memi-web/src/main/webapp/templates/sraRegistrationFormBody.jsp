@@ -1,12 +1,17 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%--<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>--%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<h2><spring:message code="sraRegistrationForm.title"/></h2>
 
-
-    <%@ include file="components/sraRegistrationFormComponent.jsp" %>
+<p class="intro">
+We provide a service for submission of raw sequence data and associated meta-data to the European Nucleotide Archive (ENA) and our analysis pipelines. A <a class="ext" title="Click here to watch the full video tutorial" href="http://www.youtube.com/watch?v=Zml8jTqfQPg">video tutorial</a> is available outlining this process.
+</p>
+<p class="intro">
+    You need to register for an ENA account in order to be able to upload your sequence to the archives. Do this using the form below; we have pre-filled in some of the fields using the information you have already supplied to us. You will be contacted by the email address you supply once the account is activated.</p>
+<%--<%@ include file="components/sraRegistrationFormComponent.jsp" %>--%>
 
     <div class="sub">
         <div class="sub_form">
-            <div style="text-align: left; padding-bottom: 18px;"><span class="required"></span>&nbsp; Please note that all fields in this form are required.</div>
+            <div style="padding-bottom: 18px;"><span class="required"></span>&nbsp; Please note that all fields in this form are required.</div>
             <form:form id="sub_form" commandName="sraRegistrationForm" method="post" action="submit">
                 <fieldset>
                     <legend>User details</legend>
