@@ -84,7 +84,7 @@
 
                                     <div class="cent"><img src="${pageContext.request.contextPath}/img/icons_arc.png"
                                                            alt="data archiving"/></div>
-                                    <p>Data automatically archived at the Sequence Read Archive (SRA), ensuring
+                                    <p>Data automatically archived at the European Nucleotide Archive (ENA) , ensuring
                                         accession
                                         numbers are supplied - a prerequisite for publication in many journals.</p>
 
