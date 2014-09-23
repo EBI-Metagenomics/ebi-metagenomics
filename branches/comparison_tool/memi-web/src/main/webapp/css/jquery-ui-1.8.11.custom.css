@@ -59,7 +59,7 @@
 /*.ui-widget { font-family: Trebuchet MS, Helvetica, Arial, sans-serif; font-size: 1.1em; }*/
 .ui-widget .ui-widget { font-size: 1em; }
 /*.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button { font-family: Trebuchet MS, Helvetica, Arial, sans-serif; font-size: 1em; }*/
-.ui-widget-content { border: 1px solid #aaaaaa; background: #c9c9c9 url(../img/jquery/overcast/ui-bg_inset-soft_50_c9c9c9_1x100.png) 50% bottom repeat-x; color: #333333; }
+.ui-widget-content { border: 1px solid #aaaaaa; background: #c9c9c9 url(../img/jquery/overcast/ui-bg_inset-soft_50_c9c9c9_1x100.png) 50% bottom repeat-x; color: #333333;}/*to keep for calendar*/
 .ui-widget-content a { color: #333333; }
 .ui-widget-header { border: 1px solid #bbbbbb; background: #dddddd url(../img/jquery/overcast/ui-bg_glass_35_dddddd_1x400.png) 50% 50% repeat-x; color: #444444; font-weight: bold; }
 .ui-widget-header a { color: #444444; }
