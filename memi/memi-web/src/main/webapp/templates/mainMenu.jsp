@@ -34,9 +34,14 @@
     </li>
 
 
+    <li class="${model.tabClasses["tabClassCompareView"]}"><a href="<c:url value="${baseURL}/compare"/>"
+                                                              title="Compare samples of same project">Comparison tool <span class="icon_beta_menu">beta</span></a></li>
+
     <li class="${model.tabClasses["tabClassAboutView"]}"><a href="<c:url value="${baseURL}/info"/>"
                                                             title="About EBI Metagenomics">About EBI Metagenomics</a>
     </li>
+
+
     <li class="${model.tabClasses["tabClassContactView"]} last"><a href="<c:url value="${baseURL}/contact"/>"
                                                                    title="Contact us">Contact</a></li>
 
@@ -45,7 +50,8 @@
             <%--<li class="functional last"><a href="#" class="icon icon-static" data-icon="\">Feedback</a></li>--%>
             <li class="functional last">
                     <%--<a  class="icon icon-functional" data-icon="l" id="script_loginLink" href="javascript:openLoginDialogForm()" title="Login">Login</a>--%>
-                <a id="script_loginLink" href="javascript:openLoginDialogForm()" title="Login">Login</a><%--Remove icon as font-size was bugging on mouse over--%>
+                        <a id="LoginBlockUI" href="" title="Login">Login</a>
+                        <%--<a id="script_loginLink" href="javascript:openLoginDialogForm()" title="Login">Login</a>--%>
 
                 <a class="icon icon-functional" data-icon="l" id="noscript_loginLink"
                    href="<c:url value="${baseURL}/login?display=false"/>" title="Login">Login</a>

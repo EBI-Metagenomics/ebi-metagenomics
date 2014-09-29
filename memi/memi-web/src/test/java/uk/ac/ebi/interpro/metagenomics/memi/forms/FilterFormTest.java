@@ -3,7 +3,6 @@ package uk.ac.ebi.interpro.metagenomics.memi.forms;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 
 import static org.junit.Assert.assertEquals;
 

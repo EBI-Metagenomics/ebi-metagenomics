@@ -1,10 +1,5 @@
 package uk.ac.ebi.interpro.metagenomics.memi.controller;
 
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
-
-import java.util.List;
-
 /**
  * Useful for controllers (like {@link SubmissionController}),
  * which have to check if somebody is logged in.

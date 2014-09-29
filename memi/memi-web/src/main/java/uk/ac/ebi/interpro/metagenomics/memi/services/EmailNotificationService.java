@@ -10,8 +10,6 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Represents an email notification service.

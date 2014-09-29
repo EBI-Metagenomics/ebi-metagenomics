@@ -1,7 +1,5 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage;
 
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.TaxonomyData;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

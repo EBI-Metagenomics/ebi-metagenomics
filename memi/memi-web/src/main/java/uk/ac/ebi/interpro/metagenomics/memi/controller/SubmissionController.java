@@ -1,6 +1,5 @@
 package uk.ac.ebi.interpro.metagenomics.memi.controller;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.velocity.app.VelocityEngine;
@@ -30,8 +29,6 @@ import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuil
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
-import java.io.IOException;
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

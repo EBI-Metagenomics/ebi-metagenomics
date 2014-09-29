@@ -5,14 +5,19 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.EmgLogFileInfoDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.exceptionHandling.ExceptionTag;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
+import uk.ac.ebi.interpro.metagenomics.memi.model.EmgFile;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.DownloadableFileDefinition;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Represents an abstract controller class, which extends all more specific controllers.
@@ -29,6 +34,12 @@ public abstract class AbstractController {
 
     @Resource
     protected MemiPropertyContainer propertyContainer;
+
+    @Resource
+    protected EmgLogFileInfoDAO fileInfoDAO;
+
+    @Resource
+    protected Map<String, DownloadableFileDefinition> fileDefinitionsMap;
 
     protected abstract String getModelViewName();
 
@@ -65,4 +76,17 @@ public abstract class AbstractController {
         }
         return null;
     }
+
+    protected EmgFile getEmgFile(final long sampleId) {
+        List<EmgFile> emgFiles = fileInfoDAO.getFilesBySampleId(sampleId);
+        if (emgFiles.size() > 0) {
+            return emgFiles.get(0);
+        } else {
+            final String errorMessage = ExceptionTag.DATABASE_CURATION_ISSUE.toString() + "No log_file_info entry (EMG schema) for sample with id " + sampleId + " exists!";
+            log.error(errorMessage);
+            throw new IllegalStateException(errorMessage);
+        }
+    }
+
+
 }

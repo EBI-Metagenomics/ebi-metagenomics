@@ -108,8 +108,9 @@
                                 <p style="padding-bottom:7px; "> You can click on <a href="<c:url value="${baseURL}/submit"/>"
                                                                                      title="Submit data">Submit data</a>
                                     to send us your nucleotide sequences for analysis.
-                                    (Note: you will need to <a href="javascript:openLoginDialogForm()"
-                                                               title="Login">login</a>
+                                    <%--(Note: you will need to <a href="javascript:openLoginDialogForm()" title="Login">login</a>--%>
+                                    (Note: you will need to  <a id="LoginBlockUI-text" href="" title="Login">login</a>
+
                                     or <a href="<c:url value="/register"/>"
                                           title="Registration">register</a>
                                     first). </p>
@@ -216,8 +217,8 @@
                                         <%-- leave empty to be consistent with sample overview page
                                  - <img src="${pageContext.request.contextPath}/img/ico_analysis_chart_small_off.gif" alt="Analysis in progress" title="Analysis in progress">--%></c:when>
                                     <c:otherwise>
-                                        - <a href="<c:url value="${baseURL}/sample/${sample.sampleId}#Taxonomy-Analysis"/>" class="list_sample" title="Taxonomy analysis">Taxonomy </a> | <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>#Functional-Analysis"
-                                                                                                                                                                                             class="list_sample" title="Function analysis">Function results</a> | <a class="icon icon-functional" data-icon="=" href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>#Download" class="list_sample" title="download results"></a>
+                                        - <a href="<c:url value="${baseURL}/sample/${sample.sampleId}#ui-id-7"/>" class="list_sample" title="Taxonomy analysis">Taxonomy </a> | <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>#ui-id-9"
+                                                                                                                                                                                             class="list_sample" title="Function analysis">Function results</a> | <a class="icon icon-functional" data-icon="=" href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>#ui-id-11" class="list_sample" title="download results"></a>
 
                                     </c:otherwise>
                                 </c:choose>
@@ -305,8 +306,8 @@
                             <%--BEGIN TEXT VERSION--%>
 
                              <c:otherwise>
-                                - <a href="<c:url value="${baseURL}/sample/${sample.sampleId}#Taxonomy-Analysis"/>" class="list_sample" title="Taxonomy analysis">Taxonomy </a> | <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>#Functional-Analysis"
-                                                                                                                                               class="list_sample" title="Function analysis">Function results</a> | <a class="icon icon-functional" data-icon="=" href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>#Download" class="list_sample" title="download results"></a>
+                                - <a href="<c:url value="${baseURL}/sample/${sample.sampleId}#ui-id-7"/>" class="list_sample" title="Taxonomy analysis">Taxonomy </a> | <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>#ui-id-9"
+                                                                                                                                               class="list_sample" title="Function analysis">Function results</a> | <a class="icon icon-functional" data-icon="=" href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>#ui-id-11" class="list_sample" title="download results"></a>
 
                             </c:otherwise>
                             <%--END TEXT VERSION--%>

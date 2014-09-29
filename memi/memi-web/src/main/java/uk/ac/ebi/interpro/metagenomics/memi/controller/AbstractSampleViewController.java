@@ -4,11 +4,9 @@ package uk.ac.ebi.interpro.metagenomics.memi.controller;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.ui.ModelMap;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.EmgLogFileInfoDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.ISampleStudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.temp.SampleAnnotationDAO;
-import uk.ac.ebi.interpro.metagenomics.memi.exceptionHandling.ExceptionTag;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgFile;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgSampleAnnotation;
@@ -46,16 +44,10 @@ public class AbstractSampleViewController extends SecuredAbstractController<Samp
     protected SampleDAO sampleDAO;
 
     @Resource
-    protected EmgLogFileInfoDAO fileInfoDAO;
-
-    @Resource
     private SampleAnnotationDAO sampleAnnotationDAO;
 
     @Resource
     private MemiDownloadService downloadService;
-
-    @Resource
-    protected Map<String, DownloadableFileDefinition> fileDefinitionsMap;
 
     @Resource(name = "qualityControlFileDefinitions")
     private List<ResultFileDefinitionImpl> qualityControlFileDefinitions;
@@ -81,17 +73,6 @@ public class AbstractSampleViewController extends SecuredAbstractController<Samp
             result.add(new Breadcrumb("Sample: " + ((Sample) entity).getSampleName(), "View sample " + ((Sample) entity).getSampleName(), SampleViewController.VIEW_NAME + '/' + ((Sample) entity).getSampleId()));
         }
         return result;
-    }
-
-    protected EmgFile getEmgFile(final long sampleId) {
-        List<EmgFile> emgFiles = fileInfoDAO.getFilesBySampleId(sampleId);
-        if (emgFiles.size() > 0) {
-            return emgFiles.get(0);
-        } else {
-            final String errorMessage = ExceptionTag.DATABASE_CURATION_ISSUE.toString() + "No log_file_info entry (EMG schema) for sample with id " + sampleId + " exists!";
-            log.error(errorMessage);
-            throw new IllegalStateException(errorMessage);
-        }
     }
 
     protected void openDownloadDialog(final HttpServletResponse response,
@@ -154,7 +135,7 @@ public class AbstractSampleViewController extends SecuredAbstractController<Samp
         final List<DownloadLink> funcAnalysisDownloadLinks = new ArrayList<DownloadLink>();
         final List<DownloadLink> taxaAnalysisDownloadLinks = new ArrayList<DownloadLink>();
 
-        final String linkURL = (sampleIsPublic ? "https://www.ebi.ac.uk/ena/data/view/" + sampleId + "?display=html" : "https://www.ebi.ac.uk/ena/submit/sra/#home");
+        final String linkURL = (sampleIsPublic ? "https://www.ebi.ac.uk/ena/data/view/" + sampleId : "https://www.ebi.ac.uk/ena/submit/sra/#home");
         seqDataDownloadLinks.add(new DownloadLink("Submitted nucleotide reads (ENA website)",
                 "Click to download all submitted nucleotide data on the ENA website",
                 linkURL,

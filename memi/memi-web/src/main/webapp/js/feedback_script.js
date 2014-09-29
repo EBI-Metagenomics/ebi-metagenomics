@@ -78,14 +78,14 @@ var flag = true;
 function hideFeedbackForm() {
 //        var feedbackFormRightPosition = document.getElementById("feedback_div").style.right;
     $("#feedback_div").animate({
-        right: '-=444px'
+        right: '-=437px'
     }, 1500);
     clearFeedbackForm();
 }
 //Shows feedback form
 function showFeedbackForm() {
     $("#feedback_div").animate({
-        right: '+=444px'
+        right: '+=437px'
     }, 1500);
 }
 

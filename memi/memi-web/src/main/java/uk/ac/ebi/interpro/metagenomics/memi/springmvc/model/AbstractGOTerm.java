@@ -1,7 +1,6 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
 
 import java.util.Comparator;
-import java.util.List;
 
 /**
  * Simple model class which represents a GO term.

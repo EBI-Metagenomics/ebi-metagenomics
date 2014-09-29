@@ -4,10 +4,15 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<!-- The following line includes the login dialog script. -->
+
+<!-- login dialog script for error messages -->
 <script src="${pageContext.request.contextPath}/js/loginDialog_script.js" type="text/javascript"></script>
+<!-- Jquery BlockUI to display popup-->
+<script src="${pageContext.request.contextPath}/js/jquery.blockUI.js" type="text/javascript"></script>
+
 <%--Login dialog--%>
-<div id="login_dialog_div" class="sub">
+<div id="login_dialog_div" class="sub" style="display:none; cursor: default;">
+    <div class="anim close_window close_window_button" title="Close this window">&#10006;</div>
     <div class="sub_log">
         <form:form id="login_form" action="**/doLogin" commandName="loginForm">
 
@@ -28,7 +33,7 @@
                 </div>
                 <div class="form_row_log">
                     <input type="submit" name="login" value="Login" class="main_button"/>&nbsp;
-                    <span class="clear_but">| <a href="javascript:closeLoginDialogForm()"
+                    <span class="clear_but">| <a class="close_window_button" href=""
                                                  title="Cancel">Cancel</a></span>
                 </div>
 
@@ -52,3 +57,21 @@
             should simply use your ENA account to login.</p>
     </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        //Click event for openEntryViewPopup
+        $('#LoginBlockUI, #LoginBlockUI-text').click(function () {
+            $.blockUI({ message:$('#login_dialog_div'), baseZ:100000, overlayCSS:{ backgroundColor:'#000', opacity:0.6, cursor:'pointer'}, css:{top:'25%', left:'25%', width:'708px', padding:'0px', border:'1px #AAA solid', 'border-radius':'12px', backgroundColor:'#C9C9C9' }});
+            //make the black overlay clikable and removable
+            $('.blockOverlay').click($.unblockUI);
+            return false;
+        });//end click event
+
+        //Click on close cross icon
+        $(".close_window_button").click(function () {
+                  $.unblockUI();
+            return false;
+              });//end cancel click
+
+    });
+</script>
