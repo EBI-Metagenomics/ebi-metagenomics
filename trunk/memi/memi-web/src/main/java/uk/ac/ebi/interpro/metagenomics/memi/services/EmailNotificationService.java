@@ -85,6 +85,7 @@ public class EmailNotificationService implements INotificationService {
             log.info("Sent email notification successfully to " + receiver + "!");
         } catch (MailException ex) {
             log.fatal("Could not sent email notification message!", ex);
+            log.fatal("Email message content:\n" + mimeMsg);
         }
     }
 

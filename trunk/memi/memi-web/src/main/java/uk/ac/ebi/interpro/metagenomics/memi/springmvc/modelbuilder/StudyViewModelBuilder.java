@@ -40,15 +40,13 @@ public class StudyViewModelBuilder extends AbstractViewModelBuilder<StudyViewMod
 
     private SampleDAO sampleDAO;
 
-    private SubmissionContactDAO submissionContactDAO;
-
     private List<Publication> relatedLinks;
 
     private List<Publication> relatedPublications;
 
 
     public StudyViewModelBuilder(SessionManager sessionMgr, String pageTitle, List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer,
-                                 Study study, SampleDAO sampleDAO,SubmissionContactDAO submissionContactDAO) {
+                                 Study study, SampleDAO sampleDAO) {
         super(sessionMgr);
         this.pageTitle = pageTitle;
         this.breadcrumbs = breadcrumbs;
@@ -57,7 +55,6 @@ public class StudyViewModelBuilder extends AbstractViewModelBuilder<StudyViewMod
         this.sampleDAO = sampleDAO;
         this.relatedLinks = new ArrayList<Publication>();
         this.relatedPublications = new ArrayList<Publication>();
-        this.submissionContactDAO=submissionContactDAO;
     }
 
     @Override
@@ -66,17 +63,8 @@ public class StudyViewModelBuilder extends AbstractViewModelBuilder<StudyViewMod
         Submitter submitter = getSessionSubmitter(sessionMgr);
         List<Sample> samples = getSamplesForStudyViewModel(submitter);
         buildPublicationLists();
-        //
-        String submissionAccountId = study.getSubmissionAccountId();
-        Submitter studyOwner = submissionContactDAO.getSubmitterBySubmissionAccountId(submissionAccountId);
-        if (studyOwner != null) {
-            String submitterName = studyOwner.getFirstName() + " " + studyOwner.getSurname();
-            return new StudyViewModel(submitter, study, samples, pageTitle,
-                    breadcrumbs, propertyContainer, relatedPublications, relatedLinks, submitterName, studyOwner.getEmailAddress());
-        } else {
-            return new StudyViewModel(submitter, study, samples, pageTitle,
-                    breadcrumbs, propertyContainer, relatedPublications, relatedLinks);
-        }
+        return new StudyViewModel(submitter, study, samples, pageTitle,
+                breadcrumbs, propertyContainer, relatedPublications, relatedLinks);
     }
 
     private List<Sample> getSamplesForStudyViewModel(Submitter submitter) {
