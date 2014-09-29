@@ -23,6 +23,8 @@ public interface IViewModelParams {
 
     public static final String TAB_CLASS_ABOUT_VIEW = "tabClassAboutView";
 
+    public static final String TAB_CLASS_COMPARE_VIEW = "tabClassCompareView";
+
     public static final String TAB_CLASS_CONTACT_VIEW = "tabClassContactView";
 
     public static final String TAB_CLASS_FEEDBACK_VIEW = "tabClassFeedbackView";

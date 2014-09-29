@@ -86,7 +86,7 @@
 </c:choose>
 
 </div>  <%--end sample_ana--%>
-<div class="but_top"><a href="#top" title="back to the top page">Top</a></div>
+
 <!-- Script needed to convert Google chart images into Canvas/image elements-->
 <script type="text/javascript">
 

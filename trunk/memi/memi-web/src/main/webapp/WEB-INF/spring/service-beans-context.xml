@@ -70,5 +70,4 @@
 
     <bean id="authenticationService" class="uk.ac.ebi.interpro.metagenomics.memi.authentication.AuthenticationService"/>
 
-
 </beans>

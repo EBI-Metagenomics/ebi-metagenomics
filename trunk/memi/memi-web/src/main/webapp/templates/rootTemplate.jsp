@@ -73,7 +73,7 @@
     <%-- END JQuery CSS--%>
 
     <%--<link href="https://fonts.googleapis.com/css?family=Droid+Sans:regular,bold" rel="stylesheet" type="text/css"/>--%>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/default.css" type="text/css" media="all"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/default.css?v1.1" type="text/css" media="all"/>
 
     <!--[if lt IE 8]>
     <style type="text/css"> table.result tbody tr td {background-color: #F4F4F8;}</style> <![endif]-->
@@ -92,9 +92,15 @@
     <%-- remove the snapshot option for all browsers - temp - to remove the snapshot option completely from the pages when we are sure about it--%>
 
 
-    <!-- JQuery and JQuery UI source-->
-    <script src="${pageContext.request.contextPath}/js/jquery-1.4.4.min.js" type="text/javascript"></script>
-    <script src="${pageContext.request.contextPath}/js/jquery-ui-1.8.8.custom.min.js" type="text/javascript"></script>
+    <!-- JQuery v1.11.1 and JQuery UI source-->
+    <script src="${pageContext.request.contextPath}/js/jquery-1.11.1/jquery.js" type="text/javascript"></script>
+    <script src="${pageContext.request.contextPath}/js/jquery-1.11.1/jquery-ui.min.js"></script>
+    <%--<script src="${pageContext.request.contextPath}/js/jquery-1.4.4.min.js" type="text/javascript"></script>--%>
+    <%--<script src="${pageContext.request.contextPath}/js/jquery-ui-1.8.8.custom.min.js" type="text/javascript"></script>--%>
+
+    <!--detect and restore APIs or features that have been deprecated in jQuery see https://github.com/jquery/jquery-migrate (temp solution while we remove code using old Jquery-->
+    <script src="${pageContext.request.contextPath}/js/jquery-migrate-1.2.1.js"></script>
+
     <script src="${pageContext.request.contextPath}/js/jquery.validate-1.9.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/js/jquery.form-2.85.js" type="text/javascript"></script>
     <!-- The date picker is used within the submission page -->
@@ -161,7 +167,7 @@
     <!-- script for carousel -->
     <script src="${pageContext.request.contextPath}/js/jquery.carousel.min.js" type="text/javascript"></script>
     <script type="text/javascript">
-        $(function () {
+        $(document).ready(function () {
             $("div.carousel").carousel({pagination:true, autoSlide:true, autoSlideInterval:15000, delayAutoSlide:2000, loop:true });
 
         });
@@ -296,5 +302,23 @@
 
 <!-- The following line includes the feedback DIV and the feedback FORM -->
 <%@ include file="feedback/script/feedbackDiv.jsp" %>
+<div id="toTop" class="anim"><img src="${pageContext.request.contextPath}/img/ico_scroll_top.png" alt="Scroll to top" ><span class="scroll anim">To top </span></div>
+<!--Back top jQuery plugin-->
+       <script type="text/javascript">
+           $(document).ready(function () {
+               $(window).scroll(function () {
+                   if ($(this).scrollTop() != 0) {
+                       $('#toTop').fadeIn();
+                   } else {
+                       $('#toTop').fadeOut();
+                   }
+               });
+
+               $('#toTop').click(function () {
+                   $('body,html').animate({scrollTop:0}, 800);
+               });
+           });
+       </script>
+<!-- End Back top jQuery plugin-->
 </body>
 </html>

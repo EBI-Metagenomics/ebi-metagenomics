@@ -1,8 +1,6 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder;
 
-import org.junit.Before;
 import org.junit.Test;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewPagination;
 
 import static junit.framework.Assert.*;
 

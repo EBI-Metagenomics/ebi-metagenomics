@@ -187,7 +187,4 @@ Sarah Hunter, Matthew Corbett, Hubert Denise, Matthew Fraser, Alejandra Gonzalez
             rel="nofollow"> Wikipedia</a>]
     </li>
 </ul>
-<p>
 
-<div class="but_top"><a href="#top" title="back to the top page">Top</a></div>
-</p>

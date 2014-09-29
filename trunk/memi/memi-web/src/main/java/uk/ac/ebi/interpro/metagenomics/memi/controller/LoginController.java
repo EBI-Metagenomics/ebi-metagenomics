@@ -5,16 +5,9 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.HttpServerErrorException;
-import uk.ac.ebi.ena.account.admin.client.AuthenticationClient;
-import uk.ac.ebi.ena.authentication.model.AuthResult;
 import uk.ac.ebi.interpro.metagenomics.memi.authentication.AuthenticationService;
 import uk.ac.ebi.interpro.metagenomics.memi.authentication.MGPortalAuthResult;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.erapro.SubmissionContactDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
-import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
 
 import javax.annotation.Resource;
 
