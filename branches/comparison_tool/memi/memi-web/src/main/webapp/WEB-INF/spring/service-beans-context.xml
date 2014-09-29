@@ -29,9 +29,6 @@
         <property name="receiverCCList">
             <list>
                 <value type="java.lang.String">${emailService.sraRegistration.receiverCC_1}</value>
-                <value type="java.lang.String">${emailService.sraRegistration.receiverCC_2}</value>
-                <value type="java.lang.String">${emailService.sraRegistration.receiverCC_3}</value>
-                <value type="java.lang.String">${emailService.sraRegistration.receiverCC_4}</value>
             </list>
         </property>
         <property name="emailSubject" value="New SRA account request from the MGPortal"/>
@@ -52,6 +49,8 @@
 
     <!--This service configures a HTTP response, which opens a download dialog-->
     <bean id="downloadService" class="uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService"/>
+
+    <bean id="exportValueService" class="uk.ac.ebi.interpro.metagenomics.memi.services.ExportValueService"/>
 
     <bean id="authenticationClientTomcat9" name="authenticationClientTomcat9" class="uk.ac.ebi.ena.account.admin.client.AuthenticationClientImpl">
         <constructor-arg ref="enaWebServiceUrlTomcat9"/>

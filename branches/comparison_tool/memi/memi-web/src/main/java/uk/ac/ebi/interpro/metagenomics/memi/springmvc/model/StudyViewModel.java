@@ -23,27 +23,14 @@ public class StudyViewModel extends ViewModel {
 
     private List<Publication> relatedPublications;
 
-    private String submitterName;
-
-    private String emailAddress;
-
     public StudyViewModel(Submitter submitter, Study study, List<Sample> samples, String pageTitle,
                           List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer,
                           List<Publication> relatedPublications, List<Publication> relatedLinks) {
-        this(submitter, study, samples, pageTitle, breadcrumbs, propertyContainer, relatedPublications, relatedLinks, "not available", "not available");
-    }
-
-    public StudyViewModel(Submitter submitter, Study study, List<Sample> samples, String pageTitle,
-                          List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer,
-                          List<Publication> relatedPublications, List<Publication> relatedLinks,
-                          String submitterName, String emailAddress) {
         super(submitter, pageTitle, breadcrumbs, propertyContainer);
         this.samples = samples;
         this.study = study;
         this.relatedLinks = relatedLinks;
         this.relatedPublications = relatedPublications;
-        this.submitterName = submitterName;
-        this.emailAddress = emailAddress;
     }
 
     public List<Publication> getRelatedLinks() {
@@ -68,13 +55,5 @@ public class StudyViewModel extends ViewModel {
 
     public void setStudy(Study study) {
         this.study = study;
-    }
-
-    public String getSubmitterName() {
-        return submitterName;
-    }
-
-    public String getEmailAddress() {
-        return emailAddress;
     }
 }

@@ -111,6 +111,7 @@ public class SubmissionController extends CheckLoginController implements IContr
     @RequestMapping(method = RequestMethod.POST)
     public ModelAndView doPost(@ModelAttribute(SRARegistrationForm.MODEL_ATTR_NAME) @Valid SRARegistrationForm registrationForm, BindingResult result,
                                ModelMap model, SessionStatus status) {
+        log.info("New ENA account registration request");
         final ModelPopulator modelPopulator = new SRARegistrationModelPopulator();
         modelPopulator.populateModel(model);
         if (result.hasErrors()) {
