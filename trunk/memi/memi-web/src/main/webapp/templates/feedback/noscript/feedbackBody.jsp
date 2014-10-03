@@ -15,7 +15,7 @@
                 <table class="result">
                     <tr>
                         <td>
-                            <label for="feedbackForm_emailAddress" id="required"><spring:message
+                            <label for="feedbackForm_emailAddress" class="required"><spring:message
                                     code="email.label"/></label>
                         </td>
                     </tr>
@@ -28,7 +28,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <label for="feedbackForm_emailSubject" id="required"><spring:message
+                            <label for="feedbackForm_emailSubject" class="required"><spring:message
                                     code="feedbackForm.inputField.subject.label"/></label>
                         </td>
                     </tr>
@@ -41,7 +41,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <label for="feedbackForm_emailMessage" id="required"><spring:message
+                            <label for="feedbackForm_emailMessage" class="required"><spring:message
                                     code="feedbackForm.inputField.message.label"/></label>
                         </td>
                     </tr>
@@ -63,7 +63,7 @@
                     <form:input type="hidden" path="leaveIt"/>
                     <tr>
                         <td>
-                            <span id="required"></span>&nbsp;
+                            <span class="required"></span>&nbsp;
                             <small>required</small>
                         </td>
                     </tr>
