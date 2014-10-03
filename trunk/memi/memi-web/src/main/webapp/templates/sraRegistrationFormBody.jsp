@@ -3,9 +3,6 @@
 <h2><spring:message code="sraRegistrationForm.title"/></h2>
 
 <p class="intro">
-We provide a service for submission of raw sequence data and associated meta-data to the European Nucleotide Archive (ENA) and our analysis pipelines.
-</p>
-<p class="intro">
     You need to register for an ENA account in order to be able to upload your sequence to the archives. Do this using the form below; we have pre-filled in some of the fields using the information you have already supplied to us. You will be contacted by the email address you supply once the account is activated.</p>
 <%--<%@ include file="components/sraRegistrationFormComponent.jsp" %>--%>
 
