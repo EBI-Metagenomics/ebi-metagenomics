@@ -11,14 +11,14 @@
                 <fieldset>
                     <legend>Enter details</legend>
                     <div class="form_row">
-                        <label for="title" id="required"><spring:message
+                        <label for="title" class="required"><spring:message
                                 code="submissionForm.inputField.title.label"/></label><br/>
                         <form:input id="title" path="subTitle" cssErrorClass="error" title="Project title"/>
                         <span class="form_help"><spring:message code="submissionForm.inputField.title.help"/></span>
                         <form:errors path="subTitle" cssClass="error"/></div>
 
                     <div class="form_row">
-                        <label for="datepicker" id="required"><spring:message
+                        <label for="datepicker" class="required"><spring:message
                                 code="submissionForm.inputField.date.label"/></label>
                         <br/>
                         <form:input id="datepicker" path="releaseDate" cssErrorClass="error"
@@ -28,7 +28,7 @@
                     </div>
 
                     <div class="form_row">
-                        <label for="description" id="required"><spring:message
+                        <label for="description" class="required"><spring:message
                                 code="submissionForm.inputField.desc.label"/></label><br/>
                         <form:textarea id="description" path="dataDesc" cssErrorClass="error" cssStyle="float:left;"
                                        title="Comments about your project"/>
@@ -65,7 +65,7 @@
                         <input name="submit" value="Submit" class="main_button" type="submit"/>
                         <span class="clear_but">| <a href="/metagenomics" title="cancel">Cancel</a></span>
                         <br/>
-                        <span id="required"></span>&nbsp;
+                        <span class="required"></span>&nbsp;
                         <small>required</small>
                     </p>
                 </fieldset>
