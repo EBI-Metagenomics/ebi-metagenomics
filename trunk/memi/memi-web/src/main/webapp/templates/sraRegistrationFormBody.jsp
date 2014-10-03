@@ -1,18 +1,23 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%--<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>--%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<h2><spring:message code="sraRegistrationForm.title"/></h2>
 
-
-    <%@ include file="components/sraRegistrationFormComponent.jsp" %>
+<p class="intro">
+We provide a service for submission of raw sequence data and associated meta-data to the European Nucleotide Archive (ENA) and our analysis pipelines. A <a class="ext" title="Click here to watch the full video tutorial" href="http://www.youtube.com/watch?v=Zml8jTqfQPg">video tutorial</a> is available outlining this process.
+</p>
+<p class="intro">
+    You need to register for an ENA account in order to be able to upload your sequence to the archives. Do this using the form below; we have pre-filled in some of the fields using the information you have already supplied to us. You will be contacted by the email address you supply once the account is activated.</p>
+<%--<%@ include file="components/sraRegistrationFormComponent.jsp" %>--%>
 
     <div class="sub">
-
         <div class="sub_form">
+            <div style="padding-bottom: 18px;"><span class="required"></span>&nbsp; Please note that all fields in this form are required.</div>
             <form:form id="sub_form" commandName="sraRegistrationForm" method="post" action="submit">
                 <fieldset>
                     <legend>User details</legend>
                         <%--Email input field--%>
                     <div class="form_row">
-                        <label for="email" id="required"><spring:message
+                        <label for="email"><spring:message
                                 code="registrationForm.inputField.email.label"/></label><br/>
                         <form:input id="email" path="email" cssErrorClass="error" readonly="false"
                                     title="Please enter a valid email address"/>
@@ -21,7 +26,7 @@
                         <form:errors path="email" cssClass="error"/></div>
                         <%--First name input field--%>
                     <div class="form_row">
-                        <label for="firstName" id="required"><spring:message
+                        <label for="firstName"><spring:message
                                 code="registrationForm.inputField.firstName.label"/></label><br/>
                         <form:input id="firstName" path="firstName" cssErrorClass="error"
                                     title="Please enter your first name"/>
@@ -31,7 +36,7 @@
                     </div>
                         <%--Last name input field--%>
                     <div class="form_row">
-                        <label for="lastNameId" id="required"><spring:message
+                        <label for="lastNameId" ><spring:message
                                 code="registrationForm.inputField.lastName.label"/></label>
                         <br/>
                         <form:input id="lastNameId" path="lastName" cssErrorClass="error"
@@ -42,7 +47,7 @@
                     </div>
                         <%--Department input field--%>
                     <div class="form_row">
-                        <label for="department" id="required"><spring:message
+                        <label for="department" ><spring:message
                                 code="registrationForm.inputField.department.label"/></label><br/>
                         <form:input id="department" path="department" cssErrorClass="error"
                                     title="Please enter your department within your Institute"/>
@@ -51,7 +56,7 @@
                         <form:errors path="department" cssClass="error"/></div>
                         <%--Institute input field--%>
                     <div class="form_row">
-                        <label for="institute" id="required"><spring:message
+                        <label for="institute" ><spring:message
                                 code="registrationForm.inputField.institute.label"/></label><br/>
                         <form:input id="institute" path="institute" cssErrorClass="error"
                                     title="Please enter your Institute"/>
@@ -60,7 +65,7 @@
                         <form:errors path="institute" cssClass="error"/></div>
                         <%--Postal address input field--%>
                     <div class="form_row">
-                        <label for="postalAddress" id="required"><spring:message
+                        <label for="postalAddress" ><spring:message
                                 code="registrationForm.inputField.postalAddress.label"/></label><br/>
                         <form:input id="postalAddress" path="postalAddress" cssErrorClass="error"
                                     title="Please enter your Institute's postal address"/>
@@ -69,7 +74,7 @@
                         <form:errors path="postalAddress" cssClass="error"/></div>
                         <%--Postal code input field--%>
                     <div class="form_row">
-                        <label for="postalCode" id="required"><spring:message
+                        <label for="postalCode" ><spring:message
                                 code="registrationForm.inputField.postalCode.label"/></label><br/>
                         <form:input id="postalCode" path="postalCode" cssErrorClass="error"
                                     title="Please enter your Institute's postal code"/>
@@ -78,7 +83,7 @@
                         <form:errors path="postalCode" cssClass="error"/></div>
                         <%--Country selection field--%>
                     <div class="form_row">
-                        <label for="country" id="required"><spring:message
+                        <label for="country" ><spring:message
                                 code="registrationForm.inputField.country.label"/></label><br/>
                         <form:select id="country" path="country" cssErrorClass="error"
                                      title="Please select your Institute's country">
@@ -96,7 +101,7 @@
                     <legend>Project data</legend>
                         <%--Project title input field--%>
                     <div class="form_row">
-                        <label for="title" id="required"><spring:message
+                        <label for="title" ><spring:message
                                 code="submissionForm.inputField.title.label"/></label><br/>
                         <form:input id="title" path="subTitle" cssErrorClass="error" title="Project title"/>
                                 <span class="form_help"><spring:message
@@ -104,7 +109,7 @@
                         <form:errors path="subTitle" cssClass="error"/></div>
                         <%--Date picker input field--%>
                     <div class="form_row">
-                        <label for="datepicker" id="required"><spring:message
+                        <label for="datepicker" ><spring:message
                                 code="submissionForm.inputField.date.label"/></label>
                         <br/>
                         <form:input id="datepicker" path="releaseDate" cssErrorClass="error"
@@ -115,7 +120,7 @@
                     </div>
                         <%--Description text area--%>
                     <div class="form_row">
-                        <label for="description" id="required"><spring:message
+                        <label for="description" ><spring:message
                                 code="submissionForm.inputField.desc.label"/></label><br/>
                         <form:textarea id="description" path="dataDesc" cssErrorClass="error"
                                        cssStyle="float:left;"
@@ -141,9 +146,7 @@
                     <p style="clear:both;/*For IE6*/">
                         <input name="submit" value="Submit" class="main_button" type="submit"/>
                         <span class="clear_but">| <a href="/metagenomics" title="cancel">Cancel</a></span>
-                        <br/>
-                        <span id="required"></span>&nbsp;
-                        <small>required</small>
+
                     </p>
                 </fieldset>
             </form:form>

@@ -1,9 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-   <h2>Thank you for completing the SRA registration form</h2>
+   <h2>Thank you for completing the ENA account registration form</h2>
 
     <p class="intro">
-        Your request has been successfully sent to the Sequence Read Archive. You will be contacted by the email address
+        Your request has been successfully sent to ENA. You will be contacted by the email address
         you supply once the account is activated.
 
         A copy of your request has been sent to your email address, if you do not receive this within a

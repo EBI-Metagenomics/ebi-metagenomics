@@ -1,10 +1,5 @@
-<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %><%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %><%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="eng">
-
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -20,10 +15,10 @@
     <meta name="keywords" content="ebi, EBI, InterPro, interpro, metagenomics, metagenomic, metagenome, metagenomes, DNA, microbiology, microbial, ecology, organisms, microorganism, microorganisms, biodiversity, diversity, gene, genes, genome, genomes, genomic, genomics, ecogenomics, community genomics, genetic, sequencing, sequence, environment, environmental, ecosystem, ecosystems, samples, sample, annotation, protein, research, archive, metabolic, pathways, analysis, function, GAIA, shotgun, pyrosequencing, community, communities, metabolism, cultivation, bioinformatics, bioinformatic, database, metadata, dataset, data, repository"/>
 
     <%-- EBI style and code--%>
-    <link rel="stylesheet"  href="http://www.ebi.ac.uk/inc/css/contents.css"     type="text/css" />
-    <link rel="stylesheet"  href="http://www.ebi.ac.uk/inc/css/userstyles.css"   type="text/css" />
+    <link rel="stylesheet" href="http://www.ebi.ac.uk/inc/css/contents.css" type="text/css" />
+    <link rel="stylesheet" href="http://www.ebi.ac.uk/inc/css/userstyles.css" type="text/css" />
     <script src="http://www.ebi.ac.uk/inc/js/contents.js" type="text/javascript"></script>
-    <link rel="stylesheet"  href="http://www.ebi.ac.uk/inc/css/sidebars.css"   type="text/css" />
+    <link rel="stylesheet" href="http://www.ebi.ac.uk/inc/css/sidebars.css" type="text/css" />
     <%--<link rel="SHORTCUT ICON" href="http://www.ebi.ac.uk/bookmark.ico" /> removed as we have created a favicon for metagenomics --%>
           <style type="text/css">
               @media print {
@@ -64,9 +59,6 @@
 
     <%-- remove favicon from img folder to root as was not working anymore--%>
     <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/favicon.ico"/>
-
-
-
 
     <%-- JQuery CSS--%>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/jquery-ui-1.8.11.custom.css" type="text/css" media="all"/>
@@ -200,26 +192,6 @@
         </style>
     </noscript>
 
-
-    <%--<script type="text/javascript">--%>
-
-        <%--$("#local-masthead-container-btn").click(function(){--%>
-                <%--var json = JSON.parse($("#local-masthead-json-configuration").val());--%>
-                <%--$.ajax({--%>
-                    <%--type: 'POST',--%>
-                    <%--url:"http://wwwint.ebi.ac.uk/web/template-service/prod/templates/compliance/masthead/local/",--%>
-                    <%--data: '{"name":"jonas"}',--%>
-                    <%--success: function(data, textStatus, jqXHR){--%>
-                        <%--$("#local-masthead-container").html(data);--%>
-                    <%--},--%>
-                    <%--fail: function(){--%>
-                        <%--alert ("fuck")--%>
-                    <%--},--%>
-                    <%--dataType: "html"--%>
-                <%--});--%>
-            <%--});--%>
-    <%--</script>--%>
-
 </head>
 
 <%@ include file="scriptlets/_getActivePage.jsp" %>
@@ -287,18 +259,8 @@
 </div>
 <%-- END div contents --%>
 
-<%--<div id="extra_feedback">--%>
-<%--<h1>--%>
-<%--<a id="script_feedbackLink" href="javascript:showFeedbackForm()"--%>
-<%--title="Give your feedback">Give your feedback</a>--%>
-<%--<a id="noscript_feedbackLink" href="<c:url value="${baseURL}/feedback"/>"--%>
-<%--title="Give your feedback">Give your feedback</a>--%>
-<%--</h1>--%>
-<%--</div>--%>
-
-<%--<a href="<c:url value="${baseURL}/info#intro"/>" title="About us">--%>
-    <%--<div id="extra_beta" class="anim"></div>--%>
-<%--</a>--%>
+<%--little beta flag--%>
+<%--<a href="<c:url value="${baseURL}/info#intro"/>" title="About us"><div id="extra_beta" class="anim"></div></a>--%>
 
 <!-- The following line includes the feedback DIV and the feedback FORM -->
 <%@ include file="feedback/script/feedbackDiv.jsp" %>
