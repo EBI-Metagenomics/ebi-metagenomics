@@ -1296,9 +1296,10 @@ display:block;
 
 #feedback_form label,  #feedback_form_no label {font-weight:bold;font-size:110%;color:#445668;}
 #login_form label, #submit_form label {display:block; font-weight:bold;font-size:110%;color:#605F5F;}
+.sub_form {margin-left:9px;}
 #sub_form label {font-weight:bold;font-size:110%;color:#605F5F;}
 
-#sub_form #required, #feedback_form #required, #feedback_form_no #required  {background: url(../img/ico_form_required.png) no-repeat right center; padding-right:14px; border: 0px red solid; zoom:1; /* for IE7 and IE6 to visualise the span and background without content*/}
+.required {background: url(../img/ico_form_required.png) no-repeat right center; padding-right:14px; border: 0px red solid; zoom:1; /* for IE7 and IE6 to visualise the span and background without content*/}
 
 label.error, span.error, #feedback_form label.error, #feedback_form_no label.error, #login_form label.error {
 font-weight:normal;
@@ -1539,6 +1540,7 @@ background:url(../img/carousel_l.png) 0 0 no-repeat; margin-right:-34px;}
 
 
 #login_dialog_div {display:none; /*solve a bug  of conflict between popup and carousel on IE6 and IE7*/}
+#login_dialog_div { border: 0px solid #AAA; background:none;} /*remove the double background+border for login popup */
 
 /* FEEDBACK FORM */
 #feedback_div   {
