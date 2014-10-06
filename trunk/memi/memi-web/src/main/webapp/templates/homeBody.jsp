@@ -108,10 +108,8 @@
                                 <p style="padding-bottom:7px; "> You can click on <a href="<c:url value="${baseURL}/submit"/>"
                                                                                      title="Submit data">Submit data</a>
                                     to send us your nucleotide sequences for analysis.
-                                    <%--(Note: you will need to <a href="javascript:openLoginDialogForm()" title="Login">login</a>--%>
-                                    (Note: you will need to  <a id="LoginBlockUI-text" href="" title="Login">login</a>
 
-                                    or <a href="<c:url value="/register"/>"
+                                    (Note: you will need to  <a href="<c:url value="/register"/>"
                                           title="Registration">register</a>
                                     first). </p>
                                 <c:choose>
