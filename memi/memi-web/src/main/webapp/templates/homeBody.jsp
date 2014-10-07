@@ -316,12 +316,12 @@
                 <p>
                     <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search&startPosition=0"/>"
                        title="View all public samples" class="all">View all samples</a></p>
-                <span class="separator"></span>
+                <%--<span class="separator"></span>--%>
 
-                    <h2>Mailing list</h2>
+                    <%--<h2>Mailing list</h2>--%>
 
-                    <p><span class="list_desc"><a
-                                                  href="http://listserver.ebi.ac.uk/mailman/listinfo/metagenomics">Subscribe</a> to the EBI metagenomics mailing list to receive update information. </span>
+                    <%--<p><span class="list_desc"><a--%>
+                                                  <%--href="http://listserver.ebi.ac.uk/mailman/listinfo/metagenomics">Subscribe</a> to the EBI metagenomics mailing list to receive update information. </span>--%>
 
 
             </div>
