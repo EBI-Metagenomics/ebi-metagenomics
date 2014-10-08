@@ -50,7 +50,7 @@
                                            title="Registration" style="color:#188960;">Sign-up</a> to register</span>
         </div>
         <div class="form_row" style="font-size:140%;">or</div>
-        <p><a href="https://www.ebi.ac.uk/ena/home"> <img src="${pageContext.request.contextPath}/img/ico_ena_user.jpg"
+        <p><a href="https://www.ebi.ac.uk/ena/submit/sra/#home"> <img src="${pageContext.request.contextPath}/img/ico_ena_user.jpg"
                                                           alt="ENA member" border="0"></a></p>
 
         <p class="sub_sign_note">If you already are a registered user of the European Nucleotide Archive (ENA), you
