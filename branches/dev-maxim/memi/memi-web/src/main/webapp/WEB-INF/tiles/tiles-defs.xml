@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+        "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+
+    <!-- Default main template -->
+    <definition name="rootTemplate" template="/templates/rootTemplate.jsp">
+        <!-- Attributes of type string-->
+        <put-attribute name="pageTitle" type="template" value="/templates/pageTitle.jsp"/>
+        <put-attribute name="bodyClass" type="string" value="grey"/>
+        <!-- Default value if not overridden -->
+        <!-- Attributes of type template-->
+        <put-attribute name="header" type="template" value="/templates/header.jsp"/>
+        <put-attribute name="breadcrumbs" type="template" value="/templates/breadcrumbs.jsp"/>
+        <put-attribute name="mainMenu" type="template" value="/templates/mainMenu.jsp"/>
+        <put-attribute name="footer" type="template" value="/templates/footer.jsp"/>
+    </definition>
+
+    <!-- Page bodies-->
+
+    <definition name="home" extends="rootTemplate">
+        <!-- Attributes of type definition-->
+        <put-attribute name="bodyClass" type="string" value="grey"/>
+        <put-attribute name="body" type="definition" value="homeDef"/>
+    </definition>
+
+    <definition name="homeDef" template="/templates/homeBody.jsp">
+        <put-attribute name="loginForm" type="template" value="/templates/loginForm.jsp"/>
+    </definition>
+
+    <definition name="homeError" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="grey"/>
+        <put-attribute name="body" value="/templates/errors/homeErrorBody.jsp"/>
+    </definition>
+
+
+    <definition name="info" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="green"/>
+        <put-attribute name="body" value="/templates/infoBody.jsp"/>
+    </definition>
+
+    <definition name="submit" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="ebigrey"/>
+        <put-attribute name="body" value="/templates/submitBody.jsp"/>
+    </definition>
+
+    <definition name="sraRegistration" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="ebigrey"/>
+        <put-attribute name="body" value="/templates/sraRegistrationFormBody.jsp"/>
+    </definition>
+
+    <definition name="sraWebin" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="ebigrey"/>
+        <put-attribute name="body" value="/templates/sraWebinBody.jsp"/>
+    </definition>
+
+    <definition name="submitSuccess" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="ebigrey"/>
+        <put-attribute name="body" value="/templates/sraRegistrationSuccessBody.jsp"/>
+    </definition>
+
+    <definition name="viewStudies" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="blue"/>
+        <put-attribute name="body" value="/templates/viewStudiesBody.jsp"/>
+    </definition>
+
+    <definition name="viewSamples" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="greyblue"/>
+        <put-attribute name="body" value="/templates/viewSamplesBody.jsp"/>
+    </definition>
+
+    <definition name="studyView" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="blue"/>
+        <put-attribute name="body" value="/templates/studyViewBody.jsp"/>
+    </definition>
+
+    <definition name="sampleView" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="greyblue"/>
+        <put-attribute name="body" value="/templates/sampleViewBody.jsp"/>
+    </definition>
+
+    <definition name="help" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="orange"/>
+        <put-attribute name="body" value="/templates/helpBody.jsp"/>
+    </definition>
+
+    <definition name="compare" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="ebigreen"/>
+        <put-attribute name="body" value="/templates/compareBody.jsp"/>
+    </definition>
+
+    <definition name="compareResult" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="ebigreen"/>
+        <put-attribute name="body" value="/templates/compareResultBody.jsp"/>
+    </definition>
+
+    <definition name="contact" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="ebigreen"/>
+        <put-attribute name="body" value="/templates/contactBody.jsp"/>
+    </definition>
+
+    <definition name="feedback" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="ebigreen"/>
+        <put-attribute name="body" value="/templates/feedback/noscript/feedbackBody.jsp"/>
+    </definition>
+
+    <definition name="feedbackSuccess" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="ebigreen"/>
+        <put-attribute name="body" value="/templates/feedbackSuccessBody.jsp"/>
+    </definition>
+
+    <definition name="login" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="ebigrey"/>
+        <put-attribute name="body" value="/templates/loginBody.jsp"/>
+    </definition>
+
+    <definition name="404" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="grey"/>
+        <put-attribute name="body" value="/templates/errors/404Body.jsp"/>
+    </definition>
+
+    <definition name="missing-parameter" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="grey"/>
+        <put-attribute name="body" value="/templates/errors/missing-parameterBody.jsp"/>
+    </definition>
+
+    <definition name="exception" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="grey"/>
+        <put-attribute name="body" value="/templates/errors/exceptionBody.jsp"/>
+    </definition>
+
+    <definition name="databaseException" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="grey"/>
+        <put-attribute name="body" value="/templates/errors/databaseExceptionBody.jsp"/>
+    </definition>
+
+    <definition name="error" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="grey"/>
+        <put-attribute name="body" value="/templates/errors/errorBody.jsp"/>
+    </definition>
+
+    <definition name="accessDenied" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="grey"/>
+        <put-attribute name="body" value="/templates/accessDeniedBody.jsp"/>
+    </definition>
+
+    <definition name="entryNotFound" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="grey"/>
+        <put-attribute name="body" value="/templates/entryNotFoundBody.jsp"/>
+    </definition>
+
+</tiles-definitions>
