@@ -71,61 +71,40 @@
     </c:choose>
 </div>
 
-<h3>Contact details</h3>
+    <h3>Contact details</h3>
 
-<div class="output_form">
-    <c:set var="centreName" value="${model.study.centreName}"/>
-    <c:choose>
-        <c:when test="${not empty model.study.centreName}">
-            <div class="result_row"><label>Institute:</label><span><c:out value="${centreName}"/></span></div>
-        </c:when>
-        <c:otherwise>
-            <div class="result_row"><label>Institute:</label><c:set var="centreName" value="${notGivenId}"/></div>
-        </c:otherwise>
-    </c:choose>
+    <div class="output_form">
+        <c:set var="centreName" value="${model.study.centreName}"/>
+        <c:choose>
+            <c:when test="${not empty model.study.centreName}">
+                <div class="result_row"><label>Institute:</label><span><c:out value="${centreName}"/></span></div>
+            </c:when>
+            <c:otherwise>
+                <div class="result_row"><label>Institute:</label><c:set var="centreName" value="${notGivenId}"/></div>
+            </c:otherwise>
+        </c:choose>
 
-    <%--Contact details are distinguished by the origination of the study:<br>--%>
-    <%--Submitted: Somebody submitted his Metagenomics project to us<br>--%>
-    <%--Mirrored: We integrated a Metagenomics project from an external service provider for instance MG-Rast<br>--%>
-    <%--Harvested: Nucleotid sequences submitted to the ENA.--%>
-    <c:choose>
-        <c:when test="${model.study.dataOrigination == 'SUBMITTED'}">
+        <c:set var="contactName" value="${model.study.authorName}" scope="page"/>
+        <c:set var="contactMail" value="${model.study.authorEmailAddress}" scope="page"/>
 
-            <c:set var="contactName" value="${model.submitterName}" scope="page"/>
-            <c:set var="contactMail" value="${model.emailAddress}" scope="page"/>
-
-            <c:if test="${not empty contactName && contactName != 'not available'}">
+        <c:choose>
+            <c:when test="${not empty contactName}">
                 <div class="result_row"><label>Name:</label><span>${contactName}</span></div>
-            </c:if>
-            <c:if test="${not empty contactMail && contactMail != 'not available'}">
+            </c:when>
+            <c:otherwise>
+                <div class="result_row"><label>Name:</label><span>not available</span></div>
+            </c:otherwise>
+        </c:choose>
+        <c:choose>
+            <c:when test="${not empty contactMail}">
                 <div class="result_row"><label>Email:</label><span class="lowercase">${contactMail}</span></div>
-            </c:if>
-        </c:when>
+            </c:when>
+            <c:otherwise>
+                <div class="result_row"><label>Email:</label><span class="lowercase">not available</span></div>
+            </c:otherwise>
+        </c:choose>
 
-        <c:when test="${model.study.dataOrigination == 'HARVESTED'}">
-
-            <c:set var="contactName" value="${model.study.authorName}" scope="page"/>
-            <c:set var="contactMail" value="${model.study.authorEmailAddress}" scope="page"/>
-
-            <c:if test="${not empty contactName && contactName != 'not available'}">
-                <div class="result_row"><label>Name:</label><span>${contactName}</span></div>
-            </c:if>
-            <c:if test="${not empty contactMail && contactMail != 'not available'}">
-                <div class="result_row"><label>Email:</label><span class="lowercase">${contactMail}</span></div>
-            </c:if>
-
-        </c:when>
-
-        <%--The Otherwise case is for data origination MIRRORED OR NULL values--%>
-        <c:otherwise>
-
-            <div class="result_row"><label>Name:</label><span>not available</span></div>
-            <div class="result_row"><label>Email:</label><span>not available</span></div>
-        </c:otherwise>
-    </c:choose>
-
-</div>
-
+    </div>
 
 <%-- Do we need to display this static information?
 <p>
