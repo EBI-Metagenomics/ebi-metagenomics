@@ -33,11 +33,15 @@
             <url>http://maven.itextpdf.com/</url>
         </repository>
 
-        <!--ENA repository-->
+        <!--The Google code repository hosts the ENA dependencies-->
         <repository>
-            <id>ves-ebi-de.ebi.ac.uk</id>
-            <name>ENA's Maven, Ivy or Gradle Maven repository</name>
-            <url>http://ves-ebi-de.ebi.ac.uk:8081/artifactory/gradle/</url>
+            <id>google-code-ebi-metagenomics</id>
+            <name>google-code-ebi-metagenomics</name>
+            <layout>default</layout>
+            <url>http://ebi-metagenomics.googlecode.com/svn/repository/</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
         </repository>
     </repositories>
 
