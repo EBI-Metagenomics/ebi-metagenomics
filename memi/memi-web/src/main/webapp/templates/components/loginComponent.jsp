@@ -1,6 +1,9 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <h2><spring:message code="submitView.title"/></h2>
 
+<figure class="fr"><img src="${pageContext.request.contextPath}/img/graphic_submission_00.gif" alt="5-7 steps submission and analysis process"/>
+<figcaption><p>5-7 steps submission and analysis process on the EBI metagenomics website</p></figcaption></figure>
+
 <p class="intro">
 We provide a service for submission of raw sequence data and associated meta-data to the European Nucleotide Archive (ENA) and our analysis pipelines. A <a class="ext" title="Click here to watch the full video tutorial" href="http://www.youtube.com/watch?v=Zml8jTqfQPg">video tutorial</a> is available outlining this process.
 </p>
