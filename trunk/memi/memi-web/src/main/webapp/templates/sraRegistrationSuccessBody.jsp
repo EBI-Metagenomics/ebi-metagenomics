@@ -8,8 +8,10 @@
         you supplied once the account is activated.
 
         A copy of your request has been sent to your email address, if you do not receive this within a
-        few minutes, then please check your spam/bulk mail folder and/or <a title="EBI's support & feedback form"
-                                                                                         href="http://www.ebi.ac.uk/support/metagenomics"
-                                                                                         class="ext">contact us</a>. Go back to our <a title="Home page"
+        few minutes, then please check your spam/bulk mail folder. Go back to our <a title="Home page"
                                                                                     href="<c:url value="${baseURL}/"/>">homepage</a>.
     </p>
+<div class="sub_ask">If you have any questions about submitting your data to EBI metagenomics, please email us (<a
+           href="mailto:datasubs@ebi.ac.uk?subject=EBI Metagenomics - data submission"
+           title="Send an enquiry about Metagenomics data submission">datasubs@ebi.ac.uk</a>).
+   </div>
