@@ -1421,7 +1421,7 @@ height:140px;
 .sub .sub_sign {width:260px; padding:0 14px 14px 14px;margin:18px 9px 18px 0px; text-align: center; }
 .sub_warn, .sub_ask  {display: block; padding: 14px; width: 712px; -moz-border-radius: 7px;-khtml-border-radius: 7px;-webkit-border-radius: 7px;border-radius: 7px;}
 .sub_warn { font-size: 110%;margin-bottom: 14px;color: #8c302c; background: #faefee;}
-.sub_ask { font-size: 90%;  margin: 21px 9px 9px 9px; color: #455872; background: #f1f3f7; clear:both; /*for IE6*/}
+.sub_ask { font-size: 90%;  margin: 9px; color: #455872; background: #f1f3f7; float: left;}
 .sub_form {width:740px; float: left; display:block;}
 .sub_sign_text {font-size:160%; color:#333;}
 .sub_sign_note {color:#606060;}
