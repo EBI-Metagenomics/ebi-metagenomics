@@ -168,9 +168,7 @@
                    </div>
             </form:form>
         </div>
-
-
-    <div class="sub_ask"> If your datasets do not fit this description, to help us better understand your needs,
-        please email us (<a href="mailto:datasubs@ebi.ac.uk?subject=EBI Metagenomics - data submission"
-                            title="Send an enquiry about Metagenomics data submission">datasubs@ebi.ac.uk</a>).
-    </div>
+<div class="sub_ask"> If your datasets do not fit this description, to help us better understand your needs,
+    please email us (<a href="mailto:datasubs@ebi.ac.uk?subject=EBI Metagenomics - data submission"
+                        title="Send an enquiry about Metagenomics data submission">datasubs@ebi.ac.uk</a>).
+</div>
