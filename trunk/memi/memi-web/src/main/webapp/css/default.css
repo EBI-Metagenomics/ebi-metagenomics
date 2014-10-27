@@ -1078,12 +1078,26 @@ width: 150px;
 /*background: -moz-linear-gradient(top, #FFFFFF, #EEEEEE 1px, #FFFFFF 6px);*/
 }
 
-#feedback_form input, #feedback_form_no input, #sub_form input {
+#feedback_form input, #feedback_form_no input {
 width: 360px;
 /*-moz-box-shadow:inset 0 0 7px #ccc;*/
 /*-webkit-box-shadow:inset 0 0 7px #ccc;*/
 /*box-shadow:inset 0 0 7px #ccc;*/
 }
+/*SUBMIT PAGE FORM*/
+.register_form {margin-left:9px;}
+.register_form label {font-weight: bold;font-size: 110%; color: #605F5F; display: block;}
+.register_form .note_required {padding-bottom: 18px; color: #006EFF;}
+.register_form .user_det_box {float: left; width: 48%; margin-right: 18px;}
+.register_form .institute_det_box {float: left; width: 48%;}
+.register_form .project_det_box  {margin-top: 9px;float: left; width: 98%;}
+.register_form .institute_det_box input, .register_form .user_det_box input {width: 90%;}
+.register_form .project_det_box input { width: 45%;}
+.register_form .user_det_box fieldset {min-height: 333px;}  /*to have same height between boxes*/
+.register_form .institute_det_box select {width: 93%;}
+.register_form .form_info {padding: 7px; background: #F1F3F7;-webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; color: #455872; font-size: 88%;display: block; clear: both; border: 0px #F00 solid;width: 90%;line-height: 12px;}
+.register_form .form_help {float:right; display: block; color: #455872; font-size: 88%;margin: 0; padding: 7px;visibility: visible;width: 47%;line-height: 12px; background: #f1f3f7;-webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius: 5px;}
+.register_form textarea {float:left; max-width:none;height: 66px; width:45%;}
 #sub_form input[type=checkbox]  {width: 20px; margin-top: 3px;}
 
 input.main_button, #feedback_form input.main_button, #feedback_form_no input.main_button, #sub_form input.main_button {
