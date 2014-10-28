@@ -9,7 +9,7 @@
     Register for an ENA account using the form below, in order to be able to upload your sequence to the archives.<br/>
     <%-- Is this still correct?
     We have pre-filled in some of the fields using the information you have already supplied to us. --%>
-    You will be contacted by the email address you supply once the account is activated. Please note that some of the data can be changed/updated later.</p>
+    You will be contacted using the email address you supply once the account is activated. Please note that some of the data can be changed/updated later.</p>
 <%--<%@ include file="components/sraRegistrationFormComponent.jsp" %>--%>
 
 
