@@ -1,12 +1,11 @@
 #summary One-sentence summary of this page.
-
+{{{
 <profile>
-            <id>dev</id>
+            <id>develop</id>
             <activation>
                 <activeByDefault>false</activeByDefault>
             </activation>
             <properties>
-                <!--General attributes-->
                 <!--Oracle driver class name -->
                 <jcp.jdbc.oracle.driverClassName>oracle.jdbc.OracleDriver</jcp.jdbc.oracle.driverClassName>
                 <!--The result files are stored as flat files in the following directory (absolute path)-->
@@ -59,3 +58,4 @@
                 <jcp.jdbc.oracle.erapro.password></jcp.jdbc.oracle.erapro.password>
             </properties>
         </profile>
+}}}
