@@ -49,24 +49,7 @@ public class CustomizedExceptionResolver extends SimpleMappingExceptionResolver 
         }
         //Build error view
         if (ex instanceof DataAccessException || ex instanceof TransactionException) {
-            if (handler instanceof HomePageController) {
-                return buildModelAndView(
-                        "errors/homeError",
-                        new ModelMap(),
-                        new ModelPopulator() {
-                            @Override
-                            public void populateModel(ModelMap model) {
-//                            log.info("Building model of " + HomePageController.class + "...");
-                                final ViewModelBuilder<HomePageErrorViewModel> builder = new HomePageErrorViewModelBuilder(sessionManager, "EBI metagenomics: archiving, analysis and integration of metagenomics data",
-                                        new ArrayList<Breadcrumb>(), propertyContainer);
-                                final HomePageErrorViewModel errorViewModel = builder.getModel();
-                                errorViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_HOME_VIEW);
-                                model.addAttribute(ViewModel.MODEL_ATTR_NAME, errorViewModel);
-                            }
-                        });
-            } else {
-                return buildErrorModelAndView("/errors/databaseException");
-            }
+            return buildErrorModelAndView("/errors/databaseException");
         }
         ModelAndView modelAndView = super.doResolveException(request, response, handler, ex);
         modelAndView.addAllObjects(buildErrorModelMap());
