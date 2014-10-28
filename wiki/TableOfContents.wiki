@@ -2,3 +2,4 @@
   * [TechnologiesUsed Technologies used]  
   * Developers Documentation
    * [HowToRunTheWebApplication Building and Running Memi from Source]
+   * [DevelopmentProfile Maven profile]
