@@ -170,8 +170,10 @@ public class AbstractSampleViewController extends SecuredAbstractController<Samp
                 } else {
                     //do nothing
                 }
+            } else {
+                log.warn("Download page warning: The following file does Not exist or is empty:");
+                log.warn(fileObject.getAbsolutePath());
             }
-
         }
         Collections.sort(seqDataDownloadLinks, DownloadLink.DownloadLinkComparator);
         Collections.sort(funcAnalysisDownloadLinks, DownloadLink.DownloadLinkComparator);
