@@ -1,7 +1,9 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <h2><spring:message code="submitView.title"/></h2>
-<figure class="fr"><img src="${pageContext.request.contextPath}/img/graphic_submission_02.gif" alt="5-7 steps submission and analysis process"/>
-<figcaption><p>Second step: Login on ENA website (detail of 5-7 steps submission and analysis process)</p></figcaption></figure>
+<figure class="fr"><img src="${pageContext.request.contextPath}/img/graphic_submission_02.gif" alt="Details of the submission and analysis process on EBI metagenomics
+website"/>
+<figcaption><p>Next step: Login on ENA website to submit your data (details of the submission and analysis process on EBI metagenomics
+    website)</p></figcaption></figure>
 
 <p class="intro">
     We provide a service for submission of raw sequence data and associated meta-data to the European Nucleotide Archive (ENA) and our analysis pipelines.
