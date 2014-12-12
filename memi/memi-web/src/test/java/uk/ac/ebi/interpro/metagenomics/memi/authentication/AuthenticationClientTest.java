@@ -9,7 +9,6 @@ import uk.ac.ebi.ena.authentication.client.AuthenticationClientImpl;
 import uk.ac.ebi.ena.authentication.exception.AuthException;
 import uk.ac.ebi.ena.authentication.model.AuthRealm;
 import uk.ac.ebi.ena.authentication.model.AuthResult;
-import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 
 import java.io.File;
 import java.io.FileInputStream;
