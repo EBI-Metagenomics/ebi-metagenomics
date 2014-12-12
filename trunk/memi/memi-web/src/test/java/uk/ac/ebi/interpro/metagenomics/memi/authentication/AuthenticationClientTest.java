@@ -2,12 +2,14 @@ package uk.ac.ebi.interpro.metagenomics.memi.authentication;
 
 
 import org.apache.commons.codec.binary.Base64;
+import org.junit.Before;
 import org.junit.Test;
 import uk.ac.ebi.ena.authentication.client.AuthenticationClient;
 import uk.ac.ebi.ena.authentication.client.AuthenticationClientImpl;
 import uk.ac.ebi.ena.authentication.exception.AuthException;
 import uk.ac.ebi.ena.authentication.model.AuthRealm;
 import uk.ac.ebi.ena.authentication.model.AuthResult;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -28,6 +30,13 @@ import static org.junit.Assert.*;
  * @author Maxim Scheremetjew
  */
 public class AuthenticationClientTest {
+
+    private Properties props;
+
+    @Before
+    public void setUp() throws Exception {
+        props = getProperties();
+    }
     /**
      * Tests an invalid service URL.
      */
@@ -60,7 +69,6 @@ public class AuthenticationClientTest {
     @Test
     public void testAuthenticationClientInvalidUserNamePassword() {
         //Setting test attributes
-        Properties props = getProperties();
         final String authenticationServiceUrl = props.getProperty("authentication.service.url");
         final String username = "test";
         final String password = "test";
@@ -87,7 +95,6 @@ public class AuthenticationClientTest {
     @Test
     public void testAuthenticationClientValidAuthentication() {
         //Setting test attributes
-        Properties props = getProperties();
         final String authenticationServiceUrl = props.getProperty("authentication.service.url");
         final String username = props.getProperty("username");
         final String password = loadPasswordFromFile();
@@ -140,7 +147,7 @@ public class AuthenticationClientTest {
         return null;
     }
 
-    public Properties getProperties() {
+    private Properties getProperties() {
         Properties properties = new Properties();
         String propertyFileName = "properties.config";
         InputStream inputStream = getClass().getClassLoader().getResourceAsStream(propertyFileName);
