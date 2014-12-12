@@ -52,20 +52,12 @@
 
     <bean id="exportValueService" class="uk.ac.ebi.interpro.metagenomics.memi.services.ExportValueService"/>
 
-    <bean id="authenticationClientTomcat9" name="authenticationClientTomcat9" class="uk.ac.ebi.ena.account.admin.client.AuthenticationClientImpl">
+    <bean id="authenticationClientTomcat9" name="authenticationClientTomcat9" class="uk.ac.ebi.ena.authentication.client.AuthenticationClientImpl">
         <constructor-arg ref="enaWebServiceUrlTomcat9"/>
-    </bean>
-
-    <bean id="authenticationClientTomcat10" name="authenticationClientTomcat10" class="uk.ac.ebi.ena.account.admin.client.AuthenticationClientImpl">
-        <constructor-arg ref="enaWebServiceUrlTomcat10"/>
     </bean>
 
     <bean id="enaWebServiceUrlTomcat9" class="java.lang.String">
         <constructor-arg value="${ena.authentication.service.url.tomcat-9}"/>
-    </bean>
-
-    <bean id="enaWebServiceUrlTomcat10" class="java.lang.String">
-        <constructor-arg value="${ena.authentication.service.url.tomcat-10}"/>
     </bean>
 
     <bean id="authenticationService" class="uk.ac.ebi.interpro.metagenomics.memi.authentication.AuthenticationService"/>

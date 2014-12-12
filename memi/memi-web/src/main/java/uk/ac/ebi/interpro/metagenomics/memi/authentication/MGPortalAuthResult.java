@@ -3,7 +3,10 @@ package uk.ac.ebi.interpro.metagenomics.memi.authentication;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 
 /**
- * MGPortal authentication result object.
+ * MGPortal authentication result object. Use this object to track an authentication trial.
+ * <p/>
+ * Stores things like a status code, which indicates what happens while trying to authenticate,
+ * an error message if produced and a submitter who tried to authenticate.
  *
  * @author Maxim Scheremetjew
  */
