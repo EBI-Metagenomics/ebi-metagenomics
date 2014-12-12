@@ -2,17 +2,21 @@ package uk.ac.ebi.interpro.metagenomics.memi.authentication;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.HttpServerErrorException;
-import uk.ac.ebi.ena.account.admin.client.AuthenticationClient;
+import uk.ac.ebi.ena.authentication.client.AuthenticationClient;
+import uk.ac.ebi.ena.authentication.exception.AuthException;
+import uk.ac.ebi.ena.authentication.model.AuthRealm;
 import uk.ac.ebi.ena.authentication.model.AuthResult;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.erapro.SubmissionContactDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 
 import javax.annotation.Resource;
+import java.util.Arrays;
+import java.util.List;
 
 /**
- * NOTE: As ENA do not have a loader balancer inplace yet for both tomcat instance,
+ * Represents an authentication service using ENA's authentication client API. You will find more documentation on how to use ENA's API on Confluence, if you search for 'ena-authentication'.
+ * <p/>
+ * NOTE: As ENA do not have a load balancer in place yet for both tomcat instance,
  * we need to cope with 2 authentication clients at the moment.
  *
  * @author Maxim Scheremetjew
@@ -23,34 +27,19 @@ public class AuthenticationService {
     @Resource(name = "authenticationClientTomcat9")
     private AuthenticationClient authenticationClientTomcat9;
 
-    @Resource(name = "authenticationClientTomcat10")
-    private AuthenticationClient authenticationClientTomcat10;
-
     @Resource
     private SubmissionContactDAO submissionContactDAO;
 
     public MGPortalAuthResult login(final String username, final String password) {
         MGPortalAuthResult mgPortalAuthResult = new MGPortalAuthResult();
         Submitter submitter = null;
+        final List<AuthRealm> realms = Arrays.asList(new AuthRealm[]{AuthRealm.SRA});
         try {
-            AuthResult authResult = authenticationClientTomcat9.login(username, password);
+            AuthResult authResult = authenticationClientTomcat9.login(username, password, realms);
             submitter = getSubmissionAccountIdAndCreateSubmitter(authResult);
         }//If authentication failed
-        catch (HttpClientErrorException ex) {
-            handleHttpClientErrorException(mgPortalAuthResult, ex);
-        }//If Service is Unavailable (503)
-        catch (HttpServerErrorException tomcat9ServerException) {
-            log.warn("Tomcat 9 server exception (Status code: " + tomcat9ServerException.getStatusCode().value() + ")!\n" + tomcat9ServerException);
-            try {
-                AuthResult authResult = authenticationClientTomcat10.login(username, password);
-                submitter = getSubmissionAccountIdAndCreateSubmitter(authResult);
-            } catch (final HttpClientErrorException ex) {
-                handleHttpClientErrorException(mgPortalAuthResult, ex);
-            } catch (HttpServerErrorException tomcat10ServerException) {
-                log.warn("Both ENA authentication web services (tomcat 9 and 10) are unavailable the moment!");
-                mgPortalAuthResult.setStatusCode(MGPortalAuthResult.StatusCode.AUTH_SERVICE_UNAVAILABLE);
-                mgPortalAuthResult.setErrorMessage("Authentication service unavailable at the moment. Please try again later.");
-            }
+        catch (AuthException authException) {
+            handleAuthException(mgPortalAuthResult, authException);
         }
         mgPortalAuthResult.setSubmitter(submitter);
         return mgPortalAuthResult;
@@ -60,22 +49,21 @@ public class AuthenticationService {
         boolean result = false;
         try {
             result = authenticationClientTomcat9.logout(sessionId);
-            if (!result) {
-                result = authenticationClientTomcat10.logout(sessionId);
-            }
         } catch (Exception ex) {
             log.info("Log out failed on both tomcat instances!\n" + ex);
         }
         return result;
     }
 
-    private void handleHttpClientErrorException(final MGPortalAuthResult authResult,
-                                                final HttpClientErrorException ex) {
-        int httpStatusValue = ex.getStatusCode().value();
-        log.info("Authentication failed with code " + httpStatusValue);
-        if (httpStatusValue == 401) {
+    private void handleAuthException(final MGPortalAuthResult authResult,
+                                     final AuthException authException) {
+        String message = authException.getMessage();
+        authResult.setErrorMessage(message);
+        log.info("Authentication failed: " + message);
+        if (message.equalsIgnoreCase("404 Not Found")) {
+            authResult.setStatusCode(MGPortalAuthResult.StatusCode.AUTH_SERVICE_UNAVAILABLE);
+        } else if (message.equalsIgnoreCase("Invalid username or password")) {
             authResult.setStatusCode(MGPortalAuthResult.StatusCode.UNAUTHORIZED);
-            authResult.setErrorMessage("Incorrect user name or password.");
         } else {
             authResult.setStatusCode(MGPortalAuthResult.StatusCode.AUTHENTICATION_FAILED);
         }

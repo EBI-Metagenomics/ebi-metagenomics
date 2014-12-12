@@ -12,7 +12,7 @@
 
     <groupId>uk.ac.ebi.interpro.metagenomics</groupId>
     <artifactId>memi-web</artifactId>
-    <version>1.2-SNAPSHOT</version>
+    <version>1.3-SNAPSHOT</version>
     <name>memi-web</name>
     <packaging>war</packaging>
 
@@ -33,15 +33,11 @@
             <url>http://maven.itextpdf.com/</url>
         </repository>
 
-        <!--The Google code repository hosts the ENA dependencies-->
+        <!--ENA repository-->
         <repository>
-            <id>google-code-ebi-metagenomics</id>
-            <name>google-code-ebi-metagenomics</name>
-            <layout>default</layout>
-            <url>http://ebi-metagenomics.googlecode.com/svn/repository/</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
+            <id>ena-artifactory-libs-release</id>
+            <name>ENA's library release repository</name>
+            <url>http://ves-ebi-de.ebi.ac.uk:8081/artifactory/libs-release/</url>
         </repository>
     </repositories>
 
@@ -55,6 +51,7 @@
         <tiles.version>2.2.2</tiles.version>
         <hibernate-validator.version>4.3.0.Final</hibernate-validator.version>
         <javax.validation-api.version>1.0.0.GA</javax.validation-api.version>
+        <ena-authentication.client.version>1.4.2</ena-authentication.client.version>
     </properties>
 
     <!-- Most of the dependencies are ordered by topics (e.g. Spring) or by scope -->
@@ -287,36 +284,28 @@
             <version>2.1</version>
         </dependency>
 
-        <!--TODO: There is an urgency to fix the issue that dependencies with versions 1.3.1-PROD.+ cannot be resolved by Apache Maven 2.2.1 -->
-        <!-- ena-account-model is an dependency of ena-account-admin-client, but it cannot be resolved, that's why the exclusion-->
         <dependency>
-            <groupId>uk.ac.ebi</groupId>
-            <artifactId>ena-account-admin-client</artifactId>
-            <version>1.3.1-PROD.1</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>ena-account-model</artifactId>
-                    <groupId>uk.ac.ebi</groupId>
-                </exclusion>
-            </exclusions>
+            <groupId>uk.ac.ebi.ena.ena-authentication</groupId>
+            <artifactId>ena-authentication-client</artifactId>
+            <version>${ena-authentication.client.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>uk.ac.ebi</groupId>
-            <artifactId>ena-account-model</artifactId>
-            <version>1.3.1-PROD.173</version>
+            <groupId>uk.ac.ebi.ena.ena-authentication</groupId>
+            <artifactId>ena-authentication-model</artifactId>
+            <version>${ena-authentication.client.version}</version>
         </dependency>
 
         <!--<dependency>-->
-            <!--<groupId>org.json</groupId>-->
-            <!--<artifactId>json</artifactId>-->
-            <!--<version>20140107</version>-->
+        <!--<groupId>org.json</groupId>-->
+        <!--<artifactId>json</artifactId>-->
+        <!--<version>20140107</version>-->
         <!--</dependency>-->
 
         <!--<dependency>&lt;!&ndash; jackson &ndash;&gt;-->
-            <!--<groupId>org.codehaus.jackson</groupId>-->
-            <!--<artifactId>jackson-mapper-asl</artifactId>-->
-            <!--<version>1.9.13</version>-->
+        <!--<groupId>org.codehaus.jackson</groupId>-->
+        <!--<artifactId>jackson-mapper-asl</artifactId>-->
+        <!--<version>1.9.13</version>-->
         <!--</dependency>-->
 
     </dependencies>
@@ -495,11 +484,11 @@
             <build>
                 <resources>
                     <!--<resource>-->
-                        <!--<directory>src/main/resources</directory>-->
-                        <!--<filtering>true</filtering>-->
-                        <!--<excludes>-->
-                            <!--<exclude>interpro-protein-page.xml</exclude>-->
-                        <!--</excludes>-->
+                    <!--<directory>src/main/resources</directory>-->
+                    <!--<filtering>true</filtering>-->
+                    <!--<excludes>-->
+                    <!--<exclude>interpro-protein-page.xml</exclude>-->
+                    <!--</excludes>-->
                     <!--</resource>-->
                     <resource>
                         <directory>R</directory>
