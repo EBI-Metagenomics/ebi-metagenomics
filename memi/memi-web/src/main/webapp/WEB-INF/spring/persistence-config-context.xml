@@ -81,9 +81,8 @@
         <property name="dataSource" ref="eraProDataSource"/>
     </bean>
 
-    <!--TODO: Check with ENA how to remove that dependency -->
-    <bean name="countryDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.apro.CountryDAOImpl">
-        <property name="dataSource" ref="aproDataSource"/>
+    <bean name="countryDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.erapro.CountryDAOImpl">
+        <property name="dataSource" ref="eraProDataSource"/>
     </bean>
 
 

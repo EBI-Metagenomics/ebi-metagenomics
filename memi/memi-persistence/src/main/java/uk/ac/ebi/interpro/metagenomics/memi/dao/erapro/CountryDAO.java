@@ -1,4 +1,4 @@
-package uk.ac.ebi.interpro.metagenomics.memi.dao.apro;
+package uk.ac.ebi.interpro.metagenomics.memi.dao.erapro;
 
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Country;
 
@@ -12,9 +12,6 @@ import java.util.Collection;
  * @since 1.0-SNAPSHOT
  */
 public interface CountryDAO {
-    //TODO: This variable shouldn't be visible on Google code
-    public final static String TABLE_NAME = "spin2006.cv_submitter_country";
-
     /**
      * @return All countries in the table.
      */
