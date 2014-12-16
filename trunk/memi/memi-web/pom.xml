@@ -12,7 +12,7 @@
 
     <groupId>uk.ac.ebi.interpro.metagenomics</groupId>
     <artifactId>memi-web</artifactId>
-    <version>1.3-SNAPSHOT</version>
+    <version>${memi-web.module.version}</version>
     <name>memi-web</name>
     <packaging>war</packaging>
 
@@ -59,19 +59,19 @@
         <dependency>
             <groupId>uk.ac.ebi.interpro.metagenomics</groupId>
             <artifactId>memi-model</artifactId>
-            <version>1.2-SNAPSHOT</version>
+            <version>${memi-model.module.version}</version>
         </dependency>
 
         <dependency>
             <groupId>uk.ac.ebi.interpro.metagenomics</groupId>
             <artifactId>memi-persistence</artifactId>
-            <version>1.2-SNAPSHOT</version>
+            <version>${memi-persistence.module.version}</version>
         </dependency>
 
         <dependency>
             <groupId>uk.ac.ebi.interpro.metagenomics</groupId>
             <artifactId>memi-business</artifactId>
-            <version>1.0</version>
+            <version>${memi-business.module.version}</version>
         </dependency>
 
         <!-- Rome is an API for reading/writing RSS feeds -->

@@ -3,7 +3,7 @@ package uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.apro.CountryDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.erapro.CountryDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Country;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;

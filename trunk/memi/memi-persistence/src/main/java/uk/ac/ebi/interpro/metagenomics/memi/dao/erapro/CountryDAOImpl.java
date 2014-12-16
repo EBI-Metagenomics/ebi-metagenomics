@@ -1,4 +1,4 @@
-package uk.ac.ebi.interpro.metagenomics.memi.dao.apro;
+package uk.ac.ebi.interpro.metagenomics.memi.dao.erapro;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -15,7 +15,7 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Represents the implementation class of {@link uk.ac.ebi.interpro.metagenomics.memi.dao.apro.CountryDAO}.
+ * Represents the implementation class of {@link CountryDAO}.
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @version $Id$
@@ -40,7 +40,7 @@ public class CountryDAOImpl implements CountryDAO {
     public Collection<Country> getAllCountries() {
         try {
             List<Country> countryList = jdbcTemplate.query(
-                    "select * from " + CountryDAO.TABLE_NAME,
+                    "select * from cv_country",
                     new Object[]{},
                     new RowMapper() {
                         public Object mapRow(ResultSet rs, int rowNum) throws SQLException {

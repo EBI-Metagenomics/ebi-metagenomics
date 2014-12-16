@@ -12,7 +12,7 @@
 
     <groupId>uk.ac.ebi.interpro.metagenomics</groupId>
     <artifactId>memi-business</artifactId>
-    <version>1.0</version>
+    <version>${memi-business.module.version}</version>
     <name>memi-business</name>
     <url>http://maven.apache.org</url>
 </project>
