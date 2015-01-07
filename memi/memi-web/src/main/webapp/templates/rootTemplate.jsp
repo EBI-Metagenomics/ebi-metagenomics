@@ -153,12 +153,6 @@
 
     <!-- script for carousel -->
     <script src="${pageContext.request.contextPath}/js/jquery.carousel.min.js" type="text/javascript"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("div.carousel").carousel({pagination:true, autoSlide:true, autoSlideInterval:15000, delayAutoSlide:2000, loop:true });
-
-        });
-    </script>
 
 
       <%--WARNING this is inserting a character on top of the page--%>
