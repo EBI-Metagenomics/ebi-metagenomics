@@ -7,7 +7,6 @@
     <meta http-equiv="Content-Language" content="en-GB" />
     <meta http-equiv="Window-target" content="_top" />
     <meta name="no-email-collection" content="http://www.unspam.com/noemailcollection/" />
-    <meta name="generator" content="Dreamweaver 8" />
 
     <title><tiles:insertAttribute name="pageTitle"/>&lt; EBI metagenomics &lt; EMBL-EBI</title>
 
@@ -106,10 +105,6 @@
     <!-- The following line includes the feedback dialog script. -->
     <script src="${pageContext.request.contextPath}/js/feedback_script.js" type="text/javascript"></script>
 
-   <%--Client-side twitter news feed - http://tweet.seaofclouds.com/--%>
-    <script src="${pageContext.request.contextPath}/js/tweet/jquery.tweet.js" type="text/javascript"></script>
-    <script src="${pageContext.request.contextPath}/js/tweet/tweet.instance.js" type="text/javascript"></script>
-
     <!--[if lt IE 9]>
 <script type="text/javascript">
     document.createElement('header');
@@ -164,13 +159,7 @@
 
         });
     </script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#datepicker").focus(function () {
-                $("#datepicker").datepicker("show");
-            });
-        });
-    </script>
+
 
       <%--WARNING this is inserting a character on top of the page--%>
     <%--<!-- Script and noscript versions for feedback and login links --><script type="text/javascript">--%>
