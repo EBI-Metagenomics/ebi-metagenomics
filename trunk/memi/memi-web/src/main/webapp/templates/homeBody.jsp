@@ -331,8 +331,16 @@
     <%@ include file="components/listNewsComponent.jsp" %>
 </section>
 
-<%--<div id="sidebar"><tiles:insertAttribute name="loginForm"/></div>--%>
+<!-- script for carousel - only homepage-->
+<script src="${pageContext.request.contextPath}/js/jquery.carousel.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+    $("div.carousel").carousel({pagination:true, autoSlide:true, autoSlideInterval:15000, delayAutoSlide:2000, loop:true });
 
-<%--Client-side twitter news feed - http://tweet.seaofclouds.com/ - only used on homepage--%>
+});
+</script>
+<!-- End script for carousel-->
+
+<%--Client-side twitter news feed - http://tweet.seaofclouds.com/ - only homepage--%>
 <script src="${pageContext.request.contextPath}/js/tweet/jquery.tweet.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/js/tweet/tweet.instance.js" type="text/javascript"></script>
