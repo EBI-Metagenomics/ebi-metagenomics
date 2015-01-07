@@ -332,3 +332,7 @@
 </section>
 
 <%--<div id="sidebar"><tiles:insertAttribute name="loginForm"/></div>--%>
+
+<%--Client-side twitter news feed - http://tweet.seaofclouds.com/ - only used on homepage--%>
+<script src="${pageContext.request.contextPath}/js/tweet/jquery.tweet.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/js/tweet/tweet.instance.js" type="text/javascript"></script>
