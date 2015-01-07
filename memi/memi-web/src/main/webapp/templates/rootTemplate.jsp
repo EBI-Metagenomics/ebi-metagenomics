@@ -151,11 +151,7 @@
 
     </script>
 
-    <!-- script for carousel -->
-    <script src="${pageContext.request.contextPath}/js/jquery.carousel.min.js" type="text/javascript"></script>
-
-
-      <%--WARNING this is inserting a character on top of the page--%>
+     <%--WARNING this is inserting a character on top of the page--%>
     <%--<!-- Script and noscript versions for feedback and login links --><script type="text/javascript">--%>
     <%--document.write('<style type="text/css">#noscript_feedbackLink{display: none;}#noscript_loginLink{display: none;}</style>');--%>
 <%--</script>​--%>
