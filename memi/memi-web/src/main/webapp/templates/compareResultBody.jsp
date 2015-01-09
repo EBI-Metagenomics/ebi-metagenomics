@@ -42,7 +42,7 @@
         <li><a href="#bars" title="view results as bar chart"><span class="ico-barh"></span> <span class="tab-text">Barcharts</span></a></li>
         <li><a href="#stack" title="view results as stacked column"><span class="ico-col"></span> <span class="tab-text">Stacked columns</span></a></li>
         <li><a href="#heatmap" title="view results as heatmap"><span class="ico-heatmap"></span><span class="tab-text">Heatmap</span></a></li>
-        <li><a href="#pca" title="view results as principal components analysis"><span class="ico-pca"></span><span class="tab-text">Principal Components Analysis</span></a></li>
+        <li><a href="#pca" title="view results as principal components analysis"><span class="ico-pca"></span><span class="tab-text">Principal Component Analysis</span></a></li>
         <li><a href="#jstable" title="view results in a table"><span class="ico-table"></span><span class="tab-text">Table</span></a></li>
     </ul>
     <%-- Tabs content --%>
