@@ -57,16 +57,6 @@ ul li ul { margin:10px;}
 
 i {font-style:italic;}
 
-#sidebar ul {
-display: block;
-list-style-type: disc;
--webkit-margin-before: 1em;
--webkit-margin-after: 1em;
--webkit-margin-start: 0px;
--webkit-margin-end: 0px;
--webkit-padding-start: 0px;
-margin:15px;
-}
 /*suggested change to ebi-global.css */
 div#global-masthead { border-color: rgba(255, 255, 255, 0.4); } /*like BBC top line*/
 div#headerdiv div.nav ul {font-size: 90%;height: 100%;}/*smaller font for global navigation e.g. BBC & make the size of border full height in case the height of nav is changing*/
@@ -1499,13 +1489,8 @@ z-index:20;top:-40px;}
 
 .carousel .carousel-control {font-size: 0;}/*fix a bug with Firefox that shows text by default / alternative of using text-indent property that doesn't work with IE  */
 
-
-
-
-.carousel .carousel-next{
-background:url(../img/carousel_r.png) 0 0 no-repeat; margin-left:-37px;}
-.carousel .carousel-previous{
-background:url(../img/carousel_l.png) 0 0 no-repeat; margin-right:-34px;}
+.carousel .carousel-next{ background:url(../img/carousel_r.png) 0 0 no-repeat; margin-left:-37px; outline:0;/*remove blue selection on click*/}
+.carousel .carousel-previous{background:url(../img/carousel_l.png) 0 0 no-repeat; margin-right:-34px; outline:0;/*remove blue selection on click*/}
 .carousel .carousel-control:hover{-moz-opacity:.7;opacity:0.70;filter:alpha(opacity=70);}
 .carousel .disabled,.carousel .disabled:hover{-moz-opacity:.2;opacity:0.20;filter:alpha(opacity=20);cursor:default;}
 
@@ -1679,21 +1664,29 @@ background-color:white;
 .sample_ana #tabs-taxchart .ui-tabs-panel {padding:0px;}
 .sample_ana .ui-state-disabled {opacity: .5;}
 /*IMAGE ANALYSIS PAGE*/
-.go-chart {display:block; border:0px red solid; overflow:auto;}
+.go-chart {display:block; border:0px red solid; /*overflow:auto;*/}
 .go-chart h2 {margin:0 0 18px 0; font-size:138%; padding:0;}
-.chart-block {display: block; float: left; border:0px red solid; }
+.chart-block { float: left; overflow:hidden;/*to keep otherwise v-scrollbar appearing*/border:0px red solid;}
 
 /*EXPORT BUTTON - ANALYSIS PAGE*/
-.export_list {z-index: 1;}
-.sample_comp_result .chart-block .ui-buttonset, .sample_ana .chart-block .ui-buttonset {margin-right: 30px; text-align: right; }
+ul.export_list {z-index: 1;display: none;border: 1px solid #949494; padding: 5px;background-color: #FFF;font-size: 1em;list-style: none;outline: none;margin:0;}
+.sample_comp_result .chart-block .ui-buttonset, .sample_ana .chart-block .ui-buttonset {/*margin-right: 30px;*/ text-align: right; }
 .sample_ana .chart-block .ui-widget-content {border:1px solid #949494; /*width: 128px;*/ /*remove width - why defining a width for the export menu?*/ position: absolute; top: 20px;left: 88px; background-color:rgba(255, 255, 255, 1);border-radius: 0px;}
 .sample_ana .chart-block .ui-menu {padding:5px;}
 .sample_ana .chart-block .ui-widget-content li {padding:0;}
 .sample_ana .chart-block .ui-widget-content li a {padding:0; color:#2B8A97; display: block;}
+.sample_ana .chart-block ul li a {padding:0; color:#2B8A97; display: block;}
 .sample_ana .chart-block .ui-widget-content li a:hover {text-decoration: none; }
+.sample_ana .chart-block ul li a:hover {text-decoration: none; }
 .sample_ana .chart-block .ui-widget-content .ui-state-hover {cursor:default; border: 0px solid #d6e9f8; color:#525252; background-color: #d6e9f8;background-image: none;border-radius: 0px;}
+.sample_ana .chart-block ul li.chart_exp_png:hover {cursor:default; border: 0px solid #d6e9f8; color:#525252; background-color: #d6e9f8;background-image: none;border-radius: 0px;} /*only export items*/
 .sample_ana .chart-block .ui-widget-content .ui-state-focus {cursor:default; border: 0px solid #d6e9f8; color:#525252; background-color: #d6e9f8;background-image: none;border-radius: 0px;}
 .sample_ana .chart-block .ui-menu .ui-state-focus {margin: 0px;}
+
+.sample_ana .chart-block .ui-button:hover {border: 1px #d0d0d0 solid;}
+.sample_ana .chart-block .ui-button:hover .ui-button-text {color:black;}
+.sample_ana .chart-block .ui-button:hover .ui-icon {background-image: url(../img/jquery/overcast/ui-icons_3383bb_256x240.png);}
+
 .sample_comp_result #bars .ui-button, .sample_ana .chart-block .ui-button {margin:0; border: 1px solid rgba(0,0,0,0.1);
 background-image: linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));
 background-image: -moz-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));
@@ -1737,7 +1730,7 @@ background-image: -webkit-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247
 /*.sample_comp_result #tabs-chart .ui-tabs-nav li.ui-state-hover a,*/ .sample_ana #tabs-chart .ui-tabs-nav li.ui-state-hover a, .sample_ana #interpro-chart .ui-tabs-nav li.ui-state-hover a, .sample_ana #tabs-taxchart .ui-tabs-nav li.ui-state-hover a  {text-decoration: none;}
 /*.sample_comp_result #tabs-chart .ui-tabs-nav li a:hover,*/ .sample_ana #tabs-chart .ui-tabs-nav li a:hover, .sample_ana #interpro-chart .ui-tabs-nav li a:hover, .sample_ana #tabs-taxchart .ui-tabs-nav li a:hover  {border: 1px solid #c6c6c6;box-shadow:1px 1px 1px rgba(0, 0, 0, 0.3);-moz-box-shadow:1px 1px 1px rgba(0, 0, 0, 0.3); -khtml-box-shadow:1px 1px 1px rgba(0, 0, 0, 0.3); -webkit-box-shadow:0px 0px 3px rgba(0, 0, 0, 0.3) ; text-decoration:none;}
 /*.sample_comp_result #tabs-chart li.ui-tabs-selected,*/ .sample_ana #tabs-chart li.ui-tabs-selected, .sample_ana #interpro-chart li.ui-tabs-selected, .sample_ana #tabs-taxchart li.ui-tabs-selected {/*height: 37px;*/height: 28px;background: #fff; border: none; top:1px;}
-/*.sample_comp_result #tabs-chart .ui-tabs-panel,*/ .sample_ana #tabs-chart .ui-tabs-panel, .sample_ana #interpro-chart .ui-tabs-panel, .sample_ana #tabs-taxchart .ui-tabs-panel  {margin: 0;  position: relative; /*z-index: 400;*/ border: 0px solid rgb(213, 213, 213); border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;}
+/*.sample_comp_result #tabs-chart .ui-tabs-panel,*/ .sample_ana #tabs-chart .ui-tabs-panel, .sample_ana #interpro-chart .ui-tabs-panel, .sample_ana #tabs-taxchart .ui-tabs-panel  {margin: 0;  position: relative; /*z-index: 400;*/ border: 0px solid rgb(213, 213, 213); border-bottom-left-radius: 0px;border-bottom-right-radius: 0px; overflow:auto;/*to make go chart appear correctly*/}
 /*.sample_comp_result .ui-widget-header .selector_tab,*/ .sample_ana .ui-widget-header .selector_tab {font-weight:normal;padding-top: 9px;}
 /*.sample_comp_result .ui-widget-header .selector_tab {font-weight:normal;padding-top: 9px; font-size: 83%; padding-right: 4px;} */
 /*.sample_comp_result  .ui-tabs-nav {border-bottom: #BBB solid 1px;border-bottom-right-radius: 0; border-bottom-left-radius: 0;}*/
@@ -1813,7 +1806,7 @@ background-image: -webkit-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247
 
 /*GOOGLE CHART - ANALYSIS PAGE*/
  /*#tax_chart_pie_dom,#tax_chart_pie_phy,#tax_chart_bar_dom,  #tax_chart_bar_phy, #tax_chart_col,  */#tax_table_bar, #tax_table_pie, #tax_table_col, /*#func_chart_bar_go_bp, #func_chart_bar_go_mf, #func_chart_bar_go_cc, #func_chart_pie_go_bp, #func_chart_pie_go_mf, #func_chart_pie_go_cc, */#func_chart_div1, /*#func_chart_pie_ipro,*/ #func_table_pie_interpro, #func_table_div1 {float:left;}
-#tax_chart_bar_dom, #tax_chart_pie_dom, #func_chart_bar_go_mf, #func_chart_bar_go_cc, #func_chart_pie_go_mf, #func_chart_pie_go_cc {margin-top:34px;} /*to align when export function is inserted*/
+#tax_chart_bar_dom, #tax_chart_pie_dom, #func_chart_bar_go_mf, #func_chart_bar_go_cc, #func_chart_pie_go_mf, #func_chart_pie_go_cc {margin-top:30px;} /*to align when export function is inserted*/
 
 #tax_table_pie, #tax_table_bar, #func_table_pie_ipro, #tax_table_col {margin-left: 9px;margin-top:4px;/*as the export button is inserted*/}
 
