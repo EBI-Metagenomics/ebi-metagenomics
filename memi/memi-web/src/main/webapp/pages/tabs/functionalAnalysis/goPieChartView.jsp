@@ -3,9 +3,10 @@
 <div id="go-terms-pie">
     <div class="go-chart">
         <div class="chart-block">
-         <div class="but_chart_export">
+
+         <div class="but_chart_export ui-buttonset">
          <button id="func-go-pie" style="display: none;"></button>
-         <button id="select">Export</button>
+         <button id="select" class="ui-button ui-widget ui-state-default ui-button-text-icon-secondary ui-corner-right"><span class="ui-button-text">Export</span><span class="ui-button-icon-secondary ui-icon ui-icon-triangle-1-s"></span></button>
          </div>
 
          <ul class="export_list">
@@ -115,7 +116,4 @@
         pieChart.draw(sortedCellularComponentGOTerms, options);
     }
 </script>
-<script>
-    <%--You will find the method definition in the file sampleViewBody.jsp--%>
-    loadCssStyleForExportSelection('#func-go-pie');
-</script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/export-button-menu.js"></script>

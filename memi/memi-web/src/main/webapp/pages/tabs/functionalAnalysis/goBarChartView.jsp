@@ -4,9 +4,9 @@
     <div class="go-chart">
         <div class="chart-block">
             <%--move on the left side to avoid overlap with snapshot--%>
-            <div class="but_chart_export">
+            <div class="but_chart_export ui-buttonset">
              <button id="func-go-bar" style="display: none;"></button>
-             <button id="select">Export</button>
+             <button id="select" class="ui-button ui-widget ui-state-default ui-button-text-icon-secondary ui-corner-right"><span class="ui-button-text">Export</span><span class="ui-button-icon-secondary ui-icon ui-icon-triangle-1-s"></span></button>
              </div>
 
              <ul class="export_list">
@@ -99,7 +99,4 @@ function drawCellularComponentBarChart() {
     barChart.draw(cellularComponentGOTerms, options);
 }
 </script>
-<script type="text/javascript">
-    <%--You will find the method definition in the file sampleViewBody.jsp--%>
-    loadCssStyleForExportSelection('#func-go-bar');
-</script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/export-button-menu.js"></script>

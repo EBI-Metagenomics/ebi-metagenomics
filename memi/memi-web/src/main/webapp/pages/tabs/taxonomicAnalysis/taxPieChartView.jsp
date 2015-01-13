@@ -7,10 +7,10 @@
             <div id="tax_chart_pie_dom"></div>
             </div>
 
-            <div class="chart-block">
-                <div class="but_chart_export">
+                <div class="chart-block">
+                <div class="but_chart_export ui-buttonset">
                     <button id="taxpie" style="display: none;"></button>
-                    <button id="select">Export</button>
+                    <button id="select" class="ui-button ui-widget ui-state-default ui-button-text-icon-secondary ui-corner-right"><span class="ui-button-text">Export</span><span class="ui-button-icon-secondary ui-icon ui-icon-triangle-1-s"></span></button>
                 </div>
 
                 <ul class="export_list">
@@ -25,25 +25,23 @@
                     <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('tax_chart_pie_phy'),'<spring:message code="file.name.tax.pie.chart.phylum.high.png"/>',300/72);">PNG (Higher quality)</a></li>
                     <li class="chart_exp_png"><a onclick="saveAsSVG(document.getElementById('tax_chart_pie_phy'),'<spring:message code="file.name.tax.pie.chart.phylum.svg"/>');">SVG</a></li>
                 </ul>
+
                 <div id="tax_chart_pie_phy"></div>
             </div>
-
+            <div class="chart-block">
             <div id="tax_dashboard">
                 <div id="tax_table_filter"></div>
                 <div id="tax_table_pie"></div>
                 <%--<div id="table_div"></div>--%>
             </div>
-
+            </div>
         </div>
 </div>
 
 <%--Globale page properties--%>
 <c:set var="phylumCompositionTitle" scope="request"
        value="Phylum composition (Total: ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator} OTUs)"/>
-<script>
-    <%--You will find the method definition in the file sampleViewBody.jsp--%>
-    loadCssStyleForExportSelection('#taxpie');
-</script>
+
 <script type="text/javascript">
     drawDomainCompositionPieChartView();
     drawPhylumPieChart();
@@ -64,7 +62,7 @@
             'fontName':'"Arial"',
             'colors':[${model.taxonomyAnalysisResult.domainComposition.colorCode}],
             'width':250, 'height':299,
-            'chartArea':{left:9, top:30, width:"100%", height:"80%"},
+            'chartArea':{left:20, top:30, width:"84%", height:"100%"},
             'pieSliceBorderColor':'none',
             'legend':{fontSize:10, alignment:'center', 'textStyle':{'fontSize':10}},
             'pieSliceTextStyle':{ bold:true, color:'white'}
@@ -164,3 +162,4 @@
 //    });
     }
 </script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/export-button-menu.js"></script>

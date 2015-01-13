@@ -115,9 +115,9 @@
                             <%--<div class="chart-block">--%>
                         <div class="chart_container">
                             <div class="chart-block">
-                                <div class="but_chart_export">
+                                <div class="but_chart_export ui-buttonset">
                                     <button id="func-ip-pie" style="display: none;"></button>
-                                    <button id="select">Export</button>
+                                    <button id="select" class="ui-button ui-widget ui-state-default ui-button-text-icon-secondary ui-corner-right"><span class="ui-button-text">Export</span><span class="ui-button-icon-secondary ui-icon ui-icon-triangle-1-s"></span></button>
                                 </div>
 
                                 <ul class="export_list">
@@ -204,27 +204,9 @@
                             <li><a href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/goPieChartView"/>"
                                    title="Pie-Chart-View"><span class="ico-pie"></span></a></li>
 
-                                <%--<li><a href="#go-terms-col" title="Stacked column chart view"><span class="ico-col"></span></a></li>--%>
-                                <%--<li><a href="#go-terms-Krona" title="Krona interactive chart view"><span class="ico-krona"></span></a></li>--%>
-                                <%--<li class="ico-downl"><a class="icon icon-functional" data-icon="=" href="#download" title="Download image/table"></a></li>--%>
                         </ul>
 
 
-                            <%--<div id="go-terms-bar">--%>
-                            <%--<div class="go-chart">--%>
-                            <%--<div id="func_chart_bar_go_bp"></div>--%>
-                            <%--<div id="func_chart_bar_go_mf"></div>--%>
-                            <%--<div id="func_chart_bar_go_cc"></div>--%>
-                            <%--</div>--%>
-                            <%--</div>--%>
-
-                            <%--<div id="go-terms-pie">--%>
-                            <%--<div class="go-chart">--%>
-                            <%--<div id="func_chart_pie_go_bp"></div>--%>
-                            <%--<div id="func_chart_pie_go_mf"></div>--%>
-                            <%--<div id="func_chart_pie_go_cc"></div>--%>
-                            <%--</div>--%>
-                            <%--</div>--%>
 
                     </div>
                 </c:when>
@@ -263,3 +245,4 @@
 </script>
 
 <%@ include file="../functionalAnalysis/interproMatchesView.jsp" %>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/export-button-menu.js"></script>
