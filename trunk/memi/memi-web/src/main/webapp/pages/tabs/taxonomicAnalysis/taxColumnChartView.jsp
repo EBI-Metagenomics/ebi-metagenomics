@@ -4,9 +4,10 @@
 <div id="tax-col">
     <div class="chart_container">
         <div class="chart-block">
-          <div class="but_chart_export">
+
+          <div class="but_chart_export ui-buttonset">
           <button id="taxcolumn" style="display: none;"></button>
-          <button id="select">Export</button>
+          <button id="select" class="ui-button ui-widget ui-state-default ui-button-text-icon-secondary ui-corner-right"><span class="ui-button-text">Export</span><span class="ui-button-icon-secondary ui-icon ui-icon-triangle-1-s"></span></button>
           </div>
 
           <ul class="export_list">
@@ -29,10 +30,6 @@
 
 <%--Globale page properties--%>
 <c:set var="phylumCompositionTitle" scope="request" value="Phylum composition (Total: ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator} OTUs)"/>
-<script>
-    <%--You will find the method definition in the file sampleViewBody.jsp--%>
-    loadCssStyleForExportSelection('#taxcolumn');
-</script>
 <script type="text/javascript">
     drawPhylumStackChart();
     drawPhylumTable();
@@ -103,3 +100,4 @@
         phylumStackChart.draw(data, options);
     }
 </script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/export-button-menu.js"></script>
