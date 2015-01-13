@@ -278,13 +278,10 @@ Please <a id="script_feedbackLink" href="javascript:slideFeedbackForm()" title="
         document.getElementById("selected-samples").innerHTML = "Sample list <span>(" + numberSelected + " selected out of " + numberTotal + ")</span>";
     });
 
-    // Show / hide advanced settings
-    $(function(){
-//        $('#advanced-settings-wrapper').hide();
+        // Show / hide advanced settings
         $('#advanced-settings-link').click(function() {
             $('#advanced-settings-wrapper').slideToggle(200);
         });
-    });
 
     // Uncomment these lines in the future to trigger checking of files when selecting samples
     //    // Load samples / check availability of files for chosen data when changing it
