@@ -58,7 +58,7 @@
         <script type="text/javascript">
             //Main navigation tabs - overview, quality control, taxonomic analysis, functional analysis, downloads
             //Ajax load approach as described here: http://jqueryui.com/tabs/#ajax
-            $(function () {
+
                 $("#navtabs").tabs({
                     cache:true,
                     ajaxOptions:{
@@ -74,9 +74,9 @@
                     //Set the disable option
                     ${model.analysisStatus.disabledOption}
                 });
-            });
+
             //  Load the Visualization API and the chart package.
-            google.load('visualization', '1', {'packages':['corechart', 'table', 'controls'] });
+            google.load('visualization', '1.0', {'packages':['corechart', 'table', 'controls'] });
         </script>
 
     </c:when>
@@ -216,37 +216,6 @@
         window.open(getSnapshotImgData(chartContainer), '_blank');
 
 
-    }
-
-    <%--This method is widely used on the sample page--%>
-    <%--Looks like this method only sets CSS styling--%>
-    function loadCssStyleForExportSelection(elementIdentifier) {
-        $(function () {
-            $(elementIdentifier)
-                    .next()
-                    .button({
-                        text:true,
-                        icons:{
-                            secondary:"ui-icon-triangle-1-s"
-                        }
-                    })
-                    .click(function () {
-                        var menu = $(this).parent().next().show().position({
-                            my:"left top",
-                            at:"left bottom",
-                            of:this
-                        });
-                        $(document).one("click", function () {
-                            menu.hide();
-                        });
-                        return false;
-                    })
-                    .parent()
-                    .buttonset()
-                    .next()
-                    .hide()
-                    .menu();
-        });
     }
 </script>
 
