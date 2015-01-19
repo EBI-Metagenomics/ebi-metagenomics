@@ -11,7 +11,7 @@
 <script src="${pageContext.request.contextPath}/js/jquery.blockUI.js" type="text/javascript"></script>
 
 <%--Login dialog--%>
-<div id="login_dialog_div" class="sub" style="display:none; cursor: default;">
+<div id="login_dialog_div" class="sub">
     <div class="anim close_window close_window_button" title="Close this window">&#10006;</div>
     <div class="sub_log">
         <form:form id="login_form" action="**/doLogin" commandName="loginForm">
