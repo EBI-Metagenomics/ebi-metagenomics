@@ -570,13 +570,9 @@
 
 <script type="text/javascript" defer="defer">
     // Enable jQuery tabs
-    $( document ).ready(function() {
-        $(function () {
-           $('#tabs').tabs();
-                    // Triggering the resize event after tab loading to debug display of charts (blurry charts on firefox)
-                    $(window).trigger('resize');
-        });
-        });
+   $('#tabs').tabs();
+   // Triggering the resize event after tab loading to debug display of charts (blurry charts on firefox)
+   $(window).trigger('resize');
 
     // Correcting display error of highcharts charts when working with jQuery tabs
     // Because of the 'display:none' style applied on hidden tabs, highcharts cannot render the charts properly.
@@ -615,4 +611,8 @@
             <%--});//end ajax method--%>
         <%--});--%>
     <%--});--%>
+<%--</script>--%>
+<%--<script type="text/javascript">--%>
+    <%--$( "#tabss, #tabst, #tabs" ).tabs();--%>
+
 <%--</script>--%>
