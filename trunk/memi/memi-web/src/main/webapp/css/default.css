@@ -1538,9 +1538,8 @@ z-index:20;top:-40px;}
 .carousel ul li{position:relative;width:283px; border:0px solid red;margin:0;
  float:left; /* used for no-script version */}
 
-
-#login_dialog_div {display:none; /*solve a bug  of conflict between popup and carousel on IE6 and IE7*/}
-#login_dialog_div { border: 0px solid #AAA; background:none;} /*remove the double background+border for login popup */
+/*POPUP LOGIN DIALOG*/
+#login_dialog_div {cursor: default;/*remove waiting cursor*/display:none; /*solve a bug  of conflict between popup and carousel on IE6 and IE7*/ border: 0px solid #AAA; background:none;/*remove double background+border*/}
 
 /* FEEDBACK FORM */
 #feedback_div   {
