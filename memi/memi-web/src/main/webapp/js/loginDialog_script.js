@@ -11,17 +11,21 @@ $(function() {
                 width: 730,
                 open: function(event, ui) {
                     clearLoginDialogForm();
+                    $('.ui-widget-overlay').addClass('custom-overlay');
                     document.getElementById('loginDialog_userName.errors').innerHTML = "";
-                }
+                },
+                close: function() {
+                        $('.ui-widget-overlay').removeClass('custom-overlay');
+                    }
 //                beforeClose: function(event, ui) {
 //                    $("#errorMessage").html("");
 //                }
             });
 
-    //Close dialog by mouse click in the overlay area
-    $('.ui-widget-overlay').live("click", function() {
-        dialog.dialog("close");
-    });
+    //Close dialog by mouse click in the overlay area - BUGGING REMOVED
+//    $('.ui-widget-overlay').live("click", function() {
+//        dialog.dialog("close");
+//    });
 
     var settings = {
         type: "POST",
