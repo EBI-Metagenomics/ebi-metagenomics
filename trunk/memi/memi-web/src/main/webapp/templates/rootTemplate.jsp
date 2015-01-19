@@ -84,13 +84,13 @@
 
 
     <!-- JQuery v1.11.1 and JQuery UI source-->
-    <script src="${pageContext.request.contextPath}/js/jquery-1.11.1/jquery.js" type="text/javascript"></script>
-    <script src="${pageContext.request.contextPath}/js/jquery-1.11.1/jquery-ui.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/jquery-1.11.1/jquery.js" type="text/javascript" ></script>
+    <script src="${pageContext.request.contextPath}/js/jquery-1.11.1/jquery-ui.min.js" type="text/javascript"></script>
     <%--<script src="${pageContext.request.contextPath}/js/jquery-1.4.4.min.js" type="text/javascript"></script>--%>
     <%--<script src="${pageContext.request.contextPath}/js/jquery-ui-1.8.8.custom.min.js" type="text/javascript"></script>--%>
 
     <!--detect and restore APIs or features that have been deprecated in jQuery see https://github.com/jquery/jquery-migrate (temp solution while we remove code using old Jquery-->
-    <script src="${pageContext.request.contextPath}/js/jquery-migrate-1.2.1.js"></script>
+    <%--<script src="${pageContext.request.contextPath}/js/jquery-migrate-1.2.1.js"></script>--%>
 
     <script src="${pageContext.request.contextPath}/js/jquery.validate-1.9.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/js/jquery.form-2.85.js" type="text/javascript"></script>
@@ -151,10 +151,13 @@
 
     </script>
 
+
+
      <%--WARNING this is inserting a character on top of the page--%>
     <%--<!-- Script and noscript versions for feedback and login links --><script type="text/javascript">--%>
     <%--document.write('<style type="text/css">#noscript_feedbackLink{display: none;}#noscript_loginLink{display: none;}</style>');--%>
 <%--</script>​--%>
+    <!--Load the AJAX API-->
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <%--<script type="text/javascript">--%>
         <%--//Load the Visualization API and the chart package.--%>
@@ -164,10 +167,10 @@
 
     <noscript>
         <style type="text/css">
-            #tax-Krona, #tabs-chart, #interpro-chart, #tabs-taxchart {display: none;}/*remove the Krona box  and all charts tabs when no javascript*/
-            #script_feedbackLink {display: none;}/*remove the feedback button when no javascript*/
-            #script_loginLink {display: none;}  /*remove the login button when no javascript*/
-            #mod4 {display: none;} /* remove the last item - jumping line - of the carousel when no javascript */
+        #tax-Krona, #tabs-chart, #interpro-chart, #tabs-taxchart {display: none;}/*remove the Krona box  and all charts tabs when no javascript*/
+        #script_feedbackLink {display: none;}/*remove the feedback button when no javascript*/
+        #script_loginLink {display: none;}  /*remove the login button when no javascript*/
+        #mod4 {display: none;} /* remove the last item - jumping line - of the carousel when no javascript */
         </style>
     </noscript>
 
