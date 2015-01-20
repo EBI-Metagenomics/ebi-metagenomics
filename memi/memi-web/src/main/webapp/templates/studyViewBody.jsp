@@ -176,12 +176,12 @@ Contact name: (not given)
                                       alt="Analysis finished - check the results"
                                       title="Analysis finished - check the results"></a>
                                 --%>
-                                <a href="<c:url value="${baseURL}/sample/${sample.sampleId}#ui-id-7"/>"
+                                <a href="<c:url value="${baseURL}/sample/${sample.sampleId}#ui-id-6"/>"
                                    class="list_sample" title="Taxonomy analysis">Taxonomy </a>|
-                                <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>#ui-id-9"
+                                <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>#ui-id-8"
                                    class="list_sample" title="Function analysis">Function </a>| <a
                                     class="icon icon-functional list_sample" data-icon="="
-                                    href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>#ui-id-11"
+                                    href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>#ui-id-10"
                                     class="list_sample" title="download results"></a>
                             </c:otherwise>
 
