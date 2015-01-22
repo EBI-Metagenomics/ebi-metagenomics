@@ -72,16 +72,15 @@
     <style type="text/css"> #feedback_div {display: none;}
     #feedback_no_div {display: block;}</style><![endif]-->
 
+    <!--[if lt IE 10]>
+    <style type="text/css"> li.png {display: none;}/*remove the png export option for IE9*/</style>
+    <![endif]-->
+
     <!--[if lt IE 9]>
     <style type="text/css"> .krona_chart {display: none;}</style>
     <style type="text/css"> #ie_krona {display: block;}</style>
     <style type="text/css">.but_chart_export {display: none;}</style>
     <![endif]--> <%-- Add a message to the Krona tab for IE users (lower version than IE9)+ remove the export button as Krona and export to img function is not working for IE8, IE7, IE6--%>
-
-
-    <style type="text/css">.chart_exp_snap {display: none;}</style>
-    <%-- remove the snapshot option for all browsers - temp - to remove the snapshot option completely from the pages when we are sure about it--%>
-
 
     <!-- JQuery v1.11.1 and JQuery UI source-->
     <script src="${pageContext.request.contextPath}/js/jquery-1.11.1/jquery.js" type="text/javascript" ></script>
@@ -157,7 +156,7 @@
     <%--<!-- Script and noscript versions for feedback and login links --><script type="text/javascript">--%>
     <%--document.write('<style type="text/css">#noscript_feedbackLink{display: none;}#noscript_loginLink{display: none;}</style>');--%>
 <%--</script>​--%>
-    <!--Load the AJAX API-->
+    <!--Load the Google Visualization API-->
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <%--<script type="text/javascript">--%>
         <%--//Load the Visualization API and the chart package.--%>
