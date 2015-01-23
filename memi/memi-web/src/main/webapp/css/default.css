@@ -1678,7 +1678,7 @@ ul.export_list {z-index: 1;display: none;border: 1px solid #949494; padding: 5px
 .sample_ana .chart-block .ui-widget-content li a:hover {text-decoration: none; }
 .sample_ana .chart-block ul li a:hover {text-decoration: none; }
 .sample_ana .chart-block .ui-widget-content .ui-state-hover {cursor:default; border: 0px solid #d6e9f8; color:#525252; background-color: #d6e9f8;background-image: none;border-radius: 0px;}
-.sample_ana .chart-block ul li.chart_exp_png:hover {cursor:default; border: 0px solid #d6e9f8; color:#525252; background-color: #d6e9f8;background-image: none;border-radius: 0px;} /*only export items*/
+.sample_ana .chart-block ul li.chart_exp:hover {cursor:pointer; border: 0px solid #d6e9f8; color:#525252; background-color: #d6e9f8;background-image: none;border-radius: 0px;} /*only export items*/
 .sample_ana .chart-block .ui-widget-content .ui-state-focus {cursor:default; border: 0px solid #d6e9f8; color:#525252; background-color: #d6e9f8;background-image: none;border-radius: 0px;}
 .sample_ana .chart-block .ui-menu .ui-state-focus {margin: 0px;}
 
