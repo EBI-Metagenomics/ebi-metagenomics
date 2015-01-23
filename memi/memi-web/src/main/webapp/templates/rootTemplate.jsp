@@ -73,10 +73,10 @@
     #feedback_no_div {display: block;}</style><![endif]-->
 
     <!--[if lt IE 9]>
-    <style type="text/css"> .krona_chart {display: none;}</style>
-    <style type="text/css"> #ie_krona {display: block;}</style>
-    <style type="text/css">.but_chart_export {display: none;}</style>
-    <![endif]--> <%-- Add a message to the Krona tab for IE users (lower version than IE9)+ remove the export button as Krona and export to img function is not working for IE8, IE7, IE6--%>
+    <style type="text/css"> .krona_chart {display: none;}/*remove the Krona box */</style>
+    <style type="text/css"> #ie_krona {display: block;}/*Add a message to the Krona tab for IE users (lower version than IE9)*/</style>
+    <style type="text/css">.but_chart_export {display: none;}/*remove the export button as export is not working for IE8, IE7, IE6*/</style>
+    <![endif]-->
 
     <!-- JQuery v1.11.1 and JQuery UI source-->
     <script src="${pageContext.request.contextPath}/js/jquery-1.11.1/jquery.js" type="text/javascript" ></script>
