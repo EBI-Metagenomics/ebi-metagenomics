@@ -91,24 +91,7 @@
             <c:choose>
                 <c:when test="${!model.analysisStatus.functionalAnalysisTab.interProMatchSectionDisabled}">
 
-
-                    <%--JQuery tabs DIV and UL definition for the InterPro match summary section--%>
-                    <%--<div id="interpro-chart">--%>
-
-                    <%--Tabs--%>
-                    <%--<ul>--%>
-                    <%--<li><a href="#interpro-match-table" title="Table view"><span class="ico-table"></span></a></li>--%>
-                    <%--<li class="selector_tab"></li>--%>
-                    <%--<li><a href="#interpro-match-pie" title="Pie chart view"><span class="ico-pie"></span></a></li>--%>
-                    <%--<li><a href="#interpro-match-bar" title="Bar chart view"><span class="ico-barh"></span></a></li>--%>
-                    <%--<li><a href="#interpro-match-col" title="Stacked column chart view"><span class="ico-col"></span></a></li>--%>
-                    <%--<li><a href="#interpro-match-Krona" title="Krona interactive chart view"><span class="ico-krona"></span></a></li>--%>
-
-                    <%--</ul>--%>
-
-
                     <div id="interpro-match-pie">
-
 
                             <%--<div class="chart_container">--%>
 
@@ -121,38 +104,22 @@
                                 </div>
 
                                 <ul class="export_list">
-                                    <li class="chart_exp_snap"><a
-                                            onclick="toImg(document.getElementById('func_chart_pie_ipro'), document.getElementById('img_div'));">Snapshot</a>
-                                    </li>
-                                    <li class="chart_exp_png"><a
-                                            onclick="saveAsImg(document.getElementById('func_chart_pie_ipro'),'<spring:message code="file.name.func.ip.pie.chart.png"/>',1);">PNG</a>
-                                    </li>
-                                    <li class="chart_exp_png"><a
-                                            onclick="saveAsImg(document.getElementById('func_chart_pie_ipro'),'<spring:message code="file.name.func.ip.pie.chart.high.png"/>',300/72);">PNG
-                                        (Higher quality)</a></li>
-                                    <li class="chart_exp_png"><a
-                                            onclick="saveAsSVG(document.getElementById('func_chart_pie_ipro'),'<spring:message code="file.name.func.ip.pie.chart.svg"/>');">SVG</a>
-                                    </li>
+                                <li><strong>InterPro Match</strong></li>
+                                <%--<li class="chart_exp_snap"><a onclick="toImg(document.getElementById('func_chart_pie_ipro'), document.getElementById('img_div'));">Snapshot</a></li>--%>
+                                <li class="chart_exp png" id="pie_ipro_png"><a onclick="saveAsImg(document.getElementById('func_chart_pie_ipro'),'<spring:message code="file.name.func.ip.pie.chart.png"/>',1);">PNG</a></li>
+                                <li class="chart_exp png" id="pie_ipro_png_h"><a onclick="saveAsImg(document.getElementById('func_chart_pie_ipro'),'<spring:message code="file.name.func.ip.pie.chart.high.png"/>',300/72);">PNG (Higher quality)</a></li>
+                                <li class="chart_exp" id='pie_ipro_svg'><a onclick="saveAsSVG(document.getElementById('func_chart_pie_ipro'),'<spring:message code="file.name.func.ip.pie.chart.svg"/>');">SVG</a></li>
                                 </ul>
 
                                 <div id="func_chart_pie_ipro"></div>
-                                <div class="func_chart_caption">
-                                    <div class="puce_chart"></div>
-                                    Other matches
-                                </div>
+                                <div class="func_chart_caption"><div class="puce_chart"></div>Other matches</div>
                             </div>
-
-                                <%--BEGIN http://jsfiddle.net/SCjm8/1/--%>
-                                <%--<div style="float:left; width:312px; border:0px red solid;" class="chart-export-but">--%>
-                                <%--<button onclick="saveAsImg(document.getElementById('func_chart_pie_ipro'));">Save as PNG Image</button>--%>
-                                <%--<button onclick="toImg(document.getElementById('func_chart_pie_ipro'), document.getElementById('img_div'));">Convert to image</button>--%>
-                                <%--<div id="func_chart_pie_ipro"></div></div>                       &lt;%&ndash; END http://jsfiddle.net/SCjm8/1/&ndash;%&gt;--%>
 
 
                                 <%--<div id="func_chart_div1"></div>--%>
 
 
-                                <%-- BEGIN Toolbar - to export chart--%>
+                                <%-- BEGIN Toolbar - to export chart - not used for the moment ---%>
                             <div class="ico-download" id="toolbar_div" style="display:none;"><a
                                     class="icon icon-functional" data-icon="=" id="csv" href="#" title=""></a></div>
                                 <%-- END Toolbar--%>
@@ -163,19 +130,6 @@
                                 <div id="func_table_pie_ipro"></div>
                             </div>
 
-                                <%--  BEGIN code used if we want to use the row number select option
-                  <div id="func_table_div1" style="display:none;"></div>
-                  <form action="" class="expandertable" >
-                  Show rows:
-                  <select onChange="setOption('pageSize', parseInt(this.value, 10))">
-                  <option selected=selected value="10">10</option>
-                  <option value="25">25</option>
-                  <option value="50">50</option>
-                  <option value="100">100</option>
-                  <option value="1000">1000</option>
-                  <option value="10000">All</option>
-                  </select></form>
-                  END code used if we want to use the row number select option  --%>
 
                         </div>
 
