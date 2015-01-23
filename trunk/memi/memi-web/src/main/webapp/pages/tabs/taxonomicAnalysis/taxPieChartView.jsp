@@ -14,16 +14,16 @@
                 </div>
 
                 <ul class="export_list">
-                    <li><strong>Domain composition</strong></li>
-                    <li class="chart_exp_snap"><a onclick="toImg(document.getElementById('tax_chart_pie_dom'), document.getElementById('img_div'));">Snapshot</a></li>
-                    <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('tax_chart_pie_dom'),'<spring:message code="file.name.tax.pie.chart.domain.png"/>',1);">PNG</a></li>
-                    <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('tax_chart_pie_dom'),'<spring:message code="file.name.tax.pie.chart.domain.high.png"/>',300/72);">PNG (Higher quality)</a></li>
-                    <li class="chart_exp_png"><a onclick="saveAsSVG(document.getElementById('tax_chart_pie_dom'),'<spring:message code="file.name.tax.pie.chart.domain.svg"/>');">SVG</a></li>
-                    <li><strong>Phylum composition</strong></li>
-                    <li class="chart_exp_snap"><a onclick="toImg(document.getElementById('tax_chart_pie_phy'), document.getElementById('img_div'));">Snapshot</a> </li>
-                    <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('tax_chart_pie_phy'),'<spring:message code="file.name.tax.pie.chart.phylum.png"/>',1);">PNG</a></li>
-                    <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('tax_chart_pie_phy'),'<spring:message code="file.name.tax.pie.chart.phylum.high.png"/>',300/72);">PNG (Higher quality)</a></li>
-                    <li class="chart_exp_png"><a onclick="saveAsSVG(document.getElementById('tax_chart_pie_phy'),'<spring:message code="file.name.tax.pie.chart.phylum.svg"/>');">SVG</a></li>
+                   <li><strong>Domain composition</strong></li>
+                   <%--<li class="chart_exp"><a onclick="toImg(document.getElementById('tax_chart_pie_dom'), document.getElementById('img_div'));">Snapshot</a></li>--%>
+                   <li class="chart_exp png" id="pie_dom_png"><a onclick="saveAsImg(document.getElementById('tax_chart_pie_dom'),'<spring:message code="file.name.tax.pie.chart.domain.png"/>',1);">PNG</a></li>
+                   <li class="chart_exp png" id="pie_dom_png_h"><a onclick="saveAsImg(document.getElementById('tax_chart_pie_dom'),'<spring:message code="file.name.tax.pie.chart.domain.high.png"/>',300/72);">PNG (Higher quality)</a></li>
+                   <li class="chart_exp" id="pie_dom_svg"><a onclick="saveAsSVG(document.getElementById('tax_chart_pie_dom'),'<spring:message code="file.name.tax.pie.chart.domain.svg"/>');">SVG</a>
+                   <li><strong>Phylum composition</strong></li>
+                   <%--<li class="chart_exp"><a onclick="toImg(document.getElementById('tax_chart_pie_phy'), document.getElementById('img_div'));">Snapshot</a> </li>--%>
+                   <li class="chart_exp png" id="pie_phy_png"><a onclick="saveAsImg(document.getElementById('tax_chart_pie_phy'),'<spring:message code="file.name.tax.pie.chart.phylum.png"/>',1);">PNG</a></li>
+                   <li class="chart_exp png" id="pie_phy_png_h"><a onclick="saveAsImg(document.getElementById('tax_chart_pie_phy'),'<spring:message code="file.name.tax.pie.chart.phylum.high.png"/>',300/72);">PNG (Higher quality)</a></li>
+                   <li class="chart_exp" id="pie_phy_svg"><a onclick="saveAsSVG(document.getElementById('tax_chart_pie_phy'),'<spring:message code="file.name.tax.pie.chart.phylum.svg"/>');">SVG</a>
                 </ul>
 
                 <div id="tax_chart_pie_phy"></div>
