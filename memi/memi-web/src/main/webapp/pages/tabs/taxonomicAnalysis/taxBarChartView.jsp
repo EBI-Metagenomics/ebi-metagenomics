@@ -12,19 +12,19 @@
           <button id="select" class="ui-button ui-widget ui-state-default ui-button-text-icon-secondary ui-corner-right"><span class="ui-button-text">Export</span><span class="ui-button-icon-secondary ui-icon ui-icon-triangle-1-s"></span></button>
           </div>
 
-          <ul class="export_list">
-          <li><strong>Domain composition</strong></li>
-          <li class="chart_exp_snap"><a onclick="toImg(document.getElementById('tax_chart_bar_dom'), document.getElementById('img_div'));">Snapshot</a></li>
-          <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('tax_chart_bar_dom'),'<spring:message code="file.name.tax.bar.chart.domain.png"/>',1);">PNG</a></li>
-          <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('tax_chart_bar_dom'),'<spring:message code="file.name.tax.bar.chart.domain.high.png"/>',300/72);">PNG (Higher quality)</a></li>
-          <li class="chart_exp_png"><a onclick="saveAsSVG(document.getElementById('tax_chart_bar_dom'),'<spring:message code="file.name.tax.bar.chart.domain.svg"/>');">SVG</a></li>
+        <ul class="export_list">
+        <li><strong>Domain composition</strong></li>
+        <%--<li class="chart_exp_snap"><a onclick="toImg(document.getElementById('tax_chart_bar_dom'), document.getElementById('img_div'));">Snapshot</a></li>--%>
+        <li class="chart_exp png" id="bar_dom_png"><a onclick="saveAsImg(document.getElementById('tax_chart_bar_dom'),'<spring:message code="file.name.tax.bar.chart.domain.png"/>',1);">PNG</a></li>
+        <li class="chart_exp png" id="bar_dom_png_h"><a onclick="saveAsImg(document.getElementById('tax_chart_bar_dom'),'<spring:message code="file.name.tax.bar.chart.domain.high.png"/>',300/72);">PNG (Higher quality)</a></li>
+        <li class="chart_exp" id="bar_dom_svg"><a onclick="saveAsSVG(document.getElementById('tax_chart_bar_dom'),'<spring:message code="file.name.tax.bar.chart.domain.svg"/>');">SVG</a></li>
+        <li><strong>Phylum composition</strong></li>
+        <%--<li class="chart_exp_snap"><a onclick="toImg(document.getElementById('tax_chart_bar_phy'), document.getElementById('img_div'));">Snapshot</a></li>--%>
+        <li class="chart_exp png" id="bar_phy_png"><a onclick="saveAsImg(document.getElementById('tax_chart_bar_phy'),'<spring:message code="file.name.tax.bar.chart.phylum.png"/>',1);">PNG</a></li>
+        <li class="chart_exp png" id="bar_phy_png_h"><a onclick="saveAsImg(document.getElementById('tax_chart_bar_phy'),'<spring:message code="file.name.tax.bar.chart.phylum.high.png"/>',300/72);">PNG (Higher quality)</a></li>
+        <li class="chart_exp" id="bar_phy_svg"><a onclick="saveAsSVG(document.getElementById('tax_chart_bar_phy'),'<spring:message code="file.name.tax.bar.chart.phylum.svg"/>');">SVG</a></li>
+        </ul>
 
-          <li><strong>Phylum composition</strong></li>
-          <li class="chart_exp_snap"><a onclick="toImg(document.getElementById('tax_chart_bar_phy'), document.getElementById('img_div'));">Snapshot</a></li>
-          <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('tax_chart_bar_phy'),'<spring:message code="file.name.tax.bar.chart.phylum.png"/>',1);">PNG</a></li>
-          <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('tax_chart_bar_phy'),'<spring:message code="file.name.tax.bar.chart.phylum.high.png"/>',300/72);">PNG (Higher quality)</a></li>
-          <li class="chart_exp_png"><a onclick="saveAsSVG(document.getElementById('tax_chart_bar_phy'),'<spring:message code="file.name.tax.bar.chart.phylum.svg"/>');">SVG</a></li>
-          </ul>
         <div id="tax_chart_bar_phy"></div>
         </div>
         <div id="tax_dashboard_bar">
