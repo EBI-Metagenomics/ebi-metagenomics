@@ -11,21 +11,22 @@
 
              <ul class="export_list">
              <li><strong>Biological process</strong></li>
-             <li class="chart_exp_snap"> <a onclick="toImg(document.getElementById('func_chart_bar_go_bp'), document.getElementById('img_div'));">Snapshot</a></li>
-             <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('func_chart_bar_go_bp'),'<spring:message code="file.name.func.go.bar.chart.bp.png"/>',1);">PNG</a></li>
-             <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('func_chart_bar_go_bp'),'<spring:message code="file.name.func.go.bar.chart.bp.high.png"/>',300/72);">PNG (Higher quality)</a></li>
-             <li class="chart_exp_png"><a onclick="saveAsSVG(document.getElementById('func_chart_bar_go_bp'),'<spring:message code="file.name.func.go.bar.chart.bp.svg"/>');">SVG</a></li>
+             <%--<li class="chart_exp_snap"> <a onclick="toImg(document.getElementById('func_chart_bar_go_bp'), document.getElementById('img_div'));">Snapshot</a></li>--%>
+             <li class="chart_exp png" id="bar_bp_png"><a onclick="saveAsImg(document.getElementById('func_chart_bar_go_bp'),'<spring:message code="file.name.func.go.bar.chart.bp.png"/>',1);">PNG</a></li>
+             <li class="chart_exp png" id="bar_bp_png_h"><a onclick="saveAsImg(document.getElementById('func_chart_bar_go_bp'),'<spring:message code="file.name.func.go.bar.chart.bp.high.png"/>',300/72);">PNG (Higher quality)</a></li>
+             <li class="chart_exp" id="bar_bp_svg"><a onclick="saveAsSVG(document.getElementById('func_chart_bar_go_bp'),'<spring:message code="file.name.func.go.bar.chart.bp.svg"/>');">SVG</a></li>
              <li><strong>Molecular function</strong></li>
-             <li class="chart_exp_snap"> <a onclick="toImg(document.getElementById('func_chart_bar_go_mf'), document.getElementById('img_div'));">Snapshot</a></li>
-             <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('func_chart_bar_go_mf'),'<spring:message code="file.name.func.go.bar.chart.mf.png"/>',1);">PNG</a></li>
-             <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('func_chart_bar_go_mf'),'<spring:message code="file.name.func.go.bar.chart.mf.high.png"/>',300/72);">PNG (Higher quality)</a></li>
-             <li class="chart_exp_png"><a onclick="saveAsSVG(document.getElementById('func_chart_bar_go_mf'),'<spring:message code="file.name.func.go.bar.chart.mf.svg"/>');">SVG</a></li>
+             <%--<li class="chart_exp_snap"> <a onclick="toImg(document.getElementById('func_chart_bar_go_mf'), document.getElementById('img_div'));">Snapshot</a></li>--%>
+             <li class="chart_exp png" id="bar_mf_png"><a onclick="saveAsImg(document.getElementById('func_chart_bar_go_mf'),'<spring:message code="file.name.func.go.bar.chart.mf.png"/>',1);">PNG</a></li>
+             <li class="chart_exp png" id="bar_mf_png_f"><a onclick="saveAsImg(document.getElementById('func_chart_bar_go_mf'),'<spring:message code="file.name.func.go.bar.chart.mf.high.png"/>',300/72);">PNG (Higher quality)</a></li>
+             <li class="chart_exp" id="bar_mf_svg"><a onclick="saveAsSVG(document.getElementById('func_chart_bar_go_mf'),'<spring:message code="file.name.func.go.bar.chart.mf.svg"/>');">SVG</a></li>
              <li><strong>Cellular component</strong></li>
-             <li class="chart_exp_snap"> <a onclick="toImg(document.getElementById('func_chart_bar_go_cc'), document.getElementById('img_div'));">Snapshot</a></li>
-             <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('func_chart_bar_go_cc'),'<spring:message code="file.name.func.go.bar.chart.cc.png"/>',1);">PNG</a></li>
-             <li class="chart_exp_png"><a onclick="saveAsImg(document.getElementById('func_chart_bar_go_cc'),'<spring:message code="file.name.func.go.bar.chart.cc.high.png"/>',300/72);">PNG (Higher quality)</a></li>
-             <li class="chart_exp_png"><a onclick="saveAsSVG(document.getElementById('func_chart_bar_go_cc'),'<spring:message code="file.name.func.go.bar.chart.cc.svg"/>');">SVG</a></li>
+             <%--<li class="chart_exp_snap"> <a onclick="toImg(document.getElementById('func_chart_bar_go_cc'), document.getElementById('img_div'));">Snapshot</a></li>--%>
+             <li class="chart_exp png" id="bar_cc_png"><a onclick="saveAsImg(document.getElementById('func_chart_bar_go_cc'),'<spring:message code="file.name.func.go.bar.chart.cc.png"/>',1);">PNG</a></li>
+             <li class="chart_exp png" id="bar_cc_png_h"><a onclick="saveAsImg(document.getElementById('func_chart_bar_go_cc'),'<spring:message code="file.name.func.go.bar.chart.cc.high.png"/>',300/72);">PNG (Higher quality)</a></li>
+             <li class="chart_exp" id="bar_cc_svg"><a onclick="saveAsSVG(document.getElementById('func_chart_bar_go_cc'),'<spring:message code="file.name.func.go.bar.chart.cc.svg"/>');">SVG</a></li>
              </ul>
+
         <div id="func_chart_bar_go_bp"></div>
         </div>
 
