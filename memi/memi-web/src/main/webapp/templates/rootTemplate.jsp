@@ -72,10 +72,6 @@
     <style type="text/css"> #feedback_div {display: none;}
     #feedback_no_div {display: block;}</style><![endif]-->
 
-    <!--[if lt IE 10]>
-    <style type="text/css"> li.png {display: none;}/*remove the png export option for IE9*/</style>
-    <![endif]-->
-
     <!--[if lt IE 9]>
     <style type="text/css"> .krona_chart {display: none;}</style>
     <style type="text/css"> #ie_krona {display: block;}</style>
@@ -150,18 +146,12 @@
 
     </script>
 
-
-
      <%--WARNING this is inserting a character on top of the page--%>
     <%--<!-- Script and noscript versions for feedback and login links --><script type="text/javascript">--%>
     <%--document.write('<style type="text/css">#noscript_feedbackLink{display: none;}#noscript_loginLink{display: none;}</style>');--%>
 <%--</script>​--%>
     <!--Load the Google Visualization API-->
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <%--<script type="text/javascript">--%>
-        <%--//Load the Visualization API and the chart package.--%>
-        <%--google.load("visualization", "1", {packages:["corechart","table","controls"]});--%>
-    <%--</script>--%>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/tablequerywrapper.js"></script>
 
     <noscript>
