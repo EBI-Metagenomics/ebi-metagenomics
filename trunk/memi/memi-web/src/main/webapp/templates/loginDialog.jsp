@@ -62,8 +62,9 @@
         //Click event for openEntryViewPopup
         $('#LoginBlockUI, #LoginBlockUI-text').click(function () {
             $.blockUI({ message:$('#login_dialog_div'), baseZ:100000, overlayCSS:{ backgroundColor:'#000', opacity:0.6, cursor:'pointer'}, css:{top:'25%', left:'25%', width:'708px', padding:'0px', border:'1px #AAA solid', 'border-radius':'12px', backgroundColor:'#C9C9C9' }});
-            //make the black overlay clikable and removable
+            //make the black overlay clickable and removable
             $('.blockOverlay').click($.unblockUI);
+            $('#login_form').trigger("reset");
             return false;
         });//end click event
 

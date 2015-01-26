@@ -104,24 +104,17 @@ public class FeedbackFormsController extends AbstractController {
      * Request handler method for the jQuery version (JavaScript enabled version). Supports anti-spam technique honeypot.
      * Sends out an email message to the metagenomics feedback mailing list at the end of the procedure.
      *
-     * @param emailAddress Request parameter.
-     * @param emailSubject Request parameter.
-     * @param emailMessage Request parameter.
-     * @param leaveIt      Request parameter for a hidden input field (required for the honeypot pattern).
+     * @param feedbackForm Request parameters.
      * @return Map between path name AND error message.
      */
     @RequestMapping(value = "**/doFeedback", method = RequestMethod.POST)
     public
     @ResponseBody
-    Map<String, String> doProcessFeedback(@RequestParam(value = "emailAddress") String emailAddress,
-                                          @RequestParam(value = "emailSubject") String emailSubject,
-                                          @RequestParam(value = "emailMessage") String emailMessage,
-                                          @RequestParam(value = "leaveIt") String leaveIt,
+    Map<String, String> doProcessFeedback(@ModelAttribute("loginForm") @Valid FeedbackForm feedbackForm,
                                           final HttpServletResponse response) {
         // Server side feedback form validation
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         javax.validation.Validator validator = factory.getValidator();
-        FeedbackForm feedbackForm = new FeedbackForm(emailAddress, emailSubject, emailMessage, leaveIt);
         Set<ConstraintViolation<FeedbackForm>> constraintViolations = validator.validate(feedbackForm);
         if (!constraintViolations.isEmpty()) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -142,11 +135,11 @@ public class FeedbackFormsController extends AbstractController {
             return errorMessages;
         } else {
             //build feedback email message
-            if (leaveIt == null || leaveIt.equals("")) {
-                String msg = buildMsg(emailMessage);
-                ((EmailNotificationService) emailService).setSender(emailAddress);
-                ((EmailNotificationService) emailService).setEmailSubject("[beta-feedback] " + emailSubject);
-                ((EmailNotificationService) emailService).setReceiverCC(emailAddress);
+            if (feedbackForm.getLeaveIt() == null || feedbackForm.getLeaveIt().equals("")) {
+                String msg = buildMsg(feedbackForm.getEmailMessage());
+                ((EmailNotificationService) emailService).setSender(feedbackForm.getEmailAddress());
+                ((EmailNotificationService) emailService).setEmailSubject("[beta-feedback] " + feedbackForm.getEmailSubject());
+                ((EmailNotificationService) emailService).setReceiverCC(feedbackForm.getEmailAddress());
                 emailService.sendNotification(msg);
                 if (log.isInfoEnabled()) {
                     log.info("Sent an email with feedback details: " + msg);

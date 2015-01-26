@@ -99,11 +99,7 @@ public class AbstractSampleViewController extends SecuredAbstractController<Samp
         EmgFile emgFile = getEmgFile(sample.getId());
         //TODO: For the moment the system only allows to represent one file on the analysis page, but
         //in the future it should be possible to represent all different data types (genomic, transcriptomic)
-        //TODO: The following 'if' case is a quick and dirty solution to solve the differentiation issue between genomic and transcriptomic analysis
         SampleViewModel.ExperimentType experimentType = SampleViewModel.ExperimentType.GENOMIC;
-        if (sample.getId() == 367) {
-            experimentType = SampleViewModel.ExperimentType.TRANSCRIPTOMIC;
-        }
         final List<EmgSampleAnnotation> sampleAnnotations = (List<EmgSampleAnnotation>) sampleAnnotationDAO.getSampleAnnotations(sample.getId());
 
         final ViewModelBuilder<SampleViewModel> builder = new SampleViewModelBuilder(
@@ -115,7 +111,7 @@ public class AbstractSampleViewController extends SecuredAbstractController<Samp
                 MemiTools.getArchivedSeqs(fileInfoDAO, sample),
                 propertyContainer,
                 experimentType,
-                buildDownloadSection(sample.getSampleId(), sample.isPublic(), fileDefinitionsMap, emgFile),
+                buildDownloadSection(sample, fileDefinitionsMap, emgFile),
                 sampleAnnotations,
                 qualityControlFileDefinitions,
                 functionalAnalysisFileDefinitions,
@@ -128,9 +124,13 @@ public class AbstractSampleViewController extends SecuredAbstractController<Samp
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, sampleModel);
     }
 
-    private DownloadSection buildDownloadSection(final String sampleId, final boolean sampleIsPublic,
+    private DownloadSection buildDownloadSection(final Sample sample,
                                                  final Map<String, DownloadableFileDefinition> fileDefinitionsMap,
                                                  final EmgFile emgFile) {
+        final String sampleId = sample.getSampleId();
+        final boolean sampleIsPublic = sample.isPublic();
+        final Long runId = sample.getId();
+
         final List<DownloadLink> seqDataDownloadLinks = new ArrayList<DownloadLink>();
         final List<DownloadLink> funcAnalysisDownloadLinks = new ArrayList<DownloadLink>();
         final List<DownloadLink> taxaAnalysisDownloadLinks = new ArrayList<DownloadLink>();
@@ -151,19 +151,19 @@ public class AbstractSampleViewController extends SecuredAbstractController<Samp
                 if (fileDefinition instanceof SequenceFileDefinition) {
                     seqDataDownloadLinks.add(new DownloadLink(fileDefinition.getLinkText(),
                             fileDefinition.getLinkTitle(),
-                            "sample/" + sampleId + fileDefinition.getLinkURL(),
+                            "sample/" + sampleId + fileDefinition.getLinkURL() + runId,
                             fileDefinition.getOrder(),
                             getFileSize(fileObject)));
                 } else if (fileDefinition instanceof TaxonomicAnalysisFileDefinition) {
                     taxaAnalysisDownloadLinks.add(new DownloadLink(fileDefinition.getLinkText(),
                             fileDefinition.getLinkTitle(),
-                            "sample/" + sampleId + fileDefinition.getLinkURL(),
+                            "sample/" + sampleId + fileDefinition.getLinkURL() + runId,
                             fileDefinition.getOrder(),
                             getFileSize(fileObject)));
                 } else if (fileDefinition instanceof FunctionalAnalysisFileDefinition) {
                     funcAnalysisDownloadLinks.add(new DownloadLink(fileDefinition.getLinkText(),
                             fileDefinition.getLinkTitle(),
-                            "sample/" + sampleId + fileDefinition.getLinkURL(),
+                            "sample/" + sampleId + fileDefinition.getLinkURL() + runId,
                             fileDefinition.getOrder(),
                             getFileSize(fileObject)));
 

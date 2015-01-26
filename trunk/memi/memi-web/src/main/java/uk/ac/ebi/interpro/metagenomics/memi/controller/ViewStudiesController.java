@@ -261,7 +261,7 @@ public class ViewStudiesController extends AbstractController implements IContro
         List<String> result = new ArrayList<String>();
         result.add("Project name");
         result.add("Samples");
-        result.add("Submitted date");
+        result.add("Last updated");
         return result;
     }
 

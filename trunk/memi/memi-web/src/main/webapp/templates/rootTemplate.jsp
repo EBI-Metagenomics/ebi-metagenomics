@@ -88,7 +88,7 @@
     <%--<script src="${pageContext.request.contextPath}/js/jquery-migrate-1.2.1.js"></script>--%>
 
     <script src="${pageContext.request.contextPath}/js/jquery.validate-1.9.js" type="text/javascript"></script>
-    <script src="${pageContext.request.contextPath}/js/jquery.form-2.85.js" type="text/javascript"></script>
+    <script src="${pageContext.request.contextPath}/js/jquery.form-3.51.0.js" type="text/javascript"></script>
     <!-- The date picker is used within the submission page -->
     <script src="${pageContext.request.contextPath}/js/datepicker.js" type="text/javascript"></script>
     <!-- The auto completion is used with the study search page -->

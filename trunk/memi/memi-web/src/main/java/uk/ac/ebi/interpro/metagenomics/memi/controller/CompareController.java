@@ -121,6 +121,8 @@ public class CompareController extends AbstractController implements IController
             else
                 sampleTextId.add("Sample" + String.format("%02d", i + 1));
         }
+        final List<String> sortedSampleIds = sortAndAdjustSampleNameList(sampleTextId);
+
 
 /*        Uncomment these lines if you plan to handle the 'file is empty' error by showing missing samples on the result page
         // Check if one of those is empty and catching empty files so we can display a nice error message on result page
@@ -437,5 +439,25 @@ public class CompareController extends AbstractController implements IController
             }
         }
 
+    }
+
+    protected List<String> sortAndAdjustSampleNameList(List<String> inputList) {
+        Collections.sort(inputList, String.CASE_INSENSITIVE_ORDER);
+        final List<String> resultList = new ArrayList<String>();
+        String previousListItem = null;
+        int counter = 2;
+        for (String listItem : inputList) {
+            String newListItem = listItem;
+            if (newListItem.equals(previousListItem)) {
+                newListItem += "_" + counter;
+                counter++;
+            } else {
+                //reset counter
+                counter = 2;
+            }
+            previousListItem = listItem;
+            resultList.add(newListItem);
+        }
+        return resultList;
     }
 }

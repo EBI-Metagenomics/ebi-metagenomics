@@ -36,6 +36,7 @@ public class SampleViewExportController extends AbstractSampleViewController {
 
     @RequestMapping(value = '/' + SampleViewController.VIEW_NAME + "/{sampleId}/export")
     public void doHandleSampleViewGetExports(@PathVariable final String sampleId,
+                                             @RequestParam(required = true, value = "runId") final Long runId,
                                              @RequestParam(required = true, value = "exportValue") final String exportValue,
                                              final HttpServletResponse response,
                                              final HttpServletRequest request) throws IOException {
@@ -47,7 +48,7 @@ public class SampleViewExportController extends AbstractSampleViewController {
         if (sample != null) {
             log.debug("Checking accessibility before streaming Krona result charts...");
             if (isAccessible(sample)) {
-                final EmgFile emgFile = getEmgFile(sample.getId());
+                final EmgFile emgFile = getEmgFile(runId);
                 if (emgFile != null) {
                     DownloadableFileDefinition fileDefinition = exportValueService.findResultFileDefinition(exportValue);
                     if (fileDefinition != null) {

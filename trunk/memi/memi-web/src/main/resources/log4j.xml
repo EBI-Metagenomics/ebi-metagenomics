@@ -80,7 +80,7 @@
     <root>
         <priority value="${log4j.log.level}"/>
         <appender-ref ref="console"/>
-        <appender-ref ref="dailyDebugApp"/>
+        <!--<appender-ref ref="dailyDebugApp"/>-->
         <appender-ref ref="dailyWarnApp"/>
         <appender-ref ref="dailyErrorApp"/>
     </root>

@@ -20,22 +20,22 @@
             <ul>
                 <li>
                     <a title="Overview"
-                       href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/overview"/>"><span>Overview</span></a>
+                       href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/overview?runId=${model.sample.id}"/>"><span>Overview</span></a>
                 </li>
                 <li>
                     <a title="Quality-Control"
-                       href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/qualityControl"/>"><span>Quality control</span></a>
+                       href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/qualityControl?runId=${model.sample.id}"/>"><span>Quality control</span></a>
                 </li>
                 <li><a title="Taxonomy-Analysis"
-                       href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/taxonomic"/>"><span>Taxonomy analysis</span></a>
+                       href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/taxonomic?runId=${model.sample.id}"/>"><span>Taxonomy analysis</span></a>
                 </li>
                 <li>
                     <a title="Functional-Analysis"
-                       href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/functional"/>"><span>Functional analysis</span></a>
+                       href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/functional?runId=${model.sample.id}"/>"><span>Functional analysis</span></a>
                 </li>
                 <li>
                     <a title="Download"
-                       href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/download"/>"><span>Download</span></a>
+                       href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/download?runId=${model.sample.id}"/>"><span>Download</span></a>
                 </li>
                     <%--<li><a href="#fragment-experimental"><span>Experimental factor</span></a></li>--%>
             </ul>
@@ -142,7 +142,7 @@
         var form = $('<form/>', {
             id:'pngExportForm',
             name:'pngExportForm',
-            action:"<c:url value="${baseURL}/sample/${model.sample.sampleId}/export"/>",
+            action:"<c:url value="${baseURL}/sample/${model.sample.sampleId}/export?runId=${model.sample.id}"/>",
             method:'POST',
             enctype:'text/plain',
             css:{ display:'none' }
@@ -211,7 +211,7 @@
         var form = $('<form/>', {
             id:'svgExportForm',
             name:'svgExportForm',
-            action:"<c:url value="${baseURL}/sample/${model.sample.sampleId}/export"/>",
+            action:"<c:url value="${baseURL}/sample/${model.sample.sampleId}/export?runId=${model.sample.id}"/>",
             method:'POST',
             enctype:'text/plain',
             css:{ display:'none' }

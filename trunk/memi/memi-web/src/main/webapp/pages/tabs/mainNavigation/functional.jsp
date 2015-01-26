@@ -153,9 +153,9 @@
                         <ul>
                             <li class="selector_tab">Switch view:</li>
                                 <%--<li><a href="#go-terms-table" title="Table view"><span class="ico-table"></span></a></li>--%>
-                            <li><a href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/goBarChartView"/>"
+                            <li><a href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/goBarChartView?runId=${model.sample.id}"/>"
                                    title="Bar-Chart-View"><span class="ico-barh"></span></a></li>
-                            <li><a href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/goPieChartView"/>"
+                            <li><a href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/goPieChartView?runId=${model.sample.id}"/>"
                                    title="Pie-Chart-View"><span class="ico-pie"></span></a></li>
 
                         </ul>
