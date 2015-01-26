@@ -205,18 +205,18 @@
                             <p><%--<span class="list_date">${sample.metadataReceived}:</span>--%>
                                 <c:if test="${!sample.public}"><img alt="private"
                                                                     src="${pageContext.request.contextPath}/img/icon_priv_private.gif"></c:if>&nbsp;&nbsp;
-                                <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>"
+                                <a href="<c:url value="${baseURL}/sample/${sample.sampleId}?runId=${sample.id}"/>"
                                    class="list_more fl_uppercase_title">${sample.sampleName}</a>
                                 <span class="list_desc"><c:out value="${sample.shortSampleDescription} ..."/></span>
                                 <br/>
-                                <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>" class="more_view">View more</a>
+                                <a href="<c:url value="${baseURL}/sample/${sample.sampleId}?runId=${sample.id}"/>" class="more_view">View more</a>
                                 <c:choose>
                                     <c:when test="${empty sample.analysisCompleted}">
                                         <%-- leave empty to be consistent with sample overview page
                                  - <img src="${pageContext.request.contextPath}/img/ico_analysis_chart_small_off.gif" alt="Analysis in progress" title="Analysis in progress">--%></c:when>
                                     <c:otherwise>
-                                        - <a href="<c:url value="${baseURL}/sample/${sample.sampleId}#ui-id-6"/>" class="list_sample" title="Taxonomy analysis">Taxonomy </a> | <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>#ui-id-8"
-                                                                                                                                                                                             class="list_sample" title="Function analysis">Function results</a> | <a class="icon icon-functional" data-icon="=" href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>#ui-id-10" class="list_sample" title="download results"></a>
+                                        - <a href="<c:url value="${baseURL}/sample/${sample.sampleId}?runId=${sample.id}#ui-id-6"/>" class="list_sample" title="Taxonomy analysis">Taxonomy </a> | <a href="<c:url value="${baseURL}/sample/${sample.sampleId}?runId=${sample.id}"/>#ui-id-8"
+                                                                                                                                                                                             class="list_sample" title="Function analysis">Function results</a> | <a class="icon icon-functional" data-icon="=" href="<c:url value="${baseURL}/sample/${sample.sampleId}?runId=${sample.id}"/>#ui-id-10" class="list_sample" title="download results"></a>
 
                                     </c:otherwise>
                                 </c:choose>
@@ -277,12 +277,12 @@
                 <c:forEach var="sample" items="${model.publicSamples}" varStatus="status" begin="0"
                            end="${model.maxRowNumberOfLatestItems-1}">
                     <p><%--<span class="list_date">${sample.metadataReceived}:</span>--%>
-                        <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>"
+                        <a href="<c:url value="${baseURL}/sample/${sample.sampleId}?runId=${sample.id}"/>"
                            class="list_more fl_uppercase_title">${sample.sampleName}</a>
 
                         <span class="list_desc"><c:out value="${sample.shortSampleDescription} ..."/></span>
                         <br/>
-                        <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>" class="more_view">View more</a>
+                        <a href="<c:url value="${baseURL}/sample/${sample.sampleId}?runId=${sample.id}"/>" class="more_view">View more</a>
                         <c:choose>
                             <c:when test="${empty sample.analysisCompleted}">
                                 <%-- leave empty to be consistent with sample overview page
@@ -304,8 +304,8 @@
                             <%--BEGIN TEXT VERSION--%>
 
                              <c:otherwise>
-                                - <a href="<c:url value="${baseURL}/sample/${sample.sampleId}#ui-id-6"/>" class="list_sample" title="Taxonomy analysis">Taxonomy </a> | <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>#ui-id-8"
-                                                                                                                                               class="list_sample" title="Function analysis">Function results</a> | <a class="icon icon-functional" data-icon="=" href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>#ui-id-10" class="list_sample" title="download results"></a>
+                                - <a href="<c:url value="${baseURL}/sample/${sample.sampleId}?runId=${sample.id}#ui-id-6"/>" class="list_sample" title="Taxonomy analysis">Taxonomy </a> | <a href="<c:url value="${baseURL}/sample/${sample.sampleId}?runId=${sample.id}"/>#ui-id-8"
+                                                                                                                                               class="list_sample" title="Function analysis">Function results</a> | <a class="icon icon-functional" data-icon="=" href="<c:url value="${baseURL}/sample/${sample.sampleId}?runId=${sample.id}"/>#ui-id-10" class="list_sample" title="download results"></a>
 
                             </c:otherwise>
                             <%--END TEXT VERSION--%>

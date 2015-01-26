@@ -8,7 +8,7 @@ $(function() {
         type: "POST",
         url: $("#feedback_form").attr('action'),
         data: $("#feedback_form").serialize(),
-        dataType: "json",
+        dataType: 'html',
         success: function(data, textStatus, jqXHR) {
             var root = location.protocol + '//' + location.host;
             window.location.href = root + "/metagenomics/feedbackSuccess";

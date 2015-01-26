@@ -462,7 +462,7 @@
                 <dailyErrorAppParam>/var/tmp/servers/tc-interpro-das/logs/metagenomics/memi-ERROR.log4j</dailyErrorAppParam>
                 <dailyDebugAppParam>/var/tmp/servers/tc-interpro-das/logs/metagenomics/memi-DEBUG.log4j</dailyDebugAppParam>
                 <dailyWarnAppParam>/var/tmp/servers/tc-interpro-das/logs/metagenomics/memi-WARN.log4j</dailyWarnAppParam>
-                <log4j.log.level>DEBUG</log4j.log.level>
+                <log4j.log.level>WARN</log4j.log.level>
             </properties>
         </profile>
 

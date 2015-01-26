@@ -15,7 +15,7 @@
         <property name="linkText" value="Processed nucleotide reads (FASTA)"/>
         <property name="order" value="2"/>
         <property name="linkTitle" value="Click to download processed fasta nucleotide sequences"/>
-        <property name="linkURL" value="/doExportMaskedFASTAFile"/>
+        <property name="linkURL" value="/doExportMaskedFASTAFile?runId="/>
     </bean>
 
     <bean id="readsWithPredictedCDSFile" autowire-candidate="false"
@@ -27,7 +27,7 @@
         <property name="linkText" value="Processed reads with pCDS (FASTA)"/>
         <property name="order" value="3"/>
         <property name="linkTitle" value="Click to download processed reads with predicted CDS in FASTA format"/>
-        <property name="linkURL" value="/doExportReadsWithCDSFile"/>
+        <property name="linkURL" value="/doExportReadsWithCDSFile?runId="/>
     </bean>
 
     <bean id="readsWithInterProMatchesFile" autowire-candidate="false"
@@ -39,7 +39,7 @@
         <property name="linkText" value="Processed reads with InterPro matches (FASTA)"/>
         <property name="order" value="4"/>
         <property name="linkTitle" value="Click to download reads with an InterPro match (FASTA)"/>
-        <property name="linkURL" value="/export?contentType=text&amp;exportValue=readsWithMatches"/>
+        <property name="linkURL" value="/export?contentType=text&amp;exportValue=readsWithMatches&amp;runId="/>
     </bean>
 
     <bean id="readsWithoutInterProMatchesFile" autowire-candidate="false"
@@ -50,7 +50,7 @@
         <property name="linkText" value="Processed reads without InterPro match (FASTA)"/>
         <property name="order" value="5"/>
         <property name="linkTitle" value="Click to download reads with a predicted CDS but no InterPro match (FASTA)"/>
-        <property name="linkURL" value="/export?contentType=text&amp;exportValue=readsWithoutMatches"/>
+        <property name="linkURL" value="/export?contentType=text&amp;exportValue=readsWithoutMatches&amp;runId="/>
     </bean>
 
     <bean id="predictedCDSFile" autowire-candidate="false"
@@ -62,7 +62,7 @@
         <property name="linkText" value="Predicted CDS (FASTA)"/>
         <property name="order" value="6"/>
         <property name="linkTitle" value="Click to download all predicted CDS in FASTA format"/>
-        <property name="linkURL" value="/doExportCDSFile"/>
+        <property name="linkURL" value="/doExportCDSFile?runId="/>
     </bean>
 
     <bean id="predictedCDSWithInterProMatchesFile" autowire-candidate="false"
@@ -74,7 +74,7 @@
         <property name="linkText" value="Predicted CDS with InterPro matches (FASTA)"/>
         <property name="order" value="7"/>
         <property name="linkTitle" value="Click to download predicted CDS with InterPro matches (FASTA)"/>
-        <property name="linkURL" value="/doExportIPRhitsFile"/>
+        <property name="linkURL" value="/doExportIPRhitsFile?runId="/>
     </bean>
 
     <bean id="predictedORFWithoutAnnotation" autowire-candidate="false"
@@ -86,7 +86,7 @@
         <property name="linkText" value="Predicted ORF without annotation (FASTA)"/>
         <property name="order" value="8"/>
         <property name="linkTitle" value="Click to download predicted ORF without annotation (FASTA)"/>
-        <property name="linkURL" value="/export?contentType=text&amp;exportValue=orfWithoutAnnotation"/>
+        <property name="linkURL" value="/export?contentType=text&amp;exportValue=orfWithoutAnnotation&amp;runId="/>
     </bean>
 
     <bean id="predictedCDSWithoutAnnotation" autowire-candidate="false"
@@ -98,7 +98,7 @@
         <property name="linkText" value="Predicted CDS without annotation (FASTA)"/>
         <property name="order" value="9"/>
         <property name="linkTitle" value="Click to download predicted CDS without annotation (FASTA)"/>
-        <property name="linkURL" value="/export?contentType=text&amp;exportValue=cdsWithoutAnnotation"/>
+        <property name="linkURL" value="/export?contentType=text&amp;exportValue=cdsWithoutAnnotation&amp;runId="/>
     </bean>
 
 
@@ -112,7 +112,7 @@
         <property name="linkText" value="Reads encoding 5S rRNA (FASTA)"/>
         <property name="order" value="1"/>
         <property name="linkTitle" value="Click to download reads encoding 5S rRNA (FASTA)"/>
-        <property name="linkURL" value="/export?contentType=text&amp;exportValue=5SrRNA"/>
+        <property name="linkURL" value="/export?contentType=text&amp;exportValue=5SrRNA&amp;runId="/>
     </bean>
 
     <bean id="rRNA16sFile" autowire-candidate="false"
@@ -123,7 +123,7 @@
         <property name="linkText" value="Reads encoding 16S rRNA (FASTA)"/>
         <property name="order" value="2"/>
         <property name="linkTitle" value="Click to download reads encoding 16S rRNA (FASTA)"/>
-        <property name="linkURL" value="/export?contentType=text&amp;exportValue=16SrRNA"/>
+        <property name="linkURL" value="/export?contentType=text&amp;exportValue=16SrRNA&amp;runId="/>
     </bean>
 
     <bean id="rRNA23sFile" autowire-candidate="false"
@@ -134,7 +134,7 @@
         <property name="linkText" value="Reads encoding 23S rRNA (FASTA)"/>
         <property name="order" value="3"/>
         <property name="linkTitle" value="Click to download reads encoding 23S rRNA (FASTA)"/>
-        <property name="linkURL" value="/export?contentType=text&amp;exportValue=23SrRNA"/>
+        <property name="linkURL" value="/export?contentType=text&amp;exportValue=23SrRNA&amp;runId="/>
     </bean>
 
     <bean id="otuBiomFile" autowire-candidate="false"
@@ -145,7 +145,7 @@
         <property name="linkText" value="OTUs and taxonomic assignments (BIOM)"/>
         <property name="order" value="4"/>
         <property name="linkTitle" value="Click to download the OTUs and taxonomic assignments (BIOM)"/>
-        <property name="linkURL" value="/export?contentType=text&amp;exportValue=biom"/>
+        <property name="linkURL" value="/export?contentType=text&amp;exportValue=biom&amp;runId="/>
     </bean>
 
     <bean id="newickFile" autowire-candidate="false"
@@ -156,7 +156,7 @@
         <property name="linkText" value="Phylogenetic tree (Newick format)"/>
         <property name="order" value="5"/>
         <property name="linkTitle" value="Click to download the phylogenetic tree file (Newick format)"/>
-        <property name="linkURL" value="/export?contentType=text&amp;exportValue=tree"/>
+        <property name="linkURL" value="/export?contentType=text&amp;exportValue=tree&amp;runId="/>
     </bean>
 
     <bean id="otuTsvFile" autowire-candidate="false"
@@ -168,7 +168,7 @@
         <property name="linkText" value="OTUs and taxonomic assignments (TSV)"/>
         <property name="order" value="6"/>
         <property name="linkTitle" value="Click to download the OTUs and taxonomic assignments (TSV)"/>
-        <property name="linkURL" value="/export?contentType=text&amp;exportValue=taxa"/>
+        <property name="linkURL" value="/export?contentType=text&amp;exportValue=taxa&amp;runId="/>
     </bean>
 
     <bean id="kingdomCountsFile" autowire-candidate="false"
@@ -197,7 +197,7 @@
         <property name="linkText" value="InterPro matches (TSV)"/>
         <property name="order" value="2"/>
         <property name="linkTitle" value="Click to download full InterPro matches table (TSV)"/>
-        <property name="linkURL" value="/doExportI5TSVFile"/>
+        <property name="linkURL" value="/doExportI5TSVFile?runId="/>
     </bean>
 
     <bean id="fullGOAnnotationFile" autowire-candidate="false"
@@ -209,7 +209,7 @@
         <property name="linkText" value="Complete GO annotation (CSV)"/>
         <property name="order" value="3"/>
         <property name="linkTitle" value="Click to download GO annotation result file (CSV)"/>
-        <property name="linkURL" value="/doExportGOFile"/>
+        <property name="linkURL" value="/doExportGOFile?runId="/>
     </bean>
 
     <bean id="goSlimAnnotationFile" autowire-candidate="false"
@@ -221,7 +221,7 @@
         <property name="linkText" value="GO slim annotation (CSV)"/>
         <property name="order" value="4"/>
         <property name="linkTitle" value="Click to download GO slim annotation result file (CSV)"/>
-        <property name="linkURL" value="/doExportGOSlimFile"/>
+        <property name="linkURL" value="/doExportGOSlimFile?runId="/>
     </bean>
 
     <!--Other-->

@@ -61,30 +61,40 @@ public abstract class SecuredAbstractController<T extends SecureEntity> extends 
     /**
      * Checks if the secure entity(study/sample) is public and owned by the logged in user/submitter.
      */
-    protected ModelAndView checkAccessAndBuildModel(ModelProcessingStrategy<T> modelProcessingStrategy, final ModelMap model, final String stringId, String viewName) {
-        ISampleStudyDAO<T> dao = getDAO();
-        if (dao != null) {
-            final T securedEntity = dao.readByStringId(stringId);
-            if (securedEntity == null) {
-                return getEntryNotExistMAV(stringId);
-            } else if (securedEntity instanceof Study || securedEntity instanceof Sample) {
-                if (!isAccessible(securedEntity)) {
-                    log.info("Requesting private study with ID " + stringId + "...");
-                    return buildAccessDeniedModelAndView(stringId);
-                }
-            } else {
-                throw new IllegalStateException("Unknown implementation of SecureEntity object (neither study nor sample), which cannot be handle.");
+    protected ModelAndView checkAccessAndBuildModel(ModelProcessingStrategy<T> modelProcessingStrategy, final ModelMap model, final Object identifier, String viewName) {
+        final T securedEntity = getSecuredEntity(identifier);
+        if (securedEntity == null) {
+            return getEntryNotExistMAV(identifier);
+        } else if (securedEntity instanceof Study || securedEntity instanceof Sample) {
+            if (!isAccessible(securedEntity)) {
+                log.info("Requesting private study/sample with identifier " + identifier + "...");
+                return buildAccessDeniedModelAndView(identifier);
             }
-
-            modelProcessingStrategy.processModel(model, securedEntity);
         } else {
-            log.error("Check why the DAO is null!");
-            throw new IllegalStateException("Configuration error - the the DAO is null");
+            throw new IllegalStateException("Unknown implementation of SecureEntity object (neither study nor sample), which cannot be handle.");
         }
+
+        modelProcessingStrategy.processModel(model, securedEntity);
         if (model == null) {
             return null;
         }
         return new ModelAndView(viewName, model);
+    }
+
+    private T getSecuredEntity(final Object identifier) {
+        ISampleStudyDAO<T> dao = getDAO();
+        T securedEntity = null;
+        if (dao != null) {
+            if (identifier instanceof Long) {
+                securedEntity = dao.read((Long) identifier);
+            } else if (identifier instanceof String) {
+                securedEntity = dao.readByStringId((String) identifier);
+            }
+        } else {
+            log.error("Check why the DAO is null!");
+            throw new IllegalStateException("Configuration error - the the DAO is null");
+        }
+        return securedEntity;
     }
 
 
@@ -94,11 +104,11 @@ public abstract class SecuredAbstractController<T extends SecureEntity> extends 
      * @param objectId
      * @return Access denied model and view.
      */
-    protected ModelAndView buildAccessDeniedModelAndView(String objectId) {
+    protected ModelAndView buildAccessDeniedModelAndView(Object objectId) {
         return getModelAndView(objectId, DefaultController.ACCESS_DENIED_VIEW_NAME);
     }
 
-    private ModelAndView getModelAndView(String objectId, String viewName) {
+    private ModelAndView getModelAndView(Object objectId, String viewName) {
         final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager,
                 "Error page", null, propertyContainer);
         final ViewModel viewModel = builder.getModel();
@@ -116,7 +126,7 @@ public abstract class SecuredAbstractController<T extends SecureEntity> extends 
      * @param objectId
      * @return Entry not exists model and view.
      */
-    private ModelAndView getEntryNotExistMAV(String objectId) {
+    private ModelAndView getEntryNotExistMAV(Object objectId) {
         return getModelAndView(objectId, DefaultController.ENTRY_NOT_FOUND_VIEW_NAME);
     }
 

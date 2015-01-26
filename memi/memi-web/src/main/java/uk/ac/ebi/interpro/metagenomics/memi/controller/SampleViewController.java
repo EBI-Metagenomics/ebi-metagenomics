@@ -7,6 +7,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgFile;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
@@ -37,17 +38,22 @@ public class SampleViewController extends AbstractSampleViewController {
     @Resource
     private MemiDownloadService downloadService;
 
+    /**
+     * @param sampleId External sample identifier (e.g. in ENA, for instance ERS580795)
+     * @param runId    Internal sample identifier in EMG (column name SAMPLE_ID)
+     */
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView doGetSample(@PathVariable final String sampleId,
+                                    @RequestParam(required = true, value = "runId") final Long runId,
                                     final ModelMap model) throws IOException {
-        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, sampleId, getModelViewName());
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, runId, getModelViewName());
     }
 
     private ModelProcessingStrategy<Sample> createNewModelProcessingStrategy() {
         return new ModelProcessingStrategy<Sample>() {
             @Override
             public void processModel(ModelMap model, Sample sample) {
-                log.info("Building model...");
+                log.info("Building sample view model...");
                 populateModel(model, sample);
             }
         };
@@ -60,8 +66,9 @@ public class SampleViewController extends AbstractSampleViewController {
      */
     @RequestMapping(value = "/download")
     public ModelAndView ajaxLoadDownloadTab(@PathVariable final String sampleId,
+                                            @RequestParam(required = true, value = "runId") final Long runId,
                                             final ModelMap model) throws IOException {
-        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, sampleId, "tabs/mainNavigation/download");
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, runId, "tabs/mainNavigation/download");
     }
 
     /**
@@ -71,8 +78,9 @@ public class SampleViewController extends AbstractSampleViewController {
      */
     @RequestMapping(value = "/qualityControl")
     public ModelAndView ajaxLoadQualityControlTab(@PathVariable final String sampleId,
+                                                  @RequestParam(required = true, value = "runId") final Long runId,
                                                   final ModelMap model) throws IOException {
-        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, sampleId, "tabs/mainNavigation/qualityControl");
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, runId, "tabs/mainNavigation/qualityControl");
     }
 
     /**
@@ -82,8 +90,9 @@ public class SampleViewController extends AbstractSampleViewController {
      */
     @RequestMapping(value = "/taxonomic")
     public ModelAndView ajaxLoadTaxonomyTab(@PathVariable final String sampleId,
+                                            @RequestParam(required = true, value = "runId") final Long runId,
                                             final ModelMap model) throws IOException {
-        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, sampleId, "tabs/mainNavigation/taxonomic");
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, runId, "tabs/mainNavigation/taxonomic");
     }
 
     /**
@@ -93,8 +102,9 @@ public class SampleViewController extends AbstractSampleViewController {
      */
     @RequestMapping(value = "/functional")
     public ModelAndView ajaxLoadFunctionalTab(@PathVariable final String sampleId,
+                                              @RequestParam(required = true, value = "runId") final Long runId,
                                               final ModelMap model) throws IOException {
-        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, sampleId, "tabs/mainNavigation/functional");
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, runId, "tabs/mainNavigation/functional");
     }
 
     /**
@@ -104,8 +114,9 @@ public class SampleViewController extends AbstractSampleViewController {
      */
     @RequestMapping(value = "/overview")
     public ModelAndView ajaxLoadOverviewTab(@PathVariable final String sampleId,
+                                            @RequestParam(required = true, value = "runId") final Long runId,
                                             final ModelMap model) throws IOException {
-        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, sampleId, "tabs/mainNavigation/overview");
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, runId, "tabs/mainNavigation/overview");
     }
 
     /**
@@ -115,8 +126,9 @@ public class SampleViewController extends AbstractSampleViewController {
      */
     @RequestMapping(value = "/goBarChartView")
     public ModelAndView ajaxLoadGoBarChartTab(@PathVariable final String sampleId,
-                                            final ModelMap model) throws IOException {
-        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, sampleId, "tabs/functionalAnalysis/goBarChartView");
+                                              @RequestParam(required = true, value = "runId") final Long runId,
+                                              final ModelMap model) throws IOException {
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, runId, "tabs/functionalAnalysis/goBarChartView");
     }
 
     /**
@@ -126,32 +138,37 @@ public class SampleViewController extends AbstractSampleViewController {
      */
     @RequestMapping(value = "/goPieChartView")
     public ModelAndView ajaxLoadGoPieChartTab(@PathVariable final String sampleId,
+                                              @RequestParam(required = true, value = "runId") final Long runId,
                                               final ModelMap model) throws IOException {
-        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, sampleId, "tabs/functionalAnalysis/goPieChartView");
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, runId, "tabs/functionalAnalysis/goPieChartView");
     }
 
     @RequestMapping(value = "/kronaChartView")
     public ModelAndView ajaxLoadKronaChartView(@PathVariable final String sampleId,
-                                              final ModelMap model) throws IOException {
-        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, sampleId, "tabs/taxonomicAnalysis/kronaChartView");
+                                               @RequestParam(required = true, value = "runId") final Long runId,
+                                               final ModelMap model) throws IOException {
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, runId, "tabs/taxonomicAnalysis/kronaChartView");
     }
 
     @RequestMapping(value = "/taxPieChartView")
     public ModelAndView ajaxLoadTaxPieChartView(@PathVariable final String sampleId,
-                                              final ModelMap model) throws IOException {
-        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, sampleId, "tabs/taxonomicAnalysis/taxPieChartView");
+                                                @RequestParam(required = true, value = "runId") final Long runId,
+                                                final ModelMap model) throws IOException {
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, runId, "tabs/taxonomicAnalysis/taxPieChartView");
     }
 
     @RequestMapping(value = "/taxBarChartView")
     public ModelAndView ajaxLoadTaxBarChartView(@PathVariable final String sampleId,
-                                              final ModelMap model) throws IOException {
-        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, sampleId, "tabs/taxonomicAnalysis/taxBarChartView");
+                                                @RequestParam(required = true, value = "runId") final Long runId,
+                                                final ModelMap model) throws IOException {
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, runId, "tabs/taxonomicAnalysis/taxBarChartView");
     }
 
     @RequestMapping(value = "/taxColumnChartView")
     public ModelAndView ajaxLoadTaxColumnChartView(@PathVariable final String sampleId,
-                                              final ModelMap model) throws IOException {
-        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, sampleId, "tabs/taxonomicAnalysis/taxColumnChartView");
+                                                   @RequestParam(required = true, value = "runId") final Long runId,
+                                                   final ModelMap model) throws IOException {
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, runId, "tabs/taxonomicAnalysis/taxColumnChartView");
     }
 
     @RequestMapping(value = "/accessDenied")
@@ -161,44 +178,50 @@ public class SampleViewController extends AbstractSampleViewController {
 
     @RequestMapping(value = "/doExportGOSlimFile", method = RequestMethod.GET)
     public ModelAndView doExportGOSlimFile(@PathVariable final String sampleId,
+                                           @RequestParam(required = true, value = "runId") final Long runId,
                                            final HttpServletResponse response, final HttpServletRequest request) {
         DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(FileDefinitionId.GO_SLIM_FILE.name());
-        return handleExport(sampleId, response, request, fileDefinition);
+        return handleExport(runId, response, request, fileDefinition);
     }
 
     @RequestMapping(value = "/doExportGOFile", method = RequestMethod.GET)
     public ModelAndView doExportGOFile(@PathVariable final String sampleId,
+                                       @RequestParam(required = true, value = "runId") final Long runId,
                                        final HttpServletResponse response, final HttpServletRequest request) {
         DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(FileDefinitionId.GO_COMPLETE_FILE.name());
-        return handleExport(sampleId, response, request, fileDefinition);
+        return handleExport(runId, response, request, fileDefinition);
     }
 
     @RequestMapping(value = "/doExportMaskedFASTAFile", method = RequestMethod.GET)
     public ModelAndView doExportMaskedFASTAFile(@PathVariable final String sampleId,
+                                                @RequestParam(required = true, value = "runId") final Long runId,
                                                 final HttpServletResponse response, final HttpServletRequest request) {
         DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(FileDefinitionId.MASKED_FASTA.name());
-        return handleExport(sampleId, response, request, fileDefinition);
+        return handleExport(runId, response, request, fileDefinition);
     }
 
     @RequestMapping(value = "/doExportCDSFile", method = RequestMethod.GET)
     public ModelAndView doExportCDSFile(@PathVariable final String sampleId,
+                                        @RequestParam(required = true, value = "runId") final Long runId,
                                         final HttpServletResponse response, final HttpServletRequest request) {
         DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(FileDefinitionId.PREDICTED_CDS_FILE.name());
-        return handleExport(sampleId, response, request, fileDefinition);
+        return handleExport(runId, response, request, fileDefinition);
     }
 
     @RequestMapping(value = "/doExportReadsWithCDSFile", method = RequestMethod.GET)
     public ModelAndView doExportReadsWithCDSFile(@PathVariable final String sampleId,
+                                                 @RequestParam(required = true, value = "runId") final Long runId,
                                                  final HttpServletResponse response, final HttpServletRequest request) {
         DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(FileDefinitionId.READS_WITH_PREDICTED_CDS_FILE.name());
-        return handleExport(sampleId, response, request, fileDefinition);
+        return handleExport(runId, response, request, fileDefinition);
     }
 
     @RequestMapping(value = "/doExportI5TSVFile", method = RequestMethod.GET)
     public ModelAndView doExportI5File(@PathVariable final String sampleId,
+                                       @RequestParam(required = true, value = "runId") final Long runId,
                                        final HttpServletResponse response, final HttpServletRequest request) {
         DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(FileDefinitionId.INTERPROSCAN_RESULT_FILE.name());
-        return handleExport(sampleId, response, request, fileDefinition);
+        return handleExport(runId, response, request, fileDefinition);
     }
 
 //    @RequestMapping(value = "/doExportIPRFile", method = RequestMethod.GET)
@@ -209,18 +232,19 @@ public class SampleViewController extends AbstractSampleViewController {
 
     @RequestMapping(value = "/doExportIPRhitsFile", method = RequestMethod.GET)
     public ModelAndView doExportIPRhitsFile(@PathVariable final String sampleId,
+                                            @RequestParam(required = true, value = "runId") final Long runId,
                                             final HttpServletResponse response, final HttpServletRequest request) {
         DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(FileDefinitionId.PREDICTED_CDS_WITH_INTERPRO_MATCHES_FILE.name());
-        return handleExport(sampleId, response, request, fileDefinition);
+        return handleExport(runId, response, request, fileDefinition);
     }
 
     /**
-     * @param sampleId
+     * @param runId
      * @param response
      * @param request
      * @return
      */
-    private ModelAndView handleExport(final String sampleId, final HttpServletResponse response,
+    private ModelAndView handleExport(final Long runId, final HttpServletResponse response,
                                       final HttpServletRequest request, final DownloadableFileDefinition fileDefinition) {
         log.info("Checking if sample is accessible...");
         return checkAccessAndBuildModel(new ModelProcessingStrategy<Sample>() {
@@ -233,7 +257,7 @@ public class SampleViewController extends AbstractSampleViewController {
                     openDownloadDialog(response, request, emgFile, fileDefinition.getDownloadName(), fileObject);
                 }
             }
-        }, null, sampleId, getModelViewName());
+        }, null, runId, getModelViewName());
     }
 
 

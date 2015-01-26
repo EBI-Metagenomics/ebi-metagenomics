@@ -12,7 +12,9 @@ Please <a id="script_feedbackLink" href="javascript:slideFeedbackForm()" title="
     <div id="row-wrapper">
 
         <div id="project-div">
-            <h4>Project list</h4>
+            <c:choose><c:when test="${not empty model.submitter}"><h4>My projects</h4></c:when>
+            <c:otherwise><h4>Project list</h4></c:otherwise>
+            </c:choose>
                 <%--<form:option value="-" label="--Select project"/>--%>
                 <form:select path="study" size="10" id="projects" style="width:100%;">
                     <c:forEach var="study" items="${model.filteredStudies}">
@@ -39,7 +41,9 @@ Please <a id="script_feedbackLink" href="javascript:slideFeedbackForm()" title="
         </div>
 
             <div id="samples-div">
-                <h4 id="selected-samples">Sample list</h4>
+                <c:choose><c:when test="${not empty model.submitter}"><h4 id="selected-samples">My samples</h4></c:when>
+                    <c:otherwise><h4 id="selected-samples">Sample list</h4></c:otherwise>
+                </c:choose>
                 <%-- Is the loading icon necessary? quite fast to load samples in the box
                 <div id="loading"><img src="${pageContext.request.contextPath}/img/compare_load.gif"></div>--%>
                 <form:select path="samples" multiple="true" size="10" id="samples" style="width:100%;">

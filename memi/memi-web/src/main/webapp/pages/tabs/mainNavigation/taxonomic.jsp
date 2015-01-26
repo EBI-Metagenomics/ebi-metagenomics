@@ -22,16 +22,16 @@
                         <li class="selector_tab">Switch view:</li>
                             <%--<li><a href="#tax-table" title="Table view"><span class="ico-table"></span></a></li>--%>
                         <li><a title="Pie-Chart-View"
-                               href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/taxPieChartView"/>"><span
+                               href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/taxPieChartView?runId=${model.sample.id}"/>"><span
                                 class="ico-pie"></span></a></li>
                         <li><a title="Bar-Chart-View"
-                               href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/taxBarChartView"/>"><span
+                               href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/taxBarChartView?runId=${model.sample.id}"/>"><span
                                 class="ico-barh"></span></a></li>
                         <li><a title="Stacked-Column-Chart-View"
-                               href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/taxColumnChartView"/>"><span
+                               href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/taxColumnChartView?runId=${model.sample.id}"/>"><span
                                 class="ico-col"></span></a></li>
                         <li class="but_krona"><a title="Krona-Chart-View"
-                                                 href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/kronaChartView"/>"><span
+                                                 href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/kronaChartView?runId=${model.sample.id}"/>"><span
                                 class="ico-krona"></span></a></li>
 
                        <%--<div style="border:1px red solid; display: inline-block; margin: 2px 0 0 16px;">--%>

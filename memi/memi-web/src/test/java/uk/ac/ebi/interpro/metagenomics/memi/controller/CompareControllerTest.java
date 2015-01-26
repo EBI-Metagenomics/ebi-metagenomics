@@ -5,13 +5,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import uk.ac.ebi.interpro.metagenomics.memi.core.comparators.HomePageStudiesComparator;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.UndefinedSample;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -61,4 +59,35 @@ public class CompareControllerTest {
         controller.doFileExistenceCheck(sampleToFilePathMap, activeSamples, deactiveSamples);
     }
 
+    @Test
+    public void testRunIdHack() throws Exception {
+        List<String> sampleIds = new ArrayList<String>();
+
+        sampleIds.add("ERS000005");
+        sampleIds.add("ERS000006");
+        sampleIds.add("ERS000003");
+        sampleIds.add("ERS000004");
+        sampleIds.add("ERS000010");
+        sampleIds.add("ERS000002");
+        sampleIds.add("ERS000001");
+        sampleIds.add("ERS000002");
+        sampleIds.add("ERS000003");
+        sampleIds.add("ERS000003");
+        sampleIds.add("ERS000003");
+        assertTrue(sampleIds.size() == 11);
+
+        List<String> sortedList = controller.sortAndAdjustSampleNameList(sampleIds);
+        assertTrue(sortedList.size() == 11);
+        assertEquals("ERS000001", sortedList.get(0));
+        assertEquals("ERS000002", sortedList.get(1));
+        assertEquals("ERS000002_2", sortedList.get(2));
+        assertEquals("ERS000003", sortedList.get(3));
+        assertEquals("ERS000003_2", sortedList.get(4));
+        assertEquals("ERS000003_3", sortedList.get(5));
+        assertEquals("ERS000003_4", sortedList.get(6));
+        assertEquals("ERS000004", sortedList.get(7));
+        assertEquals("ERS000005", sortedList.get(8));
+        assertEquals("ERS000006", sortedList.get(9));
+        assertEquals("ERS000010", sortedList.get(10));
+    }
 }
