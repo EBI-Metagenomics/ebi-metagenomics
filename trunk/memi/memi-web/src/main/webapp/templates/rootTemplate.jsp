@@ -64,6 +64,7 @@
     <%-- END JQuery CSS--%>
 
     <%--<link href="https://fonts.googleapis.com/css?family=Droid+Sans:regular,bold" rel="stylesheet" type="text/css"/>--%>
+    <%--?v1.1 will trigger browsers to refresh the source--%>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/default.css?v1.1" type="text/css" media="all"/>
 
     <!--[if lt IE 8]>
@@ -79,7 +80,7 @@
     <![endif]-->
 
     <!-- JQuery v1.11.1 and JQuery UI source-->
-    <script src="${pageContext.request.contextPath}/js/jquery-1.11.1/jquery.js" type="text/javascript" ></script>
+    <script src="${pageContext.request.contextPath}/js/jquery-1.11.1/jquery.js?v1.1" type="text/javascript" ></script>
     <script src="${pageContext.request.contextPath}/js/jquery-1.11.1/jquery-ui.min.js" type="text/javascript"></script>
     <%--<script src="${pageContext.request.contextPath}/js/jquery-1.4.4.min.js" type="text/javascript"></script>--%>
     <%--<script src="${pageContext.request.contextPath}/js/jquery-ui-1.8.8.custom.min.js" type="text/javascript"></script>--%>
@@ -88,7 +89,7 @@
     <%--<script src="${pageContext.request.contextPath}/js/jquery-migrate-1.2.1.js"></script>--%>
 
     <script src="${pageContext.request.contextPath}/js/jquery.validate-1.9.js" type="text/javascript"></script>
-    <script src="${pageContext.request.contextPath}/js/jquery.form-3.51.0.js" type="text/javascript"></script>
+    <script src="${pageContext.request.contextPath}/js/jquery.form-3.51.0.js?v1.1" type="text/javascript"></script>
     <!-- The date picker is used within the submission page -->
     <script src="${pageContext.request.contextPath}/js/datepicker.js" type="text/javascript"></script>
     <!-- The auto completion is used with the study search page -->
