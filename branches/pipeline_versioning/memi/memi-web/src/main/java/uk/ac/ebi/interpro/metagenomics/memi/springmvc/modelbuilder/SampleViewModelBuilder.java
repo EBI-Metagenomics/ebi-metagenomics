@@ -130,7 +130,8 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
                     relatedPublications,
                     isHostAssociated,
                     sampleAnnotations,
-                    analysisStatus);
+                    analysisStatus,
+                    "1.0");
             //Load and set taxonomy result data
             sampleViewModel.setTaxonomyAnalysisResult(loadTaxonomyDataFromCSV());
             return sampleViewModel;
@@ -148,7 +149,8 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
                     relatedPublications,
                     isHostAssociated,
                     sampleAnnotations,
-                    analysisStatus);
+                    analysisStatus,
+                    "1.0");
         }
     }
 

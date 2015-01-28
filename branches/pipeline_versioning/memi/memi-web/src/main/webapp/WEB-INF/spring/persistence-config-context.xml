@@ -68,6 +68,7 @@
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.EngineeredSample</value>
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.UndefinedSample</value>
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.PipelineRelease</value>
+                <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.PipelineTool</value>
             </list>
         </property>
     </bean>

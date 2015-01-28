@@ -6,6 +6,8 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import javax.persistence.*;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 
 /**
@@ -42,7 +44,14 @@ public class PipelineRelease implements Comparator<PipelineRelease> {
     @Column(name = "RELEASE_DATE", nullable = false)
     private Date releaseDate;
 
-    protected PipelineRelease() {
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "PIPELINE_RELEASE_TOOL", joinColumns = {
+            @JoinColumn(name = "PIPELINE_ID", nullable = false, updatable = false) },
+            inverseJoinColumns = { @JoinColumn(name = "TOOL_ID",
+                    nullable = false, updatable = false) })
+    private Set<PipelineTool> pipelineTools;
+
+    public PipelineRelease() {
     }
 
     public PipelineRelease(long pipelineId, String description, String changes, String releaseVersion, Date releaseDate) {
@@ -91,6 +100,23 @@ public class PipelineRelease implements Comparator<PipelineRelease> {
 
     public void setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
+    }
+
+    public Set<PipelineTool> getPipelineTools() {
+        return pipelineTools;
+    }
+
+    public void setPipelineTools(Set<PipelineTool> pipelineTools) {
+        this.pipelineTools = pipelineTools;
+    }
+
+    public void addPipelineTool(PipelineTool pipelineTool) {
+        if (pipelineTool != null) {
+            if (pipelineTools == null) {
+                pipelineTools = new HashSet<PipelineTool>();
+            }
+            pipelineTools.add(pipelineTool);
+        }
     }
 
     @Override

@@ -40,9 +40,6 @@ public class SampleViewController extends AbstractSampleViewController {
     @Resource
     private MemiDownloadService downloadService;
 
-    @Resource
-    private PipelineReleaseDAO pipelineReleaseDAO;
-
     /**
      * @param sampleId External sample identifier (e.g. in ENA, for instance ERS580795)
      * @param runId    Internal sample identifier in EMG (column name SAMPLE_ID)
@@ -51,7 +48,6 @@ public class SampleViewController extends AbstractSampleViewController {
     public ModelAndView doGetSample(@PathVariable final String sampleId,
                                     @RequestParam(required = true, value = "runId") final Long runId,
                                     final ModelMap model) throws IOException {
-        PipelineRelease pipelineRelease = pipelineReleaseDAO.read(1L);
         return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, runId, getModelViewName());
     }
 

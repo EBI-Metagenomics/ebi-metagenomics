@@ -45,6 +45,8 @@ public class SampleViewModel extends ViewModel {
 
     private AnalysisResult analysisResult;
 
+    private String pipelineVersion;
+
     public SampleViewModel(Submitter submitter,
                            String pageTitle,
                            List<Breadcrumb> breadcrumbs,
@@ -59,7 +61,8 @@ public class SampleViewModel extends ViewModel {
                            List<Publication> relatedPublications,
                            boolean isHostAssociated,
                            List<EmgSampleAnnotation> sampleAnnotations,
-                           final AnalysisStatus analysisStatus) {
+                           final AnalysisStatus analysisStatus,
+                           final String pipelineVersion) {
         super(submitter, pageTitle, breadcrumbs, propertyContainer);
         this.sample = sample;
         this.emgFile = emgFile;
@@ -73,6 +76,7 @@ public class SampleViewModel extends ViewModel {
         //
         this.analysisResult = new AnalysisResult(analysisStatus);
         this.analysisResult.setFunctionalAnalysisResult(functionalAnalysisResult);
+        this.pipelineVersion = pipelineVersion;
     }
 
     public SampleViewModel(Submitter submitter,
@@ -88,7 +92,8 @@ public class SampleViewModel extends ViewModel {
                            List<Publication> relatedPublications,
                            boolean isHostAssociated,
                            List<EmgSampleAnnotation> sampleAnnotations,
-                           final AnalysisStatus analysisStatus) {
+                           final AnalysisStatus analysisStatus,
+                           final String pipelineVersion) {
         this(submitter,
                 pageTitle,
                 breadcrumbs,
@@ -103,7 +108,8 @@ public class SampleViewModel extends ViewModel {
                 relatedPublications,
                 isHostAssociated,
                 sampleAnnotations,
-                analysisStatus);
+                analysisStatus,
+                pipelineVersion);
     }
 
     public Sample getSample() {
@@ -212,5 +218,13 @@ public class SampleViewModel extends ViewModel {
         public String toString() {
             return super.toString().toLowerCase();
         }
+    }
+
+    public String getPipelineVersion() {
+        return pipelineVersion;
+    }
+
+    public void setPipelineVersion(String pipelineVersion) {
+        this.pipelineVersion = pipelineVersion;
     }
 }
