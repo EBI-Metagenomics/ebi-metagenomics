@@ -1,0 +1,16 @@
+##  Created by Maxim Scheremetjew, EMBL-EBI, InterPro
+##  Date: 05-Jan-2011
+##  Desc: Velocity template to provide a downloadable semicolon separated file for publicStudies
+#foreach( $property in $sampleProperties )$property,#end
+
+#foreach( $sample in $samples )
+#if($sample.sampleName)
+"$sample.sampleName",#{else}"",#end
+#if($sample.study.studyName)
+"$sample.study.studyName",#{else}"",#end
+#if($sample.sampleTypeAsString)
+"$sample.sampleTypeAsString",#{else}"",#end
+#if($sample.analysisCompleted)
+"Finished",#{else}"In progress",#end
+
+#end
