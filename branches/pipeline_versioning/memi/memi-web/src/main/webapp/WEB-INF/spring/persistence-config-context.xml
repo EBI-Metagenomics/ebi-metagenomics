@@ -67,6 +67,7 @@
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.HostSample</value>
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.EngineeredSample</value>
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.UndefinedSample</value>
+                <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.PipelineRelease</value>
             </list>
         </property>
     </bean>
@@ -76,6 +77,8 @@
     <!--<bean id="studyDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.StudyDAOImpl"/>-->
 
     <bean id="sampleDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAOImpl"/>
+
+    <bean id="pipelineReleaseDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.PipelineReleaseDAOImpl"/>
 
     <bean name="submissionContactDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.erapro.SubmissionContactDAOImpl">
         <property name="dataSource" ref="eraProDataSource"/>

@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.PipelineReleaseDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgFile;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.PipelineRelease;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.services.FileObjectBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
@@ -38,6 +40,9 @@ public class SampleViewController extends AbstractSampleViewController {
     @Resource
     private MemiDownloadService downloadService;
 
+    @Resource
+    private PipelineReleaseDAO pipelineReleaseDAO;
+
     /**
      * @param sampleId External sample identifier (e.g. in ENA, for instance ERS580795)
      * @param runId    Internal sample identifier in EMG (column name SAMPLE_ID)
@@ -46,6 +51,7 @@ public class SampleViewController extends AbstractSampleViewController {
     public ModelAndView doGetSample(@PathVariable final String sampleId,
                                     @RequestParam(required = true, value = "runId") final Long runId,
                                     final ModelMap model) throws IOException {
+        PipelineRelease pipelineRelease = pipelineReleaseDAO.read(1L);
         return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, runId, getModelViewName());
     }
 
