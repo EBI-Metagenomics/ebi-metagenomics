@@ -1694,47 +1694,25 @@ background-image: -webkit-gradient(linear,left top,left bottom,from(rgba(255,255
 background-image: -webkit-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));  border-radius: 0px;}
 .sample_comp_result #bars .ui-state-hover {color:red;}
 .sample_comp_result .chart-block .ui-button .ui-button-text, .sample_ana .chart-block .ui-button .ui-button-text {color: #525252;}
-/*.sample_ana .chart-block .ui-state-default .ui-icon {background-image: url(../img/jquery/overcast/ico_jquery.png);}*/
 
+/*.go_rotate {-moz-transform:rotate(270deg); transform:rotate(270deg); -webkit-transform:rotate(270deg);-ms-transform:rotate(270deg); -o-transform: rotate(270deg); filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1); z-index:inherit;float:left; clear:left;height:300px; zoom:1;}*/
 
-/*#go-chart-process, #go-chart-molecular, #go-chart-cellular {*/
-/*float:left;*/
-/*border:0px solid green;*/
-/*margin-right:7px; *//*reduced because of IE6*/
-/*}*/
-
-.go_rotate {
-    float:left;
-    /*  height:400px; clear:left;
-    height:304px;
-    -moz-transform:rotate(270deg);
-    transform:rotate(270deg);
-    -webkit-transform:rotate(270deg);
-    -ms-transform:rotate(270deg);
-    -o-transform: rotate(270deg);
-    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1); */
-    z-index:inherit;
-    zoom:1;}
-
-/*.sample_comp_result #tabs-chart .ui-state-disabled,*/ .sample_ana #tabs-chart .ui-state-disabled, .sample_ana #interpro-chart .ui-state-disabled, .sample_ana #tabs-taxchart .ui-state-disabled {opacity:0.1;}
+.sample_ana #tabs-chart .ui-state-disabled, .sample_ana #interpro-chart .ui-state-disabled, .sample_ana #tabs-taxchart .ui-state-disabled {opacity:0.1;}
 
 .sample_ana #tabs-chart .ui-tabs-nav, .sample_ana #interpro-chart .ui-tabs-nav, .sample_ana #tabs-taxchart .ui-tabs-nav { margin: 0px 0 9px 9px; padding:0;}
-/*.sample_comp_result #tabs-chart .ui-tabs-nav {margin: 0px 0 0px 18px; padding:0;}    */
 .sample_ana #tabs-taxchart .ui-helper-clearfix, .sample_ana #interpro-chart .ui-helper-clearfix  {display: inline-block;}
 .sample_comp_result #tabs-chart .ui-tabs-nav li a, .sample_ana #tabs-chart .ui-tabs-nav li a, .sample_ana #interpro-chart .ui-tabs-nav li a, .sample_ana #tabs-taxchart .ui-tabs-nav li a {border: 1px solid rgba(0,0,0,0.1);padding: .2em .2em;
 background-image: -moz-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));
 background-image: -o-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));
 background-image: -webkit-gradient(linear,left top,left bottom,from(rgba(255,255,255,.85)),to(rgba(247,247,247,.85)));
 background-image: -webkit-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85)); }
-/*.sample_comp_result #tabs-chart .ui-tabs-nav li.ui-state-hover a,*/ .sample_ana #tabs-chart .ui-tabs-nav li.ui-state-hover a, .sample_ana #interpro-chart .ui-tabs-nav li.ui-state-hover a, .sample_ana #tabs-taxchart .ui-tabs-nav li.ui-state-hover a  {text-decoration: none;}
-/*.sample_comp_result #tabs-chart .ui-tabs-nav li a:hover,*/ .sample_ana #tabs-chart .ui-tabs-nav li a:hover, .sample_ana #interpro-chart .ui-tabs-nav li a:hover, .sample_ana #tabs-taxchart .ui-tabs-nav li a:hover  {border: 1px solid #c6c6c6;box-shadow:1px 1px 1px rgba(0, 0, 0, 0.3);-moz-box-shadow:1px 1px 1px rgba(0, 0, 0, 0.3); -khtml-box-shadow:1px 1px 1px rgba(0, 0, 0, 0.3); -webkit-box-shadow:0px 0px 3px rgba(0, 0, 0, 0.3) ; text-decoration:none;}
-/*.sample_comp_result #tabs-chart li.ui-tabs-selected,*/ .sample_ana #tabs-chart li.ui-tabs-selected, .sample_ana #interpro-chart li.ui-tabs-selected, .sample_ana #tabs-taxchart li.ui-tabs-selected {/*height: 37px;*/height: 28px;background: #fff; border: none; top:1px;}
-/*.sample_comp_result #tabs-chart .ui-tabs-panel,*/ .sample_ana #tabs-chart .ui-tabs-panel, .sample_ana #interpro-chart .ui-tabs-panel, .sample_ana #tabs-taxchart .ui-tabs-panel  {margin: 0;  position: relative; /*z-index: 400;*/ border: 0px solid rgb(213, 213, 213); border-bottom-left-radius: 0px;border-bottom-right-radius: 0px; overflow:auto;/*to make go chart appear correctly*/}
-/*.sample_comp_result .ui-widget-header .selector_tab,*/ .sample_ana .ui-widget-header .selector_tab {font-weight:normal;padding-top: 9px;}
-/*.sample_comp_result .ui-widget-header .selector_tab {font-weight:normal;padding-top: 9px; font-size: 83%; padding-right: 4px;} */
-/*.sample_comp_result  .ui-tabs-nav {border-bottom: #BBB solid 1px;border-bottom-right-radius: 0; border-bottom-left-radius: 0;}*/
-/*.sample_comp_result #tabs-chart .ui-state-default, .sample_comp_result #tabs-chart .ui-widget-content .ui-state-default, .sample_comp_result #tabs-chart .ui-widget-header .ui-state-default {border: 0px solid #D3D3D3} */
-/*.sample_comp_result #tabs-chart .ui-tabs-nav li {margin-right: 4px;}*/
+.sample_ana #tabs-chart .ui-tabs-nav li.ui-state-hover a, .sample_ana #interpro-chart .ui-tabs-nav li.ui-state-hover a, .sample_ana #tabs-taxchart .ui-tabs-nav li.ui-state-hover a  {text-decoration: none;}
+.sample_ana #tabs-chart .ui-tabs-nav li a:hover, .sample_ana #interpro-chart .ui-tabs-nav li a:hover, .sample_ana #tabs-taxchart .ui-tabs-nav li a:hover  {border: 1px solid #c6c6c6;box-shadow:1px 1px 1px rgba(0, 0, 0, 0.3);-moz-box-shadow:1px 1px 1px rgba(0, 0, 0, 0.3); -khtml-box-shadow:1px 1px 1px rgba(0, 0, 0, 0.3); -webkit-box-shadow:0px 0px 3px rgba(0, 0, 0, 0.3) ; text-decoration:none;}
+.sample_ana #tabs-chart li.ui-tabs-selected, .sample_ana #interpro-chart li.ui-tabs-selected, .sample_ana #tabs-taxchart li.ui-tabs-selected {/*height: 37px;*/height: 28px;background: #fff; border: none; top:1px;}
+.sample_ana #tabs-chart .ui-tabs-panel, .sample_ana #interpro-chart .ui-tabs-panel {margin: 0;  position: relative; border: 0px solid rgb(213, 213, 213); border-bottom-left-radius: 0px;border-bottom-right-radius: 0px; overflow:auto;/*to make go chart appear correctly*/}
+.sample_ana #tabs-taxchart .ui-tabs-panel {margin: 0;  position: relative; border: 0px solid rgb(213, 213, 213); border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;} /*don't use overflow:auto with Krona*/
+.sample_ana .ui-widget-header .selector_tab {font-weight:normal;padding-top: 9px;}
+
 .ui-tabs .ui-tabs-nav li.ico-downl {margin-left:16px;}
 .ui-tabs .ui-tabs-nav li .icon-functional:before {color:#3b4043;font-size: 164%; width: 20px; font-weight: normal;  padding-left: 3px; }
 
