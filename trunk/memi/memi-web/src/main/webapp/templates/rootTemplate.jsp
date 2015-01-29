@@ -75,8 +75,6 @@
     <!-- JQuery v1.11.1 and JQuery UI source-->
     <script src="${pageContext.request.contextPath}/js/jquery-1.11.1/jquery.js?v1.1" type="text/javascript" ></script>
     <script src="${pageContext.request.contextPath}/js/jquery-1.11.1/jquery-ui.min.js" type="text/javascript"></script>
-    <%--<script src="${pageContext.request.contextPath}/js/jquery-1.4.4.min.js" type="text/javascript"></script>--%>
-    <%--<script src="${pageContext.request.contextPath}/js/jquery-ui-1.8.8.custom.min.js" type="text/javascript"></script>--%>
 
     <!--detect and restore APIs or features that have been deprecated in jQuery see https://github.com/jquery/jquery-migrate (temp solution while we remove code using old Jquery-->
     <%--<script src="${pageContext.request.contextPath}/js/jquery-migrate-1.2.1.js"></script>--%>
