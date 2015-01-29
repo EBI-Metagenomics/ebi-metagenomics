@@ -18,14 +18,7 @@
     <link rel="stylesheet" href="http://www.ebi.ac.uk/inc/css/userstyles.css" type="text/css" />
     <script src="http://www.ebi.ac.uk/inc/js/contents.js" type="text/javascript"></script>
     <link rel="stylesheet" href="http://www.ebi.ac.uk/inc/css/sidebars.css" type="text/css" />
-    <%--<link rel="SHORTCUT ICON" href="http://www.ebi.ac.uk/bookmark.ico" /> removed as we have created a favicon for metagenomics --%>
-          <style type="text/css">
-              @media print {
-                  body, .contents, .header, .contentsarea, .head {
-                      position: relative;
-                  }
-              }
-     </style>
+
         <link rel="alternate" title="EBI News RSS" href="/Information/News/rss/ebinews.xml" type="application/rss+xml" />
         <link type="text/css" rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/mitigation/develop/ebi-mitigation.css"/>
         <link type="text/css" rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/mitigation/develop/embl-petrol-colours.css"/>
