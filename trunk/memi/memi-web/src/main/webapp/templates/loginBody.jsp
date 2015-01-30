@@ -5,10 +5,6 @@
 
     <c:if test="${displaySubBlock}">
         <%@ include file="components/loginComponent.jsp" %>
-
-        <%--<p class="step_breadcrumbs"><span--%>
-                <%--id="selected">&lt;%&ndash;<span class="num">1</span>&ndash;%&gt; Login, start submission process</span></p>--%>
-
     </c:if>
 
     <%--<div class="sub">--%>
