@@ -21,20 +21,17 @@ body {
 body.grey #wrapper, body.green #wrapper, body.ebigreen #wrapper, body.ebigrey #wrapper, body.blue #wrapper, body.greyblue #wrapper { background: #b5b5b5; /*#909FA8*/}
 body div.but_top  { background: #6b7380;}
 
-div.top-menu ul li.grey {background: #b5b5b5;}
-div.top-menu ul li.ebigrey {background: #6b7380;}
-
-/*body.blue #wrapper, body.blue h5, div.top-menu ul li.blue, body.blue div.but_top { background: url(../img/bgd_main_blue.jpg) #14c1df;}
-body.ebigreen #wrapper, div.top-menu ul li.ebigreen, body.ebigreen div.but_top { background: url(../img/bgd_main_ebi_green.jpg) #207A7A;}
-body.ebigrey #wrapper, div.top-menu ul li.ebigrey, body.ebigrey div.but_top { background: url(../img/bgd_main_ebi_grey.jpg) #404040;}
-body.greyblue #wrapper, body.greyblue h5, div.top-menu ul li.greyblue, body.greyblue div.but_top { background: url(../img/bgd_main_greyblue.jpg) #7d9ca6;}
-body.green #wrapper, body.green h5,div.top-menu ul li.green, body.green div.but_top { background: url(../img/bgd_main_green.jpg) #90cc2d;}
-body.grey #wrapper,div.top-menu ul li.grey, body.grey div.but_top { background: url(../img/bgd_main_grey.jpg) #b5b5b5;}
+/*body.blue #wrapper, body.blue h5, body.blue div.but_top { background: url(../img/bgd_main_blue.jpg) #14c1df;}
+body.ebigreen #wrapper,  body.ebigreen div.but_top { background: url(../img/bgd_main_ebi_green.jpg) #207A7A;}
+body.ebigrey #wrapper,  body.ebigrey div.but_top { background: url(../img/bgd_main_ebi_grey.jpg) #404040;}
+body.greyblue #wrapper, body.greyblue h5,  body.greyblue div.but_top { background: url(../img/bgd_main_greyblue.jpg) #7d9ca6;}
+body.green #wrapper, body.green h5, body.green div.but_top { background: url(../img/bgd_main_green.jpg) #90cc2d;}
+body.grey #wrapper, body.grey div.but_top { background: url(../img/bgd_main_grey.jpg) #b5b5b5;}
 body.red #wrapper { background: url(../img/bgd_main_red.jpg) #ee0836;}
-body.yellow #wrapper, body.yellow h5, div.top-menu ul li.yellow, body.yellow div.but_top { background: url(../img/bgd_main_yellow.jpg) #efd223;}
-body.black #wrapper, div.top-menu ul li.black { background: url(../img/bgd_main_black.jpg) #202020;}
-body.orange #wrapper,div.top-menu ul li.orange  { background: url(../img/bgd_main_orange.jpg) #ff8400;}
-body.pink #wrapper, div.top-menu ul li.pink { background: url(../img/bgd_main_pink.jpg) #e80767;}
+body.yellow #wrapper, body.yellow h5, body.yellow div.but_top { background: url(../img/bgd_main_yellow.jpg) #efd223;}
+body.black #wrapper { background: url(../img/bgd_main_black.jpg) #202020;}
+body.orange #wrapper  { background: url(../img/bgd_main_orange.jpg) #ff8400;}
+body.pink #wrapper { background: url(../img/bgd_main_pink.jpg) #e80767;}
 */
 h1, h2, h3, h4, h5, h6, p, table {
 padding: 0 9px;
@@ -262,57 +259,6 @@ div#headerdiv .login_name  {color:rgb(240, 240, 96);}
 div#headerdiv .login_name a {display:inline;color: white; border-bottom:0;}
 div#headerdiv .login_name a:active, div#headerdiv .login_name a:hover, div#headerdiv .login_name a:focus {background-color: transparent;}
 div#headerdiv .logout {font-weight: bold;}
-
-
-div.top-menu {
-border:0px red solid;
-float:left;
-margin-left:7px;
-}
-
-div.top-menu ul{
-    margin:0;
-    padding:0 0 0 7px;
-}
-
-div.top-menu ul li{
-    list-style-type:none;
-    border:0px green solid;
-    float:left;
-    text-align:left;
-    font-size:130%;
-    line-height:18px;
-    -moz-border-radius: 10px 10px 0 0;
-    -khtml-border-radius: 10px 10px 0 0;
-    -webkit-border-radius: 10px 10px 0 0;
-    border-radius:10px 10px 0 0;
-    margin-right:7px;
-
-}
-
-div.top-menu  a, div.top-menu  a:link, div.top-menu a:focus{
-    border:0px red solid;
-    display:block;
-   /*width:86px;  only if we want to have the same width for the Tabs on top */
-    padding:7px 14px;
-    position:relative;
-    cursor:pointer;
-    color:white;
-    text-decoration:none;
-   /*text-shadow: #737373 1px 1px 1px;*/
-}
-
-div.top-menu a:hover, div.top-menu a:link:hover  {
-/* Arrow style
-background:url(../img/arrow_menu_over.png) no-repeat right 10px;*/
-background:url(../img/bgd_black_op20_8.png);
-color:white;
--moz-border-radius: 10px 10px 0 0;
--khtml-border-radius: 10px 10px 0 0;
--webkit-border-radius: 10px 10px 0 0;
-border-radius:10px 10px 0 0;
-}
-
 
 /* LINKS */
 
