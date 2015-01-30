@@ -29,7 +29,7 @@
         <li><a href="#h_cite">How to cite</a></li>
         <li><a href="#p_features">Planned features</a></li>
         <li><a href="#funding">Funding</a></li>
-        <li><a href="#mail">Mailing list</a></li>
+        <li><a href="#mail">Follow us</a></li>
         <li><a href="#credits">Credits</a> </li>
 
     </ul>
@@ -149,10 +149,10 @@ Sarah Hunter, Matthew Corbett, Hubert Denise, Matthew Fraser, Alejandra Gonzalez
 (BBSRC grant BB/I02612X/1) and the EU's Seventh Framework Programme for Research (FP7 grant MICROB3).
 </p>
 
-<h3 id="mail">Mailing list</h3>
+<h3 id="mail">Follow us</h3>
 
-<p>If you would like to be kept informed of further developments with the EBI metagenomics resources please sign up  for the
-<a href="http://listserver.ebi.ac.uk/mailman/listinfo/metagenomics" class="ext"> EBI metagenomics mailing  list</a>.</p>
+<p>If you would like to be kept informed of further developments with the EBI metagenomics resources please follow us on Twitter using
+<a href="http://twitter.com/EBImetagenomics" class="ext">@EBImetagenomics</a>.</p>
 
 
 <h3 id="credits">Credits</h3>
