@@ -73,17 +73,16 @@ div#headerdiv { background-color: #fff; font-size:100%; font-family: Verdana, sa
 div#local-masthead ul li.active-trail a:link, div#local-masthead ul li.active-trail a:visited {padding-top: 2px;border-bottom: 3px solid #666;background-color: #111;}/*style not defined in mitigation*/
 div#local-masthead ul li.active, div#local-masthead ul li.active-trail { background-color: #111; }  /*style not defined in mitigation*/
 /*/change to ebi-mitigation.css*/
+
 /*imported from ebi-visual.css*/
 @font-face {
-		font-family: 'EBI-Generic';
-		src:url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.eot'); /*was linked to ../../../fonts/EBI-Generic/fonts/EBI-Generic.eot*/
-		src:url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.eot?#iefix') format('embedded-opentype'),
-			url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.woff') format('woff'),
-			url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.svg#EBI-Generic') format('svg'),
-			url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.ttf') format('truetype');
-		font-weight: normal;
-		font-style: normal;
-	}
+font-family: 'EBI-Generic';
+src:url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.eot'); /*was linked to ../../../fonts/EBI-Generic/fonts/EBI-Generic.eot*/
+src:url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.eot?#iefix') format('embedded-opentype'),
+url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.woff') format('woff'),
+url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.svg#EBI-Generic') format('svg'),
+url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.ttf') format('truetype');
+font-weight: normal;font-style: normal;}
 
 @font-face{font-family:'EBI-Functional';src:url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.eot');
 src:url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.eot?#iefix') format('embedded-opentype'),
@@ -117,9 +116,6 @@ a:active { color: #647685;}
 /*width: 958px;  was too much left aligned so removed 14px margin from 972px */
 /* removed to make it EBI compliant
 box-shadow: 0px 0px 70px #696969;
--moz-box-shadow: 0px 0px 70px #696969;
--khtml-box-shadow: 0px 0px 70px #696969;
--webkit-box-shadow: 0px 0px 70px #696969;
 margin: 0px auto;    */
 /*margin-left:14px; was too much left aligned - defined by added class grid 24*/
 padding:14px;
@@ -147,9 +143,9 @@ cursor:pointer; /* for IE7 */
 height:  68px;
 }
 
-.icon_beta_menu, .icon_beta_title {color:white; border-radius: 4px;-moz-border-radius: 4px;-khtml-border-radius: 4px;-webkit-border-radius: 4px;background-color:#EB6868;font-weight: bold; margin-left: 2px}
+.icon_beta_menu, .icon_beta_title {color:white; border-radius: 4px; background-color:#EB6868;font-weight: bold; margin-left: 2px}
 .icon_beta_menu {font-size: 10px;padding: 2px 3px;}
-.icon_beta_title {font-size: 64%;padding: 0px 3px; vertical-align: top;}
+.icon_beta_title {font-size: 64%;padding: 3px 5px; vertical-align: middle;}
 
 #extra_feedback {z-index:92;position:relative;}
 
@@ -193,7 +189,7 @@ z-index:1;
 border:0px black solid;
 }
 
-header, .banner  { background-color: white;}
+header, .banner  {background-color: white;}
 
 /*nav { float: left; width:100%;}*/
 
@@ -260,28 +256,7 @@ div#headerdiv .login_name a {display:inline;color: white; border-bottom:0;}
 div#headerdiv .login_name a:active, div#headerdiv .login_name a:hover, div#headerdiv .login_name a:focus {background-color: transparent;}
 div#headerdiv .logout {font-weight: bold;}
 
-/* LINKS */
-
-a.analysis {
-font-weight:bold;
-font-size:110%;
-color:white;
-background:url(../img/backgrounds/bgd_button_login_off.gif) repeat-x;
-border: 1px solid #1f54bc;
--moz-border-radius: 16px;
--khtml-border-radius: 16px;
--webkit-border-radius: 16px;
-border-radius: 16px;
-box-shadow:0px 2px 2px #adadad;
--moz-box-shadow:0px 2px 2px #adadad ;
--khtml-box-shadow:0px 2px 2px #adadad ;
--webkit-box-shadow:0px 2px 2px #adadad ;
-padding:8px 14px;
-}
-
-a.analysis:hover {background:url(../img/backgrounds/bgd_button_login_off.gif) repeat-x 16px;text-decoration:none;}
-
-a.analysis img {vertical-align:middle;padding:0 4px;border:0px red solid;}
+/************************* LINKS ************************************/
 
 #logout {color:#333;font-weight:bold;}
 
@@ -296,10 +271,7 @@ border:0px red solid;
 text-decoration:underline;
 }
 
-#login {
-display:block;
-color:#7E7E7E;
-}
+#login {display:block;color:#7E7E7E;}
 
 #login a, #login a:link, #login a:focus {
 font-weight:bold;
@@ -316,40 +288,10 @@ text-decoration:underline;
 a.ext, a.ext:link {padding-left: 12px;background: url(../img/ico_ext_link.png) no-repeat 0 3px;}
 a.ext:hover,a.ext:active, a.ext:focus {background: url(../img/ico_ext_link_on.png) no-repeat 0 3px; }
 
-a.signup {
-width:166px;
-text-align:center;
-font-weight:bold;
-font-size:140%;
-display:block;
-color:#333;
-background:url(../img/backgrounds/bgd_button_sign_off.gif) repeat-x;
-border: 1px solid #ffaa22;
--moz-border-radius: 4px;
--khtml-border-radius: 4px;
--webkit-border-radius: 4px;
-border-radius: 4px;
-padding:4px 8px;
-margin-top:4px;
-text-shadow: #fff685 1px 1px 0px;
-}
-
-a.signup:hover {
- text-shadow: #fff685 -1px -1px 0px;
-color:#171717;
-background:url(../img/backgrounds/bgd_button_sign_over.gif) repeat-x;
-border: 1px solid #ffaa22;
-}
-
-a.signup:active{
-background:url(../img/backgrounds/bgd_button_sign_active.gif) repeat-x;
-border: 1px solid #ccc;
-}
-
-
-#sidebar-news {
-color:#3e3e3e;
-}
+/*button to sign up - no used*/
+a.signup {width:166px;text-align:center;font-weight:bold;font-size:140%; display:block;color:#333; background:url(../img/backgrounds/bgd_button_sign_off.gif) repeat-x;border: 1px solid #ffaa22;border-radius: 4px; padding:4px 8px;margin-top:4px;text-shadow: #fff685 1px 1px 0px;}
+a.signup:hover {text-shadow: #fff685 -1px -1px 0px;color:#171717; background:url(../img/backgrounds/bgd_button_sign_over.gif) repeat-x;border: 1px solid #ffaa22;}
+a.signup:active {background:url(../img/backgrounds/bgd_button_sign_active.gif) repeat-x; border: 1px solid #ccc;}
 
 a.twitter {
 display:block;
@@ -383,11 +325,9 @@ text-decoration:none;
 background:url(../img/bgd_black_op20_8.png);
 }
 
+/**************************** END LINKS ********************************/
 
-
-/* END LINKS */
-
-/* TABLE */
+/**************************** TABLE ***********************************/
 
 /* DATATABLE used for the comparison tool. */
 table.dataTable {width: 100%;border-collapse: separate;}
@@ -449,46 +389,13 @@ text-align:left;
 table.result {line-height: 1.2em; border-collapse:separate; width:100%; border-spacing:4px; padding-left:2px; margin-bottom: 18px;}
 #feedback_form table.result { margin-bottom: 0px;}
 
-
-/*
-table.result thead th{
-font-size:120%;
-padding:14px;
-color:#fff;
-text-shadow:1px 1px 1px #23518f;
-border:1px solid #2a6bc8;
-background:url(../img/bgd_button_login_off.gif) repeat-x;
--webkit-border-top-left-radius:5px;
--webkit-border-top-right-radius:5px;
--moz-border-radius:5px 5px 0px 0px;
-border-top-left-radius:5px;
-border-top-right-radius:5px;  */
-/* to check if it works better  *//*
-
-box-shadow:0px 1px 1px #adadad;
--moz-box-shadow:0px 1px 1px #adadad ;
--khtml-box-shadow:0px 1px 1px #adadad ;
--webkit-box-shadow:0px 1px 1px #adadad ;
-text-align:center;
-}
-*/
-
 table.result tbody tr:hover {
 /*background: url(../img/bgd_noise_trans.gif);  */
 /*background: url(../img/bgd_stripe_50_8.png);  */
 background: url(../img/bgd_black_op05_8.png);
 }
 
-table.result tbody td{
-padding:7px;
-text-align:center;
-vertical-align: middle;
-border: 1px solid #e5e5e5;
--moz-border-radius:2px;
--webkit-border-radius:2px;
-border-radius:2px;
-color:#424242;/* text-shadow:1px 1px 1px #fff;  */
-}
+table.result tbody td{ padding:7px; text-align:center; vertical-align: middle; border: 1px solid #e5e5e5; -moz-border-radius:2px; -webkit-border-radius:2px; border-radius:2px; color:#424242;/* text-shadow:1px 1px 1px #fff;  */ }/*keep the prefix*/
 
 table.result tbody td a:hover{
 text-decoration:underline;
@@ -497,21 +404,7 @@ text-decoration:underline;
 
 table.result thead th:empty{background:transparent;border:none;}
 
-table.result thead th{
- font-size:120%;
-    padding:10px;
-    color:#fff;
-background-color:#006666;
--webkit-border-top-left-radius:5px;
--webkit-border-top-right-radius:5px;
--moz-border-radius:5px 5px 0px 0px;
-border-top-left-radius:5px;
-border-top-right-radius:5px;
-box-shadow:0px 1px 1px #adadad;
--moz-box-shadow:0px 1px 1px #adadad ;
--khtml-box-shadow:0px 1px 1px #adadad ;
--webkit-box-shadow:0px 1px 1px #adadad ;
-}
+table.result thead th { font-size:120%; padding:10px; color:#fff; background-color:#006666; border-radius:5px 5px 0 0; box-shadow:0px 1px 1px #adadad;}
 
 table.result td.showHideRelated { font-weight: bold;}
 table.result td.showHideRelated:hover {background-color: #006666; }
@@ -519,17 +412,14 @@ table.result td.showHideRelated:hover {background-color: #006666; }
 .simple_table  {padding: 0px;}
 .simple_table td {vertical-align: top;}
 
-/* END TABLE */
+/************************ END TABLE *****************************/
 
-/* TITLE + TEXT*/
+/*********************** TITLE + TEXT***************************/
 
 h2 {
-border: solid 0px red;
 font-family: helvetica, "trebuchet MS", arial, sans-serif;
 /*font-family: 'MyriadProRegular', arial, sans-serif;*/ /*TEMP not working with IE and firefox, use Arial by default*/
-/*color:#003798;*/
-/*color:#066;*/
-color:#0F6D99;
+color:#0F6D99;/*color:#003798;*/
 font-size:190%;
 font-weight:normal;
 margin:0.83em 0;/*added for compliance*/
@@ -558,7 +448,6 @@ color:#3e3e3e;
 h4 {
 color:#333;
 font-size:140%;
-
 margin:14px 0 7px 0;
 }
 
@@ -582,44 +471,30 @@ color:#333333;
 font-size:150%;
 }
 
-#sidebar-login h2, #sidebar-mailing h2{
-/*background: url(../img/bgd_stripe_title_8.png); */
-border-radius: 14px 14px 0 0;
--moz-border-radius: 14px 14px 0 0;
--khtml-border-radius: 14px 14px 0 0;
--webkit-border-radius: 14px 14px 0 0;
-padding: 2px 0 0 4px;
-margin-bottom:2px;
-}
+/*#sidebar-login {margin: 14px 20px 14px 20px;} */
+
+/*#sidebar-login {*/
+/*border: solid 0px black;*/
+/*background-color:white;*/
+/*padding:10px;*/
+/*box-shadow: 3px 3px 4px #b1b1b1;*/
+/*border-radius: 14px;*/
+/*}*/
+
+/*#sidebar-login h2 {*/
+/*border-radius: 14px 14px 0 0;*/
+/*padding: 2px 0 0 4px;*/
+/*margin-bottom:2px;*/
+/*}*/
+
+/*#sidebar-login img  {*/
+/*float:right;*/
+/*margin: 4px 14px 0 4px;*/
+/*}*/
 
 .step_breadcrumbs {
 margin-bottom:28px;
 border:0px solid #7C8C99;
-}
-
-
-#selected {
-color:#7c8c99;font-size:160%;   }
-#selected .num {
-border:2px solid #7C8C99;
-/*margin: 0  2px 0 7px ;
-padding:0 7px;
-border-radius: 14px;
--moz-border-radius: 14px;
--khtml-border-radius: 14px;
--webkit-border-radius: 14px;*/
-font-size:60%;
-}
-
-.num {
-border:1px solid #c3c3c3;
-margin: 0  2px 0 7px ;
-padding:1px 5px;
-border-radius: 10px;
--moz-border-radius: 10px;
--khtml-border-radius: 10px;
--webkit-border-radius: 10px;
-font-size:110%;
 }
 
 /*.fls_uppercase {text-transform: capitalize;} *//*transform first letter words in uppercase letter - floating elements*/
@@ -630,17 +505,7 @@ font-size:110%;
 
 .sample_desc {font-size:110%;} /*sample description*/
 
-/* END TITLE */
-
-#sidebar-login img, #sidebar-mailing img, #sidebar-news img, #sidebar-warning img{
-float:right;
-margin: 4px 14px 0 4px;
-}
-#sidebar-ena img {
-float:right;
-margin: 4px 10px 0 4px;
-}
-
+/****************** END TITLE *************************/
 
 #submit-data {
 border: solid 0px black;
@@ -718,41 +583,12 @@ background: url(../img/arrow_link_small.jpg) no-repeat right top;
 
 #list-data a.all:active  { background: url(../img/arrow_link_click_small.jpg) no-repeat right top;}
 
+section {border: solid 0px black;display:block;}
 
-section {
-border: solid 0px black;
-display:block;
-}
+section section { margin:0;}
 
-section section {
-margin:0;
-}
-
-#main-content {
-/*background: transparent url(../img/bgd_hex_8.png) no-repeat 630px 560px;*/
-overflow:auto; /*  To contain floated elements, apply overflow:auto; to the parent element*/
-border: solid 0px black;
-width:100%;
- /* height:100%;  */
-}
-
-#memicontent {
-float:left;
-border: solid 0px green;
-width:100%;  /* was 556px when 2 columns*/
-/*width:682px;    *//* was 690 reduced because of IE */
-height:auto;
-
-}
-
-#content-full  {
-border: solid 0px green;
-
-/*padding:14px 14px 28px 14px;*/
-background-color:white;
-min-height:380px;float:left;
-width:100%;
-}
+#content-full  {background-color:white; min-height:380px;float:left; width:100%;}  /*to remove in future?*/
+#content-full #sidebar {background: none;width:222px; border: solid 0px black;}
 
 #sidebar {
 float:right; /* since this element is floated, a width must be given */
@@ -764,17 +600,13 @@ background: url(../img/bgd_white_op45_8.png);
 color:#666;
 height:auto;
 }
-#content-full #sidebar{
-background: none;
-border: solid 0px black;
-width:222px;
-}
+
+
 
 .sidebar-allrel, #sidebar-download, #sidebar-analysis {width: 28%;float: right; border: solid 0px black; padding: 9px;background-color: white;}
 
 
-#sidebar-analysis {clear: right;
- background-color:white;/*to deal with description box border*/}
+#sidebar-analysis {clear: right; background-color:white;/*to deal with description box border*/}
 
 
 #p-steps {font-size: 90%;padding:9px 0 0 9px; margin: 9px; color:rgb(62, 62, 62); background: #F4F4F8; border: 1px solid #E5E5E5;list-style-type: none; display: block;}
@@ -786,21 +618,11 @@ counter-reset: section;
 list-style-type: none;
 }
 
-
 #sidebar-steps ol li { margin-top:7px;
  counter-increment: section; }
 
-
-#sidebar-nav, #sidebar-steps, #sidebar-related {
-float:right;
-width: auto;
-font-weight:normal;
-border: 1px solid #E5E5E5;
--moz-border-radius: 0 0 20px 0;
--webkit-border-radius: 0 0 20px 0;
-border-radius: 0 0 20px 0;
-background:  #F4F4F8;
-}
+/*right side box*/
+#sidebar-nav, #sidebar-steps, #sidebar-related {float:right; width: auto;font-weight:normal; border: 1px solid #E5E5E5;border-radius: 0 0 20px 0;background:  #F4F4F8;}
 
 #sidebar-nav {margin: 0 9px;/*padding: 0px 9px;*/ width:26%;}
 #sidebar-steps, #sidebar-related {font-size:90%;}
@@ -861,30 +683,6 @@ color:#c3c3c3;
 /*background-color:green;*/
 }
 
-#content-full #sidebar-mailing, #sidebar-warning, #sidebar-ena {
-margin: 0 7px 14px 0px;
-}
-
-#sidebar-login, #sidebar-news, #sidebar-mailing{
-margin: 14px 20px 14px 20px;
-}
-
-#sidebar-login, #sidebar-mailing, #sidebar-warning, #sidebar-ena {
-border: solid 0px black;
-background-color:white;
-padding:10px;
-box-shadow: 3px 3px 4px #b1b1b1;
--moz-box-shadow: 3px 3px 4px #b1b1b1;
--khtml-box-shadow: 3px 3px 4px #b1b1b1;
--webkit-box-shadow: 3px 3px 4px #b1b1b1;
-border-radius: 14px;
--moz-border-radius: 14px;
--khtml-border-radius: 14px;
--webkit-border-radius: 14px;
-}
-
-
-
 #footer a{color:#3e3e3e;}
 #footer a:hover {color:#222222; text-decoration:underline;}
 
@@ -892,11 +690,6 @@ border-radius: 14px;
     /*padding-left: 22px;*/
     /*background: url(../img/rss.gif) no-repeat;*/
 /*}*/
-
-#sidebar-news .date{
-color:#866d9e ;
-}
-
 
 a.list_more {color:#3e3e3e;/* could be 565656 */  font-weight:bold;}
 a.list_more:hover{color:#222222 ; text-decoration:underline;}
@@ -923,34 +716,18 @@ color:#7e7e7e ;
 font-size:100%;
 }
 
-#submit-data, #list-data-study, #list-data-sample, #list-news {
-background-color: white;
--moz-border-radius: 0 0 20px 0;
--khtml-border-radius: 0 0 20px 0;
--webkit-border-radius: 0 0 20px 0;
-border-radius: 0 0 20px 0;
-/*border: 1px solid #9f9f9f;*/
-/*box-shadow:2px 2px 7px #8a8a8a;*/
-/*-moz-box-shadow:2px 2px 7px #8a8a8a ;*/
-/*-khtml-box-shadow:2px 2px 7px #8a8a8a ;*/
-/*-webkit-box-shadow:2px 2px 7px #8a8a8a ;*/
-}
+/*box homepage*/
+#submit-data, #list-data-study, #list-data-sample, #list-news { background-color: white;border-radius: 0 0 20px 0; /*hidden*//*border: 1px solid #9f9f9f;*//*box-shadow:2px 2px 7px #8a8a8a;*/}
 
 #list-data-study, #list-data-sample, #list-news  {
-/*width:282px;*/
-line-height:1.3;   width:28.9%;
+line-height:1.3; width:28.9%;
 _height:400px; /*to keep same height for IE6 */
 min-height:440px;
 padding: 0 9px 9px 9px;
 }
 
 #list-data-study h3, #list-data-sample h3, #list-news h3 {font-size:123%;color:#445668;  /*was  #7c8c99*/margin: 1em 0px; /*padding:0;*/font-weight: bold;}
-
-/*#list-data-sample, #list-news {*/
-/*margin-left:14px;*/
-/*}*/
-
-
+/*END box homepage*/
 
 .center {margin: 0px auto; width:400px;}
 .center_972 {
@@ -958,9 +735,9 @@ padding: 0 9px 9px 9px;
 margin: 0px auto;*/
 width: 972px; text-align: left;}
 
-.separator {margin: 20px 9px 9px 9px; height:1px; display:block; background: url(../img/bgd_sep_dot.gif) repeat-x 0 -5px; clear:right;}
+.separator {margin: 20px 9px 9px 9px; height:1px; display:block; background: url(../img/bgd_sep_dot.gif) repeat-x 0 -5px; clear:right;} /*not used */
 
-/* FORMS */
+/*********************** FORMS ************************/
 form legend {
 background-color: #e5e5e5;
 color: #455872;
@@ -1020,6 +797,7 @@ width: 360px;
 /*-webkit-box-shadow:inset 0 0 7px #ccc;*/
 /*box-shadow:inset 0 0 7px #ccc;*/
 }
+
 /*SUBMIT PAGE FORM*/
 .register_form {margin-left:9px;}
 .register_form label {font-weight: bold;font-size: 110%; color: #605F5F; display: block;}
@@ -1031,7 +809,7 @@ width: 360px;
 .register_form .project_det_box input { width: 45%;}
 .register_form .user_det_box fieldset {min-height: 333px;}  /*to have same height between boxes*/
 .register_form .institute_det_box select {width: 93%;}
-.register_form .form_info, .register_form .form_help {display: block; padding: 7px;font-size: 90%; color: #455872; background: #f1f3f7;-webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;line-height: 12px;}
+.register_form .form_info, .register_form .form_help {display: block; padding: 7px;font-size: 90%; color: #455872; background: #f1f3f7; border-radius: 5px;line-height: 12px;}
 .register_form .form_info {clear: both; width: 90%;}
 .register_form .form_help {float:right; margin: 0; width: 47%; }
 .register_form textarea {float:left; max-width:none;height: 66px; width:45%;}
@@ -1051,36 +829,10 @@ width: auto;
     color:white;
 	float: left; margin: 28px 10px 0 0;
 }
-
-input.main_button {
-font-weight:bold;
-font-size:120%;
-color:white;
-background:url(../img/backgrounds/bgd_button_login_off.gif) repeat-x;
-border: 0px solid #1f54bc;
--moz-border-radius: 4px;
--khtml-border-radius: 4px;
--webkit-border-radius: 4px;
-border-radius: 4px;
-box-shadow:0px 2px 2px #adadad;
--moz-box-shadow:0px 2px 2px #adadad ;
--khtml-box-shadow:0px 2px 2px #adadad ;
--webkit-box-shadow:0px 2px 2px #adadad ;
-padding:4px 8px;
-cursor: pointer;
-margin:4px 0;
-}
-
-input.main_button:hover {
-background:url(../img/backgrounds/bgd_button_login_over.gif) repeat-x;
-border: 0px solid #2e22e4;
-}
-
-input.main_button:active{
-background:url(../img/backgrounds/bgd_button_login_active.gif) repeat-x;
-border: 0px solid #696969;
-}
-
+/*Search button project and sample page*/
+input.main_button {font-weight:bold;font-size:120%;color:white;background:url(../img/backgrounds/bgd_button_login_off.gif) repeat-x; border: 0px solid #1f54bc; border-radius: 4px; box-shadow:0px 2px 2px #adadad; padding:4px 8px; cursor: pointer;margin:4px 0;}
+input.main_button:hover {background:url(../img/backgrounds/bgd_button_login_over.gif) repeat-x;}
+input.main_button:active{background:url(../img/backgrounds/bgd_button_login_active.gif) repeat-x;}
 
 textarea {
     font-size:100%;/* for Firefox*/
@@ -1106,16 +858,6 @@ textarea:hover, textarea:focus {
     color: #999999;
     }
 
-.submit input {
-    width: auto;
-    padding: 9px 15px;
-    background: #617798;
-    border: 0;
-    font-size: 14px;
-    color: #FFFFFF;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;}
-
 .form_row {
 margin: 4px 0px;
 clear:both;/* added for IE6*/
@@ -1130,22 +872,6 @@ overflow:auto;
 .form_row input {float:left; }
 img.ui-datepicker-trigger {float:left; /*solve a bug with chromium*/}
 
-.form_help {
-float:right;
-display: block;
-color: #455872; /*was  #8C2C5F*/
-font-size: 90%;
-margin: 0;
-padding: 7px;
-visibility: visible; /*to remove?*/
-width: 300px;
-line-height: 14px;
-background: #f1f3f7;/*was  #FAEEF4*/
--webkit-border-radius: 5px;
--moz-border-radius: 5px;
-border-radius: 5px;
-}
-
 .filter_button {color:#cecece; margin-left:94px;}
 
 .result_row {
@@ -1153,7 +879,7 @@ padding: 4px 0px;
 border: 0px solid #ffaa22;
 }
 
-/* END FORM */
+/************************************** END FORM **************************************/
 
 .table_opt {border:0px solid black;display:block;}
 
@@ -1273,12 +999,7 @@ border:1px #ff918e solid;
 margin:0;
 }
 
-.msg_error {
-background-color: #FFCFCF; color: #8C302C;border:1px #ff918e solid; margin: 0px auto;font-size: 118%; margin-top:27px;padding: 14px;width: 712px;
--moz-border-radius: 7px;
--khtml-border-radius: 7px;
--webkit-border-radius: 7px;
-border-radius: 7px;}
+.msg_error {background-color: #FFCFCF; color: #8C302C;border:1px #ff918e solid; margin: 0px auto;font-size: 118%; margin-top:27px;padding: 14px;width: 712px;border-radius: 7px;}
 
 /*input.valid, textarea.valid {*/
 /*background: white url(../img/ico_form_check.png) no-repeat right top;*/
@@ -1309,15 +1030,10 @@ background: url(../img/bgd_contentfull_menu.gif) -14px;
 
 #samples_id {margin-bottom:0;}
 
-
+/*BOX filter search and sample overview*/
 .output_form, .filter_form {padding:14px; border:1px solid #e5e5e5; margin:9px; display:block;}
 .output_form p {padding:0;}
-.filter_form {
--moz-border-radius: 0 0 20px 0;
--khtml-border-radius: 0 0 20px 0;
--webkit-border-radius: 0 0 20px 0;
-border-radius: 0 0 20px 0;
-}
+.filter_form {border-radius: 0 0 20px 0;}
 
 .filter_form .result_row { padding: 7px 0px;border: 0px solid black;}
 
@@ -1353,10 +1069,10 @@ height:140px;
 }
 
 .sub {display:block;overflow:auto;}
-.sub .sub_log, .sub .sub_sign {-moz-border-radius: 20px;-khtml-border-radius: 20px;-webkit-border-radius: 20px;border-radius: 20px;float: left; display:block; border: 1px solid #e5e5e5;}
+.sub .sub_log, .sub .sub_sign {-moz-border-radius: 20px;-khtml-border-radius: 20px;-webkit-border-radius: 20px;border-radius: 20px;float: left; display:block; border: 1px solid #e5e5e5;}/*keep rounded prefix for the box*/
 .sub .sub_log {width:330px; padding:0 14px;text-align:left;margin: 18px; }
 .sub .sub_sign {width:260px; padding:0 14px 14px 14px;margin:18px 9px 18px 0px; text-align: center; }
-.sub_warn, .sub_ask  {display: block; padding: 14px; width: 712px; -moz-border-radius: 7px;-khtml-border-radius: 7px;-webkit-border-radius: 7px;border-radius: 7px;}
+.sub_warn, .sub_ask  {display: block; padding: 14px; width: 712px; border-radius: 7px;}
 .sub_warn { font-size: 110%;margin-bottom: 14px;color: #8c302c; background: #faefee;}
 .sub_ask { font-size: 90%;  margin: 9px; color: #455872; background: #f1f3f7; float: left;}
 .sub_form {width:740px; float: left; display:block;}
@@ -1410,16 +1126,14 @@ padding:0px 2px;
 border:1px solid #aaaaaa;
 background:#dedede;
 color:#dedede;
-cursor:pointer;-moz-border-radius:12px;webkit-border-radius:12px;border-radius:12px;}
+cursor:pointer;-moz-border-radius:12px;webkit-border-radius:12px;border-radius:12px;} /*keep the round prefix as main feature*/
 div.center-wrap a.active{background:#9e9e9e;color:#9e9e9e;/*font-weight:bold;color:#525044;*/}
 
-/* buttons find out more */
+/* carousel buttons more info  */
 .find_more {
 position: absolute;
 bottom: 5px;left: 8px;height: auto;}
-.find_more a {color:white;text-decoration:none; background:url(../img/backgrounds/bgd_button_login_off.gif) repeat-x; border: 0px solid #1f54bc;
--moz-border-radius: 4px;-khtml-border-radius: 4px;-webkit-border-radius: 4px;border-radius: 4px;
-box-shadow:0px 2px 2px #adadad;-moz-box-shadow:0px 2px 2px #adadad;-khtml-box-shadow:0px 2px 2px #adadad;-webkit-box-shadow:0px 2px 2px #adadad;padding:4px 8px;cursor: pointer;}
+.find_more a {color:white;text-decoration:none; background:url(../img/backgrounds/bgd_button_login_off.gif) repeat-x; border: 0px solid #1f54bc; border-radius: 4px; box-shadow:0px 2px 2px #adadad;padding:4px 8px;cursor: pointer;}
 .find_more a:hover{background:url(../img/backgrounds/bgd_button_login_over.gif) repeat-x;}
 .find_more a:active{background:url(../img/backgrounds/bgd_button_login_active.gif) repeat-x;}
 
@@ -1545,19 +1259,8 @@ background: white url(../img/button_feedback_over_r.gif) no-repeat -1px;
 .feedbackform_tab_v a:active  {
 background: transparent url(../img/button_feedback_active_r.gif) no-repeat;
 }
-
-.cont_feedback_form {float:left;border:0px green solid;  width:440px;
-box-shadow:0px 2px 7px #adadad;
--moz-box-shadow:0px 2px 7px #adadad ;
--khtml-box-shadow:0px 2px 7px #adadad ;
--webkit-box-shadow:0px 2px 7px #adadad ;
-border: solid 0px #e5e5e5;
--moz-border-radius:4px;
--khtml-border-radius:4px;
--webkit-border-radius:4px;
-background-color:white;
-/*width:600px;*/}
-
+/*BOX feedback*/
+.cont_feedback_form {float:left; width:440px;box-shadow:0px 2px 7px #adadad;-moz-box-shadow:0px 2px 7px #adadad ;-khtml-box-shadow:0px 2px 7px #adadad ;-webkit-box-shadow:0px 2px 7px #adadad ; -moz-border-radius:4px; -khtml-border-radius:4px; -webkit-border-radius:4px; background-color:white;}/*keep the prefix for round box*/
 
 /******************** customize Jquery style **********/
 .sample_comp_result .ui-widget-header, .ui-widget-header {border: 0px solid #BBB;background:none;} /*remove style top ban widget*/
@@ -1803,8 +1506,8 @@ ul.color_legend {list-style-type: square; list-style-position:inside;}
 .back_ban {overflow: auto;}
 .back_ban .back_title {float: left;color: #0F6D99; font-size: 190%; margin: 20px 0 9px 0;padding: 0 9px;}
 .back_ban .back_button { float: left; margin-top:14px;padding: 9px;}
-.back_ban .back_button a {text-decoration: none;background: white; border: solid #dedede; display: inline-block;height: 28px; line-height: 28px; margin-left: 20px; margin-right: 2px; padding: 0 7px 0 3px;position: relative; border-width: 1px 1px 1px 0;-moz-border-radius: 0 2px 2px 0; -webkit-border-radius: 0 2px 2px 0;border-radius: 0 2px 2px 0;}
-.back_ban .back_button a:before {border: solid #dedede;display: block; height: 21px; left: -11px; position: absolute; top: 3px;  width: 21px;border-width: 0 0 1px 1px;border-radius: 2px 0 2px 2px;content: '';-moz-transform: rotate(45deg);-webkit-transform: rotate(45deg);-o-transform: rotate(45deg);transform: rotate(45deg);-ms-transform:rotate(45deg); /* IE 9 */}
+.back_ban .back_button a {text-decoration: none;background: white; border: solid #dedede; display: inline-block;height: 28px; line-height: 28px; margin-left: 20px; margin-right: 2px; padding: 0 7px 0 3px;position: relative; border-width: 1px 1px 1px 0; border-radius: 0 2px 2px 0;}
+.back_ban .back_button a:before {border: solid #dedede;display: block; height: 21px; left: -11px; position: absolute; top: 3px;  width: 21px;border-width: 0 0 1px 1px; border-radius: 2px 0 2px 2px;content: '';-moz-transform: rotate(45deg);-webkit-transform: rotate(45deg);-o-transform: rotate(45deg);transform: rotate(45deg);-ms-transform:rotate(45deg); /* IE 9 */}
 .back_ban .back_button a:hover, .back_ban .back_button a:focus { background: #f0f0f0; color:white;}
 .back_ban .back_button a:hover:before, .back_ban .back_button a:focus:before { background: #f0f0f0;  color:white;}
 .back_ban .back_button a span {color: grey; font-weight: bold;  position: relative;}
@@ -1863,7 +1566,7 @@ ul.sample_list li {list-style: none; display: inline;}
 #pca #pca_legend .legend-item {padding: 0px 6px 0 0;  display:inline-block; cursor:pointer; color: #606068; font-size: 90%;}
 #pca #pca .legend-item-off {color:#D1D1D1;}
 #pca #pca_legend .legend-item:hover { color: #1A1A1A !important;} /* '!important' allows to keep the :hover style even when messing with the css in jQuery functions */
-#pca #pca_legend .legend-item .legend-rectangle {border-radius: 50%; margin: 4px;width: 8px; height: 8px;float: left;}
+#pca #pca_legend .legend-item .legend-rectangle {border-radius: 50%; margin: 4px;width: 8px; height: 8px;float: left;}/*round circle*/
 
 /*Charts page  - sample comparison tool*/
 #bars  #bars-wrapper, #pca  #plots-wrapper, #stack #stack_wrapper {position: relative; width:100%; overflow:hidden;margin-top:9px;/*add some space between charts and legend*/}
