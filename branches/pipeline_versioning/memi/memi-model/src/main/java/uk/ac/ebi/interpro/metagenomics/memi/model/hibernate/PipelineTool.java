@@ -28,6 +28,12 @@ public class PipelineTool implements Comparator<PipelineTool> {
     @Column(name = "TOOL_NAME", length = 20, nullable = false)
     private String toolName;
 
+    @Column(name = "DESCRIPTION", length = 1000, nullable = false)
+    private String description;
+
+    @Column(name = "WEB_LINK", length = 500)
+    private String webLink;
+
     @Column(name = "VERSION", length = 15, nullable = false)
     private String toolVersion;
 
@@ -48,7 +54,8 @@ public class PipelineTool implements Comparator<PipelineTool> {
     public PipelineTool() {
     }
 
-    public PipelineTool(long toolId, String toolName, String toolVersion, String executionCmd, String installationDir, String configurationFile, String notes) {
+    public PipelineTool(long toolId, String toolName, String toolVersion, String executionCmd, String installationDir, String configurationFile, String notes,
+                        String description, String webLink) {
         this.toolId = toolId;
         this.toolName = toolName;
         this.toolVersion = toolVersion;
@@ -56,6 +63,8 @@ public class PipelineTool implements Comparator<PipelineTool> {
         this.installationDir = installationDir;
         this.configurationFile = configurationFile;
         this.notes = notes;
+        this.description = description;
+        this.webLink = webLink;
     }
 
     public long getToolId() {
@@ -114,10 +123,28 @@ public class PipelineTool implements Comparator<PipelineTool> {
         this.notes = notes;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getWebLink() {
+        return webLink;
+    }
+
+    public void setWebLink(String webLink) {
+        this.webLink = webLink;
+    }
+
     @Override
     public int hashCode() {
         int result = (int) (toolId ^ (toolId >>> 32));
         result = 31 * result + toolName.hashCode();
+        result = 31 * result + description.hashCode();
+        result = 31 * result + (webLink != null ? webLink.hashCode() : 0);
         result = 31 * result + toolVersion.hashCode();
         result = 31 * result + executionCmd.hashCode();
         result = 31 * result + (installationDir != null ? installationDir.hashCode() : 0);
@@ -146,6 +173,8 @@ public class PipelineTool implements Comparator<PipelineTool> {
         return new EqualsBuilder()
                 .append(getToolId(), pt.getToolId())
                 .append(getToolName(), pt.getToolName())
+                .append(getDescription(),pt.getDescription())
+                .append(getWebLink(),pt.getWebLink())
                 .append(getToolVersion(), pt.getToolVersion())
                 .append(getExecutionCmd(), pt.getExecutionCmd())
                 .isEquals();
@@ -156,6 +185,8 @@ public class PipelineTool implements Comparator<PipelineTool> {
         return new ToStringBuilder(this).
                 append("id", getToolId()).
                 append("name", getToolName()).
+                append("description", getDescription()).
+                append("webLink", getWebLink()).
                 append("version", getToolVersion()).
                 append("executionCommand", getExecutionCmd()).
                 append("installDir", getInstallationDir()).

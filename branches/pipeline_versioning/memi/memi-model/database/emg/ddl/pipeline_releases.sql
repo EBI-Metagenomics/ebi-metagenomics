@@ -61,6 +61,8 @@ END;
 CREATE TABLE pipeline_tool (
          tool_id            NUMBER(7)  PRIMARY KEY,
          tool_name          VARCHAR2(30)  NOT NULL,
+         description        VARCHAR2(1000)  NOT NULL,
+         web_link           VARCHAR2(500),
          version            VARCHAR2(30)  NOT NULL,
          exe_command        VARCHAR2(500)  NOT NULL,
          installation_dir   VARCHAR2(100),
@@ -112,8 +114,8 @@ INSERT INTO pipeline_release (pipeline_id,description,changes,release_version,re
 INSERT INTO pipeline_release (description,changes,release_version,release_date) values ('test2','test2','1.0',to_date('19960725','YYYYMMDD'));
 
 --example insert statements for the pipeline_tool table
-INSERT INTO pipeline_tool (tool_name,version,exe_command,installation_dir) values ('Trimmomatic','0.32','-o {2}.log ''java -classpath {0}/Trimmomatic-0.32/trimmomatic-0.32.jar org.usadellab.trimmomatic.TrimmomaticSE  -phred33 {1} {2} LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15''','/nfs/seqdb/production/interpro/development/metagenomics/pipeline/tools');
-INSERT INTO pipeline_tool (tool_name,version,exe_command,installation_dir) values ('FragGeneScan','1.15','{0}/FragGeneScan -s {0} -o {0}_CDS -w 0 -t 454_10','/nfs/seqdb/production/interpro/development/metagenomics/pipeline/tools');
-INSERT INTO pipeline_tool (tool_name,version,exe_command,installation_dir) values ('InterProScan','5.0 (beta release)','{0}/interproscan-5-dist.dir/interproscan.sh --appl PfamA,TIGRFAM-10.1,PRINTS,PrositePatterns,Gene3d -goterms -o {1}_out.tsv -i {1}','/nfs/seqdb/production/interpro/development/metagenomics/pipeline/tools');
+INSERT INTO pipeline_tool (tool_name,description,web_link,version,exe_command,installation_dir) values ('Trimmomatic','A flexible read trimming tool.','http://www.usadellab.org/cms/?page=trimmomatic','0.32','-o {2}.log ''java -classpath {0}/Trimmomatic-0.32/trimmomatic-0.32.jar org.usadellab.trimmomatic.TrimmomaticSE  -phred33 {1} {2} LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15''','/nfs/seqdb/production/interpro/development/metagenomics/pipeline/tools');
+INSERT INTO pipeline_tool (tool_name,description,web_link,version,exe_command,installation_dir) values ('FragGeneScan','An application for finding (fragmented) genes in short reads.','http://omics.informatics.indiana.edu/FragGeneScan/','1.15','{0}/FragGeneScan -s {0} -o {0}_CDS -w 0 -t 454_10','/nfs/seqdb/production/interpro/development/metagenomics/pipeline/tools');
+INSERT INTO pipeline_tool (tool_name,description,web_link,version,exe_command,installation_dir) values ('InterProScan','A sequence analysis application (nucleotide and protein sequences) that combines different protein signature recognition methods into one resource.','https://code.google.com/p/interproscan/wiki/Introduction','5.0 (beta release)','{0}/interproscan-5-dist.dir/interproscan.sh --appl PfamA,TIGRFAM-10.1,PRINTS,PrositePatterns,Gene3d -goterms -o {1}_out.tsv -i {1}','/nfs/seqdb/production/interpro/development/metagenomics/pipeline/tools');
 
 INSERT INTO pipeline_release_tool (pipeline_id,tool_id) values (1,4);

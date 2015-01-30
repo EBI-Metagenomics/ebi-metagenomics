@@ -5,6 +5,7 @@
     <thead>
     <tr>
         <th>Tool name</th>
+        <th>Description</th>
         <th>Version</th>
         <th>Execution command</th>
     </tr>
@@ -12,8 +13,9 @@
     <tbody>
     <c:forEach var="pipelineTool" items="${pipelineTools}" varStatus="status">
         <tr>
-            <td class="h_left" id="ordered">${pipelineTool.toolName}</td>
-            <td>${pipelineTool.toolVersion}</td>
+            <td class="h_left" id="ordered"><a href="${pipelineTool.webLink}">${pipelineTool.toolName}</a></td>
+            <td class="h_left">${pipelineTool.description}</td>
+            <td class="h_left">${pipelineTool.toolVersion}</td>
             <td class="h_left">${pipelineTool.executionCmd}</td>
         </tr>
     </c:forEach>
