@@ -52,24 +52,21 @@
     <%-- remove favicon from img folder to root as was not working anymore--%>
     <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/favicon.ico"/>
 
-    <%-- JQuery CSS--%>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/jquery-ui-1.8.11.custom.css" type="text/css" media="all"/>
-    <%-- END JQuery CSS--%>
-
     <%--<link href="https://fonts.googleapis.com/css?family=Droid+Sans:regular,bold" rel="stylesheet" type="text/css"/>--%>
     <%--?v1.1 will trigger browsers to refresh the source--%>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/default.css?v1.1" type="text/css" media="all"/>
 
-    <!--[if lt IE 8]>
-    <style type="text/css"> table.result tbody tr td {background-color: #F4F4F8;}</style> <![endif]-->
-    <!--[if lt IE 7]>
-    <style type="text/css"> #feedback_div {display: none;}
-    #feedback_no_div {display: block;}</style><![endif]-->
-
     <!--[if lt IE 9]>
     <style type="text/css"> .krona_chart {display: none;}/*remove the Krona box */</style>
     <style type="text/css"> #ie_krona {display: block;}/*Add a message to the Krona tab for IE users (lower version than IE9)*/</style>
-    <style type="text/css">.but_chart_export {display: none;}/*remove the export button as export is not working for IE8, IE7, IE6*/</style>
+    <style type="text/css">.but_chart_export, .chart-but-export {display: none;}/*remove the export button - both analysis and comparison - as export is not working for IE8, IE7, IE6*/</style>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <style type="text/css"> table.result tbody tr td {background-color: #F4F4F8;}</style>
+    <![endif]-->
+    <!--[if lt IE 7]>
+    <style type="text/css"> #feedback_div {display: none;}
+    #feedback_no_div {display: block;}</style>
     <![endif]-->
 
     <!-- JQuery v1.11.1 and JQuery UI source-->
