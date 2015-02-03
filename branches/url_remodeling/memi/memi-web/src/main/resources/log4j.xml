@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration debug="true">
+
+    <!-- Appenders -->
+    <!-- Console appender -->
+    <appender name="console" class="org.apache.log4j.ConsoleAppender">
+        <param name="Target" value="System.out"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d [%t] %p - %m%n"/>
+        </layout>
+    </appender>
+
+    <!-- File appender (just a test appender)-->
+    <!--<appender name="tilesFileApp" class="org.apache.log4j.FileAppender">-->
+    <!--<param name="File" value="/home/maxim/log4j/memi_tiles.log"/>-->
+    <!--<param name="Append" value="true"/>-->
+    <!--<layout class="org.apache.log4j.PatternLayout">-->
+    <!--<param name="ConversionPattern" value="%d [%t] %p - %m%n"/>-->
+    <!--</layout>-->
+    <!--</appender>-->
+
+    <!-- Daily rolling file appender - Error level -->
+    <appender name="dailyErrorApp" class="org.apache.log4j.DailyRollingFileAppender">
+        <!-- Please specify a valid file path -->
+        <param name="File" value="${dailyErrorAppParam}"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd-HH"/>
+        <param name="Threshold" value="ERROR"/>
+        <param name="Append" value="false"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} %c{1} [%p] %m%n"/>
+        </layout>
+    </appender>
+
+    <!-- Daily rolling file appender - Debug level -->
+    <appender name="dailyDebugApp" class="org.apache.log4j.DailyRollingFileAppender">
+        <!-- Please specify a valid file path -->
+        <param name="File" value="${dailyDebugAppParam}"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd-HH"/>
+        <param name="Threshold" value="DEBUG"/>
+        <param name="Append" value="false"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} %c{1} [%p] %m%n"/>
+        </layout>
+    </appender>
+
+    <!-- Daily rolling file appender - WARN level -->
+    <appender name="dailyWarnApp" class="org.apache.log4j.DailyRollingFileAppender">
+        <!-- Please specify a valid file path -->
+        <param name="File" value="${dailyWarnAppParam}"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd-HH"/>
+        <param name="Threshold" value="WARN"/>
+        <param name="Append" value="false"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} %c{1} [%p] %m%n"/>
+        </layout>
+    </appender>
+
+
+    <!-- 3rdparty Loggers -->
+    <!--<logger name="org.apache.tiles">-->
+    <!--<level value="INFO"/>-->
+    <!--<appender-ref ref="tilesFileApp"/>-->
+    <!--</logger>-->
+
+    <!--<logger name="org.springframework.beans">-->
+    <!--<level value="info"/>-->
+    <!--</logger>-->
+
+    <!--<logger name="org.springframework.context">-->
+    <!--<level value="info"/>-->
+    <!--</logger>-->
+
+    <!--<logger name="org.springframework.web">-->
+    <!--<level value="info"/>-->
+    <!--</logger>-->
+
+    <!-- Root Logger -->
+    <!-- This will print all debug or higher messages to the specified appender reference -->
+    <root>
+        <priority value="${log4j.log.level}"/>
+        <appender-ref ref="console"/>
+        <!--<appender-ref ref="dailyDebugApp"/>-->
+        <appender-ref ref="dailyWarnApp"/>
+        <appender-ref ref="dailyErrorApp"/>
+    </root>
+</log4j:configuration>
