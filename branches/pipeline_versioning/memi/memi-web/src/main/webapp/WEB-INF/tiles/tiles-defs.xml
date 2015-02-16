@@ -95,9 +95,9 @@
         <put-attribute name="body" value="/templates/contactBody.jsp"/>
     </definition>
 
-    <definition name="pipeline" extends="rootTemplate">
+    <definition name="pipelines" extends="rootTemplate">
         <put-attribute name="bodyClass" type="string" value="ebigreen"/>
-        <put-attribute name="body" value="/templates/pipelineBody.jsp"/>
+        <put-attribute name="body" value="/templates/pipelinesBody.jsp"/>
     </definition>
 
     <definition name="feedback" extends="rootTemplate">

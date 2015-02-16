@@ -27,19 +27,40 @@ import java.util.Set;
  * @since 1.0-SNAPSHOT
  */
 @Controller(value = "pipelinePageController")
-@RequestMapping('/' + PipelinePageController.VIEW_NAME + "/{pipelineVersion}")
+@RequestMapping('/' + PipelinePageController.VIEW_NAME)
 public class PipelinePageController extends AbstractController {
 
     /**
      * View name of this controller which is used several times.
      */
-    public static final String VIEW_NAME = "pipeline";
+    public static final String VIEW_NAME = "pipelines";
 
     @Resource
     private PipelineReleaseDAO pipelineReleaseDAO;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "/{pipelineVersion}", method = RequestMethod.GET)
     public ModelAndView doGet(@PathVariable final String pipelineVersion, ModelMap model) {
+        return buildModelAndView(
+                "pipeline",
+                model,
+                new ModelPopulator() {
+                    @Override
+                    public void populateModel(ModelMap model) {
+                        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "Pipeline Version", getBreadcrumbs(null), propertyContainer);
+                        final ViewModel defaultViewModel = builder.getModel();
+                        defaultViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_CONTACT_VIEW);
+                        model.addAttribute(ViewModel.MODEL_ATTR_NAME, defaultViewModel);
+                        //
+                        PipelineRelease pipelineRelease = pipelineReleaseDAO.read(1L);
+                        Set<PipelineTool> pipelineTools = pipelineRelease.getPipelineTools();
+                        model.addAttribute("pipelineVersion", pipelineVersion);
+                        model.addAttribute("pipelineTools", pipelineTools);
+                    }
+                });
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public ModelAndView doGet(ModelMap model) {
         return buildModelAndView(
                 getModelViewName(),
                 model,
@@ -53,7 +74,6 @@ public class PipelinePageController extends AbstractController {
                         //
                         PipelineRelease pipelineRelease = pipelineReleaseDAO.read(1L);
                         Set<PipelineTool> pipelineTools = pipelineRelease.getPipelineTools();
-                        model.addAttribute("pipelineVersion", pipelineVersion);
                         model.addAttribute("pipelineTools", pipelineTools);
                     }
                 });
