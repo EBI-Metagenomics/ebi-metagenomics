@@ -103,7 +103,7 @@ The ENA only accepts data that is intended for public release. However, any data
                         package
                     </li>
                     <li>2.2. Quality filtered - sequences with > 10% undetermined nucleotides removed</li>
-                    <li>2.3. Read length filtered - depending on the platform short sequences are removed</li>
+                    <li>2.3. Read length filtered - short sequences are removed</li>
                     <li>2.4. Duplicate sequences removed - clustered on 99% identity (UCLUST v 1.1.579),
                         representative sequence chosen
                     </li>
