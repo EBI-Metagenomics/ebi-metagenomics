@@ -11,4 +11,5 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.PipelineRelease;
  */
 public interface PipelineReleaseDAO extends GenericDAO<PipelineRelease, Long> {
 
+    PipelineRelease readByReleaseVersion(String releaseVersion);
 }

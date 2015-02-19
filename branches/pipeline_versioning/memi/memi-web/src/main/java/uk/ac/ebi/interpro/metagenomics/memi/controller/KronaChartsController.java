@@ -30,9 +30,9 @@ import java.util.Locale;
 public class KronaChartsController extends AbstractSampleViewController {
     private static final Log log = LogFactory.getLog(KronaChartsController.class);
 
-    @RequestMapping(value = '/' + SampleViewController.VIEW_NAME + "/{sampleId}/krona")
+    @RequestMapping(value = "/projects/{projectId}/samples/{sampleId}/runs/{runId}/krona")
     public void doGetKronaChart(@PathVariable final String sampleId,
-                                @RequestParam(required = true, value = "runId") final Long runId,
+                                @PathVariable final String runId,
                                 @RequestParam(required = false, value = "taxonomy", defaultValue = "false") final boolean taxonomy,
                                 final ModelMap model,
                                 final HttpServletResponse response) throws IOException {
@@ -44,7 +44,7 @@ public class KronaChartsController extends AbstractSampleViewController {
             log.debug("Checking accessibility before streaming Krona result charts...");
             if (isAccessible(sample)) {
                 log.debug("Building file path to the Krona HTML file...");
-                EmgFile emgFile = getEmgFile(runId);
+                EmgFile emgFile = getEmgFile(sample.getId());
                 File fileToStream;
                 if (taxonomy && emgFile != null) {
                     fileToStream = FileObjectBuilder.createFileObject(emgFile, propertyContainer, propertyContainer.getResultFileDefinition(FileDefinitionId.KRONA_HTML_FILE));
@@ -75,5 +75,10 @@ public class KronaChartsController extends AbstractSampleViewController {
                 response.sendRedirect("/metagenomics/sample/" + sampleId + "/accessDenied");
             }
         }
+    }
+
+    @Override
+    protected String getModelViewName() {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 }

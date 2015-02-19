@@ -1,5 +1,6 @@
 package uk.ac.ebi.interpro.metagenomics.memi.controller;
 
+import org.springframework.beans.TypeMismatchException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.PipelineReleaseDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.exceptionHandling.EntryNotFoundException;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.PipelineRelease;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.PipelineTool;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
@@ -38,8 +40,8 @@ public class PipelinePageController extends AbstractController {
     @Resource
     private PipelineReleaseDAO pipelineReleaseDAO;
 
-    @RequestMapping(value = "/{pipelineVersion}", method = RequestMethod.GET)
-    public ModelAndView doGet(@PathVariable final String pipelineVersion, ModelMap model) {
+    @RequestMapping(value = "/{releaseVersion:\\d\\.\\d}")
+    public ModelAndView doGet(@PathVariable final String releaseVersion, ModelMap model) {
         return buildModelAndView(
                 "pipeline",
                 model,
@@ -51,15 +53,18 @@ public class PipelinePageController extends AbstractController {
                         defaultViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_CONTACT_VIEW);
                         model.addAttribute(ViewModel.MODEL_ATTR_NAME, defaultViewModel);
                         //
-                        PipelineRelease pipelineRelease = pipelineReleaseDAO.read(1L);
+                        PipelineRelease pipelineRelease = pipelineReleaseDAO.readByReleaseVersion(releaseVersion);
+                        if (pipelineRelease == null) {
+                            throw new EntryNotFoundException();
+                        }
                         Set<PipelineTool> pipelineTools = pipelineRelease.getPipelineTools();
-                        model.addAttribute("pipelineVersion", pipelineVersion);
+                        model.addAttribute("releaseVersion", releaseVersion);
                         model.addAttribute("pipelineTools", pipelineTools);
                     }
                 });
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping
     public ModelAndView doGet(ModelMap model) {
         return buildModelAndView(
                 getModelViewName(),
@@ -67,14 +72,13 @@ public class PipelinePageController extends AbstractController {
                 new ModelPopulator() {
                     @Override
                     public void populateModel(ModelMap model) {
-                        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "Pipeline Version", getBreadcrumbs(null), propertyContainer);
+                        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "Pipelines", getBreadcrumbs(null), propertyContainer);
                         final ViewModel defaultViewModel = builder.getModel();
                         defaultViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_CONTACT_VIEW);
                         model.addAttribute(ViewModel.MODEL_ATTR_NAME, defaultViewModel);
                         //
-                        PipelineRelease pipelineRelease = pipelineReleaseDAO.read(1L);
-                        Set<PipelineTool> pipelineTools = pipelineRelease.getPipelineTools();
-                        model.addAttribute("pipelineTools", pipelineTools);
+                        List<PipelineRelease> pipelineReleases = pipelineReleaseDAO.retrieveAll();
+                        model.addAttribute("pipelineReleases", pipelineReleases);
                     }
                 });
     }

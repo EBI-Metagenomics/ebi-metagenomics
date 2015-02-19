@@ -45,7 +45,7 @@
         <h3 id="sample_desc">Analysis</h3>
 
         <div class="output_form" id="large">
-            <div class="result_row"><label>Pipeline Version:</label><span><a title="" href="<c:url value="${baseURL}/pipeline/${model.pipelineVersion}"/>">${model.pipelineVersion}</a></span>
+            <div class="result_row"><label>Pipeline Version:</label><span><a title="" href="<c:url value="${baseURL}/pipelines/${model.pipelineVersion}"/>">${model.pipelineVersion}</a></span>
             </div>
         </div>
         <%--END ANALYSIS--%>

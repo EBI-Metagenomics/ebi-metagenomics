@@ -219,12 +219,12 @@ INSERT INTO pipeline_tool (tool_name,description,web_link,version,exe_command,in
 INSERT INTO pipeline_tool (tool_name,description,web_link,version,exe_command,installation_dir) values ('RepeatMasker','A program that screens DNA sequences for interspersed repeats and low complexity DNA sequences.','http://www.repeatmasker.org/','open-3.2.2','./RepeatMasker {0}','/sw/arch/bin/RepeatMasker');
 INSERT INTO pipeline_tool (tool_name,description,web_link,version,exe_command,installation_dir) values ('rRNASelector','A computer program for selecting ribosomal RNA encoding sequences from metagenomic and metatranscriptomic shotgun libraries.','http://www.ezbiocloud.net/sw/rrnaselector','1.0.0','HMMER3.0/hmmsearch --tblout {0} --cpu 4 -E 1.0E-5  {1}/rRNASelector/lib/all.hmm {2} > /dev/null','/ebi/production/interpro/binaries/64_bit_Linux/HMMER3.0/hmmsearch');
 INSERT INTO pipeline_tool (tool_name,description,web_link,version,exe_command,installation_dir) values ('QIIME','An open-source bioinformatics pipeline for performing microbiome analysis from raw DNA sequencing data.','http://qiime.org/','1.5.0','./qiimeWrapper.sh  {1}  {2}','/nfs/seqdb/production/interpro/development/metagenomics/pipeline/tools/qiimeWrapper.sh');
-INSERT INTO pipeline_tool (tool_name,description,web_link,version,exe_command) values ('Biopython','A set of freely available tools for biological computation written in Python by an international team of developers.','www.biopython.org/','1.54','N/A');
+INSERT INTO pipeline_tool (tool_name,description,web_link,version,exe_command) values ('Biopython','A set of freely available tools for biological computation written in Python by an international team of developers.','http://www.biopython.org/','1.54','N/A');
 
 -- For pipeline version 2.0
 INSERT INTO pipeline_tool (tool_name,description,web_link,version,exe_command,installation_dir) values ('rRNASelector','A computer program for selecting ribosomal RNA encoding sequences from metagenomic and metatranscriptomic shotgun libraries.','http://www.ezbiocloud.net/sw/rrnaselector','1.0.1','./pipelineDetectRRNA.sh {1} {2} {3}','/nfs/seqdb/production/interpro/development/metagenomics/pipeline/tools/bin/pipelineDetectRRNA.sh');
 INSERT INTO pipeline_tool (tool_name,description,web_link,version,exe_command,installation_dir) values ('QIIME','An open-source bioinformatics pipeline for performing microbiome analysis from raw DNA sequencing data.','http://qiime.org/','1.9.0','./qiime190Wrapper.sh  {1} {2} {3}','/nfs/seqdb/production/interpro/development/metagenomics/pipeline/tools/bin/qiime190Wrapper.sh');
-INSERT INTO pipeline_tool (tool_name,description,web_link,version,exe_command) values ('Biopython','A set of freely available tools for biological computation written in Python by an international team of developers.','www.biopython.org/','1.65','N/A');
+INSERT INTO pipeline_tool (tool_name,description,web_link,version,exe_command) values ('Biopython','A set of freely available tools for biological computation written in Python by an international team of developers.','http://www.biopython.org/','1.65','N/A');
 INSERT INTO pipeline_tool (tool_name,description,web_link,version,exe_command,installation_dir) values ('InterProScan','A sequence analysis application (nucleotide and protein sequences) that combines different protein signature recognition methods into one resource.','https://code.google.com/p/interproscan/wiki/Introduction','5.9-50.0','./interproscan.sh --appl PfamA,TIGRFAM-10.1,PRINTS,PrositePatterns,Gene3d -goterms -o {1}_out.tsv -i {1}','/nfs/seqdb/production/interpro/development/metagenomics/pipeline/tools/interproscan-5/interproscan-5.9-50.0/');
 
 -- Populate the relation table pipeline_release_tool
@@ -246,5 +246,5 @@ INSERT INTO pipeline_release_tool (pipeline_id,tool_id) values (2,10);
 INSERT INTO pipeline_release_tool (pipeline_id,tool_id) values (2,11);
 INSERT INTO pipeline_release_tool (pipeline_id,tool_id) values (2,12);
 
--- example insert statements for table analysis_run_job
--- INSERT INTO analysis_job (job_operator,result_directory,is_production_run,pipeline_id,analysis_status_id) values ('maxim','/ebi/production/interpro/metagenomics/results/SRS086433_G_FASTQ',1,1,2);
+-- Populate the analysis_job table
+INSERT INTO analysis_job (job_operator,result_directory,is_production_run,run_id,pipeline_id,analysis_status_id,re_run_count) values ('maxim','version_2.0/ERR753478_MERGED_FASTQ',1,3745,2,3,0);

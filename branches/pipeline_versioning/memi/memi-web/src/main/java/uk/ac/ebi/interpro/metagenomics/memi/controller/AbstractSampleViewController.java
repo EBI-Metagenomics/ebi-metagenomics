@@ -32,13 +32,13 @@ import java.util.*;
 /**
  * This class extends {@link SampleViewController}, {@link KronaChartsController} and {@link SampleViewExportController}.
  */
-public class AbstractSampleViewController extends SecuredAbstractController<Sample> {
+public abstract class AbstractSampleViewController extends SecuredAbstractController<Sample> {
 
     private static final Log log = LogFactory.getLog(AbstractSampleViewController.class);
     /**
      * View name of this controller which is used several times.
      */
-    public static final String VIEW_NAME = "sample";
+//    public static final String VIEW_NAME = "sample";
 
     @Resource
     protected SampleDAO sampleDAO;
@@ -62,15 +62,15 @@ public class AbstractSampleViewController extends SecuredAbstractController<Samp
         return sampleDAO;
     }
 
-    protected String getModelViewName() {
-        return VIEW_NAME;
-    }
+//    protected String getModelViewName() {
+//        return VIEW_NAME;
+//    }
 
     protected List<Breadcrumb> getBreadcrumbs(SecureEntity entity) {
         List<Breadcrumb> result = new ArrayList<Breadcrumb>();
         if (entity != null && entity instanceof Sample) {
             result.add(new Breadcrumb("Project: " + ((Sample) entity).getStudy().getStudyName(), "View project " + ((Sample) entity).getStudy().getStudyName(), StudyViewController.VIEW_NAME + '/' + ((Sample) entity).getStudy().getStudyId()));
-            result.add(new Breadcrumb("Sample: " + ((Sample) entity).getSampleName(), "View sample " + ((Sample) entity).getSampleName(), SampleViewController.VIEW_NAME + '/' + ((Sample) entity).getSampleId()));
+            result.add(new Breadcrumb("Sample: " + ((Sample) entity).getSampleName(), "View sample " + ((Sample) entity).getSampleName(), getModelViewName() + '/' + ((Sample) entity).getSampleId()));
         }
         return result;
     }
@@ -101,6 +101,7 @@ public class AbstractSampleViewController extends SecuredAbstractController<Samp
         //in the future it should be possible to represent all different data types (genomic, transcriptomic)
         SampleViewModel.ExperimentType experimentType = SampleViewModel.ExperimentType.GENOMIC;
         final List<EmgSampleAnnotation> sampleAnnotations = (List<EmgSampleAnnotation>) sampleAnnotationDAO.getSampleAnnotations(sample.getId());
+
 
         final ViewModelBuilder<SampleViewModel> builder = new SampleViewModelBuilder(
                 sessionManager,

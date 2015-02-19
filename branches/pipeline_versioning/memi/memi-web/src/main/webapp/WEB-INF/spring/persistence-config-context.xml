@@ -99,4 +99,9 @@
         <property name="dataSource" ref="memiDataSource"/>
     </bean>
 
+    <bean name="runDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.RunDAOImpl">
+        <property name="dataSource" ref="memiDataSource"/>
+        <property name="schemaName" value="EMG"/>
+    </bean>
+
 </beans>

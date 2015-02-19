@@ -127,7 +127,7 @@ public abstract class SecuredAbstractController<T extends SecureEntity> extends 
      * @return Entry not exists model and view.
      */
     private ModelAndView getEntryNotExistMAV(Object objectId) {
-        return getModelAndView(objectId, DefaultController.ENTRY_NOT_FOUND_VIEW_NAME);
+        return getModelAndView(objectId, DefaultController.ACCESSION_NOT_FOUND_VIEW_NAME);
     }
 
     abstract ISampleStudyDAO<T> getDAO();

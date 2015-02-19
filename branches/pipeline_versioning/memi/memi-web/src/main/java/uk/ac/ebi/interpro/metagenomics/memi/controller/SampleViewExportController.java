@@ -34,9 +34,9 @@ public class SampleViewExportController extends AbstractSampleViewController {
     private ExportValueService exportValueService;
 
 
-    @RequestMapping(value = '/' + SampleViewController.VIEW_NAME + "/{sampleId}/export")
+    @RequestMapping("/projects/{projectId}/samples/{sampleId}/runs/{runId}/export")
     public void doHandleSampleViewGetExports(@PathVariable final String sampleId,
-                                             @RequestParam(required = true, value = "runId") final Long runId,
+                                             @PathVariable final String runId,
                                              @RequestParam(required = true, value = "exportValue") final String exportValue,
                                              final HttpServletResponse response,
                                              final HttpServletRequest request) throws IOException {
@@ -48,7 +48,7 @@ public class SampleViewExportController extends AbstractSampleViewController {
         if (sample != null) {
             log.debug("Checking accessibility before streaming Krona result charts...");
             if (isAccessible(sample)) {
-                final EmgFile emgFile = getEmgFile(runId);
+                final EmgFile emgFile = getEmgFile(sample.getId());
                 if (emgFile != null) {
                     DownloadableFileDefinition fileDefinition = exportValueService.findResultFileDefinition(exportValue);
                     if (fileDefinition != null) {
@@ -72,7 +72,7 @@ public class SampleViewExportController extends AbstractSampleViewController {
      * @param response
      * @throws IOException
      */
-    @RequestMapping(value = '/' + SampleViewController.VIEW_NAME + "/{sampleId}/export", method = RequestMethod.POST)
+    @RequestMapping(value = "/projects/{projectId}/samples/{sampleId}/runs/{runId}/export", method = RequestMethod.POST)
     public void doHandleSampleViewPostExports(@PathVariable final String sampleId,
                                               @RequestBody String requestBody,
                                               final HttpServletResponse response) throws IOException {
@@ -161,5 +161,10 @@ public class SampleViewExportController extends AbstractSampleViewController {
                     log.error("Could not close input stream correctly!", e);
                 }
         }
+    }
+
+    @Override
+    protected String getModelViewName() {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 }

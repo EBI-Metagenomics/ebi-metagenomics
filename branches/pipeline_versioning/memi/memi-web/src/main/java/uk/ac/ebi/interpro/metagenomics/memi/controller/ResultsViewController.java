@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.PipelineReleaseDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.RunDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgFile;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.PipelineRelease;
+import uk.ac.ebi.interpro.metagenomics.memi.model.Run;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.services.FileObjectBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
@@ -26,33 +26,39 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 
 /**
- * The controller for analysis overview page.
+ * The controller for the analysis results page.
  *
- * @author Phil Jones, EMBL-EBI, InterPro
- * @author Maxim Scheremetjew
- * @since 1.0-SNAPSHOT
+ * @author Maxim Scheremetjew, EMBL-EBI, InterPro
+ * @since 1.4-SNAPSHOT
  */
 @Controller
-@RequestMapping("/projects/{projectId}/samples/{sampleId}")
-public class SampleViewController extends AbstractSampleViewController {
-    private static final Log log = LogFactory.getLog(SampleViewController.class);
+@RequestMapping("/projects/{projectId}/samples/{sampleId}/runs/{runId}")
+public class ResultsViewController extends AbstractSampleViewController {
+    private static final Log log = LogFactory.getLog(ResultsViewController.class);
 
     protected String getModelViewName() {
-        return "sample";
+        return "results";
     }
 
     @Resource
     private MemiDownloadService downloadService;
 
+    @Resource
+    protected RunDAO runDAO;
+
     /**
      * @param projectId External project identifier (e.g. in ENA, for instance ERP000001)
-     * @param sampleId External sample identifier (e.g. in ENA, for instance ERS580795)
+     * @param sampleId  External sample identifier (e.g. in ENA, for instance ERS580795)
+     * @param runId     External run identifier (e.g. in ENA, for instance ERR000001)
      */
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView doGetSample(@PathVariable final String projectId,
                                     @PathVariable final String sampleId,
+                                    @PathVariable final String runId,
                                     final ModelMap model) throws IOException {
-        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, sampleId, getModelViewName());
+//        Run run = runDAO.readByRunId(runId);
+        Run run = runDAO.readByRunIdDeep(projectId, sampleId, runId);
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, run.getSampleId(), getModelViewName());
     }
 
     private ModelProcessingStrategy<Sample> createNewModelProcessingStrategy() {
@@ -68,7 +74,7 @@ public class SampleViewController extends AbstractSampleViewController {
     /**
      * Request method for the download tab on the sample view page.
      *
-     * @throws IOException
+     * @throws java.io.IOException
      */
     @RequestMapping(value = "/download")
     public ModelAndView ajaxLoadDownloadTab(@PathVariable final String sampleId,
@@ -80,7 +86,7 @@ public class SampleViewController extends AbstractSampleViewController {
     /**
      * Request method for the quality control tab on the sample view page.
      *
-     * @throws IOException
+     * @throws java.io.IOException
      */
     @RequestMapping(value = "/qualityControl")
     public ModelAndView ajaxLoadQualityControlTab(@PathVariable final String sampleId,
@@ -92,7 +98,7 @@ public class SampleViewController extends AbstractSampleViewController {
     /**
      * Request method for the taxonomic analysis tab on the sample view page.
      *
-     * @throws IOException
+     * @throws java.io.IOException
      */
     @RequestMapping(value = "/taxonomic")
     public ModelAndView ajaxLoadTaxonomyTab(@PathVariable final String sampleId,
@@ -104,7 +110,7 @@ public class SampleViewController extends AbstractSampleViewController {
     /**
      * Request method for the functional analysis tab on the sample view page.
      *
-     * @throws IOException
+     * @throws java.io.IOException
      */
     @RequestMapping(value = "/functional")
     public ModelAndView ajaxLoadFunctionalTab(@PathVariable final String sampleId,
@@ -116,7 +122,7 @@ public class SampleViewController extends AbstractSampleViewController {
     /**
      * Request method for the overview tab on the sample view page.
      *
-     * @throws IOException
+     * @throws java.io.IOException
      */
     @RequestMapping(value = "/overview")
     public ModelAndView ajaxLoadOverviewTab(@PathVariable final String sampleId,
@@ -128,7 +134,7 @@ public class SampleViewController extends AbstractSampleViewController {
     /**
      * Request method for the GO bar chart tab on the functional analysis tab.
      *
-     * @throws IOException
+     * @throws java.io.IOException
      */
     @RequestMapping(value = "/goBarChartView")
     public ModelAndView ajaxLoadGoBarChartTab(@PathVariable final String sampleId,
@@ -140,7 +146,7 @@ public class SampleViewController extends AbstractSampleViewController {
     /**
      * Request method for the GO pie chart tab on the functional analysis tab.
      *
-     * @throws IOException
+     * @throws java.io.IOException
      */
     @RequestMapping(value = "/goPieChartView")
     public ModelAndView ajaxLoadGoPieChartTab(@PathVariable final String sampleId,
