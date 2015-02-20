@@ -55,18 +55,20 @@ GRANT SELECT ON PIPELINE_RELEASE_SEQ TO "EMG_READ";
 -- ANALYSIS_JOB table (including create table, CREATE SEQUENCE, GRANT statements and triggers)
 CREATE TABLE analysis_job (
          job_id             NUMBER(10)  PRIMARY KEY,
-         submit_time        TIMESTAMP(0)  DEFAULT CURRENT_TIMESTAMP NOT NULL,
-         complete_time      TIMESTAMP(0),
-         job_operator       VARCHAR2(10)  NOT NULL,
-         result_directory   VARCHAR2(100) NOT NULL,
-         re_run_count       NUMBER(2),
-         is_production_run  NUMBER(1),
-         run_id             NUMBER(19)
-                            CONSTRAINT run_id_fk REFERENCES sample (sample_id),
+         job_operator       VARCHAR2(15)  NOT NULL,
          pipeline_id        NUMBER(4)  NOT NULL
                             CONSTRAINT pipeline_id_fk2 REFERENCES pipeline_release (pipeline_id),
+         submit_time        TIMESTAMP(0)  DEFAULT CURRENT_TIMESTAMP NOT NULL,
+         complete_time      TIMESTAMP(0),
          analysis_status_id NUMBER(2)  NOT NULL
-                            CONSTRAINT analysis_status_fk REFERENCES analysis_status (analysis_status_id)
+                            CONSTRAINT analysis_status_fk REFERENCES analysis_status (analysis_status_id),
+         re_run_count       NUMBER(2) DEFAULT 0,
+         input_file_name    VARCHAR2(50) NOT NULL,
+         result_directory   VARCHAR2(100) NOT NULL,
+         external_run_ids   VARCHAR2(100),
+         sample_id          NUMBER(19)
+                            CONSTRAINT sample_id_fk REFERENCES sample (sample_id),
+         is_production_run  NUMBER(1)
          );
 
 COMMENT ON TABLE analysis_job IS 'Table to track all analysis runs in production.';
