@@ -19,6 +19,8 @@ public interface AnalysisJobDAO {
 
     public List<AnalysisJob> readByRunIdDeep(String externalRunIDs, String analysisStatus);
 
+    public AnalysisJob readByRunIdAndVersionDeep(String externalRunIDs, String releaseVersion, String analysisStatus);
+
 //    public Run readByRunIdDeep(String projectId, String sampleId, String runId);
 
 }

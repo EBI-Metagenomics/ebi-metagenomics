@@ -21,7 +21,7 @@ import java.util.List;
  * @version $Id$
  * @since 1.0-SNAPSHOT
  */
-public class SampleViewModel extends ViewModel {
+public class ResultViewModel extends ViewModel {
 
     private Sample sample;
 
@@ -48,9 +48,7 @@ public class SampleViewModel extends ViewModel {
 
     private AnalysisResult analysisResult;
 
-    private String pipelineVersion;
-
-    public SampleViewModel(Submitter submitter,
+    public ResultViewModel(Submitter submitter,
                            String pageTitle,
                            List<Breadcrumb> breadcrumbs,
                            Sample sample,
@@ -80,11 +78,10 @@ public class SampleViewModel extends ViewModel {
         //
         this.analysisResult = new AnalysisResult(analysisStatus);
         this.analysisResult.setFunctionalAnalysisResult(functionalAnalysisResult);
-        this.pipelineVersion = pipelineVersion;
         this.run = run;
     }
 
-    public SampleViewModel(Submitter submitter,
+    public ResultViewModel(Submitter submitter,
                            String pageTitle,
                            List<Breadcrumb> breadcrumbs,
                            Sample sample,
@@ -229,13 +226,5 @@ public class SampleViewModel extends ViewModel {
         public String toString() {
             return super.toString().toLowerCase();
         }
-    }
-
-    public String getPipelineVersion() {
-        return pipelineVersion;
-    }
-
-    public void setPipelineVersion(String pipelineVersion) {
-        this.pipelineVersion = pipelineVersion;
     }
 }

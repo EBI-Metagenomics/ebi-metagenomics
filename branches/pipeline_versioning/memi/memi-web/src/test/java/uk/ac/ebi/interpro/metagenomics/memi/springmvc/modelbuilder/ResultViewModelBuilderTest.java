@@ -5,13 +5,13 @@ import org.junit.Test;
 import static junit.framework.Assert.*;
 
 /**
- * JUnit test for {@link SampleViewModelBuilder}.
+ * JUnit test for {@link ResultViewModelBuilder}.
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @version $Id$
  * @since 1.0-SNAPSHOT
  */
-public class SampleViewModelBuilderTest {
+public class ResultViewModelBuilderTest {
 
     /**
      * Tests if replaceAll method works as expected.
@@ -20,6 +20,6 @@ public class SampleViewModelBuilderTest {
     public void testEncodeSingleQuoteMarks() {
         String testStr = "2'-3'-beta-blah";
         String expected = "2\\\'-3\\\'-beta-blah";
-        assertEquals("Result string differs from the expected one!", expected, SampleViewModelBuilder.encodeSingleQuoteMarks(testStr));
+        assertEquals("Result string differs from the expected one!", expected, ResultViewModelBuilder.encodeSingleQuoteMarks(testStr));
     }
 }

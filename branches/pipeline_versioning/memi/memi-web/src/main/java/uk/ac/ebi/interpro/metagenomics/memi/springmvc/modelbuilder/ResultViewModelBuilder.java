@@ -5,7 +5,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.core.comparators.PublicationComparator;
-import uk.ac.ebi.interpro.metagenomics.memi.model.EmgFile;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgSampleAnnotation;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Run;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
@@ -26,7 +25,7 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- * Model builder class for {@link SampleViewModel}.
+ * Model builder class for {@link uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ResultViewModel}.
  * <p/>
  * See {@link uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder} for more information of how to use.
  *
@@ -34,9 +33,9 @@ import java.util.*;
  * @version $Id$
  * @since 1.0-SNAPSHOT
  */
-public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewModel> {
+public class ResultViewModelBuilder extends AbstractViewModelBuilder<ResultViewModel> {
 
-    private final static Log log = LogFactory.getLog(SampleViewModelBuilder.class);
+    private final static Log log = LogFactory.getLog(ResultViewModelBuilder.class);
 
     private String pageTitle;
 
@@ -52,7 +51,7 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
 
     private AnalysisJob analysisJob;
 
-    private SampleViewModel.ExperimentType experimentType;
+    private ResultViewModel.ExperimentType experimentType;
 
     private DownloadSection downloadSection;
 
@@ -69,7 +68,7 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
     private List<ResultFileDefinitionImpl> taxonomicAnalysisFileDefinitions;
 
 
-    public SampleViewModelBuilder(SessionManager sessionMgr,
+    public ResultViewModelBuilder(SessionManager sessionMgr,
                                   Sample sample,
                                   Run run,
                                   String pageTitle,
@@ -77,7 +76,7 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
                                   AnalysisJob analysisJob,
                                   List<String> archivedSequences,
                                   MemiPropertyContainer propertyContainer,
-                                  SampleViewModel.ExperimentType experimentType,
+                                  ResultViewModel.ExperimentType experimentType,
                                   final DownloadSection downloadSection,
                                   List<EmgSampleAnnotation> sampleAnnotations,
                                   List<ResultFileDefinitionImpl> qualityControlFileDefinitions,
@@ -103,8 +102,8 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
     }
 
     @Override
-    public SampleViewModel getModel() {
-        log.info("Building instance of " + SampleViewModel.class + "...");
+    public ResultViewModel getModel() {
+        log.info("Building instance of " + ResultViewModel.class + "...");
         FunctionalAnalysisResult functionalAnalysisResult = getListOfInterProEntries();
         final boolean isHostAssociated = isHostAssociated();
         final Submitter submitter = getSessionSubmitter(sessionMgr);
@@ -118,7 +117,7 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
         if (analysisJob != null) {
             //Add GO results
             functionalAnalysisResult = loadGODataFromCSV(functionalAnalysisResult);
-            final SampleViewModel sampleViewModel = new SampleViewModel(submitter,
+            final ResultViewModel resultViewModel = new ResultViewModel(submitter,
                     pageTitle,
                     breadcrumbs,
                     sample,
@@ -136,10 +135,10 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
                     analysisStatus,
                     run.getLatestAnalysisJobPipelineVersion());
             //Load and set taxonomy result data
-            sampleViewModel.setTaxonomyAnalysisResult(loadTaxonomyDataFromCSV());
-            return sampleViewModel;
+            resultViewModel.setTaxonomyAnalysisResult(loadTaxonomyDataFromCSV());
+            return resultViewModel;
         } else {
-            return new SampleViewModel(submitter,
+            return new ResultViewModel(submitter,
                     pageTitle,
                     breadcrumbs,
                     sample,

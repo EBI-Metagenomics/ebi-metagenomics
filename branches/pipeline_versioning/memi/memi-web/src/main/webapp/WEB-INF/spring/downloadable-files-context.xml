@@ -28,6 +28,10 @@
         <entry key="OTUS_BIOM_FORMAT_FILE" value-ref="otuBiomFile"/>
         <entry key="TAX_ANALYSIS_TSV_FILE" value-ref="otuTsvFile"/>
         <entry key="TAX_ANALYSIS_TREE_FILE" value-ref="newickFile"/>
+        <entry key="OTU_TABLE_FILE" value-ref="otuTableFile"/>
+        <entry key="HDF5_BIOM_FILE" value-ref="hdf5BiomFile"/>
+        <entry key="JSON_BIOM_FILE" value-ref="JSONBiomFile"/>
+        <entry key="PRUNED_TREE_FILE" value-ref="prunedTreeFile"/>
 
         <!--functional data-->
         <entry key="INTERPROSCAN_RESULT_FILE" value-ref="interProScanResultFile"/>

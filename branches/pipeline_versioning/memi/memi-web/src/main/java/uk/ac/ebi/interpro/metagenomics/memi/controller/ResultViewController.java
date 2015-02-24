@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.RunDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgFile;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Run;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob;
 import uk.ac.ebi.interpro.metagenomics.memi.services.FileObjectBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.DownloadableFileDefinition;
@@ -41,9 +41,6 @@ public class ResultViewController extends AbstractResultViewController {
     @Resource
     private MemiDownloadService downloadService;
 
-    @Resource
-    protected RunDAO runDAO;
-
     /**
      * @param projectId External project identifier (e.g. in ENA, for instance ERP000001)
      * @param sampleId  External sample identifier (e.g. in ENA, for instance ERS580795)
@@ -65,22 +62,6 @@ public class ResultViewController extends AbstractResultViewController {
                 populateModel(model, run);
             }
         };
-    }
-
-    private Run getSecuredEntity(final String projectId,
-                                 final String sampleId,
-                                 final String runId,
-                                 String version) {
-        if (version == null) {
-            version = runDAO.readLatestPipelineVersionByRunId(runId, "completed");
-        }
-        return runDAO.readByRunIdDeep(projectId, sampleId, runId, version);
-    }
-
-    private Run getSecuredEntity(final String projectId,
-                                 final String sampleId,
-                                 final String runId) {
-        return getSecuredEntity(projectId, sampleId, runId, null);
     }
 
 
@@ -131,12 +112,13 @@ public class ResultViewController extends AbstractResultViewController {
      *
      * @throws java.io.IOException
      */
-    @RequestMapping(value = "/functional")
+    @RequestMapping(value = MGPortalURLCollection.PROJECT_SAMPLE_RUN_RESULTS_FUNCTIONAL)
     public ModelAndView ajaxLoadFunctionalTab(@PathVariable final String projectId,
                                               @PathVariable final String sampleId,
                                               @PathVariable final String runId,
+                                              @PathVariable final String releaseVersion,
                                               final ModelMap model) throws IOException {
-        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, getSecuredEntity(projectId, sampleId, runId), "tabs/mainNavigation/functional");
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, getSecuredEntity(projectId, sampleId, runId, releaseVersion), "tabs/mainNavigation/functional");
     }
 
     /**
@@ -158,12 +140,13 @@ public class ResultViewController extends AbstractResultViewController {
      *
      * @throws java.io.IOException
      */
-    @RequestMapping(value = "/goBarChartView")
+    @RequestMapping(value = MGPortalURLCollection.PROJECT_SAMPLE_RUN_RESULTS_FUNCTIONAL_GO_BAR_CHART)
     public ModelAndView ajaxLoadGoBarChartTab(@PathVariable final String projectId,
                                               @PathVariable final String sampleId,
                                               @PathVariable final String runId,
+                                              @PathVariable final String releaseVersion,
                                               final ModelMap model) throws IOException {
-        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, getSecuredEntity(projectId, sampleId, runId), "tabs/functionalAnalysis/goBarChartView");
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, getSecuredEntity(projectId, sampleId, runId, releaseVersion), "tabs/functionalAnalysis/goBarChartView");
     }
 
     /**
@@ -171,44 +154,49 @@ public class ResultViewController extends AbstractResultViewController {
      *
      * @throws java.io.IOException
      */
-    @RequestMapping(value = "/goPieChartView")
+    @RequestMapping(value = MGPortalURLCollection.PROJECT_SAMPLE_RUN_RESULTS_FUNCTIONAL_GO_PIE_CHART)
     public ModelAndView ajaxLoadGoPieChartTab(@PathVariable final String projectId,
                                               @PathVariable final String sampleId,
                                               @PathVariable final String runId,
+                                              @PathVariable final String releaseVersion,
                                               final ModelMap model) throws IOException {
-        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, getSecuredEntity(projectId, sampleId, runId), "tabs/functionalAnalysis/goPieChartView");
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, getSecuredEntity(projectId, sampleId, runId, releaseVersion), "tabs/functionalAnalysis/goPieChartView");
     }
 
-    @RequestMapping(value = "/kronaChartView")
+    @RequestMapping(value = MGPortalURLCollection.PROJECT_SAMPLE_RUN_RESULTS_TAXONOMIC_KRONA_VIEW)
     public ModelAndView ajaxLoadKronaChartView(@PathVariable final String projectId,
                                                @PathVariable final String sampleId,
                                                @PathVariable final String runId,
+                                               @PathVariable final String releaseVersion,
                                                final ModelMap model) throws IOException {
-        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, getSecuredEntity(projectId, sampleId, runId), "tabs/taxonomicAnalysis/kronaChartView");
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, getSecuredEntity(projectId, sampleId, runId, releaseVersion), "tabs/taxonomicAnalysis/kronaChartView");
     }
 
-    @RequestMapping(value = "/taxPieChartView")
+    @RequestMapping(value = MGPortalURLCollection.PROJECT_SAMPLE_RUN_RESULTS_TAXONOMIC_PIE_CHART)
     public ModelAndView ajaxLoadTaxPieChartView(@PathVariable final String projectId,
                                                 @PathVariable final String sampleId,
                                                 @PathVariable final String runId,
+                                                @PathVariable final String releaseVersion,
                                                 final ModelMap model) throws IOException {
-        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, getSecuredEntity(projectId, sampleId, runId), "tabs/taxonomicAnalysis/taxPieChartView");
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, getSecuredEntity(projectId, sampleId, runId, releaseVersion), "tabs/taxonomicAnalysis/taxPieChartView");
     }
 
-    @RequestMapping(value = "/taxBarChartView")
+    @RequestMapping(value = MGPortalURLCollection.PROJECT_SAMPLE_RUN_RESULTS_TAXONOMIC_BAR_CHART)
     public ModelAndView ajaxLoadTaxBarChartView(@PathVariable final String projectId,
                                                 @PathVariable final String sampleId,
                                                 @PathVariable final String runId,
+                                                @PathVariable final String releaseVersion,
                                                 final ModelMap model) throws IOException {
-        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, getSecuredEntity(projectId, sampleId, runId), "tabs/taxonomicAnalysis/taxBarChartView");
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, getSecuredEntity(projectId, sampleId, runId, releaseVersion), "tabs/taxonomicAnalysis/taxBarChartView");
     }
 
-    @RequestMapping(value = "/taxColumnChartView")
+    @RequestMapping(value = MGPortalURLCollection.PROJECT_SAMPLE_RUN_RESULTS_TAXONOMIC_COLUMN_CHART)
     public ModelAndView ajaxLoadTaxColumnChartView(@PathVariable final String projectId,
                                                    @PathVariable final String sampleId,
                                                    @PathVariable final String runId,
+                                                   @PathVariable final String releaseVersion,
                                                    final ModelMap model) throws IOException {
-        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, getSecuredEntity(projectId, sampleId, runId), "tabs/taxonomicAnalysis/taxColumnChartView");
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, getSecuredEntity(projectId, sampleId, runId, releaseVersion), "tabs/taxonomicAnalysis/taxColumnChartView");
     }
 
     @RequestMapping(value = "/accessDenied")
@@ -216,58 +204,35 @@ public class ResultViewController extends AbstractResultViewController {
         return buildAccessDeniedModelAndView(sampleId);
     }
 
-    @RequestMapping(value = "/doExportGOSlimFile", method = RequestMethod.GET)
+    @RequestMapping(value = MGPortalURLCollection.PROJECT_SAMPLE_RUN_RESULTS_FILE_EXPORT_GO_SLIM)
     public ModelAndView doExportGOSlimFile(@PathVariable final String projectId,
                                            @PathVariable final String sampleId,
                                            @PathVariable final String runId,
+                                           @PathVariable final String releaseVersion,
                                            final HttpServletResponse response, final HttpServletRequest request) {
         DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(FileDefinitionId.GO_SLIM_FILE.name());
-        return handleExport(getSecuredEntity(projectId, sampleId, runId), response, request, fileDefinition);
+        return handleExport(getSecuredEntity(projectId, sampleId, runId, releaseVersion), releaseVersion, response, request, fileDefinition);
     }
 
-    @RequestMapping(value = "/doExportGOFile", method = RequestMethod.GET)
+    @RequestMapping(value = MGPortalURLCollection.PROJECT_SAMPLE_RUN_RESULTS_FILE_EXPORT_GO)
     public ModelAndView doExportGOFile(@PathVariable final String projectId,
                                        @PathVariable final String sampleId,
                                        @PathVariable final String runId,
+                                       @PathVariable final String releaseVersion,
                                        final HttpServletResponse response, final HttpServletRequest request) {
         DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(FileDefinitionId.GO_COMPLETE_FILE.name());
-        return handleExport(getSecuredEntity(projectId, sampleId, runId), response, request, fileDefinition);
+        return handleExport(getSecuredEntity(projectId, sampleId, runId, releaseVersion), releaseVersion, response, request, fileDefinition);
     }
 
-    @RequestMapping(value = "/doExportMaskedFASTAFile", method = RequestMethod.GET)
-    public ModelAndView doExportMaskedFASTAFile(@PathVariable final String projectId,
-                                                @PathVariable final String sampleId,
-                                                @PathVariable final String runId,
-                                                final HttpServletResponse response, final HttpServletRequest request) {
-        DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(FileDefinitionId.MASKED_FASTA.name());
-        return handleExport(getSecuredEntity(projectId, sampleId, runId), response, request, fileDefinition);
-    }
 
-    @RequestMapping(value = "/doExportCDSFile", method = RequestMethod.GET)
-    public ModelAndView doExportCDSFile(@PathVariable final String projectId,
-                                        @PathVariable final String sampleId,
-                                        @PathVariable final String runId,
-                                        final HttpServletResponse response, final HttpServletRequest request) {
-        DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(FileDefinitionId.PREDICTED_CDS_FILE.name());
-        return handleExport(getSecuredEntity(projectId, sampleId, runId), response, request, fileDefinition);
-    }
-
-    @RequestMapping(value = "/doExportReadsWithCDSFile", method = RequestMethod.GET)
-    public ModelAndView doExportReadsWithCDSFile(@PathVariable final String projectId,
-                                                 @PathVariable final String sampleId,
-                                                 @PathVariable final String runId,
-                                                 final HttpServletResponse response, final HttpServletRequest request) {
-        DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(FileDefinitionId.READS_WITH_PREDICTED_CDS_FILE.name());
-        return handleExport(getSecuredEntity(projectId, sampleId, runId), response, request, fileDefinition);
-    }
-
-    @RequestMapping(value = "/doExportI5TSVFile", method = RequestMethod.GET)
+    @RequestMapping(value = MGPortalURLCollection.PROJECT_SAMPLE_RUN_RESULTS_FILE_EXPORT_I5_TSV)
     public ModelAndView doExportI5File(@PathVariable final String projectId,
                                        @PathVariable final String sampleId,
                                        @PathVariable final String runId,
+                                       @PathVariable final String releaseVersion,
                                        final HttpServletResponse response, final HttpServletRequest request) {
         DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(FileDefinitionId.INTERPROSCAN_RESULT_FILE.name());
-        return handleExport(getSecuredEntity(projectId, sampleId, runId), response, request, fileDefinition);
+        return handleExport(getSecuredEntity(projectId, sampleId, runId, releaseVersion), releaseVersion, response, request, fileDefinition);
     }
 
 //    @RequestMapping(value = "/doExportIPRFile", method = RequestMethod.GET)
@@ -280,9 +245,10 @@ public class ResultViewController extends AbstractResultViewController {
     public ModelAndView doExportIPRhitsFile(@PathVariable final String projectId,
                                             @PathVariable final String sampleId,
                                             @PathVariable final String runId,
+                                            @PathVariable final String releaseVersion,
                                             final HttpServletResponse response, final HttpServletRequest request) {
         DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(FileDefinitionId.PREDICTED_CDS_WITH_INTERPRO_MATCHES_FILE.name());
-        return handleExport(getSecuredEntity(projectId, sampleId, runId), response, request, fileDefinition);
+        return handleExport(getSecuredEntity(projectId, sampleId, runId, releaseVersion), releaseVersion, response, request, fileDefinition);
     }
 
     /**
@@ -290,18 +256,19 @@ public class ResultViewController extends AbstractResultViewController {
      * @param request
      * @return
      */
-    private ModelAndView handleExport(final Run run, final HttpServletResponse response,
+    private ModelAndView handleExport(final Run run,
+                                      final String releaseVersion,
+                                      final HttpServletResponse response,
                                       final HttpServletRequest request, final DownloadableFileDefinition fileDefinition) {
         log.info("Checking if sample is accessible...");
         return checkAccessAndBuildModel(new ModelProcessingStrategy<Run>() {
             @Override
             public void processModel(ModelMap model, Run run) {
                 log.info("Open download dialog...");
-                //TODO: Implement
-                final EmgFile emgFile = getEmgFile(run.getSampleId());
-                if (emgFile != null) {
-                    File fileObject = FileObjectBuilder.createFileObject(emgFile, propertyContainer, fileDefinition);
-                    openDownloadDialog(response, request, emgFile, fileDefinition.getDownloadName(), fileObject);
+                AnalysisJob analysisJob = analysisJobDAO.readByRunIdAndVersionDeep(run.getExternalRunId(), releaseVersion, "completed");
+                if (analysisJob != null) {
+                    File fileObject = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, fileDefinition);
+                    openDownloadDialog(response, request, analysisJob, fileDefinition.getDownloadName(), fileObject);
                 }
             }
         }, null, run, getModelViewName());

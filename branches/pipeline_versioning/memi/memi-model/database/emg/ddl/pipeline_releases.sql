@@ -249,5 +249,5 @@ INSERT INTO pipeline_release_tool (pipeline_id,tool_id) values (2,11);
 INSERT INTO pipeline_release_tool (pipeline_id,tool_id) values (2,12);
 
 -- Populate the analysis_job table
-INSERT INTO analysis_job (job_operator,input_file_name,result_directory,is_production_run,sample_id,external_run_ids,pipeline_id,analysis_status_id,re_run_count) values ('maxim','ERR753478_merged.fastq','ERR753478_MERGED_FASTQ',1,1487,'ERR525601',1,3,0);
-INSERT INTO analysis_job (job_operator,input_file_name,result_directory,is_production_run,sample_id,external_run_ids,pipeline_id,analysis_status_id,re_run_count) values ('maxim','ERR753478_merged.fastq','version_2.0/ERR753478_MERGED_FASTQ',1,1487,'ERR525601',2,3,0);
+INSERT INTO analysis_job (job_operator,input_file_name,result_directory,is_production_run,sample_id,external_run_ids,pipeline_id,analysis_status_id,re_run_count,complete_time) values ('maxim','ERR753478_merged.fastq','ERR753478_MERGED_FASTQ',1,1487,'ERR525601',1,3,0,to_date('20150315','YYYYMMDD'));
+INSERT INTO analysis_job (job_operator,input_file_name,result_directory,is_production_run,sample_id,external_run_ids,pipeline_id,analysis_status_id,re_run_count,complete_time) values ('maxim','ERR753478_merged.fastq','version_2.0/ERR753478_MERGED_FASTQ',1,1487,'ERR525601',2,3,0,to_date('20150315','YYYYMMDD'));

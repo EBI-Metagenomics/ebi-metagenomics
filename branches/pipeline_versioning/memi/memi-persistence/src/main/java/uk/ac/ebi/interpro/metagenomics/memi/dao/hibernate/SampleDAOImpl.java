@@ -63,7 +63,6 @@ public class SampleDAOImpl implements SampleDAO {
         return null;
     }
 
-    @Transactional(readOnly = true)
     public Sample readByStringId(String sampleId) {
         Session session = sessionFactory.getCurrentSession();
         if (session != null) {

@@ -6,12 +6,11 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.interpro.metagenomics.memi.core.tools.StreamCopyUtil;
-import uk.ac.ebi.interpro.metagenomics.memi.model.EmgFile;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
+import uk.ac.ebi.interpro.metagenomics.memi.model.Run;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob;
 import uk.ac.ebi.interpro.metagenomics.memi.services.ExportValueService;
 import uk.ac.ebi.interpro.metagenomics.memi.services.FileObjectBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.DownloadableFileDefinition;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.FileDefinitionId;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
@@ -27,42 +26,48 @@ import java.util.Locale;
  * @since 1.0-SNAPSHOT
  */
 @Controller
-public class SampleViewExportController extends AbstractSampleViewController {
-    private static final Log log = LogFactory.getLog(SampleViewExportController.class);
+public class ResultViewExportController extends AbstractResultViewController {
+    private static final Log log = LogFactory.getLog(ResultViewExportController.class);
 
     @Resource
     private ExportValueService exportValueService;
 
 
-    @RequestMapping("/projects/{projectId}/samples/{sampleId}/runs/{runId}/export")
-    public void doHandleSampleViewGetExports(@PathVariable final String sampleId,
-                                             @PathVariable final String runId,
-                                             @RequestParam(required = true, value = "exportValue") final String exportValue,
-                                             final HttpServletResponse response,
-                                             final HttpServletRequest request) throws IOException {
+    @RequestMapping(value = {
+            MGPortalURLCollection.PROJECT_SAMPLE_RUN_RESULTS_TAXONOMY_EXPORT,
+            MGPortalURLCollection.PROJECT_SAMPLE_RUN_RESULTS_SEQUENCES_EXPORT
+    })
+    public void doHandleTaxonomyExports(@PathVariable final String projectId,
+                                        @PathVariable final String sampleId,
+                                        @PathVariable final String runId,
+                                        @PathVariable final String releaseVersion,
+                                        @RequestParam(required = true, value = "exportValue") final String exportValue,
+                                        final HttpServletResponse response,
+                                        final HttpServletRequest request) throws IOException {
         response.setContentType("text/html;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_OK);
         response.setLocale(Locale.ENGLISH);
 
-        Sample sample = sampleDAO.readByStringId(sampleId);
-        if (sample != null) {
-            log.debug("Checking accessibility before streaming Krona result charts...");
-            if (isAccessible(sample)) {
-                final EmgFile emgFile = getEmgFile(sample.getId());
-                if (emgFile != null) {
+        Run run = getSecuredEntity(projectId, sampleId, runId, releaseVersion);
+
+        if (run != null) {
+            if (isAccessible(run)) {
+                AnalysisJob analysisJob = analysisJobDAO.readByRunIdAndVersionDeep(run.getExternalRunId(), releaseVersion, "completed");
+                if (analysisJob != null) {
                     DownloadableFileDefinition fileDefinition = exportValueService.findResultFileDefinition(exportValue);
                     if (fileDefinition != null) {
-                        File fileObject = FileObjectBuilder.createFileObject(emgFile, propertyContainer, fileDefinition);
-                        openDownloadDialog(response, request, emgFile, fileDefinition.getDownloadName(), fileObject);
+                        File fileObject = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, fileDefinition);
+                        openDownloadDialog(response, request, analysisJob, fileDefinition.getDownloadName(), fileObject);
                     }
+                } else {//analysis job is NULL
+                    response.setStatus(HttpServletResponse.SC_NO_CONTENT);
                 }
             } else {//access denied
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 response.sendRedirect("/metagenomics/sample/" + sampleId + "/accessDenied");
             }
-        } else {//sample not found
-            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-            response.sendRedirect("/metagenomics/sample/" + sampleId + "/accessDenied");
+        } else {//run is NULL
+            response.setStatus(HttpServletResponse.SC_NO_CONTENT);
         }
     }
 
@@ -73,13 +78,16 @@ public class SampleViewExportController extends AbstractSampleViewController {
      * @throws IOException
      */
     @RequestMapping(value = "/projects/{projectId}/samples/{sampleId}/runs/{runId}/export", method = RequestMethod.POST)
-    public void doHandleSampleViewPostExports(@PathVariable final String sampleId,
+    public void doHandleSampleViewPostExports(@PathVariable final String projectId,
+                                              @PathVariable final String sampleId,
+                                              @PathVariable final String runId,
+                                              @PathVariable final String releaseVersion,
                                               @RequestBody String requestBody,
                                               final HttpServletResponse response) throws IOException {
-        Sample sample = sampleDAO.readByStringId(sampleId);
-        if (sample != null) {
+        Run run = getSecuredEntity(projectId, sampleId, runId, releaseVersion);
+        if (run != null) {
             log.debug("Checking accessibility before streaming SVG data...");
-            if (isAccessible(sample)) {
+            if (isAccessible(run)) {
                 BufferedReader reader = new BufferedReader(new StringReader(requestBody));
                 //First of all get the first line from the request body and determine the file type (SVG or PNG)
                 String line = reader.readLine();
@@ -104,7 +112,7 @@ public class SampleViewExportController extends AbstractSampleViewController {
                         }
                     }
                     //Set HTTP response header attributes
-                    response.setHeader("Content-Disposition", "attachment; filename=\"" + sample.getSampleId() + "_" + fileName + "\"");
+                    response.setHeader("Content-Disposition", "attachment; filename=\"" + run.getExternalSampleId() + "_" + fileName + "\"");
                     response.setHeader("Accept-Ranges", "bytes");
                     response.setBufferSize(2048000);
                     response.setStatus(HttpServletResponse.SC_OK);

@@ -5,7 +5,7 @@
     <c:when test="${not empty model.sample}">
 
         <div class="title_tab">
-            <span class="subtitle">Sample <span>(${model.sample.sampleId})</span><span style="float: right;" class="subtitle">Pipeline Version: ${model.pipelineVersion}</span></span>
+            <span class="subtitle">Sample <span>(${model.sample.sampleId})</span><span style="float: right;" class="subtitle">Pipeline Version: ${model.analysisJob.pipelineRelease.releaseVersion}</span></span>
 
             <h2 class="fl_uppercase_title">${model.sample.sampleName}</h2>
         </div>
@@ -22,22 +22,22 @@
                         <%--<a title="Overview"--%>
                         <%--href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/overview?runId=${model.sample.id}"/>"><span>Overview</span></a>--%>
                     <a title="Overview"
-                       href="<c:url value="${baseURL}/projects/${model.run.externalProjectId}/samples/${model.run.externalSampleId}/runs/${model.run.externalRunId}/results/overview/versions/${model.run.latestAnalysisJobPipelineVersion}"/>"><span>Overview</span></a>
+                       href="<c:url value="${baseURL}/projects/${model.run.externalProjectId}/samples/${model.run.externalSampleId}/runs/${model.run.externalRunId}/results/overview/versions/${model.analysisJob.pipelineRelease.releaseVersion}"/>"><span>Overview</span></a>
                 </li>
                 <li>
                     <a title="Quality-Control"
-                       href="<c:url value="${baseURL}/projects/${model.run.externalProjectId}/samples/${model.run.externalSampleId}/runs/${model.run.externalRunId}/results/qualityControl/versions/${model.run.latestAnalysisJobPipelineVersion}"/>"><span>Quality control</span></a>
+                       href="<c:url value="${baseURL}/projects/${model.run.externalProjectId}/samples/${model.run.externalSampleId}/runs/${model.run.externalRunId}/results/qualityControl/versions/${model.analysisJob.pipelineRelease.releaseVersion}"/>"><span>Quality control</span></a>
                 </li>
                 <li><a title="Taxonomy-Analysis"
-                       href="<c:url value="${baseURL}/projects/${model.run.externalProjectId}/samples/${model.run.externalSampleId}/runs/${model.run.externalRunId}/results/taxonomic/versions/${model.run.latestAnalysisJobPipelineVersion}"/>"><span>Taxonomy analysis</span></a>
+                       href="<c:url value="${baseURL}/projects/${model.run.externalProjectId}/samples/${model.run.externalSampleId}/runs/${model.run.externalRunId}/results/taxonomic/versions/${model.analysisJob.pipelineRelease.releaseVersion}"/>"><span>Taxonomy analysis</span></a>
                 </li>
                 <li>
                     <a title="Functional-Analysis"
-                       href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/functional?runId=${model.sample.id}"/>"><span>Functional analysis</span></a>
+                       href="<c:url value="${baseURL}/projects/${model.run.externalProjectId}/samples/${model.run.externalSampleId}/runs/${model.run.externalRunId}/results/functional/versions/${model.analysisJob.pipelineRelease.releaseVersion}"/>"><span>Functional analysis</span></a>
                 </li>
                 <li>
                     <a title="Download"
-                       href="<c:url value="${baseURL}/projects/${model.run.externalProjectId}/samples/${model.run.externalSampleId}/runs/${model.run.externalRunId}/results/download/versions/${model.run.latestAnalysisJobPipelineVersion}"/>"><span>Download</span></a>
+                       href="<c:url value="${baseURL}/projects/${model.run.externalProjectId}/samples/${model.run.externalSampleId}/runs/${model.run.externalRunId}/results/download/versions/${model.analysisJob.pipelineRelease.releaseVersion}"/>"><span>Download</span></a>
                 </li>
                     <%--<li><a href="#fragment-experimental"><span>Experimental factor</span></a></li>--%>
             </ul>

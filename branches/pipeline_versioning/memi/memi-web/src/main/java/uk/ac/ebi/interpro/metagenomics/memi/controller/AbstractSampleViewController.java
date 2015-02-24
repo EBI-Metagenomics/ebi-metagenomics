@@ -7,9 +7,7 @@ import org.springframework.ui.ModelMap;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.ISecureEntityDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.temp.SampleAnnotationDAO;
-import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgFile;
-import uk.ac.ebi.interpro.metagenomics.memi.model.EmgSampleAnnotation;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
@@ -17,12 +15,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.services.FileExistenceChecker;
 import uk.ac.ebi.interpro.metagenomics.memi.services.FileObjectBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.SampleViewModel;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.*;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.SampleViewModelBuilder;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder;
-import uk.ac.ebi.interpro.metagenomics.memi.core.tools.MemiTools;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -31,7 +24,7 @@ import java.io.File;
 import java.util.*;
 
 /**
- * This class extends {@link SampleViewController}, {@link KronaChartsController} and {@link SampleViewExportController}.
+ * This class extends {@link SampleViewController}, {@link KronaChartsController} and {@link ResultViewExportController}.
  */
 public abstract class AbstractSampleViewController extends SecuredAbstractController<Sample> {
 
@@ -100,11 +93,11 @@ public abstract class AbstractSampleViewController extends SecuredAbstractContro
 //        EmgFile emgFile = getEmgFile(sample.getId());
 //        //TODO: For the moment the system only allows to represent one file on the analysis page, but
 //        //in the future it should be possible to represent all different data types (genomic, transcriptomic)
-//        SampleViewModel.ExperimentType experimentType = SampleViewModel.ExperimentType.GENOMIC;
+//        ResultViewModel.ExperimentType experimentType = ResultViewModel.ExperimentType.GENOMIC;
 //        final List<EmgSampleAnnotation> sampleAnnotations = (List<EmgSampleAnnotation>) sampleAnnotationDAO.getSampleAnnotations(sample.getId());
 //
 //
-//        final ViewModelBuilder<SampleViewModel> builder = new SampleViewModelBuilder(
+//        final ViewModelBuilder<ResultViewModel> builder = new ResultViewModelBuilder(
 //                sessionManager,
 //                sample,
 //                pageTitle,
@@ -118,7 +111,7 @@ public abstract class AbstractSampleViewController extends SecuredAbstractContro
 //                qualityControlFileDefinitions,
 //                functionalAnalysisFileDefinitions,
 //                taxonomicAnalysisFileDefinitions);
-//        final SampleViewModel sampleModel = builder.getModel();
+//        final ResultViewModel sampleModel = builder.getModel();
 //        //End
 //
 //        sampleModel.changeToHighlightedClass(ViewModel.TAB_CLASS_SAMPLES_VIEW);

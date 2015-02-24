@@ -16,7 +16,11 @@ public class ExportValueService {
     @Resource
     protected Map<String, DownloadableFileDefinition> fileDefinitionsMap;
 
-    private final String[] exportRequestParamValues = new String[]{"biom", "taxa", "tree", "5SrRNA", "16SrRNA", "23SrRNA", "readsWithMatches", "readsWithoutMatches", "orfWithoutAnnotation", "cdsWithoutAnnotation"};
+    private final String[] exportRequestParamValues = new String[]{"biom",
+            "taxa", "tree", "5SrRNA", "16SrRNA", "23SrRNA", "readsWithMatches",
+            "readsWithoutMatches", "orfWithoutAnnotation", "cdsWithoutAnnotation", "otuTable",
+            "hdf5Biom", "JSONBiom", "prunedTree", "maskedReads", "readsWithPredictedCDS",
+            "predictedCDS"};
 
     public DownloadableFileDefinition findResultFileDefinition(final String exportValue) {
         DownloadableFileDefinition fileDefinition = null;
@@ -48,6 +52,27 @@ public class ExportValueService {
         }//
         else if (exportValue.equalsIgnoreCase(this.exportRequestParamValues[9])) {
             fileDefinition = fileDefinitionsMap.get(FileDefinitionId.PREDICTED_CDS_WITHOUT_ANNOTATION_FILE.name());
+        }//
+        else if (exportValue.equalsIgnoreCase(this.exportRequestParamValues[10])) {
+            fileDefinition = fileDefinitionsMap.get(FileDefinitionId.OTU_TABLE_FILE.name());
+        }//
+        else if (exportValue.equalsIgnoreCase(this.exportRequestParamValues[11])) {
+            fileDefinition = fileDefinitionsMap.get(FileDefinitionId.HDF5_BIOM_FILE.name());
+        }//
+        else if (exportValue.equalsIgnoreCase(this.exportRequestParamValues[12])) {
+            fileDefinition = fileDefinitionsMap.get(FileDefinitionId.JSON_BIOM_FILE.name());
+        }//
+        else if (exportValue.equalsIgnoreCase(this.exportRequestParamValues[13])) {
+            fileDefinition = fileDefinitionsMap.get(FileDefinitionId.PRUNED_TREE_FILE.name());
+        }//
+        else if (exportValue.equalsIgnoreCase(this.exportRequestParamValues[14])) {
+            fileDefinition = fileDefinitionsMap.get(FileDefinitionId.MASKED_FASTA.name());
+        }//
+        else if (exportValue.equalsIgnoreCase(this.exportRequestParamValues[15])) {
+            fileDefinition = fileDefinitionsMap.get(FileDefinitionId.READS_WITH_PREDICTED_CDS_FILE.name());
+        }//
+        else if (exportValue.equalsIgnoreCase(this.exportRequestParamValues[16])) {
+            fileDefinition = fileDefinitionsMap.get(FileDefinitionId.PREDICTED_CDS_FILE.name());
         } else {
             //leave as null
         }

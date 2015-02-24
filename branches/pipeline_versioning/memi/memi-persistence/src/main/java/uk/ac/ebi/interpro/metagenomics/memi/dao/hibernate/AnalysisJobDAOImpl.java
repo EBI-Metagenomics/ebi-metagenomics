@@ -40,6 +40,20 @@ public class AnalysisJobDAOImpl extends GenericDAOImpl<AnalysisJob, Long> implem
         }
     }
 
+    public AnalysisJob readByRunIdAndVersionDeep(final String externalRunIDs,
+                                                 final String releaseVersion,
+                                                 final String analysisStatus) {
+        try {
+            Criteria criteria = getSession().createCriteria(AnalysisJob.class);
+            criteria.add(Restrictions.eq("externalRunIDs", externalRunIDs));
+            criteria.createAlias("analysisStatus", "status").add(Restrictions.eq("status.analysisStatus", analysisStatus));
+            criteria.createAlias("pipelineRelease", "release").add(Restrictions.eq("release.releaseVersion", releaseVersion));
+            return (AnalysisJob) criteria.uniqueResult();
+        } catch (HibernateException e) {
+            throw new HibernateException("Couldn't retrieve list of analysis jobs for external run ids " + externalRunIDs, e);
+        }
+    }
+
     @Override
     public AnalysisJob insert(AnalysisJob newInstance) {
         //TODO: Implement

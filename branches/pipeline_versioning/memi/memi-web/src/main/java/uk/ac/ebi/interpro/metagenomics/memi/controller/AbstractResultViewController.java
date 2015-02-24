@@ -4,12 +4,12 @@ package uk.ac.ebi.interpro.metagenomics.memi.controller;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.ui.ModelMap;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.RunDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.AnalysisJobDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.ISecureEntityDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.temp.SampleAnnotationDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
-import uk.ac.ebi.interpro.metagenomics.memi.model.EmgFile;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgSampleAnnotation;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Run;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob;
@@ -19,10 +19,10 @@ import uk.ac.ebi.interpro.metagenomics.memi.services.FileExistenceChecker;
 import uk.ac.ebi.interpro.metagenomics.memi.services.FileObjectBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.SampleViewModel;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ResultViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.*;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.SampleViewModelBuilder;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ResultViewModelBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder;
 
 import javax.annotation.Resource;
@@ -35,7 +35,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * This class extends {@link uk.ac.ebi.interpro.metagenomics.memi.controller.SampleViewController}, {@link uk.ac.ebi.interpro.metagenomics.memi.controller.KronaChartsController} and {@link uk.ac.ebi.interpro.metagenomics.memi.controller.SampleViewExportController}.
+ * This class extends {@link uk.ac.ebi.interpro.metagenomics.memi.controller.SampleViewController}, {@link uk.ac.ebi.interpro.metagenomics.memi.controller.KronaChartsController} and {@link uk.ac.ebi.interpro.metagenomics.memi.controller.ResultViewExportController}.
  */
 public abstract class AbstractResultViewController extends SecuredAbstractController<Run> {
 
@@ -52,7 +52,10 @@ public abstract class AbstractResultViewController extends SecuredAbstractContro
     private SampleAnnotationDAO sampleAnnotationDAO;
 
     @Resource
-    private AnalysisJobDAO analysisJobDAO;
+    protected AnalysisJobDAO analysisJobDAO;
+
+    @Resource
+    protected RunDAO runDAO;
 
     @Resource
     private MemiDownloadService downloadService;
@@ -68,6 +71,22 @@ public abstract class AbstractResultViewController extends SecuredAbstractContro
 
     ISecureEntityDAO<Sample> getDAO() {
         return sampleDAO;
+    }
+
+    protected Run getSecuredEntity(final String projectId,
+                                   final String sampleId,
+                                   final String runId,
+                                   String version) {
+        if (version == null) {
+            version = runDAO.readLatestPipelineVersionByRunId(runId, "completed");
+        }
+        return runDAO.readByRunIdDeep(projectId, sampleId, runId, version);
+    }
+
+    protected Run getSecuredEntity(final String projectId,
+                                   final String sampleId,
+                                   final String runId) {
+        return getSecuredEntity(projectId, sampleId, runId, null);
     }
 
 //    protected String getModelViewName() {
@@ -86,19 +105,19 @@ public abstract class AbstractResultViewController extends SecuredAbstractContro
 
     protected void openDownloadDialog(final HttpServletResponse response,
                                       final HttpServletRequest request,
-                                      final EmgFile emgFile,
+                                      final AnalysisJob analysisJob,
                                       final String fileNameEnd,
                                       final File fileObject) {
         if (downloadService != null) {
             //white spaces are replaced by underscores
-            final String fileNameForDownload = getFileName(emgFile, fileNameEnd);
+            final String fileNameForDownload = getFileName(analysisJob, fileNameEnd);
             downloadService.openDownloadDialog(response, request, fileObject, fileNameForDownload, false);
         }
     }
 
-    private String getFileName(final EmgFile emgFile,
+    private String getFileName(final AnalysisJob analysisJob,
                                final String fileNameEnd) {
-        return emgFile.getFileName().replace(" ", "_") + fileNameEnd;
+        return analysisJob.getInputFileName().replace(" ", "_") + fileNameEnd;
     }
 
     /**
@@ -108,7 +127,7 @@ public abstract class AbstractResultViewController extends SecuredAbstractContro
 //        EmgFile emgFile = getEmgFile(run.getSampleId());
         //TODO: For the moment the system only allows to represent one file on the analysis page, but
         //in the future it should be possible to represent all different data types (genomic, transcriptomic)
-        SampleViewModel.ExperimentType experimentType = SampleViewModel.ExperimentType.GENOMIC;
+        ResultViewModel.ExperimentType experimentType = ResultViewModel.ExperimentType.GENOMIC;
         final List<EmgSampleAnnotation> sampleAnnotations = (List<EmgSampleAnnotation>) sampleAnnotationDAO.getSampleAnnotations(run.getSampleId());
 
         List<AnalysisJob> analysisJobs = analysisJobDAO.readByRunIdDeep(run.getExternalRunId(), "completed");
@@ -119,9 +138,9 @@ public abstract class AbstractResultViewController extends SecuredAbstractContro
                 break;
             }
         }
-        final ViewModelBuilder<SampleViewModel> builder = new SampleViewModelBuilder(
+        final ViewModelBuilder<ResultViewModel> builder = new ResultViewModelBuilder(
                 sessionManager,
-                sampleDAO.readByStringId(run.getExternalSampleId()),
+                analysisJob.getSample(),
                 run,
                 pageTitle,
                 getBreadcrumbs(run),
@@ -136,18 +155,20 @@ public abstract class AbstractResultViewController extends SecuredAbstractContro
                 qualityControlFileDefinitions,
                 functionalAnalysisFileDefinitions,
                 taxonomicAnalysisFileDefinitions);
-        final SampleViewModel sampleModel = builder.getModel();
+        final ResultViewModel resultModel = builder.getModel();
         //End
 
-        sampleModel.changeToHighlightedClass(ViewModel.TAB_CLASS_SAMPLES_VIEW);
+        resultModel.changeToHighlightedClass(ViewModel.TAB_CLASS_SAMPLES_VIEW);
         model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
-        model.addAttribute(ViewModel.MODEL_ATTR_NAME, sampleModel);
+        model.addAttribute(ViewModel.MODEL_ATTR_NAME, resultModel);
     }
 
     private DownloadSection buildDownloadSection(final Run run,
                                                  final Map<String, DownloadableFileDefinition> fileDefinitionsMap,
                                                  final AnalysisJob analysisJob) {
-        final String sampleId = run.getExternalSampleId();
+        final String externalSampleId = run.getExternalSampleId();
+        final String externalProjectId = run.getExternalProjectId();
+        final String externalRunId = run.getExternalRunId();
         final boolean sampleIsPublic = run.isPublic();
 //        final Long runId = sample.getId();
 
@@ -155,7 +176,7 @@ public abstract class AbstractResultViewController extends SecuredAbstractContro
         final List<DownloadLink> funcAnalysisDownloadLinks = new ArrayList<DownloadLink>();
         final List<DownloadLink> taxaAnalysisDownloadLinks = new ArrayList<DownloadLink>();
 
-        final String linkURL = (sampleIsPublic ? "https://www.ebi.ac.uk/ena/data/view/" + sampleId : "https://www.ebi.ac.uk/ena/submit/sra/#home");
+        final String linkURL = (sampleIsPublic ? "https://www.ebi.ac.uk/ena/data/view/" + externalSampleId : "https://www.ebi.ac.uk/ena/submit/sra/#home");
         seqDataDownloadLinks.add(new DownloadLink("Submitted nucleotide reads (ENA website)",
                 "Click to download all submitted nucleotide data on the ENA website",
                 linkURL,
@@ -171,19 +192,19 @@ public abstract class AbstractResultViewController extends SecuredAbstractContro
                 if (fileDefinition instanceof SequenceFileDefinition) {
                     seqDataDownloadLinks.add(new DownloadLink(fileDefinition.getLinkText(),
                             fileDefinition.getLinkTitle(),
-                            "sample/" + sampleId + fileDefinition.getLinkURL(),
+                            "projects/" + externalProjectId + "/samples/" + externalSampleId + "/runs/" + externalRunId + "/results/sequences" + "/versions/" + analysisJob.getPipelineRelease().getReleaseVersion() + fileDefinition.getLinkURL(),
                             fileDefinition.getOrder(),
                             getFileSize(fileObject)));
                 } else if (fileDefinition instanceof TaxonomicAnalysisFileDefinition) {
                     taxaAnalysisDownloadLinks.add(new DownloadLink(fileDefinition.getLinkText(),
                             fileDefinition.getLinkTitle(),
-                            "sample/" + sampleId + fileDefinition.getLinkURL(),
+                            "projects/" + externalProjectId + "/samples/" + externalSampleId + "/runs/" + externalRunId + "/results/taxonomy" + "/versions/" + analysisJob.getPipelineRelease().getReleaseVersion() + fileDefinition.getLinkURL(),
                             fileDefinition.getOrder(),
                             getFileSize(fileObject)));
                 } else if (fileDefinition instanceof FunctionalAnalysisFileDefinition) {
                     funcAnalysisDownloadLinks.add(new DownloadLink(fileDefinition.getLinkText(),
                             fileDefinition.getLinkTitle(),
-                            "sample/" + sampleId + fileDefinition.getLinkURL(),
+                            "projects/" + externalProjectId + "/samples/" + externalSampleId + "/runs/" + externalRunId + "/results/" + fileDefinition.getLinkURL() + "/versions/" + analysisJob.getPipelineRelease().getReleaseVersion(),
                             fileDefinition.getOrder(),
                             getFileSize(fileObject)));
 

@@ -4,6 +4,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Comparator;
 
@@ -57,7 +58,7 @@ public class AnalysisJob implements Comparator<AnalysisJob>, SecureEntity {
     @Column(name = "EXTERNAL_RUN_IDS", length = 100)
     private String externalRunIDs;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "SAMPLE_ID")
     private Sample sample;
 
@@ -99,8 +100,9 @@ public class AnalysisJob implements Comparator<AnalysisJob>, SecureEntity {
         this.submitTime = submitTime;
     }
 
-    public Calendar getCompleteTime() {
-        return completeTime;
+    public String getCompleteTime() {
+        SimpleDateFormat formatter=new SimpleDateFormat("dd/MM/yyyy");
+        return formatter.format(completeTime.getTime());
     }
 
     public void setCompleteTime(Calendar completeTime) {
