@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import uk.ac.ebi.interpro.metagenomics.memi.model.EmgFile;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Run;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob;
 import uk.ac.ebi.interpro.metagenomics.memi.services.FileObjectBuilder;
@@ -21,7 +20,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
-import java.text.DecimalFormat;
 
 /**
  * The controller for the analysis results page.
@@ -281,15 +279,5 @@ public class ResultViewController extends AbstractResultViewController {
     protected void populateModel(final ModelMap model, final Run run) {
         String pageTitle = "Analysis results: " + run.getExternalRunId() + "";
         populateModel(model, run, pageTitle);
-    }
-
-
-    /**
-     * Example for pattern '000000.000':<br>
-     * 123.78  000000.000  000123.780
-     */
-    private String getCustomFormat(String pattern, double value) {
-        DecimalFormat myFormatter = new DecimalFormat(pattern);
-        return myFormatter.format(value);
     }
 }

@@ -14,6 +14,8 @@ import java.util.List;
  */
 public interface SampleDAO extends ISecureEntityDAO<Sample> {
 
+    Sample readBySampleIdAndStudyId(String externalStudyId, String externalSampleId);
+
     List<Sample> retrieveAllSamplesByStudyId(long studyId);
 
     List<Sample> retrievePublicSamplesByStudyId(long studyId);

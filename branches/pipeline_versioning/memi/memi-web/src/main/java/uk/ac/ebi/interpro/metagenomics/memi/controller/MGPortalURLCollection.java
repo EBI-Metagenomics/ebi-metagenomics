@@ -62,5 +62,7 @@ public final class MGPortalURLCollection {
 
     public final static String PROJECT_SAMPLE_RUN_RESULTS_TAXONOMY_EXPORT = PROJECT_SAMPLE_RUN_RESULTS_TAXONOMY + "/export";
 
+    //Sample page
+    public final static String PROJECT_SAMPLE = "/projects/{projectId}/samples/{sampleId}";
 
 }

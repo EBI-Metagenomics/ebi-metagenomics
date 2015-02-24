@@ -54,6 +54,17 @@ public class AnalysisJobDAOImpl extends GenericDAOImpl<AnalysisJob, Long> implem
         }
     }
 
+    public List<AnalysisJob> readBySampleId(Long sampleId, String analysisStatus) {
+        try {
+            Criteria criteria = getSession().createCriteria(AnalysisJob.class);
+            criteria.createAlias("sample", "sampleAlias").add(Restrictions.eq("sampleAlias.id", sampleId));
+            criteria.createAlias("analysisStatus", "status").add(Restrictions.eq("status.analysisStatus", analysisStatus));
+            return criteria.list();
+        } catch (HibernateException e) {
+            throw new HibernateException("Couldn't retrieve list of analysis jobs by sample id " + sampleId, e);
+        }
+    }
+
     @Override
     public AnalysisJob insert(AnalysisJob newInstance) {
         //TODO: Implement
