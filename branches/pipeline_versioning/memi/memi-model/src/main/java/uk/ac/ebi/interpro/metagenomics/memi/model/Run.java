@@ -22,6 +22,8 @@ public class Run implements SecureEntity {
 
     private String submissionAccountId;
 
+    private String latestAnalysisJobPipelineVersion;
+
     public String getExternalRunId() {
         return externalRunId;
     }
@@ -72,5 +74,13 @@ public class Run implements SecureEntity {
 
     public void setSampleId(Long sampleId) {
         this.sampleId = sampleId;
+    }
+
+    public String getLatestAnalysisJobPipelineVersion() {
+        return latestAnalysisJobPipelineVersion;
+    }
+
+    public void setLatestAnalysisJobPipelineVersion(String latestAnalysisJobPipelineVersion) {
+        this.latestAnalysisJobPipelineVersion = latestAnalysisJobPipelineVersion;
     }
 }

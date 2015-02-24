@@ -12,7 +12,7 @@ import java.util.List;
  * @version $Id$
  * @since 1.0-SNAPSHOT
  */
-public interface StudyDAO extends ISampleStudyDAO<Study> {
+public interface StudyDAO extends ISecureEntityDAO<Study> {
 
     /**
      * Retrieves studies order by the specified property.

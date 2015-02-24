@@ -32,7 +32,7 @@
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
-                <prop key="hibernate.show_sql">false</prop>
+                <prop key="hibernate.show_sql">true</prop>
                 <prop key="hibernate.format_sql">false</prop>
                 <prop key="hibernate.use_sql_comments">false</prop>
                 <!--Do not use the create value before you build up a sql dump of the hibernate tables-->
@@ -69,6 +69,8 @@
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.UndefinedSample</value>
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.PipelineRelease</value>
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.PipelineTool</value>
+                <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisStatus</value>
+                <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob</value>
             </list>
         </property>
     </bean>
@@ -80,6 +82,8 @@
     <bean id="sampleDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAOImpl"/>
 
     <bean id="pipelineReleaseDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.PipelineReleaseDAOImpl"/>
+
+    <bean id="analysisJobDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.AnalysisJobDAOImpl"/>
 
     <bean name="submissionContactDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.erapro.SubmissionContactDAOImpl">
         <property name="dataSource" ref="eraProDataSource"/>

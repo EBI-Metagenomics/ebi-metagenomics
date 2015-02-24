@@ -1,14 +1,16 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
 
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
-import uk.ac.ebi.interpro.metagenomics.memi.model.EmgFile;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgSampleAnnotation;
+import uk.ac.ebi.interpro.metagenomics.memi.model.Run;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Publication;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.*;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Model to hold statistics related to the analysis of a sample.
@@ -23,8 +25,9 @@ public class SampleViewModel extends ViewModel {
 
     private Sample sample;
 
-    /* An EmgFile object holds two attributes of the */
-    private EmgFile emgFile;
+    private Run run;
+
+    private AnalysisJob analysisJob;
 
     private ExperimentType experimentType;
 
@@ -51,7 +54,8 @@ public class SampleViewModel extends ViewModel {
                            String pageTitle,
                            List<Breadcrumb> breadcrumbs,
                            Sample sample,
-                           EmgFile emgFile,
+                           Run run,
+                           AnalysisJob analysisJob,
                            List<String> archivedSequences,
                            MemiPropertyContainer propertyContainer,
                            FunctionalAnalysisResult functionalAnalysisResult,
@@ -65,7 +69,7 @@ public class SampleViewModel extends ViewModel {
                            final String pipelineVersion) {
         super(submitter, pageTitle, breadcrumbs, propertyContainer);
         this.sample = sample;
-        this.emgFile = emgFile;
+        this.analysisJob = analysisJob;
         this.archivedSequences = archivedSequences;
         this.experimentType = experimentType;
         this.downloadSection = downloadSection;
@@ -77,12 +81,14 @@ public class SampleViewModel extends ViewModel {
         this.analysisResult = new AnalysisResult(analysisStatus);
         this.analysisResult.setFunctionalAnalysisResult(functionalAnalysisResult);
         this.pipelineVersion = pipelineVersion;
+        this.run = run;
     }
 
     public SampleViewModel(Submitter submitter,
                            String pageTitle,
                            List<Breadcrumb> breadcrumbs,
                            Sample sample,
+                           Run run,
                            List<String> archivedSequences,
                            MemiPropertyContainer propertyContainer,
                            FunctionalAnalysisResult functionalAnalysisResult,
@@ -98,6 +104,7 @@ public class SampleViewModel extends ViewModel {
                 pageTitle,
                 breadcrumbs,
                 sample,
+                run,
                 null,
                 archivedSequences,
                 propertyContainer,
@@ -114,6 +121,10 @@ public class SampleViewModel extends ViewModel {
 
     public Sample getSample() {
         return sample;
+    }
+
+    public Run getRun() {
+        return run;
     }
 
     public List<String> getArchivedSequences() {
@@ -159,8 +170,8 @@ public class SampleViewModel extends ViewModel {
         return result;
     }
 
-    public EmgFile getEmgFile() {
-        return emgFile;
+    public AnalysisJob getAnalysisJob() {
+        return analysisJob;
     }
 
     public FunctionalAnalysisResult getFunctionalAnalysisResult() {

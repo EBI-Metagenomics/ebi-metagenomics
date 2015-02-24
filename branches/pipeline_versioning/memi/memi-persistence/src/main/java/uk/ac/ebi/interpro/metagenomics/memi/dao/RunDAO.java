@@ -10,9 +10,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.Run;
  */
 public interface RunDAO {
 
-    public Run readByRunId(String runId);
+    public Run readByRunIdDeep(String projectId, String sampleId, String runId, String version);
 
-    public Run readByRunIdDeep(String runId);
-
-    public Run readByRunIdDeep(String projectId, String sampleId, String runId);
+    public String readLatestPipelineVersionByRunId(String runId, String analysisStatus);
 }

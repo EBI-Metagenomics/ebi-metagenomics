@@ -28,6 +28,7 @@
         <entry key="OTUS_BIOM_FORMAT_FILE" value-ref="otuBiomFile"/>
         <entry key="TAX_ANALYSIS_TSV_FILE" value-ref="otuTsvFile"/>
         <entry key="TAX_ANALYSIS_TREE_FILE" value-ref="newickFile"/>
+
         <!--functional data-->
         <entry key="INTERPROSCAN_RESULT_FILE" value-ref="interProScanResultFile"/>
         <entry key="GO_COMPLETE_FILE" value-ref="fullGOAnnotationFile"/>

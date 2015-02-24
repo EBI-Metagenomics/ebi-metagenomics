@@ -5,10 +5,12 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Run;
 
 import javax.sql.DataSource;
+import java.util.List;
 
 /**
  * TODO: Description
@@ -108,21 +110,25 @@ public class RunDAOImpl implements RunDAO {
 //        }
 //        return result;
 //    }
-    public Run readByRunId(String runId) {
-//        String sql2 = "SELECT * FROM CUSTOMER WHERE CUST_ID = ?";
-        String sql = "SELECT * FROM " + schemaName + "." + "log_file_info WHERE sra_run_ids = ?";
-        return jdbcTemplate.queryForObject(sql, new Object[]{runId}, new RunRowMapper());
-    }
-
-    @Override
-    public Run readByRunIdDeep(String runId) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    public Run readByRunIdDeep(String projectId, String sampleId, String runId) {
+    public Run readByRunIdDeep(String projectId, String sampleId, String runId, String version) {
         try {
-            String sql = "SELECT * FROM " + schemaName + "." + "log_file_info l, sample sa, study st WHERE st.ext_study_id = ? AND sa.ext_sample_id = ? AND l.sra_run_ids = ?";
-            return jdbcTemplate.queryForObject(sql, new Object[]{projectId, sampleId, runId}, new RunDeepRowMapper());
+//            String sql = "SELECT * FROM " + schemaName + "." + "log_file_info l, sample sa, study st WHERE st.ext_study_id = ? AND sa.ext_sample_id = ? AND l.sra_run_ids = ?";
+            String sql = "SELECT aj.external_run_ids,sa.ext_sample_id,st.ext_study_id,sa.submission_account_id,sa.is_public,aj.sample_id, r.release_version FROM " + schemaName + "." + "analysis_job aj," + schemaName + "." + "pipeline_release r," + schemaName + "." + "sample sa," + schemaName + "." + "study st WHERE aj.pipeline_id=r.pipeline_id AND st.ext_study_id = ? AND sa.ext_sample_id = ? AND aj.external_run_ids = ? AND r.release_version = ?";
+            return jdbcTemplate.queryForObject(sql, new Object[]{projectId, sampleId, runId, version}, new RunDeepRowMapper());
+        } catch (EmptyResultDataAccessException exception) {
+            throw new EmptyResultDataAccessException(1);
+        }
+    }
+
+    public String readLatestPipelineVersionByRunId(final String runId,
+                                                   final String analysisStatus) {
+        try {
+            String sql = "SELECT release_version FROM " + schemaName + "." + "analysis_job aj,"+ schemaName + "." +"pipeline_release r,"+ schemaName + "." +"analysis_status s WHERE aj.pipeline_id=r.pipeline_id AND aj.analysis_status_id=s.analysis_status_id AND aj.external_run_ids = ? AND s.analysis_status = ? order by r.release_version desc";
+            List<String> results = jdbcTemplate.queryForList(sql, String.class, runId, analysisStatus);
+            if (results.size() > 0) {
+                return results.get(0);
+            }
+            return null;
         } catch (EmptyResultDataAccessException exception) {
             throw new EmptyResultDataAccessException(1);
         }

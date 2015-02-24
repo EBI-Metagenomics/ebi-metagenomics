@@ -14,12 +14,13 @@ public class RunDeepRowMapper implements RowMapper<Run> {
 
     public Run mapRow(ResultSet rs, int rowNum) throws SQLException {
         Run run = new Run();
-        run.setExternalRunId(rs.getString("SRA_RUN_IDS"));
+        run.setExternalRunId(rs.getString("EXTERNAL_RUN_IDS"));
         run.setExternalSampleId(rs.getString("EXT_SAMPLE_ID"));
         run.setExternalProjectId(rs.getString("EXT_STUDY_ID"));
         run.setSubmissionAccountId(rs.getString("SUBMISSION_ACCOUNT_ID"));
         run.setPublic(rs.getBoolean("IS_PUBLIC"));
         run.setSampleId(rs.getLong("SAMPLE_ID"));
+        run.setLatestAnalysisJobPipelineVersion(rs.getString("RELEASE_VERSION"));
         return run;
     }
 }

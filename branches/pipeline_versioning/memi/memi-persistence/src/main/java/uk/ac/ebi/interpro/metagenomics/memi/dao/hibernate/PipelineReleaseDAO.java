@@ -7,7 +7,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.PipelineRelease;
  * Represents the data access object interface for pipeline releases.
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
- * @version $Id$
+ * @since 1.4-SNAPSHOT
  */
 public interface PipelineReleaseDAO extends GenericDAO<PipelineRelease, Long> {
 

@@ -25,7 +25,7 @@ public class PipelineTool implements Comparator<PipelineTool> {
             sequenceName = "PIPELINE_TOOL_SEQ")
     private long toolId;
 
-    @Column(name = "TOOL_NAME", length = 20, nullable = false)
+    @Column(name = "TOOL_NAME", length = 30, nullable = false)
     private String toolName;
 
     @Column(name = "DESCRIPTION", length = 1000, nullable = false)
@@ -34,13 +34,13 @@ public class PipelineTool implements Comparator<PipelineTool> {
     @Column(name = "WEB_LINK", length = 500)
     private String webLink;
 
-    @Column(name = "VERSION", length = 15, nullable = false)
+    @Column(name = "VERSION", length = 30, nullable = false)
     private String toolVersion;
 
     @Column(name = "EXE_COMMAND", length = 500, nullable = false)
     private String executionCmd;
 
-    @Column(name = "INSTALLATION_DIR", length = 100)
+    @Column(name = "INSTALLATION_DIR", length = 200)
     private String installationDir;
 
     @Column(name = "CONFIGURATION_FILE")
@@ -153,7 +153,7 @@ public class PipelineTool implements Comparator<PipelineTool> {
         return result;
     }
 
-    @Override
+    //TODO: Implement
     public int compare(PipelineTool o1, PipelineTool o2) {
         return 0;  //To change body of implemented methods use File | Settings | File Templates.
     }

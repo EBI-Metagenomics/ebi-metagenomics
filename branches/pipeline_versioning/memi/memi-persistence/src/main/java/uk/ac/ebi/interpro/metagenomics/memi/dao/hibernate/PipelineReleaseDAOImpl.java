@@ -17,7 +17,7 @@ import java.util.List;
  * Represents the implementation class of {@link PipelineReleaseDAO}.
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
- * @version $Id$
+ * @since 1.4-SNAPSHOT
  */
 @Repository
 public class PipelineReleaseDAOImpl extends GenericDAOImpl<PipelineRelease, Long> implements PipelineReleaseDAO {
@@ -26,7 +26,6 @@ public class PipelineReleaseDAOImpl extends GenericDAOImpl<PipelineRelease, Long
     }
 
 
-    @Transactional(readOnly = true)
     public PipelineRelease read(Long id) {
         try {
             return (PipelineRelease) getSession().get(PipelineRelease.class, id);
@@ -35,7 +34,6 @@ public class PipelineReleaseDAOImpl extends GenericDAOImpl<PipelineRelease, Long
         }
     }
 
-    @Transactional(readOnly = true)
     public List<PipelineRelease> retrieveAll() {
         try {
             return getSession().createCriteria(PipelineRelease.class).list();
@@ -44,7 +42,6 @@ public class PipelineReleaseDAOImpl extends GenericDAOImpl<PipelineRelease, Long
         }
     }
 
-    @Transactional(readOnly = true)
     public PipelineRelease readByReleaseVersion(String releaseVersion) {
         try {
             Criteria criteria = getSession().createCriteria(PipelineRelease.class);

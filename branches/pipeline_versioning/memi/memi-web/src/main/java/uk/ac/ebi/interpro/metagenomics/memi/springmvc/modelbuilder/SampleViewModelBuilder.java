@@ -7,15 +7,14 @@ import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.core.comparators.PublicationComparator;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgFile;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgSampleAnnotation;
+import uk.ac.ebi.interpro.metagenomics.memi.model.Run;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.HostSample;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Publication;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.PublicationType;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.*;
 import uk.ac.ebi.interpro.metagenomics.memi.services.FileExistenceChecker;
 import uk.ac.ebi.interpro.metagenomics.memi.services.FileObjectBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.*;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.*;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.AnalysisStatus;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.tabActivation.FunctionalAnalysisTab;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.tabActivation.TaxonomicAnalysisTab;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
@@ -47,10 +46,11 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
 
     private Sample sample;
 
+    private Run run;
+
     private List<EmgSampleAnnotation> sampleAnnotations;
 
-    /* An EmgFile object holds two attributes of the */
-    private EmgFile emgFile;
+    private AnalysisJob analysisJob;
 
     private SampleViewModel.ExperimentType experimentType;
 
@@ -71,9 +71,10 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
 
     public SampleViewModelBuilder(SessionManager sessionMgr,
                                   Sample sample,
+                                  Run run,
                                   String pageTitle,
                                   List<Breadcrumb> breadcrumbs,
-                                  EmgFile emgFile,
+                                  AnalysisJob analysisJob,
                                   List<String> archivedSequences,
                                   MemiPropertyContainer propertyContainer,
                                   SampleViewModel.ExperimentType experimentType,
@@ -86,7 +87,7 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
         this.sample = sample;
         this.pageTitle = pageTitle;
         this.breadcrumbs = breadcrumbs;
-        this.emgFile = emgFile;
+        this.analysisJob = analysisJob;
         this.archivedSequences = archivedSequences;
         this.propertyContainer = propertyContainer;
         this.experimentType = experimentType;
@@ -98,6 +99,7 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
         //
         this.relatedLinks = new ArrayList<Publication>();
         this.relatedPublications = new ArrayList<Publication>();
+        this.run = run;
     }
 
     @Override
@@ -113,14 +115,15 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
         AnalysisStatus analysisStatus = getAnalysisStatus((sample.getAnalysisCompleted() == null ? false : true));
 
 
-        if (emgFile != null) {
+        if (analysisJob != null) {
             //Add GO results
             functionalAnalysisResult = loadGODataFromCSV(functionalAnalysisResult);
             final SampleViewModel sampleViewModel = new SampleViewModel(submitter,
                     pageTitle,
                     breadcrumbs,
                     sample,
-                    emgFile,
+                    run,
+                    analysisJob,
                     archivedSequences,
                     propertyContainer,
                     functionalAnalysisResult,
@@ -131,7 +134,7 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
                     isHostAssociated,
                     sampleAnnotations,
                     analysisStatus,
-                    "1.0");
+                    run.getLatestAnalysisJobPipelineVersion());
             //Load and set taxonomy result data
             sampleViewModel.setTaxonomyAnalysisResult(loadTaxonomyDataFromCSV());
             return sampleViewModel;
@@ -140,6 +143,7 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
                     pageTitle,
                     breadcrumbs,
                     sample,
+                    run,
                     archivedSequences,
                     propertyContainer,
                     functionalAnalysisResult,
@@ -150,7 +154,7 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
                     isHostAssociated,
                     sampleAnnotations,
                     analysisStatus,
-                    "1.0");
+                    run.getLatestAnalysisJobPipelineVersion());
         }
     }
 
@@ -165,7 +169,7 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
         //If one of the quality control files does exist the tab gets activated
         boolean qualityControlTabDisabled = true;
         for (IResultFileDefinition fileDefinition : qualityControlFileDefinitions) {
-            File fileObject = FileObjectBuilder.createFileObject(emgFile, propertyContainer, fileDefinition);
+            File fileObject = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, fileDefinition);
             boolean doesExist = FileExistenceChecker.checkFileExistence(fileObject);
             if (doesExist) {
                 qualityControlTabDisabled = false;
@@ -178,7 +182,7 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
         boolean isGoSectionDisabled = true;
         boolean isSequenceFeatureSectionDisabled = true;
         for (FunctionalAnalysisFileDefinition fileDefinition : functionalAnalysisFileDefinitions) {
-            File fileObject = FileObjectBuilder.createFileObject(emgFile, propertyContainer, fileDefinition);
+            File fileObject = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, fileDefinition);
             boolean doesExist = FileExistenceChecker.checkFileExistence(fileObject);
             if (doesExist) {
                 if (fileDefinition.getIdentifier().equalsIgnoreCase(FileDefinitionId.INTERPRO_MATCHES_SUMMARY_FILE.toString())) {
@@ -197,7 +201,7 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
         boolean isStackChartTabDisabled = true;
         boolean isKronaTabDisabled = true;
         for (ResultFileDefinitionImpl fileDefinition : taxonomicAnalysisFileDefinitions) {
-            File fileObject = FileObjectBuilder.createFileObject(emgFile, propertyContainer, fileDefinition);
+            File fileObject = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, fileDefinition);
             boolean doesExist = FileExistenceChecker.checkFileExistence(fileObject);
             if (doesExist) {
                 if (fileDefinition.getIdentifier().equalsIgnoreCase(FileDefinitionId.KRONA_HTML_FILE.toString())) {
@@ -224,7 +228,7 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
     private TaxonomyAnalysisResult loadTaxonomyDataFromCSV() {
         final List<TaxonomyData> taxonomyDataSet = new ArrayList<TaxonomyData>();
 
-        File phylumFile = FileObjectBuilder.createFileObject(emgFile, propertyContainer, propertyContainer.getResultFileDefinition(FileDefinitionId.KINGDOM_COUNTS_FILE));
+        File phylumFile = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, propertyContainer.getResultFileDefinition(FileDefinitionId.KINGDOM_COUNTS_FILE));
         if (!phylumFile.exists()) {
             log.warn("Deactivating taxonomy result tab, because file " + phylumFile.getAbsolutePath() + " doesn't exist!");
         } else {
@@ -266,7 +270,7 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
     }
 
     private FunctionalAnalysisResult getListOfInterProEntries() {
-        File interProMatchesSummaryFile = FileObjectBuilder.createFileObject(emgFile, propertyContainer, propertyContainer.getResultFileDefinition(FileDefinitionId.INTERPRO_MATCHES_SUMMARY_FILE));
+        File interProMatchesSummaryFile = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, propertyContainer.getResultFileDefinition(FileDefinitionId.INTERPRO_MATCHES_SUMMARY_FILE));
         if (FileExistenceChecker.checkFileExistence(interProMatchesSummaryFile)) {
             List<String[]> rows = getRawData(interProMatchesSummaryFile, ',');
             return loadInterProMatchesFromCSV(rows);
@@ -317,7 +321,7 @@ public class SampleViewModelBuilder extends AbstractViewModelBuilder<SampleViewM
 
     private FunctionalAnalysisResult loadGODataFromCSV(final FunctionalAnalysisResult functionalAnalysisResult) {
         log.info("Processing GO slim file...");
-        File goSlimFile = FileObjectBuilder.createFileObject(emgFile, propertyContainer, propertyContainer.getResultFileDefinition(FileDefinitionId.GO_SLIM_FILE));
+        File goSlimFile = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, propertyContainer.getResultFileDefinition(FileDefinitionId.GO_SLIM_FILE));
         if (FileExistenceChecker.checkFileExistence(goSlimFile)) {
             List<String[]> rows = getRawData(goSlimFile, ',');
             if (rows != null) {

@@ -5,7 +5,7 @@
     <c:when test="${not empty model.sample}">
 
         <div class="title_tab">
-            <span class="subtitle">Sample <span>(${model.sample.sampleId})</span></span>
+            <span class="subtitle">Sample <span>(${model.sample.sampleId})</span><span style="float: right;" class="subtitle">Pipeline Version: ${model.pipelineVersion}</span></span>
 
             <h2 class="fl_uppercase_title">${model.sample.sampleName}</h2>
         </div>
@@ -19,15 +19,17 @@
                 <%--Main Tabs--%>
             <ul>
                 <li>
+                        <%--<a title="Overview"--%>
+                        <%--href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/overview?runId=${model.sample.id}"/>"><span>Overview</span></a>--%>
                     <a title="Overview"
-                       href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/overview?runId=${model.sample.id}"/>"><span>Overview</span></a>
+                       href="<c:url value="${baseURL}/projects/${model.run.externalProjectId}/samples/${model.run.externalSampleId}/runs/${model.run.externalRunId}/results/overview/versions/${model.run.latestAnalysisJobPipelineVersion}"/>"><span>Overview</span></a>
                 </li>
                 <li>
                     <a title="Quality-Control"
-                       href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/qualityControl?runId=${model.sample.id}"/>"><span>Quality control</span></a>
+                       href="<c:url value="${baseURL}/projects/${model.run.externalProjectId}/samples/${model.run.externalSampleId}/runs/${model.run.externalRunId}/results/qualityControl/versions/${model.run.latestAnalysisJobPipelineVersion}"/>"><span>Quality control</span></a>
                 </li>
                 <li><a title="Taxonomy-Analysis"
-                       href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/taxonomic?runId=${model.sample.id}"/>"><span>Taxonomy analysis</span></a>
+                       href="<c:url value="${baseURL}/projects/${model.run.externalProjectId}/samples/${model.run.externalSampleId}/runs/${model.run.externalRunId}/results/taxonomic/versions/${model.run.latestAnalysisJobPipelineVersion}"/>"><span>Taxonomy analysis</span></a>
                 </li>
                 <li>
                     <a title="Functional-Analysis"
@@ -35,7 +37,7 @@
                 </li>
                 <li>
                     <a title="Download"
-                       href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/download?runId=${model.sample.id}"/>"><span>Download</span></a>
+                       href="<c:url value="${baseURL}/projects/${model.run.externalProjectId}/samples/${model.run.externalSampleId}/runs/${model.run.externalRunId}/results/download/versions/${model.run.latestAnalysisJobPipelineVersion}"/>"><span>Download</span></a>
                 </li>
                     <%--<li><a href="#fragment-experimental"><span>Experimental factor</span></a></li>--%>
             </ul>
@@ -59,21 +61,21 @@
             //Main navigation tabs - overview, quality control, taxonomic analysis, functional analysis, downloads
             //Ajax load approach as described here: http://jqueryui.com/tabs/#ajax
 
-                $("#navtabs").tabs({
-                    cache:true,
-                    ajaxOptions:{
-                        error:function (xhr, status, index, anchor) {
-                            $(anchor.hash).html("<div class='msg_error'>Couldn't load this tab. We'll try to fix this as soon as possible.</div>");
-                        }
-                    },
-                    //Change the Hashtag on Select
-                    //Described here: http://imdev.in/jquery-ui-tabs-with-hashtags/
-                    select:function (event, ui) {
-                        window.location.hash = ui.tab.hash;
-                    },
-                    //Set the disable option
-                    ${model.analysisStatus.disabledOption}
-                });
+            $("#navtabs").tabs({
+                cache:true,
+                ajaxOptions:{
+                    error:function (xhr, status, index, anchor) {
+                        $(anchor.hash).html("<div class='msg_error'>Couldn't load this tab. We'll try to fix this as soon as possible.</div>");
+                    }
+                },
+                //Change the Hashtag on Select
+                //Described here: http://imdev.in/jquery-ui-tabs-with-hashtags/
+                select:function (event, ui) {
+                    window.location.hash = ui.tab.hash;
+                },
+                //Set the disable option
+                ${model.analysisStatus.disabledOption}
+            });
 
             //  Load the Visualization API and the chart package.
             google.load('visualization', '1.0', {'packages':['corechart', 'table', 'controls'] });
@@ -90,14 +92,14 @@
 <!-- Script needed to convert Google chart images into Canvas/image elements-->
 <script type="text/javascript">
 
-    function getImgData(chartContainer,dpiFactor) {
+    function getImgData(chartContainer, dpiFactor) {
 //        extract the svg code for the chart you want to serialize (assuming chartContainer points to the html element containing the chart):
         var chartArea = chartContainer.getElementsByTagName('svg')[0].parentNode;
         var svg = chartArea.innerHTML;
         var jHtmlObject = jQuery(svg);
-       var editor = jQuery("<p>").append(jHtmlObject);
-       editor.find("div").remove();
-       var newHtml = editor.html();
+        var editor = jQuery("<p>").append(jHtmlObject);
+        editor.find("div").remove();
+        var newHtml = editor.html();
 //       alert('' + newHtml + '');
 
         var document = chartContainer.ownerDocument;
@@ -107,15 +109,15 @@
 //        canvas.setAttribute('height', chartArea.offsetHeight);
         // Get chart aspect ratio
         var c_ar = chartArea.offsetHeight / chartArea.offsetWidth;
-        var newCanvasWidth = chartArea.offsetWidth*dpiFactor;
+        var newCanvasWidth = chartArea.offsetWidth * dpiFactor;
         // Set canvas size
         canvas.setAttribute('width', newCanvasWidth);
         canvas.setAttribute('height', newCanvasWidth * c_ar);
         canvas.setAttribute(
                 'style',
                 'position: absolute; ' +
-                'top: ' + (-chartArea.offsetHeight * 2) + 'px;' +
-                'left: ' + (-chartArea.offsetWidth * 2) + 'px;');
+                        'top: ' + (-chartArea.offsetHeight * 2) + 'px;' +
+                        'left: ' + (-chartArea.offsetWidth * 2) + 'px;');
         document.body.appendChild(canvas);
 //        transform the svg instructions into a canvas
         //TODO: Where do I find the transformation function called 'canvg'?
@@ -132,13 +134,13 @@
         // Download image - Replacing the mime-type will force the browser to trigger a download rather than displaying the image in the browser window.
         return canvas.toDataURL('image/png');
     }
-       //    /**
+    //    /**
     //     * Save image function for Google charts.
     //     *
     //     * How does it work? Sends a POST request to the server with the dataURL and the filename and the server creates an HTTP response with opens a download dialog.
     //     **/
-    function saveAsImg(chartContainer, fileName,dpiFactor) {
-        var dataUrl = getImgData(chartContainer,dpiFactor);
+    function saveAsImg(chartContainer, fileName, dpiFactor) {
+        var dataUrl = getImgData(chartContainer, dpiFactor);
         var form = $('<form/>', {
             id:'pngExportForm',
             name:'pngExportForm',
@@ -154,31 +156,31 @@
         form.submit();
     }
 
-//    function getSnapshotImgData(chartContainer) {
-////        extract the svg code for the chart you want to serialize (assuming chartContainer points to the html element containing the chart):
-//        var chartArea = chartContainer.getElementsByTagName('svg')[0].parentNode;
-//        var svg = chartArea.innerHTML;
-//        var document = chartContainer.ownerDocument;
-////        create a canvas element and position it offscreen for the user not to see it
-//        var canvas = document.createElement('canvas');
-//        canvas.setAttribute('width', chartArea.offsetWidth);
-//        canvas.setAttribute('height', chartArea.offsetHeight);
-//        canvas.setAttribute(
-//                'style',
-//                'position: absolute; ' +
-//                        'top: ' + (-chartArea.offsetHeight * 2) + 'px;' +
-//                        'left: ' + (-chartArea.offsetWidth * 2) + 'px;');
-//        document.body.appendChild(canvas);
-////        transform the svg instructions into a canvas
-//        //TODO: Where do I find the transformation function called 'canvg'?
-//        //Answer: Looks like it is in here: http://canvg.googlecode.com/svn/trunk/canvg.js
-//
-//        canvg(canvas, svg);
-//        canvas.parentNode.removeChild(canvas);
-//        //extract the image data (as a base64 encoded string)
-//        // Download image - Replacing the mime-type will force the browser to trigger a download rather than displaying the image in the browser window.
-//        return canvas.toDataURL('image/png');
-//    }
+    //    function getSnapshotImgData(chartContainer) {
+    ////        extract the svg code for the chart you want to serialize (assuming chartContainer points to the html element containing the chart):
+    //        var chartArea = chartContainer.getElementsByTagName('svg')[0].parentNode;
+    //        var svg = chartArea.innerHTML;
+    //        var document = chartContainer.ownerDocument;
+    ////        create a canvas element and position it offscreen for the user not to see it
+    //        var canvas = document.createElement('canvas');
+    //        canvas.setAttribute('width', chartArea.offsetWidth);
+    //        canvas.setAttribute('height', chartArea.offsetHeight);
+    //        canvas.setAttribute(
+    //                'style',
+    //                'position: absolute; ' +
+    //                        'top: ' + (-chartArea.offsetHeight * 2) + 'px;' +
+    //                        'left: ' + (-chartArea.offsetWidth * 2) + 'px;');
+    //        document.body.appendChild(canvas);
+    ////        transform the svg instructions into a canvas
+    //        //TODO: Where do I find the transformation function called 'canvg'?
+    //        //Answer: Looks like it is in here: http://canvg.googlecode.com/svn/trunk/canvg.js
+    //
+    //        canvg(canvas, svg);
+    //        canvas.parentNode.removeChild(canvas);
+    //        //extract the image data (as a base64 encoded string)
+    //        // Download image - Replacing the mime-type will force the browser to trigger a download rather than displaying the image in the browser window.
+    //        return canvas.toDataURL('image/png');
+    //    }
 
     //    /**
     //     * Returns SVG element as String representation (extracted from the chart container).
@@ -223,10 +225,10 @@
         form.submit();
     }
 
-//    //Creates a snapshot of a Google chart
-//    function toImg(chartContainer, imgContainer) {
-//        window.open(getSnapshotImgData(chartContainer), '_blank');
-//    }
+    //    //Creates a snapshot of a Google chart
+    //    function toImg(chartContainer, imgContainer) {
+    //        window.open(getSnapshotImgData(chartContainer), '_blank');
+    //    }
 </script>
 
 <script type="text/javascript" src="https://canvg.googlecode.com/svn/trunk/rgbcolor.js"></script>

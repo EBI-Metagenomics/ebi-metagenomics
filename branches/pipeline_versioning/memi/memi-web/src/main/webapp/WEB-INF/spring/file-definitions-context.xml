@@ -171,6 +171,8 @@
         <property name="linkURL" value="/export?contentType=text&amp;exportValue=taxa&amp;runId="/>
     </bean>
 
+    <!--Sinc pipeline version 2.0 QIIME -->
+
     <bean id="kingdomCountsFile" autowire-candidate="false"
           class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.ResultFileDefinitionImpl">
         <property name="identifier" value="KINGDOM_COUNTS_FILE"/>

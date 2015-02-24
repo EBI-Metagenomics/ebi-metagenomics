@@ -4,10 +4,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.persistence.*;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 
 /**
@@ -26,7 +23,6 @@ public class PipelineRelease implements Comparator<PipelineRelease> {
     @SequenceGenerator(
             name = "PIPELINE_REL_SEQ",
             sequenceName = "PIPELINE_RELEASE_SEQ")
-//        allocationSize = 1
     private long pipelineId;
 
     @Column(name = "DESCRIPTION")
@@ -42,7 +38,7 @@ public class PipelineRelease implements Comparator<PipelineRelease> {
 
     @Temporal(TemporalType.DATE)
     @Column(name = "RELEASE_DATE", nullable = false)
-    private Date releaseDate;
+    private Calendar releaseDate;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "PIPELINE_RELEASE_TOOL", joinColumns = {
@@ -54,7 +50,7 @@ public class PipelineRelease implements Comparator<PipelineRelease> {
     public PipelineRelease() {
     }
 
-    public PipelineRelease(long pipelineId, String description, String changes, String releaseVersion, Date releaseDate) {
+    public PipelineRelease(long pipelineId, String description, String changes, String releaseVersion, Calendar releaseDate) {
         this.pipelineId = pipelineId;
         this.description = description;
         this.changes = changes;
@@ -94,11 +90,11 @@ public class PipelineRelease implements Comparator<PipelineRelease> {
         this.releaseVersion = releaseVersion;
     }
 
-    public Date getReleaseDate() {
+    public Calendar getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(Date releaseDate) {
+    public void setReleaseDate(Calendar releaseDate) {
         this.releaseDate = releaseDate;
     }
 
@@ -143,7 +139,7 @@ public class PipelineRelease implements Comparator<PipelineRelease> {
 //    }
 
 
-    @Override
+    //TODO: Implement
     public int compare(PipelineRelease o1, PipelineRelease o2) {
         return 0;  //To change body of implemented methods use File | Settings | File Templates.
     }

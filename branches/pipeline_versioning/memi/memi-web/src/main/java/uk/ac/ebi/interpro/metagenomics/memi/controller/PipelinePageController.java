@@ -1,11 +1,9 @@
 package uk.ac.ebi.interpro.metagenomics.memi.controller;
 
-import org.springframework.beans.TypeMismatchException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.PipelineReleaseDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.exceptionHandling.EntryNotFoundException;

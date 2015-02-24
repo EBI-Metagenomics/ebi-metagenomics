@@ -4,12 +4,14 @@ package uk.ac.ebi.interpro.metagenomics.memi.controller;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.ui.ModelMap;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.AnalysisJobDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.ISecureEntityDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.temp.SampleAnnotationDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgFile;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgSampleAnnotation;
+import uk.ac.ebi.interpro.metagenomics.memi.model.Run;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
@@ -22,20 +24,22 @@ import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.*;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.SampleViewModelBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder;
-import uk.ac.ebi.interpro.metagenomics.memi.core.tools.MemiTools;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 /**
- * This class extends {@link SampleViewController}, {@link KronaChartsController} and {@link SampleViewExportController}.
+ * This class extends {@link uk.ac.ebi.interpro.metagenomics.memi.controller.SampleViewController}, {@link uk.ac.ebi.interpro.metagenomics.memi.controller.KronaChartsController} and {@link uk.ac.ebi.interpro.metagenomics.memi.controller.SampleViewExportController}.
  */
-public abstract class AbstractSampleViewController extends SecuredAbstractController<Sample> {
+public abstract class AbstractResultViewController extends SecuredAbstractController<Run> {
 
-    private static final Log log = LogFactory.getLog(AbstractSampleViewController.class);
+    private static final Log log = LogFactory.getLog(AbstractResultViewController.class);
     /**
      * View name of this controller which is used several times.
      */
@@ -46,6 +50,9 @@ public abstract class AbstractSampleViewController extends SecuredAbstractContro
 
     @Resource
     private SampleAnnotationDAO sampleAnnotationDAO;
+
+    @Resource
+    private AnalysisJobDAO analysisJobDAO;
 
     @Resource
     private MemiDownloadService downloadService;
@@ -67,6 +74,7 @@ public abstract class AbstractSampleViewController extends SecuredAbstractContro
 //        return VIEW_NAME;
 //    }
 
+    //TODO: Refactor
     protected List<Breadcrumb> getBreadcrumbs(SecureEntity entity) {
         List<Breadcrumb> result = new ArrayList<Breadcrumb>();
         if (entity != null && entity instanceof Sample) {
@@ -96,42 +104,52 @@ public abstract class AbstractSampleViewController extends SecuredAbstractContro
     /**
      * Creates the home page model and adds it to the specified model map.
      */
-    protected void populateModel(final ModelMap model, final AnalysisJob analysisJob, String pageTitle) {
-//        EmgFile emgFile = getEmgFile(sample.getId());
-//        //TODO: For the moment the system only allows to represent one file on the analysis page, but
-//        //in the future it should be possible to represent all different data types (genomic, transcriptomic)
-//        SampleViewModel.ExperimentType experimentType = SampleViewModel.ExperimentType.GENOMIC;
-//        final List<EmgSampleAnnotation> sampleAnnotations = (List<EmgSampleAnnotation>) sampleAnnotationDAO.getSampleAnnotations(sample.getId());
-//
-//
-//        final ViewModelBuilder<SampleViewModel> builder = new SampleViewModelBuilder(
-//                sessionManager,
-//                sample,
-//                pageTitle,
-//                getBreadcrumbs(sample),
-//                emgFile,
+    protected void populateModel(final ModelMap model, final Run run, String pageTitle) {
+//        EmgFile emgFile = getEmgFile(run.getSampleId());
+        //TODO: For the moment the system only allows to represent one file on the analysis page, but
+        //in the future it should be possible to represent all different data types (genomic, transcriptomic)
+        SampleViewModel.ExperimentType experimentType = SampleViewModel.ExperimentType.GENOMIC;
+        final List<EmgSampleAnnotation> sampleAnnotations = (List<EmgSampleAnnotation>) sampleAnnotationDAO.getSampleAnnotations(run.getSampleId());
+
+        List<AnalysisJob> analysisJobs = analysisJobDAO.readByRunIdDeep(run.getExternalRunId(), "completed");
+        AnalysisJob analysisJob = null;
+        for (AnalysisJob job : analysisJobs) {
+            if (job.getPipelineRelease().getReleaseVersion().equals("2.0")) {
+                analysisJob = job;
+                break;
+            }
+        }
+        final ViewModelBuilder<SampleViewModel> builder = new SampleViewModelBuilder(
+                sessionManager,
+                sampleDAO.readByStringId(run.getExternalSampleId()),
+                run,
+                pageTitle,
+                getBreadcrumbs(run),
+                analysisJob,
+                //TODO: Refactor
 //                MemiTools.getArchivedSeqs(fileInfoDAO, sample),
-//                propertyContainer,
-//                experimentType,
-//                buildDownloadSection(sample, fileDefinitionsMap, emgFile),
-//                sampleAnnotations,
-//                qualityControlFileDefinitions,
-//                functionalAnalysisFileDefinitions,
-//                taxonomicAnalysisFileDefinitions);
-//        final SampleViewModel sampleModel = builder.getModel();
-//        //End
-//
-//        sampleModel.changeToHighlightedClass(ViewModel.TAB_CLASS_SAMPLES_VIEW);
-//        model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
-//        model.addAttribute(ViewModel.MODEL_ATTR_NAME, sampleModel);
+                new ArrayList<String>(),
+                propertyContainer,
+                experimentType,
+                buildDownloadSection(run, fileDefinitionsMap, analysisJob),
+                sampleAnnotations,
+                qualityControlFileDefinitions,
+                functionalAnalysisFileDefinitions,
+                taxonomicAnalysisFileDefinitions);
+        final SampleViewModel sampleModel = builder.getModel();
+        //End
+
+        sampleModel.changeToHighlightedClass(ViewModel.TAB_CLASS_SAMPLES_VIEW);
+        model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
+        model.addAttribute(ViewModel.MODEL_ATTR_NAME, sampleModel);
     }
 
-    private DownloadSection buildDownloadSection(final Sample sample,
+    private DownloadSection buildDownloadSection(final Run run,
                                                  final Map<String, DownloadableFileDefinition> fileDefinitionsMap,
-                                                 final EmgFile emgFile) {
-        final String sampleId = sample.getSampleId();
-        final boolean sampleIsPublic = sample.isPublic();
-        final Long runId = sample.getId();
+                                                 final AnalysisJob analysisJob) {
+        final String sampleId = run.getExternalSampleId();
+        final boolean sampleIsPublic = run.isPublic();
+//        final Long runId = sample.getId();
 
         final List<DownloadLink> seqDataDownloadLinks = new ArrayList<DownloadLink>();
         final List<DownloadLink> funcAnalysisDownloadLinks = new ArrayList<DownloadLink>();
@@ -145,7 +163,7 @@ public abstract class AbstractSampleViewController extends SecuredAbstractContro
                 1));
 
         for (DownloadableFileDefinition fileDefinition : fileDefinitionsMap.values()) {
-            File fileObject = FileObjectBuilder.createFileObject(emgFile, propertyContainer, fileDefinition);
+            File fileObject = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, fileDefinition);
             boolean doesExist = FileExistenceChecker.checkFileExistence(fileObject);
 
             //Check if file exists and if it is not empty
@@ -153,19 +171,19 @@ public abstract class AbstractSampleViewController extends SecuredAbstractContro
                 if (fileDefinition instanceof SequenceFileDefinition) {
                     seqDataDownloadLinks.add(new DownloadLink(fileDefinition.getLinkText(),
                             fileDefinition.getLinkTitle(),
-                            "sample/" + sampleId + fileDefinition.getLinkURL() + runId,
+                            "sample/" + sampleId + fileDefinition.getLinkURL(),
                             fileDefinition.getOrder(),
                             getFileSize(fileObject)));
                 } else if (fileDefinition instanceof TaxonomicAnalysisFileDefinition) {
                     taxaAnalysisDownloadLinks.add(new DownloadLink(fileDefinition.getLinkText(),
                             fileDefinition.getLinkTitle(),
-                            "sample/" + sampleId + fileDefinition.getLinkURL() + runId,
+                            "sample/" + sampleId + fileDefinition.getLinkURL(),
                             fileDefinition.getOrder(),
                             getFileSize(fileObject)));
                 } else if (fileDefinition instanceof FunctionalAnalysisFileDefinition) {
                     funcAnalysisDownloadLinks.add(new DownloadLink(fileDefinition.getLinkText(),
                             fileDefinition.getLinkTitle(),
-                            "sample/" + sampleId + fileDefinition.getLinkURL() + runId,
+                            "sample/" + sampleId + fileDefinition.getLinkURL(),
                             fileDefinition.getOrder(),
                             getFileSize(fileObject)));
 
