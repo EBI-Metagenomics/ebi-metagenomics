@@ -38,6 +38,8 @@
 
             <div class="result_row"><label>Project:</label><span><a title="${model.sample.study.studyName}" href="<c:url value="${baseURL}/projects/${model.sample.study.studyId}"/>">${model.sample.study.studyName} (${model.sample.study.studyId})</a></span>
                        </div>
+            <div class="result_row"><label>Experiment type:</label><span> ${model.analysisJob.experimentType}</span>
+            </div>
         </div>
         <%--END DESCRIPTION--%>
 

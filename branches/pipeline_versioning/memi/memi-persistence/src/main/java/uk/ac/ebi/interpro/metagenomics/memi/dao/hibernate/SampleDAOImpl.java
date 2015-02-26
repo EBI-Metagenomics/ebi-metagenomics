@@ -175,8 +175,6 @@ public class SampleDAOImpl implements SampleDAO {
      *
      * @return Public and private samples by the specified study Id.
      */
-    @Override
-    @Transactional(readOnly = true)
     public List<Sample> retrieveAllSamplesByStudyId(long studyId) {
         Set<Criterion> criterionSet = new HashSet<Criterion>(2);
         criterionSet.add(Restrictions.eq("study.id", studyId));

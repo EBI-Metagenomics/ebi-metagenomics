@@ -25,9 +25,9 @@ public class ComparisonForm {
 
     private boolean keepNames = true;
 
-    @NotEmpty(message = "Please select samples to compare (at least two)")
+    @NotEmpty(message = "Please select runs to compare (at least two)")
     @Size(min=2)
-    private List<Long> samples = new ArrayList<Long>();
+    private List<Long> analysisJobIds = new ArrayList<Long>();
 
     private double stackThreshold = 2;
 
@@ -49,12 +49,12 @@ public class ComparisonForm {
         this.keepNames = keepNames;
     }
 
-    public List<Long> getSamples() {
-        return samples;
+    public List<Long> getAnalysisJobIds() {
+        return analysisJobIds;
     }
 
-    public void setSamples(List<Long> samples) {
-        this.samples = samples;
+    public void setAnalysisJobIds(List<Long> analysisJobIds) {
+        this.analysisJobIds = analysisJobIds;
     }
 
     public String getStudy() {

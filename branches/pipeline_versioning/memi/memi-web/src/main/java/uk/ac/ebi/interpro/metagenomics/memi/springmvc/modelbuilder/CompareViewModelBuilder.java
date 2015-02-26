@@ -45,24 +45,6 @@ public class CompareViewModelBuilder extends AbstractViewModelBuilder<CompareVie
     }
 
 
-//    public StudiesViewModel getModel() {
-//        log.info("Building instance of " + StudiesViewModel.class + "...");
-//        Submitter submitter = getSessionSubmitter(sessionMgr);
-//        String submissionAccountId = (submitter != null ? submitter.getSubmissionAccountId() : null);
-//
-//        //Get filtered studies
-//        List<Criterion> filterCriteria = buildFilterCriteria(filter, submissionAccountId);
-//        List<Study> filteredStudies = getFilteredStudies(filterCriteria, doPagination);
-//        long filteredStudiesCount = studyDAO.countByCriteria(filterCriteria);
-//        ViewPagination pagination = new ViewPagination(startPosition, filteredStudiesCount, PAGE_SIZE);
-//
-//        //studies are sorted by study name at the moment
-////        Map<Study, Long> sortedStudyMap = getStudySampleSizeMap(filteredStudies, sampleDAO, new ViewStudiesComparator());
-//
-//        attachSampleSize(filteredStudies);
-//        return new StudiesViewModel(submitter, filteredStudies, null, pageTitle, breadcrumbs, propertyContainer, tableHeaderNames, pagination, filter);
-//    }
-
     public CompareViewModel getModel() {
         log.info("Building instance of " + CompareViewModel.class + "...");
         Submitter submitter = getSessionSubmitter(sessionMgr);

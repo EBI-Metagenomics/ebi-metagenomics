@@ -46,10 +46,10 @@ Please <a id="script_feedbackLink" href="javascript:slideFeedbackForm()" title="
                 </c:choose>
                 <%-- Is the loading icon necessary? quite fast to load samples in the box
                 <div id="loading"><img src="${pageContext.request.contextPath}/img/compare_load.gif"></div>--%>
-                <form:select path="samples" multiple="true" size="10" id="samples" style="width:100%;">
+                <form:select path="analysisJobIds" multiple="true" size="10" id="analysisJobIds" style="width:100%;">
                 </form:select>
                 <div id="samples-control"><a id="select-all-button" onclick="SelectAllSamples()">Select all</a> | <a id="unselect-all-button" onclick="UnselectAllSamples()">Unselect all </a>
-                    <c:set var="sampleError"><form:errors path="samples" cssClass="error" element="div"/></c:set>
+                    <c:set var="sampleError"><form:errors path="analysisJobIds" cssClass="error" element="div"/></c:set>
                     <c:if test="${not empty sampleError}">
                         <script>
                             //replace info message by error message
@@ -144,18 +144,18 @@ Please <a id="script_feedbackLink" href="javascript:slideFeedbackForm()" title="
     // Function cleaning selected samples, getting samples for given project and updating the number of samples
     function GetSamplesOfSelectedProject() {
         UnselectAllSamples(); // Clean the samples
-        var numberSelected = $('#samples :selected').length;
+        var numberSelected = $('#analysisJobIds :selected').length;
         var studyId = $('#projects').val();
         // Show a nice loading text so the user won't break his computer.... is this necessary... TODO some speed test once on the server - if no speed issue remove the message
-        $('#samples').html('<option disabled>'+'Retrieving samples from server...'+'</option>');
+        $('#analysisJobIds').html('<option disabled>'+'Retrieving samples from server...'+'</option>');
         $.ajax({
             url:"<c:url value="${baseURL}/compare/samples"/>",
             type:"GET",
             cache:false,
             data:{studyId:studyId},
             success:function (data) {
-                $("#samples").html(data);
-                var numberTotal = $('#samples option').length;
+                $("#analysisJobIds").html(data);
+                var numberTotal = $('#analysisJobIds option').length;
                 document.getElementById("selected-samples").innerHTML = "Sample list <span>(" + numberSelected + " selected out of " + numberTotal + ")</span>";
             },
             error:function (jqXHR, textStatus, errorThrown) {
@@ -202,7 +202,7 @@ Please <a id="script_feedbackLink" href="javascript:slideFeedbackForm()" title="
     $('#sample-choice').hide();
     // Select all samples in the sample selection box
     function SelectAllSamples() {
-        $('#samples option').each(function () {
+        $('#analysisJobIds option').each(function () {
             if(! $(this).attr('disabled')) // Disabled samples must not be selected
             $(this).attr('selected', true);
         });
@@ -210,7 +210,7 @@ Please <a id="script_feedbackLink" href="javascript:slideFeedbackForm()" title="
 
     // Unselect all samples in the sample selection box
     function UnselectAllSamples() {
-        $('#samples option').each(function () {
+        $('#analysisJobIds option').each(function () {
             $(this).attr('selected', false);
         });
     }
@@ -223,7 +223,7 @@ Please <a id="script_feedbackLink" href="javascript:slideFeedbackForm()" title="
         $('#heat-clust').val('nothing').trigger('change');
         $('#heat-dendo').val('nothing').trigger('change');
         // Samples emptying
-        $('#samples').empty();
+        $('#analysisJobIds').empty();
         // Now the project
         $('#projects option').attr('selected', false);
 
@@ -232,7 +232,7 @@ Please <a id="script_feedbackLink" href="javascript:slideFeedbackForm()" title="
     // Order text of the samples select tag alphabetically.
     function SortSamplesByText() {
 
-        $('#samples').each(function() {
+        $('#analysisJobIds').each(function() {
             var selectedValue = $(this).val();
             // Sort all the options by text. It could easily be sorted by value.
             $(this).html($('option', $(this)).sort(function(a, b) {
@@ -260,7 +260,7 @@ Please <a id="script_feedbackLink" href="javascript:slideFeedbackForm()" title="
                 }
             });
 
-    $("#samples option").each(function()
+    $("#analysisJobIds option").each(function()
     {
         if ($(this).text().length > maxLength) {
             $(this).text($(this).text().substring(0, (maxLength - 3)) + "...");
@@ -272,13 +272,13 @@ Please <a id="script_feedbackLink" href="javascript:slideFeedbackForm()" title="
 
     // Selected samples number
     $('#samples-control').click(function() {
-        var numberSelected = $('#samples :selected').length;
-        var numberTotal = $('#samples option').length;
+        var numberSelected = $('#analysisJobIds :selected').length;
+        var numberTotal = $('#analysisJobIds option').length;
         document.getElementById("selected-samples").innerHTML = "Sample list <span>(" + numberSelected + " selected out of " + numberTotal + ")</span>";
     });
-    $('#samples').change(function() {
-        var numberSelected = $('#samples :selected').length;
-        var numberTotal = $('#samples option').length;
+    $('#analysisJobIds').change(function() {
+        var numberSelected = $('#analysisJobIds :selected').length;
+        var numberTotal = $('#analysisJobIds option').length;
         document.getElementById("selected-samples").innerHTML = "Sample list <span>(" + numberSelected + " selected out of " + numberTotal + ")</span>";
     });
 

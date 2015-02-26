@@ -35,8 +35,8 @@ public abstract class AbstractController {
     @Resource
     protected MemiPropertyContainer propertyContainer;
 
-    @Resource
-    protected EmgLogFileInfoDAO fileInfoDAO;
+//    @Resource
+//    protected EmgLogFileInfoDAO fileInfoDAO;
 
     @Resource
     protected Map<String, DownloadableFileDefinition> fileDefinitionsMap;
@@ -77,16 +77,16 @@ public abstract class AbstractController {
         return null;
     }
 
-    protected EmgFile getEmgFile(final long sampleId) {
-        List<EmgFile> emgFiles = fileInfoDAO.getFilesBySampleId(sampleId);
-        if (emgFiles.size() > 0) {
-            return emgFiles.get(0);
-        } else {
-            final String errorMessage = ExceptionTag.DATABASE_CURATION_ISSUE.toString() + "No log_file_info entry (EMG schema) for sample with id " + sampleId + " exists!";
-            log.error(errorMessage);
-            throw new IllegalStateException(errorMessage);
-        }
-    }
+//    protected EmgFile getEmgFile(final long sampleId) {
+//        List<EmgFile> emgFiles = fileInfoDAO.getFilesBySampleId(sampleId);
+//        if (emgFiles.size() > 0) {
+//            return emgFiles.get(0);
+//        } else {
+//            final String errorMessage = ExceptionTag.DATABASE_CURATION_ISSUE.toString() + "No log_file_info entry (EMG schema) for sample with id " + sampleId + " exists!";
+//            log.error(errorMessage);
+//            throw new IllegalStateException(errorMessage);
+//        }
+//    }
 
 
 }

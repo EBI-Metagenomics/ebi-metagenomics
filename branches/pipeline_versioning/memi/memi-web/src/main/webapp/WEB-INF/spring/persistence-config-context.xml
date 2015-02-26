@@ -93,12 +93,6 @@
         <property name="dataSource" ref="eraProDataSource"/>
     </bean>
 
-
-    <bean name="fileInfoDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.EmgLogFileInfoDAOImpl">
-        <property name="dataSource" ref="memiDataSource"/>
-        <property name="tableNamePrefix" value="EMG"/>
-    </bean>
-
     <bean name="sampleAnnotationDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.temp.SampleAnnotationDAOImpl">
         <property name="dataSource" ref="memiDataSource"/>
     </bean>

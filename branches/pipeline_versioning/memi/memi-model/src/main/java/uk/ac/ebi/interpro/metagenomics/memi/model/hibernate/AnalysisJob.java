@@ -58,6 +58,9 @@ public class AnalysisJob implements Comparator<AnalysisJob>, SecureEntity {
     @Column(name = "EXTERNAL_RUN_IDS", length = 100)
     private String externalRunIDs;
 
+    @Column(name = "EXPERIMENT_TYPE", length = 30, nullable = false)
+    private String experimentType;
+
     @ManyToOne
     @JoinColumn(name = "SAMPLE_ID")
     private Sample sample;
@@ -66,6 +69,18 @@ public class AnalysisJob implements Comparator<AnalysisJob>, SecureEntity {
     private boolean isProductionRun;
 
     public AnalysisJob() {
+    }
+
+    public AnalysisJob(String jobOperator, PipelineRelease pipelineRelease, Calendar submitTime,
+                       AnalysisStatus analysisStatus, String inputFileName, String resultDirectory,
+                       String experimentType) {
+        this.jobOperator = jobOperator;
+        this.pipelineRelease = pipelineRelease;
+        this.submitTime = submitTime;
+        this.analysisStatus = analysisStatus;
+        this.inputFileName = inputFileName;
+        this.resultDirectory = resultDirectory;
+        this.experimentType = experimentType;
     }
 
     public long getJobId() {
@@ -101,7 +116,7 @@ public class AnalysisJob implements Comparator<AnalysisJob>, SecureEntity {
     }
 
     public String getCompleteTime() {
-        SimpleDateFormat formatter=new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         return formatter.format(completeTime.getTime());
     }
 
@@ -149,6 +164,14 @@ public class AnalysisJob implements Comparator<AnalysisJob>, SecureEntity {
         this.externalRunIDs = externalRunIDs;
     }
 
+    public String getExperimentType() {
+        return experimentType;
+    }
+
+    public void setExperimentType(String experimentType) {
+        this.experimentType = experimentType;
+    }
+
     public Sample getSample() {
         return sample;
     }
@@ -176,7 +199,8 @@ public class AnalysisJob implements Comparator<AnalysisJob>, SecureEntity {
         result = 31 * result + reRunCount;
         result = 31 * result + inputFileName.hashCode();
         result = 31 * result + resultDirectory.hashCode();
-        result = 31 * result + externalRunIDs.hashCode();
+        result = 31 * result + (externalRunIDs != null ? externalRunIDs.hashCode() : 0);
+        result = 31 * result + experimentType.hashCode();
         result = 31 * result + (sample != null ? sample.hashCode() : 0);
         //TODO: Implement isProductionRun
 //        result = 31 * result + Boolean.isProductionRun;
@@ -211,6 +235,7 @@ public class AnalysisJob implements Comparator<AnalysisJob>, SecureEntity {
                 .append(getInputFileName(), aj.getInputFileName())
                 .append(getResultDirectory(), aj.getResultDirectory())
                 .append(getExternalRunIDs(), aj.getExternalRunIDs())
+                .append(getExperimentType(), aj.getExperimentType())
                 .append(getSample(), aj.getSample())
                 .append(isProductionRun(), aj.isProductionRun())
                 .isEquals();
@@ -242,5 +267,19 @@ public class AnalysisJob implements Comparator<AnalysisJob>, SecureEntity {
     @Transient
     public String getSubmissionAccountId() {
         return (sample != null ? sample.getSubmissionAccountId() : "n/a");
+    }
+
+    public enum AnalysisJobStatus {
+        COMPLETED("completed");
+
+        private String status;
+
+        private AnalysisJobStatus(String status) {
+            this.status = status;
+        }
+
+        public String getStatus() {
+            return status;
+        }
     }
 }

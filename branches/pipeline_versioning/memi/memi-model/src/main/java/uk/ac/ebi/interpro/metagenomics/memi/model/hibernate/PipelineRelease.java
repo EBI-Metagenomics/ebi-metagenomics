@@ -43,20 +43,19 @@ public class PipelineRelease implements Comparator<PipelineRelease> {
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "PIPELINE_RELEASE_TOOL", joinColumns = {
-            @JoinColumn(name = "PIPELINE_ID", nullable = false, updatable = false) },
-            inverseJoinColumns = { @JoinColumn(name = "TOOL_ID",
-                    nullable = false, updatable = false) })
+            @JoinColumn(name = "PIPELINE_ID", nullable = false, updatable = false)},
+            inverseJoinColumns = {@JoinColumn(name = "TOOL_ID",
+                    nullable = false, updatable = false)})
     private Set<PipelineTool> pipelineTools;
 
     public PipelineRelease() {
     }
 
-    public PipelineRelease(long pipelineId, String description, String changes, String releaseVersion, Calendar releaseDate) {
-        this.pipelineId = pipelineId;
-        this.description = description;
+    public PipelineRelease(String changes, String releaseVersion, Calendar releaseDate, Set<PipelineTool> pipelineTools) {
         this.changes = changes;
         this.releaseVersion = releaseVersion;
         this.releaseDate = releaseDate;
+        this.pipelineTools = pipelineTools;
     }
 
     public long getPipelineId() {
@@ -92,7 +91,7 @@ public class PipelineRelease implements Comparator<PipelineRelease> {
     }
 
     public String getReleaseDate() {
-        SimpleDateFormat formatter=new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         return formatter.format(releaseDate.getTime());
     }
 
