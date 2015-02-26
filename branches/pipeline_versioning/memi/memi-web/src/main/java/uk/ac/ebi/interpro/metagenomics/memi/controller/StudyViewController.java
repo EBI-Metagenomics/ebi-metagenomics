@@ -38,7 +38,6 @@ import java.util.Set;
  * @since 1.0-SNAPSHOT
  */
 @Controller
-@RequestMapping("/" + StudyViewController.VIEW_NAME + "/{studyId}")
 public class StudyViewController extends SecuredAbstractController<Study> {
 
     private final static Log log = LogFactory.getLog(StudyViewController.class);
@@ -69,9 +68,9 @@ public class StudyViewController extends SecuredAbstractController<Study> {
 
     //GET Methods
 
-    @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView doGetStudy(final ModelMap model,
-                                   @PathVariable final String studyId) {
+    @RequestMapping(value = MGPortalURLCollection.PROJECT)
+    public ModelAndView doGetStudy(@PathVariable final String studyId,
+                                   final ModelMap model) {
 
         return checkAccessAndBuildModel(new ModelProcessingStrategy<Study>() {
             @Override
@@ -81,9 +80,10 @@ public class StudyViewController extends SecuredAbstractController<Study> {
         }, model, getSecuredEntity(studyId), getModelViewName());
     }
 
-    @RequestMapping(value = "/doExport", method = RequestMethod.GET)
-    public ModelAndView doExportSamples(final ModelMap model, final HttpServletResponse response,
-                                        @PathVariable final String studyId) throws Exception {
+    @RequestMapping(value = MGPortalURLCollection.PROJECT_EXPORT)
+    public ModelAndView doExportSamples(@PathVariable final String studyId,
+                                        final ModelMap model,
+                                        final HttpServletResponse response) throws Exception {
         return checkAccessAndBuildModel(new ModelProcessingStrategy<Study>() {
             @Override
             public void processModel(ModelMap model, Study study) {
@@ -121,10 +121,6 @@ public class StudyViewController extends SecuredAbstractController<Study> {
         model.addAttribute(StudyViewModel.MODEL_ATTR_NAME, studyModel);
     }
 
-    ISecureEntityDAO<Study> getDAO() {
-        return studyDAO;
-    }
-
     protected String getModelViewName() {
         return VIEW_NAME;
     }
@@ -132,7 +128,7 @@ public class StudyViewController extends SecuredAbstractController<Study> {
     protected List<Breadcrumb> getBreadcrumbs(SecureEntity entity) {
         List<Breadcrumb> result = new ArrayList<Breadcrumb>();
         if (entity != null && entity instanceof Study) {
-            result.add(new Breadcrumb("Project: " + ((Study) entity).getStudyName(), "View project " + ((Study) entity).getStudyName(), VIEW_NAME + '/' + ((Study) entity).getStudyId()));
+            result.add(new Breadcrumb("Project: " + ((Study) entity).getStudyName(), "View project " + ((Study) entity).getStudyName(), "projects/" + ((Study) entity).getStudyId()));
         }
         return result;
     }

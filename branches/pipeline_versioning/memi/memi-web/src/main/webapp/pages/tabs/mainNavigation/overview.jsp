@@ -36,7 +36,7 @@
             <div class="result_row"><label>Classification:</label><span> <c:out value="${sampleClassification}"/></span>
             </div>
 
-            <div class="result_row"><label>Project:</label><span><a title="${model.sample.study.studyName}" href="<c:url value="${baseURL}/project/${model.sample.study.studyId}"/>">${model.sample.study.studyName} (${model.sample.study.studyId})</a></span>
+            <div class="result_row"><label>Project:</label><span><a title="${model.sample.study.studyName}" href="<c:url value="${baseURL}/projects/${model.sample.study.studyId}"/>">${model.sample.study.studyName} (${model.sample.study.studyId})</a></span>
                        </div>
         </div>
         <%--END DESCRIPTION--%>
@@ -45,7 +45,7 @@
         <h3 id="sample_desc">Analysis</h3>
 
         <div class="output_form" id="large">
-            <div class="result_row"><label>Pipeline Version:</label><span><a title="" href="<c:url value="${baseURL}/pipelines/${model.analysisJob.pipelineRelease.releaseVersion}"/>">${model.analysisJob.pipelineRelease.releaseVersion}</a> (analysed on: ${model.analysisJob.completeTime})</span>
+            <div class="result_row"><label>Pipeline Version:</label><span><a title="Pipeline release" href="<c:url value="${baseURL}/pipelines/${model.analysisJob.pipelineRelease.releaseVersion}"/>">${model.analysisJob.pipelineRelease.releaseVersion}</a> (analysed on: ${model.analysisJob.completeTime})</span>
             </div>
         </div>
         <%--END ANALYSIS--%>

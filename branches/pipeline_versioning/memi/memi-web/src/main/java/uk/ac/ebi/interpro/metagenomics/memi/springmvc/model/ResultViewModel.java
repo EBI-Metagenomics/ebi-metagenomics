@@ -63,8 +63,7 @@ public class ResultViewModel extends ViewModel {
                            List<Publication> relatedPublications,
                            boolean isHostAssociated,
                            List<EmgSampleAnnotation> sampleAnnotations,
-                           final AnalysisStatus analysisStatus,
-                           final String pipelineVersion) {
+                           final AnalysisStatus analysisStatus) {
         super(submitter, pageTitle, breadcrumbs, propertyContainer);
         this.sample = sample;
         this.analysisJob = analysisJob;
@@ -95,8 +94,7 @@ public class ResultViewModel extends ViewModel {
                            List<Publication> relatedPublications,
                            boolean isHostAssociated,
                            List<EmgSampleAnnotation> sampleAnnotations,
-                           final AnalysisStatus analysisStatus,
-                           final String pipelineVersion) {
+                           final AnalysisStatus analysisStatus) {
         this(submitter,
                 pageTitle,
                 breadcrumbs,
@@ -112,8 +110,7 @@ public class ResultViewModel extends ViewModel {
                 relatedPublications,
                 isHostAssociated,
                 sampleAnnotations,
-                analysisStatus,
-                pipelineVersion);
+                analysisStatus);
     }
 
     public Sample getSample() {

@@ -12,5 +12,5 @@ public interface RunDAO {
 
     public Run readByRunIdDeep(String projectId, String sampleId, String runId, String version);
 
-    public String readLatestPipelineVersionByRunId(String runId, String analysisStatus);
+//    public String readLatestPipelineVersionByRunId(String runId, String analysisStatus);
 }

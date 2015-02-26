@@ -20,7 +20,7 @@ public class RunDeepRowMapper implements RowMapper<Run> {
         run.setSubmissionAccountId(rs.getString("SUBMISSION_ACCOUNT_ID"));
         run.setPublic(rs.getBoolean("IS_PUBLIC"));
         run.setSampleId(rs.getLong("SAMPLE_ID"));
-        run.setLatestAnalysisJobPipelineVersion(rs.getString("RELEASE_VERSION"));
+        run.setReleaseVersion(rs.getString("RELEASE_VERSION"));
         return run;
     }
 }

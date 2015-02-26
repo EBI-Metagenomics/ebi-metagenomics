@@ -4,6 +4,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 
@@ -90,8 +91,9 @@ public class PipelineRelease implements Comparator<PipelineRelease> {
         this.releaseVersion = releaseVersion;
     }
 
-    public Calendar getReleaseDate() {
-        return releaseDate;
+    public String getReleaseDate() {
+        SimpleDateFormat formatter=new SimpleDateFormat("dd/MM/yyyy");
+        return formatter.format(releaseDate.getTime());
     }
 
     public void setReleaseDate(Calendar releaseDate) {

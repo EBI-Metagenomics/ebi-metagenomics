@@ -164,13 +164,13 @@
                                     <img alt="private"
                                          src="${pageContext.request.contextPath}/img/icon_priv_private.gif">
                                 </c:if>&nbsp;&nbsp;<a
-                                    href="<c:url value="${baseURL}/project/${entry.key.studyId}"/>"
+                                    href="<c:url value="${baseURL}/projects/${entry.key.studyId}"/>"
                                     class="list_more">${entry.key.studyName}</a>
                                 <br/>
                                 <span class="list_desc"><c:out value="${entry.key.shortStudyAbstract} ..."/></span>
-                                <br/><a href="<c:url value="${baseURL}/project/${entry.key.studyId}"/>"
+                                <br/><a href="<c:url value="${baseURL}/projects/${entry.key.studyId}"/>"
                                         class="more_view">View more</a> - <a
-                                    href="<c:url value="${baseURL}/project/${entry.key.studyId}"/>#samples_id"
+                                    href="<c:url value="${baseURL}/projects/${entry.key.studyId}"/>#samples_id"
                                     class="list_sample"><c:out value="${entry.value} sample"/><c:if
                                     test='${entry.value > 1}'>s</c:if></a>
                             </p>
@@ -205,21 +205,11 @@
                             <p><%--<span class="list_date">${sample.metadataReceived}:</span>--%>
                                 <c:if test="${!sample.public}"><img alt="private"
                                                                     src="${pageContext.request.contextPath}/img/icon_priv_private.gif"></c:if>&nbsp;&nbsp;
-                                <a href="<c:url value="${baseURL}/sample/${sample.sampleId}?runId=${sample.id}"/>"
+                                <a href="<c:url value="${baseURL}/projects/${sample.study.studyId}/samples/${sample.sampleId}"/>"
                                    class="list_more fl_uppercase_title">${sample.sampleName}</a>
                                 <span class="list_desc"><c:out value="${sample.shortSampleDescription} ..."/></span>
                                 <br/>
-                                <a href="<c:url value="${baseURL}/sample/${sample.sampleId}?runId=${sample.id}"/>" class="more_view">View more</a>
-                                <c:choose>
-                                    <c:when test="${empty sample.analysisCompleted}">
-                                        <%-- leave empty to be consistent with sample overview page
-                                 - <img src="${pageContext.request.contextPath}/img/ico_analysis_chart_small_off.gif" alt="Analysis in progress" title="Analysis in progress">--%></c:when>
-                                    <c:otherwise>
-                                        - <a href="<c:url value="${baseURL}/sample/${sample.sampleId}?runId=${sample.id}#ui-id-6"/>" class="list_sample" title="Taxonomy analysis">Taxonomy </a> | <a href="<c:url value="${baseURL}/sample/${sample.sampleId}?runId=${sample.id}"/>#ui-id-8"
-                                                                                                                                                                                             class="list_sample" title="Function analysis">Function results</a> | <a class="icon icon-functional" data-icon="=" href="<c:url value="${baseURL}/sample/${sample.sampleId}?runId=${sample.id}"/>#ui-id-10" class="list_sample" title="download results"></a>
-
-                                    </c:otherwise>
-                                </c:choose>
+                                <a href="<c:url value="${baseURL}/projects/${sample.study.studyId}/samples/${sample.sampleId}"/>" class="more_view">View more</a>
                             </p>
                         </c:forEach>
                     </c:otherwise>
@@ -249,14 +239,14 @@
                 <c:forEach var="study" items="${model.studies}" varStatus="status" begin="0"
                            end="${model.maxRowNumberOfLatestItems-1}">
                     <p><%--<span class="list_date">${entry.key.lastMetadataReceived}:</span> --%>
-                        <a href="<c:url value="${baseURL}/project/${study.studyId}"/>"
+                        <a href="<c:url value="${baseURL}/projects/${study.studyId}"/>"
                            class="list_more fl_uppercase_title">${study.studyName}</a>
 
                         <span class="list_desc"><c:out value="${study.shortStudyAbstract} ..."/></span>
                         <br/>
-                        <a href="<c:url value="${baseURL}/project/${study.studyId}"/>"
+                        <a href="<c:url value="${baseURL}/projects/${study.studyId}"/>"
                            class="more_view">View more</a> - <a
-                                href="<c:url value="${baseURL}/project/${study.studyId}"/>#samples_id"
+                                href="<c:url value="${baseURL}/projects/${study.studyId}"/>#samples_id"
                                 class="list_sample"><c:out value="${study.sampleSize} sample"/><c:if
                                 test='${study.sampleSize > 1}'>s</c:if></a>
                     </p>
@@ -277,39 +267,12 @@
                 <c:forEach var="sample" items="${model.publicSamples}" varStatus="status" begin="0"
                            end="${model.maxRowNumberOfLatestItems-1}">
                     <p><%--<span class="list_date">${sample.metadataReceived}:</span>--%>
-                        <a href="<c:url value="${baseURL}/sample/${sample.sampleId}?runId=${sample.id}"/>"
+                        <a href="<c:url value="${baseURL}/projects/${sample.study.studyId}/samples/${sample.sampleId}"/>"
                            class="list_more fl_uppercase_title">${sample.sampleName}</a>
 
                         <span class="list_desc"><c:out value="${sample.shortSampleDescription} ..."/></span>
                         <br/>
-                        <a href="<c:url value="${baseURL}/sample/${sample.sampleId}?runId=${sample.id}"/>" class="more_view">View more</a>
-                        <c:choose>
-                            <c:when test="${empty sample.analysisCompleted}">
-                                <%-- leave empty to be consistent with sample overview page
-                                 - <img src="${pageContext.request.contextPath}/img/ico_analysis_chart_small_off.gif" alt="Analysis in progress" title="Analysis in progress">--%>
-                            </c:when>
-
-                           <%--BEGIN ICON VERSION--%>
-
-                            <%--<c:otherwise>--%>
-                                <%--- <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>"--%>
-                                     <%--class="list_sample"> <img--%>
-                                    <%--src="${pageContext.request.contextPath}/img/ico_analysis_chart_small.gif"--%>
-                                    <%--alt="Analysis finished - check the results"--%>
-                                    <%--title="Analysis finished - check the results"></a>--%>
-                                <%----%>
-                            <%--</c:otherwise>--%>
-                            <%--END ICON VERSION--%>
-
-                            <%--BEGIN TEXT VERSION--%>
-
-                             <c:otherwise>
-                                - <a href="<c:url value="${baseURL}/sample/${sample.sampleId}?runId=${sample.id}#ui-id-6"/>" class="list_sample" title="Taxonomy analysis">Taxonomy </a> | <a href="<c:url value="${baseURL}/sample/${sample.sampleId}?runId=${sample.id}"/>#ui-id-8"
-                                                                                                                                               class="list_sample" title="Function analysis">Function results</a> | <a class="icon icon-functional" data-icon="=" href="<c:url value="${baseURL}/sample/${sample.sampleId}?runId=${sample.id}"/>#ui-id-10" class="list_sample" title="download results"></a>
-
-                            </c:otherwise>
-                            <%--END TEXT VERSION--%>
-                        </c:choose>
+                        <a href="<c:url value="${baseURL}/projects/${sample.study.studyId}/samples/${sample.sampleId}"/>" class="more_view">View more</a>
                     </p>
                 </c:forEach>
 

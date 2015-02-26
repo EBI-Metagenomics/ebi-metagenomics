@@ -44,12 +44,13 @@ public class ResultViewController extends AbstractResultViewController {
      * @param sampleId  External sample identifier (e.g. in ENA, for instance ERS580795)
      * @param runId     External run identifier (e.g. in ENA, for instance ERR000001)
      */
-    @RequestMapping(value = MGPortalURLCollection.PROJECT_SAMPLE_RUN_RESULTS)
+    @RequestMapping(value = MGPortalURLCollection.PROJECT_SAMPLE_RUN_RESULTS_ENTRY)
     public ModelAndView doGetSample(@PathVariable final String projectId,
                                     @PathVariable final String sampleId,
                                     @PathVariable final String runId,
+                                    @PathVariable final String releaseVersion,
                                     final ModelMap model) throws IOException {
-        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, getSecuredEntity(projectId, sampleId, runId), "results");
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, getSecuredEntity(projectId, sampleId, runId, releaseVersion), "results");
     }
 
     private ModelProcessingStrategy<Run> createNewModelProcessingStrategy() {

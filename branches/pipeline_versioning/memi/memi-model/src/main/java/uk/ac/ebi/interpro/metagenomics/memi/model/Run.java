@@ -22,7 +22,7 @@ public class Run implements SecureEntity {
 
     private String submissionAccountId;
 
-    private String latestAnalysisJobPipelineVersion;
+    private String releaseVersion;
 
     public String getExternalRunId() {
         return externalRunId;
@@ -76,11 +76,11 @@ public class Run implements SecureEntity {
         this.sampleId = sampleId;
     }
 
-    public String getLatestAnalysisJobPipelineVersion() {
-        return latestAnalysisJobPipelineVersion;
+    public String getReleaseVersion() {
+        return releaseVersion;
     }
 
-    public void setLatestAnalysisJobPipelineVersion(String latestAnalysisJobPipelineVersion) {
-        this.latestAnalysisJobPipelineVersion = latestAnalysisJobPipelineVersion;
+    public void setReleaseVersion(String releaseVersion) {
+        this.releaseVersion = releaseVersion;
     }
 }

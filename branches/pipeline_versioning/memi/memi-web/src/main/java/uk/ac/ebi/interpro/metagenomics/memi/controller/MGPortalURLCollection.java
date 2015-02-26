@@ -16,6 +16,9 @@ public final class MGPortalURLCollection {
     //Version handling
     private final static String PROJECT_SAMPLE_RUN_RESULTS_VERSION = "/versions/{releaseVersion:\\d\\.\\d}";
 
+    //Entry page
+    public final static String PROJECT_SAMPLE_RUN_RESULTS_ENTRY = PROJECT_SAMPLE_RUN_RESULTS + PROJECT_SAMPLE_RUN_RESULTS_VERSION;
+
     //Overview tab
     public final static String PROJECT_SAMPLE_RUN_RESULTS_OVERVIEW = PROJECT_SAMPLE_RUN_RESULTS + "/overview" + PROJECT_SAMPLE_RUN_RESULTS_VERSION;
 
@@ -64,5 +67,10 @@ public final class MGPortalURLCollection {
 
     //Sample page
     public final static String PROJECT_SAMPLE = "/projects/{projectId}/samples/{sampleId}";
+
+    //Project page
+    public final static String PROJECT = "/projects/{studyId}";
+
+    public final static String PROJECT_EXPORT = "/projects/{studyId}/export";
 
 }

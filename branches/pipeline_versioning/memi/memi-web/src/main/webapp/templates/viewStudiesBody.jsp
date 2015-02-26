@@ -142,10 +142,10 @@
                         <td class="h_left" id="ordered">
                             <c:if test="${!study.public}"><img alt="private"
                                                                    src="${pageContext.request.contextPath}/img/icon_priv_private.gif">&nbsp;&nbsp;</c:if>
-                            <a href="<c:url value="${baseURL}/project/${study.studyId}"/>">${study.studyName}</a>
+                            <a href="<c:url value="${baseURL}/projects/${study.studyId}"/>">${study.studyName}</a>
                         </td>
                         <td>
-                            <a href="<c:url value="${baseURL}/project/${study.studyId}#samples_id"/>">${study.sampleSize}</a>
+                            <a href="<c:url value="${baseURL}/projects/${study.studyId}#samples_id"/>">${study.sampleSize}</a>
                         </td>
                         <td>${study.formattedLastReceived}</td>
                     </tr>

@@ -132,8 +132,7 @@ public class ResultViewModelBuilder extends AbstractViewModelBuilder<ResultViewM
                     relatedPublications,
                     isHostAssociated,
                     sampleAnnotations,
-                    analysisStatus,
-                    run.getLatestAnalysisJobPipelineVersion());
+                    analysisStatus);
             //Load and set taxonomy result data
             resultViewModel.setTaxonomyAnalysisResult(loadTaxonomyDataFromCSV());
             return resultViewModel;
@@ -152,8 +151,7 @@ public class ResultViewModelBuilder extends AbstractViewModelBuilder<ResultViewM
                     relatedPublications,
                     isHostAssociated,
                     sampleAnnotations,
-                    analysisStatus,
-                    run.getLatestAnalysisJobPipelineVersion());
+                    analysisStatus);
         }
     }
 

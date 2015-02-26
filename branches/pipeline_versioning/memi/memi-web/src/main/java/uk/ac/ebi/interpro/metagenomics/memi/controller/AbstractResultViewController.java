@@ -9,6 +9,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.AnalysisJobDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.ISecureEntityDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.temp.SampleAnnotationDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.exceptionHandling.EntryNotFoundException;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgSampleAnnotation;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Run;
@@ -69,36 +70,24 @@ public abstract class AbstractResultViewController extends SecuredAbstractContro
     @Resource(name = "taxonomicAnalysisFileDefinitions")
     private List<ResultFileDefinitionImpl> taxonomicAnalysisFileDefinitions;
 
-    ISecureEntityDAO<Sample> getDAO() {
-        return sampleDAO;
-    }
-
     protected Run getSecuredEntity(final String projectId,
                                    final String sampleId,
                                    final String runId,
                                    String version) {
-        if (version == null) {
-            version = runDAO.readLatestPipelineVersionByRunId(runId, "completed");
-        }
         return runDAO.readByRunIdDeep(projectId, sampleId, runId, version);
     }
 
-    protected Run getSecuredEntity(final String projectId,
-                                   final String sampleId,
-                                   final String runId) {
-        return getSecuredEntity(projectId, sampleId, runId, null);
-    }
 
-//    protected String getModelViewName() {
-//        return VIEW_NAME;
-//    }
-
-    //TODO: Refactor
-    protected List<Breadcrumb> getBreadcrumbs(SecureEntity entity) {
+    protected List<Breadcrumb> getBreadcrumbs(SecureEntity secureEntity) {
         List<Breadcrumb> result = new ArrayList<Breadcrumb>();
-        if (entity != null && entity instanceof Sample) {
-            result.add(new Breadcrumb("Project: " + ((Sample) entity).getStudy().getStudyName(), "View project " + ((Sample) entity).getStudy().getStudyName(), StudyViewController.VIEW_NAME + '/' + ((Sample) entity).getStudy().getStudyId()));
-            result.add(new Breadcrumb("Sample: " + ((Sample) entity).getSampleName(), "View sample " + ((Sample) entity).getSampleName(), getModelViewName() + '/' + ((Sample) entity).getSampleId()));
+        if (secureEntity != null && secureEntity instanceof Run) {
+            Run run = (Run) secureEntity;
+            String runURL = "projects/" + run.getExternalProjectId() + "/samples/" + run.getExternalSampleId() + "/runs/" + run.getExternalRunId() + "/results/versions/" + run.getReleaseVersion();
+            String sampleURL = "projects/" + run.getExternalProjectId() + "/samples/" + run.getExternalSampleId();
+            String projectURL = "projects/" + run.getExternalProjectId();
+            result.add(new Breadcrumb("Project: " + run.getExternalProjectId(), "View project " + run.getExternalProjectId(), projectURL));
+            result.add(new Breadcrumb("Sample: " + run.getExternalSampleId(), "View sample " + run.getExternalSampleId(), sampleURL));
+            result.add(new Breadcrumb("Run: " + run.getExternalRunId(), "View run " + run.getExternalRunId(), runURL));
         }
         return result;
     }
@@ -130,14 +119,11 @@ public abstract class AbstractResultViewController extends SecuredAbstractContro
         ResultViewModel.ExperimentType experimentType = ResultViewModel.ExperimentType.GENOMIC;
         final List<EmgSampleAnnotation> sampleAnnotations = (List<EmgSampleAnnotation>) sampleAnnotationDAO.getSampleAnnotations(run.getSampleId());
 
-        List<AnalysisJob> analysisJobs = analysisJobDAO.readByRunIdDeep(run.getExternalRunId(), "completed");
-        AnalysisJob analysisJob = null;
-        for (AnalysisJob job : analysisJobs) {
-            if (job.getPipelineRelease().getReleaseVersion().equals("2.0")) {
-                analysisJob = job;
-                break;
-            }
+        AnalysisJob analysisJob = analysisJobDAO.readByRunIdAndVersionDeep(run.getExternalRunId(), run.getReleaseVersion(), "completed");
+        if (analysisJob == null) {
+            throw new EntryNotFoundException();
         }
+
         final ViewModelBuilder<ResultViewModel> builder = new ResultViewModelBuilder(
                 sessionManager,
                 analysisJob.getSample(),

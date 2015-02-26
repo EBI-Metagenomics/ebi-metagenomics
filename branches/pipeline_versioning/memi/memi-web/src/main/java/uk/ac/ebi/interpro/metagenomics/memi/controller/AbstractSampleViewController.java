@@ -42,8 +42,11 @@ public abstract class AbstractSampleViewController extends SecuredAbstractContro
     protected List<Breadcrumb> getBreadcrumbs(SecureEntity entity) {
         List<Breadcrumb> result = new ArrayList<Breadcrumb>();
         if (entity != null && entity instanceof Sample) {
-            result.add(new Breadcrumb("Project: " + ((Sample) entity).getStudy().getStudyName(), "View project " + ((Sample) entity).getStudy().getStudyName(), StudyViewController.VIEW_NAME + '/' + ((Sample) entity).getStudy().getStudyId()));
-            result.add(new Breadcrumb("Sample: " + ((Sample) entity).getSampleName(), "View sample " + ((Sample) entity).getSampleName(), getModelViewName() + '/' + ((Sample) entity).getSampleId()));
+            Sample sample = (Sample) entity;
+            String sampleURL = "projects/" + sample.getStudy().getStudyId() + "/samples/" + sample.getSampleId();
+            String projectURL = "projects/" + sample.getStudy().getStudyId();
+            result.add(new Breadcrumb("Project: " + sample.getStudy().getStudyName(), "View project " + sample.getStudy().getStudyName(), projectURL));
+            result.add(new Breadcrumb("Sample: " + sample.getSampleName(), "View sample " + sample.getSampleName(), sampleURL));
         }
         return result;
     }
@@ -64,40 +67,12 @@ public abstract class AbstractSampleViewController extends SecuredAbstractContro
 
         List<AnalysisJob> analysisJobs = analysisJobDAO.readBySampleId(sample.getId(), "completed");
 
-        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "Sample page", getBreadcrumbs(null), propertyContainer);
+        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, pageTitle, getBreadcrumbs(sample), propertyContainer);
         final ViewModel defaultViewModel = builder.getModel();
         defaultViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_CONTACT_VIEW);
         model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, defaultViewModel);
         model.addAttribute("analysisJobs", analysisJobs);
-
-
-//        EmgFile emgFile = getEmgFile(sample.getId());
-//        //TODO: For the moment the system only allows to represent one file on the analysis page, but
-//        //in the future it should be possible to represent all different data types (genomic, transcriptomic)
-//        ResultViewModel.ExperimentType experimentType = ResultViewModel.ExperimentType.GENOMIC;
-//        final List<EmgSampleAnnotation> sampleAnnotations = (List<EmgSampleAnnotation>) sampleAnnotationDAO.getSampleAnnotations(sample.getId());
-//
-//
-//        final ViewModelBuilder<ResultViewModel> builder = new ResultViewModelBuilder(
-//                sessionManager,
-//                sample,
-//                pageTitle,
-//                getBreadcrumbs(sample),
-//                emgFile,
-//                MemiTools.getArchivedSeqs(fileInfoDAO, sample),
-//                propertyContainer,
-//                experimentType,
-//                buildDownloadSection(sample, fileDefinitionsMap, emgFile),
-//                sampleAnnotations,
-//                qualityControlFileDefinitions,
-//                functionalAnalysisFileDefinitions,
-//                taxonomicAnalysisFileDefinitions);
-//        final ResultViewModel sampleModel = builder.getModel();
-//        //End
-//
-//        sampleModel.changeToHighlightedClass(ViewModel.TAB_CLASS_SAMPLES_VIEW);
-//        model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
-//        model.addAttribute(ViewModel.MODEL_ATTR_NAME, sampleModel);
+        model.addAttribute("sample", sample);
     }
 }

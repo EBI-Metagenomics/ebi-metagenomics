@@ -5,7 +5,7 @@
     <c:when test="${not empty model.sample}">
 
         <div class="title_tab">
-            <span class="subtitle">Sample <span>(${model.sample.sampleId})</span><span style="float: right;" class="subtitle">Pipeline Version: ${model.analysisJob.pipelineRelease.releaseVersion}</span></span>
+            <span class="subtitle">Run <span>(${model.run.externalRunId})</span><span style="float: right;" class="subtitle">Pipeline Version: ${model.analysisJob.pipelineRelease.releaseVersion}</span></span>
 
             <h2 class="fl_uppercase_title">${model.sample.sampleName}</h2>
         </div>
