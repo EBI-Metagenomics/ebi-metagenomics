@@ -5,6 +5,7 @@ package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage;
  */
 public enum FileDefinitionId {
     MASKED_FASTA,
+    PROCESSED_READS,
     READS_WITH_PREDICTED_CDS_FILE,
     PREDICTED_CDS_FILE,
     PREDICTED_ORF_WITHOUT_ANNOTATION_FILE,

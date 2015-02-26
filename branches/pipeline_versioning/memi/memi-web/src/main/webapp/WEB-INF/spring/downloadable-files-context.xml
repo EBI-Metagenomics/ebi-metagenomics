@@ -13,6 +13,7 @@
               value-type="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.DownloadableFileDefinition">
         <!--sequence data-->
         <entry key="MASKED_FASTA" value-ref="maskedReadsFile"/>
+        <entry key="PROCESSED_READS" value-ref="processedReads"/>
         <entry key="READS_WITH_PREDICTED_CDS_FILE" value-ref="readsWithPredictedCDSFile"/>
         <entry key="READS_WITH_MATCHES_FASTA_FILE" value-ref="readsWithInterProMatchesFile"/>
         <entry key="READS_WITHOUT_MATCHES_FASTA_FILE" value-ref="readsWithoutInterProMatchesFile"/>

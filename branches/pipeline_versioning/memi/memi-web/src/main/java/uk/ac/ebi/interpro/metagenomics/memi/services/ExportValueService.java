@@ -20,7 +20,7 @@ public class ExportValueService {
             "taxa", "tree", "5SrRNA", "16SrRNA", "23SrRNA", "readsWithMatches",
             "readsWithoutMatches", "orfWithoutAnnotation", "cdsWithoutAnnotation", "otuTable",
             "hdf5Biom", "JSONBiom", "prunedTree", "maskedReads", "readsWithPredictedCDS",
-            "predictedCDS"};
+            "predictedCDS", "processedReads"};
 
     public DownloadableFileDefinition findResultFileDefinition(final String exportValue) {
         DownloadableFileDefinition fileDefinition = null;
@@ -73,6 +73,9 @@ public class ExportValueService {
         }//
         else if (exportValue.equalsIgnoreCase(this.exportRequestParamValues[16])) {
             fileDefinition = fileDefinitionsMap.get(FileDefinitionId.PREDICTED_CDS_FILE.name());
+        }//
+        else if (exportValue.equalsIgnoreCase(this.exportRequestParamValues[17])) {
+            fileDefinition = fileDefinitionsMap.get(FileDefinitionId.PROCESSED_READS.name());
         } else {
             //leave as null
         }

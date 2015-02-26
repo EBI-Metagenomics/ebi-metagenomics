@@ -18,6 +18,17 @@
         <property name="linkURL" value="/export?contentType=text&amp;exportValue=maskedReads"/>
     </bean>
 
+    <bean id="processedReads" autowire-candidate="false"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.SequenceFileDefinition">
+        <property name="fileNameEnding" value=".fasta"/>
+        <property name="description" value="Processed nucleotide reads (since pipeline version 2.0)."/>
+        <property name="downloadName" value="_nt_reads.fasta"/>
+        <property name="linkText" value="Processed nucleotide reads (FASTA)"/>
+        <property name="order" value="2"/>
+        <property name="linkTitle" value="Click to download processed fasta nucleotide sequences"/>
+        <property name="linkURL" value="/export?contentType=text&amp;exportValue=processedReads"/>
+    </bean>
+
     <bean id="readsWithPredictedCDSFile" autowire-candidate="false"
           class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.SequenceFileDefinition">
         <property name="identifier" value="READS_WITH_PREDICTED_CDS_FILE"/>
