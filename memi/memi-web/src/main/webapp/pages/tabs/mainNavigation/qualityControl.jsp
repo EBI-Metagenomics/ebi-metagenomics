@@ -14,7 +14,7 @@
             <c:url var="statsImage" value="/getImage" scope="request">
                 <c:param name="imageName" value="/charts/qc.png"/>
                 <c:param name="imageType" value="PNG"/>
-                <c:param name="dir" value="${model.emgFile.fileID}"/>
+                <c:param name="dir" value="${model.analysisJob.resultDirectory}"/>
             </c:url>
             <p><img src="<c:out value="${statsImage}"/>"/></p>
 

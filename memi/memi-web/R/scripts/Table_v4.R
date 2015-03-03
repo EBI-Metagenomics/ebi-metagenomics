@@ -80,7 +80,7 @@ DataTableGen <- function(abTable) {
   newTable <- data.table(recordName, recordCat, recordGO, recordSample, recordValue, recordPc)
   # Changes column names by correct names as they will be displayed on the visualization
   setnames(newTable, colnames(newTable), 
-           c("GO name", "GO category", "GO ID", "Sample ID", "Matches", "%"))
+           c("GO name", "GO category", "GO ID", "Run ID", "Matches", "%"))
   
   
   # Convert the generated flat table to JSON object

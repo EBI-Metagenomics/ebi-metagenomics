@@ -11,7 +11,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
  * @version $Id$
  * @since 1.0-SNAPSHOT
  */
-public interface ISampleStudyDAO<T extends SecureEntity> extends GenericDAO<T, Long> {
+public interface ISecureEntityDAO<T extends SecureEntity> extends GenericDAO<T, Long>{
 
     T readByStringId(String stringId);
 }

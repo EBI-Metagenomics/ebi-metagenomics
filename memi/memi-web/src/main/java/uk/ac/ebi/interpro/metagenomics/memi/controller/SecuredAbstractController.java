@@ -4,8 +4,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.ISampleStudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
+import uk.ac.ebi.interpro.metagenomics.memi.model.Run;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
@@ -61,14 +61,13 @@ public abstract class SecuredAbstractController<T extends SecureEntity> extends 
     /**
      * Checks if the secure entity(study/sample) is public and owned by the logged in user/submitter.
      */
-    protected ModelAndView checkAccessAndBuildModel(ModelProcessingStrategy<T> modelProcessingStrategy, final ModelMap model, final Object identifier, String viewName) {
-        final T securedEntity = getSecuredEntity(identifier);
+    protected ModelAndView checkAccessAndBuildModel(ModelProcessingStrategy<T> modelProcessingStrategy, final ModelMap model, final T securedEntity, String viewName) {
         if (securedEntity == null) {
-            return getEntryNotExistMAV(identifier);
-        } else if (securedEntity instanceof Study || securedEntity instanceof Sample) {
+            return getEntryNotExistMAV();
+        } else if (securedEntity instanceof Study || securedEntity instanceof Sample || securedEntity instanceof Run) {
             if (!isAccessible(securedEntity)) {
-                log.info("Requesting private study/sample with identifier " + identifier + "...");
-                return buildAccessDeniedModelAndView(identifier);
+                log.info("Requesting private study/sample with identifier " + securedEntity.getSecureEntityId() + "...");
+                return buildAccessDeniedModelAndView(securedEntity.getSecureEntityId());
             }
         } else {
             throw new IllegalStateException("Unknown implementation of SecureEntity object (neither study nor sample), which cannot be handle.");
@@ -81,23 +80,6 @@ public abstract class SecuredAbstractController<T extends SecureEntity> extends 
         return new ModelAndView(viewName, model);
     }
 
-    private T getSecuredEntity(final Object identifier) {
-        ISampleStudyDAO<T> dao = getDAO();
-        T securedEntity = null;
-        if (dao != null) {
-            if (identifier instanceof Long) {
-                securedEntity = dao.read((Long) identifier);
-            } else if (identifier instanceof String) {
-                securedEntity = dao.readByStringId((String) identifier);
-            }
-        } else {
-            log.error("Check why the DAO is null!");
-            throw new IllegalStateException("Configuration error - the the DAO is null");
-        }
-        return securedEntity;
-    }
-
-
     /**
      * This view is shown if somebody tries to access a private entry OR if session has timed out.
      *
@@ -105,15 +87,14 @@ public abstract class SecuredAbstractController<T extends SecureEntity> extends 
      * @return Access denied model and view.
      */
     protected ModelAndView buildAccessDeniedModelAndView(Object objectId) {
-        return getModelAndView(objectId, DefaultController.ACCESS_DENIED_VIEW_NAME);
+        return getModelAndView(DefaultController.ACCESS_DENIED_VIEW_NAME);
     }
 
-    private ModelAndView getModelAndView(Object objectId, String viewName) {
+    private ModelAndView getModelAndView(String viewName) {
         final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager,
                 "Error page", null, propertyContainer);
         final ViewModel viewModel = builder.getModel();
         ModelMap model = new ModelMap();
-        model.addAttribute("objectId", objectId);
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, viewModel);
         model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
         return new ModelAndView(viewName, model);
@@ -123,12 +104,11 @@ public abstract class SecuredAbstractController<T extends SecureEntity> extends 
     /**
      * This view is shown if somebody types in a entry ID which does not exist.
      *
-     * @param objectId
      * @return Entry not exists model and view.
      */
-    private ModelAndView getEntryNotExistMAV(Object objectId) {
-        return getModelAndView(objectId, DefaultController.ENTRY_NOT_FOUND_VIEW_NAME);
+    private ModelAndView getEntryNotExistMAV() {
+        return getModelAndView(DefaultController.ACCESSION_NOT_FOUND_VIEW_NAME);
     }
 
-    abstract ISampleStudyDAO<T> getDAO();
+//    abstract ISecureEntityDAO<T> getDAO();
 }

@@ -19,9 +19,9 @@
         </c:if>
     </div>
 </div>
-<ul><li>Samples:
-<c:forEach var="sample" items="${samples}">
-<a class="sample_list" href="<c:url value="${baseURL}/sample/${sample.sampleId}?runId=${sample.id}"/>" title="${sample.sampleName} (${sample.sampleId})">${sample.sampleId}</a>
+<ul><li>Runs:
+<c:forEach var="analysisJob" items="${analysisJobs}">
+<a class="sample_list" href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${analysisJob.sample.sampleId}/runs/${analysisJob.externalRunIDs}/results/versions/${analysisJob.pipelineRelease.releaseVersion}"/>" title="${analysisJob.sample.sampleName} (${analysisJob.externalRunIDs})">${analysisJob.externalRunIDs}</a>
 </c:forEach>
     <%-- Uncomment these lines if you plan to handle the 'file is empty' error by showing missing samples on the result page
     <%--<c:if test="${not empty missingSamples}">--%>
@@ -30,7 +30,7 @@
     <%--</c:forEach>--%>
     <%--</c:if>--%>
     </li>
-    <li> Project: <a href="<c:url value="${baseURL}/project/${study.studyId}"/>" title="${study.studyName} (${study.studyId})">${study.studyName}</a> (${study.studyId})</li>
+    <li> Project: <a href="<c:url value="${baseURL}/projects/${study.studyId}"/>" title="${study.studyName} (${study.studyId})">${study.studyName}</a> (${study.studyId})</li>
 </ul>
 <%--<p>Use tabs below to switch between available visualizations.</p>--%>
 
@@ -73,7 +73,7 @@
              </select>
              </div>
 
-       <div id="barcharts_legend_title"><strong>Sample list</strong> <span class="barcharts_legend_info">(click to hide)</span></div>
+       <div id="barcharts_legend_title"><strong>Run list</strong> <span class="barcharts_legend_info">(click to hide)</span></div>
        <div id="barcharts_legend_list_items"></div>
 <%--${sampleString}--%>
         </div>
@@ -169,7 +169,7 @@
                         </optgroup>
                     </select>
             </div>
-        <div id="pca_legend_title"><strong>Sample list</strong> <span class="pca_legend_info">(mouse over to highlight and click to hide)</span></div>
+        <div id="pca_legend_title"><strong>Run list</strong> <span class="pca_legend_info">(mouse over to highlight and click to hide)</span></div>
         <div id="pca_legend_list_items"></div>
 
         </div>
@@ -447,7 +447,7 @@
     $(document).ready(function() {
         // Creation of legend items only if the charts exist (if the barchart for biological process exists others should exist as well)
         if($('#biological_process_bars').length != 0) {
-            var sampleNum = "${fn:length(samples)}"; // Retrieving number of samples
+            var sampleNum = "${fn:length(analysisJobs)}"; // Retrieving number of samples
             var sampleString = "${sampleString}"; // Retrieving identifiers of samples
             var sampleArr = sampleString.split(','); // Creation of an array of sample identifiers
             // Retrieving charts and charts series as JS vars
@@ -501,7 +501,7 @@
     // This function is similar to the previous one, the only difference being the 'mouseenter' and 'mouseleave' functions.
     $(document).ready(function() {
         if($('#biological_process_pca_12').length != 0) {
-            var sampleNum = "${fn:length(samples)}";
+            var sampleNum = "${fn:length(analysisJobs)}";
             var sampleString = "${sampleString}";
             var sampleArr = sampleString.split(',');
             var i;

@@ -12,7 +12,9 @@ import java.util.List;
  * @version $Id$
  * @since 1.0-SNAPSHOT
  */
-public interface SampleDAO extends ISampleStudyDAO<Sample> {
+public interface SampleDAO extends ISecureEntityDAO<Sample> {
+
+    Sample readBySampleIdAndStudyId(String externalStudyId, String externalSampleId);
 
     List<Sample> retrieveAllSamplesByStudyId(long studyId);
 

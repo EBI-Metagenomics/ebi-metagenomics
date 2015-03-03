@@ -144,7 +144,6 @@ Contact name: (not given)
                 <th scope="col" abbr="Pname">Sample ID</th>
                 <th scope="col" abbr="Pname">Collection date</th>
                 <th scope="col" abbr="Source" width="140px">Source</th>
-                <th scope="col" abbr="Analysis" width="170px">Analysis results</th>
             </tr>
             </thead>
             <tbody>
@@ -153,7 +152,7 @@ Contact name: (not given)
                     <td class="h_left" id="ordered">
                         <c:if test="${!sample.public}"><img alt="private"
                                                             src="${pageContext.request.contextPath}/img/icon_priv_private.gif">&nbsp;&nbsp;</c:if>
-                        <a href="<c:url value="${baseURL}/sample/${sample.sampleId}?runId=${sample.id}"/>" class="fl_uppercase_title">${sample.sampleName}</a>
+                        <a href="<c:url value="${baseURL}/projects/${sample.study.studyId}/samples/${sample.sampleId}"/>" class="fl_uppercase_title">${sample.sampleName}</a>
                     </td>
                     <td style="width:94px;">${sample.sampleId}</td>
                     <td style="width:130px;">
@@ -163,30 +162,6 @@ Contact name: (not given)
                                                          pattern="dd-MMM-yyyy"/></c:otherwise>
                         </c:choose></td>
                     <td>${sample.sampleTypeAsString}</td>
-                    <td>
-                        <c:choose>
-                            <c:when test="${empty sample.analysisCompleted}"><%--<img
-                                    src="${pageContext.request.contextPath}/img/ico_IN_PROGRESS_25_8.png"
-                                    alt="Analysis in progress" title="Analysis in progress">--%>in progress</c:when>
-                            <c:otherwise>
-
-                                <%--  ICON VERSION
-                              <a href="<c:url value="${baseURL}/sample/${sample.sampleId}"/>"><img
-                                      src="${pageContext.request.contextPath}/img/ico_analysis_chart.gif"
-                                      alt="Analysis finished - check the results"
-                                      title="Analysis finished - check the results"></a>
-                                --%>
-                                <a href="<c:url value="${baseURL}/sample/${sample.sampleId}?runId=${sample.id}#ui-id-6"/>"
-                                   class="list_sample" title="Taxonomy analysis">Taxonomy </a>|
-                                <a href="<c:url value="${baseURL}/sample/${sample.sampleId}?runId=${sample.id}#ui-id-8"/>"
-                                   class="list_sample" title="Function analysis">Function </a>| <a
-                                    class="icon icon-functional list_sample" data-icon="="
-                                    href="<c:url value="${baseURL}/sample/${sample.sampleId}?runId=${sample.id}#ui-id-10"/>"
-                                    class="list_sample" title="download results"></a>
-                            </c:otherwise>
-
-                        </c:choose>
-                    </td>
                 </tr>
             </c:forEach>
             </tbody>
