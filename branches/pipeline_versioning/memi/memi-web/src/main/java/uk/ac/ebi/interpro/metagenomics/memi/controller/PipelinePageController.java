@@ -46,9 +46,9 @@ public class PipelinePageController extends AbstractController {
                 new ModelPopulator() {
                     @Override
                     public void populateModel(ModelMap model) {
-                        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "Pipeline Version", getBreadcrumbs(null), propertyContainer);
+                        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "Pipeline Version", getSubPageBreadcrumbs(releaseVersion), propertyContainer);
                         final ViewModel defaultViewModel = builder.getModel();
-                        defaultViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_CONTACT_VIEW);
+                        defaultViewModel.changeToHighlightedClass(ViewModel.DEFAULT_CLASS);
                         model.addAttribute(ViewModel.MODEL_ATTR_NAME, defaultViewModel);
                         //
                         PipelineRelease pipelineRelease = pipelineReleaseDAO.readByReleaseVersion(releaseVersion);
@@ -87,7 +87,13 @@ public class PipelinePageController extends AbstractController {
 
     protected List<Breadcrumb> getBreadcrumbs(SecureEntity entity) {
         List<Breadcrumb> result = new ArrayList<Breadcrumb>();
-        result.add(new Breadcrumb("Contact", "Contact us", VIEW_NAME));
+        result.add(new Breadcrumb("Pipeline Release Archive", "List of pipeline releases", "pipelines"));
+        return result;
+    }
+
+    private List<Breadcrumb> getSubPageBreadcrumbs(final String releaseVersion) {
+        List<Breadcrumb> result = new ArrayList<Breadcrumb>(getBreadcrumbs(null));
+        result.add(new Breadcrumb("Release version " + releaseVersion, "Pipeline releases version " + releaseVersion, "pipelines/" + releaseVersion));
         return result;
     }
 }
