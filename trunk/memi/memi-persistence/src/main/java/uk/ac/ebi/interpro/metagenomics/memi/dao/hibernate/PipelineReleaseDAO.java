@@ -3,6 +3,8 @@ package uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.GenericDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.PipelineRelease;
 
+import java.util.List;
+
 /**
  * Represents the data access object interface for pipeline releases.
  *
@@ -12,4 +14,6 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.PipelineRelease;
 public interface PipelineReleaseDAO extends GenericDAO<PipelineRelease, Long> {
 
     PipelineRelease readByReleaseVersion(String releaseVersion);
+
+    List<PipelineRelease> retrieveAllSortedByReleaseVersion();
 }

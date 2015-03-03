@@ -6,8 +6,8 @@
 <c:choose>
     <c:when test="${releaseVersion == '2.0'}">
         <ol id="p-steps">
-            <li>1. Reads submitted</li>
-            <li>2. Nucleotide sequences processed
+            <li>1. Submitted reads*</li>
+            <li>2. Reads are processed
                 <ol>
                     <li>2.1. Clipped - low quality ends trimmed and adapter sequences removed using Biopython SeqIO
                         package
@@ -15,19 +15,19 @@
                     <li>2.2. Quality filtered - sequences with > 10% undetermined nucleotides removed</li>
                     <li>2.3. Read length filtered - depending on the platform short sequences are removed</li>
                 </ol>
-            <li>3. rRNA reads are filtered using rRNASelector (rRNASelector v 1.0.1)</li>
-            <li>4. Taxonomy analysis is performed upon 16s rRNA using Qiime (Qiime v 1.9).</li>
-            <li>5. CDS predicted (FragGeneScan v 1.15)</li>
-            <li>6. Matches were generated against predicted CDS with InterProScan 5.9 using a subset of databases from
+            <li>3. rRNA reads are filtered and clipped if non-rRNA sequence is present using rRNASelector prokaryotic ribosomal RNA hidden Markov models </li>
+            <li>4. Taxonomic analysis is performed on 16S rRNA reads using QIIME 1.9.0 (default closed-reference OTU picking protocal with Greengenes 13.8 reference with reverse strand matching enabled)</li>
+            <li>5. CDS prediction with FragGeneScan v.1.15 </li>
+            <li>6. Functional analysis of predicted proteins from step 5 is performed with InterProScan 5.9 using a subset of databases from
                 InterPro release 50.0 (databases used for analysis: Pfam, TIGRFAM, PRINTS, PROSITE patterns, Gene3d).
                 The Gene Ontology term summary was generated using the following GO slim: goslim_goa
             </li>
+            <li>* paired-end reads are merged with SeqPrep v1.1</li>
         </ol>
     </c:when>
     <c:otherwise>
         <ol id="p-steps">
             <li>1. Reads submitted</li>
-
             <li>2. Nucleotide sequences processed
                 <ol>
                     <li>2.1. Clipped - low quality ends trimmed and adapter sequences removed using Biopython
@@ -63,22 +63,22 @@
     <thead>
     <tr>
         <th>Tool name</th>
-        <th>Description</th>
         <th>Version</th>
-        <th>Technical detailsyes</th>
+        <th>Description</th>
+        <%--<th>Technical details</th>--%>
     </tr>
     </thead>
     <tbody>
     <c:forEach var="pipelineTool" items="${pipelineTools}" varStatus="status">
         <tr>
-            <td class="h_left" id="ordered"><a href="${pipelineTool.webLink}">${pipelineTool.toolName}</a></td>
-            <td class="h_left">${pipelineTool.description}</td>
+            <td class="h_left" id="ordered"><a class="ext" href="${pipelineTool.webLink}">${pipelineTool.toolName}</a></td>
             <td class="h_left">${pipelineTool.toolVersion}</td>
-            <td class="h_left">
-                <a title="Taxonomy analysis" class="list_sample">Execution command </a>|
-                <a title="Function analysis" class="list_sample">Configuration file </a>|
-                <a title="download results" class="icon icon-functional list_sample" data-icon="=">Download source code</a>
-            </td>
+            <td class="h_left">${pipelineTool.description}</td>
+            <%--<td class="h_left">--%>
+                <%--<a title="Taxonomy analysis" class="list_sample">Execution command </a>|--%>
+                <%--<a title="Function analysis" class="list_sample">Configuration file </a>|--%>
+                <%--<a title="download results" class="icon icon-functional list_sample" data-icon="=">Download source code</a>--%>
+            <%--</td>--%>
         </tr>
     </c:forEach>
     </tbody>

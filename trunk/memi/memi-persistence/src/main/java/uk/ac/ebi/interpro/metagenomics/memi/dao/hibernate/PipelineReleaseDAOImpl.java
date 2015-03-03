@@ -3,6 +3,7 @@ package uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,6 +38,16 @@ public class PipelineReleaseDAOImpl extends GenericDAOImpl<PipelineRelease, Long
     public List<PipelineRelease> retrieveAll() {
         try {
             return getSession().createCriteria(PipelineRelease.class).list();
+        } catch (HibernateException e) {
+            throw new HibernateException("Couldn't retrieve all pipeline release!", e);
+        }
+    }
+
+    public List<PipelineRelease> retrieveAllSortedByReleaseVersion() {
+        try {
+            Criteria criteria = getSession().createCriteria(PipelineRelease.class);
+            criteria.addOrder(Order.desc("releaseVersion"));
+            return criteria.list();
         } catch (HibernateException e) {
             throw new HibernateException("Couldn't retrieve all pipeline release!", e);
         }

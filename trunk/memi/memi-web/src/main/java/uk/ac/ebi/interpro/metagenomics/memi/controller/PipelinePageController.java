@@ -75,7 +75,7 @@ public class PipelinePageController extends AbstractController {
                         defaultViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_CONTACT_VIEW);
                         model.addAttribute(ViewModel.MODEL_ATTR_NAME, defaultViewModel);
                         //
-                        List<PipelineRelease> pipelineReleases = pipelineReleaseDAO.retrieveAll();
+                        List<PipelineRelease> pipelineReleases = pipelineReleaseDAO.retrieveAllSortedByReleaseVersion();
                         model.addAttribute("pipelineReleases", pipelineReleases);
                     }
                 });
