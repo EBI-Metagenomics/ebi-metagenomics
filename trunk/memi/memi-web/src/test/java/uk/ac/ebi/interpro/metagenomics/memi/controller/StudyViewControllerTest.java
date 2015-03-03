@@ -53,7 +53,7 @@ public class StudyViewControllerTest {
     public void testInitPage() throws Exception {
         ModelMap model = new ModelMap();
 //        TODO: Refactor
-        assertEquals("study", controller.doGetStudy(model, "1"));
+        assertEquals("study", controller.doGetStudy("1",model));
         //check model
         assertEquals(1, model.size());
         assertTrue(model.containsKey("study"));

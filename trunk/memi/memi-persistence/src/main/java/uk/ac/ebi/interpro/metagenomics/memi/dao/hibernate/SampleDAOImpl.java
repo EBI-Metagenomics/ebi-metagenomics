@@ -13,6 +13,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 
 import java.util.*;
@@ -33,6 +34,19 @@ public class SampleDAOImpl implements SampleDAO {
     private SessionFactory sessionFactory;
 
     public SampleDAOImpl() {
+    }
+
+    public Sample readBySampleIdAndStudyId(String externalStudyId, String externalSampleId) {
+        try {
+            Session session = sessionFactory.getCurrentSession();
+            Criteria criteria = session.createCriteria(Sample.class);
+            criteria.add(Restrictions.eq("sampleId", externalSampleId));
+            criteria.createAlias("study", "project").add(Restrictions.eq("project.studyId", externalStudyId));
+            Sample result = (Sample) criteria.uniqueResult();
+            return result;
+        } catch (HibernateException e) {
+            throw new HibernateException("Couldn't retrieve sample object by the following external IDs " + externalStudyId + "/" + externalSampleId, e);
+        }
     }
 
     //TODO: Do implement
@@ -63,7 +77,6 @@ public class SampleDAOImpl implements SampleDAO {
         return null;
     }
 
-    @Transactional(readOnly = true)
     public Sample readByStringId(String sampleId) {
         Session session = sessionFactory.getCurrentSession();
         if (session != null) {
@@ -162,7 +175,6 @@ public class SampleDAOImpl implements SampleDAO {
      *
      * @return Public and private samples by the specified study Id.
      */
-    @Override
     @Transactional(readOnly = true)
     public List<Sample> retrieveAllSamplesByStudyId(long studyId) {
         Set<Criterion> criterionSet = new HashSet<Criterion>(2);

@@ -6,8 +6,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import uk.ac.ebi.interpro.metagenomics.memi.core.comparators.HomePageStudiesComparator;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.UndefinedSample;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.*;
 
 import java.util.*;
 
@@ -35,9 +34,9 @@ public class CompareControllerTest {
     @Test
     public void testDoFileExistenceCheck() throws Exception {
         //Set test method input
-        Map<Sample, String> sampleToFilePathMap = new HashMap<Sample, String>();
-        List<Sample> activeSamples = null;
-        List<Sample> deactiveSamples = null;
+        Map<AnalysisJob, String> sampleToFilePathMap = new HashMap<AnalysisJob, String>();
+        List<AnalysisJob> activeSamples = null;
+        List<AnalysisJob> deactiveSamples = null;
         try {
             controller.doFileExistenceCheck(sampleToFilePathMap, activeSamples, deactiveSamples);
             assertTrue("Method should throw an exception.", false);
@@ -45,17 +44,22 @@ public class CompareControllerTest {
             //That is expected, go ahead
         }
         //Set test method input
-        sampleToFilePathMap = new HashMap<Sample, String>();
-        activeSamples = new ArrayList<Sample>();
-        deactiveSamples = new ArrayList<Sample>();
+        sampleToFilePathMap = new HashMap<AnalysisJob, String>();
+        activeSamples = new ArrayList<AnalysisJob>();
+        deactiveSamples = new ArrayList<AnalysisJob>();
         //Run the test method
         controller.doFileExistenceCheck(sampleToFilePathMap, activeSamples, deactiveSamples);
         //Set test method input
-        sampleToFilePathMap = new HashMap<Sample, String>();
-        activeSamples = new ArrayList<Sample>();
-        deactiveSamples = new ArrayList<Sample>();
-        sampleToFilePathMap.put(new UndefinedSample(), "/uk/ac/ebi/test.txt");
-        sampleToFilePathMap.put(new UndefinedSample(), "/uk/ac/ebi/test_2.txt");
+        sampleToFilePathMap = new HashMap<AnalysisJob, String>();
+        activeSamples = new ArrayList<AnalysisJob>();
+        deactiveSamples = new ArrayList<AnalysisJob>();
+        //analysis job instance
+        AnalysisJob analysisJob = new AnalysisJob("operator",
+                new PipelineRelease("changes", "2.0", Calendar.getInstance(), new HashSet<PipelineTool>()),
+                Calendar.getInstance(), new AnalysisStatus(), "input", "output","assembly");
+        //
+        sampleToFilePathMap.put(analysisJob, "/uk/ac/ebi/test.txt");
+        sampleToFilePathMap.put(analysisJob, "/uk/ac/ebi/test_2.txt");
         controller.doFileExistenceCheck(sampleToFilePathMap, activeSamples, deactiveSamples);
     }
 

@@ -28,7 +28,7 @@ public class DefaultController {
 
     public static final String ACCESS_DENIED_VIEW_NAME = "accessDenied";
 
-    public static final String ENTRY_NOT_FOUND_VIEW_NAME = "entryNotFound";
+    public static final String ACCESSION_NOT_FOUND_VIEW_NAME = "accessionNotFound";
 
     @Resource
     private SessionManager sessionManager;

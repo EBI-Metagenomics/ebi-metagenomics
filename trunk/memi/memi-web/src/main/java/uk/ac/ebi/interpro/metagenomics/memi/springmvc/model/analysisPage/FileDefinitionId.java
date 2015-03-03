@@ -5,6 +5,7 @@ package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage;
  */
 public enum FileDefinitionId {
     MASKED_FASTA,
+    PROCESSED_READS,
     READS_WITH_PREDICTED_CDS_FILE,
     PREDICTED_CDS_FILE,
     PREDICTED_ORF_WITHOUT_ANNOTATION_FILE,
@@ -24,5 +25,9 @@ public enum FileDefinitionId {
     GO_COMPLETE_FILE,
     KRONA_HTML_FILE,
     KINGDOM_COUNTS_FILE,
-    SEQUENCE_FEATURE_SUMMARY_FILE;
+    SEQUENCE_FEATURE_SUMMARY_FILE,
+    PRUNED_TREE_FILE,
+    JSON_BIOM_FILE,
+    HDF5_BIOM_FILE,
+    OTU_TABLE_FILE;
 }

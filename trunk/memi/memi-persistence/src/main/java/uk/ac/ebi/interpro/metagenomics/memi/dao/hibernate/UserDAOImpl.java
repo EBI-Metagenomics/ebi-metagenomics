@@ -11,7 +11,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.User;
 import java.util.List;
 
 /**
- * Represents the implementation class of {@link uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.StudyDAO}.
+ * Represents the implementation class of {@link UserDAO}.
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @version $Id$

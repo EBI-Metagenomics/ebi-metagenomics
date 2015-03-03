@@ -21,7 +21,7 @@ import java.util.Map;
  * @version $Id$
  * @since 1.0-SNAPSHOT
  */
-@Repository
+@Deprecated
 public class EmgLogFileInfoDAOImpl implements EmgLogFileInfoDAO {
 
     private JdbcTemplate jdbcTemplate;

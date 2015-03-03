@@ -11,6 +11,7 @@ import java.util.List;
  * @version $Id$
  * @since 1.0-SNAPSHOT
  */
+@Deprecated
 public interface EmgLogFileInfoDAO {
 
     public List<String> getFileIdsBySampleId(long sampleId);

@@ -64,7 +64,7 @@
                         <c:url var="sequenceFeatureImage" value="/getImage" scope="request">
                             <c:param name="imageName" value="/charts/seq-feat.png"/>
                             <c:param name="imageType" value="PNG"/>
-                            <c:param name="dir" value="${model.emgFile.fileID}"/>
+                            <c:param name="dir" value="${model.analysisJob.resultDirectory}"/>
                         </c:url>
                         <p><img
                                 src="<c:out value="${sequenceFeatureImage}"/>"/></p>
@@ -153,9 +153,9 @@
                         <ul>
                             <li class="selector_tab">Switch view:</li>
                                 <%--<li><a href="#go-terms-table" title="Table view"><span class="ico-table"></span></a></li>--%>
-                            <li><a href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/goBarChartView?runId=${model.sample.id}"/>"
+                            <li><a href="<c:url value="${baseURL}/projects/${model.run.externalProjectId}/samples/${model.run.externalSampleId}/runs/${model.run.externalRunId}/results/goBarChartView/versions/${model.analysisJob.pipelineRelease.releaseVersion}"/>"
                                    title="Bar-Chart-View"><span class="ico-barh"></span></a></li>
-                            <li><a href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/goPieChartView?runId=${model.sample.id}"/>"
+                            <li><a href="<c:url value="${baseURL}/projects/${model.run.externalProjectId}/samples/${model.run.externalSampleId}/runs/${model.run.externalRunId}/results/goPieChartView/versions/${model.analysisJob.pipelineRelease.releaseVersion}"/>"
                                    title="Pie-Chart-View"><span class="ico-pie"></span></a></li>
 
                         </ul>

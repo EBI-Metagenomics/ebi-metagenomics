@@ -9,10 +9,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import uk.ac.ebi.interpro.metagenomics.memi.core.tools.MemiTools;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.erapro.SubmissionContactDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.ISecureEntityDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.StudyDAO;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.ISampleStudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
@@ -23,7 +24,6 @@ import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.StudyViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.StudyViewModelBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder;
-import uk.ac.ebi.interpro.metagenomics.memi.core.tools.MemiTools;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -38,7 +38,6 @@ import java.util.Set;
  * @since 1.0-SNAPSHOT
  */
 @Controller
-@RequestMapping("/" + StudyViewController.VIEW_NAME + "/{studyId}")
 public class StudyViewController extends SecuredAbstractController<Study> {
 
     private final static Log log = LogFactory.getLog(StudyViewController.class);
@@ -63,20 +62,28 @@ public class StudyViewController extends SecuredAbstractController<Study> {
     @Resource
     private MemiDownloadService downloadService;
 
+    private Study getSecuredEntity(final String projectId) {
+        return studyDAO.readByStringId(projectId);
+    }
+
     //GET Methods
 
-    @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView doGetStudy(final ModelMap model, @PathVariable final String studyId) {
+    @RequestMapping(value = MGPortalURLCollection.PROJECT)
+    public ModelAndView doGetStudy(@PathVariable final String studyId,
+                                   final ModelMap model) {
+
         return checkAccessAndBuildModel(new ModelProcessingStrategy<Study>() {
             @Override
             public void processModel(ModelMap model, Study study) {
                 populateModel(model, study);
             }
-        }, model, studyId, getModelViewName());
+        }, model, getSecuredEntity(studyId), getModelViewName());
     }
 
-    @RequestMapping(value = "/doExport", method = RequestMethod.GET)
-    public ModelAndView doExportSamples(final ModelMap model, final HttpServletResponse response, @PathVariable final String studyId) throws Exception {
+    @RequestMapping(value = MGPortalURLCollection.PROJECT_EXPORT)
+    public ModelAndView doExportSamples(@PathVariable final String studyId,
+                                        final ModelMap model,
+                                        final HttpServletResponse response) throws Exception {
         return checkAccessAndBuildModel(new ModelProcessingStrategy<Study>() {
             @Override
             public void processModel(ModelMap model, Study study) {
@@ -96,7 +103,7 @@ public class StudyViewController extends SecuredAbstractController<Study> {
                     log.info("There are no samples to be exported!");
                 }
             }
-        }, model, studyId, getModelViewName());
+        }, model, getSecuredEntity(studyId), getModelViewName());
     }
 
     /**
@@ -114,10 +121,6 @@ public class StudyViewController extends SecuredAbstractController<Study> {
         model.addAttribute(StudyViewModel.MODEL_ATTR_NAME, studyModel);
     }
 
-    ISampleStudyDAO<Study> getDAO() {
-        return studyDAO;
-    }
-
     protected String getModelViewName() {
         return VIEW_NAME;
     }
@@ -125,7 +128,7 @@ public class StudyViewController extends SecuredAbstractController<Study> {
     protected List<Breadcrumb> getBreadcrumbs(SecureEntity entity) {
         List<Breadcrumb> result = new ArrayList<Breadcrumb>();
         if (entity != null && entity instanceof Study) {
-            result.add(new Breadcrumb("Project: " + ((Study) entity).getStudyName(), "View project " + ((Study) entity).getStudyName(), VIEW_NAME + '/' + ((Study) entity).getStudyId()));
+            result.add(new Breadcrumb("Project: " + ((Study) entity).getStudyName(), "View project " + ((Study) entity).getStudyName(), "projects/" + ((Study) entity).getStudyId()));
         }
         return result;
     }
