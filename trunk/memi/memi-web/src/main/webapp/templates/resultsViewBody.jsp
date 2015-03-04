@@ -19,8 +19,6 @@
                 <%--Main Tabs--%>
             <ul>
                 <li>
-                        <%--<a title="Overview"--%>
-                        <%--href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/overview?runId=${model.sample.id}"/>"><span>Overview</span></a>--%>
                     <a title="Overview"
                        href="<c:url value="${baseURL}/projects/${model.run.externalProjectId}/samples/${model.run.externalSampleId}/runs/${model.run.externalRunId}/results/overview/versions/${model.analysisJob.pipelineRelease.releaseVersion}"/>"><span>Overview</span></a>
                 </li>
@@ -144,7 +142,7 @@
         var form = $('<form/>', {
             id:'pngExportForm',
             name:'pngExportForm',
-            action:"<c:url value="${baseURL}/sample/${model.sample.sampleId}/export?runId=${model.sample.id}"/>",
+            action:"<c:url value="${baseURL}/projects/${model.run.externalProjectId}/samples/${model.run.externalSampleId}/runs/${model.run.externalRunId}/results/versions/${model.analysisJob.pipelineRelease.releaseVersion}/export"/>",
             method:'POST',
             enctype:'text/plain',
             css:{ display:'none' }
@@ -213,7 +211,7 @@
         var form = $('<form/>', {
             id:'svgExportForm',
             name:'svgExportForm',
-            action:"<c:url value="${baseURL}/sample/${model.sample.sampleId}/export?runId=${model.sample.id}"/>",
+            action:"<c:url value="${baseURL}/projects/${model.run.externalProjectId}/samples/${model.run.externalSampleId}/runs/${model.run.externalRunId}/results/versions/${model.analysisJob.pipelineRelease.releaseVersion}/export"/>",
             method:'POST',
             enctype:'text/plain',
             css:{ display:'none' }

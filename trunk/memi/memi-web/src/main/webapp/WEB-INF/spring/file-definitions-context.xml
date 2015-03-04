@@ -85,7 +85,7 @@
         <property name="linkText" value="Predicted CDS with InterPro matches (FASTA)"/>
         <property name="order" value="7"/>
         <property name="linkTitle" value="Click to download predicted CDS with InterPro matches (FASTA)"/>
-        <property name="linkURL" value="/doExportIPRhitsFile?runId="/>
+        <property name="linkURL" value="/doExportIPRhitsFile"/>
     </bean>
 
     <bean id="predictedORFWithoutAnnotation" autowire-candidate="false"
@@ -97,7 +97,7 @@
         <property name="linkText" value="Predicted ORF without annotation (FASTA)"/>
         <property name="order" value="8"/>
         <property name="linkTitle" value="Click to download predicted ORF without annotation (FASTA)"/>
-        <property name="linkURL" value="/export?contentType=text&amp;exportValue=orfWithoutAnnotation&amp;runId="/>
+        <property name="linkURL" value="/export?contentType=text&amp;exportValue=orfWithoutAnnotation"/>
     </bean>
 
     <bean id="predictedCDSWithoutAnnotation" autowire-candidate="false"
@@ -109,7 +109,7 @@
         <property name="linkText" value="Predicted CDS without annotation (FASTA)"/>
         <property name="order" value="9"/>
         <property name="linkTitle" value="Click to download predicted CDS without annotation (FASTA)"/>
-        <property name="linkURL" value="/export?contentType=text&amp;exportValue=cdsWithoutAnnotation&amp;runId="/>
+        <property name="linkURL" value="/export?contentType=text&amp;exportValue=cdsWithoutAnnotation"/>
     </bean>
 
 
