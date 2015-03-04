@@ -16,7 +16,7 @@ public class FunctionalAnalysisResult {
 
 
     public FunctionalAnalysisResult() {
-        this(new InterProMatchesSection(new ArrayList<InterProEntry>(0), 0));
+        this(new InterProMatchesSection(new ArrayList<InterProEntry>(0), new ArrayList<InterProEntry>(0), 0));
     }
 
     public FunctionalAnalysisResult(InterProMatchesSection interProMatchesSection) {
