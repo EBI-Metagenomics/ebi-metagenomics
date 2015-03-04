@@ -116,8 +116,12 @@ public class AnalysisJob implements Comparator<AnalysisJob>, SecureEntity {
     }
 
     public String getCompleteTime() {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        return formatter.format(completeTime.getTime());
+        if (this.completeTime != null) {
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            return formatter.format(this.completeTime.getTime());
+        } else {
+            return "N/A";
+        }
     }
 
     public void setCompleteTime(Calendar completeTime) {

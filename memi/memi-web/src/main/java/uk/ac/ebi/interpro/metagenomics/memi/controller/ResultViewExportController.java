@@ -77,7 +77,7 @@ public class ResultViewExportController extends AbstractResultViewController {
      * @param response
      * @throws IOException
      */
-    @RequestMapping(value = "/projects/{projectId}/samples/{sampleId}/runs/{runId}/export", method = RequestMethod.POST)
+    @RequestMapping(value = MGPortalURLCollection.PROJECT_SAMPLE_RUN_RESULTS_IMAGE_EXPORT, method = RequestMethod.POST)
     public void doHandleSampleViewPostExports(@PathVariable final String projectId,
                                               @PathVariable final String sampleId,
                                               @PathVariable final String runId,
