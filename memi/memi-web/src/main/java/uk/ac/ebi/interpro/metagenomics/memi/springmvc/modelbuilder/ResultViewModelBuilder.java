@@ -284,12 +284,16 @@ public class ResultViewModelBuilder extends AbstractViewModelBuilder<ResultViewM
      * @return
      */
     protected static FunctionalAnalysisResult loadInterProMatchesFromCSV(List<String[]> rows) {
-        List<InterProEntry> result = new ArrayList<InterProEntry>();
+        List<InterProEntry> fullResults = new ArrayList<InterProEntry>();
+        List<InterProEntry> condensedResults = new ArrayList<InterProEntry>();
         log.info("Processing interpro result summary file...");
 
         int totalReadsCount = 0;
+        int otherMatchesReadsCount = 0;
+        final int maxNumCondensedResults = 10;
         if (rows != null) {
-            for (String[] row : rows) {
+            for (int i = 0; i < rows.size(); i++) {
+                String[] row = rows.get(i);
                 if (row.length == 3) {
                     String entryID = row[0];
                     String entryDesc = row[1];
@@ -298,18 +302,29 @@ public class ResultViewModelBuilder extends AbstractViewModelBuilder<ResultViewM
                     entryDesc = entryDesc.replaceAll("\'", "");
                     int numOfEntryHits = Integer.parseInt(row[2]);
                     if (entryID != null && entryID.trim().length() > 0) {
-                        result.add(new InterProEntry(entryID, entryDesc, numOfEntryHits));
+                        fullResults.add(new InterProEntry(entryID, entryDesc, numOfEntryHits));
+                        if (i < maxNumCondensedResults) {
+                            // Only store the top results in the condensed list
+                            condensedResults.add(new InterProEntry(entryID, entryDesc, numOfEntryHits));
+                        }
+                        else {
+                            otherMatchesReadsCount += numOfEntryHits;
+                        }
                     }
                     totalReadsCount += numOfEntryHits;
                 } else {
                     log.warn("Row size is not the expected one.");
                 }
             }
+            if (otherMatchesReadsCount > 0) {
+                // Add on the "other matches" entry at the end of the condensed list
+                condensedResults.add(new InterProEntry("Other matches", "Other matches", otherMatchesReadsCount));
+            }
         } else {
             log.warn("Didn't get any data from InterPro result summary file. There might be some fundamental change to this file" +
                     "(maybe in the near past), which affects this parsing process!");
         }
-        return new FunctionalAnalysisResult(new InterProMatchesSection(result, totalReadsCount));
+        return new FunctionalAnalysisResult(new InterProMatchesSection(fullResults, condensedResults, totalReadsCount));
     }
 
     protected static String encodeSingleQuoteMarks(String entryDesc) {

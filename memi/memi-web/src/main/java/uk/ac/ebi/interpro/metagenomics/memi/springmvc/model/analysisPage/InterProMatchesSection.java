@@ -12,7 +12,9 @@ import java.util.List;
  */
 public class InterProMatchesSection {
 
-    private List<InterProEntry> interProEntryList;
+    private List<InterProEntry> interProEntryList; // Full list
+
+    private List<InterProEntry> condensedInterProEntryList; // Top matches only, then an "other matches" entry
 
     private int totalReadsCount;
 
@@ -20,8 +22,9 @@ public class InterProMatchesSection {
 
     private List<String> colorCodeList;
 
-    public InterProMatchesSection(List<InterProEntry> interProEntryList, int totalReadsCount) {
+    public InterProMatchesSection(List<InterProEntry> interProEntryList, List<InterProEntry> condensedInterProEntryList, int totalReadsCount) {
         this.interProEntryList = interProEntryList;
+        this.condensedInterProEntryList = condensedInterProEntryList;
         this.totalReadsCount = totalReadsCount;
         init();
     }
@@ -35,6 +38,10 @@ public class InterProMatchesSection {
 
     public List<InterProEntry> getInterProEntryList() {
         return interProEntryList;
+    }
+
+    public List<InterProEntry> getCondensedInterProEntryList() {
+        return condensedInterProEntryList;
     }
 
     public int getTotalReadsCount() {
