@@ -741,6 +741,7 @@ width: 972px; text-align: left;}
 
 .separator {margin: 20px 9px 9px 9px; height:1px; display:block; background: url(../img/bgd_sep_dot.gif) repeat-x 0 -5px; clear:right;} /*not used */
 
+.study_desc {margin-top:20px;}
 /*********************** FORMS ************************/
 form legend {
 background-color: #e5e5e5;
