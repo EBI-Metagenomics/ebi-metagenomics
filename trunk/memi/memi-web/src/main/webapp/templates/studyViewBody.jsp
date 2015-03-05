@@ -39,9 +39,9 @@
 </c:if>
 
 
-<p><span>Last updated: ${model.study.formattedLastReceived}</span></p>
+<p class="project_upd_date">Last updated: ${model.study.formattedLastReceived}</p>
 
-<h3 id="study_desc" style="margin-top:30px;">Description </h3>
+<h3 class="study_desc">Description</h3>
 
 <div class="output_form">
     <c:choose>
@@ -140,10 +140,10 @@ Contact name: (not given)
         <table border="1" class="result">
             <thead>
             <tr>
-                <th scope="col" abbr="Sname" class="h_left">Sample name</th>
-                <th scope="col" abbr="Pname">Sample ID</th>
-                <th scope="col" abbr="Pname">Collection date</th>
-                <th scope="col" abbr="Source" width="140px">Source</th>
+                <th scope="col" class="h_left">Sample name</th>
+                <th scope="col" >Sample ID</th>
+                <th scope="col">Collection date</th>
+                <th scope="col" width="140px">Source</th>
             </tr>
             </thead>
             <tbody>
