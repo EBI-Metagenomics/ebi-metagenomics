@@ -3,12 +3,11 @@
 
 <c:choose>
     <c:when test="${not empty model.sample}">
+       <a href="<c:url value="${baseURL}/pipelines/${model.analysisJob.pipelineRelease.releaseVersion}"/>"> <div class="icon_pipeline_v anim" title="Data analysed with pipeline v.${model.analysisJob.pipelineRelease.releaseVersion}">Pipeline v.${model.analysisJob.pipelineRelease.releaseVersion}</div></a>
 
-        <div class="title_tab">
-            <span class="subtitle">Run <span>(${model.run.externalRunId})</span><span style="float: right;" class="subtitle">Pipeline Version: ${model.analysisJob.pipelineRelease.releaseVersion}</span></span>
+        <h2 class="fl_uppercase_title run_title">Run id <span>${model.run.externalRunId}</span></h2>
 
-            <h2 class="fl_uppercase_title">${model.sample.sampleName}</h2>
-        </div>
+
 
         <div id="img_div" style="position: fixed; top: 9px; right: 38px; z-index: 10; "></div>
         <%--container used to convert   google chart into image--%>
