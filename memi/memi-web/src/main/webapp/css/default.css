@@ -1671,3 +1671,7 @@ ul.sample_list li {list-style: none; display: inline;}
 #pca .rChart {float: left; width:33%;/*height:500px;*/border:0px red solid;}
 #stack .rChart {/*border:1px red solid;*/}
 #heatmap img { max-width: 100%; height: auto; /*width:850px;*/ /*remove width from there as it should be defined right in the export parameters of R*/}
+
+/*icon pipeline*/
+.icon_pipeline_v {text-shadow:  rgba(0, 0, 0, 0.2) 1px 1px 0px;background-color:#E4E4E4; border-radius: 2px;cursor: pointer; color:#676767; margin-right:9px;border:1px solid #DADADA;padding:4px 8px;position: absolute;top: 18px; right: 18px;  opacity: 0.6; filter: alpha(opacity = 60);  }
+.icon_pipeline_v:hover {opacity: 1; filter: alpha(opacity = 100); }
