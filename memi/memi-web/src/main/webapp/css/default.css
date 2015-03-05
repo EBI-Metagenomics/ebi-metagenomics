@@ -1378,6 +1378,8 @@ img.ui-datepicker-trigger {float:left; /*solve a bug with chromium*/}
 
 .title_tab_p {margin-top:0.83em;}
 .title_tab_p h2 {margin-top:0;}
+.run_title {margin-top:9px;}
+.run_title span {font-size: 80%;}
 
 /*.sample_comp_result .ui-corner-top,*/ .sample_ana .ui-corner-top {border-top-right-radius: 0px;border-top-left-radius: 0px;}
 .sample_ana .ui-widget-content a {color:#188960;}
