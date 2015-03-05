@@ -53,7 +53,7 @@
         </c:otherwise>
     </c:choose>
 
-    <p style="font-size:110%;"><c:out value="${studyAbstract}"/></p>
+    <p class="study_desc_text"><c:out value="${studyAbstract}"/></p>
 
 
     <c:choose>
