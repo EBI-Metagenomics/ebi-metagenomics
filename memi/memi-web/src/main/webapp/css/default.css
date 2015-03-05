@@ -1487,8 +1487,6 @@ li.ui-tabs-active .ico-krona {background: url(../img/ico_graph_krona_on.png) no-
 .sample_comp_result .tab-text {float: left; padding-top: 6px; display: block;}
 .sample_comp option:disabled {color: #b6b6b6;}
 
-.main_tab_content {width:70%;}
-
 /*icon to download table, raw data or image*/
 .sample_ana #interpro-chart li.ico-downl.ui-tabs-selected {border:1px red solid; cursor:pointer;} /*keep click available for download*/
 .sample_ana #interpro-chart li.ico-downl.ui-tabs-selected a {cursor:pointer;} /*keep click available for download*/
