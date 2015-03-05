@@ -16,7 +16,7 @@
         <h3 id="sample_desc">Description</h3>
 
 
-        <div class="output_form">
+        <div class="output_form" id="large">
             <c:choose>
                 <c:when test="${not empty model.sample.sampleDescription}">
                     <c:set var="sampleDescription" value="${model.sample.sampleDescription}"/>
@@ -38,17 +38,20 @@
 
             <div class="result_row"><label>Project:</label><span><a title="${model.sample.study.studyName}" href="<c:url value="${baseURL}/projects/${model.sample.study.studyId}"/>">${model.sample.study.studyName} (${model.sample.study.studyId})</a></span>
                        </div>
-            <div class="result_row"><label>Experiment type:</label><span> ${model.analysisJob.experimentType}</span>
-            </div>
+
         </div>
         <%--END DESCRIPTION--%>
 
         <%--BEGIN ANALYSIS--%>
-        <h3 id="sample_desc">Analysis</h3>
+        <h3 id="sample_desc">Data analysis</h3>
 
         <div class="output_form" id="large">
-            <div class="result_row"><label>Pipeline Version:</label><span><a title="Pipeline release" href="<c:url value="${baseURL}/pipelines/${model.analysisJob.pipelineRelease.releaseVersion}"/>">${model.analysisJob.pipelineRelease.releaseVersion}</a> (analysed on: ${model.analysisJob.completeTime})</span>
+            <div class="result_row"><label>Experiment type:</label><span class="capitalize"> ${model.analysisJob.experimentType}</span>
+                                  </div>
+            <div class="result_row"><label>Pipeline version:</label><span><a title="Pipeline release" href="<c:url value="${baseURL}/pipelines/${model.analysisJob.pipelineRelease.releaseVersion}"/>">${model.analysisJob.pipelineRelease.releaseVersion}</a></span>
             </div>
+            <div class="result_row"><label>Analysis date:</label><span>${model.analysisJob.completeTime}</span>
+                       </div>
         </div>
         <%--END ANALYSIS--%>
 
@@ -104,9 +107,8 @@
                             <c:set var="environmentalBiome" value="${notGivenId}"/>
                         </c:otherwise>
                     </c:choose>
-                    <div class="result_row"><label>Biome:</label> <span class="fl_uppercase">${fn:toLowerCase(environmentalBiome)}</span>
+                    <div class="result_row"><label>Biome:</label> <span class="fl_uppercase" id="env">${fn:toLowerCase(environmentalBiome)}</span>
                     </div>
-
                     <c:choose>
                         <c:when test="${not empty model.sample.environmentalFeature}">
                             <c:set var="environmentalFeature" value="${model.sample.environmentalFeature}"/>
