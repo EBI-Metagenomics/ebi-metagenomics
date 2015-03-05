@@ -8,7 +8,17 @@
     <h2 class="fl_uppercase_title">${sample.sampleName}</h2>
 </div>
 
+<h3 class="study_desc">Description</h3>
+
+<div class="output_form" id="large">
+
+    <div class="result_row"><label>Project name:</label><span><a title="${sample.study.studyName}" href="<c:url value="${baseURL}/projects/${sample.study.studyId}"/>">${sample.study.studyName} (${sample.study.studyId})</a></span>
+                           </div>
+
+</div>
+
 <h3 id="samples_id">Associated runs</h3>
+
 <c:choose>
     <c:when test="${empty analysisJobs}">
         <p>
