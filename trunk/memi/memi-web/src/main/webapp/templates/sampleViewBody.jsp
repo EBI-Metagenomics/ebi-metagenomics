@@ -1,13 +1,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<div class="title_tab">
-    <span class="subtitle">Sample <span>(${sample.sampleId})</span></span>
+
+<div class="title_tab_p">
+    <span class="subtitle">Sample overview <span>(${sample.sampleId})</span></span>
 
     <h2 class="fl_uppercase_title">${sample.sampleName}</h2>
 </div>
 
-<h3 id="samples_id">Associated runs and analysis results</h3>
+<h3 id="samples_id">Associated runs</h3>
 <c:choose>
     <c:when test="${empty analysisJobs}">
         <p>
@@ -18,16 +19,16 @@
         <table border="1" class="result">
             <thead>
             <tr>
-                <th scope="col" abbr="Pname">External run id</th>
-                <th scope="col" abbr="Pname">Pipeline version</th>
-                <th scope="col" abbr="Pname">Analysed on</th>
-                <th scope="col" abbr="Analysis" width="170px">Analysis results</th>
+                <th scope="col" class="h_left">Run id</th>
+                <th scope="col">Experiment type</th>
+                <th scope="col">Analysed on</th>
+                <th scope="col" width="170px">Analysis results</th>
             </tr>
             </thead>
             <tbody>
             <c:forEach var="analysisJob" items="${analysisJobs}" varStatus="status">
                 <tr>
-                    <td><a title="Overview"
+                    <td class="h_left"><a title="Overview"
                            href="<c:url value="${baseURL}/projects/${sample.study.studyId}/samples/${sample.sampleId}/runs/${analysisJob.externalRunIDs}/results/versions/${analysisJob.pipelineRelease.releaseVersion}"/>">${analysisJob.externalRunIDs}</a>
                     </td>
                     <td><a title="Pipeline release"
