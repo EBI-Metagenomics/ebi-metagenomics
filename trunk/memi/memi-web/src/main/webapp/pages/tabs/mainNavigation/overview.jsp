@@ -36,7 +36,10 @@
             <div class="result_row"><label>Classification:</label><span> <c:out value="${sampleClassification}"/></span>
             </div>
 
-            <div class="result_row"><label>Project:</label><span><a title="${model.sample.study.studyName}" href="<c:url value="${baseURL}/projects/${model.sample.study.studyId}"/>">${model.sample.study.studyName} (${model.sample.study.studyId})</a></span>
+            <div class="result_row"><label>Sample name:</label><span><a title="${model.sample.sampleName}" href="<c:url value="${baseURL}/projects/${model.sample.study.studyId}/samples/${model.sample.sampleId}"/>">${model.sample.sampleName} (${model.sample.sampleId})</a></span>
+                                   </div>
+
+            <div class="result_row"><label>Project name:</label><span><a title="${model.sample.study.studyName}" href="<c:url value="${baseURL}/projects/${model.sample.study.studyId}"/>">${model.sample.study.studyName} (${model.sample.study.studyId})</a></span>
                        </div>
 
         </div>
