@@ -21,7 +21,7 @@
             <tr>
                 <th scope="col" class="h_left">Run id</th>
                 <th scope="col">Experiment type</th>
-                <th scope="col">Analysed on</th>
+                <th scope="col">Analysis date</th>
                 <th scope="col" width="170px">Analysis results</th>
             </tr>
             </thead>
