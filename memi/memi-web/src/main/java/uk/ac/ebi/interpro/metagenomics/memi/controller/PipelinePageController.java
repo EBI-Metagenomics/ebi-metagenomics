@@ -87,7 +87,7 @@ public class PipelinePageController extends AbstractController {
 
     protected List<Breadcrumb> getBreadcrumbs(SecureEntity entity) {
         List<Breadcrumb> result = new ArrayList<Breadcrumb>();
-        result.add(new Breadcrumb("Pipeline Release Archive", "List of pipeline releases", "pipelines"));
+        result.add(new Breadcrumb("Pipeline release archive", "List of pipeline releases", "pipelines"));
         return result;
     }
 
