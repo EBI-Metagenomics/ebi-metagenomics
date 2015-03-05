@@ -386,7 +386,7 @@ text-align:left;
 #small {width:70%;} /*table in analysis result changed in pourcentage for mitigation*/
 
 /*table used on the feedback form, project and sample list*/
-table.result {line-height: 1.2em; border-collapse:separate; width:100%; border-spacing:4px; padding-left:2px; margin-bottom: 18px;}
+table.result {line-height: 1.2em; border-collapse:separate; width:100%; border-spacing:4px; padding-left:7px;/*9px is too much as we have already padding 2px in the table*/ margin-bottom: 18px;}
 #feedback_form table.result { margin-bottom: 0px;}
 
 table.result tbody tr:hover {
@@ -504,6 +504,9 @@ border:0px solid #7C8C99;
 .fl_uppercase_title:first-letter {text-transform: uppercase;}
 
 .sample_desc {font-size:110%;} /*sample description*/
+
+.capitalize {text-transform: capitalize;}
+.project_upd_date {color: #7C8C99; font-style: italic;}
 
 /****************** END TITLE *************************/
 
