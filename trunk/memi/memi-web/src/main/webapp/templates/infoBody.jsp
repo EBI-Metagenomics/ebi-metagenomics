@@ -76,8 +76,27 @@ The ENA only accepts data that is intended for public release. However, any data
 
 
 <h3 id="analysis">How we analyse the data</h3>
-
-<p>Please explore here: <a title="EBI metagenomics - pipeline releases" href="<c:url value="${baseURL}/pipelines"/>">Pipeline Release Archive</a></p>
+<p>The latest version of the pipeline includes the following steps:</p>
+<ol id="p-steps">
+<li>1. Submitted reads*</li>
+<li>2. Reads are processed
+    <ol>
+        <li>2.1. Clipped - low quality ends trimmed and adapter sequences removed using Biopython SeqIO
+            package
+        </li>
+        <li>2.2. Quality filtered - sequences with > 10% undetermined nucleotides removed</li>
+        <li>2.3. Read length filtered - depending on the platform short sequences are removed</li>
+    </ol>
+<li>3. rRNA reads are filtered and clipped if non-rRNA sequence is present using rRNASelector prokaryotic ribosomal RNA hidden Markov models </li>
+<li>4. Taxonomic analysis is performed on 16S rRNA reads using QIIME 1.9.0 (default closed-reference OTU picking protocal with Greengenes 13.8 reference with reverse strand matching enabled)</li>
+<li>5. CDS prediction with FragGeneScan v.1.15 </li>
+<li>6. Functional analysis of predicted proteins from step 5 is performed with InterProScan 5.9 using a subset of databases from
+    InterPro release 50.0 (databases used for analysis: Pfam, TIGRFAM, PRINTS, PROSITE patterns, Gene3d).
+    The Gene Ontology term summary was generated using the following GO slim: goslim_goa
+</li>
+<li>* paired-end reads are merged with SeqPrep v1.1</li>
+</ol>
+<p>Please find here more detail about <a title="EBI metagenomics - pipeline releases" href="<c:url value="${baseURL}/pipelines"/>"> previous versions of the pipeline</a> that were used to analyse our data.</p>
 
 <h3 id="h_cite">How to cite</h3>
 
