@@ -1712,7 +1712,7 @@ ul.sample_list li {list-style: none; display: inline;}
 .block.function {border:1px #DACAEC solid; background-color:#ECE2FF;color: #9B8CBA;}
 .block.taxon {border:1px #ECCACA solid; background-color:#FAEBD7;color: #A86363;}
 
-.qclist {font-size:90%;position: absolute;top: 230px;left: 72px;color: #777;line-height: 1.2;}
+.qclist {font-size:90%;position: absolute;top: 236px;left: 72px;color: #777;line-height: 1.2;}
 
 .arrow_pip {display:inline-block;position: relative;background: grey;padding: 2px; width: 0px; margin-left:2px;margin-right:2px;}
 .arrow_pip:after {left: 100%;top: 50%; border: solid rgba(0, 0, 0, 0);content: " ";height: 0;width: 0;position: absolute; pointer-events: none;  border-color: rgba(24, 33, 38, 0);border-left-color: grey; border-width: 5px;margin-top: -5px;}
