@@ -45,7 +45,7 @@
                     </td>
                     <td>${analysisJob.completeTime}</td>
                     <td>
-                        <a title="Taxonomy analysis" class="list_sample"
+                        <a title="Taxonomic analysis" class="list_sample"
                            href="<c:url value="${baseURL}/projects/${sample.study.studyId}/samples/${sample.sampleId}/runs/${analysisJob.externalRunIDs}/results/versions/${analysisJob.pipelineRelease.releaseVersion}#ui-id-6"/>">Taxonomy </a>|
                         <a title="Function analysis" class="list_sample"
                            href="<c:url value="${baseURL}/projects/${sample.study.studyId}/samples/${sample.sampleId}/runs/${analysisJob.externalRunIDs}/results/versions/${analysisJob.pipelineRelease.releaseVersion}#ui-id-8"/>">Function </a>|
