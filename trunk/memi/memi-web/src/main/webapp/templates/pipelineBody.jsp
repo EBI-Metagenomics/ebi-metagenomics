@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <h2 style="margin-bottom:0;/*for pipeline image higher*/">Pipeline version ${releaseVersion}</h2>
+
 <c:choose>
     <c:when test="${releaseVersion == '2.0'}">
 
@@ -56,8 +57,8 @@
 
           <div class="qclist"><ul><li>Trim low quality (Trimmomatic)</li>
                   <li>Lenght filtering (Biopython)</li>
-                  <li>Remove duplicates (UCLUST)</li>
-                  <li>Filtering low complex. region (RepeatMasker)</li></ul></div>
+                  <li>Duplicate Removal (UCLUST & Biopython)</li>
+                  <li>Filtering low complexity region (RepeatMasker)</li></ul></div>
 
           <div class="branch">
           <div class="branch1">
@@ -185,7 +186,7 @@
                 </ol>
             </li>
             <li>3. rRNA reads are filtered using rRNASelector (rRNASelector v 1.0.0)</li>
-            <li>4. Taxonomy analysis is performed upon 16s rRNA using Qiime (Qiime v 1.5).</li>
+            <li>4. Taxonomic analysis is performed upon 16s rRNA using Qiime (Qiime v 1.5).</li>
             <li>5. CDS predicted (FragGeneScan v 1.15)</li>
             <li>6. Matches were generated against predicted CDS with InterProScan 5.0 (beta release) using a subset of
                 databases from InterPro release 31.0 (databases used for analysis: Pfam, TIGRFAM, PRINTS, PROSITE
