@@ -26,7 +26,7 @@
                        href="<c:url value="${baseURL}/projects/${model.run.externalProjectId}/samples/${model.run.externalSampleId}/runs/${model.run.externalRunId}/results/qualityControl/versions/${model.analysisJob.pipelineRelease.releaseVersion}"/>"><span>Quality control</span></a>
                 </li>
                 <li><a title="Taxonomy-Analysis"
-                       href="<c:url value="${baseURL}/projects/${model.run.externalProjectId}/samples/${model.run.externalSampleId}/runs/${model.run.externalRunId}/results/taxonomic/versions/${model.analysisJob.pipelineRelease.releaseVersion}"/>"><span>Taxonomy analysis</span></a>
+                       href="<c:url value="${baseURL}/projects/${model.run.externalProjectId}/samples/${model.run.externalSampleId}/runs/${model.run.externalRunId}/results/taxonomic/versions/${model.analysisJob.pipelineRelease.releaseVersion}"/>"><span>Taxonomic analysis</span></a>
                 </li>
                 <li>
                     <a title="Functional-Analysis"
