@@ -3,9 +3,9 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <div class="sample_comp">
-<h2>Sample comparison tool <span class="icon_beta_title">beta</span></h2>
-<p>The comparison is currently based on a summary of Gene Ontology (GO) terms derived from InterPro matches to the selected samples.<br/>
-This sample comparison tool is in <strong>beta version</strong> and undergoing testing. We welcome your feedback and suggestions during this period to improve it.
+<h2>Comparison tool <span class="icon_beta_title">beta</span></h2>
+<p>The comparison is currently based on a summary of Gene Ontology (GO) terms derived from InterPro matches to the selected runs.<br/>
+This comparison tool is in <strong>beta version</strong> and undergoing testing. We welcome your feedback and suggestions during this period to improve it.
 Please <a id="script_feedbackLink" href="javascript:slideFeedbackForm()" title="Give your feedback">get in touch</a> using the feedback button on the right, or by contacting us through <a title="EBI's support & feedback form" href="http://www.ebi.ac.uk/support/metagenomics" class="ext">EBI contact form</a>.
 </p>
 <form:form id="comparison-tool-form-id" method="post" commandName="comparisonForm">
@@ -42,7 +42,7 @@ Please <a id="script_feedbackLink" href="javascript:slideFeedbackForm()" title="
 
             <div id="samples-div">
                 <c:choose><c:when test="${not empty model.submitter}"><h4 id="selected-samples">My samples</h4></c:when>
-                    <c:otherwise><h4 id="selected-samples">Sample list</h4></c:otherwise>
+                    <c:otherwise><h4 id="selected-samples">Run list</h4></c:otherwise>
                 </c:choose>
                 <%-- Is the loading icon necessary? quite fast to load samples in the box
                 <div id="loading"><img src="${pageContext.request.contextPath}/img/compare_load.gif"></div>--%>
@@ -53,7 +53,8 @@ Please <a id="script_feedbackLink" href="javascript:slideFeedbackForm()" title="
                     <c:if test="${not empty sampleError}">
                         <script>
                             //replace info message by error message
-                            $( "#description-content" ).replaceWith( "<div class='error' id='description-content samples.errors'>Please select at least two samples to launch comparison.</div>" ); </script>
+                            $( "#description-content" ).replaceWith( "<div class='error' id='description-content analysisJobIds.errors'>Please select at least two samples to launch comparison.</div>" );
+                        </script>
                     </c:if></div>
             </div>
     </div>
@@ -156,7 +157,7 @@ Please <a id="script_feedbackLink" href="javascript:slideFeedbackForm()" title="
             success:function (data) {
                 $("#analysisJobIds").html(data);
                 var numberTotal = $('#analysisJobIds option').length;
-                document.getElementById("selected-samples").innerHTML = "Sample list <span>(" + numberSelected + " selected out of " + numberTotal + ")</span>";
+                document.getElementById("selected-samples").innerHTML = "Run list <span>(" + numberSelected + " selected out of " + numberTotal + ")</span>";
             },
             error:function (jqXHR, textStatus, errorThrown) {
                 alert("Request failed (unable to retrieve samples): " + textStatus);
@@ -274,12 +275,12 @@ Please <a id="script_feedbackLink" href="javascript:slideFeedbackForm()" title="
     $('#samples-control').click(function() {
         var numberSelected = $('#analysisJobIds :selected').length;
         var numberTotal = $('#analysisJobIds option').length;
-        document.getElementById("selected-samples").innerHTML = "Sample list <span>(" + numberSelected + " selected out of " + numberTotal + ")</span>";
+        document.getElementById("selected-samples").innerHTML = "Run list <span>(" + numberSelected + " selected out of " + numberTotal + ")</span>";
     });
     $('#analysisJobIds').change(function() {
         var numberSelected = $('#analysisJobIds :selected').length;
         var numberTotal = $('#analysisJobIds option').length;
-        document.getElementById("selected-samples").innerHTML = "Sample list <span>(" + numberSelected + " selected out of " + numberTotal + ")</span>";
+        document.getElementById("selected-samples").innerHTML = "Run list <span>(" + numberSelected + " selected out of " + numberTotal + ")</span>";
     });
 
         // Show / hide advanced settings
