@@ -165,7 +165,7 @@
     </c:when>
     <c:otherwise>
         <p>
-        <ol id="pipeline_step">
+        <ol class="pipeline_step">
             <li>1. Reads submitted</li>
             <li>2. Nucleotide sequences processed
                 <ol>
