@@ -57,7 +57,7 @@
 
           <div class="qclist"><ul><li>Trim low quality (Trimmomatic)</li>
                   <li>Lenght filtering (Biopython)</li>
-                  <li>Duplicate Removal (UCLUST & Biopython)</li>
+                  <li>Duplicate Removal (UCLUST & Prefix)</li>
                   <li>Filtering low complexity region (RepeatMasker)</li></ul></div>
 
           <div class="branch">
