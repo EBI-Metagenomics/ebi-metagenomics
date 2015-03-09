@@ -57,6 +57,7 @@ public class PipelinePageController extends AbstractController {
                         }
                         Set<PipelineTool> pipelineTools = pipelineRelease.getPipelineTools();
                         model.addAttribute("releaseVersion", releaseVersion);
+                        model.addAttribute("releaseDate", pipelineRelease.getReleaseDate());
                         model.addAttribute("pipelineTools", pipelineTools);
                     }
                 });
