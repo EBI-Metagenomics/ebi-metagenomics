@@ -438,6 +438,8 @@ margin:0.83em 0;/*added for compliance*/
 }
 #list-data h2 {margin:0;} /*added for compliance*/
 
+h2 span {font-size:80%; color: #7c8c99;}
+
 .subtitle {font-size:150%;color: #066; margin-left: 9px;margin-top:20px;}
 .subtitle span {font-size:80%; color: #7c8c99;}
 
@@ -1701,6 +1703,7 @@ ul.sample_list li {list-style: none; display: inline;}
 .mainbranch {float:left;margin-top:57px;}
 .branch {float:left;}
 .branch1 {border: 0px red solid;}
+
 .branch2 {border: 0px blue solid;margin-top:20px;}
 
 .block, .block-nt, .block-lb {font-size:90%;padding: 8px; display:inline-block; text-align:center; /*vertical-align: middle;*/}
