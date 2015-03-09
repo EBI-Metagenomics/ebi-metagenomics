@@ -151,7 +151,7 @@
                         package
                     </li>
                     <li>2.2. Quality filtered - sequences with > 10% undetermined nucleotides removed</li>
-                    <li>2.3. Read length filtered - depending on the platform short sequences are removed</li>
+                    <li>2.3. Read length filtered - sequences < 100 nt in length removed</li>
                 </ol>
             <li>3. rRNA reads are filtered and clipped if non-rRNA sequence is present using rRNASelector prokaryotic ribosomal RNA hidden Markov models </li>
             <li>4. Taxonomic analysis is performed on 16S rRNA reads using QIIME 1.9.0 (default closed-reference OTU picking protocal with Greengenes 13.8 reference with reverse strand matching enabled)</li>
@@ -175,9 +175,8 @@
                         package
                     </li>
                     <li>2.2. Quality filtered - sequences with > 10% undetermined nucleotides removed</li>
-                    <li>2.3. Read length filtered - depending on the platform short sequences are removed</li>
-                    <li>2.4. Duplicate sequences removed - clustered on 99% identity (UCLUST v 1.1.579),
-                        representative sequence chosen
+                    <li>2.3. Read length filtered - sequences < 100 nt in length removed</li>
+                    <li>2.4. Duplicate sequences removed - clustered on 99% identity (UCLUST v 1.1.579) for LS454 or on 50nt prefix identity (Qiime v1.15) for other sequencing platforms and one representative sequence chosen
                     </li>
                     <li>2.5. Repeat masked - RepeatMasker (open-3.2.2), removed reads with 50% or more
                         nucleotides
