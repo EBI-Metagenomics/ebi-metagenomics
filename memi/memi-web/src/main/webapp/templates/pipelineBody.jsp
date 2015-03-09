@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<h2 style="margin-bottom:0;/*for pipeline image higher*/">Pipeline version ${releaseVersion}</h2>
+<h2 style="margin-bottom:0;/*for pipeline image higher*/">Pipeline version ${releaseVersion}  <span>- ${releaseDate}</span></h2>
 
 <c:choose>
     <c:when test="${releaseVersion == '2.0'}">
