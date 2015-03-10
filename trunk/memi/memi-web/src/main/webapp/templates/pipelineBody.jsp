@@ -153,7 +153,7 @@
                     <li>2.2. Quality filtered - sequences with > 10% undetermined nucleotides removed</li>
                     <li>2.3. Read length filtered - sequences < 100 nt in length removed</li>
                 </ol>
-            <li>3. rRNA reads are filtered and clipped if non-rRNA sequence is present using rRNASelector prokaryotic ribosomal RNA hidden Markov models </li>
+            <li>3. rRNA recognized by rRNASelector prokaryotic ribosomal RNA hidden Markov models reads are masked</li>
             <li>4. Taxonomic analysis is performed on 16S rRNA reads using QIIME 1.9.0 (default closed-reference OTU picking protocal with Greengenes 13.8 reference with reverse strand matching enabled)</li>
             <li>5. CDS prediction with FragGeneScan v.1.15 </li>
             <li>6. Functional analysis of predicted proteins from step 5 is performed with InterProScan 5.9 using a subset of databases from
