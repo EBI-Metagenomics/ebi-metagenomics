@@ -448,8 +448,6 @@
         // Creation of legend items only if the charts exist (if the barchart for biological process exists others should exist as well)
         if($('#biological_process_bars').length != 0) {
             var sampleNum = "${fn:length(analysisJobs)}"; // Retrieving number of samples
-            var sampleString = "${sampleString}"; // Retrieving identifiers of samples
-            var sampleArr = sampleString.split(','); // Creation of an array of sample identifiers
             // Retrieving charts and charts series as JS vars
             var bioChart = $('#biological_process_bars').highcharts();
             var molChart = $('#molecular_function_bars').highcharts();
@@ -458,15 +456,15 @@
             var molChartSeries = molChart.series;
             var cellChartSeries = cellChart.series;
             // Creation of the legend items for each sample
-            var i;
-            for (i = 0; i < sampleNum; i++)
+            for (var i = 0; i < sampleNum; i++)
             {
 //                var currentColor = cellChartSeries[i].color;
                 var currentColor = bioChartSeries[i].color;
+                var currentName =  bioChartSeries[i].name;
                 $('<div/>', {
                     'id': 'legend_' + i,
                     'class': 'legend-item',
-                    'html': '<div class="legend-rectangle" style="background:'+ currentColor + ';"></div><span> '+sampleArr[i]+'</span>',
+                    'html': '<div class="legend-rectangle" style="background:'+ currentColor + ';"></div><span> '+currentName+'</span>',
                     'click': function () {
                         var legInd = this.id.split('_')[1]; // Gives the series index to hide / show when clicking on the legend item
                         // Check if element is visible on biological process chart but could be whatever we want
@@ -502,9 +500,6 @@
     $(document).ready(function() {
         if($('#biological_process_pca_12').length != 0) {
             var sampleNum = "${fn:length(analysisJobs)}";
-            var sampleString = "${sampleString}";
-            var sampleArr = sampleString.split(',');
-            var i;
             var bioChart = $('#biological_process_pca_12').highcharts();
             var molChart = $('#molecular_function_pca_12').highcharts();
             var cellChart = $('#cellular_component_pca_12').highcharts();
@@ -514,13 +509,14 @@
             // These two lines are really ugly but allow to correct the 'moving axis' display bug
             bioChartSeries[0].hide();
             bioChartSeries[0].show();
-            for (i = 0; i < sampleNum; i++)
+            for (var i = 0; i < sampleNum; i++)
             {
                 var currentColor = bioChartSeries[i].color;
+                var currentName =  bioChartSeries[i].name;
                 $('<div/>', {
                     'id': 'pca_legend_'+i,
                     'class': 'legend-item',
-                    'html': '<div class="legend-rectangle" style="background:'+ currentColor + ';"></div><span> '+sampleArr[i]+'</span>',
+                    'html': '<div class="legend-rectangle" style="background:'+ currentColor + ';"></div><span> '+currentName+'</span>',
                     'click': function () {
                         var legInd = this.id.split('_')[2];
                         // Set to biological process chart but could be whatever we want

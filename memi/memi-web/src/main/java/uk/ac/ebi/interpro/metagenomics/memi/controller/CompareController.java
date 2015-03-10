@@ -230,7 +230,6 @@ public class CompareController extends AbstractController implements IController
                         model.addAttribute("study", studyDAO.read(Long.valueOf(comparisonForm.getStudy())));
                         model.addAttribute("analysisJobs", analysisJobs);
                         // Atribute needed for functions of the result page
-                        model.addAttribute("sampleString", rFriendlySampleNames);
                         model.addAttribute("data", usedData);
                         // Enable this if you plan to handle the 'file is empty' error by showing missing samples on the result page
                         //  model.addAttribute("missingSamples", missingSampleList);
