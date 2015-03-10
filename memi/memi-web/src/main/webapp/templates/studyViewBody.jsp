@@ -49,7 +49,7 @@
             <c:set var="studyAbstract" value="${model.study.studyAbstract}"/>
         </c:when>
         <c:otherwise>
-            <c:set var="studyAbstract" value="notGivenId"/>
+            <c:set var="studyAbstract" value="${notGivenId}"/>
         </c:otherwise>
     </c:choose>
 
