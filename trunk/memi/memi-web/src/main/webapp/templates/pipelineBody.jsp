@@ -176,7 +176,7 @@
                     </li>
                     <li>2.2. Quality filtered - sequences with > 10% undetermined nucleotides removed</li>
                     <li>2.3. Read length filtered - sequences < 100 nt in length removed</li>
-                    <li>2.4. Duplicate sequences removed - clustered on 99% identity (UCLUST v 1.1.579) for LS454 or on 50nt prefix identity (Qiime v1.15) for other sequencing platforms and one representative sequence chosen
+                    <li>2.4. Duplicate sequences removed - clustered on 99% identity (UCLUST v 1.1.579) for LS454 or on 50nt prefix identity (using pick_otus.py script which is part of Qiime v1.15) for other sequencing platforms and one representative sequence chosen
                     </li>
                     <li>2.5. Repeat masked - RepeatMasker (open-3.2.2), removed reads with 50% or more
                         nucleotides
