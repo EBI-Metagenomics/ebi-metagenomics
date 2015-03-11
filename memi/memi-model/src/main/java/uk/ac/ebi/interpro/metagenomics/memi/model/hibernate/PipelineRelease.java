@@ -43,7 +43,7 @@ public class PipelineRelease implements Comparator<PipelineRelease> {
     @Column(name = "RELEASE_DATE", nullable = false)
     private Calendar releaseDate;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.pipelineRelease", cascade=CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.pipelineRelease")
     @Sort(type = SortType.COMPARATOR, comparator = PipelineReleaseTool.PipelineReleaseToolComparator.class)
     private SortedSet<PipelineReleaseTool> pipelineReleaseTools;
 
