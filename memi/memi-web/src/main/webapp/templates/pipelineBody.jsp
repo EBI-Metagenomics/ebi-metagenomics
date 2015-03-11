@@ -4,145 +4,135 @@
 <c:choose>
     <c:when test="${releaseVersion == '2.0'}">
 
-<!-- Pipeline chart for version 2.0-->
-<div class="block_wrapper">
+        <!-- Pipeline chart for version 2.0-->
+        <div class="block_wrapper">
 
-<div class="block_container">
+            <div class="block_container">
 
-<div class="mainbranch">
-<div class="block-lb" id="item_01">Raw reads</div><div class="arrow_pip"></div>
-<div class="block step1" id="item_02">QC</div><div class="arrow_pip"></div>
-<div class="block-lb" id="item_03">Processed reads</div><div class="arrow_pip"></div>
-<div class="block step2" id="item_04">rRNASelector</div>
-</div>
+                <div class="mainbranch">
+                    <div class="block-lb" id="item_01">Raw reads</div><div class="arrow_pip"></div>
+                    <div class="block step1" id="item_02">QC</div><div class="arrow_pip"></div>
+                    <div class="block-lb" id="item_03">Processed reads</div><div class="arrow_pip"></div>
+                    <div class="block step2" id="item_04">rRNASelector</div>
+                </div>
 
-<div class="qclist"><ul><li>Trim low quality (Trimmomatic)</li>
-        <li>Length filtering (Biopython)</li></ul></div>
+                <div class="qclist"><ul><li>Trim low quality (Trimmomatic)</li>
+                    <li>Length filtering (Biopython)</li></ul></div>
 
-<div class="branch">
-<div class="branch1">
-<div class="arrow_pip rotate_f"></div><div class="block-lb" id="item_05">Reads without rRNA</div><div class="arrow_pip"></div>
-<div class="block step3 function" id="item_06">FragGeneScan</div><div class="arrow_pip"></div>
-<div class="block-lb" id="item_07">Reads with pcds</div><div class="arrow_pip"></div>
-<div class="block step4 function" id="item_08">InterProScan</div>
-<div class="block-nt">Functional analysis</div>
-</div> <!-- /branch1 -->
+                <div class="branch">
+                    <div class="branch1">
+                        <div class="arrow_pip rotate_f"></div><div class="block-lb" id="item_05">Reads without rRNA</div><div class="arrow_pip"></div>
+                        <div class="block step3 function" id="item_06">FragGeneScan</div><div class="arrow_pip"></div>
+                        <div class="block-lb" id="item_07">Reads with pcds</div><div class="arrow_pip"></div>
+                        <div class="block step4 function" id="item_08">InterProScan</div>
+                        <div class="block-nt">Functional analysis</div>
+                    </div> <!-- /branch1 -->
 
-<div class="branch2">  <div class="arrow_pip rotate_t"></div>
-<div class="block-lb" id="item_09">Reads with rRNA</div>
- <div class="arrow_pip"></div>
-<div class="block-lb" id="item_11">16s rRNA</div>
-<div class="arrow_pip"></div>
-<div class="block step5 taxon" id="item_10">QIIME</div>
-<div class="block-nt">Taxonomic analysis</div>
-</div><!-- /branch2 -->
+                    <div class="branch2">  <div class="arrow_pip rotate_t"></div>
+                        <div class="block-lb" id="item_09">Reads with rRNA</div>
+                        <div class="arrow_pip"></div>
+                        <div class="block-lb" id="item_11">16s rRNA</div>
+                        <div class="arrow_pip"></div>
+                        <div class="block step5 taxon" id="item_10">QIIME</div>
+                        <div class="block-nt">Taxonomic analysis</div>
+                    </div><!-- /branch2 -->
 
- </div><!-- /branch -->
-</div> <!-- /container -->
-</div>   <!-- /block_wrapper -->
-<!-- /pipeline chart version 2.0-->
+                </div><!-- /branch -->
+            </div> <!-- /container -->
+        </div>   <!-- /block_wrapper -->
+        <!-- /pipeline chart version 2.0-->
     </c:when>
-      <c:otherwise>
-          <!-- Pipeline chart for version 1.0-->
-          <div class="block_wrapper">
+    <c:otherwise>
+        <!-- Pipeline chart for version 1.0-->
+        <div class="block_wrapper">
 
-          <div class="block_container">
+            <div class="block_container">
 
-          <div class="mainbranch">
-          <div class="block-lb" id="item_01">Raw reads</div><div class="arrow_pip"></div>
-          <div class="block step1" id="item_02">QC</div><div class="arrow_pip"></div>
-          <div class="block-lb" id="item_03">Processed reads</div><div class="arrow_pip"></div>
-          <div class="block step2" id="item_04">rRNASelector</div>
-          </div>
+                <div class="mainbranch">
+                    <div class="block-lb" id="item_01">Raw reads</div><div class="arrow_pip"></div>
+                    <div class="block step1" id="item_02">QC</div><div class="arrow_pip"></div>
+                    <div class="block-lb" id="item_03">Processed reads</div><div class="arrow_pip"></div>
+                    <div class="block step2" id="item_04">rRNASelector</div>
+                </div>
 
-          <div class="qclist"><ul><li>Trim low quality (Trimmomatic)</li>
-                  <li>Length filtering (Biopython)</li>
-                  <li>Duplicate Removal (UCLUST & Prefix)</li>
-                  <li>Filtering low complexity region (RepeatMasker)</li></ul></div>
+                <div class="qclist"><ul><li>Trim low quality (Trimmomatic)</li>
+                    <li>Length filtering (Biopython)</li>
+                    <li>Duplicate Removal (UCLUST & Prefix)</li>
+                    <li>Filtering low complexity region (RepeatMasker)</li></ul></div>
 
-          <div class="branch">
-          <div class="branch1">
-          <div class="arrow_pip rotate_f"></div><div class="block-lb" id="item_05">Reads without rRNA</div><div class="arrow_pip"></div>
-          <div class="block step3 function" id="item_06">FragGeneScan</div><div class="arrow_pip"></div>
-          <div class="block-lb" id="item_07">Reads with pcds</div><div class="arrow_pip"></div>
-          <div class="block step4 function" id="item_08">InterProScan</div>
-          <div class="block-nt">Functional analysis</div>
-          </div> <!-- /branch1 -->
+                <div class="branch">
+                    <div class="branch1">
+                        <div class="arrow_pip rotate_f"></div><div class="block-lb" id="item_05">Reads without rRNA</div><div class="arrow_pip"></div>
+                        <div class="block step3 function" id="item_06">FragGeneScan</div><div class="arrow_pip"></div>
+                        <div class="block-lb" id="item_07">Reads with pcds</div><div class="arrow_pip"></div>
+                        <div class="block step4 function" id="item_08">InterProScan</div>
+                        <div class="block-nt">Functional analysis</div>
+                    </div> <!-- /branch1 -->
 
-          <div class="branch2">  <div class="arrow_pip rotate_t"></div>
-          <div class="block-lb" id="item_09">Reads with rRNA</div>
-           <div class="arrow_pip"></div>
-          <div class="block-lb" id="item_11">16s rRNA</div>
-          <div class="arrow_pip"></div>
-          <div class="block step5 taxon" id="item_10">QIIME</div>
-          <div class="block-nt">Taxonomic analysis</div>
-          </div><!-- /branch2 -->
+                    <div class="branch2">  <div class="arrow_pip rotate_t"></div>
+                        <div class="block-lb" id="item_09">Reads with rRNA</div>
+                        <div class="arrow_pip"></div>
+                        <div class="block-lb" id="item_11">16s rRNA</div>
+                        <div class="arrow_pip"></div>
+                        <div class="block step5 taxon" id="item_10">QIIME</div>
+                        <div class="block-nt">Taxonomic analysis</div>
+                    </div><!-- /branch2 -->
 
-           </div><!-- /branch -->
-          </div> <!-- /container -->
-          </div>   <!-- /block_wrapper -->
-          <!-- /pipeline chart version 1.0-->
-      </c:otherwise>
-  </c:choose>
+                </div><!-- /branch -->
+            </div> <!-- /container -->
+        </div>   <!-- /block_wrapper -->
+        <!-- /pipeline chart version 1.0-->
+    </c:otherwise>
+</c:choose>
 
 <h3>Pipeline Tools</h3>
 
 <table class="pipeline_table">
-<thead>
- <tr>
-   <th>Tools</th>
-   <th>Version</th>
-   <th>Description</th>
- </tr>
-</thead>
-<tbody>
-<!-- Change table row class for each tool -->
-<c:forEach var="pipelineReleaseTool" items="${pipelineReleaseTools}" varStatus="status">
-    <c:set var="pipelineTool" value="${pipelineReleaseTool.pk.pipelineTool}"/>
-    <c:set var="tool" value="${pipelineTool.toolName}"/>
-    <c:set var="toolGroupId" value="${pipelineReleaseTool.toolGroupId}"/>
-    <c:choose>
+    <thead>
+    <tr>
+        <th>Tools</th>
+        <th>Version</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Change table row class for each tool -->
+    <c:forEach var="pipelineReleaseTool" items="${pipelineReleaseTools}" varStatus="status">
+        <c:set var="pipelineTool" value="${pipelineReleaseTool.pk.pipelineTool}"/>
+        <c:set var="tool" value="${pipelineTool.toolName}"/>
+        <c:set var="toolGroupId" value="${pipelineReleaseTool.toolGroupId}"/>
+        <c:choose>
+            <c:when test="${tool == 'InterProScan' || tool == 'FragGeneScan'}">
+                <tr class="step${toolGroupId} row-function">
+            </c:when>
+            <c:when test="${tool == 'Trimmomatic' || tool == 'Biopython' || tool == 'UCLUST' || tool == 'RepeatMasker' || tool == 'rRNASelector'}">
+                <tr class="step${toolGroupId} row-cb">
+            </c:when>
+            <c:when test="${tool == 'QIIME' }">
+                <tr class="step${toolGroupId} row-taxon">
+            </c:when>
 
-    <c:when test="${tool == 'InterProScan'}">
-        <tr class="step${toolGroupId} row-function">
-    </c:when>
-    <c:when test="${tool == 'Trimmomatic' || tool == 'Biopython' || tool == 'UCLUST' || tool == 'RepeatMasker'}">
-      <tr class="step${toolGroupId} row-cb">
-    </c:when>
-    <c:when test="${tool == 'rRNASelector' }">
-      <tr class="step${toolGroupId} row-cb">
-    </c:when>
-        <c:when test="${tool == 'FragGeneScan' }">
-      <tr class="step${toolGroupId} row-function">
-    </c:when>
-        <c:when test="${tool == 'InterProScan' }">
-         <tr class="step${toolGroupId} row-function">
-       </c:when>
-        <c:when test="${tool == 'QIIME' }">
-           <tr class="step${toolGroupId} row-taxon">
-         </c:when>
+            <c:otherwise>
+                <tr class="step row-cb">
+                <script>
+                    //alert("tool not defined");
+                </script>
+            </c:otherwise>
+        </c:choose>
 
-    <c:otherwise>
-        <tr class="step row-cb">
-        <script>
-              //alert("tool not defined");
-         </script>
-    </c:otherwise>
-    </c:choose>
+        <td ><a class="ext" href="${pipelineTool.webLink}">${pipelineTool.toolName}</a></td>
+        <td>${pipelineTool.toolVersion}</td>
+        <td>${pipelineTool.description}</td>
+        </tr>
 
-   <td ><a class="ext" href="${pipelineTool.webLink}">${pipelineTool.toolName}</a></td>
-   <td>${pipelineTool.toolVersion}</td>
-      <td>${pipelineTool.description}</td>
- </tr>
-
-</c:forEach>
-</tbody>
+    </c:forEach>
+    </tbody>
 </table>
 
 
 
 <h3>Data processing steps</h3>
- <p>
+<p>
 <c:choose>
     <c:when test="${releaseVersion == '2.0'}">
         <ol class="pipeline_step">
@@ -208,27 +198,27 @@
         });
 
         //for step1
-         $('.block.step1').hover(function() {
+        $('.block.step1').hover(function() {
             $('.block.step1, table tbody tr.step1').addClass('highlight');
 
         }, function() {
             $('.block.step1, table tbody tr.step1').removeClass('highlight');
         });
 
-            $('table tbody tr.step1').hover(function() {
+        $('table tbody tr.step1').hover(function() {
             $('.step1').addClass('highlight');
         }, function() {
             $('.step1').removeClass('highlight');
         });
 
-       //for step2
+        //for step2
         $('.block.step2').hover(function() {
             $('.block.step2, table tbody tr.step2').addClass('highlight');
         }, function() {
             $('.block.step2, table tbody tr.step2').removeClass('highlight');
         });
 
-            $('table tbody tr.step2').hover(function() {
+        $('table tbody tr.step2').hover(function() {
             $('.step2').addClass('highlight');
         }, function() {
             $('.step2').removeClass('highlight');
@@ -241,7 +231,7 @@
             $('.block.step3, table tbody tr.step3').removeClass('highlight');
         });
 
-            $('table tbody tr.step3').hover(function() {
+        $('table tbody tr.step3').hover(function() {
             $('.step3').addClass('highlight');
         }, function() {
             $('.step3').removeClass('highlight');
@@ -254,20 +244,20 @@
             $('.block.step4, table tbody tr.step4').removeClass('highlight');
         });
 
-            $('table tbody tr.step4').hover(function() {
+        $('table tbody tr.step4').hover(function() {
             $('.step4').addClass('highlight');
         }, function() {
             $('.step4').removeClass('highlight');
         });
 
-         //for step5
+        //for step5
         $('.block.step5').hover(function() {
             $('.block.step5, table tbody tr.step5').addClass('highlight');
         }, function() {
             $('.block.step5, table tbody tr.step5').removeClass('highlight');
         });
 
-            $('table tbody tr.step5').hover(function() {
+        $('table tbody tr.step5').hover(function() {
             $('.step5').addClass('highlight');
         }, function() {
             $('.step5').removeClass('highlight');
