@@ -239,22 +239,22 @@ INSERT INTO pipeline_tool (tool_name,description,web_link,version,exe_command,in
 
 -- Populate the relation table pipeline_release_tool
 -- For pipeline version 1.0
-INSERT INTO pipeline_release_tool (pipeline_id,tool_id) values (1,1,1);
-INSERT INTO pipeline_release_tool (pipeline_id,tool_id) values (1,2,3);
-INSERT INTO pipeline_release_tool (pipeline_id,tool_id) values (1,3,4);
-INSERT INTO pipeline_release_tool (pipeline_id,tool_id) values (1,4,1);
-INSERT INTO pipeline_release_tool (pipeline_id,tool_id) values (1,5,1);
-INSERT INTO pipeline_release_tool (pipeline_id,tool_id) values (1,6,2);
-INSERT INTO pipeline_release_tool (pipeline_id,tool_id) values (1,7,5);
-INSERT INTO pipeline_release_tool (pipeline_id,tool_id) values (1,8,1);
+INSERT INTO pipeline_release_tool (pipeline_id,tool_id,tool_group_id) values (1,1,1);
+INSERT INTO pipeline_release_tool (pipeline_id,tool_id,tool_group_id) values (1,2,3);
+INSERT INTO pipeline_release_tool (pipeline_id,tool_id,tool_group_id) values (1,3,4);
+INSERT INTO pipeline_release_tool (pipeline_id,tool_id,tool_group_id) values (1,4,1);
+INSERT INTO pipeline_release_tool (pipeline_id,tool_id,tool_group_id) values (1,5,1);
+INSERT INTO pipeline_release_tool (pipeline_id,tool_id,tool_group_id) values (1,6,2);
+INSERT INTO pipeline_release_tool (pipeline_id,tool_id,tool_group_id) values (1,7,5);
+INSERT INTO pipeline_release_tool (pipeline_id,tool_id,tool_group_id) values (1,8,1);
 
 -- For pipeline version 2.0
-INSERT INTO pipeline_release_tool (pipeline_id,tool_id) values (2,1,1);
-INSERT INTO pipeline_release_tool (pipeline_id,tool_id) values (2,2,3);
-INSERT INTO pipeline_release_tool (pipeline_id,tool_id) values (2,9,2);
-INSERT INTO pipeline_release_tool (pipeline_id,tool_id) values (2,10,5);
-INSERT INTO pipeline_release_tool (pipeline_id,tool_id) values (2,11,1);
-INSERT INTO pipeline_release_tool (pipeline_id,tool_id) values (2,12,4);
+INSERT INTO pipeline_release_tool (pipeline_id,tool_id,tool_group_id) values (2,1,1);
+INSERT INTO pipeline_release_tool (pipeline_id,tool_id,tool_group_id) values (2,2,3);
+INSERT INTO pipeline_release_tool (pipeline_id,tool_id,tool_group_id) values (2,9,2);
+INSERT INTO pipeline_release_tool (pipeline_id,tool_id,tool_group_id) values (2,10,5);
+INSERT INTO pipeline_release_tool (pipeline_id,tool_id,tool_group_id) values (2,11,1);
+INSERT INTO pipeline_release_tool (pipeline_id,tool_id,tool_group_id) values (2,12,4);
 
 -- Populate the analysis_job table
 -- Version 1.0
