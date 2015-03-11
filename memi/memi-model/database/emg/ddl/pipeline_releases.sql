@@ -152,6 +152,10 @@ CREATE TABLE pipeline_release_tool (
          PRIMARY KEY (pipeline_id, tool_id)
          );
 
+COMMENT ON COLUMN pipeline_release_tool.tool_group_id
+IS
+  'The tool group identifier allows you to group pipeline tools into different categories. It is mainly used to assign pipeline tools to certain steps in the pipeline workflow. For example, tool group identifiers 1, 2, 3 etc. may represent categories such as quality control, taxonomic and function annotation, gene and rRNA predication.';
+
 GRANT SELECT ON pipeline_release_tool TO "EMGAPP";
 GRANT SELECT ON pipeline_release_tool TO "EMG_USER";
 GRANT ALTER ON pipeline_release_tool TO "EMG_USER";
