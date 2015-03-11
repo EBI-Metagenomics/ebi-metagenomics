@@ -54,7 +54,7 @@ public class PipelineTool implements Comparator<PipelineTool> {
     @Lob
     private String notes;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.pipelineTool", cascade=CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.pipelineTool")
     @Sort(type = SortType.COMPARATOR, comparator = PipelineReleaseTool.PipelineReleaseToolComparator.class)
     private SortedSet<PipelineReleaseTool> pipelineReleaseTools;
 
