@@ -17,7 +17,7 @@
 </div>
 
 <div class="qclist"><ul><li>Trim low quality (Trimmomatic)</li>
-        <li>length filtering (Biopython)</li></ul></div>
+        <li>Length filtering (Biopython)</li></ul></div>
 
 <div class="branch">
 <div class="branch1">
@@ -56,7 +56,7 @@
           </div>
 
           <div class="qclist"><ul><li>Trim low quality (Trimmomatic)</li>
-                  <li>length filtering (Biopython)</li>
+                  <li>Length filtering (Biopython)</li>
                   <li>Duplicate Removal (UCLUST & Prefix)</li>
                   <li>Filtering low complexity region (RepeatMasker)</li></ul></div>
 
@@ -97,27 +97,29 @@
 </thead>
 <tbody>
 <!-- Change table row class for each tool -->
-<c:forEach var="pipelineTool" items="${pipelineTools}" varStatus="status">
+<c:forEach var="pipelineReleaseTool" items="${pipelineReleaseTools}" varStatus="status">
+    <c:set var="pipelineTool" value="${pipelineReleaseTool.pk.pipelineTool}"/>
     <c:set var="tool" value="${pipelineTool.toolName}"/>
+    <c:set var="toolGroupId" value="${pipelineReleaseTool.toolGroupId}"/>
     <c:choose>
 
     <c:when test="${tool == 'InterProScan'}">
-        <tr class="step4 row-function">
+        <tr class="step${toolGroupId} row-function">
     </c:when>
     <c:when test="${tool == 'Trimmomatic' || tool == 'Biopython' || tool == 'UCLUST' || tool == 'RepeatMasker'}">
-      <tr class="step1 row-cb">
+      <tr class="step${toolGroupId} row-cb">
     </c:when>
     <c:when test="${tool == 'rRNASelector' }">
-      <tr class="step2 row-cb">
+      <tr class="step${toolGroupId} row-cb">
     </c:when>
         <c:when test="${tool == 'FragGeneScan' }">
-      <tr class="step3 row-function">
+      <tr class="step${toolGroupId} row-function">
     </c:when>
         <c:when test="${tool == 'InterProScan' }">
-         <tr class="step4 row-function">
+         <tr class="step${toolGroupId} row-function">
        </c:when>
         <c:when test="${tool == 'QIIME' }">
-           <tr class="step5 row-taxon">
+           <tr class="step${toolGroupId} row-taxon">
          </c:when>
 
     <c:otherwise>
