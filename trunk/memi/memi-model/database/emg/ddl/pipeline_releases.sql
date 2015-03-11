@@ -144,10 +144,11 @@ GRANT SELECT ON ANALYSIS_STEP_SEQ TO "EMG_READ";
 
 --Relation table for pipeline_release and pipeline_tool
 CREATE TABLE pipeline_release_tool (
-         pipeline_id  NUMBER(4) NOT NULL
-                      CONSTRAINT pipeline_id_fk REFERENCES pipeline_release (pipeline_id),
-         tool_id      NUMBER(7) NOT NULL
-                      CONSTRAINT tool_id_fk2 REFERENCES pipeline_tool (tool_id),
+         pipeline_id   NUMBER(4) NOT NULL
+                       CONSTRAINT pipeline_id_fk REFERENCES pipeline_release (pipeline_id),
+         tool_id       NUMBER(7) NOT NULL
+                       CONSTRAINT tool_id_fk2 REFERENCES pipeline_tool (tool_id),
+         tool_group_id NUMBER(4) NOT NULL,
          PRIMARY KEY (pipeline_id, tool_id)
          );
 
@@ -238,22 +239,22 @@ INSERT INTO pipeline_tool (tool_name,description,web_link,version,exe_command,in
 
 -- Populate the relation table pipeline_release_tool
 -- For pipeline version 1.0
-INSERT INTO pipeline_release_tool (pipeline_id,tool_id) values (1,1);
-INSERT INTO pipeline_release_tool (pipeline_id,tool_id) values (1,2);
-INSERT INTO pipeline_release_tool (pipeline_id,tool_id) values (1,3);
-INSERT INTO pipeline_release_tool (pipeline_id,tool_id) values (1,4);
-INSERT INTO pipeline_release_tool (pipeline_id,tool_id) values (1,5);
-INSERT INTO pipeline_release_tool (pipeline_id,tool_id) values (1,6);
-INSERT INTO pipeline_release_tool (pipeline_id,tool_id) values (1,7);
-INSERT INTO pipeline_release_tool (pipeline_id,tool_id) values (1,8);
+INSERT INTO pipeline_release_tool (pipeline_id,tool_id) values (1,1,1);
+INSERT INTO pipeline_release_tool (pipeline_id,tool_id) values (1,2,3);
+INSERT INTO pipeline_release_tool (pipeline_id,tool_id) values (1,3,4);
+INSERT INTO pipeline_release_tool (pipeline_id,tool_id) values (1,4,1);
+INSERT INTO pipeline_release_tool (pipeline_id,tool_id) values (1,5,1);
+INSERT INTO pipeline_release_tool (pipeline_id,tool_id) values (1,6,2);
+INSERT INTO pipeline_release_tool (pipeline_id,tool_id) values (1,7,5);
+INSERT INTO pipeline_release_tool (pipeline_id,tool_id) values (1,8,1);
 
 -- For pipeline version 2.0
-INSERT INTO pipeline_release_tool (pipeline_id,tool_id) values (2,1);
-INSERT INTO pipeline_release_tool (pipeline_id,tool_id) values (2,2);
-INSERT INTO pipeline_release_tool (pipeline_id,tool_id) values (2,9);
-INSERT INTO pipeline_release_tool (pipeline_id,tool_id) values (2,10);
-INSERT INTO pipeline_release_tool (pipeline_id,tool_id) values (2,11);
-INSERT INTO pipeline_release_tool (pipeline_id,tool_id) values (2,12);
+INSERT INTO pipeline_release_tool (pipeline_id,tool_id) values (2,1,1);
+INSERT INTO pipeline_release_tool (pipeline_id,tool_id) values (2,2,3);
+INSERT INTO pipeline_release_tool (pipeline_id,tool_id) values (2,9,2);
+INSERT INTO pipeline_release_tool (pipeline_id,tool_id) values (2,10,5);
+INSERT INTO pipeline_release_tool (pipeline_id,tool_id) values (2,11,1);
+INSERT INTO pipeline_release_tool (pipeline_id,tool_id) values (2,12,4);
 
 -- Populate the analysis_job table
 -- Version 1.0

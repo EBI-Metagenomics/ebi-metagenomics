@@ -2,9 +2,12 @@ package uk.ac.ebi.interpro.metagenomics.memi.model.hibernate;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.hibernate.annotations.Sort;
+import org.hibernate.annotations.SortType;
 
 import javax.persistence.*;
 import java.util.Comparator;
+import java.util.SortedSet;
 
 
 /**
@@ -51,11 +54,16 @@ public class PipelineTool implements Comparator<PipelineTool> {
     @Lob
     private String notes;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.pipelineTool", cascade=CascadeType.ALL)
+    @Sort(type = SortType.COMPARATOR, comparator = PipelineReleaseTool.PipelineReleaseToolComparator.class)
+    private SortedSet<PipelineReleaseTool> pipelineReleaseTools;
+
+
     public PipelineTool() {
     }
 
     public PipelineTool(long toolId, String toolName, String toolVersion, String executionCmd, String installationDir, String configurationFile, String notes,
-                        String description, String webLink) {
+                        String description, String webLink, SortedSet<PipelineReleaseTool> pipelineReleaseTools) {
         this.toolId = toolId;
         this.toolName = toolName;
         this.toolVersion = toolVersion;
@@ -65,6 +73,7 @@ public class PipelineTool implements Comparator<PipelineTool> {
         this.notes = notes;
         this.description = description;
         this.webLink = webLink;
+        this.pipelineReleaseTools = pipelineReleaseTools;
     }
 
     public long getToolId() {
@@ -137,6 +146,14 @@ public class PipelineTool implements Comparator<PipelineTool> {
 
     public void setWebLink(String webLink) {
         this.webLink = webLink;
+    }
+
+    public SortedSet<PipelineReleaseTool> getPipelineReleaseTools() {
+        return pipelineReleaseTools;
+    }
+
+    public void setPipelineReleaseTools(SortedSet<PipelineReleaseTool> pipelineReleaseTools) {
+        this.pipelineReleaseTools = pipelineReleaseTools;
     }
 
     @Override

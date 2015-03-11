@@ -2,6 +2,8 @@ package uk.ac.ebi.interpro.metagenomics.memi.model.hibernate;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.hibernate.annotations.Sort;
+import org.hibernate.annotations.SortType;
 
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
@@ -41,21 +43,18 @@ public class PipelineRelease implements Comparator<PipelineRelease> {
     @Column(name = "RELEASE_DATE", nullable = false)
     private Calendar releaseDate;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "PIPELINE_RELEASE_TOOL", joinColumns = {
-            @JoinColumn(name = "PIPELINE_ID", nullable = false, updatable = false)},
-            inverseJoinColumns = {@JoinColumn(name = "TOOL_ID",
-                    nullable = false, updatable = false)})
-    private Set<PipelineTool> pipelineTools;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.pipelineRelease", cascade=CascadeType.ALL)
+    @Sort(type = SortType.COMPARATOR, comparator = PipelineReleaseTool.PipelineReleaseToolComparator.class)
+    private SortedSet<PipelineReleaseTool> pipelineReleaseTools;
 
     public PipelineRelease() {
     }
 
-    public PipelineRelease(String changes, String releaseVersion, Calendar releaseDate, Set<PipelineTool> pipelineTools) {
+    public PipelineRelease(String changes, String releaseVersion, Calendar releaseDate, SortedSet<PipelineReleaseTool> pipelineReleaseTools) {
         this.changes = changes;
         this.releaseVersion = releaseVersion;
         this.releaseDate = releaseDate;
-        this.pipelineTools = pipelineTools;
+        this.pipelineReleaseTools = pipelineReleaseTools;
     }
 
     public long getPipelineId() {
@@ -91,7 +90,7 @@ public class PipelineRelease implements Comparator<PipelineRelease> {
     }
 
     public String getReleaseDate() {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
         return formatter.format(releaseDate.getTime());
     }
 
@@ -99,21 +98,12 @@ public class PipelineRelease implements Comparator<PipelineRelease> {
         this.releaseDate = releaseDate;
     }
 
-    public Set<PipelineTool> getPipelineTools() {
-        return pipelineTools;
+    public Set<PipelineReleaseTool> getPipelineReleaseTools() {
+        return pipelineReleaseTools;
     }
 
-    public void setPipelineTools(Set<PipelineTool> pipelineTools) {
-        this.pipelineTools = pipelineTools;
-    }
-
-    public void addPipelineTool(PipelineTool pipelineTool) {
-        if (pipelineTool != null) {
-            if (pipelineTools == null) {
-                pipelineTools = new HashSet<PipelineTool>();
-            }
-            pipelineTools.add(pipelineTool);
-        }
+    public void setPipelineReleaseTools(SortedSet<PipelineReleaseTool> pipelineReleaseTools) {
+        this.pipelineReleaseTools = pipelineReleaseTools;
     }
 
     @Override

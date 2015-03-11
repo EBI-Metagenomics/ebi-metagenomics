@@ -69,6 +69,7 @@
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.UndefinedSample</value>
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.PipelineRelease</value>
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.PipelineTool</value>
+                <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.PipelineReleaseTool</value>
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisStatus</value>
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob</value>
             </list>

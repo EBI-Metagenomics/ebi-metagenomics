@@ -55,7 +55,7 @@ public class CompareControllerTest {
         deactiveSamples = new ArrayList<AnalysisJob>();
         //analysis job instance
         AnalysisJob analysisJob = new AnalysisJob("operator",
-                new PipelineRelease("changes", "2.0", Calendar.getInstance(), new HashSet<PipelineTool>()),
+                new PipelineRelease("changes", "2.0", Calendar.getInstance(), new TreeSet<PipelineReleaseTool>()),
                 Calendar.getInstance(), new AnalysisStatus(), "input", "output","assembly");
         //
         sampleToFilePathMap.put(analysisJob, "/uk/ac/ebi/test.txt");

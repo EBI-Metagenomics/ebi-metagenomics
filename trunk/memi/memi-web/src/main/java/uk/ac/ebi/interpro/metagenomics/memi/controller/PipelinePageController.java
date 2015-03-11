@@ -8,7 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.PipelineReleaseDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.exceptionHandling.EntryNotFoundException;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.PipelineRelease;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.PipelineTool;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.PipelineReleaseTool;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
@@ -55,10 +55,11 @@ public class PipelinePageController extends AbstractController {
                         if (pipelineRelease == null) {
                             throw new EntryNotFoundException();
                         }
-                        Set<PipelineTool> pipelineTools = pipelineRelease.getPipelineTools();
+
+                        Set<PipelineReleaseTool> pipelineReleaseTools = pipelineRelease.getPipelineReleaseTools();
                         model.addAttribute("releaseVersion", releaseVersion);
                         model.addAttribute("releaseDate", pipelineRelease.getReleaseDate());
-                        model.addAttribute("pipelineTools", pipelineTools);
+                        model.addAttribute("pipelineReleaseTools", pipelineReleaseTools);
                     }
                 });
     }
