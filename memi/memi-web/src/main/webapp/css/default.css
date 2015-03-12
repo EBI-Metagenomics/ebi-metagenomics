@@ -417,7 +417,6 @@ table.result td.showHideRelated:hover {background-color: #006666; }
 .pipeline_table th {padding: 9px 18px;text-align: left; }
 .pipeline_table td {padding: 9px 18px; }
 .pipeline_table tbody tr:first-child {border-top:1px #b9b9b9 solid;}
-.pipeline_table tbody tr:last-child {border-bottom:0px red solid;}
 .pipeline_table tr.row-cb {background-color: #EAF0F9;border-bottom:1px #D1DDED solid; }
 .pipeline_table tr.row-taxon {background-color: #FAEBD7;border-bottom:1px #ECCACA solid; }
 .pipeline_table tr.row-function {background-color: #ECE2FF;border-bottom:1px #DACAEC solid;}
