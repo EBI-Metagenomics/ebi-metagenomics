@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 
 import java.util.*;
 
@@ -34,6 +35,25 @@ public class SampleDAOImpl implements SampleDAO {
     private SessionFactory sessionFactory;
 
     public SampleDAOImpl() {
+    }
+
+    @Override
+    public String retrieveExternalStudyId(String externalSampleId) {
+        try {
+            Session session = sessionFactory.getCurrentSession();
+            Criteria criteria = session.createCriteria(Sample.class);
+            criteria.add(Restrictions.eq("sampleId", externalSampleId));
+            Sample sample = (Sample) criteria.uniqueResult();
+            if (sample != null) {
+                Study sampleStudy = sample.getStudy();
+                if (sampleStudy != null) {
+                    return sampleStudy.getStudyId();
+                }
+            }
+            return null;
+        } catch (HibernateException e) {
+            throw new HibernateException("Couldn't retrieve sample object by the following external IDs " + externalSampleId, e);
+        }
     }
 
     public Sample readBySampleIdAndStudyId(String externalStudyId, String externalSampleId) {

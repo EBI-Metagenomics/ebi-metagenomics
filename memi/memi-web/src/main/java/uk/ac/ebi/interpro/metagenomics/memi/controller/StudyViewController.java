@@ -80,6 +80,14 @@ public class StudyViewController extends SecuredAbstractController<Study> {
         }, model, getSecuredEntity(studyId), getModelViewName());
     }
 
+    /**
+     * Temporary re-directions.
+     */
+    @RequestMapping(value = "/project/{studyId}")
+    public String doGetStudy(@PathVariable final String studyId) {
+        return "redirect:/projects/" + studyId;
+    }
+
     @RequestMapping(value = MGPortalURLCollection.PROJECT_EXPORT)
     public ModelAndView doExportSamples(@PathVariable final String studyId,
                                         final ModelMap model,

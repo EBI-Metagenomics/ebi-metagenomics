@@ -54,7 +54,7 @@
 
     <%--<link href="https://fonts.googleapis.com/css?family=Droid+Sans:regular,bold" rel="stylesheet" type="text/css"/>--%>
     <%--?v1.1 will trigger browsers to refresh the source--%>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/default.css?v1.1" type="text/css" media="all"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/default.css?v1.2" type="text/css" media="all"/>
 
     <!--[if lt IE 9]>
     <style type="text/css"> .krona_chart {display: none;}/*remove the Krona box */</style>
