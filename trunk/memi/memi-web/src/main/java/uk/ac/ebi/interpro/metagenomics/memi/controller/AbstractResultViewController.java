@@ -156,7 +156,7 @@ public abstract class AbstractResultViewController extends SecuredAbstractContro
         final String externalProjectId = run.getExternalProjectId();
         final String externalRunId = run.getExternalRunId();
         final boolean sampleIsPublic = run.isPublic();
-//        final Long runId = sample.getId();
+        final String analysisJobReleaseVersion = analysisJob.getPipelineRelease().getReleaseVersion();
 
         final List<DownloadLink> seqDataDownloadLinks = new ArrayList<DownloadLink>();
         final List<DownloadLink> funcAnalysisDownloadLinks = new ArrayList<DownloadLink>();
@@ -176,21 +176,24 @@ public abstract class AbstractResultViewController extends SecuredAbstractContro
             //Check if file exists and if it is not empty
             if (doesExist && fileObject.length() > 0) {
                 if (fileDefinition instanceof SequenceFileDefinition) {
-                    seqDataDownloadLinks.add(new DownloadLink(fileDefinition.getLinkText(),
-                            fileDefinition.getLinkTitle(),
-                            "projects/" + externalProjectId + "/samples/" + externalSampleId + "/runs/" + externalRunId + "/results/sequences" + "/versions/" + analysisJob.getPipelineRelease().getReleaseVersion() + fileDefinition.getLinkURL(),
-                            fileDefinition.getOrder(),
-                            getFileSize(fileObject)));
+                    //filter out certain files by release version
+                    if (fileDefinition.getReleaseVersion() == null || fileDefinition.getReleaseVersion().equals(analysisJobReleaseVersion)) {
+                        seqDataDownloadLinks.add(new DownloadLink(fileDefinition.getLinkText(),
+                                fileDefinition.getLinkTitle(),
+                                "projects/" + externalProjectId + "/samples/" + externalSampleId + "/runs/" + externalRunId + "/results/sequences" + "/versions/" + analysisJobReleaseVersion + fileDefinition.getLinkURL(),
+                                fileDefinition.getOrder(),
+                                getFileSize(fileObject)));
+                    }
                 } else if (fileDefinition instanceof TaxonomicAnalysisFileDefinition) {
                     taxaAnalysisDownloadLinks.add(new DownloadLink(fileDefinition.getLinkText(),
                             fileDefinition.getLinkTitle(),
-                            "projects/" + externalProjectId + "/samples/" + externalSampleId + "/runs/" + externalRunId + "/results/taxonomy" + "/versions/" + analysisJob.getPipelineRelease().getReleaseVersion() + fileDefinition.getLinkURL(),
+                            "projects/" + externalProjectId + "/samples/" + externalSampleId + "/runs/" + externalRunId + "/results/taxonomy" + "/versions/" + analysisJobReleaseVersion + fileDefinition.getLinkURL(),
                             fileDefinition.getOrder(),
                             getFileSize(fileObject)));
                 } else if (fileDefinition instanceof FunctionalAnalysisFileDefinition) {
                     funcAnalysisDownloadLinks.add(new DownloadLink(fileDefinition.getLinkText(),
                             fileDefinition.getLinkTitle(),
-                            "projects/" + externalProjectId + "/samples/" + externalSampleId + "/runs/" + externalRunId + "/results/" + fileDefinition.getLinkURL() + "/versions/" + analysisJob.getPipelineRelease().getReleaseVersion(),
+                            "projects/" + externalProjectId + "/samples/" + externalSampleId + "/runs/" + externalRunId + "/results/" + fileDefinition.getLinkURL() + "/versions/" + analysisJobReleaseVersion,
                             fileDefinition.getOrder(),
                             getFileSize(fileObject)));
 

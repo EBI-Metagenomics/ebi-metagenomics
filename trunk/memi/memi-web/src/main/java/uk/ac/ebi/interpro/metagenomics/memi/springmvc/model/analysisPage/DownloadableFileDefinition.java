@@ -31,6 +31,11 @@ public abstract class DownloadableFileDefinition implements IResultFileDefinitio
 
     private int order;
 
+    /**
+     * Defines the version compatibility. This file definition is supported for this version and higher.
+     */
+    private String releaseVersion;
+
     public String getIdentifier() {
         return identifier;
     }
@@ -107,5 +112,13 @@ public abstract class DownloadableFileDefinition implements IResultFileDefinitio
     @Required
     public void setLinkURL(String linkURL) {
         this.linkURL = linkURL;
+    }
+
+    public String getReleaseVersion() {
+        return releaseVersion;
+    }
+
+    public void setReleaseVersion(String releaseVersion) {
+        this.releaseVersion = releaseVersion;
     }
 }

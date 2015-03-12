@@ -23,7 +23,6 @@ import java.io.IOException;
  * @since 1.0-SNAPSHOT
  */
 @Controller
-@RequestMapping(value = MGPortalURLCollection.PROJECT_SAMPLE)
 public class SampleViewController extends AbstractSampleViewController {
     private static final Log log = LogFactory.getLog(SampleViewController.class);
 
@@ -41,11 +40,20 @@ public class SampleViewController extends AbstractSampleViewController {
      * @param projectId External project identifier (e.g. in ENA, for instance ERP000001)
      * @param sampleId  External sample identifier (e.g. in ENA, for instance ERS580795)
      */
-    @RequestMapping
+    @RequestMapping(value = MGPortalURLCollection.PROJECT_SAMPLE)
     public ModelAndView doGetSample(@PathVariable final String projectId,
                                     @PathVariable final String sampleId,
                                     final ModelMap model) throws IOException {
         return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, getSecuredEntity(projectId, sampleId), getModelViewName());
+    }
+
+    /**
+     * Temporary re-directions.
+     */
+    @RequestMapping(value = {"/samples/{sampleId}", "/sample/{sampleId}"})
+    public String doGetSample(@PathVariable final String sampleId) {
+        String projectId = sampleDAO.retrieveExternalStudyId(sampleId);
+        return "redirect:/projects/" + projectId + "/samples/" + sampleId;
     }
 
     private Sample getSecuredEntity(final String projectId,

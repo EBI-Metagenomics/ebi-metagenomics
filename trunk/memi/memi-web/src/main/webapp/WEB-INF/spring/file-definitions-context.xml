@@ -27,6 +27,7 @@
         <property name="order" value="2"/>
         <property name="linkTitle" value="Click to download processed fasta nucleotide sequences"/>
         <property name="linkURL" value="/export?contentType=text&amp;exportValue=processedReads"/>
+        <property name="releaseVersion" value="2.0"/>
     </bean>
 
     <bean id="readsWithPredictedCDSFile" autowire-candidate="false"
