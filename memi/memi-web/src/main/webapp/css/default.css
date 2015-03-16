@@ -415,7 +415,7 @@ table.result td.showHideRelated:hover {background-color: #006666; }
  /*Table used in the pipeline page*/
 .pipeline_table {margin:9px; border: 0px #E4E8ED solid; border-collapse: collapse; color: #333;}
 .pipeline_table th {padding: 9px 18px;text-align: left; }
-.pipeline_table td {padding: 9px 18px; }
+.pipeline_table td {padding: 9px; }
 .pipeline_table tbody tr:first-child {border-top:1px #b9b9b9 solid;}
 .pipeline_table tr.row-cb {background-color: #EAF0F9;border-bottom:1px #D1DDED solid; }
 .pipeline_table tr.row-taxon {background-color: #FAEBD7;border-bottom:1px #ECCACA solid; }
@@ -1695,31 +1695,62 @@ ul.sample_list li {list-style: none; display: inline;}
 .icon_pipeline_v {background-color:#E4E4E4; border-radius: 3px;cursor: pointer; color:#676767; margin-right:9px;border:1px solid #DADADA;padding:4px 8px;position: absolute;top: 18px; right: 18px;  opacity: 0.6; filter: alpha(opacity = 60);  }
 .icon_pipeline_v:hover {opacity: 1; filter: alpha(opacity = 100); }
 /*chart*/
-.block_wrapper {overflow:hidden; margin: 0 9px 36px 9px;}
-.block_container {width:1122px;}
-.block.step1.highlight, .block.step2.highlight, .block.step3.highlight, .block.step4.highlight, .block.step5.highlight {border:1px #0F6D99 solid; background-color:#0F6D99; transition: all 0.5s ease; color:white;}
-
+.block_wrapper {overflow:hidden; margin: 0 9px 18px 9px;  min-height: 206px;/*for qclist text to appear correctly*/}
+.block_container {width:1070px;}
+.block.step0.highlight, .block.step1.highlight, .block.step2.highlight, .block.step3.highlight, .block.step4.highlight, .block.step5.highlight {border:1px #0F6D99 solid; background-color:#0F6D99; transition: all 0.5s ease; color:white;}
+ .first_branch {float:left; margin-top:44px;}
 .mainbranch {float:left;margin-top:57px;}
 .branch {float:left;}
 .branch1 {border: 0px red solid;}
 
 .branch2 {border: 0px blue solid;margin-top:20px;}
 
-.block, .block-nt, .block-lb, .block_small {font-size:90%;padding: 8px; display:inline-block; text-align:center; /*vertical-align: middle;*/}
+.block, .block-nt, .block-lb {font-size:90%;padding: 8px; display:inline-block; text-align:center; /*vertical-align: middle;*/}
 .block, .block_small {position:relative;padding: 2px; cursor:pointer; border:1px #B4D0F3 solid; width: 82px; height: 82px; border-radius:50%;line-height:7.1;background-color:#EAF0F9;color:#5983B5;}
-.block_small {width: 46px; height: 46px;line-height: 4.1;}
+.block.small {font-size: 67%;width: 36px; height: 36px;line-height: 4.1;}
 .block-nt {border: 1px #C3C3C3 solid; line-height:3.1;background-color: #DBDBDB;color:#777;margin-left:9px;}
 .block-lb {border: 1px #C3C3C3 solid; color:#777;}
 .block-ar {padding: 2px; border:0px #B4D0F3 solid; color:grey;display:inline-block;}
+.block-lb.small{font-size: 67%;padding: 4px;}
 
 .block.function {border:1px #DACAEC solid; background-color:#ECE2FF;color: #9B8CBA;}
 .block.taxon {border:1px #ECCACA solid; background-color:#FAEBD7;color: #A86363;}
 
-.qclist {font-size:90%;position: absolute;top: 236px;left: 72px;color: #777;line-height: 1.2;}
+.qclist {font-size: 98%; position: absolute;top: 94px;  left: 18px; color: #777; line-height: 1.2; width: 286px; text-align: left;}
+.qclist ul {margin:0; padding:0;}
 
 .arrow_pip {display:inline-block;position: relative;background: grey;padding: 2px; width: 0px; margin-left:2px;margin-right:2px;}
 .arrow_pip:after {left: 100%;top: 50%; border: solid rgba(0, 0, 0, 0);content: " ";height: 0;width: 0;position: absolute; pointer-events: none;  border-color: rgba(24, 33, 38, 0);border-left-color: grey; border-width: 5px;margin-top: -5px;}
+.arrow_notip {display:inline-block;background: grey;padding: 2px; width: 131px; margin-left:2px;margin-right:2px;}
 
 .rotate_t {-ms-transform: rotate(45deg); /* IE 9 */-webkit-transform: rotate(45deg); /* Chrome, Safari, Opera */transform: rotate(45deg);margin-left: -22px;margin-bottom: 12px;}
 .rotate_f {-ms-transform: rotate(-45deg); /* IE 9 */ -webkit-transform: rotate(-45deg); /* Chrome, Safari, Opera */ transform: rotate(-45deg);margin-left: -22px;margin-bottom: -12px;margin-right: 6px;/*for alignment*/}
+
+/*animation*/
+.animation {
+    -webkit-animation: mymove 3s 0s forwards, mymove_second 10s 2s forwards; /* Chrome, Safari, Opera */
+    animation: mymove 3s forwards, mymove_second 10s 2s forwards;; /*forwards to keep the animation state*/
+
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes mymove {
+    0%   {top: 0px;}
+    100%  {top: 200px;}
+}
+
+@-webkit-keyframes mymove_second {
+    0%   {top: 0px;}
+    100%  {top: 200px;}
+}
+/* Standard syntax */
+@keyframes mymove {
+    0%   {top: 0px;}
+    100%  {top: 200px;}
+}
+@keyframes mymove_second {
+    0%   {top: 0px;}
+    100%  {top: 200px;}
+}
+
  /*/ pipeline chart *******************************/
