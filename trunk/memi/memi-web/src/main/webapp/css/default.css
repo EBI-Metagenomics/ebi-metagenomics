@@ -325,6 +325,7 @@ text-decoration:none;
 background:url(../img/bgd_black_op20_8.png);
 }
 
+a.pi_arch_title {color:#7c8c99;}
 /**************************** END LINKS ********************************/
 
 /**************************** TABLE ***********************************/
@@ -442,11 +443,7 @@ h2 span {font-size:80%; color: #7c8c99;}
 .subtitle {font-size:150%;color: #066; margin-left: 9px;margin-top:20px;}
 .subtitle span {font-size:80%; color: #7c8c99;}
 
-h3 {
-color:#7c8c99;
-font-size:160%;
-margin:9px 0;
-}
+h3 {color:#7c8c99;font-size:160%;margin:9px 0;}
 
 .form_row h3 {
 color:#605f5f;
