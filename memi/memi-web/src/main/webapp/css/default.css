@@ -1705,7 +1705,7 @@ ul.sample_list li {list-style: none; display: inline;}
 
 .branch2 {border: 0px blue solid;margin-top:20px;}
 
-.block, .block-nt, .block-lb {font-size:90%;padding: 8px; display:inline-block; text-align:center; /*vertical-align: middle;*/}
+.block, .block-nt, .block-lb {font-size:90%;padding: 5px; display:inline-block; text-align:center; /*vertical-align: middle;*/}
 .block, .block_small {position:relative;padding: 2px; cursor:pointer; border:1px #B4D0F3 solid; width: 82px; height: 82px; border-radius:50%;line-height:7.1;background-color:#EAF0F9;color:#5983B5;}
 .block.small {font-size: 67%;width: 36px; height: 36px;line-height: 4.1;}
 .block-nt {border: 1px #C3C3C3 solid; line-height:3.1;background-color: #DBDBDB;color:#777;margin-left:9px;}
