@@ -8,8 +8,9 @@
 <a href="<c:url value="${baseURL}/pipelines/${pipelineRelease.releaseVersion}"/>" class="pi_arch_title"><h3>Pipeline v.${pipelineRelease.releaseVersion} <span>(${pipelineRelease.releaseDate})</span></h3></a>
     <c:choose>
         <c:when test="${pipelineRelease.releaseVersion == '2.0'}">
-            <ul><li>fewer steps in the Quality control (QC)</li>
-             <li>rRNASelector just masking rRNA on reads (instead of removing reads with rRNA)</li></ul>
+            <ul><li>remove clustering step during the Quality control (QC)</li>
+             <li>added step to mask rRNA on reads (instead of removing reads with rRNA)</li>
+             <li>improve performance and tools update</li></ul>
         </c:when>
     </c:choose>
 </c:forEach>
