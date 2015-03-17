@@ -12,15 +12,15 @@
                        relatedLinks="${model.relatedLinks}"/>
 
     <div class="main_tab_content">
-        <%--BEGIN DESCRIPTION--%>
+        <!-- Description -->
         <h3 id="sample_desc">Description</h3>
 
 
-        <div class="output_form" id="large">
+        <div class="output_form">
             <c:choose>
                 <c:when test="${not empty model.sample.sampleDescription}">
                     <c:set var="sampleDescription" value="${model.sample.sampleDescription}"/>
-                    <p class="fl_uppercase sample_desc"><c:out value="${sampleDescription}"/></p>
+                    <p class="fl_capitalize sample_desc"><c:out value="${sampleDescription}"/></p>
                 </c:when>
             </c:choose>
 
@@ -33,45 +33,54 @@
                 </c:otherwise>
             </c:choose>
 
-            <div class="result_row"><label>Classification:</label><span> <c:out value="${sampleClassification}"/></span>
+            <div class="result_row">
+                <div class="result_row_label">Classification:</div>
+                <div class="result_row_data"> <c:out value="${sampleClassification}"/></div>
             </div>
 
-            <div class="result_row"><label>Sample name:</label><span><a title="${model.sample.sampleName}" href="<c:url value="${baseURL}/projects/${model.sample.study.studyId}/samples/${model.sample.sampleId}"/>">${model.sample.sampleName} (${model.sample.sampleId})</a></span>
-                                   </div>
+            <div class="result_row">
+                <div class="result_row_label">Sample name:</div>
+                <div class="result_row_data"><a title="${model.sample.sampleName}" href="<c:url value="${baseURL}/projects/${model.sample.study.studyId}/samples/${model.sample.sampleId}"/>">${model.sample.sampleName} (${model.sample.sampleId})</a></div>
+            </div>
 
-            <div class="result_row"><label>Project name:</label><span><a title="${model.sample.study.studyName}" href="<c:url value="${baseURL}/projects/${model.sample.study.studyId}"/>">${model.sample.study.studyName} (${model.sample.study.studyId})</a></span>
-                       </div>
-
+            <div class="result_row">
+                <div class="result_row_label">Project name:</div>
+                <div class="result_row_data"><a title="${model.sample.study.studyName}" href="<c:url value="${baseURL}/projects/${model.sample.study.studyId}"/>">${model.sample.study.studyName} (${model.sample.study.studyId})</a></div>
+            </div>
         </div>
-        <%--END DESCRIPTION--%>
+        <!--/ Description -->
 
-        <%--BEGIN ANALYSIS--%>
+        <!-- Data analysis -->
         <h3 id="sample_desc">Data analysis</h3>
 
-        <div class="output_form" id="large">
-            <div class="result_row"><label>Experiment type:</label><span class="capitalize"> ${model.analysisJob.experimentType}</span>
-                                  </div>
-            <div class="result_row"><label>Pipeline version:</label><span><a title="Pipeline release" href="<c:url value="${baseURL}/pipelines/${model.analysisJob.pipelineRelease.releaseVersion}"/>">${model.analysisJob.pipelineRelease.releaseVersion}</a></span>
+        <div class="output_form" >
+            <div class="result_row">
+                <div class="result_row_label">Experiment type:</div>
+                <div class="result_row_data"> ${model.analysisJob.experimentType}</div>
             </div>
-            <div class="result_row"><label>Analysis date:</label><span>${model.analysisJob.completeTime}</span>
-                       </div>
+            <div class="result_row">
+                <div class="result_row_label">Pipeline version:</div>
+                <div class="result_row_data"><a title="Pipeline release" href="<c:url value="${baseURL}/pipelines/${model.analysisJob.pipelineRelease.releaseVersion}"/>">${model.analysisJob.pipelineRelease.releaseVersion}</a></div>
+            </div>
+            <div class="result_row">
+                <div class="result_row_label">Analysis date:</div>
+                <div class="result_row_data">${model.analysisJob.completeTime}</div>
+            </div>
         </div>
-        <%--END ANALYSIS--%>
+        <!--/Data analysis -->
 
-        <%--BEGIN ENVIRONMENTAL/HOST ASSOCIATED    --%>
+        <!-- Host associated/environmental -->
         <c:choose>
-
             <c:when test="${model.hostAssociated}">
+
                 <h3>Host associated</h3>
+                <div class="output_form" >
 
-                <div class="output_form" id="large">
-
-                    <div class="result_row"><label>Species:</label>
+                    <div class="result_row">
+                        <div class="result_row_label">Species:</div>
                         <c:choose>
                         <c:when test="${not empty model.sample.hostTaxonomyId && model.sample.hostTaxonomyId>0}">
-        <span><em><c:out value="${model.sample.species}"/></em> <a class="ext"
-                                                          href="<c:url value="http://www.uniprot.org/taxonomy/${model.sample.hostTaxonomyId}"/>">Tax
-            ID <c:out value="${model.sample.hostTaxonomyId}"/></a> </span>
+                        <div class="result_row_data"><a class="ext" title="UniProt website - Tax ID <c:out value="${model.sample.hostTaxonomyId}"/>" href="<c:url value="http://www.uniprot.org/taxonomy/${model.sample.hostTaxonomyId}"/>"><em><c:out value="${model.sample.species}"/></em></a></div>
                     </c:when>
                     <c:otherwise>
                         <c:out value="${notGivenId}"/>
@@ -81,27 +90,28 @@
 
                     <c:if test="${not empty model.sample.hostSex}">
                         <c:set var="hostSex" value="${model.sample.hostSex}"/>
-                        <div class="result_row"><label>Sex:</label> <span
-                                style="text-transform: capitalize;">${fn:toLowerCase(hostSex)}</span></div>
-                    </c:if>
-
-
-                    <c:if test="${not empty model.sample.phenotype}">
-                        <c:set var="phenotype" value="${model.sample.phenotype}"/>
-                        <div class="result_row"><label>Phenotype:</label> <span><c:out value="${phenotype}"/></span>
+                        <div class="result_row">
+                            <div class="result_row_label">Sex:</div>
+                            <div class="result_row_data">${fn:toLowerCase(hostSex)}</div>
                         </div>
                     </c:if>
 
-
+                    <c:if test="${not empty model.sample.phenotype}">
+                        <c:set var="phenotype" value="${model.sample.phenotype}"/>
+                        <div class="result_row">
+                            <div class="result_row_label">Phenotype:</div>
+                            <div class="result_row_data"><c:out value="${phenotype}"/></div>
+                        </div>
+                    </c:if>
                 </div>
-                <%--end div output_form--%>
-
             </c:when>
 
-            <c:otherwise>
-                <h3>Environmental conditions</h3>
 
-                <div class="output_form" id="large">
+            <c:otherwise>
+
+                <h3>Environmental conditions</h3>
+                <div class="output_form" >
+
                     <c:choose>
                         <c:when test="${not empty model.sample.environmentalBiome}">
                             <c:set var="environmentalBiome" value="${model.sample.environmentalBiome}"/>
@@ -110,8 +120,14 @@
                             <c:set var="environmentalBiome" value="${notGivenId}"/>
                         </c:otherwise>
                     </c:choose>
-                    <div class="result_row"><label>Biome:</label> <span class="fl_uppercase" id="env">${fn:toLowerCase(environmentalBiome)}</span>
+
+                    <div class="result_row">
+                        <div class="result_row_label">Biome:</div>
+                        <div class="result_row_data"><%--${fn:toLowerCase(environmentalBiome)}--%>
+                        ${environmentalBiome}
+                        </div>
                     </div>
+
                     <c:choose>
                         <c:when test="${not empty model.sample.environmentalFeature}">
                             <c:set var="environmentalFeature" value="${model.sample.environmentalFeature}"/>
@@ -120,10 +136,16 @@
                             <c:set var="environmentalFeature" value="${notGivenId}"/>
                         </c:otherwise>
                     </c:choose>
-                    <div class="result_row"><label>Experimental feature:</label><span class="fl_uppercase">${fn:toLowerCase(environmentalFeature)}</span>
+
+                    <div class="result_row">
+                        <div class="result_row_label">Experimental feature:</div>
+                        <div class="result_row_data">
+                        <%--${fn:toLowerCase(environmentalFeature)}--%>
+                        ${environmentalFeature}
+                        </div>
                     </div>
 
-                        <c:choose>
+                    <c:choose>
                         <c:when test="${not empty model.sample.environmentalMaterial}">
                             <c:set var="environmentalMaterial" value="${model.sample.environmentalMaterial}"/>
                         </c:when>
@@ -132,15 +154,20 @@
                         </c:otherwise>
                     </c:choose>
 
-                    <div class="result_row"><label>Material:</label><span class="fl_uppercase">${fn:toLowerCase(environmentalMaterial)}</span>
+                    <div class="result_row">
+                        <div class="result_row_label">Material:</div>
+                        <div class="result_row_data">
+                        <%--${fn:toLowerCase(environmentalMaterial)}--%>
+                        ${environmentalMaterial}
+                        </div>
                     </div>
 
                 </div>
             </c:otherwise>
         </c:choose>
-        <%--END ENVIRONMENTAL/HOST ASSOCIATED--%>
+        <!--/ Host associated/environmental -->
 
-        <%--BEGIN LOCALISATION   --%>
+        <!-- Localisation -->
         <c:choose>
         <c:when test="${empty model.sample.geoLocName && empty model.sample.longitude && empty model.sample.latitude}">
         <%--don't show the localisation box if empty--%>
@@ -148,12 +175,12 @@
         <c:otherwise>
             <h3>Localisation</h3>
 
-                    <div class="output_form" id="large" style="overflow:auto;">
+                    <div class="output_form"  style="overflow:auto;">
 
                         <c:if test="${!model.hostAssociated}">
                             <c:choose>
                                 <c:when test="${empty model.sample.latitude}">
-                                    <%--remove the label when emtpy otherwise make alignment problem--%>
+                                    <%--remove label when emtpy otherwise alignment problem--%>
                                 </c:when>
                                 <c:otherwise>
                                     <c:choose>
@@ -166,23 +193,28 @@
                                             <c:set var="latLon" value="${notGivenId}"/>
                                         </c:otherwise>
                                     </c:choose>
-                                    <div class="result_row"><label>Latitude/Longitude:</label> <span><c:out
-                                            value="${latLon}"/></span></div>
+
+                                    <div class="result_row">
+                                        <div class="result_row_label">Latitude/Longitude:</div>
+                                        <div class="result_row_data"><c:out value="${latLon}"/></div>
+                                    </div>
+
                                 </c:otherwise>
                             </c:choose>
                         </c:if>
 
                         <c:choose>
-
                             <c:when test="${empty model.sample.geoLocName}">
-                                <%--remove the label when emtpy otherwise make alignment problem--%>
+                                <%--remove label when emtpy otherwise alignment problem--%>
                             </c:when>
                             <c:otherwise>
                                 <c:choose>
                                     <c:when test="${not empty model.sample.geoLocName}">
                                         <c:set var="geoLocName" value="${model.sample.geoLocName}"/>
-                                        <div class="result_row"><label>Geographic location:</label> <span><c:out
-                                                value="${geoLocName}"/></span></div>
+                                        <div class="result_row">
+                                            <div class="result_row_label">Geographic location:</div>
+                                            <div class="result_row_data"><c:out value="${geoLocName}"/></div>
+                                        </div>
                                     </c:when>
                                     <c:otherwise>
                                         <c:set var="geoLocName" value="${notGivenId}"/>
@@ -195,29 +227,25 @@
                     </div>
         </c:otherwise>
         </c:choose>
+        <!--/ Localisation -->
 
-
-        <%--END LOCALISATION   --%>
-
-        <%--BEGIN OTHER INFO   --%>
+        <!-- Other info box -->
         <c:if test="${not empty model.sampleAnnotations}">
-            <h3 style="">Other information
-                    <%--<span id="expandersign">+</span>--%>
-            </h3>
+            <h3 style="">Other information</h3>
 
             <div class="output_form">
                 <table class="simple_table">
                     <tbody>
                     <c:forEach var="annotation" items="${model.sampleAnnotations}" varStatus="status">
                         <tr>
-                            <td class="h_left" id="ordered" width="250px"><div class="fl_uppercase">${annotation.annotationName}</div></td>
-                            <td class="h_left">${annotation.annotationValue} ${annotation.unit}</td>
+                            <td id="ordered" width="250px"><div class="fl_capitalize">${annotation.annotationName}</div></td>
+                            <td class="fl_capitalize">${annotation.annotationValue} ${annotation.unit}</td>
                         </tr>
                     </c:forEach>
                     </tbody>
                 </table>
             </div>
         </c:if>
-        <%--END OTHER INFO   --%>
+        <!--/ Other info box -->
     </div>
 </div>
