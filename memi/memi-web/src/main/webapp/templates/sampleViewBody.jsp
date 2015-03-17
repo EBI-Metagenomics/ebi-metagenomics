@@ -10,10 +10,12 @@
 
 <h3 class="study_desc">Description</h3>
 
-<div class="output_form" id="large">
+<div class="output_form">
 
-    <div class="result_row"><label>Project name:</label><span><a title="${sample.study.studyName}" href="<c:url value="${baseURL}/projects/${sample.study.studyId}"/>">${sample.study.studyName} (${sample.study.studyId})</a></span>
-                           </div>
+    <div class="result_row">
+        <div class="result_row_label">Project name:</div>
+        <div class="result_row_data"><a title="${sample.study.studyName}" href="<c:url value="${baseURL}/projects/${sample.study.studyId}"/>">${sample.study.studyName} (${sample.study.studyId})</a></div>
+    </div>
 
 </div>
 
