@@ -35,7 +35,7 @@
 
             <div class="result_row">
                 <div class="result_row_label">Classification:</div>
-                <div class="result_row_data"> <c:out value="${sampleClassification}"/></div>
+                <div class="result_row_data"><c:out value="${sampleClassification}"/></div>
             </div>
 
             <div class="result_row">
