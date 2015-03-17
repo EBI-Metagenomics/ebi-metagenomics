@@ -515,6 +515,9 @@ border:0px solid #7C8C99;
 .sample_desc {font-size:110%;} /*sample description*/
 
 .capitalize {text-transform: capitalize;}
+.fl_capitalize:first-letter {text-transform: capitalize;} /*transform first letter first word only*/
+.lowercase {text-transform:lowercase;}
+
 .project_upd_date {color: #7C8C99; font-style: italic;}
 
 /****************** END TITLE *************************/
@@ -891,10 +894,11 @@ overflow:auto;
 
 .filter_button {color:#cecece; margin-left:94px;}
 
-.result_row {
-padding: 4px 0px;
-border: 0px solid #ffaa22;
-}
+/*run page overview*/
+.result_row {padding: 4px 0px; border: 0px solid #ffaa22; overflow:auto;}
+.result_row .result_row_label {width: 140px; float: left; text-align: right; font-size: 110%; color: #445668; line-height: 1.35; border: 0px solid #556F8C;}
+.result_row .result_row_data {float: left; margin-left:9px;}
+.result_row .result_row_data:first-letter {text-transform: capitalize;}
 
 /************************************** END FORM **************************************/
 
@@ -1054,18 +1058,9 @@ background: url(../img/bgd_contentfull_menu.gif) -14px;
 
 .filter_form .result_row { padding: 7px 0px;border: 0px solid black;}
 
-.output_form  label {
-float: left;
-clear: left;
-margin:0;
-width: 86px; text-align: right; font-size: 110%;color: #445668; line-height: 1.35;/*to make it align with smaller text next*/border: 0px solid #556f8c;
-}
+.output_form  label {float: left; margin:0; text-align: right; font-size: 110%; color: #445668; line-height: 1.35;/*to make it align with smaller text next*/border: 0px solid #556f8c;  }
 
 .output_form h4 {padding-left:0;}
-
-#large label {
-width: 140px;
-}
 
 .output_form  span, .filter_form span {
 border: 0px solid #556f8c;
@@ -1372,8 +1367,6 @@ img.ui-datepicker-trigger {float:left; /*solve a bug with chromium*/}
 .tweet {margin-top: 1em; }
 .tweet  ul {margin:0px; padding: 0px;}
 .tweet  li {list-style-type: none; margin:0 9px 20px 9px;}
-
-.lowercase {text-transform:lowercase;}
 
 .krona_chart {height:540px; width:100%; background-color: rgb(244, 244, 248);border:1px solid rgb(224, 224, 224);}
 .krona_chart_small {height: 230px; width: 354px; border:0px pink solid;}
