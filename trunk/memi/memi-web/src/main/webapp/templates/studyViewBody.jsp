@@ -14,14 +14,7 @@
 
 <tags:publications publications="${model.study.publications}" relatedPublications="${model.relatedPublications}" relatedLinks="${model.relatedLinks}" />
 
-<c:choose>
-    <c:when test="${not empty model.study.ncbiProjectId && model.study.ncbiProjectId>0}">
-        <p>BioProject ID: <a class="ext"
-                             href="<c:url value="https://www.ebi.ac.uk/ena/data/view/Project:${model.study.ncbiProjectId}"/>"><c:out
-                value="${model.study.ncbiProjectId}"/></a></p>
-    </c:when>
-    <c:otherwise></c:otherwise>
-</c:choose>
+
 
 <c:if test="${!model.study.public}">
     <p>Private data <img alt="private" src="${pageContext.request.contextPath}/img/icon_priv_private.gif">
@@ -39,7 +32,16 @@
 </c:if>
 
 
-<p class="project_upd_date">Last updated: ${model.study.formattedLastReceived}</p>
+<p class="project_upd_date">
+    <c:choose>
+    <c:when test="${not empty model.study.ncbiProjectId && model.study.ncbiProjectId>0}">
+       BioProject <a class="ext"
+                             href="<c:url value="https://www.ebi.ac.uk/ena/data/view/Project:${model.study.ncbiProjectId}"/>"><c:out
+                value="${model.study.ncbiProjectId}"/></a> -
+    </c:when>
+    <c:otherwise></c:otherwise>
+    </c:choose>
+Last updated: ${model.study.formattedLastReceived}</p>
 
 <h3 class="study_desc">Description</h3>
 
@@ -77,10 +79,14 @@
         <c:set var="centreName" value="${model.study.centreName}"/>
         <c:choose>
             <c:when test="${not empty model.study.centreName}">
-                <div class="result_row"><label>Institute:</label><span><c:out value="${centreName}"/></span></div>
+                <div class="result_row">
+                    <div class="result_row_label">Institute:</div>
+                    <div class="result_row_data"><c:out value="${centreName}"/></div>
+                </div>
             </c:when>
             <c:otherwise>
-                <div class="result_row"><label>Institute:</label><c:set var="centreName" value="${notGivenId}"/></div>
+                <div class="result_row">
+                    <div class="result_row_label">Institute:</div><c:set var="centreName" value="${notGivenId}"/></div>
             </c:otherwise>
         </c:choose>
 
@@ -89,32 +95,34 @@
 
         <c:choose>
             <c:when test="${not empty contactName}">
-                <div class="result_row"><label>Name:</label><span>${contactName}</span></div>
+                <div class="result_row">
+                    <div class="result_row_label">Name:</div>
+                    <div class="result_row_data">${contactName}</div>
+                </div>
             </c:when>
             <c:otherwise>
-                <div class="result_row"><label>Name:</label><span>not available</span></div>
+                <div class="result_row">
+                    <div class="result_row_label">Name:</div>
+                    <div class="result_row_data">not available</div>
+                </div>
             </c:otherwise>
         </c:choose>
         <c:choose>
             <c:when test="${not empty contactMail}">
-                <div class="result_row"><label>Email:</label><span class="lowercase">${contactMail}</span></div>
+                <div class="result_row">
+                    <div class="result_row_label">Email:</div>
+                    <div class="result_row_data">${contactMail}</div>
+                </div>
             </c:when>
             <c:otherwise>
-                <div class="result_row"><label>Email:</label><span class="lowercase">not available</span></div>
+                <div class="result_row">
+                    <div class="result_row_label">Email:</div>
+                    <div class="result_row_data lowercase">not available</div>
+                </div>
             </c:otherwise>
         </c:choose>
 
     </div>
-
-<%-- Do we need to display this static information?
-<p>
-<strong>Submitter name:</strong>
-<c:choose>
-<c:when test="${model.study.public}">Public data</c:when>
-<c:otherwise>(not given)</c:otherwise>
-</c:choose>
-Contact name: (not given)
-</p>--%>
 
 <%--<h3>Other information</h3>--%>
 
