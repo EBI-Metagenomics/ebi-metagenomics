@@ -508,7 +508,6 @@ border:0px solid #7C8C99;
 }
 
 /*.fls_uppercase {text-transform: capitalize;} *//*transform first letter words in uppercase letter - floating elements*/
-.fl_uppercase {display: inline-block;}
 .fl_uppercase:first-letter {text-transform: uppercase;}  /*transform first letter words in uppercase letter - block elements*/
 .fl_uppercase_title {display: block;}
 .fl_uppercase_title:first-letter {text-transform: uppercase;}
@@ -1055,16 +1054,11 @@ background: url(../img/bgd_contentfull_menu.gif) -14px;
 
 .filter_form .result_row { padding: 7px 0px;border: 0px solid black;}
 
-.output_form  label, .filter_form label  {
+.output_form  label {
 float: left;
 clear: left;
 margin:0;
- width: 86px;
-text-align: right;
-font-size: 110%;
-color: #445668; /* was #003798 or blue 4d68a1 */
-border: 0px solid #556f8c;
-line-height: 1.5;
+width: 86px; text-align: right; font-size: 110%;color: #445668; line-height: 1.35;/*to make it align with smaller text next*/border: 0px solid #556f8c;
 }
 
 .output_form h4 {padding-left:0;}
