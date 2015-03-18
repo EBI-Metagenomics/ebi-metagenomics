@@ -2,6 +2,7 @@
 <h2 style="margin-bottom:0;/*for pipeline image higher*/">Pipeline version ${releaseVersion}  <span>- ${releaseDate}</span></h2>
 
 <c:choose>
+
     <c:when test="${releaseVersion == '2.0'}">
 
         <!-- Pipeline chart for version 2.0-->
@@ -10,20 +11,23 @@
             <div class="block_container">
 
                 <div class="mainbranch">
-                    <div class="block-lb" id="item_01">Raw reads</div><div class="arrow_pip"></div>
-                    <div class="block step1" id="item_02">QC</div><div class="arrow_pip"></div>
+                    <div class="block-lb" id="item_03">Raw reads</div><div class="arrow_pip "></div>
+                                                <div class="block small step0" id="item_000">SeqPrep</div><div class="arrow_pip "></div>
+                                                <div class="block-lb" id="item_01">Initial reads</div><div class="arrow_pip"></div>
+                    <div class="block step1" id="item_02">QC
+                        <div class="qclist"><ul><li>Trim low quality (Trimmomatic)</li>
+                                        <li>Length filtering (Biopython)</li></ul></div></div><div class="arrow_pip"></div>
                     <div class="block-lb" id="item_03">Processed reads</div><div class="arrow_pip"></div>
                     <div class="block step2" id="item_04">rRNASelector</div>
                 </div>
 
-                <div class="qclist"><ul><li>Trim low quality (Trimmomatic)</li>
-                    <li>Length filtering (Biopython)</li></ul></div>
+
 
                 <div class="branch">
                     <div class="branch1">
-                        <div class="arrow_pip rotate_f"></div><div class="block-lb" id="item_05">Reads without rRNA</div><div class="arrow_pip"></div>
+                        <div class="arrow_pip rotate_f"></div><div class="block-lb" id="item_05">Reads with rRNA masked</div><div class="arrow_pip"></div>
                         <div class="block step3 function" id="item_06">FragGeneScan</div><div class="arrow_pip"></div>
-                        <div class="block-lb" id="item_07">Reads with pcds</div><div class="arrow_pip"></div>
+                        <div class="block-lb" id="item_07">Predicted CDS</div><div class="arrow_pip"></div>
                         <div class="block step4 function" id="item_08">InterProScan</div>
                         <div class="block-nt">Functional analysis</div>
                     </div> <!-- /branch1 -->
@@ -43,59 +47,124 @@
         <!-- /pipeline chart version 2.0-->
     </c:when>
     <c:otherwise>
-        <!-- Pipeline chart for version 1.0-->
+        <!-- Pipeline chart for version 1.0 -->
         <div class="block_wrapper">
 
-            <div class="block_container">
+                    <div class="block_container">
 
-                <div class="mainbranch">
-                    <div class="block-lb" id="item_01">Raw reads</div><div class="arrow_pip"></div>
-                    <div class="block step1" id="item_02">QC</div><div class="arrow_pip"></div>
-                    <div class="block-lb" id="item_03">Processed reads</div><div class="arrow_pip"></div>
-                    <div class="block step2" id="item_04">rRNASelector</div>
-                </div>
+                        <div class="mainbranch">
+                            <div class="block-lb" id="item_03">Raw reads</div><div class="arrow_pip "></div>
+                            <div class="block small step0" id="item_000">SeqPrep</div><div class="arrow_pip "></div>
+                            <div class="block-lb" id="item_01">Initial reads</div><div class="arrow_pip"></div>
+                            <div class="block step1" id="item_02">QC
+                                <div class="qclist"><ul><li>Trim low quality (Trimmomatic)</li>
+                                                            <li>Length filtering (Biopython)</li>
+                                                            <li>Duplicate Removal (UCLUST & Prefix)</li>
+                                                            <li>Filtering low complexity region (RepeatMasker)</li></ul></div>
+                            </div><div class="arrow_pip"></div>
+                            <div class="block-lb" id="item_03">Processed reads</div><div class="arrow_pip"></div>
+                            <div class="block step2" id="item_04">rRNASelector</div>
+                        </div>
 
-                <div class="qclist"><ul><li>Trim low quality (Trimmomatic)</li>
-                    <li>Length filtering (Biopython)</li>
-                    <li>Duplicate Removal (UCLUST & Prefix)</li>
-                    <li>Filtering low complexity region (RepeatMasker)</li></ul></div>
 
-                <div class="branch">
-                    <div class="branch1">
-                        <div class="arrow_pip rotate_f"></div><div class="block-lb" id="item_05">Reads without rRNA</div><div class="arrow_pip"></div>
-                        <div class="block step3 function" id="item_06">FragGeneScan</div><div class="arrow_pip"></div>
-                        <div class="block-lb" id="item_07">Reads with pcds</div><div class="arrow_pip"></div>
-                        <div class="block step4 function" id="item_08">InterProScan</div>
-                        <div class="block-nt">Functional analysis</div>
-                    </div> <!-- /branch1 -->
 
-                    <div class="branch2">  <div class="arrow_pip rotate_t"></div>
-                        <div class="block-lb" id="item_09">Reads with rRNA</div>
-                        <div class="arrow_pip"></div>
-                        <div class="block-lb" id="item_11">16s rRNA</div>
-                        <div class="arrow_pip"></div>
-                        <div class="block step5 taxon" id="item_10">QIIME</div>
-                        <div class="block-nt">Taxonomic analysis</div>
-                    </div><!-- /branch2 -->
+                        <div class="branch">
+                            <div class="branch1">
+                                <div class="arrow_pip rotate_f"></div><div class="block-lb" id="item_05">Reads without rRNA</div><div class="arrow_pip"></div>
+                                <div class="block step3 function" id="item_06">FragGeneScan</div><div class="arrow_pip"></div>
+                                <div class="block-lb" id="item_07">Predicted CDS</div><div class="arrow_pip"></div>
+                                <div class="block step4 function" id="item_08">InterProScan</div>
+                                <div class="block-nt">Functional analysis</div>
+                            </div> <!-- /branch1 -->
 
-                </div><!-- /branch -->
-            </div> <!-- /container -->
-        </div>   <!-- /block_wrapper -->
-        <!-- /pipeline chart version 1.0-->
+                            <div class="branch2">  <div class="arrow_pip rotate_t"></div>
+                                <div class="block-lb" id="item_09">Reads with rRNA</div>
+                                <div class="arrow_pip"></div>
+                                <div class="block-lb" id="item_11">16s rRNA</div>
+                                <div class="arrow_pip"></div>
+                                <div class="block step5 taxon" id="item_10">QIIME</div>
+                                <div class="block-nt">Taxonomic analysis</div>
+                            </div><!-- /branch2 -->
+
+                        </div><!-- /branch -->
+                    </div> <!-- /container -->
+                </div>   <!-- /block_wrapper -->
+                <!-- /pipeline chart version 1.0-->
+        <!-- Pipeline chart for version 1.0 - complex version-->
+        <%--<div class="block_wrapper">--%>
+
+            <%--<div class="block_container">--%>
+                <%--<div class="mainbranch" style="margin-top: 82px;">--%>
+                      <%--<div class="block-lb" id="item_03">Raw reads</div>--%>
+                 <%--</div>--%>
+
+                <%--<div class="first_branch">--%>
+                    <%--<div class="branch1">--%>
+                        <%--<div class="arrow_pip rotate_f" style="margin-left:2px;margin-right:2px;"></div>--%>
+                        <%--<div class="block-lb small" id="item_00">Paired-end reads</div><div class="arrow_pip "></div>--%>
+                        <%--<div class="block small step0" id="item_000">SeqPrep</div><div class="arrow_pip "></div>--%>
+                        <%--<div class="block-lb small" id="item_00">Initial reads</div>--%>
+                        <%--<div class="arrow_pip rotate_t" style="float: right;margin-top: 34px; margin-left: 1px"></div></div>--%>
+                    <%--<div class="branch2"><div class="arrow_pip rotate_t" style="margin-left:2px;margin-right:5px;"></div><div class="block-lb small" id="item_00">Simple reads</div><div class="arrow_notip" ></div><div class="arrow_pip rotate_f" style="margin-top: 10px;float: right;"></div></div>--%>
+                <%--</div>--%>
+
+                <%--<div class="mainbranch">--%>
+
+                    <%--&lt;%&ndash;<div class="block-lb" id="item_01">Raw reads</div><div class="arrow_pip"></div>&ndash;%&gt;--%>
+                    <%--<div class="block step1" id="item_02">QC</div><div class="arrow_pip"></div>--%>
+                    <%--<div class="block-lb" id="item_03">Processed reads</div><div class="arrow_pip"></div>--%>
+                    <%--<div class="block step2" id="item_04">rRNASelector</div>--%>
+                <%--</div>--%>
+
+                <%--<div class="qclist"><ul><li>Trim low quality (Trimmomatic)</li>--%>
+                    <%--<li>Length filtering (Biopython)</li>--%>
+                    <%--<li>Duplicate Removal (UCLUST & Prefix)</li>--%>
+                    <%--<li>Filtering low complexity region (RepeatMasker)</li></ul></div>--%>
+
+                <%--<div class="branch">--%>
+                    <%--<div class="branch1">--%>
+                        <%--<div class="arrow_pip rotate_f"></div><div class="block-lb" id="item_05">Reads without rRNA</div><div class="arrow_pip"></div>--%>
+                        <%--<div class="block step3 function" id="item_06">FragGeneScan</div><div class="arrow_pip"></div>--%>
+                        <%--<div class="block-lb" id="item_07">Predicted CDS</div><div class="arrow_pip"></div>--%>
+                        <%--<div class="block step4 function" id="item_08">InterProScan</div>--%>
+                        <%--<div class="block-nt">Functional analysis</div>--%>
+                    <%--</div> <!-- /branch1 -->--%>
+
+                    <%--<div class="branch2">  <div class="arrow_pip rotate_t"></div>--%>
+                        <%--<div class="block-lb" id="item_09">Reads with rRNA</div>--%>
+                        <%--<div class="arrow_pip"></div>--%>
+                        <%--<div class="block-lb" id="item_11">16s rRNA</div>--%>
+                        <%--<div class="arrow_pip"></div>--%>
+                        <%--<div class="block step5 taxon" id="item_10">QIIME</div>--%>
+                        <%--<div class="block-nt">Taxonomic analysis</div>--%>
+                    <%--</div><!-- /branch2 -->--%>
+
+                <%--</div><!-- /branch -->--%>
+            <%--</div> <!-- /container -->--%>
+        <%--</div>   <!-- /block_wrapper -->--%>
+        <!-- /complex pipeline chart version 1.0-->
     </c:otherwise>
+
 </c:choose>
 
-<h3>Pipeline Tools</h3>
+<h3>Pipeline tools & steps</h3>
 
+<c:choose>
+    <c:when test="${releaseVersion == '2.0'}">
+<!-- Table version 2.0 -->
 <table class="pipeline_table">
     <thead>
     <tr>
+        <th width="4px"></th>
         <th>Tools</th>
-        <th>Version</th>
+        <th >Version</th>
         <th>Description</th>
+        <th>How we use it</th>
     </tr>
     </thead>
     <tbody>
+    <tr class="step0 row-cb"><td>1</td><td><a href="https://github.com/jstjohn/SeqPrep" class="ext">SeqPrep</a></td><td>1.1</td><td>A program to merge paired end Illumina reads that are overlapping into a single longer read.</td><td>Paired-end overlapping reads are merged - we do not perform assembly
+    </td></tr>
     <!-- Change table row class for each tool -->
     <c:forEach var="pipelineReleaseTool" items="${pipelineReleaseTools}" varStatus="status">
         <c:set var="pipelineTool" value="${pipelineReleaseTool.pk.pipelineTool}"/>
@@ -119,75 +188,168 @@
                 </script>
             </c:otherwise>
         </c:choose>
-
+        <td>
+            <!-- Showing a step number -->
+            <c:choose>
+                <c:when test="${tool == 'Trimmomatic'}">2.1</c:when>
+                <c:when test="${tool == 'Biopython'}">2.2</c:when>
+                <c:when test="${tool == 'UCLUST'}">2.3</c:when>
+                <c:when test="${tool == 'RepeatMasker'}">2.4</c:when>
+                <c:when test="${tool == 'rRNASelector'}">3</c:when>
+                <c:when test="${tool == 'FragGeneScan'}">4</c:when>
+                <c:when test="${tool == 'InterProScan'}">5</c:when>
+                <c:when test="${tool == 'QIIME' }">6</c:when>
+                <c:otherwise>0</c:otherwise>
+             </c:choose>
+            <!--/ Showing a step number -->
+        </td>
         <td ><a class="ext" href="${pipelineTool.webLink}">${pipelineTool.toolName}</a></td>
         <td>${pipelineTool.toolVersion}</td>
         <td>${pipelineTool.description}</td>
+        <td>
+        <c:choose>
+            <c:when test="${tool == 'Trimmomatic'}">
+            Low quality trimming (low quality ends and sequences with > 10% undetermined nucleotides removed). Adapter sequences removed using Biopython SeqIO package
+             </c:when>
+            <c:when test="${tool == 'Biopython'}">
+                Sequences < 100 nucleotides in length removed
+            </c:when>
+            <c:when test="${tool == 'UCLUST'}">
+           Duplicate sequences removed - clustered on 99% identity for LS454 or on 50 nucleotides prefix identity (using pick_otus.py script in Qiime v1.15)
+            </c:when>
+            <c:when test="${tool == 'RepeatMasker'}">
+                Repeat masked - removed reads with 50% or more nucleotides masked
+           </c:when>
+            <c:when test="${tool == 'rRNASelector'}">
+                Prokaryotic rRNA reads are filtered. We use the hidden Markov models to identify rRNA sequences
+            </c:when>
+            <c:when test="${tool == 'FragGeneScan'}">
+            Reads with predicted coding sequences (pCDS) above 60 nucleotides in length
+            </c:when>
+            <c:when test="${tool == 'InterProScan' }">
+            Matches are generated against predicted CDS, using a subset of databases (Pfam, TIGRFAM, PRINTS, PROSITE patterns, Gene3d) from InterPro release 31.0. A summary of Gene Ontology (GO) terms derived from InterPro matches to your sample is provided. It is generated using a reduced list of GO terms called GO slim (version <a href="http://www.geneontology.org/ontology/subsets/goslim_metagenomics.obo" class="ext">goslim_goa</a>).
+            </c:when>
+            <c:when test="${tool == 'QIIME' }">
+             16s rRNA are annotated using the Greengenes reference database (default closed-reference OTU picking protocol with Greengenes 13.8 reference with reverse strand matching enabled)
+            </c:when>
+
+            <c:otherwise>
+                  tool not defined
+                <script>
+                    //alert("tool not defined");
+                </script>
+            </c:otherwise>
+        </c:choose>
+        </td>
         </tr>
 
     </c:forEach>
     </tbody>
 </table>
 
-
-
-<h3>Data processing steps</h3>
-<p>
-<c:choose>
-    <c:when test="${releaseVersion == '2.0'}">
-        <ol class="pipeline_step">
-            <li>1. Submitted reads - paired-end reads are merged with SeqPrep v1.1</li>
-            <li>2. Reads are processed
-                <ol>
-                    <li>2.1. Clipped - low quality ends trimmed and adapter sequences removed using Biopython SeqIO
-                        package
-                    </li>
-                    <li>2.2. Quality filtered - sequences with > 10% undetermined nucleotides removed</li>
-                    <li>2.3. Read length filtered - sequences < 100 nt in length removed</li>
-                </ol>
-            <li>3. rRNA recognized by rRNASelector prokaryotic ribosomal RNA hidden Markov models reads are masked</li>
-            <li>4. Taxonomic analysis is performed on 16S rRNA reads using QIIME 1.9.0 (default closed-reference OTU picking protocal with Greengenes 13.8 reference with reverse strand matching enabled)</li>
-            <li>5. CDS prediction with FragGeneScan v.1.15 </li>
-            <li>6. Functional analysis of predicted proteins from step 5 is performed with InterProScan 5.9 using a subset of databases from
-                InterPro release 50.0 (databases used for analysis: Pfam, TIGRFAM, PRINTS, PROSITE patterns, Gene3d).
-                The Gene Ontology term summary was generated using the following GO slim: goslim_goa
-            </li>
-
-        </ol>
-        </p>
     </c:when>
-    <c:otherwise>
-        <p>
-        <ol class="pipeline_step">
-            <li>1. Reads submitted</li>
-            <li>2. Nucleotide sequences processed
-                <ol>
-                    <li>2.1. Clipped - low quality ends trimmed and adapter sequences removed using Biopython
-                        SeqIO
-                        package
-                    </li>
-                    <li>2.2. Quality filtered - sequences with > 10% undetermined nucleotides removed</li>
-                    <li>2.3. Read length filtered - sequences < 100 nt in length removed</li>
-                    <li>2.4. Duplicate sequences removed - clustered on 99% identity (UCLUST v 1.1.579) for LS454 or on 50nt prefix identity (using pick_otus.py script which is part of Qiime v1.15) for other sequencing platforms and one representative sequence chosen
-                    </li>
-                    <li>2.5. Repeat masked - RepeatMasker (open-3.2.2), removed reads with 50% or more
-                        nucleotides
-                        masked
-                    </li>
-                </ol>
-            </li>
-            <li>3. rRNA reads are filtered using rRNASelector (rRNASelector v 1.0.0)</li>
-            <li>4. Taxonomic analysis is performed upon 16s rRNA using Qiime (Qiime v 1.5).</li>
-            <li>5. CDS predicted (FragGeneScan v 1.15)</li>
-            <li>6. Matches were generated against predicted CDS with InterProScan 5.0 (beta release) using a subset of
-                databases from InterPro release 31.0 (databases used for analysis: Pfam, TIGRFAM, PRINTS, PROSITE
-                patterns, Gene3d). The Gene Ontology term summary was generated using the following GO slim: goslim_goa
-            </li>
-        </ol>
-        </p>
-    </c:otherwise>
-</c:choose>
-<script>
+        <c:otherwise>
+            <!-- Table version 1.0 -->
+            <table class="pipeline_table">
+                <thead>
+                <tr>
+                    <th width="4px"></th>
+                    <th>Tools</th>
+                    <th >Version</th>
+                    <th>Description</th>
+                    <th>How we use it</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="step0 row-cb"><td>1</td><td><a href="https://github.com/jstjohn/SeqPrep" class="ext">SeqPrep</a></td><td>1.1</td><td>A program to merge paired end Illumina reads that are overlapping into a single longer read.</td><td>Paired-end overlapping reads are merged - we do not perform assembly
+                </td></tr>
+                <!-- Change table row class for each tool -->
+                <c:forEach var="pipelineReleaseTool" items="${pipelineReleaseTools}" varStatus="status">
+                    <c:set var="pipelineTool" value="${pipelineReleaseTool.pk.pipelineTool}"/>
+                    <c:set var="tool" value="${pipelineTool.toolName}"/>
+                    <c:set var="toolGroupId" value="${pipelineReleaseTool.toolGroupId}"/>
+                    <c:choose>
+                        <c:when test="${tool == 'InterProScan' || tool == 'FragGeneScan'}">
+                            <tr class="step${toolGroupId} row-function">
+                        </c:when>
+                        <c:when test="${tool == 'Trimmomatic' || tool == 'Biopython' || tool == 'UCLUST' || tool == 'RepeatMasker' || tool == 'rRNASelector'}">
+                            <tr class="step${toolGroupId} row-cb">
+                        </c:when>
+                        <c:when test="${tool == 'QIIME' }">
+                            <tr class="step${toolGroupId} row-taxon">
+                        </c:when>
+
+                        <c:otherwise>
+                            <tr class="step row-cb">
+                            <script>
+                                //alert("tool not defined");
+                            </script>
+                        </c:otherwise>
+                    </c:choose>
+                    <td>
+                        <!-- Showing a step number -->
+                        <c:choose>
+                            <c:when test="${tool == 'Trimmomatic'}">2.1</c:when>
+                            <c:when test="${tool == 'Biopython'}">2.2</c:when>
+                            <c:when test="${tool == 'UCLUST'}">2.3</c:when>
+                            <c:when test="${tool == 'RepeatMasker'}">2.4</c:when>
+                            <c:when test="${tool == 'rRNASelector'}">3</c:when>
+                            <c:when test="${tool == 'FragGeneScan'}">4</c:when>
+                            <c:when test="${tool == 'InterProScan'}">5</c:when>
+                            <c:when test="${tool == 'QIIME' }">6</c:when>
+                            <c:otherwise>0</c:otherwise>
+                         </c:choose>
+                        <!--/ Showing a step number -->
+                    </td>
+                    <td ><a class="ext" href="${pipelineTool.webLink}">${pipelineTool.toolName}</a></td>
+                    <td>${pipelineTool.toolVersion}</td>
+                    <td>${pipelineTool.description}</td>
+                    <td>
+                    <c:choose>
+                        <c:when test="${tool == 'Trimmomatic'}">
+                        Low quality trimming (low quality ends and sequences with > 10% undetermined nucleotides removed). Adapter sequences removed using Biopython SeqIO package
+                         </c:when>
+                        <c:when test="${tool == 'Biopython'}">
+                            Sequences < 100 nucleotides in length removed
+                        </c:when>
+                        <c:when test="${tool == 'UCLUST'}">
+                       Duplicate sequences removed - clustered on 99% identity for LS454 or on 50 nucleotides prefix identity (using pick_otus.py script in Qiime v1.15)
+                        </c:when>
+                        <c:when test="${tool == 'RepeatMasker'}">
+                            Repeat masked - removed reads with 50% or more nucleotides masked
+                       </c:when>
+                        <c:when test="${tool == 'rRNASelector'}">
+                            Prokaryotic rRNA reads are filtered. We use the hidden Markov models to identify rRNA sequences
+                        </c:when>
+                        <c:when test="${tool == 'FragGeneScan'}">
+                        Reads with predicted coding sequences (pCDS) above 60 nucleotides in length
+                        </c:when>
+                        <c:when test="${tool == 'InterProScan' }">
+                        Matches are generated against predicted CDS, using a subset of databases (Pfam, TIGRFAM, PRINTS, PROSITE patterns, Gene3d) from InterPro release 31.0. A summary of Gene Ontology (GO) terms derived from InterPro matches to your sample is provided. It is generated using a reduced list of GO terms called GO slim (version <a href="http://www.geneontology.org/ontology/subsets/goslim_metagenomics.obo" class="ext">goslim_goa</a>).
+                        </c:when>
+                        <c:when test="${tool == 'QIIME' }">
+                         16s rRNA are annotated using the Greengenes reference database (default de novo OTU picking protocol with Greengenes 12.10 reference with reverse strand matching enabled)
+                        </c:when>
+
+                        <c:otherwise>
+                            <script>
+                                //alert("tool not defined");
+                            </script>
+                        </c:otherwise>
+                    </c:choose>
+                    </td>
+                    </tr>
+
+                </c:forEach>
+                </tbody>
+            </table>
+            <!-- /Table version 1.0 -->
+        </c:otherwise>
+    </c:choose>
+
+
+
+<script type="text/javascript">
     $(document).ready(function() {
 
         //add class "highlight" when hover over the row
@@ -195,6 +357,20 @@
             $(this).addClass('highlight');
         }, function() {
             $(this).removeClass('highlight');
+        });
+
+          //for step0
+        $('.block.step0').hover(function() {
+            $('.block.step0, table tbody tr.step0').addClass('highlight');
+
+        }, function() {
+            $('.block.step0, table tbody tr.step0').removeClass('highlight');
+        });
+
+        $('table tbody tr.step0').hover(function() {
+            $('.step0').addClass('highlight');
+        }, function() {
+            $('.step0').removeClass('highlight');
         });
 
         //for step1
