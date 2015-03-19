@@ -1680,7 +1680,7 @@ ul.sample_list li {list-style: none; display: inline;}
 .icon_pipeline_v:hover {opacity: 1; filter: alpha(opacity = 100); }
 /*chart*/
 .block_wrapper {overflow:hidden; margin: 0 9px 18px 9px;  min-height: 206px;/*for qclist text to appear correctly*/}
-.block_container {width:1070px;}
+.block_container {width:1080px;}
 .block.step0.highlight, .block.step1.highlight, .block.step2.highlight, .block.step3.highlight, .block.step4.highlight, .block.step5.highlight {border:1px #0F6D99 solid; background-color:#0F6D99; transition: all 0.5s ease; color:white;}
  .first_branch {float:left; margin-top:44px;}
 .mainbranch {float:left;margin-top:57px;}
