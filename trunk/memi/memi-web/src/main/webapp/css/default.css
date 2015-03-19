@@ -325,7 +325,7 @@ text-decoration:none;
 background:url(../img/bgd_black_op20_8.png);
 }
 
-a.pi_arch_title {color:#7c8c99;}
+.pi_arch_title span {font-size: 160%;}
 /**************************** END LINKS ********************************/
 
 /**************************** TABLE ***********************************/
