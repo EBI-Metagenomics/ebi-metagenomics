@@ -1,6 +1,7 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage;
 
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.TaxonomyData;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.results.AbstractResultViewModel;
 
 import java.util.*;
 
@@ -82,7 +83,7 @@ public class TaxonomyAnalysisResult {
      * //TODO: Write JUnit test
      */
     private void init() {
-        List<String> colors = AnalysisResult.colorCodeList;
+        List<String> colors = AbstractResultViewModel.colorCodeList;
         //maps domains (Bacteria, Archaea, unassigned)
         Map<String, Integer> domainCompositionMap = new TreeMap();
         //Counts all unique UTU values

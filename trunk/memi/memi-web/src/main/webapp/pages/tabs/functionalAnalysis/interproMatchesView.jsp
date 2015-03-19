@@ -79,7 +79,7 @@
             titleTextStyle:{fontSize:12},
             width:310, // bigger width to let the info window display correctly
             height:299,
-            colors:[ <c:set var="addComma" value="false"/><c:forEach var="entry" items="${model.functionalAnalysisResult.interProMatchesSection.condensedInterProEntryList}" varStatus="status"><c:choose><c:when test="${addComma}">, </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose><c:choose><c:when test="${status.index>9}">'#ccc'</c:when><c:otherwise>'<c:out value="${model.analysisResult.colorCodeList[status.index]}"/>'</c:otherwise></c:choose></c:forEach>],
+            colors:[ <c:set var="addComma" value="false"/><c:forEach var="entry" items="${model.functionalAnalysisResult.interProMatchesSection.condensedInterProEntryList}" varStatus="status"><c:choose><c:when test="${addComma}">, </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose><c:choose><c:when test="${status.index>9}">'#ccc'</c:when><c:otherwise>'<c:out value="${model.colorCodeList[status.index]}"/>'</c:otherwise></c:choose></c:forEach>],
 //               pieSliceText:'none',
             legend:'none',
             chartArea:{left:20, top:30, width:"74%", height:"100%"},

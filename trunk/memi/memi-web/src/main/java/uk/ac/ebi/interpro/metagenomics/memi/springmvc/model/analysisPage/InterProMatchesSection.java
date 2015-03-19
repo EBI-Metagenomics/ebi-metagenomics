@@ -1,5 +1,7 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage;
 
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.results.AbstractResultViewModel;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -109,7 +111,7 @@ public class InterProMatchesSection {
             boolean colorTrigger = false;
             for (int index = 9; index >= 0; index--) {
                 if (colorTrigger) {
-                    colorCodeArray[index] = AnalysisResult.colorCodeList.get(index);
+                    colorCodeArray[index] = AbstractResultViewModel.colorCodeList.get(index);
                 } else {
                     int currentNumberOfHits = interProEntryList.get(index).getNumOfEntryHits();
                     if (index - 1 >= 0) {
@@ -121,14 +123,14 @@ public class InterProMatchesSection {
                     if (currentNumberOfHits == nextNumberOfHits || currentNumberOfHits == previousNumberOfHits) {
                         colorCodeArray[index] = "b9b9b9";
                     } else {
-                        colorCodeArray[index] = AnalysisResult.colorCodeList.get(index);
+                        colorCodeArray[index] = AbstractResultViewModel.colorCodeList.get(index);
                         colorTrigger = true;
                     }
                 }
             }
             this.colorCodeList = Arrays.asList(colorCodeArray);
         } else {
-            this.colorCodeList = new ArrayList<String>(AnalysisResult.colorCodeList);
+            this.colorCodeList = new ArrayList<String>(AbstractResultViewModel.colorCodeList);
         }
     }
 }
