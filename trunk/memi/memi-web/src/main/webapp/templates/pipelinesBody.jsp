@@ -5,7 +5,7 @@
 
 <c:forEach var="pipelineRelease" items="${pipelineReleases}" varStatus="status">
 
-<p class="icon icon-functional pi_arch_title" data-icon="9"><span><a href="<c:url value="${baseURL}/pipelines/${pipelineRelease.releaseVersion}"/>">Pipeline v.${pipelineRelease.releaseVersion}</a></span> (${pipelineRelease.releaseDate})</p>
+<p class="pi_arch_title"><span><a href="<c:url value="${baseURL}/pipelines/${pipelineRelease.releaseVersion}"/>">Pipeline v.${pipelineRelease.releaseVersion}</a></span> (${pipelineRelease.releaseDate})</p>
     <c:choose>
         <c:when test="${pipelineRelease.releaseVersion == '2.0'}">
             <ul><li>remove clustering step during the Quality control (QC)</li>
