@@ -1680,14 +1680,12 @@ ul.sample_list li {list-style: none; display: inline;}
 .icon_pipeline_v:hover {opacity: 1; filter: alpha(opacity = 100); }
 /*chart*/
 .block_wrapper {overflow:hidden; margin: 0 9px 18px 9px;  min-height: 206px;/*for qclist text to appear correctly*/}
-.block_container {width:1109px;}
+.block_container { width: 300%; /*was 1109px*/float:left; border:0px red solid;}
 .block.step0.highlight, .block.step1.highlight, .block.step2.highlight, .block.step3.highlight, .block.step4.highlight, .block.step5.highlight {border:1px #0F6D99 solid; background-color:#0F6D99; transition: all 0.5s ease; color:white;}
  .first_branch {float:left; margin-top:44px;}
-.mainbranch {float:left;margin-top:57px;}
+.mainbranch {float:left;/*was margin-top:57px;*/  padding-top: 57px;height: 139px; border:0px black solid;}
 .branch {float:left;}
-.branch1 {border: 0px red solid;}
-
-.branch2 {border: 0px blue solid;margin-top:20px;}
+.branch2 {margin-top:20px;}
 
 .block, .block-nt, .block-lb {font-size:90%;padding: 5px; display:inline-block; text-align:center; /*vertical-align: middle;*/}
 .block, .block_small {position:relative;padding: 2px; cursor:pointer; border:1px #B4D0F3 solid; width: 82px; height: 82px; border-radius:50%;line-height:7.1;background-color:#EAF0F9;color:#5983B5;}
