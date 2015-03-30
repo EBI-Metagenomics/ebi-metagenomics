@@ -2,6 +2,7 @@ package uk.ac.ebi.interpro.metagenomics.memi.model.hibernate;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Comparator;
 
 /**
@@ -23,8 +24,12 @@ public class PipelineReleaseTool implements Serializable {
     private PipelineReleaseToolId pk = new PipelineReleaseToolId();
 
     // An extra column on the pipeline release/tools join table
-    @Column(name = "TOOL_GROUP_ID", nullable = false, length = 4)
-    private Integer toolGroupId;
+    @Column(name = "TOOL_GROUP_ID", nullable = false, precision = 6, scale = 3)
+    private BigDecimal toolGroupId;
+
+    // An extra column on the pipeline release/tools join table
+    @Column(name = "HOW_TOOL_USED_DESC", nullable = false, length = 1000)
+    private String howToolUsedDesc;
 
     public PipelineReleaseTool() {
     }
@@ -55,12 +60,25 @@ public class PipelineReleaseTool implements Serializable {
         getPk().setPipelineTool(pipelineTool);
     }
 
-    public Integer getToolGroupId() {
+    public BigDecimal getToolGroupId() {
         return toolGroupId;
     }
 
-    public void setToolGroupId(Integer toolGroupId) {
+    public void setToolGroupId(BigDecimal toolGroupId) {
         this.toolGroupId = toolGroupId;
+    }
+
+    public String getHowToolUsedDesc() {
+        return howToolUsedDesc;
+    }
+
+    public void setHowToolUsedDesc(String howToolUsedDesc) {
+        this.howToolUsedDesc = howToolUsedDesc;
+    }
+
+    @Transient
+    public int getToolGroupMajorId() {
+        return toolGroupId.intValue();
     }
 
     @Override
@@ -99,14 +117,8 @@ public class PipelineReleaseTool implements Serializable {
             if (thisPipelineId > thatPipelineId) return 1;
 
             // Sort by pipeline tool group ID ascending
-            if (prt1.getToolGroupId() < prt2.getToolGroupId()) return -1;
-            if (prt1.getToolGroupId() > prt2.getToolGroupId()) return 1;
-
-            // Sort by pipeline tool ID ascending
-            long thisToolId = prt1.getPipelineTool().getToolId();
-            long thatToolId = prt2.getPipelineTool().getToolId();
-            if (thisToolId < thatToolId) return -1;
-            if (thisToolId > thatToolId) return 1;
+            if (prt1.getToolGroupId().doubleValue() < prt2.getToolGroupId().doubleValue()) return -1;
+            if (prt1.getToolGroupId().doubleValue() > prt2.getToolGroupId().doubleValue()) return 1;
 
             return 0;
         }
