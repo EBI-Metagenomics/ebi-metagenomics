@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <h2 style="margin-bottom:0;/*for pipeline image higher*/">Pipeline version ${releaseVersion}  <span>- ${releaseDate}</span></h2>
 
 <c:choose>
@@ -163,22 +164,22 @@
     </tr>
     </thead>
     <tbody>
-    <tr class="step0 row-cb"><td>1</td><td><a href="https://github.com/jstjohn/SeqPrep" class="ext">SeqPrep</a></td><td>1.1</td><td>A program to merge paired end Illumina reads that are overlapping into a single longer read.</td><td>Paired-end overlapping reads are merged - we do not perform assembly
+    <tr class="step0 row-cb"><td>1</td><td><a href="https://github.com/jstjohn/SeqPrep" class="ext">SeqPrep</a></td><td>1.1</td><td>A program to merge paired end Illumina reads that are overlapping into a single longer read.</td><td>Paired-end overlapping reads are merged - we do not perform assembly.
     </td></tr>
     <!-- Change table row class for each tool -->
     <c:forEach var="pipelineReleaseTool" items="${pipelineReleaseTools}" varStatus="status">
         <c:set var="pipelineTool" value="${pipelineReleaseTool.pk.pipelineTool}"/>
         <c:set var="tool" value="${pipelineTool.toolName}"/>
-        <c:set var="toolGroupId" value="${pipelineReleaseTool.toolGroupId}"/>
+        <c:set var="toolGroupMajorId" value="${pipelineReleaseTool.toolGroupMajorId}"/>
         <c:choose>
             <c:when test="${tool == 'InterProScan' || tool == 'FragGeneScan'}">
-                <tr class="step${toolGroupId} row-function">
+                <tr class="step${toolGroupMajorId} row-function">
             </c:when>
             <c:when test="${tool == 'Trimmomatic' || tool == 'Biopython' || tool == 'UCLUST' || tool == 'RepeatMasker' || tool == 'rRNASelector'}">
-                <tr class="step${toolGroupId} row-cb">
+                <tr class="step${toolGroupMajorId} row-cb">
             </c:when>
             <c:when test="${tool == 'QIIME' }">
-                <tr class="step${toolGroupId} row-taxon">
+                <tr class="step${toolGroupMajorId} row-taxon">
             </c:when>
 
             <c:otherwise>
@@ -189,58 +190,13 @@
             </c:otherwise>
         </c:choose>
         <td>
-            <!-- Showing a step number -->
-            <c:choose>
-                <c:when test="${tool == 'Trimmomatic'}">2.1</c:when>
-                <c:when test="${tool == 'Biopython'}">2.2</c:when>
-                <c:when test="${tool == 'UCLUST'}">2.3</c:when>
-                <c:when test="${tool == 'RepeatMasker'}">2.4</c:when>
-                <c:when test="${tool == 'rRNASelector'}">3</c:when>
-                <c:when test="${tool == 'FragGeneScan'}">4</c:when>
-                <c:when test="${tool == 'InterProScan'}">5</c:when>
-                <c:when test="${tool == 'QIIME' }">6</c:when>
-                <c:otherwise>0</c:otherwise>
-             </c:choose>
-            <!--/ Showing a step number -->
+            <!-- Showing a step number, add one as the first step is not a tool in the database -->
+            ${pipelineReleaseTool.toolGroupId + 1.0}
         </td>
         <td ><a class="ext" href="${pipelineTool.webLink}">${pipelineTool.toolName}</a></td>
         <td>${pipelineTool.toolVersion}</td>
         <td>${pipelineTool.description}</td>
-        <td>
-        <c:choose>
-            <c:when test="${tool == 'Trimmomatic'}">
-            Low quality trimming (low quality ends and sequences with > 10% undetermined nucleotides removed). Adapter sequences removed using Biopython SeqIO package
-             </c:when>
-            <c:when test="${tool == 'Biopython'}">
-                Sequences < 100 nucleotides in length removed
-            </c:when>
-            <c:when test="${tool == 'UCLUST'}">
-           Duplicate sequences removed - clustered on 99% identity for LS454 or on 50 nucleotides prefix identity (using pick_otus.py script in Qiime v1.15)
-            </c:when>
-            <c:when test="${tool == 'RepeatMasker'}">
-                Repeat masked - removed reads with 50% or more nucleotides masked
-           </c:when>
-            <c:when test="${tool == 'rRNASelector'}">
-                Prokaryotic rRNA reads are filtered. We use the hidden Markov models to identify rRNA sequences
-            </c:when>
-            <c:when test="${tool == 'FragGeneScan'}">
-            Reads with predicted coding sequences (pCDS) above 60 nucleotides in length
-            </c:when>
-            <c:when test="${tool == 'InterProScan' }">
-            Matches are generated against predicted CDS, using a subset of databases (Pfam, TIGRFAM, PRINTS, PROSITE patterns, Gene3d) from InterPro release 31.0. A summary of Gene Ontology (GO) terms derived from InterPro matches to your sample is provided. It is generated using a reduced list of GO terms called GO slim (version <a href="http://www.geneontology.org/ontology/subsets/goslim_metagenomics.obo" class="ext">goslim_goa</a>).
-            </c:when>
-            <c:when test="${tool == 'QIIME' }">
-             16s rRNA are annotated using the Greengenes reference database (default closed-reference OTU picking protocol with Greengenes 13.8 reference with reverse strand matching enabled)
-            </c:when>
-
-            <c:otherwise>
-                  tool not defined
-                <script>
-                    //alert("tool not defined");
-                </script>
-            </c:otherwise>
-        </c:choose>
-        </td>
+        <td>${pipelineReleaseTool.howToolUsedDesc}</td>
         </tr>
 
     </c:forEach>
@@ -261,22 +217,22 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr class="step0 row-cb"><td>1</td><td><a href="https://github.com/jstjohn/SeqPrep" class="ext">SeqPrep</a></td><td>1.1</td><td>A program to merge paired end Illumina reads that are overlapping into a single longer read.</td><td>Paired-end overlapping reads are merged - we do not perform assembly
+                <tr class="step0 row-cb"><td>1</td><td><a href="https://github.com/jstjohn/SeqPrep" class="ext">SeqPrep</a></td><td>1.1</td><td>A program to merge paired end Illumina reads that are overlapping into a single longer read.</td><td>Paired-end overlapping reads are merged - we do not perform assembly.
                 </td></tr>
                 <!-- Change table row class for each tool -->
                 <c:forEach var="pipelineReleaseTool" items="${pipelineReleaseTools}" varStatus="status">
                     <c:set var="pipelineTool" value="${pipelineReleaseTool.pk.pipelineTool}"/>
                     <c:set var="tool" value="${pipelineTool.toolName}"/>
-                    <c:set var="toolGroupId" value="${pipelineReleaseTool.toolGroupId}"/>
+                    <c:set var="toolGroupMajorId" value="${pipelineReleaseTool.toolGroupMajorId}"/>
                     <c:choose>
                         <c:when test="${tool == 'InterProScan' || tool == 'FragGeneScan'}">
-                            <tr class="step${toolGroupId} row-function">
+                            <tr class="step${toolGroupMajorId} row-function">
                         </c:when>
                         <c:when test="${tool == 'Trimmomatic' || tool == 'Biopython' || tool == 'UCLUST' || tool == 'RepeatMasker' || tool == 'rRNASelector'}">
-                            <tr class="step${toolGroupId} row-cb">
+                            <tr class="step${toolGroupMajorId} row-cb">
                         </c:when>
                         <c:when test="${tool == 'QIIME' }">
-                            <tr class="step${toolGroupId} row-taxon">
+                            <tr class="step${toolGroupMajorId} row-taxon">
                         </c:when>
 
                         <c:otherwise>
@@ -287,57 +243,13 @@
                         </c:otherwise>
                     </c:choose>
                     <td>
-                        <!-- Showing a step number -->
-                        <c:choose>
-                            <c:when test="${tool == 'Trimmomatic'}">2.1</c:when>
-                            <c:when test="${tool == 'Biopython'}">2.2</c:when>
-                            <c:when test="${tool == 'UCLUST'}">2.3</c:when>
-                            <c:when test="${tool == 'RepeatMasker'}">2.4</c:when>
-                            <c:when test="${tool == 'rRNASelector'}">3</c:when>
-                            <c:when test="${tool == 'FragGeneScan'}">4</c:when>
-                            <c:when test="${tool == 'InterProScan'}">5</c:when>
-                            <c:when test="${tool == 'QIIME' }">6</c:when>
-                            <c:otherwise>0</c:otherwise>
-                         </c:choose>
-                        <!--/ Showing a step number -->
+                        <!-- Showing a step number, add one as the first step is not a tool in the database -->
+                        ${pipelineReleaseTool.toolGroupId + 1.0}
                     </td>
                     <td ><a class="ext" href="${pipelineTool.webLink}">${pipelineTool.toolName}</a></td>
                     <td>${pipelineTool.toolVersion}</td>
                     <td>${pipelineTool.description}</td>
-                    <td>
-                    <c:choose>
-                        <c:when test="${tool == 'Trimmomatic'}">
-                        Low quality trimming (low quality ends and sequences with > 10% undetermined nucleotides removed). Adapter sequences removed using Biopython SeqIO package
-                         </c:when>
-                        <c:when test="${tool == 'Biopython'}">
-                            Sequences < 100 nucleotides in length removed
-                        </c:when>
-                        <c:when test="${tool == 'UCLUST'}">
-                       Duplicate sequences removed - clustered on 99% identity for LS454 or on 50 nucleotides prefix identity (using pick_otus.py script in Qiime v1.15)
-                        </c:when>
-                        <c:when test="${tool == 'RepeatMasker'}">
-                            Repeat masked - removed reads with 50% or more nucleotides masked
-                       </c:when>
-                        <c:when test="${tool == 'rRNASelector'}">
-                            Prokaryotic rRNA reads are filtered. We use the hidden Markov models to identify rRNA sequences
-                        </c:when>
-                        <c:when test="${tool == 'FragGeneScan'}">
-                        Reads with predicted coding sequences (pCDS) above 60 nucleotides in length
-                        </c:when>
-                        <c:when test="${tool == 'InterProScan' }">
-                        Matches are generated against predicted CDS, using a subset of databases (Pfam, TIGRFAM, PRINTS, PROSITE patterns, Gene3d) from InterPro release 31.0. A summary of Gene Ontology (GO) terms derived from InterPro matches to your sample is provided. It is generated using a reduced list of GO terms called GO slim (version <a href="http://www.geneontology.org/ontology/subsets/goslim_metagenomics.obo" class="ext">goslim_goa</a>).
-                        </c:when>
-                        <c:when test="${tool == 'QIIME' }">
-                         16s rRNA are annotated using the Greengenes reference database (default de novo OTU picking protocol with Greengenes 12.10 reference with reverse strand matching enabled)
-                        </c:when>
-
-                        <c:otherwise>
-                            <script>
-                                //alert("tool not defined");
-                            </script>
-                        </c:otherwise>
-                    </c:choose>
-                    </td>
+                    <td>${pipelineReleaseTool.howToolUsedDesc}</td>
                     </tr>
 
                 </c:forEach>
