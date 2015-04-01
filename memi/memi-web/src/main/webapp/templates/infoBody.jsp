@@ -77,26 +77,69 @@ The ENA only accepts data that is intended for public release. However, any data
 
 <h3 id="analysis">How we analyse the data</h3>
 <p>The latest version of the pipeline includes the following steps:</p>
-<ol id="p-steps">
-<li>1. Submitted reads*</li>
-<li>2. Reads are processed
-    <ol>
-        <li>2.1. Clipped - low quality ends trimmed and adapter sequences removed using Biopython SeqIO
-            package
-        </li>
-        <li>2.2. Quality filtered - sequences with > 10% undetermined nucleotides removed</li>
-        <li>2.3. Read length filtered - depending on the platform short sequences are removed</li>
-    </ol>
-<li>3. rRNA reads are filtered and clipped if non-rRNA sequence is present using rRNASelector prokaryotic ribosomal RNA hidden Markov models </li>
-<li>4. Taxonomic analysis is performed on 16S rRNA reads using QIIME 1.9.0 (default closed-reference OTU picking protocal with Greengenes 13.8 reference with reverse strand matching enabled)</li>
-<li>5. CDS prediction with FragGeneScan v.1.15 </li>
-<li>6. Functional analysis of predicted proteins from step 5 is performed with InterProScan 5.9 using a subset of databases from
-    InterPro release 50.0 (databases used for analysis: Pfam, TIGRFAM, PRINTS, PROSITE patterns, Gene3d).
-    The Gene Ontology term summary was generated using the following GO slim: goslim_goa
-</li>
-<li>* paired-end reads are merged with SeqPrep v1.1</li>
-</ol>
-<p>Please find here more detail about <a title="EBI metagenomics - pipeline releases" href="<c:url value="${baseURL}/pipelines"/>"> previous versions of the pipeline</a> that were used to analyse our data.</p>
+<!-- Pipeline chart for version 2.0-->
+<a title="EBI metagenomics - pipeline releases" href="<c:url value="${baseURL}/pipelines/2.0"/>">
+       <div class="block_wrapper">
+
+           <div class="block_container">
+
+               <div class="mainbranch">
+                   <div class="block-lb" id="item_03">Raw reads</div><div class="arrow_pip "></div>
+                   <div class="block small step0" id="item_000" data-toggle="tooltip" title="Paired-end overlapping reads are merged - we do not perform assembly.">SeqPrep</div><div class="arrow_pip "></div>
+                   <div class="block-lb" id="item_01">Initial reads</div><div class="arrow_pip"></div>
+                   <div class="block step1" id="item_02" title="Trimmomatic: Low quality trimming (low quality ends and sequences with > 10% undetermined nucleotides removed). Adapter sequences removed using Biopython SeqIO package. Biopython: Sequences < 100 nucleotides in length removed.">QC
+                       <div class="qclist"><ul><li>Trim low quality (Trimmomatic)</li>
+                                       <li>Length filtering (Biopython)</li></ul></div>
+                   </div><div class="arrow_pip"></div>
+                   <div class="block-lb" id="item_03">Processed reads</div><div class="arrow_pip"></div>
+                   <div class="block step2" id="item_04" title="Prokaryotic rRNA reads are filtered. We use the hidden Markov models to identify rRNA sequences.">rRNASelector</div>
+               </div>
+
+
+
+               <div class="branch">
+                   <div class="branch1">
+                       <div class="arrow_pip rotate_f"></div><div class="block-lb" id="item_05">Reads with rRNA masked</div><div class="arrow_pip"></div>
+                       <div class="block step3 function" id="item_06" title="Reads with predicted coding sequences (pCDS) above 60 nucleotides in length.">FragGeneScan</div><div class="arrow_pip"></div>
+                       <div class="block-lb" id="item_07">Predicted CDS</div><div class="arrow_pip"></div>
+                       <div class="block step4 function" id="item_08" title="Matches are generated against predicted CDS, using a subset of databases (Pfam, TIGRFAM, PRINTS, PROSITE patterns, Gene3d) from InterPro release 31.0. A summary of Gene Ontology (GO) terms derived from InterPro matches to your sample is provided. It is generated using a reduced list of GO terms called GO slim">InterProScan</div>
+                       <div class="block-nt">Functional analysis</div>
+                   </div> <!-- /branch1 -->
+
+                   <div class="branch2">  <div class="arrow_pip rotate_t"></div>
+                       <div class="block-lb" id="item_09">Reads with rRNA</div>
+                       <div class="arrow_pip"></div>
+                       <div class="block-lb" id="item_11">16s rRNA</div>
+                       <div class="arrow_pip"></div>
+                       <div class="block step5 taxon" id="item_10" title="16s rRNA are annotated using the Greengenes reference database (default closed-reference OTU picking protocol with Greengenes 13.8 reference with reverse strand matching enabled).">QIIME</div>
+                       <div class="block-nt">Taxonomic analysis</div>
+                   </div><!-- /branch2 -->
+
+               </div><!-- /branch -->
+           </div> <!-- /container -->
+       </div>   <!-- /block_wrapper -->
+    </a>
+       <!-- /pipeline chart version 2.0-->
+<%--<ol id="p-steps">--%>
+<%--<li>1. Submitted reads*</li>--%>
+<%--<li>2. Reads are processed--%>
+    <%--<ol>--%>
+        <%--<li>2.1. Clipped - low quality ends trimmed and adapter sequences removed using Biopython SeqIO--%>
+            <%--package--%>
+        <%--</li>--%>
+        <%--<li>2.2. Quality filtered - sequences with > 10% undetermined nucleotides removed</li>--%>
+        <%--<li>2.3. Read length filtered - depending on the platform short sequences are removed</li>--%>
+    <%--</ol>--%>
+<%--<li>3. rRNA reads are filtered and clipped if non-rRNA sequence is present using rRNASelector prokaryotic ribosomal RNA hidden Markov models </li>--%>
+<%--<li>4. Taxonomic analysis is performed on 16S rRNA reads using QIIME 1.9.0 (default closed-reference OTU picking protocal with Greengenes 13.8 reference with reverse strand matching enabled)</li>--%>
+<%--<li>5. CDS prediction with FragGeneScan v.1.15 </li>--%>
+<%--<li>6. Functional analysis of predicted proteins from step 5 is performed with InterProScan 5.9 using a subset of databases from--%>
+    <%--InterPro release 50.0 (databases used for analysis: Pfam, TIGRFAM, PRINTS, PROSITE patterns, Gene3d).--%>
+    <%--The Gene Ontology term summary was generated using the following GO slim: goslim_goa--%>
+<%--</li>--%>
+<%--<li>* paired-end reads are merged with SeqPrep v1.1</li>--%>
+<%--</ol>--%>
+<p>Please find here <a title="EBI metagenomics - pipeline releases" href="<c:url value="${baseURL}/pipelines"/>">more detail about the pipeline tools & steps </a> that were used to analyse our data.</p>
 
 <h3 id="h_cite">How to cite</h3>
 
@@ -164,3 +207,4 @@ Sarah Hunter, Matthew Corbett, Hubert Denise, Matthew Fraser, Alejandra Gonzalez
     </li>
 </ul>
 
+       <script type="javascript">$(function () { $("[data-toggle='tooltip']").tooltip(); });</script>
