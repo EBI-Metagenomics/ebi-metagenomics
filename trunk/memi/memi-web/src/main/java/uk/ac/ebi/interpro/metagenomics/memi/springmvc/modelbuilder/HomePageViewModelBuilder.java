@@ -5,6 +5,7 @@ import org.apache.commons.logging.LogFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.core.comparators.HomePageSamplesComparator;
 import uk.ac.ebi.interpro.metagenomics.memi.core.comparators.HomePageStudiesComparator;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.RunDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.StudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
@@ -37,6 +38,8 @@ public class HomePageViewModelBuilder extends AbstractViewModelBuilder<HomePageV
 
     private SampleDAO sampleDAO;
 
+    private RunDAO runDAO;
+
     /**
      * The number of latest project and samples to show on the home page. Used within this builder class, but also within the Java Server Page.
      */
@@ -44,13 +47,14 @@ public class HomePageViewModelBuilder extends AbstractViewModelBuilder<HomePageV
 
 
     public HomePageViewModelBuilder(SessionManager sessionMgr, String pageTitle, List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer,
-                                    StudyDAO studyDAO, SampleDAO sampleDAO) {
+                                    StudyDAO studyDAO, SampleDAO sampleDAO, RunDAO runDAO) {
         super(sessionMgr);
         this.pageTitle = pageTitle;
         this.breadcrumbs = breadcrumbs;
         this.propertyContainer = propertyContainer;
         this.studyDAO = studyDAO;
         this.sampleDAO = sampleDAO;
+        this.runDAO = runDAO;
     }
 
     @Override
@@ -61,6 +65,8 @@ public class HomePageViewModelBuilder extends AbstractViewModelBuilder<HomePageV
         final Long privateSamplesCount = sampleDAO.countAllPrivate();
         final Long publicStudiesCount = studyDAO.countAllPublic();
         final Long privateStudiesCount = studyDAO.countAllPrivate();
+        final int publicRunCount = runDAO.countAllPublic();
+        final int privateRunCount = runDAO.countAllPrivate();
 //        If case: if nobody is logged in
         if (submitter == null) {
             //retrieve public studies and order them by last meta data received
@@ -72,8 +78,8 @@ public class HomePageViewModelBuilder extends AbstractViewModelBuilder<HomePageV
             Collections.sort(samples, new HomePageSamplesComparator());
             samples = samples.subList(0, getToIndex(samples));
 
-            return new HomePageViewModel(submitter, samples,
-                    pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems, publicSamplesCount, privateSamplesCount, publicStudiesCount, privateStudiesCount, studies);
+            return new HomePageViewModel(submitter, samples, pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems,
+                    publicSamplesCount, privateSamplesCount, publicStudiesCount, privateStudiesCount, studies, publicRunCount, privateRunCount);
         }
 //        Else case: if somebody is logged in
         else {
@@ -98,7 +104,8 @@ public class HomePageViewModelBuilder extends AbstractViewModelBuilder<HomePageV
             final Long mySamplesCount = (mySamples != null ? new Long(mySamples.size()) : new Long(0));
             final Long myStudiesCount = (myStudies != null ? new Long(myStudies.size()) : new Long(0));
 
-            return new HomePageViewModel(submitter, myStudiesMap, mySamples, pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems, mySamplesCount, myStudiesCount, publicSamplesCount, privateSamplesCount, publicStudiesCount, privateStudiesCount);
+            return new HomePageViewModel(submitter, myStudiesMap, mySamples, pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems,
+                    mySamplesCount, myStudiesCount, publicSamplesCount, privateSamplesCount, publicStudiesCount, privateStudiesCount, publicRunCount, privateRunCount);
         }
     }
 
