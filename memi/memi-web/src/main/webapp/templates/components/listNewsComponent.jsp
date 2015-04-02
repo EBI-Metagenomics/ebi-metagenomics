@@ -1,10 +1,10 @@
 <div id="list-news" class="grid_9 omega">
 
     <h2>Data content</h2>
-    <h3 class="icon icon-functional" data-icon="U" style="margin-bottom:0;">Public data</h3>
-    <p><strong>${model.publicRunCount}</strong> runs / <strong>${model.publicSamplesCount}</strong> samples  (<strong>${model.publicStudiesCount}</strong> projects)</p>
-    <h3 class="icon icon-functional" data-icon="L" style="margin-bottom:0;">Private data</h3>
-    <p><strong> ${model.privateRunCount}</strong> runs / <strong>${model.privateSamplesCount}</strong> samples (<strong>${model.privateStudiesCount}</strong> projects)</p>
+
+    <p class="data-stat" style="margin-bottom:0;"><span class="icon icon-functional" data-icon="U"></span>Public: <strong>${model.publicRunCount}</strong> runs / <strong>${model.publicSamplesCount}</strong> samples  (<strong>${model.publicStudiesCount}</strong> projects)</p>
+    <p class="data-stat" style="margin-top:0;"><span class="icon icon-functional" data-icon="L"></span>Private: <strong> ${model.privateRunCount}</strong> runs / <strong>${model.privateSamplesCount}</strong> samples (<strong>${model.privateStudiesCount}</strong> projects)</p>
+
 
 
         <%--The number of registered user is deactivated at the moment as there is no easy way to get that info automatically.--%>
