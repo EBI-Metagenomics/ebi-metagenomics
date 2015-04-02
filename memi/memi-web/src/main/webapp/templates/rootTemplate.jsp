@@ -3,7 +3,6 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="author" content="EBI Web Team" />
     <meta http-equiv="Content-Language" content="en-GB" />
     <meta http-equiv="Window-target" content="_top" />
     <meta name="no-email-collection" content="http://www.unspam.com/noemailcollection/" />
@@ -12,6 +11,9 @@
 
     <meta name="description" content="EBI Metagenomics is a new web resource targeted at metagenomic researchers"/>
     <meta name="keywords" content="ebi, EBI, InterPro, interpro, metagenomics, metagenomic, metagenome, metagenomes, DNA, microbiology, microbial, ecology, organisms, microorganism, microorganisms, biodiversity, diversity, gene, genes, genome, genomes, genomic, genomics, ecogenomics, community genomics, genetic, sequencing, sequence, environment, environmental, ecosystem, ecosystems, samples, sample, annotation, protein, research, archive, metabolic, pathways, analysis, function, GAIA, shotgun, pyrosequencing, community, communities, metabolism, cultivation, bioinformatics, bioinformatic, database, metadata, dataset, data, repository"/>
+    <meta name="author" content="InterPro EMBL-EBI">
+    <!-- Mobile viewport optimized-->
+    <meta name="viewport" content="width=device-width,initial-scale=1">
 
     <%-- EBI style and code--%>
     <link rel="stylesheet" href="http://www.ebi.ac.uk/inc/css/contents.css" type="text/css" />
@@ -159,7 +161,7 @@
 <%-- The following variable saves and provides the base URL for the whole application --%>
 <c:set var="baseURL" value="" scope="session"/>
 
-<body class="<tiles:getAsString name='bodyClass'/>" id="top"  <%--onload="loaded()" onload="initialize()"--%>>
+<body class="<tiles:getAsString name='bodyClass'/>">
 
 <%-- EBI-Interpro main header - exactly same as Interpro header--%>
 <div class="headerdiv" id="headerdiv">
