@@ -91,10 +91,12 @@
             'colors':[${model.taxonomyAnalysisResult.colorCodeForStackChart}],
             'width':320, 'height':420,
             'legend':{position:'right', textStyle:{fontSize:10}},
-            'chartArea':{left:80, top:30, width:"20%", height:"86%"},
+            'chartArea':{left:40, top:50, width:"38%", height:"86%"},
             'pieSliceBorderColor':'none',
-            'vAxis':{ viewWindowMode:'maximized'}, //  important to keep viewWindowMode separated from the rest to keep the display of the value 100% on vaxis
-            'vAxis':{title:'Relative abundance (%)', baselineColor:'#ccc'},
+            'vAxis':{viewWindowMode:'maximized'}, //  important to keep viewWindowMode separated from the rest to keep the display of the value 100% on vaxis
+            'vAxis':{
+                title:'Relative abundance (%)',
+                baselineColor:'#ccc'},
             'isStacked':true
         };
 
