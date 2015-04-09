@@ -62,7 +62,7 @@
             'fontName':'"Arial"',
             'colors':[${model.taxonomyAnalysisResult.domainComposition.colorCode}],
             'width':250, 'height':299,
-            'chartArea':{left:20, top:30, width:"84%", height:"100%"},
+            'chartArea':{left:20, top:30, width:"100%", height:"100%"},
             'pieSliceBorderColor':'none',
             'legend':{fontSize:10, alignment:'center', 'textStyle':{'fontSize':10}},
             'pieSliceTextStyle':{ bold:true, color:'white'}
