@@ -200,13 +200,14 @@
     //     */
     function saveAsSVG(chartContainer, fileName) {
         var svgDocumentAsString = getSVGDocumentAsString(chartContainer);
-//        alert('' + svgDocumentAsString + '');
         //remove the div from the string to make the SVG export work
         var jHtmlObject = jQuery(svgDocumentAsString);
         var editor = jQuery("<p>").append(jHtmlObject);
         editor.find("div").remove();
         var newHtml = editor.html();
-//        alert('' + newHtml + '');
+       // alert('' + newHtml + '');
+        mystringNew = newHtml.split('\u2026').join('...'); //replace 3dots in string that cause of SVG bug export
+       //  alert(mystringNew);
         var form = $('<form/>', {
             id:'svgExportForm',
             name:'svgExportForm',
@@ -217,7 +218,7 @@
         });
         form.append($('<input/>', {name:'fileType', value:'svg'}));
         form.append($('<input/>', {name:'fileName', value:fileName}));
-        form.append($('<input/>', {name:'svgDocumentAsString', value:newHtml}));
+        form.append($('<input/>', {name:'svgDocumentAsString', value:mystringNew}));
         $('body').append(form);
         form.submit();
     }
