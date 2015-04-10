@@ -185,7 +185,7 @@
     //     * @return {String}
     //     */
     function getSVGDocumentAsString(chartContainer) {
-//   extract the svg code for the chart (assuming chartContainer points to the html element containing the chart) - svg elements don't have inner/outerHTML properties, so use the parent
+//   extract the svg code for the chart (assuming chartContainer points to the html element containing the chart) - svg elements don't have inner/outerHTML properties -  IN FAct, this is not true anymore-, so use the parent
         var chartArea = chartContainer.getElementsByTagName('svg')[0].parentNode;
         var svgDocumentAsString = chartArea.innerHTML;
         return svgDocumentAsString;
