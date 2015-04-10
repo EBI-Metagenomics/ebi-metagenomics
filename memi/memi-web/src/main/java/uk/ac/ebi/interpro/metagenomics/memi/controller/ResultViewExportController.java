@@ -113,7 +113,7 @@ public class ResultViewExportController extends AbstractResultViewController {
                         }
                     }
                     //Set HTTP response header attributes
-                    response.setHeader("Content-Disposition", "attachment; filename=\"" + run.getExternalSampleId() + "_" + fileName + "\"");
+                    response.setHeader("Content-Disposition", "attachment; filename=\"" + run.getExternalRunId() + "_" + fileName + "\"");
                     response.setHeader("Accept-Ranges", "bytes");
                     response.setBufferSize(2048000);
                     response.setStatus(HttpServletResponse.SC_OK);
