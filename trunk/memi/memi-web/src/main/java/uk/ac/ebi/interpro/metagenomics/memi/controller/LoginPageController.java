@@ -91,7 +91,7 @@ public class LoginPageController extends LoginController {
 
     protected List<Breadcrumb> getBreadcrumbs(SecureEntity entity) {
         List<Breadcrumb> result = new ArrayList<Breadcrumb>();
-        result.add(new Breadcrumb("Submit", "Submit new data", VIEW_NAME));
+        result.add(new Breadcrumb("Submit data", "Submit new data", VIEW_NAME));
         return result;
     }
 
