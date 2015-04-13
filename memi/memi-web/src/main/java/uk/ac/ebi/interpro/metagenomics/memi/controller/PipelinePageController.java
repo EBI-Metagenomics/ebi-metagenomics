@@ -74,7 +74,7 @@ public class PipelinePageController extends AbstractController {
                     public void populateModel(ModelMap model) {
                         final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "Pipelines", getBreadcrumbs(null), propertyContainer);
                         final ViewModel defaultViewModel = builder.getModel();
-                        defaultViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_CONTACT_VIEW);
+                        defaultViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_ABOUT_VIEW);
                         model.addAttribute(ViewModel.MODEL_ATTR_NAME, defaultViewModel);
                         //
                         List<PipelineRelease> pipelineReleases = pipelineReleaseDAO.retrieveAllSortedByReleaseVersion();
