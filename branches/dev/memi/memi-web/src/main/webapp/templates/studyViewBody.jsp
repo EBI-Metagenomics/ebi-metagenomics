@@ -149,7 +149,7 @@
             <table border="1" class="result">
                 <thead>
                 <tr>
-                    <th scope="col" class="h_left">Sample ID</th>
+                    <th scope="col">Sample ID</th>
                     <th scope="col">Run ID</th>
                     <th scope="col">Experiment type</th>
                     <th scope="col">Version</th>
@@ -162,7 +162,7 @@
                     <tr>
                         <!-- Only include the the sample ID once for all runs under that sample -->
                         <c:if test="${runCountLine == 1}">
-                            <td class="h_left" id="ordered" rowspan="${run.runCount}">
+                            <td id="ordered" rowspan="${run.runCount}" style="width:94px;">
                                 <c:if test="${!run.public}"><img alt="private"
                                                                  src="${pageContext.request.contextPath}/img/icon_priv_private.gif">&nbsp;&nbsp;</c:if>
                                 <a href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${run.externalSampleId}"/>" title="${run.sampleName}" class="fl_uppercase_title">${run.externalSampleId}</a>
@@ -182,8 +182,8 @@
                                 ${run.externalRunIds}
                             </a>
                         </td>
-                        <td style="width:130px;">${run.experimentType}</td>
-                        <td style="width:130px;">
+                        <td>${run.experimentType}</td>
+                        <td style="width:60px;">
                             <a href="<c:url value="${baseURL}/pipelines/${run.releaseVersion}"/>" title="Pipeline version ${run.releaseVersion}">${run.releaseVersion}</a>
                         </td>
                         <td>
