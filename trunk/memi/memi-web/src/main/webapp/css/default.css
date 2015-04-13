@@ -1106,8 +1106,7 @@ span.form_help ul li{
 .about_img_r img {vertical-align: top;}
 
  /*EBI Bread Crumbs */
-#breadcrumb {display:block;padding:9px; color:#999; border:0px red solid;font-size:90%;}
-#breadcrumb p {margin:0; padding-left:0;}
+#breadcrumb {display:block;padding:9px; color:#999;font-size:90%;margin-bottom:0;}
 #breadcrumb a {color:#999; text-decoration: none;}
 #breadcrumb a:hover,#breadcrumb a:active {color:#999;text-decoration: underline;}
 
