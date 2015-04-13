@@ -38,7 +38,7 @@ public class LoginPageController extends LoginController {
     /**
      * View name of this controller which is used several times.
      */
-    public static final String VIEW_NAME = "login";
+    public static final String VIEW_NAME = "submitData";
 
 
     /**
