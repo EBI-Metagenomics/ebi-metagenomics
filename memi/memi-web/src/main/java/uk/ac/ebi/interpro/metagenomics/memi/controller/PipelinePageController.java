@@ -48,7 +48,7 @@ public class PipelinePageController extends AbstractController {
                     public void populateModel(ModelMap model) {
                         final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "Pipeline Version", getSubPageBreadcrumbs(releaseVersion), propertyContainer);
                         final ViewModel defaultViewModel = builder.getModel();
-                        defaultViewModel.changeToHighlightedClass(ViewModel.DEFAULT_CLASS);
+                        defaultViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_ABOUT_VIEW);
                         model.addAttribute(ViewModel.MODEL_ATTR_NAME, defaultViewModel);
                         //
                         PipelineRelease pipelineRelease = pipelineReleaseDAO.readByReleaseVersion(releaseVersion);
@@ -89,7 +89,9 @@ public class PipelinePageController extends AbstractController {
 
     protected List<Breadcrumb> getBreadcrumbs(SecureEntity entity) {
         List<Breadcrumb> result = new ArrayList<Breadcrumb>();
-        result.add(new Breadcrumb("Pipeline release archive", "List of pipeline releases", "pipelines"));
+        result.add(new Breadcrumb("About", "About the Metagenomics portal", InfoController.VIEW_NAME));
+        result.add(new Breadcrumb("Pipeline release archive", "List of pipeline releases", VIEW_NAME));
+
         return result;
     }
 
