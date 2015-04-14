@@ -21,7 +21,7 @@ import javax.annotation.Resource;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.List;
-
+import java.util.ArrayList;
 /**
  * Handles registration form requests..
  *
@@ -111,9 +111,10 @@ public class RegistrationController extends AbstractController implements IContr
     protected String getModelViewName() {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
-
-    @Override
-    protected List<Breadcrumb> getBreadcrumbs(SecureEntity obj) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    public static final String VIEW_NAME = "submit";
+    protected List<Breadcrumb> getBreadcrumbs(SecureEntity entity) {
+        List<Breadcrumb> result = new ArrayList<Breadcrumb>();
+        result.add(new Breadcrumb("Submit data", "Submit new data", VIEW_NAME));
+        return result;
     }
 }
