@@ -137,7 +137,7 @@ public abstract class AbstractResultViewController extends SecuredAbstractContro
         final ResultViewModel resultModel = builder.getModel();
         //End
 
-        resultModel.changeToHighlightedClass(ViewModel.TAB_CLASS_SAMPLES_VIEW);
+        resultModel.changeToHighlightedClass(ViewModel.DEFAULT_CLASS);
         model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, resultModel);
     }
