@@ -80,7 +80,7 @@
 
     </c:when>
     <c:otherwise>
-        <h3>Sample ID Not Recognised</h3>
+        <h3>Run ID Not Recognised</h3>
     </c:otherwise>
 </c:choose>
 
