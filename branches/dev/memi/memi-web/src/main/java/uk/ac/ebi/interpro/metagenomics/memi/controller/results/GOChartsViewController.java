@@ -57,7 +57,7 @@ public class GOChartsViewController extends AbstractResultViewController {
                                               @PathVariable final String runId,
                                               @PathVariable final String releaseVersion,
                                               final ModelMap model) {
-        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, getSecuredEntity(projectId, sampleId, runId, releaseVersion), "tabs/functionalAnalysis/goBarChartView");
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, getSecuredEntity(projectId, sampleId, runId, releaseVersion), "tabs/results/functionalAnalysis/goBarChartView");
     }
 
     /**
@@ -71,7 +71,7 @@ public class GOChartsViewController extends AbstractResultViewController {
                                               @PathVariable final String runId,
                                               @PathVariable final String releaseVersion,
                                               final ModelMap model) {
-        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, getSecuredEntity(projectId, sampleId, runId, releaseVersion), "tabs/functionalAnalysis/goPieChartView");
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, getSecuredEntity(projectId, sampleId, runId, releaseVersion), "tabs/results/functionalAnalysis/goPieChartView");
     }
 
     /**
