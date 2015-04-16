@@ -9,6 +9,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.ui.ModelMap;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.SampleDAOTestImpl;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.StudyDAOTestImpl;
+import uk.ac.ebi.interpro.metagenomics.memi.controller.studies.StudyViewController;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.EmgSampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.EmgStudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgStudy;
@@ -18,7 +19,7 @@ import java.lang.reflect.Field;
 import static org.junit.Assert.*;
 
 /**
- * Represents a test for the {@link StudyViewController}
+ * Represents a test for the {@link uk.ac.ebi.interpro.metagenomics.memi.controller.studies.StudyViewController}
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @version $Id$

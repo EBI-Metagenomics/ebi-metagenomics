@@ -35,7 +35,7 @@ public class QualityCheckViewController extends AbstractResultViewController {
     private static final Log log = LogFactory.getLog(QualityCheckViewController.class);
 
     protected String getModelViewName() {
-        return "tabs/mainNavigation/qualityControl";
+        return "tabs/results/mainNavigation/qualityControl";
     }
 
     private ModelProcessingStrategy<Run> createNewModelProcessingStrategy() {

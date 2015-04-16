@@ -32,7 +32,7 @@ public class MetaDataViewController extends AbstractResultViewController {
     private static final Log log = LogFactory.getLog(MetaDataViewController.class);
 
     protected String getModelViewName() {
-        return "tabs/mainNavigation/overview";
+        return "tabs/results/mainNavigation/overview";
     }
 
 

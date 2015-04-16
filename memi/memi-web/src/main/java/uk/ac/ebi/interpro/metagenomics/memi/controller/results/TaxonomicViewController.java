@@ -54,7 +54,7 @@ public class TaxonomicViewController extends AbstractResultViewController {
                                             @PathVariable final String runId,
                                             @PathVariable final String releaseVersion,
                                             final ModelMap model) {
-        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, getSecuredEntity(projectId, sampleId, runId, releaseVersion), "tabs/mainNavigation/taxonomic");
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, getSecuredEntity(projectId, sampleId, runId, releaseVersion), "tabs/results/mainNavigation/taxonomic");
     }
 
     @RequestMapping(value = MGPortalURLCollection.PROJECT_SAMPLE_RUN_RESULTS_TAXONOMIC_PIE_CHART)
@@ -63,7 +63,7 @@ public class TaxonomicViewController extends AbstractResultViewController {
                                                 @PathVariable final String runId,
                                                 @PathVariable final String releaseVersion,
                                                 final ModelMap model)  {
-        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, getSecuredEntity(projectId, sampleId, runId, releaseVersion), "tabs/taxonomicAnalysis/taxPieChartView");
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, getSecuredEntity(projectId, sampleId, runId, releaseVersion), "tabs/results/taxonomicAnalysis/taxPieChartView");
     }
 
     @RequestMapping(value = MGPortalURLCollection.PROJECT_SAMPLE_RUN_RESULTS_TAXONOMIC_KRONA_VIEW)
@@ -72,7 +72,7 @@ public class TaxonomicViewController extends AbstractResultViewController {
                                                @PathVariable final String runId,
                                                @PathVariable final String releaseVersion,
                                                final ModelMap model) {
-        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, getSecuredEntity(projectId, sampleId, runId, releaseVersion), "tabs/taxonomicAnalysis/kronaChartView");
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, getSecuredEntity(projectId, sampleId, runId, releaseVersion), "tabs/results/taxonomicAnalysis/kronaChartView");
     }
 
     @RequestMapping(value = MGPortalURLCollection.PROJECT_SAMPLE_RUN_RESULTS_TAXONOMIC_BAR_CHART)
@@ -81,7 +81,7 @@ public class TaxonomicViewController extends AbstractResultViewController {
                                                 @PathVariable final String runId,
                                                 @PathVariable final String releaseVersion,
                                                 final ModelMap model) {
-        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, getSecuredEntity(projectId, sampleId, runId, releaseVersion), "tabs/taxonomicAnalysis/taxBarChartView");
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, getSecuredEntity(projectId, sampleId, runId, releaseVersion), "tabs/results/taxonomicAnalysis/taxBarChartView");
     }
 
     @RequestMapping(value = MGPortalURLCollection.PROJECT_SAMPLE_RUN_RESULTS_TAXONOMIC_COLUMN_CHART)
@@ -90,7 +90,7 @@ public class TaxonomicViewController extends AbstractResultViewController {
                                                    @PathVariable final String runId,
                                                    @PathVariable final String releaseVersion,
                                                    final ModelMap model) {
-        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, getSecuredEntity(projectId, sampleId, runId, releaseVersion), "tabs/taxonomicAnalysis/taxColumnChartView");
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, getSecuredEntity(projectId, sampleId, runId, releaseVersion), "tabs/results/taxonomicAnalysis/taxColumnChartView");
     }
 
     /**

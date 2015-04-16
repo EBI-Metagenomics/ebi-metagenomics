@@ -33,7 +33,7 @@ public class DownloadViewController extends AbstractResultViewController {
     private static final Log log = LogFactory.getLog(DownloadViewController.class);
 
     protected String getModelViewName() {
-        return "tabs/mainNavigation/download";
+        return "tabs/results/mainNavigation/download";
     }
 
     private ModelProcessingStrategy<Run> createNewModelProcessingStrategy() {
