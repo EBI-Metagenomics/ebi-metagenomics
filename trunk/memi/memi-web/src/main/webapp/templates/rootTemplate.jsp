@@ -222,7 +222,7 @@
 <%-- END div contents --%>
 
 <%--little beta flag--%>
-<%--<a href="<c:url value="${baseURL}/info#intro"/>" title="About us"><div id="extra_beta" class="anim"></div></a>--%>
+<%--<a href="<c:url value="${baseURL}/about#intro"/>" title="About us"><div id="extra_beta" class="anim"></div></a>--%>
 
 <!-- The following line includes the feedback DIV and the feedback FORM -->
 <%@ include file="feedback/script/feedbackDiv.jsp" %>
