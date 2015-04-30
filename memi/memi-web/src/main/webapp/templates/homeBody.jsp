@@ -48,7 +48,7 @@
                                     meta-data provision. Accepted data formats include SFF (454) and FASTQ (Illumina and
                                     IonTorrent).<br/></p>
 
-                                <div class="find_more"><a href="${pageContext.request.contextPath}/info#features_1"
+                                <div class="find_more"><a href="${pageContext.request.contextPath}/about#features_1"
                                                           title="find out more about easy submission"><span>Find out more</span></a>
                                 </div>
                             </div>
@@ -68,7 +68,7 @@
                                     sophisticated alternative to BLAST-based analyses. Taxonomy diversity analysis is
                                     performed using Qiime. <br/></p>
 
-                                <div class="find_more"><a href="${pageContext.request.contextPath}/info#features_2"
+                                <div class="find_more"><a href="${pageContext.request.contextPath}/about#features_2"
                                                           title="find out more about analysis"><span>Find out more</span></a>
                                 </div>
                             </div>
@@ -87,7 +87,7 @@
                                 <p>Data automatically archived at the European Nucleotide Archive (ENA), ensuring accession
                                     numbers are supplied - a prerequisite for publication in many journals.</p>
 
-                                <div class="find_more"><a href="${pageContext.request.contextPath}/info#features_3"
+                                <div class="find_more"><a href="${pageContext.request.contextPath}/about#features_3"
                                                           title="find out more about data archiving"><span>Find out more</span></a>
                                 </div>
                             </div>
@@ -114,7 +114,7 @@
                                     first). </p>
                                 <c:choose>
                                     <c:when test="${empty model.submitter}">
-                                        <div class="find_more"><a href="<c:url value="${baseURL}/login"/>"
+                                        <div class="find_more"><a href="<c:url value="${baseURL}/submitData"/>"
                                                                   title="submit data for analysis"><span>Submit your data</span></a>
                                         </div>
                                     </c:when>
