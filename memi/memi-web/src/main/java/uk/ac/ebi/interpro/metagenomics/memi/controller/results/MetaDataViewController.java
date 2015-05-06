@@ -40,7 +40,7 @@ public class MetaDataViewController extends AbstractResultViewController {
         return new ModelProcessingStrategy<Run>() {
             @Override
             public void processModel(ModelMap model, Run run) {
-                log.info("Building download view model...");
+                log.info("Building meta data view model...");
                 populateModel(model, run);
             }
         };

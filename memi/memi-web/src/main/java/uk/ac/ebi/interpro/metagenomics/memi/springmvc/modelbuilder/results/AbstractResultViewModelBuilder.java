@@ -34,8 +34,6 @@ public abstract class AbstractResultViewModelBuilder<E extends AbstractResultVie
 
     private final static Log log = LogFactory.getLog(TaxonomicViewModelBuilder.class);
 
-    protected SessionManager sessionMgr;
-
     private List<ResultFileDefinitionImpl> qualityControlFileDefinitions;
 
     private List<FunctionalAnalysisFileDefinition> functionalAnalysisFileDefinitions;
