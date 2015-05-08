@@ -35,7 +35,10 @@
     </div>
 </div>
 <%--Globale page properties--%>
-<c:set var="phylumCompositionTitle" scope="request" value="Phylum composition (Total: ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator} OTUs)"/>
+<c:choose>
+    <c:when test="${model.run.releaseVersion == '1.0'}"><c:set var="phylumCompositionTitle" scope="request" value="Phylum composition (Total: ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator} OTUs)"/></c:when>
+    <c:otherwise><c:set var="phylumCompositionTitle" scope="request" value="Phylum composition (Total: ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator} sequences)"/></c:otherwise>
+</c:choose>
 
 <script type="text/javascript">
     drawDomainCompositionBarChart();
@@ -47,10 +50,10 @@
         var taxMatchesDataBarChart = new google.visualization.DataTable();
         taxMatchesDataBarChart.addColumn('string', 'Phylum');
         taxMatchesDataBarChart.addColumn('string', 'Domain');
-        taxMatchesDataBarChart.addColumn('number', 'Unique OTUs');
-        taxMatchesDataBarChart.addColumn('number', '%');
-//        taxMatchesData.addColumn('number', 'Count of reads assigned');
-//        taxMatchesData.addColumn('number', '% reads assigned');
+        <c:choose>
+            <c:when test="${model.run.releaseVersion == '1.0'}">taxMatchesDataBarChart.addColumn('number', 'Unique OTUs');taxMatchesDataBarChart.addColumn('number', '%');</c:when>
+            <c:otherwise>taxMatchesDataBarChart.addColumn('number', 'Number of sequences');taxMatchesDataBarChart.addColumn('number', '% of sequences');</c:otherwise>
+        </c:choose>
         taxMatchesDataBarChart.addRows([
             <c:set var="addComma" value="false"/><c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResult.taxonomyDataSet}" varStatus="status"><c:choose><c:when test="${addComma}">,
             </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>
