@@ -41,7 +41,7 @@
 <%--Globale page properties--%>
 <c:choose>
     <c:when test="${model.run.releaseVersion == '1.0'}"><c:set var="phylumCompositionTitle" scope="request" value="Phylum composition (Total: ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator} OTUs)"/></c:when>
-    <c:otherwise><c:set var="phylumCompositionTitle" scope="request" value="Phylum composition (Total: ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator} sequences)"/></c:otherwise>
+    <c:otherwise><c:set var="phylumCompositionTitle" scope="request" value="Phylum composition (Total: ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator} reads)"/></c:otherwise>
 </c:choose>
 
 <script type="text/javascript">
@@ -81,7 +81,7 @@
         taxMatchesDataPieChart.addColumn('string', 'Domain');
         <c:choose>
             <c:when test="${model.run.releaseVersion == '1.0'}">taxMatchesDataPieChart.addColumn('number', 'Unique OTUs');taxMatchesDataPieChart.addColumn('number', '%');</c:when>
-            <c:otherwise>taxMatchesDataPieChart.addColumn('number', 'Number of sequences');taxMatchesDataPieChart.addColumn('number', '% of sequences');</c:otherwise>
+            <c:otherwise>taxMatchesDataPieChart.addColumn('number', 'Number of reads');taxMatchesDataPieChart.addColumn('number', '%');</c:otherwise>
         </c:choose>
         taxMatchesDataPieChart.addRows([
             <c:set var="addComma" value="false"/><c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResult.taxonomyDataSet}" varStatus="status"><c:choose><c:when test="${addComma}">,
@@ -119,7 +119,7 @@
         taxMatchesData2.addColumn('string', 'Domain');
         <c:choose>
             <c:when test="${model.run.releaseVersion == '1.0'}">taxMatchesData2.addColumn('number', 'Unique OTUs');taxMatchesData2.addColumn('number', '%');</c:when>
-            <c:otherwise>taxMatchesData2.addColumn('number', 'Number of sequences');taxMatchesData2.addColumn('number', '% of sequences');</c:otherwise>
+            <c:otherwise>taxMatchesData2.addColumn('number', 'Number of reads');taxMatchesData2.addColumn('number', '%');</c:otherwise>
         </c:choose>
         taxMatchesData2.addRows([
             <c:set var="addComma" value="false"/><c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResult.taxonomyDataSet}" varStatus="status"><c:choose><c:when test="${addComma}">,
