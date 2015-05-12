@@ -37,7 +37,7 @@
 <%--Globale page properties--%>
 <c:choose>
     <c:when test="${model.run.releaseVersion == '1.0'}"><c:set var="phylumCompositionTitle" scope="request" value="Phylum composition (Total: ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator} OTUs)"/></c:when>
-    <c:otherwise><c:set var="phylumCompositionTitle" scope="request" value="Phylum composition (Total: ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator} sequences)"/></c:otherwise>
+    <c:otherwise><c:set var="phylumCompositionTitle" scope="request" value="Phylum composition (Total: ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator} reads)"/></c:otherwise>
 </c:choose>
 
 <script type="text/javascript">
@@ -52,7 +52,7 @@
         taxMatchesDataBarChart.addColumn('string', 'Domain');
         <c:choose>
             <c:when test="${model.run.releaseVersion == '1.0'}">taxMatchesDataBarChart.addColumn('number', 'Unique OTUs');taxMatchesDataBarChart.addColumn('number', '%');</c:when>
-            <c:otherwise>taxMatchesDataBarChart.addColumn('number', 'Number of sequences');taxMatchesDataBarChart.addColumn('number', '% of sequences');</c:otherwise>
+            <c:otherwise>taxMatchesDataBarChart.addColumn('number', 'Number of reads');taxMatchesDataBarChart.addColumn('number', '%');</c:otherwise>
         </c:choose>
         taxMatchesDataBarChart.addRows([
             <c:set var="addComma" value="false"/><c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResult.taxonomyDataSet}" varStatus="status"><c:choose><c:when test="${addComma}">,
