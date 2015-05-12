@@ -32,6 +32,7 @@
             <thead>
             <tr>
                 <th scope="col" class="h_left">Run id</th>
+                <th scope="col">Pipeline version</th>
                 <th scope="col">Experiment type</th>
                 <th scope="col">Analysis date</th>
                 <th scope="col" width="170px">Analysis results</th>
@@ -43,6 +44,7 @@
                     <td class="h_left"><a title="Overview"
                            href="<c:url value="${baseURL}/projects/${sample.study.studyId}/samples/${sample.sampleId}/runs/${analysisJob.externalRunIDs}/results/versions/${analysisJob.pipelineRelease.releaseVersion}"/>">${analysisJob.externalRunIDs}</a>
                     </td>
+                    <td>${analysisJob.pipelineRelease.releaseVersion}</td>
                     <td><span class="capitalize">${analysisJob.experimentType}</span>
                     </td>
                     <td>${analysisJob.completeTime}</td>
