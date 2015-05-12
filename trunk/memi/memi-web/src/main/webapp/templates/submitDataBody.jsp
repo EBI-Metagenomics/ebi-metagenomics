@@ -60,7 +60,7 @@
             <%--</div>--%>
         <%--</div>--%>
 
-        <div class="sub_ask">If you have any questions about submitting your data to EBI metagenomics, please email us (<a
-            href="mailto:datasubs@ebi.ac.uk?subject=EBI Metagenomics - data submission"
-            title="Send an enquiry about Metagenomics data submission">datasubs@ebi.ac.uk</a>).
+        <div class="sub_ask">If you have any questions about submitting your data to EBI metagenomics, <a
+                    href="mailto:metagenomics-help@ebi.ac.uk"
+                    title="Send an enquiry about Metagenomics data submission">please contact us</a>.
     </div>
