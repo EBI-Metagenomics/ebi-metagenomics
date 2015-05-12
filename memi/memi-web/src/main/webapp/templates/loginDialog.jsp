@@ -46,8 +46,8 @@
                    <%--value="${model.propertyContainer.enaSubmissionURL.registrationLink}">--%>
                 <%--<c:param name="url" value="${enaUrlParam}"/>--%>
             <%--</c:url>--%>
-            <span class="sub_sign_text"><a href="<c:url value="${baseURL}/register"/>"
-                                           title="Registration" style="color:#188960;">Sign-up</a> to register</span>
+            <span class="sub_sign_text"><a  href="https://www.ebi.ac.uk/ena/submit/sra/#metagenome_registration"
+                                           title="Click here to register for a new ENA submitter account" style="color:#188960;">Sign-up</a> to register</span>
         </div>
         <div class="form_row" style="font-size:140%;">or</div>
         <p><a href="https://www.ebi.ac.uk/ena/submit/sra/#home"> <img src="${pageContext.request.contextPath}/img/ico_ena_user.jpg"
