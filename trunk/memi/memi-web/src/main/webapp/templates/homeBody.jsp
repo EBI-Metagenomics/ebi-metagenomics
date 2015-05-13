@@ -109,8 +109,8 @@
                                                                                      title="Submit data">Submit data</a>
                                     to send us your nucleotide sequences for analysis.
 
-                                    (Note: you will need to  <a href="<c:url value="/register"/>"
-                                          title="Registration">register</a>
+                                    (Note: you will need to  <a  href="https://www.ebi.ac.uk/ena/submit/sra/#metagenome_registration"
+                                                                 title="Click here to register for a new ENA submitter account">register</a>
                                     first). </p>
                                 <c:choose>
                                     <c:when test="${empty model.submitter}">

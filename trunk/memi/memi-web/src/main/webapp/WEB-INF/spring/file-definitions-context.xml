@@ -152,7 +152,7 @@
     <bean id="otuBiomFile" autowire-candidate="false"
           class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.TaxonomicAnalysisFileDefinition">
         <property name="relativePath" value="/otus/otu_table.biom"/>
-        <property name="description" value="OTUs, reads and taxonomic assignments (BIOM format)."/>
+        <property name="description" value="OTUs and taxonomic assignments (BIOM format)."/>
         <property name="downloadName" value="_otu.biom"/>
         <property name="linkText" value="OTUs and taxonomic assignments (BIOM)"/>
         <property name="order" value="5"/>
@@ -175,7 +175,7 @@
           class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.TaxonomicAnalysisFileDefinition">
         <property name="fileNameEnding" value="_rRNAFiltered.fasta_rep_set_tax_assignments.txt"/>
         <property name="relativePath" value="/otus/rdp_assigned_taxonomy/"/>
-        <property name="description" value="OTUs, reads and taxonomic assignments (TSV)."/>
+        <property name="description" value="OTUs and taxonomic assignments (TSV)."/>
         <property name="downloadName" value="_otu.tsv"/>
         <property name="linkText" value="OTUs and taxonomic assignments (TSV)"/>
         <property name="order" value="4"/>
@@ -202,9 +202,9 @@
         <property name="fileNameEnding" value="_otu_table_hdf5.biom"/>
         <property name="description" value="N/A"/>
         <property name="downloadName" value="_otu_table_hdf5.biom"/>
-        <property name="linkText" value="OTUs, reads and taxonomic assignments in hdf5 biom format (BIOM)"/>
+        <property name="linkText" value="OTUs, reads and taxonomic assignments (HDF5 biom)"/>
         <property name="order" value="8"/>
-        <property name="linkTitle" value="Click to download the OTU table in hdf5 biom format"/>
+        <property name="linkTitle" value="Click to download the converted OTU table in HDF5 biom format"/>
         <!--TODO: Implement the request mapping-->
         <property name="linkURL" value="/export?contentType=text&amp;exportValue=hdf5Biom"/>
     </bean>
@@ -215,9 +215,9 @@
         <property name="fileNameEnding" value="_otu_table_json.biom"/>
         <property name="description" value="N/A"/>
         <property name="downloadName" value="_otu_table_json.biom"/>
-        <property name="linkText" value="OTUs, reads and taxonomic assignments in JSON biom format (BIOM)"/>
+        <property name="linkText" value="OTUs, reads and taxonomic assignments (JSON biom)"/>
         <property name="order" value="9"/>
-        <property name="linkTitle" value="Click to download the OTU table in JSON biom format"/>
+        <property name="linkTitle" value="Click to download the converted OTU table in JSON biom format"/>
         <!--TODO: Implement the request mapping-->
         <property name="linkURL" value="/export?contentType=text&amp;exportValue=JSONBiom"/>
     </bean>
