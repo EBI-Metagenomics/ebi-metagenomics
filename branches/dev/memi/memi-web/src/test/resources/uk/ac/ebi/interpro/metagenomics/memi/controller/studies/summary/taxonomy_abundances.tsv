@@ -1,0 +1,15 @@
+taxonomy	SRS009545_G_SFF	SRS009545_T_SFF	SRS009546_G_SFF	SRS009546_T_SFF	SRS009547_G_SFF	SRS009548_G_SFF	SRS009548_T_SFF	SRS009549_G_SFF	SRS009549_T_SFF	SRS009550_T_SFF	SRS009551_G_SFF	SRS009551_T_SFF	SRS009552_T_SFF	SRS009553_G_SFF	SRS009553_T_SFF	SRS009554_T_SFF	SRS009547_T_SFF	SRS009550_G_SFF	SRS009552_G_SFF	SRS009554_G_SFF
+Root	5	32	39	45	50	52	127	129	160	252	255	323	328	340	353	366	383	385	391	396
+Root;k__Archaea	1	15	16	20	20	20	32	32	32	32	32	32	33	33	33	34	35	35	35	36
+Root;k__Archaea;p__Crenarchaeota	0	13	13	19	19	19	19	19	19	19	19	19	19	19	19	19	19	19	19	20
+Root;k__Archaea;p__Crenarchaeota;c__Thaumarchaeota	0	14	14	17	17	17	17	17	17	17	17	17	17	17	17	18	18	18	18	18
+Root;k__Archaea;p__Crenarchaeota;c__Thaumarchaeota;o__Cenarchaeales	0	11	11	45	45	45	45	45	45	45	45	45	45	45	45	50	50	50	50	50
+Root;k__Archaea;p__Crenarchaeota;c__Thaumarchaeota;o__Cenarchaeales;f__Cenarchaeaceae	1	76	82	140	140	140	140	140	140	140	140	140	140	140	140	151	152	152	152	159
+Root;k__Archaea;p__Euryarchaeota	0	0	0	1	1	1	8	8	9	9	9	9	9	9	9	10	10	10	10	10
+Root;k__Archaea;p__Euryarchaeota;c__Thermoplasmata	0	0	0	0	0	0	1	1	1	1	1	1	1	1	1	1	1	1	1	1
+Root;k__Archaea;p__Euryarchaeota;c__Thermoplasmata;o__E2	0	0	0	2	2	2	3	3	3	3	3	3	3	3	3	3	3	3	3	3
+Root;k__Archaea;p__Euryarchaeota;c__Thermoplasmata;o__E2;f__Marine group II	0	4	5	5	6	6	42	42	44	44	44	46	46	46	46	47	48	48	48	50
+Root;k__Archaea;p__Euryarchaeota;c__Thermoplasmata;o__E2;f__Marine group III	0	11	11	129	129	129	129	129	129	129	129	129	129	129	129	129	129	129	129	129
+Root;k__Archaea;p__Euryarchaeota;c__Thermoplasmata;o__E2;f__WCHD3-02	0	0	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1
+Root;k__Bacteria	56	902	972	1348	1396	1442	2671	2723	3846	4946	4999	5748	5965	6019	6291	6459	7067	7096	7153	7252
+Root;k__Bacteria;p__Actinobacteria	0	2	2	2	2	2	5	5	6	6	6	8	15	15	15	15	16	16	16	16
