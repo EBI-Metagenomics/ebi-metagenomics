@@ -13,7 +13,7 @@ website"/>
 </p>
 <%--<iframe width="210" height="158" src="//www.youtube.com/embed/Zml8jTqfQPg" frameborder="0" allowfullscreen></iframe>--%>
 <p class="intro">
-    IMPORTANT: If you have data that you wish to have analysed, you need an <strong>ENA submitter account</strong> that
+    <strong>IMPORTANT:</strong> if you have data that you wish to have analysed, you need an <strong>ENA submitter account</strong> that
     has been registered with EBI Metagenomics. This allows us to track your submitted data and ensures that we have
     consent to access it for analysis.
     </p>
