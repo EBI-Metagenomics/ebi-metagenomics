@@ -12,7 +12,9 @@ import uk.ac.ebi.interpro.metagenomics.memi.controller.ModelProcessingStrategy;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.DownloadLink;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -49,19 +51,46 @@ public class DownloadStudyController extends AbstractStudyViewController {
     }
 
     protected void populateModel(final ModelMap model, final Study study) {
+
         model.addAttribute("study", study);
-        List<DownloadLink> downloadLinks = new ArrayList<DownloadLink>();
-        // TODO Auto generate links for all abundance table files from the specific base URL
-        downloadLinks.add(new DownloadLink("File1 link text",
-                        "File1 link title text",
-                        "File1_URL",
-                        true,
-                        1));
-        downloadLinks.add(new DownloadLink("File2 link text",
-                "File2 link title text",
-                "File2_URL",
-                true,
-                2));
+
+        // TODO Don't hardcode this - build correct URL from analysis_job tables result_directory!
+        String direcotryLocation = "~/Projects/EBI_Metagenomics_dev/ebi-metagenomics/memi-web/src/test/resources/uk/ac/ebi/interpro/metagenomics/memi/controller/studies/summary";
+        List<DownloadLink> downloadLinks = getDownloadLinks(new File(direcotryLocation));
+
         model.addAttribute("downloadLinks", downloadLinks);
+    }
+
+    public static List<DownloadLink> getDownloadLinks(final File summaryFilesDir) {
+        // Check location exists and is a directory
+        if (!summaryFilesDir.isDirectory()) {
+            throw new IllegalStateException("Does not exist or is not a directory: " + summaryFilesDir.getAbsolutePath());
+        }
+
+        // Build list of download links (only include files with one of the expected names)
+        List<DownloadLink> downloadLinks = new ArrayList<DownloadLink>();
+        File[] files = summaryFilesDir.listFiles(new StudySummaryFileFilter());
+        for (int i = 0; i < files.length; i++) {
+            File file = files[i];
+            if (!file.isFile()) {
+                throw new IllegalStateException("Does not exist or is not a file: " + file.getAbsolutePath());
+            }
+
+            final String filename = file.getName();
+            StudySummaryFile studySummaryFile = StudySummaryFile.lookupFromFilename(filename);
+            if (studySummaryFile == null) {
+                throw new IllegalStateException("Could not lookup study summary file deatils: " + filename);
+            }
+
+            final String fileAbsolutePath = file.getAbsolutePath();
+
+            downloadLinks.add(new DownloadLink(studySummaryFile.getFilename(),
+                    studySummaryFile.getDescription(),
+                    fileAbsolutePath,
+                    true,
+                    studySummaryFile.getFileOrder()));
+        }
+        Collections.sort(downloadLinks, DownloadLink.DownloadLinkComparator);
+        return downloadLinks;
     }
 }
