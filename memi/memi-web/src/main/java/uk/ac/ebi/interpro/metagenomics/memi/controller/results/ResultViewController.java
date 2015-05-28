@@ -101,11 +101,6 @@ public class ResultViewController extends AbstractResultViewController {
         return handleExport(getSecuredEntity(projectId, sampleId, runId, releaseVersion), releaseVersion, response, request, fileDefinition);
     }
 
-//    @RequestMapping(value = "/doExportIPRFile", method = RequestMethod.GET)
-//    public ModelAndView doExportIPRFile(@PathVariable final String sampleId,
-//                                        final HttpServletResponse response, final HttpServletRequest request) {
-//        return handleExport(sampleId, response, request, EmgFile.ResultFileType.IPR, "_InterPro_sum.csv");
-//    }
 
     @RequestMapping(value = "/doExportIPRhitsFile", method = RequestMethod.GET)
     public ModelAndView doExportIPRhitsFile(@PathVariable final String projectId,
