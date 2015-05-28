@@ -22,7 +22,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.results.MetaD
 import java.util.List;
 
 /**
- * The controller for the analysis results page.
+ * The controller for the overview tab on the analysis results page.
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @since 1.4-SNAPSHOT

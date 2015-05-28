@@ -1,29 +1,17 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.results;
 
-import au.com.bytecode.opencsv.CSVReader;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
-import uk.ac.ebi.interpro.metagenomics.memi.core.comparators.PublicationComparator;
-import uk.ac.ebi.interpro.metagenomics.memi.model.EmgSampleAnnotation;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Run;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.*;
-import uk.ac.ebi.interpro.metagenomics.memi.services.FileExistenceChecker;
-import uk.ac.ebi.interpro.metagenomics.memi.services.FileObjectBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.*;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.*;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.AnalysisStatus;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.tabActivation.FunctionalAnalysisTab;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.tabActivation.TaxonomicAnalysisTab;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.results.ResultViewModel;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.AbstractViewModelBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.*;
 
 /**
@@ -47,8 +35,6 @@ public class ResultViewModelBuilder extends AbstractResultViewModelBuilder<Resul
 
     private Run run;
 
-    private ResultViewModel.ExperimentType experimentType;
-
     private final List<String> archivedSequences;
 
     public ResultViewModelBuilder(SessionManager sessionMgr,
@@ -59,7 +45,6 @@ public class ResultViewModelBuilder extends AbstractResultViewModelBuilder<Resul
                                   AnalysisJob analysisJob,
                                   List<String> archivedSequences,
                                   MemiPropertyContainer propertyContainer,
-                                  ResultViewModel.ExperimentType experimentType,
                                   List<ResultFileDefinitionImpl> qualityControlFileDefinitions,
                                   List<FunctionalAnalysisFileDefinition> functionalAnalysisFileDefinitions,
                                   List<ResultFileDefinitionImpl> taxonomicAnalysisFileDefinitions) {
@@ -68,7 +53,6 @@ public class ResultViewModelBuilder extends AbstractResultViewModelBuilder<Resul
         this.pageTitle = pageTitle;
         this.breadcrumbs = breadcrumbs;
         this.archivedSequences = archivedSequences;
-        this.experimentType = experimentType;
         this.run = run;
     }
 
@@ -89,8 +73,7 @@ public class ResultViewModelBuilder extends AbstractResultViewModelBuilder<Resul
                 analysisJob,
                 analysisStatus,
                 archivedSequences,
-                propertyContainer,
-                experimentType);
+                propertyContainer);
         return resultViewModel;
     }
 }
