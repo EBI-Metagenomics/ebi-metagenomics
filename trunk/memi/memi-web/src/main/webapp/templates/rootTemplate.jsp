@@ -15,11 +15,11 @@
     <!-- Mobile viewport optimized-->
     <meta name="viewport" content="width=device-width,initial-scale=1">
 
-    <%-- EBI style and code--%>
-    <link rel="stylesheet" href="http://www.ebi.ac.uk/inc/css/contents.css" type="text/css" />
-    <link rel="stylesheet" href="http://www.ebi.ac.uk/inc/css/userstyles.css" type="text/css" />
-    <script src="http://www.ebi.ac.uk/inc/js/contents.js" type="text/javascript"></script>
-    <link rel="stylesheet" href="http://www.ebi.ac.uk/inc/css/sidebars.css" type="text/css" />
+    <%-- EBI style and code - update to https--%>
+    <link rel="stylesheet" href="https://www.ebi.ac.uk/inc/css/contents.css" type="text/css" />
+    <link rel="stylesheet" href="https://www.ebi.ac.uk/inc/css/userstyles.css" type="text/css" />
+    <script src="https://www.ebi.ac.uk/inc/js/contents.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="https://www.ebi.ac.uk/inc/css/sidebars.css" type="text/css" />
 
         <link rel="alternate" title="EBI News RSS" href="/Information/News/rss/ebinews.xml" type="application/rss+xml" />
         <link type="text/css" rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/mitigation/develop/ebi-mitigation.css"/>
