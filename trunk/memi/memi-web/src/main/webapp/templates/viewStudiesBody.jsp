@@ -127,6 +127,9 @@
                             <c:when test="${headerName == 'Samples'}">
                                 <c:set var="headerWidth" value="60px" scope="page"/>
                             </c:when>
+                            <c:when test="${headerName == 'Biome'}">
+                                   <c:set var="headerWidth" value="40px" scope="page"/>
+                               </c:when>
                             <%--The Otherwise case is for header name Submitted date--%>
                             <c:otherwise>
                                 <c:set var="headerWidth" value="120px" scope="page"/>
@@ -143,6 +146,10 @@
                             <c:if test="${!study.public}"><img alt="private"
                                                                    src="${pageContext.request.contextPath}/img/icon_priv_private.gif">&nbsp;&nbsp;</c:if>
                             <a href="<c:url value="${baseURL}/projects/${study.studyId}"/>">${study.studyName}</a>
+                        </td>
+                        <td>
+                        <a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>"
+                                                                                                                 title="Human gut biome"><span class="biome_icon icon_xs human_gut_b"></span></a>
                         </td>
                         <td>
                             <a href="<c:url value="${baseURL}/projects/${study.studyId}#samples_id"/>">${study.sampleSize}</a>
