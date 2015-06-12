@@ -26,13 +26,6 @@
     <!--</licenses>-->
 
     <repositories>
-        <!--iText repository-->
-        <repository>
-            <id>itextpdf.com</id>
-            <name>Maven Repository for iText</name>
-            <url>http://maven.itextpdf.com/</url>
-        </repository>
-
         <!--ENA repository-->
         <repository>
             <id>ena-artifactory-libs-release</id>
@@ -264,13 +257,6 @@
             <artifactId>standard</artifactId>
             <version>1.1.2</version>
         </dependency>
-        <!-- iText dependency-->
-        <dependency>
-            <groupId>com.itextpdf</groupId>
-            <artifactId>itextpdf</artifactId>
-            <version>5.0.4</version>
-            <scope>compile</scope>
-        </dependency>
 
         <!-- Apache Commons Upload -->
         <dependency>
@@ -443,11 +429,12 @@
         <profile>
             <id>test-war</id>
             <properties>
-                <deployment.folder>/ebi/www/jtest/deploy/tc-interpro-das</deployment.folder>
-                <log4j.log.file>/var/tmp/servers/tc-interpro-das/logs/metagenomics/memi.log4j</log4j.log.file>
-                <dailyErrorAppParam>/var/tmp/servers/tc-interpro-das/logs/metagenomics/memi-ERROR.log4j</dailyErrorAppParam>
-                <dailyDebugAppParam>/var/tmp/servers/tc-interpro-das/logs/metagenomics/memi-DEBUG.log4j</dailyDebugAppParam>
-                <dailyWarnAppParam>/var/tmp/servers/tc-interpro-das/logs/metagenomics/memi-WARN.log4j</dailyWarnAppParam>
+                <!--<deployment.folder>/ebi/www/jtest/deploy/tc-interpro-das</deployment.folder>-->
+                <deployment.folder>/nfs/web-hx/webadmin/tomcat/bases/interpro/tc-ipr-emg_dev/deploy</deployment.folder>
+                <log4j.log.file>/var/tmp/tc-ipr-emg_dev/logs/metagenomics/memi.log4j</log4j.log.file>
+                <dailyErrorAppParam>/var/tmp/tc-ipr-emg_dev/logs/metagenomics/memi-ERROR.log4j</dailyErrorAppParam>
+                <dailyDebugAppParam>/var/tmp/tc-ipr-emg_dev/logs/metagenomics/memi-DEBUG.log4j</dailyDebugAppParam>
+                <dailyWarnAppParam>/var/tmp/tc-ipr-emg_dev/logs/metagenomics/memi-WARN.log4j</dailyWarnAppParam>
                 <log4j.log.level>DEBUG</log4j.log.level>
             </properties>
         </profile>
