@@ -260,6 +260,7 @@ public class ViewStudiesController extends AbstractController implements IContro
     private List<String> getTableHeaderNames() {
         List<String> result = new ArrayList<String>();
         result.add("Project name");
+        result.add("Biome");
         result.add("Samples");
         result.add("Last updated");
         return result;
