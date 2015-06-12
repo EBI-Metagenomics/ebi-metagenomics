@@ -752,6 +752,17 @@ padding: 0 9px 9px 9px;
 /*biome gal*/
 .biome_icon {display: inline-block; background-image: url(../img/ico_biome_sprite.png);}
 /*biome large icon - TO DO later*/
+/*biome large icon*/
+.biome_icon.icon_lg {width:150px; height:150px;}
+.biome_icon.icon_lg.soil_b {background-position: -20px -998px;}
+.biome_icon.icon_lg.marine_b {background-position: -222px -998px;}
+.biome_icon.icon_lg.forest_b {background-position: -420px -998px;}
+.biome_icon.icon_lg.freshwater_b {background-position: -20px -1196px;}
+.biome_icon.icon_lg.grassland_b {background-position: -222px -1196px;}
+.biome_icon.icon_lg.human_gut_b {background-position: -420px -1196px;}
+.biome_icon.icon_lg.engineered_b {background-position: -20px -1396px;}
+.biome_icon.icon_lg.air_b {background-position: -222px -1396px;}
+.biome_icon.icon_lg.wastewater_b {background-position: -420px -1396px;}
 /*biome medium icon*/
 .biome_icon.icon_sm {width:75px; height:75px;}
 .biome_icon.icon_sm.soil_b {background-position: -40px -396px;}
@@ -794,6 +805,8 @@ padding: 0 9px 9px 9px;
 #list-biomes .air_b {background-position: -82px -118px;}
 #list-biomes .wastewater_b {background-position: -122px -118px;}
 }
+/*biome project page*/
+.biome_project {float: right; margin-right: 18px;}
 /************* END BIOME ************/
 
 /*END box homepage*/
