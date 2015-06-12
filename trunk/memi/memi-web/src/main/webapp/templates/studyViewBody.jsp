@@ -6,7 +6,7 @@
 <c:set var="notGivenId" value="(not given)"/>
 
 <div id="project_ov">
-
+<div class="biome_project"><span class="biome_icon icon_sm human_gut_b" title="Human gut biome"></span></div>
 <div class="title_tab_p">
 <span class="subtitle">Project overview <span>(${model.study.studyId})</span></span>
 <h2 class="fl_uppercase_title">${model.study.studyName}</h2>
