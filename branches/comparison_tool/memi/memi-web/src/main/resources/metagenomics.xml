@@ -1,5 +1,0 @@
-<Context
-        docBase="${deployment.folder}/${project.name}-${timestamp}.war"
-        path="/metagenomics"
-        distributable="false">
-</Context>
