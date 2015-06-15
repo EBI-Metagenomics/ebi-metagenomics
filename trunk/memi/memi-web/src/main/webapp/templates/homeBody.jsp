@@ -104,7 +104,7 @@
                                 <div class="cent"><img src="${pageContext.request.contextPath}/img/icons_submit.png"
                                                        alt=""
                                                        width="71" height="71"/></div>
-                                <%--</c:url>--%>
+                                    <%--</c:url>--%>
                                 <p style="padding-bottom:7px; "> You can click on <a href="<c:url value="${baseURL}/submit"/>"
                                                                                      title="Submit data">Submit data</a>
                                     to send us your nucleotide sequences for analysis.
@@ -256,45 +256,17 @@
                        title="View all public projects" class="all">View all projects</a></p>
             </div>
 
-            <div id="list-biomes" class="grid_9"> <h2>Browse by biomes</h2>
-
-                <div class="grid_24"><div class="grid_8 alpha"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>"
-                                       title="View all soil projects"><span class="biome_icon icon_sm soil_b"></span><span class="biome_text">Soil (9)</span></a></div>
-                    <div class="grid_8"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>"
-                                                           title="View all marine projects"><span class="biome_icon icon_sm marine_b"></span><span class="biome_text">Marine (24)</span></a></div>
-                    <div class="grid_8 omega"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>"
-                                                           title="View all forest projects"><span class="biome_icon icon_sm forest_b"></span><span class="biome_text">Forest (3)</span></a></div>
-
-                <div class="grid_8 alpha"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>"
-                                                       title="View all freshwater projects"><span class="biome_icon icon_sm freshwater_b"></span><span class="biome_text">Freshwater (8)</span></a></div>
-                                    <div class="grid_8"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>"
-                                                                           title="View all grassland projects"><span class="biome_icon icon_sm grassland_b"></span><span class="biome_text">Grassland (4)</span></a></div>
-                                    <div class="grid_8 omega"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>"
-                                                                           title="View all  human gut projects"><span class="biome_icon icon_sm human_gut_b"></span><span class="biome_text">Human gut (4)</span></a></div>
-
-                <div class="grid_8 alpha"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>"
-                                                                 title="View all engineered projects"><span class="biome_icon icon_sm engineered_b"></span><span class="biome_text">Engineered (8)</span></a></div>
-                                              <div class="grid_8"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>"
-                                                                                     title="View all air projects"><span class="biome_icon icon_sm air_b"></span><span class="biome_text">Air (2)</span></a></div>
-                                              <div class="grid_8 omega"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>"
-                                                                                     title="View all  wastewater projects"><span class="biome_icon icon_sm wastewater_b"></span><span class="biome_text">Wastewater (7)</span></a></div>
-
-                          </div>
-                <p><a href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>"
-                                                        title="View projects and filter by biome" class="all">View all biomes</a></p>
-            </div>
-
-          <%--  <div id="list-data-sample" class="grid_9">
+            <div id="list-data-sample" class="grid_9">
                 <h2>Samples</h2>
 
                 <h3>Latest public samples (Total: <a
                         href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search&startPosition=0"/>"
                         title="View all ${model.publicSamplesCount} public samples">${model.publicSamplesCount}</a>)
                 </h3>
-                    &lt;%&ndash;The count starts at 0, that is why we subtract 1 from the end value&ndash;%&gt;
+                    <%--The count starts at 0, that is why we subtract 1 from the end value--%>
                 <c:forEach var="sample" items="${model.publicSamples}" varStatus="status" begin="0"
                            end="${model.maxRowNumberOfLatestItems-1}">
-                    <p>&lt;%&ndash;<span class="list_date">${sample.metadataReceived}:</span>&ndash;%&gt;
+                    <p><%--<span class="list_date">${sample.metadataReceived}:</span>--%>
                         <a href="<c:url value="${baseURL}/projects/${sample.study.studyId}/samples/${sample.sampleId}"/>"
                            class="list_more fl_uppercase_title">${sample.sampleName}</a>
 
@@ -307,15 +279,15 @@
                 <p>
                     <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search&startPosition=0"/>"
                        title="View all public samples" class="all">View all samples</a></p>
-                &lt;%&ndash;<span class="separator"></span>&ndash;%&gt;
+                    <%--<span class="separator"></span>--%>
 
-                    &lt;%&ndash;<h2>Mailing list</h2>&ndash;%&gt;
+                    <%--<h2>Mailing list</h2>--%>
 
-                    &lt;%&ndash;<p><span class="list_desc"><a&ndash;%&gt;
-                                                  &lt;%&ndash;href="http://listserver.ebi.ac.uk/mailman/listinfo/metagenomics">Subscribe</a> to the EBI metagenomics mailing list to receive update information. </span>&ndash;%&gt;
+                    <%--<p><span class="list_desc"><a--%>
+                    <%--href="http://listserver.ebi.ac.uk/mailman/listinfo/metagenomics">Subscribe</a> to the EBI metagenomics mailing list to receive update information. </span>--%>
 
 
-            </div>--%>
+            </div>
 
         </c:otherwise>
     </c:choose>
@@ -325,10 +297,10 @@
 <!-- script for carousel - only homepage-->
 <script src="${pageContext.request.contextPath}/js/jquery.carousel.min.js" type="text/javascript"></script>
 <script type="text/javascript">
-$(document).ready(function () {
-    $("div.carousel").carousel({pagination:true, autoSlide:true, autoSlideInterval:15000, delayAutoSlide:2000, loop:true });
+    $(document).ready(function () {
+        $("div.carousel").carousel({pagination:true, autoSlide:true, autoSlideInterval:15000, delayAutoSlide:2000, loop:true });
 
-});
+    });
 </script>
 <!-- End script for carousel-->
 
