@@ -3,6 +3,7 @@
 
     <div class="box-export">
         <p>You can download in this section the full set of analysis results files and the original raw sequence reads.</p>
+        <p style="color: red">Some of the download files are temporarily unavailable due to planned hardware maintenance.</p>
         <h4>Sequence data</h4>
         <ul>
             <c:forEach var="downloadLink" items="${model.downloadSection.seqDataDownloadLinks}" varStatus="loop">
