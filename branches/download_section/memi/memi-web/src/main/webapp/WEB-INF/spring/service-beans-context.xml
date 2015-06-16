@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+    <!--Services-->
+
+    <!-- The next 3 beans belong to the email notification service which is currently used in the submission form  -->
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="${javamail.sender.host}"/>
+        <property name="port" value="25"/>
+    </bean>
+
+    <!--Email service for CustomizedExceptionResolver-->
+    <bean name="emailNotificationServiceExceptionResolver"
+          class="uk.ac.ebi.interpro.metagenomics.memi.services.EmailNotificationService">
+        <constructor-arg ref="mailSender"/>
+        <property name="receiver" value="${emailService.exceptionResolver.receiver}"/>
+        <property name="sender" value="${emailService.exceptionResolver.sender}"/>
+        <property name="emailSubject" value="DEVELOPERS [MG portal] Exception occurred"/>
+    </bean>
+
+    <!--Email service for the SRARegistration form  -->
+    <bean name="emailNotificationServiceSRARegistration"
+          class="uk.ac.ebi.interpro.metagenomics.memi.services.EmailNotificationService">
+        <constructor-arg ref="mailSender"/>
+        <property name="receiver" value="${emailService.sraRegistration.receiver}"/>
+        <property name="receiverCCList">
+            <list>
+                <value type="java.lang.String">${emailService.sraRegistration.receiverCC_1}</value>
+            </list>
+        </property>
+        <property name="emailSubject" value="New SRA account request from the MGPortal"/>
+    </bean>
+
+    <!--Email service for the feedback form-->
+    <bean name="emailNotificationServiceFeedbackPage"
+          class="uk.ac.ebi.interpro.metagenomics.memi.services.EmailNotificationService">
+        <constructor-arg ref="mailSender"/>
+        <property name="receiver" value="${emailService.feedbackForm.receiver}"/>
+    </bean>
+
+    <!-- Default email notification service without any specific properties-->
+    <bean name="defaultEmailNotificationService"
+          class="uk.ac.ebi.interpro.metagenomics.memi.services.EmailNotificationService">
+        <constructor-arg ref="mailSender"/>
+    </bean>
+
+    <!--This service configures a HTTP response, which opens a download dialog-->
+    <bean id="downloadService" class="uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService"/>
+
+    <bean id="exportValueService" class="uk.ac.ebi.interpro.metagenomics.memi.services.ExportValueService"/>
+
+    <bean id="authenticationClientTomcat9" name="authenticationClientTomcat9" class="uk.ac.ebi.ena.authentication.client.AuthenticationClientImpl">
+        <constructor-arg ref="enaWebServiceUrlTomcat9"/>
+    </bean>
+
+    <bean id="enaWebServiceUrlTomcat9" class="java.lang.String">
+        <constructor-arg value="${ena.authentication.service.url.tomcat-9}"/>
+    </bean>
+
+    <bean id="authenticationService" class="uk.ac.ebi.interpro.metagenomics.memi.authentication.AuthenticationService"/>
+
+</beans>
