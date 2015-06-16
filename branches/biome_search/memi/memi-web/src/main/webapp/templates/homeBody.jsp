@@ -238,7 +238,7 @@
                     <%--The count starts at 0, that is why we subtract 1 from the end value--%>
                 <c:forEach var="study" items="${model.studies}" varStatus="status" begin="0"
                            end="${model.maxRowNumberOfLatestItems-1}">
-                    <p><%--<span class="list_date">${entry.key.lastMetadataReceived}:</span> --%>
+                    <p><div class="biome_icon icon_xs default_b" title="Biome icon"></div>
                         <a href="<c:url value="${baseURL}/projects/${study.studyId}"/>"
                            class="list_more fl_uppercase_title">${study.studyName}</a>
 
