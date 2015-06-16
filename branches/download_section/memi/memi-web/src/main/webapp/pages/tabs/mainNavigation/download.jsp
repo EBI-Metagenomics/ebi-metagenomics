@@ -33,27 +33,26 @@
                 <c:if test="${not empty model.downloadSection.functionalDownloadSection.interproscanDownloadLinks}">
                     <c:choose>
                         <c:when test="${fn:length(model.downloadSection.functionalDownloadSection.interproscanDownloadLinks)>1}">
-                            <li>InterPro matches (TSV) - compressed</li>
-                            <ul>
+                            <li class="no-dash-last">InterPro matches (GZIP) <span class="icon icon-generic" data-icon="i" title="GZ, or GNU Zipped Archive file is a compression utility. GZ was adopted by the GNU Project, and is relatively popular on the Internet. GZIP produces files with a GZ extension, which can be decompressed by GZIP/GNUZIP program."></span>:
                                 <c:forEach var="downloadLink"
-                                           items="${model.downloadSection.functionalDownloadSection.interproscanDownloadLinks}"
-                                           varStatus="loop">
-                                    <li>
-                                        <a href="<c:url value="${baseURL}/${downloadLink.linkURL}"/>"
-                                           title="${downloadLink.linkTitle}">${downloadLink.linkText}
-                                        </a><span class="list_date_new"> - ${downloadLink.fileSize}
-                                    </li>
-                                </c:forEach>
-                            </ul>
+                                       items="${model.downloadSection.functionalDownloadSection.interproscanDownloadLinks}"
+                                       varStatus="loop">
+
+                                    <a href="<c:url value="${baseURL}/${downloadLink.linkURL}"/>"
+                                       title="${downloadLink.linkTitle}">${downloadLink.linkText}
+                                    </a><span class="list_date_new"> (${downloadLink.fileSize})</span> <span>-</span>
+                            </c:forEach>
+                            </li>
+
                         </c:when>
                         <c:otherwise>
+                            <%--only one link but quite big so it has been zipped --%>
                             <c:forEach var="downloadLink"
                                        items="${model.downloadSection.functionalDownloadSection.interproscanDownloadLinks}"
                                        varStatus="loop">
                                 <li>
                                     <a href="<c:url value="${baseURL}/${downloadLink.linkURL}"/>"
-                                       title="${downloadLink.linkTitle}">${downloadLink.linkText}
-                                    </a><span class="list_date_new"> - ${downloadLink.fileSize}
+                                       title="${downloadLink.linkTitle}">InterPro matches (GZIP)</a> <span class="icon icon-generic" data-icon="i" title="GZ, or GNU Zipped Archive file is a compression utility. GZ was adopted by the GNU Project, and is relatively popular on the Internet. GZIP produces files with a GZ extension, which can be decompressed by GZIP/GNUZIP program."></span> <span class="list_date_new"> - ${downloadLink.fileSize}</span>
                                 </li>
                             </c:forEach>
                         </c:otherwise>
@@ -64,10 +63,7 @@
                            varStatus="loop">
                     <li>
                         <a href="<c:url value="${baseURL}/${downloadLink.linkURL}"/>"
-                           title="${downloadLink.linkTitle}">
-                                ${downloadLink.linkText}
-                        </a>
-                        <span class="list_date"> - ${downloadLink.fileSize}
+                           title="${downloadLink.linkTitle}">${downloadLink.linkText}</a> <span class="list_date"> - ${downloadLink.fileSize}</span>
                     </li>
                 </c:forEach>
             </ul>
@@ -101,3 +97,9 @@
 
     </div>
 </div>
+<script>
+//temp script to remove the last dash item in the list when partition
+$(document).ready(function(){
+   $(".no-dash-last span:last-child").css("display", "none");
+});
+</script>
