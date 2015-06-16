@@ -646,7 +646,7 @@ list-style-type: none;
 #sidebar-steps, #sidebar-related {font-size:90%;}
 
 .box-export ul {padding:0 9px;margin-left: 9px;}
-.box-export ul li {list-style-image:url(../img/arrow_menu_exp.gif); margin-left:7px; list-style-type:square; color:#c3c3c3;}
+.box-export ul li {list-style-image:url(../img/arrow_menu_exp.gif); margin-left:7px; /*list-style-type:square; color:#c3c3c3;*/}
 
 #sidebar-export  {
 float:right;
