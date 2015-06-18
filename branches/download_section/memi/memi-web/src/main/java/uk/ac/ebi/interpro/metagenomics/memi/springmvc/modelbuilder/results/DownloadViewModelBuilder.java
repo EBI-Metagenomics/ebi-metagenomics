@@ -117,6 +117,16 @@ public class DownloadViewModelBuilder extends AbstractResultViewModelBuilder<Dow
                                     getFileSize(downloadFileObj)));
                             chunkCounter++;
                         }
+                    } else if (fileDefinition.getIdentifier().equals("INTERPROSCAN_RESULT_FILE")) {
+                        String filePath = fileObject.getAbsolutePath();
+                        File newFileObject = new File(filePath + ".chunks");
+                        if (!FileExistenceChecker.checkFileExistence(newFileObject)) {
+                            otherFuncAnalysisDownloadLinks.add(new DownloadLink(fileDefinition.getLinkText(),
+                                    fileDefinition.getLinkTitle(),
+                                    "projects/" + externalProjectId + "/samples/" + externalSampleId + "/runs/" + externalRunId + "/results/" + fileDefinition.getLinkURL() + "/versions/" + analysisJobReleaseVersion,
+                                    fileDefinition.getOrder(),
+                                    getFileSize(fileObject)));
+                        }
                     } else {
                         otherFuncAnalysisDownloadLinks.add(new DownloadLink(fileDefinition.getLinkText(),
                                 fileDefinition.getLinkTitle(),
