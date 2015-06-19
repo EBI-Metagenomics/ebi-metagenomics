@@ -28,6 +28,7 @@ import java.util.ArrayList;
  * @author Maxim Scheremetjew
  */
 @Controller
+@Deprecated
 public class RegistrationController extends AbstractController implements IController {
 
     private final static Log log = LogFactory.getLog(RegistrationController.class);
@@ -36,7 +37,7 @@ public class RegistrationController extends AbstractController implements IContr
     private CountryDAO countryDAO;
 
 
-    @RequestMapping(value = "/register")
+//    @RequestMapping(value = "/register")
     public ModelAndView doGet(ModelMap model) {
         final ModelPopulator modelPopulator = new SRARegistrationModelPopulator();
         SRARegistrationForm registrationForm = new SRARegistrationForm();
