@@ -35,6 +35,40 @@
         <put-attribute name="body" value="/templates/aboutBody.jsp"/>
     </definition>
 
+    <!-- Start Registration process multi form -->
+
+    <definition name="registIntro" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="green"/>
+        <put-attribute name="body" value="/templates/user-registration/registIntroBody.jsp"/>
+    </definition>
+
+    <definition name="registAccountCheck" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="green"/>
+        <put-attribute name="body" value="/templates/user-registration/registAccountCheckBody.jsp"/>
+    </definition>
+
+    <definition name="registUserNameCheck" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="green"/>
+        <put-attribute name="body" value="/templates/user-registration/registUserNameCheckBody.jsp"/>
+    </definition>
+
+    <definition name="registUserNameCheckSummary" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="green"/>
+        <put-attribute name="body" value="/templates/user-registration/registUserNameCheckSummaryBody.jsp"/>
+    </definition>
+
+    <definition name="registGiveConsent" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="green"/>
+        <put-attribute name="body" value="/templates/user-registration/registGiveConsentBody.jsp"/>
+    </definition>
+
+    <definition name="registGiveConsentSummary" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="green"/>
+        <put-attribute name="body" value="/templates/user-registration/registGiveConsentSummaryBody.jsp"/>
+    </definition>
+
+    <!-- End Registration process multi form -->
+
     <definition name="submit" extends="rootTemplate">
         <put-attribute name="bodyClass" type="string" value="ebigrey"/>
         <put-attribute name="body" value="/templates/submitBody.jsp"/>

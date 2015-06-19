@@ -35,12 +35,11 @@ public class SubmissionContactDAOImpl implements SubmissionContactDAO {
     public SubmissionContactDAOImpl() {
     }
 
-    @Override
     public boolean checkAccountByEmailAddress(String emailAddress) {
         if (emailAddress == null)
             return false;
         try {
-            int count = this.jdbcTemplate.queryForObject("select count(1) FROM submission_contact sc join submission_account sa using (submission_account_id) WHERE upper(sc.email_address) = UPPER(?) and sa.role_SRA = 'Y'",
+            int count = this.jdbcTemplate.queryForObject("select count(1) FROM submission_contact sc join submission_account sa using (submission_account_id) WHERE upper(sc.email_address) = UPPER(?)",
                     new Object[]{emailAddress.toUpperCase()}, Integer.class);
             if (count > 0) {
                 return true;
@@ -68,20 +67,42 @@ public class SubmissionContactDAOImpl implements SubmissionContactDAO {
         }
     }
 
-    @Override
-    public Submitter getSubmitterBySubmissionAccountId(String submissionAccountId) {
+    public Submitter getSubmitterBySubmissionAccountId(final String submissionAccountId) {
         if (submissionAccountId == null)
+            return null;
+        try {
+            List<Map<String, Object>> rows = this.jdbcTemplate.queryForList("select sa.submission_account_id, sa.role_metagenome_analysis FROM submission_account sa WHERE UPPER(sa.submission_account_id) = UPPER(?)",
+                    new String[]{submissionAccountId});
+            if (rows.size() > 1) {
+                log.warn("Found more then one submission accounts for account id: " + submissionAccountId);
+            }
+            for (Map row : rows) {
+                Submitter submitter = new Submitter();
+                submitter.setSubmissionAccountId((String) row.get("submission_account_id"));
+                submitter.setConsentGiven(((String) row.get("role_metagenome_analysis")).equalsIgnoreCase("Y") ? true : false);
+                return submitter;
+            }
+        } catch (Exception e) {
+            log.warn("Could not perform database query. It might be that the JDBC connection could not build" +
+                    " or is wrong configured. For more info take a look at the stack trace!", e);
+        }
+        return null;
+    }
+
+    public Submitter getSubmitterByEmail(final String emailAddress) {
+        if (emailAddress == null)
             return null;
         Submitter submitter = new Submitter();
         try {
-            List<Map<String, Object>> rows = this.jdbcTemplate.queryForList("select sc.submission_account_id,sc.email_address,sc.first_name,sc.surname FROM submission_contact sc join submission_account sa on (sc.submission_account_id=sa.submission_account_id) WHERE UPPER(sc.submission_account_id) = UPPER(?)",
-                    new String[]{submissionAccountId});
+            List<Map<String, Object>> rows = this.jdbcTemplate.queryForList("select sc.submission_account_id, sc.email_address, sc.first_name, sc.surname, sa.role_metagenome_analysis FROM submission_contact sc join submission_account sa on (sc.submission_account_id=sa.submission_account_id) WHERE UPPER(sc.email_address) = UPPER(?)",
+                    new String[]{emailAddress});
 
             for (Map row : rows) {
                 submitter.setSubmissionAccountId((String) row.get("submission_account_id"));
                 submitter.setEmailAddress((String) row.get("email_address"));
                 submitter.setFirstName((String) row.get("first_name"));
                 submitter.setSurname((String) row.get("surname"));
+                submitter.setConsentGiven(((String) row.get("role_metagenome_analysis")).equalsIgnoreCase("Y") ? true : false);
             }
             return submitter;
         } catch (Exception e) {
@@ -90,6 +111,4 @@ public class SubmissionContactDAOImpl implements SubmissionContactDAO {
             return null;
         }
     }
-
-
 }
