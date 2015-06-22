@@ -33,7 +33,7 @@
                 <c:if test="${not empty model.downloadSection.functionalDownloadSection.interproscanDownloadLinks}">
                     <c:choose>
                         <c:when test="${fn:length(model.downloadSection.functionalDownloadSection.interproscanDownloadLinks)>1}">
-                            <li class="no-dash-last">InterPro matches (TSV) <span class="icon icon-generic" data-icon="i" title="TSV file compressed using GZIP -GZ, or GNU Zipped Archive file is a compression utility. GZ was adopted by the GNU Project, and is relatively popular on the Internet. GZIP produces files with a GZ extension, which can be decompressed by GZIP/GNUZIP program."></span>:
+                            <li class="no-dash-last">InterPro matches (TSV) <span class="icon icon-generic show_tooltip" data-icon="i" title="TSV file compressed using GZIP -GZ, or GNU Zipped Archive file is a compression utility. GZ was adopted by the GNU Project, and is relatively popular on the Internet. GZIP produces files with a GZ extension, which can be decompressed by GZIP/GNUZIP program."></span>:
                                 <c:forEach var="downloadLink"
                                        items="${model.downloadSection.functionalDownloadSection.interproscanDownloadLinks}"
                                        varStatus="loop">
@@ -52,7 +52,7 @@
                                        varStatus="loop">
                                 <li>
                                     <a href="<c:url value="${baseURL}/${downloadLink.linkURL}"/>"
-                                       title="${downloadLink.linkTitle}">InterPro matches (TSV)</a> <span class="icon icon-generic" data-icon="i" title="TSV file compressed using GZIP - GZ, or GNU Zipped Archive file is a compression utility. GZ was adopted by the GNU Project, and is relatively popular on the Internet. GZIP produces files with a GZ extension, which can be decompressed by GZIP/GNUZIP program."></span> <span class="list_date_new"> - ${downloadLink.fileSize}</span>
+                                       title="${downloadLink.linkTitle}">InterPro matches (TSV)</a> <span class="icon icon-generic show_tooltip" data-icon="i" title="TSV file compressed using GZIP - GZ, or GNU Zipped Archive file is a compression utility. GZ was adopted by the GNU Project, and is relatively popular on the Internet. GZIP produces files with a GZ extension, which can be decompressed by GZIP/GNUZIP program."></span> <span class="list_date_new"> - ${downloadLink.fileSize}</span>
                                 </li>
                             </c:forEach>
                         </c:otherwise>
@@ -82,10 +82,10 @@
 
                         <c:choose>
                             <c:when test="${downloadLink.linkText == 'OTUs and taxonomic assignments (BIOM)' || downloadLink.linkText == 'OTUs, reads and taxonomic assignments (HDF5 biom)' || downloadLink.linkText == 'OTUs, reads and taxonomic assignments (JSON biom)'}">
-                                <span class="icon icon-generic" data-icon="i"
+                                <span class="icon icon-generic show_tooltip" data-icon="i"
                                       title="BIOM is a standard format (http://biom-format.org/) for representing taxonomy distribution (OTUs and their occurence in each sample). BIOM files could be directly imported in diverse analysis packages such as MEGAN (http://ab.inf.uni-tuebingen.de/software/megan5/)."></span></c:when>
                             <c:when test="${downloadLink.linkText == 'Phylogenetic tree (Newick format)'}"> <span
-                                    class="icon icon-generic" data-icon="i"
+                                    class="icon icon-generic show_tooltip" data-icon="i"
                                     title="The Newick format is a computer-readable phylogenetic tree representation (http://evolution.genetics.washington.edu/phylip/newicktree.html). The trees can be visualized using graphical viewers such as FigTree (http://tree.bio.ed.ac.uk/software/figtree/) and iTOL (http://itol.embl.de/)."></span></c:when>
                         </c:choose>
 
