@@ -1806,3 +1806,5 @@ ul.sample_list li {list-style: none; display: inline;}
 }
 
  /*/ pipeline chart *******************************/
+/*tooltip*/
+.icon-generic.show_tooltip:before {color: #888888;} /*darker than default*/
