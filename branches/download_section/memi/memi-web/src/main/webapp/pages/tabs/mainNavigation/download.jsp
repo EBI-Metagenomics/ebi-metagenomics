@@ -98,8 +98,19 @@
     </div>
 </div>
 <script>
-//temp script to remove the last dash item in the list when partition
+
 $(document).ready(function(){
+    //temp script to remove the last dash item in the list when partition
    $(".no-dash-last span:last-child").css("display", "none");
+
+    //Force the tooltip to be shown
+   $('.show_tooltip').qtip({
+            position: {
+                my: 'top center',  // Position my top left...
+                at: 'bottom center' // at the bottom right of...
+
+            }});
+
+
 });
 </script>
