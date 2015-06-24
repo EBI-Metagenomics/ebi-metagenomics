@@ -55,9 +55,9 @@
     <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/favicon.ico"/>
 
     <%--?v1.1 will trigger browsers to refresh the source--%>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/default.css?v1.2" type="text/css" media="all"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/default.css?v1.3" type="text/css" media="all"/>
     <%--tooltip css--%>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/jquery.qtip.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/jquery.qtip.css?v1.1" type="text/css">
 
     <!--[if lt IE 9]>
     <style type="text/css">.krona_chart {display: none;}/*remove the Krona box */</style>
