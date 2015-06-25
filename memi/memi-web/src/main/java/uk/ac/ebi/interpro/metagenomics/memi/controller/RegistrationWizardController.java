@@ -49,20 +49,22 @@ public class RegistrationWizardController extends AbstractController {
         modelMap.addAttribute("registrationForm", new RegistrationForm());
         modelMap.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
         // populate the model Map as needed
+        modelMap.addAttribute("displayUsernameBox", "none");
         return new ModelAndView("user-registration/registAccountCheck", modelMap);
     }
 
-    @RequestMapping(params = "_target0")
-    public ModelAndView processFirstStep(final @ModelAttribute("registrationForm") RegistrationForm form,
-                                         final Errors errors,
-                                         final ModelMap modelMap) {
-        // do something with command, errors, request, response,
-        // model map or whatever you include among the method
-        // parameters. See the documentation for @RequestMapping
-        // to get the full picture.
-        modelMap.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
-        return new ModelAndView("user-registration/registAccountCheck", modelMap);
-    }
+//    @RequestMapping(params = "_target0")
+//    public ModelAndView processFirstStep(final @ModelAttribute("registrationForm") RegistrationForm form,
+//                                         final Errors errors,
+//                                         final ModelMap modelMap) {
+//        // do something with command, errors, request, response,
+//        // model map or whatever you include among the method
+//        // parameters. See the documentation for @RequestMapping
+//        // to get the full picture.
+//        modelMap.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
+//        modelMap.addAttribute("displayUsernameBox", "none");
+//        return new ModelAndView("user-registration/registAccountCheck", modelMap);
+//    }
 
     /**
      * First step handler (if you want to map each step individually to a method). You should probably either use this
@@ -74,13 +76,9 @@ public class RegistrationWizardController extends AbstractController {
                                           final ModelMap modelMap) {
         modelMap.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
         if (errors.hasErrors()) {
-            if (!errors.hasFieldErrors("doesAccountExist")) {
-                //If submitters do not have an ENA Webin account refer them to the customised Webin account registration page
-                if (!form.getDoesAccountExist()) {
-                    return new ModelAndView("redirect:https://www.ebi.ac.uk/ena/submit/sra/#metagenome_registration");
-                }
+            if (errors.hasFieldErrors("userName")) {
+                return new ModelAndView("user-registration/registAccountCheck", modelMap);
             }
-            return new ModelAndView("user-registration/registAccountCheck", modelMap);
         }
 
 
@@ -88,6 +86,7 @@ public class RegistrationWizardController extends AbstractController {
         final Submitter submitter = submissionContactDAO.getSubmitterBySubmissionAccountId(userName);
 
         if (submitter != null) {
+            log.info("found user");
             if (submitter.isConsentGiven()) {
                 modelMap.addAttribute("accountCheckResult", "User does exist and has given consent!");
                 return new ModelAndView("user-registration/registUserNameCheckSummary", modelMap);
@@ -96,42 +95,22 @@ public class RegistrationWizardController extends AbstractController {
                 return new ModelAndView("user-registration/registUserNameCheckSummary", modelMap);
             }
         }
-        modelMap.addAttribute("accountCheckResult", "User does not exist!");
-        return new ModelAndView("user-registration/registUserNameCheckSummary", modelMap);
+        modelMap.addAttribute("accountCheckResult", "User does not exist, please try again.");
+        modelMap.addAttribute("displayUsernameBox", "block");
+        return new ModelAndView("user-registration/registAccountCheck", modelMap);
     }
 
     @RequestMapping(params = "_target2")
     public ModelAndView processThirdStep(final @ModelAttribute("registrationForm") @Valid RegistrationForm form,
                                          final Errors errors,
                                          final ModelMap modelMap) {
-        if (errors.hasFieldErrors("userName")) {
-            modelMap.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
-            return new ModelAndView("user-registration/registUserNameCheck", modelMap);
-        }
-        form.getUserName();
-        //TODO: Check if user account exists
-        boolean exists = true;
-        boolean consentGiven = true;
-        if (exists) {
-            if (consentGiven) {
-                //TODO: Do implement
-            } else {
-                //TODO: Do implement
+        modelMap.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
+        if (errors.hasFieldErrors("consentCheck")) {
+
+                return new ModelAndView("user-registration/registUserNameCheckSummary", modelMap);
             }
 
-        } else {
-            FieldError userNameFieldError = errors.getFieldError("userName");
-            modelMap.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
-            return new ModelAndView("user-registration/registUserNameCheck", modelMap);
-        }
-
-        //Else point them to the next form to collect more information from them
-        // do something with command, errors, request, response,
-        // model map or whatever you include among the method
-        // parameters. See the documentation for @RequestMapping
-        // to get the full picture.
-        modelMap.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
-        return new ModelAndView("user-registration/registUserNameCheckSummary", modelMap);
+            return new ModelAndView("user-registration/registGiveConsentSummary", modelMap);
     }
 
     @RequestMapping(params = "_target3")
