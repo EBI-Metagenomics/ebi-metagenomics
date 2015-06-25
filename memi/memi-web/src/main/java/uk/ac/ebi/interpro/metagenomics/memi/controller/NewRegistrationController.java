@@ -5,6 +5,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.erapro.CountryDAO;
@@ -20,6 +22,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.SRARegistrati
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
@@ -32,14 +35,18 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/register")
-public class NewRegistrationController extends AbstractController implements IController {
+public class NewRegistrationController extends AbstractController {
 
     private final static Log log = LogFactory.getLog(NewRegistrationController.class);
 
     @RequestMapping
-    public ModelAndView doGet(final ModelMap modelMap) {
+    public ModelAndView doGet(final @ModelAttribute("registrationForm") @Valid RegistrationForm form,
+                              final Errors errors,
+                              final ModelMap modelMap) {
         // put your initial command
         modelMap.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
+        modelMap.addAttribute("registrationForm", new RegistrationForm());
+        modelMap.addAttribute("displayUsernameBox", "none");
         // populate the model Map as needed
         return new ModelAndView("user-registration/registIntro", modelMap);
     }
