@@ -868,7 +868,6 @@ color: #445668;}
 
 #headerdiv input {border:0px; padding:0; }/*added for the mitigation template*/
 
-
 input {
 width: 150px;
 /*background: -webkit-gradient(linear, left top, left 6, from(#FFFFFF), color-stop(4%, #EEEEEE), to(#FFFFFF));*/
@@ -890,6 +889,9 @@ width: 360px;
 .register_form .institute_det_box {float: left; width: 48%;}
 .register_form .project_det_box  {margin-top: 9px;float: left; width: 98%;}
 .register_form .institute_det_box input, .register_form .user_det_box input {width: 90%;}
+.register_form .user_det_box input[type=checkbox] {width: 20px;  margin-left: -3px;  margin-top: 4px;}
+.register_form input[type="radio"]{width:38px;}
+.register_form .user_det_box input.main_button {width: auto; float: none;}
 .register_form .project_det_box input { width: 45%;}
 .register_form .user_det_box fieldset {min-height: 333px;}  /*to have same height between boxes*/
 .register_form .institute_det_box select {width: 93%;}
@@ -1075,13 +1077,7 @@ display: block;
 
 label.error  {border:none; display:block;}
 
-
-input.error, textarea.error {
-background: #FFCFCF url(../img/ico_form_cancel.png) no-repeat right top;
-color: #8C302C;
-border:1px #ff918e solid;
-margin:0;
-}
+input.error, textarea.error {background: #FFEAEA url(../img/ico_form_cancel.png) no-repeat right top;color: #8C302C;  border:1px #F9B7B5 solid;margin:0;}
 
 .msg_error {background-color: #FFCFCF; color: #8C302C;border:1px #ff918e solid; margin: 0px auto;font-size: 118%; margin-top:27px;padding: 14px;width: 712px;border-radius: 7px;}
 
@@ -1272,7 +1268,7 @@ z-index:20;top:-40px;}
 
 /*POPUP LOGIN DIALOG*/
 #login_dialog_div {cursor: default;/*remove waiting cursor*/display:none; /*solve a bug  of conflict between popup and carousel on IE6 and IE7*/ border: 0px solid #AAA; background:none;/*remove double background+border*/}
-
+#registration_dialog_div{cursor: default;display:none;border: 0px solid #AAA; background:none;}
 /* FEEDBACK FORM */
 #feedback_div   {
     position:fixed;
