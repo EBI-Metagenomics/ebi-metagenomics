@@ -39,7 +39,7 @@
           <span class="error" style="display:${displayUsernameBox};">${accountCheckResult}</span>
       <p>
           <input id="submit_button" name="_target1" value="Check" class="main_button" type="submit"/>
-          <span class="clear_but">| <a href="/metagenomics/register" title="cancel">Cancel</a></span>
+          <span class="clear_but">| <a href="/metagenomics/submit" title="cancel">Cancel</a></span>
       </p>
       </fieldset>
     </div>
