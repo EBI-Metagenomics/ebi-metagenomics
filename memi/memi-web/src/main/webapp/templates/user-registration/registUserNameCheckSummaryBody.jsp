@@ -19,7 +19,7 @@
 </p>
 <p>
 <input id="submit_button" name="_target2" value="Submit" class="main_button" type="submit"/>
-<span class="clear_but">| <a href="/metagenomics/register" title="cancel">Cancel</a></span>
+<span class="clear_but">| <a href="/metagenomics/submit" title="cancel">Cancel</a></span>
 </p>
 </div></div>
 </form:form>
