@@ -47,7 +47,7 @@ public class NewRegistrationController extends AbstractController {
         // put your initial command
         final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "Submit data", getBreadcrumbs(null), propertyContainer);
         final ViewModel submitDataModel = builder.getModel();
-        submitDataModel.changeToHighlightedClass(ViewModel.TAB_CLASS_ABOUT_VIEW);
+        submitDataModel.changeToHighlightedClass(ViewModel.TAB_CLASS_SUBMIT_VIEW);
         modelMap.addAttribute(ViewModel.MODEL_ATTR_NAME, submitDataModel);
 
         modelMap.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
