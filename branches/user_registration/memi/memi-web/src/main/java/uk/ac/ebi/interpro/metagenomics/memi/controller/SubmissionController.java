@@ -42,6 +42,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping('/' + SubmissionController.VIEW_NAME)
+@Deprecated
 public class SubmissionController extends CheckLoginController implements IController {
 
     private final static Log log = LogFactory.getLog(SubmissionController.class);
@@ -49,7 +50,7 @@ public class SubmissionController extends CheckLoginController implements IContr
     /**
      * View name of this controller which is used several times.
      */
-    public static final String VIEW_NAME = "submit";
+    public static final String VIEW_NAME = "submit2";
 
     public static final String SUCCESS_VIEW_NAME = "submitSuccess";
 
