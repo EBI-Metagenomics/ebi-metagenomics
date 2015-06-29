@@ -16,7 +16,7 @@
     <div class="webin">
 
           <h2>Do you have an EBI Webin account?</h2>
-
+           <p>A Webin account is an ENA submitter account provided by the European Nucleotide Archive, the first time you have submitted data to them (read data, genome assemblies, etc.).</p>
           <div class="form_row">
               <label style="display:inline-block;"><form:radiobutton path="doesAccountExist" id ="radio_button_y" value="true" /> Yes</label>
               <label style="display:inline-block;"><form:radiobutton path="doesAccountExist" id="radio_button_n" value="false" /> No</label>
@@ -72,4 +72,23 @@ $(document).ready(function(){
     });
 });
 
+</script>
+<script type="text/javascript">
+    var urlParams;
+    (window.onpopstate = function () {
+        var match,
+            pl     = /\+/g,  // Regex for replacing addition symbol with a space
+            search = /([^&=]+)=?([^&]*)/g,
+            decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+            query  = window.location.search.substring(1);
+
+        urlParams = {};
+        while (match = search.exec(query))
+           urlParams[decode(match[1])] = decode(match[2]);
+    })();
+
+    if(urlParams["user"]== 'existing')  {
+               $('.webin').toggle();
+               $('.user_det_box').show();
+           }
 </script>
