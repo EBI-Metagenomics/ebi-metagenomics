@@ -876,8 +876,6 @@ width: 150px;
 
 #feedback_form input, #feedback_form_no input {
 width: 360px;
-/*-moz-box-shadow:inset 0 0 7px #ccc;*/
-/*-webkit-box-shadow:inset 0 0 7px #ccc;*/
 /*box-shadow:inset 0 0 7px #ccc;*/
 }
 
@@ -1797,3 +1795,32 @@ ul.sample_list li {list-style: none; display: inline;}
 }
 
  /*/ pipeline chart *******************************/
+/*Submit data - registration check*/
+.registration-check {text-align: center;margin-bottom:9px;}
+.box-registration {display:inline-block; margin: 0 18px 9px 0; vertical-align: top; }
+.box-registration-cont {z-index: 12; position:relative;text-align: center; background-color: #ececec; min-height: 178px;  width: 220px;  padding: 18px 9px 27px 9px;  border-radius: 50%; /*box-shadow: 4px 4px 3px -3px rgba(0, 0, 0, 0.35);*/}
+.box-registration-cont .intro {line-height: 1.2;}
+.box-registration-cont:hover {background-color:  rgba(0, 0, 0, 0.54);}
+.box-registration-cont:hover .icon-functional:before {color: #fff;}
+.box-registration-cont:hover h3 {color: #BCCDDB;}
+.box-registration-cont:hover .intro {color: #fff;}
+a.box-registration-link  {text-decoration: none; cursor: pointer;}
+.box-registration-cont .icon-functional:before {font-size: 255%; color: #0F6D99;}
+
+.box-registration-cont.box-def {background-color: #6f94a0;}
+.box-registration-cont.box-def h3 {color: white;}
+.box-registration-cont.box-def:hover{background-color:#5c7781;}
+
+.box-registration-cont.box-blue {background-color: #57CADF;}
+.box-registration-cont.box-blue h3 {color: white;}
+.box-registration-cont.box-blue:hover{background-color:#5c7781;}
+.box-registration-cont.box-blue:hover .icon-functional:before {color: #7DDCE8;}
+
+.box-registration-cont.box-pink {background-color: #DD3575;}
+.box-registration-cont.box-pink h3 {color: white;}
+.box-registration-cont.box-pink .intro {color: #62224E;}
+.box-registration-cont.box-pink:hover .intro {color: #fff;}
+.box-registration-cont.box-pink:hover{background-color:#5c7781;}
+.box-registration-cont.box-pink:hover .icon-functional:before {color: #7DDCE8;}
+.box-registration-cont.box-pink .icon-functional:before {font-size: 255%; color: #7E2E64;}
+
