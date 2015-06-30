@@ -3,6 +3,8 @@ package uk.ac.ebi.interpro.metagenomics.memi.forms;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import javax.validation.constraints.AssertFalse;
+import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -18,11 +20,12 @@ public class RegistrationForm {
     @NotNull(message = "Please choose one of the following options.")
     Boolean doesAccountExist;
 
+    @AssertTrue(message = "Please check this box if you want your data to be analysed by the EBI metagenomics team.")
+    Boolean consentCheck=true;
+
     @NotEmpty(message = "Please enter a valid ENA Webin account user name")
     @Length(min = 3, message = "Your user name must be at least {min} characters long")
     String userName;
-
-    String password;
 
     public String getUserName() {
         return userName;
@@ -32,19 +35,19 @@ public class RegistrationForm {
         this.userName = userName;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public Boolean getDoesAccountExist() {
         return doesAccountExist;
     }
 
     public void setDoesAccountExist(Boolean doesAccountExist) {
         this.doesAccountExist = doesAccountExist;
+    }
+
+    public Boolean getConsentCheck() {
+        return consentCheck;
+    }
+
+    public void setConsentCheck(Boolean consentCheck) {
+        this.consentCheck = consentCheck;
     }
 }
