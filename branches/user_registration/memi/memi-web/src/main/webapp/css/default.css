@@ -1811,10 +1811,16 @@ a.box-registration-link  {text-decoration: none; cursor: pointer;}
 .box-registration-cont.box-def h3 {color: white;}
 .box-registration-cont.box-def:hover{background-color:#5c7781;}
 
+.box-registration-cont.box-ban {background-color: #7094a1;}
+.box-registration-cont.box-ban h3 {color: white;}
+.box-registration-cont.box-ban:hover{background-color: #5c7781;}
+.box-registration-cont.box-ban .icon-functional:before {font-size: 255%; color: #7DDCE8;}
+
+
 .box-registration-cont.box-blue {background-color: #57CADF;}
 .box-registration-cont.box-blue h3 {color: white;}
 .box-registration-cont.box-blue:hover{background-color:#5c7781;}
-.box-registration-cont.box-blue:hover .icon-functional:before {color: #7DDCE8;}
+.box-registration-cont.box-blue:hover .icon-functional:before {color:#7DDCE8;}
 
 .box-registration-cont.box-pink {background-color: #DD3575;}
 .box-registration-cont.box-pink h3 {color: white;}
