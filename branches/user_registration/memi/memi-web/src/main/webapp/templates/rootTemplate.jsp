@@ -54,9 +54,10 @@
     <%-- remove favicon from img folder to root as was not working anymore--%>
     <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/favicon.ico"/>
 
-    <%--<link href="https://fonts.googleapis.com/css?family=Droid+Sans:regular,bold" rel="stylesheet" type="text/css"/>--%>
     <%--?v1.1 will trigger browsers to refresh the source--%>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/default.css?v1.2" type="text/css" media="all"/>
+    <%--css for image zooming--%>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
 
     <!--[if lt IE 9]>
     <style type="text/css"> .krona_chart {display: none;}/*remove the Krona box */</style>
@@ -75,8 +76,8 @@
     <script src="${pageContext.request.contextPath}/js/jquery-1.11.1/jquery.js?v1.1" type="text/javascript" ></script>
     <script src="${pageContext.request.contextPath}/js/jquery-1.11.1/jquery-ui.min.js" type="text/javascript"></script>
 
-    <!--detect and restore APIs or features that have been deprecated in jQuery see https://github.com/jquery/jquery-migrate (temp solution while we remove code using old Jquery-->
-    <%--<script src="${pageContext.request.contextPath}/js/jquery-migrate-1.2.1.js"></script>--%>
+    <!-- Image zoomer-->
+    <script src="${pageContext.request.contextPath}/js/jquery.fancybox.pack.js?v=2.1.5" type="text/javascript" ></script>
 
     <script src="${pageContext.request.contextPath}/js/jquery.validate-1.9.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/js/jquery.form-3.51.0.js?v1.1" type="text/javascript"></script>
