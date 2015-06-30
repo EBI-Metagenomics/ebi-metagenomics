@@ -89,7 +89,7 @@ public class RegistrationWizardController extends AbstractController {
             log.info("found user");
             if (submitter.isConsentGiven()) {
                 modelMap.addAttribute("accountCheckResult", "User does exist and has given consent!");
-                return new ModelAndView("user-registration/registGiveConsentSummary", modelMap);
+                return new ModelAndView("user-registration/registGiveConsent", modelMap);
             } else {
                 modelMap.addAttribute("accountCheckResult", "User does exist but has not given consent!");
                 return new ModelAndView("user-registration/registUserNameCheckSummary", modelMap);
