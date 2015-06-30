@@ -21,15 +21,12 @@
               <label style="display:inline-block;"><form:radiobutton path="doesAccountExist" id ="radio_button_y" value="true" /> Yes</label>
               <label style="display:inline-block;"><form:radiobutton path="doesAccountExist" id="radio_button_n" value="false" /> No</label>
               <span class="form_info" id="ENA_redirect" style="display:none;margin:18px 0 0 9px;">You will be redirected to ENA website to create an ENA submitter account. If this doesn't happen automatically, please <a href="https://www.ebi.ac.uk/ena/submit/sra/#metagenome_registration">click here</a>.</span>
-              <%--<form:errors path="doesAccountExist" cssClass="error"/>--%>
           </div>
 
         </div>
 
     <div class="user_det_box" style="display:${displayUsernameBox};">
       <fieldset style="border:0px solid grey;">
-
-      <%--User name --%>
       <div class="form_row">
           <label>User name</label>
           <form:input path="userName" cssErrorClass="error"/>
@@ -49,10 +46,9 @@
 
 </div>
 
-
-
-<script>
+<script type="text/javascript">
 $(document).ready(function(){
+    //script to do auto redirections
     var timeoutFunction;
     $('input:radio[name="doesAccountExist"]').change(function(){
         if($(this).val() == 'true'){
@@ -74,6 +70,7 @@ $(document).ready(function(){
 
 </script>
 <script type="text/javascript">
+    //script to get the url parameter and change page behavior depending on it
     var urlParams;
     (window.onpopstate = function () {
         var match,
