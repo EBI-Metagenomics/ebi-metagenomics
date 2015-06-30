@@ -5,6 +5,9 @@
   Time: 4:13 PM
   To change this template use File | Settings | File Templates.
 --%>
+<!-- Add fancyBox -->
+
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -53,7 +56,7 @@
 
 <p >Once your reads are uploaded to the ENA, the EBI Metagenomics team will access them and perform the
     analysis, which is done in several steps. You will receive an email once the analysis starts and another when the
-    analysis of all samples is complete. The analysis time is dependent on the number of samples submitted and requests
+    analysis of all samples is complete (<a class="fancybox" rel="group" href="<c:url value="${baseURL}/img/graphic_submission_00.gif"/>" title="Detail of the submission and analysis process on the EBI metagneomics website">view figure for more details</a> of the submission and analysis process). The analysis time is dependent on the number of samples submitted and requests
     by other submitters at the time. If your samples are private, you will need to log in to the EBI Metagenomics
     homepage to be able to view the results of the analysis.
 </p>
@@ -74,4 +77,7 @@
             return false;
               });//end cancel click
     });
+    // Script for the image zooming
+	$(".fancybox").fancybox();
+
 </script>
