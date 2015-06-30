@@ -33,7 +33,7 @@
             <div class="box-registration-cont anim box-blue">
             <span class="icon icon-functional" data-icon="/"></span><br/><h3>Existing user</h3>
             <p class="intro">
-            Already user? we need your consent to analyse your data.
+            Already registered? we need your consent to analyse your data.
              </p>
         </div>
 
