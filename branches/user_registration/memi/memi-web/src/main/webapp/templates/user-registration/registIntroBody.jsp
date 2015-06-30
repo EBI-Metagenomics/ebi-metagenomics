@@ -11,12 +11,6 @@
 
 <h2>Submit data</h2>
 
-<%--<p class="intro">--%>
-    <%--If you have data that you wish to have analysed, you need an <strong>ENA Webin account</strong> that--%>
-    <%--has been registered with EBI Metagenomics. This allows us to track your submitted data and ensures that we have--%>
-    <%--consent to access it for analysis.--%>
-<%--</p>--%>
-
 <p class="intro">
     We provide a free service for submission of raw metagenomics sequence data and associated metadata to the European
     Nucleotide Archive (ENA) and analysis by EBI Metagenomics.
@@ -25,7 +19,7 @@
 <div class="grid_24 registration-check">
     <div class="box-registration">
     <a href="<c:url value="${baseURL}/wizard.form?user=new"/>" title="New user - start the submission" class="box-registration-link" >
-    <div class="box-registration-cont anim box-pink">
+    <div class="box-registration-cont anim box-ban">
         <span class="icon icon-functional" data-icon="7"></span><br/><h3>New user</h3>
     <p class="intro"> If you are new user, Click here to start the submission.
     </p>
@@ -66,7 +60,7 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        //TO DELETE IF WE DON'T USE POPUP
+        //TEMP - TO DELETE IF WE DON'T USE POPUP
         $('#registrationBlockUI').click(function () {
             $.blockUI({ message:$('#registration_dialog_div'), baseZ:100000, overlayCSS:{ backgroundColor:'#000', opacity:0.6, cursor:'pointer'}, css:{top:'25%', left:'25%', width:'517px', padding:'0px', border:'1px #AAA solid', 'border-radius':'12px', backgroundColor:'#C9C9C9' }});
             $('.blockOverlay').click($.unblockUI);
