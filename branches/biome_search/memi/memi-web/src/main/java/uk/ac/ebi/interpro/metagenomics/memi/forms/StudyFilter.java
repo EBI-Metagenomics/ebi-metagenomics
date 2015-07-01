@@ -20,8 +20,12 @@ public class StudyFilter {
 
     private StudyVisibility studyVisibility;
 
+    private Biome biome;
+
     public StudyFilter() {
-        studyVisibility = StudyVisibility.ALL_PUBLISHED_PROJECTS;
+        //set default values
+        this.studyVisibility = StudyVisibility.ALL_PUBLISHED_PROJECTS;
+        this.biome = Biome.ALL;
     }
 
 
@@ -49,6 +53,14 @@ public class StudyFilter {
         this.studyVisibility = studyVisibility;
     }
 
+    public Biome getBiome() {
+        return biome;
+    }
+
+    public void setBiome(Biome biome) {
+        this.biome = biome;
+    }
+
     /**
      * ALL_PROJECTS: All published and my pre-published studies
      * ALL_PUBLISHED_PROJECTS: All published studies
@@ -66,6 +78,36 @@ public class StudyFilter {
         private String name;
 
         private StudyVisibility(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String toString() {
+            return name;
+        }
+
+        public String getUpperCaseString() {
+            String result = name.replace(" ", "_");
+            result = result.replace("-", "");
+            return result.toUpperCase();
+        }
+    }
+
+    public enum Biome {
+        ALL("All biomes"),
+        SOIL("Soil biomes"),
+        MARINE("Marine biomes"),
+        FOREST_SOIL("Forest soil biomes"),
+        FRESHWATER("Freshwater biomes"),
+        GRASSLAND("Grassland biomes"),
+        HUMAN_GUT("Human gut biomes"),
+        ENGINEERED("Engineered biomes"),
+        AIR("Air biomes"),
+        WASTEWATER("Wastewater biomes");
+
+        private String name;
+
+        private Biome(String name) {
             this.name = name;
         }
 

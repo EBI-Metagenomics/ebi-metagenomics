@@ -28,6 +28,15 @@
                         <form:errors path="searchTerm" cssClass="error"/>
                     </div>
 
+                    <div class="result_row">
+                        <label for="biome">Biome:</label>
+                     <span>
+                      <form:select id="biomeId" path="biome">
+                          <form:options items="${model.studyBiomes}"/>
+                      </form:select>
+                     </span>
+                    </div>
+
                     <c:if test="${not empty model.submitter}">
                         <div class="result_row">
                             <label for="privacy">Privacy:</label>
@@ -148,8 +157,40 @@
                             <a href="<c:url value="${baseURL}/projects/${study.studyId}"/>">${study.studyName}</a>
                         </td>
                         <td>
-                        <a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>"
-                                                                                                                 title="Human gut biome"><span class="biome_icon icon_xs human_gut_b"></span></a>
+                            <c:choose>
+                                <c:when test="${model.filter.biome.upperCaseString == 'SOIL_BIOMES'}">
+                                    <a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=SOIL"/>"
+                                       title="Soil biomes"><span class="biome_icon icon_xs soil_b"></span></a>
+                                </c:when>
+                                <c:when test="${model.filter.biome.upperCaseString == 'MARINE_BIOMES'}">
+                                    <a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=MARINE"/>"
+                                       title="Marine biomes"><span class="biome_icon icon_xs marine_b"></span></a>
+                                </c:when>
+                                <c:when test="${model.filter.biome.upperCaseString == 'FRESHWATER_BIOMES'}">
+                                    <a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=FRESHWATER"/>"
+                                       title="Freshwater biomes"><span class="biome_icon icon_xs freshwater_b"></span></a>
+                                </c:when>
+                                <c:when test="${model.filter.biome.upperCaseString == 'HUMAN_GUT_BIOMES'}">
+                                    <a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=HUMAN_GUT"/>"
+                                       title="Human gut biomes"><span class="biome_icon icon_xs human_gut_b"></span></a>
+                                </c:when>
+                                <c:when test="${model.filter.biome.upperCaseString == 'ENGINEERED_BIOMES'}">
+                                    <a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=ENGINEERED"/>"
+                                       title="Engineered biomes"><span class="biome_icon icon_xs engineered_b"></span></a>
+                                </c:when>
+                                <c:when test="${model.filter.biome.upperCaseString == 'AIR_BIOMES'}">
+                                    <a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=AIR"/>"
+                                       title="Air biomes"><span class="biome_icon icon_xs air_b"></span></a>
+                                </c:when>
+                                <c:when test="${model.filter.biome.upperCaseString == 'WASTEWATER_BIOMES'}">
+                                    <a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=WASTEWATER"/>"
+                                       title="Wastewater biomes"><span class="biome_icon icon_xs wastewater_b"></span></a>
+                                </c:when>
+                                <c:otherwise>
+                                    <a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=ALL"/>"
+                                       title="All biomes"><span class=""></span></a>
+                                </c:otherwise>
+                            </c:choose>
                         </td>
                         <td>
                             <a href="<c:url value="${baseURL}/projects/${study.studyId}#samples_id"/>">${study.sampleSize}</a>

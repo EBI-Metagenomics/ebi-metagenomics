@@ -3,6 +3,7 @@ package uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate;
 import org.hibernate.criterion.Criterion;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -104,4 +105,6 @@ public interface StudyDAO extends ISecureEntityDAO<Study> {
      * @return
      */
     Long countByCriteria(List<Criterion> crits);
+
+    List<Study> retrieveStudiesByBiomeIdCollection(Collection<Integer> biomeIds);
 }

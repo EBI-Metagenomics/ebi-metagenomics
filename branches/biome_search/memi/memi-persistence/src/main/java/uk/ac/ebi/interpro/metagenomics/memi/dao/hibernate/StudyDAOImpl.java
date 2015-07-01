@@ -137,6 +137,23 @@ public class StudyDAOImpl implements StudyDAO {
         return null;
     }
 
+    @Transactional(readOnly = true)
+    public List<Study> retrieveStudiesByBiomeIdCollection(Collection<Integer> biomeIds) {
+        Session session = sessionFactory.getCurrentSession();
+        if (session != null) {
+            Criteria criteria = session.createCriteria(Study.class);
+            if (biomeIds != null || !biomeIds.isEmpty()) {
+                criteria.add(Restrictions.in("biomeHierarchyItem.biomeId", biomeIds));
+            }
+            try {
+                return (List<Study>) criteria.list();
+            } catch (HibernateException e) {
+                throw new HibernateException("Cannot retrieve studies by collection of biome ids!", e);
+            }
+        }
+        return null;
+    }
+
     private Long getStudyCount(final Boolean isPublic) {
         Session session = sessionFactory.getCurrentSession();
         if (session != null) {

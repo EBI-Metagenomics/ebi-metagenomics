@@ -258,25 +258,25 @@
 
             <div id="list-biomes" class="grid_9"> <h2>Browse by biomes</h2>
 
-                <div class="grid_24"><div class="grid_8 alpha"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>"
+                <div class="grid_24"><div class="grid_8 alpha"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=SOIL"/>"
                                        title="View all soil projects"><span class="biome_icon icon_sm soil_b"></span><span class="biome_text">Soil (9)</span></a></div>
-                    <div class="grid_8"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>"
+                    <div class="grid_8"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=MARINE"/>"
                                                            title="View all marine projects"><span class="biome_icon icon_sm marine_b"></span><span class="biome_text">Marine (24)</span></a></div>
-                    <div class="grid_8 omega"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>"
+                    <div class="grid_8 omega"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=FOREST_SOIL"/>"
                                                            title="View all forest projects"><span class="biome_icon icon_sm forest_b"></span><span class="biome_text">Forest (3)</span></a></div>
 
-                <div class="grid_8 alpha"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>"
+                <div class="grid_8 alpha"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=FRESHWATER"/>"
                                                        title="View all freshwater projects"><span class="biome_icon icon_sm freshwater_b"></span><span class="biome_text">Freshwater (8)</span></a></div>
-                                    <div class="grid_8"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>"
+                                    <div class="grid_8"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=GRASSLAND"/>"
                                                                            title="View all grassland projects"><span class="biome_icon icon_sm grassland_b"></span><span class="biome_text">Grassland (4)</span></a></div>
-                                    <div class="grid_8 omega"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>"
+                                    <div class="grid_8 omega"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=HUMAN_GUT"/>"
                                                                            title="View all  human gut projects"><span class="biome_icon icon_sm human_gut_b"></span><span class="biome_text">Human gut (4)</span></a></div>
 
-                <div class="grid_8 alpha"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>"
+                <div class="grid_8 alpha"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=ENGINEERED"/>"
                                                                  title="View all engineered projects"><span class="biome_icon icon_sm engineered_b"></span><span class="biome_text">Engineered (8)</span></a></div>
-                                              <div class="grid_8"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>"
+                                              <div class="grid_8"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=AIR"/>"
                                                                                      title="View all air projects"><span class="biome_icon icon_sm air_b"></span><span class="biome_text">Air (2)</span></a></div>
-                                              <div class="grid_8 omega"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>"
+                                              <div class="grid_8 omega"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=WASTEWATER"/>"
                                                                                      title="View all  wastewater projects"><span class="biome_icon icon_sm wastewater_b"></span><span class="biome_text">Wastewater (7)</span></a></div>
 
                           </div>
