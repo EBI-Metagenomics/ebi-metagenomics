@@ -1826,3 +1826,17 @@ a.box-registration-link  {text-decoration: none; cursor: pointer;}
 .box-registration-cont.box-pink:hover .icon-functional:before {color: #7DDCE8;}
 .box-registration-cont.box-pink .icon-functional:before {color: #7E2E64;}
 
+/*loading icon to use for redirection*/
+.ico_loading_b {background: url(../img/ico_loading.gif) no-repeat; width:35px; height:35px; display:inline-block; vertical-align: middle;margin-right:9px;}
+.ico_loading {background: url(../img/ico_loading.png) no-repeat; width:16px; height:16px; display:inline-block; vertical-align: middle;margin-right:9px;}
+@-webkit-keyframes ico-spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+.ico-spin {-webkit-animation: ico-spin 1s infinite linear; animation: ico-spin 1s infinite linear;}
