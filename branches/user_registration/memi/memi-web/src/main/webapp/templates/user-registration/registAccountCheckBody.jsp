@@ -63,7 +63,7 @@ $(document).ready(function(){
             $('#ENA_redirect').show();
             timeoutFunction = setTimeout(function() {
               window.location.href = "https://www.ebi.ac.uk/ena/submit/sra/#metagenome_registration";
-            }, 6000);
+            }, 9000);
         }
     });
 });
