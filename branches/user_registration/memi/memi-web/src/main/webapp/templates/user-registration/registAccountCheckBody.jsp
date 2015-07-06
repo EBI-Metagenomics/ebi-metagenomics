@@ -20,7 +20,7 @@
           <div class="form_row">
               <label style="display:inline-block;"><form:radiobutton path="doesAccountExist" id ="radio_button_y" value="true" /> Yes</label>
               <label style="display:inline-block;"><form:radiobutton path="doesAccountExist" id="radio_button_n" value="false" /> No</label>
-              <span class="form_info" id="ENA_redirect" style="display:none;margin:18px 0 0 9px;">You will be redirected to ENA website to create an ENA submitter account. If this doesn't happen automatically, please <a href="https://www.ebi.ac.uk/ena/submit/sra/#metagenome_registration">click here</a>.</span>
+              <span class="form_info" id="ENA_redirect" style="display:none;margin:18px 0 0 9px;"><span class="ico_loading ico-spin"></span> You will be redirected to ENA website to create an ENA submitter account. If this doesn't happen automatically, please <a href="https://www.ebi.ac.uk/ena/submit/sra/#metagenome_registration">click here</a>.</span>
           </div>
 
         </div>
