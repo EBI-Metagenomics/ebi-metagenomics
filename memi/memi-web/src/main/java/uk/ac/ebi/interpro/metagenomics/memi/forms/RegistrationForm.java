@@ -23,8 +23,8 @@ public class RegistrationForm {
     @AssertTrue(message = "Please check this box if you want your data to be analysed by the EBI metagenomics team.")
     Boolean consentCheck=true;
 
-    @NotEmpty(message = "Please enter a valid ENA Webin account user name")
-    @Length(min = 3, message = "Your user name must be at least {min} characters long")
+    @NotEmpty(message = "Please enter a valid ENA Webin account username")
+    @Length(min = 3, message = "Your username must be at least {min} characters long")
     String userName;
 
     public String getUserName() {
