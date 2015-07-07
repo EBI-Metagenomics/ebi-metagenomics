@@ -20,6 +20,7 @@
 </p>
 
 <div class="grid_24 registration-check">
+    <%--rond gros
     <div class="box-registration">
     <a href="<c:url value="${baseURL}/wizard.form?user=new"/>" title="New user - start the submission" class="box-registration-link" >
     <div class="box-registration-cont anim box-ban">
@@ -41,7 +42,47 @@
         </div>
 
         </a>
+    </div>  --%>
+        <%--rond small--%><%--
+            <div class="box-registration">
+            <a href="<c:url value="${baseURL}/wizard.form?user=new"/>" title="New user - start the submission" class="box-registration-link" >
+            <div class="box-registration-cont anim box-ban rd_button">
+                <span class="icon icon-functional" data-icon="7"></span><br/><h3>New user</h3>
+            <p class="intro"> If you are new user, click here to start the submission.
+            </p>
+            </div>
+            </a>
+
+            </div>
+
+            <div class="box-registration">
+                <a href="<c:url value="${baseURL}/wizard.form?user=existing"/>" title="Existing user" class="box-registration-link" id="test">
+                    <div class="box-registration-cont anim box-blue rd_button">
+                    <span class="icon icon-functional" data-icon="/"></span><br/><h3>Existing user</h3>
+                    <p class="intro">
+                    Already registered? We need your consent to analyse your data.
+                     </p>
+                </div>
+
+                </a>
+            </div>--%>
+     <%--flat sq  --%>
+    <div class="box-registration">
+    <a href="<c:url value="${baseURL}/wizard.form?user=new"/>" title="New user - start the submission" class="box-registration-link" >
+        <div class="box-registration-cont anim box-ban sq_button">
+        <h3><span class="icon icon-functional" data-icon="7"></span> New user</h3>
+        </div>
+    </a>
     </div>
+
+    <div class="box-registration">
+        <a href="<c:url value="${baseURL}/wizard.form?user=existing"/>" title="Existing user" class="box-registration-link" id="test">
+            <div class="box-registration-cont anim box-blue sq_button">
+            <h3><span class="icon icon-functional" data-icon="/"></span> Existing user</h3>
+            </div>
+        </a>
+    </div>
+
 </div>
 <p >
     If you have data that you wish to have analysed, you need an <strong>ENA submitter account</strong> that
