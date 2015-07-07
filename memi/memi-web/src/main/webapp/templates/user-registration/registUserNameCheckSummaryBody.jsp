@@ -11,16 +11,18 @@
 
 <div class="register_form">
 <form:form method="POST" commandName="registrationForm" id="sub_form">
-<div class="user_det_box">
+<%--${accountCheckResult}--%>
+<p class="intro"><span>Your Webin account is not currently registered with EBI metagenomics.<br/></span>
+</p>
 <div class="form_row">
-<p class="intro" title="${accountCheckResult}">Could you please read carefully the following text?</p>
-<p><form:checkbox path="consentCheck" value="on" id="gwt-debug-consentField-input"/> By checking this box, I give consent and confirm that the data submitted through this account is NOT sensitive, restricted-access or human-identifiable.
+<%--<p class="intro">Could you please read carefully the following text?</p>--%>
+<p><form:checkbox path="consentCheck" value="on" id="gwt-debug-consentField-input"/>By keeping this box checked you give consent to the EBI Metagenomics team to analyse your private data. Note that the data as well as the analysis results will remain confidential until the release date you specify when submitting your sequencing study. You also confirm that the data submitted through this account is NOT sensitive, restricted-access or human-identifiable.
     <form:errors path="consentCheck" cssClass="error"/>
 </p>
 <p>
-<input id="submit_button" name="_target2" value="Submit" class="main_button" type="submit"/>
+<input id="submit_button" name="_target2" value="Submit" class="main_button" type="submit" style="float: none;"/>
 <span class="clear_but">| <a href="/metagenomics/submit" title="cancel">Cancel</a></span>
 </p>
-</div></div>
+</div>
 </form:form>
 </div>
