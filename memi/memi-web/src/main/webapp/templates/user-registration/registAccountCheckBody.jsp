@@ -9,8 +9,11 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 
-
 <div class="register_form">
+
+<div class="this_hide">
+<h2>Already registered?</h2>
+</div>
 
 <form:form method="POST" commandName="registrationForm" id="sub_form">
     <div class="webin">
@@ -28,14 +31,14 @@
     <div class="user_det_box" style="display:${displayUsernameBox};">
       <fieldset style="border:0px solid grey;">
       <div class="form_row">
-          <label>User name</label>
+          <label>Username</label>
           <form:input path="userName" cssErrorClass="error"/>
          <span class="form_info">The username is the submission account id, starting with <i>Webin-*</i></span>
           <form:errors path="userName" cssClass="error"/>
       </div>
           <span class="error" style="display:${displayUsernameBox};">${accountCheckResult}</span>
       <p>
-          <input id="submit_button" name="_target1" value="Check" class="main_button" type="submit"/>
+          <input id="submit_button" name="_target1" value="Check" class="main_button" type="submit" />
           <span class="clear_but">| <a href="/metagenomics/submit" title="cancel">Cancel</a></span>
       </p>
       </fieldset>
@@ -87,5 +90,6 @@ $(document).ready(function(){
     if(urlParams["user"]== 'existing')  {
                $('.webin').toggle();
                $('.user_det_box').show();
+               $('.this_hide').show();
            }
 </script>
