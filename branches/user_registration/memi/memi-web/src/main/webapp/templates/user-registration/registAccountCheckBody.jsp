@@ -16,7 +16,7 @@
     <div class="webin">
 
           <h2>Do you have an EBI Webin account?</h2>
-           <p>A Webin account is an ENA submitter account provided by the European Nucleotide Archive, the first time you have submitted data to them (read data, genome assemblies, etc.).</p>
+           <p>A Webin account is an ENA submitter account provided by the European Nucleotide Archive. You should have received a Webin account if you have previously submitted data to ENA (read data, genome assemblies, etc.).</p>
           <div class="form_row">
               <label style="display:inline-block;"><form:radiobutton path="doesAccountExist" id ="radio_button_y" value="true" /> Yes</label>
               <label style="display:inline-block;"><form:radiobutton path="doesAccountExist" id="radio_button_n" value="false" /> No</label>
