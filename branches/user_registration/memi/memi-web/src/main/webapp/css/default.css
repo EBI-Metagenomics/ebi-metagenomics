@@ -1797,9 +1797,12 @@ ul.sample_list li {list-style: none; display: inline;}
  /*/ pipeline chart *******************************/
 /*Submit data - registration check*/
 .registration-check {text-align: center;margin-bottom:9px;}
-.box-registration {display:inline-block; margin: 0 18px 9px 0; vertical-align: top; }
+.box-registration {display:inline-block; margin: 0 18px 9px 0; vertical-align: top;}
 .box-registration-cont {z-index: 12; position:relative;text-align: center; background-color: #ececec; min-height: 178px;  width: 220px;  padding: 18px 9px 27px 9px;  border-radius: 50%; /*box-shadow: 4px 4px 3px -3px rgba(0, 0, 0, 0.35);*/}
 .box-registration-cont .intro {line-height: 1.2;}
+.box-registration-cont.sq_button {padding: 0; border-radius:8px; width:260px; min-height: 0;}
+.box-registration-cont.rd_button {padding: 0; width:192px;  min-height: 156px; padding-top: 18px; }
+.box-registration-cont.rd_button .intro {display:none; }
 .box-registration-cont:hover {background-color:  rgba(0, 0, 0, 0.54);}
 .box-registration-cont:hover .icon-functional:before {color: #fff;}
 .box-registration-cont h3 {color: white;}
@@ -1840,3 +1843,5 @@ a.box-registration-link  {text-decoration: none; cursor: pointer;}
   }
 }
 .ico-spin {-webkit-animation: ico-spin 1s infinite linear; animation: ico-spin 1s infinite linear;}
+/*create gal class for hidden elements on the page - to move on top*/
+.this_hide {display:none;}
