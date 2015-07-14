@@ -29,7 +29,7 @@
                     </div>
 
                     <div class="result_row">
-                        <label for="biome">Biome:</label>
+                        <label for="biome">Biomes:</label>
                      <span>
                       <form:select id="biomeId" path="biome">
                           <form:options items="${model.studyBiomes}"/>
