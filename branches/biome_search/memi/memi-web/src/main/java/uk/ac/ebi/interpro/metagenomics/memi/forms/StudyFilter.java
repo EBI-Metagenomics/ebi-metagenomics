@@ -94,16 +94,16 @@ public class StudyFilter {
     }
 
     public enum Biome {
-        ALL("All biomes"),
-        SOIL("Soil biomes"),
-        MARINE("Marine biomes"),
-        FOREST_SOIL("Forest soil biomes"),
-        FRESHWATER("Freshwater biomes"),
-        GRASSLAND("Grassland biomes"),
-        HUMAN_GUT("Human gut biomes"),
-        ENGINEERED("Engineered biomes"),
-        AIR("Air biomes"),
-        WASTEWATER("Wastewater biomes");
+        ALL("All"),
+        AIR("Air"),
+        ENGINEERED("Engineered"),
+        FOREST_SOIL("Forest"),
+        FRESHWATER("Freshwater"),
+        GRASSLAND("Grassland"),
+        HUMAN_GUT("Human gut"),
+        MARINE("Marine"),
+        SOIL("Soil"),
+        WASTEWATER("Wastewater");
 
         private String name;
 
