@@ -113,7 +113,7 @@ public class Study implements SecureEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "BIOME_ID", nullable = true)
-    private BiomeHierarchyTree biomeHierarchyItem;
+    private Biome biomeHierarchyItem;
 
     /**
      * Submitted - Directly submitted to us (EBI Metagenomics).
@@ -353,11 +353,11 @@ public class Study implements SecureEntity {
         this.sampleSize = sampleSize;
     }
 
-    public BiomeHierarchyTree getBiomeHierarchyItem() {
+    public Biome getBiomeHierarchyItem() {
         return biomeHierarchyItem;
     }
 
-    public void setBiomeHierarchyItem(BiomeHierarchyTree biomeHierarchyItem) {
+    public void setBiomeHierarchyItem(Biome biomeHierarchyItem) {
         this.biomeHierarchyItem = biomeHierarchyItem;
     }
 

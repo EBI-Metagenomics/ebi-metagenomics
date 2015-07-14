@@ -94,21 +94,26 @@ public class StudyFilter {
     }
 
     public enum Biome {
-        ALL("All"),
-        AIR("Air"),
-        ENGINEERED("Engineered"),
-        FOREST_SOIL("Forest"),
-        FRESHWATER("Freshwater"),
-        GRASSLAND("Grassland"),
-        HUMAN_GUT("Human gut"),
-        MARINE("Marine"),
-        SOIL("Soil"),
-        WASTEWATER("Wastewater");
+        ALL("All", "root:root"),
+        AIR("Air", "root:Environmental:Air"),
+        ENGINEERED("Engineered", "root:Engineered"),
+        FOREST_SOIL("Forest Soil", "root:Environmental:Terrestrial:Soil:Loam:Forest Soil", "root:Environmental:Terrestrial:Soil:Sand:Forest soil",
+                "root:Environmental:Terrestrial:Soil:Forest Soil"),
+        FRESHWATER("Freshwater", "root:Environmental:Aquatic:Freshwater"),
+        GRASSLAND("Grassland Soil", "root:Environmental:Terrestrial:Soil:Grasslands", "root:Environmental:Terrestrial:Soil:Sand:Grasslands",
+                "root:Environmental:Terrestrial:Soil:Loam:Grasslands", "root:Environmental:Terrestrial:Soil:Clay:Grasslands"),
+        HUMAN_GUT("Human gut", "root:Host-associated:Human:Digestive system:Large intestine"),
+        MARINE("Marine", "root:Environmental:Aquatic:Marine"),
+        SOIL("Soil", "root:Environmental:Terrestrial:Soil"),
+        WASTEWATER("Wastewater", "root:Engineered:Wastewater");
 
         private String name;
 
-        private Biome(String name) {
+        private String[] lineages;
+
+        private Biome(String name, String... lineages) {
             this.name = name;
+            this.lineages = lineages;
         }
 
         @Override
@@ -120,6 +125,10 @@ public class StudyFilter {
             String result = name.replace(" ", "_");
             result = result.replace("-", "");
             return result.toUpperCase();
+        }
+
+        public String[] getLineages() {
+            return lineages;
         }
     }
 }

@@ -106,5 +106,5 @@ public interface StudyDAO extends ISecureEntityDAO<Study> {
      */
     Long countByCriteria(List<Criterion> crits);
 
-    List<Study> retrieveStudiesByBiomeIdCollection(Collection<Integer> biomeIds);
+    Long countPublicStudiesFilteredByBiomes(Collection<Integer> biomeIds);
 }

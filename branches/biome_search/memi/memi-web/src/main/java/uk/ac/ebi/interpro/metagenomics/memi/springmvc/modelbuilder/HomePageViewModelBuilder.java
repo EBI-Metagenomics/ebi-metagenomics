@@ -6,8 +6,10 @@ import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.core.comparators.HomePageSamplesComparator;
 import uk.ac.ebi.interpro.metagenomics.memi.core.comparators.HomePageStudiesComparator;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.RunDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.BiomeDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.StudyDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.StudyFilter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
@@ -24,7 +26,7 @@ import java.util.*;
  * @version $Id$
  * @since 1.0-SNAPSHOT
  */
-public class HomePageViewModelBuilder extends AbstractViewModelBuilder<HomePageViewModel> {
+public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<HomePageViewModel> {
 
     private final static Log log = LogFactory.getLog(HomePageViewModelBuilder.class);
 
@@ -38,6 +40,8 @@ public class HomePageViewModelBuilder extends AbstractViewModelBuilder<HomePageV
 
     private SampleDAO sampleDAO;
 
+    private BiomeDAO biomeDAO;
+
     private RunDAO runDAO;
 
     /**
@@ -47,7 +51,7 @@ public class HomePageViewModelBuilder extends AbstractViewModelBuilder<HomePageV
 
 
     public HomePageViewModelBuilder(SessionManager sessionMgr, String pageTitle, List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer,
-                                    StudyDAO studyDAO, SampleDAO sampleDAO, RunDAO runDAO) {
+                                    StudyDAO studyDAO, SampleDAO sampleDAO, RunDAO runDAO, BiomeDAO biomeDAO) {
         super(sessionMgr);
         this.pageTitle = pageTitle;
         this.breadcrumbs = breadcrumbs;
@@ -55,6 +59,7 @@ public class HomePageViewModelBuilder extends AbstractViewModelBuilder<HomePageV
         this.studyDAO = studyDAO;
         this.sampleDAO = sampleDAO;
         this.runDAO = runDAO;
+        this.biomeDAO = biomeDAO;
     }
 
     @Override
@@ -67,21 +72,21 @@ public class HomePageViewModelBuilder extends AbstractViewModelBuilder<HomePageV
         final Long privateStudiesCount = studyDAO.countAllPrivate();
         final int publicRunCount = runDAO.countAllPublic();
         final int privateRunCount = runDAO.countAllPrivate();
-//        If case: if nobody is logged in
+        // If case: if nobody is logged in
         if (submitter == null) {
-            //retrieve public studies and order them by last meta data received
+            // Retrieve public studies and order them by last meta data received
             List<Study> studies = getOrderedPublicStudies();
             attachSampleSize(studies);
-//            Map<Study, Long> publicStudiesMap = getStudySampleSizeMap(studies, sampleDAO, new HomePageStudiesComparator());
-            //retrieve public samples and order them by last meta data received
+            // Retrieve public samples and order them by last meta data received
             List<Sample> samples = getPublicSamples();
             Collections.sort(samples, new HomePageSamplesComparator());
             samples = samples.subList(0, getToIndex(samples));
 
+            Map<String, Long> biomeCountMap = buildBiomeCountMap();
             return new HomePageViewModel(submitter, samples, pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems,
-                    publicSamplesCount, privateSamplesCount, publicStudiesCount, privateStudiesCount, studies, publicRunCount, privateRunCount);
+                    publicSamplesCount, privateSamplesCount, publicStudiesCount, privateStudiesCount, studies, publicRunCount, privateRunCount, biomeCountMap);
         }
-//        Else case: if somebody is logged in
+        //  Else case: if somebody is logged in
         else {
             //retrieve private studies and order them by last meta data received
             List<Study> myStudies = getStudiesBySubmitter(submitter.getSubmissionAccountId(), studyDAO);
@@ -92,21 +97,44 @@ public class HomePageViewModelBuilder extends AbstractViewModelBuilder<HomePageV
             Collections.sort(mySamples, new HomePageSamplesComparator());
             mySamples = mySamples.subList(0, getToIndex(mySamples));
 
-            //retrieve public studies and order them last meta data received
-//            List<Study> publicStudies = getPublicStudiesWithoutSubId(submitter.getSubmitterId(), studyDAO);
-//            Map<Study, Long> publicStudiesMap = getStudySampleSizeMap(publicStudies, sampleDAO, new HomePageStudiesComparator());
-
-            //retrieve public samples and order them last meta data received
-//            List<Sample> publicSamples = getOrderedPublicSamplesWithoutSubId(submitter.getSubmitterId(), sampleDAO);
-//            Collections.sort(publicSamples, new HomePageSamplesComparator());
-//            publicSamples = publicSamples.subList(0, getToIndex(publicSamples));
-
             final Long mySamplesCount = (mySamples != null ? new Long(mySamples.size()) : new Long(0));
             final Long myStudiesCount = (myStudies != null ? new Long(myStudies.size()) : new Long(0));
 
             return new HomePageViewModel(submitter, myStudiesMap, mySamples, pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems,
                     mySamplesCount, myStudiesCount, publicSamplesCount, privateSamplesCount, publicStudiesCount, privateStudiesCount, publicRunCount, privateRunCount);
         }
+    }
+
+    private Map<String, Long> buildBiomeCountMap() {
+        final Map<String, Long> biomesCountMap = new HashMap<String, Long>();
+        //Add number of soil biomes
+        long studyCount = super.countStudiesFilteredByBiomes(studyDAO, biomeDAO, StudyFilter.Biome.SOIL.getLineages());
+        biomesCountMap.put(StudyFilter.Biome.SOIL.toString(), studyCount);
+        //Add number of marine biomes
+        studyCount = super.countStudiesFilteredByBiomes(studyDAO, biomeDAO, StudyFilter.Biome.MARINE.getLineages());
+        biomesCountMap.put(StudyFilter.Biome.MARINE.toString(), studyCount);
+        //Add number of forest biomes
+        studyCount = super.countStudiesFilteredByBiomes(studyDAO, biomeDAO, StudyFilter.Biome.FOREST_SOIL.getLineages());
+        biomesCountMap.put(StudyFilter.Biome.FOREST_SOIL.toString(), studyCount);
+        //Add number of freshwater biomes
+        studyCount = super.countStudiesFilteredByBiomes(studyDAO, biomeDAO, StudyFilter.Biome.FRESHWATER.getLineages());
+        biomesCountMap.put(StudyFilter.Biome.FRESHWATER.toString(), studyCount);
+        //Add number of grassland biomes
+        studyCount = super.countStudiesFilteredByBiomes(studyDAO, biomeDAO, StudyFilter.Biome.GRASSLAND.getLineages());
+        biomesCountMap.put(StudyFilter.Biome.GRASSLAND.toString(), studyCount);
+        //Add number of human gut biomes
+        studyCount = super.countStudiesFilteredByBiomes(studyDAO, biomeDAO, StudyFilter.Biome.HUMAN_GUT.getLineages());
+        biomesCountMap.put(StudyFilter.Biome.HUMAN_GUT.toString(), studyCount);
+        //Add number of engineered biomes
+        studyCount = super.countStudiesFilteredByBiomes(studyDAO, biomeDAO, StudyFilter.Biome.ENGINEERED.getLineages());
+        biomesCountMap.put(StudyFilter.Biome.ENGINEERED.toString(), studyCount);
+        //Add number of air biomes
+        studyCount = super.countStudiesFilteredByBiomes(studyDAO, biomeDAO, StudyFilter.Biome.AIR.getLineages());
+        biomesCountMap.put(StudyFilter.Biome.AIR.toString(), studyCount);
+        //Add number of wastewater biomes
+        studyCount = super.countStudiesFilteredByBiomes(studyDAO, biomeDAO, StudyFilter.Biome.WASTEWATER.getLineages());
+        biomesCountMap.put(StudyFilter.Biome.WASTEWATER.toString(), studyCount);
+        return biomesCountMap;
     }
 
     private void attachSampleSize(List<Study> studies) {

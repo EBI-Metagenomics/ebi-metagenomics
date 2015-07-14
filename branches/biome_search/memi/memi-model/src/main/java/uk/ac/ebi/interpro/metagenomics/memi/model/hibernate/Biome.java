@@ -17,7 +17,7 @@ import java.util.Comparator;
  */
 @Entity
 @Table(name = "BIOME_HIERARCHY_TREE")
-public class BiomeHierarchyTree {
+public class Biome {
 
     @Id
     @Column(name = "BIOME_ID", precision = 4, scale = 0)
@@ -38,10 +38,10 @@ public class BiomeHierarchyTree {
     @Column(name = "LINEAGE", length = 110, nullable = false)
     private String lineage;
 
-    public BiomeHierarchyTree() {
+    public Biome() {
     }
 
-    public BiomeHierarchyTree(int biomeId, String biomeName, int left, int right, int depth, String lineage) {
+    public Biome(int biomeId, String biomeName, int left, int right, int depth, String lineage) {
         this.biomeId = biomeId;
         this.biomeName = biomeName;
         this.left = left;
@@ -106,7 +106,7 @@ public class BiomeHierarchyTree {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        BiomeHierarchyTree that = (BiomeHierarchyTree) o;
+        Biome that = (Biome) o;
 
         if (biomeId != that.biomeId) return false;
         if (depth != that.depth) return false;
