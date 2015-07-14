@@ -256,7 +256,7 @@
                        title="View all public projects" class="all">View all projects</a></p>
             </div>
 
-            <div id="list-biomes" class="grid_9"> <h2>Browse by biomes</h2>
+            <div id="list-biomes" class="grid_9"> <h2>Browse by selected biomes</h2>
 
                 <div class="grid_24"><div class="grid_8 alpha"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=SOIL"/>"
                                        title="View all soil projects"><span class="biome_icon icon_sm soil_b"></span><span class="biome_text">Soil (9)</span></a></div>
