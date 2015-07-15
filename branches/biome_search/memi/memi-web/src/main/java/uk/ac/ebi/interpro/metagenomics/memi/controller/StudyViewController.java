@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.core.tools.MemiTools;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.erapro.SubmissionContactDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.BiomeDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.ISecureEntityDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.StudyDAO;
@@ -52,6 +53,9 @@ public class StudyViewController extends SecuredAbstractController<Study> {
 
     @Resource
     private SampleDAO sampleDAO;
+
+    @Resource
+    private BiomeDAO biomeDAO;
 
     @Resource
     private SubmissionContactDAO submissionContactDAO;
@@ -119,7 +123,8 @@ public class StudyViewController extends SecuredAbstractController<Study> {
      */
 
     private void populateModel(final ModelMap model, final Study study) {
-//        List<Sample> samples = sampleDAO.retrieveSamplesByStudyId(study.getId());
+        // Assign biome CSS class to the study
+        MemiTools.assignBiomeIconCSSClass(study, biomeDAO);
         String pageTitle = "Project overview: " + study.getStudyName() + "";
         final ViewModelBuilder<StudyViewModel> builder = new StudyViewModelBuilder(sessionManager,
                 pageTitle, getBreadcrumbs(study), propertyContainer, study, sampleDAO);

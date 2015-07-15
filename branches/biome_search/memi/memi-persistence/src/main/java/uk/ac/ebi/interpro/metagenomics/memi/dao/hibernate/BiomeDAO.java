@@ -17,4 +17,6 @@ public interface BiomeDAO {
     public Biome readByLineage(String lineage);
 
     public List<Integer> getListOfBiomeIdsBetween(int lowValue, int highValue);
+
+    public List<Biome> getAllAncestorsInDescOrder(Biome biome);
 }

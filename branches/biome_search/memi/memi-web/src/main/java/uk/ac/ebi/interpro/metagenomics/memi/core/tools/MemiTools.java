@@ -3,7 +3,10 @@ package uk.ac.ebi.interpro.metagenomics.memi.core.tools;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.EmgLogFileInfoDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.BiomeDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Biome;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,6 +25,60 @@ import java.util.*;
  */
 public class MemiTools {
     private final static Log log = LogFactory.getLog(MemiTools.class);
+
+    public static final Map<Integer, String> biomeIconMap;
+
+    static {
+        biomeIconMap = new HashMap<Integer, String>();
+        biomeIconMap.put(234, "soil_b");
+        biomeIconMap.put(127, "marine_b");
+        biomeIconMap.put(85, "freshwater_b");
+        biomeIconMap.put(375, "human_gut_b");
+        biomeIconMap.put(1, "engineered_b");
+        biomeIconMap.put(80, "air_b");
+        biomeIconMap.put(61, "wastewater_b");
+        // forest soil
+        biomeIconMap.put(249, "forest_b");
+        biomeIconMap.put(253, "forest_b");
+        biomeIconMap.put(266, "forest_b");
+        // grassland soil
+        biomeIconMap.put(267, "grassland_b");
+        biomeIconMap.put(254, "grassland_b");
+        biomeIconMap.put(250, "grassland_b");
+        biomeIconMap.put(238, "grassland_b");
+        //human host
+        biomeIconMap.put(368, "human_host_b");
+        //non human host
+        biomeIconMap.put(280, "non_human_host_b");
+        // add default icon class
+        biomeIconMap.put(0, "default_b");
+    }
+
+    public static void assignBiomeIconCSSClass(final Study study, final BiomeDAO biomeDAO) {
+        Biome studyBiome = study.getBiome();
+        if (studyBiome != null) {
+            // Look up CSS class
+            int biomeId = study.getBiome().getBiomeId();
+            if (MemiTools.biomeIconMap.containsKey(biomeId)) {
+                study.setBiomeIconCSSClass(MemiTools.biomeIconMap.get(biomeId));
+            }
+            // no CSS class entry exists for the study biome
+            // traverse up the tree for all ancestors
+            else {
+                List<Biome> ancestors = biomeDAO.getAllAncestorsInDescOrder(study.getBiome());
+                for (Biome ancestor : ancestors) {
+                    if (MemiTools.biomeIconMap.containsKey(ancestor.getBiomeId())) {
+                        study.setBiomeIconCSSClass(MemiTools.biomeIconMap.get(ancestor.getBiomeId()));
+                        break;
+                    }
+                }
+            }
+        }
+        if (study.getBiomeIconCSSClass() == null) {
+            // Set the default icon class
+            study.setBiomeIconCSSClass(MemiTools.biomeIconMap.get(0));
+        }
+    }
 
     public static Set<String> getSampleIds(Collection<Sample> samples) {
         log.info("Getting sample IDs from the specified sample list...");

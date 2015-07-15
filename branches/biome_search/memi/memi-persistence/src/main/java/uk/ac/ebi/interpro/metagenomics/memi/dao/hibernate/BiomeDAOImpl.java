@@ -2,10 +2,12 @@ package uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate;
 
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.Transformers;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.GenericDAOImpl;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Biome;
@@ -27,7 +29,7 @@ public class BiomeDAOImpl extends GenericDAOImpl<Biome, Long> implements BiomeDA
     public BiomeDAOImpl() {
     }
 
-    @Override
+    @Transactional(readOnly = true)
     public Biome readByLineage(String lineage) {
         try {
             Criteria criteria = getSession().createCriteria(Biome.class);
@@ -38,7 +40,7 @@ public class BiomeDAOImpl extends GenericDAOImpl<Biome, Long> implements BiomeDA
         }
     }
 
-    @Override
+    @Transactional(readOnly = true)
     public List<Integer> getListOfBiomeIdsBetween(int lowValue, int highValue) {
         try {
             Criteria criteria = getSession().createCriteria(Biome.class)
@@ -47,7 +49,20 @@ public class BiomeDAOImpl extends GenericDAOImpl<Biome, Long> implements BiomeDA
                     .add(Restrictions.between("left", lowValue, highValue));
             return criteria.list();
         } catch (HibernateException e) {
-            throw new HibernateException("Couldn't retrieve list of biomes using the BETWEEN clause", e);
+            throw new HibernateException("Couldn't retrieve list of biomes using the BETWEEN clause!", e);
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public List<Biome> getAllAncestorsInDescOrder(Biome biome) {
+        try {
+            Criteria criteria = getSession().createCriteria(Biome.class)
+                    .add(Restrictions.gt("right", biome.getRight()))
+                    .add(Restrictions.lt("left", biome.getLeft()))
+                    .addOrder(Order.desc("left"));
+            return criteria.list();
+        } catch (HibernateException e) {
+            throw new HibernateException("Couldn't retrieve list of biomes using the greater/less than clause!", e);
         }
     }
 

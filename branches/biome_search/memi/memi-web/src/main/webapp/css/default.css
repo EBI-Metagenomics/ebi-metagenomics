@@ -788,12 +788,12 @@ padding: 0 9px 9px 9px;
 .biome_icon.icon_xs.freshwater_b {background-position: -42px -78px;}
 .biome_icon.icon_xs.grassland_b {background-position: -82px -78px;}
 .biome_icon.icon_xs.human_gut_b {background-position: -122px -78px;}
-.biome_icon.icon_xs.human_host_b {background-position: -122px -78px;}
-.biome_icon.icon_xs.non_human_host_b {background-position: -122px -78px;}
+.biome_icon.icon_xs.human_host_b {background-position: -162px -78px;}
+.biome_icon.icon_xs.non_human_host_b {background-position: -162px -38px;}
 .biome_icon.icon_xs.engineered_b {background-position: -42px -118px;}
 .biome_icon.icon_xs.air_b {background-position: -82px -118px;}
 .biome_icon.icon_xs.wastewater_b {background-position: -122px -118px;}
-.biome_icon.icon_xs.default_b {background-position: -122px -78px;}
+.biome_icon.icon_xs.default_b {background-position: -162px -118px;}
 /*biome homepage*/
 #list-biomes .grid_24 {background-color: #ececec;  margin: 24px 0;   /* padding: 25px 9px 0px 9px; min-height: 390px;*/}
 #list-biomes .grid_8 {text-align: center;}

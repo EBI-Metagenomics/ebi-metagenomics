@@ -144,7 +144,7 @@ public class StudyDAOImpl implements StudyDAO {
             if (biomeIds != null || !biomeIds.isEmpty()) {
                 Criteria criteria = session.createCriteria(Study.class)
                         .add(Restrictions.eq("isPublic", true))
-                        .add(Restrictions.in("biomeHierarchyItem.biomeId", biomeIds))
+                        .add(Restrictions.in("biome.biomeId", biomeIds))
                         .setProjection(Projections.rowCount() );
                 try {
                     return (Long) criteria.uniqueResult();

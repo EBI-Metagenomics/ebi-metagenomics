@@ -6,11 +6,13 @@ import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
+import uk.ac.ebi.interpro.metagenomics.memi.core.tools.MemiTools;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.BiomeDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.StudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.StudyFilter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Biome;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.StudiesViewModel;
@@ -109,7 +111,14 @@ public class StudiesViewModelBuilder extends AbstractBiomeViewModelBuilder<Studi
         } else {
             result = studyDAO.retrieveFilteredStudies(criteria, false, "studyName");
         }
-        return (result == null ? new ArrayList<Study>() : result);
+        if (result != null && !result.isEmpty()) {
+            for (Study study : result) {
+                MemiTools.assignBiomeIconCSSClass(study, biomeDAO);
+            }
+            return result;
+        } else {
+            return new ArrayList<Study>();
+        }
     }
 
     /**
@@ -168,7 +177,7 @@ public class StudiesViewModelBuilder extends AbstractBiomeViewModelBuilder<Studi
             else if (filter.getBiome().equals(StudyFilter.Biome.WASTEWATER)) {
                 biomeIds.addAll(super.getBiomeIdsByLineage(biomeDAO, StudyFilter.Biome.WASTEWATER.getLineages()));
             }
-            crits.add(Restrictions.in("biomeHierarchyItem.biomeId", biomeIds));
+            crits.add(Restrictions.in("biome.biomeId", biomeIds));
         }
         //add is public and submitter identifier criteria
         if (submissionAccountId != null) {
