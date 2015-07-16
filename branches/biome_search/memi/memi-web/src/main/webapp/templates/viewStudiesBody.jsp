@@ -151,14 +151,15 @@
                 <tbody>
                 <c:forEach var="study" items="${model.studies}" varStatus="status">
                     <tr>
+                        <td>
+                            <span class="biome_icon icon_xs ${study.biomeIconCSSClass}"></span>
+                        </td>
                         <td class="h_left" id="ordered">
                             <c:if test="${!study.public}"><img alt="private"
                                                                    src="${pageContext.request.contextPath}/img/icon_priv_private.gif">&nbsp;&nbsp;</c:if>
                             <a href="<c:url value="${baseURL}/projects/${study.studyId}"/>">${study.studyName}</a>
                         </td>
-                        <td>
-                            <span class="biome_icon icon_xs ${study.biomeIconCSSClass}"></span>
-                        </td>
+
                         <td>
                             <a href="<c:url value="${baseURL}/projects/${study.studyId}#samples_id"/>">${study.sampleSize}</a>
                         </td>
