@@ -1,0 +1,418 @@
+Engineered	Bioreactor	Continuous culture	Marine intertidal flat sediment inoculum	Wadden Sea-Germany
+Engineered	Bioreactor	Continuous culture	Marine sediment inoculum	Wadden Sea-Germany
+Engineered	Bioreactor	Continuous culture	Unclassified	Unclassified
+Engineered	Bioreactor	Unclassified	Unclassified	Unclassified
+Engineered	Bioremediation	Hydrocarbon	Benzene	Bioreactor
+Engineered	Bioremediation	Hydrocarbon	Unclassified	Unclassified
+Engineered	Bioremediation	Metal	Unclassified	Unclassified
+Engineered	Bioremediation	Persistent organic pollutants (POP)	Polycyclic aromatic hydrocarbons	Unclassified
+Engineered	Bioremediation	Terephthalate	Wastewater	Activated sludge
+Engineered	Bioremediation	Terephthalate	Wastewater	Bioreactor
+Engineered	Bioremediation	Terephthalate	Wastewater	Unclassified
+Engineered	Bioremediation	Tetrachloroethylene and derivatives	Chloroethene	Bioreactor
+Engineered	Bioremediation	Tetrachloroethylene and derivatives	Chloroethene	Unclassified
+Engineered	Bioremediation	Tetrachloroethylene and derivatives	Tetrachloroethylene	Bioreactor
+Engineered	Bioremediation	Tetrachloroethylene and derivatives	Tetrachloroethylene	Unclassified
+Engineered	Bioremediation	Unclassified	Unclassified	Unclassified
+Engineered	Biotransformation	Microbial enhanced oil recovery	Unclassified	Unclassified
+Engineered	Biotransformation	Microbial solubilization of coal	Unclassified	Unclassified
+Engineered	Biotransformation	Mixed alcohol bioreactor	Unclassified	Unclassified
+Engineered	Biotransformation	Unclassified	Unclassified	Unclassified
+Engineered	Built environment	Unclassified	Unclassified	Unclassified
+Engineered	Food production	Dairy products	Unclassified	Unclassified
+Engineered	Food production	Fermented beverages	Unclassified	Unclassified
+Engineered	Food production	Fermented seafood	Unclassified	Unclassified
+Engineered	Food production	Fermented vegetables	Unclassified	Unclassified
+Engineered	Food production	Silage fermentation	Unclassified	Unclassified
+Engineered	Food production	Unclassified	Unclassified	Unclassified
+Engineered	Industrial production	Engineered product	Unclassified	Unclassified
+Engineered	Industrial production	Unclassified	Unclassified	Unclassified
+Engineered	Lab enrichment	Defined media	Aerobic media	Unclassified
+Engineered	Lab enrichment	Defined media	Anaerobic media	Unclassified
+Engineered	Lab enrichment	Defined media	Marine media	Algoconsortia
+Engineered	Lab enrichment	Defined media	Marine media	Unclassified
+Engineered	Lab enrichment	Defined media	Unclassified	Unclassified
+Engineered	Lab enrichment	Unclassified	Unclassified	Unclassified
+Engineered	Lab enrichment	Undefined media	Unclassified	Unclassified
+Engineered	Lab Synthesis	Genetic cross	Unclassified	Unclassified
+Engineered	Modeled	Simulated communities (DNA mixture)	Unclassified	Unclassified
+Engineered	Modeled	Simulated communities (microbial mixture)	Unclassified	Unclassified
+Engineered	Modeled	Simulated communities (sequence read mixture)	Sanger	Unclassified
+Engineered	Modeled	Simulated communities (sequence read mixture)	Unclassified	Unclassified
+Engineered	Modeled	Unclassified	Unclassified	Unclassified
+Engineered	Solid waste	Composting	Grass	Bioreactor
+Engineered	Solid waste	Composting	Grass	Unclassified
+Engineered	Solid waste	Composting	Unclassified	Bioreactor
+Engineered	Solid waste	Composting	Unclassified	Unclassified
+Engineered	Solid waste	Composting	Wood	Bioreactor
+Engineered	Solid waste	Landfill	Unclassified	Unclassified
+Engineered	Solid waste	Solid animal waste	Unclassified	Unclassified
+Engineered	Solid waste	Unclassified	Unclassified	Unclassified
+Engineered	Unclassified	Unclassified	Unclassified	Unclassified
+Engineered	Wastewater	Activated Sludge	Unclassified	Unclassified
+Engineered	Wastewater	Industrial wastewater	Agricultural wastewater	Unclassified
+Engineered	Wastewater	Industrial wastewater	Landfill leachate	Unclassified
+Engineered	Wastewater	Industrial wastewater	Mine water	Unclassified
+Engineered	Wastewater	Industrial wastewater	Petrochemical	Unclassified
+Engineered	Wastewater	Industrial wastewater	Pulp and paper wastewater	Unclassified
+Engineered	Wastewater	Industrial wastewater	Unclassified	Unclassified
+Engineered	Wastewater	Nutrient removal	Biological phosphorus removal	Activated sludge
+Engineered	Wastewater	Nutrient removal	Biological phosphorus removal	Bioreactor
+Engineered	Wastewater	Nutrient removal	Biological phosphorus removal	Unclassified
+Engineered	Wastewater	Nutrient removal	Dissolved organics (aerobic)	Activated sludge
+Engineered	Wastewater	Nutrient removal	Dissolved organics (aerobic)	Unclassified
+Engineered	Wastewater	Nutrient removal	Dissolved organics (anaerobic)	Activated sludge
+Engineered	Wastewater	Nutrient removal	Dissolved organics (anaerobic)	Unclassified
+Engineered	Wastewater	Nutrient removal	Nitrogen removal	Anammox
+Engineered	Wastewater	Nutrient removal	Nitrogen removal	Unclassified
+Engineered	Wastewater	Nutrient removal	Unclassified	Unclassified
+Engineered	Wastewater	Unclassified	Unclassified	Unclassified
+Environmental	Air	Indoor Air	Unclassified	Unclassified
+Environmental	Air	Outdoor Air	Unclassified	Unclassified
+Environmental	Air	Unclassified	Unclassified	Unclassified
+Environmental	Aquatic	Aquaculture	Unclassified	Unclassified
+Environmental	Aquatic	Freshwater	Drinking water	Chlorinated
+Environmental	Aquatic	Freshwater	Drinking water	Delivery networks
+Environmental	Aquatic	Freshwater	Drinking water	Unclassified
+Environmental	Aquatic	Freshwater	Groundwater	Acid Mine Drainage
+Environmental	Aquatic	Freshwater	Groundwater	Cave water
+Environmental	Aquatic	Freshwater	Groundwater	Coalbed water
+Environmental	Aquatic	Freshwater	Groundwater	Contaminated
+Environmental	Aquatic	Freshwater	Groundwater	Mine
+Environmental	Aquatic	Freshwater	Groundwater	Mine drainage
+Environmental	Aquatic	Freshwater	Groundwater	Unclassified
+Environmental	Aquatic	Freshwater	Ice	Glacial lake
+Environmental	Aquatic	Freshwater	Ice	Glacier
+Environmental	Aquatic	Freshwater	Ice	Ice accretions
+Environmental	Aquatic	Freshwater	Ice	Unclassified
+Environmental	Aquatic	Freshwater	Lake	Unclassified
+Environmental	Aquatic	Freshwater	Lentic	Epilimnion
+Environmental	Aquatic	Freshwater	Lentic	Hypolimnion
+Environmental	Aquatic	Freshwater	Lentic	Limnetic zone
+Environmental	Aquatic	Freshwater	Lentic	Littoral zone
+Environmental	Aquatic	Freshwater	Lentic	Sediment
+Environmental	Aquatic	Freshwater	Lentic	Unclassified
+Environmental	Aquatic	Freshwater	Lotic   Low land river systems
+Environmental	Aquatic	Freshwater	Lotic   Mid stream
+Environmental	Aquatic	Freshwater	Lotic   Sediment
+Environmental	Aquatic	Freshwater	Lotic   Unclassified
+Environmental	Aquatic	Freshwater	Microbialites	Unclassified
+Environmental	Aquatic	Freshwater	Pond	Sediment
+Environmental	Aquatic	Freshwater	Pond	Unclassified
+Environmental	Aquatic	Freshwater	Sediment	Unclassified
+Environmental	Aquatic	Freshwater	Storm water	Drainage pipe biofilm
+Environmental	Aquatic	Freshwater	Storm water	Unclassified
+Environmental	Aquatic	Freshwater	Subglacial lake	Unclassified
+Environmental	Aquatic	Freshwater	Unclassified	Unclassified
+Environmental	Aquatic	Freshwater	Wetlands	Bog
+Environmental	Aquatic	Freshwater	Wetlands	Marsh
+Environmental	Aquatic	Freshwater	Wetlands	Sediment
+Environmental	Aquatic	Freshwater	Wetlands	Swamp
+Environmental	Aquatic	Freshwater	Wetlands	Unclassified
+Environmental	Aquatic	Marine	Coastal	Sediment
+Environmental	Aquatic	Marine	Coastal	Unclassified
+Environmental	Aquatic	Marine	Cold seeps	Sediment
+Environmental	Aquatic	Marine	Cold seeps	Unclassified
+Environmental	Aquatic	Marine	Fossil	Whale fall
+Environmental	Aquatic	Marine	Hydrothermal vents	Black smokers
+Environmental	Aquatic	Marine	Hydrothermal vents	Diffuse flow
+Environmental	Aquatic	Marine	Hydrothermal vents	Microbial mats
+Environmental	Aquatic	Marine	Hydrothermal vents	Sediment
+Environmental	Aquatic	Marine	Hydrothermal vents	Unclassified
+Environmental	Aquatic	Marine	Intertidal zone	Beach
+Environmental	Aquatic	Marine	Intertidal zone	Coral reef
+Environmental	Aquatic	Marine	Intertidal zone	Estuary
+Environmental	Aquatic	Marine	Intertidal zone	Mangrove swamp
+Environmental	Aquatic	Marine	Intertidal zone	Microbialites
+Environmental	Aquatic	Marine	Intertidal zone	Oil-contaminated
+Environmental	Aquatic	Marine	Intertidal zone	Salt marsh
+Environmental	Aquatic	Marine	Intertidal zone	Sediment
+Environmental	Aquatic	Marine	Intertidal zone	Unclassified
+Environmental	Aquatic	Marine	Marginal Sea	Unclassified
+Environmental	Aquatic	Marine	Neritic zone	Oil-contaminated sediment
+Environmental	Aquatic	Marine	Neritic zone	Sediment
+Environmental	Aquatic	Marine	Neritic zone	Unclassified
+Environmental	Aquatic	Marine	Oceanic	Abyssal plane
+Environmental	Aquatic	Marine	Oceanic	Aphotic zone
+Environmental	Aquatic	Marine	Oceanic Benthic
+Environmental	Aquatic	Marine	Oceanic	Oil-contaminated
+Environmental	Aquatic	Marine	Oceanic	Oil-contaminated sediments
+Environmental	Aquatic	Marine	Oceanic	Photic zone
+Environmental	Aquatic	Marine	Oceanic	Sediment
+Environmental	Aquatic	Marine	Oceanic	Unclassified
+Environmental	Aquatic	Marine	Oil seeps	Unclassified
+Environmental	Aquatic	Marine	Pelagic	Unclassified
+Environmental	Aquatic	Marine	Unclassified	Oil-contaminated sediment
+Environmental	Aquatic	Marine	Unclassified	Sediment
+Environmental	Aquatic	Marine	Unclassified	Unclassified
+Environmental	Aquatic	Marine	Volcanic	Unclassified
+Environmental	Aquatic	Marine	Wetlands	Sediment
+Environmental	Aquatic	Marine	Wetlands	Unclassified
+Environmental	Aquatic	Non-marine Saline and Alkaline	Alkaline	Carbonate
+Environmental	Aquatic	Non-marine Saline and Alkaline	Alkaline	Microbial mats
+Environmental	Aquatic	Non-marine Saline and Alkaline	Alkaline	Sediment
+Environmental	Aquatic	Non-marine Saline and Alkaline	Alkaline	Unclassified
+Environmental	Aquatic	Non-marine Saline and Alkaline	Hypersaline	Microbial mats
+Environmental	Aquatic	Non-marine Saline and Alkaline	Hypersaline	Sediment
+Environmental	Aquatic	Non-marine Saline and Alkaline	Hypersaline	Unclassified
+Environmental	Aquatic	Non-marine Saline and Alkaline	Near-boiling (>90C)	Alkaline
+Environmental	Aquatic	Non-marine Saline and Alkaline	Saline	Athalassic
+Environmental	Aquatic	Non-marine Saline and Alkaline	Saline	Epilimnion
+Environmental	Aquatic	Non-marine Saline and Alkaline	Saline	Hypolimnion
+Environmental	Aquatic	Non-marine Saline and Alkaline	Saline	Microbial mats
+Environmental	Aquatic	Non-marine Saline and Alkaline	Saline	Sediment
+Environmental	Aquatic	Non-marine Saline and Alkaline	Saline	Thalassic
+Environmental	Aquatic	Non-marine Saline and Alkaline	Saline	Unclassified
+Environmental	Aquatic	Non-marine Saline and Alkaline	Salt crystallizer pond	Microbial mats
+Environmental	Aquatic	Non-marine Saline and Alkaline	Salt crystallizer pond	Unclassified
+Environmental	Aquatic	Non-marine Saline and Alkaline	Unclassified	Unclassified
+Environmental	Aquatic	Sediment	Unclassified	Unclassified
+Environmental	Aquatic	Thermal springs	Hot (42-90C)	Acidic
+Environmental	Aquatic	Thermal springs	Hot (42-90C)	Alkaline
+Environmental	Aquatic	Thermal springs	Hot (42-90C)	Neutral
+Environmental	Aquatic	Thermal springs	Hot (42-90C)	Sediment
+Environmental	Aquatic	Thermal springs	Hot (42-90C)	Unclassified
+Environmental	Aquatic	Thermal springs	Near-boiling (>90C)	Alkaline
+Environmental	Aquatic	Thermal springs	Sediment	Unclassified
+Environmental	Aquatic	Thermal springs	Tepid (25-34C)	Sediment
+Environmental	Aquatic	Thermal springs	Tepid (25-34C)	Unclassified
+Environmental	Aquatic	Thermal springs	Unclassified	Unclassified
+Environmental	Aquatic	Thermal springs	Warm (34-42C)	Neutral
+Environmental	Aquatic	Thermal springs	Warm (34-42C)	Sediment
+Environmental	Aquatic	Thermal springs	Warm (34-42C)	Unclassified
+Environmental	Aquatic	Unclassified	Unclassified	Unclassified
+Environmental	Terrestrial	Agricultural field	Unclassified	Unclassified
+Environmental	Terrestrial	Asphalt lakes	Tar	Unclassified
+Environmental	Terrestrial	Asphalt lakes	Unclassified	Unclassified
+Environmental	Terrestrial	Deep subsurface	Clay	Unclassified
+Environmental	Terrestrial	Deep subsurface	Unclassified	Unclassified
+Environmental	Terrestrial	Geologic	Mine	Unclassified
+Environmental	Terrestrial	Geologic	Unclassified	Unclassified
+Environmental	Terrestrial	Oil reservoir	Unclassified	Unclassified
+Environmental	Terrestrial	Rock-dwelling (subaerial biofilm)	Unclassified	Unclassified
+Environmental	Terrestrial	Soil	Clay	Agricultural land
+Environmental	Terrestrial	Soil	Clay	Contaminated
+Environmental	Terrestrial	Soil	Clay	Grasslands
+Environmental	Terrestrial	Soil	Clay	Oil-contaminated
+Environmental	Terrestrial	Soil	Clay	Unclassified
+Environmental	Terrestrial	Soil	Crop	Agricultural land
+Environmental	Terrestrial	Soil	Loam	Agricultural
+Environmental	Terrestrial	Soil	Loam	Contaminated
+Environmental	Terrestrial	Soil	Loam	Forest soil
+Environmental	Terrestrial	Soil	Loam	Grasslands
+Environmental	Terrestrial	Soil	Loam	Unclassified
+Environmental	Terrestrial	Soil	Sand	Desert
+Environmental	Terrestrial	Soil	Sand	Forest soil
+Environmental	Terrestrial	Soil	Sand	Grasslands
+Environmental	Terrestrial	Soil	Sand	Oil-contaminated
+Environmental	Terrestrial	Soil	Sand 	Unclassified
+Environmental	Terrestrial	Soil	Silt	Unclassified
+Environmental	Terrestrial	Soil	Unclassified	Agricultural
+Environmental	Terrestrial	Soil	Unclassified	Boreal forest
+Environmental	Terrestrial	Soil	Unclassified	Contaminated
+Environmental	Terrestrial	Soil	Unclassified	Desert
+Environmental	Terrestrial	Soil	Unclassified	Forest soil
+Environmental	Terrestrial	Soil	Unclassified	Grasslands
+Environmental	Terrestrial	Soil	Unclassified	Mine
+Environmental	Terrestrial	Soil	Unclassified	Mine drainage
+Environmental	Terrestrial	Soil	Unclassified	Oil-contaminated
+Environmental	Terrestrial	Soil	Unclassified	Permafrost
+Environmental	Terrestrial	Soil	Unclassified	Shrubland
+Environmental	Terrestrial	Soil	Unclassified	Tropical rainforest
+Environmental	Terrestrial	Soil	Unclassified	Unclassified
+Environmental	Terrestrial	Soil	Unclassified	Uranium contaminated
+Environmental	Terrestrial	Soil	Unclassified	Viriome
+Environmental	Terrestrial	Soil	Wetlands	Permafrost
+Environmental	Terrestrial	Soil	Wetlands	Unclassified
+Environmental	Terrestrial	Unclassified	Unclassified	Unclassified
+Environmental	Terrestrial	Volcanic	Fumaroles	Unclassified
+Environmental	Terrestrial	Volcanic	Unclassified	Unclassified
+Environmental	Unclassified	Unclassified	Unclassified	Unclassified
+Host-associated	Algae	Brown Algae	Unclassified	Unclassified
+Host-associated	Algae	Green algae	Ectosymbionts	Unclassified
+Host-associated	Algae	Green algae	Unclassified	Unclassified
+Host-associated	Algae	Red algae	Ectosymbionts 	Unclassified
+Host-associated	Algae	Red algae	Unclassified	Unclassified
+Host-associated	Algae	Unclassified	Unclassified	Unclassified
+Host-associated	Amphibia	Digestive system	Unclassified	Unclassified
+Host-associated	Amphibia	Excretory system	Unclassified	Unclassified
+Host-associated	Amphibia	Unclassified	Unclassified	Unclassified
+Host-associated	Animal	Circulatory system	Unclassified	Unclassified
+Host-associated	Animal	Digestive system	Fecal	Unclassified
+Host-associated	Animal	Digestive system	Unclassified	Unclassified
+Host-associated	Animal	Reproductive system	Unclassified	Unclassified
+Host-associated	Animal	Respiratory system	Unclassified	Unclassified
+Host-associated	Animal	Skin	Unclassified	Unclassified
+Host-associated	Animal	Unclassified	Unclassified	Unclassified
+Host-associated	Annelida	Digestive system	Digestive tube	Extracellular symbionts
+Host-associated	Annelida	Digestive system	Unclassified	Unclassified
+Host-associated	Annelida	Integument	Cuticle	Epibionts
+Host-associated	Annelida	Integument	Subcuticular space	Extracellular symbionts
+Host-associated	Annelida	Integument	Unclassified	Unclassified
+Host-associated	Annelida	Intracellular endosymbionts	Trophosome	Unclassified
+Host-associated	Annelida	Reproductive system	Egg capsule	Extracellular
+Host-associated	Annelida	Reproductive system	Egg capsule	Unclassified
+Host-associated	Annelida	Unclassified	Unclassified	Unclassified
+Host-associated	Arthropoda	Digestive system	Foregut	Unclassified
+Host-associated	Arthropoda	Digestive system	Gut	P3 segment
+Host-associated	Arthropoda	Digestive system	Gut	Proctodeal segment
+Host-associated	Arthropoda	Digestive system	Gut	Unclassified
+Host-associated	Arthropoda	Digestive system	Hindgut	P1 segment
+Host-associated	Arthropoda	Digestive system	Hindgut	P3 segment
+Host-associated	Arthropoda	Digestive system	Hindgut	Unclassified
+Host-associated	Arthropoda	Digestive system	Midgut	Unclassified
+Host-associated	Arthropoda	Digestive system	Unclassified	Unclassified
+Host-associated	Arthropoda	Integument	Cuticle	Thoracic segments
+Host-associated	Arthropoda	Integument	Cuticle	Unclassified
+Host-associated	Arthropoda	Intracellular endosymbionts	Primary	Bacteriomes
+Host-associated	Arthropoda	Intracellular endosymbionts	Secondary	Unclassified
+Host-associated	Arthropoda	Intracellular endosymbionts	Unclassified	Unclassified
+Host-associated	Arthropoda	Respiratory system	Gills	Unclassified
+Host-associated	Arthropoda	Symbiotic fungal gardens and galleries	Fungus gallery	Unclassified
+Host-associated	Arthropoda	Symbiotic fungal gardens and galleries	Fungus garden	Garden dump
+Host-associated	Arthropoda	Symbiotic fungal gardens and galleries	Fungus garden	Unclassified
+Host-associated	Arthropoda	Symbiotic fungal gardens and galleries	Unclassified	Unclassified
+Host-associated	Arthropoda	Unclassified	Unclassified	Unclassified
+Host-associated	Birds	Circulatory system	Blood	Unclassified
+Host-associated	Birds	Digestive system	Ceca	Lumen
+Host-associated	Birds	Digestive system	Ceca	Unclassified
+Host-associated	Birds	Digestive system	Crop	Lumen
+Host-associated	Birds	Digestive system	Digestive tube	Cecum
+Host-associated	Birds	Digestive system	Digestive tube	Unclassified
+Host-associated	Birds	Digestive system	Fecal	Unclassified
+Host-associated	Birds	Digestive system	Small intestine	Duodenal
+Host-associated	Birds	Digestive system	Unclassified	Unclassified
+Host-associated	Birds	Reproductive system	Unclassified	Unclassified
+Host-associated	Birds	Respiratory system	Lungs	Unclassified
+Host-associated	Birds	Respiratory system	Unclassified	Unclassified
+Host-associated	Birds	Unclassified	Unclassified	Unclassified
+Host-associated	Cnidaria	Unclassified	Unclassified	Unclassified
+Host-associated	Echinodermata	Unclassified	Unclassified	Unclassified
+Host-associated	Endosymbionts	Fungi	Endosymbionts	Unclassified
+Host-associated	Fish	Circulatory system	Blood	Unclassified
+Host-associated	Fish	Digestive system	Foregut	Uncharacterized
+Host-associated	Fish	Digestive system	Intestine	Unclassified
+Host-associated	Fish	Digestive system	Unclassified	Unclassified
+Host-associated	Fish	Excretory system	Kidneys	Unclassified
+Host-associated	Fish	Reproductive system	Unclassified	Unclassified
+Host-associated	Fish	Skin	Slime	Unclassified
+Host-associated	Fish	Skin	Unclassified	Unclassified
+Host-associated	Fish	Unclassified	Unclassified	Unclassified
+Host-associated	Fungi	Unclassified	Unclassified	Unclassified
+Host-associated	Human	Circulatory system	Blood	Unclassified
+Host-associated	Human	Digestive system	Hindgut	Rectum
+Host-associated	Human	Digestive system	Intestine	Unclassified
+Host-associated	Human	Digestive system	Large intestine	Fecal
+Host-associated	Human	Digestive system	Large intestine	Sigmoid colon
+Host-associated	Human	Digestive system	Large intestine	Unclassified
+Host-associated	Human	Digestive system	Oral	Attached/Keratinized gingiva
+Host-associated	Human	Digestive system	Oral	buccal mucosa
+Host-associated	Human	Digestive system	Oral	hard palate
+Host-associated	Human	Digestive system	Oral	Palatine tonsils
+Host-associated	Human	Digestive system	Oral	Periodontal pockets
+Host-associated	Human	Digestive system	Oral	Saliva
+Host-associated	Human	Digestive system	Oral	Subgingival plaque
+Host-associated	Human	Digestive system	Oral	subgingival plaque
+Host-associated	Human	Digestive system	Oral	Supragingival plaque
+Host-associated	Human	Digestive system	Oral	Throat
+Host-associated	Human	Digestive system	Oral	tongue dorsum
+Host-associated	Human	Digestive system	Oral	Unclassified
+Host-associated	Human	Digestive system	Unclassified	Unclassified
+Host-associated	Human	Excretory system	Unclassified	Unclassified
+Host-associated	Human	Excretory system	Urethra	Urine
+Host-associated	Human	Lympathic system	Lymph nodes	Unclassified
+Host-associated	Human	Milk	Unclassified	Unclassified
+Host-associated	Human	Nervous system	Cerebrospinal fluid	Unclassified
+Host-associated	Human	Nervous system	Unclassified	Unclassified
+Host-associated	Human	Reproductive system	Female	Unclassified
+Host-associated	Human	Reproductive system	Unclassified	Unclassified
+Host-associated	Human	Reproductive system	Vagina	Introitus
+Host-associated	Human	Reproductive system	Vagina	Midpoint vagina
+Host-associated	Human	Reproductive system	Vagina	posterior fornix
+Host-associated	Human	Reproductive system	Vagina	Unclassified
+Host-associated	Human	Respiratory system	Nasopharyngeal	anterior nares
+Host-associated	Human	Respiratory system	Nasopharyngeal	Pharynx
+Host-associated	Human	Respiratory system	Nasopharyngeal	Unclassified
+Host-associated	Human	Respiratory system	Pulmonary system	Sputum
+Host-associated	Human	Respiratory system	Pulmonary system	Trachea
+Host-associated	Human	Respiratory system	Pulmonary system	Unclassified
+Host-associated	Human	Respiratory system	Pulmonary system	Viriome
+Host-associated	Human	Respiratory system	Unclassified	Unclassified
+Host-associated	Human	Skin	Axilla	Unclassified
+Host-associated	Human	Skin	Medial distal leg	Venous leg ulcers
+Host-associated	Human	Skin	Naris	Unclassified
+Host-associated	Human	Skin	retroauricular crease	Unclassified
+Host-associated	Human	Skin	Umbilicus	Unclassified
+Host-associated	Human	Skin	Unclassified	Unclassified
+Host-associated	Human	Skin	Volar forearm	Unclassified
+Host-associated	Human	Unclassified	Unclassified	Unclassified
+Host-associated	Insecta	Digestive system	Unclassified	Unclassified
+Host-associated	Insecta	Unclassified	Unclassified	Unclassified
+Host-associated	Invertebrates	Bryozoans	Gymnolaemates	Unclassified
+Host-associated	Invertebrates	Cnidaria	Coral	Unclassified
+Host-associated	Invertebrates	Echinodermata	Sea Urchin	Unclassified
+Host-associated	Invertebrates	Unclassified	Unclassified	Unclassified
+Host-associated	Mammals	Circulatory system	Blood	Unclassified
+Host-associated	Mammals	Circulatory system	Unclassified	Unclassified
+Host-associated	Mammals	Digestive system	Fecal	Uncharacterized
+Host-associated	Mammals	Digestive system	Fecal	Unclassified
+Host-associated	Mammals	Digestive system	Foregut	Rumen
+Host-associated	Mammals	Digestive system	Foregut	Unclassified
+Host-associated	Mammals	Digestive system	Large intestine	Cecum
+Host-associated	Mammals	Digestive system	Large intestine	Fecal
+Host-associated	Mammals	Digestive system	Large intestine	Unclassified
+Host-associated	Mammals	Digestive system	Midgut	Unclassified
+Host-associated	Mammals	Digestive system	Oral cavity	Buccal mucosa
+Host-associated	Mammals	Digestive system	Oral cavity	Unclassified
+Host-associated	Mammals	Digestive system	Stomach	Endoperitrophic space
+Host-associated	Mammals	Digestive system	Stomach	Rumen
+Host-associated	Mammals	Digestive system	Stomach	Unclassified
+Host-associated	Mammals	Digestive system	Unclassified	Unclassified
+Host-associated	Mammals	Excretory system	Unclassified	Unclassified
+Host-associated	Mammals	Gastrointestinal tract	Intestine	Fecal
+Host-associated	Mammals	Gastrointestinal tract	Intestine	Unclassified
+Host-associated	Mammals	Gastrointestinal tract	Unclassified	Unclassified
+Host-associated	Mammals	Lymphatic	Lymph nodes	Unclassified
+Host-associated	Mammals	Lymphatic	Unclassified	Unclassified
+Host-associated	Mammals	Milk	Unclassified	Unclassified
+Host-associated	Mammals	Nervous system	Brain	Unclassified
+Host-associated	Mammals	Nervous system	Unclassified	Unclassified
+Host-associated	Mammals	Reproductive system	Unclassified	Unclassified
+Host-associated	Mammals	Respiratory system	Nasopharyngeal	Nasal cavity
+Host-associated	Mammals	Respiratory system	Nasopharyngeal	Unclassified
+Host-associated	Mammals	Respiratory system	Pulmonary system	Viriome
+Host-associated	Mammals	Respiratory system	Unclassified	Unclassified
+Host-associated	Mammals	Skin	Unclassified	Unclassified
+Host-associated	Mammals	Unclassified	Unclassified	Unclassified
+Host-associated	Microbial	Bacteria	Unclassified	Unclassified
+Host-associated	Microbial	Dinoflagellates	Endosymbionts	Unclassified
+Host-associated	Microbial	Unclassified	Unclassified	Unclassified
+Host-associated	Mollusca	Digestive system	Ceca	Uncharacterized
+Host-associated	Mollusca	Digestive system	Glands	Unclassified
+Host-associated	Mollusca	Digestive system	Unclassified	Unclassified
+Host-associated	Mollusca	Respiratory system	Gills	Extracellular
+Host-associated	Mollusca	Respiratory system	Gills	Intracellular
+Host-associated	Mollusca	Respiratory system	Gills	Unclassified
+Host-associated	Mollusca	Shell	Unclassified	Unclassified
+Host-associated	Mollusca	Unclassified	Unclassified	Unclassified
+Host-associated	Plants	Phylloplane	Endophytes	Unclassified
+Host-associated	Plants	Phylloplane	Epiphytes	Unclassified
+Host-associated	Plants	Phylloplane	Unclassified	Unclassified
+Host-associated	Plants	Rhizome	Epiphytes	Unclassified
+Host-associated	Plants	Rhizome	Unclassified	Unclassified
+Host-associated	Plants	Rhizoplane	Endophytes	Unclassified
+Host-associated	Plants	Rhizoplane	Epiphytes	Unclassified
+Host-associated	Plants	Rhizoplane	Soil	Unclassified
+Host-associated	Plants	Rhizoplane	Unclassified	Unclassified
+Host-associated	Plants	Rhizosphere	Epiphytes	Unclassified
+Host-associated	Plants	Rhizosphere	Soil	Unclassified
+Host-associated	Plants	Rhizosphere	Unclassified	Forest soil
+Host-associated	Plants	Rhizosphere	Unclassified	Unclassified
+Host-associated	Plants	Unclassified	Unclassified	Unclassified
+Host-associated	Porifera	Unclassified	Unclassified	Unclassified
+Host-associated	Protists	Unclassified	Unclassified	Unclassified
+Host-associated	Protozoa	Unclassified	Unclassified	Unclassified
+Host-associated	Reptilia	Unclassified	Unclassified	Unclassified
+Host-associated	Tunicates	Ascidians	Unclassified	Unclassified
+Host-associated	Tunicates	Unclassified	Unclassified	Unclassified
+Host-associated	Unclassified	Unclassified	Unclassified	Unclassified
