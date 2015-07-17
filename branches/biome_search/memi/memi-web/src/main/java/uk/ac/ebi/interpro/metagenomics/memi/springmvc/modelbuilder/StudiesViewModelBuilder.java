@@ -177,6 +177,14 @@ public class StudiesViewModelBuilder extends AbstractBiomeViewModelBuilder<Studi
             else if (filter.getBiome().equals(StudyFilter.Biome.WASTEWATER)) {
                 biomeIds.addAll(super.getBiomeIdsByLineage(biomeDAO, StudyFilter.Biome.WASTEWATER.getLineages()));
             }
+            // Human host
+            else if (filter.getBiome().equals(StudyFilter.Biome.HUMAN_HOST)) {
+                biomeIds.addAll(super.getBiomeIdsByLineage(biomeDAO, StudyFilter.Biome.HUMAN_HOST.getLineages()));
+            }
+            // Host-associated
+            else if (filter.getBiome().equals(StudyFilter.Biome.HOST_ASSOCIATED)) {
+                biomeIds.addAll(super.getBiomeIdsByLineage(biomeDAO, StudyFilter.Biome.HOST_ASSOCIATED.getLineages()));
+            }
             crits.add(Restrictions.in("biome.biomeId", biomeIds));
         }
         //add is public and submitter identifier criteria

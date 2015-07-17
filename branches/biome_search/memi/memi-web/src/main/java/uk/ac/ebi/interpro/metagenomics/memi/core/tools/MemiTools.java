@@ -26,35 +26,12 @@ import java.util.*;
 public class MemiTools {
     private final static Log log = LogFactory.getLog(MemiTools.class);
 
-    public static final Map<Integer, String> biomeIconMap;
-
-    static {
-        biomeIconMap = new HashMap<Integer, String>();
-        biomeIconMap.put(234, "soil_b");
-        biomeIconMap.put(127, "marine_b");
-        biomeIconMap.put(85, "freshwater_b");
-        biomeIconMap.put(375, "human_gut_b");
-        biomeIconMap.put(1, "engineered_b");
-        biomeIconMap.put(80, "air_b");
-        biomeIconMap.put(61, "wastewater_b");
-        // forest soil
-        biomeIconMap.put(249, "forest_b");
-        biomeIconMap.put(253, "forest_b");
-        biomeIconMap.put(266, "forest_b");
-        // grassland soil
-        biomeIconMap.put(267, "grassland_b");
-        biomeIconMap.put(254, "grassland_b");
-        biomeIconMap.put(250, "grassland_b");
-        biomeIconMap.put(238, "grassland_b");
-        //human host
-        biomeIconMap.put(368, "human_host_b");
-        //non human host
-        biomeIconMap.put(280, "non_human_host_b");
-        // add default icon class
-        biomeIconMap.put(0, "default_b");
-    }
+    public static final Map<Integer, String> biomeIconMap = new HashMap<Integer, String>();
 
     public static void assignBiomeIconCSSClass(final Study study, final BiomeDAO biomeDAO) {
+        if (biomeIconMap.isEmpty()) {
+            buildBiomeIconMap(biomeDAO);
+        }
         Biome studyBiome = study.getBiome();
         if (studyBiome != null) {
             // Look up CSS class
@@ -77,6 +54,50 @@ public class MemiTools {
         if (study.getBiomeIconCSSClass() == null) {
             // Set the default icon class
             study.setBiomeIconCSSClass(MemiTools.biomeIconMap.get(0));
+        }
+    }
+
+    private static void buildBiomeIconMap(final BiomeDAO biomeDAO) {
+        // add default icon class
+        MemiTools.biomeIconMap.put(0, "default_b");
+
+        // add 1:1 mapping biomes
+        List<Biome> biomes = biomeDAO.readByLineages("root:Environmental:Terrestrial:Soil", "root:Environmental:Air", "root:Engineered", "root:Environmental:Aquatic:Freshwater", "root:Host-associated:Human:Digestive system:Large intestine"
+                , "root:Environmental:Aquatic:Marine", "root:Engineered:Wastewater", "root:Host-associated:Human", "root:Host-associated");
+        for (Biome biome : biomes) {
+            String biomeName = biome.getBiomeName();
+            if (biomeName.equalsIgnoreCase("Air")) {
+                MemiTools.biomeIconMap.put(biome.getBiomeId(), "air_b");
+            } else if (biomeName.equalsIgnoreCase("Engineered")) {
+                MemiTools.biomeIconMap.put(biome.getBiomeId(), "engineered_b");
+            } else if (biomeName.equalsIgnoreCase("Freshwater")) {
+                MemiTools.biomeIconMap.put(biome.getBiomeId(), "freshwater_b");
+            } else if (biomeName.equalsIgnoreCase("Host-associated")) {
+                MemiTools.biomeIconMap.put(biome.getBiomeId(), "non_human_host_b");
+            } else if (biomeName.equalsIgnoreCase("Human")) {
+                MemiTools.biomeIconMap.put(biome.getBiomeId(), "human_host_b");
+            } else if (biomeName.equalsIgnoreCase("Large intestine")) {
+                MemiTools.biomeIconMap.put(biome.getBiomeId(), "human_gut_b");
+            } else if (biomeName.equalsIgnoreCase("Marine")) {
+                MemiTools.biomeIconMap.put(biome.getBiomeId(), "marine_b");
+            } else if (biomeName.equalsIgnoreCase("Soil")) {
+                MemiTools.biomeIconMap.put(biome.getBiomeId(), "soil_b");
+            } else if (biomeName.equalsIgnoreCase("wastewater_b")) {
+
+            }
+        }
+        // add grassland biomes
+        biomes = biomeDAO.readByLineages("root:Environmental:Terrestrial:Soil:Grasslands", "root:Environmental:Terrestrial:Soil:Sand:Grasslands",
+                "root:Environmental:Terrestrial:Soil:Loam:Grasslands", "root:Environmental:Terrestrial:Soil:Clay:Grasslands");
+        for (Biome biome : biomes) {
+            MemiTools.biomeIconMap.put(biome.getBiomeId(), "grassland_b");
+        }
+
+        // add forest soil biomes
+        biomes = biomeDAO.readByLineages("root:Environmental:Terrestrial:Soil:Loam:Forest Soil", "root:Environmental:Terrestrial:Soil:Sand:Forest soil",
+                "root:Environmental:Terrestrial:Soil:Forest Soil");
+        for (Biome biome : biomes) {
+            MemiTools.biomeIconMap.put(biome.getBiomeId(), "forest_b");
         }
     }
 

@@ -41,6 +41,17 @@ public class BiomeDAOImpl extends GenericDAOImpl<Biome, Long> implements BiomeDA
     }
 
     @Transactional(readOnly = true)
+    public List<Biome> readByLineages(String... lineages) {
+        try {
+            Criteria criteria = getSession().createCriteria(Biome.class)
+                    .add(Restrictions.in("lineage", lineages));
+            return (List<Biome>) criteria.list();
+        } catch (HibernateException e) {
+            throw new HibernateException("Couldn't retrieve biomes by lineages using the IN clause: " + lineages, e);
+        }
+    }
+
+    @Transactional(readOnly = true)
     public List<Integer> getListOfBiomeIdsBetween(int lowValue, int highValue) {
         try {
             Criteria criteria = getSession().createCriteria(Biome.class)

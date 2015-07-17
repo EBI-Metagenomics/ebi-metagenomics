@@ -301,13 +301,13 @@
                                            title="View all marine projects"><span class="biome_icon icon_sm marine_b"></span><span class="biome_text">Marine (<c:out value="${model.biomeMap['Marine']}"/>)</span></a></div>
 
                     <div class="grid_8 omega"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=FOREST_SOIL"/>"
-                                                 title="View all forest projects"><span class="biome_icon icon_sm forest_b"></span><span class="biome_text">Forest (<c:out value="${model.biomeMap['Forest Soil']}"/>)</span></a></div>
+                                                 title="View all forest projects"><span class="biome_icon icon_sm forest_b"></span><span class="biome_text">Forest (<c:out value="${model.biomeMap['Forest']}"/>)</span></a></div>
 
                     <div class="grid_8 alpha"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=FRESHWATER"/>"
                                                  title="View all freshwater projects"><span class="biome_icon icon_sm freshwater_b"></span><span class="biome_text">Freshwater (<c:out value="${model.biomeMap['Freshwater']}"/>)</span></a></div>
 
                     <div class="grid_8"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=GRASSLAND"/>"
-                                           title="View all grassland projects"><span class="biome_icon icon_sm grassland_b"></span><span class="biome_text">Grassland (<c:out value="${model.biomeMap['Grassland Soil']}"/>)</span></a></div>
+                                           title="View all grassland projects"><span class="biome_icon icon_sm grassland_b"></span><span class="biome_text">Grassland (<c:out value="${model.biomeMap['Grassland']}"/>)</span></a></div>
 
                     <div class="grid_8 omega"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=HUMAN_GUT"/>"
                                                  title="View all  human gut projects"><span class="biome_icon icon_sm human_gut_b"></span><span class="biome_text">Human gut (<c:out value="${model.biomeMap['Human gut']}"/>)</span></a></div>

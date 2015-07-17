@@ -103,6 +103,8 @@ public class StudyFilter {
         GRASSLAND("Grassland", "root:Environmental:Terrestrial:Soil:Grasslands", "root:Environmental:Terrestrial:Soil:Sand:Grasslands",
                 "root:Environmental:Terrestrial:Soil:Loam:Grasslands", "root:Environmental:Terrestrial:Soil:Clay:Grasslands"),
         HUMAN_GUT("Human gut", "root:Host-associated:Human:Digestive system:Large intestine"),
+        HUMAN_HOST("Human", "root:Host-associated:Human"),
+        HOST_ASSOCIATED("Host-associated", "root:Host-associated"),
         MARINE("Marine", "root:Environmental:Aquatic:Marine"),
         SOIL("Soil", "root:Environmental:Terrestrial:Soil"),
         WASTEWATER("Wastewater", "root:Engineered:Wastewater");
