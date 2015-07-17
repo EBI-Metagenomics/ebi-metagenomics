@@ -92,10 +92,10 @@ Environmental	Aquatic	Freshwater	Lentic	Limnetic zone
 Environmental	Aquatic	Freshwater	Lentic	Littoral zone
 Environmental	Aquatic	Freshwater	Lentic	Sediment
 Environmental	Aquatic	Freshwater	Lentic	Unclassified
-Environmental	Aquatic	Freshwater	Lotic   Low land river systems
-Environmental	Aquatic	Freshwater	Lotic   Mid stream
-Environmental	Aquatic	Freshwater	Lotic   Sediment
-Environmental	Aquatic	Freshwater	Lotic   Unclassified
+Environmental	Aquatic	Freshwater	Lotic	Low land river systems
+Environmental	Aquatic	Freshwater	Lotic	Mid stream
+Environmental	Aquatic	Freshwater	Lotic	Sediment
+Environmental	Aquatic	Freshwater	Lotic	Unclassified
 Environmental	Aquatic	Freshwater	Microbialites	Unclassified
 Environmental	Aquatic	Freshwater	Pond	Sediment
 Environmental	Aquatic	Freshwater	Pond	Unclassified
@@ -134,7 +134,7 @@ Environmental	Aquatic	Marine	Neritic zone	Sediment
 Environmental	Aquatic	Marine	Neritic zone	Unclassified
 Environmental	Aquatic	Marine	Oceanic	Abyssal plane
 Environmental	Aquatic	Marine	Oceanic	Aphotic zone
-Environmental	Aquatic	Marine	Oceanic Benthic
+Environmental	Aquatic	Marine	Oceanic	Benthic
 Environmental	Aquatic	Marine	Oceanic	Oil-contaminated
 Environmental	Aquatic	Marine	Oceanic	Oil-contaminated sediments
 Environmental	Aquatic	Marine	Oceanic	Photic zone
@@ -205,7 +205,7 @@ Environmental	Terrestrial	Soil	Sand	Desert
 Environmental	Terrestrial	Soil	Sand	Forest soil
 Environmental	Terrestrial	Soil	Sand	Grasslands
 Environmental	Terrestrial	Soil	Sand	Oil-contaminated
-Environmental	Terrestrial	Soil	Sand 	Unclassified
+Environmental	Terrestrial	Soil	Sand	Unclassified
 Environmental	Terrestrial	Soil	Silt	Unclassified
 Environmental	Terrestrial	Soil	Unclassified	Agricultural
 Environmental	Terrestrial	Soil	Unclassified	Boreal forest
