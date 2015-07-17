@@ -7,7 +7,43 @@
 <c:set var="notGivenId" value="(not given)"/>
 
 <div id="project_ov">
-    <div class="biome_project"><span class="biome_icon icon_sm ${model.study.biomeIconCSSClass}"></span></div>
+                            <%--TEMP while we implement a better solution--%>
+                            <c:choose>
+                            <c:when test="${model.study.biomeIconCSSClass == 'freshwater_b'}">
+                                <c:set var="biomeName" value="Freshwater" scope="page"/>
+                            </c:when>
+                                <c:when test="${model.study.biomeIconCSSClass == 'soil_b'}">
+                                    <c:set var="biomeName" value="Soil" scope="page"/>
+                            </c:when>
+                                <c:when test="${model.study.biomeIconCSSClass == 'forest_b'}">
+                                    <c:set var="biomeName" value="Forest" scope="page"/>
+                            </c:when>
+                                <c:when test="${model.study.biomeIconCSSClass == 'grassland_b'}">
+                                    <c:set var="biomeName" value="Grassland" scope="page"/>
+                            </c:when>
+                            <c:when test="${model.study.biomeIconCSSClass == 'marine_b'}">
+                                <c:set var="biomeName" value="Marine" />
+                            </c:when>
+                                <c:when test="${model.study.biomeIconCSSClass == 'human_gut_b'}">
+                                    <c:set var="biomeName" value="Human gut" scope="page"/>
+                            </c:when>
+                                <c:when test="${model.study.biomeIconCSSClass == 'engineered_b'}">
+                                    <c:set var="biomeName" value="Engineered" scope="page"/>
+                            </c:when>
+                                <c:when test="${model.study.biomeIconCSSClass == 'air_b'}">
+                                    <c:set var="biomeName" value="Air" scope="page"/>
+                            </c:when>
+                                <c:when test="${model.study.biomeIconCSSClass == 'wastewater_b'}">
+                                    <c:set var="biomeName" value="Wastewater" scope="page"/>
+                            </c:when>
+                            <c:otherwise>
+                                <c:set var="biomeName" value="Default" scope="page"/>
+                            </c:otherwise>
+                            </c:choose>
+
+
+
+    <div class="biome_project"><span class="biome_icon icon_sm ${model.study.biomeIconCSSClass}" title="${biomeName} biome icon"></span></div>
     <div class="title_tab_p">
         <span class="subtitle">Project overview <span>(${model.study.studyId})</span></span>
 
