@@ -75,7 +75,7 @@
         </c:choose>
 
         <c:if test="${not empty model.study.biome}">
-            <h4>Classification: <c:out value="${fn:replace(model.study.biome.lineage,':',' > ')}"/></h4>
+            <h4>Classification: <c:out value="${fn:replace(fn:replace(model.study.biome.lineage,'root:',''),':',' > ')}"/></h4>
         </c:if>
     </div>
 
