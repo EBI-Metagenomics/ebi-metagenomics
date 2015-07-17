@@ -5,6 +5,7 @@ import org.apache.commons.logging.LogFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.core.comparators.HomePageSamplesComparator;
 import uk.ac.ebi.interpro.metagenomics.memi.core.comparators.HomePageStudiesComparator;
+import uk.ac.ebi.interpro.metagenomics.memi.core.tools.MemiTools;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.RunDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.BiomeDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAO;
@@ -154,7 +155,14 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
         if (studyDAO != null) {
             studies = studyDAO.retrieveOrderedPublicStudies("lastMetadataReceived", true);
         }
-        return (studies != null ? studies : new ArrayList<Study>());
+        if (studies != null && !studies.isEmpty()) {
+                    for (Study study : studies) {
+                        MemiTools.assignBiomeIconCSSClass(study, biomeDAO);
+                    }
+                    return studies;
+                } else {
+                    return new ArrayList<Study>();
+                }
     }
 
     private Map<Study, Long> getStudySampleSizeMap(List<Study> studies, SampleDAO sampleDAO, Comparator<Study> comparator) {
