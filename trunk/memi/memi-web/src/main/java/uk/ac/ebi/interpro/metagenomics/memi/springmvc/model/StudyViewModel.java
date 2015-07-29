@@ -1,9 +1,9 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
 
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.extensions.QueryRunsForProjectResult;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Publication;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 
 import java.util.List;
@@ -15,7 +15,7 @@ import java.util.List;
  * @since 1.0-SNAPSHOT
  */
 public class StudyViewModel extends ViewModel {
-    private List<Sample> samples;
+    private List<QueryRunsForProjectResult> runs;
 
     private Study study;
 
@@ -23,11 +23,11 @@ public class StudyViewModel extends ViewModel {
 
     private List<Publication> relatedPublications;
 
-    public StudyViewModel(Submitter submitter, Study study, List<Sample> samples, String pageTitle,
+    public StudyViewModel(Submitter submitter, Study study, List<QueryRunsForProjectResult> runs, String pageTitle,
                           List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer,
                           List<Publication> relatedPublications, List<Publication> relatedLinks) {
         super(submitter, pageTitle, breadcrumbs, propertyContainer);
-        this.samples = samples;
+        this.runs = runs;
         this.study = study;
         this.relatedLinks = relatedLinks;
         this.relatedPublications = relatedPublications;
@@ -41,12 +41,12 @@ public class StudyViewModel extends ViewModel {
         return relatedPublications;
     }
 
-    public List<Sample> getSamples() {
-        return samples;
+    public List<QueryRunsForProjectResult> getRuns() {
+        return runs;
     }
 
-    public void setSamples(List<Sample> samples) {
-        this.samples = samples;
+    public void setRuns(List<QueryRunsForProjectResult> runs) {
+        this.runs = runs;
     }
 
     public Study getStudy() {
