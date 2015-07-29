@@ -4,12 +4,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.core.comparators.PublicationComparator;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.erapro.SubmissionContactDAO;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.extensions.QueryRunsForProjectResult;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.RunDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Publication;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.PublicationType;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.StudyViewModel;
@@ -38,7 +37,7 @@ public class StudyViewModelBuilder extends AbstractViewModelBuilder<StudyViewMod
 
     private Study study;
 
-    private SampleDAO sampleDAO;
+    private RunDAO runDAO;
 
     private List<Publication> relatedLinks;
 
@@ -46,13 +45,13 @@ public class StudyViewModelBuilder extends AbstractViewModelBuilder<StudyViewMod
 
 
     public StudyViewModelBuilder(SessionManager sessionMgr, String pageTitle, List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer,
-                                 Study study, SampleDAO sampleDAO) {
+                                 Study study, RunDAO runDAO) {
         super(sessionMgr);
         this.pageTitle = pageTitle;
         this.breadcrumbs = breadcrumbs;
         this.propertyContainer = propertyContainer;
         this.study = study;
-        this.sampleDAO = sampleDAO;
+        this.runDAO = runDAO;
         this.relatedLinks = new ArrayList<Publication>();
         this.relatedPublications = new ArrayList<Publication>();
     }
@@ -61,22 +60,22 @@ public class StudyViewModelBuilder extends AbstractViewModelBuilder<StudyViewMod
     public StudyViewModel getModel() {
         log.info("Building instance of " + StudyViewModel.class + "...");
         Submitter submitter = getSessionSubmitter(sessionMgr);
-        List<Sample> samples = getSamplesForStudyViewModel(submitter);
+        List<QueryRunsForProjectResult> runs = getRunsForStudyViewModel(submitter);
         buildPublicationLists();
-        return new StudyViewModel(submitter, study, samples, pageTitle,
+        return new StudyViewModel(submitter, study, runs, pageTitle,
                 breadcrumbs, propertyContainer, relatedPublications, relatedLinks);
     }
 
-    private List<Sample> getSamplesForStudyViewModel(Submitter submitter) {
+    private List<QueryRunsForProjectResult> getRunsForStudyViewModel(Submitter submitter) {
         long studyId = study.getId();
         if (submitter == null) {
-            return sampleDAO.retrievePublicSamplesByStudyId(studyId);
+            return runDAO.retrieveRunsByProjectId(studyId, true);
         } else {
             //Check if submitter is study owner
             if (submitter.getSubmissionAccountId().equalsIgnoreCase(study.getSubmissionAccountId())) {
-                return sampleDAO.retrieveAllSamplesByStudyId(studyId);
+                return runDAO.retrieveRunsByProjectId(studyId, false);
             } else {
-                return sampleDAO.retrievePublicSamplesByStudyId(studyId);
+                return runDAO.retrieveRunsByProjectId(studyId, true);
             }
         }
     }

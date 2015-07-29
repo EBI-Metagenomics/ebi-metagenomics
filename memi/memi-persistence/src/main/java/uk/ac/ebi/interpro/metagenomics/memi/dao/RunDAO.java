@@ -1,6 +1,9 @@
 package uk.ac.ebi.interpro.metagenomics.memi.dao;
 
+import uk.ac.ebi.interpro.metagenomics.memi.dao.extensions.QueryRunsForProjectResult;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Run;
+
+import java.util.List;
 
 /**
  * //TODO: Add description
@@ -12,7 +15,9 @@ public interface RunDAO {
 
     public Run readByRunIdDeep(String projectId, String sampleId, String runId, String version);
 
-    int countAllPublic();
+    public int countAllPublic();
 
-    int countAllPrivate();
+    public int countAllPrivate();
+
+    public List<QueryRunsForProjectResult> retrieveRunsByProjectId(long projectId, boolean publicOnly);
 }
