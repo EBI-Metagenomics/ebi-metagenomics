@@ -7,6 +7,16 @@
 
     <!--sequence data file definitions-->
 
+    <!-- List of mappings between download links (on the website) and result files on file system -->
+    <!-- Download link name                             | file name suffix -->
+    <!-- Processed nucleotide reads (FASTA)             | _masked.fasta (Version 1)                     | .fasta (Version 2) -->
+    <!-- Processed reads with pCDS (FASTA)              | /sequence-categorisation/pCDS.fasta -->
+    <!-- Processed reads with InterPro matches (FASTA)  | /sequence-categorisation/interproscan.fasta -->
+    <!-- Processed reads without InterPro match (FASTA) | /sequence-categorisation/noFunction.fasta -->
+    <!-- Predicted CDS (FASTA)                          | _CDS.faa -->
+    <!-- Predicted ORF without annotation (FASTA)       | _CDS_unannotated.ffn -->
+    <!-- Predicted CDS without annotation (FASTA)       | _CDS_unannotated.faa-->
+
     <bean id="maskedReadsFile" autowire-candidate="false"
           class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.SequenceFileDefinition">
         <property name="fileNameEnding" value="_masked.fasta"/>
