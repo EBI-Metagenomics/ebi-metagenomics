@@ -36,6 +36,7 @@
 
         <!--functional data-->
         <entry key="INTERPROSCAN_RESULT_FILE" value-ref="interProScanResultFile"/>
+        <entry key="INTERPROSCAN_RESULT_FILE_NEW" value-ref="interProScanResultFileNew"/>
         <entry key="GO_COMPLETE_FILE" value-ref="fullGOAnnotationFile"/>
         <entry key="GO_SLIM_FILE" value-ref="goSlimAnnotationFile"/>
         <!--<entry key="INTERPRO_MATCHES_SUMMARY_FILE" value-ref="interProMatchesSummaryFile"/>-->

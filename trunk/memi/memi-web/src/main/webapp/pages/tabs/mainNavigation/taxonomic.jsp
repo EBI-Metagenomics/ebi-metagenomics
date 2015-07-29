@@ -21,16 +21,16 @@
                     <ul>
                         <li class="selector_tab">Switch view:</li>
                             <%--<li><a href="#tax-table" title="Table view"><span class="ico-table"></span></a></li>--%>
-                        <li><a title="Pie-Chart-View"
+                        <li><a class="show_tooltip" title="Pie-Chart-View"
                                href="<c:url value="${baseURL}/projects/${model.run.externalProjectId}/samples/${model.run.externalSampleId}/runs/${model.run.externalRunId}/results/taxPieChartView/versions/${model.analysisJob.pipelineRelease.releaseVersion}"/>"><span
                                 class="ico-pie"></span></a></li>
-                        <li><a title="Bar-Chart-View"
+                        <li><a class="show_tooltip" title="Bar-Chart-View"
                                href="<c:url value="${baseURL}/projects/${model.run.externalProjectId}/samples/${model.run.externalSampleId}/runs/${model.run.externalRunId}/results/taxBarChartView/versions/${model.analysisJob.pipelineRelease.releaseVersion}"/>"><span
                                 class="ico-barh"></span></a></li>
-                        <li><a title="Stacked-Column-Chart-View"
+                        <li><a class="show_tooltip" title="Stacked-Column-Chart-View"
                                href="<c:url value="${baseURL}/projects/${model.run.externalProjectId}/samples/${model.run.externalSampleId}/runs/${model.run.externalRunId}/results/taxColumnChartView/versions/${model.analysisJob.pipelineRelease.releaseVersion}"/>"><span
                                 class="ico-col"></span></a></li>
-                        <li class="but_krona"><a title="Krona-Chart-View"
+                        <li class="but_krona"><a class="show_tooltip" title="Krona-Chart-View"
                                href="<c:url value="${baseURL}/projects/${model.run.externalProjectId}/samples/${model.run.externalSampleId}/runs/${model.run.externalRunId}/results/kronaChartView/versions/${model.analysisJob.pipelineRelease.releaseVersion}"/>"><span
                                 class="ico-krona"></span></a></li>
 

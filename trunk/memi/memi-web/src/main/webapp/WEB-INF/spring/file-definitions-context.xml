@@ -7,6 +7,16 @@
 
     <!--sequence data file definitions-->
 
+    <!-- List of mappings between download links (on the website) and result files on file system -->
+    <!-- Download link name                             | file name suffix -->
+    <!-- Processed nucleotide reads (FASTA)             | _masked.fasta (Version 1)                     | .fasta (Version 2) -->
+    <!-- Processed reads with pCDS (FASTA)              | /sequence-categorisation/pCDS.fasta -->
+    <!-- Processed reads with InterPro matches (FASTA)  | /sequence-categorisation/interproscan.fasta -->
+    <!-- Processed reads without InterPro match (FASTA) | /sequence-categorisation/noFunction.fasta -->
+    <!-- Predicted CDS (FASTA)                          | _CDS.faa -->
+    <!-- Predicted ORF without annotation (FASTA)       | _CDS_unannotated.ffn -->
+    <!-- Predicted CDS without annotation (FASTA)       | _CDS_unannotated.faa-->
+
     <bean id="maskedReadsFile" autowire-candidate="false"
           class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.SequenceFileDefinition">
         <property name="fileNameEnding" value="_masked.fasta"/>
@@ -236,16 +246,16 @@
     </bean>
 
     <!--<bean id="qiimeLogFile" autowire-candidate="false"-->
-          <!--class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.TaxonomicAnalysisFileDefinition">-->
-        <!--<property name="relativePath" value="/cr_otus/uclust_ref_picked_otus/"/>-->
-        <!--<property name="fileNameEnding" value="_16S_rRNA_QIIME_otus.log"/>-->
-        <!--<property name="description" value="N/A"/>-->
-        <!--<property name="downloadName" value="_16S_rRNA_QIIME_otus.log"/>-->
-        <!--<property name="linkText" value="16S rRNA QIIME OTUs log file"/>-->
-        <!--<property name="order" value="9"/>-->
-        <!--<property name="linkTitle" value="Click to download the 16S rRNA QIIME OTUs log file"/>-->
-        <!--&lt;!&ndash;TODO: Implement the request mapping&ndash;&gt;-->
-        <!--<property name="linkURL" value="/export?contentType=text&amp;exportValue=qiimeLog"/>-->
+    <!--class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.TaxonomicAnalysisFileDefinition">-->
+    <!--<property name="relativePath" value="/cr_otus/uclust_ref_picked_otus/"/>-->
+    <!--<property name="fileNameEnding" value="_16S_rRNA_QIIME_otus.log"/>-->
+    <!--<property name="description" value="N/A"/>-->
+    <!--<property name="downloadName" value="_16S_rRNA_QIIME_otus.log"/>-->
+    <!--<property name="linkText" value="16S rRNA QIIME OTUs log file"/>-->
+    <!--<property name="order" value="9"/>-->
+    <!--<property name="linkTitle" value="Click to download the 16S rRNA QIIME OTUs log file"/>-->
+    <!--&lt;!&ndash;TODO: Implement the request mapping&ndash;&gt;-->
+    <!--<property name="linkURL" value="/export?contentType=text&amp;exportValue=qiimeLog"/>-->
     <!--</bean>-->
 
     <!--Since pipeline version 2.0 QIIME -->
@@ -266,6 +276,18 @@
     </bean>
 
     <!--Functional data file definitions-->
+
+    <bean id="interProScanResultFileNew" autowire-candidate="false"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.FunctionalAnalysisFileDefinition">
+        <property name="identifier" value="INTERPROSCAN_RESULT_FILE_NEW"/>
+        <property name="fileNameEnding" value="_I5.tsv.chunks"/>
+        <property name="description" value="InterPro matches (TSV)"/>
+        <property name="downloadName" value="_InterPro.tsv.gz"/>
+        <property name="linkText" value="InterPro matches (TSV)"/>
+        <property name="order" value="2"/>
+        <property name="linkTitle" value="Click here to download InterPro matches (TSV)"/>
+        <property name="linkURL" value="I5TSVFile"/>
+    </bean>
 
     <bean id="interProScanResultFile" autowire-candidate="false"
           class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.FunctionalAnalysisFileDefinition">

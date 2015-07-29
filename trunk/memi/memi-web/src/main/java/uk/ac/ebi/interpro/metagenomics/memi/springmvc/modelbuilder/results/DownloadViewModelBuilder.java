@@ -3,6 +3,7 @@ package uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.results;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
+import uk.ac.ebi.interpro.metagenomics.memi.core.tools.MemiTools;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Run;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob;
 import uk.ac.ebi.interpro.metagenomics.memi.services.FileExistenceChecker;
@@ -62,7 +63,8 @@ public class DownloadViewModelBuilder extends AbstractResultViewModelBuilder<Dow
         final String analysisJobReleaseVersion = analysisJob.getPipelineRelease().getReleaseVersion();
 
         final List<DownloadLink> seqDataDownloadLinks = new ArrayList<DownloadLink>();
-        final List<DownloadLink> funcAnalysisDownloadLinks = new ArrayList<DownloadLink>();
+        final List<DownloadLink> otherFuncAnalysisDownloadLinks = new ArrayList<DownloadLink>();
+        final List<DownloadLink> interproscanDownloadLinks = new ArrayList<DownloadLink>();
         final List<DownloadLink> taxaAnalysisDownloadLinks = new ArrayList<DownloadLink>();
 
         final String linkURL = (sampleIsPublic ? "https://www.ebi.ac.uk/ena/data/view/" + externalRunId : "https://www.ebi.ac.uk/ena/submit/sra/#home");
@@ -94,12 +96,44 @@ public class DownloadViewModelBuilder extends AbstractResultViewModelBuilder<Dow
                             fileDefinition.getOrder(),
                             getFileSize(fileObject)));
                 } else if (fileDefinition instanceof FunctionalAnalysisFileDefinition) {
-                    funcAnalysisDownloadLinks.add(new DownloadLink(fileDefinition.getLinkText(),
-                            fileDefinition.getLinkTitle(),
-                            "projects/" + externalProjectId + "/samples/" + externalSampleId + "/runs/" + externalRunId + "/results/" + fileDefinition.getLinkURL() + "/versions/" + analysisJobReleaseVersion,
-                            fileDefinition.getOrder(),
-                            getFileSize(fileObject)));
-
+                    if (fileDefinition.getIdentifier().equals("INTERPROSCAN_RESULT_FILE_NEW")) {
+                        //get result file chunks as a list of absolute file paths
+                        List<String> chunkedResultFiles = MemiTools.getListOfChunkedResultFiles(fileObject);
+                        //We do need to distinguish 2 cases - case 1: single compressed file - case 2: chunked and compressed result files
+                        //Case 1 will look like: InterPro matches (TSV) - 47 MB
+                        //Case 2 will look like: InterPro matches (TSV) - compressed - File 1
+                        String linkText = fileDefinition.getLinkText() + " - compressed";
+                        int chunkCounter = 1;
+                        for (String chunk : chunkedResultFiles) {
+                            if (chunkedResultFiles.size() > 1) {
+                                String partStr = " Part " + String.valueOf(chunkCounter);
+                                linkText = partStr;
+                            }
+                            final File downloadFileObj = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, chunk);
+                            interproscanDownloadLinks.add(new DownloadLink(linkText,
+                                    fileDefinition.getLinkTitle(),
+                                    "projects/" + externalProjectId + "/samples/" + externalSampleId + "/runs/" + externalRunId + "/results/versions/" + analysisJobReleaseVersion + "/function/InterProScan/chunks/" + String.valueOf(chunkCounter),
+                                    fileDefinition.getOrder(),
+                                    getFileSize(downloadFileObj)));
+                            chunkCounter++;
+                        }
+                    } else if (fileDefinition.getIdentifier().equals("INTERPROSCAN_RESULT_FILE")) {
+                        String filePath = fileObject.getAbsolutePath();
+                        File newFileObject = new File(filePath + ".chunks");
+                        if (!FileExistenceChecker.checkFileExistence(newFileObject)) {
+                            otherFuncAnalysisDownloadLinks.add(new DownloadLink(fileDefinition.getLinkText(),
+                                    fileDefinition.getLinkTitle(),
+                                    "projects/" + externalProjectId + "/samples/" + externalSampleId + "/runs/" + externalRunId + "/results/" + fileDefinition.getLinkURL() + "/versions/" + analysisJobReleaseVersion,
+                                    fileDefinition.getOrder(),
+                                    getFileSize(fileObject)));
+                        }
+                    } else {
+                        otherFuncAnalysisDownloadLinks.add(new DownloadLink(fileDefinition.getLinkText(),
+                                fileDefinition.getLinkTitle(),
+                                "projects/" + externalProjectId + "/samples/" + externalSampleId + "/runs/" + externalRunId + "/results/" + fileDefinition.getLinkURL() + "/versions/" + analysisJobReleaseVersion,
+                                fileDefinition.getOrder(),
+                                getFileSize(fileObject)));
+                    }
                 } else {
                     //do nothing
                 }
@@ -109,9 +143,9 @@ public class DownloadViewModelBuilder extends AbstractResultViewModelBuilder<Dow
             }
         }
         Collections.sort(seqDataDownloadLinks, DownloadLink.DownloadLinkComparator);
-        Collections.sort(funcAnalysisDownloadLinks, DownloadLink.DownloadLinkComparator);
+        Collections.sort(otherFuncAnalysisDownloadLinks, DownloadLink.DownloadLinkComparator);
         Collections.sort(taxaAnalysisDownloadLinks, DownloadLink.DownloadLinkComparator);
-        return new DownloadSection(seqDataDownloadLinks, funcAnalysisDownloadLinks, taxaAnalysisDownloadLinks);
+        return new DownloadSection(seqDataDownloadLinks, new FunctionalDownloadSection(interproscanDownloadLinks, otherFuncAnalysisDownloadLinks), taxaAnalysisDownloadLinks);
     }
 
     private String getFileSize(final File file) {

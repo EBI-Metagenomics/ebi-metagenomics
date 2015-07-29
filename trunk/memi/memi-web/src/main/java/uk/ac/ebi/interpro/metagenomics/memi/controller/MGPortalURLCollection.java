@@ -64,6 +64,11 @@ public final class MGPortalURLCollection {
 
     public final static String PROJECT_SAMPLE_RUN_RESULTS_FILE_EXPORT_I5_TSV = PROJECT_SAMPLE_RUN_RESULTS + "/I5TSVFile" + PROJECT_SAMPLE_RUN_RESULTS_VERSION;
 
+    public final static String PROJECT_SAMPLE_RUN_RESULTS_FUNCTION_INTERPROSCAN_CHUNKS = PROJECT_SAMPLE_RUN_RESULTS + PROJECT_SAMPLE_RUN_RESULTS_VERSION + "/function/InterProScan/chunks";
+
+    public final static String PROJECT_SAMPLE_RUN_RESULTS_FUNCTION_INTERPROSCAN_CHUNKS_VALUE = PROJECT_SAMPLE_RUN_RESULTS + PROJECT_SAMPLE_RUN_RESULTS_VERSION + "/function/InterProScan/chunks/{chunkValue}";
+
+
     //Sequence files (seq input files, pre-processed/filtered files)
     private final static String PROJECT_SAMPLE_RUN_RESULTS_SEQUENCES = PROJECT_SAMPLE_RUN_RESULTS + "/sequences" + PROJECT_SAMPLE_RUN_RESULTS_VERSION;
 

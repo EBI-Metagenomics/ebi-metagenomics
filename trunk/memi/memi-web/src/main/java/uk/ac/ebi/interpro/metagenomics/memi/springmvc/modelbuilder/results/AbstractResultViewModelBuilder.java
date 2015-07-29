@@ -17,10 +17,8 @@ import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.AbstractViewM
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -156,5 +154,4 @@ public abstract class AbstractResultViewModelBuilder<E extends AbstractResultVie
         }
         return rows;
     }
-
 }

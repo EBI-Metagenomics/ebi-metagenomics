@@ -23,7 +23,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuil
  */
 public abstract class SecuredAbstractController<T extends SecureEntity> extends AbstractController {
 
-    private static final Log log = LogFactory.getLog(SecuredAbstractController.class);
+    protected static final Log log = LogFactory.getLog(SecuredAbstractController.class);
 
     /**
      * Check if the specified secure entity object has the same submitter Id as the login session user. FYI, each study and sample has
