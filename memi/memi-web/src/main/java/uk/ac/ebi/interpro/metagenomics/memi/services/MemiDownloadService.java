@@ -155,10 +155,13 @@ public class MemiDownloadService {
 
     private void assembleServletResponse(final HttpServletResponse response, final HttpServletRequest request,
                                          final File file, final FileInputStream fis, final String fileName) throws IOException {
-        log.debug("Trying to assemble servlet response");
+        if (log.isDebugEnabled()) {
+            log.debug("Trying to assemble servlet response");
+            log.debug("File length (long): " + file.length());
+            log.debug("File length (int): " + (int) file.length());
+        }
         response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
-        //Resumable download options
-        response.setContentLength((int) file.length());
+        setContentLength(file, response);
         response.setHeader("Accept-Ranges", "bytes");
         response.setBufferSize(2048000);
         //Get and set content size
@@ -168,6 +171,15 @@ public class MemiDownloadService {
         ServletOutputStream sot = response.getOutputStream();
         StreamCopyUtil.copy(fis, sot);
         sot.flush();
+    }
+
+    private void setContentLength(final File file, final HttpServletResponse response) {
+        long length = file.length();
+        if (length <= Integer.MAX_VALUE) {
+            response.setContentLength((int) length);
+        } else {
+            response.addHeader("Content-Length", Long.toString(length));
+        }
     }
 
 

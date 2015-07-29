@@ -61,7 +61,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <org.springframework.version>3.0.5.RELEASE</org.springframework.version>
-        <memi-web.module.version>1.4-SNAPSHOT</memi-web.module.version>
+        <memi-web.module.version>1.5-SNAPSHOT</memi-web.module.version>
         <memi-persistence.module.version>1.4-SNAPSHOT</memi-persistence.module.version>
         <memi-model.module.version>1.3-SNAPSHOT</memi-model.module.version>
         <memi-business.module.version>1.0</memi-business.module.version>

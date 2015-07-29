@@ -24,8 +24,8 @@ import java.util.List;
 public class AuthenticationService {
     private final Log log = LogFactory.getLog(AuthenticationService.class);
 
-    @Resource(name = "authenticationClientTomcat9")
-    private AuthenticationClient authenticationClientTomcat9;
+    @Resource(name = "authenticationClient")
+    private AuthenticationClient authenticationClient;
 
     @Resource
     private SubmissionContactDAO submissionContactDAO;
@@ -35,7 +35,7 @@ public class AuthenticationService {
         Submitter submitter = null;
         final List<AuthRealm> realms = Arrays.asList(new AuthRealm[]{AuthRealm.SRA});
         try {
-            AuthResult authResult = authenticationClientTomcat9.login(username, password, realms);
+            AuthResult authResult = authenticationClient.login(username, password, realms);
             submitter = getSubmissionAccountIdAndCreateSubmitter(authResult);
         }//If authentication failed
         catch (AuthException authException) {
@@ -48,7 +48,7 @@ public class AuthenticationService {
     public boolean logout(final String sessionId) {
         boolean result = false;
         try {
-            result = authenticationClientTomcat9.logout(sessionId);
+            result = authenticationClient.logout(sessionId);
         } catch (Exception ex) {
             log.info("Log out failed on both tomcat instances!\n" + ex);
         }
