@@ -39,4 +39,12 @@ public class DownloadTest {
         }
     }
 
+    @Test(expected=IllegalStateException.class)
+    public void testDownloadLinksNotAvailable() {
+
+        // Test input directory does not exist
+        List<DownloadLink> links = DownloadStudyController.getDownloadLinks(null);
+        Assert.fail("The expected exception was not thrown");
+    }
+
 }

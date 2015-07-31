@@ -108,6 +108,9 @@ public class Study implements SecureEntity {
     @Column(name = "AUTHOR_EMAIL", length = 100)
     private String authorEmailAddress;
 
+    @Column(name = "RESULT_DIRECTORY", length = 100, nullable = false)
+    private String resultDirectory;
+
     @Transient
     private Long sampleSize;
 
@@ -341,6 +344,14 @@ public class Study implements SecureEntity {
         this.authorEmailAddress = authorEmailAddress;
     }
 
+    public String getResultDirectory() {
+        return resultDirectory;
+    }
+
+    public void setResultDirectory(String resultDirectory) {
+        this.resultDirectory = resultDirectory;
+    }
+
     public Long getSampleSize() {
         return sampleSize;
     }
@@ -372,6 +383,7 @@ public class Study implements SecureEntity {
         if (!studyName.equals(study.studyName)) return false;
         if (!studyPageURL.equals(study.studyPageURL)) return false;
         if (studyStatus != study.studyStatus) return false;
+        if (!resultDirectory.equals(study.resultDirectory)) return false;
 
         return true;
     }
@@ -394,6 +406,7 @@ public class Study implements SecureEntity {
         result = 31 * result + (experimentalFactor == null ? 0 : experimentalFactor.hashCode());
         result = 31 * result + (isPublic ? 1 : 0);
         result = 31 * result + (studyPageURL == null ? 0 : studyPageURL.hashCode());
+        result = 31 * result + (resultDirectory == null ? 0 : resultDirectory.hashCode());
         return result;
     }
 
