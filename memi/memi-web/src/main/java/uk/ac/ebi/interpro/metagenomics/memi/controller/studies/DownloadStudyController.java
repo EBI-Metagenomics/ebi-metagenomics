@@ -9,9 +9,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.controller.MGPortalURLCollection;
 import uk.ac.ebi.interpro.metagenomics.memi.controller.ModelProcessingStrategy;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.AnalysisJobDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
+import uk.ac.ebi.interpro.metagenomics.memi.services.FileExistenceChecker;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.DownloadLink;
 
+import javax.annotation.Resource;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,6 +27,9 @@ import java.util.List;
 public class DownloadStudyController extends AbstractStudyViewController {
 
     private static final Log log = LogFactory.getLog(DownloadStudyController.class);
+
+    @Resource
+    protected AnalysisJobDAO analysisJobDAO;
 
     protected String getModelViewName() {
         return "tabs/study/download";
@@ -54,15 +60,36 @@ public class DownloadStudyController extends AbstractStudyViewController {
 
         model.addAttribute("study", study);
 
-        // TODO Don't hardcode this - build correct URL from analysis_job tables result_directory!
-        String direcotryLocation = "~/Projects/EBI_Metagenomics_dev/ebi-metagenomics/memi-web/src/test/resources/uk/ac/ebi/interpro/metagenomics/memi/controller/studies/summary";
-        List<DownloadLink> downloadLinks = getDownloadLinks(new File(direcotryLocation));
+        final String rootPath = propertyContainer.getPathToAnalysisDirectory();
+        final String resultDirectoryAbsolute = rootPath + study.getResultDirectory();
 
-        model.addAttribute("downloadLinks", downloadLinks);
+        if (!FileExistenceChecker.checkFileExistence(new File(resultDirectoryAbsolute))) {
+            throw new IllegalStateException("Result directory for study " + study.getStudyId() + " not found");
+        }
+
+        final File v1 = new File(resultDirectoryAbsolute + "/version_1.0/project-summary");
+        if (FileExistenceChecker.checkFileExistence(v1)) {
+            final List<DownloadLink> downloadLinks = getDownloadLinks(v1);
+            if (downloadLinks != null && downloadLinks.size() > 0) {
+                model.addAttribute("downloadLinksV1", downloadLinks);
+            }
+        }
+
+        final File v2 = new File(resultDirectoryAbsolute + "/version_2.0/project-summary");
+        if (FileExistenceChecker.checkFileExistence(v2)) {
+            final List<DownloadLink> downloadLinks = getDownloadLinks(v2);
+            if (downloadLinks != null && downloadLinks.size() > 0) {
+                model.addAttribute("downloadLinksV2", downloadLinks);
+            }
+        }
     }
 
     public static List<DownloadLink> getDownloadLinks(final File summaryFilesDir) {
         // Check location exists and is a directory
+
+        if (summaryFilesDir == null) {
+            throw new IllegalStateException("Does not exist or is not a directory: NULL");
+        }
         if (!summaryFilesDir.isDirectory()) {
             throw new IllegalStateException("Does not exist or is not a directory: " + summaryFilesDir.getAbsolutePath());
         }
@@ -79,12 +106,12 @@ public class DownloadStudyController extends AbstractStudyViewController {
             final String filename = file.getName();
             StudySummaryFile studySummaryFile = StudySummaryFile.lookupFromFilename(filename);
             if (studySummaryFile == null) {
-                throw new IllegalStateException("Could not lookup study summary file deatils: " + filename);
+                throw new IllegalStateException("Could not lookup study summary file details: " + filename);
             }
 
             final String fileAbsolutePath = file.getAbsolutePath();
 
-            downloadLinks.add(new DownloadLink(studySummaryFile.getFilename(),
+            downloadLinks.add(new DownloadLink(filename,
                     studySummaryFile.getDescription(),
                     fileAbsolutePath,
                     true,
