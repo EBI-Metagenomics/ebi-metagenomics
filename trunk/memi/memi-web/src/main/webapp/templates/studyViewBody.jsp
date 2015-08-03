@@ -2,6 +2,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%--Page variable which is used several time within this page. Used for not specified study attributes.--%>
 <c:set var="notGivenId" value="(not given)"/>
 <c:set var="study" value="${model.study}"/>
@@ -148,7 +149,7 @@
 
             <table border="1" class="result">
                 <thead>
-                <tr>
+                <tr> <th scope="col" class="h_left">Sample Name</th>
                     <th scope="col">Sample ID</th>
                     <th scope="col">Run ID</th>
                     <th scope="col">Experiment type</th>
@@ -160,29 +161,32 @@
                 <c:set var="runCountLine" value="1"/>
                 <c:forEach var="run" items="${model.runs}" varStatus="status">
                     <tr>
-                        <!-- Only include the the sample ID once for all runs under that sample -->
-                        <c:if test="${runCountLine == 1}">
-                            <td id="ordered" rowspan="${run.runCount}" style="width:94px;">
-                                <c:if test="${!run.public}"><img alt="private"
-                                                                 src="${pageContext.request.contextPath}/img/icon_priv_private.gif">&nbsp;&nbsp;</c:if>
-                                <a href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${run.externalSampleId}"/>" title="${run.sampleName}" class="fl_uppercase_title">${run.externalSampleId}</a>
-                            </td>
-                        </c:if>
-                        <c:choose>
-                            <c:when test="${runCountLine == run.runCount}">
-                                <c:set var="runCountLine" value="1"/>
-                            </c:when>
-                            <c:otherwise>
-                                <c:set var="runCountLine" value="${runCountLine + 1}"/>
-                            </c:otherwise>
-                        </c:choose>
 
-                        <td style="width:94px;">
+                        <!-- Only include the the sample ID once for all runs under that sample -->
+
+
+                        <c:if test="${runCountLine == 1}">
+                            <td id="ordered" rowspan="${run.runCount}" class="h_left"><a href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${run.externalSampleId}"/>" title="Sample ${run.externalSampleId}" class="fl_uppercase_title">${run.sampleName} </a></td>
+                                                 <td rowspan="${run.runCount}" >
+                                                     <c:if test="${!run.public}"><img alt="private"
+                                                                                      src="${pageContext.request.contextPath}/img/icon_priv_private.gif">&nbsp;&nbsp;</c:if>
+                                                     ${run.externalSampleId}
+                                                 </td>
+                                             </c:if>
+                                             <c:choose>
+                                                 <c:when test="${runCountLine == run.runCount}">
+                                                     <c:set var="runCountLine" value="1"/>
+                                                 </c:when>
+                                                 <c:otherwise>
+                                                     <c:set var="runCountLine" value="${runCountLine + 1}"/>
+                                                 </c:otherwise>
+                                             </c:choose>
+                        <td >
                             <a title="Run ${run.externalRunIds}" href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${run.externalSampleId}/runs/${run.externalRunIds}/results/versions/${run.releaseVersion}"/>">
                                     ${run.externalRunIds}
                             </a>
                         </td>
-                        <td>${run.experimentType}</td>
+                        <td class="fl_capitalize">${run.experimentType}</td>
                         <td style="width:60px;">
                             <a href="<c:url value="${baseURL}/pipelines/${run.releaseVersion}"/>" title="Pipeline version ${run.releaseVersion}">${run.releaseVersion}</a>
                         </td>
@@ -191,7 +195,7 @@
                                href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${run.externalSampleId}/runs/${run.externalRunIds}/results/versions/${run.releaseVersion}#ui-id-6"/>">Taxonomy </a>|
                             <a title="Function analysis" class="list_sample"
                                href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${run.externalSampleId}/runs/${run.externalRunIds}/results/versions/${run.releaseVersion}#ui-id-8"/>">Function </a>|
-                            <a title="download results"
+                            <a title="Download results"
                                class="icon icon-functional list_sample" data-icon="="
                                href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${run.externalSampleId}/runs/${run.externalRunIds}/results/versions/${run.releaseVersion}#ui-id-10"/>"></a>
                         </td>
