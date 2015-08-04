@@ -2,6 +2,7 @@ package uk.ac.ebi.interpro.metagenomics.memi.model.hibernate;
 
 
 import javax.persistence.*;
+import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -345,7 +346,7 @@ public class Study implements SecureEntity {
     }
 
     public String getResultDirectory() {
-        return resultDirectory;
+        return resultDirectory.replaceAll("\\/", File.separator);
     }
 
     public void setResultDirectory(String resultDirectory) {
