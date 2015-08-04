@@ -346,7 +346,7 @@ public class Study implements SecureEntity {
     }
 
     public String getResultDirectory() {
-        return resultDirectory.replaceAll("\\/", File.separator);
+        return resultDirectory.replace("/", File.separator);
     }
 
     public void setResultDirectory(String resultDirectory) {
