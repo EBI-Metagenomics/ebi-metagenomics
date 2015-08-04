@@ -6,7 +6,7 @@
 <c:set var="notGivenId" value="(not given)"/>
 <c:set var="study" value="${model.study}"/>
 
-<div class="title_tab_p">
+<div class="title_tab_p extra_margin">
     <span class="subtitle">Project overview <span>(${study.studyId})</span></span>
     <h2 class="fl_uppercase_title">${study.studyName}</h2>
 </div>
