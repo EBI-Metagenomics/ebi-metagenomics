@@ -6,6 +6,12 @@
 <c:set var="notGivenId" value="(not given)"/>
 <c:set var="study" value="${model.study}"/>
 
+<div class="title_tab_p">
+    <span class="subtitle">Project overview <span>(${study.studyId})</span></span>
+    <h2 class="fl_uppercase_title">${study.studyName}</h2>
+</div>
+
+<div class="sample_ana">
 <div id="navtabs">
 
     <%--Main Tabs--%>
@@ -22,6 +28,7 @@
 
 </div>
 <%--end navtabs--%>
+</div>  <%--end sample_ana--%>
 
 <script type="text/javascript">
     $(function () {
@@ -57,6 +64,4 @@
         <%--//${model.analysisStatus.disabledOption}--%>
     });
 
-    //  Load the Visualization API and the chart package.
-    google.load('visualization', '1.0', {'packages':['corechart', 'table', 'controls'] });
 </script>
