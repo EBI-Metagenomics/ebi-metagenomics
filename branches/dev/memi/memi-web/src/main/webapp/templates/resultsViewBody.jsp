@@ -5,7 +5,7 @@
     <c:when test="${not empty model.sample}">
        <a href="<c:url value="${baseURL}/pipelines/${model.analysisJob.pipelineRelease.releaseVersion}"/>"> <div class="icon_pipeline_v anim" title="Data analysed with pipeline v.${model.analysisJob.pipelineRelease.releaseVersion}">Pipeline v.${model.analysisJob.pipelineRelease.releaseVersion}</div></a>
 
-        <h2 class="fl_uppercase_title run_title">Run id <span>${model.run.externalRunId}</span></h2>
+        <h2 class="fl_uppercase_title run_title extra_margin">Run id <span>${model.run.externalRunId}</span></h2>
 
 
 
