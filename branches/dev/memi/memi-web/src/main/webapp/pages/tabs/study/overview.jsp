@@ -9,10 +9,10 @@
 <%--<div id="fragment-overview">--%>
 <div id="project_ov">
 
-    <div class="title_tab_p">
-        <span class="subtitle">Project overview <span>(${study.studyId})</span></span>
-        <h2 class="fl_uppercase_title">${study.studyName}</h2>
-    </div>
+    <%--<div class="title_tab_p">--%>
+        <%--<span class="subtitle">Project overview <span>(${study.studyId})</span></span>--%>
+        <%--<h2 class="fl_uppercase_title">${study.studyName}</h2>--%>
+    <%--</div>--%>
 
     <tags:publications publications="${study.publications}" relatedPublications="${model.relatedPublications}" relatedLinks="${model.relatedLinks}" />
 
