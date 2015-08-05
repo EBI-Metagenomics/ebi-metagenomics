@@ -109,7 +109,7 @@ public class Study implements SecureEntity {
     @Column(name = "AUTHOR_EMAIL", length = 100)
     private String authorEmailAddress;
 
-    @Column(name = "RESULT_DIRECTORY", length = 100, nullable = false)
+    @Column(name = "RESULT_DIRECTORY", length = 100, nullable = true)
     private String resultDirectory;
 
     @Transient
@@ -346,6 +346,9 @@ public class Study implements SecureEntity {
     }
 
     public String getResultDirectory() {
+        if (resultDirectory == null) {
+            return null;
+        }
         return resultDirectory.replace("/", File.separator);
     }
 

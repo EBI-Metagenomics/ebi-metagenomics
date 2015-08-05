@@ -20,10 +20,12 @@
             <a title="Overview"
                href="<c:url value="${baseURL}/projects/${study.studyId}/overview"/>"><span>Overview</span></a>
         </li>
-        <li>
-            <a title="Download"
-               href="<c:url value="${baseURL}/projects/${study.studyId}/download"/>"><span>Download</span></a>
-        </li>
+        <c:if test="${not empty study.resultDirectory}">
+            <li>
+                <a title="Download"
+                   href="<c:url value="${baseURL}/projects/${study.studyId}/download"/>"><span>Download</span></a>
+            </li>
+        </c:if>
     </ul>
 
 </div>
