@@ -88,10 +88,12 @@ public class DownloadStudyController extends AbstractStudyViewController {
         // Check location exists and is a directory
 
         if (summaryFilesDir == null) {
-            throw new IllegalStateException("Does not exist or is not a directory: NULL");
+            //throw new IllegalStateException("Does not exist or is not a directory: NULL");
+            return null;
         }
         if (!summaryFilesDir.isDirectory()) {
-            throw new IllegalStateException("Does not exist or is not a directory: " + summaryFilesDir.getAbsolutePath());
+            //throw new IllegalStateException("Does not exist or is not a directory: " + summaryFilesDir.getAbsolutePath());
+            return null;
         }
 
         // Build list of download links (only include files with one of the expected names)
