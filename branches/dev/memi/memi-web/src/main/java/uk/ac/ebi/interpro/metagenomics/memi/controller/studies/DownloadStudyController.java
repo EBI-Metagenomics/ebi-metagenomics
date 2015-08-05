@@ -61,9 +61,7 @@ public class DownloadStudyController extends AbstractStudyViewController {
         model.addAttribute("study", study);
 
         final String rootPath = propertyContainer.getPathToAnalysisDirectory();
-        System.out.println("TEMP DEBUG1: " + rootPath);
         final String resultDirectoryAbsolute = rootPath + study.getResultDirectory();
-        System.out.println("TEMP DEBUG2: " + resultDirectoryAbsolute);
 
         if (!FileExistenceChecker.checkFileExistence(new File(resultDirectoryAbsolute))) {
             throw new IllegalStateException("Result directory for study " + study.getStudyId() + " not found");
