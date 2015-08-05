@@ -67,7 +67,7 @@ public class DownloadStudyController extends AbstractStudyViewController {
             throw new IllegalStateException("Result directory for study " + study.getStudyId() + " not found");
         }
 
-        final File v1 = new File(resultDirectoryAbsolute + "/version_1.0/project-summary");
+        final File v1 = new File(resultDirectoryAbsolute + File.separator + "version_1.0" + File.separator + "project-summary");
         if (FileExistenceChecker.checkFileExistence(v1)) {
             final List<DownloadLink> downloadLinks = getDownloadLinks(v1);
             if (downloadLinks != null && downloadLinks.size() > 0) {
@@ -75,7 +75,7 @@ public class DownloadStudyController extends AbstractStudyViewController {
             }
         }
 
-        final File v2 = new File(resultDirectoryAbsolute + "/version_2.0/project-summary");
+        final File v2 = new File(resultDirectoryAbsolute + File.separator + "version_2.0" + File.separator + "project-summary");
         if (FileExistenceChecker.checkFileExistence(v2)) {
             final List<DownloadLink> downloadLinks = getDownloadLinks(v2);
             if (downloadLinks != null && downloadLinks.size() > 0) {
