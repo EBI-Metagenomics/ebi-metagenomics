@@ -1,3 +1,4 @@
+Engineered	Biogas plant	Wet fermentation	Unclassified	Unclassified
 Engineered	Bioreactor	Continuous culture	Marine intertidal flat sediment inoculum	Wadden Sea-Germany
 Engineered	Bioreactor	Continuous culture	Marine sediment inoculum	Wadden Sea-Germany
 Engineered	Bioreactor	Continuous culture	Unclassified	Unclassified
@@ -66,15 +67,18 @@ Engineered	Wastewater	Nutrient removal	Dissolved organics (anaerobic)	Unclassifi
 Engineered	Wastewater	Nutrient removal	Nitrogen removal	Anammox
 Engineered	Wastewater	Nutrient removal	Nitrogen removal	Unclassified
 Engineered	Wastewater	Nutrient removal	Unclassified	Unclassified
+Engineered	Wastewater	Water and sludge	Unclassified	Unclassified
 Engineered	Wastewater	Unclassified	Unclassified	Unclassified
 Environmental	Air	Indoor Air	Unclassified	Unclassified
 Environmental	Air	Outdoor Air	Unclassified	Unclassified
 Environmental	Air	Unclassified	Unclassified	Unclassified
 Environmental	Aquatic	Aquaculture	Unclassified	Unclassified
+Environmental	Aquatic	Estuary	Sediment	Unclassified
 Environmental	Aquatic	Freshwater	Drinking water	Chlorinated
 Environmental	Aquatic	Freshwater	Drinking water	Delivery networks
 Environmental	Aquatic	Freshwater	Drinking water	Unclassified
 Environmental	Aquatic	Freshwater	Groundwater	Acid Mine Drainage
+Environmental	Aquatic	Freshwater	Groundwater	Biofilm
 Environmental	Aquatic	Freshwater	Groundwater	Cave water
 Environmental	Aquatic	Freshwater	Groundwater	Coalbed water
 Environmental	Aquatic	Freshwater	Groundwater	Contaminated
@@ -92,7 +96,9 @@ Environmental	Aquatic	Freshwater	Lentic	Limnetic zone
 Environmental	Aquatic	Freshwater	Lentic	Littoral zone
 Environmental	Aquatic	Freshwater	Lentic	Sediment
 Environmental	Aquatic	Freshwater	Lentic	Unclassified
+Environmental	Aquatic	Freshwater	Lotic	Acidic
 Environmental	Aquatic	Freshwater	Lotic	Low land river systems
+Environmental	Aquatic	Freshwater	Lotic	Microbial mats
 Environmental	Aquatic	Freshwater	Lotic	Mid stream
 Environmental	Aquatic	Freshwater	Lotic	Sediment
 Environmental	Aquatic	Freshwater	Lotic	Unclassified
@@ -109,6 +115,8 @@ Environmental	Aquatic	Freshwater	Wetlands	Marsh
 Environmental	Aquatic	Freshwater	Wetlands	Sediment
 Environmental	Aquatic	Freshwater	Wetlands	Swamp
 Environmental	Aquatic	Freshwater	Wetlands	Unclassified
+Environmental	Aquatic	Lentic	Brackish	Unclassified
+Environmental	Aquatic	Marine	Brackish	Unclassified
 Environmental	Aquatic	Marine	Coastal	Sediment
 Environmental	Aquatic	Marine	Coastal	Unclassified
 Environmental	Aquatic	Marine	Cold seeps	Sediment
@@ -140,6 +148,7 @@ Environmental	Aquatic	Marine	Oceanic	Oil-contaminated sediments
 Environmental	Aquatic	Marine	Oceanic	Photic zone
 Environmental	Aquatic	Marine	Oceanic	Sediment
 Environmental	Aquatic	Marine	Oceanic	Unclassified
+Environmental	Aquatic	Marine	Oil field	bore hole
 Environmental	Aquatic	Marine	Oil seeps	Unclassified
 Environmental	Aquatic	Marine	Pelagic	Unclassified
 Environmental	Aquatic	Marine	Unclassified	Oil-contaminated sediment
@@ -148,6 +157,7 @@ Environmental	Aquatic	Marine	Unclassified	Unclassified
 Environmental	Aquatic	Marine	Volcanic	Unclassified
 Environmental	Aquatic	Marine	Wetlands	Sediment
 Environmental	Aquatic	Marine	Wetlands	Unclassified
+Environmental	Aquatic	Meromictic lake	Unclassified	Unclassified
 Environmental	Aquatic	Non-marine Saline and Alkaline	Alkaline	Carbonate
 Environmental	Aquatic	Non-marine Saline and Alkaline	Alkaline	Microbial mats
 Environmental	Aquatic	Non-marine Saline and Alkaline	Alkaline	Sediment
@@ -240,6 +250,8 @@ Host-associated	Amphibia	Unclassified	Unclassified	Unclassified
 Host-associated	Animal	Circulatory system	Unclassified	Unclassified
 Host-associated	Animal	Digestive system	Fecal	Unclassified
 Host-associated	Animal	Digestive system	Unclassified	Unclassified
+Host-associated	Animal	Fossil	Bone	Unclassified
+Host-associated	Animal	Fossil	Feces	Unclassified
 Host-associated	Animal	Reproductive system	Unclassified	Unclassified
 Host-associated	Animal	Respiratory system	Unclassified	Unclassified
 Host-associated	Animal	Skin	Unclassified	Unclassified
@@ -261,17 +273,20 @@ Host-associated	Arthropoda	Digestive system	Hindgut	P1 segment
 Host-associated	Arthropoda	Digestive system	Hindgut	P3 segment
 Host-associated	Arthropoda	Digestive system	Hindgut	Unclassified
 Host-associated	Arthropoda	Digestive system	Midgut	Unclassified
+Host-associated	Arthropoda	Digestive system	Oral	Saliva
 Host-associated	Arthropoda	Digestive system	Unclassified	Unclassified
 Host-associated	Arthropoda	Integument	Cuticle	Thoracic segments
 Host-associated	Arthropoda	Integument	Cuticle	Unclassified
 Host-associated	Arthropoda	Intracellular endosymbionts	Primary	Bacteriomes
 Host-associated	Arthropoda	Intracellular endosymbionts	Secondary	Unclassified
 Host-associated	Arthropoda	Intracellular endosymbionts	Unclassified	Unclassified
+Host-associated	Arthropoda	Oral cavity	Unclassified	Unclassified
 Host-associated	Arthropoda	Respiratory system	Gills	Unclassified
 Host-associated	Arthropoda	Symbiotic fungal gardens and galleries	Fungus gallery	Unclassified
 Host-associated	Arthropoda	Symbiotic fungal gardens and galleries	Fungus garden	Garden dump
 Host-associated	Arthropoda	Symbiotic fungal gardens and galleries	Fungus garden	Unclassified
-Host-associated	Arthropoda	Symbiotic fungal gardens and galleries	Unclassified	Unclassified
+Host-associated	Arthropoda	Symbiotic fungal gardens and galleries  Unclassified	Unclassified
+Host-associated	Arthropoda	Venom gland	Venom	Unclassified
 Host-associated	Arthropoda	Unclassified	Unclassified	Unclassified
 Host-associated	Birds	Circulatory system	Blood	Unclassified
 Host-associated	Birds	Digestive system	Ceca	Lumen
@@ -320,6 +335,7 @@ Host-associated	Human	Digestive system	Oral	Unclassified
 Host-associated	Human	Digestive system	Unclassified	Unclassified
 Host-associated	Human	Excretory system	Unclassified	Unclassified
 Host-associated	Human	Excretory system	Urethra	Urine
+Host-associated	Human	Fossil	Bone	Unclassified
 Host-associated	Human	Lympathic system	Lymph nodes	Unclassified
 Host-associated	Human	Milk	Unclassified	Unclassified
 Host-associated	Human	Nervous system	Cerebrospinal fluid	Unclassified
@@ -331,8 +347,10 @@ Host-associated	Human	Reproductive system	Vagina	Midpoint vagina
 Host-associated	Human	Reproductive system	Vagina	posterior fornix
 Host-associated	Human	Reproductive system	Vagina	Unclassified
 Host-associated	Human	Respiratory system	Nasopharyngeal	anterior nares
+Host-associated	Human	Respiratory system	Nasopharyngeal	Nasal cavity
 Host-associated	Human	Respiratory system	Nasopharyngeal	Pharynx
 Host-associated	Human	Respiratory system	Nasopharyngeal	Unclassified
+Host-associated	Human	Respiratory system	Pulmonary system	Lung
 Host-associated	Human	Respiratory system	Pulmonary system	Sputum
 Host-associated	Human	Respiratory system	Pulmonary system	Trachea
 Host-associated	Human	Respiratory system	Pulmonary system	Unclassified
@@ -368,7 +386,7 @@ Host-associated	Mammals	Digestive system	Stomach	Endoperitrophic space
 Host-associated	Mammals	Digestive system	Stomach	Rumen
 Host-associated	Mammals	Digestive system	Stomach	Unclassified
 Host-associated	Mammals	Digestive system	Unclassified	Unclassified
-Host-associated	Mammals	Excretory system	Unclassified	Unclassified
+Host-associated	Mammals	Excretory system	Urine	Unclassified
 Host-associated	Mammals	Gastrointestinal tract	Intestine	Fecal
 Host-associated	Mammals	Gastrointestinal tract	Intestine	Unclassified
 Host-associated	Mammals	Gastrointestinal tract	Unclassified	Unclassified
@@ -408,11 +426,14 @@ Host-associated	Plants	Rhizosphere	Epiphytes	Unclassified
 Host-associated	Plants	Rhizosphere	Soil	Unclassified
 Host-associated	Plants	Rhizosphere	Unclassified	Forest soil
 Host-associated	Plants	Rhizosphere	Unclassified	Unclassified
+Host-associated	Plants	Root	Unclassified	Unclassified
 Host-associated	Plants	Unclassified	Unclassified	Unclassified
 Host-associated	Porifera	Unclassified	Unclassified	Unclassified
 Host-associated	Protists	Unclassified	Unclassified	Unclassified
 Host-associated	Protozoa	Unclassified	Unclassified	Unclassified
-Host-associated	Reptilia	Unclassified	Unclassified	Unclassified
+Host-associated	Reptile	Oral cavity	Venom gland	Venom
+Host-associated	Spiralia	Unclassified	Unclassified	Unclassified
 Host-associated	Tunicates	Ascidians	Unclassified	Unclassified
 Host-associated	Tunicates	Unclassified	Unclassified	Unclassified
 Host-associated	Unclassified	Unclassified	Unclassified	Unclassified
+Control	Unclassified	Unclassified	Unclassified	Unclassified
