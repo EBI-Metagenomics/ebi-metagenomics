@@ -64,19 +64,19 @@ public class StudyDownloadViewModelBuilder extends AbstractViewModelBuilder<Down
 
     private Map<String, DownloadSection> buildDownloadSection(final Map<String, DownloadableFileDefinition> fileDefinitionsMap,
                                                               final Study study) {
-        final boolean studyIsPublic = study.isPublic();
         final Map<String, DownloadSection> downloadSectionMap = new HashMap<String, DownloadSection>();
 
         final String rootPath = propertyContainer.getPathToAnalysisDirectory();
         final String resultDirectoryAbsolute = rootPath + study.getResultDirectory();
+        final File rootDir = new File(resultDirectoryAbsolute);
 
-        if (!FileExistenceChecker.checkFileExistence(new File(resultDirectoryAbsolute))) {
+        if (!FileExistenceChecker.checkFileExistence(rootDir)) {
             throw new IllegalStateException("Result directory for study " + study.getStudyId() + " not found");
         }
 
         final File v2 = new File(resultDirectoryAbsolute + File.separator + "version_2.0" + File.separator + "project-summary");
         if (FileExistenceChecker.checkFileExistence(v2)) {
-            final DownloadSection downloadLinks = getDownloadLinks(v2);
+            final DownloadSection downloadLinks = getDownloadLinks(rootDir, study.getStudyId(), "2.0");
             if (downloadLinks != null && (downloadLinks.getFuncAnalysisDownloadLinks().size() > 0 || downloadLinks.getTaxaAnalysisDownloadLinks().size() > 0)) {
                 downloadSectionMap.put("2.0", downloadLinks);
             }
@@ -84,7 +84,7 @@ public class StudyDownloadViewModelBuilder extends AbstractViewModelBuilder<Down
 
         final File v1 = new File(resultDirectoryAbsolute + File.separator + "version_1.0" + File.separator + "project-summary");
         if (FileExistenceChecker.checkFileExistence(v1)) {
-            final DownloadSection downloadLinks = getDownloadLinks(v1);
+            final DownloadSection downloadLinks = getDownloadLinks(rootDir, study.getStudyId(), "1.0");
             if (downloadLinks != null && (downloadLinks.getFuncAnalysisDownloadLinks().size() > 0 || downloadLinks.getTaxaAnalysisDownloadLinks().size() > 0)) {
                 downloadSectionMap.put("1.0", downloadLinks);
             }
@@ -93,61 +93,59 @@ public class StudyDownloadViewModelBuilder extends AbstractViewModelBuilder<Down
         return downloadSectionMap;
     }
 
-    public static DownloadSection getDownloadLinks(final File summaryFilesDir) {
+    public static DownloadSection getDownloadLinks(final File resultDirectoryAbsolute, final String studyId, final String version) {
         // Check location exists and is a directory
 
-        if (summaryFilesDir == null) {
-            //throw new IllegalStateException("Does not exist or is not a directory: NULL");
-            return null;
-        }
-        if (!summaryFilesDir.isDirectory()) {
-            //throw new IllegalStateException("Does not exist or is not a directory: " + summaryFilesDir.getAbsolutePath());
+        if (resultDirectoryAbsolute == null || studyId == null || version == null) {
             return null;
         }
 
-        // Build list of download links (only include files with one of the expected names)
-        final List<DownloadLink> funcDownloadLinks = new ArrayList<DownloadLink>();
-        final List<DownloadLink> taxaDownloadLinks = new ArrayList<DownloadLink>();
+        final File summaryFilesDir = new File(resultDirectoryAbsolute + File.separator + "version_" + version + File.separator + "project-summary");
+        if (FileExistenceChecker.checkFileExistence(summaryFilesDir) && summaryFilesDir.isDirectory()) {
 
-        File[] files = summaryFilesDir.listFiles(new StudySummaryFileFilter());
-        for (int i = 0; i < files.length; i++) {
-            File file = files[i];
-            if (!file.isFile()) {
-                throw new IllegalStateException("Does not exist or is not a file: " + file.getAbsolutePath());
-            }
+            // Build list of download links (only include files with one of the expected names)
+            final List<DownloadLink> funcDownloadLinks = new ArrayList<DownloadLink>();
+            final List<DownloadLink> taxaDownloadLinks = new ArrayList<DownloadLink>();
 
-            final String filename = file.getName();
-            StudySummaryFile studySummaryFile = StudySummaryFile.lookupFromFilename(filename);
-            if (studySummaryFile == null) {
-                throw new IllegalStateException("Could not lookup study summary file details: " + filename);
-            }
+            File[] files = summaryFilesDir.listFiles(new StudySummaryFileFilter());
+            for (int i = 0; i < files.length; i++) {
+                File file = files[i];
+                if (!file.isFile()) {
+                    throw new IllegalStateException("Does not exist or is not a file: " + file.getAbsolutePath());
+                }
 
-            final String fileAbsolutePath = file.getAbsolutePath();
+                final String filename = file.getName();
+                StudySummaryFile studySummaryFile = StudySummaryFile.lookupFromFilename(filename);
+                if (studySummaryFile == null) {
+                    throw new IllegalStateException("Could not lookup study summary file details: " + filename);
+                }
 
-            if (studySummaryFile.getCategory().equalsIgnoreCase("func")) {
-                funcDownloadLinks.add(new DownloadLink(filename,
-                        studySummaryFile.getDescription(),
-                        fileAbsolutePath,
-                        true,
-                        studySummaryFile.getFileOrder()));
+                if (studySummaryFile.getCategory().equalsIgnoreCase("func")) {
+                    funcDownloadLinks.add(new DownloadLink(filename,
+                            studySummaryFile.getDescription(),
+                            "projects/" + studyId + "/download/" + version + "/export?contentType=text&amp;exportValue=" + studySummaryFile.getFilename(),
+                            true,
+                            studySummaryFile.getFileOrder(),
+                            getFileSize(file)));
+                } else if (studySummaryFile.getCategory().equalsIgnoreCase("taxa")) {
+                    taxaDownloadLinks.add(new DownloadLink(filename,
+                            studySummaryFile.getDescription(),
+                            "projects/" + studyId + "/download/" + version + "/export?contentType=text&amp;exportValue=" + studySummaryFile.getFilename(),
+                            true,
+                            studySummaryFile.getFileOrder(),
+                            getFileSize(file)));
+                } else {
+                    log.warn("Project summary file did not have an expected category, it had: " + studySummaryFile.getCategory());
+                }
             }
-            else if (studySummaryFile.getCategory().equalsIgnoreCase("taxa")) {
-                taxaDownloadLinks.add(new DownloadLink(filename,
-                        studySummaryFile.getDescription(),
-                        fileAbsolutePath,
-                        true,
-                        studySummaryFile.getFileOrder()));
-            }
-            else {
-                log.warn("Project summary file did not have an expected category, it had: " + studySummaryFile.getCategory());
-            }
+            Collections.sort(funcDownloadLinks, DownloadLink.DownloadLinkComparator);
+            Collections.sort(taxaDownloadLinks, DownloadLink.DownloadLinkComparator);
+            return new DownloadSection(funcDownloadLinks, taxaDownloadLinks);
         }
-        Collections.sort(funcDownloadLinks, DownloadLink.DownloadLinkComparator);
-        Collections.sort(taxaDownloadLinks, DownloadLink.DownloadLinkComparator);
-        return new DownloadSection(funcDownloadLinks, taxaDownloadLinks);
+        return null;
     }
 
-    private String getFileSize(final File file) {
+    private static String getFileSize(final File file) {
         if (file.canRead()) {
             long fileLength = file.length();
             long cutoff = 1024 * 1024;

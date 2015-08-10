@@ -56,14 +56,14 @@ public final class FileObjectBuilder {
 
         //e.g. <rootDirPathName>/ERR071289_FASTQ_I5.tsv
         if (fileNameEnding != null && relativePath == null) {
-            return new File(resultDirectoryAbsolute + '/' + inputFileName + fileNameEnding);
+            return new File(resultDirectoryAbsolute + File.separator + inputFileName + fileNameEnding);
 
         }//e.g. <rootDirPathName>/otus/rep_set.tre
         else if (fileNameEnding == null && relativePath != null) {
             return new File(resultDirectoryAbsolute + relativePath);
         } //e.g. <rootDirPathName>/otus/rdp_assigned_taxonomy/ERR071289_FASTQ__rRNAFiltered.fasta_rep_set_tax_assignments.txt
         else if (fileNameEnding != null && relativePath != null) {
-            return new File(resultDirectoryAbsolute + relativePath + '/' + inputFileName + fileNameEnding);
+            return new File(resultDirectoryAbsolute + relativePath + File.separator + inputFileName + fileNameEnding);
         } else {
             //This case is not supported
             log.warn("Result file definition misconfigured!");

@@ -22,12 +22,12 @@ public class DownloadTest {
     public void testDownloadLinks() {
 
         // Setup test input directory
-        final String testResourceLocation = "uk/ac/ebi/interpro/metagenomics/memi/controller/studies/summary";
+        final String testResourceLocation = "uk/ac/ebi/interpro/metagenomics/memi/controller/studies/summary/ERP1";
         final String extraFile = "extra-file.txt";
         final File summaryFilesDir = new File(classLoader.getResource(testResourceLocation).getFile());
 
         // Get links
-        final DownloadSection downloadSection = StudyDownloadViewModelBuilder.getDownloadLinks(summaryFilesDir);
+        final DownloadSection downloadSection = StudyDownloadViewModelBuilder.getDownloadLinks(summaryFilesDir, "ERP1", "1.0");
 
         // Check results
         Assert.assertNotNull(downloadSection);
@@ -54,7 +54,7 @@ public class DownloadTest {
 
     public void testDownloadLinksNotAvailable() {
         // Test input directory does not exist
-        DownloadSection downloadSection = StudyDownloadViewModelBuilder.getDownloadLinks(null);
+        DownloadSection downloadSection = StudyDownloadViewModelBuilder.getDownloadLinks(null, null, null);
         Assert.assertNull(downloadSection);
     }
 
