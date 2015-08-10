@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.controller.MGPortalURLCollection;
 import uk.ac.ebi.interpro.metagenomics.memi.controller.ModelProcessingStrategy;
@@ -13,12 +14,18 @@ import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.AnalysisJobDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.exceptionHandling.EntryNotFoundException;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
+import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.study.DownloadViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.study.StudyDownloadViewModelBuilder;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.IOException;
+import java.util.Locale;
 
 /**
  * Download tab on the project page.
@@ -30,6 +37,10 @@ public class DownloadStudyController extends AbstractStudyViewController {
 
     @Resource
     protected AnalysisJobDAO analysisJobDAO;
+
+    @Resource
+    private MemiDownloadService downloadService;
+
 
     protected String getModelViewName() {
         return "tabs/study/download";
@@ -77,4 +88,44 @@ public class DownloadStudyController extends AbstractStudyViewController {
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, downloadViewModel);
 
     }
+
+    //TODO
+    @RequestMapping(value = MGPortalURLCollection.PROJECT_SUMMARY_EXPORT)
+    public void doHandleSummaryExports(@PathVariable final String studyId,
+                                        @PathVariable final String releaseVersion,
+                                        @RequestParam(required = true, value = "exportValue") final String exportValue,
+                                        final HttpServletResponse response,
+                                        final HttpServletRequest request) throws IOException {
+        response.setContentType("text/html;charset=utf-8");
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.setLocale(Locale.ENGLISH);
+
+        Study study = getSecuredEntity(studyId);
+
+        if (study != null) {
+            if (isAccessible(study)) {
+                File file = getDownloadFile(study, "1.0", exportValue);
+                if (file != null) {
+                    downloadService.openDownloadDialog(response, request, file, exportValue + "_v" + releaseVersion.substring(0, 1) + ".tsv" ,false);
+                } else {//analysis job is NULL
+                    response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+                }
+            } else {//access denied
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.sendRedirect("/metagenomics/projects/" + studyId + "/accessDenied");
+            }
+        } else {//run is NULL
+            response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+        }
+    }
+
+    private File getDownloadFile(final Study study, final String version, final String exportValue) {
+        final String rootPath = propertyContainer.getPathToAnalysisDirectory();
+        final String resultDirectoryAbsolute = rootPath + study.getResultDirectory();
+
+        final File file = new File(resultDirectoryAbsolute + File.separator + "version_" + version + File.separator + "project-summary" + File.separator + exportValue + "_v" + version.substring(0, 1) + ".tsv");
+        return file;
+    }
+
+
 }

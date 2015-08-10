@@ -77,7 +77,8 @@ public final class MGPortalURLCollection {
     //Project page, download tab
     public final static String PROJECT_DOWNLOAD = PROJECT + "/download";
 
-    public final static String PROJECT_EXPORT = "/projects/{studyId}/export";
+
+    public final static String PROJECT_SUMMARY_EXPORT = PROJECT_DOWNLOAD + "/{releaseVersion}/export";
 
     //Google image export function (for PNG and SVG) on the taxonomy and functional tab
     //POST request
