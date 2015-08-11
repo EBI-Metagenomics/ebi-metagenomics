@@ -106,7 +106,7 @@ public class DownloadStudyController extends AbstractStudyViewController {
             if (isAccessible(study)) {
                 File file = getDownloadFile(study, "1.0", exportValue);
                 if (file != null) {
-                    downloadService.openDownloadDialog(response, request, file, exportValue + "_v" + releaseVersion.substring(0, 1) + ".tsv" ,false);
+                    downloadService.openDownloadDialog(response, request, file, exportValue + "_v" + releaseVersion.substring(0, releaseVersion.indexOf('.')) + ".tsv" ,false);
                 } else {//analysis job is NULL
                     response.setStatus(HttpServletResponse.SC_NO_CONTENT);
                 }
@@ -123,7 +123,7 @@ public class DownloadStudyController extends AbstractStudyViewController {
         final String rootPath = propertyContainer.getPathToAnalysisDirectory();
         final String resultDirectoryAbsolute = rootPath + study.getResultDirectory();
 
-        final File file = new File(resultDirectoryAbsolute + File.separator + "version_" + version + File.separator + "project-summary" + File.separator + exportValue + "_v" + version.substring(0, 1) + ".tsv");
+        final File file = new File(resultDirectoryAbsolute + File.separator + "version_" + version + File.separator + "project-summary" + File.separator + exportValue + "_v" + version.substring(0, version.indexOf('.')) + ".tsv");
         return file;
     }
 
