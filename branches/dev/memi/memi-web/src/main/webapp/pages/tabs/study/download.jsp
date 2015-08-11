@@ -13,7 +13,7 @@
                     <li>
                         <a href="<c:url value="${baseURL}/${downloadLink.linkURL}"/>"
                            title="${downloadLink.linkTitle}">${downloadLink.linkTitle}</a>
-                            ${downloadLink.linkText}
+                            <%--${downloadLink.linkText}--%>
                                 <span
                                         class="list_date"> - ${downloadLink.fileSize}</span>
                     </li>
@@ -25,7 +25,7 @@
                     <li>
                         <a href="<c:url value="${baseURL}/${downloadLink.linkURL}"/>"
                            title="${downloadLink.linkTitle}">${downloadLink.linkTitle}</a>
-                            ${downloadLink.linkText}
+                            <%--${downloadLink.linkText}--%>
                                 <span
                                         class="list_date"> - ${downloadLink.fileSize}</span>
                     </li>
