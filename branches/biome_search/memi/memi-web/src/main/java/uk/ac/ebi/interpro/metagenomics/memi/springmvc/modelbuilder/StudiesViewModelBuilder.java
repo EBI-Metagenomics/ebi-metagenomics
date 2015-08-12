@@ -185,6 +185,17 @@ public class StudiesViewModelBuilder extends AbstractBiomeViewModelBuilder<Studi
             else if (filter.getBiome().equals(StudyFilter.Biome.HOST_ASSOCIATED)) {
                 biomeIds.addAll(super.getBiomeIdsByLineage(biomeDAO, StudyFilter.Biome.HOST_ASSOCIATED.getLineages()));
             }
+            // All Non-human hosts
+            else if (filter.getBiome().equals(StudyFilter.Biome.NON_HUMAN_HOST)) {
+                List<Integer> biomeIdsForHumanHost = super.getBiomeIdsByLineage(biomeDAO, StudyFilter.Biome.HUMAN_HOST.getLineages());
+                List<Integer> biomeIdsForAllHosts = super.getBiomeIdsByLineage(biomeDAO, StudyFilter.Biome.HOST_ASSOCIATED.getLineages());
+
+                //human host is a subset of all hosts
+                //so to get all non human host we remove all human host identifiers from the set of all hosts
+                biomeIds.addAll(biomeIdsForAllHosts);
+                biomeIds.removeAll(biomeIdsForHumanHost);
+            }
+
             crits.add(Restrictions.in("biome.biomeId", biomeIds));
         }
         //add is public and submitter identifier criteria

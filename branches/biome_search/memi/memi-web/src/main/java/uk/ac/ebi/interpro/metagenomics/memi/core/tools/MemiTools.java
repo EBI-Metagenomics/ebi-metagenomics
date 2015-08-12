@@ -2,8 +2,8 @@ package uk.ac.ebi.interpro.metagenomics.memi.core.tools;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.EmgLogFileInfoDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.BiomeDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.StudyFilter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Biome;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
@@ -82,20 +82,18 @@ public class MemiTools {
                 MemiTools.biomeIconMap.put(biome.getBiomeId(), "marine_b");
             } else if (biomeName.equalsIgnoreCase("Soil")) {
                 MemiTools.biomeIconMap.put(biome.getBiomeId(), "soil_b");
-            } else if (biomeName.equalsIgnoreCase("wastewater_b")) {
-
+            } else if (biomeName.equalsIgnoreCase("Wastewater")) {
+                MemiTools.biomeIconMap.put(biome.getBiomeId(), "wastewater_b");
             }
         }
         // add grassland biomes
-        biomes = biomeDAO.readByLineages("root:Environmental:Terrestrial:Soil:Grasslands", "root:Environmental:Terrestrial:Soil:Sand:Grasslands",
-                "root:Environmental:Terrestrial:Soil:Loam:Grasslands", "root:Environmental:Terrestrial:Soil:Clay:Grasslands");
+        biomes = biomeDAO.readByLineages(StudyFilter.Biome.GRASSLAND.getLineages());
         for (Biome biome : biomes) {
             MemiTools.biomeIconMap.put(biome.getBiomeId(), "grassland_b");
         }
 
         // add forest soil biomes
-        biomes = biomeDAO.readByLineages("root:Environmental:Terrestrial:Soil:Loam:Forest Soil", "root:Environmental:Terrestrial:Soil:Sand:Forest soil",
-                "root:Environmental:Terrestrial:Soil:Forest Soil");
+        biomes = biomeDAO.readByLineages(StudyFilter.Biome.FOREST_SOIL.getLineages());
         for (Biome biome : biomes) {
             MemiTools.biomeIconMap.put(biome.getBiomeId(), "forest_b");
         }
@@ -128,14 +126,6 @@ public class MemiTools {
         Date date = new Date();
         final String infix = dateFormatter.format(date);
         return fileName + infix + suffix;
-    }
-
-    public static List<String> getArchivedSeqs(EmgLogFileInfoDAO fileInfoDAO, Sample sample) {
-        List<String> result = new ArrayList<String>();
-        if (fileInfoDAO != null && sample != null) {
-            result = fileInfoDAO.getSraIDs(sample.getId());
-        }
-        return result;
     }
 
     /**
