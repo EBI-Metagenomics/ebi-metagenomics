@@ -393,7 +393,7 @@ table.result {line-height: 1.2em; border-collapse:separate; width:100%; border-s
 table.result tbody tr:hover {
 /*background: url(../img/bgd_noise_trans.gif);  */
 /*background: url(../img/bgd_stripe_50_8.png);  */
-background: url(../img/bgd_black_op05_8.png);
+/*background: url(../img/bgd_black_op05_8.png);*/
 }
 
 table.result tbody td{ padding:7px; text-align:center; vertical-align: middle; border: 1px solid #e5e5e5; -moz-border-radius:2px; -webkit-border-radius:2px; border-radius:2px; color:#424242;/* text-shadow:1px 1px 1px #fff;  */ }/*keep the prefix*/

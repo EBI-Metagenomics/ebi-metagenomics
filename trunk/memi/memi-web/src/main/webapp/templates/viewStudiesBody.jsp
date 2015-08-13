@@ -214,7 +214,7 @@
                             </c:when>
 
                             <c:otherwise>
-                                <c:set var="biomeName" value="Default" scope="page"/>
+                                <c:set var="biomeName" value="Undefined" scope="page"/>
                             </c:otherwise>
                         </c:choose>
 
