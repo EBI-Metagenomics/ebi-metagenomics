@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>uk.ac.ebi.interpro.metagenomics</groupId>
+    <artifactId>memi</artifactId>
+    <version>1.1</version>
+    <packaging>pom</packaging>
+
+    <name>memi</name>
+    <!-- URL is not yet specified  -->
+    <url>http://maven.apache.org</url>
+    <!-- Test commitment Seb for New analysis page branche -->
+
+    <organization>
+        <name>European Bioinformatics Institute</name>
+        <url>http://www.ebi.ac.uk/</url>
+    </organization>
+
+    <!--<licenses>-->
+    <!--<license>-->
+    <!--<name>The Apache Software License, Version 2.0</name>-->
+    <!--<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>-->
+    <!--<distribution>repo</distribution>-->
+    <!--</license>-->
+    <!--</licenses>-->
+
+    <!--<scm>-->
+    <!--<connection>http://ebi-metagenomics.googlecode.com/svn/</connection>-->
+    <!--<url>http://ebi-metagenomics.googlecode.com/svn/</url>-->
+    <!--</scm>-->
+
+    <repositories>
+        <!--Specified this Hibernate JBoss repository to resolve the latest version of Hibernate Annotations 3.5.1-->
+        <repository>
+            <id>JBoss repository</id>
+            <url>https://repository.jboss.org/maven2/</url>
+        </repository>
+        <repository>
+            <id>google-code-interproscan</id>
+            <name>google-code-interproscan</name>
+            <layout>default</layout>
+            <url>http://interproscan.googlecode.com/svn/repository/</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <!--<repository>-->
+        <!--<id>oracleReleases</id>-->
+        <!--<name>Oracle Released Java Packages</name>-->
+        <!--<url>http://download.oracle.com/maven</url>-->
+        <!--<layout>default</layout>-->
+        <!--</repository>-->
+        <!--<repository>-->
+        <!--<id>Sourcesense repository</id>-->
+        <!--<url>https://nexus.sourcesense.com/nexus/content/repositories/public/</url>-->
+        <!--</repository>-->
+    </repositories>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <org.springframework.version>3.1.4.RELEASE</org.springframework.version>
+        <memi-web.module.version>1.5-SNAPSHOT</memi-web.module.version>
+        <memi-persistence.module.version>1.5-SNAPSHOT</memi-persistence.module.version>
+        <memi-model.module.version>1.4-SNAPSHOT</memi-model.module.version>
+        <memi-business.module.version>1.0</memi-business.module.version>
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.16</version>
+        </dependency>
+        <!-- JUnit 4 framework - used within model and spring mvc module -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.8.2</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- Spring framework dependencies -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>${org.springframework.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${org.springframework.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${org.springframework.version}</version>
+        </dependency>
+
+        <!-- Spring test integration -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${org.springframework.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- Contains the Oracle JDBC driver -->
+        <dependency>
+            <groupId>com.oracle.jdbc</groupId>
+            <artifactId>com.springsource.oracle.jdbc</artifactId>
+            <version>10.2.0.2</version>
+            <!-- Possibly should be "provided" -->
+            <!--<scope>provided</scope>-->
+        </dependency>
+        <!-- MySQL JDBC driver-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.14</version>
+            <scope>runtime</scope>
+        </dependency>
+        <!-- CSV formatted file parser-->
+        <dependency>
+            <groupId>net.sf.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>2.1</version>
+        </dependency>
+    </dependencies>
+
+    <modules>
+        <module>memi-model</module>
+        <module>memi-business</module>
+        <module>memi-persistence</module>
+        <module>memi-web</module>
+    </modules>
+
+    <build>
+        <finalName>memi</finalName>
+        <plugins>
+            <!-- Use Java 6 language features -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+            <!-- JavaDocs (generate: mvn javadoc:javadoc, package: mvn javadoc:jar) -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <configuration>
+                    <overview/>
+                </configuration>
+            </plugin>
+            <!-- Create JAR of source files (source:jar, source:test-jar) -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>

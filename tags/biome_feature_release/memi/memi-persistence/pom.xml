@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>memi</artifactId>
+        <groupId>uk.ac.ebi.interpro.metagenomics</groupId>
+        <version>1.1</version>
+    </parent>
+
+    <groupId>uk.ac.ebi.interpro.metagenomics</groupId>
+    <artifactId>memi-persistence</artifactId>
+    <version>${memi-persistence.module.version}</version>
+    <name>memi-persistence</name>
+    <url>http://maven.apache.org</url>
+
+    <dependencies>
+        <!-- Internal dependency - Memi spring_model module -->
+        <dependency>
+            <groupId>uk.ac.ebi.interpro.metagenomics</groupId>
+            <artifactId>memi-model</artifactId>
+            <version>${memi-model.module.version}</version>
+        </dependency>
+        <!-- Packages for Hibernate support -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>3.5.1-Final</version>
+        </dependency>
+        <!-- Supports Springs' Autowired annotation -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+            <version>${org.springframework.version}</version>
+        </dependency>
+    </dependencies>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <build>
+        <testResources>
+            <testResource>
+                <directory>src/test/resources/</directory>
+                <filtering>true</filtering>
+            </testResource>
+        </testResources>
+    </build>
+</project>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+
+    <import resource="file-definitions-context.xml"/>
+
+    <!-- The session bean holds the current logged in user/submitter reference-->
+    <!-- an HTTP Session-scoped bean exposed as a proxy -->
+    <bean id="sessionBeanRef" class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionBean"
+          scope="session">
+        <!-- this next element effects the proxying of the surrounding bean -->
+        <aop:scoped-proxy/>
+    </bean>
+
+    <!-- a singleton-scoped bean injected with a proxy to the above bean -->
+    <bean id="sessionManager" class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager">
+        <!-- a reference to the proxied userPreferences bean -->
+        <property name="sessionBean" ref="sessionBeanRef"/>
+    </bean>
+
+    <!-- Please use this bean to specify the path to the analysis files -->
+    <bean id="propContainer" class="uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer">
+        <property name="pathToAnalysisDirectory" value="${pathToAnalysisDirectory}"/>
+        <property name="enaSubmissionURL" ref="enaSubmission"/>
+        <property name="enaMasterUserEmail" value="${ena.master.user.email}"/>
+        <property name="resultFileDefinitionMap">
+            <map>
+                <!--Maps FileDefinitionIds to result file definitions -->
+                <entry key="KINGDOM_COUNTS_FILE" value-ref="kingdomCountsFile"/>
+                <entry key="INTERPRO_MATCHES_SUMMARY_FILE" value-ref="interProMatchesSummaryFile"/>
+                <entry key="GO_SLIM_FILE" value-ref="goSlimAnnotationFile"/>
+                <entry key="KRONA_HTML_FILE" value-ref="kronaHtmlFile"/>
+            </map>
+        </property>
+        <property name="RInstallationLocation" value="${r.installation.location}"/>
+        <property name="RScriptLocation" value="${r.script.location}"/>
+        <property name="ROutputDir" value="${r.output.dir}"/>
+        <property name="RScriptName" value="${r.script.name}"/>
+        <property name="RTmpImgDir" value="${r.tmp.dir}"/>
+    </bean>
+
+    <bean id="enaSubmission" class="uk.ac.ebi.interpro.metagenomics.memi.core.ENASubmissionURL">
+        <property name="mainURL" value="http://www.ebi.ac.uk/embl/genomes/submission/"/>
+        <property name="registrationPageName" value="external-reg-link.jsf"/>
+        <property name="editPrefsPageName" value="external-update-link.jsf"/>
+        <property name="forgottenPasswordPageName" value="external-password-link.jsf"/>
+    </bean>
+</beans>
