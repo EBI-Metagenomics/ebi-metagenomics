@@ -220,7 +220,7 @@
                         </c:choose>
 
                         <span class="biome_icon icon_xs ${study.biomeIconCSSClass}"
-                              title="${biomeName} biome icon"></span>
+                              title="${biomeName} biome"></span>
 
                     </td>
                     <td class="h_left" id="ordered">
