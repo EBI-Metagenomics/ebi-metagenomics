@@ -2,20 +2,57 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%--Page variable which is used several time within this page. Used for not specified study attributes.--%>
 <c:set var="notGivenId" value="(not given)"/>
 <c:set var="study" value="${model.study}"/>
 
 <div id="project_ov">
+                            <%--TEMP while we implement a better solution--%>
+                            <c:choose>
+                            <c:when test="${study.biomeIconCSSClass == 'freshwater_b'}">
+                                <c:set var="biomeName" value="Freshwater" scope="page"/>
+                            </c:when>
+                                <c:when test="${study.biomeIconCSSClass == 'soil_b'}">
+                                    <c:set var="biomeName" value="Soil" scope="page"/>
+                            </c:when>
+                                <c:when test="${study.biomeIconCSSClass == 'forest_b'}">
+                                    <c:set var="biomeName" value="Forest" scope="page"/>
+                            </c:when>
+                                <c:when test="${study.biomeIconCSSClass == 'grassland_b'}">
+                                    <c:set var="biomeName" value="Grassland" scope="page"/>
+                            </c:when>
+                            <c:when test="${study.biomeIconCSSClass == 'marine_b'}">
+                                <c:set var="biomeName" value="Marine" />
+                            </c:when>
+                                <c:when test="${study.biomeIconCSSClass == 'human_gut_b'}">
+                                    <c:set var="biomeName" value="Human gut" scope="page"/>
+                            </c:when>
+                                <c:when test="${study.biomeIconCSSClass == 'engineered_b'}">
+                                    <c:set var="biomeName" value="Engineered" scope="page"/>
+                            </c:when>
+                                <c:when test="${study.biomeIconCSSClass == 'air_b'}">
+                                    <c:set var="biomeName" value="Air" scope="page"/>
+                            </c:when>
+                                <c:when test="${study.biomeIconCSSClass == 'wastewater_b'}">
+                                    <c:set var="biomeName" value="Wastewater" scope="page"/>
+                            </c:when>
+                            <c:otherwise>
+                                <c:set var="biomeName" value="Default" scope="page"/>
+                            </c:otherwise>
+                            </c:choose>
 
+
+
+    <div class="biome_project"><span class="biome_icon icon_sm ${study.biomeIconCSSClass}" title="${biomeName} biome"></span></div>
     <div class="title_tab_p">
         <span class="subtitle">Project overview <span>(${study.studyId})</span></span>
+
         <h2 class="fl_uppercase_title">${study.studyName}</h2>
     </div>
 
-    <tags:publications publications="${study.publications}" relatedPublications="${model.relatedPublications}" relatedLinks="${model.relatedLinks}" />
-
+    <tags:publications publications="${study.publications}" relatedPublications="${model.relatedPublications}"
+                       relatedLinks="${model.relatedLinks}"/>
 
 
     <c:if test="${!study.public}">
@@ -73,6 +110,10 @@
                 <c:set var="experimentalFactor" value="${notGivenId}"/>
             </c:otherwise>
         </c:choose>
+
+        <c:if test="${not empty study.biome}">
+            <h4>Classification: <c:out value="${fn:replace(fn:replace(study.biome.lineage,'root:',''),':',' > ')}"/></h4>
+        </c:if>
     </div>
 
     <h3>Contact details</h3>
@@ -88,7 +129,8 @@
             </c:when>
             <c:otherwise>
                 <div class="result_row">
-                    <div class="result_row_label">Institute:</div><c:set var="centreName" value="${notGivenId}"/></div>
+                    <div class="result_row_label">Institute:</div>
+                    <c:set var="centreName" value="${notGivenId}"/></div>
             </c:otherwise>
         </c:choose>
 
@@ -136,7 +178,7 @@
                 <p><span style="color:red">No export data available for that(these) sample(s)!</span></p>
             </c:if>
             <div>
-                <a href="<c:url value="${baseURL}/project/${study.studyId}/doExport/"/>">Export more detailed run info to CSV</a>
+                <a href="<c:url value="${baseURL}/project/${study.studyId}/doExport/"/>">Export more detailed sample info to CSV</a>
             </div>--%>
 
             <!-- Removed link temporarily-->

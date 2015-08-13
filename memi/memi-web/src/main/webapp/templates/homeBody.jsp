@@ -238,7 +238,42 @@
                     <%--The count starts at 0, that is why we subtract 1 from the end value--%>
                 <c:forEach var="study" items="${model.studies}" varStatus="status" begin="0"
                            end="${model.maxRowNumberOfLatestItems-1}">
-                    <p><%--<span class="list_date">${entry.key.lastMetadataReceived}:</span> --%>
+
+                            <%--TEMP while we implement a better solution--%>
+                            <c:choose>
+                            <c:when test="${study.biomeIconCSSClass == 'freshwater_b'}">
+                                <c:set var="biomeName" value="Freshwater" scope="page"/>
+                            </c:when>
+                                <c:when test="${study.biomeIconCSSClass == 'soil_b'}">
+                                    <c:set var="biomeName" value="Soil" scope="page"/>
+                            </c:when>
+                                <c:when test="${study.biomeIconCSSClass == 'forest_b'}">
+                                    <c:set var="biomeName" value="Forest" scope="page"/>
+                            </c:when>
+                                <c:when test="${study.biomeIconCSSClass == 'grassland_b'}">
+                                    <c:set var="biomeName" value="Grassland" scope="page"/>
+                            </c:when>
+                            <c:when test="${study.biomeIconCSSClass == 'marine_b'}">
+                                <c:set var="biomeName" value="Marine" />
+                            </c:when>
+                                <c:when test="${study.biomeIconCSSClass == 'human_gut_b'}">
+                                    <c:set var="biomeName" value="Human gut" scope="page"/>
+                            </c:when>
+                                <c:when test="${study.biomeIconCSSClass == 'engineered_b'}">
+                                    <c:set var="biomeName" value="Engineered" scope="page"/>
+                            </c:when>
+                                <c:when test="${study.biomeIconCSSClass == 'air_b'}">
+                                    <c:set var="biomeName" value="Air" scope="page"/>
+                            </c:when>
+                                <c:when test="${study.biomeIconCSSClass == 'wastewater_b'}">
+                                    <c:set var="biomeName" value="Wastewater" scope="page"/>
+                            </c:when>
+                            <c:otherwise>
+                                <c:set var="biomeName" value="Default" scope="page"/>
+                            </c:otherwise>
+                            </c:choose>
+
+                    <p><div class="biome_icon icon_xs ${study.biomeIconCSSClass}" title="${biomeName} biome"></div>
                         <a href="<c:url value="${baseURL}/projects/${study.studyId}"/>"
                            class="list_more fl_uppercase_title">${study.studyName}</a>
 
@@ -256,37 +291,46 @@
                        title="View all public projects" class="all">View all projects</a></p>
             </div>
 
-            <div id="list-data-sample" class="grid_9">
-                <h2>Samples</h2>
+            <div id="list-biomes" class="grid_9"> <h2>Browse by selected biomes</h2>
 
-                <h3>Latest public samples (Total: <a
-                        href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search&startPosition=0"/>"
-                        title="View all ${model.publicSamplesCount} public samples">${model.publicSamplesCount}</a>)
-                </h3>
-                    <%--The count starts at 0, that is why we subtract 1 from the end value--%>
-                <c:forEach var="sample" items="${model.publicSamples}" varStatus="status" begin="0"
-                           end="${model.maxRowNumberOfLatestItems-1}">
-                    <p><%--<span class="list_date">${sample.metadataReceived}:</span>--%>
-                        <a href="<c:url value="${baseURL}/projects/${sample.study.studyId}/samples/${sample.sampleId}"/>"
-                           class="list_more fl_uppercase_title">${sample.sampleName}</a>
+                <div class="grid_24">
+                    <div class="grid_8 alpha"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=SOIL"/>"
+                                                 title="View all <c:out value="${model.biomeMap['SOIL']}"/> soil projects"><span class="biome_icon icon_sm soil_b"></span><span class="biome_text">Soil (<c:out value="${model.biomeMap['SOIL']}"/>)</span></a></div>
 
-                        <span class="list_desc"><c:out value="${sample.shortSampleDescription} ..."/></span>
-                        <br/>
-                        <a href="<c:url value="${baseURL}/projects/${sample.study.studyId}/samples/${sample.sampleId}"/>" class="more_view">View more</a>
-                    </p>
-                </c:forEach>
+                    <div class="grid_8"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=MARINE"/>"
+                                           title="View all <c:out value="${model.biomeMap['MARINE']}"/> marine projects"><span class="biome_icon icon_sm marine_b"></span><span class="biome_text">Marine (<c:out value="${model.biomeMap['MARINE']}"/>)</span></a></div>
 
-                <p>
-                    <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search&startPosition=0"/>"
-                       title="View all public samples" class="all">View all samples</a></p>
-                    <%--<span class="separator"></span>--%>
+                    <div class="grid_8 omega"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=FOREST_SOIL"/>"
+                                                 title="View all <c:out value="${model.biomeMap['FOREST_SOIL']}"/> forest projects"><span class="biome_icon icon_sm forest_b"></span><span class="biome_text">Forest (<c:out value="${model.biomeMap['FOREST_SOIL']}"/>)</span></a></div>
 
-                    <%--<h2>Mailing list</h2>--%>
+                    <div class="grid_8 alpha"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=FRESHWATER"/>"
+                                                 title="View all <c:out value="${model.biomeMap['FRESHWATER']}"/> freshwater projects"><span class="biome_icon icon_sm freshwater_b"></span><span class="biome_text">Freshwater (<c:out value="${model.biomeMap['FRESHWATER']}"/>)</span></a></div>
 
-                    <%--<p><span class="list_desc"><a--%>
-                    <%--href="http://listserver.ebi.ac.uk/mailman/listinfo/metagenomics">Subscribe</a> to the EBI metagenomics mailing list to receive update information. </span>--%>
+                    <div class="grid_8"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=GRASSLAND"/>"
+                                           title="View all <c:out value="${model.biomeMap['GRASSLAND']}"/> grassland projects"><span class="biome_icon icon_sm grassland_b"></span><span class="biome_text">Grassland (<c:out value="${model.biomeMap['GRASSLAND']}"/>)</span></a></div>
 
+                    <div class="grid_8 omega"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=HUMAN_GUT"/>"
+                                                 title="View all <c:out value="${model.biomeMap['HUMAN_GUT']}"/> human gut projects"><span class="biome_icon icon_sm human_gut_b"></span><span class="biome_text">Human gut (<c:out value="${model.biomeMap['HUMAN_GUT']}"/>)</span></a></div>
 
+                    <div class="grid_8 alpha"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=ENGINEERED"/>"
+                                                 title="View all <c:out value="${model.biomeMap['ENGINEERED']}"/> engineered projects"><span class="biome_icon icon_sm engineered_b"></span><span class="biome_text">Engineered (<c:out value="${model.biomeMap['ENGINEERED']}"/>)</span></a></div>
+
+                    <div class="grid_8"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=AIR"/>"
+                                           title="View all <c:out value="${model.biomeMap['AIR']}"/> air projects"><span class="biome_icon icon_sm air_b"></span><span class="biome_text">Air (<c:out value="${model.biomeMap['AIR']}"/>)</span></a></div>
+
+                    <div class="grid_8 omega"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=WASTEWATER"/>"
+                                                 title="View all <c:out value="${model.biomeMap['WASTEWATER']}"/> wastewater projects"><span class="biome_icon icon_sm wastewater_b"></span><span class="biome_text">Wastewater (<c:out value="${model.biomeMap['WASTEWATER']}"/>)</span></a></div>
+
+                    <%--<div class="grid_8 alpha"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=HUMAN-HOST"/>"--%>
+                                                           <%--title="View all soil projects"><span class="biome_icon icon_sm human_host_b"></span><span class="biome_text">Human (9)</span></a></div>--%>
+                                        <%--<div class="grid_8"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=NON-HUMAN-HOST"/>"--%>
+                                                                               <%--title="View all marine projects"><span class="biome_icon icon_sm non_human_host_b"></span><span class="biome_text">Host-associated non-human (24)</span></a></div>--%>
+                                        <%--<div class="grid_8 omega"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>"--%>
+                                                                               <%--title="View all forest projects"><span class="biome_icon icon_sm default_b"></span><span class="biome_text">All biomes (3)</span></a></div>--%>
+
+                </div>
+                <p><a href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>"
+                                                        title="View projects and filter by biome" class="all">View all biomes</a></p>
             </div>
 
         </c:otherwise>

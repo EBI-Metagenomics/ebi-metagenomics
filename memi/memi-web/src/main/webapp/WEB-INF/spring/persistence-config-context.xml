@@ -72,6 +72,7 @@
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.PipelineReleaseTool</value>
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisStatus</value>
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob</value>
+                <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Biome</value>
             </list>
         </property>
     </bean>
@@ -85,6 +86,8 @@
     <bean id="pipelineReleaseDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.PipelineReleaseDAOImpl"/>
 
     <bean id="analysisJobDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.AnalysisJobDAOImpl"/>
+
+    <bean id="biomeDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.BiomeDAOImpl"/>
 
     <bean name="submissionContactDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.erapro.SubmissionContactDAOImpl">
         <property name="dataSource" ref="eraProDataSource"/>
