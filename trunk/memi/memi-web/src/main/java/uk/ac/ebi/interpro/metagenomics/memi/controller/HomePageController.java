@@ -7,6 +7,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.RunDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.BiomeDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.StudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
@@ -51,6 +52,9 @@ public class HomePageController extends AbstractController implements IControlle
     @Resource
     private RunDAO runDAO;
 
+    @Resource
+    private BiomeDAO biomeDAO;
+
     public ModelAndView doGet(ModelMap model) {
         log.info("Requesting doGet of " + HomePageController.class);
         return buildModelAndView(
@@ -61,7 +65,7 @@ public class HomePageController extends AbstractController implements IControlle
                     public void populateModel(ModelMap model) {
                         log.info("Building model of " + HomePageController.class + "...");
                         final ViewModelBuilder<HomePageViewModel> builder = new HomePageViewModelBuilder(sessionManager, "EBI metagenomics: archiving, analysis and integration of metagenomics data",
-                                getBreadcrumbs(null), propertyContainer, studyDAO, sampleDAO,runDAO);
+                                getBreadcrumbs(null), propertyContainer, studyDAO, sampleDAO, runDAO, biomeDAO);
                         final HomePageViewModel hpModel = builder.getModel();
                         hpModel.changeToHighlightedClass(ViewModel.TAB_CLASS_HOME_VIEW);
                         model.addAttribute(ViewModel.MODEL_ATTR_NAME, hpModel);

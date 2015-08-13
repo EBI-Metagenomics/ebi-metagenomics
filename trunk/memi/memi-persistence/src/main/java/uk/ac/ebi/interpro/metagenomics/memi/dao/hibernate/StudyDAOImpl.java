@@ -137,6 +137,25 @@ public class StudyDAOImpl implements StudyDAO {
         return null;
     }
 
+    @Transactional(readOnly = true)
+    public Long countPublicStudiesFilteredByBiomes(Collection<Integer> biomeIds) {
+        Session session = sessionFactory.getCurrentSession();
+        if (session != null) {
+            if (biomeIds != null || !biomeIds.isEmpty()) {
+                Criteria criteria = session.createCriteria(Study.class)
+                        .add(Restrictions.eq("isPublic", true))
+                        .add(Restrictions.in("biome.biomeId", biomeIds))
+                        .setProjection(Projections.rowCount() );
+                try {
+                    return (Long) criteria.uniqueResult();
+                } catch (HibernateException e) {
+                    throw new HibernateException("Cannot retrieve study count filtered by biomes!", e);
+                }
+            }
+        }
+        return null;
+    }
+
     private Long getStudyCount(final Boolean isPublic) {
         Session session = sessionFactory.getCurrentSession();
         if (session != null) {
