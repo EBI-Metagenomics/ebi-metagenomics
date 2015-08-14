@@ -37,6 +37,12 @@
     <c:when test="${study.biomeIconCSSClass == 'wastewater_b'}">
         <c:set var="biomeName" value="Wastewater" scope="page"/>
     </c:when>
+    <c:when test="${study.biomeIconCSSClass == 'non_human_host_b'}">
+        <c:set var="biomeName" value="Non-human host" scope="page"/>
+    </c:when>
+    <c:when test="${study.biomeIconCSSClass == 'human_host_b'}">
+        <c:set var="biomeName" value="Human host" scope="page"/>
+    </c:when>
     <c:otherwise>
         <c:set var="biomeName" value="Undefined" scope="page"/>
     </c:otherwise>
