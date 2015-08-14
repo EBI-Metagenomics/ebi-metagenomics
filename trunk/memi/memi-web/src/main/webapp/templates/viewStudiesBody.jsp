@@ -32,19 +32,25 @@
                     <label for="biome">Biomes:</label>
                      <span>
                       <form:select id="biomeId" path="biome">
-                          <form:option value="ALL" label="All"/>
-                          <form:option cssStyle="padding-left: 20px" value="AIR" label="Air"/>
-                          <form:option cssStyle="padding-left: 20px" value="ENGINEERED" label="Engineered"/>
-                          <form:option cssStyle="padding-left: 40px" value="WASTEWATER" label="Wastewater"/>
-                          <form:option cssStyle="padding-left: 20px" value="FRESHWATER" label="Freshwater"/>
-                          <form:option cssStyle="padding-left: 20px" value="HOST_ASSOCIATED" label="Host-associated"/>
-                          <form:option cssStyle="padding-left: 40px" value="HUMAN_HOST" label="Human"/>
-                          <form:option cssStyle="padding-left: 60px" value="HUMAN_GUT" label="Human gut"/>
-                          <form:option cssStyle="padding-left: 40px" value="NON_HUMAN_HOST" label="Non-human"/>
-                          <form:option cssStyle="padding-left: 20px" value="MARINE" label="Marine"/>
-                          <form:option cssStyle="padding-left: 20px" value="SOIL" label="Soil"/>
-                          <form:option cssStyle="padding-left: 40px" value="FOREST_SOIL" label="Forest"/>
-                          <form:option cssStyle="padding-left: 40px" value="GRASSLAND" label="Grassland"/>
+                          <form:option value="ALL" label="All"></form:option>
+                          <form:option value="AIR">&nbsp;&nbsp;&nbsp;&nbsp;Air</form:option>
+                          <form:option value="ENGINEERED">&nbsp;&nbsp;&nbsp;&nbsp;Engineered</form:option>
+                          <form:option
+                                  value="WASTEWATER">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Wastewater</form:option>
+                          <form:option value="FRESHWATER">&nbsp;&nbsp;&nbsp;&nbsp;Freshwater</form:option>
+                          <form:option value="HOST_ASSOCIATED">&nbsp;&nbsp;&nbsp;&nbsp;Host-associated</form:option>
+                          <form:option
+                                  value="HUMAN_HOST">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Human</form:option>
+                          <form:option
+                                  value="HUMAN_GUT">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Human gut</form:option>
+                          <form:option
+                                  value="NON_HUMAN_HOST">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Non-human</form:option>
+                          <form:option value="MARINE">&nbsp;&nbsp;&nbsp;&nbsp;Marine</form:option>
+                          <form:option value="SOIL">&nbsp;&nbsp;&nbsp;&nbsp;Soil</form:option>
+                          <form:option
+                                  value="FOREST_SOIL">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Forest</form:option>
+                          <form:option
+                                  value="GRASSLAND">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Grassland</form:option>
                       </form:select>
                      </span>
                 </div>
