@@ -46,13 +46,13 @@ public enum StudySummaryFile {
 
     /**
      * Does the supplied filename match one of the expected filenames in this enum?
-     * @param filename Filename including file extension, but without the file path, e.g. "GO_abundances_v1.tsv"
+     * @param filename Filename including file extension, but without the file path, e.g. "GO_abundances_v1.0.tsv"
      * @return
      */
     public static boolean contains(String filename) {
         for (StudySummaryFile file : StudySummaryFile.values()) {
             if (filename.startsWith(file.getFilename())) {
-                // E.g. "GO_abundances_v1.tsv" starts with "GO_abundances"
+                // E.g. "GO_abundances_v1.0.tsv" starts with "GO_abundances"
                 return true;
             }
         }
@@ -72,7 +72,7 @@ public enum StudySummaryFile {
 
         for (StudySummaryFile file : StudySummaryFile.values()) {
             if (filename.startsWith(file.getFilename())) {
-                // E.g. "GO_abundances_v1.tsv" starts with "GO_abundances"
+                // E.g. "GO_abundances_v1.0.tsv" starts with "GO_abundances"
                 return file;
             }
         }

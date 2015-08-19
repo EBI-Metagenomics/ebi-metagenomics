@@ -89,7 +89,16 @@ public class DownloadStudyController extends AbstractStudyViewController {
 
     }
 
-    //TODO
+    /**
+     * Perform the project summary file download.
+     *
+     * @param studyId
+     * @param releaseVersion
+     * @param exportValue
+     * @param response
+     * @param request
+     * @throws IOException
+     */
     @RequestMapping(value = MGPortalURLCollection.PROJECT_SUMMARY_EXPORT)
     public void doHandleSummaryExports(@PathVariable final String studyId,
                                         @PathVariable final String releaseVersion,
@@ -106,7 +115,7 @@ public class DownloadStudyController extends AbstractStudyViewController {
             if (isAccessible(study)) {
                 File file = getDownloadFile(study, "1.0", exportValue);
                 if (file != null) {
-                    downloadService.openDownloadDialog(response, request, file, exportValue + "_v" + releaseVersion.substring(0, releaseVersion.indexOf('.')) + ".tsv" ,false);
+                    downloadService.openDownloadDialog(response, request, file, exportValue + "_v" + releaseVersion + ".tsv" ,false);
                 } else {//analysis job is NULL
                     response.setStatus(HttpServletResponse.SC_NO_CONTENT);
                 }
@@ -123,7 +132,7 @@ public class DownloadStudyController extends AbstractStudyViewController {
         final String rootPath = propertyContainer.getPathToAnalysisDirectory();
         final String resultDirectoryAbsolute = rootPath + study.getResultDirectory();
 
-        final File file = new File(resultDirectoryAbsolute + File.separator + "version_" + version + File.separator + "project-summary" + File.separator + exportValue + "_v" + version.substring(0, version.indexOf('.')) + ".tsv");
+        final File file = new File(resultDirectoryAbsolute + File.separator + "version_" + version + File.separator + "project-summary" + File.separator + exportValue + "_v" + version + ".tsv");
         return file;
     }
 
