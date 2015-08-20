@@ -1,0 +1,61 @@
+
+```
+<profile>
+            <id>develop</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <!--Oracle driver class name -->
+                <jcp.jdbc.oracle.driverClassName>oracle.jdbc.OracleDriver</jcp.jdbc.oracle.driverClassName>
+                <!--The result files are stored as flat files in the following directory (absolute path)-->
+                <!--Please note: Necessary to render the sample result page -->
+                <pathToAnalysisDirectory>../data/metagenomics/results/</pathToAnalysisDirectory>
+                <!--Email addresses e.g. test@gmail.com -->
+                <email.address.beta.feedback></email.address.beta.feedback>
+                <ena.master.user.email></ena.master.user.email>
+                <!--Authentication server addresses-->
+                <!--Please note: Leave blank if working outside the EBI-->
+                <ena.authentication.service.url.tomcat-9></ena.authentication.service.url.tomcat-9>
+                <ena.authentication.service.url.tomcat-10></ena.authentication.service.url.tomcat-10>
+                <!--Absolute path to the R scripts directory-->
+                <!--Please note: You will find them under the web module (memi-web/R)-->
+                <r.script.location>../memi/memi-web/R
+                </r.script.location>
+                <!--Rscript binary-->
+                <!--Please note: This could a command or an absolute path to the binary-->
+                <r.installation.location>Rscript</r.installation.location>
+                <!--Temporary output directory-->
+                <r.output.dir>/temp/</r.output.dir>
+                <!--Output location of the heatmap image -->
+                <!--Please note: Does not work with the Jetty command: jetty:run-war)-->
+                <r.tmp.dir>../memi/memi-web/src/main/webapp/tmp/
+                </r.tmp.dir>
+                <!--Name of the launch script-->
+                <r.script.name>launch_v12.R</r.script.name>
+                <!--Address of the SMTP email server-->
+                <javamail.sender.host></javamail.sender.host>
+                <!--If email server is setup correctly, then you could set up some receiver email address to receive web app exceptions -->
+                <emailService.exceptionResolver.receiver></emailService.exceptionResolver.receiver>
+                <emailService.exceptionResolver.sender></emailService.exceptionResolver.sender>
+                <!--Please note: Leave blank if working outside the EBI-->
+                <emailService.sraRegistration.receiver></emailService.sraRegistration.receiver>
+                <emailService.sraRegistration.receiverCC_1></emailService.sraRegistration.receiverCC_1>
+                <emailService.feedbackForm.receiver></emailService.feedbackForm.receiver>
+                <!--Database connection details-->
+                <!--EMG database-->
+                <jcp.jdbc.oracle.ipdev.url>jdbc:oracle:thin:@</jcp.jdbc.oracle.ipdev.url>
+                <jcp.jdbc.oracle.ipdev.username></jcp.jdbc.oracle.ipdev.username>
+                <jcp.jdbc.oracle.ipdev.password></jcp.jdbc.oracle.ipdev.password>
+                <!--APRO database-->
+                <jcp.jdbc.oracle.apro.url>jdbc:oracle:thin:@</jcp.jdbc.oracle.apro.url>
+                <jcp.jdbc.oracle.apro.username></jcp.jdbc.oracle.apro.username>
+                <jcp.jdbc.oracle.apro.password></jcp.jdbc.oracle.apro.password>
+                <!--ERAPRO database-->
+                <jcp.jdbc.oracle.erapro.url>jdbc:oracle:thin:@
+                </jcp.jdbc.oracle.erapro.url>
+                <jcp.jdbc.oracle.erapro.username></jcp.jdbc.oracle.erapro.username>
+                <jcp.jdbc.oracle.erapro.password></jcp.jdbc.oracle.erapro.password>
+            </properties>
+        </profile>
+```

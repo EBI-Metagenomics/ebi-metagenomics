@@ -1,0 +1,18 @@
+# Introduction #
+
+This tutorial should give you an explanation of how to run the latest version of this Spring MVC-based web application.
+
+# Requirements #
+
+  * Create a Google account
+  * Install the latest version of Java
+  * Install Maven on your local machine
+  * Install Subversion or us an IDE with a smart Version Control Integration ([IntellJ IDEA](http://www.jetbrains.com/idea/download/index.html))
+
+# 1. Check out the project from subversion #
+
+1.1 Create a new directory for your project (e.g. ebi-metagenomics), go into this directory and type the following Subversion command:
+
+svn checkout https://ebi-metagenomics.googlecode.com/svn/trunk/ --username <Google Account User Name>
+
+If you use this check out command the first time it will ask you for a password.
