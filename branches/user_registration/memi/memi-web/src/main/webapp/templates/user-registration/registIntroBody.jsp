@@ -20,84 +20,45 @@
 </p>
 
 <div class="grid_24 registration-check">
-    <%--rond gros
     <div class="box-registration">
-    <a href="<c:url value="${baseURL}/wizard.form?user=new"/>" title="New user - start the submission" class="box-registration-link" >
-    <div class="box-registration-cont anim box-ban">
-        <span class="icon icon-functional" data-icon="7"></span><br/><h3>New user</h3>
-    <p class="intro"> If you are new user, click here to start the submission.
-    </p>
-    </div>
-    </a>
 
-    </div>
-
-    <div class="box-registration">
-        <a href="<c:url value="${baseURL}/wizard.form?user=existing"/>" title="Existing user" class="box-registration-link" id="test">
-            <div class="box-registration-cont anim box-blue">
-            <span class="icon icon-functional" data-icon="/"></span><br/><h3>Existing user</h3>
-            <p class="intro">
-            Already registered? We need your consent to analyse your data.
-             </p>
-        </div>
-
+        <a href="<c:url value="${baseURL}/registration/new-user"/>" title="New user - start the submission"
+           class="box-registration-link">
+            <div class="box-registration-cont anim box-ban sq_button">
+                <h3><span class="icon icon-functional" data-icon="7"></span> New user</h3>
+            </div>
         </a>
-    </div>  --%>
-        <%--rond small--%><%--
-            <div class="box-registration">
-            <a href="<c:url value="${baseURL}/wizard.form?user=new"/>" title="New user - start the submission" class="box-registration-link" >
-            <div class="box-registration-cont anim box-ban rd_button">
-                <span class="icon icon-functional" data-icon="7"></span><br/><h3>New user</h3>
-            <p class="intro"> If you are new user, click here to start the submission.
-            </p>
-            </div>
-            </a>
-
-            </div>
-
-            <div class="box-registration">
-                <a href="<c:url value="${baseURL}/wizard.form?user=existing"/>" title="Existing user" class="box-registration-link" id="test">
-                    <div class="box-registration-cont anim box-blue rd_button">
-                    <span class="icon icon-functional" data-icon="/"></span><br/><h3>Existing user</h3>
-                    <p class="intro">
-                    Already registered? We need your consent to analyse your data.
-                     </p>
-                </div>
-
-                </a>
-            </div>--%>
-     <%--flat sq  --%>
-    <div class="box-registration">
-    <a href="<c:url value="${baseURL}/wizard.form?user=new"/>" title="New user - start the submission" class="box-registration-link" >
-        <div class="box-registration-cont anim box-ban sq_button">
-        <h3><span class="icon icon-functional" data-icon="7"></span> New user</h3>
-        </div>
-    </a>
     </div>
 
     <div class="box-registration">
-        <a href="<c:url value="${baseURL}/wizard.form?user=existing"/>" title="Existing user" class="box-registration-link" id="test">
+        <a href="<c:url value="${baseURL}/registration/account-check"/>" title="Existing user"
+           class="box-registration-link" id="test">
             <div class="box-registration-cont anim box-blue sq_button">
-            <h3><span class="icon icon-functional" data-icon="/"></span> Existing user</h3>
+                <h3><span class="icon icon-functional" data-icon="/"></span> Existing user</h3>
             </div>
         </a>
     </div>
 
 </div>
-<p >
+<p>
     If you have data that you wish to have analysed, you need an <strong>ENA submitter account</strong> that
     has been registered with EBI Metagenomics. This allows us to track your submitted data and ensures that we have
     consent to access it for analysis.
-    </p>
+</p>
+
 <p>With a valid ENA submitter account, you can submit your data directly using the <a class="ext"
                                                                                       title="Click here to submit data to ENA"
                                                                                       href="https://www.ebi.ac.uk/ena/submit/sra/#home">ENA
     Webin tool</a>, which will help you describe your metadata and upload your sequence data.</p>
 
 
-<p >Once your reads are uploaded to the ENA, the EBI Metagenomics team will access them and perform the
+<p>Once your reads are uploaded to the ENA, the EBI Metagenomics team will access them and perform the
     analysis, which is done in several steps. You will receive an email once the analysis starts and another when the
-    analysis of all samples is complete (<a class="fancybox" rel="group" href="<c:url value="${baseURL}/img/graphic_submission_00.gif"/>" title="Detail of the submission and analysis process on the EBI metagneomics website">view figure for more details</a> of the submission and analysis process). The analysis time is dependent on the number of samples submitted and requests
+    analysis of all samples is complete (<a class="fancybox" rel="group"
+                                            href="<c:url value="${baseURL}/img/graphic_submission_00.gif"/>"
+                                            title="Detail of the submission and analysis process on the EBI metagneomics website">view
+        figure for more details</a> of the submission and analysis process). The analysis time is dependent on the
+    number of samples submitted and requests
     by other submitters at the time. If your samples are private, you will need to log in to the EBI Metagenomics
     homepage to be able to view the results of the analysis.
 </p>
@@ -114,11 +75,11 @@
 
         //Click on close cross icon
         $(".close_window_button").click(function () {
-                  $.unblockUI();
+            $.unblockUI();
             return false;
-              });//end cancel click
+        });//end cancel click
     });
     // Script for the image zooming
-	$(".fancybox").fancybox();
+    $(".fancybox").fancybox();
 
 </script>
