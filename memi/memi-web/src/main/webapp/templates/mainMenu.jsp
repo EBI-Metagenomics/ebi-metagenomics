@@ -4,7 +4,7 @@
 <ul id="local-nav">
     <li class="${model.tabClasses["tabClassHomeView"]} first"><a href="<c:url value="${baseURL}/"/>"
                                                                  title="Home">Home</a></li>
-    <li class="${model.tabClasses["tabClassSubmitView"]}"><a href="<c:url value="${baseURL}/submit"/>"
+    <li class="${model.tabClasses["tabClassSubmitView"]}"><a href="<c:url value="${baseURL}/submission"/>"
                                                              class="more_desc" title="Submit data">Submit
         data</a></li>
 

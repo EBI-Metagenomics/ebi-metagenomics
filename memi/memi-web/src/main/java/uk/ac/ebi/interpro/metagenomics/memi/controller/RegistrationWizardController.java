@@ -8,6 +8,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
@@ -31,7 +32,7 @@ import java.util.List;
  * @author Maxim Scheremetjew
  */
 @Controller
-@RequestMapping("/wizard.form")
+@RequestMapping("/registration")
 @SessionAttributes("registrationForm")
 public class RegistrationWizardController extends AbstractController {
 
@@ -43,28 +44,27 @@ public class RegistrationWizardController extends AbstractController {
     /**
      * The default handler (page=0)
      */
-    @RequestMapping
-    public ModelAndView doGet(final ModelMap modelMap) {
+    @RequestMapping(value = {"/new-user"})
+    public ModelAndView handleNewUserRequest(final ModelMap modelMap) {
         // put your initial command
         modelMap.addAttribute("registrationForm", new RegistrationForm());
         modelMap.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
         // populate the model Map as needed
+        modelMap.addAttribute("isNewUser", true);
         modelMap.addAttribute("displayUsernameBox", "none");
         return new ModelAndView("user-registration/registAccountCheck", modelMap);
     }
 
-//    @RequestMapping(params = "_target0")
-//    public ModelAndView processFirstStep(final @ModelAttribute("registrationForm") RegistrationForm form,
-//                                         final Errors errors,
-//                                         final ModelMap modelMap) {
-//        // do something with command, errors, request, response,
-//        // model map or whatever you include among the method
-//        // parameters. See the documentation for @RequestMapping
-//        // to get the full picture.
-//        modelMap.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
-//        modelMap.addAttribute("displayUsernameBox", "none");
-//        return new ModelAndView("user-registration/registAccountCheck", modelMap);
-//    }
+    @RequestMapping(value = "/account-check")
+    public ModelAndView handleAccountCheckRequest(final ModelMap modelMap) {
+        // put your initial command
+        modelMap.addAttribute("registrationForm", new RegistrationForm());
+        modelMap.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
+        // populate the model Map as needed
+        modelMap.addAttribute("isNewUser", false);
+        modelMap.addAttribute("displayUsernameBox", "none");
+        return new ModelAndView("user-registration/registAccountCheck", modelMap);
+    }
 
     /**
      * First step handler (if you want to map each step individually to a method). You should probably either use this
@@ -107,10 +107,10 @@ public class RegistrationWizardController extends AbstractController {
         modelMap.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
         if (errors.hasFieldErrors("consentCheck")) {
 
-                return new ModelAndView("user-registration/registUserNameCheckSummary", modelMap);
-            }
+            return new ModelAndView("user-registration/registUserNameCheckSummary", modelMap);
+        }
 
-            return new ModelAndView("user-registration/registGiveConsentSummary", modelMap);
+        return new ModelAndView("user-registration/registGiveConsentSummary", modelMap);
     }
 
     @RequestMapping(params = "_target3")

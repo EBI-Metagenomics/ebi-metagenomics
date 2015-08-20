@@ -105,7 +105,7 @@
                                                        alt=""
                                                        width="71" height="71"/></div>
                                     <%--</c:url>--%>
-                                <p style="padding-bottom:7px; "> You can click on <a href="<c:url value="${baseURL}/submit"/>"
+                                <p style="padding-bottom:7px; "> You can click on <a href="<c:url value="${baseURL}/submission"/>"
                                                                                      title="Submit data">Submit data</a>
                                     to send us your nucleotide sequences for analysis.
 
@@ -114,12 +114,12 @@
                                     first). </p>
                                 <c:choose>
                                     <c:when test="${empty model.submitter}">
-                                        <div class="find_more"><a href="<c:url value="${baseURL}/submitData"/>"
+                                        <div class="find_more"><a href="<c:url value="${baseURL}/submission"/>"
                                                                   title="submit data for analysis"><span>Submit your data</span></a>
                                         </div>
                                     </c:when>
                                     <c:otherwise>
-                                        <div class="find_more"><a href="<c:url value="${baseURL}/submit"/>"
+                                        <div class="find_more"><a href="<c:url value="${baseURL}/submission"/>"
                                                                   title="submit data for analysis"><span>Submit your data</span></a>
                                         </div>
                                     </c:otherwise>
