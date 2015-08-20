@@ -1,7 +1,7 @@
 # ebi-metagenomics
 <img src='http://www.ebi.ac.uk/inc/images/ebilogohelp.gif' align='right' />
 
-# Metagenomics at the EBI #
+# Metagenomics at the EMBL-EBI #
 ## working name "MGportal" ##
 
 ## Introduction ##
