@@ -4,6 +4,7 @@ import au.com.bytecode.opencsv.CSVReader;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
+import uk.ac.ebi.interpro.metagenomics.memi.model.ExperimentType;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob;
 import uk.ac.ebi.interpro.metagenomics.memi.services.FileExistenceChecker;
@@ -17,8 +18,10 @@ import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.AbstractViewM
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
 
-import java.io.*;
-import java.util.ArrayList;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -95,16 +98,20 @@ public abstract class AbstractResultViewModelBuilder<E extends AbstractResultVie
         boolean isInterProMatchSectionDisabled = true;
         boolean isGoSectionDisabled = true;
         boolean isSequenceFeatureSectionDisabled = true;
-        for (FunctionalAnalysisFileDefinition fileDefinition : functionalAnalysisFileDefinitions) {
-            File fileObject = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, fileDefinition);
-            boolean doesExist = FileExistenceChecker.checkFileExistence(fileObject);
-            if (doesExist) {
-                if (fileDefinition.getIdentifier().equalsIgnoreCase(FileDefinitionId.INTERPRO_MATCHES_SUMMARY_FILE.toString())) {
-                    isInterProMatchSectionDisabled = false;
-                } else if (fileDefinition.getIdentifier().equalsIgnoreCase(FileDefinitionId.GO_COMPLETE_FILE.toString())) {
-                    isGoSectionDisabled = false;
-                } else if (fileDefinition.getIdentifier().equalsIgnoreCase(FileDefinitionId.SEQUENCE_FEATURE_SUMMARY_FILE.toString())) {
-                    isSequenceFeatureSectionDisabled = false;
+        //Only check for functional result files if it is not amplicon data
+        //Amplicon analyses do not produce any sensible functional results, you might see artifact, which you do not want to render
+        if (!isAmpliconData()) {
+            for (FunctionalAnalysisFileDefinition fileDefinition : functionalAnalysisFileDefinitions) {
+                File fileObject = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, fileDefinition);
+                boolean doesExist = FileExistenceChecker.checkFileExistence(fileObject);
+                if (doesExist) {
+                    if (fileDefinition.getIdentifier().equalsIgnoreCase(FileDefinitionId.INTERPRO_MATCHES_SUMMARY_FILE.toString())) {
+                        isInterProMatchSectionDisabled = false;
+                    } else if (fileDefinition.getIdentifier().equalsIgnoreCase(FileDefinitionId.GO_COMPLETE_FILE.toString())) {
+                        isGoSectionDisabled = false;
+                    } else if (fileDefinition.getIdentifier().equalsIgnoreCase(FileDefinitionId.SEQUENCE_FEATURE_SUMMARY_FILE.toString())) {
+                        isSequenceFeatureSectionDisabled = false;
+                    }
                 }
             }
         }
@@ -153,5 +160,13 @@ public abstract class AbstractResultViewModelBuilder<E extends AbstractResultVie
             }
         }
         return rows;
+    }
+
+    protected boolean isAmpliconData() {
+        //We only want to render functional results on the download section if the experiment type is not amplicon
+        //Therefore there is no need to create the functional download model for amplicon studies
+        //Also we only want to activate the functional tabs for all experiments except amplicon studies
+        final String experimentType = analysisJob.getExperimentType();
+        return (experimentType.equals(ExperimentType.AMPLICON.getExperimentType()) ? true : false);
     }
 }

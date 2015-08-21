@@ -96,43 +96,45 @@ public class DownloadViewModelBuilder extends AbstractResultViewModelBuilder<Dow
                             fileDefinition.getOrder(),
                             getFileSize(fileObject)));
                 } else if (fileDefinition instanceof FunctionalAnalysisFileDefinition) {
-                    if (fileDefinition.getIdentifier().equals("INTERPROSCAN_RESULT_FILE_NEW")) {
-                        //get result file chunks as a list of absolute file paths
-                        List<String> chunkedResultFiles = MemiTools.getListOfChunkedResultFiles(fileObject);
-                        //We do need to distinguish 2 cases - case 1: single compressed file - case 2: chunked and compressed result files
-                        //Case 1 will look like: InterPro matches (TSV) - 47 MB
-                        //Case 2 will look like: InterPro matches (TSV) - compressed - File 1
-                        String linkText = fileDefinition.getLinkText() + " - compressed";
-                        int chunkCounter = 1;
-                        for (String chunk : chunkedResultFiles) {
-                            if (chunkedResultFiles.size() > 1) {
-                                String partStr = " Part " + String.valueOf(chunkCounter);
-                                linkText = partStr;
+                    if (!isAmpliconData()) {
+                        if (fileDefinition.getIdentifier().equals("INTERPROSCAN_RESULT_FILE_NEW")) {
+                            //get result file chunks as a list of absolute file paths
+                            List<String> chunkedResultFiles = MemiTools.getListOfChunkedResultFiles(fileObject);
+                            //We do need to distinguish 2 cases - case 1: single compressed file - case 2: chunked and compressed result files
+                            //Case 1 will look like: InterPro matches (TSV) - 47 MB
+                            //Case 2 will look like: InterPro matches (TSV) - compressed - File 1
+                            String linkText = fileDefinition.getLinkText() + " - compressed";
+                            int chunkCounter = 1;
+                            for (String chunk : chunkedResultFiles) {
+                                if (chunkedResultFiles.size() > 1) {
+                                    String partStr = " Part " + String.valueOf(chunkCounter);
+                                    linkText = partStr;
+                                }
+                                final File downloadFileObj = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, chunk);
+                                interproscanDownloadLinks.add(new DownloadLink(linkText,
+                                        fileDefinition.getLinkTitle(),
+                                        "projects/" + externalProjectId + "/samples/" + externalSampleId + "/runs/" + externalRunId + "/results/versions/" + analysisJobReleaseVersion + "/function/InterProScan/chunks/" + String.valueOf(chunkCounter),
+                                        fileDefinition.getOrder(),
+                                        getFileSize(downloadFileObj)));
+                                chunkCounter++;
                             }
-                            final File downloadFileObj = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, chunk);
-                            interproscanDownloadLinks.add(new DownloadLink(linkText,
-                                    fileDefinition.getLinkTitle(),
-                                    "projects/" + externalProjectId + "/samples/" + externalSampleId + "/runs/" + externalRunId + "/results/versions/" + analysisJobReleaseVersion + "/function/InterProScan/chunks/" + String.valueOf(chunkCounter),
-                                    fileDefinition.getOrder(),
-                                    getFileSize(downloadFileObj)));
-                            chunkCounter++;
-                        }
-                    } else if (fileDefinition.getIdentifier().equals("INTERPROSCAN_RESULT_FILE")) {
-                        String filePath = fileObject.getAbsolutePath();
-                        File newFileObject = new File(filePath + ".chunks");
-                        if (!FileExistenceChecker.checkFileExistence(newFileObject)) {
+                        } else if (fileDefinition.getIdentifier().equals("INTERPROSCAN_RESULT_FILE")) {
+                            String filePath = fileObject.getAbsolutePath();
+                            File newFileObject = new File(filePath + ".chunks");
+                            if (!FileExistenceChecker.checkFileExistence(newFileObject)) {
+                                otherFuncAnalysisDownloadLinks.add(new DownloadLink(fileDefinition.getLinkText(),
+                                        fileDefinition.getLinkTitle(),
+                                        "projects/" + externalProjectId + "/samples/" + externalSampleId + "/runs/" + externalRunId + "/results/" + fileDefinition.getLinkURL() + "/versions/" + analysisJobReleaseVersion,
+                                        fileDefinition.getOrder(),
+                                        getFileSize(fileObject)));
+                            }
+                        } else {
                             otherFuncAnalysisDownloadLinks.add(new DownloadLink(fileDefinition.getLinkText(),
                                     fileDefinition.getLinkTitle(),
                                     "projects/" + externalProjectId + "/samples/" + externalSampleId + "/runs/" + externalRunId + "/results/" + fileDefinition.getLinkURL() + "/versions/" + analysisJobReleaseVersion,
                                     fileDefinition.getOrder(),
                                     getFileSize(fileObject)));
                         }
-                    } else {
-                        otherFuncAnalysisDownloadLinks.add(new DownloadLink(fileDefinition.getLinkText(),
-                                fileDefinition.getLinkTitle(),
-                                "projects/" + externalProjectId + "/samples/" + externalSampleId + "/runs/" + externalRunId + "/results/" + fileDefinition.getLinkURL() + "/versions/" + analysisJobReleaseVersion,
-                                fileDefinition.getOrder(),
-                                getFileSize(fileObject)));
                     }
                 } else {
                     //do nothing

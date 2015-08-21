@@ -50,7 +50,10 @@ public class FunctionalViewModelBuilder extends AbstractResultViewModelBuilder<F
         final Sample sample = analysisJob.getSample();
         //Get analysis status
         final AnalysisStatus analysisStatus = getAnalysisStatus((sample.getAnalysisCompleted() == null ? false : true));
-        FunctionalAnalysisResult functionalAnalysisResult = getListOfInterProEntries();
+        FunctionalAnalysisResult functionalAnalysisResult = null;
+        if (!isAmpliconData()) {
+            functionalAnalysisResult = getListOfInterProEntries();
+        }
         return new FunctionalViewModel(getSessionSubmitter(sessionMgr), pageTitle, breadcrumbs, propertyContainer, analysisJob.getSample(), run, analysisJob, analysisStatus, functionalAnalysisResult);
     }
 
