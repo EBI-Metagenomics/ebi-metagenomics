@@ -3,7 +3,7 @@
 <div id="fragment-download">
 
     <div class="box-export">
-        <p>You can download in this section the full set of analysis results files (abundance tables) that have been merged for all samples on this project.</p>
+        <p>In this section you can download the different matrix files. Each downloadable file contains an aggregation of the analysis results from the individual project runs. To visualise and download the analysis results for individual runs, please access their respective pages.</p>
 
         <c:forEach var="downloadSection" items="${model.downloadSectionMap}">
             <h3>Pipeline version <c:out value="${downloadSection.key}"/></h3>
