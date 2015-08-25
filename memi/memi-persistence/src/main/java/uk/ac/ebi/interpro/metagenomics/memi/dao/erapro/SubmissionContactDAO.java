@@ -19,5 +19,7 @@ public interface SubmissionContactDAO {
 
     Submitter getSubmitterBySubmissionAccountId(String submissionAccountId);
 
+    Submitter getSubmitterBySubmissionAccountIdAndEmail(String submissionAccountId, String email);
+
     Submitter getSubmitterByEmail(String emailAddress);
 }

@@ -1,0 +1,30 @@
+<html>
+<body>
+<table>
+    <tbody>
+    <tr>
+        <td><b>User details</b></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Full name:</td>
+        <td>$submitter.firstName $submitter.surname</td>
+    </tr>
+    <tr>
+        <td>Webin account id:</td>
+        <td>$submitter.submissionAccountId</td>
+    </tr>
+    <tr>
+        <td>Email address associated with your account:</td>
+        <td>$submitter.emailAddress</td>
+    </tr>
+</table>
+<p>
+    <b>Confirmation</b><br>
+    I give consent to the EBI Metagenomics team to analyse my private data. I am aware of the fact that the data as well
+    as the analysis results will remain confidential until the release date I specify when submitting my sequencing
+    study. I also confirm that the data submitted through this account is NOT sensitive, restricted-access or
+    human-identifiable.
+</p>
+</body>
+</html>

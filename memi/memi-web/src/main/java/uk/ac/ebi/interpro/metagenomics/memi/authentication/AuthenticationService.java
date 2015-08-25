@@ -71,7 +71,7 @@ public class AuthenticationService {
 
     private Submitter getSubmissionAccountIdAndCreateSubmitter(final AuthResult authResult) {
         final String principle = authResult.getPrinciple();
-        log.info("Authenticated as " + principle);
+        log.debug("Authenticated as " + principle);
         String submissionAccountId = null;
         if (principle.startsWith("Webin")) {
             submissionAccountId = principle;

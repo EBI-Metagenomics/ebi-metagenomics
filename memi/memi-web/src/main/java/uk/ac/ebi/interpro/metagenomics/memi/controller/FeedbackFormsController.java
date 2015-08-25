@@ -76,7 +76,7 @@ public class FeedbackFormsController extends AbstractController {
             ((EmailNotificationService) emailService).setEmailSubject("[beta-feedback] " + feedbackForm.getEmailSubject());
             ((EmailNotificationService) emailService).setReceiverCC(feedbackForm.getEmailAddress());
             emailService.sendNotification(msg);
-            log.info("Sent an email with contact details: " + msg);
+            log.debug("Sent an email with contact details: " + msg);
             status.setComplete();
         } else {
             return new ModelAndView(DefaultController.EXCEPTION_PAGE_VIEW_NAME, model);

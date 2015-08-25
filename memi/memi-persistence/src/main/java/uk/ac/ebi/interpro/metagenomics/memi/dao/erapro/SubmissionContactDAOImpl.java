@@ -89,6 +89,32 @@ public class SubmissionContactDAOImpl implements SubmissionContactDAO {
         return null;
     }
 
+    public Submitter getSubmitterBySubmissionAccountIdAndEmail(final String submissionAccountId, final String email) {
+        if (submissionAccountId == null || email == null)
+            return null;
+        try {
+            List<Map<String, Object>> rows = this.jdbcTemplate.queryForList("select sa.submission_account_id, sa.role_metagenome_analysis, c.first_name, c.surname, c.email_address, c.main_contact FROM era.submission_account sa, ERA.submission_contact c WHERE c.submission_account_id=sa.submission_account_id and UPPER(sa.submission_account_id) = UPPER(?) and UPPER(c.email_address) = UPPER(?)",
+                    new String[]{submissionAccountId, email});
+            if (rows.size() > 1) {
+                log.warn("Found more then one submission accounts for account id: " + submissionAccountId);
+            }
+            for (Map row : rows) {
+                Submitter submitter = new Submitter();
+                submitter.setSubmissionAccountId((String) row.get("submission_account_id"));
+                submitter.setConsentGiven(((String) row.get("role_metagenome_analysis")).equalsIgnoreCase("Y") ? true : false);
+                submitter.setFirstName((String) row.get("first_name"));
+                submitter.setSurname((String) row.get("surname"));
+                submitter.setEmailAddress((String) row.get("email_address"));
+                submitter.setMainContact(((String) row.get("main_contact")).equalsIgnoreCase("Y") ? true : false);
+                return submitter;
+            }
+        } catch (Exception e) {
+            log.warn("Could not perform database query. It might be that the JDBC connection could not build" +
+                    " or is wrong configured. For more info take a look at the stack trace!", e);
+        }
+        return null;
+    }
+
     public Submitter getSubmitterByEmail(final String emailAddress) {
         if (emailAddress == null)
             return null;

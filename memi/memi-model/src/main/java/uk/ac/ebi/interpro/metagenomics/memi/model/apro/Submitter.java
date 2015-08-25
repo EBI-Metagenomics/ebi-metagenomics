@@ -42,6 +42,8 @@ public class Submitter implements Serializable {
 
     private String submissionAccountId;
 
+    private boolean mainContact;
+
     /* Represents role_metagenome_analysis column in the submission table */
     boolean consentGiven;
 
@@ -173,5 +175,13 @@ public class Submitter implements Serializable {
 
     public void setConsentGiven(boolean consentGiven) {
         this.consentGiven = consentGiven;
+    }
+
+    public boolean isMainContact() {
+        return mainContact;
+    }
+
+    public void setMainContact(boolean mainContact) {
+        this.mainContact = mainContact;
     }
 }

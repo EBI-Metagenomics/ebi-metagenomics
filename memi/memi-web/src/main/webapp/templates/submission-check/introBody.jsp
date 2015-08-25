@@ -22,7 +22,7 @@
 <div class="grid_24 registration-check">
     <div class="box-registration">
 
-        <a href="<c:url value="${baseURL}/registration/new-user"/>" title="New user - start the submission"
+        <a href="<c:url value="${baseURL}/submission/consent"/>" title="New user - start the submission"
            class="box-registration-link">
             <div class="box-registration-cont anim box-ban sq_button">
                 <h3><span class="icon icon-functional" data-icon="7"></span> New user</h3>
@@ -31,7 +31,7 @@
     </div>
 
     <div class="box-registration">
-        <a href="<c:url value="${baseURL}/registration/account-check"/>" title="Existing user"
+        <a href="<c:url value="${baseURL}/submission/consent/account-check"/>" title="Existing user"
            class="box-registration-link" id="test">
             <div class="box-registration-cont anim box-blue sq_button">
                 <h3><span class="icon icon-functional" data-icon="/"></span> Existing user</h3>
