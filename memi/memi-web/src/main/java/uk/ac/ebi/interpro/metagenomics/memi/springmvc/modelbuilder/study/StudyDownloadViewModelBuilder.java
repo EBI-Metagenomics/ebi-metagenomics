@@ -70,8 +70,11 @@ public class StudyDownloadViewModelBuilder extends AbstractViewModelBuilder<Down
         final String resultDirectoryAbsolute = rootPath + study.getResultDirectory();
         final File rootDir = new File(resultDirectoryAbsolute);
 
-        if (!FileExistenceChecker.checkFileExistence(rootDir)) {
+        if (rootDir == null) {
             throw new IllegalStateException("Result directory for study " + study.getStudyId() + " not found");
+        }
+        else if (!FileExistenceChecker.checkFileExistence(rootDir)) {
+            throw new IllegalStateException("Result directory for study " + study.getStudyId() + " not found: " + rootDir.getAbsolutePath());
         }
 
         final File v2 = new File(resultDirectoryAbsolute + File.separator + "version_2.0" + File.separator + "project-summary");
@@ -102,7 +105,7 @@ public class StudyDownloadViewModelBuilder extends AbstractViewModelBuilder<Down
 
                 });
         sortedDownloadSectionMap.putAll(downloadSectionMap);
-        
+
         return sortedDownloadSectionMap;
     }
 

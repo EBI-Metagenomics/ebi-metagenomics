@@ -3,12 +3,12 @@
 <div id="fragment-download">
 
     <div class="box-export">
-        <p>In this section you can download the different matrix files. Each downloadable file contains an aggregation of the analysis results from the individual project runs. To visualise and download the analysis results for individual runs, please access their respective pages.</p>
+        <p>In this section you can download the different results matrix files summarising the project. Each downloadable file contains an aggregation of the analysis results from the individual project runs. To visualise and download the analysis results for individual runs, please access their respective pages.</p>
 
         <c:forEach var="downloadSection" items="${model.downloadSectionMap}">
             <h3>Pipeline version <c:out value="${downloadSection.key}"/></h3>
             <c:if test="${not empty downloadSection.value.funcAnalysisDownloadLinks}">
-                <h4>Functional analysis for project</h4>
+                <h4>Functional analysis for the project</h4>
                 <ul>
                     <c:forEach var="downloadLink" items="${downloadSection.value.funcAnalysisDownloadLinks}">
                         <li>
@@ -20,7 +20,7 @@
                 </ul>
             </c:if>
             <c:if test="${not empty downloadSection.value.taxaAnalysisDownloadLinks}">
-                <h4>Taxonomic analysis for project</h4>
+                <h4>Taxonomic analysis for the project</h4>
                 <ul>
                     <c:forEach var="downloadLink" items="${downloadSection.value.taxaAnalysisDownloadLinks}">
                         <li>
