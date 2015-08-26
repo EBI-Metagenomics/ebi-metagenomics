@@ -7,7 +7,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
 
 import java.util.List;
-import java.util.Map;
+import java.util.SortedMap;
 
 /**
  * Download view model.
@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public class DownloadViewModel extends ViewModel {
 
-    private Map<String, DownloadSection> downloadSectionMap;
+    private SortedMap<String, DownloadSection> downloadSectionMap;
 
     private Study study;
 
@@ -25,14 +25,14 @@ public class DownloadViewModel extends ViewModel {
                              String pageTitle,
                              List<Breadcrumb> breadcrumbs,
                              MemiPropertyContainer propertyContainer,
-                             Map<String, DownloadSection> downloadSectionMap,
+                             SortedMap<String, DownloadSection> downloadSectionMap,
                              Study study) {
         super(submitter, pageTitle, breadcrumbs, propertyContainer);
         this.downloadSectionMap = downloadSectionMap;
         this.study = study;
     }
 
-    public Map<String, DownloadSection> getDownloadSectionMap() {
+    public SortedMap<String, DownloadSection> getDownloadSectionMap() {
         return downloadSectionMap;
     }
 

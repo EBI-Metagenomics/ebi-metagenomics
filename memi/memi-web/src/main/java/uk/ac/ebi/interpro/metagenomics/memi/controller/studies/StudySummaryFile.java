@@ -13,8 +13,8 @@ public enum StudySummaryFile {
     IPR("IPR_abundances", "InterPro matches (TSV)", "func", 7),
     GO("GO_abundances", "Complete GO annotation (TSV)", "func", 8),
     GO_SLIM("GO-slim_abundances", "GO slim annotation (TSV)", "func", 9),
-//    PHYLUM_TAXONOMY("phylum_taxonomy_abundances", "phylum_level taxonomies found in the samples from a study.", "taxa", 10),
-    TAXONOMY("taxonomy_abundances", "OTUs and taxonomic assignments (TSV)", "taxa", 11);
+    PHYLUM_TAXONOMY("phylum_taxonomy_abundances", "Phylum level taxonomies across samples (TSV)", "taxa", 10),
+    TAXONOMY("taxonomy_abundances", "Taxonomic assignments across samples (TSV)", "taxa", 11);
 
     private String filename;
     private String description;

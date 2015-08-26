@@ -42,7 +42,7 @@ public class DownloadTest {
         }
         List<DownloadLink> taxaDownloadLinks = downloadSection.getTaxaAnalysisDownloadLinks();
         Assert.assertNotNull(taxaDownloadLinks);
-        Assert.assertEquals(1, taxaDownloadLinks.size());
+        Assert.assertEquals(2, taxaDownloadLinks.size());
         for (DownloadLink link : taxaDownloadLinks) {
             if (link.getLinkText().equals(extraFile)) {
                 // This extra file from the directory should not be included in the list as it is not an expected summary file

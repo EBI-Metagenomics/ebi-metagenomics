@@ -23,7 +23,7 @@
         <c:if test="${not empty study.resultDirectory}">
             <li>
                 <a title="Download"
-                   href="<c:url value="${baseURL}/projects/${study.studyId}/download"/>"><span>Download</span></a>
+                   href="<c:url value="${baseURL}/projects/${study.studyId}/download"/>"><span>Analysis summary</span></a>
             </li>
         </c:if>
     </ul>

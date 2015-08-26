@@ -58,11 +58,11 @@ public class StudyDownloadViewModelBuilder extends AbstractViewModelBuilder<Down
         if (log.isInfoEnabled()) {
             log.info("Building instance of " + DownloadViewModel.class + "...");
         }
-        final Map<String, DownloadSection> downloadSectionMap = buildDownloadSection(fileDefinitionsMap, study);
+        final SortedMap<String, DownloadSection> downloadSectionMap = buildDownloadSection(fileDefinitionsMap, study);
         return new DownloadViewModel(getSessionSubmitter(sessionMgr), pageTitle, breadcrumbs, propertyContainer, downloadSectionMap, study);
     }
 
-    private Map<String, DownloadSection> buildDownloadSection(final Map<String, DownloadableFileDefinition> fileDefinitionsMap,
+    private SortedMap<String, DownloadSection> buildDownloadSection(final Map<String, DownloadableFileDefinition> fileDefinitionsMap,
                                                               final Study study) {
         final Map<String, DownloadSection> downloadSectionMap = new HashMap<String, DownloadSection>();
 
@@ -90,7 +90,20 @@ public class StudyDownloadViewModelBuilder extends AbstractViewModelBuilder<Down
             }
         }
 
-        return downloadSectionMap;
+        // Sort the map with keys ordered by pipeline version number string (descending order)
+        SortedMap<String, DownloadSection> sortedDownloadSectionMap = new TreeMap<String, DownloadSection>(
+                new Comparator<String>() {
+
+                    @Override
+                    public int compare(String o1, String o2) {
+                        // TODO This comparator may need imrpoving to cope with some future pipeline version number strings
+                        return o2.compareTo(o1); // Reverse order
+                    }
+
+                });
+        sortedDownloadSectionMap.putAll(downloadSectionMap);
+        
+        return sortedDownloadSectionMap;
     }
 
     public static DownloadSection getDownloadLinks(final File resultDirectoryAbsolute, final String studyId, final String version) {
