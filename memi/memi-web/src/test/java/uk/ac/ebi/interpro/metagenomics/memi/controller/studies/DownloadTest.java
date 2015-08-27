@@ -37,7 +37,7 @@ public class DownloadTest {
         for (DownloadLink link : funcDownloadLinks) {
             if (link.getLinkText().equals(extraFile)) {
                 // This extra file from the directory should not be included in the list as it is not an expected summary file
-                Assert.fail("Unexpected file in download list: " + testResourceLocation + "/" + extraFile);
+                Assert.fail("Unexpected file in download list: " + testResourceLocation + File.separator + extraFile);
             }
         }
         List<DownloadLink> taxaDownloadLinks = downloadSection.getTaxaAnalysisDownloadLinks();
@@ -46,7 +46,7 @@ public class DownloadTest {
         for (DownloadLink link : taxaDownloadLinks) {
             if (link.getLinkText().equals(extraFile)) {
                 // This extra file from the directory should not be included in the list as it is not an expected summary file
-                Assert.fail("Unexpected file in download list: " + testResourceLocation + "/" + extraFile);
+                Assert.fail("Unexpected file in download list: " + testResourceLocation + File.separator + extraFile);
             }
         }
 

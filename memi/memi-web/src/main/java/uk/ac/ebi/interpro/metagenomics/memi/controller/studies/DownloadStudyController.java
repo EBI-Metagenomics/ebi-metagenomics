@@ -112,7 +112,7 @@ public class DownloadStudyController extends AbstractStudyViewController {
 
         if (study != null) {
             if (isAccessible(study)) {
-                File file = getDownloadFile(study, "1.0", exportValue);
+                File file = getDownloadFile(study, releaseVersion, exportValue);
                 if (file != null) {
                     downloadService.openDownloadDialog(response, request, file, exportValue + "_v" + releaseVersion + ".tsv" ,false);
                 } else {//analysis job is NULL

@@ -5,8 +5,8 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.Run;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.*;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.*;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.AnalysisStatus;
 
 import java.util.List;
 
@@ -43,7 +43,6 @@ public class ResultViewModel extends AbstractResultViewModel {
         this.sample = sample;
         this.analysisJob = analysisJob;
         this.archivedSequences = archivedSequences;
-        //
         this.run = run;
         this.analysisStatus = analysisStatus;
     }
