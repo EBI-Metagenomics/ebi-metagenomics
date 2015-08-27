@@ -75,7 +75,7 @@ public class DownloadViewModelBuilder extends AbstractResultViewModelBuilder<Dow
                 1));
 
         for (DownloadableFileDefinition fileDefinition : fileDefinitionsMap.values()) {
-            File fileObject = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, fileDefinition);
+                File fileObject = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, fileDefinition);
             boolean doesExist = FileExistenceChecker.checkFileExistence(fileObject);
 
             //Check if file exists and if it is not empty

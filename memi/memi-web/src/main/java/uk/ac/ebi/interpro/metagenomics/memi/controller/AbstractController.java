@@ -5,14 +5,8 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
-import uk.ac.ebi.interpro.metagenomics.memi.core.tools.MemiTools;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.EmgLogFileInfoDAO;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.BiomeDAO;
-import uk.ac.ebi.interpro.metagenomics.memi.exceptionHandling.ExceptionTag;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
-import uk.ac.ebi.interpro.metagenomics.memi.model.EmgFile;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Biome;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.DownloadableFileDefinition;
@@ -38,9 +32,6 @@ public abstract class AbstractController {
 
     @Resource
     protected MemiPropertyContainer propertyContainer;
-
-//    @Resource
-//    protected EmgLogFileInfoDAO fileInfoDAO;
 
     @Resource
     protected Map<String, DownloadableFileDefinition> fileDefinitionsMap;

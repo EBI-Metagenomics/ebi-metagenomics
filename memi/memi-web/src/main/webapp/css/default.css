@@ -1434,10 +1434,6 @@ img.ui-datepicker-trigger {float:left; /*solve a bug with chromium*/}
 .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {border: 1px solid #999; background: #999 url(../img/jquery/overcast/ui-bg_inset-hard_75_999999_1x100.png) 50% 50% repeat-x;font-weight: bold; color: #FFF;}
 /*End out of jQuery-ui*/
 
-/*JQUERY CALENDAR*/
-
-/*END JQUERY CALENDAR*/
-
 .sample_comp_result .ui-widget-header, .ui-widget-header {border: 0px solid #BBB;background:none;} /*remove style top ban widget*/
 
 .ui-datepicker { font-size:90%;}
@@ -1460,7 +1456,8 @@ img.ui-datepicker-trigger {float:left; /*solve a bug with chromium*/}
 .title_tab {margin:0.83em 0 0 9px;}
 .title_tab h2 {margin-top:0; margin-bottom:9px;}
 
-.title_tab_p {margin-top:0.83em;}
+.title_tab_p {margin-top:0.83em; }
+.extra_margin {margin-left:9px;/*add extra left space to align title& tab content - only for run and project*/}
 .title_tab_p h2 {margin-top:0;}
 .run_title {margin-top:9px;}
 .run_title span {font-size: 80%;}

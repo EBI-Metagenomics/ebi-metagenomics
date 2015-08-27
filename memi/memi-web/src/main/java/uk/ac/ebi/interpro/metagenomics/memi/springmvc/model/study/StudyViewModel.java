@@ -1,10 +1,12 @@
-package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
+package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.study;
 
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.extensions.QueryRunsForProjectResult;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Publication;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
 
 import java.util.List;
 
@@ -23,6 +25,8 @@ public class StudyViewModel extends ViewModel {
 
     private List<Publication> relatedPublications;
 
+    private String disabledOption;
+
     public StudyViewModel(Submitter submitter, Study study, List<QueryRunsForProjectResult> runs, String pageTitle,
                           List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer,
                           List<Publication> relatedPublications, List<Publication> relatedLinks) {
@@ -31,6 +35,13 @@ public class StudyViewModel extends ViewModel {
         this.study = study;
         this.relatedLinks = relatedLinks;
         this.relatedPublications = relatedPublications;
+        if (study == null || study.getResultDirectory() == null || study.getResultDirectory().isEmpty()) {
+            this.disabledOption = "disabled: [1]"; // No data to show, disable tab with index 1
+        }
+        else {
+            this.disabledOption = ""; // We have data, no tabs to be disabled
+        }
+
     }
 
     public List<Publication> getRelatedLinks() {
@@ -55,5 +66,9 @@ public class StudyViewModel extends ViewModel {
 
     public void setStudy(Study study) {
         this.study = study;
+    }
+
+    public String getDisabledOption() {
+        return disabledOption;
     }
 }

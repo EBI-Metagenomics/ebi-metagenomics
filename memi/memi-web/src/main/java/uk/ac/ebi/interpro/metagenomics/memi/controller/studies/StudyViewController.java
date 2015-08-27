@@ -1,31 +1,23 @@
-package uk.ac.ebi.interpro.metagenomics.memi.controller;
+package uk.ac.ebi.interpro.metagenomics.memi.controller.studies;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.velocity.app.VelocityEngine;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import uk.ac.ebi.interpro.metagenomics.memi.core.tools.MemiTools;
+import uk.ac.ebi.interpro.metagenomics.memi.controller.MGPortalURLCollection;
+import uk.ac.ebi.interpro.metagenomics.memi.controller.ModelProcessingStrategy;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.RunDAO;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.erapro.SubmissionContactDAO;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.BiomeDAO;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.StudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
-import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.StudyViewModel;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.study.StudyViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.StudyViewModelBuilder;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.study.StudyViewModelBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Represents the controller for the study (project) overview page. The use of terms project for study has a historical background.
@@ -34,7 +26,7 @@ import java.util.List;
  * @since 1.0-SNAPSHOT
  */
 @Controller
-public class StudyViewController extends SecuredAbstractController<Study> {
+public class StudyViewController extends AbstractStudyViewController {
 
     private final static Log log = LogFactory.getLog(StudyViewController.class);
 
@@ -44,28 +36,7 @@ public class StudyViewController extends SecuredAbstractController<Study> {
     public static final String VIEW_NAME = "project";
 
     @Resource
-    private StudyDAO studyDAO;
-
-    @Resource
     private RunDAO runDAO;
-
-    @Resource
-    private BiomeDAO biomeDAO;
-
-    @Resource
-    private SubmissionContactDAO submissionContactDAO;
-
-    @Resource
-    private VelocityEngine velocityEngine;
-
-    @Resource
-    private MemiDownloadService downloadService;
-
-    private Study getSecuredEntity(final String projectId) {
-        return studyDAO.readByStringId(projectId);
-    }
-
-    //GET Methods
 
     @RequestMapping(value = MGPortalURLCollection.PROJECT)
     public ModelAndView doGetStudy(@PathVariable final String studyId,
@@ -119,8 +90,6 @@ public class StudyViewController extends SecuredAbstractController<Study> {
      */
 
     private void populateModel(final ModelMap model, final Study study) {
-        // Assign biome CSS class to the study
-        MemiTools.assignBiomeIconCSSClass(study, biomeDAO);
         String pageTitle = "Project overview: " + study.getStudyName() + "";
         final ViewModelBuilder<StudyViewModel> builder = new StudyViewModelBuilder(sessionManager,
                 pageTitle, getBreadcrumbs(study), propertyContainer, study, runDAO);
@@ -134,11 +103,4 @@ public class StudyViewController extends SecuredAbstractController<Study> {
         return VIEW_NAME;
     }
 
-    protected List<Breadcrumb> getBreadcrumbs(SecureEntity entity) {
-        List<Breadcrumb> result = new ArrayList<Breadcrumb>();
-        if (entity != null && entity instanceof Study) {
-            result.add(new Breadcrumb("Project: " + ((Study) entity).getStudyName(), "View project " + ((Study) entity).getStudyName(), "projects/" + ((Study) entity).getStudyId()));
-        }
-        return result;
-    }
 }

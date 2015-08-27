@@ -29,7 +29,7 @@ public class FunctionalViewController extends AbstractResultViewController {
     private static final Log log = LogFactory.getLog(FunctionalViewController.class);
 
     protected String getModelViewName() {
-        return "tabs/mainNavigation/functional";
+        return "tabs/results/mainNavigation/functional";
     }
 
     private ModelProcessingStrategy<Run> createNewModelProcessingStrategy() {

@@ -1,4 +1,4 @@
-package uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder;
+package uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.study;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -11,7 +11,8 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Publication;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.PublicationType;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.StudyViewModel;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.study.StudyViewModel;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.AbstractViewModelBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
 
 import java.util.Collections;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Model builder class for StudyViewModel. See {@link ViewModelBuilder} for more information of how to use.
+ * Model builder class for StudyViewModel. See {@link StudyViewModelBuilder} for more information of how to use.
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @version $Id$
@@ -58,7 +59,9 @@ public class StudyViewModelBuilder extends AbstractViewModelBuilder<StudyViewMod
 
     @Override
     public StudyViewModel getModel() {
-        log.info("Building instance of " + StudyViewModel.class + "...");
+        if (log.isInfoEnabled()) {
+            log.info("Building instance of " + StudyViewModel.class + "...");
+        }
         Submitter submitter = getSessionSubmitter(sessionMgr);
         List<QueryRunsForProjectResult> runs = getRunsForStudyViewModel(submitter);
         buildPublicationLists();
