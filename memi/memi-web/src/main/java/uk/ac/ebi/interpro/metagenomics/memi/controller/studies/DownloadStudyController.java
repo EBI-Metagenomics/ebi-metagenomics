@@ -86,7 +86,6 @@ public class DownloadStudyController extends AbstractStudyViewController {
         downloadViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_PROJECTS_VIEW); // Not really needed as this is within an AJAX tab anyway?
         model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm()); // Not really needed as this is within an AJAX tab anyway?
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, downloadViewModel);
-
     }
 
     /**

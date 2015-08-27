@@ -12,24 +12,21 @@
 </div>
 
 <div class="sample_ana">
-<div id="navtabs">
+    <div id="navtabs">
 
-    <%--Main Tabs--%>
-    <ul>
-        <li>
-            <a title="Overview"
-               href="<c:url value="${baseURL}/projects/${study.studyId}/overview"/>"><span>Overview</span></a>
-        </li>
-        <c:if test="${not empty study.resultDirectory}">
+        <%--Main Tabs--%>
+        <ul>
             <li>
-                <a title="Download"
-                   href="<c:url value="${baseURL}/projects/${study.studyId}/download"/>"><span>Analysis summary</span></a>
+                <a title="Overview"
+                   href="<c:url value="${baseURL}/projects/${study.studyId}/overview"/>"><span>Overview</span></a>
             </li>
-        </c:if>
-    </ul>
+            <li>
+                <a title="Download" href="<c:url value="${baseURL}/projects/${study.studyId}/download"/>"><span>Analysis summary</span></a>
+            </li>
+        </ul>
 
-</div>
-<%--end navtabs--%>
+    </div>
+    <%--end navtabs--%>
 </div>  <%--end sample_ana--%>
 
 <script type="text/javascript">
@@ -59,11 +56,9 @@
         //Described here: http://imdev.in/jquery-ui-tabs-with-hashtags/
         select:function (event, ui) {
             window.location.hash = ui.tab.hash;
-        }
-        // TODO disable tab if no downloads for this project?
-        //,
-        //Set the disable option
-        <%--//${model.analysisStatus.disabledOption}--%>
+        },
+        //Set the tab disable option
+        ${model.disabledOption}
     });
 
 </script>

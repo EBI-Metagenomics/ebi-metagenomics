@@ -71,10 +71,12 @@ public class StudyDownloadViewModelBuilder extends AbstractViewModelBuilder<Down
         final File rootDir = new File(resultDirectoryAbsolute);
 
         if (rootDir == null) {
-            throw new IllegalStateException("Result directory for study " + study.getStudyId() + " not found");
+            log.error("Result directory for study " + study.getStudyId() + " not found");
+            return null;
         }
         else if (!FileExistenceChecker.checkFileExistence(rootDir)) {
-            throw new IllegalStateException("Result directory for study " + study.getStudyId() + " not found: " + rootDir.getAbsolutePath());
+            log.error("Result directory for study " + study.getStudyId() + " not found: " + rootDir.getAbsolutePath());
+            return null;
         }
 
         final File v2 = new File(resultDirectoryAbsolute + File.separator + "version_2.0" + File.separator + "project-summary");
