@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.controller.MGPortalURLCollection;
 import uk.ac.ebi.interpro.metagenomics.memi.controller.ModelProcessingStrategy;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.AnalysisJobDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.PipelineReleaseDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.exceptionHandling.EntryNotFoundException;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
@@ -37,6 +38,9 @@ public class DownloadStudyController extends AbstractStudyViewController {
 
     @Resource
     protected AnalysisJobDAO analysisJobDAO;
+
+    @Resource
+    private PipelineReleaseDAO pipelineReleaseDAO;
 
     @Resource
     private MemiDownloadService downloadService;
@@ -80,7 +84,8 @@ public class DownloadStudyController extends AbstractStudyViewController {
                 getBreadcrumbs(study), // Not really needed as this is within an AJAX tab anyway?
                 propertyContainer,
                 fileDefinitionsMap,
-                study);
+                study,
+                pipelineReleaseDAO);
 
         final DownloadViewModel downloadViewModel = builder.getModel();
         downloadViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_PROJECTS_VIEW); // Not really needed as this is within an AJAX tab anyway?

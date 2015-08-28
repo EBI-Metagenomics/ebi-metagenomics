@@ -10,12 +10,13 @@ import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.controller.MGPortalURLCollection;
 import uk.ac.ebi.interpro.metagenomics.memi.controller.ModelProcessingStrategy;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.RunDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.PipelineReleaseDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.study.StudyViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.study.StudyViewModelBuilder;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.study.StudyViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.study.StudyViewModelBuilder;
 
 import javax.annotation.Resource;
 
@@ -36,7 +37,7 @@ public class StudyViewController extends AbstractStudyViewController {
     public static final String VIEW_NAME = "project";
 
     @Resource
-    private RunDAO runDAO;
+    private PipelineReleaseDAO pipelineReleaseDAO;
 
     @RequestMapping(value = MGPortalURLCollection.PROJECT)
     public ModelAndView doGetStudy(@PathVariable final String studyId,
@@ -92,7 +93,7 @@ public class StudyViewController extends AbstractStudyViewController {
     private void populateModel(final ModelMap model, final Study study) {
         String pageTitle = "Project overview: " + study.getStudyName() + "";
         final ViewModelBuilder<StudyViewModel> builder = new StudyViewModelBuilder(sessionManager,
-                pageTitle, getBreadcrumbs(study), propertyContainer, study, runDAO);
+                pageTitle, getBreadcrumbs(study), propertyContainer, study, pipelineReleaseDAO);
         final StudyViewModel studyModel = builder.getModel();
         studyModel.changeToHighlightedClass(ViewModel.TAB_CLASS_PROJECTS_VIEW);
         model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());

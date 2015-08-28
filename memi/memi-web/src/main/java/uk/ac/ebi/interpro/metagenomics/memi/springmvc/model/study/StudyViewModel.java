@@ -8,6 +8,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -17,55 +18,19 @@ import java.util.List;
  * @since 1.0-SNAPSHOT
  */
 public class StudyViewModel extends ViewModel {
-    private List<QueryRunsForProjectResult> runs;
-
     private Study study;
-
-    private List<Publication> relatedLinks;
-
-    private List<Publication> relatedPublications;
 
     private String disabledOption;
 
-    public StudyViewModel(Submitter submitter, Study study, List<QueryRunsForProjectResult> runs, String pageTitle,
-                          List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer,
-                          List<Publication> relatedPublications, List<Publication> relatedLinks) {
+    public StudyViewModel(Submitter submitter, Study study, String pageTitle,
+                          List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer, final String disabledOption) {
         super(submitter, pageTitle, breadcrumbs, propertyContainer);
-        this.runs = runs;
         this.study = study;
-        this.relatedLinks = relatedLinks;
-        this.relatedPublications = relatedPublications;
-        if (study == null || study.getResultDirectory() == null || study.getResultDirectory().isEmpty()) {
-            this.disabledOption = "disabled: [1]"; // No data to show, disable tab with index 1
-        }
-        else {
-            this.disabledOption = ""; // We have data, no tabs to be disabled
-        }
-
-    }
-
-    public List<Publication> getRelatedLinks() {
-        return relatedLinks;
-    }
-
-    public List<Publication> getRelatedPublications() {
-        return relatedPublications;
-    }
-
-    public List<QueryRunsForProjectResult> getRuns() {
-        return runs;
-    }
-
-    public void setRuns(List<QueryRunsForProjectResult> runs) {
-        this.runs = runs;
+        this.disabledOption = disabledOption;
     }
 
     public Study getStudy() {
         return study;
-    }
-
-    public void setStudy(Study study) {
-        this.study = study;
     }
 
     public String getDisabledOption() {
