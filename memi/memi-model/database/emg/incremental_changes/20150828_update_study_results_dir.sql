@@ -3,8 +3,8 @@
 -- #2. Retrospectively populates the new column for all studies for which the new project summary (abundance table)
 --     files have been generated for (up to this date).
 
-ALTER TABLE EMG.STUDY ADD RESULT_DIR VARCHAR2(100 CHAR);
-COMMENT ON COLUMN EMG.STUDY.RESULT_DIR IS 'Path to the results directory for this study';
+ALTER TABLE EMG.STUDY ADD RESULT_DIRECTORY VARCHAR2(100 CHAR);
+COMMENT ON COLUMN EMG.STUDY.RESULT_DIRECTORY IS 'Path to the results directory for this study';
 
 
 UPDATE EMG.STUDY SET RESULT_DIRECTORY='2014/02/Cardiff' WHERE EXT_STUDY_ID='Cardiff';
