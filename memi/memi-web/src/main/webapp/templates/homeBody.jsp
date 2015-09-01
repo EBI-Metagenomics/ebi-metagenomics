@@ -279,6 +279,7 @@
                             </c:otherwise>
                             </c:choose>
 
+                    <!-- Test-->
                     <p><div class="biome_icon icon_xs ${study.biomeIconCSSClass}" title="${biomeName} biome"></div>
                         <a href="<c:url value="${baseURL}/projects/${study.studyId}"/>"
                            class="list_more fl_uppercase_title">${study.studyName}</a>
