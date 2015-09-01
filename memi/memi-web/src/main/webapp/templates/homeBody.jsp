@@ -278,6 +278,7 @@
                                 <c:set var="biomeName" value="Undefined" scope="page"/>
                             </c:otherwise>
                             </c:choose>
+                    <!-- branch test-->
 
                     <p><div class="biome_icon icon_xs ${study.biomeIconCSSClass}" title="${biomeName} biome"></div>
                         <a href="<c:url value="${baseURL}/projects/${study.studyId}"/>"
