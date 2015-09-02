@@ -47,7 +47,7 @@
         </c:otherwise>
     </c:choose>
 
-    <div class="biome_project"><span class="biome_icon icon_sm ${study.biomeIconCSSClass}"
+    <div class="biome_project"><span class="biome_icon icon_sm show_tooltip ${study.biomeIconCSSClass}"
                                      title="${biomeName} biome"></span></div>
 
     <span class="subtitle">Project overview <span>(${study.studyId})</span></span>
