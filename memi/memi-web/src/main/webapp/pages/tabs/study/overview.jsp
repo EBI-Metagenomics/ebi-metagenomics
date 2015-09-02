@@ -8,49 +8,6 @@
 <c:set var="study" value="${model.study}"/>
 
 <div id="project_ov">
-<%--TEMP while we implement a better solution--%>
-<c:choose>
-    <c:when test="${study.biomeIconCSSClass == 'freshwater_b'}">
-        <c:set var="biomeName" value="Freshwater" scope="page"/>
-    </c:when>
-    <c:when test="${study.biomeIconCSSClass == 'soil_b'}">
-        <c:set var="biomeName" value="Soil" scope="page"/>
-    </c:when>
-    <c:when test="${study.biomeIconCSSClass == 'forest_b'}">
-        <c:set var="biomeName" value="Forest" scope="page"/>
-    </c:when>
-    <c:when test="${study.biomeIconCSSClass == 'grassland_b'}">
-        <c:set var="biomeName" value="Grassland" scope="page"/>
-    </c:when>
-    <c:when test="${study.biomeIconCSSClass == 'marine_b'}">
-        <c:set var="biomeName" value="Marine"/>
-    </c:when>
-    <c:when test="${study.biomeIconCSSClass == 'human_gut_b'}">
-        <c:set var="biomeName" value="Human gut" scope="page"/>
-    </c:when>
-    <c:when test="${study.biomeIconCSSClass == 'engineered_b'}">
-        <c:set var="biomeName" value="Engineered" scope="page"/>
-    </c:when>
-    <c:when test="${study.biomeIconCSSClass == 'air_b'}">
-        <c:set var="biomeName" value="Air" scope="page"/>
-    </c:when>
-    <c:when test="${study.biomeIconCSSClass == 'wastewater_b'}">
-        <c:set var="biomeName" value="Wastewater" scope="page"/>
-    </c:when>
-    <c:when test="${study.biomeIconCSSClass == 'non_human_host_b'}">
-        <c:set var="biomeName" value="Non-human host" scope="page"/>
-    </c:when>
-    <c:when test="${study.biomeIconCSSClass == 'human_host_b'}">
-        <c:set var="biomeName" value="Human host" scope="page"/>
-    </c:when>
-    <c:otherwise>
-        <c:set var="biomeName" value="Undefined" scope="page"/>
-    </c:otherwise>
-</c:choose>
-
-
-<div class="biome_project"><span class="biome_icon icon_sm ${study.biomeIconCSSClass}"
-                                 title="${biomeName} biome"></span></div>
 
 <tags:publications publications="${study.publications}" relatedPublications="${model.relatedPublications}"
                    relatedLinks="${model.relatedLinks}"/>
