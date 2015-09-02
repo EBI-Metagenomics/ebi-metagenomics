@@ -64,7 +64,7 @@
                    href="<c:url value="${baseURL}/projects/${study.studyId}/overview"/>"><span>Overview</span></a>
             </li>
             <li>
-                <a title="Download" href="<c:url value="${baseURL}/projects/${study.studyId}/download"/>"><span>Analysis summary</span></a>
+                <a title="Analysis summary" href="<c:url value="${baseURL}/projects/${study.studyId}/download"/>"><span>Analysis summary</span></a>
             </li>
         </ul>
 
