@@ -50,7 +50,7 @@
     <div class="biome_project"><span class="biome_icon icon_sm show_tooltip ${study.biomeIconCSSClass}"
                                      title="${biomeName} biome"></span></div>
 
-    <span class="subtitle">Project <span>(${study.studyId})</span></span>
+    <span class="subtitle">Project  <span>(${study.studyId})</span></span>
     <h2 class="fl_uppercase_title">${study.studyName}</h2>
 </div>
 
