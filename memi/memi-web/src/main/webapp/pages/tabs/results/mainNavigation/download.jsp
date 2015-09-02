@@ -28,7 +28,7 @@
             </c:forEach>
         </ul>
         <c:if test="${(not empty model.downloadSection.functionalDownloadSection.interproscanDownloadLinks || not empty model.downloadSection.functionalDownloadSection.otherDownloadLinks) && not empty model.sample.analysisCompleted}">
-            <h4>Functional Analysis</h4>
+            <h4>Functional analysis</h4>
             <ul>
                 <c:if test="${not empty model.downloadSection.functionalDownloadSection.interproscanDownloadLinks}">
                     <c:choose>
@@ -69,7 +69,7 @@
             </ul>
         </c:if>
         <c:if test="${not empty model.downloadSection.taxaAnalysisDownloadLinks && not empty model.sample.analysisCompleted}">
-            <h4>Taxonomic Analysis</h4>
+            <h4>Taxonomic analysis</h4>
             <ul>
                 <c:forEach var="downloadLink" items="${model.downloadSection.taxaAnalysisDownloadLinks}"
                            varStatus="loop">
