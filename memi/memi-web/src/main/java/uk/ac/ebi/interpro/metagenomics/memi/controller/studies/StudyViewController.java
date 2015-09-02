@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.controller.MGPortalURLCollection;
 import uk.ac.ebi.interpro.metagenomics.memi.controller.ModelProcessingStrategy;
+import uk.ac.ebi.interpro.metagenomics.memi.core.tools.MemiTools;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.RunDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.BiomeDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.PipelineReleaseDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
@@ -38,6 +40,9 @@ public class StudyViewController extends AbstractStudyViewController {
 
     @Resource
     private PipelineReleaseDAO pipelineReleaseDAO;
+
+    @Resource
+     private BiomeDAO biomeDAO;
 
     @RequestMapping(value = MGPortalURLCollection.PROJECT)
     public ModelAndView doGetStudy(@PathVariable final String studyId,
@@ -91,6 +96,8 @@ public class StudyViewController extends AbstractStudyViewController {
      */
 
     private void populateModel(final ModelMap model, final Study study) {
+         // Assign biome CSS class to the study
+        MemiTools.assignBiomeIconCSSClass(study, biomeDAO);
         String pageTitle = "Project overview: " + study.getStudyName() + "";
         final ViewModelBuilder<StudyViewModel> builder = new StudyViewModelBuilder(sessionManager,
                 pageTitle, getBreadcrumbs(study), propertyContainer, study, pipelineReleaseDAO);
