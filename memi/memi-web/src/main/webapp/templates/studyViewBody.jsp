@@ -7,7 +7,50 @@
 <c:set var="study" value="${model.study}"/>
 
 <div class="title_tab_p extra_margin">
-    <span class="subtitle">Project overview <span>(${study.studyId})</span></span>
+    <%--TEMP while we implement a better solution--%>
+    <c:choose>
+        <c:when test="${study.biomeIconCSSClass == 'freshwater_b'}">
+            <c:set var="biomeName" value="Freshwater" scope="page"/>
+        </c:when>
+        <c:when test="${study.biomeIconCSSClass == 'soil_b'}">
+            <c:set var="biomeName" value="Soil" scope="page"/>
+        </c:when>
+        <c:when test="${study.biomeIconCSSClass == 'forest_b'}">
+            <c:set var="biomeName" value="Forest" scope="page"/>
+        </c:when>
+        <c:when test="${study.biomeIconCSSClass == 'grassland_b'}">
+            <c:set var="biomeName" value="Grassland" scope="page"/>
+        </c:when>
+        <c:when test="${study.biomeIconCSSClass == 'marine_b'}">
+            <c:set var="biomeName" value="Marine"/>
+        </c:when>
+        <c:when test="${study.biomeIconCSSClass == 'human_gut_b'}">
+            <c:set var="biomeName" value="Human gut" scope="page"/>
+        </c:when>
+        <c:when test="${study.biomeIconCSSClass == 'engineered_b'}">
+            <c:set var="biomeName" value="Engineered" scope="page"/>
+        </c:when>
+        <c:when test="${study.biomeIconCSSClass == 'air_b'}">
+            <c:set var="biomeName" value="Air" scope="page"/>
+        </c:when>
+        <c:when test="${study.biomeIconCSSClass == 'wastewater_b'}">
+            <c:set var="biomeName" value="Wastewater" scope="page"/>
+        </c:when>
+        <c:when test="${study.biomeIconCSSClass == 'non_human_host_b'}">
+            <c:set var="biomeName" value="Non-human host" scope="page"/>
+        </c:when>
+        <c:when test="${study.biomeIconCSSClass == 'human_host_b'}">
+            <c:set var="biomeName" value="Human host" scope="page"/>
+        </c:when>
+        <c:otherwise>
+            <c:set var="biomeName" value="Undefined" scope="page"/>
+        </c:otherwise>
+    </c:choose>
+
+    <div class="biome_project"><span class="biome_icon icon_sm show_tooltip ${study.biomeIconCSSClass}"
+                                     title="${biomeName} biome"></span></div>
+
+    <span class="subtitle">Project  <span>(${study.studyId})</span></span>
     <h2 class="fl_uppercase_title">${study.studyName}</h2>
 </div>
 
@@ -21,7 +64,7 @@
                    href="<c:url value="${baseURL}/projects/${study.studyId}/overview"/>"><span>Overview</span></a>
             </li>
             <li>
-                <a title="Download" href="<c:url value="${baseURL}/projects/${study.studyId}/download"/>"><span>Analysis summary</span></a>
+                <a title="Analysis summary" href="<c:url value="${baseURL}/projects/${study.studyId}/download"/>"><span>Analysis summary</span></a>
             </li>
         </ul>
 

@@ -7,9 +7,8 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.Run;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.*;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.*;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.*;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.AnalysisStatus;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.FunctionalAnalysisFileDefinition;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.ResultFileDefinitionImpl;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.results.ResultViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
 
@@ -36,8 +35,6 @@ public class ResultViewModelBuilder extends AbstractResultViewModelBuilder<Resul
 
     private Run run;
 
-    private ResultViewModel.ExperimentType experimentType;
-
     private final List<String> archivedSequences;
 
     public ResultViewModelBuilder(SessionManager sessionMgr,
@@ -48,7 +45,6 @@ public class ResultViewModelBuilder extends AbstractResultViewModelBuilder<Resul
                                   AnalysisJob analysisJob,
                                   List<String> archivedSequences,
                                   MemiPropertyContainer propertyContainer,
-                                  ResultViewModel.ExperimentType experimentType,
                                   List<ResultFileDefinitionImpl> qualityControlFileDefinitions,
                                   List<FunctionalAnalysisFileDefinition> functionalAnalysisFileDefinitions,
                                   List<ResultFileDefinitionImpl> taxonomicAnalysisFileDefinitions) {
@@ -57,7 +53,6 @@ public class ResultViewModelBuilder extends AbstractResultViewModelBuilder<Resul
         this.pageTitle = pageTitle;
         this.breadcrumbs = breadcrumbs;
         this.archivedSequences = archivedSequences;
-        this.experimentType = experimentType;
         this.run = run;
     }
 
@@ -78,8 +73,7 @@ public class ResultViewModelBuilder extends AbstractResultViewModelBuilder<Resul
                 analysisJob,
                 analysisStatus,
                 archivedSequences,
-                propertyContainer,
-                experimentType);
+                propertyContainer);
         return resultViewModel;
     }
 }

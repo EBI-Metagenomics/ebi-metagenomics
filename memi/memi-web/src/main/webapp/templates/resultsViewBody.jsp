@@ -3,7 +3,7 @@
 
 <c:choose>
     <c:when test="${not empty model.sample}">
-       <a href="<c:url value="${baseURL}/pipelines/${model.analysisJob.pipelineRelease.releaseVersion}"/>"> <div class="icon_pipeline_v anim" title="Data analysed with pipeline v.${model.analysisJob.pipelineRelease.releaseVersion}">Pipeline v.${model.analysisJob.pipelineRelease.releaseVersion}</div></a>
+       <a href="<c:url value="${baseURL}/pipelines/${model.analysisJob.pipelineRelease.releaseVersion}"/>"> <div class="icon_pipeline_v anim show_tooltip" title="Data analysed with pipeline v.${model.analysisJob.pipelineRelease.releaseVersion}">Pipeline v.${model.analysisJob.pipelineRelease.releaseVersion}</div></a>
 
         <h2 class="fl_uppercase_title run_title extra_margin">Run id <span>${model.run.externalRunId}</span></h2>
 
@@ -80,7 +80,7 @@
 
     </c:when>
     <c:otherwise>
-        <h3>Sample ID Not Recognised</h3>
+        <h3>Run ID Not Recognised</h3>
     </c:otherwise>
 </c:choose>
 
@@ -185,7 +185,7 @@
     //     * @return {String}
     //     */
     function getSVGDocumentAsString(chartContainer) {
-//   extract the svg code for the chart (assuming chartContainer points to the html element containing the chart) - svg elements don't have inner/outerHTML properties, so use the parent
+//   extract the svg code for the chart (assuming chartContainer points to the html element containing the chart) - svg elements don't have inner/outerHTML properties -  IN FAct, this is not true anymore-, so use the parent
         var chartArea = chartContainer.getElementsByTagName('svg')[0].parentNode;
         var svgDocumentAsString = chartArea.innerHTML;
         return svgDocumentAsString;
@@ -200,13 +200,14 @@
     //     */
     function saveAsSVG(chartContainer, fileName) {
         var svgDocumentAsString = getSVGDocumentAsString(chartContainer);
-//        alert('' + svgDocumentAsString + '');
         //remove the div from the string to make the SVG export work
         var jHtmlObject = jQuery(svgDocumentAsString);
         var editor = jQuery("<p>").append(jHtmlObject);
         editor.find("div").remove();
         var newHtml = editor.html();
-//        alert('' + newHtml + '');
+       // alert('' + newHtml + '');
+        mystringNew = newHtml.split('\u2026').join('...'); //replace 3dots in string that cause of SVG bug export
+       //  alert(mystringNew);
         var form = $('<form/>', {
             id:'svgExportForm',
             name:'svgExportForm',
@@ -217,7 +218,7 @@
         });
         form.append($('<input/>', {name:'fileType', value:'svg'}));
         form.append($('<input/>', {name:'fileName', value:fileName}));
-        form.append($('<input/>', {name:'svgDocumentAsString', value:newHtml}));
+        form.append($('<input/>', {name:'svgDocumentAsString', value:mystringNew}));
         $('body').append(form);
         form.submit();
     }

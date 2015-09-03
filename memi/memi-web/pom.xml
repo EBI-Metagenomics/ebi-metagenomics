@@ -26,13 +26,6 @@
     <!--</licenses>-->
 
     <repositories>
-        <!--iText repository-->
-        <repository>
-            <id>itextpdf.com</id>
-            <name>Maven Repository for iText</name>
-            <url>http://maven.itextpdf.com/</url>
-        </repository>
-
         <!--ENA repository-->
         <repository>
             <id>ena-artifactory-libs-release</id>
@@ -51,7 +44,7 @@
         <tiles.version>2.2.2</tiles.version>
         <hibernate-validator.version>4.3.0.Final</hibernate-validator.version>
         <javax.validation-api.version>1.0.0.GA</javax.validation-api.version>
-        <ena-authentication.client.version>1.4.2</ena-authentication.client.version>
+        <ena-authentication.client.version>1.6.0</ena-authentication.client.version>
     </properties>
 
     <!-- Most of the dependencies are ordered by topics (e.g. Spring) or by scope -->
@@ -263,13 +256,6 @@
             <groupId>taglibs</groupId>
             <artifactId>standard</artifactId>
             <version>1.1.2</version>
-        </dependency>
-        <!-- iText dependency-->
-        <dependency>
-            <groupId>com.itextpdf</groupId>
-            <artifactId>itextpdf</artifactId>
-            <version>5.0.4</version>
-            <scope>compile</scope>
         </dependency>
 
         <!-- Apache Commons Upload -->

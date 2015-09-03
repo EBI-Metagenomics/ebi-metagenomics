@@ -1,8 +1,6 @@
 package uk.ac.ebi.interpro.metagenomics.memi.controller.results;
 
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.ui.ModelMap;
 import uk.ac.ebi.interpro.metagenomics.memi.controller.SecuredAbstractController;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.RunDAO;
@@ -11,7 +9,6 @@ import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.temp.SampleAnnotationDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.exceptionHandling.EntryNotFoundException;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
-import uk.ac.ebi.interpro.metagenomics.memi.model.EmgSampleAnnotation;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Run;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
@@ -32,15 +29,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class extends {@link uk.ac.ebi.interpro.metagenomics.memi.controller.SampleViewController}, {@link uk.ac.ebi.interpro.metagenomics.memi.controller.KronaChartsController} and {@link uk.ac.ebi.interpro.metagenomics.memi.controller.ResultViewExportController}.
+ * Abstract controller class which is inherited by several result view controllers.
+ *
+ * @author Maxim Scheremetjew, EMBL-EBI, InterPro
+ * @since 1.4-SNAPSHOT
  */
 public abstract class AbstractResultViewController extends SecuredAbstractController<Run> {
-
-    private static final Log log = LogFactory.getLog(AbstractResultViewController.class);
-    /**
-     * View name of this controller which is used several times.
-     */
-//    public static final String VIEW_NAME = "sample";
 
     @Resource
     protected SampleDAO sampleDAO;
@@ -106,13 +100,9 @@ public abstract class AbstractResultViewController extends SecuredAbstractContro
     }
 
     /**
-     * Creates the home page model and adds it to the specified model map.
+     * Populates the abstract result view model.
      */
     protected void populateModel(final ModelMap model, final Run run, String pageTitle) {
-        //TODO: For the moment the system only allows to represent one file on the analysis page, but
-        //in the future it should be possible to represent all different data types (genomic, transcriptomic)
-        ResultViewModel.ExperimentType experimentType = ResultViewModel.ExperimentType.GENOMIC;
-        final List<EmgSampleAnnotation> sampleAnnotations = (List<EmgSampleAnnotation>) sampleAnnotationDAO.getSampleAnnotations(run.getSampleId());
 
         AnalysisJob analysisJob = analysisJobDAO.readByRunIdAndVersionDeep(run.getExternalRunId(), run.getReleaseVersion(), "completed");
         if (analysisJob == null) {
@@ -130,14 +120,12 @@ public abstract class AbstractResultViewController extends SecuredAbstractContro
 //                MemiTools.getArchivedSeqs(fileInfoDAO, sample),
                 new ArrayList<String>(),
                 propertyContainer,
-                experimentType,
                 qualityControlFileDefinitions,
                 functionalAnalysisFileDefinitions,
                 taxonomicAnalysisFileDefinitions);
         final ResultViewModel resultModel = builder.getModel();
-        //End
 
-        resultModel.changeToHighlightedClass(ViewModel.TAB_CLASS_SAMPLES_VIEW);
+        resultModel.changeToHighlightedClass(ViewModel.DEFAULT_CLASS);
         model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, resultModel);
     }

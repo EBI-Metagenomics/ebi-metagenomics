@@ -3,20 +3,18 @@ package uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.study;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
-import uk.ac.ebi.interpro.metagenomics.memi.core.comparators.PublicationComparator;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.extensions.QueryRunsForProjectResult;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.RunDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.extensions.QueryRunsForProjectResult;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.PipelineReleaseDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Publication;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.PublicationType;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.PipelineRelease;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.study.StudyViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.AbstractViewModelBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
 
-import java.util.Collections;
-import java.util.ArrayList;
+import java.io.File;
 import java.util.List;
 
 /**
@@ -38,23 +36,16 @@ public class StudyViewModelBuilder extends AbstractViewModelBuilder<StudyViewMod
 
     private Study study;
 
-    private RunDAO runDAO;
-
-    private List<Publication> relatedLinks;
-
-    private List<Publication> relatedPublications;
-
+    private PipelineReleaseDAO pipelineReleaseDAO;
 
     public StudyViewModelBuilder(SessionManager sessionMgr, String pageTitle, List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer,
-                                 Study study, RunDAO runDAO) {
+                                 Study study, PipelineReleaseDAO pipelineReleaseDAO) {
         super(sessionMgr);
         this.pageTitle = pageTitle;
         this.breadcrumbs = breadcrumbs;
         this.propertyContainer = propertyContainer;
         this.study = study;
-        this.runDAO = runDAO;
-        this.relatedLinks = new ArrayList<Publication>();
-        this.relatedPublications = new ArrayList<Publication>();
+        this.pipelineReleaseDAO = pipelineReleaseDAO;
     }
 
     @Override
@@ -63,39 +54,42 @@ public class StudyViewModelBuilder extends AbstractViewModelBuilder<StudyViewMod
             log.info("Building instance of " + StudyViewModel.class + "...");
         }
         Submitter submitter = getSessionSubmitter(sessionMgr);
-        List<QueryRunsForProjectResult> runs = getRunsForStudyViewModel(submitter);
-        buildPublicationLists();
-        return new StudyViewModel(submitter, study, runs, pageTitle,
-                breadcrumbs, propertyContainer, relatedPublications, relatedLinks);
-    }
-
-    private List<QueryRunsForProjectResult> getRunsForStudyViewModel(Submitter submitter) {
-        long studyId = study.getId();
-        if (submitter == null) {
-            return runDAO.retrieveRunsByProjectId(studyId, true);
-        } else {
-            //Check if submitter is study owner
-            if (submitter.getSubmissionAccountId().equalsIgnoreCase(study.getSubmissionAccountId())) {
-                return runDAO.retrieveRunsByProjectId(studyId, false);
-            } else {
-                return runDAO.retrieveRunsByProjectId(studyId, true);
-            }
-        }
+        String tabDisabledOption = getTabDisabledOption();
+        return new StudyViewModel(submitter, study, pageTitle,
+                breadcrumbs, propertyContainer, tabDisabledOption);
     }
 
     /**
-     * Divides the set of publications into 2 different types of publication sets.
+     * Checks for all pipeline release if results do exist. If no results exist then disable the study summary tab.
      */
-    private void buildPublicationLists() {
-        for (Publication pub : study.getPublications()) {
-            if (pub.getPubType().equals(PublicationType.PUBLICATION)) {
-                relatedPublications.add(pub);
-            } else if (pub.getPubType().equals(PublicationType.WEBSITE_LINK)) {
-                relatedLinks.add(pub);
+    public String getTabDisabledOption() {
+        final String disableOption = "disabled: [1]";
+
+        if (study == null || study.getResultDirectory() == null || study.getResultDirectory().isEmpty()) {
+            return disableOption; // No data to show, disable tab with index 1
+        } else {
+            // Check if study result directory does exist and is not empty (suppress tab if necessary)
+            final String studyResultDirectory = study.getResultDirectory();
+            final String rootPath = propertyContainer.getPathToAnalysisDirectory();
+            final String resultDirectoryAbsolute = rootPath + studyResultDirectory;
+            //Get all pipeline releases and iterate over them
+            List<PipelineRelease> pipelines = pipelineReleaseDAO.retrieveAll();
+            boolean hasResults = false;
+            for (PipelineRelease pipeline : pipelines) {
+                final File results = new File(resultDirectoryAbsolute + File.separator + "version_" + pipeline.getReleaseVersion() + File.separator + "project-summary");
+                if (results.exists() && results.isDirectory() && results.list().length > 0) {
+                    // We have data, no tabs to be disabled
+                    hasResults = true;
+                    //leave the loop, we proved that:
+                    //1. The result dir does exist and is not empty
+                    break;
+                }
+            }
+            if (hasResults) {
+                return ""; // No data to show, disable tab with index 1
+            } else {
+                return disableOption; // We have data, no tabs to be disabled
             }
         }
-        //Sorting lists
-        Collections.sort(relatedPublications, new PublicationComparator());
-        Collections.sort(relatedLinks, new PublicationComparator());
     }
 }

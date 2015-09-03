@@ -7,6 +7,16 @@
 
     <!--sequence data file definitions-->
 
+    <!-- List of mappings between download links (on the website) and result files on file system -->
+    <!-- Download link name                             | file name suffix -->
+    <!-- Processed nucleotide reads (FASTA)             | _masked.fasta (Version 1)                     | .fasta (Version 2) -->
+    <!-- Processed reads with pCDS (FASTA)              | /sequence-categorisation/pCDS.fasta -->
+    <!-- Processed reads with InterPro matches (FASTA)  | /sequence-categorisation/interproscan.fasta -->
+    <!-- Processed reads without InterPro match (FASTA) | /sequence-categorisation/noFunction.fasta -->
+    <!-- Predicted CDS (FASTA)                          | _CDS.faa -->
+    <!-- Predicted ORF without annotation (FASTA)       | _CDS_unannotated.ffn -->
+    <!-- Predicted CDS without annotation (FASTA)       | _CDS_unannotated.faa-->
+
     <bean id="maskedReadsFile" autowire-candidate="false"
           class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.SequenceFileDefinition">
         <property name="fileNameEnding" value="_masked.fasta"/>
@@ -155,7 +165,7 @@
         <property name="description" value="OTUs and taxonomic assignments (BIOM format)."/>
         <property name="downloadName" value="_otu.biom"/>
         <property name="linkText" value="OTUs and taxonomic assignments (BIOM)"/>
-        <property name="order" value="4"/>
+        <property name="order" value="5"/>
         <property name="linkTitle" value="Click to download the OTUs and taxonomic assignments (BIOM)"/>
         <property name="linkURL" value="/export?contentType=text&amp;exportValue=biom"/>
     </bean>
@@ -166,7 +176,7 @@
         <property name="description" value="Phylogenetic tree (Newick format)."/>
         <property name="downloadName" value="_newick.tre"/>
         <property name="linkText" value="Phylogenetic tree (Newick format)"/>
-        <property name="order" value="5"/>
+        <property name="order" value="6"/>
         <property name="linkTitle" value="Click to download the phylogenetic tree file (Newick format)"/>
         <property name="linkURL" value="/export?contentType=text&amp;exportValue=tree"/>
     </bean>
@@ -178,8 +188,8 @@
         <property name="description" value="OTUs and taxonomic assignments (TSV)."/>
         <property name="downloadName" value="_otu.tsv"/>
         <property name="linkText" value="OTUs and taxonomic assignments (TSV)"/>
-        <property name="order" value="6"/>
-        <property name="linkTitle" value="Click to download the OTUs and taxonomic assignments (TSV)"/>
+        <property name="order" value="4"/>
+        <property name="linkTitle" value="Click to download the OTU table in TSV format"/>
         <property name="linkURL" value="/export?contentType=text&amp;exportValue=taxa"/>
     </bean>
 
@@ -189,9 +199,9 @@
         <property name="fileNameEnding" value="_otu_table.txt"/>
         <property name="description" value="N/A"/>
         <property name="downloadName" value="_otu.tsv"/>
-        <property name="linkText" value="OTU table file"/>
+        <property name="linkText" value="OTUs, reads and taxonomic assignments (TSV)"/>
         <property name="order" value="7"/>
-        <property name="linkTitle" value="Click to download the OTU table file"/>
+        <property name="linkTitle" value="Click to download the OTU table in TSV format"/>
         <!--TODO: Implement the request mapping-->
         <property name="linkURL" value="/export?contentType=text&amp;exportValue=otuTable"/>
     </bean>
@@ -202,9 +212,9 @@
         <property name="fileNameEnding" value="_otu_table_hdf5.biom"/>
         <property name="description" value="N/A"/>
         <property name="downloadName" value="_otu_table_hdf5.biom"/>
-        <property name="linkText" value="OTU table hdf5 biom file"/>
+        <property name="linkText" value="OTUs, reads and taxonomic assignments (HDF5 biom)"/>
         <property name="order" value="8"/>
-        <property name="linkTitle" value="Click to download the OTU table hdf5 biom file"/>
+        <property name="linkTitle" value="Click to download the converted OTU table in HDF5 biom format"/>
         <!--TODO: Implement the request mapping-->
         <property name="linkURL" value="/export?contentType=text&amp;exportValue=hdf5Biom"/>
     </bean>
@@ -215,9 +225,9 @@
         <property name="fileNameEnding" value="_otu_table_json.biom"/>
         <property name="description" value="N/A"/>
         <property name="downloadName" value="_otu_table_json.biom"/>
-        <property name="linkText" value="OTU table JSON biom file"/>
+        <property name="linkText" value="OTUs, reads and taxonomic assignments (JSON biom)"/>
         <property name="order" value="9"/>
-        <property name="linkTitle" value="Click to download the OTU table JSON biom file"/>
+        <property name="linkTitle" value="Click to download the converted OTU table in JSON biom format"/>
         <!--TODO: Implement the request mapping-->
         <property name="linkURL" value="/export?contentType=text&amp;exportValue=JSONBiom"/>
     </bean>
@@ -228,24 +238,24 @@
         <property name="fileNameEnding" value="_pruned.tree"/>
         <property name="description" value="N/A"/>
         <property name="downloadName" value="_pruned.tree"/>
-        <property name="linkText" value="Pruned tree file"/>
-        <property name="order" value="9"/>
-        <property name="linkTitle" value="Click to download the pruned tree file"/>
+        <property name="linkText" value="Phylogenetic tree (Newick format)"/>
+        <property name="order" value="10"/>
+        <property name="linkTitle" value="Click to download the phylogenetic tree file (Newick format)"/>
         <!--TODO: Implement the request mapping-->
         <property name="linkURL" value="/export?contentType=text&amp;exportValue=prunedTree"/>
     </bean>
 
     <!--<bean id="qiimeLogFile" autowire-candidate="false"-->
-          <!--class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.TaxonomicAnalysisFileDefinition">-->
-        <!--<property name="relativePath" value="/cr_otus/uclust_ref_picked_otus/"/>-->
-        <!--<property name="fileNameEnding" value="_16S_rRNA_QIIME_otus.log"/>-->
-        <!--<property name="description" value="N/A"/>-->
-        <!--<property name="downloadName" value="_16S_rRNA_QIIME_otus.log"/>-->
-        <!--<property name="linkText" value="16S rRNA QIIME OTUs log file"/>-->
-        <!--<property name="order" value="9"/>-->
-        <!--<property name="linkTitle" value="Click to download the 16S rRNA QIIME OTUs log file"/>-->
-        <!--&lt;!&ndash;TODO: Implement the request mapping&ndash;&gt;-->
-        <!--<property name="linkURL" value="/export?contentType=text&amp;exportValue=qiimeLog"/>-->
+    <!--class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.TaxonomicAnalysisFileDefinition">-->
+    <!--<property name="relativePath" value="/cr_otus/uclust_ref_picked_otus/"/>-->
+    <!--<property name="fileNameEnding" value="_16S_rRNA_QIIME_otus.log"/>-->
+    <!--<property name="description" value="N/A"/>-->
+    <!--<property name="downloadName" value="_16S_rRNA_QIIME_otus.log"/>-->
+    <!--<property name="linkText" value="16S rRNA QIIME OTUs log file"/>-->
+    <!--<property name="order" value="9"/>-->
+    <!--<property name="linkTitle" value="Click to download the 16S rRNA QIIME OTUs log file"/>-->
+    <!--&lt;!&ndash;TODO: Implement the request mapping&ndash;&gt;-->
+    <!--<property name="linkURL" value="/export?contentType=text&amp;exportValue=qiimeLog"/>-->
     <!--</bean>-->
 
     <!--Since pipeline version 2.0 QIIME -->
@@ -266,6 +276,18 @@
     </bean>
 
     <!--Functional data file definitions-->
+
+    <bean id="interProScanResultFileNew" autowire-candidate="false"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.FunctionalAnalysisFileDefinition">
+        <property name="identifier" value="INTERPROSCAN_RESULT_FILE_NEW"/>
+        <property name="fileNameEnding" value="_I5.tsv.chunks"/>
+        <property name="description" value="InterPro matches (TSV)"/>
+        <property name="downloadName" value="_InterPro.tsv.gz"/>
+        <property name="linkText" value="InterPro matches (TSV)"/>
+        <property name="order" value="2"/>
+        <property name="linkTitle" value="Click here to download InterPro matches (TSV)"/>
+        <property name="linkURL" value="I5TSVFile"/>
+    </bean>
 
     <bean id="interProScanResultFile" autowire-candidate="false"
           class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.FunctionalAnalysisFileDefinition">

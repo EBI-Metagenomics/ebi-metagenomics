@@ -30,9 +30,9 @@
         <put-attribute name="loginForm" type="template" value="/templates/loginForm.jsp"/>
     </definition>
 
-    <definition name="info" extends="rootTemplate">
+    <definition name="about" extends="rootTemplate">
         <put-attribute name="bodyClass" type="string" value="green"/>
-        <put-attribute name="body" value="/templates/infoBody.jsp"/>
+        <put-attribute name="body" value="/templates/aboutBody.jsp"/>
     </definition>
 
     <definition name="submit" extends="rootTemplate">
@@ -115,9 +115,9 @@
         <put-attribute name="body" value="/templates/feedbackSuccessBody.jsp"/>
     </definition>
 
-    <definition name="login" extends="rootTemplate">
+    <definition name="submitData" extends="rootTemplate">
         <put-attribute name="bodyClass" type="string" value="ebigrey"/>
-        <put-attribute name="body" value="/templates/loginBody.jsp"/>
+        <put-attribute name="body" value="/templates/submitDataBody.jsp"/>
     </definition>
 
     <definition name="404" extends="rootTemplate">

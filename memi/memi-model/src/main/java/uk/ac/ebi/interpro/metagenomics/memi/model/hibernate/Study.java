@@ -115,6 +115,13 @@ public class Study implements SecureEntity {
     @Transient
     private Long sampleSize;
 
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "BIOME_ID", nullable = true)
+    private Biome biome;
+
+    @Transient
+    private String biomeIconCSSClass;
+
     /**
      * Submitted - Directly submitted to us (EBI Metagenomics).
      * <p/>
@@ -362,6 +369,22 @@ public class Study implements SecureEntity {
 
     public void setSampleSize(Long sampleSize) {
         this.sampleSize = sampleSize;
+    }
+
+    public Biome getBiome() {
+        return biome;
+    }
+
+    public void setBiome(Biome biome) {
+        this.biome = biome;
+    }
+
+    public String getBiomeIconCSSClass() {
+        return biomeIconCSSClass;
+    }
+
+    public void setBiomeIconCSSClass(String biomeIconCSSClass) {
+        this.biomeIconCSSClass = biomeIconCSSClass;
     }
 
     /**

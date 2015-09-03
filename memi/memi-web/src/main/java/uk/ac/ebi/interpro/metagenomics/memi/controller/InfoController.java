@@ -30,7 +30,7 @@ public class InfoController extends AbstractController implements IController {
     /**
      * View name of this controller which is used several times.
      */
-    public static final String VIEW_NAME = "info";
+    public static final String VIEW_NAME = "about";
 
     @Override
     public ModelAndView doGet(final ModelMap model) {

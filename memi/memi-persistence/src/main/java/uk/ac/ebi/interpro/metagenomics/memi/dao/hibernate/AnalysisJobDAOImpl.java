@@ -4,6 +4,7 @@ import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.GenericDAOImpl;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob;
 
@@ -22,6 +23,7 @@ public class AnalysisJobDAOImpl extends GenericDAOImpl<AnalysisJob, Long> implem
     public AnalysisJobDAOImpl() {
     }
 
+    @Transactional(readOnly = true)
     public AnalysisJob readByRunIdAndVersionDeep(final String externalRunIDs,
                                                  final String releaseVersion,
                                                  final String analysisStatus) {
@@ -36,6 +38,7 @@ public class AnalysisJobDAOImpl extends GenericDAOImpl<AnalysisJob, Long> implem
         }
     }
 
+    @Transactional(readOnly = true)
     public List<AnalysisJob> readBySampleId(Long sampleId, String analysisStatus) {
         try {
             Criteria criteria = getSession().createCriteria(AnalysisJob.class);
@@ -47,6 +50,7 @@ public class AnalysisJobDAOImpl extends GenericDAOImpl<AnalysisJob, Long> implem
         }
     }
 
+    @Transactional(readOnly = true)
     public List<AnalysisJob> readByJobIds(List<Long> jobIds) {
         try {
             Criteria criteria = getSession().createCriteria(AnalysisJob.class);

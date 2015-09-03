@@ -38,7 +38,7 @@ public class LoginPageController extends LoginController {
     /**
      * View name of this controller which is used several times.
      */
-    public static final String VIEW_NAME = "login";
+    public static final String VIEW_NAME = "submitData";
 
 
     /**
@@ -91,7 +91,7 @@ public class LoginPageController extends LoginController {
 
     protected List<Breadcrumb> getBreadcrumbs(SecureEntity entity) {
         List<Breadcrumb> result = new ArrayList<Breadcrumb>();
-        result.add(new Breadcrumb("Login", "Login to the metagenomics portal", VIEW_NAME));
+        result.add(new Breadcrumb("Submit data", "Submit new data", VIEW_NAME));
         return result;
     }
 

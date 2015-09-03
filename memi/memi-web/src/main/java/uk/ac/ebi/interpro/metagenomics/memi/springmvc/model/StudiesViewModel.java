@@ -27,6 +27,8 @@ public class StudiesViewModel extends ViewModel {
 
     private List<StudyFilter.StudyVisibility> studyVisibilities;
 
+    private List<StudyFilter.Biome> studyBiomes;
+
     /**
      * Specifies a list of table header names for the table on samples view page (the list of names should be in the order you like to show within the web
      * application).
@@ -52,6 +54,7 @@ public class StudiesViewModel extends ViewModel {
         this.filter = filter;
         this.studies = studies;
         this.studyVisibilities = getDefaultStudyVisibilityList();
+        this.studyBiomes = getDefaultStudyBiomeList();
         this.tableHeaderNames = tableHeaderNames;
         this.pagination = pagination;
         this.studySampleSizeMap = studySampleSizeMap;
@@ -85,6 +88,14 @@ public class StudiesViewModel extends ViewModel {
         this.studyVisibilities = studyVisibilities;
     }
 
+    public List<StudyFilter.Biome> getStudyBiomes() {
+        return studyBiomes;
+    }
+
+    public void setStudyBiomes(List<StudyFilter.Biome> studyBiomes) {
+        this.studyBiomes = studyBiomes;
+    }
+
     public ViewPagination getPagination() {
         return pagination;
     }
@@ -99,6 +110,10 @@ public class StudiesViewModel extends ViewModel {
 
     private List<StudyFilter.StudyVisibility> getDefaultStudyVisibilityList() {
         return Arrays.asList(StudyFilter.StudyVisibility.values());
+    }
+
+    private List<StudyFilter.Biome> getDefaultStudyBiomeList() {
+        return Arrays.asList(StudyFilter.Biome.values());
     }
 
     public Map<Study, Long> getStudySampleSizeMap() {

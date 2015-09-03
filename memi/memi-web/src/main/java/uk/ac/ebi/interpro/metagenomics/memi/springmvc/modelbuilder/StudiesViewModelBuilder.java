@@ -6,10 +6,13 @@ import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
+import uk.ac.ebi.interpro.metagenomics.memi.core.tools.MemiTools;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.BiomeDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.StudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.StudyFilter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Biome;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.StudiesViewModel;
@@ -26,7 +29,7 @@ import java.util.List;
  * @version $Id$
  * @since 1.0-SNAPSHOT
  */
-public class StudiesViewModelBuilder extends AbstractViewModelBuilder<StudiesViewModel> {
+public class StudiesViewModelBuilder extends AbstractBiomeViewModelBuilder<StudiesViewModel> {
 
     private final static Log log = LogFactory.getLog(StudiesViewModelBuilder.class);
 
@@ -42,6 +45,8 @@ public class StudiesViewModelBuilder extends AbstractViewModelBuilder<StudiesVie
 
     private StudyDAO studyDAO;
 
+    private BiomeDAO biomeDAO;
+
     private StudyFilter filter;
 
     private int startPosition;
@@ -54,6 +59,7 @@ public class StudiesViewModelBuilder extends AbstractViewModelBuilder<StudiesVie
                                    final MemiPropertyContainer propertyContainer, final List<String> tableHeaderNames,
                                    final SampleDAO sampleDAO,
                                    final StudyDAO studyDAO,
+                                   final BiomeDAO biomeDAO,
                                    final StudyFilter filter,
                                    final int startPosition,
                                    final boolean doPagination) {
@@ -64,6 +70,7 @@ public class StudiesViewModelBuilder extends AbstractViewModelBuilder<StudiesVie
         this.tableHeaderNames = tableHeaderNames;
         this.sampleDAO = sampleDAO;
         this.studyDAO = studyDAO;
+        this.biomeDAO = biomeDAO;
         this.filter = filter;
         this.startPosition = startPosition;
         this.doPagination = doPagination;
@@ -104,14 +111,21 @@ public class StudiesViewModelBuilder extends AbstractViewModelBuilder<StudiesVie
         } else {
             result = studyDAO.retrieveFilteredStudies(criteria, false, "studyName");
         }
-        return (result == null ? new ArrayList<Study>() : result);
+        if (result != null && !result.isEmpty()) {
+            for (Study study : result) {
+                MemiTools.assignBiomeIconCSSClass(study, biomeDAO);
+            }
+            return result;
+        } else {
+            return new ArrayList<Study>();
+        }
     }
 
     /**
      * Builds a list of criteria for the specified study filter. These criteria can be used for
      * a Hibernate query.
      */
-    private static List<Criterion> buildFilterCriteria(final StudyFilter filter, final String submissionAccountId) {
+    private List<Criterion> buildFilterCriteria(final StudyFilter filter, final String submissionAccountId) {
         String searchText = filter.getSearchTerm();
         Study.StudyStatus studyStatus = filter.getStudyStatus();
 
@@ -124,10 +138,70 @@ public class StudiesViewModelBuilder extends AbstractViewModelBuilder<StudiesVie
         if (studyStatus != null) {
             crits.add(Restrictions.eq("studyStatus", studyStatus));
         }
+        if (!filter.getBiome().equals(StudyFilter.Biome.ALL)) {
+            List<Integer> biomeIds = new ArrayList<Integer>();
+
+            // Soil
+            if (filter.getBiome().equals(StudyFilter.Biome.SOIL)) {
+                biomeIds.addAll(super.getBiomeIdsByLineage(biomeDAO, StudyFilter.Biome.SOIL.getLineages()));
+            }
+            // Marine
+            else if (filter.getBiome().equals(StudyFilter.Biome.MARINE)) {
+                biomeIds.addAll(super.getBiomeIdsByLineage(biomeDAO, StudyFilter.Biome.MARINE.getLineages()));
+            }
+            // Forest Soil
+            else if (filter.getBiome().equals(StudyFilter.Biome.FOREST_SOIL)) {
+                biomeIds.addAll(super.getBiomeIdsByLineage(biomeDAO, StudyFilter.Biome.FOREST_SOIL.getLineages()));
+            }
+            // Freshwater
+            else if (filter.getBiome().equals(StudyFilter.Biome.FRESHWATER)) {
+                biomeIds.addAll(super.getBiomeIdsByLineage(biomeDAO, StudyFilter.Biome.FRESHWATER.getLineages()));
+            }
+            // Grassland
+            else if (filter.getBiome().equals(StudyFilter.Biome.GRASSLAND)) {
+                biomeIds.addAll(super.getBiomeIdsByLineage(biomeDAO, StudyFilter.Biome.GRASSLAND.getLineages()));
+            }
+            // Human gut
+            else if (filter.getBiome().equals(StudyFilter.Biome.HUMAN_GUT)) {
+                biomeIds.addAll(super.getBiomeIdsByLineage(biomeDAO, StudyFilter.Biome.HUMAN_GUT.getLineages()));
+            }
+            //Engineered
+            else if (filter.getBiome().equals(StudyFilter.Biome.ENGINEERED)) {
+                biomeIds.addAll(super.getBiomeIdsByLineage(biomeDAO, StudyFilter.Biome.ENGINEERED.getLineages()));
+            }
+            // Air
+            else if (filter.getBiome().equals(StudyFilter.Biome.AIR)) {
+                biomeIds.addAll(super.getBiomeIdsByLineage(biomeDAO, StudyFilter.Biome.AIR.getLineages()));
+            }
+            // Wastewater
+            else if (filter.getBiome().equals(StudyFilter.Biome.WASTEWATER)) {
+                biomeIds.addAll(super.getBiomeIdsByLineage(biomeDAO, StudyFilter.Biome.WASTEWATER.getLineages()));
+            }
+            // Human host
+            else if (filter.getBiome().equals(StudyFilter.Biome.HUMAN_HOST)) {
+                biomeIds.addAll(super.getBiomeIdsByLineage(biomeDAO, StudyFilter.Biome.HUMAN_HOST.getLineages()));
+            }
+            // Host-associated
+            else if (filter.getBiome().equals(StudyFilter.Biome.HOST_ASSOCIATED)) {
+                biomeIds.addAll(super.getBiomeIdsByLineage(biomeDAO, StudyFilter.Biome.HOST_ASSOCIATED.getLineages()));
+            }
+            // All Non-human hosts
+            else if (filter.getBiome().equals(StudyFilter.Biome.NON_HUMAN_HOST)) {
+                List<Integer> biomeIdsForHumanHost = super.getBiomeIdsByLineage(biomeDAO, StudyFilter.Biome.HUMAN_HOST.getLineages());
+                List<Integer> biomeIdsForAllHosts = super.getBiomeIdsByLineage(biomeDAO, StudyFilter.Biome.HOST_ASSOCIATED.getLineages());
+
+                //human host is a subset of all hosts
+                //so to get all non human host we remove all human host identifiers from the set of all hosts
+                biomeIds.addAll(biomeIdsForAllHosts);
+                biomeIds.removeAll(biomeIdsForHumanHost);
+            }
+
+            crits.add(Restrictions.in("biome.biomeId", biomeIds));
+        }
         //add is public and submitter identifier criteria
-        if (submissionAccountId !=null) {
+        if (submissionAccountId != null) {
             //Set DEFAULT visibility if not defined
-            StudyFilter.StudyVisibility visibility = (filter.getStudyVisibility() == null ? StudyFilter.StudyVisibility.MY_PROJECTS: filter.getStudyVisibility());
+            StudyFilter.StudyVisibility visibility = (filter.getStudyVisibility() == null ? StudyFilter.StudyVisibility.MY_PROJECTS : filter.getStudyVisibility());
             //SELECT * FROM HB_STUDY where submitter_id=?;
             if (visibility.equals(StudyFilter.StudyVisibility.MY_PROJECTS)) {
                 crits.add(Restrictions.eq("submissionAccountId", submissionAccountId));

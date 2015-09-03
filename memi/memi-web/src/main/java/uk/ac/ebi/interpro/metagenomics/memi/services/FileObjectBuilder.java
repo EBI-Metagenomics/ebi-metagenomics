@@ -70,4 +70,14 @@ public final class FileObjectBuilder {
             return null;
         }
     }
+
+    public static File createFileObject(final AnalysisJob analysisJob,
+                                        final MemiPropertyContainer propertyContainer,
+                                        final String resultFileName) {
+        //Get directory name + root path
+        final String resultDirectory = analysisJob.getResultDirectory();
+        final String rootPath = propertyContainer.getPathToAnalysisDirectory();
+        final String resultDirectoryAbsolute = rootPath + resultDirectory;
+        return new File(resultDirectoryAbsolute + '/' + resultFileName);
+    }
 }

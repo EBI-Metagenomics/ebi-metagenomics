@@ -6,7 +6,7 @@
     <p>The chart below shows the number of sequence reads which pass each of the quality control steps we
         have implemented in our pipeline. Note that, for paired-end data, sequence merging may have
         occurred and so the initial number of reads may differ from what is in the ENA. For more details
-        about the data processing we employ, please see the <a href="<c:url value="${baseURL}/info#analysis"/>"  title="About Metagenomics">about page</a>.</p>
+        about the data processing we employ, please see the <a href="<c:url value="${baseURL}/about#analysis"/>"  title="About Metagenomics">about page</a>.</p>
     <c:choose>
         <c:when test="${empty model.sample.analysisCompleted}"><div class="msg_error">Analysis in progress.</div></c:when>
         <c:when test="${not empty model.sample.analysisCompleted && !model.analysisStatus.qualityControlTabDisabled}">

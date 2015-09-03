@@ -9,11 +9,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.controller.MGPortalURLCollection;
 import uk.ac.ebi.interpro.metagenomics.memi.controller.ModelProcessingStrategy;
+import uk.ac.ebi.interpro.metagenomics.memi.core.tools.MemiTools;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.RunDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.erapro.SubmissionContactDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.BiomeDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.PipelineReleaseDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.study.OverviewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.study.StudyViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.study.OverviewModelBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.study.StudyViewModelBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder;
 
@@ -26,16 +32,22 @@ import javax.annotation.Resource;
  * @since 1.4-SNAPSHOT
  */
 @Controller
-public class OverviewStudyViewController extends AbstractStudyViewController{
+public class OverviewStudyViewController extends AbstractStudyViewController {
+
     private static final Log log = LogFactory.getLog(OverviewStudyViewController.class);
 
     @Resource
     private RunDAO runDAO;
 
+    @Resource
+    private BiomeDAO biomeDAO;
+
     protected String getModelViewName() {
         return "tabs/study/overview";
     }
 
+    @Resource
+    private SubmissionContactDAO submissionContactDAO;
 
     private ModelProcessingStrategy<Study> createNewModelProcessingStrategy() {
         return new ModelProcessingStrategy<Study>() {
@@ -63,12 +75,14 @@ public class OverviewStudyViewController extends AbstractStudyViewController{
      * Creates the analysis page model and adds it to the specified model map.
      */
     protected void populateModel(final ModelMap model, final Study study) {
+        // Assign biome CSS class to the study
+        MemiTools.assignBiomeIconCSSClass(study, biomeDAO);
         String pageTitle = "Project overview: " + study.getStudyName() + "";
-        final ViewModelBuilder<StudyViewModel> builder = new StudyViewModelBuilder(sessionManager,
+        final ViewModelBuilder<OverviewModel> builder = new OverviewModelBuilder(sessionManager,
                 pageTitle, getBreadcrumbs(study), propertyContainer, study, runDAO);
-        final StudyViewModel studyModel = builder.getModel();
-        studyModel.changeToHighlightedClass(ViewModel.TAB_CLASS_PROJECTS_VIEW);
+        final OverviewModel overviewModel = builder.getModel();
+        overviewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_PROJECTS_VIEW);
         model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
-        model.addAttribute(StudyViewModel.MODEL_ATTR_NAME, studyModel);
+        model.addAttribute(StudyViewModel.MODEL_ATTR_NAME, overviewModel);
     }
 }

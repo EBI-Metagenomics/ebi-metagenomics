@@ -4,20 +4,26 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.controller.results.AbstractResultViewController;
+import uk.ac.ebi.interpro.metagenomics.memi.core.tools.MemiTools;
 import uk.ac.ebi.interpro.metagenomics.memi.core.tools.StreamCopyUtil;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Run;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob;
 import uk.ac.ebi.interpro.metagenomics.memi.services.ExportValueService;
 import uk.ac.ebi.interpro.metagenomics.memi.services.FileObjectBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.DownloadableFileDefinition;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.FileDefinitionId;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -72,6 +78,49 @@ public class ResultViewExportController extends AbstractResultViewController {
         }
     }
 
+
+    public void doHandleFunctionalExports(final String projectId,
+                                          final String sampleId,
+                                          final String runId,
+                                          final String releaseVersion,
+                                          final Integer chunkValue,
+                                          final HttpServletResponse response,
+                                          final HttpServletRequest request) throws IOException {
+        response.setContentType("text/html;charset=utf-8");
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.setLocale(Locale.ENGLISH);
+
+        Run run = getSecuredEntity(projectId, sampleId, runId, releaseVersion);
+
+        if (run != null) {
+            if (isAccessible(run)) {
+                AnalysisJob analysisJob = analysisJobDAO.readByRunIdAndVersionDeep(run.getExternalRunId(), releaseVersion, "completed");
+                if (analysisJob != null) {
+                    DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(FileDefinitionId.INTERPROSCAN_RESULT_FILE_NEW.name());
+                    if (fileDefinition != null) {
+                        File fileObject = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, fileDefinition);
+                        //get result file chunks as a list of absolute file paths
+                        List<String> chunkedResultFiles = MemiTools.getListOfChunkedResultFiles(fileObject);
+                        try {
+                            final String downloadName = (chunkedResultFiles.size() == 1 ? fileDefinition.getDownloadName() : fileDefinition.getDownloadName().replace(".tsv.gz", "_" + String.valueOf(chunkValue) + ".tsv.gz"));
+                            final String resultFileName = chunkedResultFiles.get(chunkValue - 1);
+                            openDownloadDialog(response, request, analysisJob, downloadName, FileObjectBuilder.createFileObject(analysisJob, propertyContainer, resultFileName));
+                        } catch (IndexOutOfBoundsException e) {
+                            response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+                        }
+                    } else {//analysis job is NULL
+                        response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+                    }
+                } else {//access denied
+                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    response.sendRedirect("/metagenomics/sample/" + sampleId + "/accessDenied");
+                }
+            } else {//run is NULL
+                response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+            }
+        }
+    }
+
     /**
      * @param sampleId
      * @param requestBody The response body should contain 3 attributes (file type, file name and image or SVG document as plain text)
@@ -113,7 +162,7 @@ public class ResultViewExportController extends AbstractResultViewController {
                         }
                     }
                     //Set HTTP response header attributes
-                    response.setHeader("Content-Disposition", "attachment; filename=\"" + run.getExternalSampleId() + "_" + fileName + "\"");
+                    response.setHeader("Content-Disposition", "attachment; filename=\"" + run.getExternalRunId() + "_" + fileName + "\"");
                     response.setHeader("Accept-Ranges", "bytes");
                     response.setBufferSize(2048000);
                     response.setStatus(HttpServletResponse.SC_OK);
@@ -170,6 +219,41 @@ public class ResultViewExportController extends AbstractResultViewController {
                     log.error("Could not close input stream correctly!", e);
                 }
         }
+    }
+
+    @RequestMapping(value = MGPortalURLCollection.PROJECT_SAMPLE_RUN_RESULTS_FUNCTION_INTERPROSCAN_CHUNKS)
+    public ModelAndView doListInterProScanChunks(@PathVariable final String projectId,
+                                                 @PathVariable final String sampleId,
+                                                 @PathVariable final String runId,
+                                                 @PathVariable final String releaseVersion,
+                                                 final HttpServletResponse response, final HttpServletRequest request) {
+        final DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(FileDefinitionId.INTERPROSCAN_RESULT_FILE_NEW.name());
+        final Run run = getSecuredEntity(projectId, sampleId, runId, releaseVersion);
+
+        return checkAccessAndBuildModel(new ModelProcessingStrategy<Run>() {
+            @Override
+            public void processModel(ModelMap model, Run run) {
+                AnalysisJob analysisJob = analysisJobDAO.readByRunIdAndVersionDeep(run.getExternalRunId(), releaseVersion, "completed");
+                if (analysisJob != null) {
+                    File fileObject = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, fileDefinition);
+                    List<String> listOfChunks = MemiTools.getListOfChunkedResultFiles(fileObject);
+                    model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
+                    model.addAttribute("numOfChunks", listOfChunks.size());
+                }
+            }
+        }, new ModelMap(), run, "chunks");
+    }
+
+
+    @RequestMapping(value = MGPortalURLCollection.PROJECT_SAMPLE_RUN_RESULTS_FUNCTION_INTERPROSCAN_CHUNKS_VALUE)
+    public void doExportI5Results(@PathVariable final String projectId,
+                                  @PathVariable final String sampleId,
+                                  @PathVariable final String runId,
+                                  @PathVariable final String releaseVersion,
+                                  @PathVariable final Integer chunkValue,
+                                  final HttpServletResponse response,
+                                  final HttpServletRequest request) throws IOException {
+        doHandleFunctionalExports(projectId, sampleId, runId, releaseVersion, chunkValue, response, request);
     }
 
     @Override

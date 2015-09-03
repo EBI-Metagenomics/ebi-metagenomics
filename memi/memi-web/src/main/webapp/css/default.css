@@ -393,7 +393,7 @@ table.result {line-height: 1.2em; border-collapse:separate; width:100%; border-s
 table.result tbody tr:hover {
 /*background: url(../img/bgd_noise_trans.gif);  */
 /*background: url(../img/bgd_stripe_50_8.png);  */
-background: url(../img/bgd_black_op05_8.png);
+/*background: url(../img/bgd_black_op05_8.png);*/
 }
 
 table.result tbody td{ padding:7px; text-align:center; vertical-align: middle; border: 1px solid #e5e5e5; -moz-border-radius:2px; -webkit-border-radius:2px; border-radius:2px; color:#424242;/* text-shadow:1px 1px 1px #fff;  */ }/*keep the prefix*/
@@ -646,7 +646,7 @@ list-style-type: none;
 #sidebar-steps, #sidebar-related {font-size:90%;}
 
 .box-export ul {padding:0 9px;margin-left: 9px;}
-.box-export ul li {list-style-image:url(../img/arrow_menu_exp.gif); margin-left:7px; list-style-type:square; color:#c3c3c3;}
+.box-export ul li {list-style-image:url(../img/arrow_menu_exp.gif); margin-left:7px; /*list-style-type:square; color:#c3c3c3;*/}
 
 #sidebar-export  {
 float:right;
@@ -730,6 +730,11 @@ color:#9d9d9d ;
 font-size:90%;
 }
 
+.list_date_new{
+color:#9d9d9d ;
+font-size:100%;
+}
+
 .list_desc {
 color:#7e7e7e ;
 font-size:100%;
@@ -738,14 +743,91 @@ font-size:100%;
 /*box homepage*/
 #submit-data, #list-data-study, #list-data-sample, #list-news { background-color: white;border-radius: 0 0 20px 0; /*hidden*//*border: 1px solid #9f9f9f;*//*box-shadow:2px 2px 7px #8a8a8a;*/}
 
-#list-data-study, #list-data-sample, #list-news  {
+#list-data-study, #list-data-sample, #list-news,#list-biomes {
 line-height:1.3; width:28.9%;
 _height:400px; /*to keep same height for IE6 */
 min-height:440px;
 padding: 0 9px 9px 9px;
 }
 
-#list-data-study h3, #list-data-sample h3, #list-news h3 {font-size:123%;color:#445668;  /*was  #7c8c99*/margin: 1em 0px; /*padding:0;*/font-weight: bold;}
+#list-data-study h3, #list-data-sample h3 {font-size:123%; color:#445668; margin: 1em 0px; font-weight: bold;}
+
+
+/************* BIOME ************/
+/*biome gal*/
+.biome_icon {display: inline-block; background-image: url(../img/ico_biome_sprite.png);}
+/*biome large icon - TO DO later*/
+/*biome large icon*/
+.biome_icon.icon_lg {width:150px; height:150px;}
+.biome_icon.icon_lg.soil_b {background-position: -20px -998px;}
+.biome_icon.icon_lg.marine_b {background-position: -222px -998px;}
+.biome_icon.icon_lg.forest_b {background-position: -420px -998px;}
+.biome_icon.icon_lg.freshwater_b {background-position: -20px -1196px;}
+.biome_icon.icon_lg.grassland_b {background-position: -222px -1196px;}
+.biome_icon.icon_lg.human_gut_b {background-position: -420px -1196px;}
+.biome_icon.icon_lg.human_host_b {background-position: -620px -1196px;}
+.biome_icon.icon_lg.non_human_host_b {background-position: -622px -996px;}
+.biome_icon.icon_lg.engineered_b {background-position: -20px -1396px;}
+.biome_icon.icon_lg.air_b {background-position: -222px -1396px;}
+.biome_icon.icon_lg.wastewater_b {background-position: -420px -1396px;}
+.biome_icon.icon_lg.default_b {background-position: -622px -1396px;}
+/*biome medium icon*/
+.biome_icon.icon_sm {width:75px; height:75px;}
+.biome_icon.icon_sm.soil_b {background-position: -40px -396px;}
+.biome_icon.icon_sm.marine_b {background-position: -142px -396px;}
+.biome_icon.icon_sm.forest_b {background-position: -241px -396px;}
+.biome_icon.icon_sm.human_gut_b {background-position: -241px -497px;}
+.biome_icon.icon_sm.human_host_b {background-position: -341px -497px;}
+.biome_icon.icon_sm.non_human_host_b {background-position: -341px -397px;}
+.biome_icon.icon_sm.freshwater_b {background-position: -40px -497px;}
+.biome_icon.icon_sm.grassland_b {background-position: -142px -497px;}
+.biome_icon.icon_sm.engineered_b {background-position: -40px -596px;}
+.biome_icon.icon_sm.air_b {background-position: -142px -596px;}
+.biome_icon.icon_sm.wastewater_b {background-position: -241px -596px;}
+.biome_icon.icon_sm.default_b {background-position: -342px -596px;}
+/*biome small icon*/
+.biome_icon.icon_xs {width: 30px; height: 30px;}
+.biome_icon.icon_xs.soil_b {background-position:-42px -38px;}
+.biome_icon.icon_xs.marine_b {background-position: -82px -38px;}
+.biome_icon.icon_xs.forest_b {background-position: -122px -38px;}
+.biome_icon.icon_xs.freshwater_b {background-position: -42px -78px;}
+.biome_icon.icon_xs.grassland_b {background-position: -82px -78px;}
+.biome_icon.icon_xs.human_gut_b {background-position: -122px -78px;}
+.biome_icon.icon_xs.human_host_b {background-position: -162px -78px;}
+.biome_icon.icon_xs.non_human_host_b {background-position: -162px -38px;}
+.biome_icon.icon_xs.engineered_b {background-position: -42px -118px;}
+.biome_icon.icon_xs.air_b {background-position: -82px -118px;}
+.biome_icon.icon_xs.wastewater_b {background-position: -122px -118px;}
+.biome_icon.icon_xs.default_b {background-position: -162px -118px;}
+/*biome homepage*/
+#list-biomes .grid_24 {background-color: #ececec;  margin: 24px 0;   /* padding: 25px 9px 0px 9px; min-height: 390px;*/}
+#list-biomes .grid_8 {text-align: center;}
+#list-biomes .biome_text {display: block; padding-bottom: 9px;  word-wrap: break-word; }
+#list-biomes .grid_24 a {height:130px;/*to keep for double text line*/font-weight: bold; color:#6f6f6f; display:block;}
+#list-biomes .grid_24 a:hover {color:white;background-color:  rgba(0, 0, 0, 0.3);text-decoration: none;}
+#list-biomes .biome_icon {margin:9px;}
+/*biome homepage responsive - change size icons  for small screens */
+@media (max-width: 768px) {
+#list-biomes .biome_icon {width: 30px; height: 30px;}
+#list-biomes .soil_b {background-position:-42px -38px;}
+#list-biomes .marine_b {background-position: -82px -38px;}
+#list-biomes .forest_b {background-position: -122px -38px;}
+#list-biomes .freshwater_b {background-position: -42px -78px;}
+#list-biomes .grassland_b {background-position: -82px -78px;}
+#list-biomes .human_gut_b {background-position: -122px -78px;}
+#list-biomes .human_host_b {background-position: -162px -78px;}
+#list-biomes .non_human_host_b {background-position: -162px -38px;}
+#list-biomes .engineered_b {background-position: -42px -118px;}
+#list-biomes .air_b {background-position: -82px -118px;}
+#list-biomes .wastewater_b {background-position: -122px -118px;}
+#list-biomes .default_b {background-position: -162px -118px;}
+#list-biomes .grid_24 a {font-weight: normal;}
+}
+/*biome project page*/
+.biome_project {float: right; margin-right: 18px;}
+#list-data-study .biome_icon {float: left; margin-right: 9px;}
+/************* END BIOME ************/
+
 /*END box homepage*/
 
 .center {margin: 0px auto; width:400px;}
@@ -1106,13 +1188,15 @@ span.form_help ul li{
 .about_img_r img {vertical-align: top;}
 
  /*EBI Bread Crumbs */
-#breadcrumb {display:block;padding:9px; color:#999; border:0px red solid;font-size:90%;}
-#breadcrumb p {margin:0; padding-left:0;}
+#breadcrumb {display:block;padding:9px; color:#999;font-size:90%;margin-bottom:0;}
 #breadcrumb a {color:#999; text-decoration: none;}
 #breadcrumb a:hover,#breadcrumb a:active {color:#999;text-decoration: underline;}
 
 /* carousel */
-.carousel {text-align:center; margin:0;border:0px green solid;zoom:1; font-size:110%;min-width:860px; /*padding:14px 14px 0 14px;*/  /*removed padding for EBI Mitigation*/}
+.carousel {text-align:center; margin:0;border:0px green solid;zoom:1; font-size:110%;min-width:860px;display: block;}
+@media (max-width: 768px) {  /*remove carousel for small scree - temp while trying to find a responsive carousel*/
+    .carousel { display: none;}
+}
 .carousel div{margin:0;padding:0;}
 .carousel:focus{outline:0px solid #0092bf;}/*removed the annoying effect on the slideshow*/
 .carousel-wrap{
@@ -1733,3 +1817,5 @@ ul.sample_list li {list-style: none; display: inline;}
 }
 
  /*/ pipeline chart *******************************/
+/*tooltip*/
+.icon-generic.show_tooltip:before {color: #888888;} /*darker than default*/

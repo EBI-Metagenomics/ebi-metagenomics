@@ -30,6 +30,11 @@ public final class HomePageViewModel extends ViewModel {
      */
     private Map<Study, Long> myStudiesMap;
 
+    /**
+     * Maps biomes with biome counts
+     */
+    private Map<String, Long> biomeMap;
+
     private List<Sample> mySamples;
 
     /**
@@ -65,7 +70,8 @@ public final class HomePageViewModel extends ViewModel {
                              final Long privateStudiesCount,
                              final List<Study> studies,
                              final int publicRunCount,
-                             final int privateRunCount) {
+                             final int privateRunCount,
+                             final Map<String, Long> biomeCountMap) {
         super(submitter, pageTitle, breadcrumbs, propertyContainer);
         this.publicSamples = publicSamples;
         this.myStudiesMap = new TreeMap<Study, Long>();
@@ -78,6 +84,7 @@ public final class HomePageViewModel extends ViewModel {
         this.studies = studies;
         this.publicRunCount = publicRunCount;
         this.privateRunCount = privateRunCount;
+        this.biomeMap = biomeCountMap;
     }
 
     public HomePageViewModel(final Submitter submitter,
@@ -96,7 +103,7 @@ public final class HomePageViewModel extends ViewModel {
                              final int publicRunCount,
                              final int privateRunCount) {
         this(submitter, new ArrayList<Sample>(), pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems,
-                publicSamplesCount, privateSamplesCount, publicStudiesCount, privateStudiesCount, new ArrayList<Study>(), publicRunCount, privateRunCount);
+                publicSamplesCount, privateSamplesCount, publicStudiesCount, privateStudiesCount, new ArrayList<Study>(), publicRunCount, privateRunCount, null);
         this.myStudiesMap = myStudiesMap;
         this.mySamples = mySamples;
         this.mySamplesCount = mySamplesCount;
@@ -166,5 +173,13 @@ public final class HomePageViewModel extends ViewModel {
 
     public int getPrivateRunCount() {
         return privateRunCount;
+    }
+
+    public Map<String, Long> getBiomeMap() {
+        return biomeMap;
+    }
+
+    public void setBiomeMap(Map<String, Long> biomeMap) {
+        this.biomeMap = biomeMap;
     }
 }

@@ -10,15 +10,15 @@ import java.util.List;
 public class DownloadSection {
     private List<DownloadLink> seqDataDownloadLinks;
 
-    private List<DownloadLink> funcAnalysisDownloadLinks;
+    private FunctionalDownloadSection functionalDownloadSection;
 
     private List<DownloadLink> taxaAnalysisDownloadLinks;
 
     public DownloadSection(List<DownloadLink> seqDataDownloadLinks,
-                           List<DownloadLink> funcAnalysisDownloadLinks,
+                           FunctionalDownloadSection functionalDownloadSection,
                            List<DownloadLink> taxaAnalysisDownloadLinks) {
         this.seqDataDownloadLinks = seqDataDownloadLinks;
-        this.funcAnalysisDownloadLinks = funcAnalysisDownloadLinks;
+        this.functionalDownloadSection = functionalDownloadSection;
         this.taxaAnalysisDownloadLinks = taxaAnalysisDownloadLinks;
     }
 
@@ -26,11 +26,11 @@ public class DownloadSection {
         return seqDataDownloadLinks;
     }
 
-    public List<DownloadLink> getFuncAnalysisDownloadLinks() {
-        return funcAnalysisDownloadLinks;
-    }
-
     public List<DownloadLink> getTaxaAnalysisDownloadLinks() {
         return taxaAnalysisDownloadLinks;
+    }
+
+    public FunctionalDownloadSection getFunctionalDownloadSection() {
+        return functionalDownloadSection;
     }
 }

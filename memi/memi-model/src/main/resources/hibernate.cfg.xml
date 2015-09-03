@@ -19,7 +19,7 @@
         -->
         <property name="current_session_context_class">thread</property>
         <!-- this will show us all sql statements -->
-        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.show_sql">false</property>
         <!-- Setting which indicates whether or not the new IdentifierGenerator implementations are used for AUTO, TABLE and SEQUENCE. Default to false to keep backward compatibility.-->
         <property name="hibernate.id.new_generator_mappings">true</property>
         <!-- mapping files -->

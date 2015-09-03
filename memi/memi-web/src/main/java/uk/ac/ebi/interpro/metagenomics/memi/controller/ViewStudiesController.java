@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.core.StudyStatusEditor;
 import uk.ac.ebi.interpro.metagenomics.memi.core.StudyVisibilityEditor;
 import uk.ac.ebi.interpro.metagenomics.memi.core.VelocityTemplateWriter;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.BiomeDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.StudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.files.MemiFileWriter;
@@ -59,6 +60,9 @@ public class ViewStudiesController extends AbstractController implements IContro
 
     @Resource
     private SampleDAO sampleDAO;
+
+    @Resource
+    private BiomeDAO biomeDAO;
 
     @Resource
     private VelocityEngine velocityEngine;
@@ -238,7 +242,7 @@ public class ViewStudiesController extends AbstractController implements IContro
                                final int startPosition,
                                final boolean doPagination) {
         final ViewModelBuilder<StudiesViewModel> builder = new StudiesViewModelBuilder(sessionManager, "Projects list",
-                getBreadcrumbs(null), propertyContainer, getTableHeaderNames(), sampleDAO, studyDAO, filter, startPosition, doPagination);
+                getBreadcrumbs(null), propertyContainer, getTableHeaderNames(), sampleDAO, studyDAO, biomeDAO, filter, startPosition, doPagination);
         final StudiesViewModel studiesViewModel = builder.getModel();
         studiesViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_PROJECTS_VIEW);
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, studiesViewModel);
@@ -259,6 +263,7 @@ public class ViewStudiesController extends AbstractController implements IContro
      */
     private List<String> getTableHeaderNames() {
         List<String> result = new ArrayList<String>();
+        result.add("Biome");
         result.add("Project name");
         result.add("Samples");
         result.add("Last updated");

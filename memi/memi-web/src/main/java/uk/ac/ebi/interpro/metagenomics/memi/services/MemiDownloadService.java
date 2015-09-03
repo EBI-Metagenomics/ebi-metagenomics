@@ -38,7 +38,9 @@ public class MemiDownloadService {
      */
     public boolean openDownloadDialog(final HttpServletResponse response, final HttpServletRequest request,
                                       final File file, String fileName, boolean isDeleteFile) {
-        log.info("Trying to open the download dialog for the file with name " + file.getName() + "...");
+        if (log.isInfoEnabled()) {
+            log.info("Trying to open the download dialog for the file with name " + file.getName() + "...");
+        }
         FileInputStream fis = null;
         try {
             fis = new FileInputStream(file);
@@ -77,7 +79,9 @@ public class MemiDownloadService {
      * @return TRUE if a downloadable file exists and 'Save to file' dialog could be open.
      */
     public boolean openDownloadDialog(HttpServletResponse response, Class<? extends Sample> clazz, Set<String> sampleIDs) {
-        log.info("Trying to open the download dialog to export a CSV file for sample(s) with ID(s)" + sampleIDs.toArray() + "...");
+        if (log.isInfoEnabled()) {
+            log.info("Trying to open the download dialog to export a CSV file for sample(s) with ID(s)" + sampleIDs.toArray() + "...");
+        }
 
         boolean result = false;
         InputStream sampleFileIs = null;
@@ -108,7 +112,9 @@ public class MemiDownloadService {
             //create a file input stream and concatenate if the previous input stream if exists
             String pathName = sampleID + ".csv";
             String path = CLASS_PATH + pathName;
-            log.debug("Creating sample file resource with path " + path);
+            if (log.isDebugEnabled()) {
+                log.debug("Creating sample file resource with path " + path);
+            }
             Resource sampleResource = new ClassPathResource(path);
             if (sampleResource.exists()) {
                 try {
@@ -155,19 +161,43 @@ public class MemiDownloadService {
 
     private void assembleServletResponse(final HttpServletResponse response, final HttpServletRequest request,
                                          final File file, final FileInputStream fis, final String fileName) throws IOException {
-        log.debug("Trying to assemble servlet response");
+        if (log.isDebugEnabled()) {
+            log.debug("Trying to assemble servlet response");
+            log.debug("File length (long): " + file.length());
+            log.debug("File length (int): " + (int) file.length());
+        }
         response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
-        //Resumable download options
-        response.setContentLength((int) file.length());
+        setContentLength(file, response);
         response.setHeader("Accept-Ranges", "bytes");
         response.setBufferSize(2048000);
         //Get and set content size
         ServletContext context = RequestContextUtils.getWebApplicationContext(request).getServletContext();
         String mimetype = context.getMimeType(file.getAbsolutePath());
         response.setContentType(mimetype);
-        ServletOutputStream sot = response.getOutputStream();
-        StreamCopyUtil.copy(fis, sot);
-        sot.flush();
+        ServletOutputStream sot = null;
+        try {
+            sot = response.getOutputStream();
+            StreamCopyUtil.copy(fis, sot);
+            sot.flush();
+        }
+        finally {
+            if (sot != null) {
+                try {
+                    sot.close();
+                } catch (IOException e) {
+                    log.warn("Could not close output stream after the assembly of the HTTP response!");
+                }
+            }
+        }
+    }
+
+    private void setContentLength(final File file, final HttpServletResponse response) {
+        long length = file.length();
+        if (length <= Integer.MAX_VALUE) {
+            response.setContentLength((int) length);
+        } else {
+            response.addHeader("Content-Length", Long.toString(length));
+        }
     }
 
 
@@ -212,7 +242,9 @@ public class MemiDownloadService {
         }
         if (headerFileName != null) {
             String path = CLASS_PATH + headerFileName;
-            log.debug("Creating header file resource with path " + path);
+            if (log.isDebugEnabled()) {
+                log.debug("Creating header file resource with path " + path);
+            }
             return new ClassPathResource(path);
         }
         return null;

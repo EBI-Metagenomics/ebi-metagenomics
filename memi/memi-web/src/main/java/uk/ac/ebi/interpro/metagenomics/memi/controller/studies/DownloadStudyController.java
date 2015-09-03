@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.controller.MGPortalURLCollection;
 import uk.ac.ebi.interpro.metagenomics.memi.controller.ModelProcessingStrategy;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.AnalysisJobDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.PipelineReleaseDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.exceptionHandling.EntryNotFoundException;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
@@ -37,6 +38,9 @@ public class DownloadStudyController extends AbstractStudyViewController {
 
     @Resource
     protected AnalysisJobDAO analysisJobDAO;
+
+    @Resource
+    private PipelineReleaseDAO pipelineReleaseDAO;
 
     @Resource
     private MemiDownloadService downloadService;
@@ -80,7 +84,8 @@ public class DownloadStudyController extends AbstractStudyViewController {
                 getBreadcrumbs(study), // Not really needed as this is within an AJAX tab anyway?
                 propertyContainer,
                 fileDefinitionsMap,
-                study);
+                study,
+                pipelineReleaseDAO);
 
         final DownloadViewModel downloadViewModel = builder.getModel();
         downloadViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_PROJECTS_VIEW); // Not really needed as this is within an AJAX tab anyway?
@@ -112,9 +117,10 @@ public class DownloadStudyController extends AbstractStudyViewController {
 
         if (study != null) {
             if (isAccessible(study)) {
-                File file = getDownloadFile(study, "1.0", exportValue);
+                File file = getDownloadFile(study, releaseVersion, exportValue);
                 if (file != null) {
-                    downloadService.openDownloadDialog(response, request, file, exportValue + "_v" + releaseVersion + ".tsv" ,false);
+                    final String filename = studyId + "_" + exportValue + "_v" + releaseVersion + ".tsv";
+                    downloadService.openDownloadDialog(response, request, file, filename ,false);
                 } else {//analysis job is NULL
                     response.setStatus(HttpServletResponse.SC_NO_CONTENT);
                 }
@@ -131,7 +137,8 @@ public class DownloadStudyController extends AbstractStudyViewController {
         final String rootPath = propertyContainer.getPathToAnalysisDirectory();
         final String resultDirectoryAbsolute = rootPath + study.getResultDirectory();
 
-        final File file = new File(resultDirectoryAbsolute + File.separator + "version_" + version + File.separator + "project-summary" + File.separator + exportValue + "_v" + version + ".tsv");
+        final String filename = resultDirectoryAbsolute + File.separator + "version_" + version + File.separator + "project-summary" + File.separator + exportValue + "_v" + version + ".tsv";
+        final File file = new File(filename);
         return file;
     }
 

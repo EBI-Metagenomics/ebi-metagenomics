@@ -5,6 +5,8 @@ import org.apache.commons.logging.LogFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.controller.studies.StudySummaryFile;
 import uk.ac.ebi.interpro.metagenomics.memi.controller.studies.StudySummaryFileFilter;
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.PipelineReleaseDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.PipelineRelease;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.services.FileExistenceChecker;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
@@ -40,18 +42,21 @@ public class StudyDownloadViewModelBuilder extends AbstractViewModelBuilder<Down
 
     private Map<String, DownloadableFileDefinition> fileDefinitionsMap;
 
+    private PipelineReleaseDAO pipelineReleaseDAO;
+
     public StudyDownloadViewModelBuilder(SessionManager sessionMgr,
                                          String pageTitle,
                                          List<Breadcrumb> breadcrumbs,
                                          MemiPropertyContainer propertyContainer,
                                          Map<String, DownloadableFileDefinition> fileDefinitionsMap,
-                                         Study study) {
+                                         Study study, PipelineReleaseDAO pipelineReleaseDAO) {
         super(sessionMgr);
         this.pageTitle = pageTitle;
         this.breadcrumbs = breadcrumbs;
         this.propertyContainer = propertyContainer;
         this.study = study;
         this.fileDefinitionsMap = fileDefinitionsMap;
+        this.pipelineReleaseDAO = pipelineReleaseDAO;
     }
 
     public DownloadViewModel getModel() {
@@ -63,7 +68,7 @@ public class StudyDownloadViewModelBuilder extends AbstractViewModelBuilder<Down
     }
 
     private SortedMap<String, DownloadSection> buildDownloadSection(final Map<String, DownloadableFileDefinition> fileDefinitionsMap,
-                                                              final Study study) {
+                                                                    final Study study) {
         final Map<String, DownloadSection> downloadSectionMap = new HashMap<String, DownloadSection>();
 
         final String rootPath = propertyContainer.getPathToAnalysisDirectory();
@@ -73,25 +78,21 @@ public class StudyDownloadViewModelBuilder extends AbstractViewModelBuilder<Down
         if (rootDir == null) {
             log.error("Result directory for study " + study.getStudyId() + " not found");
             return null;
-        }
-        else if (!FileExistenceChecker.checkFileExistence(rootDir)) {
+        } else if (!FileExistenceChecker.checkFileExistence(rootDir)) {
             log.error("Result directory for study " + study.getStudyId() + " not found: " + rootDir.getAbsolutePath());
             return null;
         }
 
-        final File v2 = new File(resultDirectoryAbsolute + File.separator + "version_2.0" + File.separator + "project-summary");
-        if (FileExistenceChecker.checkFileExistence(v2)) {
-            final DownloadSection downloadLinks = getDownloadLinks(rootDir, study.getStudyId(), "2.0");
-            if (downloadLinks != null && (downloadLinks.getFuncAnalysisDownloadLinks().size() > 0 || downloadLinks.getTaxaAnalysisDownloadLinks().size() > 0)) {
-                downloadSectionMap.put("2.0", downloadLinks);
-            }
-        }
-
-        final File v1 = new File(resultDirectoryAbsolute + File.separator + "version_1.0" + File.separator + "project-summary");
-        if (FileExistenceChecker.checkFileExistence(v1)) {
-            final DownloadSection downloadLinks = getDownloadLinks(rootDir, study.getStudyId(), "1.0");
-            if (downloadLinks != null && (downloadLinks.getFuncAnalysisDownloadLinks().size() > 0 || downloadLinks.getTaxaAnalysisDownloadLinks().size() > 0)) {
-                downloadSectionMap.put("1.0", downloadLinks);
+        //Get all pipeline releases and iterate over them
+        List<PipelineRelease> pipelines = pipelineReleaseDAO.retrieveAll();
+        for (PipelineRelease pipeline : pipelines) {
+            String releaseVersion = pipeline.getReleaseVersion();
+            final File results = new File(resultDirectoryAbsolute + File.separator + "version_" + releaseVersion + File.separator + "project-summary");
+            if (FileExistenceChecker.checkFileExistence(results)) {
+                final DownloadSection downloadLinks = getDownloadLinks(rootDir, study.getStudyId(), releaseVersion);
+                if (downloadLinks != null && (downloadLinks.getFuncAnalysisDownloadLinks().size() > 0 || downloadLinks.getTaxaAnalysisDownloadLinks().size() > 0)) {
+                    downloadSectionMap.put(releaseVersion, downloadLinks);
+                }
             }
         }
 
@@ -101,13 +102,12 @@ public class StudyDownloadViewModelBuilder extends AbstractViewModelBuilder<Down
 
                     @Override
                     public int compare(String o1, String o2) {
-                        // TODO This comparator may need imrpoving to cope with some future pipeline version number strings
+                        // TODO This comparator may need improving to cope with some future pipeline version number strings
                         return o2.compareTo(o1); // Reverse order
                     }
 
                 });
         sortedDownloadSectionMap.putAll(downloadSectionMap);
-
         return sortedDownloadSectionMap;
     }
 

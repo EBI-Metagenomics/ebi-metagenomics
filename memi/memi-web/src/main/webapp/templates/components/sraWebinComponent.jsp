@@ -6,16 +6,20 @@ website"/>
     website)</p></figcaption></figure>
 
 <p class="intro">
-    We provide a service for submission of raw sequence data and associated meta-data to the European Nucleotide Archive (ENA) and our analysis pipelines.
-    A <a class="ext" title="Click here to watch the full video tutorial" href="http://www.youtube.com/watch?v=Zml8jTqfQPg">video tutorial</a> is available outlining this process.</p>
+    We provide a free service for submission of raw sequence data and associated metadata to the EBI Metagenomics.
+
+ <%--A <a class="ext" title="Click here to watch the full video tutorial" href="http://www.youtube.com/watch?v=Zml8jTqfQPg">video tutorial</a> is available outlining this process.</p>--%>
 <%--<p><iframe width="320" height="215" src="//www.youtube.com/embed/Zml8jTqfQPg" frameborder="0" allowfullscreen></iframe></p>--%>
-<p class="intro">We have detected that you already have an ENA account associated with your email address.<br/> You can use the <strong><a class="ext" title="Click here to submit data to ENA via the ENA Webin Tool" href="https://www.ebi.ac.uk/ena/submit/sra/#home">ENA Webin tool</a></strong> to upload your data.
-    Alternatively, you may submit your data using ISAcreator and OntoMaton, which are part of the <a class="ext" title="Click here to find out more about the ISA tools suite" href="http://isa-tools.org">ISA tools suite</a>. These standalone tools have been designed to handle the collection, formatting and submission of multi-omics study data.
-   <br/> Once the analysis is complete, the results will be visible through this website.</p>
-<p class="intro">
-    Further info on the Minimum Information about any (x) Sequence (MIxS) can be found on the <a class="ext" title="Link to Genomic Standards Consortium's website" href="http://gensc.org/gc_wiki/index.php/MIxS">Genomic Standards Consortium</a> website.
+<p class="intro">We have detected that you already have an ENA account associated with your email address.<br/>
+You can submit your data directly using the <a class="ext" title="Click here to submit data to ENA" href="https://www.ebi.ac.uk/ena/submit/sra/#home">ENA Webin tool</a>, which will help you describe your metadata and upload your sequence read data.
 </p>
-<div class="sub_ask">If you have any questions about submitting your data to EBI metagenomics, please email us (<a
-           href="mailto:datasubs@ebi.ac.uk?subject=EBI Metagenomics - data submission"
-           title="Send an enquiry about Metagenomics data submission">datasubs@ebi.ac.uk</a>).
-   </div>
+<p class="intro">If you have created your ENA submitter account before November 2014, please <a href="mailto:metagenomics-help@ebi.ac.uk?subject=EBI Metagenomics - data privacy statement">send us an email</a> stating that you let EBI Metagenomics access your private data for analysis.
+</p>
+    <p class="intro">Once the analysis is complete, the results will be visible through this website. If your samples are private, you will need to log in to the EBI Metagenomics homepage to be able to view them.
+<p class="intro">
+    <%--Further info on the Minimum Information about any (x) Sequence (MIxS) can be found on the <a class="ext" title="Link to Genomic Standards Consortium's website" href="http://gensc.org/gc_wiki/index.php/MIxS">Genomic Standards Consortium</a> website.--%>
+</p>
+<div class="sub_ask">If you have any questions about submitting your data to EBI metagenomics, <a
+                href="mailto:metagenomics-help@ebi.ac.uk"
+                title="Send an enquiry about Metagenomics data submission">please contact us</a>.
+</div>
