@@ -6,4 +6,4 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
-<tiles:insertDefinition name="giveConsent"/>
+<tiles:insertDefinition name="registerAndGiveConsent"/>

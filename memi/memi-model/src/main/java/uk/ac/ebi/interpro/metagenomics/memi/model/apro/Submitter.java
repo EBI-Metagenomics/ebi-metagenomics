@@ -44,8 +44,11 @@ public class Submitter implements Serializable {
 
     private boolean mainContact;
 
-    /* Represents role_metagenome_analysis column in the submission table */
+    /* Represents role_metagenome_analysis column in the erapro submission_account table. */
     boolean consentGiven;
+
+    /* Represents role_metagenome_submitter column in the erapro submission_account table. */
+    private boolean registered;
 
 
     public Submitter() {
@@ -183,5 +186,13 @@ public class Submitter implements Serializable {
 
     public void setMainContact(boolean mainContact) {
         this.mainContact = mainContact;
+    }
+
+    public boolean isRegistered() {
+        return registered;
+    }
+
+    public void setRegistered(boolean registered) {
+        this.registered = registered;
     }
 }

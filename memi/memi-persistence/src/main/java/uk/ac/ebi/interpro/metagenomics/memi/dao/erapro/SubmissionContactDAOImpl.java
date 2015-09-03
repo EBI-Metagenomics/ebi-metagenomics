@@ -4,7 +4,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import uk.ac.ebi.interpro.metagenomics.memi.model.EmgFile;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 
 import javax.annotation.Resource;
@@ -93,7 +92,7 @@ public class SubmissionContactDAOImpl implements SubmissionContactDAO {
         if (submissionAccountId == null || email == null)
             return null;
         try {
-            List<Map<String, Object>> rows = this.jdbcTemplate.queryForList("select sa.submission_account_id, sa.role_metagenome_analysis, c.first_name, c.surname, c.email_address, c.main_contact FROM era.submission_account sa, ERA.submission_contact c WHERE c.submission_account_id=sa.submission_account_id and UPPER(sa.submission_account_id) = UPPER(?) and UPPER(c.email_address) = UPPER(?)",
+            List<Map<String, Object>> rows = this.jdbcTemplate.queryForList("select sa.submission_account_id, sa.role_metagenome_submitter, sa.role_metagenome_analysis, c.first_name, c.surname, c.email_address, c.main_contact FROM era.submission_account sa, ERA.submission_contact c WHERE c.submission_account_id=sa.submission_account_id and UPPER(sa.submission_account_id) = UPPER(?) and UPPER(c.email_address) = UPPER(?)",
                     new String[]{submissionAccountId, email});
             if (rows.size() > 1) {
                 log.warn("Found more then one submission accounts for account id: " + submissionAccountId);
@@ -102,6 +101,7 @@ public class SubmissionContactDAOImpl implements SubmissionContactDAO {
                 Submitter submitter = new Submitter();
                 submitter.setSubmissionAccountId((String) row.get("submission_account_id"));
                 submitter.setConsentGiven(((String) row.get("role_metagenome_analysis")).equalsIgnoreCase("Y") ? true : false);
+                submitter.setRegistered(((String) row.get("role_metagenome_submitter")).equalsIgnoreCase("Y") ? true : false);
                 submitter.setFirstName((String) row.get("first_name"));
                 submitter.setSurname((String) row.get("surname"));
                 submitter.setEmailAddress((String) row.get("email_address"));

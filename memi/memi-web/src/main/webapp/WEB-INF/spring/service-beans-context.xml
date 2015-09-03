@@ -22,16 +22,12 @@
     </bean>
 
     <!--Email service for the embl-ebi metagenomics consent email-->
-    <bean name="emailNotificationServiceAnalysisConsent"
+    <bean name="emailNotificationServiceRegistration"
           class="uk.ac.ebi.interpro.metagenomics.memi.services.EmailNotificationService">
         <constructor-arg ref="mailSender"/>
-        <property name="receiver" value="${emailService.sraRegistration.receiver}"/>
-        <property name="receiverCCList">
-            <list>
-                <value type="java.lang.String">${emailService.sraRegistration.receiverCC_1}</value>
-            </list>
-        </property>
-        <property name="emailSubject" value="EMBL-EBI Metagenomics: Access to confidential pre-publication data - Confirmation"/>
+        <property name="receiver" value="${emailService.emg.registration.receiver}"/>
+        <property name="sender" value="${emailService.emg.registration.sender}"/>
+        <property name="emailSubject" value="EMBL-EBI Metagenomics: Registration confirmation"/>
     </bean>
 
     <!--Email service for the feedback form-->

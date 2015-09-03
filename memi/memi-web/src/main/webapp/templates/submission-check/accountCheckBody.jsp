@@ -12,7 +12,7 @@
 
 <div class="register_form">
 
-    <c:url var="accountCheck" value="${baseURL}/submission/consent/account-check"/>
+    <c:url var="accountCheck" value="${baseURL}/registration/account-check"/>
     <form:form method="POST" commandName="consentCheckForm" action="${accountCheck}" id="sub_form">
 
         <c:if test="${consentCheckForm.newUser}">
@@ -40,10 +40,10 @@
         </c:if>
 
         <div class="user_det_box" style="display:${displayUsernameBox};">
-            <h2>Consent given?</h2>
+            <h2>Registered with us?</h2>
 
-            <p>In order to check our system if you gave consent to allow EMG to access and analyse pre-publication data
-                (private data), please type in your username and password.</p>
+            <p>In order to confirm that your ENA submitter account is registered with us, please enter your account details.</p>
+
             <fieldset style="border:0px solid grey;">
                 <div class="form_row">
                     <label>Username</label>
@@ -60,7 +60,7 @@
                 </div>
                 <span class="error" style="display:${displayUsernameBox};">${accountCheckResult}</span>
 
-                <%--<form:radiobutton cssStyle="display: none;" path="newUser" value="${consentCheckForm.newUser}"/>--%>
+                    <%--<form:radiobutton cssStyle="display: none;" path="newUser" value="${consentCheckForm.newUser}"/>--%>
                 <p>
                     <input id="submit_button" name="_target1" value="Check" class="main_button" type="submit"/>
                             <span class="clear_but">| <a href="/metagenomics/submission"

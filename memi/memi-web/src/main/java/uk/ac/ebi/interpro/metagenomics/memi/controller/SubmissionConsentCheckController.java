@@ -43,7 +43,7 @@ import java.util.Map;
  * @author Maxim Scheremetjew
  */
 @Controller
-@RequestMapping("/submission/consent")
+@RequestMapping("/registration")
 @SessionAttributes("consentCheckForm")
 public class SubmissionConsentCheckController extends AbstractController {
 
@@ -55,7 +55,7 @@ public class SubmissionConsentCheckController extends AbstractController {
     @Resource
     private AuthenticationService authenticationService;
 
-    @Resource(name = "emailNotificationServiceAnalysisConsent")
+    @Resource(name = "emailNotificationServiceRegistration")
     private INotificationService emailService;
 
     @Resource
@@ -77,16 +77,24 @@ public class SubmissionConsentCheckController extends AbstractController {
                                              final BindingResult bindingResult,
                                              final ModelMap model) {
         populateModel(model);
-        if (bindingResult.hasFieldErrors("consentCheck")) {
-
+        final Submitter submitter = form.getSubmitter();
+        //Used this boolean flag to indicate if a submitter registered with us or just gave consent
+        //If FALSE then he just registered, otherwise he gave consent
+        final boolean isRegistered = submitter.isRegistered();
+        if (isRegistered && bindingResult.hasFieldErrors("consentCheck")) {
             return new ModelAndView("submission-check/userNameCheckSummary", model);
         }
 
-        Submitter submitter = form.getSubmitter();
-        ((EmailNotificationService) emailService).setSender(submitter.getEmailAddress());
-        String msg = buildMsg(submitter);
+        //TODO: Activate before going live
+//        ((EmailNotificationService) emailService).setReceiverCC(submitter.getEmailAddress());
+        final boolean isConsentChecked = form.getConsentCheck();
+        String msg = buildMsg(submitter, isConsentChecked);
         emailService.sendNotification(msg);
-        return new ModelAndView("submission-check/giveConsentSummary", model);
+        if (isRegistered) {
+            return new ModelAndView("submission-check/giveConsentSummary", model);
+        } else {
+            return new ModelAndView("submission-check/registrationSummary", model);
+        }
     }
 
     @RequestMapping(value = "/account-check")
@@ -130,14 +138,21 @@ public class SubmissionConsentCheckController extends AbstractController {
             final Submitter submitter = submissionContactDAO.getSubmitterBySubmissionAccountIdAndEmail(userName, email);
 
             if (submitter != null) {
+                form.setSubmitter(submitter);
                 if (submitter.isMainContact()) {
-                    if (submitter.isConsentGiven()) {
-//                    modelMap.addAttribute("accountCheckResult", "User does exist and has given consent!");
-                        return new ModelAndView("submission-check/giveConsent", modelMap);
-                    } else {
-                        form.setSubmitter(submitter);
-//                    modelMap.addAttribute("accountCheckResult", "User does exist but has not given consent!");
-                        return new ModelAndView("submission-check/userNameCheckSummary", modelMap);
+                    //  Now we do have 3 cases
+                    //  Case 1: Not registered
+                    //  Case 2: Registered, but consent not given
+                    //  Case 3: Registered and consent given
+                    if (submitter.isRegistered()) {
+                        //  Case 3
+                        if (submitter.isConsentGiven()) {
+                            return new ModelAndView("submission-check/giveConsent", modelMap);
+                        } else {//  Case 2
+                            return new ModelAndView("submission-check/userNameCheckSummary", modelMap);
+                        }
+                    } else {//  Case 1
+                        return new ModelAndView("submission-check/registerAndGiveConsent", modelMap);
                     }
                 } else {
                     return new ModelAndView("submission-check/notMainContact", modelMap);
@@ -157,10 +172,10 @@ public class SubmissionConsentCheckController extends AbstractController {
      * @param submitter ENA submission account object.
      * @return The email message as String representation.
      */
-    protected String buildMsg(Submitter submitter) {
+    protected String buildMsg(final Submitter submitter, final boolean isConsentChecked) {
         Map<String, Object> model = new HashMap<String, Object>();
-        //TODO: Populate the velocity model
         model.put("submitter", submitter);
+        model.put("isConsentChecked", isConsentChecked);
         return VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "metagenomics-consent-email.vm", model);
     }
 
@@ -182,7 +197,7 @@ public class SubmissionConsentCheckController extends AbstractController {
 
     protected List<Breadcrumb> getBreadcrumbs(SecureEntity entity) {
         List<Breadcrumb> result = new ArrayList<Breadcrumb>();
-        result.add(new Breadcrumb("Submit data", "Submit new data", "/submission"));
+        result.add(new Breadcrumb("Submit data", "Submit new data", "submission"));
         return result;
     }
 

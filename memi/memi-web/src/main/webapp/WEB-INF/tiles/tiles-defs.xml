@@ -47,22 +47,27 @@
         <put-attribute name="body" value="/templates/submission-check/accountCheckBody.jsp"/>
     </definition>
 
-    <definition name="registUserNameCheck" extends="rootTemplate">
-        <put-attribute name="bodyClass" type="string" value="green"/>
-        <put-attribute name="body" value="/templates/submission-check/userNameCheckBody.jsp"/>
-    </definition>
-
     <definition name="registUserNameCheckSummary" extends="rootTemplate">
         <put-attribute name="bodyClass" type="string" value="green"/>
         <put-attribute name="body" value="/templates/submission-check/userNameCheckSummaryBody.jsp"/>
     </definition>
 
-    <definition name="registGiveConsent" extends="rootTemplate">
+    <definition name="giveConsent" extends="rootTemplate">
         <put-attribute name="bodyClass" type="string" value="green"/>
         <put-attribute name="body" value="/templates/submission-check/giveConsentBody.jsp"/>
     </definition>
 
-    <definition name="registGiveConsentSummary" extends="rootTemplate">
+    <definition name="registerAndGiveConsent" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="green"/>
+        <put-attribute name="body" value="/templates/submission-check/registerAndGiveConsentBody.jsp"/>
+    </definition>
+
+    <definition name="registrationSummary" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="green"/>
+        <put-attribute name="body" value="/templates/submission-check/registrationSummaryBody.jsp"/>
+    </definition>
+
+    <definition name="giveConsentSummary" extends="rootTemplate">
         <put-attribute name="bodyClass" type="string" value="green"/>
         <put-attribute name="body" value="/templates/submission-check/giveConsentSummaryBody.jsp"/>
     </definition>
@@ -152,11 +157,6 @@
     <definition name="feedbackSuccess" extends="rootTemplate">
         <put-attribute name="bodyClass" type="string" value="ebigreen"/>
         <put-attribute name="body" value="/templates/feedbackSuccessBody.jsp"/>
-    </definition>
-
-    <definition name="submitData" extends="rootTemplate">
-        <put-attribute name="bodyClass" type="string" value="ebigrey"/>
-        <put-attribute name="body" value="/templates/submitDataBody.jsp"/>
     </definition>
 
     <definition name="404" extends="rootTemplate">
