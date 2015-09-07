@@ -10,6 +10,8 @@ import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.study.DownloadSectio
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.study.StudyDownloadViewModelBuilder;
 
 import java.io.File;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -24,10 +26,18 @@ public class DownloadTest {
         // Setup test input directory
         final String testResourceLocation = "uk/ac/ebi/interpro/metagenomics/memi/controller/studies/summary/ERP1";
         final String extraFile = "extra-file.txt";
-        final File summaryFilesDir = new File(classLoader.getResource(testResourceLocation).getFile());
+//        final File inputFile = new File(classLoader.getResource(testResourceLocation).getFile());
+        URL url = getClass().getClassLoader().getResource(testResourceLocation);
+        assert url != null;
+        File inputFile = null;
+        try {
+            inputFile = new File(url.toURI().getPath());
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
 
         // Get links
-        final DownloadSection downloadSection = StudyDownloadViewModelBuilder.getDownloadLinks(summaryFilesDir, "ERP1", "1.0");
+        final DownloadSection downloadSection = StudyDownloadViewModelBuilder.getDownloadLinks(inputFile, "ERP1", "1.0");
 
         // Check results
         Assert.assertNotNull(downloadSection);
