@@ -97,7 +97,7 @@ public class PipelinePageController extends AbstractController {
 
     private List<Breadcrumb> getSubPageBreadcrumbs(final String releaseVersion) {
         List<Breadcrumb> result = new ArrayList<Breadcrumb>(getBreadcrumbs(null));
-        result.add(new Breadcrumb("Release version " + releaseVersion, "Pipeline releases version " + releaseVersion, "pipelines/" + releaseVersion));
+        result.add(new Breadcrumb("Release version " + releaseVersion, "Pipeline release version " + releaseVersion, "pipelines/" + releaseVersion));
         return result;
     }
 }

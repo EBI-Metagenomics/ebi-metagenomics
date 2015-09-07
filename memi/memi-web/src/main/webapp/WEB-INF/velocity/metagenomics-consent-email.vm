@@ -1,0 +1,43 @@
+<html>
+<body>
+<p>Many Thanks for register your Webin account $submitter.submissionAccountId with EBI Metagenomics.
+    You #if(!$isConsentChecked)not#end gave us
+    permission to analyse your private data.</p>
+
+<table>
+    <tbody>
+    <tr>
+        <td><b>User details</b></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Full name:</td>
+        <td>$submitter.firstName $submitter.surname</td>
+    </tr>
+    <tr>
+        <td>Webin account id:</td>
+        <td>$submitter.submissionAccountId</td>
+    </tr>
+    <tr>
+        <td>Email address:</td>
+        <td>$submitter.emailAddress</td>
+    </tr>
+    <tr>
+        <td>Registered with EBI Metagenomics:</td>
+        <td>Yes</td>
+    </tr>
+</table>
+    #if($isConsentChecked)
+    <p>
+        <b>Confirmation</b><br>
+        I give consent to the EBI Metagenomics team to analyse my private data. I am aware that the data and analysis
+        result
+        will remain confidential until the release date I specify when submitting my sequencing study. I also confirm
+        that
+        the data submitted through this account is NOT sensitive, restricted-access or human-identifiable.
+    </p>
+    #{else}
+    <p>Consent <b>not given</b></p>
+    #end
+</body>
+</html>
