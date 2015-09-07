@@ -1,8 +1,23 @@
 <html>
+<head>
+    <title>EMBL-EBI Metagenomics: Registration confirmation</title>
+</head>
 <body>
-<p>Many Thanks for register your Webin account $submitter.submissionAccountId with EBI Metagenomics.
-    You #if(!$isConsentChecked)not#end gave us
-    permission to analyse your private data.</p>
+<p>
+    #if($isConsentChecked)
+        Thank you for registering your Webin account $submitter.submissionAccountId with EBI
+        Metagenomics. We are now able to analyse publicly available data and data held privately for pre-publication
+        associated with this account.
+    #{else}
+        Thank you for registering your Webin account $submitter.submissionAccountId with EBI Metagenomics. We are now
+        able to analyse publicly available data submitted via this account. Please note that in order for us to analyse
+        any data held privately for pre-publication, we need your explicit consent, which you can provide <a
+            href="https://www.ebi.ac.uk/metagenomics/registration">here</a>.
+    #end
+</p>
+
+<p>If you have any questions, please contact <a href="http://www.ebi.ac.uk/support/metagenomics">metagenomcis-help</a>
+</p>
 
 <table>
     <tbody>
@@ -15,7 +30,7 @@
         <td>$submitter.firstName $submitter.surname</td>
     </tr>
     <tr>
-        <td>Webin account id:</td>
+        <td>Webin account ID:</td>
         <td>$submitter.submissionAccountId</td>
     </tr>
     <tr>
@@ -26,18 +41,14 @@
         <td>Registered with EBI Metagenomics:</td>
         <td>Yes</td>
     </tr>
+    <tr>
+        <td>Consent given:</td>
+        #if($isConsentChecked)
+            <td>Yes</td>
+        #{else}
+            <td>No</td>
+        #end
+    </tr>
 </table>
-    #if($isConsentChecked)
-    <p>
-        <b>Confirmation</b><br>
-        I give consent to the EBI Metagenomics team to analyse my private data. I am aware that the data and analysis
-        result
-        will remain confidential until the release date I specify when submitting my sequencing study. I also confirm
-        that
-        the data submitted through this account is NOT sensitive, restricted-access or human-identifiable.
-    </p>
-    #{else}
-    <p>Consent <b>not given</b></p>
-    #end
 </body>
 </html>

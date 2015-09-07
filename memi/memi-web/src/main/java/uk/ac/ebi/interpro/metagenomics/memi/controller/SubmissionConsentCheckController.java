@@ -85,8 +85,7 @@ public class SubmissionConsentCheckController extends AbstractController {
             return new ModelAndView("submission-check/userNameCheckSummary", model);
         }
 
-        //TODO: Activate before going live
-//        ((EmailNotificationService) emailService).setReceiverCC(submitter.getEmailAddress());
+        ((EmailNotificationService) emailService).setReceiverCC(submitter.getEmailAddress());
         final boolean isConsentChecked = form.getConsentCheck();
         String msg = buildMsg(submitter, isConsentChecked);
         emailService.sendNotification(msg);
