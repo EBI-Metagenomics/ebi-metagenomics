@@ -18,15 +18,12 @@ import java.util.List;
 @TestExecutionListeners
 public class DownloadTest {
 
-    ClassLoader classLoader = getClass().getClassLoader();
-
     @Test
     public void testDownloadLinks() {
 
         // Setup test input directory
         final String testResourceLocation = "uk/ac/ebi/interpro/metagenomics/memi/controller/studies/summary/ERP1";
         final String extraFile = "extra-file.txt";
-//        final File inputFile = new File(classLoader.getResource(testResourceLocation).getFile());
         URL url = getClass().getClassLoader().getResource(testResourceLocation);
         assert url != null;
         File inputFile = null;
