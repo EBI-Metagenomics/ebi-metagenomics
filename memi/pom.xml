@@ -63,7 +63,7 @@
         <org.springframework.version>3.1.4.RELEASE</org.springframework.version>
         <memi-web.module.version>1.5-SNAPSHOT</memi-web.module.version>
         <memi-persistence.module.version>1.5-SNAPSHOT</memi-persistence.module.version>
-        <memi-model.module.version>1.4-SNAPSHOT</memi-model.module.version>
+        <memi-model.module.version>1.5-SNAPSHOT</memi-model.module.version>
         <memi-business.module.version>1.0</memi-business.module.version>
     </properties>
 

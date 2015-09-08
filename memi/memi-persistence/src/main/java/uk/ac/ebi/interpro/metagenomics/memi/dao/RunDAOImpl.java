@@ -3,6 +3,7 @@ package uk.ac.ebi.interpro.metagenomics.memi.dao;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -11,10 +12,13 @@ import uk.ac.ebi.interpro.metagenomics.memi.dao.extensions.QueryRunsForProjectRe
 import uk.ac.ebi.interpro.metagenomics.memi.model.Run;
 
 import javax.sql.DataSource;
+import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
- * TODO: Description
+ * This data access object is mainly used to query the analysis job table in EMG.
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @since 1.4-SNAPSHOT
@@ -49,8 +53,24 @@ public class RunDAOImpl implements RunDAO {
         }
     }
 
+    //TODO: Migrate to Hibernate SQL (AnalysisJobDAO)
+    public Map<String, Integer> retrieveRunCountsGroupedByExperimentType(final int analysisStatusId) {
+        try {
+            final Map<String, Integer> result = new HashMap<String, Integer>();
+            String sql = "select et.experiment_type, count(distinct j.external_run_ids) as count from " + schemaName + '.' + "analysis_job j, " + schemaName + '.' + "experiment_type et where et.experiment_type_id = j.experiment_type_id AND j.analysis_status_id = ? group by et.experiment_type";
+            List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql, new Object[]{analysisStatusId});
+            for (Map<String, Object> row : rows) {
+                result.put((String) (row.get("EXPERIMENT_TYPE")), new Integer(((BigDecimal) row.get("COUNT")).intValue()));
+            }
+            return result;
+        } catch (DataAccessException exception) {
+            throw exception;
+        }
+    }
+
     /**
      * List of runs for a study.
+     *
      * @param projectId
      * @return
      */
@@ -61,13 +81,14 @@ public class RunDAOImpl implements RunDAO {
             // SELECT aj.sample_id, sa.ext_sample_id, sa.sample_name, tmp.ct, aj.external_run_ids, aj.experiment_type, sa.submission_account_id, sa.is_public, r.release_version FROM analysis_job aj, pipeline_release r, sample sa, (select aj.sample_id, count(aj.sample_id) as ct from sample sa, analysis_job aj where sa.sample_id = aj.sample_id AND sa.study_id = 434 GROUP BY aj.sample_id) tmp WHERE aj.pipeline_id=r.pipeline_id AND sa.sample_id = aj.sample_id AND tmp.sample_id = aj.sample_id AND sa.study_id = 434 order by sa.ext_sample_id, aj.external_run_ids;
 
             StringBuilder sb = new StringBuilder()
-                    .append("SELECT aj.sample_id, sa.ext_sample_id as external_sample_id, sa.sample_name, tmp.run_count, aj.external_run_ids, aj.experiment_type, sa.submission_account_id, sa.is_public, r.release_version ")
+                    .append("SELECT aj.sample_id, sa.ext_sample_id as external_sample_id, sa.sample_name, tmp.run_count, aj.external_run_ids, et.experiment_type, sa.submission_account_id, sa.is_public, r.release_version ")
                     .append("FROM ")
                     .append(schemaName).append(".analysis_job aj, ")
                     .append(schemaName).append(".pipeline_release r, ")
                     .append(schemaName).append(".sample sa, ")
+                    .append(schemaName).append(".experiment_type et, ")
                     .append("(SELECT aj.sample_id, count(aj.sample_id) as run_count FROM ").append(schemaName).append(".sample sa, ").append(schemaName).append(".analysis_job aj where sa.sample_id = aj.sample_id AND sa.study_id = ? GROUP BY aj.sample_id) tmp ")
-                    .append("WHERE aj.pipeline_id=r.pipeline_id AND sa.sample_id = aj.sample_id AND tmp.sample_id = aj.sample_id AND sa.study_id = ? ");
+                    .append("WHERE aj.experiment_type_id=et.experiment_type_id AND aj.pipeline_id=r.pipeline_id AND sa.sample_id = aj.sample_id AND tmp.sample_id = aj.sample_id AND sa.study_id = ? ");
             if (publicOnly) {
                 sb.append("AND sa.is_public = 1 ");
             }

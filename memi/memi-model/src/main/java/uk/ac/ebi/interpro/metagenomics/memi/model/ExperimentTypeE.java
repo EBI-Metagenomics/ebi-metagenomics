@@ -7,13 +7,13 @@ package uk.ac.ebi.interpro.metagenomics.memi.model;
  *
  * @author Maxim Scheremetjew - EMBL-EBI
  */
-public enum ExperimentType {
+public enum ExperimentTypeE {
 
     METAGENOMICS("metagenomic"), AMPLICON("amplicon"), METATRANSCRIPTOMIC("metatranscriptomic"), ASSEMBLY("assembly");
 
     private String experimentType;
 
-    private ExperimentType(String experimentType) {
+    private ExperimentTypeE(String experimentType) {
         this.experimentType = experimentType;
     }
 
