@@ -106,30 +106,16 @@ public class RunDAOImpl implements RunDAO {
 
 
     public int countAllPublic() {
-        return getSampleCount(1);
+        return getAnalysisJobCount(1);
     }
 
     public int countAllPrivate() {
-        return getSampleCount(0);
+        return getAnalysisJobCount(0);
     }
 
-    private int getSampleCount(int isPublic) {
-        String sql = "SELECT count(*) FROM " + schemaName + "." + "analysis_job aj," + schemaName + "." + "sample s WHERE aj.sample_id=s.sample_id and s.is_public = ?";
-        return jdbcTemplate.queryForInt(sql, isPublic);
-    }
-
-
-    public String readLatestPipelineVersionByRunId(final String runId,
-                                                   final String analysisStatus) {
-        try {
-            String sql = "SELECT release_version FROM " + schemaName + "." + "analysis_job aj," + schemaName + "." + "pipeline_release r," + schemaName + "." + "analysis_status s WHERE aj.pipeline_id=r.pipeline_id AND aj.analysis_status_id=s.analysis_status_id AND aj.external_run_ids = ? AND s.analysis_status = ? order by r.release_version desc";
-            List<String> results = jdbcTemplate.queryForList(sql, String.class, runId, analysisStatus);
-            if (results.size() > 0) {
-                return results.get(0);
-            }
-            return null;
-        } catch (EmptyResultDataAccessException exception) {
-            throw new EmptyResultDataAccessException(1);
-        }
+    private int getAnalysisJobCount(int isPublic) {
+        String sql = "SELECT count(distinct aj.external_run_ids) FROM " + schemaName + "." + "analysis_job aj," + schemaName + "." + "sample s WHERE aj.sample_id=s.sample_id and s.is_public = ? and aj.analysis_status_id = ?";
+        int analysisStatusId = 3;
+        return jdbcTemplate.queryForInt(sql, isPublic, analysisStatusId);
     }
 }
