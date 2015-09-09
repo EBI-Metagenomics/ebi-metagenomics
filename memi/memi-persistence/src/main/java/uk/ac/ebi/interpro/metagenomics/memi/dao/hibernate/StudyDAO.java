@@ -107,4 +107,18 @@ public interface StudyDAO extends ISecureEntityDAO<Study> {
     Long countByCriteria(List<Criterion> crits);
 
     Long countPublicStudiesFilteredByBiomes(Collection<Integer> biomeIds);
+
+    /**
+     * Counts all submission accounts associated to a study.
+     *
+     * @return Number of submission accounts.
+     */
+    Long countDistinctSubmissionAccounts();
+
+    /**
+     * Distinct count over column ext_study_id.
+     *
+     * @return Number of distinct studies (no matter which status, public, private or something else)
+     */
+    Long countDistinct();
 }

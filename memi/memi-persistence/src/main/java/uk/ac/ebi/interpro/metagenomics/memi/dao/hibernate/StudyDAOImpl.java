@@ -145,7 +145,7 @@ public class StudyDAOImpl implements StudyDAO {
                 Criteria criteria = session.createCriteria(Study.class)
                         .add(Restrictions.eq("isPublic", true))
                         .add(Restrictions.in("biome.biomeId", biomeIds))
-                        .setProjection(Projections.rowCount() );
+                        .setProjection(Projections.rowCount());
                 try {
                     return (Long) criteria.uniqueResult();
                 } catch (HibernateException e) {
@@ -419,5 +419,35 @@ public class StudyDAOImpl implements StudyDAO {
     //TODO: Do implement
     public Long getMaximumPrimaryKey() {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Transactional(readOnly = true)
+    public Long countDistinctSubmissionAccounts() {
+        Session session = sessionFactory.getCurrentSession();
+        if (session != null) {
+            try {
+                Criteria criteria = session.createCriteria(Study.class);
+                criteria.setProjection(Projections.countDistinct("submissionAccountId"));
+                return (Long) criteria.uniqueResult();
+            } catch (HibernateException e) {
+                throw new HibernateException("Couldn't retrieve distinct count of submission accounts.", e);
+            }
+        }
+        return null;
+    }
+
+    @Transactional(readOnly = true)
+    public Long countDistinct() {
+        Session session = sessionFactory.getCurrentSession();
+        if (session != null) {
+            try {
+                Criteria criteria = session.createCriteria(Study.class);
+                criteria.setProjection(Projections.countDistinct("studyId"));
+                return (Long) criteria.uniqueResult();
+            } catch (HibernateException e) {
+                throw new HibernateException("Couldn't retrieve distinct count of submission accounts.", e);
+            }
+        }
+        return null;
     }
 }
