@@ -71,6 +71,7 @@
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.PipelineTool</value>
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.PipelineReleaseTool</value>
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisStatus</value>
+                <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.ExperimentType</value>
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob</value>
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Biome</value>
             </list>

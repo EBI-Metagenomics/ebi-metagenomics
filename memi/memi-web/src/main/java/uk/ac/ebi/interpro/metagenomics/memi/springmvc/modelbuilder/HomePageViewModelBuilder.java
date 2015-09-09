@@ -63,7 +63,6 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
         this.biomeDAO = biomeDAO;
     }
 
-    @Override
     public HomePageViewModel getModel() {
         log.info("Building instance of " + HomePageViewModel.class + "...");
         Submitter submitter = getSessionSubmitter(sessionMgr);
@@ -73,6 +72,9 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
         final Long privateStudiesCount = studyDAO.countAllPrivate();
         final int publicRunCount = runDAO.countAllPublic();
         final int privateRunCount = runDAO.countAllPrivate();
+        final Map<String, Integer> experimentCountMap = runDAO.retrieveRunCountsGroupedByExperimentType(3);
+        final Long numOfSubmitters = studyDAO.countDistinctSubmissionAccounts();
+        final Long numOfSubmissions = studyDAO.countDistinct();
         // If case: if nobody is logged in
         if (submitter == null) {
             // Retrieve public studies and order them by last meta data received
@@ -84,8 +86,9 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
             samples = samples.subList(0, getToIndex(samples));
 
             Map<String, Long> biomeCountMap = buildBiomeCountMap();
-            return new HomePageViewModel(submitter, samples, pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems,
-                    publicSamplesCount, privateSamplesCount, publicStudiesCount, privateStudiesCount, studies, publicRunCount, privateRunCount, biomeCountMap);
+            return new HomePageViewModel(submitter, samples, pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems, publicSamplesCount,
+                    privateSamplesCount, publicStudiesCount, privateStudiesCount, studies, publicRunCount, privateRunCount, biomeCountMap, experimentCountMap, numOfSubmitters,
+                    numOfSubmissions);
         }
         //  Else case: if somebody is logged in
         else {
@@ -156,13 +159,13 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
             studies = studyDAO.retrieveOrderedPublicStudies("lastMetadataReceived", true);
         }
         if (studies != null && !studies.isEmpty()) {
-                    for (Study study : studies) {
-                        MemiTools.assignBiomeIconCSSClass(study, biomeDAO);
-                    }
-                    return studies;
-                } else {
-                    return new ArrayList<Study>();
-                }
+            for (Study study : studies) {
+                MemiTools.assignBiomeIconCSSClass(study, biomeDAO);
+            }
+            return studies;
+        } else {
+            return new ArrayList<Study>();
+        }
     }
 
     private Map<Study, Long> getStudySampleSizeMap(List<Study> studies, SampleDAO sampleDAO, Comparator<Study> comparator) {
