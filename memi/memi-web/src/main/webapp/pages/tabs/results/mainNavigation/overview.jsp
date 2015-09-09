@@ -56,7 +56,7 @@
         <div class="output_form" >
             <div class="result_row">
                 <div class="result_row_label">Experiment type:</div>
-                <div class="result_row_data"> ${model.analysisJob.experimentType}</div>
+                <div class="result_row_data"> ${model.analysisJob.experimentType.experimentType}</div>
             </div>
             <div class="result_row">
                 <div class="result_row_label">Pipeline version:</div>
