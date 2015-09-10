@@ -9,7 +9,7 @@
 
     <import resource="file-definitions-context.xml"/>
 
-    <util:map id="fileDefinitionsMap" map-class="java.util.HashMap" key-type="java.lang.String"
+    <util:map id="fileDefinitionsMapV1" map-class="java.util.HashMap" key-type="java.lang.String"
               value-type="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.DownloadableFileDefinition">
         <!--sequence data-->
         <entry key="MASKED_FASTA" value-ref="maskedReadsFile"/>
@@ -36,10 +36,27 @@
 
         <!--functional data-->
         <entry key="INTERPROSCAN_RESULT_FILE" value-ref="interProScanResultFile"/>
-        <entry key="INTERPROSCAN_RESULT_FILE_NEW" value-ref="interProScanResultFileNew"/>
+        <entry key="INTERPROSCAN_RESULT_FILE_NEW" value-ref="chunkedInterProScanResultFile"/>
         <entry key="GO_COMPLETE_FILE" value-ref="fullGOAnnotationFile"/>
         <entry key="GO_SLIM_FILE" value-ref="goSlimAnnotationFile"/>
         <!--<entry key="INTERPRO_MATCHES_SUMMARY_FILE" value-ref="interProMatchesSummaryFile"/>-->
+    </util:map>
+
+    <util:map id="chunkedResultFilesMap" map-class="java.util.HashMap" key-type="java.lang.String"
+              value-type="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.DownloadableFileDefinition">
+        <!--sequence data-->
+        <entry key="MASKED_FASTA" value-ref="maskedReadsFile"/>
+        <entry key="PROCESSED_READS" value-ref="processedReads"/>
+        <entry key="READS_WITH_PREDICTED_CDS_FILE" value-ref="readsWithPredictedCDSFile"/>
+        <entry key="READS_WITH_MATCHES_FASTA_FILE" value-ref="readsWithInterProMatchesFile"/>
+        <entry key="READS_WITHOUT_MATCHES_FASTA_FILE" value-ref="readsWithoutInterProMatchesFile"/>
+        <entry key="PREDICTED_CDS_FILE" value-ref="predictedCDSFile"/>
+        <entry key="PREDICTED_CDS_WITH_INTERPRO_MATCHES_FILE" value-ref="predictedCDSWithInterProMatchesFile"/>
+        <entry key="PREDICTED_ORF_WITHOUT_ANNOTATION_FILE" value-ref="predictedORFWithoutAnnotation"/>
+        <entry key="PREDICTED_CDS_WITHOUT_ANNOTATION_FILE" value-ref="predictedCDSWithoutAnnotation"/>
+
+        <!--functional data-->
+        <entry key="INTERPROSCAN_RESULT_FILE_NEW" value-ref="chunkedInterProScanResultFile"/>
     </util:map>
 
 </beans>

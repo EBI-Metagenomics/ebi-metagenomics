@@ -15,6 +15,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.DownloadableFileDefinition;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.FunctionalAnalysisFileDefinition;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.ResultFileDefinitionImpl;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.results.ResultViewModel;
@@ -27,6 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Abstract controller class which is inherited by several result view controllers.
@@ -59,6 +61,9 @@ public abstract class AbstractResultViewController extends SecuredAbstractContro
 
     @Resource(name = "taxonomicAnalysisFileDefinitions")
     protected List<ResultFileDefinitionImpl> taxonomicAnalysisFileDefinitions;
+
+    @Resource
+    protected Map<String, DownloadableFileDefinition> fileDefinitionsMapV1;
 
     protected Run getSecuredEntity(final String projectId,
                                    final String sampleId,

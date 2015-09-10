@@ -17,6 +17,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.DownloadableFileDefinition;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.study.DownloadViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.study.StudyDownloadViewModelBuilder;
@@ -27,6 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * Download tab on the project page.
@@ -44,6 +46,9 @@ public class DownloadStudyController extends AbstractStudyViewController {
 
     @Resource
     private MemiDownloadService downloadService;
+
+    @Resource
+    protected Map<String, DownloadableFileDefinition> fileDefinitionsMapV1;
 
 
     protected String getModelViewName() {
@@ -83,7 +88,7 @@ public class DownloadStudyController extends AbstractStudyViewController {
                 pageTitle, // Not really needed as this is within an AJAX tab anyway?
                 getBreadcrumbs(study), // Not really needed as this is within an AJAX tab anyway?
                 propertyContainer,
-                fileDefinitionsMap,
+                fileDefinitionsMapV1,
                 study,
                 pipelineReleaseDAO);
 
