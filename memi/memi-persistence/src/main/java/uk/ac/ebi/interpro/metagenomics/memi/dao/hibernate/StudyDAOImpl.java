@@ -2,10 +2,7 @@ package uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.Criteria;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import org.hibernate.*;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
@@ -163,6 +160,22 @@ public class StudyDAOImpl implements StudyDAO {
             if (isPublic != null) {
                 criteria.add(Restrictions.eq("isPublic", isPublic));
             }
+            criteria.setProjection(Projections.rowCount());
+            try {
+                return ((Long) criteria.list().get(0)).longValue();
+            } catch (HibernateException e) {
+                throw new HibernateException("Cannot retrieve study count!", e);
+            }
+        }
+        return null;
+    }
+
+    @Transactional(readOnly = true)
+    public Long countAllWithNotEqualsEx(final int isPublic) {
+        Session session = sessionFactory.getCurrentSession();
+        if (session != null) {
+            Criteria criteria = session.createCriteria(Study.class);
+            criteria.add(Restrictions.sqlRestriction("{alias}.is_public <> " + isPublic));
             criteria.setProjection(Projections.rowCount());
             try {
                 return ((Long) criteria.list().get(0)).longValue();

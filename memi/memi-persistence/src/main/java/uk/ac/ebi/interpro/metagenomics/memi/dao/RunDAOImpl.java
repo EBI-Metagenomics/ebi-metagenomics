@@ -13,9 +13,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.Run;
 
 import javax.sql.DataSource;
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * This data access object is mainly used to query the analysis job table in EMG.
@@ -56,7 +54,7 @@ public class RunDAOImpl implements RunDAO {
     //TODO: Migrate to Hibernate SQL (AnalysisJobDAO)
     public Map<String, Integer> retrieveRunCountsGroupedByExperimentType(final int analysisStatusId) {
         try {
-            final Map<String, Integer> result = new HashMap<String, Integer>();
+            Map<String, Integer> result = new HashMap<String, Integer>();
             String sql = "select et.experiment_type, count(distinct j.external_run_ids) as count from " + schemaName + '.' + "analysis_job j, " + schemaName + '.' + "experiment_type et where et.experiment_type_id = j.experiment_type_id AND j.analysis_status_id = ? group by et.experiment_type";
             List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql, new Object[]{analysisStatusId});
             for (Map<String, Object> row : rows) {
@@ -110,11 +108,17 @@ public class RunDAOImpl implements RunDAO {
     }
 
     public int countAllPrivate() {
-        return getAnalysisJobCount(0);
+        return getPrivateAnalysisJobCount(1);
     }
 
     private int getAnalysisJobCount(int isPublic) {
         String sql = "SELECT count(distinct aj.external_run_ids) FROM " + schemaName + "." + "analysis_job aj," + schemaName + "." + "sample s WHERE aj.sample_id=s.sample_id and s.is_public = ? and aj.analysis_status_id = ?";
+        int analysisStatusId = 3;
+        return jdbcTemplate.queryForInt(sql, isPublic, analysisStatusId);
+    }
+
+    private int getPrivateAnalysisJobCount(int isPublic) {
+        String sql = "SELECT count(distinct aj.external_run_ids) FROM " + schemaName + "." + "analysis_job aj," + schemaName + "." + "sample s WHERE aj.sample_id=s.sample_id and s.is_public <> ? and aj.analysis_status_id =?";
         int analysisStatusId = 3;
         return jdbcTemplate.queryForInt(sql, isPublic, analysisStatusId);
     }

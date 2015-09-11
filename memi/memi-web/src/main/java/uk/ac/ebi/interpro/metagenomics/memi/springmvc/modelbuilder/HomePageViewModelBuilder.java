@@ -69,12 +69,12 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
         final Long publicSamplesCount = sampleDAO.countAllPublic();
         final Long privateSamplesCount = sampleDAO.countAllPrivate();
         final Long publicStudiesCount = studyDAO.countAllPublic();
-        final Long privateStudiesCount = studyDAO.countAllPrivate();
+        final Long privateStudiesCount = studyDAO.countAllWithNotEqualsEx(1);
         final int publicRunCount = runDAO.countAllPublic();
         final int privateRunCount = runDAO.countAllPrivate();
         final Map<String, Integer> experimentCountMap = runDAO.retrieveRunCountsGroupedByExperimentType(3);
-        final Long numOfSubmitters = studyDAO.countDistinctSubmissionAccounts();
-        final Long numOfSubmissions = studyDAO.countDistinct();
+        final Map<String, Integer> transformedExperimentCountMap = transformMap(experimentCountMap);
+        final Integer numOfDataSets = getNumOfDataSets(experimentCountMap);
         // If case: if nobody is logged in
         if (submitter == null) {
             // Retrieve public studies and order them by last meta data received
@@ -87,8 +87,7 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
 
             Map<String, Long> biomeCountMap = buildBiomeCountMap();
             return new HomePageViewModel(submitter, samples, pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems, publicSamplesCount,
-                    privateSamplesCount, publicStudiesCount, privateStudiesCount, studies, publicRunCount, privateRunCount, biomeCountMap, experimentCountMap, numOfSubmitters,
-                    numOfSubmissions);
+                    privateSamplesCount, publicStudiesCount, privateStudiesCount, studies, publicRunCount, privateRunCount, biomeCountMap, transformedExperimentCountMap, numOfDataSets);
         }
         //  Else case: if somebody is logged in
         else {
@@ -107,6 +106,45 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
             return new HomePageViewModel(submitter, myStudiesMap, mySamples, pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems,
                     mySamplesCount, myStudiesCount, publicSamplesCount, privateSamplesCount, publicStudiesCount, privateStudiesCount, publicRunCount, privateRunCount);
         }
+    }
+
+    private Map<String, Integer> transformMap(Map<String, Integer> experimentCountMap) {
+        Map<String, Integer> result = new TreeMap<String, Integer>(
+                //Comparator is tested in HomePageSamplesComparatorTest
+                new Comparator<String>() {
+                    @Override
+                    public int compare(String o1, String o2) {
+                        if (o1.equalsIgnoreCase("assemblies") || o2.equalsIgnoreCase("assemblies")) {
+                            return 1;
+                        } else if (o1.equalsIgnoreCase("metagenomics") || o2.equalsIgnoreCase("metagenomics")) {
+                            return -1;
+                        } else if (o1.equalsIgnoreCase("amplicons") || o2.equalsIgnoreCase("metatranscriptomics")) {
+                            return 1;
+                        } else if (o1.equalsIgnoreCase("metatranscriptomics") || o2.equalsIgnoreCase("amplicons")) {
+                            return -1;
+                        } else {
+                            return 0;
+                        }
+                    }
+
+                });
+        for (String key : experimentCountMap.keySet()) {
+            Integer value = experimentCountMap.get(key);
+            if (key.equalsIgnoreCase("assembly")) {
+                result.put("assemblies", value);
+            } else {
+                result.put(key + 's', value);
+            }
+        }
+        return result;
+    }
+
+    private Integer getNumOfDataSets(Map<String, Integer> experimentCountMap) {
+        Integer result = 0;
+        for (String key : experimentCountMap.keySet()) {
+            result += experimentCountMap.get(key);
+        }
+        return result;
     }
 
     private Map<String, Long> buildBiomeCountMap() {
