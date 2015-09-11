@@ -89,14 +89,20 @@ public interface StudyDAO extends ISecureEntityDAO<Study> {
     Study readByStringId(String studyId);
 
     /**
-     * @return Number of all public samples.
+     * @return Number of all public studies.
      */
     Long countAllPublic();
 
     /**
-     * @return Number of all private samples.
+     * @return Number of all private studies.
      */
     Long countAllPrivate();
+
+    /**
+     * @return Number of all studies not equals a specific isPublic value.
+     */
+    Long countAllWithNotEqualsEx(int isPublic);
+
 
     /**
      * Counts studies by criteria.
