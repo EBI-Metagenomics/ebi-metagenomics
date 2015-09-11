@@ -3,10 +3,8 @@
 
 
 <section class="jumbo-header">
-
      <p class="lead">Submit, analyse, visualize and compare your data.</p>
    <div class="button"><a href="<c:url value="${baseURL}/submit"/>"> Submit data</a></div>
-
 </section>
 
 
