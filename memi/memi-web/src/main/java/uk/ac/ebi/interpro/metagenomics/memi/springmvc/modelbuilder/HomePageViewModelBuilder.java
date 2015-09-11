@@ -48,7 +48,7 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
     /**
      * The number of latest project and samples to show on the home page. Used within this builder class, but also within the Java Server Page.
      */
-    private final int maxRowNumberOfLatestItems = 5;
+    private final int maxRowNumberOfLatestItems = 15;
 
 
     public HomePageViewModelBuilder(SessionManager sessionMgr, String pageTitle, List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer,
@@ -167,6 +167,12 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
         //Add number of human gut biomes
         studyCount = super.countStudiesFilteredByBiomes(studyDAO, biomeDAO, StudyFilter.Biome.HUMAN_GUT.getLineages());
         biomesCountMap.put(StudyFilter.Biome.HUMAN_GUT.toString(), studyCount);
+        //Add number of human host biomes
+        studyCount = super.countStudiesFilteredByBiomes(studyDAO, biomeDAO, StudyFilter.Biome.HUMAN_HOST.getLineages());
+        biomesCountMap.put(StudyFilter.Biome.HUMAN_HOST.toString(), studyCount);
+          //Add number of non-human host biomes
+        studyCount = super.countStudiesFilteredByBiomes(studyDAO, biomeDAO, StudyFilter.Biome.NON_HUMAN_HOST.getLineages());
+        biomesCountMap.put(StudyFilter.Biome.NON_HUMAN_HOST.toString(), studyCount);
         //Add number of engineered biomes
         studyCount = super.countStudiesFilteredByBiomes(studyDAO, biomeDAO, StudyFilter.Biome.ENGINEERED.getLineages());
         biomesCountMap.put(StudyFilter.Biome.ENGINEERED.toString(), studyCount);
