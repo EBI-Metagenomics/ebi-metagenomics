@@ -75,8 +75,7 @@ div#local-masthead ul li.active, div#local-masthead ul li.active-trail { backgro
 /*/change to ebi-mitigation.css*/
 
 /*imported from ebi-visual.css*/
-@font-face {
-font-family: 'EBI-Generic';
+@font-face {font-family: 'EBI-Generic';
 src:url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.eot'); /*was linked to ../../../fonts/EBI-Generic/fonts/EBI-Generic.eot*/
 src:url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.eot?#iefix') format('embedded-opentype'),
 url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.woff') format('woff'),
@@ -91,22 +90,41 @@ local('☺'),
 url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.svg#EBI-Functional') format('svg'),
 url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.ttf') format('truetype');font-weight:normal;font-style:normal}
 
+@font-face{font-family:'EBI-Conceptual';src:url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.eot');src:url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.eot?#iefix') format('embedded-opentype'),
+url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.woff') format('woff'),
+local('☺'),
+url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.svg#EBI-Conceptual') format('svg'),
+url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.ttf') format('truetype');font-weight:normal;font-style:normal}
+@font-face{font-family:'EBI-Conceptual';src:url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.eot');src:url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.eot?#iefix') format('embedded-opentype'),
+url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.woff') format('woff'),
+local('☺'),
+url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.svg#EBI-Conceptual') format('svg'),
+url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.ttf') format('truetype');font-weight:normal;font-style:normal}
+
+@font-face {font-family:'EBI-SocialMedia'; src:url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.eot');src:url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.eot?#iefix') format('embedded-opentype'),
+url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.woff') format('woff'),
+local('☺'),
+url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.svg#EBI-SocialMedia') format('svg');
+url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.ttf') format('truetype'),font-weight: normal;font-style: normal;}
 .icon {text-decoration: none; font-style: normal;}
 .icon-functional:before {font-family: 'EBI-Functional'; font-size: 100%; color: #bbb; content: attr(data-icon);margin: 0 0.3em 0 0; }
 .icon-static:before, .icon-generic:before { font-family: 'EBI-Generic'; /* font-size: 123.1%; */ font-size: 100%;  color: #bbb;	content: attr(data-icon); margin: 0 0.3em 0 0; }
+.icon-conceptual:before{font-family:'EBI-Conceptual';font-size:138.5%;color:#bbb;content:attr(data-icon);margin:0 0.3em 0 0}
+.icon-socialmedia:before{font-family:'EBI-SocialMedia';font-size:138.5%;color:#bbb;content:attr(data-icon);margin:0 0.3em 0 0}
 /*/from ebi-visual.css*/
 
+/**/
 img {border: none;}
 
 a {
-color:#188960;
-/*color: #3DA4CE;*/
-/*color: #158DEB;     new*/
+/*color:#188960;*/
+color: #2A9DCC;/*better for table*/
+/*color: #158DEB;*/
 text-decoration: none;
 }
 
 /*a:hover,  a:focus { color: red; text-decoration:underline;}*/
-a:hover,  a:focus { text-decoration:underline;}
+a:hover,  a:focus {text-decoration:underline;}
 
 a:active { color: #647685;}
 /*a:active {color: #3D809B;}   new */
@@ -427,6 +445,13 @@ table.result td.showHideRelated:hover {background-color: #006666; }
 /************************ END TABLE *****************************/
 
 /*********************** TITLE + TEXT***************************/
+h1 {font-family: helvetica, "trebuchet MS", arial, sans-serif;
+color:#0F6D99;/*color:#003798;*/
+font-size:244%;
+font-weight:normal;
+margin:0.83em 0;/*added for compliance*/
+}
+
 
 h2 {
 font-family: helvetica, "trebuchet MS", arial, sans-serif;
@@ -436,7 +461,6 @@ font-size:190%;
 font-weight:normal;
 margin:0.83em 0;/*added for compliance*/
 }
-#list-data h2 {margin:0;} /*added for compliance*/
 
 h2 span {font-size:80%; color: #7c8c99;}
 
@@ -577,26 +601,6 @@ background: url(../img/arrow_link_over.jpg) no-repeat  right center;
 #submit-data-description a:active  {
 background: url(../img/arrow_link_click.jpg) no-repeat right center;
 }
-
-#list-data {
-display:block;
-/*overflow:auto; remove to see if there is any impact*/
-margin-top:20px;
-}
-
-#list-data  a.all {
-margin-right:4px;
-padding:2px 36px 0 0;
-float:right;
-height: 30px;
-border: 0px solid black;
-display: block;
-background: url(../img/arrow_link_small.jpg) no-repeat right top;
-}
-
-#list-data a.all:hover,#list-data  a.all:focus { background: url(../img/arrow_link_over_small.jpg) no-repeat  right top;}
-
-#list-data a.all:active  { background: url(../img/arrow_link_click_small.jpg) no-repeat right top;}
 
 section {border: solid 0px black;display:block;}
 
@@ -743,11 +747,11 @@ font-size:100%;
 /*box homepage*/
 #submit-data, #list-data-study, #list-data-sample, #list-news { background-color: white;border-radius: 0 0 20px 0; /*hidden*//*border: 1px solid #9f9f9f;*//*box-shadow:2px 2px 7px #8a8a8a;*/}
 
-#list-data-study, #list-data-sample, #list-news,#list-biomes {
-line-height:1.3; width:28.9%;
+#list-data-study, #list-data-sample, /*#list-news,*/#list-biomes {
+line-height:1.3; /*width:28.9%;*/
 _height:400px; /*to keep same height for IE6 */
-min-height:440px;
-padding: 0 9px 9px 9px;
+/*min-height:440px;*/
+/*padding: 0 9px 9px 9px;*/
 }
 
 #list-data-study h3, #list-data-sample h3 {font-size:123%; color:#445668; margin: 1em 0px; font-weight: bold;}
@@ -800,11 +804,13 @@ padding: 0 9px 9px 9px;
 .biome_icon.icon_xs.wastewater_b {background-position: -122px -118px;}
 .biome_icon.icon_xs.default_b {background-position: -162px -118px;}
 /*biome homepage*/
-#list-biomes .grid_24 {background-color: #ececec;  margin: 24px 0;   /* padding: 25px 9px 0px 9px; min-height: 390px;*/}
-#list-biomes .grid_8 {text-align: center;}
+#list-biomes .list-biomes-l { margin-top: 9px;/*  background-color: #ececec; padding: 25px 9px 0px 9px; min-height: 390px;*/}
+#list-biomes .list-biomes-l .list-biomes-element {width:18%;text-align: center; display: inline;  float: left;  position: relative;  zoom: 1;  margin-left: 1%;  margin-right: 1%; }
+#list-biomes .list-biomes-l .list-biomes-element.omega {margin-right: 0%; }
+#list-biomes .list-biomes-l .list-biomes-element.alpha {margin-left: 0%; }
 #list-biomes .biome_text {display: block; padding-bottom: 9px;  word-wrap: break-word; }
-#list-biomes .grid_24 a {height:130px;/*to keep for double text line*/font-weight: bold; color:#6f6f6f; display:block;}
-#list-biomes .grid_24 a:hover {color:white;background-color:  rgba(0, 0, 0, 0.3);text-decoration: none;}
+#list-biomes .grid_24 a {height:130px;font-weight: bold; color:#6f6f6f; display:block;}
+#list-biomes .grid_24 a:hover {color:white;background-color:  rgba(0, 0, 0, 0.25);text-decoration: none;}
 #list-biomes .biome_icon {margin:9px;}
 /*biome homepage responsive - change size icons  for small screens */
 @media (max-width: 768px) {
@@ -1819,3 +1825,79 @@ ul.sample_list li {list-style: none; display: inline;}
  /*/ pipeline chart *******************************/
 /*tooltip*/
 .icon-generic.show_tooltip:before {color: #888888;} /*darker than default*/
+
+/*homepage - header*/
+.jumbo-header {background: url(../img/backgrounds/bgd_header_microbes_30p.png) 98% bottom no-repeat, url(../img/backgrounds/bgd_header_microbes_big_10p.png) -100px center no-repeat; background-color: #606a73; text-align: center; font-weight: 300; color:#fff; line-height: 1.4; background-color: #606a73; padding: 60px 0; margin-bottom: 18px;}
+.jumbo-header .lead {font-family: 'Lato',Helvetica,Arial,sans-serif; font-size: 239%;}
+.jumbo-header .button {margin-top: 18px; display:inline-block;}
+.jumbo-header .button a {font-size: 143%;color:white; text-transform: uppercase; text-decoration:none; background:url(../img/backgrounds/bgd_button_login_off.gif) repeat-x 50%; border-radius: 30px; box-shadow:0px 2px 5px rgba(0, 0, 0,0.3); padding: 12px 22px;cursor: pointer; border:1px #1f54bc solid;}
+.jumbo-header .button a:hover{background:url(../img/backgrounds/bgd_button_login_over.gif) repeat-x 50%;}
+.jumbo-header .button a:active{background:url(../img/backgrounds/bgd_button_login_active.gif) repeat-x 50%; border: 1px #96979A solid}
+
+/*HOMEPAGE - stats*/
+.jumbo-stats {text-align: center; color:#606a73;font-size: 120%;line-height: 1.4;}
+.jumbo-stats .jumbo-stats-box {border: 0px red solid;}
+.jumbo-stats .jumbo-stats-box span.icon {font-size: 216%;}
+.jumbo-stats #stat-exptype .grid_4.alpha {transform: rotate(90deg) scale(1);} /*rotate DNA*/
+.jumbo-stats #stat-submissions, .jumbo-stats #stat-member {margin-top: -3px; /*to align text better*/}
+.jumbo-stats #stat-exptype .omega, .jumbo-stats #stat-public .omega, .jumbo-stats #stat-private .omega {text-align: left;}
+.stat-lock-title {font-size: 79%;color:#1a5286;}
+.jumbo-stats #stat-submissions .high_nb, .jumbo-stats #stat-member .high_nb, .jumbo-stats #stat-public .high_nb, .jumbo-stats #stat-private .high_nb, .jumbo-stats #stat-exptype .high_nb {font-weight: bold;}
+.jumbo-stats #stat-submissions .high_nb, .jumbo-stats #stat-submissions .icon-functional:before,  .jumbo-stats #stat-submissions .icon-generic:before {color:#e93984;}
+.jumbo-stats #stat-member .high_nb, .jumbo-stats #stat-member .icon-generic:before {color:#f45b5b;}
+.jumbo-stats #stat-public .high_nb,.jumbo-stats #stat-private .high_nb, .jumbo-stats #stat-private .icon-functional:before, .jumbo-stats #stat-public .icon-functional:before  {color:#1a5286;}
+.jumbo-stats #stat-public .alpha .icon-functional:before {margin-left: 9px;}/*move open lock icon because of its shape*/
+.jumbo-stats #stat-exptype .high_nb, .jumbo-stats #stat-exptype .icon-conceptual:before {color:#34a9d5;}
+
+.jumbo-list-data-container h1 {margin:0px 0 18px 9px;}
+.hlight_maintitle h1 {margin: 0 0 9px 0; padding:0;}
+.hlight_subtitle h2  {margin:0;padding:0;}
+
+.home_box {color: #606a73;border:1px #cbcbcb solid; overflow:hidden /*when resizing*/;   padding: 18px 18px 9px 18px; min-height: 200px; }
+.hlight-spot .home_box p {border:0px pink solid; margin-left:0;  margin-right:0;padding-left:0;font-size:120%; }
+.hlight-spot .home_box img {margin-bottom: 9px;}
+.home_box.alpha {margin: 0 0 18px 18px;}
+.home_box.omega {margin: 0 18px 18px 0;}
+.home_box h2 {margin:0 0 9px 0; padding:0;font-size: 168%;}
+
+.badge {display: inline-block;  min-width: 10px; padding: 3px 7px;  font-size: 50%; font-weight: bold;  line-height: 1;  color: #fff;  text-align: center;   white-space: nowrap; vertical-align: middle;  background-color: #777;  border-radius: 10px; }
+.badge a {color: #fff;}
+.badge a:hover {text-decoration: none;}
+
+.list-data, .jumbo-stats  {margin-bottom: 18px; display: block;  overflow: hidden; border: 0px red solid;}
+
+a.all {float:right; display: block; background: url(../img/arrow_link_small.jpg) no-repeat right top; margin-top:9px; padding:4px 36px 0 0; height: 23px; border: 0px solid red;}
+a.all:hover, a.all:focus { background: url(../img/arrow_link_over_small.jpg) no-repeat  right top;}
+a.all:active  { background: url(../img/arrow_link_click_small.jpg) no-repeat right top;}
+
+.hlight_title_cont {margin-left: 18px; display:block; overflow: auto; border:0px red solid;}
+.hlight_maintitle {display:block; float:left;border:0px red solid;}
+.hlight_subtitle {display:block; float:right;margin-top: 18px; margin-right: 2px; border:0px black solid;}
+.hlight_subtitle h2 {font-size: 137%;}
+
+.jumbo-news-container {text-align: center;background-color: #eee; padding: 18px 0 9px 0; }
+.jumbo-news-centred { color:#454545; font-size: 130%;  width: 38%;   margin: 0 auto;}
+.jumbo-news-centred h3  {margin-top:0; margin-bottom:0;}
+.jumbo-news-centred .jumbo-news-contact {margin-top: 4px;}
+.jumbo-news-centred a, .jumbo-news-centred a:visited {color:#0c4d7b;}
+.jumbo-news-centred .icon-socialmedia:before {color:#0c4d7b;}
+
+
+/*END HOMEPAGE*/
+
+.list-project-l {height: 278px; width: auto; position: relative;  width: 100%;  overflow-x: hidden; overflow-y: scroll;}
+
+@media (max-width: 768px) {
+/*Homepage*/
+.jumbo-header {padding: 18px 0;}
+.jumbo-header .button {margin-top: 0px;}
+.jumbo-header .lead, .jumbo-stats   {display: none;}
+.jumbo-header .button a {border-radius:0px; box-shadow:none;padding: 12px 66px;}
+.jumbo-header {background: url(../img/backgrounds/bgd_header_microbes_big_10p.png) -100px  center no-repeat;background-color: #606a73;}
+.jumbo-news-centred {width: 66%;}
+.hlight_subtitle {margin-right:18px;}
+#list-biomes .grid_24 a  {height:inherit;}
+#list-biomes, #list-data-study, #hlight-box-spotlight, #hlight-box-tools {width:100%;margin-left: 0;margin-right: 0;}
+#list-biomes .home_box , #list-data-study .home_box, #hlight-box-spotlight .home_box, #hlight-box-tools .home_box {margin:9px 18px;}
+}
+
