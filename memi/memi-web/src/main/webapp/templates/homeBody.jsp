@@ -391,7 +391,7 @@
                         <p>Interested in comparing the functional profile of sequencing runs within a project? Now it is possible, using our new comparison tool, which provides analysis of the high level
                         Gene Ontology (GO) terms. </p>
                         <p>You can visualise the results using a range of interactive charts (bar charts, stacked columns, PCAs and Heatmaps).
-                            Click <a href="<c:url value="${baseURL}/compare"/>">here</a> to try it out now. </p>
+                            Click <a href="<c:url value="${baseURL}/compare"/>">here</a> to try it out now.</p>
 
                         <a href="<c:url value="${baseURL}/compare"/>"
                                                                               title="Compare samples" class="all">Compare samples</a>
