@@ -2,10 +2,7 @@ package uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.Criteria;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import org.hibernate.*;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
@@ -145,7 +142,7 @@ public class StudyDAOImpl implements StudyDAO {
                 Criteria criteria = session.createCriteria(Study.class)
                         .add(Restrictions.eq("isPublic", true))
                         .add(Restrictions.in("biome.biomeId", biomeIds))
-                        .setProjection(Projections.rowCount() );
+                        .setProjection(Projections.rowCount());
                 try {
                     return (Long) criteria.uniqueResult();
                 } catch (HibernateException e) {
@@ -163,6 +160,22 @@ public class StudyDAOImpl implements StudyDAO {
             if (isPublic != null) {
                 criteria.add(Restrictions.eq("isPublic", isPublic));
             }
+            criteria.setProjection(Projections.rowCount());
+            try {
+                return ((Long) criteria.list().get(0)).longValue();
+            } catch (HibernateException e) {
+                throw new HibernateException("Cannot retrieve study count!", e);
+            }
+        }
+        return null;
+    }
+
+    @Transactional(readOnly = true)
+    public Long countAllWithNotEqualsEx(final int isPublic) {
+        Session session = sessionFactory.getCurrentSession();
+        if (session != null) {
+            Criteria criteria = session.createCriteria(Study.class);
+            criteria.add(Restrictions.sqlRestriction("{alias}.is_public <> " + isPublic));
             criteria.setProjection(Projections.rowCount());
             try {
                 return ((Long) criteria.list().get(0)).longValue();
@@ -419,5 +432,35 @@ public class StudyDAOImpl implements StudyDAO {
     //TODO: Do implement
     public Long getMaximumPrimaryKey() {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Transactional(readOnly = true)
+    public Long countDistinctSubmissionAccounts() {
+        Session session = sessionFactory.getCurrentSession();
+        if (session != null) {
+            try {
+                Criteria criteria = session.createCriteria(Study.class);
+                criteria.setProjection(Projections.countDistinct("submissionAccountId"));
+                return (Long) criteria.uniqueResult();
+            } catch (HibernateException e) {
+                throw new HibernateException("Couldn't retrieve distinct count of submission accounts.", e);
+            }
+        }
+        return null;
+    }
+
+    @Transactional(readOnly = true)
+    public Long countDistinct() {
+        Session session = sessionFactory.getCurrentSession();
+        if (session != null) {
+            try {
+                Criteria criteria = session.createCriteria(Study.class);
+                criteria.setProjection(Projections.countDistinct("studyId"));
+                return (Long) criteria.uniqueResult();
+            } catch (HibernateException e) {
+                throw new HibernateException("Couldn't retrieve distinct count of submission accounts.", e);
+            }
+        }
+        return null;
     }
 }

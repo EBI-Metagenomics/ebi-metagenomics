@@ -58,6 +58,10 @@ public final class HomePageViewModel extends ViewModel {
 
     private int privateRunCount;
 
+    private Map<String, Integer> experimentCountMap;
+
+    private Integer numOfDataSets;
+
     public HomePageViewModel(final Submitter submitter,
                              final List<Sample> publicSamples,
                              final String pageTitle,
@@ -71,7 +75,9 @@ public final class HomePageViewModel extends ViewModel {
                              final List<Study> studies,
                              final int publicRunCount,
                              final int privateRunCount,
-                             final Map<String, Long> biomeCountMap) {
+                             final Map<String, Long> biomeCountMap,
+                             final Map<String, Integer> experimentCountMap,
+                             final Integer numOfDataSets) {
         super(submitter, pageTitle, breadcrumbs, propertyContainer);
         this.publicSamples = publicSamples;
         this.myStudiesMap = new TreeMap<Study, Long>();
@@ -85,6 +91,8 @@ public final class HomePageViewModel extends ViewModel {
         this.publicRunCount = publicRunCount;
         this.privateRunCount = privateRunCount;
         this.biomeMap = biomeCountMap;
+        this.experimentCountMap = experimentCountMap;
+        this.numOfDataSets = numOfDataSets;
     }
 
     public HomePageViewModel(final Submitter submitter,
@@ -103,7 +111,7 @@ public final class HomePageViewModel extends ViewModel {
                              final int publicRunCount,
                              final int privateRunCount) {
         this(submitter, new ArrayList<Sample>(), pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems,
-                publicSamplesCount, privateSamplesCount, publicStudiesCount, privateStudiesCount, new ArrayList<Study>(), publicRunCount, privateRunCount, null);
+                publicSamplesCount, privateSamplesCount, publicStudiesCount, privateStudiesCount, new ArrayList<Study>(), publicRunCount, privateRunCount, null, null, null);
         this.myStudiesMap = myStudiesMap;
         this.mySamples = mySamples;
         this.mySamplesCount = mySamplesCount;
@@ -181,5 +189,13 @@ public final class HomePageViewModel extends ViewModel {
 
     public void setBiomeMap(Map<String, Long> biomeMap) {
         this.biomeMap = biomeMap;
+    }
+
+    public Map<String, Integer> getExperimentCountMap() {
+        return experimentCountMap;
+    }
+
+    public Integer getNumOfDataSets() {
+        return numOfDataSets;
     }
 }

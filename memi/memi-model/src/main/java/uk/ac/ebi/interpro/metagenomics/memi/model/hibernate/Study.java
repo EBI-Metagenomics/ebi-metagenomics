@@ -261,7 +261,7 @@ public class Study implements SecureEntity {
 
     @Transient
     public String getShortStudyAbstract() {
-        return getShortStudyAbstract(100);
+        return getShortStudyAbstract(190);
     }
 
     @Transient
