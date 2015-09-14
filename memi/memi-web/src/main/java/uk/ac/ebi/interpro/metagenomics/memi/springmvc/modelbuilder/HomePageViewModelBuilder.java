@@ -48,7 +48,7 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
     /**
      * The number of latest project and samples to show on the home page. Used within this builder class, but also within the Java Server Page.
      */
-    private final int maxRowNumberOfLatestItems = 5;
+    private final int maxRowNumberOfLatestItems = 15;
 
 
     public HomePageViewModelBuilder(SessionManager sessionMgr, String pageTitle, List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer,
@@ -63,16 +63,18 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
         this.biomeDAO = biomeDAO;
     }
 
-    @Override
     public HomePageViewModel getModel() {
         log.info("Building instance of " + HomePageViewModel.class + "...");
         Submitter submitter = getSessionSubmitter(sessionMgr);
         final Long publicSamplesCount = sampleDAO.countAllPublic();
         final Long privateSamplesCount = sampleDAO.countAllPrivate();
         final Long publicStudiesCount = studyDAO.countAllPublic();
-        final Long privateStudiesCount = studyDAO.countAllPrivate();
+        final Long privateStudiesCount = studyDAO.countAllWithNotEqualsEx(1);
         final int publicRunCount = runDAO.countAllPublic();
         final int privateRunCount = runDAO.countAllPrivate();
+        final Map<String, Integer> experimentCountMap = runDAO.retrieveRunCountsGroupedByExperimentType(3);
+        final Map<String, Integer> transformedExperimentCountMap = transformMap(experimentCountMap);
+        final Integer numOfDataSets = getNumOfDataSets(experimentCountMap);
         // If case: if nobody is logged in
         if (submitter == null) {
             // Retrieve public studies and order them by last meta data received
@@ -84,8 +86,8 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
             samples = samples.subList(0, getToIndex(samples));
 
             Map<String, Long> biomeCountMap = buildBiomeCountMap();
-            return new HomePageViewModel(submitter, samples, pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems,
-                    publicSamplesCount, privateSamplesCount, publicStudiesCount, privateStudiesCount, studies, publicRunCount, privateRunCount, biomeCountMap);
+            return new HomePageViewModel(submitter, samples, pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems, publicSamplesCount,
+                    privateSamplesCount, publicStudiesCount, privateStudiesCount, studies, publicRunCount, privateRunCount, biomeCountMap, transformedExperimentCountMap, numOfDataSets);
         }
         //  Else case: if somebody is logged in
         else {
@@ -104,6 +106,45 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
             return new HomePageViewModel(submitter, myStudiesMap, mySamples, pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems,
                     mySamplesCount, myStudiesCount, publicSamplesCount, privateSamplesCount, publicStudiesCount, privateStudiesCount, publicRunCount, privateRunCount);
         }
+    }
+
+    private Map<String, Integer> transformMap(Map<String, Integer> experimentCountMap) {
+        Map<String, Integer> result = new TreeMap<String, Integer>(
+                //Comparator is tested in HomePageSamplesComparatorTest
+                new Comparator<String>() {
+                    @Override
+                    public int compare(String o1, String o2) {
+                        if (o1.equalsIgnoreCase("assemblies") || o2.equalsIgnoreCase("assemblies")) {
+                            return 1;
+                        } else if (o1.equalsIgnoreCase("metagenomics") || o2.equalsIgnoreCase("metagenomics")) {
+                            return -1;
+                        } else if (o1.equalsIgnoreCase("amplicons") || o2.equalsIgnoreCase("metatranscriptomics")) {
+                            return 1;
+                        } else if (o1.equalsIgnoreCase("metatranscriptomics") || o2.equalsIgnoreCase("amplicons")) {
+                            return -1;
+                        } else {
+                            return 0;
+                        }
+                    }
+
+                });
+        for (String key : experimentCountMap.keySet()) {
+            Integer value = experimentCountMap.get(key);
+            if (key.equalsIgnoreCase("assembly")) {
+                result.put("assemblies", value);
+            } else {
+                result.put(key + 's', value);
+            }
+        }
+        return result;
+    }
+
+    private Integer getNumOfDataSets(Map<String, Integer> experimentCountMap) {
+        Integer result = 0;
+        for (String key : experimentCountMap.keySet()) {
+            result += experimentCountMap.get(key);
+        }
+        return result;
     }
 
     private Map<String, Long> buildBiomeCountMap() {
@@ -126,6 +167,12 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
         //Add number of human gut biomes
         studyCount = super.countStudiesFilteredByBiomes(studyDAO, biomeDAO, StudyFilter.Biome.HUMAN_GUT.getLineages());
         biomesCountMap.put(StudyFilter.Biome.HUMAN_GUT.toString(), studyCount);
+        //Add number of human host biomes
+        studyCount = super.countStudiesFilteredByBiomes(studyDAO, biomeDAO, StudyFilter.Biome.HUMAN_HOST.getLineages());
+        biomesCountMap.put(StudyFilter.Biome.HUMAN_HOST.toString(), studyCount);
+          //Add number of non-human host biomes
+        studyCount = super.countStudiesFilteredByBiomes(studyDAO, biomeDAO, StudyFilter.Biome.NON_HUMAN_HOST.getLineages());
+        biomesCountMap.put(StudyFilter.Biome.NON_HUMAN_HOST.toString(), studyCount);
         //Add number of engineered biomes
         studyCount = super.countStudiesFilteredByBiomes(studyDAO, biomeDAO, StudyFilter.Biome.ENGINEERED.getLineages());
         biomesCountMap.put(StudyFilter.Biome.ENGINEERED.toString(), studyCount);
@@ -156,13 +203,13 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
             studies = studyDAO.retrieveOrderedPublicStudies("lastMetadataReceived", true);
         }
         if (studies != null && !studies.isEmpty()) {
-                    for (Study study : studies) {
-                        MemiTools.assignBiomeIconCSSClass(study, biomeDAO);
-                    }
-                    return studies;
-                } else {
-                    return new ArrayList<Study>();
-                }
+            for (Study study : studies) {
+                MemiTools.assignBiomeIconCSSClass(study, biomeDAO);
+            }
+            return studies;
+        } else {
+            return new ArrayList<Study>();
+        }
     }
 
     private Map<Study, Long> getStudySampleSizeMap(List<Study> studies, SampleDAO sampleDAO, Comparator<Study> comparator) {

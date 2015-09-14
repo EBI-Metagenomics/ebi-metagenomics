@@ -5,7 +5,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import uk.ac.ebi.interpro.metagenomics.memi.core.comparators.HomePageStudiesComparator;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.*;
 
 import java.util.*;
@@ -56,7 +55,7 @@ public class CompareControllerTest {
         //analysis job instance
         AnalysisJob analysisJob = new AnalysisJob("operator",
                 new PipelineRelease("changes", "2.0", Calendar.getInstance(), new TreeSet<PipelineReleaseTool>()),
-                Calendar.getInstance(), new AnalysisStatus(), "input", "output","assembly");
+                Calendar.getInstance(), new AnalysisStatus(), "input", "output",new ExperimentType());
         //
         sampleToFilePathMap.put(analysisJob, "/uk/ac/ebi/test.txt");
         sampleToFilePathMap.put(analysisJob, "/uk/ac/ebi/test_2.txt");

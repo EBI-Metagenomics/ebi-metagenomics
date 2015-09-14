@@ -47,7 +47,7 @@
                            href="<c:url value="${baseURL}/projects/${sample.study.studyId}/samples/${sample.sampleId}/runs/${analysisJob.externalRunIDs}/results/versions/${analysisJob.pipelineRelease.releaseVersion}"/>">${analysisJob.externalRunIDs}</a>
                     </td>
                     <td>${analysisJob.pipelineRelease.releaseVersion}</td>
-                    <td><span class="capitalize">${analysisJob.experimentType}</span>
+                    <td><span class="capitalize">${analysisJob.experimentType.experimentType}</span>
                     </td>
                     <td>${analysisJob.completeTime}</td>
                     <td>

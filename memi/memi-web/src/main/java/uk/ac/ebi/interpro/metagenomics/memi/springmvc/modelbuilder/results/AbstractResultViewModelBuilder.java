@@ -4,9 +4,10 @@ import au.com.bytecode.opencsv.CSVReader;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
-import uk.ac.ebi.interpro.metagenomics.memi.model.ExperimentType;
+import uk.ac.ebi.interpro.metagenomics.memi.model.ExperimentTypeE;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.ExperimentType;
 import uk.ac.ebi.interpro.metagenomics.memi.services.FileExistenceChecker;
 import uk.ac.ebi.interpro.metagenomics.memi.services.FileObjectBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
@@ -166,7 +167,7 @@ public abstract class AbstractResultViewModelBuilder<E extends AbstractResultVie
         //We only want to render functional results on the download section if the experiment type is not amplicon
         //Therefore there is no need to create the functional download model for amplicon studies
         //Also we only want to activate the functional tabs for all experiments except amplicon studies
-        final String experimentType = analysisJob.getExperimentType();
-        return (experimentType.equals(ExperimentType.AMPLICON.getExperimentType()) ? true : false);
+        final ExperimentType experimentType = analysisJob.getExperimentType();
+        return (experimentType.getExperimentType().equalsIgnoreCase(ExperimentTypeE.AMPLICON.getExperimentType()) ? true : false);
     }
 }
