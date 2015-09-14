@@ -3,7 +3,9 @@
 
 
 <div class="title_tab_p">
-    <span class="subtitle">Sample overview <span>(${sample.sampleId})</span></span>
+    <span class="subtitle">Sample overview <span>(<a title="Click to view entry on European Nucleotide Archive"
+                                                     href="https://www.ebi.ac.uk/ena/data/view/${sample.sampleId}"
+                                                     class="ext">${sample.sampleId}</a>)</span></span>
 
     <h2 class="fl_uppercase_title">${sample.sampleName}</h2>
 </div>
