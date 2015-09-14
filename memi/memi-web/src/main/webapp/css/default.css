@@ -1859,7 +1859,7 @@ ul.sample_list li {list-style: none; display: inline;}
 
 .home_box {color: #606a73;border:1px #cbcbcb solid; overflow:hidden /*when resizing*/;   padding: 18px 18px 9px 18px; min-height: 200px; }
 .hlight-spot .home_box p {border:0px pink solid; margin-left:0;  margin-right:0;padding-left:0;font-size:120%; }
-.hlight-spot .home_box img {margin-bottom: 9px;}
+.hlight-spot .home_box img {margin-bottom: 9px; width: 100%;/*resize img with screen*/}
 .home_box.alpha {margin: 0 0 18px 18px;}
 .home_box.omega {margin: 0 18px 18px 0;}
 .home_box h2 {margin:0 0 9px 0; padding:0;font-size: 168%;}
@@ -1955,16 +1955,3 @@ a.box-registration-link  {text-decoration: none; cursor: pointer;}
 .ico-spin {-webkit-animation: ico-spin 1s infinite linear; animation: ico-spin 1s infinite linear;}
 /*create gal class for hidden elements on the page - to move on top*/
 .this_hide {display:none;}
-
-.flexbox {
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  overflow: hidden;
-}
-.flexbox .col {
-    -webkit-flex: 1;  /* Safari 6.1+ */
-    -ms-flex: 1;  /* IE 10 */
-    flex: 1;
-}
-
