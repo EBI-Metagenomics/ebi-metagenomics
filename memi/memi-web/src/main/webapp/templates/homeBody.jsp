@@ -388,9 +388,10 @@
                    <div  class="hlight_title_cont"> <div class="hlight_maintitle"><h1>Tools</h1></div><div class="hlight_subtitle"><h2>Functional sample comparison</h2></div></div>
                     <div class="home_box alpha">
                         <img alt="example of Go terms analysis result" src="<c:url value="${baseURL}/img/comparesamples_crop_568px.png"/>"/>
-                        <p>Always wondering what your microorganisms do in your samples? Now it is possible to compare mutiple samples in the same project, using our new comparison tool. It allows you to compare samples using functional information based on the Gene Ontology (GO) terms derived from InterPro matches.
-
-                        <p>You can visualise your results, using interactive and responsive charts, with a large choice of options and visualizations to choose from (bar chart, stacked column, PCA, Heatmap).<br/>Have a try, select a project and  <a href="<c:url value="${baseURL}/compare"/>">do a functional sample comparison</a> based on Go terms.</p>
+                        <p>Interested in comparing the functional profile of sequencing runs within a project? Now it is possible, using our new comparison tool, which provides analysis of the high level
+                        Gene Ontology (GO) terms. </p>
+                        <p>You can visualise the results using a range of interactive charts (bar charts, stacked columns, PCAs and Heatmaps).
+                            Click <a href="<c:url value="${baseURL}/compare"/>">here</a> to try it out now. </p>
 
                         <a href="<c:url value="${baseURL}/compare"/>"
                                                                               title="Compare samples" class="all">Compare samples</a>
