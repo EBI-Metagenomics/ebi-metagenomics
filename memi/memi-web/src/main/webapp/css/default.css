@@ -1858,7 +1858,7 @@ ul.sample_list li {list-style: none; display: inline;}
 .hlight_subtitle h2  {margin:0;padding:0;}
 
 .home_box {color: #606a73;border:1px #cbcbcb solid; overflow:hidden /*when resizing*/;   padding: 18px 18px 9px 18px; min-height: 200px; }
-.hlight-spot .home_box p {border:0px pink solid; margin-left:0;  margin-right:0;padding-left:0;font-size:120%; }
+.hlight-spot .home_box p {border:0px pink solid; margin-left:0;  margin-right:0;padding-left:0;padding-right:0;font-size:120%; }
 .hlight-spot .home_box img {margin-bottom: 9px; width: 100%;/*resize img with screen*/}
 .home_box.alpha {margin: 0 0 18px 18px;}
 .home_box.omega {margin: 0 18px 18px 0;}
