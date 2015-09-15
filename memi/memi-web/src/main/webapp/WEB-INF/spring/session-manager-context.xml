@@ -24,9 +24,9 @@
         <property name="sessionBean" ref="sessionBeanRef"/>
     </bean>
 
-   <!-- Please use this bean to specify the path to the analysis files To keep-->
+    <!-- Please use this bean to specify the path to the analysis files -->
     <bean id="propContainer" class="uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer">
-        <property name="pathToAnalysisDirectory" value="Z:\metagenomics\"/>
+        <property name="pathToAnalysisDirectory" value="${pathToAnalysisDirectory}"/>
         <property name="enaSubmissionURL" ref="enaSubmission"/>
         <property name="enaMasterUserEmail" value="${ena.master.user.email}"/>
         <property name="resultFileDefinitionMap">
@@ -38,14 +38,11 @@
                 <entry key="KRONA_HTML_FILE" value-ref="kronaHtmlFile"/>
             </map>
         </property>
-        <property name="RInstallationLocation" value="C:\Program Files\R\R-3.1.0\bin\Rscript"/>
-        <!--<property name="RScriptLocation" value="C:\Users\pesseat\project\memi\branches\comparison_tool\memi-web\R\"/>-->
-        <property name="RScriptLocation" value="C:\Users\pesseat\project\ebi-metagenomics\memi\memi-web\R\"/>
-        <!--<property name="ROutputDir" value="C:\Users\pesseat\project\memi\branches\comparison_tool\memi-web\R\tmpGraph\"/>-->
-        <property name="ROutputDir" value="C:\Users\pesseat\project\ebi-metagenomics\memi\memi-web\R\tmpGraph\"/>
-        <!--<property name="RTmpImgDir" value="C:\Users\pesseat\project\memi\branches\comparison_tool\memi-web\src\main\webapp\tmp\"/>-->
-        <property name="RTmpImgDir" value="C:\Users\pesseat\project\ebi-metagenomics\memi\memi-web\src\main\webapp\tmp\"/>
-        <property name="RScriptName" value="launch_v12.R"/>
+        <property name="RInstallationLocation" value="${r.installation.location}"/>
+        <property name="RScriptLocation" value="${r.script.location}"/>
+        <property name="ROutputDir" value="${r.output.dir}"/>
+        <property name="RScriptName" value="${r.script.name}"/>
+        <property name="RTmpImgDir" value="${r.tmp.dir}"/>
     </bean>
 
     <bean id="enaSubmission" class="uk.ac.ebi.interpro.metagenomics.memi.core.ENASubmissionURL">
