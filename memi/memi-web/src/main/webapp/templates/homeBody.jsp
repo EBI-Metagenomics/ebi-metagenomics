@@ -141,8 +141,11 @@
     <c:choose>
         <%-- Show MyStudies and MySamples tables only if a user is logged in--%>
         <c:when test="${not empty model.submitter}">
-            <div id="list-data-study" class="grid_9 alpha">
-                <h2>My Projects</h2>
+            <div id="list-data-study" class="grid_12 alpha">
+                <div class="home_box alpha">
+                <h2>My latest projects <span class="badge"><a
+                                                href="<c:url value="${baseURL}/projects/doSearch?searchTerm=&studyVisibility=MY_PROJECTS&search=Search"/>"
+                                                title="View all ${model.myStudiesCount} my projects">${model.myStudiesCount}</a></span></h2>
                 <c:choose>
                     <c:when test="${empty model.myStudiesMap}">
                         <p>
@@ -150,42 +153,96 @@
                         </p>
                     </c:when>
                     <c:otherwise>
-                        <h3>My latest projects (Total: <a
-                                href="<c:url value="${baseURL}/projects/doSearch?searchTerm=&studyVisibility=MY_PROJECTS&search=Search"/>"
-                                title="View all ${model.myStudiesCount} my projects">${model.myStudiesCount}</a>)</h3>
+                    <div class="list-project-l">
+                        <%--<h3>My latest projects (Total: <a--%>
+                                <%--href="<c:url value="${baseURL}/projects/doSearch?searchTerm=&studyVisibility=MY_PROJECTS&search=Search"/>"--%>
+                                <%--title="View all ${model.myStudiesCount} my projects">${model.myStudiesCount}</a>)</h3>--%>
                         <%--The count starts at 0, that is why we subtract 1 from the end value--%>
                         <c:forEach var="entry" items="${model.myStudiesMap}" varStatus="status" begin="0"
                                    end="${model.maxRowNumberOfLatestItems-1}">
-                            <p>
+
+
+                            <%--TEMP while we implement a better solution--%>
+                            <c:choose>
+                            <c:when test="${study.biomeIconCSSClass == 'freshwater_b'}">
+                                <c:set var="biomeName" value="Freshwater" scope="page"/>
+                            </c:when>
+                            <c:when test="${study.biomeIconCSSClass == 'soil_b'}">
+                                    <c:set var="biomeName" value="Soil" scope="page"/>
+                            </c:when>
+                            <c:when test="${study.biomeIconCSSClass == 'forest_b'}">
+                                    <c:set var="biomeName" value="Forest" scope="page"/>
+                            </c:when>
+                            <c:when test="${study.biomeIconCSSClass == 'grassland_b'}">
+                                    <c:set var="biomeName" value="Grassland" scope="page"/>
+                            </c:when>
+                            <c:when test="${study.biomeIconCSSClass == 'marine_b'}">
+                                <c:set var="biomeName" value="Marine" />
+                            </c:when>
+                            <c:when test="${study.biomeIconCSSClass == 'human_gut_b'}">
+                                    <c:set var="biomeName" value="Human gut" scope="page"/>
+                            </c:when>
+                            <c:when test="${study.biomeIconCSSClass == 'engineered_b'}">
+                                    <c:set var="biomeName" value="Engineered" scope="page"/>
+                            </c:when>
+                            <c:when test="${study.biomeIconCSSClass == 'air_b'}">
+                                    <c:set var="biomeName" value="Air" scope="page"/>
+                            </c:when>
+                            <c:when test="${study.biomeIconCSSClass == 'wastewater_b'}">
+                                    <c:set var="biomeName" value="Wastewater" scope="page"/>
+                            </c:when>
+                            <c:when test="${study.biomeIconCSSClass == 'non_human_host_b'}">
+                                    <c:set var="biomeName" value="Non-human host" scope="page"/>
+                            </c:when>
+                            <c:when test="${study.biomeIconCSSClass == 'human_host_b'}">
+                                    <c:set var="biomeName" value="Human host" scope="page"/>
+                            </c:when>
+                            <c:otherwise>
+                                <c:set var="biomeName" value="Undefined" scope="page"/>
+                            </c:otherwise>
+                            </c:choose>
+                    <!-- branch test-->
+
+                                <p><div class="biome_icon icon_xs ${study.biomeIconCSSClass}" title="${biomeName} biome"></div>
+                                    <a href="<c:url value="${baseURL}/projects/${entry.key.studyId}"/>"
+                                       class="list_more fl_uppercase_title">${entry.key.studyName}</a>
+
+                                    <span class="list_desc"><c:out value="${entry.key.shortStudyAbstract} ..."/></span>
+                                    <br/>
+                                    <a href="<c:url value="${baseURL}/projects/${entry.key.studyId}"/>"
+                                       class="more_view">View more</a> - <a
+                                            href="<c:url value="${baseURL}/projects/${entry.key.studyId}"/>#samples_id"
+                                            class="list_sample"><c:out value="${entry.value} sample"/><c:if
+                                            test='${entry.value > 1}'>s</c:if></a>
+                                <!-- Private icon-->
                                 <c:if test="${!entry.key.public}">
-                                    <img alt="private"
-                                         src="${pageContext.request.contextPath}/img/icon_priv_private.gif">
-                                </c:if>&nbsp;&nbsp;<a
-                                    href="<c:url value="${baseURL}/projects/${entry.key.studyId}"/>"
-                                    class="list_more">${entry.key.studyName}</a>
-                                <br/>
-                                <span class="list_desc"><c:out value="${entry.key.shortStudyAbstract} ..."/></span>
-                                <br/><a href="<c:url value="${baseURL}/projects/${entry.key.studyId}"/>"
-                                        class="more_view">View more</a> - <a
-                                    href="<c:url value="${baseURL}/projects/${entry.key.studyId}"/>#samples_id"
-                                    class="list_sample"><c:out value="${entry.value} sample"/><c:if
-                                    test='${entry.value > 1}'>s</c:if></a>
-                            </p>
-                        </c:forEach>
+                                <img alt="private" src="${pageContext.request.contextPath}/img/icon_priv_private.gif">
+                                </c:if>
+
+                                </p>
+                            </c:forEach>
+
+                        </div><!-- /list-project-l -->
                     </c:otherwise>
                 </c:choose>
-                <p>
-                    <a href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>"
-                       title="View all public projects" class="all">All public projects</a>
+
+                    <!-- <a href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>"
+                       title="View all public projects" class="all">All public projects</a>  -->
                     <c:if test="${not empty model.myStudiesMap}">
-                        <a href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=MY_PROJECTS"/>"
-                           title="View all my studies" class="all">All my projects</a>
+                    <p><a href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=MY_PROJECTS"/>"
+                           title="View all my studies" class="all">All my projects</a></p>
                     </c:if>
-                </p>
+
+            </div>
             </div>
 
-            <div id="list-data-sample" class="grid_9">
-                <h2>My Samples</h2>
+            <div id="list-data-sample" class="grid_12 omega">
+                <div class="home_box omega">
+                <h2>My latest Samples <span class="badge"><a
+                                                href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleType=&sampleVisibility=MY_SAMPLES&search=Search&startPosition=0"/>"
+                                                title="View all ${model.mySamplesCount} my samples">${model.mySamplesCount}</a></span>
+                </h2>
+
                 <c:choose>
                     <c:when test="${empty model.mySamples}">
                         <p>
@@ -193,9 +250,9 @@
                         </p>
                     </c:when>
                     <c:otherwise>
-                        <h3>My latest samples (Total: <a
-                                href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleType=&sampleVisibility=MY_SAMPLES&search=Search&startPosition=0"/>"
-                                title="View all ${model.mySamplesCount} my samples">${model.mySamplesCount}</a>)</h3>
+                        <%--<h3>My latest samples (Total: <a--%>
+                                <%--href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleType=&sampleVisibility=MY_SAMPLES&search=Search&startPosition=0"/>"--%>
+                                <%--title="View all ${model.mySamplesCount} my samples">${model.mySamplesCount}</a>)</h3>--%>
                         <%--The count starts at 0, that is why we subtract 1 from the end value--%>
                         <c:forEach var="sample" items="${model.mySamples}" varStatus="status" begin="0"
                                    end="${model.maxRowNumberOfLatestItems-1}">
@@ -211,14 +268,15 @@
                         </c:forEach>
                     </c:otherwise>
                 </c:choose>
-                <p>
-                    <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search&startPosition=0"/>"
-                       title="View all public samples" class="all">All public samples</a>
+
+                    <%--<a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search&startPosition=0"/>"--%>
+                       <%--title="View all public samples" class="all">All public samples</a>--%>
                     <c:if test="${not empty model.mySamples}">
-                        <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=MY_SAMPLES&search=Search&startPosition=0"/>"
-                           title="View all my samples" class="all">All my samples</a>
+                    <p><a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=MY_SAMPLES&search=Search&startPosition=0"/>"
+                           title="View all my samples" class="all">All my samples</a></p>
                     </c:if>
-                </p>
+
+            </div>
             </div>
         </c:when>
         <%-- End of show MyStudies and MySamples tables--%>
