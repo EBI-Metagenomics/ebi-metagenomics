@@ -9,9 +9,9 @@
     <!--data source ERAPRO-->
     <bean id="eraProDataSource"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="oracle.jdbc.OracleDriver"/>
-        <property name="url" value="jdbc:oracle:thin:@ora-vm-009.ebi.ac.uk:1541:ERAPRO"/>
-        <property name="username" value="era_reader"/>
-        <property name="password" value="reader"/>
+        <property name="driverClassName" value="${jcp.jdbc.oracle.driverClassName}"/>
+        <property name="url" value="${jcp.jdbc.oracle.erapro.url}"/>
+        <property name="username" value="${jcp.jdbc.oracle.erapro.username}"/>
+        <property name="password" value="${jcp.jdbc.oracle.erapro.password}"/>
     </bean>
 </beans>
