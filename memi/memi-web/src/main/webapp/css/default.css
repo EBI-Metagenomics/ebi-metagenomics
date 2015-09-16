@@ -118,7 +118,7 @@ img {border: none;}
 
 a {
 /*color:#188960;*/
-color: #2A9DCC;/*better for table*/
+color: #2B8A97;/*better for table*/
 /*color: #158DEB;*/
 text-decoration: none;
 }
@@ -1473,7 +1473,7 @@ img.ui-datepicker-trigger {float:left; /*solve a bug with chromium*/}
 .run_title span {font-size: 80%;}
 
 /*.sample_comp_result .ui-corner-top,*/ .sample_ana .ui-corner-top {border-top-right-radius: 0px;border-top-left-radius: 0px;}
-.sample_ana .ui-widget-content a {color:#188960;}
+.sample_ana .ui-widget-content a {color:#2B8A97;}  /*links under jquery tabs*/
 .sample_ana .ui-widget-content {border: 0px solid #aaa;background: none;color: #333333;margin: 0 9px;}  /*margin for navigation tab*/
 /*.sample_comp .ui-widget-content .ui-widget-content, .sample_ana .ui-widget-content .ui-widget-content {margin: 0;} *//*non margin for graph tab*/
 .sample_ana .ui-tabs-nav { margin: 0px 0 -1px 9px;position: relative; z-index: 1;/*z-index: 500;*/}
