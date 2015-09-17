@@ -497,15 +497,16 @@
 <%--Client-side twitter news feed - http://tweet.seaofclouds.com/ - only homepage--%>
 <script src="${pageContext.request.contextPath}/js/tweet/jquery.tweet.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/js/tweet/tweet.instance.js" type="text/javascript"></script>
-<!-- Style the twitter component-->
+<!-- re-style the twitter component-->
 <script type="text/javascript">
     $("iframe").ready(function() {
         setTimeout(function() {
-            $($("iframe").contents()).find(".avatar, .p-author, .footer").css({ display: "none" });
+            $($("iframe").contents()).find(".avatar, .p-author, .footer, .retweet-credit").css({ display: "none" });
             $($("iframe").contents()).find(".permalink").css({ float: "none" });
-            $($("iframe").contents()).find(".header").css({'text-align': "center" });
+            $($("iframe").contents()).find(".header, .inline-media").css({'text-align': "center" });
             $($("iframe").contents()).find("li").css({'padding': "0 0 0 0" });
             $($("iframe").contents()).find(".e-entry-title").css({'text-align': "center", 'font-size':'157%', 'line-height':'1.4' });
+            $($("iframe").contents()).find("img.autosized-media").css({'max-height': '175px' });
         }, 700);
     });
 </script>
