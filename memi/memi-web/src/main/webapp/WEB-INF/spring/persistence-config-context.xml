@@ -93,10 +93,6 @@
         <property name="dataSource" ref="eraProDataSource"/>
     </bean>
 
-    <bean name="countryDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.erapro.CountryDAOImpl">
-        <property name="dataSource" ref="eraProDataSource"/>
-    </bean>
-
     <bean name="sampleAnnotationDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.temp.SampleAnnotationDAOImpl">
         <property name="dataSource" ref="memiDataSource"/>
     </bean>

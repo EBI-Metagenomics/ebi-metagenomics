@@ -1,0 +1,54 @@
+<html>
+<head>
+    <title>EMBL-EBI Metagenomics: Registration confirmation</title>
+</head>
+<body>
+<p>
+    #if($isConsentChecked)
+        Thank you for registering your Webin account $submitter.submissionAccountId with EBI
+        Metagenomics. We are now able to analyse publicly available data and data held privately for pre-publication
+        associated with this account.
+    #{else}
+        Thank you for registering your Webin account $submitter.submissionAccountId with EBI Metagenomics. We are now
+        able to analyse publicly available data submitted via this account. Please note that in order for us to analyse
+        any data held privately for pre-publication, we need your explicit consent, which you can provide <a
+            href="https://www.ebi.ac.uk/metagenomics/registration">here</a>.
+    #end
+</p>
+
+<p>If you have any questions, please contact <a href="http://www.ebi.ac.uk/support/metagenomics">metagenomcis-help</a>
+</p>
+
+<table>
+    <tbody>
+    <tr>
+        <td><b>User details</b></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Full name:</td>
+        <td>$submitter.firstName $submitter.surname</td>
+    </tr>
+    <tr>
+        <td>Webin account ID:</td>
+        <td>$submitter.submissionAccountId</td>
+    </tr>
+    <tr>
+        <td>Email address:</td>
+        <td>$submitter.emailAddress</td>
+    </tr>
+    <tr>
+        <td>Registered with EBI Metagenomics:</td>
+        <td>Yes</td>
+    </tr>
+    <tr>
+        <td>Consent given:</td>
+        #if($isConsentChecked)
+            <td>Yes</td>
+        #{else}
+            <td>No</td>
+        #end
+    </tr>
+</table>
+</body>
+</html>

@@ -21,17 +21,13 @@
         <property name="emailSubject" value="DEVELOPERS [MG portal] Exception occurred"/>
     </bean>
 
-    <!--Email service for the SRARegistration form  -->
-    <bean name="emailNotificationServiceSRARegistration"
+    <!--Email service for the embl-ebi metagenomics consent email-->
+    <bean name="emailNotificationServiceRegistration"
           class="uk.ac.ebi.interpro.metagenomics.memi.services.EmailNotificationService">
         <constructor-arg ref="mailSender"/>
-        <property name="receiver" value="${emailService.sraRegistration.receiver}"/>
-        <property name="receiverCCList">
-            <list>
-                <value type="java.lang.String">${emailService.sraRegistration.receiverCC_1}</value>
-            </list>
-        </property>
-        <property name="emailSubject" value="New SRA account request from the MGPortal"/>
+        <property name="receiver" value="${emailService.emg.registration.receiver}"/>
+        <property name="sender" value="${emailService.emg.registration.sender}"/>
+        <property name="emailSubject" value="EMBL-EBI Metagenomics: Registration confirmation"/>
     </bean>
 
     <!--Email service for the feedback form-->
