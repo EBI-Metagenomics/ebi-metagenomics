@@ -123,4 +123,39 @@ public class HomePageSamplesComparatorTest extends TestCase {
         assertEquals("Sample set is in a wrong order!", sample1, samples.get(2));
         assertEquals("Sample set is in a wrong order!", sample3, samples.get(3));
     }
+
+    @org.junit.Test
+    public void testExperimentTypeSorting() {
+        Map<String, Integer> result = new TreeMap<String, Integer>(
+                new Comparator<String>() {
+                    @Override
+                    public int compare(String o1, String o2) {
+                        if (o1.equalsIgnoreCase("assemblies") || o2.equalsIgnoreCase("assemblies")) {
+                            return 1;
+                        } else if (o1.equalsIgnoreCase("metagenomics") || o2.equalsIgnoreCase("metagenomics")) {
+                            return -1;
+                        } else if (o1.equalsIgnoreCase("amplicons") || o2.equalsIgnoreCase("metatranscriptomics")) {
+                            return 1;
+                        } else if (o1.equalsIgnoreCase("metatranscriptomics") || o2.equalsIgnoreCase("amplicons")) {
+                            return -1;
+                        } else {
+                            return 0;
+                        }
+                    }
+                });
+        assertEquals("Unexpected map size!", 0, result.size());
+
+        result.put("metatranscriptomics", 12);
+        result.put("amplicons", 22);
+        result.put("assemblies", 12);
+        result.put("metagenomics", 33);
+        assertEquals("Unexpected map size!", 4, result.size());
+        Set<String> keySet = result.keySet();
+        Object[] array = keySet.toArray();
+        assertEquals(4, array.length);
+        assertEquals("metagenomics", array[0]);
+        assertEquals("metatranscriptomics", array[1]);
+        assertEquals("amplicons", array[2]);
+        assertEquals("assemblies", array[3]);
+    }
 }

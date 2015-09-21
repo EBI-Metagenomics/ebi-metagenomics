@@ -18,10 +18,7 @@ Please <a id="script_feedbackLink" href="javascript:slideFeedbackForm()" title="
                 <%--<form:option value="-" label="--Select project"/>--%>
                 <form:select path="study" size="10" id="projects" style="width:100%;">
                     <c:forEach var="study" items="${model.filteredStudies}">
-                        <%-- Only show the projects with two samples or more in the list. --%>
-                        <c:if test="${fn:length(study.samples) gt 1}">
                         <form:option id="${study.studyId}" value="${study.id}" title="Project ${study.studyId} | ${study.studyName}">${study.studyName}</form:option>
-                        </c:if>
                     </c:forEach>
                 </form:select>
 
@@ -41,8 +38,8 @@ Please <a id="script_feedbackLink" href="javascript:slideFeedbackForm()" title="
         </div>
 
             <div id="samples-div">
-                <c:choose><c:when test="${not empty model.submitter}"><h4 id="selected-samples">My samples</h4></c:when>
-                    <c:otherwise><h4 id="selected-samples">Run list</h4></c:otherwise>
+                <c:choose><c:when test="${not empty model.submitter}"><h4 id="selected-samples">List of selectable runs</h4></c:when>
+                    <c:otherwise><h4 id="selected-samples">List of selectable runs</h4></c:otherwise>
                 </c:choose>
                 <%-- Is the loading icon necessary? quite fast to load samples in the box
                 <div id="loading"><img src="${pageContext.request.contextPath}/img/compare_load.gif"></div>--%>
@@ -53,7 +50,7 @@ Please <a id="script_feedbackLink" href="javascript:slideFeedbackForm()" title="
                     <c:if test="${not empty sampleError}">
                         <script>
                             //replace info message by error message
-                            $( "#description-content" ).replaceWith( "<div class='error' id='description-content analysisJobIds.errors'>Please select at least two samples to launch comparison.</div>" );
+                            $( "#description-content" ).replaceWith( "<div class='error' id='description-content analysisJobIds.errors'>Please select at least two runs to launch comparison.</div>" );
                         </script>
                     </c:if></div>
             </div>
@@ -107,13 +104,13 @@ Please <a id="script_feedbackLink" href="javascript:slideFeedbackForm()" title="
                         <li>Hierarchical clustering: <form:select path="hmClust" id="heat-clust">
                             <form:option value="none">No clustering</form:option>
                             <form:option value="row">Observations (X axis)</form:option>
-                            <form:option value="column">Samples (Y axis)</form:option>
+                            <form:option value="column">Runs (Y axis)</form:option>
                             <form:option value="both">Both</form:option>
                         </form:select></li>
                         <li>Show dendrograms (if clustering): <form:select path="hmDendrogram" id="heat-dendo">
                             <form:option value="none">No dendrograms</form:option>
                             <form:option value="row">Observations (X axis)</form:option>
-                            <form:option value="column">Samples (Y axis)</form:option>
+                            <form:option value="column">Runs (Y axis)</form:option>
                             <form:option value="both">Both</form:option>
                         </form:select></li>
                     </ul>
@@ -148,7 +145,7 @@ Please <a id="script_feedbackLink" href="javascript:slideFeedbackForm()" title="
         var numberSelected = $('#analysisJobIds :selected').length;
         var studyId = $('#projects').val();
         // Show a nice loading text so the user won't break his computer.... is this necessary... TODO some speed test once on the server - if no speed issue remove the message
-        $('#analysisJobIds').html('<option disabled>'+'Retrieving samples from server...'+'</option>');
+        $('#analysisJobIds').html('<option disabled>'+'Retrieving runs from server...'+'</option>');
         $.ajax({
             url:"<c:url value="${baseURL}/compare/samples"/>",
             type:"GET",
@@ -160,7 +157,7 @@ Please <a id="script_feedbackLink" href="javascript:slideFeedbackForm()" title="
                 document.getElementById("selected-samples").innerHTML = "Run list <span>(" + numberSelected + " selected out of " + numberTotal + ")</span>";
             },
             error:function (jqXHR, textStatus, errorThrown) {
-                alert("Request failed (unable to retrieve samples): " + textStatus);
+                alert("Request failed (unable to retrieve runs): " + textStatus);
             }
         });//end ajax method
     }

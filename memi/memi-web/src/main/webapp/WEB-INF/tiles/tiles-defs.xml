@@ -35,6 +35,50 @@
         <put-attribute name="body" value="/templates/aboutBody.jsp"/>
     </definition>
 
+    <!-- Start submission check multi-form -->
+
+    <definition name="registIntro" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="green"/>
+        <put-attribute name="body" value="/templates/submission-check/introBody.jsp"/>
+    </definition>
+
+    <definition name="registAccountCheck" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="green"/>
+        <put-attribute name="body" value="/templates/submission-check/accountCheckBody.jsp"/>
+    </definition>
+
+    <definition name="registUserNameCheckSummary" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="green"/>
+        <put-attribute name="body" value="/templates/submission-check/userNameCheckSummaryBody.jsp"/>
+    </definition>
+
+    <definition name="giveConsent" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="green"/>
+        <put-attribute name="body" value="/templates/submission-check/giveConsentBody.jsp"/>
+    </definition>
+
+    <definition name="registerAndGiveConsent" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="green"/>
+        <put-attribute name="body" value="/templates/submission-check/registerAndGiveConsentBody.jsp"/>
+    </definition>
+
+    <definition name="registrationSummary" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="green"/>
+        <put-attribute name="body" value="/templates/submission-check/registrationSummaryBody.jsp"/>
+    </definition>
+
+    <definition name="giveConsentSummary" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="green"/>
+        <put-attribute name="body" value="/templates/submission-check/giveConsentSummaryBody.jsp"/>
+    </definition>
+
+    <definition name="notMainContact" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="green"/>
+        <put-attribute name="body" value="/templates/submission-check/notMainContactBody.jsp"/>
+    </definition>
+
+    <!-- End Registration process multi form -->
+
     <definition name="submit" extends="rootTemplate">
         <put-attribute name="bodyClass" type="string" value="ebigrey"/>
         <put-attribute name="body" value="/templates/submitBody.jsp"/>
@@ -113,11 +157,6 @@
     <definition name="feedbackSuccess" extends="rootTemplate">
         <put-attribute name="bodyClass" type="string" value="ebigreen"/>
         <put-attribute name="body" value="/templates/feedbackSuccessBody.jsp"/>
-    </definition>
-
-    <definition name="submitData" extends="rootTemplate">
-        <put-attribute name="bodyClass" type="string" value="ebigrey"/>
-        <put-attribute name="body" value="/templates/submitDataBody.jsp"/>
     </definition>
 
     <definition name="404" extends="rootTemplate">

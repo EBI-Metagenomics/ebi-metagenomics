@@ -13,9 +13,13 @@ import java.util.List;
  */
 public interface SubmissionContactDAO {
 
-    public boolean checkAccountByEmailAddress(String emailAddress);
+    boolean checkAccountByEmailAddress(String emailAddress);
 
-    public String getSubmissionAccountIdByEmail(final String emailAddress);
+    String getSubmissionAccountIdByEmail(String emailAddress);
 
-    public Submitter getSubmitterBySubmissionAccountId(final String submissionAccountId);
+    Submitter getSubmitterBySubmissionAccountId(String submissionAccountId);
+
+    Submitter getSubmitterBySubmissionAccountIdAndEmail(String submissionAccountId, String email);
+
+    Submitter getSubmitterByEmail(String emailAddress);
 }

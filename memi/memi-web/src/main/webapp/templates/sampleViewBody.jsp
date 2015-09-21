@@ -3,7 +3,9 @@
 
 
 <div class="title_tab_p">
-    <span class="subtitle">Sample overview <span>(${sample.sampleId})</span></span>
+    <span class="subtitle">Sample overview <span>(<a title="Click to view entry on European Nucleotide Archive"
+                                                     href="https://www.ebi.ac.uk/ena/data/view/${sample.sampleId}"
+                                                     class="ext">${sample.sampleId}</a>)</span></span>
 
     <h2 class="fl_uppercase_title">${sample.sampleName}</h2>
 </div>
@@ -45,7 +47,7 @@
                            href="<c:url value="${baseURL}/projects/${sample.study.studyId}/samples/${sample.sampleId}/runs/${analysisJob.externalRunIDs}/results/versions/${analysisJob.pipelineRelease.releaseVersion}"/>">${analysisJob.externalRunIDs}</a>
                     </td>
                     <td>${analysisJob.pipelineRelease.releaseVersion}</td>
-                    <td><span class="capitalize">${analysisJob.experimentType}</span>
+                    <td><span class="capitalize">${analysisJob.experimentType.experimentType}</span>
                     </td>
                     <td>${analysisJob.completeTime}</td>
                     <td>

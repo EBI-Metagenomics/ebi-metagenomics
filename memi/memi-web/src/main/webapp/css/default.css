@@ -75,8 +75,7 @@ div#local-masthead ul li.active, div#local-masthead ul li.active-trail { backgro
 /*/change to ebi-mitigation.css*/
 
 /*imported from ebi-visual.css*/
-@font-face {
-font-family: 'EBI-Generic';
+@font-face {font-family: 'EBI-Generic';
 src:url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.eot'); /*was linked to ../../../fonts/EBI-Generic/fonts/EBI-Generic.eot*/
 src:url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.eot?#iefix') format('embedded-opentype'),
 url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.woff') format('woff'),
@@ -85,28 +84,47 @@ url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.tt
 font-weight: normal;font-style: normal;}
 
 @font-face{font-family:'EBI-Functional';src:url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.eot');
-src:url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.eot?#iefix') format('embedded-opentype'),
-url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.woff') format('woff'),
-local('☺'),
-url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.svg#EBI-Functional') format('svg'),
-url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.ttf') format('truetype');font-weight:normal;font-style:normal}
+    src:url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.eot?#iefix') format('embedded-opentype'),
+    url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.woff') format('woff'),
+    local('☺'),
+    url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.svg#EBI-Functional') format('svg'),
+    url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.ttf') format('truetype');font-weight:normal;font-style:normal}
 
+@font-face{font-family:'EBI-Conceptual';src:url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.eot');src:url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.eot?#iefix') format('embedded-opentype'),
+url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.woff') format('woff'),
+local('☺'),
+url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.svg#EBI-Conceptual') format('svg'),
+url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.ttf') format('truetype');font-weight:normal;font-style:normal}
+@font-face{font-family:'EBI-Conceptual';src:url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.eot');src:url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.eot?#iefix') format('embedded-opentype'),
+url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.woff') format('woff'),
+local('☺'),
+url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.svg#EBI-Conceptual') format('svg'),
+url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.ttf') format('truetype');font-weight:normal;font-style:normal}
+
+@font-face {font-family:'EBI-SocialMedia'; src:url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.eot');src:url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.eot?#iefix') format('embedded-opentype'),
+url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.woff') format('woff'),
+local('☺'),
+url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.svg#EBI-SocialMedia') format('svg');
+url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.ttf') format('truetype'),font-weight: normal;font-style: normal;}
 .icon {text-decoration: none; font-style: normal;}
 .icon-functional:before {font-family: 'EBI-Functional'; font-size: 100%; color: #bbb; content: attr(data-icon);margin: 0 0.3em 0 0; }
 .icon-static:before, .icon-generic:before { font-family: 'EBI-Generic'; /* font-size: 123.1%; */ font-size: 100%;  color: #bbb;	content: attr(data-icon); margin: 0 0.3em 0 0; }
+.icon-conceptual:before{font-family:'EBI-Conceptual';font-size:138.5%;color:#bbb;content:attr(data-icon);margin:0 0.3em 0 0}
+.icon-socialmedia:before{font-family:'EBI-SocialMedia';font-size:138.5%;color:#bbb;content:attr(data-icon);margin:0 0.3em 0 0}
 /*/from ebi-visual.css*/
 
+/**/
 img {border: none;}
 
 a {
-color:#188960;
-/*color: #3DA4CE;*/
-/*color: #158DEB;     new*/
+/*color:#188960;*/
+color: #2B8A97;/*better for table*/
+/*color: #158DEB;*/
 text-decoration: none;
 }
 
 /*a:hover,  a:focus { color: red; text-decoration:underline;}*/
-a:hover,  a:focus { text-decoration:underline;}
+a:hover,  a:focus {text-decoration:underline;}
 
 a:active { color: #647685;}
 /*a:active {color: #3D809B;}   new */
@@ -427,16 +445,22 @@ table.result td.showHideRelated:hover {background-color: #006666; }
 /************************ END TABLE *****************************/
 
 /*********************** TITLE + TEXT***************************/
-
-h2 {
-font-family: helvetica, "trebuchet MS", arial, sans-serif;
-/*font-family: 'MyriadProRegular', arial, sans-serif;*/ /*TEMP not working with IE and firefox, use Arial by default*/
+h1 {font-family: helvetica, "trebuchet MS", arial, sans-serif;
 color:#0F6D99;/*color:#003798;*/
-font-size:190%;
+font-size:244%;
 font-weight:normal;
 margin:0.83em 0;/*added for compliance*/
 }
-#list-data h2 {margin:0;} /*added for compliance*/
+
+
+h2 {
+    font-family: helvetica, "trebuchet MS", arial, sans-serif;
+    /*font-family: 'MyriadProRegular', arial, sans-serif;*/ /*TEMP not working with IE and firefox, use Arial by default*/
+    color:#0F6D99;/*color:#003798;*/
+    font-size:190%;
+    font-weight:normal;
+    margin:0.83em 0;/*added for compliance*/
+}
 
 h2 span {font-size:80%; color: #7c8c99;}
 
@@ -577,26 +601,6 @@ background: url(../img/arrow_link_over.jpg) no-repeat  right center;
 #submit-data-description a:active  {
 background: url(../img/arrow_link_click.jpg) no-repeat right center;
 }
-
-#list-data {
-display:block;
-/*overflow:auto; remove to see if there is any impact*/
-margin-top:20px;
-}
-
-#list-data  a.all {
-margin-right:4px;
-padding:2px 36px 0 0;
-float:right;
-height: 30px;
-border: 0px solid black;
-display: block;
-background: url(../img/arrow_link_small.jpg) no-repeat right top;
-}
-
-#list-data a.all:hover,#list-data  a.all:focus { background: url(../img/arrow_link_over_small.jpg) no-repeat  right top;}
-
-#list-data a.all:active  { background: url(../img/arrow_link_click_small.jpg) no-repeat right top;}
 
 section {border: solid 0px black;display:block;}
 
@@ -743,11 +747,11 @@ font-size:100%;
 /*box homepage*/
 #submit-data, #list-data-study, #list-data-sample, #list-news { background-color: white;border-radius: 0 0 20px 0; /*hidden*//*border: 1px solid #9f9f9f;*//*box-shadow:2px 2px 7px #8a8a8a;*/}
 
-#list-data-study, #list-data-sample, #list-news,#list-biomes {
-line-height:1.3; width:28.9%;
+#list-data-study, #list-data-sample, /*#list-news,*/#list-biomes {
+line-height:1.3; /*width:28.9%;*/
 _height:400px; /*to keep same height for IE6 */
-min-height:440px;
-padding: 0 9px 9px 9px;
+/*min-height:440px;*/
+/*padding: 0 9px 9px 9px;*/
 }
 
 #list-data-study h3, #list-data-sample h3 {font-size:123%; color:#445668; margin: 1em 0px; font-weight: bold;}
@@ -800,11 +804,13 @@ padding: 0 9px 9px 9px;
 .biome_icon.icon_xs.wastewater_b {background-position: -122px -118px;}
 .biome_icon.icon_xs.default_b {background-position: -162px -118px;}
 /*biome homepage*/
-#list-biomes .grid_24 {background-color: #ececec;  margin: 24px 0;   /* padding: 25px 9px 0px 9px; min-height: 390px;*/}
-#list-biomes .grid_8 {text-align: center;}
+#list-biomes .list-biomes-l { margin-top: 9px;/*  background-color: #ececec; padding: 25px 9px 0px 9px; min-height: 390px;*/}
+#list-biomes .list-biomes-l .list-biomes-element {width:18%;text-align: center; display: inline;  float: left;  position: relative;  zoom: 1;  margin-left: 1%;  margin-right: 1%; }
+#list-biomes .list-biomes-l .list-biomes-element.omega {margin-right: 0%; }
+#list-biomes .list-biomes-l .list-biomes-element.alpha {margin-left: 0%; }
 #list-biomes .biome_text {display: block; padding-bottom: 9px;  word-wrap: break-word; }
-#list-biomes .grid_24 a {height:130px;/*to keep for double text line*/font-weight: bold; color:#6f6f6f; display:block;}
-#list-biomes .grid_24 a:hover {color:white;background-color:  rgba(0, 0, 0, 0.3);text-decoration: none;}
+#list-biomes .grid_24 a {height:130px;font-weight: bold; color:#6f6f6f; display:block;}
+#list-biomes .grid_24 a:hover {color:white;background-color:  rgba(0, 0, 0, 0.25);text-decoration: none;}
 #list-biomes .biome_icon {margin:9px;}
 /*biome homepage responsive - change size icons  for small screens */
 @media (max-width: 768px) {
@@ -909,6 +915,9 @@ width: 360px;
 .register_form .institute_det_box {float: left; width: 48%;}
 .register_form .project_det_box  {margin-top: 9px;float: left; width: 98%;}
 .register_form .institute_det_box input, .register_form .user_det_box input {width: 90%;}
+.register_form .user_det_box input[type=checkbox] {width: 20px;  margin-left: -3px;  margin-top: 4px;}
+.register_form input[type="radio"]{width:38px;}
+.register_form .user_det_box input.main_button {width: auto; float: none;}
 .register_form .project_det_box input { width: 45%;}
 .register_form .user_det_box fieldset {min-height: 333px;}  /*to have same height between boxes*/
 .register_form .institute_det_box select {width: 93%;}
@@ -1094,6 +1103,7 @@ display: block;
 
 label.error  {border:none; display:block;}
 
+input.error, textarea.error {background: #FFEAEA url(../img/ico_form_cancel.png) no-repeat right top;color: #8C302C;  border:1px #F9B7B5 solid;margin:0;}
 
 input.error, textarea.error {
 background: #FFCFCF url(../img/ico_form_cancel.png) no-repeat right top;
@@ -1287,11 +1297,11 @@ z-index:20;top:-40px;}
 
 .carousel ul{padding:0;list-style:none;}
 .carousel ul li{position:relative;width:283px; border:0px solid red;margin:0;
- float:left; /* used for no-script version */}
+    float:left; /* used for no-script version */}
 
 /*POPUP LOGIN DIALOG*/
 #login_dialog_div {cursor: default;/*remove waiting cursor*/display:none; /*solve a bug  of conflict between popup and carousel on IE6 and IE7*/ border: 0px solid #AAA; background:none;/*remove double background+border*/}
-
+#registration_dialog_div{cursor: default;display:none;border: 0px solid #AAA; background:none;}
 /* FEEDBACK FORM */
 #feedback_div   {
     position:fixed;
@@ -1463,7 +1473,7 @@ img.ui-datepicker-trigger {float:left; /*solve a bug with chromium*/}
 .run_title span {font-size: 80%;}
 
 /*.sample_comp_result .ui-corner-top,*/ .sample_ana .ui-corner-top {border-top-right-radius: 0px;border-top-left-radius: 0px;}
-.sample_ana .ui-widget-content a {color:#188960;}
+.sample_ana .ui-widget-content a {color:#2B8A97;}  /*links under jquery tabs*/
 .sample_ana .ui-widget-content {border: 0px solid #aaa;background: none;color: #333333;margin: 0 9px;}  /*margin for navigation tab*/
 /*.sample_comp .ui-widget-content .ui-widget-content, .sample_ana .ui-widget-content .ui-widget-content {margin: 0;} *//*non margin for graph tab*/
 .sample_ana .ui-tabs-nav { margin: 0px 0 -1px 9px;position: relative; z-index: 1;/*z-index: 500;*/}
@@ -1609,7 +1619,8 @@ background-image: -webkit-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247
 #func_table_pie_ipro div div table {border:1px white solid; width: 600px;}
 .chart_container {display:block;overflow:auto;}
 
-.sample_ana .google-visualization-table-table {font-size: 91%;}  /*reduce slightly font table*/
+.sample_ana .google-visualization-table {border:0px solid #eee;} /*remove default border*/
+.sample_ana .google-visualization-table-table {font-size: 91%;/*reduce slightly font table*/ padding:0;}
 
 .sample_ana .google-visualization-table-table .google-visualization-table-tr-head td {background: white; border:none;}
 
@@ -1622,8 +1633,8 @@ ul.color_legend {list-style-type: square; list-style-position:inside;}
 
 .expandertable {float:left; margin-top: -32px; margin-left: 833px; z-index: 1;  position: relative;}
 #toolbar_div {display: block; float:left;}
-
-.google-visualization-table-table ._cc {margin: 0px 6px 0 2px; width:6px; height:6px; display:inline-block;}
+.sample_ana .google-visualization-table-table td:first-child {border-left:1px #eee solid;}/*solve a bug where border disappear just for first col*/
+.google-visualization-table-table ._cc {margin: 0px 6px 0 2px; width:8px; height:8px; display:inline-block;}/*puce*/
 
 .func_chart_caption {border: 0px solid green; position: absolute; left: 20px; top: 648px;font-size: 11px;}
 .puce_chart {margin: 0px 4px 0 2px; width:8px; height:8px; display:inline-block; background-color:#b9b9b9;}
@@ -1637,11 +1648,16 @@ ul.color_legend {list-style-type: square; list-style-position:inside;}
 .sample_ana .google-visualization-toolbar-small-dialog-bg {z-index:2;}   /*important to avoid overlay with tabs*/
 .sample_ana .google-visualization-toolbar-small-dialog {z-index:2;}   /*important to avoid overlay with tabs*/
 .sample_ana .charts-menu-button-inner-box {margin: 0 0px;}
+/*GOOGLE TABLE HEADER*/
+.sample_ana .google-visualization-table .gradient {background-image: none;}
+.sample_ana .google-visualization-table-tr-head {background-color: transparent;}
+.sample_ana .google-visualization-table-table th { border: solid #eee;  border-width: 0 0 1px 0;}
 /*GOOGLE TABLE PAGINATION*/
-.sample_ana .google-visualization-table-page-numbers {border:0px red solid; text-align: center; width: 88%;}
-.sample_ana .google-visualization-table-page-numbers .page-number {display: inline-block; border: 1px solid #eee; border-radius: 0px;  color: #666; padding: 0.7em 0.5em 0.7em 0.5em;}
-.sample_ana .google-visualization-table-page-numbers .page-number.current {font-weight: bold; color:black;border:1px solid #c3c3c3;background-color: #fafafa;}
-.sample_ana .google-visualization-table-div-page .gradient { background: none;}
+.sample_ana .google-visualization-table-page-numbers {text-align: center; width: 86%; border:0px red solid;/*align numbers in the center*/}
+.sample_ana .google-visualization-table-page-numbers .google-visualization-table-page-number {display: inline-block; border: 1px solid #eee; border-radius: 0px;  color: #666; padding: 4px;background-color: #fff;}
+.sample_ana .google-visualization-table-page-numbers .google-visualization-table-page-number.current {font-weight: bold; color:black;border:1px solid #c3c3c3;background-color: #fafafa;}
+.sample_ana .google-visualization-table-div-page [role="button"] {font-size: 11px;} /*button next-prev*/
+.sample_ana .google-visualization-table-div-page { background-color: transparent;}
 
 /*.sample_ana .ui-tabs .ui-tabs-hide {display: block;}*/
 /*#tax-pie, #tax-bar, #tax-col, #tax-Krona, #fragment-overview, #fragment-quality,#fragment-taxonomy, #fragment-functional, #fragment-download {display:block;} *//*attempt to solve bug loading Jquery tab content*/
@@ -1755,7 +1771,7 @@ ul.sample_list li {list-style: none; display: inline;}
 #stack .rChart {/*border:1px red solid;*/}
 #heatmap img { max-width: 100%; height: auto; /*width:850px;*/ /*remove width from there as it should be defined right in the export parameters of R*/}
 
- /* pipeline chart *******************************/
+/* pipeline chart *******************************/
 /*icon*/
 .icon_pipeline_v {background-color:#E4E4E4; border-radius: 3px;cursor: pointer; color:#676767; margin-right:9px;border:1px solid #DADADA;padding:4px 8px;position: absolute;top: 18px; right: 18px;  opacity: 0.6; filter: alpha(opacity = 60);  }
 .icon_pipeline_v:hover {opacity: 1; filter: alpha(opacity = 100); }
@@ -1763,7 +1779,7 @@ ul.sample_list li {list-style: none; display: inline;}
 .block_wrapper {overflow:hidden; margin: 0 9px 18px 9px;  min-height: 206px;/*for qclist text to appear correctly*/}
 .block_container { width: 300%; /*was 1109px*/float:left; border:0px red solid;}
 .block.step0.highlight, .block.step1.highlight, .block.step2.highlight, .block.step3.highlight, .block.step4.highlight, .block.step5.highlight {border:1px #0F6D99 solid; background-color:#0F6D99; transition: all 0.5s ease; color:white;}
- .first_branch {float:left; margin-top:44px;}
+.first_branch {float:left; margin-top:44px;}
 .mainbranch {float:left;/*was margin-top:57px;*/  padding-top: 57px;height: 139px; border:0px black solid;}
 .branch {float:left;}
 .branch2 {margin-top:20px;}
@@ -1819,3 +1835,129 @@ ul.sample_list li {list-style: none; display: inline;}
  /*/ pipeline chart *******************************/
 /*tooltip*/
 .icon-generic.show_tooltip:before {color: #888888;} /*darker than default*/
+
+/*homepage - header*/
+.jumbo-header {background: url(../img/backgrounds/bgd_header_microbes_30p.png) 98% bottom no-repeat, url(../img/backgrounds/bgd_header_microbes_big_10p.png) -100px center no-repeat; background-color: #606a73; text-align: center; font-weight: 300; color:#fff; line-height: 1.4; background-color: #606a73; padding: 60px 0; margin-bottom: 18px;}
+.jumbo-header .lead {font-family: 'Lato',Helvetica,Arial,sans-serif; font-size: 239%;}
+.jumbo-header .button {margin-top: 18px; display:inline-block;}
+.jumbo-header .button a {font-size: 143%;color:white; text-transform: uppercase; text-decoration:none; background:url(../img/backgrounds/bgd_button_login_off.gif) repeat-x 50%; border-radius: 30px; box-shadow:0px 2px 5px rgba(0, 0, 0,0.3); padding: 12px 22px;cursor: pointer; border:1px #1f54bc solid;}
+.jumbo-header .button a:hover{background:url(../img/backgrounds/bgd_button_login_over.gif) repeat-x 50%;}
+.jumbo-header .button a:active{background:url(../img/backgrounds/bgd_button_login_active.gif) repeat-x 50%; border: 1px #96979A solid}
+
+/*HOMEPAGE - stats*/
+.jumbo-stats {text-align: center; color:#606a73;font-size: 120%;line-height: 1.4;}
+.jumbo-stats .jumbo-stats-box {border: 0px red solid;}
+.jumbo-stats .jumbo-stats-box span.icon {font-size: 216%;}
+.jumbo-stats #stat-exptype .grid_4.alpha {transform: rotate(90deg) scale(1);} /*rotate DNA*/
+.jumbo-stats #stat-submissions, .jumbo-stats #stat-member {margin-top: -3px; /*to align text better*/}
+.jumbo-stats #stat-exptype .omega, .jumbo-stats #stat-public .omega, .jumbo-stats #stat-private .omega {text-align: left;}
+.stat-lock-title {font-size: 79%;color:#1a5286;}
+.jumbo-stats #stat-submissions .high_nb, .jumbo-stats #stat-member .high_nb, .jumbo-stats #stat-public .high_nb, .jumbo-stats #stat-private .high_nb, .jumbo-stats #stat-exptype .high_nb {font-weight: bold;}
+.jumbo-stats #stat-submissions .high_nb, .jumbo-stats #stat-submissions .icon-functional:before,  .jumbo-stats #stat-submissions .icon-generic:before {color:#e93984;}
+.jumbo-stats #stat-member .high_nb, .jumbo-stats #stat-member .icon-generic:before {color:#f45b5b;}
+.jumbo-stats #stat-public .high_nb,.jumbo-stats #stat-private .high_nb, .jumbo-stats #stat-private .icon-functional:before, .jumbo-stats #stat-public .icon-functional:before  {color:#1a5286;}
+.jumbo-stats #stat-public .alpha .icon-functional:before {margin-left: 9px;}/*move open lock icon because of its shape*/
+.jumbo-stats #stat-exptype .high_nb, .jumbo-stats #stat-exptype .icon-conceptual:before {color:#34a9d5;}
+
+.jumbo-list-data-container h1 {margin:0px 0 18px 9px;}
+.hlight_maintitle h1 {margin: 0 0 9px 0; padding:0;}
+.hlight_subtitle h2  {margin:0;padding:0;}
+
+.home_box {color: #606a73;border:1px #cbcbcb solid; overflow:hidden /*when resizing*/;   padding: 18px 18px 9px 18px; min-height: 200px; }
+.hlight-spot .home_box p {border:0px pink solid; margin-left:0;  margin-right:0;padding-left:0;padding-right:0;font-size:120%; }
+.hlight-spot .home_box img {margin-bottom: 9px; width: 100%;/*resize img with screen*/}
+.home_box.alpha {margin: 0 0 18px 18px;}
+.home_box.omega {margin: 0 18px 18px 0;}
+.home_box h2 {margin:0 0 9px 0; padding:0;font-size: 168%;}
+
+.badge {display: inline-block;  min-width: 10px; padding: 3px 7px;  font-size: 50%; font-weight: bold;  line-height: 1;  color: #fff;  text-align: center;   white-space: nowrap; vertical-align: middle;  background-color: #777;  border-radius: 10px; }
+.badge a {color: #fff;}
+.badge a:hover {text-decoration: none;}
+
+.list-data, .jumbo-stats  {margin-bottom: 18px; display: block;  overflow: hidden; border: 0px red solid;}
+
+a.all {float:right; display: block; background: url(../img/arrow_link_small.jpg) no-repeat right top; margin-top:9px; padding:4px 36px 0 0; height: 23px; border: 0px solid red;}
+a.all:hover, a.all:focus { background: url(../img/arrow_link_over_small.jpg) no-repeat  right top;}
+a.all:active  { background: url(../img/arrow_link_click_small.jpg) no-repeat right top;}
+
+.hlight_title_cont {margin-left: 18px; display:block; overflow: auto; border:0px red solid;}
+.hlight_maintitle {display:block; float:left;border:0px red solid;}
+.hlight_subtitle {display:block; float:right;margin-top: 18px; margin-right: 2px; border:0px black solid;}
+.hlight_subtitle h2 {font-size: 137%;}
+
+.jumbo-news-container {text-align: center;background-color: #eee; padding: 18px 0 9px 0; }
+.jumbo-news-centred { color:#454545; font-size: 130%;  width: 38%;   margin: 0 auto;}
+.jumbo-news-centred h3  {margin-top:0; margin-bottom:0;}
+.jumbo-news-centred .jumbo-news-contact {margin-top: 4px;}
+.jumbo-news-centred a, .jumbo-news-centred a:visited {color:#0c4d7b;}
+.jumbo-news-centred .icon-socialmedia:before {color:#0c4d7b;}
+
+
+/*END HOMEPAGE*/
+
+.list-project-l {height: 278px; width: auto; position: relative;  width: 100%;  overflow-x: hidden; overflow-y: scroll;}
+
+@media (max-width: 768px) {
+/*Homepage*/
+.jumbo-header {padding: 18px 0;}
+.jumbo-header .button {margin-top: 0px;}
+.jumbo-header .lead, .jumbo-stats   {display: none;}
+.jumbo-header .button a {border-radius:0px; box-shadow:none;padding: 12px 66px;}
+.jumbo-header {background: url(../img/backgrounds/bgd_header_microbes_big_10p.png) -100px  center no-repeat;background-color: #606a73;}
+.jumbo-news-centred {width: 66%;}
+.hlight_subtitle {margin-right:18px;}
+#list-biomes .grid_24 a  {height:inherit;}
+#list-biomes, #list-data-study, #hlight-box-spotlight, #hlight-box-tools {width:100%;margin-left: 0;margin-right: 0;}
+#list-biomes .home_box , #list-data-study .home_box, #hlight-box-spotlight .home_box, #hlight-box-tools .home_box {margin:9px 18px;}
+}
+
+/*Submit data - registration check*/
+.registration-check {text-align: center;margin-bottom:9px;}
+.box-registration {display:inline-block; margin: 0 18px 9px 0; vertical-align: top;}
+.box-registration-cont {z-index: 12; position:relative;text-align: center; background-color: #ececec; min-height: 178px;  width: 220px;  padding: 18px 9px 27px 9px;  border-radius: 50%; /*box-shadow: 4px 4px 3px -3px rgba(0, 0, 0, 0.35);*/}
+.box-registration-cont .intro {line-height: 1.2;}
+.box-registration-cont.sq_button {padding: 0; border-radius:8px; width:260px; min-height: 0;}
+.box-registration-cont.rd_button {padding: 0; width:192px;  min-height: 156px; padding-top: 18px; }
+.box-registration-cont.rd_button .intro {display:none; }
+.box-registration-cont:hover {background-color:  rgba(0, 0, 0, 0.54);}
+.box-registration-cont:hover .icon-functional:before {color: #fff;}
+.box-registration-cont h3 {color: white;}
+.box-registration-cont:hover .intro {color: #fff;}
+a.box-registration-link  {text-decoration: none; cursor: pointer;}
+.box-registration-cont .icon-functional:before {font-size: 255%; color: #0F6D99;}
+
+.box-registration-cont.box-def {background-color: #6f94a0;}
+.box-registration-cont.box-def:hover{background-color:#5c7781;}
+
+.box-registration-cont.box-ban {background-color: #7094a1;}
+.box-registration-cont.box-ban:hover{background-color: #5c7781;}
+.box-registration-cont.box-ban .icon-functional:before {color: #7DDCE8;}
+
+
+.box-registration-cont.box-blue {background-color: #57CADF;}
+.box-registration-cont.box-blue:hover{background-color:#5c7781;}
+.box-registration-cont.box-blue:hover .icon-functional:before {color:#7DDCE8;}
+
+.box-registration-cont.box-pink {background-color: #DD3575;}
+.box-registration-cont.box-pink .intro {color: #62224E;}
+.box-registration-cont.box-pink:hover .intro {color: #fff;}
+.box-registration-cont.box-pink:hover{background-color:#5c7781;}
+.box-registration-cont.box-pink:hover .icon-functional:before {color: #7DDCE8;}
+.box-registration-cont.box-pink .icon-functional:before {color: #7E2E64;}
+
+/*loading icon to use for redirection*/
+.ico_loading {background: url(../img/ico_loading.png) no-repeat; width:16px; height:16px; display:inline-block; vertical-align: middle;margin-right:9px;}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes ico-spin {
+  0% {-webkit-transform: rotate(0deg); transform: rotate(0deg);}
+  100% {-webkit-transform: rotate(359deg); transform: rotate(359deg);}
+}
+/* Standard syntax */
+@keyframes ico-spin {
+    0% {-webkit-transform: rotate(0deg); transform: rotate(0deg);}
+      100% {-webkit-transform: rotate(359deg); transform: rotate(359deg);}
+}
+.ico-spin {-webkit-animation: ico-spin 1s infinite linear; animation: ico-spin 1s infinite linear;}
+/*create gal class for hidden elements on the page - to move on top*/
+.this_hide {display:none;}

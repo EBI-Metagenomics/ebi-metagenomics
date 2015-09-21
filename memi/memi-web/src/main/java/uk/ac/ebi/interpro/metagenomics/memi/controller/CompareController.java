@@ -15,6 +15,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.StudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.ComparisonForm;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
+import uk.ac.ebi.interpro.metagenomics.memi.model.ExperimentTypeE;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
@@ -74,7 +75,7 @@ public class CompareController extends AbstractController implements IController
                 new ModelPopulator() {
                     @Override
                     public void populateModel(ModelMap model) {
-                        final ViewModelBuilder<CompareViewModel> builder = new CompareViewModelBuilder(sessionManager, "Compare samples of the same project", getBreadcrumbs(null), propertyContainer, studyDAO);
+                        final ViewModelBuilder<CompareViewModel> builder = new CompareViewModelBuilder(sessionManager, "Compare runs of the same project", getBreadcrumbs(null), propertyContainer, studyDAO);
                         final CompareViewModel compareViewModel = builder.getModel();
                         compareViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_COMPARE_VIEW);
 
@@ -97,7 +98,7 @@ public class CompareController extends AbstractController implements IController
                     new ModelPopulator() {
                         @Override
                         public void populateModel(ModelMap model) {
-                            final ViewModelBuilder<CompareViewModel> builder = new CompareViewModelBuilder(sessionManager, "Compare samples of same project", getBreadcrumbs(null), propertyContainer, studyDAO);
+                            final ViewModelBuilder<CompareViewModel> builder = new CompareViewModelBuilder(sessionManager, "Compare runs of same project", getBreadcrumbs(null), propertyContainer, studyDAO);
                             final ViewModel compareViewModel = builder.getModel();
                             compareViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_COMPARE_VIEW);
                             // Retrieving list of public studies and samples + add attributes
@@ -221,7 +222,7 @@ public class CompareController extends AbstractController implements IController
                 new ModelPopulator() {
                     @Override
                     public void populateModel(ModelMap model) {
-                        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "Sample comparison results", getBreadcrumbsForResultPage(), propertyContainer);
+                        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "Run comparison results", getBreadcrumbsForResultPage(), propertyContainer);
                         final ViewModel defaultViewModel = builder.getModel();
                         defaultViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_COMPARE_VIEW);
                         model.addAttribute(ViewModel.MODEL_ATTR_NAME, defaultViewModel);
@@ -310,10 +311,25 @@ public class CompareController extends AbstractController implements IController
         List<AnalysisJob> deactivatedAnalysisJobs = new ArrayList<AnalysisJob>();
         List<AnalysisJob> activatedAnalysisJobs = new ArrayList<AnalysisJob>();
         doFileExistenceCheck(sampleToFilePathMap, activatedAnalysisJobs, deactivatedAnalysisJobs);
+        //Filter out runs with experiment type amplicon as they will never have valid functional assignments
+        List<AnalysisJob> ampliconAnalysisJobs = getListOfAmpliconRuns(activatedAnalysisJobs);
+        //Now remove all amplicon runs from the list of active runs/analysis jobs
+        activatedAnalysisJobs.removeAll(ampliconAnalysisJobs);
 
         mav.addObject("analysisJobs", activatedAnalysisJobs);
         mav.addObject("deactivatedAnalysisJobs", deactivatedAnalysisJobs);
+        mav.addObject("ampliconAnalysisJobs", ampliconAnalysisJobs);
         return mav;
+    }
+
+    private List<AnalysisJob> getListOfAmpliconRuns(List<AnalysisJob> activatedAnalysisJobs) {
+        List<AnalysisJob> ampliconAnalysisJobs = new ArrayList<AnalysisJob>();
+        for (AnalysisJob analysisJob : activatedAnalysisJobs) {
+            if (analysisJob.getExperimentType().getExperimentType().equalsIgnoreCase(ExperimentTypeE.AMPLICON.getExperimentType())) {
+                ampliconAnalysisJobs.add(analysisJob);
+            }
+        }
+        return ampliconAnalysisJobs;
     }
 
     @RequestMapping(value = "/studies")

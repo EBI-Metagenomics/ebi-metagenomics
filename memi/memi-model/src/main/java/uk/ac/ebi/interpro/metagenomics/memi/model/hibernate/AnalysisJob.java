@@ -58,8 +58,12 @@ public class AnalysisJob implements Comparator<AnalysisJob>, SecureEntity {
     @Column(name = "EXTERNAL_RUN_IDS", length = 100)
     private String externalRunIDs;
 
-    @Column(name = "EXPERIMENT_TYPE", length = 30, nullable = false)
-    private String experimentType;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "EXPERIMENT_TYPE_ID", nullable = false)
+    private ExperimentType experimentType;
+
+//    @Column(name = "EXPERIMENT_TYPE", length = 30, nullable = false)
+//    private String experimentType;
 
     @ManyToOne
     @JoinColumn(name = "SAMPLE_ID")
@@ -73,7 +77,7 @@ public class AnalysisJob implements Comparator<AnalysisJob>, SecureEntity {
 
     public AnalysisJob(String jobOperator, PipelineRelease pipelineRelease, Calendar submitTime,
                        AnalysisStatus analysisStatus, String inputFileName, String resultDirectory,
-                       String experimentType) {
+                       ExperimentType experimentType) {
         this.jobOperator = jobOperator;
         this.pipelineRelease = pipelineRelease;
         this.submitTime = submitTime;
@@ -168,11 +172,11 @@ public class AnalysisJob implements Comparator<AnalysisJob>, SecureEntity {
         this.externalRunIDs = externalRunIDs;
     }
 
-    public String getExperimentType() {
+    public ExperimentType getExperimentType() {
         return experimentType;
     }
 
-    public void setExperimentType(String experimentType) {
+    public void setExperimentType(ExperimentType experimentType) {
         this.experimentType = experimentType;
     }
 

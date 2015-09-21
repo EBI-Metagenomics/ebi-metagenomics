@@ -71,6 +71,7 @@
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.PipelineTool</value>
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.PipelineReleaseTool</value>
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisStatus</value>
+                <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.ExperimentType</value>
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob</value>
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Biome</value>
             </list>
@@ -90,10 +91,6 @@
     <bean id="biomeDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.BiomeDAOImpl"/>
 
     <bean name="submissionContactDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.erapro.SubmissionContactDAOImpl">
-        <property name="dataSource" ref="eraProDataSource"/>
-    </bean>
-
-    <bean name="countryDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.erapro.CountryDAOImpl">
         <property name="dataSource" ref="eraProDataSource"/>
     </bean>
 

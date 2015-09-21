@@ -15,7 +15,10 @@
     <!-- Mobile viewport optimized-->
     <meta name="viewport" content="width=device-width,initial-scale=1">
 
-    <%-- EBI style and code - update to https--%>
+    <!-- import Lato - temp?-->
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,300,700,900,100' rel='stylesheet' type='text/css'>
+
+    <!-- EBI style and code - update to https-->
     <link rel="stylesheet" href="https://www.ebi.ac.uk/inc/css/contents.css" type="text/css" />
     <link rel="stylesheet" href="https://www.ebi.ac.uk/inc/css/userstyles.css" type="text/css" />
     <script src="https://www.ebi.ac.uk/inc/js/contents.js" type="text/javascript"></script>
@@ -55,9 +58,12 @@
     <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/favicon.ico"/>
 
     <%--?v1.1 will trigger browsers to refresh the source--%>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/default.css?v1.3" type="text/css" media="all"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/default.css?v1.4" type="text/css" media="all"/>
+    <%--css for image zooming--%>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/jquery.fancybox.css" type="text/css" media="screen" />
+
     <%--tooltip css--%>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/jquery.qtip.css?v1.1" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/jquery.qtip.css?v1.1" type="text/css"/>
 
     <!--[if lt IE 9]>
     <style type="text/css">.krona_chart {display: none;}/*remove the Krona box */</style>
@@ -75,9 +81,13 @@
     <!-- JQuery v1.11.1 and JQuery UI source-->
     <script src="${pageContext.request.contextPath}/js/jquery-1.11.1/jquery.js?v1.1" type="text/javascript" ></script>
     <script src="${pageContext.request.contextPath}/js/jquery-1.11.1/jquery-ui.min.js" type="text/javascript"></script>
+    <!-- Image zoomer-->
+    <script src="${pageContext.request.contextPath}/js/jquery.fancybox.pack.js" type="text/javascript"></script>
+
     <%--tooltip css--%>
     <script src="${pageContext.request.contextPath}/js/qtip/jquery.qtip.min.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/js/qtip/common.js" type="text/javascript"></script>
+    <%--end tooltip--%>
     <script src="${pageContext.request.contextPath}/js/jquery.validate-1.9.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/js/jquery.form-3.51.0.js?v1.1" type="text/javascript"></script>
     <!-- The date picker is used within the submission page -->
