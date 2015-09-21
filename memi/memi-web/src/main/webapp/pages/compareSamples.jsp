@@ -12,6 +12,11 @@
     <option value="${analysisJob.jobId}" title="Run ${analysisJob.externalRunIDs} | ${analysisJob.sample.sampleName} | ${analysisJob.sample.sampleAlias}" disabled>${analysisJob.sample.sampleName} - ${analysisJob.externalRunIDs} - NO DATA AVAILABLE</option>
 </c:forEach>
 
+<%-- Creates HTML select option for each sample of selected project that have no data (sample selection - comparison tool submission page) --%>
+<c:forEach var="analysisJob" items="${ampliconAnalysisJobs}">
+    <option value="${analysisJob.jobId}" title="Run ${analysisJob.externalRunIDs} | ${analysisJob.sample.sampleName} | ${analysisJob.sample.sampleAlias}" disabled>${analysisJob.sample.sampleName} - ${analysisJob.externalRunIDs} - AMPLICON DATA</option>
+</c:forEach>
+
 <%-- Sorts HTML select options alphabetically (sample selection - comparison tool submission page) --%>
 <script type="text/javascript">
     SortSamplesByText(); // Function defined in compareBody.jsp.
