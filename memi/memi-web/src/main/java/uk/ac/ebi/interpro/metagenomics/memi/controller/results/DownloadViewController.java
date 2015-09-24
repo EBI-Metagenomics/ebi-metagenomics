@@ -14,9 +14,14 @@ import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Run;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.DownloadableFileDefinition;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.results.DownloadViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.results.DownloadViewModelBuilder;
+
+import javax.annotation.Resource;
+import java.util.List;
+import java.util.Map;
 
 /**
  * The controller for the analysis results page.
@@ -27,6 +32,9 @@ import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.results.Downl
 @Controller
 public class DownloadViewController extends AbstractResultViewController {
     private static final Log log = LogFactory.getLog(DownloadViewController.class);
+
+    @Resource
+    protected Map<String, List> downloadableFileLists;
 
     protected String getModelViewName() {
         return "tabs/results/mainNavigation/download";
@@ -75,6 +83,8 @@ public class DownloadViewController extends AbstractResultViewController {
                 propertyContainer,
                 run,
                 fileDefinitionsMapV1,
+                chunkedResultFilesMap,
+                downloadableFileLists,
                 analysisJob);
         final DownloadViewModel downloadViewModel = builder.getModel();
 

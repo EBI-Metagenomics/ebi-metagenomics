@@ -8,22 +8,22 @@ import java.util.List;
  * @author Maxim Scheremetjew
  */
 public class DownloadSection {
-    private List<DownloadLink> seqDataDownloadLinks;
+    private SequencesDownloadSection sequencesDownloadSection;
 
     private FunctionalDownloadSection functionalDownloadSection;
 
     private List<DownloadLink> taxaAnalysisDownloadLinks;
 
-    public DownloadSection(List<DownloadLink> seqDataDownloadLinks,
+    public DownloadSection(SequencesDownloadSection sequencesDownloadSection,
                            FunctionalDownloadSection functionalDownloadSection,
                            List<DownloadLink> taxaAnalysisDownloadLinks) {
-        this.seqDataDownloadLinks = seqDataDownloadLinks;
+        this.sequencesDownloadSection = sequencesDownloadSection;
         this.functionalDownloadSection = functionalDownloadSection;
         this.taxaAnalysisDownloadLinks = taxaAnalysisDownloadLinks;
     }
 
-    public List<DownloadLink> getSeqDataDownloadLinks() {
-        return seqDataDownloadLinks;
+    public SequencesDownloadSection getSequencesDownloadSection() {
+        return sequencesDownloadSection;
     }
 
     public List<DownloadLink> getTaxaAnalysisDownloadLinks() {
