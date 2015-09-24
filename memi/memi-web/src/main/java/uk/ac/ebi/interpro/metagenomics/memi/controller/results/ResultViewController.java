@@ -76,7 +76,7 @@ public class ResultViewController extends AbstractResultViewController {
                                            @PathVariable final String runId,
                                            @PathVariable final String releaseVersion,
                                            final HttpServletResponse response, final HttpServletRequest request) {
-        DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(FileDefinitionId.GO_SLIM_FILE.name());
+        DownloadableFileDefinition fileDefinition = fileDefinitionsMapV1.get(FileDefinitionId.GO_SLIM_FILE.name());
         return handleExport(getSecuredEntity(projectId, sampleId, runId, releaseVersion), releaseVersion, response, request, fileDefinition);
     }
 
@@ -86,7 +86,7 @@ public class ResultViewController extends AbstractResultViewController {
                                        @PathVariable final String runId,
                                        @PathVariable final String releaseVersion,
                                        final HttpServletResponse response, final HttpServletRequest request) {
-        DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(FileDefinitionId.GO_COMPLETE_FILE.name());
+        DownloadableFileDefinition fileDefinition = fileDefinitionsMapV1.get(FileDefinitionId.GO_COMPLETE_FILE.name());
         return handleExport(getSecuredEntity(projectId, sampleId, runId, releaseVersion), releaseVersion, response, request, fileDefinition);
     }
 
@@ -97,7 +97,7 @@ public class ResultViewController extends AbstractResultViewController {
                                        @PathVariable final String runId,
                                        @PathVariable final String releaseVersion,
                                        final HttpServletResponse response, final HttpServletRequest request) {
-        DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(FileDefinitionId.INTERPROSCAN_RESULT_FILE.name());
+        DownloadableFileDefinition fileDefinition = fileDefinitionsMapV1.get(FileDefinitionId.INTERPROSCAN_RESULT_FILE.name());
         return handleExport(getSecuredEntity(projectId, sampleId, runId, releaseVersion), releaseVersion, response, request, fileDefinition);
     }
 
@@ -108,7 +108,7 @@ public class ResultViewController extends AbstractResultViewController {
                                             @PathVariable final String runId,
                                             @PathVariable final String releaseVersion,
                                             final HttpServletResponse response, final HttpServletRequest request) {
-        DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(FileDefinitionId.PREDICTED_CDS_WITH_INTERPRO_MATCHES_FILE.name());
+        DownloadableFileDefinition fileDefinition = fileDefinitionsMapV1.get(FileDefinitionId.PREDICTED_CDS_WITH_INTERPRO_MATCHES_FILE.name());
         return handleExport(getSecuredEntity(projectId, sampleId, runId, releaseVersion), releaseVersion, response, request, fileDefinition);
     }
 

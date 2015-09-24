@@ -74,6 +74,10 @@ public final class MGPortalURLCollection {
 
     public final static String PROJECT_SAMPLE_RUN_RESULTS_SEQUENCES_EXPORT = PROJECT_SAMPLE_RUN_RESULTS_SEQUENCES + "/export";
 
+    //New sequence files URLs
+    public final static String PROJECT_SAMPLE_RUN_RESULTS_SEQUENCES_SEQ_TYPE_CHUNKS = PROJECT_SAMPLE_RUN_RESULTS + PROJECT_SAMPLE_RUN_RESULTS_VERSION + "/sequences/{sequenceType}/chunks";
+    public final static String PROJECT_SAMPLE_RUN_RESULTS_SEQUENCES_SEQ_TYPE_CHUNKS_VALUE = PROJECT_SAMPLE_RUN_RESULTS + PROJECT_SAMPLE_RUN_RESULTS_VERSION + "/sequences/{sequenceType}/chunks/{chunkValue}";
+
     //Taxonomy result files
     private final static String PROJECT_SAMPLE_RUN_RESULTS_TAXONOMY = PROJECT_SAMPLE_RUN_RESULTS + "/taxonomy" + PROJECT_SAMPLE_RUN_RESULTS_VERSION;
 

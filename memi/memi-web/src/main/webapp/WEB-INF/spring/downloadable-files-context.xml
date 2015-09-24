@@ -9,7 +9,7 @@
 
     <import resource="file-definitions-context.xml"/>
 
-    <util:map id="fileDefinitionsMap" map-class="java.util.HashMap" key-type="java.lang.String"
+    <util:map id="fileDefinitionsMapV1" map-class="java.util.HashMap" key-type="java.lang.String"
               value-type="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.DownloadableFileDefinition">
         <!--sequence data-->
         <entry key="MASKED_FASTA" value-ref="maskedReadsFile"/>
@@ -36,10 +36,78 @@
 
         <!--functional data-->
         <entry key="INTERPROSCAN_RESULT_FILE" value-ref="interProScanResultFile"/>
-        <entry key="INTERPROSCAN_RESULT_FILE_NEW" value-ref="interProScanResultFileNew"/>
         <entry key="GO_COMPLETE_FILE" value-ref="fullGOAnnotationFile"/>
         <entry key="GO_SLIM_FILE" value-ref="goSlimAnnotationFile"/>
         <!--<entry key="INTERPRO_MATCHES_SUMMARY_FILE" value-ref="interProMatchesSummaryFile"/>-->
     </util:map>
 
+    <util:map id="chunkedResultFilesMap" map-class="java.util.HashMap" key-type="java.lang.String"
+              value-type="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.DownloadableFileDefinition">
+        <!--sequence data version 1 only-->
+
+        <!--sequence data version 2 -->
+        <entry key="PROCESSED_READS" value-ref="chunkedProcessedReadsFile"/>
+        <entry key="READS_WITH_PREDICTED_CDS_FILE" value-ref="chunkedReadsWithPredictedCDSFile"/>
+        <entry key="READS_WITH_MATCHES_FASTA_FILE" value-ref="chunkedReadsWithInterProMatchesFile"/>
+        <entry key="READS_WITHOUT_MATCHES_FASTA_FILE" value-ref="chunkedReadsWithoutInterProMatchesFile"/>
+        <entry key="PREDICTED_CDS_FILE" value-ref="chunkedPredictedCDSFile"/>
+        <entry key="PREDICTED_ORF_WITHOUT_ANNOTATION_FILE" value-ref="chunkedPredictedORFWithoutAnnotation"/>
+        <entry key="PREDICTED_CDS_WITHOUT_ANNOTATION_FILE" value-ref="chunkedPredictedCDSWithoutAnnotation"/>
+
+        <!--functional data-->
+        <entry key="INTERPROSCAN_RESULT_FILE" value-ref="chunkedInterProScanResultFile"/>
+    </util:map>
+
+
+    <util:map id="downloadableFileLists" map-class="java.util.HashMap" key-type="java.lang.String"
+              value-type="java.util.ArrayList">
+        <entry key="v1" value-ref="downloadableFileListV1"/>
+        <entry key="v2" value-ref="downloadableFileListV2"/>
+    </util:map>
+
+
+    <util:list id="downloadableFileListV2" value-type="java.lang.String">
+        <!--sequence data files-->
+        <value>PROCESSED_READS</value>
+        <value>READS_WITH_PREDICTED_CDS_FILE</value>
+        <value>READS_WITH_MATCHES_FASTA_FILE</value>
+        <value>READS_WITHOUT_MATCHES_FASTA_FILE</value>
+        <value>PREDICTED_CDS_FILE</value>
+        <value>PREDICTED_ORF_WITHOUT_ANNOTATION_FILE</value>
+        <value>PREDICTED_CDS_WITHOUT_ANNOTATION_FILE</value>
+        <!--functional result files-->
+        <value>INTERPROSCAN_RESULT_FILE</value>
+        <value>GO_COMPLETE_FILE</value>
+        <value>GO_SLIM_FILE</value>
+        <!--taxonomy result files-->
+        <value>R_RNA_5S_FASTA_FILE</value>
+        <value>R_RNA_16S_FASTA_FILE</value>
+        <value>R_RNA_23S_FASTA_FILE</value>
+        <value>OTU_TABLE_FILE</value>
+        <value>HDF5_BIOM_FILE</value>
+        <value>JSON_BIOM_FILE</value>
+        <value>PRUNED_TREE_FILE</value>
+    </util:list>
+
+    <util:list id="downloadableFileListV1" value-type="java.lang.String">
+        <!--sequence data files-->
+        <value>MASKED_FASTA</value>
+        <value>READS_WITH_PREDICTED_CDS_FILE</value>
+        <value>READS_WITH_MATCHES_FASTA_FILE</value>
+        <value>READS_WITHOUT_MATCHES_FASTA_FILE</value>
+        <value>PREDICTED_CDS_FILE</value>
+        <value>PREDICTED_ORF_WITHOUT_ANNOTATION_FILE</value>
+        <value>PREDICTED_CDS_WITHOUT_ANNOTATION_FILE</value>
+        <!--functional result files-->
+        <value>INTERPROSCAN_RESULT_FILE</value>
+        <value>GO_COMPLETE_FILE</value>
+        <value>GO_SLIM_FILE</value>
+        <!--taxonomy result files-->
+        <value>R_RNA_5S_FASTA_FILE</value>
+        <value>R_RNA_16S_FASTA_FILE</value>
+        <value>R_RNA_23S_FASTA_FILE</value>
+        <value>TAX_ANALYSIS_TSV_FILE</value>
+        <value>TAX_ANALYSIS_TREE_FILE</value>
+        <value>OTUS_BIOM_FORMAT_FILE</value>
+    </util:list>
 </beans>

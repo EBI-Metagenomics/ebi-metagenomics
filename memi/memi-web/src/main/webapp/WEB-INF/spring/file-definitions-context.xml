@@ -54,7 +54,7 @@
 
     <bean id="readsWithInterProMatchesFile" autowire-candidate="false"
           class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.SequenceFileDefinition">
-        <property name="identifier" value="READS_WITHOUT_PREDICTED_CDS_FILE"/>
+        <property name="identifier" value="READS_WITH_MATCHES_FASTA_FILE"/>
         <property name="relativePath" value="/sequence-categorisation/interproscan.fasta"/>
         <property name="description" value="All reads with an interproscan match."/>
         <property name="downloadName" value="_interproscan.fasta"/>
@@ -277,18 +277,6 @@
 
     <!--Functional data file definitions-->
 
-    <bean id="interProScanResultFileNew" autowire-candidate="false"
-          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.FunctionalAnalysisFileDefinition">
-        <property name="identifier" value="INTERPROSCAN_RESULT_FILE_NEW"/>
-        <property name="fileNameEnding" value="_I5.tsv.chunks"/>
-        <property name="description" value="InterPro matches (TSV)"/>
-        <property name="downloadName" value="_InterPro.tsv.gz"/>
-        <property name="linkText" value="InterPro matches (TSV)"/>
-        <property name="order" value="2"/>
-        <property name="linkTitle" value="Click here to download InterPro matches (TSV)"/>
-        <property name="linkURL" value="I5TSVFile"/>
-    </bean>
-
     <bean id="interProScanResultFile" autowire-candidate="false"
           class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.FunctionalAnalysisFileDefinition">
         <property name="identifier" value="INTERPROSCAN_RESULT_FILE"/>
@@ -357,6 +345,105 @@
         <property name="downloadName" value="N/A"/>
         <property name="linkURL" value="N/A"/>
         <property name="linkTitle" value="N/A"/>
+    </bean>
+
+    <!-- Chunked and compressed result file definitions -->
+
+    <bean id="chunkedInterProScanResultFile" autowire-candidate="false"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.FunctionalAnalysisFileDefinition">
+        <property name="identifier" value="CHUNKED_INTERPROSCAN_RESULT_FILE"/>
+        <property name="fileNameEnding" value="_I5.tsv.chunks"/>
+        <property name="description" value="InterPro matches (TSV)"/>
+        <property name="downloadName" value="_InterPro.tsv.gz"/>
+        <property name="linkText" value="InterPro matches (TSV)"/>
+        <property name="order" value="2"/>
+        <property name="linkTitle" value="Click here to download InterPro matches (TSV)"/>
+        <property name="linkURL" value="I5TSVFile"/>
+    </bean>
+
+    <bean id="chunkedProcessedReadsFile" autowire-candidate="false"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.SequenceFileDefinition">
+        <property name="identifier" value="PROCESSED_READS_FILE"/>
+        <property name="fileNameEnding" value=".fasta.chunks"/>
+        <property name="description" value="Processed nucleotide reads (since pipeline version 2.0)."/>
+        <property name="downloadName" value="_nt_reads.fasta.gz"/>
+        <property name="linkText" value="Processed nucleotide reads (FASTA)"/>
+        <property name="order" value="2"/>
+        <property name="linkTitle" value="Click to download processed fasta nucleotide sequences"/>
+        <property name="linkURL" value="ProcessedReads"/>
+        <property name="releaseVersion" value="2.0"/>
+    </bean>
+
+    <bean id="chunkedReadsWithPredictedCDSFile" autowire-candidate="false"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.SequenceFileDefinition">
+        <property name="identifier" value="READS_WITH_PREDICTED_CDS_FILE"/>
+        <property name="relativePath" value="/sequence-categorisation/pCDS.fasta.chunks"/>
+        <property name="description" value="All reads that have predicted CDS "/>
+        <property name="downloadName" value="_readsWithpCDS.fasta.gz"/>
+        <property name="linkText" value="Processed reads with pCDS (FASTA)"/>
+        <property name="order" value="3"/>
+        <property name="linkTitle" value="Click to download processed reads with predicted CDS in FASTA format"/>
+        <property name="linkURL" value="ReadsWithPredictedCDS"/>
+    </bean>
+
+    <bean id="chunkedReadsWithInterProMatchesFile" autowire-candidate="false"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.SequenceFileDefinition">
+        <property name="identifier" value="READS_WITH_MATCHES_FASTA_FILE"/>
+        <property name="relativePath" value="/sequence-categorisation/interproscan.fasta.chunks"/>
+        <property name="description" value="All reads with an interproscan match."/>
+        <property name="downloadName" value="_interproscan.fasta.gz"/>
+        <property name="linkText" value="Processed reads with InterPro matches (FASTA)"/>
+        <property name="order" value="4"/>
+        <property name="linkTitle" value="Click to download reads with an InterPro match (FASTA)"/>
+        <property name="linkURL" value="ReadsWithMatches"/>
+    </bean>
+
+    <bean id="chunkedReadsWithoutInterProMatchesFile" autowire-candidate="false"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.SequenceFileDefinition">
+        <property name="identifier" value="READS_WITH_MATCHES_FASTA_FILE"/>
+        <property name="relativePath" value="/sequence-categorisation/noFunction.fasta.chunks"/>
+        <property name="description" value="All reads with a predicted CDS but no interproscan match."/>
+        <property name="downloadName" value="_noFunction.fasta.gz"/>
+        <property name="linkText" value="Processed reads without InterPro match (FASTA)"/>
+        <property name="order" value="5"/>
+        <property name="linkTitle" value="Click to download reads with a predicted CDS but no InterPro match (FASTA)"/>
+        <property name="linkURL" value="ReadsWithoutMatches"/>
+    </bean>
+
+    <bean id="chunkedPredictedCDSFile" autowire-candidate="false"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.SequenceFileDefinition">
+        <property name="identifier" value="PREDICTED_CDS_FILE"/>
+        <property name="fileNameEnding" value="_CDS.faa.chunks"/>
+        <property name="description" value="All predicted CDS."/>
+        <property name="downloadName" value="_pCDS.faa.gz"/>
+        <property name="linkText" value="Predicted CDS (FASTA)"/>
+        <property name="order" value="6"/>
+        <property name="linkTitle" value="Click to download all predicted CDS in FASTA format"/>
+        <property name="linkURL" value="PredictedCDS"/>
+    </bean>
+
+    <bean id="chunkedPredictedORFWithoutAnnotation" autowire-candidate="false"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.SequenceFileDefinition">
+        <property name="identifier" value="PREDICTED_ORF_WITHOUT_ANNOTATION_FILE"/>
+        <property name="fileNameEnding" value="_CDS_unannotated.ffn.chunks"/>
+        <property name="description" value="Predicted open reading frames without annotation (FASTA)"/>
+        <property name="downloadName" value="_ORF_unannotated.ffn.gz"/>
+        <property name="linkText" value="Predicted ORF without annotation (FASTA)"/>
+        <property name="order" value="8"/>
+        <property name="linkTitle" value="Click to download predicted ORF without annotation (FASTA)"/>
+        <property name="linkURL" value="PredictedORFWithoutAnnotation"/>
+    </bean>
+
+    <bean id="chunkedPredictedCDSWithoutAnnotation" autowire-candidate="false"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.SequenceFileDefinition">
+        <property name="identifier" value="PREDICTED_CDS_WITHOUT_ANNOTATION_FILE"/>
+        <property name="fileNameEnding" value="_CDS_unannotated.faa.chunks"/>
+        <property name="description" value="Predicted CDS without annotation (FASTA)"/>
+        <property name="downloadName" value="_CDS_unannotated.faa.gz"/>
+        <property name="linkText" value="Predicted CDS without annotation (FASTA)"/>
+        <property name="order" value="9"/>
+        <property name="linkTitle" value="Click to download predicted CDS without annotation (FASTA)"/>
+        <property name="linkURL" value="PredicatedCDSWithoutAnnotation"/>
     </bean>
 
 </beans>

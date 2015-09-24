@@ -19,21 +19,41 @@ public class DownloadLink {
     /* Optional. If the link is for a downloadable file it will hold the file size. */
     private String fileSize;
 
+    /**
+     * Use this attribute to render chunked dowbloadable files.
+     * To give you an example of the structure of a download link for chunked files:
+     * link-prefix (file format) : link-text (file size)
+     * <p/>
+     * Here is an example:
+     * <p/>
+     * InterPro matches (TSV) : Part 1 (492 MB)
+     */
+    private String linkPrefix;
+
+    public DownloadLink(String linkText, String linkTitle, String linkURL, int order, String fileSize, String linkPrefix) {
+        this(linkText, linkTitle, linkURL, false, order, fileSize, linkPrefix);
+    }
+
     public DownloadLink(String linkText, String linkTitle, String linkURL, int order, String fileSize) {
-        this(linkText, linkTitle, linkURL, false, order, fileSize);
+        this(linkText, linkTitle, linkURL, false, order, fileSize, null);
     }
 
     public DownloadLink(String linkText, String linkTitle, String linkURL, boolean isExternalLink, int order) {
-        this(linkText, linkTitle, linkURL, isExternalLink, order, null);
+        this(linkText, linkTitle, linkURL, isExternalLink, order, null, null);
     }
 
     public DownloadLink(String linkText, String linkTitle, String linkURL, boolean isExternalLink, int order, String fileSize) {
+        this(linkText, linkTitle, linkURL, isExternalLink, order, fileSize, null);
+    }
+
+    public DownloadLink(String linkText, String linkTitle, String linkURL, boolean isExternalLink, int order, String fileSize, String linkPrefix) {
         this.linkText = linkText;
         this.linkTitle = linkTitle;
         this.linkURL = linkURL;
         this.isExternalLink = isExternalLink;
         this.order = order;
         this.fileSize = fileSize;
+        this.linkPrefix = linkPrefix;
     }
 
     public String getLinkText() {
@@ -58,6 +78,10 @@ public class DownloadLink {
 
     public String getFileSize() {
         return fileSize;
+    }
+
+    public String getLinkPrefix() {
+        return linkPrefix;
     }
 
     /**

@@ -96,7 +96,7 @@ public class ResultViewExportController extends AbstractResultViewController {
             if (isAccessible(run)) {
                 AnalysisJob analysisJob = analysisJobDAO.readByRunIdAndVersionDeep(run.getExternalRunId(), releaseVersion, "completed");
                 if (analysisJob != null) {
-                    DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(FileDefinitionId.INTERPROSCAN_RESULT_FILE_NEW.name());
+                    DownloadableFileDefinition fileDefinition = chunkedResultFilesMap.get(FileDefinitionId.INTERPROSCAN_RESULT_FILE.name());
                     if (fileDefinition != null) {
                         File fileObject = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, fileDefinition);
                         //get result file chunks as a list of absolute file paths
@@ -104,6 +104,61 @@ public class ResultViewExportController extends AbstractResultViewController {
                         try {
                             final String downloadName = (chunkedResultFiles.size() == 1 ? fileDefinition.getDownloadName() : fileDefinition.getDownloadName().replace(".tsv.gz", "_" + String.valueOf(chunkValue) + ".tsv.gz"));
                             final String resultFileName = chunkedResultFiles.get(chunkValue - 1);
+                            openDownloadDialog(response, request, analysisJob, downloadName, FileObjectBuilder.createFileObject(analysisJob, propertyContainer, resultFileName));
+                        } catch (IndexOutOfBoundsException e) {
+                            response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+                        }
+                    } else {//analysis job is NULL
+                        response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+                    }
+                } else {//access denied
+                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    response.sendRedirect("/metagenomics/sample/" + sampleId + "/accessDenied");
+                }
+            } else {//run is NULL
+                response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+            }
+        }
+    }
+
+    public void doHandleSequenceFileExports(final String projectId,
+                                            final String sampleId,
+                                            final String runId,
+                                            final String releaseVersion,
+                                            final Integer chunkValue,
+                                            final HttpServletResponse response,
+                                            final HttpServletRequest request,
+                                            final FileDefinitionId fileDefinitionId) throws IOException {
+        response.setContentType("text/html;charset=utf-8");
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.setLocale(Locale.ENGLISH);
+
+        Run run = getSecuredEntity(projectId, sampleId, runId, releaseVersion);
+
+        if (run != null && fileDefinitionId != null) {
+            if (isAccessible(run)) {
+                AnalysisJob analysisJob = analysisJobDAO.readByRunIdAndVersionDeep(run.getExternalRunId(), releaseVersion, "completed");
+                if (analysisJob != null) {
+                    DownloadableFileDefinition fileDefinition = chunkedResultFilesMap.get(fileDefinitionId.name());
+                    if (fileDefinition != null) {
+                        File fileObject = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, fileDefinition);
+                        //get result file chunks as a list of absolute file paths
+                        List<String> chunkedResultFiles = MemiTools.getListOfChunkedResultFiles(fileObject);
+                        try {
+                            String downloadName = null;
+                            if (fileDefinitionId.equals(FileDefinitionId.PREDICTED_CDS_FILE) || fileDefinitionId.equals(FileDefinitionId.PREDICTED_CDS_WITHOUT_ANNOTATION_FILE)) {
+                                downloadName = (chunkedResultFiles.size() == 1 ? fileDefinition.getDownloadName() : fileDefinition.getDownloadName().replace(".faa.gz", "_" + String.valueOf(chunkValue) + ".faa.gz"));
+                            } else if (fileDefinitionId.equals(FileDefinitionId.PREDICTED_ORF_WITHOUT_ANNOTATION_FILE)) {
+                                downloadName = (chunkedResultFiles.size() == 1 ? fileDefinition.getDownloadName() : fileDefinition.getDownloadName().replace(".ffn.gz", "_" + String.valueOf(chunkValue) + ".ffn.gz"));
+                            } else {
+                                downloadName = (chunkedResultFiles.size() == 1 ? fileDefinition.getDownloadName() : fileDefinition.getDownloadName().replace(".fasta.gz", "_" + String.valueOf(chunkValue) + ".fasta.gz"));
+                            }
+                            String resultFileName = chunkedResultFiles.get(chunkValue - 1);
+                            String relativePath = fileDefinition.getRelativePath();
+                            if (relativePath != null) {
+                                String fileParent = new File(relativePath).getParent();
+                                resultFileName = fileParent + "/" + resultFileName;
+                            }
                             openDownloadDialog(response, request, analysisJob, downloadName, FileObjectBuilder.createFileObject(analysisJob, propertyContainer, resultFileName));
                         } catch (IndexOutOfBoundsException e) {
                             response.setStatus(HttpServletResponse.SC_NO_CONTENT);
@@ -227,7 +282,7 @@ public class ResultViewExportController extends AbstractResultViewController {
                                                  @PathVariable final String runId,
                                                  @PathVariable final String releaseVersion,
                                                  final HttpServletResponse response, final HttpServletRequest request) {
-        final DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(FileDefinitionId.INTERPROSCAN_RESULT_FILE_NEW.name());
+        final DownloadableFileDefinition fileDefinition = chunkedResultFilesMap.get(FileDefinitionId.INTERPROSCAN_RESULT_FILE.name());
         final Run run = getSecuredEntity(projectId, sampleId, runId, releaseVersion);
 
         return checkAccessAndBuildModel(new ModelProcessingStrategy<Run>() {
@@ -254,6 +309,61 @@ public class ResultViewExportController extends AbstractResultViewController {
                                   final HttpServletResponse response,
                                   final HttpServletRequest request) throws IOException {
         doHandleFunctionalExports(projectId, sampleId, runId, releaseVersion, chunkValue, response, request);
+    }
+
+    @RequestMapping(value = MGPortalURLCollection.PROJECT_SAMPLE_RUN_RESULTS_SEQUENCES_SEQ_TYPE_CHUNKS)
+    public ModelAndView doListReadsWithPredictedCDSChunks(@PathVariable final String projectId,
+                                                          @PathVariable final String sampleId,
+                                                          @PathVariable final String runId,
+                                                          @PathVariable final String releaseVersion,
+                                                          @PathVariable final String sequenceType,
+                                                          final HttpServletResponse response, final HttpServletRequest request) {
+        final DownloadableFileDefinition fileDefinition = chunkedResultFilesMap.get(FileDefinitionId.READS_WITH_PREDICTED_CDS_FILE.name());
+        final Run run = getSecuredEntity(projectId, sampleId, runId, releaseVersion);
+
+        return checkAccessAndBuildModel(new ModelProcessingStrategy<Run>() {
+            @Override
+            public void processModel(ModelMap model, Run run) {
+                AnalysisJob analysisJob = analysisJobDAO.readByRunIdAndVersionDeep(run.getExternalRunId(), releaseVersion, "completed");
+                if (analysisJob != null) {
+                    File fileObject = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, fileDefinition);
+                    List<String> listOfChunks = MemiTools.getListOfChunkedResultFiles(fileObject);
+                    model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
+                    model.addAttribute("numOfChunks", listOfChunks.size());
+                }
+            }
+        }, new ModelMap(), run, "chunks");
+    }
+
+
+    @RequestMapping(value = MGPortalURLCollection.PROJECT_SAMPLE_RUN_RESULTS_SEQUENCES_SEQ_TYPE_CHUNKS_VALUE)
+    public void doExportReadsWithPredictedCDSResults(@PathVariable final String projectId,
+                                                     @PathVariable final String sampleId,
+                                                     @PathVariable final String runId,
+                                                     @PathVariable final String releaseVersion,
+                                                     @PathVariable final String sequenceType,
+                                                     @PathVariable final Integer chunkValue,
+                                                     final HttpServletResponse response,
+                                                     final HttpServletRequest request) throws IOException {
+        FileDefinitionId fileDefinitionId = null;
+        if (sequenceType.equalsIgnoreCase("ProcessedReads")) {
+            fileDefinitionId = FileDefinitionId.PROCESSED_READS;
+        } else if (sequenceType.equalsIgnoreCase("ReadsWithPredictedCDS")) {
+            fileDefinitionId = FileDefinitionId.READS_WITH_PREDICTED_CDS_FILE;
+        } else if (sequenceType.equalsIgnoreCase("ReadsWithMatches")) {
+            fileDefinitionId = FileDefinitionId.READS_WITH_MATCHES_FASTA_FILE;
+        } else if (sequenceType.equalsIgnoreCase("ReadsWithoutMatches")) {
+            fileDefinitionId = FileDefinitionId.READS_WITHOUT_MATCHES_FASTA_FILE;
+        } else if (sequenceType.equalsIgnoreCase("PredictedCDS")) {
+            fileDefinitionId = FileDefinitionId.PREDICTED_CDS_FILE;
+        } else if (sequenceType.equalsIgnoreCase("PredictedORFWithoutAnnotation")) {
+            fileDefinitionId = FileDefinitionId.PREDICTED_ORF_WITHOUT_ANNOTATION_FILE;
+        } else if (sequenceType.equalsIgnoreCase("PredicatedCDSWithoutAnnotation")) {
+            fileDefinitionId = FileDefinitionId.PREDICTED_CDS_WITHOUT_ANNOTATION_FILE;
+        } else {
+            log.warn("Sequence type: " + sequenceType + " not found!");
+        }
+        doHandleSequenceFileExports(projectId, sampleId, runId, releaseVersion, chunkValue, response, request, fileDefinitionId);
     }
 
     @Override
