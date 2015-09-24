@@ -65,6 +65,9 @@ public abstract class AbstractResultViewController extends SecuredAbstractContro
     @Resource
     protected Map<String, DownloadableFileDefinition> fileDefinitionsMapV1;
 
+    @Resource
+    protected Map<String, DownloadableFileDefinition> chunkedResultFilesMap;
+
     protected Run getSecuredEntity(final String projectId,
                                    final String sampleId,
                                    final String runId,

@@ -35,16 +35,28 @@ public class DownloadViewModelBuilder extends AbstractResultViewModelBuilder<Dow
 
     private Map<String, DownloadableFileDefinition> fileDefinitionsMap;
 
+    private Map<String, DownloadableFileDefinition> chunkedResultFilesMap;
+
+    /*
+    Contains a map of downloadable file lists for each pipeline version.
+     */
+    private Map<String, List> downloadableFileLists;
+
+
     public DownloadViewModelBuilder(SessionManager sessionMgr,
                                     String pageTitle,
                                     List<Breadcrumb> breadcrumbs,
                                     MemiPropertyContainer propertyContainer,
                                     Run run,
                                     Map<String, DownloadableFileDefinition> fileDefinitionsMap,
+                                    Map<String, DownloadableFileDefinition> chunkedResultFilesMap,
+                                    Map<String, List> downloadableFileLists,
                                     AnalysisJob analysisJob) {
         super(sessionMgr, pageTitle, breadcrumbs, propertyContainer, null, null, null, analysisJob);
         this.run = run;
         this.fileDefinitionsMap = fileDefinitionsMap;
+        this.chunkedResultFilesMap = chunkedResultFilesMap;
+        this.downloadableFileLists = downloadableFileLists;
     }
 
     public DownloadViewModel getModel() {
@@ -62,93 +74,204 @@ public class DownloadViewModelBuilder extends AbstractResultViewModelBuilder<Dow
         final boolean sampleIsPublic = run.isPublic();
         final String analysisJobReleaseVersion = analysisJob.getPipelineRelease().getReleaseVersion();
 
-        final List<DownloadLink> seqDataDownloadLinks = new ArrayList<DownloadLink>();
+        final SequencesDownloadSection sequencesDownloadSection = new SequencesDownloadSection();
+        final List<DownloadLink> otherSeqDataDownloadLinks = new ArrayList<DownloadLink>();
         final List<DownloadLink> otherFuncAnalysisDownloadLinks = new ArrayList<DownloadLink>();
         final List<DownloadLink> interproscanDownloadLinks = new ArrayList<DownloadLink>();
         final List<DownloadLink> taxaAnalysisDownloadLinks = new ArrayList<DownloadLink>();
 
         final String linkURL = (sampleIsPublic ? "https://www.ebi.ac.uk/ena/data/view/" + externalRunId : "https://www.ebi.ac.uk/ena/submit/sra/#home");
-        seqDataDownloadLinks.add(new DownloadLink("Submitted nucleotide reads (ENA website)",
+        sequencesDownloadSection.addOtherDownloadLink(new DownloadLink("Submitted nucleotide reads (ENA website)",
                 "Click to download all submitted nucleotide data on the ENA website",
                 linkURL,
                 true,
                 1));
 
-        for (DownloadableFileDefinition fileDefinition : fileDefinitionsMap.values()) {
-                File fileObject = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, fileDefinition);
-            boolean doesExist = FileExistenceChecker.checkFileExistence(fileObject);
+        //Set the list of downloadable files depending on the pipeline version
+        List<String> downloadableFileList = null;
+        if (analysisJobReleaseVersion.equals("1.0")) {
+            downloadableFileList = downloadableFileLists.get("v1");
+        } else if (analysisJobReleaseVersion.equalsIgnoreCase("2.0")) {
+            downloadableFileList = downloadableFileLists.get("v2");
+        } else {
+            downloadableFileList = new ArrayList<String>();
+        }
 
-            //Check if file exists and if it is not empty
-            if (doesExist && fileObject.length() > 0) {
-                if (fileDefinition instanceof SequenceFileDefinition) {
-                    //filter out certain files by release version
-                    if (fileDefinition.getReleaseVersion() == null || fileDefinition.getReleaseVersion().equals(analysisJobReleaseVersion)) {
-                        seqDataDownloadLinks.add(new DownloadLink(fileDefinition.getLinkText(),
-                                fileDefinition.getLinkTitle(),
-                                "projects/" + externalProjectId + "/samples/" + externalSampleId + "/runs/" + externalRunId + "/results/sequences" + "/versions/" + analysisJobReleaseVersion + fileDefinition.getLinkURL(),
-                                fileDefinition.getOrder(),
-                                getFileSize(fileObject)));
+        for (String downloadableFile : downloadableFileList) {
+            //first check if there is a chunked version of this file
+            DownloadableFileDefinition chunkedFileDefinition = chunkedResultFilesMap.get(downloadableFile);
+            //If so
+            if (chunkedFileDefinition != null) {
+                File chunkedFileObject = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, chunkedFileDefinition);
+                boolean doesExist = FileExistenceChecker.checkFileExistence(chunkedFileObject);
+                if (doesExist && chunkedFileObject.length() > 0) {
+
+                    //get result file chunks as a list of absolute file paths
+                    List<String> chunkedResultFiles = MemiTools.getListOfChunkedResultFiles(chunkedFileObject);
+                    //Loop through the list of chunked files and check they do exist and are not empty
+                    boolean checkResult = checkChunkedFilesDoExist(chunkedResultFiles, chunkedFileDefinition);
+                    if (checkResult) {
+
+                        //We do need to distinguish 2 cases - case 1: single compressed file - case 2: chunked and compressed result files
+                        //Case 1 will look like: InterPro matches (TSV) - 47 MB
+                        //Case 2 will look like: InterPro matches (TSV): - Part 1 (500 MB) - Part 2 (499 MB)
+                        String linkText = chunkedFileDefinition.getLinkText();
+
+                        //
+                        final List<DownloadLink> downloadLinks = new ArrayList<DownloadLink>();
+                        if (chunkedFileDefinition.getIdentifier().equalsIgnoreCase("PROCESSED_READS_FILE")) {
+                            sequencesDownloadSection.setProcessedReadsLinks(downloadLinks);
+                        } else if (chunkedFileDefinition.getIdentifier().equalsIgnoreCase("READS_WITH_PREDICTED_CDS_FILE")) {
+                            sequencesDownloadSection.setReadsWithPredictedCDSLinks(downloadLinks);
+                        } else if (chunkedFileDefinition.getIdentifier().equalsIgnoreCase("READS_WITH_MATCHES_FASTA_FILE")) {
+                            sequencesDownloadSection.setReadsWithMatchesLinks(downloadLinks);
+                        } else if (chunkedFileDefinition.getIdentifier().equalsIgnoreCase("READS_WITH_MATCHES_FASTA_FILE")) {
+                            sequencesDownloadSection.setReadsWithoutMatchesLinks(downloadLinks);
+                        } else if (chunkedFileDefinition.getIdentifier().equalsIgnoreCase("PREDICTED_CDS_FILE")) {
+                            sequencesDownloadSection.setPredictedCDSLinks(downloadLinks);
+                        } else if (chunkedFileDefinition.getIdentifier().equalsIgnoreCase("PREDICTED_ORF_WITHOUT_ANNOTATION_FILE")) {
+                            sequencesDownloadSection.setPredictedORFWithoutAnnotationLinks(downloadLinks);
+                        } else if (chunkedFileDefinition.getIdentifier().equalsIgnoreCase("PREDICTED_CDS_WITHOUT_ANNOTATION_FILE")) {
+                            sequencesDownloadSection.setPredicatedCDSWithoutAnnotationLinks(downloadLinks);
+                        } else {
+                            log.warn("Unknown file definition identifier: " + chunkedFileDefinition.getIdentifier() + " encountered!");
+                        }
+                        int chunkCounter = 1;
+                        for (String chunk : chunkedResultFiles) {
+                            if (chunkedResultFiles.size() > 1) {
+                                String partStr = " Part " + String.valueOf(chunkCounter);
+                                linkText = partStr;
+                            }
+                            String relativePath = chunkedFileDefinition.getRelativePath();
+                            if (relativePath != null) {
+                                String fileParent = new File(relativePath).getParent();
+                                chunk = fileParent + "/" + chunk;
+                            }
+                            final File downloadFileObj = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, chunk);
+
+                            if (chunkedFileDefinition instanceof SequenceFileDefinition) {
+                                downloadLinks.add(new DownloadLink(linkText,
+                                        chunkedFileDefinition.getLinkTitle(),
+                                        "projects/" + externalProjectId + "/samples/" + externalSampleId + "/runs/" + externalRunId + "/results/versions/" + analysisJobReleaseVersion + "/sequences/"
+                                                + chunkedFileDefinition.getLinkURL() + "/chunks/" + String.valueOf(chunkCounter),
+                                        chunkedFileDefinition.getOrder(),
+                                        getFileSize(downloadFileObj), chunkedFileDefinition.getLinkText()));
+
+                            } else if (chunkedFileDefinition instanceof FunctionalAnalysisFileDefinition) {
+                                interproscanDownloadLinks.add(new DownloadLink(linkText,
+                                        chunkedFileDefinition.getLinkTitle(),
+                                        "projects/" + externalProjectId + "/samples/" + externalSampleId + "/runs/" + externalRunId + "/results/versions/" + analysisJobReleaseVersion + "/function/InterProScan/chunks/" + String.valueOf(chunkCounter),
+                                        chunkedFileDefinition.getOrder(),
+                                        getFileSize(downloadFileObj), chunkedFileDefinition.getLinkText()));
+                            } else {
+                                //do nothing
+                            }
+                            chunkCounter++;
+                        }
+                    } //end if chunked files existence check
+                    else {
+                        log.warn("One of the chunked files does not exist:");
+                        log.warn(chunkedFileObject.getAbsolutePath());
+                        log.warn("Will go on with the unchunked version.");
+                        processUnchunkedFileDefinition(downloadableFile, analysisJobReleaseVersion, externalProjectId, externalSampleId, externalRunId,
+                                otherSeqDataDownloadLinks, otherFuncAnalysisDownloadLinks, taxaAnalysisDownloadLinks);
                     }
-                } else if (fileDefinition instanceof TaxonomicAnalysisFileDefinition) {
-                    taxaAnalysisDownloadLinks.add(new DownloadLink(fileDefinition.getLinkText(),
+                } else {//Chunk summary file does not exist
+                    log.warn("The following .chunks file does not exist:");
+                    log.warn(chunkedFileObject.getAbsolutePath());
+                    log.warn("Will go on with the unchunked version.");
+                    processUnchunkedFileDefinition(downloadableFile, analysisJobReleaseVersion, externalProjectId, externalSampleId, externalRunId,
+                            otherSeqDataDownloadLinks, otherFuncAnalysisDownloadLinks, taxaAnalysisDownloadLinks);
+                }
+            } else {//No chunked version of this file
+                processUnchunkedFileDefinition(downloadableFile, analysisJobReleaseVersion, externalProjectId, externalSampleId, externalRunId,
+                        otherSeqDataDownloadLinks, otherFuncAnalysisDownloadLinks, taxaAnalysisDownloadLinks);
+            }
+
+        }
+
+
+        Collections.sort(otherSeqDataDownloadLinks, DownloadLink.DownloadLinkComparator);
+        sequencesDownloadSection.addOtherDownloadLinks(otherSeqDataDownloadLinks);
+        Collections.sort(otherFuncAnalysisDownloadLinks, DownloadLink.DownloadLinkComparator);
+        Collections.sort(taxaAnalysisDownloadLinks, DownloadLink.DownloadLinkComparator);
+        return new DownloadSection(sequencesDownloadSection, new FunctionalDownloadSection(interproscanDownloadLinks, otherFuncAnalysisDownloadLinks), taxaAnalysisDownloadLinks);
+    }
+
+    /**
+     * Loops through the list of chunked files, creates file objects and checks if they do exist and are not empty.
+     *
+     * @return FALSE if at least 1 file does not exist or the list of chunked files is empty, otherwise TRUE.
+     */
+    private boolean checkChunkedFilesDoExist(final List<String> chunkedResultFiles,
+                                             final DownloadableFileDefinition chunkedFileDefinition) {
+        boolean result = (chunkedResultFiles.size() > 0 ? true : false);
+        for (String chunk : chunkedResultFiles) {
+            String relativePath = chunkedFileDefinition.getRelativePath();
+            if (relativePath != null) {
+                String fileParent = new File(relativePath).getParent();
+                chunk = fileParent + "/" + chunk;
+            }
+            final File downloadFileObj = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, chunk);
+            if (!downloadFileObj.exists() || downloadFileObj.length() == 0) {
+                return false;
+            }
+        }
+        return result;
+    }
+
+    private void processUnchunkedFileDefinition(final String downloadableFile, final String analysisJobReleaseVersion,
+                                                final String externalProjectId, final String externalSampleId, final String externalRunId,
+                                                final List<DownloadLink> seqDataDownloadLinks, final List<DownloadLink> otherFuncAnalysisDownloadLinks,
+                                                final List<DownloadLink> taxaAnalysisDownloadLinks) {
+        DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(downloadableFile);
+        File fileObject = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, fileDefinition);
+        boolean doesExist = FileExistenceChecker.checkFileExistence(fileObject);
+        if (doesExist && fileObject.length() > 0) {
+            if (fileDefinition instanceof SequenceFileDefinition) {
+                //filter out certain files by release version
+                if (fileDefinition.getReleaseVersion() == null || fileDefinition.getReleaseVersion().equals(analysisJobReleaseVersion)) {
+                    seqDataDownloadLinks.add(new DownloadLink(fileDefinition.getLinkText(),
                             fileDefinition.getLinkTitle(),
-                            "projects/" + externalProjectId + "/samples/" + externalSampleId + "/runs/" + externalRunId + "/results/taxonomy" + "/versions/" + analysisJobReleaseVersion + fileDefinition.getLinkURL(),
+                            "projects/" + externalProjectId + "/samples/" + externalSampleId + "/runs/" + externalRunId + "/results/sequences" + "/versions/" + analysisJobReleaseVersion + fileDefinition.getLinkURL(),
                             fileDefinition.getOrder(),
                             getFileSize(fileObject)));
-                } else if (fileDefinition instanceof FunctionalAnalysisFileDefinition) {
-                    //Filter out amplicons
-                    if (!isAmpliconData()) {
-                        if (fileDefinition.getIdentifier().equals("INTERPROSCAN_RESULT_FILE_NEW")) {
-                            //get result file chunks as a list of absolute file paths
-                            List<String> chunkedResultFiles = MemiTools.getListOfChunkedResultFiles(fileObject);
-                            //We do need to distinguish 2 cases - case 1: single compressed file - case 2: chunked and compressed result files
-                            //Case 1 will look like: InterPro matches (TSV) - 47 MB
-                            //Case 2 will look like: InterPro matches (TSV) - compressed - File 1
-                            String linkText = fileDefinition.getLinkText() + " - compressed";
-                            int chunkCounter = 1;
-                            for (String chunk : chunkedResultFiles) {
-                                if (chunkedResultFiles.size() > 1) {
-                                    String partStr = " Part " + String.valueOf(chunkCounter);
-                                    linkText = partStr;
-                                }
-                                final File downloadFileObj = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, chunk);
-                                interproscanDownloadLinks.add(new DownloadLink(linkText,
-                                        fileDefinition.getLinkTitle(),
-                                        "projects/" + externalProjectId + "/samples/" + externalSampleId + "/runs/" + externalRunId + "/results/versions/" + analysisJobReleaseVersion + "/function/InterProScan/chunks/" + String.valueOf(chunkCounter),
-                                        fileDefinition.getOrder(),
-                                        getFileSize(downloadFileObj)));
-                                chunkCounter++;
-                            }
-                        } else if (fileDefinition.getIdentifier().equals("INTERPROSCAN_RESULT_FILE")) {
-                            String filePath = fileObject.getAbsolutePath();
-                            File newFileObject = new File(filePath + ".chunks");
-                            if (!FileExistenceChecker.checkFileExistence(newFileObject)) {
-                                otherFuncAnalysisDownloadLinks.add(new DownloadLink(fileDefinition.getLinkText(),
-                                        fileDefinition.getLinkTitle(),
-                                        "projects/" + externalProjectId + "/samples/" + externalSampleId + "/runs/" + externalRunId + "/results/" + fileDefinition.getLinkURL() + "/versions/" + analysisJobReleaseVersion,
-                                        fileDefinition.getOrder(),
-                                        getFileSize(fileObject)));
-                            }
-                        } else {
+                }
+            } else if (fileDefinition instanceof TaxonomicAnalysisFileDefinition) {
+                taxaAnalysisDownloadLinks.add(new DownloadLink(fileDefinition.getLinkText(),
+                        fileDefinition.getLinkTitle(),
+                        "projects/" + externalProjectId + "/samples/" + externalSampleId + "/runs/" + externalRunId + "/results/taxonomy" + "/versions/" + analysisJobReleaseVersion + fileDefinition.getLinkURL(),
+                        fileDefinition.getOrder(),
+                        getFileSize(fileObject)));
+            } else if (fileDefinition instanceof FunctionalAnalysisFileDefinition) {
+                //Filter out amplicons
+                if (!isAmpliconData()) {
+                    if (fileDefinition.getIdentifier().equals("INTERPROSCAN_RESULT_FILE")) {
+                        String filePath = fileObject.getAbsolutePath();
+                        File newFileObject = new File(filePath + ".chunks");
+                        if (!FileExistenceChecker.checkFileExistence(newFileObject)) {
                             otherFuncAnalysisDownloadLinks.add(new DownloadLink(fileDefinition.getLinkText(),
                                     fileDefinition.getLinkTitle(),
                                     "projects/" + externalProjectId + "/samples/" + externalSampleId + "/runs/" + externalRunId + "/results/" + fileDefinition.getLinkURL() + "/versions/" + analysisJobReleaseVersion,
                                     fileDefinition.getOrder(),
                                     getFileSize(fileObject)));
                         }
+                    } else {
+                        otherFuncAnalysisDownloadLinks.add(new DownloadLink(fileDefinition.getLinkText(),
+                                fileDefinition.getLinkTitle(),
+                                "projects/" + externalProjectId + "/samples/" + externalSampleId + "/runs/" + externalRunId + "/results/" + fileDefinition.getLinkURL() + "/versions/" + analysisJobReleaseVersion,
+                                fileDefinition.getOrder(),
+                                getFileSize(fileObject)));
                     }
-                } else {
-                    //do nothing
                 }
             } else {
-                log.warn("Download page warning: The following file does Not exist or is empty:");
-                log.warn(fileObject.getAbsolutePath());
+                //do nothing
             }
+        } else {
+            log.warn("Download page warning: The following file does Not exist or is empty:");
+            log.warn(fileObject.getAbsolutePath());
         }
-        Collections.sort(seqDataDownloadLinks, DownloadLink.DownloadLinkComparator);
-        Collections.sort(otherFuncAnalysisDownloadLinks, DownloadLink.DownloadLinkComparator);
-        Collections.sort(taxaAnalysisDownloadLinks, DownloadLink.DownloadLinkComparator);
-        return new DownloadSection(seqDataDownloadLinks, new FunctionalDownloadSection(interproscanDownloadLinks, otherFuncAnalysisDownloadLinks), taxaAnalysisDownloadLinks);
+
     }
 
     private String getFileSize(final File file) {
