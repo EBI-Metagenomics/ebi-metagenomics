@@ -96,6 +96,7 @@ public class DownloadViewModelBuilder extends AbstractResultViewModelBuilder<Dow
                             fileDefinition.getOrder(),
                             getFileSize(fileObject)));
                 } else if (fileDefinition instanceof FunctionalAnalysisFileDefinition) {
+                    //Filter out amplicons
                     if (!isAmpliconData()) {
                         if (fileDefinition.getIdentifier().equals("INTERPROSCAN_RESULT_FILE_NEW")) {
                             //get result file chunks as a list of absolute file paths

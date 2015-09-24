@@ -96,7 +96,7 @@ public class ResultViewExportController extends AbstractResultViewController {
             if (isAccessible(run)) {
                 AnalysisJob analysisJob = analysisJobDAO.readByRunIdAndVersionDeep(run.getExternalRunId(), releaseVersion, "completed");
                 if (analysisJob != null) {
-                    DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(FileDefinitionId.INTERPROSCAN_RESULT_FILE_NEW.name());
+                    DownloadableFileDefinition fileDefinition = fileDefinitionsMapV1.get(FileDefinitionId.INTERPROSCAN_RESULT_FILE_NEW.name());
                     if (fileDefinition != null) {
                         File fileObject = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, fileDefinition);
                         //get result file chunks as a list of absolute file paths
@@ -227,7 +227,7 @@ public class ResultViewExportController extends AbstractResultViewController {
                                                  @PathVariable final String runId,
                                                  @PathVariable final String releaseVersion,
                                                  final HttpServletResponse response, final HttpServletRequest request) {
-        final DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(FileDefinitionId.INTERPROSCAN_RESULT_FILE_NEW.name());
+        final DownloadableFileDefinition fileDefinition = fileDefinitionsMapV1.get(FileDefinitionId.INTERPROSCAN_RESULT_FILE_NEW.name());
         final Run run = getSecuredEntity(projectId, sampleId, runId, releaseVersion);
 
         return checkAccessAndBuildModel(new ModelProcessingStrategy<Run>() {

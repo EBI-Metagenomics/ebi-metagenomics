@@ -13,8 +13,11 @@ import java.util.Map;
  */
 public class ExportValueService {
 
-    @Resource
-    protected Map<String, DownloadableFileDefinition> fileDefinitionsMap;
+    private Map<String, DownloadableFileDefinition> fileDefinitionsMap;
+
+    public ExportValueService(Map<String, DownloadableFileDefinition> fileDefinitionsMap) {
+        this.fileDefinitionsMap = fileDefinitionsMap;
+    }
 
     private final String[] exportRequestParamValues = new String[]{"biom",
             "taxa", "tree", "5SrRNA", "16SrRNA", "23SrRNA", "readsWithMatches",
