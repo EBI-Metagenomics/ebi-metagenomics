@@ -74,7 +74,7 @@ public class DownloadViewController extends AbstractResultViewController {
                 getBreadcrumbs(run),
                 propertyContainer,
                 run,
-                fileDefinitionsMap,
+                fileDefinitionsMapV1,
                 analysisJob);
         final DownloadViewModel downloadViewModel = builder.getModel();
 

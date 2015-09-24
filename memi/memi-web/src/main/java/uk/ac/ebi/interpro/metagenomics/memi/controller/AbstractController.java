@@ -33,9 +33,6 @@ public abstract class AbstractController {
     @Resource
     protected MemiPropertyContainer propertyContainer;
 
-    @Resource
-    protected Map<String, DownloadableFileDefinition> fileDefinitionsMap;
-
     protected abstract String getModelViewName();
 
     protected abstract List<Breadcrumb> getBreadcrumbs(SecureEntity obj);
