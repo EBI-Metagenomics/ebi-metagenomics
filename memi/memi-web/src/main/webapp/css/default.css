@@ -1843,9 +1843,11 @@ ul.sample_list li {list-style: none; display: inline;}
 
 /*HOMEPAGE - stats*/
 .jumbo-stats {text-align: center; color:#606a73;font-size: 120%;line-height: 1.4;}
-.jumbo-stats .jumbo-stats-box {border: 0px red solid;}
+/*.jumbo-stats  .grid_24 {border:1px solid blue; box-sizing:border-box;}*/
+.jumbo-stats .jumbo-stats-box {overflow: hidden;/*small screens -remove overlap*/}
+.jumbo-stats .jumbo-stats-box .grid_6.alpha {max-width: 41px;}
 .jumbo-stats .jumbo-stats-box span.icon {font-size: 216%;}
-.jumbo-stats #stat-exptype .grid_4.alpha {transform: rotate(90deg) scale(1);} /*rotate DNA*/
+.jumbo-stats #stat-exptype .alpha {transform: rotate(90deg) scale(1);} /*rotate DNA*/
 .jumbo-stats #stat-submissions, .jumbo-stats #stat-member {margin-top: -3px; /*to align text better*/}
 .jumbo-stats #stat-exptype .omega, .jumbo-stats #stat-public .omega, .jumbo-stats #stat-private .omega {text-align: left;}
 .stat-lock-title {font-size: 79%;color:#1a5286;}
