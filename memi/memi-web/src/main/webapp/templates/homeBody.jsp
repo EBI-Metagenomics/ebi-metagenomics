@@ -20,15 +20,22 @@
 <section class="jumbo-stats">
 <div class="grid_24 jumbo-stats-container">
     <div class="grid_6 alpha jumbo-stats-box" id="stat-submissions"><!-- <span class="icon icon-functional" data-icon="D"></span>--><span class="icon icon-generic" data-icon="D"></span><br/><span class="high_nb">${model.numOfDataSets}</span> data sets</div>
-    <div class="grid_6  jumbo-stats-box" id="stat-exptype"><div class="grid_24"><div class="grid_4 alpha"><span class="icon icon-conceptual icon-c1" data-icon="d"></span></div> <div class="grid_4">
+    <div class="grid_6  jumbo-stats-box" id="stat-exptype">
+        <div class="grid_24"><div class="grid_6 alpha"><span class="icon icon-conceptual icon-c1" data-icon="d"></span></div> <div class="grid_6">
         <c:forEach var="experimentCountEntry"
                    items="${model.experimentCountMap}">
-        <span class="high_nb">${experimentCountEntry.value}</span>
+        <span class="high_nb">${experimentCountEntry.value}</span><br/>
         </c:forEach>
-    </div> <div class="grid_16 omega"> metagenomics <br/> metatranscriptomics  <br/> amplicons <br/> assemblies</div></div> </div>
+    </div> <div class="grid_12 omega"> metagenomics <br/> metatranscriptomics  <br/> amplicons <br/> assemblies</div></div> </div>
     <%--<div class="grid_3 jumbo-stats-box" id="stat-member"><span class="icon icon-generic" data-icon="}"></span><br/><span class="high_nb">${model.numOfSubmitters}</span> members </div>--%>
-    <div class="grid_6 jumbo-stats-box" id="stat-public"><div class="grid_24"><div class="grid_4 alpha" ><span class="icon icon-functional" data-icon="U"></span><br/><span class="stat-lock-title">Public</span></div> <div class="grid_4"><span class="high_nb">${model.publicRunCount}</span><br/><span class="high_nb">${model.publicSamplesCount}</span><br/><span class="high_nb">${model.publicStudiesCount}</span></div> <div class="grid_16 omega"> runs <br/> samples  <br/> projects</div></div></div>
-    <div class="grid_6 jumbo-stats-box omega" id="stat-private"><div class="grid_24"><div class="grid_4 alpha" ><span class="icon icon-functional" data-icon="L"></span><br/><span class="stat-lock-title">Private</span></div> <div class="grid_4"><span class="high_nb">${model.privateRunCount}</span><br/><span class="high_nb">${model.privateSamplesCount}</span><br/><span class="high_nb">${model.privateStudiesCount}</span></div> <div class="grid_16 omega"> runs <br/> samples  <br/> projects</div></div></div>
+    <div class="grid_6 jumbo-stats-box" id="stat-public">
+        <div class="grid_24"><div class="grid_6 alpha" ><span class="icon icon-functional" data-icon="U"></span><br/><span class="stat-lock-title">Public</span></div>
+            <div class="grid_6"><span class="high_nb">${model.publicRunCount}</span><br/><span class="high_nb">${model.publicSamplesCount}</span><br/><span class="high_nb">${model.publicStudiesCount}</span></div> <div class="grid_12 omega"> runs <br/> samples  <br/> projects</div></div></div>
+    <div class="grid_6 jumbo-stats-box omega" id="stat-private">
+        <div class="grid_24"><div class="grid_6 alpha" ><span class="icon icon-functional" data-icon="L"></span><br/><span class="stat-lock-title">Private</span></div>
+            <div class="grid_6"><span class="high_nb">${model.privateRunCount}</span><br/><span class="high_nb">${model.privateSamplesCount}</span><br/><span class="high_nb">${model.privateStudiesCount}</span></div>
+            <div class="grid_12 omega"> runs <br/> samples  <br/> projects</div></div>
+    </div>
 </div>
 </section>
       <%--Caroussel--%>
@@ -291,20 +298,20 @@
 
                 <div class="grid_24 list-biomes-l">
 
-                    <div class=" alpha list-biomes-element"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=SOIL"/>"
+                    <div class="alpha list-biomes-element"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=SOIL"/>"
                                                  title="View all <c:out value="${model.biomeMap['SOIL']}"/> soil projects"><span class="biome_icon icon_sm soil_b"></span><span class="biome_text">Soil (<c:out value="${model.biomeMap['SOIL']}"/>)</span></a></div>
 
-                    <div class=" list-biomes-element"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=MARINE"/>"
+                    <div class="list-biomes-element"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=MARINE"/>"
                                            title="View all <c:out value="${model.biomeMap['MARINE']}"/> marine projects"><span class="biome_icon icon_sm marine_b"></span><span class="biome_text">Marine (<c:out value="${model.biomeMap['MARINE']}"/>)</span></a></div>
 
 
-                    <div class=" list-biomes-element"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=FOREST_SOIL"/>"
+                    <div class="list-biomes-element"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=FOREST_SOIL"/>"
                                                  title="View all <c:out value="${model.biomeMap['FOREST_SOIL']}"/> forest projects"><span class="biome_icon icon_sm forest_b"></span><span class="biome_text">Forest (<c:out value="${model.biomeMap['FOREST_SOIL']}"/>)</span></a></div>
 
-                    <div class=" list-biomes-element"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=NON_HUMAN_HOST"/>"
+                    <div class="list-biomes-element"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=NON_HUMAN_HOST"/>"
                                                                   title="View all <c:out value="${model.biomeMap['NON_HUMAN_HOST&']}"/> non-human host-associated projects"><span class="biome_icon icon_sm non_human_host_b"></span><span class="biome_text">Non-human host (<c:out value="${model.biomeMap['NON_HUMAN_HOST']}"/>)</span></a></div>
 
-                    <div class=" omega list-biomes-element"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=ENGINEERED"/>"
+                    <div class="omega list-biomes-element"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=ENGINEERED"/>"
                                                                title="View all <c:out value="${model.biomeMap['ENGINEERED']}"/> engineered projects"><span class="biome_icon icon_sm engineered_b"></span><span class="biome_text">Engineered (<c:out value="${model.biomeMap['ENGINEERED']}"/>)</span></a></div>
 
 
