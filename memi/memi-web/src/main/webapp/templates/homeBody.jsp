@@ -500,13 +500,20 @@
 <!-- re-style the twitter component-->
 <script type="text/javascript">
     $("iframe").ready(function() {
-        setTimeout(function() {
-            $($("iframe").contents()).find(".avatar, .p-author, .footer, .retweet-credit").css({ display: "none" });
-            $($("iframe").contents()).find(".permalink").css({ float: "none" });
-            $($("iframe").contents()).find(".header, .inline-media").css({'text-align': "center" });
-            $($("iframe").contents()).find("li").css({'padding': "0 0 0 0" });
-            $($("iframe").contents()).find(".e-entry-title").css({'text-align': "center", 'font-size':'157%', 'line-height':'1.4' });
-            $($("iframe").contents()).find("img.autosized-media").css({'max-height': '175px' });
-        }, 700);
+        var timer = setInterval(function() {
+            if ($($("iframe").contents()).find(".avatar").length>0) {
+                $($("iframe").contents()).find(".avatar, .p-author, .footer, .retweet-credit").css({display: "none"});
+                $($("iframe").contents()).find(".permalink").css({float: "none"});
+                $($("iframe").contents()).find(".header, .inline-media").css({'text-align': "center"});
+                $($("iframe").contents()).find("li").css({'padding': "0 0 0 0"});
+                $($("iframe").contents()).find(".e-entry-title").css({
+                    'text-align': "center",
+                    'font-size': '157%',
+                    'line-height': '1.4'
+                });
+                $($("iframe").contents()).find("img.autosized-media").css({'max-height': '175px'});
+                clearInterval(timer);
+            }
+        }, 100);
     });
 </script>
