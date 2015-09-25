@@ -400,7 +400,7 @@
 
     <bean id="chunkedReadsWithoutInterProMatchesFile" autowire-candidate="false"
           class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.SequenceFileDefinition">
-        <property name="identifier" value="READS_WITH_MATCHES_FASTA_FILE"/>
+        <property name="identifier" value="READS_WITHOUT_MATCHES_FASTA_FILE"/>
         <property name="relativePath" value="/sequence-categorisation/noFunction.fasta.chunks"/>
         <property name="description" value="All reads with a predicted CDS but no interproscan match."/>
         <property name="downloadName" value="_noFunction.fasta.gz"/>

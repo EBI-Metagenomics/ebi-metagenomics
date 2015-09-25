@@ -175,18 +175,14 @@ public class MemiDownloadService {
         String mimetype = context.getMimeType(file.getAbsolutePath());
         response.setContentType(mimetype);
         ServletOutputStream sot = null;
-        try {
-            sot = response.getOutputStream();
-            StreamCopyUtil.copy(fis, sot);
-            sot.flush();
-        }
-        finally {
-            if (sot != null) {
-                try {
-                    sot.close();
-                } catch (IOException e) {
-                    log.warn("Could not close output stream after the assembly of the HTTP response!");
-                }
+        sot = response.getOutputStream();
+        StreamCopyUtil.copy(fis, sot);
+        sot.flush();
+        if (sot != null) {
+            try {
+                sot.close();
+            } catch (IOException e) {
+                log.warn("Could not close output stream after the assembly of the HTTP response!");
             }
         }
     }

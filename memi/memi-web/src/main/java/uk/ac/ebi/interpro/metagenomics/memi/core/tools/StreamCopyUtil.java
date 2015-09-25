@@ -34,8 +34,8 @@ public final class StreamCopyUtil {
             timeStamp = System.currentTimeMillis();
         }
         // get an channel from the stream
-        final ReadableByteChannel inputChannel = Channels.newChannel(is);
-        final WritableByteChannel outputChannel = Channels.newChannel(os);
+        ReadableByteChannel inputChannel = Channels.newChannel(is);
+        WritableByteChannel outputChannel = Channels.newChannel(os);
         // copy the channels
         try {
             ChannelTool.fastChannelCopy(inputChannel, outputChannel);
@@ -47,12 +47,18 @@ public final class StreamCopyUtil {
             log.warn("Couldn't copy from input to output stream!");
         } finally {
             try {
-                // closing the channels
+                // closing input channel
                 inputChannel.close();
+            } catch (IOException e) {
+                log.warn("Couldn't close input channel!");
+            }
+            try {
+                //closing output channel
                 outputChannel.close();
             } catch (IOException e) {
-                log.warn("Couldn't close channels!");
+                log.warn("Couldn't close output channel!");
             }
+
         }
     }
 }
