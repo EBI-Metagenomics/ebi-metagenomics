@@ -170,9 +170,11 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
         //Add number of human host biomes
         studyCount = super.countStudiesFilteredByBiomes(studyDAO, biomeDAO, StudyFilter.Biome.HUMAN_HOST.getLineages());
         biomesCountMap.put(StudyFilter.Biome.HUMAN_HOST.toString(), studyCount);
-          //Add number of non-human host biomes
-        studyCount = super.countStudiesFilteredByBiomes(studyDAO, biomeDAO, StudyFilter.Biome.NON_HUMAN_HOST.getLineages());
-        biomesCountMap.put(StudyFilter.Biome.NON_HUMAN_HOST.toString(), studyCount);
+        //Add number of non-human host biomes
+        long studyCountForHuman = super.countStudiesFilteredByBiomes(studyDAO, biomeDAO, StudyFilter.Biome.HUMAN_HOST.getLineages());
+        long studyCountForHost = super.countStudiesFilteredByBiomes(studyDAO, biomeDAO, StudyFilter.Biome.HOST_ASSOCIATED.getLineages());
+        long studyCountForNonHumanHost = studyCountForHost - studyCountForHuman;
+        biomesCountMap.put(StudyFilter.Biome.NON_HUMAN_HOST.toString(), studyCountForNonHumanHost);
         //Add number of engineered biomes
         studyCount = super.countStudiesFilteredByBiomes(studyDAO, biomeDAO, StudyFilter.Biome.ENGINEERED.getLineages());
         biomesCountMap.put(StudyFilter.Biome.ENGINEERED.toString(), studyCount);
