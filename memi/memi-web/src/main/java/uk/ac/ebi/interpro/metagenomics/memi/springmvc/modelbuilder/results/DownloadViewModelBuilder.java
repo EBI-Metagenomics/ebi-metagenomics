@@ -164,11 +164,14 @@ public class DownloadViewModelBuilder extends AbstractResultViewModelBuilder<Dow
                                         getFileSize(downloadFileObj), linkPrefix));
 
                             } else if (chunkedFileDefinition instanceof FunctionalAnalysisFileDefinition) {
-                                interproscanDownloadLinks.add(new DownloadLink(linkText,
-                                        chunkedFileDefinition.getLinkTitle(),
-                                        "projects/" + externalProjectId + "/samples/" + externalSampleId + "/runs/" + externalRunId + "/results/versions/" + analysisJobReleaseVersion + "/function/InterProScan/chunks/" + String.valueOf(chunkCounter),
-                                        chunkedFileDefinition.getOrder(),
-                                        getFileSize(downloadFileObj), linkPrefix));
+                                //Filter out amplicons
+                                if (!isAmpliconData()) {
+                                    interproscanDownloadLinks.add(new DownloadLink(linkText,
+                                            chunkedFileDefinition.getLinkTitle(),
+                                            "projects/" + externalProjectId + "/samples/" + externalSampleId + "/runs/" + externalRunId + "/results/versions/" + analysisJobReleaseVersion + "/function/InterProScan/chunks/" + String.valueOf(chunkCounter),
+                                            chunkedFileDefinition.getOrder(),
+                                            getFileSize(downloadFileObj), linkPrefix));
+                                }
                             } else {
                                 //do nothing
                             }
