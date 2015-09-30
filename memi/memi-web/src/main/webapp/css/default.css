@@ -747,12 +747,8 @@ font-size:100%;
 /*box homepage*/
 #submit-data, #list-data-study, #list-data-sample, #list-news { background-color: white;border-radius: 0 0 20px 0; /*hidden*//*border: 1px solid #9f9f9f;*//*box-shadow:2px 2px 7px #8a8a8a;*/}
 
-#list-data-study, #list-data-sample, /*#list-news,*/#list-biomes {
-line-height:1.3; /*width:28.9%;*/
-_height:400px; /*to keep same height for IE6 */
-/*min-height:440px;*/
-/*padding: 0 9px 9px 9px;*/
-}
+#list-data-study, #list-data-sample {line-height:1.3; /*width:28.9%;*/}
+#list-biomes {line-height:1.47;} /*to align biome box & project list*/
 
 #list-data-study h3, #list-data-sample h3 {font-size:123%; color:#445668; margin: 1em 0px; font-weight: bold;}
 
@@ -804,14 +800,32 @@ _height:400px; /*to keep same height for IE6 */
 .biome_icon.icon_xs.wastewater_b {background-position: -122px -118px;}
 .biome_icon.icon_xs.default_b {background-position: -162px -118px;}
 /*biome homepage*/
-#list-biomes .list-biomes-l { margin-top: 9px;/*  background-color: #ececec; padding: 25px 9px 0px 9px; min-height: 390px;*/}
-#list-biomes .list-biomes-l .list-biomes-element {width:18%;text-align: center; display: inline;  float: left;  position: relative;  zoom: 1;  margin-left: 1%;  margin-right: 1%; }
-#list-biomes .list-biomes-l .list-biomes-element.omega {margin-right: 0%; }
-#list-biomes .list-biomes-l .list-biomes-element.alpha {margin-left: 0%; }
-#list-biomes .biome_text {display: block; padding-bottom: 9px;  word-wrap: break-word; }
-#list-biomes .grid_24 a {height:130px;font-weight: bold; color:#6f6f6f; display:block;}
-#list-biomes .grid_24 a:hover {color:white;background-color:  rgba(0, 0, 0, 0.25);text-decoration: none;}
+#list-biomes .list-biomes-l {margin-top: 9px;}
+#list-biomes .list-biomes-l:last-of-type {margin-bottom: 9px;}/*add extra margin to align box content*/
+#list-biomes .list-biomes-l a.omega {margin-right: 0%; }
+#list-biomes .list-biomes-l a.alpha {margin-left: 0%; }
+#list-biomes .biome_text {display: block; padding-top: 4px; word-wrap: break-word;}
+#list-biomes .grid_24 a {padding: 6px;/*height:130px;*/font-weight: bold; color:#6f6f6f; /*display:block;*/float:left;width: 18%;text-align: center;  zoom: 1;  margin-left: 1%;  margin-right: 1%; border:0px solid black; box-sizing: border-box;}
+#list-biomes .grid_24 a:hover  {color:white;text-decoration: none; background-color:  rgba(0, 0, 0, 0.25);}
+
 #list-biomes .biome_icon {margin:9px;}
+/*strechy sprite - to amake responsive sprite/biome from http://tobyj.net/responsive-sprites/*/
+.stretchy {margin-left: 6px;display: block; position: relative; overflow: hidden; max-width: 80px;/*sprite icon size*/}
+.stretchy .spacer {width: 100%; height: auto;}
+.stretchy .sprite {position: absolute;top: 0; left: 0; max-width: none; max-height: 2690%;}
+
+.stretchy .sprite.soil_b {left: -47%;top: -480%;}
+.stretchy .sprite.marine_b {left:-170%; top: -480%;}
+.stretchy .sprite.forest_b {left: -292%;top: -480%;}
+.stretchy .sprite.non_human_host_b {left:-414%; top: -480%;}
+.stretchy .sprite.engineered_b {left:-47%; top: -724%;}
+.stretchy .sprite.freshwater_b {left:-47%; top: -602%;}
+.stretchy .sprite.grassland_b {left:-170%; top: -602%;}
+.stretchy .sprite.human_gut_b {left:-292%; top: -602%;}
+.stretchy .sprite.air_b {left:-170%; top: -724%;}
+.stretchy .sprite.wastewater_b {left:-290%; top: -724%;}
+
+.list-biomes-element {/*padding: 6px;/*define size of the icon image*/}
 /*biome homepage responsive - change size icons  for small screens */
 @media (max-width: 768px) {
 #list-biomes .biome_icon {width: 30px; height: 30px;}
@@ -1204,9 +1218,7 @@ span.form_help ul li{
 
 /* carousel */
 .carousel {text-align:center; margin:0;border:0px green solid;zoom:1; font-size:110%;min-width:860px;display: block;}
-@media (max-width: 768px) {  /*remove carousel for small scree - temp while trying to find a responsive carousel*/
-    .carousel { display: none;}
-}
+
 .carousel div{margin:0;padding:0;}
 .carousel:focus{outline:0px solid #0092bf;}/*removed the annoying effect on the slideshow*/
 .carousel-wrap{
@@ -1891,10 +1903,9 @@ a.all:active  { background: url(../img/arrow_link_click_small.jpg) no-repeat rig
 .jumbo-news-centred a, .jumbo-news-centred a:visited {color:#0c4d7b;}
 .jumbo-news-centred .icon-socialmedia:before {color:#0c4d7b;}
 
-
+#list-data-study .list-project-l {height: 280px; width: auto; position: relative;  width: 100%;  overflow-x: hidden; overflow-y: scroll;}
 /*END HOMEPAGE*/
 
-.list-project-l {height: 278px; width: auto; position: relative;  width: 100%;  overflow-x: hidden; overflow-y: scroll;}
 
 @media (max-width: 768px) {
 /*Homepage*/
@@ -1960,3 +1971,8 @@ a.box-registration-link  {text-decoration: none; cursor: pointer;}
 .ico-spin {-webkit-animation: ico-spin 1s infinite linear; animation: ico-spin 1s infinite linear;}
 /*create gal class for hidden elements on the page - to move on top*/
 .this_hide {display:none;}
+
+/* responsive  *******************************/
+@media (max-width: 768px) {  /*remove carousel and feedback for small screens*/
+    .carousel, #feedback_div {display: none;}
+}
