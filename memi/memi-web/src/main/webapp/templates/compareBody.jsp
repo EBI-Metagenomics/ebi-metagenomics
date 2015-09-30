@@ -18,7 +18,7 @@
             <c:otherwise><h4>Project list</h4></c:otherwise>
             </c:choose>
                 <%--<form:option value="-" label="--Select project"/>--%>
-                <form:select path="study" size="10" id="projects" style="width:100%;">
+                <form:select path="study" size="13" id="projects" style="width:100%;">
                     <c:forEach var="study" items="${model.filteredStudies}">
                         <form:option id="${study.studyId}" value="${study.id}" title="Project ${study.studyId} | ${study.studyName}">${study.studyName}</form:option>
                     </c:forEach>
@@ -45,7 +45,7 @@
                 </c:choose>
                 <%-- Is the loading icon necessary? quite fast to load samples in the box
                 <div id="loading"><img src="${pageContext.request.contextPath}/img/compare_load.gif"></div>--%>
-                <form:select path="analysisJobIds" multiple="true" size="10" id="analysisJobIds" style="width:100%;">
+                <form:select path="analysisJobIds" multiple="true" size="13" id="analysisJobIds" style="width:100%;">
                 </form:select>
                 <div id="samples-control"><a id="select-all-button" onclick="SelectAllSamples()">Select all</a> | <a id="unselect-all-button" onclick="UnselectAllSamples()">Unselect all </a>
                     <c:set var="sampleError"><form:errors path="analysisJobIds" cssClass="error" element="div"/></c:set>
