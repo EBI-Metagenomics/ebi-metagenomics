@@ -898,12 +898,15 @@ text-shadow: 0px 1px 0px #f2f2f2;
 border: 0px solid #556f8c;
 }
 
-
 input, textarea, select {
 font-family: helvetica, "trebuchet MS", arial, sans-serif;
 padding:4px;
 border:1px solid #abadb3;
 color: #445668;}
+
+/*comparaison tool select*/
+#projects, #analysisJobIds {padding:0px;font-size: 109%;}
+#projects option, #analysisJobIds option {padding: 2px 4px;}
 
 #headerdiv input {border:0px; padding:0; }/*added for the mitigation template*/
 
