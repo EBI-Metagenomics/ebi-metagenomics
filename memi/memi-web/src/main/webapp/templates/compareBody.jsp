@@ -3,10 +3,12 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <div class="sample_comp">
-<h2>Comparison tool <span class="icon_beta_title">beta</span></h2>
+<h2>Comparison tool
+    <%--<span class="icon_beta_title">beta</span>--%>
+</h2>
 <p>The comparison is currently based on a summary of Gene Ontology (GO) terms derived from InterPro matches to the selected runs.<br/>
-This comparison tool is in <strong>beta version</strong> and undergoing testing. We welcome your feedback and suggestions during this period to improve it.
-Please <a id="script_feedbackLink" href="javascript:slideFeedbackForm()" title="Give your feedback">get in touch</a> using the feedback button on the right, or by contacting us through <a title="EBI's support & feedback form" href="http://www.ebi.ac.uk/support/metagenomics" class="ext">EBI contact form</a>.
+<%--This comparison tool is in <strong>beta version</strong> and undergoing testing. We welcome your feedback and suggestions during this period to improve it.--%>
+<%--Please <a id="script_feedbackLink" href="javascript:slideFeedbackForm()" title="Give your feedback">get in touch</a> using the feedback button on the right, or by contacting us through <a title="EBI's support & feedback form" href="http://www.ebi.ac.uk/support/metagenomics" class="ext">EBI contact form</a>.--%>
 </p>
 <form:form id="comparison-tool-form-id" method="post" commandName="comparisonForm">
     <div id="row-wrapper">
