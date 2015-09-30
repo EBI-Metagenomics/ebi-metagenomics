@@ -24,14 +24,14 @@
                        href="<c:url value="${baseURL}/projects/${model.run.externalProjectId}/samples/${model.run.externalSampleId}/runs/${model.run.externalRunId}/results/overview/versions/${model.analysisJob.pipelineRelease.releaseVersion}"/>"><span>Overview</span></a>
                 </li>
                 <li>
-                    <a title="Quality-Control"
+                    <a title="Quality control"
                        href="<c:url value="${baseURL}/projects/${model.run.externalProjectId}/samples/${model.run.externalSampleId}/runs/${model.run.externalRunId}/results/qualityControl/versions/${model.analysisJob.pipelineRelease.releaseVersion}"/>"><span>Quality control</span></a>
                 </li>
-                <li><a title="Taxonomy-Analysis"
+                <li><a title="Taxonomy analysis"
                        href="<c:url value="${baseURL}/projects/${model.run.externalProjectId}/samples/${model.run.externalSampleId}/runs/${model.run.externalRunId}/results/taxonomic/versions/${model.analysisJob.pipelineRelease.releaseVersion}"/>"><span>Taxonomic analysis</span></a>
                 </li>
                 <li>
-                    <a title="Functional-Analysis"
+                    <a title="Functional analysis"
                        href="<c:url value="${baseURL}/projects/${model.run.externalProjectId}/samples/${model.run.externalSampleId}/runs/${model.run.externalRunId}/results/functional/versions/${model.analysisJob.pipelineRelease.releaseVersion}"/>"><span>Functional analysis</span></a>
                 </li>
                 <li>
