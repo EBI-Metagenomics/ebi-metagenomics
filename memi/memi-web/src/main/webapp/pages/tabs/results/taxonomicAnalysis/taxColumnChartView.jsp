@@ -5,37 +5,48 @@
     <div class="chart_container">
         <div class="chart-block">
 
-          <div class="but_chart_export ui-buttonset">
-          <button id="taxcolumn" style="display: none;"></button>
-          <button id="select" class="ui-button ui-widget ui-state-default ui-button-text-icon-secondary ui-corner-right"><span class="ui-button-text">Export</span><span class="ui-button-icon-secondary ui-icon ui-icon-triangle-1-s"></span></button>
-          </div>
+            <div class="but_chart_export ui-buttonset">
+                <button id="taxcolumn" style="display: none;"></button>
+                <button id="select"
+                        class="ui-button ui-widget ui-state-default ui-button-text-icon-secondary ui-corner-right"><span
+                        class="ui-button-text">Export</span><span
+                        class="ui-button-icon-secondary ui-icon ui-icon-triangle-1-s"></span></button>
+            </div>
 
             <ul class="export_list">
-             <li><strong>Phylum composition</strong></li>
-             <%--<li class="chart_exp_snap"> <a onclick="toImg(document.getElementById('tax_chart_col'), document.getElementById('img_div'));">Snapshot</a></li>--%>
-             <li class="chart_exp png" id="col_phy_png"><a onclick="saveAsImg(document.getElementById('tax_chart_col'),'<spring:message code="file.name.tax.col.chart.phylum.png"/>',1);">PNG</a></li>
-             <li class="chart_exp png" id="col_phy_png_h"><a onclick="saveAsImg(document.getElementById('tax_chart_col'),'<spring:message code="file.name.tax.col.chart.phylum.high.png"/>',300/72);">PNG (Higher quality)</a></li>
-             <li class="chart_exp" id="col_phy_svg"><a onclick="saveAsSVG(document.getElementById('tax_chart_col'),'<spring:message code="file.name.tax.col.chart.phylum.svg"/>');">SVG</a>
-             </ul>
+                <li><strong>Phylum composition</strong></li>
+                <%--<li class="chart_exp_snap"> <a onclick="toImg(document.getElementById('tax_chart_col'), document.getElementById('img_div'));">Snapshot</a></li>--%>
+                <li class="chart_exp png" id="col_phy_png"><a
+                        onclick="saveAsImg(document.getElementById('tax_chart_col'),'<spring:message code="file.name.tax.col.chart.phylum.png"/>',1);">PNG</a>
+                </li>
+                <li class="chart_exp png" id="col_phy_png_h"><a
+                        onclick="saveAsImg(document.getElementById('tax_chart_col'),'<spring:message code="file.name.tax.col.chart.phylum.high.png"/>',300/72);">PNG
+                    (Higher quality)</a></li>
+                <li class="chart_exp" id="col_phy_svg"><a
+                        onclick="saveAsSVG(document.getElementById('tax_chart_col'),'<spring:message code="file.name.tax.col.chart.phylum.svg"/>');">SVG</a>
+            </ul>
 
-        <div id="tax_chart_col"></div>
+            <div id="tax_chart_col"></div>
         </div>
 
         <div id="tax_dashboard_col">
             <div id="tax_table_col_filter"></div>
             <div id="tax_table_col"></div>
             <div class="msg_help blue_h phylum_help">
-             <p><span class="icon icon-generic" data-icon="i"></span>This view aggregates the taxonomy information at the domain and phylum level. To download the full detailed taxonomy distribution (TSV format),<a href="<c:url value="${baseURL}/projects/${projectId}/samples/${sampleId}/runs/${runId}/results/taxonomy/versions/${releaseVersion}/export?contentType=text&exportValue=otuTable"/>">
-                 <c:choose>
-                 <c:when test="${releaseVersion == '1.0'}">
-                     <a href="<c:url value="${baseURL}/projects/${projectId}/samples/${sampleId}/runs/${runId}/results/taxonomy/versions/${releaseVersion}/export?contentType=text&exportValue=taxa"/>">please follow this link</a>
-                 </c:when>
-                <c:when test="${releaseVersion== '2.0'}">
-                <a href="<c:url value="${baseURL}/projects/${projectId}/samples/${sampleId}/runs/${runId}/results/taxonomy/versions/${releaseVersion}/export?contentType=text&exportValue=otuTable"/>">please follow this link</a>
-                </c:when><c:otherwise> not working</c:otherwise>
-                </c:choose>
-               .</p>
-             </div>
+                <p><span class="icon icon-generic" data-icon="i"></span>This view aggregates the taxonomy information at
+                    the domain and phylum level. To download the full detailed taxonomy distribution (TSV format),
+                    <c:choose>
+                        <c:when test="${releaseVersion == '1.0'}">
+                            <a href="<c:url value="${baseURL}/projects/${projectId}/samples/${sampleId}/runs/${runId}/results/taxonomy/versions/${releaseVersion}/export?contentType=text&exportValue=taxa"/>">please
+                                follow this link</a>
+                        </c:when>
+                        <c:when test="${releaseVersion== '2.0'}">
+                            <a href="<c:url value="${baseURL}/projects/${projectId}/samples/${sampleId}/runs/${runId}/results/taxonomy/versions/${releaseVersion}/export?contentType=text&exportValue=otuTable"/>">please
+                                follow this link</a>
+                        </c:when><c:otherwise> not working</c:otherwise>
+                    </c:choose>
+                    .</p>
+            </div>
         </div>
 
     </div>
@@ -44,8 +55,10 @@
 
 <%--Globale page properties--%>
 <c:choose>
-    <c:when test="${model.run.releaseVersion == '1.0'}"><c:set var="phylumCompositionTitle" scope="request" value="Phylum composition (Total: ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator} OTUs)"/></c:when>
-    <c:otherwise><c:set var="phylumCompositionTitle" scope="request" value="Phylum composition (Total: ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator} reads)"/></c:otherwise>
+    <c:when test="${model.run.releaseVersion == '1.0'}"><c:set var="phylumCompositionTitle" scope="request"
+                                                               value="Phylum composition (Total: ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator} OTUs)"/></c:when>
+    <c:otherwise><c:set var="phylumCompositionTitle" scope="request"
+                        value="Phylum composition (Total: ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator} reads)"/></c:otherwise>
 </c:choose>
 <script type="text/javascript">
     drawPhylumStackChart();
@@ -56,10 +69,14 @@
         var taxMatchesDataColumnChart = new google.visualization.DataTable();
         taxMatchesDataColumnChart.addColumn('string', 'Phylum');
         taxMatchesDataColumnChart.addColumn('string', 'Domain');
-        <c:choose>
-            <c:when test="${model.run.releaseVersion == '1.0'}">taxMatchesDataColumnChart.addColumn('number', 'Unique OTUs');taxMatchesDataColumnChart.addColumn('number', '%');</c:when>
-            <c:otherwise>taxMatchesDataColumnChart.addColumn('number', 'Number of reads');taxMatchesDataColumnChart.addColumn('number', '%');</c:otherwise>
-        </c:choose>
+    <c:choose>
+        <c:when test="${model.run.releaseVersion == '1.0'}">taxMatchesDataColumnChart.addColumn('number', 'Unique OTUs');
+        taxMatchesDataColumnChart.addColumn('number', '%');
+    </c:when>
+        <c:otherwise>taxMatchesDataColumnChart.addColumn('number', 'Number of reads');
+        taxMatchesDataColumnChart.addColumn('number', '%');
+    </c:otherwise>
+    </c:choose>
         taxMatchesDataColumnChart.addRows([
             <c:set var="addComma" value="false"/><c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResult.taxonomyDataSet}" varStatus="status"><c:choose><c:when test="${addComma}">,
             </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>
@@ -102,7 +119,7 @@
         ]);
 
 // Stacked column graph
-        var options = {'title':'${phylumCompositionTitle}', 'titleTextStyle':{fontSize:12},'fontName': '"Arial"',
+        var options = {'title':'${phylumCompositionTitle}', 'titleTextStyle':{fontSize:12}, 'fontName':'"Arial"',
             'colors':[${model.taxonomyAnalysisResult.colorCodeForStackChart}],
             'width':320, 'height':420,
             'legend':{position:'right', textStyle:{fontSize:10}},
