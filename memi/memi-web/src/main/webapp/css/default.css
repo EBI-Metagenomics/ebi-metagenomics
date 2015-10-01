@@ -1130,13 +1130,13 @@ margin:0;
 }
 
 .msg_error {background-color: #FFCFCF; color: #8C302C;border:1px #ff918e solid; margin: 0px auto;font-size: 118%; margin-top:27px;padding: 14px;width: 712px;border-radius: 7px;}
-
-/*input.valid, textarea.valid {*/
-/*background: white url(../img/ico_form_check.png) no-repeat right top;*/
-/*border:1px #ade89f solid;*/
-/*margin:0;*/
-/*}*/
-
+.msg_help {display:block;background-color: #f1f3f7; color: #455872; border: 1px #D5E5FA solid; padding: 9px; border-radius: 7px; }
+.msg_help.blue_h {background-color: #DDE5F5; color: #455872; border: 1px #D5E5FA solid;}
+.msg_help.yel_h {background-color: #ffffa3; color: #555; border: 1px #f1d031 solid;}
+.msg_help p {margin:0;}
+.msg_help.phylum_help {width: 450px; clear: both; margin-left: 9px; margin-top: 9px;}
+.msg_help.blue_h span.icon-generic::before {color: #7CA3D4;}
+.msg_help.yel_h span.icon-generic::before {color: #797070;}
 
 .close_wind a {
 background: transparent url(../img/ico_close.png) no-repeat right top;
@@ -1645,7 +1645,7 @@ ul.color_legend {list-style-type: square; list-style-position:inside;}
 #func_dashboard, #tax_dashboard, #tax_dashboard_col, #tax_dashboard_bar  {float: left;}
 #tax_table_filter, #tax_table_col_filter, #tax_table_bar_filter, #func_table_filter {margin-left: 9px; padding-left: 9px; background-color: #E6E6E6;}
 #tax_table_filter input, #tax_table_col_filter input, #tax_table_bar_filter input, #func_table_filter input {padding: 1px;margin: 3px 0;}
-
+#tax_dashboard {margin-bottom: 2px;}/*space with help info*/
 .expandertable {float:left; margin-top: -32px; margin-left: 833px; z-index: 1;  position: relative;}
 #toolbar_div {display: block; float:left;}
 .sample_ana .google-visualization-table-table td:first-child {border-left:1px #eee solid;}/*solve a bug where border disappear just for first col*/
