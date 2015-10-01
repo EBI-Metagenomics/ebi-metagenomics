@@ -72,7 +72,7 @@
                         <c:if test="${not empty model.downloadSection.functionalDownloadSection.interproscanDownloadLinks}">
                             <c:choose>
                                 <c:when test="${fn:length(model.downloadSection.functionalDownloadSection.interproscanDownloadLinks)>1}">
-                                    <li class="no-dash-last">InterPro matches (TSV) <span
+                                    <li class="no-dash-last"><c:out value="${model.downloadSection.functionalDownloadSection.interproscanDownloadLinks[0].linkPrefix}"/><span
                                             class="icon icon-generic show_tooltip"
                                             data-icon="i"
                                             title="TSV file compressed using GZIP -GZ, or GNU Zipped Archive file is a compression utility. GZ was adopted by the GNU Project, and is relatively popular on the Internet. GZIP produces files with a GZ extension, which can be decompressed by GZIP/GNUZIP program."></span>:
