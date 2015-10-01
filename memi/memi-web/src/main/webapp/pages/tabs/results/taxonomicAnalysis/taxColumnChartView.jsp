@@ -24,6 +24,18 @@
         <div id="tax_dashboard_col">
             <div id="tax_table_col_filter"></div>
             <div id="tax_table_col"></div>
+            <div class="msg_help blue_h phylum_help">
+             <p><span class="icon icon-generic" data-icon="i"></span>This view aggregates the taxonomy information at the domain and phylum level. To download the full detailed taxonomy distribution (TSV format),<a href="<c:url value="${baseURL}/projects/${projectId}/samples/${sampleId}/runs/${runId}/results/taxonomy/versions/${releaseVersion}/export?contentType=text&exportValue=otuTable"/>">
+                 <c:choose>
+                 <c:when test="${releaseVersion == '1.0'}">
+                     <a href="<c:url value="${baseURL}/projects/${projectId}/samples/${sampleId}/runs/${runId}/results/taxonomy/versions/${releaseVersion}/export?contentType=text&exportValue=taxa"/>">please follow this link</a>
+                 </c:when>
+                <c:when test="${releaseVersion== '2.0'}">
+                <a href="<c:url value="${baseURL}/projects/${projectId}/samples/${sampleId}/runs/${runId}/results/taxonomy/versions/${releaseVersion}/export?contentType=text&exportValue=otuTable"/>">please follow this link</a>
+                </c:when><c:otherwise> not working</c:otherwise>
+                </c:choose>
+               .</p>
+             </div>
         </div>
 
     </div>
