@@ -45,7 +45,6 @@
         </div>
 
     </div>
-
 </div>
 <%--Globale page properties--%>
 <c:choose>
