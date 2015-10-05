@@ -374,6 +374,19 @@
         <property name="releaseVersion" value="2.0"/>
     </bean>
 
+    <bean id="chunkedMaskedReadsFile" autowire-candidate="false"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.SequenceFileDefinition">
+        <property name="identifier" value="MASKED_FASTA"/>
+        <property name="fileNameEnding" value="_masked.fasta.chunks"/>
+        <property name="description" value="Processed nucleotide reads."/>
+        <property name="downloadName" value="_nt_reads.fasta.gz"/>
+        <property name="linkText" value="Processed nucleotide reads (FASTA)"/>
+        <property name="order" value="2"/>
+        <property name="linkTitle" value="Click to download processed fasta nucleotide sequences"/>
+        <property name="linkURL" value="ProcessedReads"/>
+        <property name="releaseVersion" value="1.0"/>
+    </bean>
+
     <bean id="chunkedReadsWithPredictedCDSFile" autowire-candidate="false"
           class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.SequenceFileDefinition">
         <property name="identifier" value="READS_WITH_PREDICTED_CDS_FILE"/>

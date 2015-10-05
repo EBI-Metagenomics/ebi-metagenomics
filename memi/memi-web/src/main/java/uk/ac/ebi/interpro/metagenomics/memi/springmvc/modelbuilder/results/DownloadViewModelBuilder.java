@@ -114,7 +114,8 @@ public class DownloadViewModelBuilder extends AbstractResultViewModelBuilder<Dow
 
                         //
                         final List<DownloadLink> downloadLinks = new ArrayList<DownloadLink>();
-                        if (chunkedFileDefinition.getIdentifier().equalsIgnoreCase("PROCESSED_READS_FILE")) {
+                        //Processed reads are different between version 1 and 2
+                        if (chunkedFileDefinition.getIdentifier().equalsIgnoreCase("MASKED_FASTA") || chunkedFileDefinition.getIdentifier().equalsIgnoreCase("PROCESSED_READS_FILE")) {
                             sequencesDownloadSection.setProcessedReadsLinks(downloadLinks);
                         } else if (chunkedFileDefinition.getIdentifier().equalsIgnoreCase("READS_WITH_PREDICTED_CDS_FILE")) {
                             sequencesDownloadSection.setReadsWithPredictedCDSLinks(downloadLinks);

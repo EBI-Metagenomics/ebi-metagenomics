@@ -347,7 +347,13 @@ public class ResultViewExportController extends AbstractResultViewController {
                                                      final HttpServletRequest request) throws IOException {
         FileDefinitionId fileDefinitionId = null;
         if (sequenceType.equalsIgnoreCase("ProcessedReads")) {
-            fileDefinitionId = FileDefinitionId.PROCESSED_READS;
+            if (releaseVersion.equalsIgnoreCase("1.0")) {
+                fileDefinitionId = FileDefinitionId.MASKED_FASTA;
+            } else if (releaseVersion.equalsIgnoreCase("2.0")) {
+                fileDefinitionId = FileDefinitionId.PROCESSED_READS;
+            } else {//Default value
+                fileDefinitionId = FileDefinitionId.PROCESSED_READS;
+            }
         } else if (sequenceType.equalsIgnoreCase("ReadsWithPredictedCDS")) {
             fileDefinitionId = FileDefinitionId.READS_WITH_PREDICTED_CDS_FILE;
         } else if (sequenceType.equalsIgnoreCase("ReadsWithMatches")) {
