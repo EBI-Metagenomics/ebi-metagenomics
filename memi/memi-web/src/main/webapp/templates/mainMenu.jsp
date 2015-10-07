@@ -1,7 +1,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="loginDialog.jsp" %>
 
-<ul id="local-nav">
+<div class="navbar-header">
+    <ul>
+     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+         <span class="icon-bar"></span>
+         <span class="icon-bar"></span>
+         <span class="icon-bar"></span>
+       </button>  </ul>
+</div><!-- /navbar-header -->
+
+<ul id="local-nav" class="collapse navbar-collapse nav navbar-nav">
     <li class="${model.tabClasses["tabClassHomeView"]} first"><a href="<c:url value="${baseURL}/"/>"
                                                                  title="Home">Home</a></li>
     <li class="${model.tabClasses["tabClassSubmitView"]}"><a href="<c:url value="${baseURL}/submission"/>"
@@ -77,6 +86,15 @@
 
 </ul>
 
+<script type="text/javascript">
+    $(document).ready(function() {
+        //show the menu when click on the button
+        $('.navbar-toggle').click(function() {
+          $( "#local-nav" ).slideToggle( "fast", function() {
+          });
+        });
+    });
+</script>
 
 
 
