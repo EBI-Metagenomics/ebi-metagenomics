@@ -195,18 +195,18 @@ public class DatabaseMockuper {
                             ((EnvironmentSample) s).setEnvironmentalMaterial(row[13]);
 
                         } else {
-                            s = new HostSample();
-                            ((HostSample) s).setHostSex((row[41].equals("female") ? HostSample.HostSex.FEMALE : HostSample.HostSex.MALE));
-                            String taxonId = row[17];
-                            if (taxonId != null && taxonId.trim().length() > 0) {
-                                ((HostSample) s).setHostTaxonomyId(new Integer(Integer.parseInt(taxonId)));
-                            }
-                            ((HostSample) s).setPhenotype(row[47]);
+                            s = new Sample();
+                            s.setHostSex((row[41].equals("female") ? Sample.HostSex.FEMALE : Sample.HostSex.MALE));
+//                            String taxonId = row[17];
+//                            if (taxonId != null && taxonId.trim().length() > 0) {
+//                                ((HostSample) s).setHostTaxonomyId(new Integer(Integer.parseInt(taxonId)));
+//                            }
+                            s.setPhenotype(row[47]);
                         }
                         s.setSampleId(row[0]);
                         String studyId = row[1];
 //                        s.setSampleTitle(row[2]);
-                        s.setSampleClassification(row[3]);
+//                        s.setSampleClassification(row[3]);
                         s.setGeoLocName(row[4]);
 
                         //set dates using different date formatters

@@ -19,7 +19,7 @@ public class UndefinedSample extends Sample {
         return this.getClass();
     }
 
-    public SampleType getSampleType() {
-        return Sample.SampleType.UNDEFINED;
-    }
+//    public SampleType getSampleType() {
+//        return Sample.SampleType.UNDEFINED;
+//    }
 }

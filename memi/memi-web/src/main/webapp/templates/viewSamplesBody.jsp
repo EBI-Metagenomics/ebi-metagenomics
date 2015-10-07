@@ -20,17 +20,30 @@
                     </div>
 
                     <div class="result_row">
-                            <%--Used sample type instead of study type to not confuse the user--%>
-                        <label for="source">Source:</label>
-                    <span>
-                        <form:select path="sampleType">
-                            <form:option value="" label="All"/>
-                            <form:option value="ENVIRONMENTAL" label="Environmental"/>
-                            <form:option value="HOST_ASSOCIATED" label="Host associated"/>
-                            <form:option value="ENGINEERED" label="Man-made"/>
-                            <%--<form:options items="${model.sampleTypes}"/>--%>
-                        </form:select>
-                    </span>
+                        <label for="biome">Biomes:</label>
+                     <span>
+                      <form:select id="biomeId" path="biome">
+                          <form:option value="ALL" label="All"></form:option>
+                          <form:option value="AIR">&nbsp;&nbsp;&nbsp;&nbsp;Air</form:option>
+                          <form:option value="ENGINEERED">&nbsp;&nbsp;&nbsp;&nbsp;Engineered</form:option>
+                          <form:option
+                                  value="WASTEWATER">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Wastewater</form:option>
+                          <form:option value="FRESHWATER">&nbsp;&nbsp;&nbsp;&nbsp;Freshwater</form:option>
+                          <form:option value="HOST_ASSOCIATED">&nbsp;&nbsp;&nbsp;&nbsp;Host-associated</form:option>
+                          <form:option
+                                  value="HUMAN_HOST">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Human</form:option>
+                          <form:option
+                                  value="HUMAN_GUT">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Human gut</form:option>
+                          <form:option
+                                  value="NON_HUMAN_HOST">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Non-human</form:option>
+                          <form:option value="MARINE">&nbsp;&nbsp;&nbsp;&nbsp;Marine</form:option>
+                          <form:option value="SOIL">&nbsp;&nbsp;&nbsp;&nbsp;Soil</form:option>
+                          <form:option
+                                  value="FOREST_SOIL">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Forest</form:option>
+                          <form:option
+                                  value="GRASSLAND">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Grassland</form:option>
+                      </form:select>
+                     </span>
                     </div>
 
                     <c:if test="${not empty model.submitter}">
@@ -100,10 +113,10 @@
                 <c:if test="${model.pagination.totalItems > model.pagination.pageSize}">
                     <c:choose>
                         <c:when test="${model.pagination.existPreviousStartPos}">
-                          
-                             <div class="pag-first"><a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=${model.sampleFilter.searchTerm}&sampleVisibility=${model.sampleFilter.sampleVisibility.upperCaseString}&search=Search&startPosition=${model.pagination.start}&sampleType=${model.sampleFilter.sampleType.upperCaseString}"/>"
+
+                             <div class="pag-first"><a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=${model.sampleFilter.searchTerm}&sampleVisibility=${model.sampleFilter.sampleVisibility.upperCaseString}&search=Search&startPosition=${model.pagination.start}&biome=${model.sampleFilter.biome}"/>"
                                id="csv" title="<c:out value="${firstId}"/>"></a></div>
-                            <div class="pag-prev"><a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=${model.sampleFilter.searchTerm}&sampleVisibility=${model.sampleFilter.sampleVisibility.upperCaseString}&search=Search&startPosition=${model.pagination.previousStartPos}&sampleType=${model.sampleFilter.sampleType.upperCaseString}"/>"
+                            <div class="pag-prev"><a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=${model.sampleFilter.searchTerm}&sampleVisibility=${model.sampleFilter.sampleVisibility.upperCaseString}&search=Search&startPosition=${model.pagination.previousStartPos}&biome=${model.sampleFilter.biome}"/>"
                                id="csv" title="<c:out value="${prevId}"/>"></a></div>
                         </c:when>
                         <c:otherwise><div class="pag-first-off"></div>  <div class="pag-prev-off"></div></c:otherwise>
@@ -111,9 +124,9 @@
                     <%--<span style="float:left;padding:0 4px; color:#ABADB3;">prev | next</span>--%>
                     <c:choose>
                         <c:when test="${model.pagination.existNextStartPos}">
-                           <div class="pag-next"><a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=${model.sampleFilter.searchTerm}&sampleVisibility=${model.sampleFilter.sampleVisibility.upperCaseString}&search=Search&startPosition=${model.pagination.nextStartPos}&sampleType=${model.sampleFilter.sampleType.upperCaseString}"/>"
+                           <div class="pag-next"><a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=${model.sampleFilter.searchTerm}&sampleVisibility=${model.sampleFilter.sampleVisibility.upperCaseString}&search=Search&startPosition=${model.pagination.nextStartPos}&biome=${model.sampleFilter.biome}"/>"
                                id="csv" title="<c:out value="${nextId}"/>"></a></div>
-                             <div class="pag-last"><a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=${model.sampleFilter.searchTerm}&sampleVisibility=${model.sampleFilter.sampleVisibility.upperCaseString}&search=Search&startPosition=${model.pagination.lastLinkPosition}&sampleType=${model.sampleFilter.sampleType.upperCaseString}"/>"
+                             <div class="pag-last"><a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=${model.sampleFilter.searchTerm}&sampleVisibility=${model.sampleFilter.sampleVisibility.upperCaseString}&search=Search&startPosition=${model.pagination.lastLinkPosition}&biome=${model.sampleFilter.biome}"/>"
                                id="csv" title="<c:out value="${lastId}"/>"></a></div>
                         </c:when>
                         <c:otherwise><div class="pag-next-off"></div> <div class="pag-last-off"></div></c:otherwise>
@@ -132,11 +145,9 @@
                         <c:choose>
                             <c:when test="${headerName == 'Sample name' || headerName == 'Project name'}">
                                 <c:set var="headerId" value="h_left" scope="page"/>
-                                
                             </c:when>
-
-                            <c:when test="${headerName == 'Source'}">
-                                <c:set var="headerWidth" value="120px" scope="page"/>
+                            <c:when test="${headerName == 'Biome'}">
+                                <c:set var="headerWidth" value="40px" scope="page"/>
                             </c:when>
                             <%--The Otherwise case is for header name Analysis--%>
                             <c:otherwise>
@@ -150,13 +161,15 @@
                 <tbody>
                 <c:forEach var="sample" items="${model.samples}" varStatus="status">
                     <tr>
+                        <td>
+                        <span class="biome_icon icon_xs ${sample.biomeIconCSSClass}" title="${sample.biomeIconTitle} biome"></span>
+                        </td>
                         <td class="h_left" id="ordered">
                             <c:if test="${!sample.public}"><img alt="private"
                                                                 src="${pageContext.request.contextPath}/img/icon_priv_private.gif">&nbsp;&nbsp;</c:if>
                             <a href="<c:url value="${baseURL}/projects/${sample.study.studyId}/samples/${sample.sampleId}"/>" class="fl_uppercase_title">${sample.sampleName}</a>
                         </td>
-                        <td class="h_left" width="240px">${sample.study.studyName}</td>
-                        <td>${sample.sampleTypeAsString}</td>
+                        <td class="h_left">${sample.study.studyName}</td>
                     </tr>
                 </c:forEach>
                 </tbody>

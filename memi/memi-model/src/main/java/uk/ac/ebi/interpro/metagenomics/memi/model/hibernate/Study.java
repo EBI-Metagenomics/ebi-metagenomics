@@ -16,7 +16,7 @@ import java.util.*;
  */
 @Entity
 @Table(name = "STUDY")
-public class Study implements SecureEntity {
+public class Study implements SecureEntity, BiomeEntity {
 
     @Id
     @Column(name = "STUDY_ID")
@@ -121,6 +121,9 @@ public class Study implements SecureEntity {
 
     @Transient
     private String biomeIconCSSClass;
+
+    @Transient
+    private String biomeIconTitle;
 
     /**
      * Submitted - Directly submitted to us (EBI Metagenomics).
@@ -385,6 +388,14 @@ public class Study implements SecureEntity {
 
     public void setBiomeIconCSSClass(String biomeIconCSSClass) {
         this.biomeIconCSSClass = biomeIconCSSClass;
+    }
+
+    public String getBiomeIconTitle() {
+        return biomeIconTitle;
+    }
+
+    public void setBiomeIconTitle(String biomeIconTitle) {
+        this.biomeIconTitle = biomeIconTitle;
     }
 
     /**

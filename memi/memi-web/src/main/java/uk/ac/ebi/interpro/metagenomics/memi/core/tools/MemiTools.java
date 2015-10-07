@@ -3,12 +3,14 @@ package uk.ac.ebi.interpro.metagenomics.memi.core.tools;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.BiomeDAO;
-import uk.ac.ebi.interpro.metagenomics.memi.forms.StudyFilter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Biome;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.BiomeEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -23,40 +25,72 @@ import java.util.*;
 public class MemiTools {
     private final static Log log = LogFactory.getLog(MemiTools.class);
 
-    public static final Map<Integer, String> biomeIconMap = new HashMap<Integer, String>();
+    public static final Map<Integer, String> biomeIconCSSMap = new HashMap<Integer, String>();
 
-    public static void assignBiomeIconCSSClass(final Study study, final BiomeDAO biomeDAO) {
-        if (biomeIconMap.isEmpty()) {
+    public static final Map<Integer, String> biomeIconTitleMap = new HashMap<Integer, String>();
+
+    public static void assignBiomeIconCSSClass(final BiomeEntity biomeEntity, final BiomeDAO biomeDAO) {
+        if (biomeIconCSSMap.isEmpty()) {
             buildBiomeIconMap(biomeDAO);
         }
-        Biome studyBiome = study.getBiome();
-        if (studyBiome != null) {
+        Biome biome = biomeEntity.getBiome();
+        if (biome != null) {
             // Look up CSS class
-            int biomeId = study.getBiome().getBiomeId();
-            if (MemiTools.biomeIconMap.containsKey(biomeId)) {
-                study.setBiomeIconCSSClass(MemiTools.biomeIconMap.get(biomeId));
+            int biomeId = biomeEntity.getBiome().getBiomeId();
+            if (MemiTools.biomeIconCSSMap.containsKey(biomeId)) {
+                biomeEntity.setBiomeIconCSSClass(MemiTools.biomeIconCSSMap.get(biomeId));
             }
-            // no CSS class entry exists for the study biome
+            // no CSS class entry exists for the biome entry
             // traverse up the tree for all ancestors
             else {
-                List<Biome> ancestors = biomeDAO.getAllAncestorsInDescOrder(study.getBiome());
+                List<Biome> ancestors = biomeDAO.getAllAncestorsInDescOrder(biomeEntity.getBiome());
                 for (Biome ancestor : ancestors) {
-                    if (MemiTools.biomeIconMap.containsKey(ancestor.getBiomeId())) {
-                        study.setBiomeIconCSSClass(MemiTools.biomeIconMap.get(ancestor.getBiomeId()));
+                    if (MemiTools.biomeIconCSSMap.containsKey(ancestor.getBiomeId())) {
+                        biomeEntity.setBiomeIconCSSClass(MemiTools.biomeIconCSSMap.get(ancestor.getBiomeId()));
                         break;
                     }
                 }
             }
         }
-        if (study.getBiomeIconCSSClass() == null) {
+        if (biomeEntity.getBiomeIconCSSClass() == null) {
             // Set the default icon class
-            study.setBiomeIconCSSClass(MemiTools.biomeIconMap.get(0));
+            biomeEntity.setBiomeIconCSSClass(MemiTools.biomeIconCSSMap.get(0));
+        }
+    }
+
+    public static void assignBiomeIconTitle(final BiomeEntity biomeEntity, final BiomeDAO biomeDAO) {
+        if (biomeIconTitleMap.isEmpty()) {
+            buildBiomeIconMap(biomeDAO);
+        }
+        Biome biome = biomeEntity.getBiome();
+        if (biome != null) {
+            // Look up biome icon title
+            int biomeId = biomeEntity.getBiome().getBiomeId();
+            if (MemiTools.biomeIconTitleMap.containsKey(biomeId)) {
+                biomeEntity.setBiomeIconTitle(MemiTools.biomeIconTitleMap.get(biomeId));
+            }
+            // no title entry exists for the biome entry
+            // traverse up the tree for all ancestors
+            else {
+                List<Biome> ancestors = biomeDAO.getAllAncestorsInDescOrder(biomeEntity.getBiome());
+                for (Biome ancestor : ancestors) {
+                    if (MemiTools.biomeIconTitleMap.containsKey(ancestor.getBiomeId())) {
+                        biomeEntity.setBiomeIconTitle(MemiTools.biomeIconTitleMap.get(ancestor.getBiomeId()));
+                        break;
+                    }
+                }
+            }
+        }
+        if (biomeEntity.getBiomeIconTitle() == null) {
+            // Set the default icon class
+            biomeEntity.setBiomeIconTitle(MemiTools.biomeIconTitleMap.get(0));
         }
     }
 
     private static void buildBiomeIconMap(final BiomeDAO biomeDAO) {
         // add default icon class
-        MemiTools.biomeIconMap.put(0, "default_b");
+        MemiTools.biomeIconCSSMap.put(0, "default_b");
+        MemiTools.biomeIconTitleMap.put(0, "Undefined");
 
         // add 1:1 mapping biomes
         List<Biome> biomes = biomeDAO.readByLineages("root:Environmental:Terrestrial:Soil", "root:Environmental:Air", "root:Engineered", "root:Environmental:Aquatic:Freshwater", "root:Host-associated:Human:Digestive system:Large intestine"
@@ -64,37 +98,49 @@ public class MemiTools {
         for (Biome biome : biomes) {
             String biomeName = biome.getBiomeName();
             if (biomeName.equalsIgnoreCase("Air")) {
-                MemiTools.biomeIconMap.put(biome.getBiomeId(), "air_b");
+                MemiTools.biomeIconCSSMap.put(biome.getBiomeId(), "air_b");
+                MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Air");
             } else if (biomeName.equalsIgnoreCase("Engineered")) {
-                MemiTools.biomeIconMap.put(biome.getBiomeId(), "engineered_b");
+                MemiTools.biomeIconCSSMap.put(biome.getBiomeId(), "engineered_b");
+                MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Engineered");
             } else if (biomeName.equalsIgnoreCase("Freshwater")) {
-                MemiTools.biomeIconMap.put(biome.getBiomeId(), "freshwater_b");
+                MemiTools.biomeIconCSSMap.put(biome.getBiomeId(), "freshwater_b");
+                MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Freshwater");
             } else if (biomeName.equalsIgnoreCase("Host-associated")) {
-                MemiTools.biomeIconMap.put(biome.getBiomeId(), "non_human_host_b");
+                MemiTools.biomeIconCSSMap.put(biome.getBiomeId(), "non_human_host_b");
+                MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Non-human host");
             } else if (biomeName.equalsIgnoreCase("Human")) {
-                MemiTools.biomeIconMap.put(biome.getBiomeId(), "human_host_b");
+                MemiTools.biomeIconCSSMap.put(biome.getBiomeId(), "human_host_b");
+                MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Human");
             } else if (biomeName.equalsIgnoreCase("Large intestine")) {
-                MemiTools.biomeIconMap.put(biome.getBiomeId(), "human_gut_b");
+                MemiTools.biomeIconCSSMap.put(biome.getBiomeId(), "human_gut_b");
+                MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Human gut");
             } else if (biomeName.equalsIgnoreCase("Marine")) {
-                MemiTools.biomeIconMap.put(biome.getBiomeId(), "marine_b");
+                MemiTools.biomeIconCSSMap.put(biome.getBiomeId(), "marine_b");
+                MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Marine");
             } else if (biomeName.equalsIgnoreCase("Soil")) {
-                MemiTools.biomeIconMap.put(biome.getBiomeId(), "soil_b");
+                MemiTools.biomeIconCSSMap.put(biome.getBiomeId(), "soil_b");
+                MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Soil");
             } else if (biomeName.equalsIgnoreCase("Wastewater")) {
-                MemiTools.biomeIconMap.put(biome.getBiomeId(), "wastewater_b");
+                MemiTools.biomeIconCSSMap.put(biome.getBiomeId(), "wastewater_b");
+                MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Wastewater");
             }
         }
         // add grassland biomes
-        biomes = biomeDAO.readByLineages(StudyFilter.Biome.GRASSLAND.getLineages());
+        biomes = biomeDAO.readByLineages(uk.ac.ebi.interpro.metagenomics.memi.forms.Biome.GRASSLAND.getLineages());
         for (Biome biome : biomes) {
-            MemiTools.biomeIconMap.put(biome.getBiomeId(), "grassland_b");
+            MemiTools.biomeIconCSSMap.put(biome.getBiomeId(), "grassland_b");
+            MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Grassland");
         }
 
         // add forest soil biomes
-        biomes = biomeDAO.readByLineages(StudyFilter.Biome.FOREST_SOIL.getLineages());
+        biomes = biomeDAO.readByLineages(uk.ac.ebi.interpro.metagenomics.memi.forms.Biome.FOREST_SOIL.getLineages());
         for (Biome biome : biomes) {
-            MemiTools.biomeIconMap.put(biome.getBiomeId(), "forest_b");
+            MemiTools.biomeIconCSSMap.put(biome.getBiomeId(), "forest_b");
+            MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Forest soil");
         }
     }
+
 
     public static Set<String> getSampleIds(Collection<Sample> samples) {
         log.info("Getting sample IDs from the specified sample list...");

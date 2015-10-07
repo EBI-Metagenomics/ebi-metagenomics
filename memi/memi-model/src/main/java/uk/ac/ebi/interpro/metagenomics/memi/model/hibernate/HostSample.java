@@ -14,7 +14,7 @@ import javax.persistence.Enumerated;
  * @since 1.0-SNAPSHOT
  */
 @Entity
-public class HostSample extends Sample {
+public class HostSample  {
 
     @Column(name = "PHENOTYPE")
     private String phenotype;
@@ -37,13 +37,13 @@ public class HostSample extends Sample {
     private HostSex hostSex;
 
 
-    public Class<? extends Sample> getClazz() {
-        return this.getClass();
-    }
-
-    public SampleType getSampleType() {
-        return Sample.SampleType.HOST_ASSOCIATED;
-    }
+//    public Class<? extends Sample> getClazz() {
+//        return this.getClass();
+//    }
+//
+//    public SampleType getSampleType() {
+//        return Sample.SampleType.HOST_ASSOCIATED;
+//    }
 
     public enum HostSex {
         FEMALE, MALE;

@@ -25,8 +25,8 @@
             </c:choose>
 
             <c:choose>
-                <c:when test="${not empty model.sample.sampleClassification}">
-                    <c:set var="sampleClassification" value="${model.sample.sampleClassification}"/>
+                <c:when test="${not empty model.sample.biome}">
+                    <c:set var="sampleClassification" value="${fn:replace(fn:replace(model.sample.biome.lineage,'root:',''),':',' > ')}"/>
                 </c:when>
                 <c:otherwise>
                     <c:set var="sampleClassification" value="${notGivenId}"/>

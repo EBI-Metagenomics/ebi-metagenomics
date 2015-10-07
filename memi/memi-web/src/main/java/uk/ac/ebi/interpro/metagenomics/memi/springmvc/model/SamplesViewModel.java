@@ -1,7 +1,9 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
 
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.Biome;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.SampleFilter;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.StudyFilter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 
@@ -29,7 +31,7 @@ public class SamplesViewModel extends ViewModel {
 
     private List<SampleFilter.SampleVisibility> sampleVisibilityList;
 
-    private List<Sample.SampleType> sampleTypes;
+    private List<Biome> studyBiomes;
 
     /**
      * Specifies a list of table header names for the table on samples view page (the list of names should be in the order you like to show within the web
@@ -53,7 +55,7 @@ public class SamplesViewModel extends ViewModel {
         this.samples = samples;
         this.downloadableSamples = downloadableSamples;
         this.sampleVisibilityList = getDefaultStudyVisibilityList();
-        this.sampleTypes = getDefaultSampleTypes();
+        this.studyBiomes = getDefaultSampleBiomeList();
         this.tableHeaderNames = tableHeaderNames;
         this.pagination = pagination;
     }
@@ -86,14 +88,6 @@ public class SamplesViewModel extends ViewModel {
         this.sampleVisibilityList = sampleVisibilityList;
     }
 
-    public List<Sample.SampleType> getSampleTypes() {
-        return sampleTypes;
-    }
-
-    public void setSampleTypes(List<Sample.SampleType> sampleTypes) {
-        this.sampleTypes = sampleTypes;
-    }
-
     public ViewPagination getPagination() {
         return pagination;
     }
@@ -110,8 +104,7 @@ public class SamplesViewModel extends ViewModel {
         return Arrays.asList(SampleFilter.SampleVisibility.values());
     }
 
-
-    private List<Sample.SampleType> getDefaultSampleTypes() {
-        return Arrays.asList(Sample.SampleType.values());
+    private List<Biome> getDefaultSampleBiomeList() {
+        return Arrays.asList(Biome.values());
     }
 }

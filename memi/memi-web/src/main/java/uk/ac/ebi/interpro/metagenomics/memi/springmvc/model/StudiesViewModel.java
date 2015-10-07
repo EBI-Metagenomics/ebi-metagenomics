@@ -1,6 +1,7 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
 
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.Biome;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.StudyFilter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
@@ -27,7 +28,7 @@ public class StudiesViewModel extends ViewModel {
 
     private List<StudyFilter.StudyVisibility> studyVisibilities;
 
-    private List<StudyFilter.Biome> studyBiomes;
+    private List<Biome> studyBiomes;
 
     /**
      * Specifies a list of table header names for the table on samples view page (the list of names should be in the order you like to show within the web
@@ -88,11 +89,11 @@ public class StudiesViewModel extends ViewModel {
         this.studyVisibilities = studyVisibilities;
     }
 
-    public List<StudyFilter.Biome> getStudyBiomes() {
+    public List<Biome> getStudyBiomes() {
         return studyBiomes;
     }
 
-    public void setStudyBiomes(List<StudyFilter.Biome> studyBiomes) {
+    public void setStudyBiomes(List<Biome> studyBiomes) {
         this.studyBiomes = studyBiomes;
     }
 
@@ -112,8 +113,8 @@ public class StudiesViewModel extends ViewModel {
         return Arrays.asList(StudyFilter.StudyVisibility.values());
     }
 
-    private List<StudyFilter.Biome> getDefaultStudyBiomeList() {
-        return Arrays.asList(StudyFilter.Biome.values());
+    private List<Biome> getDefaultStudyBiomeList() {
+        return Arrays.asList(Biome.values());
     }
 
     public Map<Study, Long> getStudySampleSizeMap() {

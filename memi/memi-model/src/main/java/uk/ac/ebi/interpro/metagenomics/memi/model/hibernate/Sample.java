@@ -14,7 +14,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "SAMPLE")
-public abstract class Sample implements SecureEntity {
+public class Sample implements SecureEntity, BiomeEntity {
 
     @Id
     @Column(name = "SAMPLE_ID")
@@ -41,8 +41,8 @@ public abstract class Sample implements SecureEntity {
     @Lob
     private String sampleDescription;
 
-    @Column(name = "SAMPLE_CLASSIFICATION")
-    private String sampleClassification;
+//    @Column(name = "SAMPLE_CLASSIFICATION")
+//    private String sampleClassification;
 
     @Column(name = "GEO_LOC_NAME")
     private String geoLocName;
@@ -93,13 +93,52 @@ public abstract class Sample implements SecureEntity {
     @Column(name = "LONGITUDE", precision = 7, scale = 4)
     private BigDecimal longitude;
 
+    @Column(name = "ENVIRONMENT_BIOME")
+    private String environmentalBiome;
+
+    @Column(name = "ENVIRONMENT_FEATURE")
+    private String environmentalFeature;
+
+    @Column(name = "ENVIRONMENT_MATERIAL")
+    private String environmentalMaterial;
+
+    @Column(name = "PHENOTYPE")
+    private String phenotype;
+
+    /**
+     * Host taxonomy ID (e.g. 9606 for Homo sapiens)
+     */
+    @Column(name = "HOST_TAX_ID")
+    private Integer hostTaxonomyId;
+
+
+    /**
+     * Name of the species for instance Homo sapiens
+     */
+    @Column(name = "SPECIES", nullable = true)
+    private String species;
+
+    @Column(name = "HOST_SEX", length = 30)
+    @Enumerated(EnumType.STRING)
+    private HostSex hostSex;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "BIOME_ID", nullable = true)
+    private Biome biome;
+
+    @Transient
+    private String biomeIconCSSClass;
+
+    @Transient
+    private String biomeIconTitle;
+
     /**
      * Associated publication.
      */
     @ManyToMany
     private Set<Publication> publications;
 
-    protected Sample() {
+    public Sample() {
         isPublic = false;
         publications = new HashSet<Publication>();
     }
@@ -159,13 +198,13 @@ public abstract class Sample implements SecureEntity {
         this.sampleDescription = sampleDescription;
     }
 
-    public String getSampleClassification() {
-        return sampleClassification;
-    }
+//    public String getSampleClassification() {
+//        return sampleClassification;
+//    }
 
-    public void setSampleClassification(String sampleClassification) {
-        this.sampleClassification = sampleClassification;
-    }
+//    public void setSampleClassification(String sampleClassification) {
+//        this.sampleClassification = sampleClassification;
+//    }
 
     public String getGeoLocName() {
         return geoLocName;
@@ -288,16 +327,96 @@ public abstract class Sample implements SecureEntity {
         this.lastMetadataReceived = lastMetadataReceived;
     }
 
-    @Transient
-    public abstract Class<? extends Sample> getClazz();
-
-    @Transient
-    public abstract SampleType getSampleType();
-
-    @Transient
-    public String getSampleTypeAsString() {
-        return getSampleType().toString();
+    public String getEnvironmentalBiome() {
+        return environmentalBiome;
     }
+
+    public void setEnvironmentalBiome(String environmentalBiome) {
+        this.environmentalBiome = environmentalBiome;
+    }
+
+    public String getEnvironmentalFeature() {
+        return environmentalFeature;
+    }
+
+    public void setEnvironmentalFeature(String environmentalFeature) {
+        this.environmentalFeature = environmentalFeature;
+    }
+
+    public String getEnvironmentalMaterial() {
+        return environmentalMaterial;
+    }
+
+    public void setEnvironmentalMaterial(String environmentalMaterial) {
+        this.environmentalMaterial = environmentalMaterial;
+    }
+
+    public String getPhenotype() {
+        return phenotype;
+    }
+
+    public void setPhenotype(String phenotype) {
+        this.phenotype = phenotype;
+    }
+
+    public Integer getHostTaxonomyId() {
+        return hostTaxonomyId;
+    }
+
+    public void setHostTaxonomyId(Integer hostTaxonomyId) {
+        this.hostTaxonomyId = hostTaxonomyId;
+    }
+
+    public HostSex getHostSex() {
+        return hostSex;
+    }
+
+    public void setHostSex(HostSex hostSex) {
+        this.hostSex = hostSex;
+    }
+
+    public String getSpecies() {
+        return species;
+    }
+
+    public void setSpecies(String species) {
+        this.species = species;
+    }
+
+    public Biome getBiome() {
+        return biome;
+    }
+
+    public void setBiome(Biome biome) {
+        this.biome = biome;
+    }
+
+    public void setBiomeIconCSSClass(String biomeIconCSSClass) {
+        this.biomeIconCSSClass = biomeIconCSSClass;
+    }
+
+    public String getBiomeIconCSSClass() {
+        return biomeIconCSSClass;
+    }
+
+    public String getBiomeIconTitle() {
+        return biomeIconTitle;
+    }
+
+    public void setBiomeIconTitle(String biomeIconTitle) {
+        this.biomeIconTitle = biomeIconTitle;
+    }
+
+//    @Transient
+//    public abstract Class<? extends Sample> getClazz();
+
+//    @Transient
+//    public abstract SampleType getSampleType();
+
+//    @Transient
+//    public String getSampleTypeAsString() {
+//        return getSampleType().toString();
+//    }
 
     @Override
     @Transient
@@ -306,33 +425,37 @@ public abstract class Sample implements SecureEntity {
     }
 
 
-    public enum SampleType {
-        ENVIRONMENTAL(EnvironmentSample.class, "Environmental"),
-        HOST_ASSOCIATED(HostSample.class, "Host associated"),
-        ENGINEERED(EngineeredSample.class, "Man-made"),
-        UNDEFINED(UndefinedSample.class, "Undefined");
+//    public enum SampleType {
+//        ENVIRONMENTAL(EnvironmentSample.class, "Environmental"),
+//        HOST_ASSOCIATED(HostSample.class, "Host associated"),
+//        ENGINEERED(EngineeredSample.class, "Man-made"),
+//        UNDEFINED(UndefinedSample.class, "Undefined");
+//
+//        private Class<? extends Sample> clazz;
+//
+//        private String type;
+//
+//        private SampleType(Class<? extends Sample> clazz, String type) {
+//            this.clazz = clazz;
+//            this.type = type;
+//        }
+//
+//        public Class<? extends Sample> getClazz() {
+//            return clazz;
+//        }
+//
+//        @Override
+//        public String toString() {
+//            return type;
+//        }
+//
+//        public String getUpperCaseString() {
+//            String result = type.replace(" ", "_");
+//            return result.toUpperCase();
+//        }
+//    }
 
-        private Class<? extends Sample> clazz;
-
-        private String type;
-
-        private SampleType(Class<? extends Sample> clazz, String type) {
-            this.clazz = clazz;
-            this.type = type;
-        }
-
-        public Class<? extends Sample> getClazz() {
-            return clazz;
-        }
-
-        @Override
-        public String toString() {
-            return type;
-        }
-
-        public String getUpperCaseString() {
-            String result = type.replace(" ", "_");
-            return result.toUpperCase();
-        }
+    public enum HostSex {
+        FEMALE, MALE;
     }
 }

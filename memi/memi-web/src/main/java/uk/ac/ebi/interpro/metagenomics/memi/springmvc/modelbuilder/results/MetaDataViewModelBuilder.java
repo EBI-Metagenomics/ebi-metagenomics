@@ -60,8 +60,14 @@ public class MetaDataViewModelBuilder extends AbstractResultViewModelBuilder<Met
 
     private boolean isHostAssociated(Sample sample) {
         if (sample != null) {
-            if (sample instanceof HostSample) {
-                return true;
+            Biome biome = sample.getBiome();
+            if (biome != null) {
+                String lineage = biome.getLineage();
+                if (lineage != null) {
+                    if (lineage.startsWith("root:Host-associated")) {
+                        return true;
+                    }
+                }
             }
         }
         return false;

@@ -4,7 +4,7 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import uk.ac.ebi.interpro.metagenomics.memi.core.comparators.ViewSamplesComparator;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.HostSample;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 
 import java.util.*;
@@ -39,19 +39,19 @@ public class ViewSamplesComparatorTest extends TestCase {
      */
     @org.junit.Test
     public void testCompareSortedSet() {
-        Sample sample1 = new HostSample();
+        Sample sample1 = new Sample();
         sample1.setSampleName("b");
         sample1.setId(1);
         //
-        Sample sample2 = new HostSample();
+        Sample sample2 = new Sample();
         sample2.setSampleName("A");
         sample2.setId(2);
         //
-        Sample sample3 = new HostSample();
+        Sample sample3 = new Sample();
         sample3.setSampleName("C");
         sample3.setId(3);
         //
-        Sample sample4 = new HostSample();
+        Sample sample4 = new Sample();
         sample4.setSampleName("C");
         sample4.setId(4);
         //
@@ -76,19 +76,19 @@ public class ViewSamplesComparatorTest extends TestCase {
      */
     @org.junit.Test
     public void testCompareCollectionsSort() {
-        Sample sample1 = new HostSample();
+        Sample sample1 = new Sample();
         sample1.setSampleName("B");
         sample1.setId(1);
         //
-        Sample sample2 = new HostSample();
+        Sample sample2 = new Sample();
         sample2.setSampleName("a");
         sample2.setId(2);
         //
-        Sample sample3 = new HostSample();
+        Sample sample3 = new Sample();
         sample3.setSampleName("c");
         sample3.setId(3);
         //
-        Sample sample4 = new HostSample();
+        Sample sample4 = new Sample();
         sample4.setSampleName("c");
         sample4.setId(4);
         //

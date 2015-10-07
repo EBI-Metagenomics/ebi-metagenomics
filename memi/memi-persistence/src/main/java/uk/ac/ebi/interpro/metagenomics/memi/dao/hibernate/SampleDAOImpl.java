@@ -365,8 +365,8 @@ public class SampleDAOImpl implements SampleDAO {
     }
 
     @Transactional(readOnly = true)
-    public List<Sample> retrieveFilteredSamples(List<Criterion> crits, Class<? extends Sample> clazz, int startPosition, int pageSize, String orderedByColumnWithName) {
-        Criteria criteria = setUpFilteredSamplesCriteria(crits, clazz, orderedByColumnWithName);
+    public List<Sample> retrieveFilteredSamples(List<Criterion> crits, int startPosition, int pageSize, String orderedByColumnWithName) {
+        Criteria criteria = setUpFilteredSamplesCriteria(crits, orderedByColumnWithName);
         if (criteria != null) {
             criteria.setFirstResult(startPosition);
             criteria.setMaxResults(pageSize);
@@ -380,8 +380,8 @@ public class SampleDAOImpl implements SampleDAO {
     }
 
     @Transactional(readOnly = true)
-    public List<Sample> retrieveFilteredSamples(List<Criterion> crits, Class<? extends Sample> clazz, String orderedByColumnWithName) {
-        Criteria criteria = setUpFilteredSamplesCriteria(crits, clazz, orderedByColumnWithName);
+    public List<Sample> retrieveFilteredSamples(List<Criterion> crits, String orderedByColumnWithName) {
+        Criteria criteria = setUpFilteredSamplesCriteria(crits, orderedByColumnWithName);
         if (criteria != null) {
             try {
                 return (List<Sample>) criteria.list();
@@ -393,12 +393,11 @@ public class SampleDAOImpl implements SampleDAO {
     }
 
     private Criteria setUpFilteredSamplesCriteria(final List<Criterion> crits,
-                                                  Class<? extends Sample> clazz,
                                                   final String orderedByColumnWithName) {
         Session session = sessionFactory.getCurrentSession();
         Criteria criteria = null;
         if (session != null) {
-            criteria = session.createCriteria(clazz);
+            criteria = session.createCriteria(Sample.class);
             //add criteria
             for (Criterion crit : crits) {
                 criteria.add(crit);
@@ -411,12 +410,11 @@ public class SampleDAOImpl implements SampleDAO {
     }
 
     @Transactional(readOnly = true)
-    public Long countFilteredSamples
-            (List<Criterion> crits, Class<? extends Sample> clazz) {
+    public Long countFilteredSamples(List<Criterion> crits) {
         Session session = sessionFactory.getCurrentSession();
         Criteria criteria = null;
         if (session != null) {
-            criteria = session.createCriteria(clazz);
+            criteria = session.createCriteria(Sample.class);
             //add criteria
             for (Criterion crit : crits) {
                 criteria.add(crit);

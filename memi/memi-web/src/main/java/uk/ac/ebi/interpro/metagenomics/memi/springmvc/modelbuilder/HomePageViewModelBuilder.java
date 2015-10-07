@@ -10,6 +10,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.dao.RunDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.BiomeDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.StudyDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.Biome;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.StudyFilter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
@@ -80,13 +81,9 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
             // Retrieve public studies and order them by last meta data received
             List<Study> studies = getOrderedPublicStudies();
             attachSampleSize(studies);
-            // Retrieve public samples and order them by last meta data received
-            List<Sample> samples = getPublicSamples();
-            Collections.sort(samples, new HomePageSamplesComparator());
-            samples = samples.subList(0, getToIndex(samples));
 
             Map<String, Long> biomeCountMap = buildBiomeCountMap();
-            return new HomePageViewModel(submitter, samples, pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems, publicSamplesCount,
+            return new HomePageViewModel(submitter, pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems, publicSamplesCount,
                     privateSamplesCount, publicStudiesCount, privateStudiesCount, studies, publicRunCount, privateRunCount, biomeCountMap, transformedExperimentCountMap, numOfDataSets);
         }
         //  Else case: if somebody is logged in
@@ -150,40 +147,40 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
     private Map<String, Long> buildBiomeCountMap() {
         final Map<String, Long> biomesCountMap = new HashMap<String, Long>();
         //Add number of soil biomes
-        long studyCount = super.countStudiesFilteredByBiomes(studyDAO, biomeDAO, StudyFilter.Biome.SOIL.getLineages());
-        biomesCountMap.put(StudyFilter.Biome.SOIL.toString(), studyCount);
+        long studyCount = super.countStudiesFilteredByBiomes(studyDAO, biomeDAO, Biome.SOIL.getLineages());
+        biomesCountMap.put(Biome.SOIL.toString(), studyCount);
         //Add number of marine biomes
-        studyCount = super.countStudiesFilteredByBiomes(studyDAO, biomeDAO, StudyFilter.Biome.MARINE.getLineages());
-        biomesCountMap.put(StudyFilter.Biome.MARINE.toString(), studyCount);
+        studyCount = super.countStudiesFilteredByBiomes(studyDAO, biomeDAO, Biome.MARINE.getLineages());
+        biomesCountMap.put(Biome.MARINE.toString(), studyCount);
         //Add number of forest biomes
-        studyCount = super.countStudiesFilteredByBiomes(studyDAO, biomeDAO, StudyFilter.Biome.FOREST_SOIL.getLineages());
-        biomesCountMap.put(StudyFilter.Biome.FOREST_SOIL.toString(), studyCount);
+        studyCount = super.countStudiesFilteredByBiomes(studyDAO, biomeDAO, Biome.FOREST_SOIL.getLineages());
+        biomesCountMap.put(Biome.FOREST_SOIL.toString(), studyCount);
         //Add number of freshwater biomes
-        studyCount = super.countStudiesFilteredByBiomes(studyDAO, biomeDAO, StudyFilter.Biome.FRESHWATER.getLineages());
-        biomesCountMap.put(StudyFilter.Biome.FRESHWATER.toString(), studyCount);
+        studyCount = super.countStudiesFilteredByBiomes(studyDAO, biomeDAO, Biome.FRESHWATER.getLineages());
+        biomesCountMap.put(Biome.FRESHWATER.toString(), studyCount);
         //Add number of grassland biomes
-        studyCount = super.countStudiesFilteredByBiomes(studyDAO, biomeDAO, StudyFilter.Biome.GRASSLAND.getLineages());
-        biomesCountMap.put(StudyFilter.Biome.GRASSLAND.toString(), studyCount);
+        studyCount = super.countStudiesFilteredByBiomes(studyDAO, biomeDAO, Biome.GRASSLAND.getLineages());
+        biomesCountMap.put(Biome.GRASSLAND.toString(), studyCount);
         //Add number of human gut biomes
-        studyCount = super.countStudiesFilteredByBiomes(studyDAO, biomeDAO, StudyFilter.Biome.HUMAN_GUT.getLineages());
-        biomesCountMap.put(StudyFilter.Biome.HUMAN_GUT.toString(), studyCount);
+        studyCount = super.countStudiesFilteredByBiomes(studyDAO, biomeDAO, Biome.HUMAN_GUT.getLineages());
+        biomesCountMap.put(Biome.HUMAN_GUT.toString(), studyCount);
         //Add number of human host biomes
-        studyCount = super.countStudiesFilteredByBiomes(studyDAO, biomeDAO, StudyFilter.Biome.HUMAN_HOST.getLineages());
-        biomesCountMap.put(StudyFilter.Biome.HUMAN_HOST.toString(), studyCount);
+        studyCount = super.countStudiesFilteredByBiomes(studyDAO, biomeDAO, Biome.HUMAN_HOST.getLineages());
+        biomesCountMap.put(Biome.HUMAN_HOST.toString(), studyCount);
         //Add number of non-human host biomes
-        long studyCountForHuman = super.countStudiesFilteredByBiomes(studyDAO, biomeDAO, StudyFilter.Biome.HUMAN_HOST.getLineages());
-        long studyCountForHost = super.countStudiesFilteredByBiomes(studyDAO, biomeDAO, StudyFilter.Biome.HOST_ASSOCIATED.getLineages());
+        long studyCountForHuman = super.countStudiesFilteredByBiomes(studyDAO, biomeDAO, Biome.HUMAN_HOST.getLineages());
+        long studyCountForHost = super.countStudiesFilteredByBiomes(studyDAO, biomeDAO, Biome.HOST_ASSOCIATED.getLineages());
         long studyCountForNonHumanHost = studyCountForHost - studyCountForHuman;
-        biomesCountMap.put(StudyFilter.Biome.NON_HUMAN_HOST.toString(), studyCountForNonHumanHost);
+        biomesCountMap.put(Biome.NON_HUMAN_HOST.toString(), studyCountForNonHumanHost);
         //Add number of engineered biomes
-        studyCount = super.countStudiesFilteredByBiomes(studyDAO, biomeDAO, StudyFilter.Biome.ENGINEERED.getLineages());
-        biomesCountMap.put(StudyFilter.Biome.ENGINEERED.toString(), studyCount);
+        studyCount = super.countStudiesFilteredByBiomes(studyDAO, biomeDAO, Biome.ENGINEERED.getLineages());
+        biomesCountMap.put(Biome.ENGINEERED.toString(), studyCount);
         //Add number of air biomes
-        studyCount = super.countStudiesFilteredByBiomes(studyDAO, biomeDAO, StudyFilter.Biome.AIR.getLineages());
-        biomesCountMap.put(StudyFilter.Biome.AIR.toString(), studyCount);
+        studyCount = super.countStudiesFilteredByBiomes(studyDAO, biomeDAO, Biome.AIR.getLineages());
+        biomesCountMap.put(Biome.AIR.toString(), studyCount);
         //Add number of wastewater biomes
-        studyCount = super.countStudiesFilteredByBiomes(studyDAO, biomeDAO, StudyFilter.Biome.WASTEWATER.getLineages());
-        biomesCountMap.put(StudyFilter.Biome.WASTEWATER.toString(), studyCount);
+        studyCount = super.countStudiesFilteredByBiomes(studyDAO, biomeDAO, Biome.WASTEWATER.getLineages());
+        biomesCountMap.put(Biome.WASTEWATER.toString(), studyCount);
         return biomesCountMap;
     }
 
@@ -222,17 +219,6 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
             }
         }
         return result;
-    }
-
-    /**
-     * Returns a list of public sample limited by a specified number of rows and order by received date.
-     */
-    public List<Sample> getPublicSamples() {
-        List<Sample> samples = new ArrayList<Sample>();
-        if (sampleDAO != null) {
-            samples = sampleDAO.retrieveAllPublicSamples();
-        }
-        return samples;
     }
 
     private int getToIndex(Collection<Sample> collection) {
