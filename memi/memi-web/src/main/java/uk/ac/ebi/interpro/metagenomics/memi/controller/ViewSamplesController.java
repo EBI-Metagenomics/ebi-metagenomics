@@ -193,6 +193,7 @@ public class ViewSamplesController extends AbstractController implements IContro
     private List<String> getTableHeaderNames() {
         List<String> result = new ArrayList<String>();
         result.add("Biome");
+        result.add("Sample ID");
         result.add("Sample name");
         result.add("Project name");
         return result;
