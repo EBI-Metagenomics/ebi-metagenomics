@@ -151,7 +151,7 @@
                             </c:when>
                             <%--The Otherwise case is for header name Analysis--%>
                             <c:otherwise>
-                                <c:set var="headerWidth" value="170px" scope="page"/>
+                                <c:set var="headerWidth" scope="page"/>
                             </c:otherwise>
                         </c:choose>
                         <th class="${headerId}" abbr="${headerName}" width="${headerWidth}" scope="col">${headerName}</th>
@@ -164,12 +164,13 @@
                         <td>
                         <span class="biome_icon icon_xs ${sample.biomeIconCSSClass}" title="${sample.biomeIconTitle} biome"></span>
                         </td>
-                        <td class="h_left" id="ordered">
+                        <td width="100px">${sample.sampleId}</td>
+                        <td class="h_left" id="ordered" width="30%">
                             <c:if test="${!sample.public}"><img alt="private"
                                                                 src="${pageContext.request.contextPath}/img/icon_priv_private.gif">&nbsp;&nbsp;</c:if>
                             <a href="<c:url value="${baseURL}/projects/${sample.study.studyId}/samples/${sample.sampleId}"/>" class="fl_uppercase_title">${sample.sampleName}</a>
                         </td>
-                        <td class="h_left">${sample.study.studyName}</td>
+                        <td class="h_left" width="70%">${sample.study.studyName}</td>
                     </tr>
                 </c:forEach>
                 </tbody>
