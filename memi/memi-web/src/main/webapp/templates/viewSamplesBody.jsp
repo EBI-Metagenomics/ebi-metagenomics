@@ -149,7 +149,7 @@
                             <c:when test="${headerName == 'Biome'}">
                                 <c:set var="headerWidth" value="40px" scope="page"/>
                             </c:when>
-                            <%--The Otherwise case is for header name Analysis--%>
+
                             <c:otherwise>
                                 <c:set var="headerWidth" scope="page"/>
                             </c:otherwise>
