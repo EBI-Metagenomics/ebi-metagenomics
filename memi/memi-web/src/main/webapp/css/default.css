@@ -67,7 +67,8 @@ div#local-masthead ul li a:link {border-bottom: 0px solid #71b360;  text-shadow:
 div#local-masthead ul li a:hover, div#local-masthead ul li a:focus, div#local-masthead ul li a:active {border-bottom: 0px solid #71b360; background-color: rgba(0, 0, 0, 0.2);}
 div#local-title.logo-title img {margin: 18px 9px;} /*make the metagenomics logo more centered */
 div#headerdiv div#local-title a  { display: block; overflow: auto; }/*to show tooltip properly*/
-/*div#headerdiv a:link {float: left;}*/
+div#headerdiv #global-masthead a:link {float: left;border-bottom:0;}
+div#headerdiv #global-masthead .nav a:link {float: none;}
 /*/suggested change to ebi-global.css */
 
 /*change to ebi-mitigation.css*/
