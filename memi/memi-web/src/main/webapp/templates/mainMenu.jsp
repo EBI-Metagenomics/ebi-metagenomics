@@ -7,7 +7,8 @@
          <span class="icon-bar"></span>
          <span class="icon-bar"></span>
          <span class="icon-bar"></span>
-       </button>  </ul>
+       </button>
+    </ul>
 </div><!-- /navbar-header -->
 
 <ul id="local-nav" class="collapse navbar-collapse nav navbar-nav">
@@ -95,6 +96,3 @@
         });
     });
 </script>
-
-
-
