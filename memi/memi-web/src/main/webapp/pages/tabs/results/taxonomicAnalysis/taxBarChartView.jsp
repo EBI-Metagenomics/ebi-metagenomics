@@ -48,17 +48,18 @@
             <div class="msg_help blue_h phylum_help">
                 <p><span class="icon icon-generic" data-icon="i"></span>This view aggregates the taxonomy information at
                     the domain and phylum level. To download the full detailed taxonomy distribution (TSV format),
-                    <c:choose>
-                        <c:when test="${releaseVersion == '1.0'}">
-                            <a href="<c:url value="${baseURL}/projects/${projectId}/samples/${sampleId}/runs/${runId}/results/taxonomy/versions/${releaseVersion}/export?contentType=text&exportValue=taxa"/>">please
-                                follow this link</a>
-                        </c:when>
-                        <c:when test="${releaseVersion== '2.0'}">
-                            <a href="<c:url value="${baseURL}/projects/${projectId}/samples/${sampleId}/runs/${runId}/results/taxonomy/versions/${releaseVersion}/export?contentType=text&exportValue=otuTable"/>">please
-                                follow this link</a>
-                        </c:when><c:otherwise> not working</c:otherwise>
-                    </c:choose>
-                    .</p>
+                    <a href="#ui-id-6" class="open-tab" data-tab-index="4"> please follow this link</a>
+                                           <%--<c:choose>--%>
+                                               <%--<c:when test="${releaseVersion == '1.0'}">--%>
+                                                   <%--<a href="<c:url value="${baseURL}/projects/${projectId}/samples/${sampleId}/runs/${runId}/results/taxonomy/versions/${releaseVersion}/export?contentType=text&exportValue=taxa"/>">please--%>
+                                                       <%--follow this link</a>--%>
+                                               <%--</c:when>--%>
+                                               <%--<c:when test="${releaseVersion== '2.0'}">--%>
+                                                   <%--<a href="<c:url value="${baseURL}/projects/${projectId}/samples/${sampleId}/runs/${runId}/results/taxonomy/versions/${releaseVersion}/export?contentType=text&exportValue=otuTable"/>">please--%>
+                                                       <%--follow this link</a>--%>
+                                               <%--</c:when><c:otherwise> not working</c:otherwise>--%>
+                                           <%--</c:choose>--%>
+                                           .</p>
             </div>
         </div>
 
@@ -73,6 +74,11 @@
 </c:choose>
 
 <script type="text/javascript">
+     // script to make the tab download link work
+    $('.open-tab').click(function (event) {
+        $('#navtabs').tabs("option", "active", $(this).data("tab-index"));
+    });
+
     drawDomainCompositionBarChart();
     drawPhylumBarChart();
     drawPhylumTable();
