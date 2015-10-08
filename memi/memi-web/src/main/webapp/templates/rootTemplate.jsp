@@ -9,7 +9,7 @@
 
     <title><tiles:insertAttribute name="pageTitle"/>&lt; EBI metagenomics &lt; EMBL-EBI</title>
 
-    <meta name="description" content="EBI Metagenomics is a new web resource targeted at metagenomic researchers"/>
+    <meta name="description" content="EBI Metagenomics is a free resource for the analysis, archiving and browsing of metagenomic and metatranscriptomic data"/>
     <meta name="keywords" content="ebi, EBI, InterPro, interpro, metagenomics, metagenomic, metagenome, metagenomes, DNA, microbiology, microbial, ecology, organisms, microorganism, microorganisms, biodiversity, diversity, gene, genes, genome, genomes, genomic, genomics, ecogenomics, community genomics, genetic, sequencing, sequence, environment, environmental, ecosystem, ecosystems, samples, sample, annotation, protein, research, archive, metabolic, pathways, analysis, function, GAIA, shotgun, pyrosequencing, community, communities, metabolism, cultivation, bioinformatics, bioinformatic, database, metadata, dataset, data, repository"/>
     <meta name="author" content="InterPro EMBL-EBI">
     <!-- Mobile viewport optimized-->
