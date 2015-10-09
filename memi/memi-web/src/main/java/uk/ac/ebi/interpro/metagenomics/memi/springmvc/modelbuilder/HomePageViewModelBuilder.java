@@ -11,7 +11,6 @@ import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.BiomeDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.StudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.Biome;
-import uk.ac.ebi.interpro.metagenomics.memi.forms.StudyFilter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
@@ -89,7 +88,7 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
         //  Else case: if somebody is logged in
         else {
             //retrieve private studies and order them by last meta data received
-            List<Study> myStudies = getStudiesBySubmitter(submitter.getSubmissionAccountId(), studyDAO);
+            List<Study> myStudies = getStudiesBySubmitter(submitter.getSubmissionAccountId());
             Map<Study, Long> myStudiesMap = getStudySampleSizeMap(myStudies, sampleDAO, new HomePageStudiesComparator());
 
             //retrieve private samples and order them last meta data received
@@ -197,18 +196,12 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
      * Returns a list of public studies limited by a specified number of rows and order by meta data received date.
      */
     private List<Study> getOrderedPublicStudies() {
-        List<Study> studies = null;
+        List<Study> studies = new ArrayList<Study>();
         if (studyDAO != null) {
             studies = studyDAO.retrieveOrderedPublicStudies("lastMetadataReceived", true);
+            assignBiomeIconFeatures(studies);
         }
-        if (studies != null && !studies.isEmpty()) {
-            for (Study study : studies) {
-                MemiTools.assignBiomeIconCSSClass(study, biomeDAO);
-            }
-            return studies;
-        } else {
-            return new ArrayList<Study>();
-        }
+        return studies;
     }
 
     private Map<Study, Long> getStudySampleSizeMap(List<Study> studies, SampleDAO sampleDAO, Comparator<Study> comparator) {
@@ -225,13 +218,23 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
         return ((collection.size() > 5) ? 5 : collection.size());
     }
 
+    protected void assignBiomeIconFeatures(final List<Study> studies) {
+        if (studies != null) {
+            for (Study study : studies) {
+                MemiTools.assignBiomeIconCSSClass(study, biomeDAO);
+                MemiTools.assignBiomeIconTitle(study, biomeDAO);
+            }
+        }
+    }
+
     /**
      * Returns a list of studies for the specified submitter.
      */
-    private List<Study> getStudiesBySubmitter(String submissionAccountId, StudyDAO studyDAO) {
+    private List<Study> getStudiesBySubmitter(String submissionAccountId) {
         List<Study> studies = new ArrayList<Study>();
         if (studyDAO != null) {
             studies = studyDAO.retrieveStudiesBySubmitter(submissionAccountId);
+            assignBiomeIconFeatures(studies);
         }
         return studies;
     }
@@ -246,21 +249,4 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
         }
         return samples;
     }
-
-    private List<Study> getPublicStudiesWithoutSubId(long submitterId, StudyDAO studyDAO) {
-        List<Study> studies = new ArrayList<Study>();
-        if (studyDAO != null) {
-            studies = studyDAO.retrievePublicStudiesWithoutSubId(submitterId);
-        }
-        return studies;
-    }
-
-    private List<Sample> getOrderedPublicSamplesWithoutSubId(long submitterId, SampleDAO sampleDAO) {
-        List<Sample> samples = new ArrayList<Sample>();
-        if (sampleDAO != null) {
-            samples = sampleDAO.retrievePublicSamplesWithoutSubId(submitterId);
-        }
-        return samples;
-    }
-
 }
