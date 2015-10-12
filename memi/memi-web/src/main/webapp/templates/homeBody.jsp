@@ -46,7 +46,7 @@
 
               </div>
               <div class="result_row">
-              <div class="result_row_label"><a href="https://www.ebi.ac.uk/ena/submit/sra/#home" title="Edit your user profile" class="icon icon-functional" data-icon="e"></a></div>
+              <div class="result_row_label"><a href="https://www.ebi.ac.uk/ena/submit/sra/#home" title="Edit my user profile" class="icon icon-functional" data-icon="e"></a></div>
           </div>
         </div>
 
