@@ -228,48 +228,7 @@
                                    end="${model.maxRowNumberOfLatestItems-1}">
 
 
-                            <%--TEMP while we implement a better solution--%>
-                            <c:choose>
-                            <c:when test="${study.biomeIconCSSClass == 'freshwater_b'}">
-                                <c:set var="biomeName" value="Freshwater" scope="page"/>
-                            </c:when>
-                            <c:when test="${study.biomeIconCSSClass == 'soil_b'}">
-                                    <c:set var="biomeName" value="Soil" scope="page"/>
-                            </c:when>
-                            <c:when test="${study.biomeIconCSSClass == 'forest_b'}">
-                                    <c:set var="biomeName" value="Forest" scope="page"/>
-                            </c:when>
-                            <c:when test="${study.biomeIconCSSClass == 'grassland_b'}">
-                                    <c:set var="biomeName" value="Grassland" scope="page"/>
-                            </c:when>
-                            <c:when test="${study.biomeIconCSSClass == 'marine_b'}">
-                                <c:set var="biomeName" value="Marine" />
-                            </c:when>
-                            <c:when test="${study.biomeIconCSSClass == 'human_gut_b'}">
-                                    <c:set var="biomeName" value="Human gut" scope="page"/>
-                            </c:when>
-                            <c:when test="${study.biomeIconCSSClass == 'engineered_b'}">
-                                    <c:set var="biomeName" value="Engineered" scope="page"/>
-                            </c:when>
-                            <c:when test="${study.biomeIconCSSClass == 'air_b'}">
-                                    <c:set var="biomeName" value="Air" scope="page"/>
-                            </c:when>
-                            <c:when test="${study.biomeIconCSSClass == 'wastewater_b'}">
-                                    <c:set var="biomeName" value="Wastewater" scope="page"/>
-                            </c:when>
-                            <c:when test="${study.biomeIconCSSClass == 'non_human_host_b'}">
-                                    <c:set var="biomeName" value="Non-human host" scope="page"/>
-                            </c:when>
-                            <c:when test="${study.biomeIconCSSClass == 'human_host_b'}">
-                                    <c:set var="biomeName" value="Human host" scope="page"/>
-                            </c:when>
-                            <c:otherwise>
-                                <c:set var="biomeName" value="Undefined" scope="page"/>
-                            </c:otherwise>
-                            </c:choose>
-                    <!-- branch test-->
-
-                                <p><div class="biome_icon icon_xs ${study.biomeIconCSSClass}" title="${biomeName} biome"></div>
+                            <p><div class="biome_icon icon_xs ${entry.key.biomeIconCSSClass}" title="${entry.key.biomeIconTitle} biome"></div>
                                     <a href="<c:url value="${baseURL}/projects/${entry.key.studyId}"/>"
                                        class="list_more fl_uppercase_title">${entry.key.studyName}</a>
 
@@ -548,48 +507,7 @@
                 <c:forEach var="study" items="${model.studies}" varStatus="status" begin="0"
                            end="${model.maxRowNumberOfLatestItems-1}">
 
-                            <%--TEMP while we implement a better solution--%>
-                            <c:choose>
-                            <c:when test="${study.biomeIconCSSClass == 'freshwater_b'}">
-                                <c:set var="biomeName" value="Freshwater" scope="page"/>
-                            </c:when>
-                            <c:when test="${study.biomeIconCSSClass == 'soil_b'}">
-                                    <c:set var="biomeName" value="Soil" scope="page"/>
-                            </c:when>
-                            <c:when test="${study.biomeIconCSSClass == 'forest_b'}">
-                                    <c:set var="biomeName" value="Forest" scope="page"/>
-                            </c:when>
-                            <c:when test="${study.biomeIconCSSClass == 'grassland_b'}">
-                                    <c:set var="biomeName" value="Grassland" scope="page"/>
-                            </c:when>
-                            <c:when test="${study.biomeIconCSSClass == 'marine_b'}">
-                                <c:set var="biomeName" value="Marine" />
-                            </c:when>
-                            <c:when test="${study.biomeIconCSSClass == 'human_gut_b'}">
-                                    <c:set var="biomeName" value="Human gut" scope="page"/>
-                            </c:when>
-                            <c:when test="${study.biomeIconCSSClass == 'engineered_b'}">
-                                    <c:set var="biomeName" value="Engineered" scope="page"/>
-                            </c:when>
-                            <c:when test="${study.biomeIconCSSClass == 'air_b'}">
-                                    <c:set var="biomeName" value="Air" scope="page"/>
-                            </c:when>
-                            <c:when test="${study.biomeIconCSSClass == 'wastewater_b'}">
-                                    <c:set var="biomeName" value="Wastewater" scope="page"/>
-                            </c:when>
-                            <c:when test="${study.biomeIconCSSClass == 'non_human_host_b'}">
-                                    <c:set var="biomeName" value="Non-human host" scope="page"/>
-                            </c:when>
-                            <c:when test="${study.biomeIconCSSClass == 'human_host_b'}">
-                                    <c:set var="biomeName" value="Human host" scope="page"/>
-                            </c:when>
-                            <c:otherwise>
-                                <c:set var="biomeName" value="Undefined" scope="page"/>
-                            </c:otherwise>
-                            </c:choose>
-                    <!-- branch test-->
-
-                    <p><div class="biome_icon icon_xs ${study.biomeIconCSSClass}" title="${biomeName} biome"></div>
+                    <p><div class="biome_icon icon_xs ${study.biomeIconCSSClass}" title="${study.biomeIconTitle} biome"></div>
                         <a href="<c:url value="${baseURL}/projects/${study.studyId}"/>"
                            class="list_more fl_uppercase_title">${study.studyName}</a>
 
