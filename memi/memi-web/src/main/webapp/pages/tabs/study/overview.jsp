@@ -12,20 +12,26 @@
 <tags:publications publications="${study.publications}" relatedPublications="${model.relatedPublications}"
                    relatedLinks="${model.relatedLinks}"/>
 
-
-<c:if test="${!study.public}">
-    <p>Private data <img alt="private" src="${pageContext.request.contextPath}/img/icon_priv_private.gif">
-        <c:choose>
-            <c:when test="${not empty study.publicReleaseDate}">
-                <c:set var="publicReleaseDate" value="${study.publicReleaseDate}"/>
-                <span class="list_date">&nbsp;(will be published on the <fmt:formatDate value="${publicReleaseDate}"
-                                                                                        pattern="dd-MMM-yyyy"/>)</span>
-            </c:when>
-            <c:otherwise>
-                <c:set var="publicReleaseDate" value="${notGivenId}"/>
-            </c:otherwise>
-        </c:choose>
-    </p>
+<%-- Show icon only for people are are logged in--%>
+<c:if test="${not empty model.submitter}">
+    <!-- Private icon-->
+    <c:if test="${!study.public}">
+        <p class="show_tooltip icon icon-functional" data-icon="L" title="Private data">Private data
+         <c:choose>
+             <c:when test="${not empty study.publicReleaseDate}">
+                 <c:set var="publicReleaseDate" value="${study.publicReleaseDate}"/>
+                 <span class="list_warn">&nbsp;(will be published on the <fmt:formatDate value="${publicReleaseDate}"
+                                                                                         pattern="dd-MMM-yyyy"/>)</span>
+             </c:when>
+             <c:otherwise>
+                 <c:set var="publicReleaseDate" value="${notGivenId}"/>
+             </c:otherwise>
+         </c:choose>
+     </p>
+    </c:if>
+    <c:if test="${study.public}">
+            <p class="show_tooltip icon icon-functional" data-icon="U" title="Public data">Public data </p>
+     </c:if>
 </c:if>
 
 
@@ -171,11 +177,20 @@
                             class="h_left"><a
                                 href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${run.externalSampleId}"/>"
                                 title="Sample ${run.externalSampleId}" class="fl_uppercase_title">${run.sampleName} </a>
+
+                                 <%-- Show icon only for people are are logged in--%>
+                       <c:if test="${not empty model.submitter}">
+                            <!-- Private icon-->
+                           <c:if test="${!study.public}">
+                               <span class="show_tooltip icon icon-functional" data-icon="L" title="Private data"></span>
+                           </c:if>
+                           <c:if test="${study.public}">
+                           <span class="show_tooltip icon icon-functional" data-icon="U" title="Public data"></span>
+                           </c:if>
+                       </c:if>
                         </td>
                         <td style="background-color: rgb(244, 244, 248);" rowspan="${run.runCount}">
-                            <c:if test="${!run.public}"><img alt="private"
-                                                             src="${pageContext.request.contextPath}/img/icon_priv_private.gif">&nbsp;&nbsp;</c:if>
-                                ${run.externalSampleId}
+                         ${run.externalSampleId}
                         </td>
                     </c:if>
                     <c:choose>
