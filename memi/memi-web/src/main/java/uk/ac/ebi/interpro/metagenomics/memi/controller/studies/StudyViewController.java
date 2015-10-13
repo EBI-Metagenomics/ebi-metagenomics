@@ -42,7 +42,7 @@ public class StudyViewController extends AbstractStudyViewController {
     private PipelineReleaseDAO pipelineReleaseDAO;
 
     @Resource
-     private BiomeDAO biomeDAO;
+    private BiomeDAO biomeDAO;
 
     @RequestMapping(value = MGPortalURLCollection.PROJECT)
     public ModelAndView doGetStudy(@PathVariable final String studyId,
@@ -96,8 +96,9 @@ public class StudyViewController extends AbstractStudyViewController {
      */
 
     private void populateModel(final ModelMap model, final Study study) {
-         //  Assign biome CSS class to the study
+        //  Assign biome CSS class to the study
         MemiTools.assignBiomeIconCSSClass(study, biomeDAO);
+        MemiTools.assignBiomeIconTitle(study, biomeDAO);
         String pageTitle = "Project: " + study.getStudyName() + "";
         final ViewModelBuilder<StudyViewModel> builder = new StudyViewModelBuilder(sessionManager,
                 pageTitle, getBreadcrumbs(study), propertyContainer, study, pipelineReleaseDAO);
