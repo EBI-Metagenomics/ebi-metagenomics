@@ -6,19 +6,14 @@ import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.core.comparators.PublicationComparator;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.RunDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.extensions.QueryRunsForProjectResult;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.PipelineReleaseDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.PipelineRelease;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Publication;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.PublicationType;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.study.OverviewModel;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.study.StudyViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.AbstractViewModelBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -92,10 +87,10 @@ public class OverviewModelBuilder extends AbstractViewModelBuilder<OverviewModel
      */
     private void buildPublicationLists() {
         for (Publication pub : study.getPublications()) {
-            if (pub.getPubType().equals(PublicationType.PUBLICATION)) {
-                relatedPublications.add(pub);
-            } else if (pub.getPubType().equals(PublicationType.WEBSITE_LINK)) {
+            if (pub.getPubType().equals("WEBSITE_LINK")) {
                 relatedLinks.add(pub);
+            } else {
+                relatedPublications.add(pub);
             }
         }
         //Sorting lists

@@ -68,9 +68,9 @@ public class PublicationTest {
 
     @Test
     public void testHashCode() {
-        Publication pub1 = new Publication(PublicationType.PUBLICATION, "isbn1", "volumn1", 2001, "title1", "authors1", "doi1");
-        Publication pub2 = new Publication(PublicationType.PUBLICATION, "isbn1", "volumn1", 2001, "title1", "authors1", "doi1");
-        Publication pub3 = new Publication(PublicationType.WEBSITE_LINK, "isbn3", "volumn3", 2003, "title3", "authors3", "doi3");
+        Publication pub1 = new Publication("publication", "isbn1", "volumn1", 2001, "title1", "authors1", "doi1");
+        Publication pub2 = new Publication("publication", "isbn1", "volumn1", 2001, "title1", "authors1", "doi1");
+        Publication pub3 = new Publication("publication", "isbn3", "volumn3", 2003, "title3", "authors3", "doi3");
         //
         Set<Publication> publications = new HashSet<Publication>();
         assertNotNull(publications);

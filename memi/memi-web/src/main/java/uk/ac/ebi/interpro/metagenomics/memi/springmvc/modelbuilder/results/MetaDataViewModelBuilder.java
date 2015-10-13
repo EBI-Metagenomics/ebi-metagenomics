@@ -78,10 +78,10 @@ public class MetaDataViewModelBuilder extends AbstractResultViewModelBuilder<Met
      */
     private void buildPublicationLists() {
         for (Publication pub : sample.getPublications()) {
-            if (pub.getPubType().equals(PublicationType.PUBLICATION)) {
-                relatedPublications.add(pub);
-            } else if (pub.getPubType().equals(PublicationType.WEBSITE_LINK)) {
+            if (pub.getPubType().equals("WEBSITE_LINK")) {
                 relatedLinks.add(pub);
+            } else {
+                relatedPublications.add(pub);
             }
         }
         //Sorting lists

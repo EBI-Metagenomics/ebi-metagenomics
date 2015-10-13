@@ -29,8 +29,7 @@ public class Publication implements Comparator<Publication> {
     private long pubId;
 
     @Column(name = "PUB_TYPE", length = 30, nullable = false)
-    @Enumerated(EnumType.STRING)
-    private PublicationType pubType;
+    private String pubType;
 
     @Column(name = "ISBN", length = 10)
     private String isbn;
@@ -81,7 +80,7 @@ public class Publication implements Comparator<Publication> {
     protected Publication() {
     }
 
-    public Publication(PublicationType pubType, String isbn, String volume, Integer year, String pubTitle, String authors, String doi) {
+    public Publication(String pubType, String isbn, String volume, Integer year, String pubTitle, String authors, String doi) {
         this.pubType = pubType;
         this.isbn = isbn;
         this.volume = volume;
@@ -123,11 +122,11 @@ public class Publication implements Comparator<Publication> {
         this.pubTitle = pubTitle;
     }
 
-    public PublicationType getPubType() {
+    public String getPubType() {
         return pubType;
     }
 
-    public void setPubType(PublicationType pubType) {
+    public void setPubType(String pubType) {
         this.pubType = pubType;
     }
 
