@@ -1130,7 +1130,7 @@ border:1px #ff918e solid;
 margin:0;
 }
 
-.msg_error {background-color: #FFCFCF; color: #8C302C;border:1px #ff918e solid; margin: 0px auto;font-size: 118%; margin-top:27px;padding: 14px;width: 712px;border-radius: 7px;}
+.msg_error {background-color: #FFCFCF; color: #8C302C;border:1px #ff918e solid; margin: 0px auto;font-size: 118%; margin-top:27px;padding: 9px 18px;width: 60%;border-radius: 7px;}
 .msg_help {display:block;background-color: #f1f3f7; color: #455872; border: 1px #D5E5FA solid; padding: 9px; border-radius: 7px; }
 .msg_help.blue_h {background-color: #DDE5F5; color: #455872; border: 1px #D5E5FA solid;}
 .msg_help.yel_h {background-color: #ffffa3; color: #555; border: 1px #f1d031 solid;}
@@ -1888,7 +1888,7 @@ ul.sample_list li {list-style: none; display: inline;}
 .home_box {color: #606a73;border:1px #cbcbcb solid; overflow:hidden /*when resizing*/;   padding: 18px 18px 9px 18px; min-height: 200px; }
 .hlight-spot .home_box p, .hlight-info .home_box p  {border:0px pink solid; margin-left:0;  margin-right:0;padding-left:0;padding-right:0;font-size:120%; }
 .hlight-spot .home_box img {margin-bottom: 9px; width: 100%;/*resize img with screen*/}
-.hlight-info .home_box img {margin: 0 9px 9px 0; float:left; width:22%;}
+.hlight-info .home_box img {margin: 0 9px 9px 0; float:left; width:17%;}
 .home_box.alpha {margin: 0 0 18px 18px;}
 .home_box.omega {margin: 0 18px 18px 0;}
 .home_box h2 {margin:0 0 9px 0; padding:0;font-size: 168%;}
@@ -1931,7 +1931,7 @@ a.all:active  { background: url(../img/arrow_link_click_small.jpg) no-repeat rig
 .jumbo-news-centred {width: 66%;}
 .hlight_subtitle {margin-right:18px;}
 #list-biomes .grid_24 a  {height:inherit;}
-#list-biomes, .list-contain-box, #hlight-box-spotlight, #hlight-box-tools {width:100%;margin-left: 0;margin-right: 0;}
+#list-biomes, .grid_12.list-contain-box, #hlight-box-spotlight, #hlight-box-tools {width:100%;margin-left: 0;margin-right: 0;}
 #list-biomes .home_box , .list-contain-box .home_box, #hlight-box-spotlight .home_box, #hlight-box-tools .home_box {margin:9px 18px;}
 }
 
