@@ -1130,7 +1130,7 @@ border:1px #ff918e solid;
 margin:0;
 }
 
-.msg_error {background-color: #FFCFCF; color: #8C302C;border:1px #ff918e solid; margin: 0px auto;font-size: 118%; margin-top:27px;padding: 9px 18px;width: 60%;border-radius: 7px;}
+.msg_error {background-color: #FFCFCF; color: #8C302C;border:1px #ff918e solid; margin: 0px auto;font-size: 118%; margin-top:18px; margin-bottom:18px; padding: 9px 18px;width: 60%;border-radius: 7px;}
 .msg_help {display:block;background-color: #f1f3f7; color: #455872; border: 1px #D5E5FA solid; padding: 9px; border-radius: 7px; }
 .msg_help.blue_h {background-color: #DDE5F5; color: #455872; border: 1px #D5E5FA solid;}
 .msg_help.yel_h {background-color: #ffffa3; color: #555; border: 1px #f1d031 solid;}
