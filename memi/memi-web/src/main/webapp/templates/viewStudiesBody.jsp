@@ -188,9 +188,20 @@
 
                     </td>
                     <td class="h_left" id="ordered">
-                        <c:if test="${!study.public}"><img alt="private"
-                                                           src="${pageContext.request.contextPath}/img/icon_priv_private.gif">&nbsp;&nbsp;</c:if>
+
                         <a href="<c:url value="${baseURL}/projects/${study.studyId}"/>">${study.studyName}</a>
+
+                           <%-- Show icon only for people are are logged in--%>
+                           <c:if test="${not empty model.submitter}">
+                            <!-- Private icon-->
+                           <c:if test="${!study.public}">
+                               <span class="show_tooltip icon icon-functional" data-icon="L" title="Private data"></span>
+                           </c:if>
+                           <c:if test="${study.public}">
+                           <span class="show_tooltip icon icon-functional" data-icon="U" title="Public data"></span>
+                           </c:if>
+                       </c:if>
+
                     </td>
 
                     <td>

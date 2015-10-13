@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
+<div id="sample_ov">
 
 <div class="title_tab_p">
     <span class="subtitle">Sample overview <span>(<a title="Click to view entry on European Nucleotide Archive"
@@ -9,6 +10,19 @@
 
     <h2 class="fl_uppercase_title">${sample.sampleName}</h2>
 </div>
+
+ <%-- Show icon only for people are are logged in--%>
+ <c:if test="${not empty model.submitter}">
+     <!-- Private icon-->
+     <c:if test="${!sample.public}">
+         <p class="show_tooltip icon icon-functional" data-icon="L" title="Private data">Private data
+
+      </p>
+     </c:if>
+     <c:if test="${sample.public}">
+             <p class="show_tooltip icon icon-functional" data-icon="U" title="Public data">Public data </p>
+      </c:if>
+ </c:if>
 
 <h3 class="study_desc">Description</h3>
 
@@ -65,3 +79,4 @@
         </table>
     </c:otherwise>
 </c:choose>
+</div>

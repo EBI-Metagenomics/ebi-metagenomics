@@ -1,14 +1,67 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 
+<c:choose>
+<c:when test="${not empty model.submitter}">
+<section class="jumbo-header private-area">
+    <div class="close_section anim"><span class="show_tooltip" title="Close this section" id="this_close">&#10006;</span></div>
+    <%--<div class="close_section anim"><span class="icon icon-functional" data-icon="x" title="Close this section" id="this_close"></span></div>--%>
+    <div class="mega-lock"><span class="icon icon-functional" data-icon="L"></span></div>
+     <p class="lead">Welcome to your private area.<br/>You can track here data you submitted to us <br/>and visualize the corresponding results </p>
+   <div class="button"><a href="<c:url value="${baseURL}/submission"/>"> Submit data</a></div>
+</section>
+<section class="jumbo-user">
+  <div class="jumbo-user-box">
+      <%--<h3>User details</h3>--%>
 
+          <div class="output_form">
+
+          <div class="result_row">
+              <div class="result_row_label">Name:</div>
+              <div class="result_row_data">Christophe Becavin</div>
+          </div>
+
+              <div class="result_row">
+                <div class="result_row_label">Webin account:</div>
+                <div class="result_row_data lowercase">Webin-651</div>
+            </div>
+
+          <div class="result_row">
+              <div class="result_row_label">Email:</div>
+              <div class="result_row_data lowercase">not available</div>
+          </div>
+
+          <div class="result_row">
+            <div class="result_row_label">Institute:</div>
+            <div class="result_row_data">BioProject</div>
+          </div>
+
+              <div class="result_row">
+                      <div class="result_row_label">Registered with us:</div>
+                      <div class="result_row_data lowercase">Yes</div>
+                  </div>
+              <div class="result_row">
+                      <div class="result_row_label">Consent given:</div>
+                      <div class="result_row_data lowercase">Yes</div> &nbsp;
+
+              </div>
+              <div class="result_row">
+              <div class="result_row_label"><a href="https://www.ebi.ac.uk/ena/submit/sra/#home" title="Edit my user profile" class="icon icon-functional" data-icon="e"></a></div>
+          </div>
+        </div>
+
+
+  </div>
+</section>
+</c:when>
+<c:otherwise>
 <section class="jumbo-header">
+    <div class="close_section anim"><span class="show_tooltip" title="Close this section" id="this_close">&#10006;</span></div>
      <p class="lead">Submit, analyse, visualize and compare your data.</p>
    <div class="button"><a href="<c:url value="${baseURL}/submission"/>"> Submit data</a></div>
 </section>
-
-
-
+</c:otherwise>
+</c:choose>
 
     <%--<c:forEach var="experimentCountEntry"--%>
                <%--items="${model.experimentCountMap}">--%>
@@ -16,28 +69,34 @@
         <%--${experimentCountEntry.value}--%>
         <%--</br>--%>
     <%--</c:forEach>--%>
-
-<section class="jumbo-stats">
-<div class="grid_24 jumbo-stats-container">
-    <div class="grid_6 alpha jumbo-stats-box" id="stat-submissions"><!-- <span class="icon icon-functional" data-icon="D"></span>--><span class="icon icon-generic" data-icon="D"></span><br/><span class="high_nb">${model.numOfDataSets}</span> data sets</div>
-    <div class="grid_6  jumbo-stats-box" id="stat-exptype">
-        <div class="grid_24"><div class="grid_6 alpha"><span class="icon icon-conceptual icon-c1" data-icon="d"></span></div> <div class="grid_6">
-        <c:forEach var="experimentCountEntry"
-                   items="${model.experimentCountMap}">
-        <span class="high_nb">${experimentCountEntry.value}</span><br/>
-        </c:forEach>
-    </div> <div class="grid_12 omega"> metagenomics <br/> metatranscriptomics  <br/> amplicons <br/> assemblies</div></div> </div>
-    <%--<div class="grid_3 jumbo-stats-box" id="stat-member"><span class="icon icon-generic" data-icon="}"></span><br/><span class="high_nb">${model.numOfSubmitters}</span> members </div>--%>
-    <div class="grid_6 jumbo-stats-box" id="stat-public">
-        <div class="grid_24"><div class="grid_6 alpha" ><span class="icon icon-functional" data-icon="U"></span><br/><span class="stat-lock-title">Public</span></div>
-            <div class="grid_6"><span class="high_nb">${model.publicRunCount}</span><br/><span class="high_nb">${model.publicSamplesCount}</span><br/><span class="high_nb">${model.publicStudiesCount}</span></div> <div class="grid_12 omega"> runs <br/> samples  <br/> projects</div></div></div>
-    <div class="grid_6 jumbo-stats-box omega" id="stat-private">
-        <div class="grid_24"><div class="grid_6 alpha" ><span class="icon icon-functional" data-icon="L"></span><br/><span class="stat-lock-title">Private</span></div>
-            <div class="grid_6"><span class="high_nb">${model.privateRunCount}</span><br/><span class="high_nb">${model.privateSamplesCount}</span><br/><span class="high_nb">${model.privateStudiesCount}</span></div>
-            <div class="grid_12 omega"> runs <br/> samples  <br/> projects</div></div>
+<c:choose>
+<c:when test="${not empty model.submitter}">
+<!-- no stats for private area unless someone makes it work-->
+</c:when>
+<c:otherwise>
+    <section class="jumbo-stats">
+    <div class="grid_24 jumbo-stats-container">
+        <div class="grid_6 alpha jumbo-stats-box" id="stat-submissions"><!-- <span class="icon icon-functional" data-icon="D"></span>--><span class="icon icon-generic" data-icon="D"></span><br/><span class="high_nb">${model.numOfDataSets}</span> data sets</div>
+        <div class="grid_6  jumbo-stats-box" id="stat-exptype">
+            <div class="grid_24"><div class="grid_6 alpha"><span class="icon icon-conceptual icon-c1" data-icon="d"></span></div> <div class="grid_6">
+            <c:forEach var="experimentCountEntry"
+                       items="${model.experimentCountMap}">
+            <span class="high_nb">${experimentCountEntry.value}</span><br/>
+            </c:forEach>
+        </div> <div class="grid_12 omega"> metagenomics <br/> metatranscriptomics  <br/> amplicons <br/> assemblies</div></div> </div>
+        <%--<div class="grid_3 jumbo-stats-box" id="stat-member"><span class="icon icon-generic" data-icon="}"></span><br/><span class="high_nb">${model.numOfSubmitters}</span> members </div>--%>
+        <div class="grid_6 jumbo-stats-box" id="stat-public">
+            <div class="grid_24"><div class="grid_6 alpha" ><span class="icon icon-functional" data-icon="U"></span><br/><span class="stat-lock-title">Public</span></div>
+                <div class="grid_6"><span class="high_nb">${model.publicRunCount}</span><br/><span class="high_nb">${model.publicSamplesCount}</span><br/><span class="high_nb">${model.publicStudiesCount}</span></div> <div class="grid_12 omega"> runs <br/> samples  <br/> projects</div></div></div>
+        <div class="grid_6 jumbo-stats-box omega" id="stat-private">
+            <div class="grid_24"><div class="grid_6 alpha" ><span class="icon icon-functional" data-icon="L"></span><br/><span class="stat-lock-title">Private</span></div>
+                <div class="grid_6"><span class="high_nb">${model.privateRunCount}</span><br/><span class="high_nb">${model.privateSamplesCount}</span><br/><span class="high_nb">${model.privateStudiesCount}</span></div>
+                <div class="grid_12 omega"> runs <br/> samples  <br/> projects</div></div>
+        </div>
     </div>
-</div>
-</section>
+    </section>
+</c:otherwise>
+</c:choose>
       <%--Caroussel--%>
             <%--<!--[if IE 6]><div id="IE6" class="IE"><![endif]--> <!--[if IE 7]><div id="IE7" class="IE"><![endif]--> <!--[if IE & ((!IE 6) & (!IE 7))]><div><![endif]--> <!--[if !IE]>--><div><!--<![endif]-->--%>
             <%--<div class="carousel">--%>
@@ -169,48 +228,7 @@
                                    end="${model.maxRowNumberOfLatestItems-1}">
 
 
-                            <%--TEMP while we implement a better solution--%>
-                            <c:choose>
-                            <c:when test="${study.biomeIconCSSClass == 'freshwater_b'}">
-                                <c:set var="biomeName" value="Freshwater" scope="page"/>
-                            </c:when>
-                            <c:when test="${study.biomeIconCSSClass == 'soil_b'}">
-                                    <c:set var="biomeName" value="Soil" scope="page"/>
-                            </c:when>
-                            <c:when test="${study.biomeIconCSSClass == 'forest_b'}">
-                                    <c:set var="biomeName" value="Forest" scope="page"/>
-                            </c:when>
-                            <c:when test="${study.biomeIconCSSClass == 'grassland_b'}">
-                                    <c:set var="biomeName" value="Grassland" scope="page"/>
-                            </c:when>
-                            <c:when test="${study.biomeIconCSSClass == 'marine_b'}">
-                                <c:set var="biomeName" value="Marine" />
-                            </c:when>
-                            <c:when test="${study.biomeIconCSSClass == 'human_gut_b'}">
-                                    <c:set var="biomeName" value="Human gut" scope="page"/>
-                            </c:when>
-                            <c:when test="${study.biomeIconCSSClass == 'engineered_b'}">
-                                    <c:set var="biomeName" value="Engineered" scope="page"/>
-                            </c:when>
-                            <c:when test="${study.biomeIconCSSClass == 'air_b'}">
-                                    <c:set var="biomeName" value="Air" scope="page"/>
-                            </c:when>
-                            <c:when test="${study.biomeIconCSSClass == 'wastewater_b'}">
-                                    <c:set var="biomeName" value="Wastewater" scope="page"/>
-                            </c:when>
-                            <c:when test="${study.biomeIconCSSClass == 'non_human_host_b'}">
-                                    <c:set var="biomeName" value="Non-human host" scope="page"/>
-                            </c:when>
-                            <c:when test="${study.biomeIconCSSClass == 'human_host_b'}">
-                                    <c:set var="biomeName" value="Human host" scope="page"/>
-                            </c:when>
-                            <c:otherwise>
-                                <c:set var="biomeName" value="Undefined" scope="page"/>
-                            </c:otherwise>
-                            </c:choose>
-                    <!-- branch test-->
-
-                                <p><div class="biome_icon icon_xs ${study.biomeIconCSSClass}" title="${biomeName} biome"></div>
+                            <p><div class="biome_icon icon_xs ${entry.key.biomeIconCSSClass}" title="${entry.key.biomeIconTitle} biome"></div>
                                     <a href="<c:url value="${baseURL}/projects/${entry.key.studyId}"/>"
                                        class="list_more fl_uppercase_title">${entry.key.studyName}</a>
 
@@ -223,9 +241,11 @@
                                             test='${entry.value > 1}'>s</c:if></a>
                                 <!-- Private icon-->
                                 <c:if test="${!entry.key.public}">
-                                <img alt="private" src="${pageContext.request.contextPath}/img/icon_priv_private.gif">
+                                    <span class="show_tooltip icon icon-functional" data-icon="L" title="Private data"></span>
                                 </c:if>
-
+                                <c:if test="${entry.key.public}">
+                                <span class="show_tooltip icon icon-functional" data-icon="U" title="Public data"></span>
+                                </c:if>
                                 </p>
                             </c:forEach>
 
@@ -250,6 +270,7 @@
                                                 title="View all ${model.mySamplesCount} my samples">${model.mySamplesCount}</a></span>
                 </h2>
 
+
                 <c:choose>
                     <c:when test="${empty model.mySamples}">
                         <p>
@@ -257,6 +278,7 @@
                         </p>
                     </c:when>
                     <c:otherwise>
+                    <div class="list-sample-l">
                         <%--<h3>My latest samples (Total: <a--%>
                                 <%--href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleType=&sampleVisibility=MY_SAMPLES&search=Search&startPosition=0"/>"--%>
                                 <%--title="View all ${model.mySamplesCount} my samples">${model.mySamplesCount}</a>)</h3>--%>
@@ -264,24 +286,29 @@
                         <c:forEach var="sample" items="${model.mySamples}" varStatus="status" begin="0"
                                    end="${model.maxRowNumberOfLatestItems-1}">
                             <p><%--<span class="list_date">${sample.metadataReceived}:</span>--%>
-                                <c:if test="${!sample.public}"><img alt="private"
-                                                                    src="${pageContext.request.contextPath}/img/icon_priv_private.gif"></c:if>&nbsp;&nbsp;
+
                                 <a href="<c:url value="${baseURL}/projects/${sample.study.studyId}/samples/${sample.sampleId}"/>"
-                                   class="list_more fl_uppercase_title">${sample.sampleName}</a>
+                                   class="list_more fl_uppercase_title">${sample.sampleName}
+                                    <c:if test="${!sample.public}"><span class="show_tooltip icon icon-functional" data-icon="L"  title="Private data"></span></c:if>
+                                    <c:if test="${sample.public}"><span class="show_tooltip icon icon-functional" data-icon="U"  title="Public data"></span></c:if>
+
+                                </a>
                                 <span class="list_desc"><c:out value="${sample.shortSampleDescription} ..."/></span>
                                 <br/>
                                 <a href="<c:url value="${baseURL}/projects/${sample.study.studyId}/samples/${sample.sampleId}"/>" class="more_view">View more</a>
                             </p>
                         </c:forEach>
+                    </div><!-- /list-project-l-->
                     </c:otherwise>
                 </c:choose>
 
-                    <%--<a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search&startPosition=0"/>"--%>
-                       <%--title="View all public samples" class="all">All public samples</a>--%>
-                    <c:if test="${not empty model.mySamples}">
-                    <p><a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=MY_SAMPLES&search=Search&startPosition=0"/>"
-                           title="View all my samples" class="all">All my samples</a></p>
-                    </c:if>
+
+                <%--<a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search&startPosition=0"/>"--%>
+                   <%--title="View all public samples" class="all">All public samples</a>--%>
+                <c:if test="${not empty model.mySamples}">
+                <p><a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=MY_SAMPLES&search=Search&startPosition=0"/>"
+                       title="View all my samples" class="all">All my samples</a></p>
+                </c:if>
 
             </div>
             </div>
@@ -480,48 +507,7 @@
                 <c:forEach var="study" items="${model.studies}" varStatus="status" begin="0"
                            end="${model.maxRowNumberOfLatestItems-1}">
 
-                            <%--TEMP while we implement a better solution--%>
-                            <c:choose>
-                            <c:when test="${study.biomeIconCSSClass == 'freshwater_b'}">
-                                <c:set var="biomeName" value="Freshwater" scope="page"/>
-                            </c:when>
-                            <c:when test="${study.biomeIconCSSClass == 'soil_b'}">
-                                    <c:set var="biomeName" value="Soil" scope="page"/>
-                            </c:when>
-                            <c:when test="${study.biomeIconCSSClass == 'forest_b'}">
-                                    <c:set var="biomeName" value="Forest" scope="page"/>
-                            </c:when>
-                            <c:when test="${study.biomeIconCSSClass == 'grassland_b'}">
-                                    <c:set var="biomeName" value="Grassland" scope="page"/>
-                            </c:when>
-                            <c:when test="${study.biomeIconCSSClass == 'marine_b'}">
-                                <c:set var="biomeName" value="Marine" />
-                            </c:when>
-                            <c:when test="${study.biomeIconCSSClass == 'human_gut_b'}">
-                                    <c:set var="biomeName" value="Human gut" scope="page"/>
-                            </c:when>
-                            <c:when test="${study.biomeIconCSSClass == 'engineered_b'}">
-                                    <c:set var="biomeName" value="Engineered" scope="page"/>
-                            </c:when>
-                            <c:when test="${study.biomeIconCSSClass == 'air_b'}">
-                                    <c:set var="biomeName" value="Air" scope="page"/>
-                            </c:when>
-                            <c:when test="${study.biomeIconCSSClass == 'wastewater_b'}">
-                                    <c:set var="biomeName" value="Wastewater" scope="page"/>
-                            </c:when>
-                            <c:when test="${study.biomeIconCSSClass == 'non_human_host_b'}">
-                                    <c:set var="biomeName" value="Non-human host" scope="page"/>
-                            </c:when>
-                            <c:when test="${study.biomeIconCSSClass == 'human_host_b'}">
-                                    <c:set var="biomeName" value="Human host" scope="page"/>
-                            </c:when>
-                            <c:otherwise>
-                                <c:set var="biomeName" value="Undefined" scope="page"/>
-                            </c:otherwise>
-                            </c:choose>
-                    <!-- branch test-->
-
-                    <p><div class="biome_icon icon_xs ${study.biomeIconCSSClass}" title="${biomeName} biome"></div>
+                    <p><div class="biome_icon icon_xs ${study.biomeIconCSSClass}" title="${study.biomeIconTitle} biome"></div>
                         <a href="<c:url value="${baseURL}/projects/${study.studyId}"/>"
                            class="list_more fl_uppercase_title">${study.studyName}</a>
 
@@ -549,6 +535,32 @@
 
         </div><!-- /jumbo-list-data-container-->
 </section>
+
+<c:choose>
+<c:when test="${not empty model.submitter}"> <!-- private-->
+    <section class="hlight_item">
+        <div class="grid_24">
+            <div id="hlight-box-spotlight" class="grid_12 alpha hlight-info">
+               <div  class="hlight_title_cont"> <div class="hlight_maintitle"><h1>Tracking data submission</h1></div><div class="hlight_subtitle" style="margin-top:0;"><h2 class="icon icon-generic" data-icon="i"></h2></div></div>
+                <div class="home_box alpha"><p><img src="${pageContext.request.contextPath}/img/ico_sub_big.png" alt="Tracking submission"/> EBI Metagenomics service offers a manually-assisted submission route, with help available to ensure data and metadata formatting comply with the European Nucleotide Archive (ENA) data schema and the Genomic Standards Consortium (GSC) sample metadata guidelines.</p>
+                    <p>You may find delays between the moment you submit your data in ENA and the moment you will find them available in this private section of the EBI metagenomics. It doesn't necessarily means there is something wrong with your data. We just need some time to get your data analysed (usually 1-2 weeks). It needs to go through the analysis pipeline before it will appear in this private area.
+                    </p>
+                    <p>If you have been waiting for more than a month, you are welcome to <a
+                                                  href="mailto:metagenomics-help@ebi.ac.uk?subject=EBI Metagenomics private area: data submission status">contact us to get some update</a>.</p>
+                </div>
+            </div>
+            <div id="hlight-box-spotlight" class="grid_12 alpha hlight-info">
+              <div  class="hlight_title_cont"> <div class="hlight_maintitle"><h1>Data confidentiality</h1></div><div class="hlight_subtitle" style="margin-top:0;"><h2 class="icon icon-generic" data-icon="i"></h2></div></div>
+               <div class="home_box alpha"><p><img src="${pageContext.request.contextPath}/img/ico_conf_big.png" alt="Data archiving"/> Data submitted to us can be kept confidential (and only accessible after secure user login) to allow the data producer to publish their findings. It should be noted that ALL data must eventually be suitable for public release.</p>
+                  <p>The default is two years but you can set it up for any length suitable to you in the ENA Webin submission tools. Upon analysis, result data will be posted on our website however, if private, only you will be able to access them as login will be necessary for access. Once you published the results, you can <a href="https://www.ebi.ac.uk/ena/submit/sra/#home" title="Reset release date"> reset the date for release </a> or we can do it for you if you <a
+                              href="mailto:metagenomics-help@ebi.ac.uk?subject=EBI Metagenomics private area: reset release date">sent us an email</a>.
+                  </p></div>
+           </div>
+        </div>
+    </section>
+</c:when>
+<c:otherwise>
+
 
 <section class="hlight_item">
     <div class="grid_24">
@@ -601,6 +613,9 @@
 </div>
 </section>
 
+</c:otherwise>
+</c:choose>
+
 <!-- script for carousel - only homepage-->
 <%--<script src="${pageContext.request.contextPath}/js/jquery.carousel.min.js" type="text/javascript"></script>--%>
 <%--<script type="text/javascript">--%>
@@ -621,8 +636,8 @@
 <%--Client-side twitter news feed - http://tweet.seaofclouds.com/ - only homepage--%>
 <script src="${pageContext.request.contextPath}/js/tweet/jquery.tweet.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/js/tweet/tweet.instance.js" type="text/javascript"></script>
-<!-- re-style the twitter component-->
 <script type="text/javascript">
+    //  re-style the twitter component
     $("iframe").ready(function() {
         var timer = setInterval(function() {
             if ($($("iframe").contents()).find(".avatar").length>0) {
@@ -640,4 +655,10 @@
             }
         }, 100);
     });
+</script>
+<script type="text/javascript">
+    //close section for the private area
+    $('#this_close').click(function (event) {
+           $('.jumbo-header').slideToggle();
+       });
 </script>

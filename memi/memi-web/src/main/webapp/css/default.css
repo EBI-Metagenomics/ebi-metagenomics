@@ -277,6 +277,8 @@ div#headerdiv .login_name a {display:inline;color: white; border-bottom:0;}
 div#headerdiv .login_name a:active, div#headerdiv .login_name a:hover, div#headerdiv .login_name a:focus {background-color: transparent;}
 div#headerdiv .logout {font-weight: bold;}
 
+
+#local-nav {z-index: 90; position: relative;}/*to make the banner img private section not overlap*/
 /************************* LINKS ************************************/
 
 #logout {color:#333;font-weight:bold;}
@@ -536,7 +538,6 @@ border:0px solid #7C8C99;
 
 /*.fls_uppercase {text-transform: capitalize;} *//*transform first letter words in uppercase letter - floating elements*/
 .fl_uppercase:first-letter {text-transform: uppercase;}  /*transform first letter words in uppercase letter - block elements*/
-.fl_uppercase_title {display: block;}
 .fl_uppercase_title:first-letter {text-transform: uppercase;}
 
 .sample_desc {font-size:110%;} /*sample description*/
@@ -731,11 +732,10 @@ a.list_sample:hover{
 color:#62388b;
 text-decoration:underline;
 }
+.list_note {color:#D4A346;}
+.list_warn{color:#CC4E4E;}
 
-.list_date{
-color:#9d9d9d ;
-font-size:90%;
-}
+.list_date{color:#9d9d9d;font-size:90%;}
 
 .list_date_new{
 color:#9d9d9d ;
@@ -1141,14 +1141,11 @@ margin:0;
 .msg_help.blue_h span.icon-generic::before {color: #7CA3D4;}
 .msg_help.yel_h span.icon-generic::before {color: #797070;}
 
-.close_wind a {
-background: transparent url(../img/ico_close.png) no-repeat right top;
-border:0px solid green; float:right; width:22px; height:22px; -moz-opacity:.5;opacity:0.50;filter:alpha(opacity=50);margin-right:7px;
-}
-
-.close_wind a:hover {
--moz-opacity:.9;opacity:0.90;filter:alpha(opacity=90);
-}
+.close_wind a { background: transparent url(../img/ico_close.png) no-repeat right top;  float:right; width:22px; height:22px; -moz-opacity:.5;opacity:0.50;filter:alpha(opacity=50);margin-right:7px;  }
+.close_wind a:hover {-moz-opacity:.9;opacity:0.90;filter:alpha(opacity=90);}
+.close_section {padding: 6px 12px; position: absolute; top: 9px;  right: 9px;opacity: 0.3; cursor:pointer; font-size: 226%;}
+.close_section .icon-functional:before {color:white;font-size: 193%;}
+.close_section:hover {opacity: 1;transform-origin: 50% 50%;transfom:rotate(180deg) scale(1);-moz-transform: rotate(180deg) scale(1);-ms-transform:rotate(180deg) scale(1); -webkit-transform:rotate(180deg) scale(1); -o-transform: rotate(180deg) scale(1);}
 
 .clear_but {color: #606060;} /*used for login form on both submit page and popup page*/
 
@@ -1851,17 +1848,26 @@ ul.sample_list li {list-style: none; display: inline;}
 /*tooltip*/
 .icon-generic.show_tooltip:before {color: #888888;} /*darker than default*/
 
-/*homepage - header*/
-.jumbo-header {background: url(../img/backgrounds/bgd_header_microbes_30p.png) 98% bottom no-repeat, url(../img/backgrounds/bgd_header_microbes_big_10p.png) -100px center no-repeat; background-color: #606a73; text-align: center; font-weight: 300; color:#fff; line-height: 1.4; background-color: #606a73; padding: 60px 0; margin-bottom: 18px;}
+/*HOMEPAGE - header*/
+.jumbo-header {background: url(../img/backgrounds/bgd_header_microbes_30p.png) 96% bottom no-repeat, url(../img/backgrounds/bgd_header_microbes_big_10p.png) -100px center no-repeat; background-color: #606a73; text-align: center; font-weight: 300; color:#fff; line-height: 1.4; background-color: #606a73; padding: 60px 0; margin-bottom: 18px;}
 .jumbo-header .lead {font-family: 'Lato',Helvetica,Arial,sans-serif; font-size: 239%;}
 .jumbo-header .button {margin-top: 18px; display:inline-block;}
 .jumbo-header .button a {font-size: 143%;color:white; text-transform: uppercase; text-decoration:none; background:url(../img/backgrounds/bgd_button_login_off.gif) repeat-x 50%; border-radius: 30px; box-shadow:0px 2px 5px rgba(0, 0, 0,0.3); padding: 12px 22px;cursor: pointer; border:1px #1f54bc solid;}
 .jumbo-header .button a:hover{background:url(../img/backgrounds/bgd_button_login_over.gif) repeat-x 50%;}
 .jumbo-header .button a:active{background:url(../img/backgrounds/bgd_button_login_active.gif) repeat-x 50%; border: 1px #96979A solid}
 
+.jumbo-header.private-area {background: url(../img/backgrounds/bgd_header_microbes_big_10p.png) right center no-repeat; background-color: #256EDA;/*pink #606a73- vert #72B934 - orange #E68C43*/ text-align: center; font-weight: 300; color:#fff; line-height: 1.4; padding: 60px 0; margin-bottom: 0px;}
+.jumbo-header.private-area .mega-lock .icon-functional:before {font-size: 1800%; color:white; opacity: 0.3;position: absolute; left: 28px; top: -37px; z-index: 1; /*important to avoid overlap with menu*/}
+/*HOMEPAGE - user info - private area*/
+
+.jumbo-user-box {margin:0 9px; color: #2B8A97;}
+.jumbo-user-box .result_row {display: inline-block; float:none;padding:0; margin-right: 18px;}
+.jumbo-user-box .result_row .result_row_label {width:inherit;}
+.jumbo-user-box .output_form {background-color: #E3F2FF;border-radius: 4px; text-align: center;}
+.jumbo-user-box .icon-functional:before {color:#2B8A97;  font-size: 137%;}
 /*HOMEPAGE - stats*/
 .jumbo-stats {text-align: center; color:#606a73;font-size: 120%;line-height: 1.4;}
-/*.jumbo-stats  .grid_24 {border:1px solid blue; box-sizing:border-box;}*/
+/*.jumbo-stats  .grid_24 {bZorder:1px solid blue; box-sizing:border-box;}*/
 .jumbo-stats .jumbo-stats-box {overflow: hidden;/*small screens -remove overlap*/}
 .jumbo-stats .jumbo-stats-box .grid_6.alpha {max-width: 41px;}
 .jumbo-stats .jumbo-stats-box span.icon {font-size: 216%;}
@@ -1879,10 +1885,12 @@ ul.sample_list li {list-style: none; display: inline;}
 .jumbo-list-data-container h1 {margin:0px 0 18px 9px;}
 .hlight_maintitle h1 {margin: 0 0 9px 0; padding:0;}
 .hlight_subtitle h2  {margin:0;padding:0;}
+.hlight_subtitle .icon-generic:before {font-size:152%; color:#1a5286;}
 
 .home_box {color: #606a73;border:1px #cbcbcb solid; overflow:hidden /*when resizing*/;   padding: 18px 18px 9px 18px; min-height: 200px; }
-.hlight-spot .home_box p {border:0px pink solid; margin-left:0;  margin-right:0;padding-left:0;padding-right:0;font-size:120%; }
+.hlight-spot .home_box p, .hlight-info .home_box p  {border:0px pink solid; margin-left:0;  margin-right:0;padding-left:0;padding-right:0;font-size:120%; }
 .hlight-spot .home_box img {margin-bottom: 9px; width: 100%;/*resize img with screen*/}
+.hlight-info .home_box img {margin: 0 9px 9px 0; float:left; width:22%;}
 .home_box.alpha {margin: 0 0 18px 18px;}
 .home_box.omega {margin: 0 18px 18px 0;}
 .home_box h2 {margin:0 0 9px 0; padding:0;font-size: 168%;}
@@ -1892,6 +1900,7 @@ ul.sample_list li {list-style: none; display: inline;}
 .badge a:hover {text-decoration: none;}
 
 .list-data, .jumbo-stats  {margin-bottom: 18px; display: block;  overflow: hidden; border: 0px red solid;}
+.jumbo-stats {margin-top: 18px;/*used when section collapse*/}
 
 a.all {float:right; display: block; background: url(../img/arrow_link_small.jpg) no-repeat right top; margin-top:9px; padding:4px 36px 0 0; height: 23px; border: 0px solid red;}
 a.all:hover, a.all:focus { background: url(../img/arrow_link_over_small.jpg) no-repeat  right top;}
@@ -1909,21 +1918,23 @@ a.all:active  { background: url(../img/arrow_link_click_small.jpg) no-repeat rig
 .jumbo-news-centred a, .jumbo-news-centred a:visited {color:#0c4d7b;}
 .jumbo-news-centred .icon-socialmedia:before {color:#0c4d7b;}
 
-#list-data-study .list-project-l {height: 280px; width: auto; position: relative;  width: 100%;  overflow-x: hidden; overflow-y: scroll;}
+#list-data-study .list-project-l, #list-data-sample .list-sample-l {height: 280px; width: auto; position: relative;  width: 100%;  overflow-x: hidden; overflow-y: scroll;}
+#list-data-study .list-project-l .icon-functional:before, #list-data-sample .list-sample-l .icon-functional:before, table.result .icon-functional:before, #project_ov .icon-functional:before, #sample_ov .icon-functional:before {color: #777;}
 /*END HOMEPAGE*/
 
 
 @media (max-width: 768px) {
 /*Homepage*/
-.jumbo-header {background: none; background-color: #E5F3FF;padding: 18px 0; }
+.jumbo-header  {background: url(../img/backgrounds/bgd_header_microbes_big_10p.png) -100px center no-repeat;background-color:#606a73;}
 .jumbo-header .button {margin-top: 0px;}
 .jumbo-header .lead, .jumbo-stats   {display: none;}
 .jumbo-header .button a {border-radius:0px; box-shadow:none;padding: 12px 66px;}
+.jumbo-header .mega-lock {display: none;}/*remove lock shape private*/
 .jumbo-news-centred {width: 66%;}
 .hlight_subtitle {margin-right:18px;}
 #list-biomes .grid_24 a  {height:inherit;}
-#list-biomes, #list-data-study, #hlight-box-spotlight, #hlight-box-tools {width:100%;margin-left: 0;margin-right: 0;}
-#list-biomes .home_box , #list-data-study .home_box, #hlight-box-spotlight .home_box, #hlight-box-tools .home_box {margin:9px 18px;}
+#list-biomes, #list-data-study, #list-data-sample, #hlight-box-spotlight, #hlight-box-tools {width:100%;margin-left: 0;margin-right: 0;}
+#list-biomes .home_box , #list-data-study .home_box, #list-data-sample .home_box, #hlight-box-spotlight .home_box, #hlight-box-tools .home_box {margin:9px 18px;}
 }
 
 /*Submit data - registration check*/
@@ -1994,9 +2005,8 @@ div#local-masthead div.navbar-header {float:none;}
 }
 /*bootstrap menu*/
 @media (max-width: 768px){
-/*#local-nav {display: none;}*/
 div#headerdiv nav ul {font-size: 126%;}
-div#headerdiv nav ul li, ul#local-nav li.functional {background-color: #3C5863;}
+div#headerdiv nav ul li, ul#local-nav li.functional {background-color: #578696;}
 div.masthead ul li {float: none;}
 div.masthead ul#local-nav li.functional, div#headerdiv .logout {float: none;}
 div#headerdiv .logout {margin-left:9px;}
