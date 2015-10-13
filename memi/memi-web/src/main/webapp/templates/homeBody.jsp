@@ -207,7 +207,7 @@
     <c:choose>
         <%-- Show MyStudies and MySamples tables only if a user is logged in--%>
         <c:when test="${not empty model.submitter}">
-            <div id="list-data-study" class="grid_12 alpha">
+            <div class="list-contain-box grid_12 alpha">
                 <div class="home_box alpha">
                 <h2>My latest projects <span class="badge"><a
                                                 href="<c:url value="${baseURL}/projects/doSearch?searchTerm=&studyVisibility=MY_PROJECTS&search=Search"/>"
@@ -219,36 +219,34 @@
                         </p>
                     </c:when>
                     <c:otherwise>
+
                     <div class="list-project-l">
-                        <%--<h3>My latest projects (Total: <a--%>
-                                <%--href="<c:url value="${baseURL}/projects/doSearch?searchTerm=&studyVisibility=MY_PROJECTS&search=Search"/>"--%>
-                                <%--title="View all ${model.myStudiesCount} my projects">${model.myStudiesCount}</a>)</h3>--%>
                         <%--The count starts at 0, that is why we subtract 1 from the end value--%>
                         <c:forEach var="entry" items="${model.myStudiesMap}" varStatus="status" begin="0"
                                    end="${model.maxRowNumberOfLatestItems-1}">
-
-
-                            <p><div class="biome_icon icon_xs ${entry.key.biomeIconCSSClass}" title="${entry.key.biomeIconTitle} biome"></div>
+                        <div class="list-item">
+                         <div class="list-title"> <div class="biome_icon icon_xs ${entry.key.biomeIconCSSClass}" title="${entry.key.biomeIconTitle} biome"></div>
                                     <a href="<c:url value="${baseURL}/projects/${entry.key.studyId}"/>"
                                        class="list_more fl_uppercase_title">${entry.key.studyName}</a>
-
-                                    <span class="list_desc"><c:out value="${entry.key.shortStudyAbstract} ..."/></span>
-                                    <br/>
+                         </div>
+                         <div class="list-body">
+                           <p class="list-desc"><c:out value="${entry.key.shortStudyAbstract} ..."/></p>
+                           <p class="list-more">
                                     <a href="<c:url value="${baseURL}/projects/${entry.key.studyId}"/>"
                                        class="more_view">View more</a> - <a
                                             href="<c:url value="${baseURL}/projects/${entry.key.studyId}"/>#samples_id"
                                             class="list_sample"><c:out value="${entry.value} sample"/><c:if
                                             test='${entry.value > 1}'>s</c:if></a>
-                                <!-- Private icon-->
                                 <c:if test="${!entry.key.public}">
                                     <span class="show_tooltip icon icon-functional" data-icon="L" title="Private data"></span>
                                 </c:if>
                                 <c:if test="${entry.key.public}">
                                 <span class="show_tooltip icon icon-functional" data-icon="U" title="Public data"></span>
                                 </c:if>
-                                </p>
-                            </c:forEach>
-
+                           </p>
+                         </div>
+                        </div>
+                        </c:forEach>
                         </div><!-- /list-project-l -->
                     </c:otherwise>
                 </c:choose>
@@ -263,7 +261,7 @@
             </div>
             </div>
 
-            <div id="list-data-sample" class="grid_12 omega">
+            <div class="list-contain-box grid_12 omega">
                 <div class="home_box omega">
                 <h2>My latest Samples <span class="badge"><a
                                                 href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleType=&sampleVisibility=MY_SAMPLES&search=Search&startPosition=0"/>"
@@ -283,22 +281,26 @@
                                 <%--href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleType=&sampleVisibility=MY_SAMPLES&search=Search&startPosition=0"/>"--%>
                                 <%--title="View all ${model.mySamplesCount} my samples">${model.mySamplesCount}</a>)</h3>--%>
                         <%--The count starts at 0, that is why we subtract 1 from the end value--%>
+
                         <c:forEach var="sample" items="${model.mySamples}" varStatus="status" begin="0"
                                    end="${model.maxRowNumberOfLatestItems-1}">
-                            <p><%--<span class="list_date">${sample.metadataReceived}:</span>--%>
 
+                        <div class="list-item">
+                            <div class="list-title">
+                                <%--<span class="list_date">${sample.metadataReceived}:</span>--%>
                                 <a href="<c:url value="${baseURL}/projects/${sample.study.studyId}/samples/${sample.sampleId}"/>"
                                    class="list_more fl_uppercase_title">${sample.sampleName}
                                     <c:if test="${!sample.public}"><span class="show_tooltip icon icon-functional" data-icon="L"  title="Private data"></span></c:if>
                                     <c:if test="${sample.public}"><span class="show_tooltip icon icon-functional" data-icon="U"  title="Public data"></span></c:if>
-
                                 </a>
-                                <span class="list_desc"><c:out value="${sample.shortSampleDescription} ..."/></span>
-                                <br/>
-                                <a href="<c:url value="${baseURL}/projects/${sample.study.studyId}/samples/${sample.sampleId}"/>" class="more_view">View more</a>
-                            </p>
+                            </div>
+                            <div class="list-body">
+                            <p class="list-desc"><c:out value="${sample.shortSampleDescription} ..."/></p>
+                            <p class="list-more"> <a href="<c:url value="${baseURL}/projects/${sample.study.studyId}/samples/${sample.sampleId}"/>" class="more_view">View more</a></p>
+                            </div>
+                         </div>
                         </c:forEach>
-                    </div><!-- /list-project-l-->
+                    </div>
                     </c:otherwise>
                 </c:choose>
 
@@ -496,7 +498,7 @@
             <%--</div>--%>
 
             <!-- Project list box -->
-            <div id="list-data-study" class="grid_12 omega">
+            <div class="list-contain-box grid_12 omega">
 
                 <div class="home_box omega">
                 <h2>Latest projects <span class="badge"><a
@@ -507,20 +509,23 @@
                 <c:forEach var="study" items="${model.studies}" varStatus="status" begin="0"
                            end="${model.maxRowNumberOfLatestItems-1}">
 
-                    <p><div class="biome_icon icon_xs ${study.biomeIconCSSClass}" title="${study.biomeIconTitle} biome"></div>
+                <div class="list-item">
+                    <div class="list-title"><div class="biome_icon icon_xs ${study.biomeIconCSSClass}" title="${study.biomeIconTitle} biome"></div>
                         <a href="<c:url value="${baseURL}/projects/${study.studyId}"/>"
                            class="list_more fl_uppercase_title">${study.studyName}</a>
-
-                        <span class="list_desc"><c:out value="${study.shortStudyAbstract} ..."/></span>
-                        <br/>
+                    </div>
+                    <div class="list-body">
+                       <p class="list-desc"><c:out value="${study.shortStudyAbstract} ..."/></p>
+                       <p class="list-more">
                         <a href="<c:url value="${baseURL}/projects/${study.studyId}"/>"
                            class="more_view">View more</a> - <a
                                 href="<c:url value="${baseURL}/projects/${study.studyId}"/>#samples_id"
                                 class="list_sample"><c:out value="${study.sampleSize} sample"/><c:if
                                 test='${study.sampleSize > 1}'>s</c:if></a>
-                    </p>
+                       </p>
+                    </div>
+                    </div>
                 </c:forEach>
-
                 </div><!-- /list-project-l -->
 
 
