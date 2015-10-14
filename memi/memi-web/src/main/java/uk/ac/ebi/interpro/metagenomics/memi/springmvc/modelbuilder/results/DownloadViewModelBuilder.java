@@ -1,3 +1,4 @@
+
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.results;
 
 import org.apache.commons.logging.Log;
@@ -81,7 +82,7 @@ public class DownloadViewModelBuilder extends AbstractResultViewModelBuilder<Dow
         final List<DownloadLink> taxaAnalysisDownloadLinks = new ArrayList<DownloadLink>();
 
         final String linkURL = (sampleIsPublic ? "https://www.ebi.ac.uk/ena/data/view/" + externalRunId : "https://www.ebi.ac.uk/ena/submit/sra/#home");
-        sequencesDownloadSection.addOtherDownloadLink(new DownloadLink("Submitted nucleotide reads (ENA website)",
+        sequencesDownloadSection.addOtherDownloadLink(new DownloadLink("Submitted nucleotide reads",
                 "Click to download all submitted nucleotide data on the ENA website",
                 linkURL,
                 true,
