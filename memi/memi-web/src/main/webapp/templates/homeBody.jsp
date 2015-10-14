@@ -208,7 +208,7 @@
     <c:when test="${not empty model.submitter && empty model.myStudiesMap && empty model.mySamples}">
         <!-- No project or sample have been analysed -->
         <p class="msg_error">
-            No projects or samples submitted yet. If you already submitted your data to ENA then it will need some time to get analysed before appearing in this section. If you didn't submit any data yet, you can  do it directly using the <a class="ext" title="Click here to submit data to ENA" href="https://www.ebi.ac.uk/ena/submit/sra/#home">ENA Webin tool</a>.
+            No projects or samples processed - If you have already submitted your data to ENA, then there is a small time lag (a few days) before they appear in this section as they must first be added to the ENA database. If you have not yet submitted your data, you can do this directly using <a class="ext" title="Click here to submit data to ENA" href="https://www.ebi.ac.uk/ena/submit/sra/#home">the ENA Webin tool</a>.
         </p>
     </c:when>
     <c:otherwise>
