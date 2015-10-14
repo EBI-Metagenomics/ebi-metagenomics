@@ -7,6 +7,7 @@
             <div class="box-export">
                 <p>You can download in this section the full set of analysis results files and the original raw sequence
                     reads.</p>
+                <section id="download_sq_analysis">
                 <h4>Sequence data</h4>
                 <ul>
                     <c:forEach var="downloadLink"
@@ -66,6 +67,8 @@
                         </c:choose>
                     </c:forEach>
                 </ul>
+                </section>
+                <section id="download_fun_analysis">
                 <c:if test="${(not empty model.downloadSection.functionalDownloadSection.interproscanDownloadLinks || not empty model.downloadSection.functionalDownloadSection.otherDownloadLinks)}">
                     <h4>Functional analysis</h4>
                     <ul>
@@ -115,6 +118,9 @@
                         </c:forEach>
                     </ul>
                 </c:if>
+                </section>
+
+                <section id="download_tax_analysis">
                 <c:if test="${not empty model.downloadSection.taxaAnalysisDownloadLinks}">
                     <h4>Taxonomic analysis</h4>
                     <ul>
@@ -141,7 +147,7 @@
                         </c:forEach>
                     </ul>
                 </c:if>
-
+                </section>
             </div>
         </c:when>
         <c:otherwise>
