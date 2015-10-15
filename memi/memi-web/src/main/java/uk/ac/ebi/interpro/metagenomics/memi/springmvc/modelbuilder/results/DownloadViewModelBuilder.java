@@ -126,10 +126,10 @@ public class DownloadViewModelBuilder extends AbstractResultViewModelBuilder<Dow
                             sequencesDownloadSection.setReadsWithoutMatchesLinks(downloadLinks);
                         } else if (chunkedFileDefinition.getIdentifier().equalsIgnoreCase("PREDICTED_CDS_FILE")) {
                             sequencesDownloadSection.setPredictedCDSLinks(downloadLinks);
-                        } else if (chunkedFileDefinition.getIdentifier().equalsIgnoreCase("PREDICTED_ORF_WITHOUT_ANNOTATION_FILE")) {
-                            sequencesDownloadSection.setPredictedORFWithoutAnnotationLinks(downloadLinks);
                         } else if (chunkedFileDefinition.getIdentifier().equalsIgnoreCase("PREDICTED_CDS_WITHOUT_ANNOTATION_FILE")) {
                             sequencesDownloadSection.setPredicatedCDSWithoutAnnotationLinks(downloadLinks);
+                        } else if (chunkedFileDefinition.getIdentifier().equalsIgnoreCase("PREDICTED_ORF_WITHOUT_ANNOTATION_FILE")) {
+                            sequencesDownloadSection.setPredictedORFWithoutAnnotationLinks(downloadLinks);
                         } else {
                             log.warn("Unknown file definition identifier: " + chunkedFileDefinition.getIdentifier() + " encountered!");
                         }
