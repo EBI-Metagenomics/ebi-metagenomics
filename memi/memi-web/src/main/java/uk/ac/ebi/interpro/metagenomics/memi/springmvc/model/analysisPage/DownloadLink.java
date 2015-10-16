@@ -29,24 +29,25 @@ public class DownloadLink {
      * InterPro matches (TSV) : Part 1 (492 MB)
      */
     private String linkPrefix;
+    private String linkPreNumberOfChunks;
 
-    public DownloadLink(String linkText, String linkTitle, String linkURL, int order, String fileSize, String linkPrefix) {
-        this(linkText, linkTitle, linkURL, false, order, fileSize, linkPrefix);
+    public DownloadLink(String linkText, String linkTitle, String linkURL, int order, String fileSize, String linkPrefix, String linkPreNumberOfChunks) {
+        this(linkText, linkTitle, linkURL, false, order, fileSize, linkPrefix, linkPreNumberOfChunks);
     }
 
     public DownloadLink(String linkText, String linkTitle, String linkURL, int order, String fileSize) {
-        this(linkText, linkTitle, linkURL, false, order, fileSize, null);
+        this(linkText, linkTitle, linkURL, false, order, fileSize, null, null);
     }
 
     public DownloadLink(String linkText, String linkTitle, String linkURL, boolean isExternalLink, int order) {
-        this(linkText, linkTitle, linkURL, isExternalLink, order, null, null);
+        this(linkText, linkTitle, linkURL, isExternalLink, order, null, null, null);
     }
 
     public DownloadLink(String linkText, String linkTitle, String linkURL, boolean isExternalLink, int order, String fileSize) {
-        this(linkText, linkTitle, linkURL, isExternalLink, order, fileSize, null);
+        this(linkText, linkTitle, linkURL, isExternalLink, order, fileSize, null, null);
     }
 
-    public DownloadLink(String linkText, String linkTitle, String linkURL, boolean isExternalLink, int order, String fileSize, String linkPrefix) {
+    public DownloadLink(String linkText, String linkTitle, String linkURL, boolean isExternalLink, int order, String fileSize, String linkPrefix, String linkPreNumberOfChunks) {
         this.linkText = linkText;
         this.linkTitle = linkTitle;
         this.linkURL = linkURL;
@@ -54,6 +55,7 @@ public class DownloadLink {
         this.order = order;
         this.fileSize = fileSize;
         this.linkPrefix = linkPrefix;
+        this.linkPreNumberOfChunks = linkPreNumberOfChunks;
     }
 
     public String getLinkText() {
@@ -82,6 +84,9 @@ public class DownloadLink {
 
     public String getLinkPrefix() {
         return linkPrefix;
+    }
+    public String getlinkPreNumberOfChunks() {
+        return linkPreNumberOfChunks;
     }
 
     /**
