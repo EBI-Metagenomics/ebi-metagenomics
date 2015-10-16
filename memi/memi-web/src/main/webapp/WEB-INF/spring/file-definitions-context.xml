@@ -22,7 +22,7 @@
         <property name="fileNameEnding" value="_masked.fasta"/>
         <property name="description" value="Processed nucleotide reads."/>
         <property name="downloadName" value="_nt_reads.fasta"/>
-        <property name="linkText" value="Processed nucleotide reads (FASTA)"/>
+        <property name="linkText" value="Processed nucleotide reads"/>
         <property name="order" value="2"/>
         <property name="linkTitle" value="Click to download processed fasta nucleotide sequences"/>
         <property name="linkURL" value="/export?contentType=text&amp;exportValue=maskedReads"/>
@@ -33,7 +33,7 @@
         <property name="fileNameEnding" value=".fasta"/>
         <property name="description" value="Processed nucleotide reads (since pipeline version 2.0)."/>
         <property name="downloadName" value="_nt_reads.fasta"/>
-        <property name="linkText" value="Processed nucleotide reads (FASTA)"/>
+        <property name="linkText" value="Processed nucleotide reads"/>
         <property name="order" value="2"/>
         <property name="linkTitle" value="Click to download processed fasta nucleotide sequences"/>
         <property name="linkURL" value="/export?contentType=text&amp;exportValue=processedReads"/>
@@ -46,7 +46,7 @@
         <property name="relativePath" value="/sequence-categorisation/pCDS.fasta"/>
         <property name="description" value="All reads that have predicted CDS "/>
         <property name="downloadName" value="_readsWithpCDS.fasta"/>
-        <property name="linkText" value="Processed reads with pCDS (FASTA)"/>
+        <property name="linkText" value="Processed reads with pCDS"/>
         <property name="order" value="3"/>
         <property name="linkTitle" value="Click to download processed reads with predicted CDS in FASTA format"/>
         <property name="linkURL" value="/export?contentType=text&amp;exportValue=readsWithPredictedCDS"/>
@@ -58,7 +58,7 @@
         <property name="relativePath" value="/sequence-categorisation/interproscan.fasta"/>
         <property name="description" value="All reads with an interproscan match."/>
         <property name="downloadName" value="_interproscan.fasta"/>
-        <property name="linkText" value="Processed reads with InterPro matches (FASTA)"/>
+        <property name="linkText" value="Processed reads with annotation"/>
         <property name="order" value="4"/>
         <property name="linkTitle" value="Click to download reads with an InterPro match (FASTA)"/>
         <property name="linkURL" value="/export?contentType=text&amp;exportValue=readsWithMatches"/>
@@ -69,7 +69,7 @@
         <property name="relativePath" value="/sequence-categorisation/noFunction.fasta"/>
         <property name="description" value="All reads with a predicted CDS but no interproscan match."/>
         <property name="downloadName" value="_noFunction.fasta"/>
-        <property name="linkText" value="Processed reads without InterPro match (FASTA)"/>
+        <property name="linkText" value="Processed reads without annotation"/>
         <property name="order" value="5"/>
         <property name="linkTitle" value="Click to download reads with a predicted CDS but no InterPro match (FASTA)"/>
         <property name="linkURL" value="/export?contentType=text&amp;exportValue=readsWithoutMatches"/>
@@ -91,13 +91,24 @@
           class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.SequenceFileDefinition">
         <property name="identifier" value="PREDICTED_CDS_WITH_INTERPRO_MATCHES_FILE"/>
         <property name="fileNameEnding" value="_IPRhits.fasta"/>
-        <property name="description" value="Predicted coding sequences with InterPro matches (FASTA)"/>
+        <property name="description" value="Predicted coding sequences with InterPro match (FASTA)"/>
         <property name="downloadName" value="_InterPro_hits.fasta"/>
-        <property name="linkText" value="Predicted CDS with InterPro matches (FASTA)"/>
+        <property name="linkText" value="Predicted CDS with annotation"/>
         <property name="order" value="7"/>
-        <property name="linkTitle" value="Click to download predicted CDS with InterPro matches (FASTA)"/>
+        <property name="linkTitle" value="Click to download predicted CDS with InterPro match (FASTA)"/>
         <property name="linkURL" value="/doExportIPRhitsFile"/>
     </bean>
+    <bean id="predictedCDSWithoutAnnotation" autowire-candidate="false"
+           class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.SequenceFileDefinition">
+         <property name="identifier" value="PREDICTED_CDS_WITHOUT_ANNOTATION_FILE"/>
+         <property name="fileNameEnding" value="_CDS_unannotated.faa"/>
+         <property name="description" value="Predicted CDS without annotation"/>
+         <property name="downloadName" value="_CDS_unannotated.faa"/>
+         <property name="linkText" value="Predicted CDS without annotation"/>
+         <property name="order" value="8"/>
+         <property name="linkTitle" value="Click to download predicted CDS without annotation (FASTA)"/>
+         <property name="linkURL" value="/export?contentType=text&amp;exportValue=cdsWithoutAnnotation"/>
+     </bean>
 
     <bean id="predictedORFWithoutAnnotation" autowire-candidate="false"
           class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.SequenceFileDefinition">
@@ -105,24 +116,11 @@
         <property name="fileNameEnding" value="_CDS_unannotated.ffn"/>
         <property name="description" value="Predicted open reading frames without annotation (FASTA)"/>
         <property name="downloadName" value="_ORF_unannotated.ffn"/>
-        <property name="linkText" value="Predicted ORF without annotation (FASTA)"/>
-        <property name="order" value="8"/>
+        <property name="linkText" value="Predicted ORF without annotation"/>
+        <property name="order" value="9"/>
         <property name="linkTitle" value="Click to download predicted ORF without annotation (FASTA)"/>
         <property name="linkURL" value="/export?contentType=text&amp;exportValue=orfWithoutAnnotation"/>
     </bean>
-
-    <bean id="predictedCDSWithoutAnnotation" autowire-candidate="false"
-          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.SequenceFileDefinition">
-        <property name="identifier" value="PREDICTED_CDS_WITHOUT_ANNOTATION_FILE"/>
-        <property name="fileNameEnding" value="_CDS_unannotated.faa"/>
-        <property name="description" value="Predicted CDS without annotation (FASTA)"/>
-        <property name="downloadName" value="_CDS_unannotated.faa"/>
-        <property name="linkText" value="Predicted CDS without annotation (FASTA)"/>
-        <property name="order" value="9"/>
-        <property name="linkTitle" value="Click to download predicted CDS without annotation (FASTA)"/>
-        <property name="linkURL" value="/export?contentType=text&amp;exportValue=cdsWithoutAnnotation"/>
-    </bean>
-
 
     <!--Taxonomic data file definitions-->
 
@@ -131,7 +129,7 @@
         <property name="relativePath" value="/sequence-categorisation/5S.fasta"/>
         <property name="description" value="All reads encoding 5S rRNA."/>
         <property name="downloadName" value="_5SrRNA.fasta"/>
-        <property name="linkText" value="Reads encoding 5S rRNA (FASTA)"/>
+        <property name="linkText" value="Reads encoding 5S rRNA"/>
         <property name="order" value="1"/>
         <property name="linkTitle" value="Click to download reads encoding 5S rRNA (FASTA)"/>
         <property name="linkURL" value="/export?contentType=text&amp;exportValue=5SrRNA"/>
@@ -142,7 +140,7 @@
         <property name="relativePath" value="/sequence-categorisation/16S.fasta"/>
         <property name="description" value="All reads encoding 16S rRNA."/>
         <property name="downloadName" value="_16SrRNA.fasta"/>
-        <property name="linkText" value="Reads encoding 16S rRNA (FASTA)"/>
+        <property name="linkText" value="Reads encoding 16S rRNA"/>
         <property name="order" value="2"/>
         <property name="linkTitle" value="Click to download reads encoding 16S rRNA (FASTA)"/>
         <property name="linkURL" value="/export?contentType=text&amp;exportValue=16SrRNA"/>
@@ -153,7 +151,7 @@
         <property name="relativePath" value="/sequence-categorisation/23S.fasta"/>
         <property name="description" value="All reads encoding 23S rRNA."/>
         <property name="downloadName" value="_23SrRNA.fasta"/>
-        <property name="linkText" value="Reads encoding 23S rRNA (FASTA)"/>
+        <property name="linkText" value="Reads encoding 23S rRNA"/>
         <property name="order" value="3"/>
         <property name="linkTitle" value="Click to download reads encoding 23S rRNA (FASTA)"/>
         <property name="linkURL" value="/export?contentType=text&amp;exportValue=23SrRNA"/>
@@ -199,7 +197,7 @@
         <property name="fileNameEnding" value="_otu_table.txt"/>
         <property name="description" value="N/A"/>
         <property name="downloadName" value="_otu.tsv"/>
-        <property name="linkText" value="OTUs, reads and taxonomic assignments (TSV)"/>
+        <property name="linkText" value="OTUs, reads and taxonomic assignments"/>
         <property name="order" value="7"/>
         <property name="linkTitle" value="Click to download the OTU table in TSV format"/>
         <!--TODO: Implement the request mapping-->
@@ -212,7 +210,7 @@
         <property name="fileNameEnding" value="_otu_table_hdf5.biom"/>
         <property name="description" value="N/A"/>
         <property name="downloadName" value="_otu_table_hdf5.biom"/>
-        <property name="linkText" value="OTUs, reads and taxonomic assignments (HDF5 biom)"/>
+        <property name="linkText" value="OTUs, reads and taxonomic assignments"/>
         <property name="order" value="8"/>
         <property name="linkTitle" value="Click to download the converted OTU table in HDF5 biom format"/>
         <!--TODO: Implement the request mapping-->
@@ -225,7 +223,7 @@
         <property name="fileNameEnding" value="_otu_table_json.biom"/>
         <property name="description" value="N/A"/>
         <property name="downloadName" value="_otu_table_json.biom"/>
-        <property name="linkText" value="OTUs, reads and taxonomic assignments (JSON biom)"/>
+        <property name="linkText" value="OTUs, reads and taxonomic assignments"/>
         <property name="order" value="9"/>
         <property name="linkTitle" value="Click to download the converted OTU table in JSON biom format"/>
         <!--TODO: Implement the request mapping-->
@@ -238,7 +236,7 @@
         <property name="fileNameEnding" value="_pruned.tree"/>
         <property name="description" value="N/A"/>
         <property name="downloadName" value="_pruned.tree"/>
-        <property name="linkText" value="Phylogenetic tree (Newick format)"/>
+        <property name="linkText" value="Phylogenetic tree"/>
         <property name="order" value="10"/>
         <property name="linkTitle" value="Click to download the phylogenetic tree file (Newick format)"/>
         <!--TODO: Implement the request mapping-->
@@ -283,7 +281,7 @@
         <property name="fileNameEnding" value="_I5.tsv"/>
         <property name="description" value="InterPro matches (TSV)"/>
         <property name="downloadName" value="_InterPro.tsv"/>
-        <property name="linkText" value="InterPro matches (TSV)"/>
+        <property name="linkText" value="InterPro matches"/>
         <property name="order" value="2"/>
         <property name="linkTitle" value="Click to download full InterPro matches table (TSV)"/>
         <property name="linkURL" value="I5TSVFile"/>
@@ -295,7 +293,7 @@
         <property name="fileNameEnding" value="_summary.go"/>
         <property name="description" value="Complete GO annotation."/>
         <property name="downloadName" value="_GO.csv"/>
-        <property name="linkText" value="Complete GO annotation (CSV)"/>
+        <property name="linkText" value="Complete GO annotation"/>
         <property name="order" value="3"/>
         <property name="linkTitle" value="Click to download GO annotation result file (CSV)"/>
         <property name="linkURL" value="GOFile"/>
@@ -307,7 +305,7 @@
         <property name="fileNameEnding" value="_summary.go_slim"/>
         <property name="description" value="GO slim annotation."/>
         <property name="downloadName" value="_GO_slim.csv"/>
-        <property name="linkText" value="GO slim annotation (CSV)"/>
+        <property name="linkText" value="GO slim annotation"/>
         <property name="order" value="4"/>
         <property name="linkTitle" value="Click to download GO slim annotation result file (CSV)"/>
         <property name="linkURL" value="GOSlimFile"/>
@@ -355,7 +353,7 @@
         <property name="fileNameEnding" value="_I5.tsv.chunks"/>
         <property name="description" value="InterPro matches (TSV)"/>
         <property name="downloadName" value="_InterPro.tsv.gz"/>
-        <property name="linkText" value="InterPro matches (TSV)"/>
+        <property name="linkText" value="InterPro matches"/>
         <property name="order" value="2"/>
         <property name="linkTitle" value="Click here to download InterPro matches (TSV)"/>
         <property name="linkURL" value="I5TSVFile"/>
@@ -367,7 +365,7 @@
         <property name="fileNameEnding" value=".fasta.chunks"/>
         <property name="description" value="Processed nucleotide reads (since pipeline version 2.0)."/>
         <property name="downloadName" value="_nt_reads.fasta.gz"/>
-        <property name="linkText" value="Processed nucleotide reads (FASTA)"/>
+        <property name="linkText" value="Processed nucleotide reads"/>
         <property name="order" value="2"/>
         <property name="linkTitle" value="Click to download processed fasta nucleotide sequences"/>
         <property name="linkURL" value="ProcessedReads"/>
@@ -380,7 +378,7 @@
         <property name="fileNameEnding" value="_masked.fasta.chunks"/>
         <property name="description" value="Processed nucleotide reads."/>
         <property name="downloadName" value="_nt_reads.fasta.gz"/>
-        <property name="linkText" value="Processed nucleotide reads (FASTA)"/>
+        <property name="linkText" value="Processed nucleotide reads"/>
         <property name="order" value="2"/>
         <property name="linkTitle" value="Click to download processed fasta nucleotide sequences"/>
         <property name="linkURL" value="ProcessedReads"/>
@@ -393,7 +391,7 @@
         <property name="relativePath" value="/sequence-categorisation/pCDS.fasta.chunks"/>
         <property name="description" value="All reads that have predicted CDS "/>
         <property name="downloadName" value="_readsWithpCDS.fasta.gz"/>
-        <property name="linkText" value="Processed reads with pCDS (FASTA)"/>
+        <property name="linkText" value="Processed reads with pCDS"/>
         <property name="order" value="3"/>
         <property name="linkTitle" value="Click to download processed reads with predicted CDS in FASTA format"/>
         <property name="linkURL" value="ReadsWithPredictedCDS"/>
@@ -405,7 +403,7 @@
         <property name="relativePath" value="/sequence-categorisation/interproscan.fasta.chunks"/>
         <property name="description" value="All reads with an interproscan match."/>
         <property name="downloadName" value="_interproscan.fasta.gz"/>
-        <property name="linkText" value="Processed reads with InterPro matches (FASTA)"/>
+        <property name="linkText" value="Processed reads with annotation"/>
         <property name="order" value="4"/>
         <property name="linkTitle" value="Click to download reads with an InterPro match (FASTA)"/>
         <property name="linkURL" value="ReadsWithMatches"/>
@@ -417,8 +415,8 @@
         <property name="relativePath" value="/sequence-categorisation/noFunction.fasta.chunks"/>
         <property name="description" value="All reads with a predicted CDS but no interproscan match."/>
         <property name="downloadName" value="_noFunction.fasta.gz"/>
-        <property name="linkText" value="Processed reads without InterPro match (FASTA)"/>
-        <property name="order" value="5"/>
+        <property name="linkText" value="Processed reads without annotation"/>
+        <property name="order" value="6"/>
         <property name="linkTitle" value="Click to download reads with a predicted CDS but no InterPro match (FASTA)"/>
         <property name="linkURL" value="ReadsWithoutMatches"/>
     </bean>
@@ -429,10 +427,22 @@
         <property name="fileNameEnding" value="_CDS.faa.chunks"/>
         <property name="description" value="All predicted CDS."/>
         <property name="downloadName" value="_pCDS.faa.gz"/>
-        <property name="linkText" value="Predicted CDS (FASTA)"/>
-        <property name="order" value="6"/>
+        <property name="linkText" value="Predicted CDS"/>
+        <property name="order" value="5"/>
         <property name="linkTitle" value="Click to download all predicted CDS in FASTA format"/>
         <property name="linkURL" value="PredictedCDS"/>
+    </bean>
+
+    <bean id="chunkedPredictedCDSWithoutAnnotation" autowire-candidate="false"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.SequenceFileDefinition">
+        <property name="identifier" value="PREDICTED_CDS_WITHOUT_ANNOTATION_FILE"/>
+        <property name="fileNameEnding" value="_CDS_unannotated.faa.chunks"/>
+        <property name="description" value="Predicted CDS without annotation"/>
+        <property name="downloadName" value="_CDS_unannotated.faa.gz"/>
+        <property name="linkText" value="Predicted CDS without annotation"/>
+        <property name="order" value="6"/>
+        <property name="linkTitle" value="Click to download predicted CDS without annotation (FASTA)"/>
+        <property name="linkURL" value="PredicatedCDSWithoutAnnotation"/>
     </bean>
 
     <bean id="chunkedPredictedORFWithoutAnnotation" autowire-candidate="false"
@@ -441,22 +451,12 @@
         <property name="fileNameEnding" value="_CDS_unannotated.ffn.chunks"/>
         <property name="description" value="Predicted open reading frames without annotation (FASTA)"/>
         <property name="downloadName" value="_ORF_unannotated.ffn.gz"/>
-        <property name="linkText" value="Predicted ORF without annotation (FASTA)"/>
-        <property name="order" value="8"/>
+        <property name="linkText" value="Predicted ORF without annotation"/>
+        <property name="order" value="7"/>
         <property name="linkTitle" value="Click to download predicted ORF without annotation (FASTA)"/>
         <property name="linkURL" value="PredictedORFWithoutAnnotation"/>
     </bean>
 
-    <bean id="chunkedPredictedCDSWithoutAnnotation" autowire-candidate="false"
-          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.SequenceFileDefinition">
-        <property name="identifier" value="PREDICTED_CDS_WITHOUT_ANNOTATION_FILE"/>
-        <property name="fileNameEnding" value="_CDS_unannotated.faa.chunks"/>
-        <property name="description" value="Predicted CDS without annotation (FASTA)"/>
-        <property name="downloadName" value="_CDS_unannotated.faa.gz"/>
-        <property name="linkText" value="Predicted CDS without annotation (FASTA)"/>
-        <property name="order" value="9"/>
-        <property name="linkTitle" value="Click to download predicted CDS without annotation (FASTA)"/>
-        <property name="linkURL" value="PredicatedCDSWithoutAnnotation"/>
-    </bean>
+
 
 </beans>
