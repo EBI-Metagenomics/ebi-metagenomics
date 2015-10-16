@@ -155,7 +155,10 @@ public class DownloadViewModelBuilder extends AbstractResultViewModelBuilder<Dow
                             }
                             final File downloadFileObj = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, chunk);
 
-                            String linkPrefix = chunkedFileDefinition.getLinkText().replace(")", ", " + numberOfChunks + ")");
+                            String linkPrefix = chunkedFileDefinition.getLinkText();
+                            String linkPreNumberOfChunks = numberOfChunks;
+//                          String linkPrefix = chunkedFileDefinition.getLinkText().replace(")", ", " + numberOfChunks + ")");
+
 
                             if (chunkedFileDefinition instanceof SequenceFileDefinition) {
                                 downloadLinks.add(new DownloadLink(linkText,
@@ -163,7 +166,7 @@ public class DownloadViewModelBuilder extends AbstractResultViewModelBuilder<Dow
                                         "projects/" + externalProjectId + "/samples/" + externalSampleId + "/runs/" + externalRunId + "/results/versions/" + analysisJobReleaseVersion + "/sequences/"
                                                 + chunkedFileDefinition.getLinkURL() + "/chunks/" + String.valueOf(chunkCounter),
                                         chunkedFileDefinition.getOrder(),
-                                        getFileSize(downloadFileObj), linkPrefix));
+                                        getFileSize(downloadFileObj), linkPrefix, linkPreNumberOfChunks));
 
                             } else if (chunkedFileDefinition instanceof FunctionalAnalysisFileDefinition) {
                                 //Filter out amplicons
@@ -172,7 +175,7 @@ public class DownloadViewModelBuilder extends AbstractResultViewModelBuilder<Dow
                                             chunkedFileDefinition.getLinkTitle(),
                                             "projects/" + externalProjectId + "/samples/" + externalSampleId + "/runs/" + externalRunId + "/results/versions/" + analysisJobReleaseVersion + "/function/InterProScan/chunks/" + String.valueOf(chunkCounter),
                                             chunkedFileDefinition.getOrder(),
-                                            getFileSize(downloadFileObj), linkPrefix));
+                                            getFileSize(downloadFileObj), linkPrefix, linkPreNumberOfChunks));
                                 }
                             } else {
                                 //do nothing
