@@ -446,7 +446,20 @@ table.result td.showHideRelated:hover {background-color: #006666; }
 .pipeline_table tr.row-function {background-color: #ECE2FF;border-bottom:1px #DACAEC solid;}
 .pipeline_table tr.highlight {background-color: #0F6D99;color: White;  transition: all 0.5s ease;}
 .pipeline_table tr.highlight a {color: #D4FBC1; }
-
+/*Table used in the download page*/
+#fragment-download .pipeline_table  {vertical-align: middle; margin:0; width: 100%;}
+#fragment-download .pipeline_table thead th {padding: 9px;}
+#fragment-download .pipeline_table thead th:first-child {width:22%;}
+#fragment-download .pipeline_table td {  padding: 0px 9px;}
+#fragment-download .pipeline_table .col_sm {width: 10%;}
+#fragment-download .pipeline_table .col_xs {width: 8%;}
+#fragment-download .pipeline_table span.icon {vertical-align: text-top; /*try to center the icon*/border:0px red solid;}
+.dna_rna:before {font-size:277%; color: #34a9d5;  position: relative; top: 6px; /*try to center the icon*/ }
+.protein:before { font-size:277%;color: purple; position: relative; top: 6px; /*try to center the icon*/}
+.link:before  {color:#2B8A97;font-size:130%;}
+#fragment-download .pipeline_table .icon-functional:before {font-size: 138%;color: #2B8A97;}
+#fragment-download .pipeline_table .icon-generic.big:before {color: #9A9A9A; font-size: 206%;}
+#fragment-download .pipeline_table .filesize {color: #8E8E8E; font-size:90%;}
 /************************ END TABLE *****************************/
 
 /*********************** TITLE + TEXT***************************/
@@ -736,11 +749,7 @@ text-decoration:underline;
 .list_warn {color:#CC4E4E;}
 
 .list_date {color:#9d9d9d; font-size:90%;}
-
-.list_date_new{
-color:#9d9d9d ;
-font-size:100%;
-}
+.list_date_new {color:#9d9d9d ;font-size:100%;}  /*to remove once updtaed dowload page*/
 
 .list-desc {color:#606a73;}/*project&sample description homepage*/
 
