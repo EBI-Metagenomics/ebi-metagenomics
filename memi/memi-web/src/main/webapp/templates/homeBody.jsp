@@ -586,7 +586,7 @@
         <div id="hlight-box-spotlight" class="grid_12 alpha hlight-spot">
            <div  class="hlight_title_cont"> <div class="hlight_maintitle"><h1>Spotlight</h1></div><div class="hlight_subtitle"><h2>TARA ocean project</h2></div></div>
             <div class="home_box alpha">
-                <img alt="Tara map" src="<c:url value="${baseURL}/img/Tara_map_crop_590px.png"/>" />
+                <img alt="Tara map" src="<c:url value="${baseURL}/img/Tara_map_crop_590px.png"/>" style="max-width: 590px;" />
                 <p>Plankton ecosystems contain a phenomenal reservoir of life: more than 10 billion organisms inhabit every litre of oceanic water, including viruses, prokaryotes, unicellular eukaryotes (protists), and metazoans.
 
                 Plankton&#39;s importance for the earth&#39;s climate is at least equivalent to that of the rainforest. Yet only a small fraction of organisms that compose it have been classified and analysed.</p>
@@ -600,7 +600,7 @@
         <div id="hlight-box-tools" class="grid_12 alpha hlight-spot">
                    <div  class="hlight_title_cont"> <div class="hlight_maintitle"><h1>Tools</h1></div><div class="hlight_subtitle"><h2>Functional sample comparison</h2></div></div>
                     <div class="home_box alpha">
-                        <img alt="example of Go terms analysis result" src="<c:url value="${baseURL}/img/comparesamples_crop_568px.png"/>"/>
+                        <img alt="example of Go terms analysis result" src="<c:url value="${baseURL}/img/comparesamples_crop_568px.png"/>" style="max-width: 566px;"/>
                         <p>Interested in comparing the functional profile of sequencing runs within a project? <br/>Now it is possible, using our comparison tool, which provides analysis based on a slimmed-down subset of Gene Ontology (GO) terms, specially developed to describe metagenomic data. </p>
 <p>You can visualise the results using a range of interactive charts (bar charts, stacked columns, Principal Component Analysis and heatmaps).
                             <%--or view the results in a table format--%>
