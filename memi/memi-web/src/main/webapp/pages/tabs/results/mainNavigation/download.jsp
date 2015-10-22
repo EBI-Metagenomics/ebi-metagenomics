@@ -210,6 +210,7 @@
                                             </c:otherwise>
                                             </c:choose>
                                     </td>
+
                                     <td class="no-dash-last">
                                         <c:forEach var="downloadLink"
                                                    items="${model.downloadSection.functionalDownloadSection.interproscanDownloadLinks}"
