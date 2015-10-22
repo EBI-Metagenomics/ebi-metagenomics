@@ -601,15 +601,14 @@
                    <div  class="hlight_title_cont"> <div class="hlight_maintitle"><h1>Tools</h1></div><div class="hlight_subtitle"><h2>Functional sample comparison</h2></div></div>
                     <div class="home_box alpha">
                         <img alt="Example of Go terms analysis result page" src="<c:url value="${baseURL}/img/pict_home_comparison_566.png"/>" style="max-width: 566px;"/>
-                        <p>Interested in comparing the functional profile of sequencing runs within a project? <br/>Now it is possible, using our comparison tool, which provides analysis based on a slimmed-down subset of Gene Ontology (GO) terms, specially developed to describe metagenomic data. </p>
+                        <p>Interested in comparing the functional profile of sequencing runs within a project? Now it is possible, using our comparison tool, which provides analysis based on a slimmed-down subset of Gene Ontology (GO) terms, specially developed to describe metagenomic data. </p>
 <p>You can visualise the results using a range of interactive charts (bar charts, stacked columns, Principal Component Analysis and heatmaps).
                             <%--or view the results in a table format--%>
                             The different charts can be exported in PNG,  PDF and SVG formats, so that they can easily be included in presentations and publications.
                             <%--<br/> Note that the functional comparison tool only works for non-amplicon datasets.--%>
                         </p>
 
-                        <a href="<c:url value="${baseURL}/compare"/>"
-                                                                              title="Compare samples" class="all">Compare samples</a>
+                        <a href="<c:url value="${baseURL}/compare"/>" title="Compare samples" class="all">Compare samples</a>
                     </div>
         </div>
     </div>
