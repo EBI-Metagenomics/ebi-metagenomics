@@ -171,7 +171,7 @@
                             <c:choose>
 
                                 <c:when test="${fn:length(model.downloadSection.functionalDownloadSection.interproscanDownloadLinks)>1}">
-
+                               <%--multiple links/partition - zipped  - e.g. //SRP022254/samples/SRS429585/runs/SRR873465/ --%>
                                 <tr class="row-function">
                                     <td><c:out value="${model.downloadSection.functionalDownloadSection.interproscanDownloadLinks[0].linkPrefix}"/></td>
 
@@ -222,10 +222,8 @@
 
                                 </c:when>
                                 <c:otherwise>
-
-                                    <%--only one link but quite big so it has been zipped  - is it still happening? --%>
-
-                                    <c:forEach var="downloadLink" items="${model.downloadSection.functionalDownloadSection.interproscanDownloadLinks}" varStatus="loop">
+                                <%--only one link but quite big so it has been zipped  - e.g. /SRP001803/samples/SRS010106/runs/SRR035084/ --%>
+                                <c:forEach var="downloadLink" items="${model.downloadSection.functionalDownloadSection.interproscanDownloadLinks}" varStatus="loop">
 
                                     <tr class="row-function">
                                <td><c:out value="${model.downloadSection.functionalDownloadSection.interproscanDownloadLinks[0].linkPrefix}"/></td>
@@ -248,28 +246,17 @@
                                </td>
                                <td class="col_sm">
                                    <%--while implemented in file-definition-context--%>
-                                   <c:choose>
-                                 <c:when test="${model.downloadSection.functionalDownloadSection.interproscanDownloadLinks[0].linkPrefix == 'InterPro matches'}">
                                      GZIP
-                                 </c:when>
-                                   </c:choose>
                                    </td>
                                <td class="col_sm">
                                    <%--while implemented in file-definition-context--%>
-                                   <c:choose>
-                                     <c:when test="${model.downloadSection.functionalDownloadSection.interproscanDownloadLinks[0].linkPrefix == 'InterPro matches'}">
-                                         TSV,${model.downloadSection.functionalDownloadSection.interproscanDownloadLinks[0].linkPreNumberOfChunks}
-                                     </c:when>
-                                       <c:otherwise>
-                                           CSV
-                                       </c:otherwise>
-                                       </c:choose>
+                                         TSV
                                </td>
-                               <td class="no-dash-last">
+                               <td>
                                    <c:forEach var="downloadLink"
                                               items="${model.downloadSection.functionalDownloadSection.interproscanDownloadLinks}"
                                               varStatus="loop">
-                                 <a href="<c:url value="${baseURL}/${downloadLink.linkURL}"/>" title="${downloadLink.linkTitle}">${downloadLink.linkText}</a> <span class="filesize"> (${downloadLink.fileSize})</span> <span>-</span>
+                                 <a href="<c:url value="${baseURL}/${downloadLink.linkURL}"/>" title="${downloadLink.linkTitle}"> <span class="icon icon-functional" data-icon="="></span></a> <span class="filesize"> (${downloadLink.fileSize})</span>
                                  </c:forEach>
 
                               </td>
