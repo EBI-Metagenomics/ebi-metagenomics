@@ -50,6 +50,10 @@ public class Submitter implements Serializable {
     /* Represents role_metagenome_submitter column in the erapro submission_account table. */
     private boolean registered;
 
+    private String laboratoryName;
+
+    private String centreName;
+
 
     public Submitter() {
     }
@@ -194,5 +198,21 @@ public class Submitter implements Serializable {
 
     public void setRegistered(boolean registered) {
         this.registered = registered;
+    }
+
+    public String getLaboratoryName() {
+        return laboratoryName;
+    }
+
+    public void setLaboratoryName(String laboratoryName) {
+        this.laboratoryName = laboratoryName;
+    }
+
+    public String getCentreName() {
+        return centreName;
+    }
+
+    public void setCentreName(String centreName) {
+        this.centreName = centreName;
     }
 }

@@ -85,7 +85,7 @@ public class Study implements SecureEntity, BiomeEntity {
      * Default value is private.
      */
     @Column(name = "IS_PUBLIC")
-    private boolean isPublic;
+    private Integer isPublic;
 
     /**
      * Holds an optional URL to the study's website.
@@ -139,7 +139,7 @@ public class Study implements SecureEntity, BiomeEntity {
     public Study() {
         publications = new HashSet<Publication>();
         samples = new HashSet<Sample>();
-        this.isPublic = false;
+        this.isPublic = 0;
     }
 
 
@@ -296,16 +296,18 @@ public class Study implements SecureEntity, BiomeEntity {
     }
 
     public boolean isPublic() {
-        return isPublic;
+        return (isPublic == 1 ? true : false);
     }
 
-    public void setPublic(boolean aPublic) {
+    public void setPublic(Integer aPublic) {
         isPublic = aPublic;
     }
 
     public String getPrivacy() {
-        if (isPublic) {
+        if (isPublic == 1) {
             return "public";
+        } else if (isPublic == 5) {
+            return "suppressed";
         }
         return "private";
     }
@@ -442,7 +444,7 @@ public class Study implements SecureEntity, BiomeEntity {
         result = 31 * result + (centreName == null ? 0 : centreName.hashCode());
         result = 31 * result + (studyAbstract == null ? 0 : studyAbstract.hashCode());
         result = 31 * result + (experimentalFactor == null ? 0 : experimentalFactor.hashCode());
-        result = 31 * result + (isPublic ? 1 : 0);
+        result = 31 * result + (isPublic == null ? 0 : isPublic.hashCode());
         result = 31 * result + (studyPageURL == null ? 0 : studyPageURL.hashCode());
         result = 31 * result + (resultDirectory == null ? 0 : resultDirectory.hashCode());
         return result;

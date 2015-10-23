@@ -97,7 +97,7 @@
 
                             </td>
                             <td class="col_sm">GZIP</td>
-                            <td class="col_sm">${numberOfChunks} ${linkPrefix} ${downloadLink.numberOfChunks} ${downloadLink.linkPrefix} ${chunkedResultFiles}  <c:out value="${linkPrefix}"/> FASTA, ${downloadLinkList[0].linkPreNumberOfChunks}</td>
+                            <td class="col_sm">${numberOfChunks} ${linkPrefix} ${downloadLink.numberOfChunks} ${downloadLink.linkPrefix} ${chunkedResultFiles}  <c:out value="${linkPrefix}"/> FASTA, ${downloadLinkList[0].numberOfChunks}</td>
                             <td class="no-dash-last">
                               <c:forEach var="downloadLink" items="${downloadLinkList}" varStatus="loop">
                               <a href="<c:url value="${baseURL}/${downloadLink.linkURL}"/>" title="${downloadLink.linkTitle}">${downloadLink.linkText}</a> <span class="filesize"> (${downloadLink.fileSize})</span> <span>-</span>
@@ -292,7 +292,7 @@
                         <%--while implemented in file-definition-context--%>
                         <c:choose>
                         <c:when test="${downloadLink.linkText == 'InterPro matches'}">
-                            TSV,${model.downloadSection.functionalDownloadSection.interproscanDownloadLinks[0].linkPreNumberOfChunks}
+                            TSV,${model.downloadSection.functionalDownloadSection.interproscanDownloadLinks[0].numberOfChunks}
                         </c:when>
                           <c:otherwise>
                               CSV

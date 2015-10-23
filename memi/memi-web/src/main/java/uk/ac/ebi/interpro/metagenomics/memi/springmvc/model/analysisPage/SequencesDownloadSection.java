@@ -107,6 +107,10 @@ public class SequencesDownloadSection {
         }
     }
 
+    /**
+     * Get the list of chunked sequence
+     * @return
+     */
     public List<List<DownloadLink>> getListOfChunkedDownloadLinks() {
         List<List<DownloadLink>> result = new ArrayList<List<DownloadLink>>();
         result.add(getProcessedReadsLinks());
@@ -114,8 +118,8 @@ public class SequencesDownloadSection {
         result.add(getReadsWithMatchesLinks());
         result.add(getReadsWithoutMatchesLinks());
         result.add(getPredictedCDSLinks());
-        result.add(getPredictedORFWithoutAnnotationLinks());
         result.add(getPredicatedCDSWithoutAnnotationLinks());
+        result.add(getPredictedORFWithoutAnnotationLinks());
         return result;
     }
 }

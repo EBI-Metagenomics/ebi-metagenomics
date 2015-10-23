@@ -20,7 +20,7 @@ public class HomePageModelBuilderTest {
 
     @Before
     public void setUp() throws Exception {
-        modelBuilder = new HomePageViewModelBuilder(null, null, null, null, null, null, null, null);
+        modelBuilder = new HomePageViewModelBuilder(null, null, null, null, null, null, null, null, null);
     }
 
     @Test

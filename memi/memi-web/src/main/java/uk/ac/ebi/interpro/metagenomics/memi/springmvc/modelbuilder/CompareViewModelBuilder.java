@@ -69,7 +69,7 @@ public class CompareViewModelBuilder extends AbstractViewModelBuilder<CompareVie
         if (submissionAccountId != null) {
             criterionList.add(Restrictions.eq("submissionAccountId", submissionAccountId));
         } else {
-            criterionList.add(Restrictions.eq("isPublic", true));
+            criterionList.add(Restrictions.eq("isPublic", 1));
         }
 
         return criterionList;

@@ -7,6 +7,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.core.comparators.HomePageSamplesComp
 import uk.ac.ebi.interpro.metagenomics.memi.core.comparators.HomePageStudiesComparator;
 import uk.ac.ebi.interpro.metagenomics.memi.core.tools.MemiTools;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.RunDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.erapro.SubmissionContactDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.BiomeDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.StudyDAO;
@@ -45,6 +46,8 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
 
     private RunDAO runDAO;
 
+    private SubmissionContactDAO submissionContactDAO;
+
     /**
      * The number of latest project and samples to show on the home page. Used within this builder class, but also within the Java Server Page.
      */
@@ -52,7 +55,7 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
 
 
     public HomePageViewModelBuilder(SessionManager sessionMgr, String pageTitle, List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer,
-                                    StudyDAO studyDAO, SampleDAO sampleDAO, RunDAO runDAO, BiomeDAO biomeDAO) {
+                                    StudyDAO studyDAO, SampleDAO sampleDAO, RunDAO runDAO, BiomeDAO biomeDAO, SubmissionContactDAO submissionContactDAO) {
         super(sessionMgr);
         this.pageTitle = pageTitle;
         this.breadcrumbs = breadcrumbs;
@@ -61,6 +64,7 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
         this.sampleDAO = sampleDAO;
         this.runDAO = runDAO;
         this.biomeDAO = biomeDAO;
+        this.submissionContactDAO= submissionContactDAO;
     }
 
     public HomePageViewModel getModel() {
@@ -87,8 +91,12 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
         }
         //  Else case: if somebody is logged in
         else {
+            final String submitterAccountId = submitter.getSubmissionAccountId();
+            //Retrieve submitter details for the private area section
+            Submitter submitterDetails = submissionContactDAO.getSubmitterBySubmissionAccountId(submitterAccountId);
+
             //retrieve private studies and order them by last meta data received
-            List<Study> myStudies = getStudiesBySubmitter(submitter.getSubmissionAccountId());
+            List<Study> myStudies = getStudiesBySubmitter(submitterAccountId);
             Map<Study, Long> myStudiesMap = getStudySampleSizeMap(myStudies, sampleDAO, new HomePageStudiesComparator());
 
             //retrieve private samples and order them last meta data received
@@ -99,7 +107,7 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
             final Long mySamplesCount = (mySamples != null ? new Long(mySamples.size()) : new Long(0));
             final Long myStudiesCount = (myStudies != null ? new Long(myStudies.size()) : new Long(0));
 
-            return new HomePageViewModel(submitter, myStudiesMap, mySamples, pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems,
+            return new HomePageViewModel(submitterDetails, myStudiesMap, mySamples, pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems,
                     mySamplesCount, myStudiesCount, publicSamplesCount, privateSamplesCount, publicStudiesCount, privateStudiesCount, publicRunCount, privateRunCount);
         }
     }

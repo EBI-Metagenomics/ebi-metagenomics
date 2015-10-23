@@ -29,10 +29,10 @@ public class DownloadLink {
      * InterPro matches (TSV) : Part 1 (492 MB)
      */
     private String linkPrefix;
-    private String linkPreNumberOfChunks;
+    private String numberOfChunks;
 
-    public DownloadLink(String linkText, String linkTitle, String linkURL, int order, String fileSize, String linkPrefix, String linkPreNumberOfChunks) {
-        this(linkText, linkTitle, linkURL, false, order, fileSize, linkPrefix, linkPreNumberOfChunks);
+    public DownloadLink(String linkText, String linkTitle, String linkURL, int order, String fileSize, String linkPrefix, String numberOfChunks) {
+        this(linkText, linkTitle, linkURL, false, order, fileSize, linkPrefix, numberOfChunks);
     }
 
     public DownloadLink(String linkText, String linkTitle, String linkURL, int order, String fileSize) {
@@ -47,7 +47,7 @@ public class DownloadLink {
         this(linkText, linkTitle, linkURL, isExternalLink, order, fileSize, null, null);
     }
 
-    public DownloadLink(String linkText, String linkTitle, String linkURL, boolean isExternalLink, int order, String fileSize, String linkPrefix, String linkPreNumberOfChunks) {
+    public DownloadLink(String linkText, String linkTitle, String linkURL, boolean isExternalLink, int order, String fileSize, String linkPrefix, String numberOfChunks) {
         this.linkText = linkText;
         this.linkTitle = linkTitle;
         this.linkURL = linkURL;
@@ -55,7 +55,7 @@ public class DownloadLink {
         this.order = order;
         this.fileSize = fileSize;
         this.linkPrefix = linkPrefix;
-        this.linkPreNumberOfChunks = linkPreNumberOfChunks;
+        this.numberOfChunks = numberOfChunks;
     }
 
     public String getLinkText() {
@@ -85,8 +85,9 @@ public class DownloadLink {
     public String getLinkPrefix() {
         return linkPrefix;
     }
-    public String getlinkPreNumberOfChunks() {
-        return linkPreNumberOfChunks;
+
+    public String getNumberOfChunks() {
+        return numberOfChunks;
     }
 
     /**

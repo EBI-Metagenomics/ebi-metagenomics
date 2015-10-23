@@ -150,7 +150,7 @@ public class DatabaseMockuper {
             study.setLastMetadataReceived(dateCreator.getNextDate());
             if (study.getStudyId().equals("SRP001111")) {
                 study.addSample(getSample("SRS009999"));
-                study.setPublic(true);
+                study.setPublic(1);
             }
             createObject(study);
         }
@@ -294,7 +294,7 @@ public class DatabaseMockuper {
                             e.printStackTrace();
                         }
                         s.setStudyAbstract(row[14]);
-                        s.setPublic((row[15].equals("TRUE") ? true : false));
+                        s.setPublic(1);
                         s.setStudyStatus(getRandomStudyStatus());
 
                         result.add(s);

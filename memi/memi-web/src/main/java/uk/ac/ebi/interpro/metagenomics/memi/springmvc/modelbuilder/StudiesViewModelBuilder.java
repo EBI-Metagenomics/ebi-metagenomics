@@ -209,22 +209,22 @@ public class StudiesViewModelBuilder extends AbstractBiomeViewModelBuilder<Studi
             }
             //select * from hb_study where submitter_id=? and is_public=1;
             else if (visibility.equals(StudyFilter.StudyVisibility.MY_PUBLISHED_PROJECTS)) {
-                crits.add(Restrictions.and(Restrictions.eq("isPublic", true), Restrictions.eq("submissionAccountId", submissionAccountId)));
+                crits.add(Restrictions.and(Restrictions.eq("isPublic", 1), Restrictions.eq("submissionAccountId", submissionAccountId)));
             }
             //select * from hb_study where submitter_id=? and is_public=0;
             else if (visibility.equals(StudyFilter.StudyVisibility.MY_PREPUBLISHED_PROJECTS)) {
-                crits.add(Restrictions.and(Restrictions.eq("isPublic", false), Restrictions.eq("submissionAccountId", submissionAccountId)));
+                crits.add(Restrictions.and(Restrictions.eq("isPublic", 0), Restrictions.eq("submissionAccountId", submissionAccountId)));
             }
             //select * from hb_study where is_public=1;
             else if (visibility.equals(StudyFilter.StudyVisibility.ALL_PUBLISHED_PROJECTS)) {
-                crits.add(Restrictions.eq("isPublic", true));
+                crits.add(Restrictions.eq("isPublic", 1));
             }
             //select * from hb_study where is_public=1 or submitter_id=? and is_public=0;
             else if (visibility.equals(StudyFilter.StudyVisibility.ALL_PROJECTS)) {
-                crits.add(Restrictions.or(Restrictions.and(Restrictions.eq("isPublic", false), Restrictions.eq("submissionAccountId", submissionAccountId)), Restrictions.eq("isPublic", true)));
+                crits.add(Restrictions.or(Restrictions.and(Restrictions.eq("isPublic", 0), Restrictions.eq("submissionAccountId", submissionAccountId)), Restrictions.eq("isPublic", 1)));
             }
         } else {
-            crits.add(Restrictions.eq("isPublic", true));
+            crits.add(Restrictions.eq("isPublic", 1));
         }
 
         return crits;

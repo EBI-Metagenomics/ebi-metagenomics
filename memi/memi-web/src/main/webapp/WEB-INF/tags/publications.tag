@@ -17,7 +17,8 @@
                             <a class="list_more" href="<c:url value="http://dx.doi.org/${pub.doi}"/>"><c:out
                                     value="${pub.pubTitle}"/></a><br/>
                             <i><c:out value="${pub.shortAuthors}"/></i><br/>
-                            <c:out value="${pub.year}"/> <c:out value="${pub.volume}"/><br/>
+                            <c:out value="${pub.year}"/> <c:out value="${pub.volume}"/>
+                            <c:if test="${not empty pub.pubMedId}">(PMID:<c:out value="${pub.pubMedId}"/>)</c:if><br/>
                         </li>
                     </c:forEach>
                 </ul>

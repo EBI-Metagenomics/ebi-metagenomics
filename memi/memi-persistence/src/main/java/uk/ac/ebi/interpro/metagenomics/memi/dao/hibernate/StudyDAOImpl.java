@@ -104,12 +104,12 @@ public class StudyDAOImpl implements StudyDAO {
 
     @Transactional(readOnly = true)
     public Long countAllPublic() {
-        return getStudyCount(new Boolean(true));
+        return getStudyCount(1);
     }
 
     @Transactional(readOnly = true)
     public Long countAllPrivate() {
-        return getStudyCount(new Boolean(false));
+        return getStudyCount(0);
     }
 
     @Transactional(readOnly = true)
@@ -140,7 +140,7 @@ public class StudyDAOImpl implements StudyDAO {
         if (session != null) {
             if (biomeIds != null || !biomeIds.isEmpty()) {
                 Criteria criteria = session.createCriteria(Study.class)
-                        .add(Restrictions.eq("isPublic", true))
+                        .add(Restrictions.eq("isPublic", 1))
                         .add(Restrictions.in("biome.biomeId", biomeIds))
                         .setProjection(Projections.rowCount());
                 try {
@@ -153,7 +153,7 @@ public class StudyDAOImpl implements StudyDAO {
         return null;
     }
 
-    private Long getStudyCount(final Boolean isPublic) {
+    private Long getStudyCount(final Integer isPublic) {
         Session session = sessionFactory.getCurrentSession();
         if (session != null) {
             Criteria criteria = session.createCriteria(Study.class);
@@ -231,7 +231,7 @@ public class StudyDAOImpl implements StudyDAO {
                 crit.addOrder(Order.asc(propertyName));
             }
             //add WHERE clause
-            crit.add(Restrictions.eq("isPublic", true));
+            crit.add(Restrictions.eq("isPublic", 1));
             //add distinct criterion
             crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
             try {
@@ -298,7 +298,7 @@ public class StudyDAOImpl implements StudyDAO {
                 crit.addOrder(Order.asc(propertyName));
             }
             //add WHERE clause
-            crit.add(Restrictions.eq("isPublic", true));
+            crit.add(Restrictions.eq("isPublic", 1));
             //add another WHERE clause
             crit.add(Restrictions.ne("submitterId", submitterId));
             try {
@@ -316,7 +316,7 @@ public class StudyDAOImpl implements StudyDAO {
         if (session != null) {
             Criteria crit = session.createCriteria(Study.class);
             //add WHERE clause
-            crit.add(Restrictions.eq("isPublic", true));
+            crit.add(Restrictions.eq("isPublic", 1));
             //add another WHERE clause
             crit.add(Restrictions.ne("submitterId", submitterId));
             try {
@@ -390,7 +390,7 @@ public class StudyDAOImpl implements StudyDAO {
         Session session = sessionFactory.getCurrentSession();
         if (session != null) {
             Criteria criteria = session.createCriteria(Study.class);
-            criteria.add(Restrictions.eq("isPublic", true));
+            criteria.add(Restrictions.eq("isPublic", 1));
             try {
                 return (List<Study>) criteria.list();
             } catch (HibernateException e) {
@@ -406,7 +406,7 @@ public class StudyDAOImpl implements StudyDAO {
         Session session = sessionFactory.getCurrentSession();
         if (session != null) {
             Criteria criteria = session.createCriteria(Study.class);
-            criteria.add(Restrictions.eq("isPublic", true));
+            criteria.add(Restrictions.eq("isPublic", 1));
             if (isDescendingOrder != null && propertyName != null) {
                 if (isDescendingOrder) {
                     criteria.addOrder(Order.desc(propertyName));

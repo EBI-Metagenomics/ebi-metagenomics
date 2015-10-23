@@ -10,49 +10,52 @@
      <p class="lead">Welcome to your private area.<br/>You can track here data you submitted to us <br/>and visualize the corresponding results </p>
    <div class="button"><a href="<c:url value="${baseURL}/submission"/>"> Submit data</a></div>
 </section>
-<section class="jumbo-user">
-  <div class="jumbo-user-box">
-      <%--<h3>User details</h3>--%>
+    <%--Suppressed until ENA solved--%>
 
-          <div class="output_form">
+<%--<section class="jumbo-user">--%>
+  <%--<div class="jumbo-user-box">--%>
 
-          <div class="result_row">
-              <div class="result_row_label">Name:</div>
-              <div class="result_row_data">Christophe Becavin</div>
-          </div>
+          <%--<div class="output_form">--%>
 
-              <div class="result_row">
-                <div class="result_row_label">Webin account:</div>
-                <div class="result_row_data lowercase">Webin-651</div>
-            </div>
+          <%--<div class="result_row">--%>
+              <%--<div class="result_row_label">Name:</div>--%>
+              <%--<div class="result_row_data">${model.submitter.firstName} ${model.submitter.surname}</div>--%>
+          <%--</div>--%>
 
-          <div class="result_row">
-              <div class="result_row_label">Email:</div>
-              <div class="result_row_data lowercase">not available</div>
-          </div>
+              <%--<div class="result_row">--%>
+                <%--<div class="result_row_label">Webin account:</div>--%>
+                <%--<div class="result_row_data lowercase">${model.submitter.loginName}</div>--%>
+            <%--</div>--%>
 
-          <div class="result_row">
-            <div class="result_row_label">Institute:</div>
-            <div class="result_row_data">BioProject</div>
-          </div>
+          <%--<div class="result_row">--%>
+              <%--<div class="result_row_label">Email:</div>--%>
+              <%--<div class="result_row_data lowercase">${model.submitter.emailAddress}</div>--%>
+          <%--</div>--%>
 
-              <div class="result_row">
-                      <div class="result_row_label">Registered with us:</div>
-                      <div class="result_row_data lowercase">Yes</div>
-                  </div>
-              <div class="result_row">
-                      <div class="result_row_label">Consent given:</div>
-                      <div class="result_row_data lowercase">Yes</div> &nbsp;
+          <%--<c:if test="${not empty model.submitter.centreName}">--%>
+              <%--<div class="result_row">--%>
+                <%--<div class="result_row_label">Institute:</div>--%>
+                <%--<div class="result_row_data">${model.submitter.centreName}</div>--%>
+              <%--</div>--%>
+          <%--</c:if>--%>
 
-              </div>
-              <div class="result_row">
-              <div class="result_row_label"><a href="https://www.ebi.ac.uk/ena/submit/sra/#home" title="Edit my user profile" class="icon icon-functional" data-icon="e"></a></div>
-          </div>
-        </div>
+              <%--<div class="result_row">--%>
+                      <%--<div class="result_row_label">Registered with us:</div>--%>
+                      <%--<div class="result_row_data lowercase"><c:choose><c:when test="${model.submitter.registered}">Yes</c:when><c:otherwise>No</c:otherwise></c:choose></div>--%>
+                  <%--</div>--%>
+              <%--<div class="result_row">--%>
+                      <%--<div class="result_row_label">Consent given:</div>--%>
+                      <%--<div class="result_row_data lowercase"><c:choose><c:when test="${model.submitter.consentGiven}">Yes</c:when><c:otherwise>No</c:otherwise></c:choose></div> &nbsp;--%>
+
+              <%--</div>--%>
+              <%--<div class="result_row">--%>
+              <%--<div class="result_row_label"><a href="https://www.ebi.ac.uk/ena/submit/sra/#home" title="Edit my user profile" class="icon icon-functional" data-icon="e"></a></div>--%>
+          <%--</div>--%>
+        <%--</div>--%>
 
 
-  </div>
-</section>
+  <%--</div>--%>
+<%--</section>--%>
 </c:when>
 <c:otherwise>
 <section class="jumbo-header">
