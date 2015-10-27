@@ -16,8 +16,7 @@ if __name__ == "__main__":
         required=True)
     parser.add_argument("-t", "--file_type",
         help="Possible file types are: InterProScan, ProcessedReads, ReadsWithPredictedCDS, ReadsWithMatches, "\
-             "ReadsWithoutMatches, PredictedCDS, PredicatedCDSWithoutAnnotation, PredictedORFWithoutAnnotation"
-        ,
+             "ReadsWithoutMatches, PredictedCDS, PredicatedCDSWithoutAnnotation, PredictedORFWithoutAnnotation",
         required=True)
     args = vars(parser.parse_args())
 
@@ -60,3 +59,4 @@ if __name__ == "__main__":
             except URLError as e:
                 print e.reason
             print "Download finished."
+    print "Program finished."
