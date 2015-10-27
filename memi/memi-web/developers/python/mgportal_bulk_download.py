@@ -1,3 +1,9 @@
+'''
+Created on 27/10/2015
+
+@author: Maxim Scheremetjew
+'''
+
 import argparse
 import csv
 import os
