@@ -27,6 +27,9 @@ if __name__ == "__main__":
     version = args['version']
     domain = None
     fileExtension = None
+
+    # Set the result file domain (sequences or function) dependent on the file type
+    # Set output file extension (tsv, faa or fasta) dependent on the file type
     if file_type == 'InterProScan':
         domain = "function"
         fileExtension = ".tsv.gz"
@@ -37,6 +40,7 @@ if __name__ == "__main__":
         domain = "sequences"
         fileExtension = ".fasta.gz"
 
+    # Parse the input file and iterate over each line (each run) and build the download link using the variables from above
     with open(input_file, 'r') as f:
         reader = csv.reader(f, delimiter='\t')
         for study_id, sample_id, run_id in reader:
