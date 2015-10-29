@@ -225,13 +225,6 @@
                      <h2>My latest projects <span class="badge"><a
                                                      href="<c:url value="${baseURL}/projects/doSearch?searchTerm=&studyVisibility=MY_PROJECTS&search=Search"/>"
                                                      title="View all ${model.myStudiesCount} my projects">${model.myStudiesCount}</a></span></h2>
-                     <c:choose>
-                         <c:when test="${empty model.myStudiesMap}">
-                             <p>
-                                 No projects submitted
-                             </p>
-                         </c:when>
-                         <c:otherwise>
 
                          <div class="list-project-l">
                              <%--The count starts at 0, that is why we subtract 1 from the end value--%>
@@ -256,13 +249,13 @@
                                      <c:if test="${entry.key.public}">
                                      <span class="show_tooltip icon icon-functional" data-icon="U" title="Public data"></span>
                                      </c:if>
+                                    <!-- temp while we wait for runSize to be defined at project level so we can change the condition-->
+                                    <c:if test='${entry.value > 1}'>- <a href="<c:url value="${baseURL}/compare/&#35${entry.key.studyId}"/>"  title="Compare samples in this project" class="list_sample icon icon-functional" data-icon="O">compare</a></c:if>
                                 </p>
                               </div>
                              </div>
                              </c:forEach>
                              </div><!-- /list-project-l -->
-                         </c:otherwise>
-                     </c:choose>
 
                          <!-- <a href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>"
                             title="View all public projects" class="all">All public projects</a>  -->
@@ -281,14 +274,6 @@
                                                      title="View all ${model.mySamplesCount} my samples">${model.mySamplesCount}</a></span>
                      </h2>
 
-
-                     <c:choose>
-                         <c:when test="${empty model.mySamples}">
-                             <p>
-                                 No samples submitted
-                             </p>
-                         </c:when>
-                         <c:otherwise>
                          <div class="list-sample-l">
                              <%--<h3>My latest samples (Total: <a--%>
                                      <%--href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleType=&sampleVisibility=MY_SAMPLES&search=Search&startPosition=0"/>"--%>
@@ -314,9 +299,6 @@
                               </div>
                              </c:forEach>
                          </div>
-                         </c:otherwise>
-                     </c:choose>
-
 
                      <%--<a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search&startPosition=0"/>"--%>
                         <%--title="View all public samples" class="all">All public samples</a>--%>
@@ -535,6 +517,8 @@
                                      href="<c:url value="${baseURL}/projects/${study.studyId}"/>#samples_id"
                                      class="list_sample"><c:out value="${study.sampleSize} sample"/><c:if
                                      test='${study.sampleSize > 1}'>s</c:if></a>
+                                <!-- temp while we wait for runSize to be defined at project level so we can change the condition-->
+                                <c:if test='${study.sampleSize > 1}'>- <a href="<c:url value="${baseURL}/compare/&#35${study.studyId}"/>" title="Compare samples in this project" class="list_sample icon icon-functional" data-icon="O">compare</a></c:if>
                             </p>
                          </div>
                          </div>
