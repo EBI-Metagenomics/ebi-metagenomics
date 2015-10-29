@@ -762,6 +762,7 @@ text-decoration:underline;
 .list-contain-box .biome_icon {float: left; margin-right: 9px;}
 .list-contain-box .list-item {margin-bottom: 9px;}
 .list-contain-box .list-item .list-body p {margin:0;padding:0;/*removed for list elements alignment*/}
+.list-contain-box .list-item a.list_sample.icon-functional:before {color:#725093;position: relative;top: 2px; } /*comparison icon*/
 
 /************* BIOME ************/
 /*biome gal*/
@@ -1626,10 +1627,10 @@ background-image: -webkit-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247
 /*.sample_ana .ui-buttonset .ui-state-default .icon-functional:before { font-size: 175%;}*/
 /*.sample_ana .ui-buttonset .ui-button-text-only .ui-button-text {padding:1px 4px;}*/
 
-#list-data a.icon-functional:hover, #sample_list a.icon-functional:hover, #project_ov a.icon-functional:hover {text-decoration:none;}
-#list-data a.icon-functional:before, #sample_list a.icon-functional:before, #project_ov a.icon-functional:before {color:rgba(114, 80, 147, 1);}
-#list-data a:hover.icon-functional:before, #sample_list a:hover.icon-functional:before, #project_ov a:hover.icon-functional:before {color:rgba(114, 80, 147, 0.5);}
-#list-data a.list_sample:hover, #sample_list a.list_sample:hover, #project_ov a.list_sample:hover {color:#62388b;}
+#sample_list a.icon-functional:hover, #project_ov a.icon-functional:hover {text-decoration:none;}
+#sample_list a.icon-functional:before, #project_ov a.icon-functional:before {color:rgba(114, 80, 147, 1);}
+#sample_list a:hover.icon-functional:before, #project_ov a:hover.icon-functional:before {color:rgba(114, 80, 147, 0.5);}
+#sample_list a.list_sample:hover, #project_ov a.list_sample:hover {color:#62388b;}
 
 /*GOOGLE CHART - ANALYSIS PAGE*/
  /*#tax_chart_pie_dom,#tax_chart_pie_phy,#tax_chart_bar_dom,  #tax_chart_bar_phy, #tax_chart_col,  */#tax_table_bar, #tax_table_pie, #tax_table_col, /*#func_chart_bar_go_bp, #func_chart_bar_go_mf, #func_chart_bar_go_cc, #func_chart_pie_go_bp, #func_chart_pie_go_mf, #func_chart_pie_go_cc, */#func_chart_div1, /*#func_chart_pie_ipro,*/ #func_table_pie_interpro, #func_table_div1 {float:left;}
@@ -1695,7 +1696,7 @@ ul.color_legend {list-style-type: square; list-style-position:inside;}
 .sample_comp a:hover {cursor:pointer;}  /*show right icon for jquery button*/
 .sample_comp #row-wrapper{margin: 9px;overflow: auto;}
 .sample_comp #row-wrapper #project-div {float:left; width: 48%;}
-.sample_comp #row-wrapper #samples-div {float:left; width: 48%; margin-left: 18px;}
+.sample_comp #row-wrapper #samples-div {float:left; width: 48%; margin-left: 9px;}
 .sample_comp #settings-wrapper{margin: 0 9px;overflow: auto;}
 .sample_comp #settings-wrapper .settings-div-data {float:left;}
 .sample_comp #settings-wrapper .settings-div-adv {float:left; /*margin-left: 18px;*/}
