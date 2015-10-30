@@ -14,9 +14,8 @@ Please <a id="script_feedbackLink" href="javascript:slideFeedbackForm()" title="
     <div id="row-wrapper">
 
         <div id="project-div">
-            <c:choose><c:when test="${not empty model.submitter}"><h4>My projects</h4></c:when>
-            <c:otherwise><h4>Project list</h4></c:otherwise>
-            </c:choose>
+            <h4>Project list</h4>
+
                 <%--<form:option value="-" label="--Select project"/>--%>
                 <form:select path="study" size="13" id="projects" style="width:100%;">
                     <c:forEach var="study" items="${model.filteredStudies}">
