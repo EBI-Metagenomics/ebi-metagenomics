@@ -3,14 +3,14 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <div class="sample_comp">
-<h2>Comparison tool
-    <%--<span class="icon_beta_title">beta</span>--%>
-</h2>
-<p>The comparison is currently based on a summary of Gene Ontology (GO) terms derived from InterPro matches to the selected runs.<br/>
-<%--This comparison tool is in <strong>beta version</strong> and undergoing testing. We welcome your feedback and suggestions during this period to improve it.--%>
-<%--Please <a id="script_feedbackLink" href="javascript:slideFeedbackForm()" title="Give your feedback">get in touch</a> using the feedback button on the right, or by contacting us through <a title="EBI's support & feedback form" href="http://www.ebi.ac.uk/support/metagenomics" class="ext">EBI contact form</a>.--%>
-</p>
-<form:form id="comparison-tool-form-id" method="post" commandName="comparisonForm">
+<h2>Comparison tool </h2>
+<p>The comparison is currently based on a summary of Gene Ontology (GO) terms derived from InterPro matches to the selected runs.</p>
+<!-- BETA flag - Temp
+<span class="icon_beta_title">beta</span>
+This comparison tool is in <strong>beta version</strong> and undergoing testing. We welcome your feedback and suggestions during this period to improve it.
+Please <a id="script_feedbackLink" href="javascript:slideFeedbackForm()" title="Give your feedback">get in touch</a> using the feedback button on the right, or by contacting us through <a title="EBI's support & feedback form" href="http://www.ebi.ac.uk/support/metagenomics" class="ext">EBI contact form</a>.
+-->
+    <form:form id="comparison-tool-form-id" method="post" commandName="comparisonForm">
     <div id="row-wrapper">
 
         <div id="project-div">
@@ -20,7 +20,7 @@
                 <%--<form:option value="-" label="--Select project"/>--%>
                 <form:select path="study" size="13" id="projects" style="width:100%;">
                     <c:forEach var="study" items="${model.filteredStudies}">
-                        <form:option id="${study.studyId}" value="${study.id}" title="Project ${study.studyId} | ${study.studyName}">${study.studyName}</form:option>
+                        <form:option id="${study.id}" value="${study.studyId}" title="Project ${study.studyId} | ${study.studyName}">${study.studyName}</form:option>
                     </c:forEach>
                 </form:select>
 
@@ -33,7 +33,8 @@
             <c:if test="${not empty noStudyError}">
             <script>
                 //replace info message by error message
-                $( "#description-content" ).replaceWith( "<div class='error' id='description-content study.errors'>Please select one project in the list above.</div>" ); </script>
+                $( "#description-content" ).replaceWith( "<div class='error' id='description-content study.errors'>Please select one project in the list above.</div>" );
+            </script>
             </c:if>
 
 
@@ -145,7 +146,7 @@
     function GetSamplesOfSelectedProject() {
         UnselectAllSamples(); // Clean the samples
         var numberSelected = $('#analysisJobIds :selected').length;
-        var studyId = $('#projects').val();
+        var studyId = $('#projects').children(":selected").attr("id");
         // Show a nice loading text so the user won't break his computer.... is this necessary... TODO some speed test once on the server - if no speed issue remove the message
         $('#analysisJobIds').html('<option disabled>'+'Retrieving runs from server...'+'</option>');
         $.ajax({
@@ -180,7 +181,8 @@
     $(document).ready(function () {
         $('#projects').change(function() {
 
-            var textId = $('#projects').children(":selected").attr("id");
+            var textId = $('#projects').children(":selected").attr("value");
+//            alert(textId);
             $.ajax({
                 url:"<c:url value="${baseURL}/compare/studies"/>",
                 type:"GET",
@@ -298,4 +300,10 @@
     //           // $("#vis-choice option[value='table']").prop("disabled", true);
     //        }
     //    });
+
+    // Grab and select the related project - from homepage button
+    var slideNumber= window.location.hash.replace('#','');
+//    alert (slideNumber);
+    $("#projects").val(slideNumber);
+
 </script>
