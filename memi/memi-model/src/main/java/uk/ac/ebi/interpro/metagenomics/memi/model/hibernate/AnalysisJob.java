@@ -273,6 +273,11 @@ public class AnalysisJob implements Comparator<AnalysisJob>, SecureEntity {
     }
 
     @Transient
+    public Integer isPublicInt() {
+        return (sample != null ? sample.isPublicInt() : 0);
+    }
+
+    @Transient
     public String getSubmissionAccountId() {
         return (sample != null ? sample.getSubmissionAccountId() : "n/a");
     }

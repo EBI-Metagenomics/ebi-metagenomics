@@ -10,52 +10,51 @@
      <p class="lead">Welcome to your private area.<br/>You can track here data you submitted to us <br/>and visualize the corresponding results </p>
    <div class="button"><a href="<c:url value="${baseURL}/submission"/>"> Submit data</a></div>
 </section>
-    <%--Suppressed until ENA solved--%>
 
-<%--<section class="jumbo-user">--%>
-  <%--<div class="jumbo-user-box">--%>
+<section class="jumbo-user">
+  <div class="jumbo-user-box">
 
-          <%--<div class="output_form">--%>
+          <div class="output_form">
 
-          <%--<div class="result_row">--%>
-              <%--<div class="result_row_label">Name:</div>--%>
-              <%--<div class="result_row_data">${model.submitter.firstName} ${model.submitter.surname}</div>--%>
-          <%--</div>--%>
+          <div class="result_row">
+              <div class="result_row_label">Name:</div>
+              <div class="result_row_data">${model.submitter.firstName} ${model.submitter.surname}</div>
+          </div>
 
-              <%--<div class="result_row">--%>
-                <%--<div class="result_row_label">Webin account:</div>--%>
-                <%--<div class="result_row_data lowercase">${model.submitter.loginName}</div>--%>
-            <%--</div>--%>
+              <div class="result_row">
+                <div class="result_row_label">Webin account:</div>
+                <div class="result_row_data lowercase">${model.submitter.loginName}</div>
+            </div>
 
-          <%--<div class="result_row">--%>
-              <%--<div class="result_row_label">Email:</div>--%>
-              <%--<div class="result_row_data lowercase">${model.submitter.emailAddress}</div>--%>
-          <%--</div>--%>
+          <div class="result_row">
+              <div class="result_row_label">Email:</div>
+              <div class="result_row_data lowercase">${model.submitter.emailAddress}</div>
+          </div>
 
-          <%--<c:if test="${not empty model.submitter.centreName}">--%>
-              <%--<div class="result_row">--%>
-                <%--<div class="result_row_label">Institute:</div>--%>
-                <%--<div class="result_row_data">${model.submitter.centreName}</div>--%>
-              <%--</div>--%>
-          <%--</c:if>--%>
+          <c:if test="${not empty model.submitter.centreName}">
+              <div class="result_row">
+                <div class="result_row_label">Institute:</div>
+                <div class="result_row_data">${model.submitter.centreName}</div>
+              </div>
+          </c:if>
 
-              <%--<div class="result_row">--%>
-                      <%--<div class="result_row_label">Registered with us:</div>--%>
-                      <%--<div class="result_row_data lowercase"><c:choose><c:when test="${model.submitter.registered}">Yes</c:when><c:otherwise>No</c:otherwise></c:choose></div>--%>
-                  <%--</div>--%>
-              <%--<div class="result_row">--%>
-                      <%--<div class="result_row_label">Consent given:</div>--%>
-                      <%--<div class="result_row_data lowercase"><c:choose><c:when test="${model.submitter.consentGiven}">Yes</c:when><c:otherwise>No</c:otherwise></c:choose></div> &nbsp;--%>
+              <div class="result_row">
+                      <div class="result_row_label">Registered with us:</div>
+                      <div class="result_row_data lowercase"><c:choose><c:when test="${model.submitter.registered}">Yes</c:when><c:otherwise>No</c:otherwise></c:choose></div>
+                  </div>
+              <div class="result_row">
+                      <div class="result_row_label">Consent given:</div>
+                      <div class="result_row_data lowercase"><c:choose><c:when test="${model.submitter.consentGiven}">Yes</c:when><c:otherwise>No</c:otherwise></c:choose></div> &nbsp;
 
-              <%--</div>--%>
-              <%--<div class="result_row">--%>
-              <%--<div class="result_row_label"><a href="https://www.ebi.ac.uk/ena/submit/sra/#home" title="Edit my user profile" class="icon icon-functional" data-icon="e"></a></div>--%>
-          <%--</div>--%>
-        <%--</div>--%>
+              </div>
+              <div class="result_row">
+              <div class="result_row_label"><a href="https://www.ebi.ac.uk/ena/submit/sra/#home" title="Edit my user profile" class="icon icon-functional" data-icon="e"></a></div>
+          </div>
+        </div>
 
 
-  <%--</div>--%>
-<%--</section>--%>
+  </div>
+</section>
 </c:when>
 <c:otherwise>
 <section class="jumbo-header">
@@ -250,7 +249,7 @@
                                      <span class="show_tooltip icon icon-functional" data-icon="U" title="Public data"></span>
                                      </c:if>
                                     <!-- temp while we wait for runSize to be defined at project level so we can change the condition-->
-                                    <c:if test='${entry.value > 1}'>- <a href="<c:url value="${baseURL}/compare/&#35${entry.key.studyId}"/>"  title="Compare samples in this project" class="list_sample icon icon-functional" data-icon="O">compare</a></c:if>
+                                    <c:if test='${entry.value > 1}'>- <a href="<c:url value="${baseURL}/compare&#35${entry.key.studyId}"/>"  title="Compare samples in this project" class="list_sample icon icon-functional" data-icon="O">compare</a></c:if>
                                 </p>
                               </div>
                              </div>
@@ -518,7 +517,7 @@
                                      class="list_sample"><c:out value="${study.sampleSize} sample"/><c:if
                                      test='${study.sampleSize > 1}'>s</c:if></a>
                                 <!-- temp while we wait for runSize to be defined at project level so we can change the condition-->
-                                <c:if test='${study.sampleSize > 1}'>- <a href="<c:url value="${baseURL}/compare/&#35${study.studyId}"/>" title="Compare samples in this project" class="list_sample icon icon-functional" data-icon="O">compare</a></c:if>
+                                <c:if test='${study.sampleSize > 1}'>- <a href="<c:url value="${baseURL}/compare&#35${study.studyId}"/>" title="Compare samples in this project" class="list_sample icon icon-functional" data-icon="O">compare</a></c:if>
                             </p>
                          </div>
                          </div>

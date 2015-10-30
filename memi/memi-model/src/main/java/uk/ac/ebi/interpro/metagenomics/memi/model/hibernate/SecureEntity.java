@@ -16,9 +16,14 @@ public interface SecureEntity {
     public String getSecureEntityId();
 
     /**
-     * Defines privacy, if the secure entity is private or public.
+     * Defines privacy, if the secure entity is private or public. Boolean representation.
      */
     public boolean isPublic();
+
+    /**
+     * Defines privacy, if the secure entity is private (0), public (1) or suppressed (5).
+     */
+    public Integer isPublicInt();
 
     /**
      * Defines the Id of the ENA submitter.

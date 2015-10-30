@@ -78,7 +78,7 @@ public class Sample implements SecureEntity, BiomeEntity {
      * Single samples of public study could be private. Default value is private.
      */
     @Column(name = "IS_PUBLIC")
-    private boolean isPublic;
+    private Integer isPublic;
 
     @Column(name = "SUBMISSION_ACCOUNT_ID")
     private String submissionAccountId;
@@ -139,7 +139,7 @@ public class Sample implements SecureEntity, BiomeEntity {
     private Set<Publication> publications;
 
     public Sample() {
-        isPublic = false;
+        isPublic = 0;
         publications = new HashSet<Publication>();
     }
 
@@ -223,11 +223,15 @@ public class Sample implements SecureEntity, BiomeEntity {
     }
 
     public boolean isPublic() {
+        return (isPublic == 1 ? true : false);
+    }
+
+    public Integer isPublicInt() {
         return isPublic;
     }
 
-    public void setPublic(boolean aPublic) {
-        isPublic = aPublic;
+    public void setPublic(Integer isPublicInt) {
+        isPublic = isPublicInt;
     }
 
     public Date getMetadataReceived() {

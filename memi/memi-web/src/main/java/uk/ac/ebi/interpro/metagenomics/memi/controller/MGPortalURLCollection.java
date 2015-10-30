@@ -58,9 +58,9 @@ public final class MGPortalURLCollection {
     //Set of URLs for download/export functionality
     //START
     //Functional results files (InterProScan and GO annotation results)
-    public final static String PROJECT_SAMPLE_RUN_RESULTS_FILE_EXPORT_GO_SLIM = PROJECT_SAMPLE_RUN_RESULTS + "/GOSlimFile" + PROJECT_SAMPLE_RUN_RESULTS_VERSION;
+    public final static String PROJECT_SAMPLE_RUN_RESULTS_FILE_EXPORT_GO_SLIM = PROJECT_SAMPLE_RUN_RESULTS + PROJECT_SAMPLE_RUN_RESULTS_VERSION + "/function/GOSlimAnnotations";
 
-    public final static String PROJECT_SAMPLE_RUN_RESULTS_FILE_EXPORT_GO = PROJECT_SAMPLE_RUN_RESULTS + "/GOFile" + PROJECT_SAMPLE_RUN_RESULTS_VERSION;
+    public final static String PROJECT_SAMPLE_RUN_RESULTS_FILE_EXPORT_GO = PROJECT_SAMPLE_RUN_RESULTS + PROJECT_SAMPLE_RUN_RESULTS_VERSION + "/function/GOAnnotations";
 
     public final static String PROJECT_SAMPLE_RUN_RESULTS_FILE_EXPORT_I5_TSV = PROJECT_SAMPLE_RUN_RESULTS + "/I5TSVFile" + PROJECT_SAMPLE_RUN_RESULTS_VERSION;
 

@@ -8,10 +8,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.authentication.AuthenticationService;
@@ -29,6 +26,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.DefaultViewMo
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -36,6 +34,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Handles EMG consent check requests.
@@ -75,7 +75,8 @@ public class SubmissionConsentCheckController extends AbstractController {
     @RequestMapping(method = RequestMethod.POST)
     public ModelAndView handleConsentRequest(final @ModelAttribute("consentCheckForm") @Valid ConsentCheckForm form,
                                              final BindingResult bindingResult,
-                                             final ModelMap model) {
+                                             final ModelMap model,
+                                             final HttpServletResponse response) {
         populateModel(model);
         final Submitter submitter = form.getSubmitter();
         //Used this boolean flag to indicate if a submitter registered with us or just gave consent
@@ -89,6 +90,13 @@ public class SubmissionConsentCheckController extends AbstractController {
         final boolean isConsentChecked = form.getConsentCheck();
         String msg = buildMsg(submitter, isConsentChecked);
         emailService.sendNotification(msg);
+
+        //Set registration delay HTTP cookie
+        CookieValueObject cookieObject = new CookieValueObject(submitter.getSubmissionAccountId(), true, form.getConsentCheck());
+        Cookie registrationCookie = new Cookie("reg-delay", cookieObject.toString()); //bake cookie
+        registrationCookie.setMaxAge(604800); //set expire time to 1 week 60x60x24x7
+        response.addCookie(registrationCookie); //put cookie in response
+
         if (isRegistered) {
             return new ModelAndView("submission-check/giveConsentSummary", model);
         } else {
@@ -113,7 +121,8 @@ public class SubmissionConsentCheckController extends AbstractController {
     @RequestMapping(method = RequestMethod.POST, value = "/account-check")
     public ModelAndView handleAccountCheckRequest(final @ModelAttribute("consentCheckForm") @Valid ConsentCheckForm form,
                                                   final BindingResult bindingResult,
-                                                  final ModelMap modelMap) {
+                                                  final ModelMap modelMap,
+                                                  @CookieValue(value = "reg-delay", defaultValue = "notAvailable") String registrationCookie) {
         populateModel(modelMap);
         if (bindingResult.hasFieldErrors("userName") || bindingResult.hasFieldErrors("password") || bindingResult.hasFieldErrors("email")) {
             return new ModelAndView("submission-check/accountCheck", modelMap);
@@ -136,6 +145,21 @@ public class SubmissionConsentCheckController extends AbstractController {
             //Check if user gave consent to allow EMG to access their private
             final Submitter submitter = submissionContactDAO.getSubmitterBySubmissionAccountIdAndEmail(userName, email);
 
+            boolean isRegistered = submitter.isRegistered();
+            boolean isConsentGiven = submitter.isConsentGiven();
+            if (!isRegistered) {
+                //This might be due to the registration delay in ENA (manual step)
+                //Read HTTP cookie
+                if (!registrationCookie.equals("notAvailable")) {//If cookie is set
+                    CookieValueObject cookieObject = new CookieValueObject(registrationCookie);
+                    //Check if submitters are the same
+                    if (submitter.getSubmissionAccountId().toLowerCase().equals(cookieObject.getUserName())) {//HTTP cookie set for this submitter
+                        isRegistered = cookieObject.isRegistered();
+                        isConsentGiven = cookieObject.isConsentGiven();
+                    }
+                }
+            }
+
             if (submitter != null) {
                 form.setSubmitter(submitter);
                 if (submitter.isMainContact()) {
@@ -143,10 +167,10 @@ public class SubmissionConsentCheckController extends AbstractController {
                     //  Case 1: Not registered
                     //  Case 2: Registered, but consent not given
                     //  Case 3: Registered and consent given
-                    if (submitter.isRegistered()) {
+                    if (isRegistered) {
                         //  Case 3
-                        if (submitter.isConsentGiven()) {
-                            return new ModelAndView("submission-check/giveConsent", modelMap);
+                        if (isConsentGiven) {
+                            return new ModelAndView("submission-check/redirectToWebin", modelMap);
                         } else {//  Case 2
                             return new ModelAndView("submission-check/userNameCheckSummary", modelMap);
                         }
@@ -206,5 +230,54 @@ public class SubmissionConsentCheckController extends AbstractController {
         submitDataModel.changeToHighlightedClass(ViewModel.TAB_CLASS_SUBMIT_VIEW);
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, submitDataModel);
         model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
+    }
+
+}
+
+class CookieValueObject {
+    private final static Log log = LogFactory.getLog(CookieValueObject.class);
+
+    private String userName;
+
+    private boolean isRegistered;
+
+    private boolean isConsentGiven;
+
+    CookieValueObject(String userName, boolean isRegistered, boolean isConsentGiven) {
+        this.userName = userName;
+        this.isRegistered = isRegistered;
+        this.isConsentGiven = isConsentGiven;
+    }
+
+    CookieValueObject(String cookieValue) {
+        String patternString = "[0-9]+\\|[a-z]+\\|[a-z]+";
+        Pattern pattern = Pattern.compile(patternString, Pattern.CASE_INSENSITIVE);
+        if (pattern.matcher(cookieValue).matches()) {
+            String[] values = cookieValue.split("\\|");
+            if (values.length == 3) {
+                this.userName = "Webin-" + values[0];
+                this.isRegistered = Boolean.valueOf(values[1]);
+                this.isConsentGiven = Boolean.valueOf(values[2]);
+            }
+        } else {
+            log.warn("Cookie value - " + cookieValue + " does NOT match the patter: " + patternString);
+        }
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public boolean isRegistered() {
+        return isRegistered;
+    }
+
+    public boolean isConsentGiven() {
+        return isConsentGiven;
+    }
+
+    @Override
+    public String toString() {
+        return getUserName().toLowerCase().replace("webin-", "") + "|" + isRegistered() + "|" + isConsentGiven();
     }
 }

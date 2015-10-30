@@ -299,8 +299,12 @@ public class Study implements SecureEntity, BiomeEntity {
         return (isPublic == 1 ? true : false);
     }
 
-    public void setPublic(Integer aPublic) {
-        isPublic = aPublic;
+    public Integer isPublicInt() {
+        return isPublic;
+    }
+
+    public void setPublic(Integer isPublicInt) {
+        isPublic = isPublicInt;
     }
 
     public String getPrivacy() {

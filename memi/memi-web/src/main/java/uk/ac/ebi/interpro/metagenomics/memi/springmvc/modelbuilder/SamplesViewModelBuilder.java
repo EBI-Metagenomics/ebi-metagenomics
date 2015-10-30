@@ -13,7 +13,6 @@ import uk.ac.ebi.interpro.metagenomics.memi.forms.Biome;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.SampleFilter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.SamplesViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewPagination;
@@ -126,22 +125,22 @@ public class SamplesViewModelBuilder extends AbstractBiomeViewModelBuilder<Sampl
             }
             //select * from hb_study where submitter_id=? and is_public=1;
             else if (visibility.equals(SampleFilter.SampleVisibility.MY_PUBLISHED_SAMPLES)) {
-                crits.add(Restrictions.and(Restrictions.eq("isPublic", true), Restrictions.eq("submissionAccountId", submissionAccountId)));
+                crits.add(Restrictions.and(Restrictions.eq("isPublic", 1), Restrictions.eq("submissionAccountId", submissionAccountId)));
             }
             //select * from hb_study where submitter_id=? and is_public=0;
             else if (visibility.equals(SampleFilter.SampleVisibility.MY_PREPUBLISHED_SAMPLES)) {
-                crits.add(Restrictions.and(Restrictions.eq("isPublic", false), Restrictions.eq("submissionAccountId", submissionAccountId)));
+                crits.add(Restrictions.and(Restrictions.eq("isPublic", 0), Restrictions.eq("submissionAccountId", submissionAccountId)));
             }
             //select * from hb_study where is_public=1;
             else if (visibility.equals(SampleFilter.SampleVisibility.ALL_PUBLISHED_SAMPLES)) {
-                crits.add(Restrictions.eq("isPublic", true));
+                crits.add(Restrictions.eq("isPublic", 1));
             }
             //select * from hb_study where is_public=1 or submitter_id=? and is_public=0;
             else if (visibility.equals(SampleFilter.SampleVisibility.ALL_SAMPLES)) {
-                crits.add(Restrictions.or(Restrictions.and(Restrictions.eq("isPublic", false), Restrictions.eq("submissionAccountId", submissionAccountId)), Restrictions.eq("isPublic", true)));
+                crits.add(Restrictions.or(Restrictions.and(Restrictions.eq("isPublic", 0), Restrictions.eq("submissionAccountId", submissionAccountId)), Restrictions.eq("isPublic", 1)));
             }
         } else {
-            crits.add(Restrictions.eq("isPublic", true));
+            crits.add(Restrictions.eq("isPublic", 1));
         }
         if (!filter.getBiome().equals(Biome.ALL)) {
             List<Integer> biomeIds = new ArrayList<Integer>();

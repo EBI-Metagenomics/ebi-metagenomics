@@ -161,7 +161,7 @@ public class DatabaseMockuper {
         for (String studyId : sampleMap.keySet()) {
             for (Sample sample : sampleMap.get(studyId)) {
                 sample.setMetadataReceived(dateCreator.getNextDate());
-                sample.setPublic(false);
+                sample.setPublic(0);
                 sample.setSubmissionAccountId("Webin-10");
                 createObject(sample);
             }
@@ -242,7 +242,7 @@ public class DatabaseMockuper {
                         }
                         s.setMiscellaneous(row[56]);
                         s.setSampleDescription(row[57]);
-                        s.setPublic((row[58].equals("TRUE") ? true : false));
+                        s.setPublic((row[58].equals("TRUE") ? 1 : 0));
                         Set<Sample> samples = result.get(studyId);
                         if (samples == null) {
                             samples = new HashSet<Sample>();

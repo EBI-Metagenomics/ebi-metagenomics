@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.results;
 
 import org.apache.commons.logging.Log;
@@ -273,7 +272,7 @@ public class DownloadViewModelBuilder extends AbstractResultViewModelBuilder<Dow
                     } else {
                         otherFuncAnalysisDownloadLinks.add(new DownloadLink(fileDefinition.getLinkText(),
                                 fileDefinition.getLinkTitle(),
-                                "projects/" + externalProjectId + "/samples/" + externalSampleId + "/runs/" + externalRunId + "/results/" + fileDefinition.getLinkURL() + "/versions/" + analysisJobReleaseVersion,
+                                "projects/" + externalProjectId + "/samples/" + externalSampleId + "/runs/" + externalRunId + "/results/versions/" + analysisJobReleaseVersion + "/function/" + fileDefinition.getLinkURL(),
                                 fileDefinition.getOrder(),
                                 getFileSize(fileObject)));
                     }

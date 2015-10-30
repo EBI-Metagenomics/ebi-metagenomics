@@ -296,7 +296,7 @@
         <property name="linkText" value="Complete GO annotation"/>
         <property name="order" value="3"/>
         <property name="linkTitle" value="Click to download GO annotation result file (CSV)"/>
-        <property name="linkURL" value="GOFile"/>
+        <property name="linkURL" value="GOAnnotations"/>
     </bean>
 
     <bean id="goSlimAnnotationFile" autowire-candidate="false"
@@ -308,7 +308,7 @@
         <property name="linkText" value="GO slim annotation"/>
         <property name="order" value="4"/>
         <property name="linkTitle" value="Click to download GO slim annotation result file (CSV)"/>
-        <property name="linkURL" value="GOSlimFile"/>
+        <property name="linkURL" value="GOSlimAnnotations"/>
     </bean>
 
     <!--Other-->
