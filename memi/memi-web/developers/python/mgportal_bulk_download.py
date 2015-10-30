@@ -55,7 +55,7 @@ if __name__ == "__main__":
                 os.makedirs(output_path)
 
             output_file_name = output_path + "/" + run_id + "_" + file_type + fileExtension
-            rootUrl = "https://wwwdev.ebi.ac.uk/metagenomics/projects/%s/samples/%s/runs/%s/results/versions/%s/%s/%s/chunks/1" % (
+            rootUrl = "https://www.ebi.ac.uk/metagenomics/projects/%s/samples/%s/runs/%s/results/versions/%s/%s/%s/chunks/1" % (
                 study_id, sample_id, run_id, version, domain, file_type)
 
             print "Starting the download of the following file..."
