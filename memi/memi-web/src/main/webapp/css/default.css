@@ -465,10 +465,7 @@ h2 {
     margin:0.83em 0;/*added for compliance*/
 }
 
-h2 span {font-size:80%; color: #7c8c99;}
-
-.subtitle {font-size:150%;color: #066; margin-left: 9px;margin-top:20px;}
-.subtitle span {font-size:80%; color: #7c8c99;}
+h2 span {font-size:80%; /*color: #7c8c99;*/}
 
 h3 {color:#7c8c99;font-size:160%;margin:9px 0;}
 
@@ -546,6 +543,8 @@ border:0px solid #7C8C99;
 
 .project_upd_date {color: #7C8C99; font-style: italic;}
 
+.subtitle {font-size:150%;color: #066; margin-left: 9px;margin-top:20px;}
+.subtitle span {font-size:80%; /*color: #7c8c99;*/}
 /****************** END TITLE *************************/
 
 #submit-data {
@@ -622,10 +621,7 @@ color:#666;
 height:auto;
 }
 
-
-
-.sidebar-allrel, #sidebar-download, #sidebar-analysis {width: 28%;float: right; border: solid 0px black; padding: 9px;background-color: white;}
-
+.sidebar-allrel, #sidebar-download, #sidebar-analysis {width: 28%;float: right; border: solid 0px black; padding: 9px;background-color: white; clear: right;/*added for second ENA box*/}
 
 #sidebar-analysis {clear: right; background-color:white;/*to deal with description box border*/}
 
