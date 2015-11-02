@@ -116,14 +116,6 @@
 </script>
     <![endif]-->  <%-- HTML5 tags working in IE8 by including this JavaScript in the head  --%>
 
-    <%-- simple script for alternate row in a table color was #EFF1F1 originally--%>
-    <script>
-        $(document).ready(function () {
-            $("table.result tbody tr:even").css("background-color", "#F4F4F8");
-            $("table.result tbody tr:odd").css("background-color", "#e9e9e9");
-        });
-    </script>
-
     <script type="text/javascript"
             src="https://maps.google.com/maps/api/js?sensor=false">
     </script>
