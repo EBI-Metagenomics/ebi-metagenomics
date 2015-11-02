@@ -232,8 +232,3 @@
     </c:otherwise>
 </c:choose>
 </div>
-
-<script type="text/javascript" defer="defer">
-    $("table.result tbody tr:even").css("background-color", "#F4F4F8");
-    $("table.result tbody tr:odd").css("background-color", "#e9e9e9");
-</script>
