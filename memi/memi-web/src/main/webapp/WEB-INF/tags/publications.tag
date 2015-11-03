@@ -10,7 +10,7 @@
         <c:if test="${not empty relatedPublications}">
             <div id="sidebar-related">
                 <h2>Related Publications</h2>
-                <span class="separator"></span>
+                <%--<span class="separator"></span>--%>
                 <ul>
                     <c:forEach var="pub" items="${relatedPublications}" varStatus="status">
                         <li>
@@ -28,7 +28,7 @@
         <c:if test="${not empty relatedLinks}">
             <div id="sidebar-related" style="margin-top:14px;">
                 <h2>Related resources</h2>
-                <span class="separator"></span>
+                <%--<span class="separator"></span>--%>
                 <ul>
                     <c:forEach var="pub" items="${relatedLinks}" varStatus="status">
                         <li>
