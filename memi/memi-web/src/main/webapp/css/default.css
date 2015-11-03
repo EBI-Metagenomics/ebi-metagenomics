@@ -490,8 +490,8 @@ font-size:150%;
 }
 h2.pipeline_title {margin-bottom: 0;}
 h2.pipeline_title span {color: #7c8c99;}/*date*/
-.sidebar-allrel h2 {margin:9px 0;}
-#sidebar-related ul {font-size: 100%;}
+.sidebar-allrel h2 {margin:18px 0 9px 0;}
+
 /*#sidebar-login {margin: 14px 20px 14px 20px;} */
 
 /*#sidebar-login {*/
@@ -653,16 +653,11 @@ margin-left:7px;
 list-style-type:square;
 color:#c3c3c3;}
 
-#sidebar-related {margin: 20px 0 0 0;color:#3E3E3E; padding:7px;}
 #sidebar-steps {color:#3E3E3E; margin:18px 9px 0 0 ;padding:0;}
 
-#sidebar-related {margin:0;width: 94.8%;}
-#sidebar-related  ul{ margin:0;padding:9px; }
-
-#sidebar-related  ul  li {
-list-style: disc;
-border: 0px solid black;list-style-position:inside;
-}
+/*box related links, resources*/
+#sidebar-related {margin:0;width: 94.8%; color:#3E3E3E; padding:6px;}
+#sidebar-related ul {margin:0; padding:9px; font-size: 100%; list-style-position: inside;}
 
 #sidebar-nav ul{padding:9px; margin:9px 0;font-weight:bold; font-size:110%;}
 
