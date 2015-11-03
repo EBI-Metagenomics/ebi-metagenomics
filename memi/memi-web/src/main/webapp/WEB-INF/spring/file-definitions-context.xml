@@ -164,7 +164,7 @@
         <property name="downloadName" value="_otu.biom"/>
         <property name="linkText" value="OTUs, reads and taxonomic assignments"/>
         <property name="order" value="5"/>
-        <property name="linkTitle" value="Click to download the OTUs and taxonomic assignments (BIOM)"/>
+        <property name="linkTitle" value="Click to download the converted OTU table in biom format"/>
         <property name="linkURL" value="/export?contentType=text&amp;exportValue=biom"/>
     </bean>
 
