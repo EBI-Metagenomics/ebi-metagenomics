@@ -361,8 +361,10 @@
                         <%--file format--%>
                         <c:choose>
                         <c:when test="${downloadLink.linkTitle == 'Click to download the OTU table in TSV format'}">
-
                         TSV
+                        </c:when>
+                        <c:when test="${downloadLink.linkTitle == 'Click to download the converted OTU table in biom format'}">
+                                                Biom <span class="icon icon-generic show_tooltip" data-icon="i" title="BIOM is a standard format (http://biom-format.org/) for representing taxonomy distribution (OTUs and their occurence in each sample). BIOM files could be directly imported in diverse analysis packages such as MEGAN (http://ab.inf.uni-tuebingen.de/software/megan5/)."></span>
                         </c:when>
                         <c:when test="${downloadLink.linkTitle == 'Click to download the converted OTU table in HDF5 biom format'}">
                         HDF5 Biom <span class="icon icon-generic show_tooltip" data-icon="i" title="BIOM is a standard format (http://biom-format.org/) for representing taxonomy distribution (OTUs and their occurence in each sample). BIOM files could be directly imported in diverse analysis packages such as MEGAN (http://ab.inf.uni-tuebingen.de/software/megan5/)."></span>
