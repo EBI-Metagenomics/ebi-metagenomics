@@ -277,10 +277,16 @@ div#headerdiv .login_name a {display:inline;color: white; border-bottom:0;}
 div#headerdiv .login_name a:active, div#headerdiv .login_name a:hover, div#headerdiv .login_name a:focus {background-color: transparent;}
 div#headerdiv .logout {font-weight: bold;}
 
-
 #local-nav {z-index: 90; position: relative;}/*to make the banner img private section not overlap*/
-/************************* LINKS ************************************/
 
+.separator {margin:9px; display:block; /*to replace the image solution*/ /*background: url(../img/bgd_sep_dot.gif) repeat-x 0 -5px;*/
+background-image: linear-gradient(to right, #949494 16%, rgba(255, 255, 255, 0) 0%);
+background-position: center;
+background-size: 4px 1px;
+background-repeat: repeat-x;
+padding-bottom: 5px;
+}
+/************************* LINKS ************************************/
 #logout {color:#333;font-weight:bold;}
 
 #logout a, #logout a:link, #logout a:focus {
@@ -347,7 +353,6 @@ border: 1px solid #aeaeae;
 text-decoration:none;
 background:url(../img/bgd_black_op20_8.png);
 }
-
 /**************************** END LINKS ********************************/
 
 /**************************** TABLE ***********************************/
@@ -485,6 +490,8 @@ font-size:150%;
 }
 h2.pipeline_title {margin-bottom: 0;}
 h2.pipeline_title span {color: #7c8c99;}/*date*/
+.sidebar-allrel h2 {margin:9px 0;}
+#sidebar-related ul {font-size: 100%;}
 /*#sidebar-login {margin: 14px 20px 14px 20px;} */
 
 /*#sidebar-login {*/
@@ -829,8 +836,6 @@ text-decoration:underline;
 /* removed to make it EBI compliant
 margin: 0px auto;*/
 width: 972px; text-align: left;}
-
-.separator {margin: 20px 9px 9px 9px; height:1px; display:block; background: url(../img/bgd_sep_dot.gif) repeat-x 0 -5px; clear:right;} /*not used */
 
 .study_desc {margin-top:20px;}
 .study_desc_text {font-size:110%;}
