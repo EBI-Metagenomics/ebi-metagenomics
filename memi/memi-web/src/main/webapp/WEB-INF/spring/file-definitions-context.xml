@@ -162,7 +162,7 @@
         <property name="relativePath" value="/otus/otu_table.biom"/>
         <property name="description" value="OTUs and taxonomic assignments (BIOM format)."/>
         <property name="downloadName" value="_otu.biom"/>
-        <property name="linkText" value="OTUs and taxonomic assignments (BIOM)"/>
+        <property name="linkText" value="OTUs, reads and taxonomic assignments"/>
         <property name="order" value="5"/>
         <property name="linkTitle" value="Click to download the OTUs and taxonomic assignments (BIOM)"/>
         <property name="linkURL" value="/export?contentType=text&amp;exportValue=biom"/>
@@ -173,7 +173,7 @@
         <property name="relativePath" value="/otus/rep_set.tre"/>
         <property name="description" value="Phylogenetic tree (Newick format)."/>
         <property name="downloadName" value="_newick.tre"/>
-        <property name="linkText" value="Phylogenetic tree (Newick format)"/>
+        <property name="linkText" value="Phylogenetic tree"/>
         <property name="order" value="6"/>
         <property name="linkTitle" value="Click to download the phylogenetic tree file (Newick format)"/>
         <property name="linkURL" value="/export?contentType=text&amp;exportValue=tree"/>
@@ -185,7 +185,7 @@
         <property name="relativePath" value="/otus/rdp_assigned_taxonomy/"/>
         <property name="description" value="OTUs and taxonomic assignments (TSV)."/>
         <property name="downloadName" value="_otu.tsv"/>
-        <property name="linkText" value="OTUs and taxonomic assignments (TSV)"/>
+        <property name="linkText" value="OTUs, reads and taxonomic assignments"/>
         <property name="order" value="4"/>
         <property name="linkTitle" value="Click to download the OTU table in TSV format"/>
         <property name="linkURL" value="/export?contentType=text&amp;exportValue=taxa"/>
