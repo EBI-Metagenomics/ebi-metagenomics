@@ -69,13 +69,12 @@ public class StudyDAOImpl implements StudyDAO {
             crit.add(Restrictions.eq("studyId", studyId));
             try {
                 List<Study> studies = crit.list();
-//            TODO: Log OR print exception if size > 1
                 if (studies != null) {
                     int studyListSize = studies.size();
                     if (studyListSize == 1) {
                         return studies.get(0);
                     } else if (studyListSize == 0) {
-                        log.warn("No study found for study id " + studyId);
+                        log.info("No study found for study id " + studyId);
                     } else if (studyListSize > 1) {
                         log.warn("More then one study found for study id " + studyId);
                     }

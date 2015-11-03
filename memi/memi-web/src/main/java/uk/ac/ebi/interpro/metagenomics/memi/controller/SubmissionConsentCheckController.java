@@ -153,7 +153,7 @@ public class SubmissionConsentCheckController extends AbstractController {
                 if (!registrationCookie.equals("notAvailable")) {//If cookie is set
                     CookieValueObject cookieObject = new CookieValueObject(registrationCookie);
                     //Check if submitters are the same
-                    if (submitter.getSubmissionAccountId().toLowerCase().equals(cookieObject.getUserName())) {//HTTP cookie set for this submitter
+                    if (submitter.getSubmissionAccountId().toLowerCase().equals(cookieObject.getUserName().toLowerCase())) {//HTTP cookie set for this submitter
                         isRegistered = cookieObject.isRegistered();
                         isConsentGiven = cookieObject.isConsentGiven();
                     }

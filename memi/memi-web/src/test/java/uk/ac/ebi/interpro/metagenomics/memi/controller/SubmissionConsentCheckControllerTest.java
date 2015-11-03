@@ -24,13 +24,6 @@ import static org.junit.Assert.assertTrue;
 @TestExecutionListeners
 public class SubmissionConsentCheckControllerTest {
 
-    private SubmissionConsentCheckController instance;
-
-    @Before
-    public void setUp() throws Exception {
-        this.instance = new SubmissionConsentCheckController();
-    }
-
     @Test
     public void testCookieValueObjectConstructorSingleParameter() {
         //input test value
@@ -45,6 +38,22 @@ public class SubmissionConsentCheckControllerTest {
         assertEquals("Webin-1234", cookieValueObject.getUserName());
         assertEquals(isRegistered, cookieValueObject.isRegistered());
         assertEquals(isConsentGiven, cookieValueObject.isConsentGiven());
+        //Test invalid cookie values
+        String invalidCookieValue = userName + separated + String.valueOf(isRegistered);
+        //Call test method
+        cookieValueObject = new CookieValueObject(invalidCookieValue);
+        //Test object attributes
+        assertEquals(null, cookieValueObject.getUserName());
+        assertEquals(false, cookieValueObject.isRegistered());
+        assertEquals(false, cookieValueObject.isConsentGiven());
+        //second
+        invalidCookieValue = separated + String.valueOf(isRegistered) + separated + String.valueOf(isConsentGiven);
+        //Call test method
+        cookieValueObject = new CookieValueObject(invalidCookieValue);
+        //Test object attributes
+        assertEquals(null, cookieValueObject.getUserName());
+        assertEquals(false, cookieValueObject.isRegistered());
+        assertEquals(false, cookieValueObject.isConsentGiven());
     }
 
     @Test
