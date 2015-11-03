@@ -11,6 +11,20 @@
 
 <tags:publications publications="${study.publications}" relatedPublications="${model.relatedPublications}"
                    relatedLinks="${model.relatedLinks}"/>
+    <!-- Related publication, resources, links -->
+    <div class="sidebar-allrel">
+    <div id="sidebar-related">
+    <h2>Related links</h2>
+    <%--<span class="separator"></span>--%>
+    <ul>
+    <li>
+        <a title="Click to view entry on European Nucleotide Archive" href="https://www.ebi.ac.uk/ena/data/view/${study.studyId}"
+                                                      class="list_more">ENA website (${study.studyId})</a>
+    </li>
+    </ul>
+    </div>
+    </div>
+    <!--/ Related publication, resources, links -->
 
 <%-- Show icon only for people are are logged in--%>
 <c:if test="${not empty model.submitter}">
