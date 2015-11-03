@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<h2 style="margin-bottom:0;/*for pipeline image higher*/">Pipeline version ${releaseVersion}  <span>- ${releaseDate}</span></h2>
+<h2 class="pipeline_title">Pipeline version ${releaseVersion}  <span>- ${releaseDate}</span></h2>
 
 <c:choose>
 

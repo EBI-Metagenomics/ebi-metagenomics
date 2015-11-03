@@ -4,12 +4,24 @@
 <div id="sample_ov">
 
 <div class="title_tab_p">
-    <span class="subtitle">Sample overview <span>(<a title="Click to view entry on European Nucleotide Archive"
-                                                     href="https://www.ebi.ac.uk/ena/data/view/${sample.sampleId}"
-                                                     class="ext">${sample.sampleId}</a>)</span></span>
+    <span class="subtitle">Sample overview <span>(${sample.sampleId})</span></span>
 
     <h2 class="fl_uppercase_title">${sample.sampleName}</h2>
 </div>
+
+    <!-- Related publication, resources, links -->
+    <div class="sidebar-allrel">
+    <div id="sidebar-related">
+    <h2>Related links</h2>
+    <%--<span class="separator"></span>--%>
+    <ul>
+    <li>
+    <a title="Click to view entry on European Nucleotide Archive" href="https://www.ebi.ac.uk/ena/data/view/${sample.sampleId}"
+                                              class="list_more">ENA website (${sample.sampleId})</a>
+    </li>
+    </ul>
+    </div>
+    </div>
 
  <%-- Show icon only for people are are logged in--%>
  <c:if test="${not empty model.submitter}">

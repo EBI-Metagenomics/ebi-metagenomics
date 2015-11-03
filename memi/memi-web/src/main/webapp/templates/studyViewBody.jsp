@@ -10,9 +10,7 @@
     <div class="biome_project"><span class="biome_icon icon_sm show_tooltip ${study.biomeIconCSSClass}"
                                      title="${study.biomeIconTitle} biome"></span></div>
 
-    <span class="subtitle">Project  <span>(<a title="Click to view entry on European Nucleotide Archive"
-                                              href="https://www.ebi.ac.uk/ena/data/view/${study.studyId}"
-                                              class="ext">${study.studyId}</a>)</span></span>
+    <span class="subtitle">Project  <span>(${study.studyId})</span></span>
 
     <h2 class="fl_uppercase_title">${study.studyName}</h2>
 </div>

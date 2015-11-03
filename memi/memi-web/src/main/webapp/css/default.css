@@ -277,10 +277,16 @@ div#headerdiv .login_name a {display:inline;color: white; border-bottom:0;}
 div#headerdiv .login_name a:active, div#headerdiv .login_name a:hover, div#headerdiv .login_name a:focus {background-color: transparent;}
 div#headerdiv .logout {font-weight: bold;}
 
-
 #local-nav {z-index: 90; position: relative;}/*to make the banner img private section not overlap*/
-/************************* LINKS ************************************/
 
+.separator {margin:9px; display:block; /*to replace the image solution*/ /*background: url(../img/bgd_sep_dot.gif) repeat-x 0 -5px;*/
+background-image: linear-gradient(to right, #949494 16%, rgba(255, 255, 255, 0) 0%);
+background-position: center;
+background-size: 4px 1px;
+background-repeat: repeat-x;
+padding-bottom: 5px;
+}
+/************************* LINKS ************************************/
 #logout {color:#333;font-weight:bold;}
 
 #logout a, #logout a:link, #logout a:focus {
@@ -347,8 +353,6 @@ border: 1px solid #aeaeae;
 text-decoration:none;
 background:url(../img/bgd_black_op20_8.png);
 }
-
-.pi_arch_title span {font-size: 160%;}
 /**************************** END LINKS ********************************/
 
 /**************************** TABLE ***********************************/
@@ -397,41 +401,26 @@ table.dataTable.no-footer {border-bottom: 1px solid #D5D5D5;}
 /* END DATATABLE used for the comparison tool. */
 
 .h_left {text-align:left;}
-table.result td.h_left {text-align:left;}
-
-table.results {
-background: url(../img/bgd_main_grey.jpg) #b5b5b5;
-}
+#small {width:70%;} /*table in analysis result changed in % for mitigation*/
 
 #feedback_form table tbody td, #feedback_form_no table tbody td{
 text-align:left;
 }
-
-#small {width:70%;} /*table in analysis result changed in pourcentage for mitigation*/
-
+#feedback_form table.result { margin-bottom: 0px;}
+/* MAIN RESULT TABLE*/
+table.result td.h_left {text-align:left;}
 /*table used on the feedback form, project and sample list*/
 table.result {line-height: 1.2em; border-collapse:separate; width:100%; border-spacing:4px; padding-left:7px;/*9px is too much as we have already padding 2px in the table*/ margin-bottom: 18px;}
-#feedback_form table.result { margin-bottom: 0px;}
-
-table.result tbody tr:hover {
-/*background: url(../img/bgd_noise_trans.gif);  */
-/*background: url(../img/bgd_stripe_50_8.png);  */
-/*background: url(../img/bgd_black_op05_8.png);*/
-}
-
+table.result tbody tr:hover {/*background: url(../img/bgd_black_op05_8.png);*/}
 table.result tbody td{ padding:7px; text-align:center; vertical-align: middle; border: 1px solid #e5e5e5; -moz-border-radius:2px; -webkit-border-radius:2px; border-radius:2px; color:#424242;/* text-shadow:1px 1px 1px #fff;  */ }/*keep the prefix*/
-
-table.result tbody td a:hover{
-text-decoration:underline;
-/*color:red;*/
-}
-
+table.result tbody td a:hover{text-decoration:underline;/*color:red;*/}
 table.result thead th:empty{background:transparent;border:none;}
-
 table.result thead th { font-size:120%; padding:10px; color:#fff; background-color:#006666; border-radius:5px 5px 0 0; box-shadow:0px 1px 1px #adadad;}
-
 table.result td.showHideRelated { font-weight: bold;}
 table.result td.showHideRelated:hover {background-color: #006666; }
+table.result tbody tr:nth-child(even) {background-color:#F4F4F8;}
+table.result tbody tr:nth-child(odd) {background-color:#e9e9e9;}
+/*/ MAIN RESULT TABLE*/
 
 .simple_table  {padding: 0px;}
 .simple_table td {vertical-align: top;}
@@ -463,29 +452,25 @@ table.result td.showHideRelated:hover {background-color: #006666; }
 /************************ END TABLE *****************************/
 
 /*********************** TITLE + TEXT***************************/
-h1 {font-family: helvetica, "trebuchet MS", arial, sans-serif;
-color:#0F6D99;/*color:#003798;*/
-font-size:244%;
+h1, h2 {font-family: helvetica, "trebuchet MS", arial, sans-serif; color:#0F6D99; /*color:#003798;*/ margin:0.83em 0;/*added for compliance*/; font-weight:normal}
+h1 {font-size:244%;}
+h2 {font-size:190%;}
+h2 span {font-size:80%; /*color: #7c8c99;*/}
+
+h3 {color:#7c8c99;font-size:160%; margin:9px 0;}
+
+h4 {font-size:140%; color:#333; margin:9px 0;}
+
+h5 {
+font-family: MyriadProRegular, sans-serif;
+color:white;    /*#2e86ec*/
+font-size:130%;
 font-weight:normal;
-margin:0.83em 0;/*added for compliance*/
+margin:7px 0 ;
+padding-left:14px;
 }
 
-
-h2 {
-    font-family: helvetica, "trebuchet MS", arial, sans-serif;
-    /*font-family: 'MyriadProRegular', arial, sans-serif;*/ /*TEMP not working with IE and firefox, use Arial by default*/
-    color:#0F6D99;/*color:#003798;*/
-    font-size:190%;
-    font-weight:normal;
-    margin:0.83em 0;/*added for compliance*/
-}
-
-h2 span {font-size:80%; color: #7c8c99;}
-
-.subtitle {font-size:150%;color: #066; margin-left: 9px;margin-top:20px;}
-.subtitle span {font-size:80%; color: #7c8c99;}
-
-h3 {color:#7c8c99;font-size:160%;margin:9px 0;}
+p, ul {font-size: 110%;color:#333; /*border:1px red solid; box-sizing: border-box;*/}
 
 .form_row h3 {
 color:#605f5f;
@@ -497,31 +482,15 @@ margin:0px 0 7px 0;
 color:#3e3e3e;
 }
 
-h4 {
-color:#333;
-font-size:140%;
-margin:14px 0 7px 0;
-}
-
-h5 {
-font-family: MyriadProRegular, sans-serif;
-color:white;    /*#2e86ec*/
-font-size:130%;
-font-weight:normal;
-margin:7px 0 ;
-padding-left:14px;
-}
-
-.intro {
-font-size:120%;
-color:#445668;
-/*padding-bottom:14px;*/
-}
+.intro {font-size:144%; color:#445668;}/*intro text*/
 
 #sidebar h2, #sidebar-related h2, #sidebar-steps h2 {
 color:#333333;
 font-size:150%;
 }
+h2.pipeline_title {margin-bottom: 0;}
+h2.pipeline_title span {color: #7c8c99;}/*date*/
+.sidebar-allrel h2 {margin:18px 0 9px 0;}
 
 /*#sidebar-login {margin: 14px 20px 14px 20px;} */
 
@@ -561,6 +530,10 @@ border:0px solid #7C8C99;
 
 .project_upd_date {color: #7C8C99; font-style: italic;}
 
+.subtitle {font-size:150%;color: #066; margin-left: 9px;margin-top:20px;}
+.subtitle span {font-size:80%; /*color: #7c8c99;*/}
+
+.pi_arch_title span {font-size: 140%;}
 /****************** END TITLE *************************/
 
 #submit-data {
@@ -637,10 +610,7 @@ color:#666;
 height:auto;
 }
 
-
-
-.sidebar-allrel, #sidebar-download, #sidebar-analysis {width: 28%;float: right; border: solid 0px black; padding: 9px;background-color: white;}
-
+.sidebar-allrel, #sidebar-download, #sidebar-analysis {width: 28%;float: right; border: solid 0px black; padding: 9px;background-color: white; clear: right;/*added for second ENA box*/}
 
 #sidebar-analysis {clear: right; background-color:white;/*to deal with description box border*/}
 
@@ -683,16 +653,11 @@ margin-left:7px;
 list-style-type:square;
 color:#c3c3c3;}
 
-#sidebar-related {margin: 20px 0 0 0;color:#3E3E3E; padding:7px;}
 #sidebar-steps {color:#3E3E3E; margin:18px 9px 0 0 ;padding:0;}
 
-#sidebar-related {margin:0;width: 94.8%;}
-#sidebar-related  ul{ margin:0;padding:9px; }
-
-#sidebar-related  ul  li {
-list-style: disc;
-border: 0px solid black;list-style-position:inside;
-}
+/*box related links, resources*/
+#sidebar-related {margin:0;width: 94.8%; color:#3E3E3E; padding:6px;}
+#sidebar-related ul {margin:0; padding:9px; font-size: 100%; list-style-position: inside;}
 
 #sidebar-nav ul{padding:9px; margin:9px 0;font-weight:bold; font-size:110%;}
 
@@ -750,7 +715,7 @@ text-decoration:underline;
 
 .list_date {color:#9d9d9d; font-size:90%;}
 .list_date_new {color:#9d9d9d ;font-size:100%;}  /*to remove once updtaed dowload page*/
-
+.list-body {font-size:90%;}/*reduce p font for list items*/
 .list-desc {color:#606a73;}/*project&sample description homepage*/
 
 /*box homepage*/
@@ -866,8 +831,6 @@ text-decoration:underline;
 /* removed to make it EBI compliant
 margin: 0px auto;*/
 width: 972px; text-align: left;}
-
-.separator {margin: 20px 9px 9px 9px; height:1px; display:block; background: url(../img/bgd_sep_dot.gif) repeat-x 0 -5px; clear:right;} /*not used */
 
 .study_desc {margin-top:20px;}
 .study_desc_text {font-size:110%;}
@@ -1015,8 +978,8 @@ overflow:auto;
 
 /*run page overview*/
 .result_row {padding: 4px 0px; border: 0px solid #ffaa22; overflow:auto;}
-.result_row .result_row_label {width: 140px; float: left; text-align: right; font-size: 110%; color: #445668; line-height: 1.35; border: 0px solid #556F8C;}
-.result_row .result_row_data {float: left; margin-left:9px;}
+.result_row .result_row_label {width: 140px; display: inline-block;/*float: left;*/ text-align: right; font-size: 110%; color: #445668; line-height: 1.35; border: 0px solid #556F8C;}
+.result_row .result_row_data {/*float: left;*/display: inline; margin-left:9px;}
 .result_row .result_row_data:first-letter {text-transform: capitalize;}
 
 /************************************** END FORM **************************************/
@@ -1073,6 +1036,7 @@ figure:hover figcaption { opacity: 1;}
 figcaption * {
   padding: 0 10px;
   margin: 0;
+ color: #fff;
 }
 
 figcaption *:first-child {
@@ -1151,7 +1115,7 @@ margin:0;
 
 .close_wind a { background: transparent url(../img/ico_close.png) no-repeat right top;  float:right; width:22px; height:22px; -moz-opacity:.5;opacity:0.50;filter:alpha(opacity=50);margin-right:7px;  }
 .close_wind a:hover {-moz-opacity:.9;opacity:0.90;filter:alpha(opacity=90);}
-.close_section {padding: 6px 12px; position: absolute; top: 9px;  right: 9px;opacity: 0.3; cursor:pointer; font-size: 226%;}
+.close_section {padding: 6px 12px; position: absolute; top: 9px;  right: 9px;opacity: 0.3; cursor:pointer; font-size: 226%; color:white;}
 .close_section .icon-functional:before {color:white;font-size: 193%;}
 .close_section:hover {opacity: 1;transform-origin: 50% 50%;transfom:rotate(180deg) scale(1);-moz-transform: rotate(180deg) scale(1);-ms-transform:rotate(180deg) scale(1); -webkit-transform:rotate(180deg) scale(1); -o-transform: rotate(180deg) scale(1);}
 
@@ -1201,7 +1165,7 @@ height:140px;
 .sub_ask { font-size: 90%;  margin: 9px; color: #455872; background: #f1f3f7; float: left;}
 .sub_form {width:740px; float: left; display:block;}
 .sub_sign_text {font-size:160%; color:#333;}
-.sub_sign_note {color:#606060;}
+.sub_sign_note {color:#606060; font-size: 90%;}
 .ui-widget-content .sub_log a { color: #188960;}  /*link cancel button*/
 
 /*Popup blockUI and datatable style*/
@@ -1857,8 +1821,8 @@ ul.sample_list li {list-style: none; display: inline;}
 .icon-generic.show_tooltip:before {color: #888888;} /*darker than default*/
 
 /*HOMEPAGE - header*/
-.jumbo-header {background: url(../img/backgrounds/bgd_header_microbes_30p.png) 96% bottom no-repeat, url(../img/backgrounds/bgd_header_microbes_big_10p.png) -100px center no-repeat; background-color: #606a73; text-align: center; font-weight: 300; color:#fff; line-height: 1.4; background-color: #606a73; padding: 60px 0; margin-bottom: 18px;}
-.jumbo-header .lead {font-family: 'Lato',Helvetica,Arial,sans-serif; font-size: 239%;}
+.jumbo-header {background: url(../img/backgrounds/bgd_header_microbes_30p.png) 96% bottom no-repeat, url(../img/backgrounds/bgd_header_microbes_big_10p.png) -100px center no-repeat; background-color: #606a73; text-align: center; font-weight: 300; line-height: 1.4; background-color: #606a73; padding: 60px 0; margin-bottom: 18px;}
+.jumbo-header .lead {font-family: 'Lato',Helvetica,Arial,sans-serif; font-size: 239%; color:#fff;}
 .jumbo-header .button {margin-top: 18px; display:inline-block;}
 .jumbo-header .button a {font-size: 143%;color:white; text-transform: uppercase; text-decoration:none; background:url(../img/backgrounds/bgd_button_login_off.gif) repeat-x 50%; border-radius: 30px; box-shadow:0px 2px 5px rgba(0, 0, 0,0.3); padding: 12px 22px;cursor: pointer; border:1px #1f54bc solid;}
 .jumbo-header .button a:hover{background:url(../img/backgrounds/bgd_button_login_over.gif) repeat-x 50%;}
@@ -1895,7 +1859,8 @@ ul.sample_list li {list-style: none; display: inline;}
 .hlight_subtitle h2  {margin:0;padding:0;}
 .hlight_subtitle .icon-generic:before {font-size:152%; color:#1a5286;}
 
-.home_box {color: #606a73;border:1px #cbcbcb solid; overflow:hidden /*when resizing*/;   padding: 18px 18px 9px 18px; min-height: 200px; }
+.home_box {border:1px #cbcbcb solid; overflow:hidden /*when resizing*/;   padding: 18px 18px 9px 18px; min-height: 200px; }
+.home_box p {color: #606a73;}
 .hlight-spot .home_box p, .hlight-info .home_box p  {border:0px pink solid; margin-left:0;  margin-right:0;padding-left:0;padding-right:0;font-size:120%; }
 .hlight-spot .home_box img {margin-bottom: 9px; width: 100%;/*resize img with screen*/}
 .hlight-info .home_box img {margin: 0 9px 9px 0; float:left; width:17%;}
