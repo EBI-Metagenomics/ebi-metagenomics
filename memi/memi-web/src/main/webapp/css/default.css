@@ -1821,22 +1821,22 @@ ul.sample_list li {list-style: none; display: inline;}
 .icon-generic.show_tooltip:before {color: #888888;} /*darker than default*/
 
 /*HOMEPAGE - header*/
-.jumbo-header {background: url(../img/backgrounds/bgd_header_microbes_30p.png) 96% bottom no-repeat, url(../img/backgrounds/bgd_header_microbes_big_10p.png) -100px center no-repeat; background-color: #606a73; text-align: center; font-weight: 300; line-height: 1.4; background-color: #606a73; padding: 60px 0; margin-bottom: 18px;}
-.jumbo-header .lead {font-family: 'Lato',Helvetica,Arial,sans-serif; font-size: 239%; color:#fff;}
+.jumbo-header {background: url(../img/backgrounds/bgd_header_microbes_30p.png) 96% bottom no-repeat, url(../img/backgrounds/bgd_header_microbes_big_10p.png) -100px center no-repeat; text-align: center; font-weight: 300; line-height: 1.4; padding: 60px 0; margin-bottom: 18px; background-color: #5b7790; /*grey #606a73*/}
+.jumbo-header .lead {font-family: 'Lato',Helvetica,Arial,sans-serif; font-size: 239%; color:#fff; line-height: 1.3;}
 .jumbo-header .button {margin-top: 18px; display:inline-block;}
 .jumbo-header .button a {font-size: 143%;color:white; text-transform: uppercase; text-decoration:none; background:url(../img/backgrounds/bgd_button_login_off.gif) repeat-x 50%; border-radius: 30px; box-shadow:0px 2px 5px rgba(0, 0, 0,0.3); padding: 12px 22px;cursor: pointer; border:1px #1f54bc solid;}
 .jumbo-header .button a:hover{background:url(../img/backgrounds/bgd_button_login_over.gif) repeat-x 50%;}
 .jumbo-header .button a:active{background:url(../img/backgrounds/bgd_button_login_active.gif) repeat-x 50%; border: 1px #96979A solid}
 
-.jumbo-header.private-area {background: url(../img/backgrounds/bgd_header_microbes_big_10p.png) right center no-repeat; background-color: #256EDA;/*pink #606a73- vert #72B934 - orange #E68C43*/ text-align: center; font-weight: 300; color:#fff; line-height: 1.4; padding: 60px 0; margin-bottom: 0px;}
+.jumbo-header.private-area {background: url(../img/backgrounds/bgd_header_microbes_big_10p.png) right center no-repeat; color:#fff; margin-bottom: 0px; background-color: #d0503d;}  /*blue: #256EDA - pink #606a73- vert #72B934 - orange #E68C43*/
 .jumbo-header.private-area .mega-lock .icon-functional:before {font-size: 1800%; color:white; opacity: 0.3;position: absolute; left: 28px; top: -37px; z-index: 1; /*important to avoid overlap with menu*/}
 /*HOMEPAGE - user info - private area*/
 
-.jumbo-user-box {margin:0 9px; color: #2B8A97;}
+.jumbo-user-box {margin:0 9px; color:#C34533 /*blue #2B8A97*/;}
 .jumbo-user-box .result_row {display: inline-block; float:none;padding:0; margin-right: 18px;}
 .jumbo-user-box .result_row .result_row_label {width:inherit;}
-.jumbo-user-box .output_form {background-color: #E3F2FF;border-radius: 4px; text-align: center;}
-.jumbo-user-box .icon-functional:before {color:#2B8A97;  font-size: 137%;}
+.jumbo-user-box .output_form {background-color: #FFF6E3 /*blue #E3F2FF*/;border-radius: 4px; text-align: center;}
+.jumbo-user-box .icon-functional:before {color:#C34533; font-size: 137%;}
 /*HOMEPAGE - stats*/
 .jumbo-stats {text-align: center; color:#606a73;font-size: 120%;line-height: 1.4;}
 /*.jumbo-stats  .grid_24 {bZorder:1px solid blue; box-sizing:border-box;}*/
