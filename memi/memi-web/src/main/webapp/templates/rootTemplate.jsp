@@ -203,14 +203,10 @@
 <div class="ebi_contents" id="contents"> <%-- style="margin:0; width:100%;"--%>
     <div id="content-full">
     <div class="grid_24">
+    <!-- Remove the breadcrumbs on homepage -->
+    <c:if test="${not empty model.breadcrumbs}">
     <tiles:insertAttribute name="breadcrumbs"/>
-
-        <%--<header>--%>
-            <%--<tiles:insertAttribute name="header"/>--%>
-        <%--</header>--%>
-        <%--<nav>--%>
-            <%--<tiles:insertAttribute name="mainMenu"/>--%>
-        <%--</nav>--%>
+    </c:if>
 
     <tiles:insertAttribute name="body"/>
     </div>
