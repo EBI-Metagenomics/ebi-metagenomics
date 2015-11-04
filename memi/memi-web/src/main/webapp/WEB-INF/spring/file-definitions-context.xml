@@ -99,16 +99,16 @@
         <property name="linkURL" value="/doExportIPRhitsFile"/>
     </bean>
     <bean id="predictedCDSWithoutAnnotation" autowire-candidate="false"
-           class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.SequenceFileDefinition">
-         <property name="identifier" value="PREDICTED_CDS_WITHOUT_ANNOTATION_FILE"/>
-         <property name="fileNameEnding" value="_CDS_unannotated.faa"/>
-         <property name="description" value="Predicted CDS without annotation"/>
-         <property name="downloadName" value="_CDS_unannotated.faa"/>
-         <property name="linkText" value="Predicted CDS without annotation"/>
-         <property name="order" value="8"/>
-         <property name="linkTitle" value="Click to download predicted CDS without annotation (FASTA)"/>
-         <property name="linkURL" value="/export?contentType=text&amp;exportValue=cdsWithoutAnnotation"/>
-     </bean>
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.SequenceFileDefinition">
+        <property name="identifier" value="PREDICTED_CDS_WITHOUT_ANNOTATION_FILE"/>
+        <property name="fileNameEnding" value="_CDS_unannotated.faa"/>
+        <property name="description" value="Predicted CDS without annotation"/>
+        <property name="downloadName" value="_CDS_unannotated.faa"/>
+        <property name="linkText" value="Predicted CDS without annotation"/>
+        <property name="order" value="8"/>
+        <property name="linkTitle" value="Click to download predicted CDS without annotation (FASTA)"/>
+        <property name="linkURL" value="/export?contentType=text&amp;exportValue=cdsWithoutAnnotation"/>
+    </bean>
 
     <bean id="predictedORFWithoutAnnotation" autowire-candidate="false"
           class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.SequenceFileDefinition">

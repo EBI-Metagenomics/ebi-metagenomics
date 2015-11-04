@@ -34,7 +34,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -145,22 +144,23 @@ public class SubmissionConsentCheckController extends AbstractController {
             //Check if user gave consent to allow EMG to access their private
             final Submitter submitter = submissionContactDAO.getSubmitterBySubmissionAccountIdAndEmail(userName, email);
 
-            boolean isRegistered = submitter.isRegistered();
-            boolean isConsentGiven = submitter.isConsentGiven();
-            if (!isRegistered) {
-                //This might be due to the registration delay in ENA (manual step)
-                //Read HTTP cookie
-                if (!registrationCookie.equals("notAvailable")) {//If cookie is set
-                    CookieValueObject cookieObject = new CookieValueObject(registrationCookie);
-                    //Check if submitters are the same
-                    if (submitter.getSubmissionAccountId().toLowerCase().equals(cookieObject.getUserName().toLowerCase())) {//HTTP cookie set for this submitter
-                        isRegistered = cookieObject.isRegistered();
-                        isConsentGiven = cookieObject.isConsentGiven();
+            if (submitter != null) {
+
+                boolean isRegistered = submitter.isRegistered();
+                boolean isConsentGiven = submitter.isConsentGiven();
+                if (!isRegistered) {
+                    //This might be due to the registration delay in ENA (manual step)
+                    //Read HTTP cookie
+                    if (!registrationCookie.equals("notAvailable")) {//If cookie is set
+                        CookieValueObject cookieObject = new CookieValueObject(registrationCookie);
+                        //Check if submitters are the same
+                        if (submitter.getSubmissionAccountId().toLowerCase().equals(cookieObject.getUserName().toLowerCase())) {//HTTP cookie set for this submitter
+                            isRegistered = cookieObject.isRegistered();
+                            isConsentGiven = cookieObject.isConsentGiven();
+                        }
                     }
                 }
-            }
 
-            if (submitter != null) {
                 form.setSubmitter(submitter);
                 if (submitter.isMainContact()) {
                     //  Now we do have 3 cases
