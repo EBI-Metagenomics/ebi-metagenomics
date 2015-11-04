@@ -727,7 +727,7 @@ text-decoration:underline;
 .list-contain-box .biome_icon {float: left; margin-right: 9px;}
 .list-contain-box .list-item {margin-bottom: 9px;}
 .list-contain-box .list-item .list-body p {margin:0;padding:0;/*removed for list elements alignment*/}
-.list-contain-box .list-item a.list_sample.icon-functional:before {color:#725093;position: relative;top: 2px; } /*comparison icon*/
+.list-contain-box .list-item a.list_sample .icon-functional:before {color:#725093;margin:0; } /*comparison icon*/
 
 /************* BIOME ************/
 /*biome gal*/
