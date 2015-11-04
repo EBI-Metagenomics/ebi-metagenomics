@@ -622,23 +622,6 @@
 </c:otherwise>
 </c:choose>
 
-<!-- script for carousel - only homepage-->
-<%--<script src="${pageContext.request.contextPath}/js/jquery.carousel.min.js" type="text/javascript"></script>--%>
-<%--<script type="text/javascript">--%>
-    <%--$(document).ready(function () {--%>
-        <%--$("div.carousel").carousel({pagination:true, autoSlide:true, autoSlideInterval:15000, delayAutoSlide:2000, loop:true });--%>
-
-    <%--});--%>
-<%--</script>--%>
-<!-- End script for carousel-->
-<!-- script to remove empty breadcrumb on the homepage-->
-<script type="text/javascript">
-    $(document).ready(function () {
-        $("#breadcrumb").hide();
-
-    });
-</script>
-<!-- End script to remove empty breadcrumb on the homepage-->
 <%--Client-side twitter news feed - http://tweet.seaofclouds.com/ - only homepage--%>
 <script src="${pageContext.request.contextPath}/js/tweet/jquery.tweet.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/js/tweet/tweet.instance.js" type="text/javascript"></script>
