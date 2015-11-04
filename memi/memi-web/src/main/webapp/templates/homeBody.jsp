@@ -249,7 +249,7 @@
                                      <span class="show_tooltip icon icon-functional" data-icon="U" title="Public data"></span>
                                      </c:if>
                                     <!-- temp while we wait for runSize to be defined at project level so we can change the condition-->
-                                    <c:if test='${entry.value > 1}'>- <a href="<c:url value="${baseURL}/compare&#35${entry.key.studyId}"/>"  title="Compare samples in this project" class="list_sample icon icon-functional" data-icon="O">compare</a></c:if>
+                                    <c:if test='${entry.value > 1}'>- <a href="<c:url value="${baseURL}/compare&#35${entry.key.studyId}"/>"  title="Compare samples in this project" class="list_sample"> <span  class="icon icon-functional" data-icon="O"></span> compare</a></c:if>
                                 </p>
                               </div>
                              </div>
@@ -517,7 +517,7 @@
                                      class="list_sample"><c:out value="${study.sampleSize} sample"/><c:if
                                      test='${study.sampleSize > 1}'>s</c:if></a>
                                 <!-- temp while we wait for runSize to be defined at project level so we can change the condition-->
-                                <c:if test='${study.sampleSize > 1}'>- <a href="<c:url value="${baseURL}/compare&#35${study.studyId}"/>" title="Compare samples in this project" class="list_sample icon icon-functional" data-icon="O">compare</a></c:if>
+                                <c:if test='${study.sampleSize > 1}'>- <a href="<c:url value="${baseURL}/compare&#35${study.studyId}"/>" title="Compare samples in this project" class="list_sample"> <span  class="icon icon-functional" data-icon="O"></span> compare</a></c:if>
                             </p>
                          </div>
                          </div>
