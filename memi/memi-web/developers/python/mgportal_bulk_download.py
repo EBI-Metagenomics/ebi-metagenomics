@@ -33,11 +33,7 @@ def _download_resource_by_url(url, output_file_name):
 
 
 def _get_number_of_chunks(study_id, sample_id, run_id, version, domain, file_type):
-    """Kicks off a download and stores the file at the given path.
-    Arguments:
-    'url' -- Resource location.
-    'output_file_name' -- Path of the output file.
-
+    """
     Returns the number of chunks for the given set of parameters (study, sample and run identifier).
     """
     print "Getting the number of chunks from the following URL..."
