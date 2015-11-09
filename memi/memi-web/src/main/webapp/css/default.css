@@ -65,7 +65,7 @@ div#local-masthead ul {height: auto;width: 100%;margin-top: 0; background-color:
 div#local-masthead ul li {margin-bottom: 0; border-right: 1px solid rgba(255, 255, 255, 0.5);}/*change the dotted line*/
 div#local-masthead ul li a:link {border-bottom: 0px solid #71b360;  text-shadow:  rgba(0, 0, 0, 0.2) 1px 1px 0px; font-size: 96%; font-family: Verdana, sans-serif;}/*make it similar to interpro menu*/
 div#local-masthead ul li a:hover, div#local-masthead ul li a:focus, div#local-masthead ul li a:active {border-bottom: 0px solid #71b360; background-color: rgba(0, 0, 0, 0.2);}
-div#local-title.logo-title img {margin: 18px 9px;} /*make the metagenomics logo more centered */
+div#local-title.logo-title img {margin: 18px 9px; box-sizing: border-box;} /*make the metagenomics logo more centered */
 div#headerdiv div#local-title a  { display: block; overflow: auto; }/*to show tooltip properly*/
 div#headerdiv #global-masthead a:link {float: left;border-bottom:0;}
 div#headerdiv #global-masthead .nav a:link {float: none;}
@@ -1974,7 +1974,8 @@ div#local-masthead div.navbar-header {float:none;}
 }
 /***************************************** responsive  *******************************/
 @media (max-width: 768px) {  /*remove carousel, feedback, ebi search and sidebar nav for the about us for small screens*/
-    .carousel, #feedback_div,  #global-search, #sidebar-nav {display: none;}
+.carousel, #feedback_div,  #global-search, #sidebar-nav {display: none;}
+div#local-title.logo-title img {width:100%; margin:0; padding: 18px 9px;} /*logo*/
 }
 /*bootstrap menu*/
 @media (max-width: 768px){
