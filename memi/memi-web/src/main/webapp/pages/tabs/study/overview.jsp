@@ -188,7 +188,7 @@
 
                     <c:if test="${runCountLine == 1}">
                         <td style="background-color: rgb(244, 244, 248);" id="ordered" rowspan="${run.runCount}"
-                            class="h_left"><a
+                            class="h_left class="table_xs_text""><a
                                 href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${run.externalSampleId}"/>"
                                 title="Sample ${run.externalSampleId}" class="fl_uppercase_title">${run.sampleName} </a>
 
@@ -203,7 +203,7 @@
                            </c:if>
                        </c:if>
                         </td>
-                        <td style="background-color: rgb(244, 244, 248);" rowspan="${run.runCount}">
+                        <td class="table_xs_text" style="background-color: rgb(244, 244, 248);" rowspan="${run.runCount}">
                          ${run.externalSampleId}
                         </td>
                     </c:if>
@@ -215,7 +215,7 @@
                             <c:set var="runCountLine" value="${runCountLine + 1}"/>
                         </c:otherwise>
                     </c:choose>
-                    <td>
+                    <td class="table_xs_text">
                         <a title="Run ${run.externalRunIds}"
                            href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${run.externalSampleId}/runs/${run.externalRunIds}/results/versions/${run.releaseVersion}"/>">
                                 ${run.externalRunIds}
