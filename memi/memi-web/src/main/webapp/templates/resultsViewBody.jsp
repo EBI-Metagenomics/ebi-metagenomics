@@ -7,13 +7,10 @@
 
         <h2 class="fl_uppercase_title run_title extra_margin">Run <span>(${model.run.externalRunId})</span></h2>
 
-        <div id="img_div" style="position: fixed; top: 9px; right: 38px; z-index: 10; "></div>
-        <%--container used to convert   google chart into image--%>
-
         <div class="sample_ana">
         <div id="navtabs">
 
-                <%--Main Tabs--%>
+            <%--Main Tabs--%>
             <ul>
                 <li>
                     <a title="Overview"
