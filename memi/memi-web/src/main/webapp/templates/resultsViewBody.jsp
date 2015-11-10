@@ -9,7 +9,6 @@
 
         <div class="sample_ana">
         <div id="navtabs">
-
             <%--Main Tabs--%>
             <ul>
                 <li>
