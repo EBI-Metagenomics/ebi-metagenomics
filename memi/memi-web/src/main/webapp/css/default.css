@@ -902,7 +902,8 @@ width: 360px;
 .register_form {margin-left:9px;}
 .register_form label {font-weight: bold;font-size: 110%; color: #605F5F; display: block;}
 .register_form .note_required {padding-bottom: 18px; color: #006EFF;}
-.register_form .user_det_box {float: left; width: 48%; margin-right: 18px;}
+.register_form .user_det_box {float: left; /*width: 48%; margin-right: 18px;*/}
+.register_form form#sub_form .user_det_box fieldset {padding:0 9px;border:none;}
 .register_form .institute_det_box {float: left; width: 48%;}
 .register_form .project_det_box  {margin-top: 9px;float: left; width: 98%;}
 .register_form .institute_det_box input, .register_form .user_det_box input {width: 90%;}
@@ -1977,6 +1978,8 @@ div#local-masthead div.navbar-header {float:none;}
 .carousel, #feedback_div,  #global-search, #sidebar-nav {display: none;}
 div#local-title.logo-title img {width:100%; margin:0; padding: 18px 9px;} /*logo*/
 #global-footer .grid_4:nth-child(1) {display:none;}/*remove one item of the EBI bottom menu - logo -  to avoid scrolling effect*/
+.icon_pipeline_v {display:none;}
+table.result tbody td.table_xs_text {word-break: break-all; /*break long character chains on small screen*/}
 }
 /*bootstrap menu*/
 @media (max-width: 768px){
