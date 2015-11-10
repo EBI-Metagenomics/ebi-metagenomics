@@ -29,5 +29,6 @@ public enum FileDefinitionId {
     PRUNED_TREE_FILE,
     JSON_BIOM_FILE,
     HDF5_BIOM_FILE,
-    OTU_TABLE_FILE;
+    OTU_TABLE_FILE,
+    DEFAULT;
 }

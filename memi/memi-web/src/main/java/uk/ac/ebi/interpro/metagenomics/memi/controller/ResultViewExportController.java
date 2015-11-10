@@ -312,13 +312,39 @@ public class ResultViewExportController extends AbstractResultViewController {
     }
 
     @RequestMapping(value = MGPortalURLCollection.PROJECT_SAMPLE_RUN_RESULTS_SEQUENCES_SEQ_TYPE_CHUNKS)
-    public ModelAndView doListReadsWithPredictedCDSChunks(@PathVariable final String projectId,
-                                                          @PathVariable final String sampleId,
-                                                          @PathVariable final String runId,
-                                                          @PathVariable final String releaseVersion,
-                                                          @PathVariable final String sequenceType,
-                                                          final HttpServletResponse response, final HttpServletRequest request) {
-        final DownloadableFileDefinition fileDefinition = chunkedResultFilesMap.get(FileDefinitionId.READS_WITH_PREDICTED_CDS_FILE.name());
+    public ModelAndView doListSequenceChunks(@PathVariable final String projectId,
+                                             @PathVariable final String sampleId,
+                                             @PathVariable final String runId,
+                                             @PathVariable final String releaseVersion,
+                                             @PathVariable final String sequenceType,
+                                             final HttpServletResponse response, final HttpServletRequest request) {
+        FileDefinitionId fileDefinitionId = FileDefinitionId.DEFAULT;
+        if (sequenceType.equalsIgnoreCase("ProcessedReads")) {
+            if (releaseVersion.equalsIgnoreCase("1.0")) {
+                fileDefinitionId = FileDefinitionId.MASKED_FASTA;
+            } else if (releaseVersion.equalsIgnoreCase("2.0")) {
+                fileDefinitionId = FileDefinitionId.PROCESSED_READS;
+            } else {//Default value
+                fileDefinitionId = FileDefinitionId.PROCESSED_READS;
+            }
+        } else if (sequenceType.equalsIgnoreCase("ReadsWithPredictedCDS")) {
+            fileDefinitionId = FileDefinitionId.READS_WITH_PREDICTED_CDS_FILE;
+        } else if (sequenceType.equalsIgnoreCase("ReadsWithMatches")) {
+            fileDefinitionId = FileDefinitionId.READS_WITH_MATCHES_FASTA_FILE;
+        } else if (sequenceType.equalsIgnoreCase("ReadsWithoutMatches")) {
+            fileDefinitionId = FileDefinitionId.READS_WITHOUT_MATCHES_FASTA_FILE;
+        } else if (sequenceType.equalsIgnoreCase("PredictedCDS")) {
+            fileDefinitionId = FileDefinitionId.PREDICTED_CDS_FILE;
+        } else if (sequenceType.equalsIgnoreCase("PredictedORFWithoutAnnotation")) {
+            fileDefinitionId = FileDefinitionId.PREDICTED_ORF_WITHOUT_ANNOTATION_FILE;
+        } else if (sequenceType.equalsIgnoreCase("PredictedCDSWithoutAnnotation")) {
+            fileDefinitionId = FileDefinitionId.PREDICTED_CDS_WITHOUT_ANNOTATION_FILE;
+        } else {
+            log.warn("Sequence type: " + sequenceType + " not found!");
+        }
+
+        final DownloadableFileDefinition fileDefinition = chunkedResultFilesMap.get(fileDefinitionId.name());
+
         final Run run = getSecuredEntity(projectId, sampleId, runId, releaseVersion);
 
         return checkAccessAndBuildModel(new ModelProcessingStrategy<Run>() {
@@ -326,10 +352,15 @@ public class ResultViewExportController extends AbstractResultViewController {
             public void processModel(ModelMap model, Run run) {
                 AnalysisJob analysisJob = analysisJobDAO.readByRunIdAndVersionDeep(run.getExternalRunId(), releaseVersion, "completed");
                 if (analysisJob != null) {
-                    File fileObject = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, fileDefinition);
-                    List<String> listOfChunks = MemiTools.getListOfChunkedResultFiles(fileObject);
+                    int numberOfChunks = -1;
+                    if (fileDefinition != null) {
+                        File fileObject = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, fileDefinition);
+                        List<String> listOfChunks = MemiTools.getListOfChunkedResultFiles(fileObject);
+                        numberOfChunks = listOfChunks.size();
+                    }
+                    model.addAttribute("numOfChunks", numberOfChunks);
                     model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
-                    model.addAttribute("numOfChunks", listOfChunks.size());
+
                 }
             }
         }, new ModelMap(), run, "chunks");
@@ -337,14 +368,14 @@ public class ResultViewExportController extends AbstractResultViewController {
 
 
     @RequestMapping(value = MGPortalURLCollection.PROJECT_SAMPLE_RUN_RESULTS_SEQUENCES_SEQ_TYPE_CHUNKS_VALUE)
-    public void doExportReadsWithPredictedCDSResults(@PathVariable final String projectId,
-                                                     @PathVariable final String sampleId,
-                                                     @PathVariable final String runId,
-                                                     @PathVariable final String releaseVersion,
-                                                     @PathVariable final String sequenceType,
-                                                     @PathVariable final Integer chunkValue,
-                                                     final HttpServletResponse response,
-                                                     final HttpServletRequest request) throws IOException {
+    public void doExportSequenceResults(@PathVariable final String projectId,
+                                        @PathVariable final String sampleId,
+                                        @PathVariable final String runId,
+                                        @PathVariable final String releaseVersion,
+                                        @PathVariable final String sequenceType,
+                                        @PathVariable final Integer chunkValue,
+                                        final HttpServletResponse response,
+                                        final HttpServletRequest request) throws IOException {
         FileDefinitionId fileDefinitionId = null;
         if (sequenceType.equalsIgnoreCase("ProcessedReads")) {
             if (releaseVersion.equalsIgnoreCase("1.0")) {
@@ -364,7 +395,7 @@ public class ResultViewExportController extends AbstractResultViewController {
             fileDefinitionId = FileDefinitionId.PREDICTED_CDS_FILE;
         } else if (sequenceType.equalsIgnoreCase("PredictedORFWithoutAnnotation")) {
             fileDefinitionId = FileDefinitionId.PREDICTED_ORF_WITHOUT_ANNOTATION_FILE;
-        } else if (sequenceType.equalsIgnoreCase("PredicatedCDSWithoutAnnotation")) {
+        } else if (sequenceType.equalsIgnoreCase("PredictedCDSWithoutAnnotation")) {
             fileDefinitionId = FileDefinitionId.PREDICTED_CDS_WITHOUT_ANNOTATION_FILE;
         } else {
             log.warn("Sequence type: " + sequenceType + " not found!");
