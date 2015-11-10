@@ -17,7 +17,6 @@
 
             <ul class="export_list">
                 <li><strong>Domain composition</strong></li>
-                <%--<li class="chart_exp_snap"><a onclick="toImg(document.getElementById('tax_chart_bar_dom'), document.getElementById('img_div'));">Snapshot</a></li>--%>
                 <li class="chart_exp png" id="bar_dom_png"><a
                         onclick="saveAsImg(document.getElementById('tax_chart_bar_dom'),'<spring:message code="file.name.tax.bar.chart.domain.png"/>',1);">PNG</a>
                 </li>
@@ -28,7 +27,6 @@
                         onclick="saveAsSVG(document.getElementById('tax_chart_bar_dom'),'<spring:message code="file.name.tax.bar.chart.domain.svg"/>');">SVG</a>
                 </li>
                 <li><strong>Phylum composition</strong></li>
-                <%--<li class="chart_exp_snap"><a onclick="toImg(document.getElementById('tax_chart_bar_phy'), document.getElementById('img_div'));">Snapshot</a></li>--%>
                 <li class="chart_exp png" id="bar_phy_png"><a
                         onclick="saveAsImg(document.getElementById('tax_chart_bar_phy'),'<spring:message code="file.name.tax.bar.chart.phylum.png"/>',1);">PNG</a>
                 </li>
