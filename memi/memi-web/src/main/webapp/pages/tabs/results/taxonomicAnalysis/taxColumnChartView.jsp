@@ -15,7 +15,6 @@
 
             <ul class="export_list">
                 <li><strong>Phylum composition</strong></li>
-                <%--<li class="chart_exp_snap"> <a onclick="toImg(document.getElementById('tax_chart_col'), document.getElementById('img_div'));">Snapshot</a></li>--%>
                 <li class="chart_exp png" id="col_phy_png"><a
                         onclick="saveAsImg(document.getElementById('tax_chart_col'),'<spring:message code="file.name.tax.col.chart.phylum.png"/>',1);">PNG</a>
                 </li>
