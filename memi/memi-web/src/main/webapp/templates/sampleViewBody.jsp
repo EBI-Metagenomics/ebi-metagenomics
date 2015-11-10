@@ -69,7 +69,7 @@
             <tbody>
             <c:forEach var="analysisJob" items="${analysisJobs}" varStatus="status">
                 <tr>
-                    <td class="h_left"><a title="Overview"
+                    <td class="h_left table_xs_text"><a title="Overview"
                            href="<c:url value="${baseURL}/projects/${sample.study.studyId}/samples/${sample.sampleId}/runs/${analysisJob.externalRunIDs}/results/versions/${analysisJob.pipelineRelease.releaseVersion}"/>">${analysisJob.externalRunIDs}</a>
                     </td>
                     <td>${analysisJob.pipelineRelease.releaseVersion}</td>
