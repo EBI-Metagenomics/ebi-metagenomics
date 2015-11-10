@@ -442,7 +442,7 @@
         <property name="linkText" value="Predicted CDS without annotation"/>
         <property name="order" value="6"/>
         <property name="linkTitle" value="Click to download predicted CDS without annotation (FASTA)"/>
-        <property name="linkURL" value="PredicatedCDSWithoutAnnotation"/>
+        <property name="linkURL" value="PredictedCDSWithoutAnnotation"/>
     </bean>
 
     <bean id="chunkedPredictedORFWithoutAnnotation" autowire-candidate="false"
