@@ -18,7 +18,6 @@
 
             <ul class="export_list">
                 <li><strong>Domain composition</strong></li>
-                <%--<li class="chart_exp"><a onclick="toImg(document.getElementById('tax_chart_pie_dom'), document.getElementById('img_div'));">Snapshot</a></li>--%>
                 <li class="chart_exp png" id="pie_dom_png"><a
                         onclick="saveAsImg(document.getElementById('tax_chart_pie_dom'),'<spring:message code="file.name.tax.pie.chart.domain.png"/>',1);">PNG</a>
                 </li>
