@@ -105,7 +105,6 @@
 
                                 <ul class="export_list">
                                 <li><strong>InterPro Match</strong></li>
-                                <%--<li class="chart_exp_snap"><a onclick="toImg(document.getElementById('func_chart_pie_ipro'), document.getElementById('img_div'));">Snapshot</a></li>--%>
                                 <li class="chart_exp png" id="pie_ipro_png"><a onclick="saveAsImg(document.getElementById('func_chart_pie_ipro'),'<spring:message code="file.name.func.ip.pie.chart.png"/>',1);">PNG</a></li>
                                 <li class="chart_exp png" id="pie_ipro_png_h"><a onclick="saveAsImg(document.getElementById('func_chart_pie_ipro'),'<spring:message code="file.name.func.ip.pie.chart.high.png"/>',300/72);">PNG (Higher quality)</a></li>
                                 <li class="chart_exp" id='pie_ipro_svg'><a onclick="saveAsSVG(document.getElementById('func_chart_pie_ipro'),'<spring:message code="file.name.func.ip.pie.chart.svg"/>');">SVG</a></li>
