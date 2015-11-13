@@ -2,13 +2,12 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <div id="tax-bar">
     <div class="chart_container">
-        <div class="chart-block">
+        <div class="chart-block col-1-3">
             <div id="tax_chart_bar_dom"></div>
         </div>
-        <div class="chart-block">
+        <div class="chart-block col-1-3">
 
             <div class="but_chart_export ui-buttonset">
-                <button id="taxbar" style="display: none;"></button>
                 <button id="select"
                         class="ui-button ui-widget ui-state-default ui-button-text-icon-secondary ui-corner-right"><span
                         class="ui-button-text">Export</span><span
@@ -40,24 +39,14 @@
 
             <div id="tax_chart_bar_phy"></div>
         </div>
-        <div id="tax_dashboard_bar">
+
+        <div id="tax_dashboard_bar" class="col-1-3">
             <div id="tax_table_bar_filter"></div>
             <div id="tax_table_bar"></div>
             <div class="msg_help blue_h phylum_help">
                 <p><span class="icon icon-generic" data-icon="i"></span>This view aggregates the taxonomy information at
                     the domain and phylum level. To download the full detailed taxonomy distribution (TSV format),
-                    <a href="#ui-id-6" class="open-tab" data-tab-index="4"> please follow this link</a>
-                                           <%--<c:choose>--%>
-                                               <%--<c:when test="${releaseVersion == '1.0'}">--%>
-                                                   <%--<a href="<c:url value="${baseURL}/projects/${projectId}/samples/${sampleId}/runs/${runId}/results/taxonomy/versions/${releaseVersion}/export?contentType=text&exportValue=taxa"/>">please--%>
-                                                       <%--follow this link</a>--%>
-                                               <%--</c:when>--%>
-                                               <%--<c:when test="${releaseVersion== '2.0'}">--%>
-                                                   <%--<a href="<c:url value="${baseURL}/projects/${projectId}/samples/${sampleId}/runs/${runId}/results/taxonomy/versions/${releaseVersion}/export?contentType=text&exportValue=otuTable"/>">please--%>
-                                                       <%--follow this link</a>--%>
-                                               <%--</c:when><c:otherwise> not working</c:otherwise>--%>
-                                           <%--</c:choose>--%>
-                                           .</p>
+                    <a href="#ui-id-6" class="open-tab" data-tab-index="4"> please follow this link</a>.</p>
             </div>
         </div>
 
@@ -112,7 +101,7 @@
         var taxbarTableOptions = new google.visualization.ChartWrapper({
             'chartType':'Table',
             'containerId':'tax_table_bar',
-            'options':{ allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false }
+            'options':{ allowHtml:true, showRowNumber:true, width: '100%', page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false }
         });
 
         // Draw the Dashboard for the Bar chart
@@ -135,7 +124,7 @@
             ['${taxonomyData.phylum}', ${taxonomyData.numberOfHits}]</c:forEach>
         ]);
 // Taxonomy Bar - phylum
-        var options = {'title':'${phylumCompositionTitle}', 'titleTextStyle':{fontSize:12}, 'fontName':'"Arial"', 'colors':['#5f8694'], 'width':370, 'height':380, 'chartArea':{left:120, top:30, width:"60%", height:"70%"}, 'hAxis':{textStyle:{color:'#a8a8a8'}, gridlines:{count:4}}, 'pieSliceBorderColor':'none', 'legend':'none' };
+        var options = {'title':'${phylumCompositionTitle}', 'titleTextStyle':{fontSize:12}, 'fontName':'"Arial"', 'colors':['#5f8694'], 'height':380, 'chartArea':{left:120, top:30, width:"60%", height:"70%"}, 'hAxis':{textStyle:{color:'#a8a8a8'}, gridlines:{count:4}}, 'pieSliceBorderColor':'none', 'legend':'none' };
         var phylumBarChart = new google.visualization.BarChart(document.getElementById('tax_chart_bar_phy'));
         phylumBarChart.draw(phylumBarChartPieChartData, options);
     }
@@ -152,10 +141,16 @@
         ]);
 
 // Taxonomy Bar - domain
-        var options = {'title':'Domain composition', 'titleTextStyle':{fontSize:12}, 'fontName':'"Arial"', 'colors':['#5f8694'], 'width':212, 'height':140, 'chartArea':{left:70, top:30, width:"56%", height:"60%"}, 'hAxis':{textStyle:{color:'#a8a8a8'}, gridlines:{count:3}}, 'vAxis':{textStyle:{fontSize:11}}, 'pieSliceBorderColor':'none', 'bar':{groupWidth:10}, 'legend':'none'};
+        var options = {'title':'Domain composition', 'titleTextStyle':{fontSize:12}, 'fontName':'"Arial"', 'colors':['#5f8694'], 'height':140, 'chartArea':{left:70, top:30, width:"56%", height:"60%"}, 'hAxis':{textStyle:{color:'#a8a8a8'}, gridlines:{count:3}}, 'vAxis':{textStyle:{fontSize:11}}, 'pieSliceBorderColor':'none', 'bar':{groupWidth:10}, 'legend':'none'};
 
         var domainBarChart = new google.visualization.BarChart(document.getElementById('tax_chart_bar_dom'));
         domainBarChart.draw(domainBarChartPieChartData, options);
     }
+   //make the charts responsive
+       $(window).resize(function(){
+           drawDomainCompositionBarChart();
+           drawPhylumBarChart();
+           drawPhylumTable();
+       });
 </script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/export-button-menu.js"></script>

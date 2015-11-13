@@ -2,10 +2,9 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <div id="go-terms-pie">
     <div class="go-chart">
-        <div class="chart-block">
+        <div class="chart-block col-1-3">
 
          <div class="but_chart_export ui-buttonset">
-         <button id="func-go-pie" style="display: none;"></button>
          <button id="select" class="ui-button ui-widget ui-state-default ui-button-text-icon-secondary ui-corner-right"><span class="ui-button-text">Export</span><span class="ui-button-icon-secondary ui-icon ui-icon-triangle-1-s"></span></button>
          </div>
 
@@ -26,12 +25,12 @@
 
         <div id="func_chart_pie_go_bp"></div>
         </div>
-        <div class="chart-block">
 
+        <div class="chart-block col-1-3">
         <div id="func_chart_pie_go_mf"></div>
         </div>
-        <div class="chart-block">
 
+        <div class="chart-block col-1-3">
         <div id="func_chart_pie_go_cc"></div>
         </div>
     </div>
@@ -56,7 +55,7 @@
 
         var options = {'title':'Biological process', 'titleTextStyle':{fontSize:12}, 'fontName':'"Arial"',
             'colors':[<c:set var="addComma" value="false"/><c:forEach begin="0" end="10" varStatus="status"><c:choose><c:when test="${addComma}">, </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose><c:choose><c:when test="${status.index>9}">'#ccc'</c:when><c:otherwise>'#<c:out value="${model.colorCodeList[status.index]}"/>'</c:otherwise></c:choose></c:forEach>],
-            'width':420, 'height':240, 'legend':{position:'right', 'textStyle':{'fontSize':10}}, 'chartArea':{left:9, top:30, width:"100%", height:"80%"}, 'pieSliceBorderColor':'none',
+            'height':240, 'legend':{position:'right', 'textStyle':{'fontSize':10}}, 'chartArea':{left:9, top:30, width:"100%", height:"80%"}, 'pieSliceBorderColor':'none',
 //      'backgroundColor':'green',
             'sliceVisibilityThreshold':${model.functionalAnalysisResult.goTermSection.biologicalProcessGoTerms.sliceVisibilityThresholdValue}
         };
@@ -79,10 +78,10 @@
 
         // GO TERM Pie Molecular function
         var options = {'title':'Molecular function', 'titleTextStyle':{fontSize:12}, 'fontName':'"Arial"',
-            'colors':[<c:set var="addComma" value="false"/><c:forEach begin="0" end="10" varStatus="status"><c:choose><c:when test="${addComma}">, </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose><c:choose><c:when test="${status.index>9}">'#ccc'</c:when><c:otherwise>'#<c:out value="${model.colorCodeList[status.index]}"/>'</c:otherwise></c:choose></c:forEach>],
-            'width':360, 'height':240, 'legend':{position:'right', 'textStyle':{'fontSize':10}}, 'chartArea':{left:9, top:30, width:"100%", height:"80%"}, 'pieSliceBorderColor':'none',
+           'colors':[<c:set var="addComma" value="false"/><c:forEach begin="0" end="10" varStatus="status"><c:choose><c:when test="${addComma}">, </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose><c:choose><c:when test="${status.index>9}">'#ccc'</c:when><c:otherwise>'#<c:out value="${model.colorCodeList[status.index]}"/>'</c:otherwise></c:choose></c:forEach>],
+           'height':240, 'legend':{position:'right', 'textStyle':{'fontSize':10}}, 'chartArea':{left:9, top:30, width:"100%", height:"80%"}, 'pieSliceBorderColor':'none',
 //      'backgroundColor':'blue',
-            'sliceVisibilityThreshold':${model.functionalAnalysisResult.goTermSection.molecularFunctionGoTerms.sliceVisibilityThresholdValue}
+           'sliceVisibilityThreshold':${model.functionalAnalysisResult.goTermSection.molecularFunctionGoTerms.sliceVisibilityThresholdValue}
         };
 
         var pieChart = new google.visualization.PieChart(document.getElementById('func_chart_pie_go_mf'));
@@ -104,7 +103,7 @@
         // GO TERM Pie Cellular component
         var options = {'title':'Cellular component', 'titleTextStyle':{fontSize:12}, 'fontName':'"Arial"',
             'colors':[<c:set var="addComma" value="false"/><c:forEach begin="0" end="10" varStatus="status"><c:choose><c:when test="${addComma}">, </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose><c:choose><c:when test="${status.index>9}">'#ccc'</c:when><c:otherwise>'#<c:out value="${model.colorCodeList[status.index]}"/>'</c:otherwise></c:choose></c:forEach>],
-            'width':360, 'height':240, 'legend':{position:'right', 'textStyle':{'fontSize':10}}, 'chartArea':{left:9, top:30, width:"100%", height:"80%"}, 'pieSliceBorderColor':'none',
+            'height':240, 'legend':{position:'right', 'textStyle':{'fontSize':10}}, 'chartArea':{left:9, top:30, width:"100%", height:"80%"}, 'pieSliceBorderColor':'none',
 //      'backgroundColor':'yellow',
             'sliceVisibilityThreshold':${model.functionalAnalysisResult.goTermSection.cellularComponentGoTerms.sliceVisibilityThresholdValue}
         };
@@ -112,5 +111,11 @@
         var pieChart = new google.visualization.PieChart(document.getElementById('func_chart_pie_go_cc'));
         pieChart.draw(sortedCellularComponentGOTerms, options);
     }
+    //make the charts responsive
+           $(window).resize(function(){
+               drawBiologicalProcessPieChart();
+               drawMolecularFunctionPieChart();
+               drawCellularComponentPieChart();
+           });
 </script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/export-button-menu.js"></script>

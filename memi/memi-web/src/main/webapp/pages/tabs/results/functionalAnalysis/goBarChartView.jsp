@@ -2,10 +2,9 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <div id="go-terms-bar">
     <div class="go-chart">
-        <div class="chart-block">
+        <div class="chart-block col-1-3">
             <%--move on the left side to avoid overlap with snapshot--%>
             <div class="but_chart_export ui-buttonset">
-             <button id="func-go-bar" style="display: none;"></button>
              <button id="select" class="ui-button ui-widget ui-state-default ui-button-text-icon-secondary ui-corner-right"><span class="ui-button-text">Export</span><span class="ui-button-icon-secondary ui-icon ui-icon-triangle-1-s"></span></button>
              </div>
 
@@ -27,12 +26,11 @@
         <div id="func_chart_bar_go_bp"></div>
         </div>
 
-        <div class="chart-block">
+        <div class="chart-block  col-1-3">
         <div id="func_chart_bar_go_mf"></div>
         </div>
 
-        <div class="chart-block">
-
+        <div class="chart-block col-1-3">
         <div id="func_chart_bar_go_cc"></div>
         </div>
     </div>
@@ -55,7 +53,7 @@ function drawBiologicalProcessBarChart() {
     ]);
 
     // GO TERM bar Biological Process
-    var options = {'title':'Biological process', 'titleTextStyle':{fontSize:12}, 'fontName': '"Arial"', 'colors':['#058dc7'], 'width':360, 'height':600, 'chartArea':{left:250, top:40, width:"100%", height:"100%"}, 'vAxis':{textStyle:{fontSize:10}}, 'hAxis':{textPosition:'none', gridlines:{color:'white'}}, 'bar':{groupWidth:8}, 'legend':'none'
+    var options = {'title':'Biological process', 'titleTextStyle':{fontSize:12}, 'fontName': '"Arial"', 'colors':['#058dc7'], 'height':600, 'chartArea':{left:250, top:40, width:"100%", height:"100%"}, 'vAxis':{textStyle:{fontSize:10}}, 'hAxis':{textPosition:'none', gridlines:{color:'white'}}, 'bar':{groupWidth:8}, 'legend':'none'
 //  'vAxis':{'textPosition':'in'},
     };
 
@@ -74,7 +72,7 @@ function drawMolecularFunctionBarChart() {
     ]);
 
     // GO TERM bar Molecular Function
-    var options = {'title':'Molecular function', 'titleTextStyle':{fontSize:12}, 'fontName': '"Arial"', 'colors':['#50b432'], 'width':360, 'height':600, 'chartArea':{left:230, top:40, width:"100%", height:"100%"}, 'vAxis':{textStyle:{fontSize:10}}, 'hAxis':{textPosition:'none', gridlines:{color:'white'}}, 'bar':{groupWidth:8}, 'legend':'none' };
+    var options = {'title':'Molecular function', 'titleTextStyle':{fontSize:12}, 'fontName': '"Arial"', 'colors':['#50b432'], 'height':600, 'chartArea':{left:230, top:40, width:"100%", height:"100%"}, 'vAxis':{textStyle:{fontSize:10}}, 'hAxis':{textPosition:'none', gridlines:{color:'white'}}, 'bar':{groupWidth:8}, 'legend':'none' };
 
     var barChart = new google.visualization.BarChart(document.getElementById('func_chart_bar_go_mf'));
     barChart.draw(molecularFunctionGOTerms, options);
@@ -91,10 +89,17 @@ function drawCellularComponentBarChart() {
     ]);
 
     // GO TERM bar Cellular component
-    var options = {'title':'Cellular component', 'titleTextStyle':{fontSize:12}, 'fontName': '"Arial"', 'colors':['#ed561b'], 'width':270, 'height':600, 'chartArea':{left:160, top:40, width:"100%", height:"100%"}, 'vAxis':{textStyle:{fontSize:10}}, 'hAxis':{textPosition:'none', gridlines:{color:'white', count:15}}, 'bar':{groupWidth:8}, 'legend':'none'};
+    var options = {'title':'Cellular component', 'titleTextStyle':{fontSize:12}, 'fontName': '"Arial"', 'colors':['#ed561b'], 'height':600, 'chartArea':{left:160, top:40, width:"100%", height:"100%"}, 'vAxis':{textStyle:{fontSize:10}}, 'hAxis':{textPosition:'none', gridlines:{color:'white', count:15}}, 'bar':{groupWidth:8}, 'legend':'none'};
 
     var barChart = new google.visualization.BarChart(document.getElementById('func_chart_bar_go_cc'));
     barChart.draw(cellularComponentGOTerms, options);
 }
+
+//make the charts responsive
+       $(window).resize(function(){
+           drawBiologicalProcessBarChart();
+           drawMolecularFunctionBarChart();
+           drawCellularComponentBarChart();
+       });
 </script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/export-button-menu.js"></script>

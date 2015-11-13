@@ -3,10 +3,9 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <div id="tax-col">
     <div class="chart_container">
-        <div class="chart-block">
+        <div class="chart-block col-1-2">
 
             <div class="but_chart_export ui-buttonset">
-                <button id="taxcolumn" style="display: none;"></button>
                 <button id="select"
                         class="ui-button ui-widget ui-state-default ui-button-text-icon-secondary ui-corner-right"><span
                         class="ui-button-text">Export</span><span
@@ -28,24 +27,13 @@
             <div id="tax_chart_col"></div>
         </div>
 
-        <div id="tax_dashboard_col">
+        <div id="tax_dashboard_col" class="col-1-2">
             <div id="tax_table_col_filter"></div>
             <div id="tax_table_col"></div>
             <div class="msg_help blue_h phylum_help">
                 <p><span class="icon icon-generic" data-icon="i"></span>This view aggregates the taxonomy information at
                     the domain and phylum level. To download the full detailed taxonomy distribution (TSV format),
-                    <a href="#ui-id-6" class="open-tab" data-tab-index="4"> please follow this link</a>
-                                           <%--<c:choose>--%>
-                                               <%--<c:when test="${releaseVersion == '1.0'}">--%>
-                                                   <%--<a href="<c:url value="${baseURL}/projects/${projectId}/samples/${sampleId}/runs/${runId}/results/taxonomy/versions/${releaseVersion}/export?contentType=text&exportValue=taxa"/>">please--%>
-                                                       <%--follow this link</a>--%>
-                                               <%--</c:when>--%>
-                                               <%--<c:when test="${releaseVersion== '2.0'}">--%>
-                                                   <%--<a href="<c:url value="${baseURL}/projects/${projectId}/samples/${sampleId}/runs/${runId}/results/taxonomy/versions/${releaseVersion}/export?contentType=text&exportValue=otuTable"/>">please--%>
-                                                       <%--follow this link</a>--%>
-                                               <%--</c:when><c:otherwise> not working</c:otherwise>--%>
-                                           <%--</c:choose>--%>
-                                           .</p>
+                    <a href="#ui-id-6" class="open-tab" data-tab-index="4"> please follow this link</a>.</p>
             </div>
         </div>
 
@@ -100,7 +88,7 @@
         var taxcolTableOptions = new google.visualization.ChartWrapper({
             'chartType':'Table',
             'containerId':'tax_table_col',
-            'options':{ allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false }
+            'options':{ allowHtml:true, showRowNumber:true, width: '100%', page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false }
         });
 
         // Draw the Dashboard for the Stacked column
@@ -126,19 +114,24 @@
 // Stacked column graph
         var options = {'title':'${phylumCompositionTitle}', 'titleTextStyle':{fontSize:12}, 'fontName':'"Arial"',
             'colors':[${model.taxonomyAnalysisResult.colorCodeForStackChart}],
-            'width':320, 'height':420,
+            'height':420,
             'legend':{position:'right', textStyle:{fontSize:10}},
             'chartArea':{left:40, top:50, width:"38%", height:"86%"},
             'pieSliceBorderColor':'none',
             'vAxis':{viewWindowMode:'maximized'}, //  important to keep viewWindowMode separated from the rest to keep the display of the value 100% on vaxis
             'vAxis':{
-                title:'Relative abundance (%)',
-                baselineColor:'#ccc'},
+            title:'Relative abundance (%)',
+            baselineColor:'#ccc'},
             'isStacked':true
         };
 
         var phylumStackChart = new google.visualization.ColumnChart(document.getElementById('tax_chart_col'));
         phylumStackChart.draw(data, options);
     }
+       //make the charts responsive
+       $(window).resize(function(){
+         drawPhylumStackChart();
+         drawPhylumTable();
+       });
 </script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/export-button-menu.js"></script>

@@ -3,13 +3,12 @@
 <div id="tax-pie">
 
     <div class="chart_container">
-        <div class="chart-block">
+        <div class="chart-block col-1-3">
             <div id="tax_chart_pie_dom"></div>
         </div>
 
-        <div class="chart-block">
+        <div class="chart-block col-1-3">
             <div class="but_chart_export ui-buttonset">
-                <button id="taxpie" style="display: none;"></button>
                 <button id="select"
                         class="ui-button ui-widget ui-state-default ui-button-text-icon-secondary ui-corner-right"><span
                         class="ui-button-text">Export</span><span
@@ -40,32 +39,19 @@
 
             <div id="tax_chart_pie_phy"></div>
         </div>
-        <div class="chart-block">
-            <div id="tax_dashboard">
+
+            <div id="tax_dashboard" class="col-1-3">
                 <div id="tax_table_filter"></div>
                 <div id="tax_table_pie"></div>
                 <%--<div id="table_div"></div>--%>
-
-
                 <div class="msg_help blue_h phylum_help">
                     <p><span class="icon icon-generic" data-icon="i"></span>This view aggregates the taxonomy
                         information at the domain and phylum level. To download the full detailed taxonomy distribution
                         (TSV format),
-                        <a href="#ui-id-6" class="open-tab" data-tab-index="4"> please follow this link</a>
-                        <%--<c:choose>--%>
-                            <%--<c:when test="${releaseVersion == '1.0'}">--%>
-                                <%--<a href="<c:url value="${baseURL}/projects/${projectId}/samples/${sampleId}/runs/${runId}/results/taxonomy/versions/${releaseVersion}/export?contentType=text&exportValue=taxa"/>">please--%>
-                                    <%--follow this link</a>--%>
-                            <%--</c:when>--%>
-                            <%--<c:when test="${releaseVersion== '2.0'}">--%>
-                                <%--<a href="<c:url value="${baseURL}/projects/${projectId}/samples/${sampleId}/runs/${runId}/results/taxonomy/versions/${releaseVersion}/export?contentType=text&exportValue=otuTable"/>">please--%>
-                                    <%--follow this link</a>--%>
-                            <%--</c:when><c:otherwise> not working</c:otherwise>--%>
-                        <%--</c:choose>--%>
-                        .</p>
+                        <a href="#ui-id-6" class="open-tab" data-tab-index="4"> please follow this link</a>.</p>
                 </div>
             </div>
-        </div>
+
     </div>
 </div>
 
@@ -102,7 +88,7 @@
             'titleTextStyle':{fontSize:12},
             'fontName':'"Arial"',
             'colors':[${model.taxonomyAnalysisResult.domainComposition.colorCode}],
-            'width':250, 'height':299,
+            'height':299,
             'chartArea':{left:20, top:30, width:"100%", height:"100%"},
             'pieSliceBorderColor':'none',
             'legend':{fontSize:10, alignment:'center', 'textStyle':{'fontSize':10}},
@@ -143,7 +129,7 @@
         var taxTableOptions = new google.visualization.ChartWrapper({
             'chartType':'Table',
             'containerId':'tax_table_pie',
-            'options':{ allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false }
+            'options':{ allowHtml:true, showRowNumber:true, width: '100%', page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false }
         });
 
 // Draw the Dashboard for the pie chart
@@ -176,14 +162,11 @@
 
         var options = {'title':'${phylumCompositionTitle}', 'titleTextStyle':{fontSize:12}, 'fontName':'"Arial"', 'colors':[${model.taxonomyAnalysisResult.colorCodeForPieChart}],
             //Krona style 'colors':['#d47f7f','#d1a575','#d4c97f','#99d47f','#7fd4a7','#7fc3d4','#7f8ad4','#a77fd4','#d47fd3','#d47faf','#ccc','#ccc','#ccc'],
-            'width':274,
             'height':299,
             'pieSliceTextStyle':{bold:true, color:'white'},
             'legend':'none',
             'chartArea':{left:20, top:30, width:"84%", height:"100%"},
             'pieSliceBorderColor':'none',
-            //          WITH CAPTION 'legend':{position:'right', fontSize:10}, 'chartArea':{left:10, top:30, width:"100%", height:"100%"},
-//            'backgroundColor':'red',
             'sliceVisibilityThreshold':${model.taxonomyAnalysisResult.sliceVisibilityThresholdNumerator / model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator}
         };
 
@@ -212,5 +195,11 @@
 //        table.setSelection(phylumPieChart.getSelection());
 //    });
     }
+   //make the charts responsive
+       $(window).resize(function(){
+           drawDomainCompositionPieChartView();
+           drawPhylumPieChart();
+           drawPhylumTablePieChartView();
+       });
 </script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/export-button-menu.js"></script>
