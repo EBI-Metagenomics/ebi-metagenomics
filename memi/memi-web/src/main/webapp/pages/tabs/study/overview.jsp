@@ -184,8 +184,6 @@
                 <tr>
 
                     <!-- Only include the the sample ID once for all runs under that sample -->
-
-
                     <c:if test="${runCountLine == 1}">
                         <td style="background-color: rgb(244, 244, 248);" id="ordered" rowspan="${run.runCount}"
                             class="h_left table_xs_text"><a
