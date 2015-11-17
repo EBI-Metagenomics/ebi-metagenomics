@@ -84,11 +84,11 @@
         <%--<div class="redraw_settings">Change threshold: <input id="stackThreshold" type="number" min="0" max="90" step="0.1" value="2" style="width:60px;"/> <button id="redrawStackButton">Redraw chart</button></div>--%>
         <div id="bars-wrapper">${graphCode[1]}</div>
     </div>
-    <div id="stack">
 
+    <div id="stack">
            <div id="stack-jump-anchor"></div>
            <div id="stack_jump">
-           <div id="export_stack_div" class="chart-but-export">
+                <div id="export_stack_div" class="chart-but-export">
                       <select id="stack_export" title="Export" class="export-select">
                           <option selected>Export</option>
                           <optgroup label="Biological process">
@@ -107,12 +107,9 @@
                               <option value="cc_svg">SVG</option>
                           </optgroup>
                       </select>
-                  </div>
+                </div>
 
                <div class="jump_anchor_text">Jump to: <a href="#stack_bio_title"> Biological process</a> | <a href="#stack_mol_title">Molecular function</a> | <a href="#stack_cell_title">Cellular component</a></div>
-
-
-
            </div>
 
             <div id="stack_wrapper">${graphCode[2]}</div>
