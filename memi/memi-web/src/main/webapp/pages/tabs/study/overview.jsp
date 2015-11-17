@@ -188,7 +188,7 @@
 
                     <c:if test="${runCountLine == 1}">
                         <td style="background-color: rgb(244, 244, 248);" id="ordered" rowspan="${run.runCount}"
-                            class="h_left class="table_xs_text""><a
+                            class="h_left table_xs_text"><a
                                 href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${run.externalSampleId}"/>"
                                 title="Sample ${run.externalSampleId}" class="fl_uppercase_title">${run.sampleName} </a>
 
