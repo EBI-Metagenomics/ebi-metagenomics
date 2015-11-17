@@ -1977,6 +1977,7 @@ div#local-title.logo-title img {width:100%; margin:0; padding: 18px 9px;} /*logo
 table.result tbody td.table_xs_text {word-break: break-all; /*break long character chains on small screen*/}
 [class*='col-'] {width:100%; margin-bottom: 9px;}
 #bars .rChart {width:100%;}
+#pca .rChart {width:100%;}
 }
 /*login window only*/
 @media (max-width: 1000px) {
