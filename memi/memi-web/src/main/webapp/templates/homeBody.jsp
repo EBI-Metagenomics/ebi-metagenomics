@@ -503,24 +503,24 @@
                      <c:forEach var="study" items="${model.studies}" varStatus="status" begin="0"
                                 end="${model.maxRowNumberOfLatestItems-1}">
 
-                     <div class="list-item">
-                         <div class="list-title"><div class="biome_icon icon_xs ${study.biomeIconCSSClass}" title="${study.biomeIconTitle} biome"></div>
-                             <a href="<c:url value="${baseURL}/projects/${study.studyId}"/>"
-                                class="list_more fl_uppercase_title">${study.studyName}</a>
-                         </div>
-                         <div class="list-body">
-                            <p class="list-desc"><c:out value="${study.shortStudyAbstract} ..."/></p>
-                            <p class="list-more">
-                             <a href="<c:url value="${baseURL}/projects/${study.studyId}"/>"
-                                class="more_view">View more</a> - <a
-                                     href="<c:url value="${baseURL}/projects/${study.studyId}"/>#samples_id"
-                                     class="list_sample"><c:out value="${study.sampleSize} sample"/><c:if
-                                     test='${study.sampleSize > 1}'>s</c:if></a>
-                                <!-- temp while we wait for runSize to be defined at project level so we can change the condition-->
-                                <c:if test='${study.sampleSize > 1}'>- <a href="<c:url value="${baseURL}/compare&#35${study.studyId}"/>" title="Compare samples in this project" class="list_sample"> <span  class="icon icon-functional" data-icon="O"></span> compare</a></c:if>
-                            </p>
-                         </div>
-                         </div>
+                         <div class="list-item">
+                             <div class="list-title"><div class="biome_icon icon_xs ${study.biomeIconCSSClass}" title="${study.biomeIconTitle} biome"></div>
+                                 <a href="<c:url value="${baseURL}/projects/${study.studyId}"/>"
+                                    class="list_more fl_uppercase_title">${study.studyName}</a>
+                             </div>
+                             <div class="list-body">
+                                <p class="list-desc"><c:out value="${study.shortStudyAbstract} ..."/></p>
+                                <p class="list-more">
+                                 <a href="<c:url value="${baseURL}/projects/${study.studyId}"/>"
+                                    class="more_view">View more</a> - <a
+                                         href="<c:url value="${baseURL}/projects/${study.studyId}"/>#samples_id"
+                                         class="list_sample"><c:out value="${study.sampleSize} sample"/><c:if
+                                         test='${study.sampleSize > 1}'>s</c:if></a>
+                                    <!-- temp while we wait for runSize to be defined at project level so we can change the condition-->
+                                    <c:if test='${study.sampleSize > 1}'>- <a href="<c:url value="${baseURL}/compare&#35${study.studyId}"/>" title="Compare samples in this project" class="list_sample"> <span  class="icon icon-functional" data-icon="O"></span> compare</a></c:if>
+                                </p>
+                             </div>
+                             </div>
                      </c:forEach>
                      </div><!-- /list-project-l -->
 

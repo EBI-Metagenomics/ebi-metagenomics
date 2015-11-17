@@ -7,14 +7,14 @@ import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.BasicTransformerAdapter;
+import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 /**
  * Represents the implementation class of {@link StudyDAO}.
@@ -461,5 +461,57 @@ public class StudyDAOImpl implements StudyDAO {
             }
         }
         return null;
+    }
+
+    @Transactional(readOnly = true)
+    public Long countNumberOfRuns(String externalStudyId) {
+        Session session = sessionFactory.getCurrentSession();
+        if (session != null) {
+            try {
+                Query query = session.createQuery("select count(*) FROM Study p inner join p.samples sample left join sample.analysisJobs where p.studyId=:studyId");
+                query.setString("studyId", externalStudyId);
+                return (Long) query.uniqueResult();
+            } catch (HibernateException e) {
+                throw new HibernateException("Couldn't retrieve distinct count of submission accounts.", e);
+            }
+        }
+        return null;
+    }
+
+    @Transactional(readOnly = true)
+    public Map<String, Long> retrieveRunCountsGroupedByExternalStudyId(Collection<String> externalStudyIds) {
+        Session session = sessionFactory.getCurrentSession();
+        if (session != null) {
+            try {
+                Query query = session.createQuery("select p.studyId, count(distinct aj.externalRunIDs) as count FROM Study p inner join p.samples sample left join sample.analysisJobs as aj  where p.studyId in (:studyIds) group by p.studyId");
+                query.setParameterList("studyIds", externalStudyIds);
+//                query.setResultTransformer(new BasicTransformerAdapter() {
+//                    private static final long serialVersionUID = 1L;
+//
+//                    @Override
+//                    public Object transformTuple(Object[] tuple, String[] aliases) {
+//                        Map<String, Long> result = new HashMap<String, Long>();
+//                        if (tuple.length == 2) {
+//                            result.put((String) tuple[0], (Long) tuple[1]);
+//                        }
+//                        return result;
+//                    }
+//                });
+                List results = query.list();
+                Map<String, Long> transformedResults = transformResultsToMap(results);
+                return transformedResults;
+            } catch (HibernateException e) {
+                throw new HibernateException("Couldn't retrieve distinct count of submission accounts.", e);
+            }
+        }
+        return null;
+    }
+
+    private Map<String, Long> transformResultsToMap(List results) {
+        Map<String, Long> result = new HashMap<String, Long>();
+        for (Object item : results) {
+            result.put((String) ((Object[]) item)[0], (Long) ((Object[]) item)[1]);
+        }
+        return result;
     }
 }

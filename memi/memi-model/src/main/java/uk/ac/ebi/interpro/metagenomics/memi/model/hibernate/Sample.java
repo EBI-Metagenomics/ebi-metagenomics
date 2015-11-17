@@ -132,6 +132,10 @@ public class Sample implements SecureEntity, BiomeEntity {
     @Transient
     private String biomeIconTitle;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "sample")
+    @Column(name = "SAMPLE_ID")
+    private Set<AnalysisJob> analysisJobs;
+
     /**
      * Associated publication.
      */
@@ -411,7 +415,15 @@ public class Sample implements SecureEntity, BiomeEntity {
         this.biomeIconTitle = biomeIconTitle;
     }
 
-//    @Transient
+    public Set<AnalysisJob> getAnalysisJobs() {
+        return analysisJobs;
+    }
+
+    public void setAnalysisJobs(Set<AnalysisJob> analysisJobs) {
+        this.analysisJobs = analysisJobs;
+    }
+
+    //    @Transient
 //    public abstract Class<? extends Sample> getClazz();
 
 //    @Transient

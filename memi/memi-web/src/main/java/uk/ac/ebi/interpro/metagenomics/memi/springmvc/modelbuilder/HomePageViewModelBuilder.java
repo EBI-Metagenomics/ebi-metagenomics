@@ -64,18 +64,20 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
         this.sampleDAO = sampleDAO;
         this.runDAO = runDAO;
         this.biomeDAO = biomeDAO;
-        this.submissionContactDAO= submissionContactDAO;
+        this.submissionContactDAO = submissionContactDAO;
     }
 
     public HomePageViewModel getModel() {
         log.info("Building instance of " + HomePageViewModel.class + "...");
         Submitter submitter = getSessionSubmitter(sessionMgr);
+        // The following values are all for the statistics section on the home page
         final Long publicSamplesCount = sampleDAO.countAllPublic();
         final Long privateSamplesCount = sampleDAO.countAllPrivate();
         final Long publicStudiesCount = studyDAO.countAllPublic();
         final Long privateStudiesCount = studyDAO.countAllWithNotEqualsEx(1);
         final int publicRunCount = runDAO.countAllPublic();
         final int privateRunCount = runDAO.countAllPrivate();
+
         final Map<String, Integer> experimentCountMap = runDAO.retrieveRunCountsGroupedByExperimentType(3);
         final Map<String, Integer> transformedExperimentCountMap = transformMap(experimentCountMap);
         final Integer numOfDataSets = getNumOfDataSets(experimentCountMap);
@@ -83,7 +85,8 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
         if (submitter == null) {
             // Retrieve public studies and order them by last meta data received
             List<Study> studies = getOrderedPublicStudies();
-            attachSampleSize(studies);
+//            attachSampleSize(studies);
+            getStudyRunCounts(studies);
 
             Map<String, Long> biomeCountMap = buildBiomeCountMap();
             return new HomePageViewModel(submitter, pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems, publicSamplesCount,
@@ -191,12 +194,27 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
         return biomesCountMap;
     }
 
-    private void attachSampleSize(List<Study> studies) {
-        if (sampleDAO != null) {
+//    private void attachSampleSize(List<Study> studies) {
+//        if (sampleDAO != null) {
+//            for (Study study : studies) {
+////                Long runCount = studyDAO.countNumberOfRuns(study.getStudyId());
+//                Map<String, Integer> studyRunCount = studyDAO.retrieveRunCountsGroupedByExternalStudyId(study.getStudyId());
+//                long sampleSize = sampleDAO.retrieveSampleSizeByStudyId(study.getId());
+//                study.setSampleSize(new Long(sampleSize));
+//            }
+//        }
+//    }
+
+    //TODO: Pass on only the first 15 or so studies and not all of them (too much overhead)
+    private void getStudyRunCounts(List<Study> studies) {
+        if (studyDAO != null) {
+            //Get list of external study identifiers
+            List<String> studyIds = new ArrayList<String>();
             for (Study study : studies) {
-                long sampleSize = sampleDAO.retrieveSampleSizeByStudyId(study.getId());
-                study.setSampleSize(new Long(sampleSize));
+                studyIds.add(study.getStudyId());
             }
+            //Get mapping between study and number of runs
+            studyDAO.retrieveRunCountsGroupedByExternalStudyId(studyIds);
         }
     }
 
