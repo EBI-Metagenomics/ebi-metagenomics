@@ -1973,9 +1973,10 @@ div#local-masthead div.navbar-header {float:none;}
 .carousel, #feedback_div,  #global-search, #sidebar-nav {display: none;}
 div#local-title.logo-title img {width:100%; margin:0; padding: 18px 9px;} /*logo*/
 #global-footer .grid_4:nth-child(1) {display:none;}/*remove one item of the EBI bottom menu - logo -  to avoid scrolling effect*/
-.icon_pipeline_v, .export {display:none;} /*remove pipeline ico and export button for table*/
+.icon_pipeline_v, .export, .tab-text {display:none;} /*remove pipeline ico and export button for table and text in comparison result tabs */
 table.result tbody td.table_xs_text {word-break: break-all; /*break long character chains on small screen*/}
 [class*='col-'] {width:100%; margin-bottom: 9px;}
+
 }
 /*login window only*/
 @media (max-width: 1000px) {
