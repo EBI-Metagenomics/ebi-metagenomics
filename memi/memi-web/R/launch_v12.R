@@ -244,7 +244,7 @@ molBars = CreateBarsForCategory(abTable,'molecular_function') # molecular functi
 cellBars = CreateBarsForCategory(abTable,'cellular_component') # cellular component barcharts
 fullBarsCode <- c(bioBars, molBars, cellBars)
 }
-
+# Write final result HTML file  - e.g. GOslim_144..._bar.htm
 write(fullBarsCode,paste(tempDir,pathSep,name,'_bar','.htm',sep='')) # Write all code 
 
 
