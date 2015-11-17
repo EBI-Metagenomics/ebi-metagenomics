@@ -3,7 +3,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
  <div id="sample_list">
-    <%--<h2>${pageTitle}</h2>--%>
+
     <h2>Samples list</h2>
 
     <div class="center">
@@ -164,8 +164,8 @@
                         <td>
                         <span class="biome_icon icon_xs ${sample.biomeIconCSSClass}" title="${sample.biomeIconTitle} biome"></span>
                         </td>
-                        <td width="8%">${sample.sampleId}</td>
-                        <td class="h_left" id="ordered" width="30%">
+                        <td width="8%" class="table_xs_text">${sample.sampleId}</td>
+                        <td width="30%" class="h_left table_xs_text" id="ordered">
 
                             <a href="<c:url value="${baseURL}/projects/${sample.study.studyId}/samples/${sample.sampleId}"/>" class="fl_uppercase_title">${sample.sampleName}</a>
 
