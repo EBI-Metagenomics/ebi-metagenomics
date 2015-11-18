@@ -85,8 +85,8 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
         if (submitter == null) {
             // Retrieve public studies and order them by last meta data received
             List<Study> studies = getOrderedPublicStudies();
-//            attachSampleSize(studies);
-            getStudyRunCounts(studies);
+            attachSampleSize(studies);
+//            getStudyRunCounts(studies);
 
             Map<String, Long> biomeCountMap = buildBiomeCountMap();
             return new HomePageViewModel(submitter, pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems, publicSamplesCount,
@@ -194,16 +194,14 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
         return biomesCountMap;
     }
 
-//    private void attachSampleSize(List<Study> studies) {
-//        if (sampleDAO != null) {
-//            for (Study study : studies) {
-////                Long runCount = studyDAO.countNumberOfRuns(study.getStudyId());
-//                Map<String, Integer> studyRunCount = studyDAO.retrieveRunCountsGroupedByExternalStudyId(study.getStudyId());
-//                long sampleSize = sampleDAO.retrieveSampleSizeByStudyId(study.getId());
-//                study.setSampleSize(new Long(sampleSize));
-//            }
-//        }
-//    }
+    private void attachSampleSize(List<Study> studies) {
+        if (sampleDAO != null) {
+            for (Study study : studies) {
+                long sampleSize = sampleDAO.retrieveSampleSizeByStudyId(study.getId());
+                study.setSampleSize(new Long(sampleSize));
+            }
+        }
+    }
 
     //TODO: Pass on only the first 15 or so studies and not all of them (too much overhead)
     private void getStudyRunCounts(List<Study> studies) {

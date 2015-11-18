@@ -7,8 +7,6 @@ import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.transform.BasicTransformerAdapter;
-import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -507,10 +505,10 @@ public class StudyDAOImpl implements StudyDAO {
         return null;
     }
 
-    private Map<String, Long> transformResultsToMap(List results) {
+    private Map<String, Long> transformResultsToMap(List<Object[]> results) {
         Map<String, Long> result = new HashMap<String, Long>();
-        for (Object item : results) {
-            result.put((String) ((Object[]) item)[0], (Long) ((Object[]) item)[1]);
+        for (Object[] resultItem : results) {
+            result.put((String) resultItem[0], (Long) resultItem[1]);
         }
         return result;
     }
