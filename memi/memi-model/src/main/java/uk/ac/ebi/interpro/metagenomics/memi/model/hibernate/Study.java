@@ -113,7 +113,7 @@ public class Study implements SecureEntity, BiomeEntity {
     private String resultDirectory;
 
     @Transient
-    private Long sampleSize;
+    private Long sampleCount;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "BIOME_ID", nullable = true)
@@ -372,12 +372,12 @@ public class Study implements SecureEntity, BiomeEntity {
         this.resultDirectory = resultDirectory;
     }
 
-    public Long getSampleSize() {
-        return sampleSize;
+    public Long getSampleCount() {
+        return sampleCount;
     }
 
-    public void setSampleSize(Long sampleSize) {
-        this.sampleSize = sampleSize;
+    public void setSampleCount(Long sampleCount) {
+        this.sampleCount = sampleCount;
     }
 
     public Biome getBiome() {

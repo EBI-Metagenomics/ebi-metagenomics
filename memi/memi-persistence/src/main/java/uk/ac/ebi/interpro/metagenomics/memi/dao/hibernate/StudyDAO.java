@@ -27,7 +27,7 @@ public interface StudyDAO extends ISecureEntityDAO<Study> {
      * @param propertyName      Name of the column for which the result should be order by.
      * @param isDescendingOrder Order direction.
      */
-    List<Study> retrieveOrderedPublicStudies(String propertyName, boolean isDescendingOrder);
+    List<Study> retrieveOrderedPublicStudies(String propertyName, boolean isDescendingOrder, int maxResult);
 
     /**
      * Returns an ordered list of public studies where the submitter ID IS equal the specified submitter ID.
@@ -136,5 +136,29 @@ public interface StudyDAO extends ISecureEntityDAO<Study> {
      */
     Long countNumberOfRuns(String externalStudyId);
 
+    /**
+     * Retrieves the number of runs for each study.
+     * <p/>
+     * Example result:
+     * <p/>
+     * ERP005249	2
+     * ERP010153	3
+     *
+     * @param externalStudyIds List of external study identifiers.
+     * @return
+     */
     Map<String, Long> retrieveRunCountsGroupedByExternalStudyId(Collection<String> externalStudyIds);
+
+    /**
+     * Retrieves the number of samples for each study.
+     * <p/>
+     * Example result:
+     * <p/>
+     * ERP005249	1
+     * ERP010153	1
+     *
+     * @param externalStudyIds List of external study identifiers.
+     * @return
+     */
+    Map<String, Long> retrieveSampleCountsGroupedByExternalStudyId(Collection<String> externalStudyIds);
 }

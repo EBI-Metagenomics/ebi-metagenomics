@@ -500,8 +500,7 @@
                                              title="View all ${model.publicStudiesCount} public projects">${model.publicStudiesCount}</a></span></h2>
                       <div class="list-project-l">
                          <%--The count starts at 0, that is why we subtract 1 from the end value--%>
-                     <c:forEach var="study" items="${model.studies}" varStatus="status" begin="0"
-                                end="${model.maxRowNumberOfLatestItems-1}">
+                     <c:forEach var="study" items="${model.studies}" varStatus="status">
 
                          <div class="list-item">
                              <div class="list-title"><div class="biome_icon icon_xs ${study.biomeIconCSSClass}" title="${study.biomeIconTitle} biome"></div>
@@ -514,10 +513,10 @@
                                  <a href="<c:url value="${baseURL}/projects/${study.studyId}"/>"
                                     class="more_view">View more</a> - <a
                                          href="<c:url value="${baseURL}/projects/${study.studyId}"/>#samples_id"
-                                         class="list_sample"><c:out value="${study.sampleSize} sample"/><c:if
-                                         test='${study.sampleSize > 1}'>s</c:if></a>
+                                         class="list_sample"><c:out value="${model.studyToSampleCountMap[study.studyId]} sample"/><c:if
+                                         test='${model.studyToSampleCountMap[study.studyId] > 1}'>s</c:if></a>
                                     <!-- temp while we wait for runSize to be defined at project level so we can change the condition-->
-                                    <c:if test='${study.sampleSize > 1}'>- <a href="<c:url value="${baseURL}/compare&#35${study.studyId}"/>" title="Compare samples in this project" class="list_sample"> <span  class="icon icon-functional" data-icon="O"></span> compare</a></c:if>
+                                    <c:if test='${model.studyToRunCountMap[study.studyId] > 1}'>- <a href="<c:url value="${baseURL}/compare&#35${study.studyId}"/>" title="Compare samples in this project" class="list_sample"> <span  class="icon icon-functional" data-icon="O"></span> compare</a></c:if>
                                 </p>
                              </div>
                              </div>

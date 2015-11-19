@@ -49,7 +49,7 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
     private SubmissionContactDAO submissionContactDAO;
 
     /**
-     * The number of latest project and samples to show on the home page. Used within this builder class, but also within the Java Server Page.
+     * The number of latest projects to show on the home page. Used within this builder class, but also within the Java Server Page.
      */
     private final int maxRowNumberOfLatestItems = 15;
 
@@ -83,14 +83,19 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
         final Integer numOfDataSets = getNumOfDataSets(experimentCountMap);
         // If case: if nobody is logged in
         if (submitter == null) {
-            // Retrieve public studies and order them by last meta data received
-            List<Study> studies = getOrderedPublicStudies();
-            attachSampleSize(studies);
-//            getStudyRunCounts(studies);
+            // Retrieve public studies limited by max result and order them by last meta data received
+            List<Study> studies = getOrderedPublicStudies(maxRowNumberOfLatestItems);
+            // Get list of study identifiers
+            List<String> studyIdentifiers = getListOfStudyIdentifiers(studies);
+            // Get study to sample count map
+            Map<String, Long> studyToSampleCountMap = studyDAO.retrieveSampleCountsGroupedByExternalStudyId(studyIdentifiers);
+            // Get study to run count map
+            Map<String, Long> studyToRunCountMap = studyDAO.retrieveRunCountsGroupedByExternalStudyId(studyIdentifiers);
 
             Map<String, Long> biomeCountMap = buildBiomeCountMap();
             return new HomePageViewModel(submitter, pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems, publicSamplesCount,
-                    privateSamplesCount, publicStudiesCount, privateStudiesCount, studies, publicRunCount, privateRunCount, biomeCountMap, transformedExperimentCountMap, numOfDataSets);
+                    privateSamplesCount, publicStudiesCount, privateStudiesCount, studies, publicRunCount, privateRunCount, biomeCountMap, transformedExperimentCountMap, numOfDataSets,
+                    studyToSampleCountMap, studyToRunCountMap);
         }
         //  Else case: if somebody is logged in
         else {
@@ -100,6 +105,13 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
 
             //retrieve private studies and order them by last meta data received
             List<Study> myStudies = getStudiesBySubmitter(submitterAccountId);
+            // Get list of study identifiers
+            List<String> studyIdentifiers = getListOfStudyIdentifiers(myStudies);
+            // Get study to sample count map
+            Map<String, Long> studyToSampleCountMap = studyDAO.retrieveSampleCountsGroupedByExternalStudyId(studyIdentifiers);
+            // Get study to run count map
+            Map<String, Long> studyToRunCountMap = studyDAO.retrieveRunCountsGroupedByExternalStudyId(studyIdentifiers);
+
             Map<Study, Long> myStudiesMap = getStudySampleSizeMap(myStudies, sampleDAO, new HomePageStudiesComparator());
 
             //retrieve private samples and order them last meta data received
@@ -111,7 +123,8 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
             final Long myStudiesCount = (myStudies != null ? new Long(myStudies.size()) : new Long(0));
 
             return new HomePageViewModel(submitterDetails, myStudiesMap, mySamples, pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems,
-                    mySamplesCount, myStudiesCount, publicSamplesCount, privateSamplesCount, publicStudiesCount, privateStudiesCount, publicRunCount, privateRunCount);
+                    mySamplesCount, myStudiesCount, publicSamplesCount, privateSamplesCount, publicStudiesCount, privateStudiesCount, publicRunCount, privateRunCount,
+                    studyToSampleCountMap, studyToRunCountMap);
         }
     }
 
@@ -194,35 +207,21 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
         return biomesCountMap;
     }
 
-    private void attachSampleSize(List<Study> studies) {
-        if (sampleDAO != null) {
-            for (Study study : studies) {
-                long sampleSize = sampleDAO.retrieveSampleSizeByStudyId(study.getId());
-                study.setSampleSize(new Long(sampleSize));
-            }
+    private List<String> getListOfStudyIdentifiers(final List<Study> studies) {
+        List<String> studyIds = new ArrayList<String>();
+        for (Study study : studies) {
+            studyIds.add(study.getStudyId());
         }
-    }
-
-    //TODO: Pass on only the first 15 or so studies and not all of them (too much overhead)
-    private void getStudyRunCounts(List<Study> studies) {
-        if (studyDAO != null) {
-            //Get list of external study identifiers
-            List<String> studyIds = new ArrayList<String>();
-            for (Study study : studies) {
-                studyIds.add(study.getStudyId());
-            }
-            //Get mapping between study and number of runs
-            studyDAO.retrieveRunCountsGroupedByExternalStudyId(studyIds);
-        }
+        return studyIds;
     }
 
     /**
      * Returns a list of public studies limited by a specified number of rows and order by meta data received date.
      */
-    private List<Study> getOrderedPublicStudies() {
+    private List<Study> getOrderedPublicStudies(final int maxRowNumberOfLatestItems) {
         List<Study> studies = new ArrayList<Study>();
         if (studyDAO != null) {
-            studies = studyDAO.retrieveOrderedPublicStudies("lastMetadataReceived", true);
+            studies = studyDAO.retrieveOrderedPublicStudies("lastMetadataReceived", true, maxRowNumberOfLatestItems);
             assignBiomeIconFeatures(studies);
         }
         return studies;

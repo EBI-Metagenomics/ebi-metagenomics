@@ -216,7 +216,7 @@ public class StudyDAOImpl implements StudyDAO {
     }
 
     @Transactional(readOnly = true)
-    public List<Study> retrieveOrderedPublicStudies(String propertyName, boolean isDescendingOrder) {
+    public List<Study> retrieveOrderedPublicStudies(String propertyName, boolean isDescendingOrder, int maxResult) {
         List<Study> result = new ArrayList<Study>();
         Session session = sessionFactory.getCurrentSession();
         if (session != null) {
@@ -231,6 +231,7 @@ public class StudyDAOImpl implements StudyDAO {
             crit.add(Restrictions.eq("isPublic", 1));
             //add distinct criterion
             crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+            crit.setMaxResults(maxResult);
             try {
                 result = crit.list();
             } catch (HibernateException e) {
@@ -481,20 +482,27 @@ public class StudyDAOImpl implements StudyDAO {
         Session session = sessionFactory.getCurrentSession();
         if (session != null) {
             try {
+                //Distinct count, which means multiple analysis versions of the same run will not take into account
                 Query query = session.createQuery("select p.studyId, count(distinct aj.externalRunIDs) as count FROM Study p inner join p.samples sample left join sample.analysisJobs as aj  where p.studyId in (:studyIds) group by p.studyId");
                 query.setParameterList("studyIds", externalStudyIds);
-//                query.setResultTransformer(new BasicTransformerAdapter() {
-//                    private static final long serialVersionUID = 1L;
-//
-//                    @Override
-//                    public Object transformTuple(Object[] tuple, String[] aliases) {
-//                        Map<String, Long> result = new HashMap<String, Long>();
-//                        if (tuple.length == 2) {
-//                            result.put((String) tuple[0], (Long) tuple[1]);
-//                        }
-//                        return result;
-//                    }
-//                });
+                List results = query.list();
+                Map<String, Long> transformedResults = transformResultsToMap(results);
+                return transformedResults;
+            } catch (HibernateException e) {
+                throw new HibernateException("Couldn't retrieve distinct count of submission accounts.", e);
+            }
+        }
+        return null;
+    }
+
+    @Transactional(readOnly = true)
+    public Map<String, Long> retrieveSampleCountsGroupedByExternalStudyId(Collection<String> externalStudyIds) {
+        Session session = sessionFactory.getCurrentSession();
+        if (session != null) {
+            try {
+                //Distinct count, which means multiple analysis versions of the same run will not take into account
+                Query query = session.createQuery("select p.studyId, count(distinct sample.sampleId) as count FROM Study p inner join p.samples sample where p.studyId in (:studyIds) group by p.studyId");
+                query.setParameterList("studyIds", externalStudyIds);
                 List results = query.list();
                 Map<String, Long> transformedResults = transformResultsToMap(results);
                 return transformedResults;

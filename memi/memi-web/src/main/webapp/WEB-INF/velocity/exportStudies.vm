@@ -6,7 +6,7 @@
 #foreach( $study in $studies )
 #if($study.studyName)
 "$study.studyName",#{else}"",#end
-"$study.sampleSize",#if($study.lastMetadataReceived)
+"$study.sampleCount",#if($study.lastMetadataReceived)
 $study.lastMetadataReceived,#{else},#end
 
 #end

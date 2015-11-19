@@ -98,7 +98,7 @@ public class StudiesViewModelBuilder extends AbstractBiomeViewModelBuilder<Studi
         for (Study study : filteredStudies) {
             if (sampleDAO != null) {
                 long sampleSize = sampleDAO.retrieveSampleSizeByStudyId(study.getId());
-                study.setSampleSize(new Long(sampleSize));
+                study.setSampleCount(new Long(sampleSize));
             }
         }
     }

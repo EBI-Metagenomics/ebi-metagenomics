@@ -205,7 +205,7 @@
                     </td>
 
                     <td>
-                        <a href="<c:url value="${baseURL}/projects/${study.studyId}#samples_id"/>">${study.sampleSize}</a>
+                        <a href="<c:url value="${baseURL}/projects/${study.studyId}#samples_id"/>">${study.sampleCount}</a>
                     </td>
                     <td>${study.formattedLastReceived}</td>
                 </tr>
