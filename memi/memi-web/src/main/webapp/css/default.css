@@ -1142,13 +1142,8 @@ border: 0px solid #556f8c;
 margin-left:9px;
 }
 
-#map_canvas {
-float:right;
-border: 1px solid #006AF6;
-display:block;
-width:210px;
-height:140px;
-}
+#map_canvas {float:right; border: 1px solid #006AF6;display:block;width:50%;height:140px;}/*google map*/
+
 /*login window*/
 .sub {display:block;overflow:auto;}
 .sub .sub_log, .sub .sub_sign {-moz-border-radius: 20px;-khtml-border-radius: 20px;-webkit-border-radius: 20px;border-radius: 20px;float: left; display:block; border: 1px solid #e5e5e5;}/*keep rounded prefix for the box*/
