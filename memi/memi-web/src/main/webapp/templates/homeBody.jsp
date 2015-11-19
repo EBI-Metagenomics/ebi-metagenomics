@@ -85,7 +85,7 @@
                        items="${model.experimentCountMap}">
             <span class="high_nb">${experimentCountEntry.value}</span><br/>
             </c:forEach>
-        </div> <div class="grid_12 omega"> metagenomics <br/> metatranscriptomics  <br/> amplicons <br/> assemblies</div></div> </div>
+        </div> <div class="grid_12 omega"> metagenomes<br/> metatranscriptomes  <br/> amplicons <br/> assemblies</div></div> </div>
         <%--<div class="grid_3 jumbo-stats-box" id="stat-member"><span class="icon icon-generic" data-icon="}"></span><br/><span class="high_nb">${model.numOfSubmitters}</span> members </div>--%>
         <div class="grid_6 jumbo-stats-box" id="stat-public">
             <div class="grid_24"><div class="grid_6 alpha" ><span class="icon icon-functional" data-icon="U"></span><br/><span class="stat-lock-title">Public</span></div>
