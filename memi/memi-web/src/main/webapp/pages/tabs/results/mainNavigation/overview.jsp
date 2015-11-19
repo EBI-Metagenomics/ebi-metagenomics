@@ -194,6 +194,16 @@
 
                         <c:if test="${!model.hostAssociated}">
                             <c:choose>
+                            <c:when test="${not empty model.sample.latitude && not empty model.sample.geoLocName}">
+                                    <div id="map_canvas"></div>
+                            </c:when>
+                            <c:otherwise>
+                                <%--<div id="map_country"></div>--%>
+                            </c:otherwise>
+
+                            </c:choose>
+
+                            <c:choose>
                                 <c:when test="${empty model.sample.latitude}">
                                     <%--remove label when emtpy otherwise alignment problem--%>
                                 </c:when>
@@ -201,8 +211,7 @@
                                     <c:choose>
                                         <c:when test="${not empty model.sample.latitude}">
                                             <c:set var="latLon" value="${model.sample.latitude} , ${model.sample.longitude}"/>
-                                            <div id="map_canvas"></div>
-                                            <script language="javascript"> initialize(${model.sample.latitude}, ${model.sample.longitude})</script>
+                                             <script language="javascript"> initialize(${model.sample.latitude}, ${model.sample.longitude})</script>
                                         </c:when>
                                         <c:otherwise>
                                             <c:set var="latLon" value="${notGivenId}"/>
@@ -217,7 +226,7 @@
                                 </c:otherwise>
                             </c:choose>
                         </c:if>
-
+                        <%--host associated - what showing country means ... to redefine more precisely--%>
                         <c:choose>
                             <c:when test="${empty model.sample.geoLocName}">
                                 <%--remove label when emtpy otherwise alignment problem--%>
