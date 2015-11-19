@@ -144,7 +144,7 @@ public class ViewStudiesController extends AbstractController implements IContro
             for (Study study : studies) {
                 fileContent.append(study.getStudyId()).append(',');
                 fileContent.append("\"").append(study.getStudyName()).append("\",");
-                fileContent.append(study.getSampleSize()).append(',');
+                fileContent.append(study.getSampleCount()).append(',');
                 fileContent.append(study.getLastMetadataReceived()).append(',');
                 fileContent.append(study.getStudyStatus()).append(',');
 
