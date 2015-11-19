@@ -116,33 +116,6 @@
 </script>
     <![endif]-->  <%-- HTML5 tags working in IE8 by including this JavaScript in the head  --%>
 
-    <script type="text/javascript"
-            src="https://maps.google.com/maps/api/js?sensor=false">
-    </script>
-    <script type="text/javascript">
-        function initialize(lat, long) {
-            var latlng = new google.maps.LatLng(lat, long);
-            google.maps.MarkerOptions
-            var myOptions = {
-                zoom:4,
-                center:latlng,
-                mapTypeId:google.maps.MapTypeId.ROADMAP,
-                streetViewControl: false
-            };
-            var map = new google.maps.Map(document.getElementById("map_canvas"),
-                    myOptions);
-            var marker = new google.maps.Marker({
-                position:latlng,
-                map:map
-            });
-        }
-
-    </script>
-
-     <%--WARNING this is inserting a character on top of the page--%>
-    <%--<!-- Script and noscript versions for feedback and login links --><script type="text/javascript">--%>
-    <%--document.write('<style type="text/css">#noscript_feedbackLink{display: none;}#noscript_loginLink{display: none;}</style>');--%>
-<%--</script>​--%>
     <!--Load the Google Visualization API-->
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/tablequerywrapper.js"></script>
