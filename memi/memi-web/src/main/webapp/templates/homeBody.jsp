@@ -226,30 +226,29 @@
                                                      title="View all ${model.myStudiesCount} my projects">${model.myStudiesCount}</a></span></h2>
 
                          <div class="list-project-l">
-                             <%--The count starts at 0, that is why we subtract 1 from the end value--%>
-                             <c:forEach var="entry" items="${model.myStudiesMap}" varStatus="status" begin="0"
-                                        end="${model.maxRowNumberOfLatestItems-1}">
+                             <c:forEach var="study" items="${model.studies}" varStatus="status">
                              <div class="list-item">
-                              <div class="list-title"> <div class="biome_icon icon_xs ${entry.key.biomeIconCSSClass}" title="${entry.key.biomeIconTitle} biome"></div>
-                                         <a href="<c:url value="${baseURL}/projects/${entry.key.studyId}"/>"
-                                            class="list_more fl_uppercase_title">${entry.key.studyName}</a>
+                              <div class="list-title"> <div class="biome_icon icon_xs ${study.biomeIconCSSClass}" title="${study.biomeIconTitle} biome"></div>
+                                         <a href="<c:url value="${baseURL}/projects/${study.studyId}"/>"
+                                            class="list_more fl_uppercase_title">${study.studyName}</a>
                               </div>
                               <div class="list-body">
-                                <p class="list-desc"><c:out value="${entry.key.shortStudyAbstract} ..."/></p>
+                                <p class="list-desc"><c:out value="${study.shortStudyAbstract} ..."/></p>
                                 <p class="list-more">
-                                         <a href="<c:url value="${baseURL}/projects/${entry.key.studyId}"/>"
+                                         <a href="<c:url value="${baseURL}/projects/${study.studyId}"/>"
                                             class="more_view">View more</a> - <a
-                                                 href="<c:url value="${baseURL}/projects/${entry.key.studyId}"/>#samples_id"
-                                                 class="list_sample"><c:out value="${entry.value} sample"/><c:if
-                                                 test='${entry.value > 1}'>s</c:if></a>
-                                     <c:if test="${!entry.key.public}">
-                                         <span class="show_tooltip icon icon-functional" data-icon="L" title="Private data"></span>
-                                     </c:if>
-                                     <c:if test="${entry.key.public}">
-                                     <span class="show_tooltip icon icon-functional" data-icon="U" title="Public data"></span>
-                                     </c:if>
-                                    <!-- temp while we wait for runSize to be defined at project level so we can change the condition-->
-                                    <c:if test='${entry.value > 1}'>- <a href="<c:url value="${baseURL}/compare&#35${entry.key.studyId}"/>"  title="Compare samples in this project" class="list_sample"> <span  class="icon icon-functional" data-icon="O"></span> compare</a></c:if>
+                                                 href="<c:url value="${baseURL}/projects/${study.studyId}"/>#samples_id"
+                                                 class="list_sample"><c:out value="${model.studyToSampleCountMap[study.studyId]} sample"/><c:if
+                                                 test='${model.studyToSampleCountMap[study.studyId] > 1}'>s</c:if></a>
+                                    <c:choose>
+                                        <c:when test="${study.public}">
+                                            <span class="show_tooltip icon icon-functional" data-icon="U" title="Public data"></span>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <span class="show_tooltip icon icon-functional" data-icon="L" title="Private data"></span>
+                                        </c:otherwise>
+                                    </c:choose>
+                                    <c:if test='${model.studyToRunCountMap[study.studyId] > 1}'>- <a href="<c:url value="${baseURL}/compare&#35${study.studyId}"/>"  title="Compare samples in this project" class="list_sample"> <span  class="icon icon-functional" data-icon="O"></span> compare</a></c:if>
                                 </p>
                               </div>
                              </div>
@@ -515,7 +514,6 @@
                                          href="<c:url value="${baseURL}/projects/${study.studyId}"/>#samples_id"
                                          class="list_sample"><c:out value="${model.studyToSampleCountMap[study.studyId]} sample"/><c:if
                                          test='${model.studyToSampleCountMap[study.studyId] > 1}'>s</c:if></a>
-                                    <!-- temp while we wait for runSize to be defined at project level so we can change the condition-->
                                     <c:if test='${model.studyToRunCountMap[study.studyId] > 1}'>- <a href="<c:url value="${baseURL}/compare&#35${study.studyId}"/>" title="Compare samples in this project" class="list_sample"> <span  class="icon icon-functional" data-icon="O"></span> compare</a></c:if>
                                 </p>
                              </div>
