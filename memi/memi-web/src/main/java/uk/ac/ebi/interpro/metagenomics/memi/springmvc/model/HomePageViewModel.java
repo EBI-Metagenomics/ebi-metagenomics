@@ -104,7 +104,8 @@ public final class HomePageViewModel extends ViewModel {
     }
 
     public HomePageViewModel(final Submitter submitter,
-                             final Map<Study, Long> myStudiesMap,
+//                             final Map<Study, Long> myStudiesMap,
+                             final List<Study> studies,
                              final List<Sample> mySamples,
                              final String pageTitle,
                              final List<Breadcrumb> breadcrumbs,
@@ -121,9 +122,9 @@ public final class HomePageViewModel extends ViewModel {
                              final Map<String, Long> studyToSampleCountMap,
                              final Map<String, Long> studyToRunCountMap) {
         this(submitter, pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems,
-                publicSamplesCount, privateSamplesCount, publicStudiesCount, privateStudiesCount, new ArrayList<Study>(), publicRunCount, privateRunCount,
+                publicSamplesCount, privateSamplesCount, publicStudiesCount, privateStudiesCount,studies, publicRunCount, privateRunCount,
                 null, null, null, studyToSampleCountMap, studyToRunCountMap);
-        this.myStudiesMap = myStudiesMap;
+//        this.myStudiesMap = myStudiesMap;
         this.mySamples = mySamples;
         this.mySamplesCount = mySamplesCount;
         this.myStudiesCount = myStudiesCount;

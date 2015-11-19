@@ -30,13 +30,13 @@ public interface StudyDAO extends ISecureEntityDAO<Study> {
     List<Study> retrieveOrderedPublicStudies(String propertyName, boolean isDescendingOrder, int maxResult);
 
     /**
-     * Returns an ordered list of public studies where the submitter ID IS equal the specified submitter ID.
+     * Returns an ordered list of studies by submitter ID..
      *
-     * @param submitterId       Submitter ID for the IS equal restriction.
-     * @param propertyName      Name of the column for which the result should be order by.
-     * @param isDescendingOrder Order direction
+     * @param submissionAccountId Submitter ID for the IS equal restriction.
+     * @param propertyName        Name of the column for which the result should be order by.
+     * @param isDescendingOrder   Order direction
      */
-    List<Study> retrieveOrderedStudiesBySubmitter(long submitterId, String propertyName, boolean isDescendingOrder);
+    List<Study> retrieveOrderedStudiesBySubmitter(String submissionAccountId, String propertyName, boolean isDescendingOrder, int maxResult);
 
     /**
      * Returns a list of public studies where the submitter ID IS equal the specified submitter ID.
@@ -82,10 +82,6 @@ public interface StudyDAO extends ISecureEntityDAO<Study> {
      */
     List<Study> retrieveFilteredStudies(List<Criterion> crits, Integer startPosition, Integer pageSize, Boolean isDescendingOrder, String propertyName);
 
-    /**
-     * Returns a list of all public studies.
-     */
-    List<Study> retrievePublicStudies();
 
     Study readByStringId(String studyId);
 
@@ -93,11 +89,6 @@ public interface StudyDAO extends ISecureEntityDAO<Study> {
      * @return Number of all public studies.
      */
     Long countAllPublic();
-
-    /**
-     * @return Number of all private studies.
-     */
-    Long countAllPrivate();
 
     /**
      * @return Number of all studies not equals a specific isPublic value.
@@ -114,27 +105,6 @@ public interface StudyDAO extends ISecureEntityDAO<Study> {
     Long countByCriteria(List<Criterion> crits);
 
     Long countPublicStudiesFilteredByBiomes(Collection<Integer> biomeIds);
-
-    /**
-     * Counts all submission accounts associated to a study.
-     *
-     * @return Number of submission accounts.
-     */
-    Long countDistinctSubmissionAccounts();
-
-    /**
-     * Distinct count over column ext_study_id.
-     *
-     * @return Number of distinct studies (no matter which status, public, private or something else)
-     */
-    Long countDistinct();
-
-    /**
-     * Counts the number of runs (pipeline version not considered).
-     *
-     * @return Number of runs.
-     */
-    Long countNumberOfRuns(String externalStudyId);
 
     /**
      * Retrieves the number of runs for each study.

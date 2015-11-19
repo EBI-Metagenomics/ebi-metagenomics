@@ -105,11 +105,6 @@ public class StudyDAOImpl implements StudyDAO {
     }
 
     @Transactional(readOnly = true)
-    public Long countAllPrivate() {
-        return getStudyCount(0);
-    }
-
-    @Transactional(readOnly = true)
     public Long countByCriteria(final List<Criterion> crits) {
         Session session = sessionFactory.getCurrentSession();
         if (session != null) {
@@ -242,8 +237,8 @@ public class StudyDAOImpl implements StudyDAO {
     }
 
     @Transactional(readOnly = true)
-    public List<Study> retrieveOrderedStudiesBySubmitter(long submitterId, String propertyName,
-                                                         boolean isDescendingOrder) {
+    public List<Study> retrieveOrderedStudiesBySubmitter(String submissionAccountId, String propertyName,
+                                                         boolean isDescendingOrder, int maxResult) {
         List<Study> result = new ArrayList<Study>();
         Session session = sessionFactory.getCurrentSession();
         if (session != null) {
@@ -255,11 +250,12 @@ public class StudyDAOImpl implements StudyDAO {
                 crit.addOrder(Order.asc(propertyName));
             }
             //add WHERE clause
-            crit.add(Restrictions.eq("submitterId", submitterId));
+            crit.add(Restrictions.eq("submissionAccountId", submissionAccountId));
+            crit.setMaxResults(maxResult);
             try {
                 result = crit.list();
             } catch (HibernateException e) {
-                throw new HibernateException("Couldn't retrieve public studies ordered by " + propertyName, e);
+                throw new HibernateException("Couldn't retrieve studies ordered by " + propertyName, e);
             }
         }
         return result;
@@ -384,21 +380,6 @@ public class StudyDAOImpl implements StudyDAO {
     }
 
     @Transactional(readOnly = true)
-    public List<Study> retrievePublicStudies() {
-        Session session = sessionFactory.getCurrentSession();
-        if (session != null) {
-            Criteria criteria = session.createCriteria(Study.class);
-            criteria.add(Restrictions.eq("isPublic", 1));
-            try {
-                return (List<Study>) criteria.list();
-            } catch (HibernateException e) {
-                throw new HibernateException("Couldn't retrieve all public studies!", e);
-            }
-        }
-        return new ArrayList<Study>();
-    }
-
-    @Transactional(readOnly = true)
     public List<Study> retrieveOrderedPublicStudies(final Boolean isDescendingOrder,
                                                     final String propertyName) {
         Session session = sessionFactory.getCurrentSession();
@@ -433,51 +414,6 @@ public class StudyDAOImpl implements StudyDAO {
     }
 
     @Transactional(readOnly = true)
-    public Long countDistinctSubmissionAccounts() {
-        Session session = sessionFactory.getCurrentSession();
-        if (session != null) {
-            try {
-                Criteria criteria = session.createCriteria(Study.class);
-                criteria.setProjection(Projections.countDistinct("submissionAccountId"));
-                return (Long) criteria.uniqueResult();
-            } catch (HibernateException e) {
-                throw new HibernateException("Couldn't retrieve distinct count of submission accounts.", e);
-            }
-        }
-        return null;
-    }
-
-    @Transactional(readOnly = true)
-    public Long countDistinct() {
-        Session session = sessionFactory.getCurrentSession();
-        if (session != null) {
-            try {
-                Criteria criteria = session.createCriteria(Study.class);
-                criteria.setProjection(Projections.countDistinct("studyId"));
-                return (Long) criteria.uniqueResult();
-            } catch (HibernateException e) {
-                throw new HibernateException("Couldn't retrieve distinct count of submission accounts.", e);
-            }
-        }
-        return null;
-    }
-
-    @Transactional(readOnly = true)
-    public Long countNumberOfRuns(String externalStudyId) {
-        Session session = sessionFactory.getCurrentSession();
-        if (session != null) {
-            try {
-                Query query = session.createQuery("select count(*) FROM Study p inner join p.samples sample left join sample.analysisJobs where p.studyId=:studyId");
-                query.setString("studyId", externalStudyId);
-                return (Long) query.uniqueResult();
-            } catch (HibernateException e) {
-                throw new HibernateException("Couldn't retrieve distinct count of submission accounts.", e);
-            }
-        }
-        return null;
-    }
-
-    @Transactional(readOnly = true)
     public Map<String, Long> retrieveRunCountsGroupedByExternalStudyId(Collection<String> externalStudyIds) {
         Session session = sessionFactory.getCurrentSession();
         if (session != null) {
@@ -489,7 +425,7 @@ public class StudyDAOImpl implements StudyDAO {
                 Map<String, Long> transformedResults = transformResultsToMap(results);
                 return transformedResults;
             } catch (HibernateException e) {
-                throw new HibernateException("Couldn't retrieve distinct count of submission accounts.", e);
+                throw new HibernateException("Couldn't retrieve grouped run counts.", e);
             }
         }
         return null;
@@ -507,7 +443,7 @@ public class StudyDAOImpl implements StudyDAO {
                 Map<String, Long> transformedResults = transformResultsToMap(results);
                 return transformedResults;
             } catch (HibernateException e) {
-                throw new HibernateException("Couldn't retrieve distinct count of submission accounts.", e);
+                throw new HibernateException("Couldn't retrieve grouped sample counts.", e);
             }
         }
         return null;
