@@ -353,6 +353,13 @@ border: 1px solid #aeaeae;
 text-decoration:none;
 background:url(../img/bgd_black_op20_8.png);
 }
+
+/*citation - about us*/
+#expand_button {font-size: 136.5%; color: #2B8A97; cursor: pointer;}
+#expand_button:after {font-family: 'EBI-Functional'; color: #bbb; content:"+";  margin: 0 0 0 0.3em; font-size: 80%;}
+#expand_button.min:after {content:"-";  }
+#expand_button:hover:after {color: #2B8A97; }
+.more_citations {display:none;}
 /**************************** END LINKS ********************************/
 
 /**************************** TABLE ***********************************/
