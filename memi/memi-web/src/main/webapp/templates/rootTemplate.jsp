@@ -56,6 +56,9 @@
 
     <%-- remove favicon from img folder to root as was not working anymore--%>
     <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/favicon.ico"/>
+    <link rel="apple-touch-icon" sizes="152x152" href="<c:url value="${pageContext.request.contextPath}/apple-touch-icon-152x152.png"/>" >
+    <link rel="apple-touch-icon" sizes="120x120" href="<c:url value="${pageContext.request.contextPath}/apple-touch-icon-120x120.png"/>" >
+    <link rel="apple-touch-icon" sizes="114x114" href="<c:url value="${pageContext.request.contextPath}/apple-touch-icon-114x114.png"/>" >
 
     <%--?v1.1 will trigger browsers to refresh the source--%>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/default.css?v1.4" type="text/css" media="all"/>
