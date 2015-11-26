@@ -52,7 +52,6 @@
     <mvc:resources mapping="/img/backgrounds/*.*" location="/img/backgrounds/"/>
     <mvc:resources mapping="/img/funding/*.*" location="/img/funding/"/>
     <mvc:resources mapping="/*.ico" location="/"/>
-    <mvc:resources mapping="/*.png" location="/icon/"/>
 
     <!-- Forwards requests to the "/" resource to the "welcome" view -->
     <!--<mvc:view-controller path="/" view-name="homePage"/>-->
