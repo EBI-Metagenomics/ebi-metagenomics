@@ -50,6 +50,7 @@
     <mvc:resources mapping="/js/tweet/*.*" location="/js/tweet/"/>
     <mvc:resources mapping="/img/backgrounds/*.*" location="/img/backgrounds/"/>
     <mvc:resources mapping="/img/funding/*.*" location="/img/funding/"/>
+    <mvc:resources mapping="/img/icon/*.png" location="/img/icon/"/>
     <mvc:resources mapping="/*.ico" location="/"/>
 
     <!-- Forwards requests to the "/" resource to the "welcome" view -->

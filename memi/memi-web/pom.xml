@@ -282,18 +282,6 @@
             <version>${ena-authentication.client.version}</version>
         </dependency>
 
-        <!--<dependency>-->
-        <!--<groupId>org.json</groupId>-->
-        <!--<artifactId>json</artifactId>-->
-        <!--<version>20140107</version>-->
-        <!--</dependency>-->
-
-        <!--<dependency>&lt;!&ndash; jackson &ndash;&gt;-->
-        <!--<groupId>org.codehaus.jackson</groupId>-->
-        <!--<artifactId>jackson-mapper-asl</artifactId>-->
-        <!--<version>1.9.13</version>-->
-        <!--</dependency>-->
-
     </dependencies>
 
     <build>

@@ -1,6 +1,5 @@
 package uk.ac.ebi.interpro.metagenomics.memi.core;
 
-import org.apache.catalina.connector.ClientAbortException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.transaction.TransactionException;
@@ -44,7 +43,7 @@ public class CustomizedExceptionResolver extends SimpleMappingExceptionResolver 
     @Override
     public ModelAndView doResolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
         //Sending email notifications OR render exception specific views
-        if (ex instanceof MissingServletRequestParameterException || ex instanceof ClientAbortException) {
+        if (ex instanceof MissingServletRequestParameterException || ex.getClass().getSimpleName().equals("ClientAbortException")) {
             //Ignore
             //DO NOT SEND AN EMAIL OUT
         } else if (ex instanceof EntryNotFoundException || ex instanceof EmptyResultDataAccessException) {
