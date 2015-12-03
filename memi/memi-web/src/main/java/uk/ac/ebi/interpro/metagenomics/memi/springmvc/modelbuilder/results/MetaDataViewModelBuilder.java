@@ -60,8 +60,14 @@ public class MetaDataViewModelBuilder extends AbstractResultViewModelBuilder<Met
 
     private boolean isHostAssociated(Sample sample) {
         if (sample != null) {
-            if (sample instanceof HostSample) {
-                return true;
+            Biome biome = sample.getBiome();
+            if (biome != null) {
+                String lineage = biome.getLineage();
+                if (lineage != null) {
+                    if (lineage.startsWith("root:Host-associated")) {
+                        return true;
+                    }
+                }
             }
         }
         return false;
@@ -72,10 +78,10 @@ public class MetaDataViewModelBuilder extends AbstractResultViewModelBuilder<Met
      */
     private void buildPublicationLists() {
         for (Publication pub : sample.getPublications()) {
-            if (pub.getPubType().equals(PublicationType.PUBLICATION)) {
-                relatedPublications.add(pub);
-            } else if (pub.getPubType().equals(PublicationType.WEBSITE_LINK)) {
+            if (pub.getPubType().equals("WEBSITE_LINK")) {
                 relatedLinks.add(pub);
+            } else {
+                relatedPublications.add(pub);
             }
         }
         //Sorting lists

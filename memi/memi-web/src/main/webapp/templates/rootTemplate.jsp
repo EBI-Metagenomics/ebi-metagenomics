@@ -9,7 +9,7 @@
 
     <title><tiles:insertAttribute name="pageTitle"/>&lt; EBI metagenomics &lt; EMBL-EBI</title>
 
-    <meta name="description" content="EBI Metagenomics is a new web resource targeted at metagenomic researchers"/>
+    <meta name="description" content="EBI Metagenomics is a free resource for the analysis, archiving and browsing of metagenomic and metatranscriptomic data"/>
     <meta name="keywords" content="ebi, EBI, InterPro, interpro, metagenomics, metagenomic, metagenome, metagenomes, DNA, microbiology, microbial, ecology, organisms, microorganism, microorganisms, biodiversity, diversity, gene, genes, genome, genomes, genomic, genomics, ecogenomics, community genomics, genetic, sequencing, sequence, environment, environmental, ecosystem, ecosystems, samples, sample, annotation, protein, research, archive, metabolic, pathways, analysis, function, GAIA, shotgun, pyrosequencing, community, communities, metabolism, cultivation, bioinformatics, bioinformatic, database, metadata, dataset, data, repository"/>
     <meta name="author" content="InterPro EMBL-EBI">
     <!-- Mobile viewport optimized-->
@@ -56,6 +56,9 @@
 
     <%-- remove favicon from img folder to root as was not working anymore--%>
     <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/favicon.ico"/>
+    <link rel="apple-touch-icon" sizes="152x152" href="${pageContext.request.contextPath}/img/icon/apple-touch-icon-152x152.png"/>
+    <link rel="apple-touch-icon" sizes="120x120" href="${pageContext.request.contextPath}/img/icon/apple-touch-icon-120x120.png"/>
+    <link rel="apple-touch-icon" sizes="114x114" href="${pageContext.request.contextPath}/img/icon/apple-touch-icon-114x114.png"/>
 
     <%--?v1.1 will trigger browsers to refresh the source--%>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/default.css?v1.4" type="text/css" media="all"/>
@@ -116,41 +119,6 @@
 </script>
     <![endif]-->  <%-- HTML5 tags working in IE8 by including this JavaScript in the head  --%>
 
-    <%-- simple script for alternate row in a table color was #EFF1F1 originally--%>
-    <script>
-        $(document).ready(function () {
-            $("table.result tbody tr:even").css("background-color", "#F4F4F8");
-            $("table.result tbody tr:odd").css("background-color", "#e9e9e9");
-        });
-    </script>
-
-    <script type="text/javascript"
-            src="https://maps.google.com/maps/api/js?sensor=false">
-    </script>
-    <script type="text/javascript">
-        function initialize(lat, long) {
-            var latlng = new google.maps.LatLng(lat, long);
-            google.maps.MarkerOptions
-            var myOptions = {
-                zoom:4,
-                center:latlng,
-                mapTypeId:google.maps.MapTypeId.ROADMAP,
-                streetViewControl: false
-            };
-            var map = new google.maps.Map(document.getElementById("map_canvas"),
-                    myOptions);
-            var marker = new google.maps.Marker({
-                position:latlng,
-                map:map
-            });
-        }
-
-    </script>
-
-     <%--WARNING this is inserting a character on top of the page--%>
-    <%--<!-- Script and noscript versions for feedback and login links --><script type="text/javascript">--%>
-    <%--document.write('<style type="text/css">#noscript_feedbackLink{display: none;}#noscript_loginLink{display: none;}</style>');--%>
-<%--</script>​--%>
     <!--Load the Google Visualization API-->
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/tablequerywrapper.js"></script>
@@ -211,14 +179,10 @@
 <div class="ebi_contents" id="contents"> <%-- style="margin:0; width:100%;"--%>
     <div id="content-full">
     <div class="grid_24">
+    <!-- Remove the breadcrumbs on homepage -->
+    <c:if test="${not empty model.breadcrumbs}">
     <tiles:insertAttribute name="breadcrumbs"/>
-
-        <%--<header>--%>
-            <%--<tiles:insertAttribute name="header"/>--%>
-        <%--</header>--%>
-        <%--<nav>--%>
-            <%--<tiles:insertAttribute name="mainMenu"/>--%>
-        <%--</nav>--%>
+    </c:if>
 
     <tiles:insertAttribute name="body"/>
     </div>

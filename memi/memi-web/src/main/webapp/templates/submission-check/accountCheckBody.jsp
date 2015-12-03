@@ -44,7 +44,7 @@
 
             <p>In order to confirm that your ENA submitter account is registered with us, please enter your account details.</p>
 
-            <fieldset style="border:0px solid grey;">
+            <fieldset>
                 <div class="form_row">
                     <label>Username</label>
                     <form:input path="userName" cssErrorClass="error"/>

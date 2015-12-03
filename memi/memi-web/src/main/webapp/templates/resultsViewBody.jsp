@@ -1,37 +1,63 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<!-- Google map script - used in overview-->
+<script src="https://maps.googleapis.com/maps/api/js"></script>
+<script type="text/javascript">
+    function initialize(lat, long) {
+        var latlng = new google.maps.LatLng(lat, long);
+        google.maps.MarkerOptions
+        var myOptions = {
+            zoom:4,
+            center:latlng,
+            mapTypeId:google.maps.MapTypeId.ROADMAP,
+            streetViewControl: false
+        };
+        var map = new google.maps.Map(document.getElementById("map_canvas"),
+                myOptions);
+        var marker = new google.maps.Marker({
+            position:latlng,
+            map:map
+        });
+//       IF WE WANT TO IMPLEMENT A SHOW COUNTRY BOUNDARIES VERSION - doesn't work for "Indian ocean"
+// var map2 = new google.maps.Map(document.getElementById('map_country'), {
+//           center: latlng,
+//           zoom: 3
+//         });
+
+         <%--var layer = new google.maps.FusionTablesLayer({--%>
+           <%--query: {--%>
+               <%--select: 'geometry',--%>
+                   <%--from: '1N2LBk4JHwWpOY4d9fobIn27lfnZ5MDy-NoqqRpk',--%>
+                   <%--where: "Name IN ('${model.sample.geoLocName}')"--%>
+           <%--}--%>
+         <%--});--%>
+         <%--layer.setMap(map2);--%>
+    }
+</script>
 
 <c:choose>
     <c:when test="${not empty model.sample}">
        <a href="<c:url value="${baseURL}/pipelines/${model.analysisJob.pipelineRelease.releaseVersion}"/>"> <div class="icon_pipeline_v anim show_tooltip" title="Data analysed with pipeline v.${model.analysisJob.pipelineRelease.releaseVersion}">Pipeline v.${model.analysisJob.pipelineRelease.releaseVersion}</div></a>
 
-        <h2 class="fl_uppercase_title run_title extra_margin">Run <span>(<a title="Click to view entry on European Nucleotide Archive"
-                                                                              href="https://www.ebi.ac.uk/ena/data/view/${model.run.externalRunId}"
-                                                                              class="ext">${model.run.externalRunId}</a>)</span></h2>
-
-
-
-        <div id="img_div" style="position: fixed; top: 9px; right: 38px; z-index: 10; "></div>
-        <%--container used to convert   google chart into image--%>
+        <h2 class="fl_uppercase_title run_title extra_margin">Run <span>(${model.run.externalRunId})</span></h2>
 
         <div class="sample_ana">
         <div id="navtabs">
-
-                <%--Main Tabs--%>
+            <%--Main Tabs--%>
             <ul>
                 <li>
                     <a title="Overview"
                        href="<c:url value="${baseURL}/projects/${model.run.externalProjectId}/samples/${model.run.externalSampleId}/runs/${model.run.externalRunId}/results/overview/versions/${model.analysisJob.pipelineRelease.releaseVersion}"/>"><span>Overview</span></a>
                 </li>
                 <li>
-                    <a title="Quality-Control"
+                    <a title="Quality control"
                        href="<c:url value="${baseURL}/projects/${model.run.externalProjectId}/samples/${model.run.externalSampleId}/runs/${model.run.externalRunId}/results/qualityControl/versions/${model.analysisJob.pipelineRelease.releaseVersion}"/>"><span>Quality control</span></a>
                 </li>
-                <li><a title="Taxonomy-Analysis"
+                <li><a title="Taxonomy analysis"
                        href="<c:url value="${baseURL}/projects/${model.run.externalProjectId}/samples/${model.run.externalSampleId}/runs/${model.run.externalRunId}/results/taxonomic/versions/${model.analysisJob.pipelineRelease.releaseVersion}"/>"><span>Taxonomic analysis</span></a>
                 </li>
                 <li>
-                    <a title="Functional-Analysis"
+                    <a title="Functional analysis"
                        href="<c:url value="${baseURL}/projects/${model.run.externalProjectId}/samples/${model.run.externalSampleId}/runs/${model.run.externalRunId}/results/functional/versions/${model.analysisJob.pipelineRelease.releaseVersion}"/>"><span>Functional analysis</span></a>
                 </li>
                 <li>

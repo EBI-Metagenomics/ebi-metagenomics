@@ -67,9 +67,12 @@ public class CompareViewModelBuilder extends AbstractViewModelBuilder<CompareVie
 
         //If submission account Id is not NULL then get private studies only, OTHERWISE public only
         if (submissionAccountId != null) {
-            criterionList.add(Restrictions.eq("submissionAccountId", submissionAccountId));
+            criterionList.add(Restrictions.or(
+                    Restrictions.eq("submissionAccountId", submissionAccountId),
+                    Restrictions.eq("isPublic", 1)
+            ));
         } else {
-            criterionList.add(Restrictions.eq("isPublic", true));
+            criterionList.add(Restrictions.eq("isPublic", 1));
         }
 
         return criterionList;

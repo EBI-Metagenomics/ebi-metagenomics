@@ -43,7 +43,8 @@ public class CustomizedExceptionResolver extends SimpleMappingExceptionResolver 
     @Override
     public ModelAndView doResolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
         //Sending email notifications OR render exception specific views
-        if (ex instanceof MissingServletRequestParameterException) {
+        if (ex instanceof MissingServletRequestParameterException || ex.getClass().getSimpleName().equals("ClientAbortException")) {
+            //Ignore
             //DO NOT SEND AN EMAIL OUT
         } else if (ex instanceof EntryNotFoundException || ex instanceof EmptyResultDataAccessException) {
             //DO NOT SEND AN EMAIL OUT

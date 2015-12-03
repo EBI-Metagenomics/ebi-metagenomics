@@ -53,23 +53,36 @@ public class KronaChartsController extends AbstractResultViewController {
                 if (taxonomy && analysisJob != null) {
                     File fileToStream = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, propertyContainer.getResultFileDefinition(FileDefinitionId.KRONA_HTML_FILE));
                     log.debug("Checking if Krona result file does exit before streaming it...");
-                    if (!fileToStream.exists()) {
+                    if (fileToStream == null || !fileToStream.exists()) {
                         log.warn(fileToStream.getAbsolutePath() + " doesn't exist!");
                         return;
                     } else {
-                        log.debug("Streaming Krona chart...");
-                        ServletOutputStream servletOut = response.getOutputStream();
-                        byte[] buffer = new byte[4096];
-                        InputStream inputStream = new FileInputStream(fileToStream);
-                        int contentLengthCounter = 0;
-                        int read;
-                        while ((read = inputStream.read(buffer)) != -1) {
-                            servletOut.write(buffer, 0, read);
-                            contentLengthCounter += read;
+                        ServletOutputStream servletOutStream = null;
+                        InputStream fileInputStream = null;
+                        try {
+                            log.debug("Streaming Krona chart...");
+                            servletOutStream = response.getOutputStream();
+                            byte[] buffer = new byte[4096];
+                            fileInputStream = new FileInputStream(fileToStream);
+                            int contentLengthCounter = 0;
+                            int read;
+                            while ((read = fileInputStream.read(buffer)) != -1) {
+                                servletOutStream.write(buffer, 0, read);
+                                contentLengthCounter += read;
+                            }
+                            response.setContentLength(contentLengthCounter);
+                            fileInputStream.close();
+                            servletOutStream.flush();
+                            servletOutStream.close();
+                        } catch (IOException e) {
+                            if (servletOutStream != null) {
+                                servletOutStream.close();
+                            }
+                            if (fileInputStream != null) {
+                                fileInputStream.close();
+                            }
+                            throw e;
                         }
-                        response.setContentLength(contentLengthCounter);
-                        servletOut.flush();
-                        servletOut.close();
                     }
                 } else { //analysis job is NULL
                     response.setStatus(HttpServletResponse.SC_NO_CONTENT);

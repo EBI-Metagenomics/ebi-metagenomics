@@ -19,8 +19,8 @@
         <entry key="READS_WITHOUT_MATCHES_FASTA_FILE" value-ref="readsWithoutInterProMatchesFile"/>
         <entry key="PREDICTED_CDS_FILE" value-ref="predictedCDSFile"/>
         <entry key="PREDICTED_CDS_WITH_INTERPRO_MATCHES_FILE" value-ref="predictedCDSWithInterProMatchesFile"/>
-        <entry key="PREDICTED_ORF_WITHOUT_ANNOTATION_FILE" value-ref="predictedORFWithoutAnnotation"/>
         <entry key="PREDICTED_CDS_WITHOUT_ANNOTATION_FILE" value-ref="predictedCDSWithoutAnnotation"/>
+        <entry key="PREDICTED_ORF_WITHOUT_ANNOTATION_FILE" value-ref="predictedORFWithoutAnnotation"/>
         <!--<entry key="READS_WITHOUT_MATCHES_FASTA_FILE" value-ref="readsWithoutMatchesFile"/>-->
         <!--taxonomic data-->
         <entry key="R_RNA_5S_FASTA_FILE" value-ref="rRNA5sFile"/>
@@ -44,6 +44,7 @@
     <util:map id="chunkedResultFilesMap" map-class="java.util.HashMap" key-type="java.lang.String"
               value-type="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.DownloadableFileDefinition">
         <!--sequence data version 1 only-->
+        <entry key="MASKED_FASTA" value-ref="chunkedMaskedReadsFile"/>
 
         <!--sequence data version 2 -->
         <entry key="PROCESSED_READS" value-ref="chunkedProcessedReadsFile"/>
@@ -51,8 +52,8 @@
         <entry key="READS_WITH_MATCHES_FASTA_FILE" value-ref="chunkedReadsWithInterProMatchesFile"/>
         <entry key="READS_WITHOUT_MATCHES_FASTA_FILE" value-ref="chunkedReadsWithoutInterProMatchesFile"/>
         <entry key="PREDICTED_CDS_FILE" value-ref="chunkedPredictedCDSFile"/>
-        <entry key="PREDICTED_ORF_WITHOUT_ANNOTATION_FILE" value-ref="chunkedPredictedORFWithoutAnnotation"/>
         <entry key="PREDICTED_CDS_WITHOUT_ANNOTATION_FILE" value-ref="chunkedPredictedCDSWithoutAnnotation"/>
+        <entry key="PREDICTED_ORF_WITHOUT_ANNOTATION_FILE" value-ref="chunkedPredictedORFWithoutAnnotation"/>
 
         <!--functional data-->
         <entry key="INTERPROSCAN_RESULT_FILE" value-ref="chunkedInterProScanResultFile"/>
@@ -73,8 +74,8 @@
         <value>READS_WITH_MATCHES_FASTA_FILE</value>
         <value>READS_WITHOUT_MATCHES_FASTA_FILE</value>
         <value>PREDICTED_CDS_FILE</value>
-        <value>PREDICTED_ORF_WITHOUT_ANNOTATION_FILE</value>
         <value>PREDICTED_CDS_WITHOUT_ANNOTATION_FILE</value>
+        <value>PREDICTED_ORF_WITHOUT_ANNOTATION_FILE</value>
         <!--functional result files-->
         <value>INTERPROSCAN_RESULT_FILE</value>
         <value>GO_COMPLETE_FILE</value>
@@ -96,8 +97,8 @@
         <value>READS_WITH_MATCHES_FASTA_FILE</value>
         <value>READS_WITHOUT_MATCHES_FASTA_FILE</value>
         <value>PREDICTED_CDS_FILE</value>
-        <value>PREDICTED_ORF_WITHOUT_ANNOTATION_FILE</value>
         <value>PREDICTED_CDS_WITHOUT_ANNOTATION_FILE</value>
+        <value>PREDICTED_ORF_WITHOUT_ANNOTATION_FILE</value>
         <!--functional result files-->
         <value>INTERPROSCAN_RESULT_FILE</value>
         <value>GO_COMPLETE_FILE</value>

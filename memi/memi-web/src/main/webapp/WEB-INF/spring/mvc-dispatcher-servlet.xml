@@ -43,7 +43,6 @@
     <!--<mvc:resources mapping="/fonts/*.svg" location="/fonts/"/>-->
     <mvc:resources mapping="/fonts/*.*" location="/fonts/"/>
     <mvc:resources mapping="/css/*.*" location="/css/"/>
-    <mvc:resources mapping="/css/tweet/*.*" location="/css/tweet/"/>
     <mvc:resources mapping="/js/*.*" location="/js/"/>
     <mvc:resources mapping="/js/qtip/*.*" location="/js/qtip/"/>
     <mvc:resources mapping="/js/jquery-1.11.1/*.*" location="/js/jquery-1.11.1/"/>
@@ -51,6 +50,7 @@
     <mvc:resources mapping="/js/tweet/*.*" location="/js/tweet/"/>
     <mvc:resources mapping="/img/backgrounds/*.*" location="/img/backgrounds/"/>
     <mvc:resources mapping="/img/funding/*.*" location="/img/funding/"/>
+    <mvc:resources mapping="/img/icon/*.png" location="/img/icon/"/>
     <mvc:resources mapping="/*.ico" location="/"/>
 
     <!-- Forwards requests to the "/" resource to the "welcome" view -->

@@ -2,49 +2,74 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <div id="tax-pie">
 
-        <div class="chart_container">
-            <div class="chart-block">
+    <div class="chart_container">
+        <div class="chart-block col-1-3">
             <div id="tax_chart_pie_dom"></div>
+        </div>
+
+        <div class="chart-block col-1-3">
+            <div class="but_chart_export ui-buttonset">
+                <button id="select"
+                        class="ui-button ui-widget ui-state-default ui-button-text-icon-secondary ui-corner-right"><span
+                        class="ui-button-text">Export</span><span
+                        class="ui-button-icon-secondary ui-icon ui-icon-triangle-1-s"></span></button>
             </div>
 
-                <div class="chart-block">
-                <div class="but_chart_export ui-buttonset">
-                    <button id="taxpie" style="display: none;"></button>
-                    <button id="select" class="ui-button ui-widget ui-state-default ui-button-text-icon-secondary ui-corner-right"><span class="ui-button-text">Export</span><span class="ui-button-icon-secondary ui-icon ui-icon-triangle-1-s"></span></button>
-                </div>
+            <ul class="export_list">
+                <li><strong>Domain composition</strong></li>
+                <li class="chart_exp png" id="pie_dom_png"><a
+                        onclick="saveAsImg(document.getElementById('tax_chart_pie_dom'),'<spring:message code="file.name.tax.pie.chart.domain.png"/>',1);">PNG</a>
+                </li>
+                <li class="chart_exp png" id="pie_dom_png_h"><a
+                        onclick="saveAsImg(document.getElementById('tax_chart_pie_dom'),'<spring:message code="file.name.tax.pie.chart.domain.high.png"/>',300/72);">PNG
+                    (Higher quality)</a></li>
+                <li class="chart_exp" id="pie_dom_svg"><a
+                        onclick="saveAsSVG(document.getElementById('tax_chart_pie_dom'),'<spring:message code="file.name.tax.pie.chart.domain.svg"/>');">SVG</a>
+                <li><strong>Phylum composition</strong></li>
+                <%--<li class="chart_exp"><a onclick="toImg(document.getElementById('tax_chart_pie_phy'), document.getElementById('img_div'));">Snapshot</a> </li>--%>
+                <li class="chart_exp png" id="pie_phy_png"><a
+                        onclick="saveAsImg(document.getElementById('tax_chart_pie_phy'),'<spring:message code="file.name.tax.pie.chart.phylum.png"/>',1);">PNG</a>
+                </li>
+                <li class="chart_exp png" id="pie_phy_png_h"><a
+                        onclick="saveAsImg(document.getElementById('tax_chart_pie_phy'),'<spring:message code="file.name.tax.pie.chart.phylum.high.png"/>',300/72);">PNG
+                    (Higher quality)</a></li>
+                <li class="chart_exp" id="pie_phy_svg"><a
+                        onclick="saveAsSVG(document.getElementById('tax_chart_pie_phy'),'<spring:message code="file.name.tax.pie.chart.phylum.svg"/>');">SVG</a>
+            </ul>
 
-                <ul class="export_list">
-                   <li><strong>Domain composition</strong></li>
-                   <%--<li class="chart_exp"><a onclick="toImg(document.getElementById('tax_chart_pie_dom'), document.getElementById('img_div'));">Snapshot</a></li>--%>
-                   <li class="chart_exp png" id="pie_dom_png"><a onclick="saveAsImg(document.getElementById('tax_chart_pie_dom'),'<spring:message code="file.name.tax.pie.chart.domain.png"/>',1);">PNG</a></li>
-                   <li class="chart_exp png" id="pie_dom_png_h"><a onclick="saveAsImg(document.getElementById('tax_chart_pie_dom'),'<spring:message code="file.name.tax.pie.chart.domain.high.png"/>',300/72);">PNG (Higher quality)</a></li>
-                   <li class="chart_exp" id="pie_dom_svg"><a onclick="saveAsSVG(document.getElementById('tax_chart_pie_dom'),'<spring:message code="file.name.tax.pie.chart.domain.svg"/>');">SVG</a>
-                   <li><strong>Phylum composition</strong></li>
-                   <%--<li class="chart_exp"><a onclick="toImg(document.getElementById('tax_chart_pie_phy'), document.getElementById('img_div'));">Snapshot</a> </li>--%>
-                   <li class="chart_exp png" id="pie_phy_png"><a onclick="saveAsImg(document.getElementById('tax_chart_pie_phy'),'<spring:message code="file.name.tax.pie.chart.phylum.png"/>',1);">PNG</a></li>
-                   <li class="chart_exp png" id="pie_phy_png_h"><a onclick="saveAsImg(document.getElementById('tax_chart_pie_phy'),'<spring:message code="file.name.tax.pie.chart.phylum.high.png"/>',300/72);">PNG (Higher quality)</a></li>
-                   <li class="chart_exp" id="pie_phy_svg"><a onclick="saveAsSVG(document.getElementById('tax_chart_pie_phy'),'<spring:message code="file.name.tax.pie.chart.phylum.svg"/>');">SVG</a>
-                </ul>
+            <div id="tax_chart_pie_phy"></div>
+        </div>
 
-                <div id="tax_chart_pie_phy"></div>
-            </div>
-            <div class="chart-block">
-            <div id="tax_dashboard">
+            <div id="tax_dashboard" class="col-1-3">
                 <div id="tax_table_filter"></div>
                 <div id="tax_table_pie"></div>
                 <%--<div id="table_div"></div>--%>
+                <div class="msg_help blue_h phylum_help">
+                    <p><span class="icon icon-generic" data-icon="i"></span>This view aggregates the taxonomy
+                        information at the domain and phylum level. To download the full detailed taxonomy distribution
+                        (TSV format),
+                        <a href="#ui-id-6" class="open-tab" data-tab-index="4"> please follow this link</a>.</p>
+                </div>
             </div>
-            </div>
-        </div>
+
+    </div>
 </div>
 
 <%--Globale page properties--%>
 <c:choose>
-    <c:when test="${model.run.releaseVersion == '1.0'}"><c:set var="phylumCompositionTitle" scope="request" value="Phylum composition (Total: ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator} OTUs)"/></c:when>
-    <c:otherwise><c:set var="phylumCompositionTitle" scope="request" value="Phylum composition (Total: ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator} reads)"/></c:otherwise>
+    <c:when test="${model.run.releaseVersion == '1.0'}"><c:set var="phylumCompositionTitle" scope="request"
+                                                               value="Phylum composition (Total: ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator} OTUs)"/></c:when>
+    <c:otherwise><c:set var="phylumCompositionTitle" scope="request"
+                        value="Phylum composition (Total: ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator} reads)"/></c:otherwise>
 </c:choose>
 
 <script type="text/javascript">
+    // script to make the tab download link work
+    $('.open-tab').click(function (event) {
+        $('#navtabs').tabs("option", "active", $(this).data("tab-index"));
+//        $('#download_tax_analysis').css("background-color", "yellow");
+    });
+
     drawDomainCompositionPieChartView();
     drawPhylumPieChart();
     drawPhylumTablePieChartView();
@@ -63,7 +88,7 @@
             'titleTextStyle':{fontSize:12},
             'fontName':'"Arial"',
             'colors':[${model.taxonomyAnalysisResult.domainComposition.colorCode}],
-            'width':250, 'height':299,
+            'height':299,
             'chartArea':{left:20, top:30, width:"100%", height:"100%"},
             'pieSliceBorderColor':'none',
             'legend':{fontSize:10, alignment:'center', 'textStyle':{'fontSize':10}},
@@ -79,10 +104,14 @@
         var taxMatchesDataPieChart = new google.visualization.DataTable();
         taxMatchesDataPieChart.addColumn('string', 'Phylum');
         taxMatchesDataPieChart.addColumn('string', 'Domain');
-        <c:choose>
-            <c:when test="${model.run.releaseVersion == '1.0'}">taxMatchesDataPieChart.addColumn('number', 'Unique OTUs');taxMatchesDataPieChart.addColumn('number', '%');</c:when>
-            <c:otherwise>taxMatchesDataPieChart.addColumn('number', 'Number of reads');taxMatchesDataPieChart.addColumn('number', '%');</c:otherwise>
-        </c:choose>
+    <c:choose>
+        <c:when test="${model.run.releaseVersion == '1.0'}">taxMatchesDataPieChart.addColumn('number', 'Unique OTUs');
+        taxMatchesDataPieChart.addColumn('number', '%');
+    </c:when>
+        <c:otherwise>taxMatchesDataPieChart.addColumn('number', 'Number of reads');
+        taxMatchesDataPieChart.addColumn('number', '%');
+    </c:otherwise>
+    </c:choose>
         taxMatchesDataPieChart.addRows([
             <c:set var="addComma" value="false"/><c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResult.taxonomyDataSet}" varStatus="status"><c:choose><c:when test="${addComma}">,
             </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>
@@ -100,7 +129,7 @@
         var taxTableOptions = new google.visualization.ChartWrapper({
             'chartType':'Table',
             'containerId':'tax_table_pie',
-            'options':{ allowHtml:true, showRowNumber:true, page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false }
+            'options':{ allowHtml:true, showRowNumber:true, width: '100%', page:'enable', pageSize:10, pagingSymbols:{prev:'prev', next:'next'}, sortColumn:2, sortAscending:false }
         });
 
 // Draw the Dashboard for the pie chart
@@ -117,10 +146,14 @@
         var taxMatchesData2 = new google.visualization.DataTable();
         taxMatchesData2.addColumn('string', 'Phylum');
         taxMatchesData2.addColumn('string', 'Domain');
-        <c:choose>
-            <c:when test="${model.run.releaseVersion == '1.0'}">taxMatchesData2.addColumn('number', 'Unique OTUs');taxMatchesData2.addColumn('number', '%');</c:when>
-            <c:otherwise>taxMatchesData2.addColumn('number', 'Number of reads');taxMatchesData2.addColumn('number', '%');</c:otherwise>
-        </c:choose>
+    <c:choose>
+        <c:when test="${model.run.releaseVersion == '1.0'}">taxMatchesData2.addColumn('number', 'Unique OTUs');
+        taxMatchesData2.addColumn('number', '%');
+    </c:when>
+        <c:otherwise>taxMatchesData2.addColumn('number', 'Number of reads');
+        taxMatchesData2.addColumn('number', '%');
+    </c:otherwise>
+    </c:choose>
         taxMatchesData2.addRows([
             <c:set var="addComma" value="false"/><c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResult.taxonomyDataSet}" varStatus="status"><c:choose><c:when test="${addComma}">,
             </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>
@@ -129,14 +162,11 @@
 
         var options = {'title':'${phylumCompositionTitle}', 'titleTextStyle':{fontSize:12}, 'fontName':'"Arial"', 'colors':[${model.taxonomyAnalysisResult.colorCodeForPieChart}],
             //Krona style 'colors':['#d47f7f','#d1a575','#d4c97f','#99d47f','#7fd4a7','#7fc3d4','#7f8ad4','#a77fd4','#d47fd3','#d47faf','#ccc','#ccc','#ccc'],
-            'width':274,
             'height':299,
             'pieSliceTextStyle':{bold:true, color:'white'},
             'legend':'none',
             'chartArea':{left:20, top:30, width:"84%", height:"100%"},
             'pieSliceBorderColor':'none',
-            //          WITH CAPTION 'legend':{position:'right', fontSize:10}, 'chartArea':{left:10, top:30, width:"100%", height:"100%"},
-//            'backgroundColor':'red',
             'sliceVisibilityThreshold':${model.taxonomyAnalysisResult.sliceVisibilityThresholdNumerator / model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator}
         };
 
@@ -165,5 +195,11 @@
 //        table.setSelection(phylumPieChart.getSelection());
 //    });
     }
+   //make the charts responsive
+       $(window).resize(function(){
+           drawDomainCompositionPieChartView();
+           drawPhylumPieChart();
+           drawPhylumTablePieChartView();
+       });
 </script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/export-button-menu.js"></script>

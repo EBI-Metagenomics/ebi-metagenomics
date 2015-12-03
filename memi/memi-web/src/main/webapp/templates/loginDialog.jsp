@@ -19,11 +19,11 @@
                 <div class="form_row"><h3>Login</h3></div>
                 <div class="form_row">
                     <label for="loginDialog_userName"><spring:message code="username.label"/></label>
-                    <form:input id="loginDialog_userName" path="userName" cssStyle="width:260px;"/>
+                    <form:input id="loginDialog_userName" path="userName" cssStyle="width:90%;"/>
                 </div>
                 <div class="form_row">
                     <label for="loginDialog_password"><spring:message code="loginForm.inputField.password.label"/></label>
-                    <form:password id="loginDialog_password" path="password" cssStyle="width:260px;"/>
+                    <form:password id="loginDialog_password" path="password" cssStyle="width:90%;"/>
                     <span id="loginDialog_userName.errors" class="error"></span>
                 </div>
                 <div>
@@ -61,7 +61,7 @@
     $(document).ready(function () {
         //Click event for openEntryViewPopup
         $('#LoginBlockUI, #LoginBlockUI-text').click(function () {
-            $.blockUI({ message:$('#login_dialog_div'), baseZ:100000, overlayCSS:{ backgroundColor:'#000', opacity:0.6, cursor:'pointer'}, css:{top:'25%', left:'25%', width:'708px', padding:'0px', border:'1px #AAA solid', 'border-radius':'12px', backgroundColor:'#C9C9C9' }});
+            $.blockUI({ message:$('#login_dialog_div'), baseZ:100000, overlayCSS:{ backgroundColor:'#000', opacity:0.6, cursor:'pointer'}, css:{top:'18%', left:'28%', width:'50%',  padding:'0px', border:'1px #AAA solid', 'border-radius':'12px', backgroundColor:'#C9C9C9' }});
             //make the black overlay clickable and removable
             $('.blockOverlay').click($.unblockUI);
             $('#login_form').trigger("reset");

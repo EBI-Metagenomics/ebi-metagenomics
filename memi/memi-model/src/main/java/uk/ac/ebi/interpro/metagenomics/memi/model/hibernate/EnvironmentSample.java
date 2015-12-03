@@ -64,7 +64,7 @@ public class EnvironmentSample extends Sample {
         return this.getClass();
     }
 
-    public SampleType getSampleType() {
-        return Sample.SampleType.ENVIRONMENTAL;
-    }
+//    public SampleType getSampleType() {
+//        return Sample.SampleType.ENVIRONMENTAL;
+//    }
 }

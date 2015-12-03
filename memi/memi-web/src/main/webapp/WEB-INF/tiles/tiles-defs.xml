@@ -52,9 +52,9 @@
         <put-attribute name="body" value="/templates/submission-check/userNameCheckSummaryBody.jsp"/>
     </definition>
 
-    <definition name="giveConsent" extends="rootTemplate">
+    <definition name="redirectToWebin" extends="rootTemplate">
         <put-attribute name="bodyClass" type="string" value="green"/>
-        <put-attribute name="body" value="/templates/submission-check/giveConsentBody.jsp"/>
+        <put-attribute name="body" value="/templates/submission-check/redirectToWebinBody.jsp"/>
     </definition>
 
     <definition name="registerAndGiveConsent" extends="rootTemplate">

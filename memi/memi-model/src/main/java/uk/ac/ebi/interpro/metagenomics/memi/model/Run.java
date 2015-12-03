@@ -18,7 +18,7 @@ public class Run implements SecureEntity {
 
     private Long sampleId;
 
-    private boolean isPublic;
+    private Integer isPublic;
 
     private String submissionAccountId;
 
@@ -37,11 +37,15 @@ public class Run implements SecureEntity {
     }
 
     public boolean isPublic() {
+        return (isPublic == 1 ? true : false);
+    }
+
+    public Integer isPublicInt() {
         return isPublic;
     }
 
-    public void setPublic(boolean aPublic) {
-        isPublic = aPublic;
+    public void setPublic(Integer isPublicInt) {
+        isPublic = isPublicInt;
     }
 
     public String getSubmissionAccountId() {

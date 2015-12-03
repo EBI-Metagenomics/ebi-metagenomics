@@ -16,7 +16,7 @@ import java.util.*;
  */
 @Entity
 @Table(name = "STUDY")
-public class Study implements SecureEntity {
+public class Study implements SecureEntity, BiomeEntity {
 
     @Id
     @Column(name = "STUDY_ID")
@@ -85,7 +85,7 @@ public class Study implements SecureEntity {
      * Default value is private.
      */
     @Column(name = "IS_PUBLIC")
-    private boolean isPublic;
+    private Integer isPublic;
 
     /**
      * Holds an optional URL to the study's website.
@@ -113,7 +113,7 @@ public class Study implements SecureEntity {
     private String resultDirectory;
 
     @Transient
-    private Long sampleSize;
+    private Long sampleCount;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "BIOME_ID", nullable = true)
@@ -121,6 +121,9 @@ public class Study implements SecureEntity {
 
     @Transient
     private String biomeIconCSSClass;
+
+    @Transient
+    private String biomeIconTitle;
 
     /**
      * Submitted - Directly submitted to us (EBI Metagenomics).
@@ -136,7 +139,7 @@ public class Study implements SecureEntity {
     public Study() {
         publications = new HashSet<Publication>();
         samples = new HashSet<Sample>();
-        this.isPublic = false;
+        this.isPublic = 0;
     }
 
 
@@ -293,16 +296,22 @@ public class Study implements SecureEntity {
     }
 
     public boolean isPublic() {
+        return (isPublic == 1 ? true : false);
+    }
+
+    public Integer isPublicInt() {
         return isPublic;
     }
 
-    public void setPublic(boolean aPublic) {
-        isPublic = aPublic;
+    public void setPublic(Integer isPublicInt) {
+        isPublic = isPublicInt;
     }
 
     public String getPrivacy() {
-        if (isPublic) {
+        if (isPublic == 1) {
             return "public";
+        } else if (isPublic == 5) {
+            return "suppressed";
         }
         return "private";
     }
@@ -363,12 +372,12 @@ public class Study implements SecureEntity {
         this.resultDirectory = resultDirectory;
     }
 
-    public Long getSampleSize() {
-        return sampleSize;
+    public Long getSampleCount() {
+        return sampleCount;
     }
 
-    public void setSampleSize(Long sampleSize) {
-        this.sampleSize = sampleSize;
+    public void setSampleCount(Long sampleCount) {
+        this.sampleCount = sampleCount;
     }
 
     public Biome getBiome() {
@@ -385,6 +394,14 @@ public class Study implements SecureEntity {
 
     public void setBiomeIconCSSClass(String biomeIconCSSClass) {
         this.biomeIconCSSClass = biomeIconCSSClass;
+    }
+
+    public String getBiomeIconTitle() {
+        return biomeIconTitle;
+    }
+
+    public void setBiomeIconTitle(String biomeIconTitle) {
+        this.biomeIconTitle = biomeIconTitle;
     }
 
     /**
@@ -431,7 +448,7 @@ public class Study implements SecureEntity {
         result = 31 * result + (centreName == null ? 0 : centreName.hashCode());
         result = 31 * result + (studyAbstract == null ? 0 : studyAbstract.hashCode());
         result = 31 * result + (experimentalFactor == null ? 0 : experimentalFactor.hashCode());
-        result = 31 * result + (isPublic ? 1 : 0);
+        result = 31 * result + (isPublic == null ? 0 : isPublic.hashCode());
         result = 31 * result + (studyPageURL == null ? 0 : studyPageURL.hashCode());
         result = 31 * result + (resultDirectory == null ? 0 : resultDirectory.hashCode());
         return result;

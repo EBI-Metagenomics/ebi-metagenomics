@@ -23,7 +23,7 @@ public final class HomePageViewModel extends ViewModel {
      */
     private List<Study> studies;
 
-    private List<Sample> publicSamples;
+//    private List<Sample> publicSamples;
 
     /**
      * Maps studies and their number of samples.
@@ -62,8 +62,11 @@ public final class HomePageViewModel extends ViewModel {
 
     private Integer numOfDataSets;
 
+    private Map<String, Long> studyToSampleCountMap;
+
+    private Map<String, Long> studyToRunCountMap;
+
     public HomePageViewModel(final Submitter submitter,
-                             final List<Sample> publicSamples,
                              final String pageTitle,
                              final List<Breadcrumb> breadcrumbs,
                              final MemiPropertyContainer propertyContainer,
@@ -77,9 +80,11 @@ public final class HomePageViewModel extends ViewModel {
                              final int privateRunCount,
                              final Map<String, Long> biomeCountMap,
                              final Map<String, Integer> experimentCountMap,
-                             final Integer numOfDataSets) {
+                             final Integer numOfDataSets,
+                             final Map<String, Long> studyToSampleCountMap,
+                             final Map<String, Long> studyToRunCountMap) {
         super(submitter, pageTitle, breadcrumbs, propertyContainer);
-        this.publicSamples = publicSamples;
+//        this.publicSamples = publicSamples;
         this.myStudiesMap = new TreeMap<Study, Long>();
         this.mySamples = new ArrayList<Sample>();
         this.maxRowNumberOfLatestItems = maxRowNumberOfLatestItems;
@@ -93,10 +98,14 @@ public final class HomePageViewModel extends ViewModel {
         this.biomeMap = biomeCountMap;
         this.experimentCountMap = experimentCountMap;
         this.numOfDataSets = numOfDataSets;
+        this.studyToSampleCountMap = studyToSampleCountMap;
+        this.studyToRunCountMap = studyToRunCountMap;
+
     }
 
     public HomePageViewModel(final Submitter submitter,
-                             final Map<Study, Long> myStudiesMap,
+//                             final Map<Study, Long> myStudiesMap,
+                             final List<Study> studies,
                              final List<Sample> mySamples,
                              final String pageTitle,
                              final List<Breadcrumb> breadcrumbs,
@@ -109,10 +118,13 @@ public final class HomePageViewModel extends ViewModel {
                              final Long publicStudiesCount,
                              final Long privateStudiesCount,
                              final int publicRunCount,
-                             final int privateRunCount) {
-        this(submitter, new ArrayList<Sample>(), pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems,
-                publicSamplesCount, privateSamplesCount, publicStudiesCount, privateStudiesCount, new ArrayList<Study>(), publicRunCount, privateRunCount, null, null, null);
-        this.myStudiesMap = myStudiesMap;
+                             final int privateRunCount,
+                             final Map<String, Long> studyToSampleCountMap,
+                             final Map<String, Long> studyToRunCountMap) {
+        this(submitter, pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems,
+                publicSamplesCount, privateSamplesCount, publicStudiesCount, privateStudiesCount,studies, publicRunCount, privateRunCount,
+                null, null, null, studyToSampleCountMap, studyToRunCountMap);
+//        this.myStudiesMap = myStudiesMap;
         this.mySamples = mySamples;
         this.mySamplesCount = mySamplesCount;
         this.myStudiesCount = myStudiesCount;
@@ -130,13 +142,13 @@ public final class HomePageViewModel extends ViewModel {
         this.myStudiesMap = myStudiesMap;
     }
 
-    public List<Sample> getPublicSamples() {
-        return publicSamples;
-    }
+//    public List<Sample> getPublicSamples() {
+//        return publicSamples;
+//    }
 
-    public void setPublicSamples(List<Sample> publicSamples) {
-        this.publicSamples = publicSamples;
-    }
+//    public void setPublicSamples(List<Sample> publicSamples) {
+//        this.publicSamples = publicSamples;
+//    }
 
 
     public List<Sample> getMySamples() {
@@ -197,5 +209,13 @@ public final class HomePageViewModel extends ViewModel {
 
     public Integer getNumOfDataSets() {
         return numOfDataSets;
+    }
+
+    public Map<String, Long> getStudyToSampleCountMap() {
+        return studyToSampleCountMap;
+    }
+
+    public Map<String, Long> getStudyToRunCountMap() {
+        return studyToRunCountMap;
     }
 }

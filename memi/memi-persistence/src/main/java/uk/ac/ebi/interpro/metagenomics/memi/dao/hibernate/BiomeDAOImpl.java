@@ -77,7 +77,16 @@ public class BiomeDAOImpl extends GenericDAOImpl<Biome, Long> implements BiomeDA
         }
     }
 
-    //    TODO: Implement
+    public Biome read(Integer id) {
+        try {
+            Criteria criteria = getSession().createCriteria(Biome.class);
+            criteria.add(Restrictions.eq("biomeId", id));
+            return (Biome) criteria.uniqueResult();
+        } catch (HibernateException e) {
+            throw new HibernateException("Couldn't retrieve biome by the following id: " + id, e);
+        }
+    }
+
     public Biome read(Long id) {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }

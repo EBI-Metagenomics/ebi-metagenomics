@@ -8,9 +8,10 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import uk.ac.ebi.interpro.metagenomics.memi.core.SampleTypeEditor;
 import uk.ac.ebi.interpro.metagenomics.memi.core.SampleVisibilityEditor;
 import uk.ac.ebi.interpro.metagenomics.memi.core.VelocityTemplateWriter;
+import uk.ac.ebi.interpro.metagenomics.memi.core.tools.MemiTools;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.BiomeDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.files.MemiFileWriter;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
@@ -23,7 +24,6 @@ import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.SamplesViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.SamplesViewModelBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder;
-import uk.ac.ebi.interpro.metagenomics.memi.core.tools.MemiTools;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -57,6 +57,9 @@ public class ViewSamplesController extends AbstractController implements IContro
     private SampleDAO sampleDAO;
 
     @Resource
+    private BiomeDAO biomeDAO;
+
+    @Resource
     private VelocityEngine velocityEngine;
 
     @Resource
@@ -79,13 +82,12 @@ public class ViewSamplesController extends AbstractController implements IContro
     public ModelAndView doExportSampleTable(@ModelAttribute(SampleFilter.MODEL_ATTR_NAME) SampleFilter filter,
                                             @RequestParam(required = false) final SampleFilter.SampleVisibility sampleVisibility,
                                             @RequestParam(required = false) final String searchTerm,
-                                            @RequestParam(required = false) final Sample.SampleType sampleType,
                                             @RequestParam(required = true) final int startPosition,
                                             final HttpServletResponse response, final HttpServletRequest request) {
         log.info("Requesting exportSamples (GET method)...");
 
         final ModelMap model = new ModelMap();
-        processRequestParams(filter, searchTerm, sampleVisibility, sampleType);
+        processRequestParams(filter, searchTerm, sampleVisibility);
         populateModel(model, filter, startPosition);
         Collection<Sample> samples = ((SamplesViewModel) model.get(ViewModel.MODEL_ATTR_NAME)).getDownloadableSamples();
 
@@ -114,13 +116,12 @@ public class ViewSamplesController extends AbstractController implements IContro
     public ModelAndView doExportDetails(@ModelAttribute(SampleFilter.MODEL_ATTR_NAME) SampleFilter filter,
                                         @RequestParam(required = false) final SampleFilter.SampleVisibility sampleVisibility,
                                         @RequestParam(required = false) final String searchTerm,
-                                        @RequestParam(required = false) final Sample.SampleType sampleType,
                                         @RequestParam(required = true) final int startPosition,
                                         HttpServletResponse response) {
         log.info("Requesting exportSamples of ViewSamplesController...");
 
         final ModelMap model = new ModelMap();
-        processRequestParams(filter, searchTerm, sampleVisibility, sampleType);
+        processRequestParams(filter, searchTerm, sampleVisibility);
         populateModel(model, filter, startPosition);
         Collection<Sample> samples = ((SamplesViewModel) model.get(ViewModel.MODEL_ATTR_NAME)).getSamples();
         if (samples != null && samples.size() > 0) {
@@ -142,22 +143,19 @@ public class ViewSamplesController extends AbstractController implements IContro
     public ModelAndView doSearch(@ModelAttribute(SampleFilter.MODEL_ATTR_NAME) SampleFilter filter,
                                  @RequestParam(required = false) final SampleFilter.SampleVisibility sampleVisibility,
                                  @RequestParam(required = false) final String searchTerm,
-                                 @RequestParam(required = false) final Sample.SampleType sampleType,
                                  @RequestParam(required = true) final int startPosition,
                                  ModelMap model) {
         log.info("Requesting doSearch of " + ViewSamplesController.class + "...");
 
-        processRequestParams(filter, searchTerm, sampleVisibility, sampleType);
+        processRequestParams(filter, searchTerm, sampleVisibility);
         populateModel(model, filter, startPosition);
         model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((SamplesViewModel) model.get(ViewModel.MODEL_ATTR_NAME)).getLoginForm());
         return new ModelAndView(VIEW_NAME, model);
     }
 
     private void processRequestParams(SampleFilter filter, String searchTerm,
-                                      SampleFilter.SampleVisibility sampleVisibility,
-                                      Sample.SampleType sampleType) {
+                                      SampleFilter.SampleVisibility sampleVisibility) {
         //Set filter parameters
-        filter.setSampleType(sampleType);
         filter.setSearchTerm(searchTerm);
 
         //The visibility parameter can only be set if a user is logged in, means a session object exists
@@ -171,7 +169,7 @@ public class ViewSamplesController extends AbstractController implements IContro
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         binder.registerCustomEditor(SampleFilter.SampleVisibility.class, "sampleVisibility", new SampleVisibilityEditor());
-        binder.registerCustomEditor(Sample.SampleType.class, "sampleType", new SampleTypeEditor());
+//        binder.registerCustomEditor(Sample.SampleType.class, "sampleType", new SampleTypeEditor());
     }
 
     /**
@@ -179,7 +177,7 @@ public class ViewSamplesController extends AbstractController implements IContro
      */
     private void populateModel(ModelMap model, SampleFilter filter, int startPosition) {
         final ViewModelBuilder<SamplesViewModel> builder = new SamplesViewModelBuilder(sessionManager, "Samples list",
-                getBreadcrumbs(null), propertyContainer, getTableHeaderNames(), sampleDAO, filter, startPosition);
+                getBreadcrumbs(null), propertyContainer, getTableHeaderNames(), sampleDAO, filter, startPosition, biomeDAO);
         final SamplesViewModel samplesViewModel = builder.getModel();
         model.addAttribute("loginForm", new LoginForm());
         samplesViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_SAMPLES_VIEW);
@@ -194,9 +192,10 @@ public class ViewSamplesController extends AbstractController implements IContro
      */
     private List<String> getTableHeaderNames() {
         List<String> result = new ArrayList<String>();
+        result.add("Biome");
+        result.add("Sample ID");
         result.add("Sample name");
         result.add("Project name");
-        result.add("Source");
         return result;
     }
 

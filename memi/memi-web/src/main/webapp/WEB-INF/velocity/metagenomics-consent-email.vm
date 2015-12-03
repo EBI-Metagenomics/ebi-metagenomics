@@ -3,17 +3,23 @@
     <title>EMBL-EBI Metagenomics: Registration confirmation</title>
 </head>
 <body>
-<p>
     #if($isConsentChecked)
+    <p>
         Thank you for registering your Webin account $submitter.submissionAccountId with EBI
         Metagenomics. We are now able to analyse publicly available data and data held privately for pre-publication
         associated with this account.
+    </p>
     #{else}
+    <p>
         Thank you for registering your Webin account $submitter.submissionAccountId with EBI Metagenomics. We are now
         able to analyse publicly available data submitted via this account. Please note that in order for us to analyse
         any data held privately for pre-publication, we need your explicit consent, which you can provide <a
             href="https://www.ebi.ac.uk/metagenomics/registration">here</a>.
+    </p>
     #end
+<p>
+    Once you finish the <a href="https://www.ebi.ac.uk/ena/submit/sra/#home">data upload process</a>, your read
+    files will be automatically identified by the EBI Metagenomics pipeline and queued for analysis.
 </p>
 
 <p>If you have any questions, please contact <a href="http://www.ebi.ac.uk/support/metagenomics">metagenomcis-help</a>

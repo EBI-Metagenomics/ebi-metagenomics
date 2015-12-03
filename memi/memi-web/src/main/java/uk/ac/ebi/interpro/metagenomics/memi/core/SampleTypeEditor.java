@@ -24,14 +24,14 @@ public class SampleTypeEditor extends PropertyEditorSupport {
             text = text.toUpperCase();
         }
 
-        Sample.SampleType type;
-
-        try {
-            type = Sample.SampleType.valueOf(text);
-            setValue(type);
-        } catch (Exception e) {
-            log.warn("Could not find any study type value for name: " + text);
-        }
+//        Sample.SampleType type;
+//
+//        try {
+//            type = Sample.SampleType.valueOf(text);
+//            setValue(type);
+//        } catch (Exception e) {
+//            log.warn("Could not find any study type value for name: " + text);
+//        }
     }
 
     @Override

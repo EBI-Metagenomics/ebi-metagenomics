@@ -152,15 +152,15 @@ public class SampleDAOImpl implements SampleDAO {
 
     @Transactional(readOnly = true)
     public Long countAllPublic() {
-        return getSampleCount(new Boolean(true));
+        return getSampleCount(1);
     }
 
     @Transactional(readOnly = true)
     public Long countAllPrivate() {
-        return getSampleCount(new Boolean(false));
+        return getSampleCount(0);
     }
 
-    private Long getSampleCount(final Boolean isPublic) {
+    private Long getSampleCount(final Integer isPublic) {
         Session session = sessionFactory.getCurrentSession();
         if (session != null) {
             Criteria criteria = session.createCriteria(Sample.class);
@@ -211,7 +211,7 @@ public class SampleDAOImpl implements SampleDAO {
     public List<Sample> retrievePublicSamplesByStudyId(long studyId) {
         Set<Criterion> criterionSet = new HashSet<Criterion>(2);
         criterionSet.add(Restrictions.eq("study.id", studyId));
-        criterionSet.add(Restrictions.eq("isPublic", true));
+        criterionSet.add(Restrictions.eq("isPublic", 1));
         return retrieveSamplesByCriterionSet(criterionSet);
     }
 
@@ -250,7 +250,7 @@ public class SampleDAOImpl implements SampleDAO {
                 crit.addOrder(Order.asc(propertyName));
             }
             //add WHERE clause
-            crit.add(Restrictions.eq("isPublic", true));
+            crit.add(Restrictions.eq("isPublic", 1));
             try {
                 result = crit.list();
             } catch (HibernateException e) {
@@ -266,7 +266,7 @@ public class SampleDAOImpl implements SampleDAO {
         if (session != null) {
             Criteria crit = session.createCriteria(Sample.class);
             //add WHERE clause
-            crit.add(Restrictions.eq("isPublic", true));
+            crit.add(Restrictions.eq("isPublic", 1));
             //Add distinct criterion
             crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
             try {
@@ -332,7 +332,7 @@ public class SampleDAOImpl implements SampleDAO {
                 crit.addOrder(Order.asc(propertyName));
             }
             //add WHERE clause
-            crit.add(Restrictions.eq("isPublic", true));
+            crit.add(Restrictions.eq("isPublic", 1));
             //add another WHERE clause
             crit.add(Restrictions.ne("submitterId", submitterId));
             try {
@@ -350,7 +350,7 @@ public class SampleDAOImpl implements SampleDAO {
         if (session != null) {
             Criteria crit = session.createCriteria(Sample.class);
             //add WHERE clause
-            crit.add(Restrictions.eq("isPublic", true));
+            crit.add(Restrictions.eq("isPublic", 1));
             //add another WHERE clause
             crit.add(Restrictions.ne("submitterId", submitterId));
             //Add distinct criterion
@@ -365,8 +365,8 @@ public class SampleDAOImpl implements SampleDAO {
     }
 
     @Transactional(readOnly = true)
-    public List<Sample> retrieveFilteredSamples(List<Criterion> crits, Class<? extends Sample> clazz, int startPosition, int pageSize, String orderedByColumnWithName) {
-        Criteria criteria = setUpFilteredSamplesCriteria(crits, clazz, orderedByColumnWithName);
+    public List<Sample> retrieveFilteredSamples(List<Criterion> crits, int startPosition, int pageSize, String orderedByColumnWithName) {
+        Criteria criteria = setUpFilteredSamplesCriteria(crits, orderedByColumnWithName);
         if (criteria != null) {
             criteria.setFirstResult(startPosition);
             criteria.setMaxResults(pageSize);
@@ -380,8 +380,8 @@ public class SampleDAOImpl implements SampleDAO {
     }
 
     @Transactional(readOnly = true)
-    public List<Sample> retrieveFilteredSamples(List<Criterion> crits, Class<? extends Sample> clazz, String orderedByColumnWithName) {
-        Criteria criteria = setUpFilteredSamplesCriteria(crits, clazz, orderedByColumnWithName);
+    public List<Sample> retrieveFilteredSamples(List<Criterion> crits, String orderedByColumnWithName) {
+        Criteria criteria = setUpFilteredSamplesCriteria(crits, orderedByColumnWithName);
         if (criteria != null) {
             try {
                 return (List<Sample>) criteria.list();
@@ -393,12 +393,11 @@ public class SampleDAOImpl implements SampleDAO {
     }
 
     private Criteria setUpFilteredSamplesCriteria(final List<Criterion> crits,
-                                                  Class<? extends Sample> clazz,
                                                   final String orderedByColumnWithName) {
         Session session = sessionFactory.getCurrentSession();
         Criteria criteria = null;
         if (session != null) {
-            criteria = session.createCriteria(clazz);
+            criteria = session.createCriteria(Sample.class);
             //add criteria
             for (Criterion crit : crits) {
                 criteria.add(crit);
@@ -411,12 +410,11 @@ public class SampleDAOImpl implements SampleDAO {
     }
 
     @Transactional(readOnly = true)
-    public Long countFilteredSamples
-            (List<Criterion> crits, Class<? extends Sample> clazz) {
+    public Long countFilteredSamples(List<Criterion> crits) {
         Session session = sessionFactory.getCurrentSession();
         Criteria criteria = null;
         if (session != null) {
-            criteria = session.createCriteria(clazz);
+            criteria = session.createCriteria(Sample.class);
             //add criteria
             for (Criterion crit : crits) {
                 criteria.add(crit);

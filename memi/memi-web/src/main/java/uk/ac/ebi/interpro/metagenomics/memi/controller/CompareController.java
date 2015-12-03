@@ -228,7 +228,7 @@ public class CompareController extends AbstractController implements IController
                         model.addAttribute(ViewModel.MODEL_ATTR_NAME, defaultViewModel);
                         model.addAttribute("graphCode", htmlFile);
                         // Result Header elements
-                        model.addAttribute("study", studyDAO.read(Long.valueOf(comparisonForm.getStudy())));
+                        model.addAttribute("study", studyDAO.readByStringId(comparisonForm.getStudy()));
                         model.addAttribute("analysisJobs", analysisJobs);
                         // Atribute needed for functions of the result page
                         model.addAttribute("data", usedData);

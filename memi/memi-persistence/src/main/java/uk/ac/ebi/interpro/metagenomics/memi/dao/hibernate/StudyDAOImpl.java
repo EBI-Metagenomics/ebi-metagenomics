@@ -12,9 +12,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 /**
  * Represents the implementation class of {@link StudyDAO}.
@@ -69,13 +67,12 @@ public class StudyDAOImpl implements StudyDAO {
             crit.add(Restrictions.eq("studyId", studyId));
             try {
                 List<Study> studies = crit.list();
-//            TODO: Log OR print exception if size > 1
                 if (studies != null) {
                     int studyListSize = studies.size();
                     if (studyListSize == 1) {
                         return studies.get(0);
                     } else if (studyListSize == 0) {
-                        log.warn("No study found for study id " + studyId);
+                        log.info("No study found for study id " + studyId);
                     } else if (studyListSize > 1) {
                         log.warn("More then one study found for study id " + studyId);
                     }
@@ -104,12 +101,7 @@ public class StudyDAOImpl implements StudyDAO {
 
     @Transactional(readOnly = true)
     public Long countAllPublic() {
-        return getStudyCount(new Boolean(true));
-    }
-
-    @Transactional(readOnly = true)
-    public Long countAllPrivate() {
-        return getStudyCount(new Boolean(false));
+        return getStudyCount(1);
     }
 
     @Transactional(readOnly = true)
@@ -140,7 +132,7 @@ public class StudyDAOImpl implements StudyDAO {
         if (session != null) {
             if (biomeIds != null || !biomeIds.isEmpty()) {
                 Criteria criteria = session.createCriteria(Study.class)
-                        .add(Restrictions.eq("isPublic", true))
+                        .add(Restrictions.eq("isPublic", 1))
                         .add(Restrictions.in("biome.biomeId", biomeIds))
                         .setProjection(Projections.rowCount());
                 try {
@@ -153,7 +145,7 @@ public class StudyDAOImpl implements StudyDAO {
         return null;
     }
 
-    private Long getStudyCount(final Boolean isPublic) {
+    private Long getStudyCount(final Integer isPublic) {
         Session session = sessionFactory.getCurrentSession();
         if (session != null) {
             Criteria criteria = session.createCriteria(Study.class);
@@ -219,7 +211,7 @@ public class StudyDAOImpl implements StudyDAO {
     }
 
     @Transactional(readOnly = true)
-    public List<Study> retrieveOrderedPublicStudies(String propertyName, boolean isDescendingOrder) {
+    public List<Study> retrieveOrderedPublicStudies(String propertyName, boolean isDescendingOrder, int maxResult) {
         List<Study> result = new ArrayList<Study>();
         Session session = sessionFactory.getCurrentSession();
         if (session != null) {
@@ -231,9 +223,10 @@ public class StudyDAOImpl implements StudyDAO {
                 crit.addOrder(Order.asc(propertyName));
             }
             //add WHERE clause
-            crit.add(Restrictions.eq("isPublic", true));
+            crit.add(Restrictions.eq("isPublic", 1));
             //add distinct criterion
             crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+            crit.setMaxResults(maxResult);
             try {
                 result = crit.list();
             } catch (HibernateException e) {
@@ -244,8 +237,8 @@ public class StudyDAOImpl implements StudyDAO {
     }
 
     @Transactional(readOnly = true)
-    public List<Study> retrieveOrderedStudiesBySubmitter(long submitterId, String propertyName,
-                                                         boolean isDescendingOrder) {
+    public List<Study> retrieveOrderedStudiesBySubmitter(String submissionAccountId, String propertyName,
+                                                         boolean isDescendingOrder, int maxResult) {
         List<Study> result = new ArrayList<Study>();
         Session session = sessionFactory.getCurrentSession();
         if (session != null) {
@@ -257,11 +250,12 @@ public class StudyDAOImpl implements StudyDAO {
                 crit.addOrder(Order.asc(propertyName));
             }
             //add WHERE clause
-            crit.add(Restrictions.eq("submitterId", submitterId));
+            crit.add(Restrictions.eq("submissionAccountId", submissionAccountId));
+            crit.setMaxResults(maxResult);
             try {
                 result = crit.list();
             } catch (HibernateException e) {
-                throw new HibernateException("Couldn't retrieve public studies ordered by " + propertyName, e);
+                throw new HibernateException("Couldn't retrieve studies ordered by " + propertyName, e);
             }
         }
         return result;
@@ -298,7 +292,7 @@ public class StudyDAOImpl implements StudyDAO {
                 crit.addOrder(Order.asc(propertyName));
             }
             //add WHERE clause
-            crit.add(Restrictions.eq("isPublic", true));
+            crit.add(Restrictions.eq("isPublic", 1));
             //add another WHERE clause
             crit.add(Restrictions.ne("submitterId", submitterId));
             try {
@@ -316,7 +310,7 @@ public class StudyDAOImpl implements StudyDAO {
         if (session != null) {
             Criteria crit = session.createCriteria(Study.class);
             //add WHERE clause
-            crit.add(Restrictions.eq("isPublic", true));
+            crit.add(Restrictions.eq("isPublic", 1));
             //add another WHERE clause
             crit.add(Restrictions.ne("submitterId", submitterId));
             try {
@@ -386,27 +380,12 @@ public class StudyDAOImpl implements StudyDAO {
     }
 
     @Transactional(readOnly = true)
-    public List<Study> retrievePublicStudies() {
-        Session session = sessionFactory.getCurrentSession();
-        if (session != null) {
-            Criteria criteria = session.createCriteria(Study.class);
-            criteria.add(Restrictions.eq("isPublic", true));
-            try {
-                return (List<Study>) criteria.list();
-            } catch (HibernateException e) {
-                throw new HibernateException("Couldn't retrieve all public studies!", e);
-            }
-        }
-        return new ArrayList<Study>();
-    }
-
-    @Transactional(readOnly = true)
     public List<Study> retrieveOrderedPublicStudies(final Boolean isDescendingOrder,
                                                     final String propertyName) {
         Session session = sessionFactory.getCurrentSession();
         if (session != null) {
             Criteria criteria = session.createCriteria(Study.class);
-            criteria.add(Restrictions.eq("isPublic", true));
+            criteria.add(Restrictions.eq("isPublic", 1));
             if (isDescendingOrder != null && propertyName != null) {
                 if (isDescendingOrder) {
                     criteria.addOrder(Order.desc(propertyName));
@@ -435,32 +414,46 @@ public class StudyDAOImpl implements StudyDAO {
     }
 
     @Transactional(readOnly = true)
-    public Long countDistinctSubmissionAccounts() {
+    public Map<String, Long> retrieveRunCountsGroupedByExternalStudyId(Collection<String> externalStudyIds) {
         Session session = sessionFactory.getCurrentSession();
         if (session != null) {
             try {
-                Criteria criteria = session.createCriteria(Study.class);
-                criteria.setProjection(Projections.countDistinct("submissionAccountId"));
-                return (Long) criteria.uniqueResult();
+                //Distinct count, which means multiple analysis versions of the same run will not take into account
+                Query query = session.createQuery("select p.studyId, count(distinct aj.externalRunIDs) as count FROM Study p inner join p.samples sample left join sample.analysisJobs as aj  where p.studyId in (:studyIds) group by p.studyId");
+                query.setParameterList("studyIds", externalStudyIds);
+                List results = query.list();
+                Map<String, Long> transformedResults = transformResultsToMap(results);
+                return transformedResults;
             } catch (HibernateException e) {
-                throw new HibernateException("Couldn't retrieve distinct count of submission accounts.", e);
+                throw new HibernateException("Couldn't retrieve grouped run counts.", e);
             }
         }
         return null;
     }
 
     @Transactional(readOnly = true)
-    public Long countDistinct() {
+    public Map<String, Long> retrieveSampleCountsGroupedByExternalStudyId(Collection<String> externalStudyIds) {
         Session session = sessionFactory.getCurrentSession();
         if (session != null) {
             try {
-                Criteria criteria = session.createCriteria(Study.class);
-                criteria.setProjection(Projections.countDistinct("studyId"));
-                return (Long) criteria.uniqueResult();
+                //Distinct count, which means multiple analysis versions of the same run will not take into account
+                Query query = session.createQuery("select p.studyId, count(distinct sample.sampleId) as count FROM Study p inner join p.samples sample where p.studyId in (:studyIds) group by p.studyId");
+                query.setParameterList("studyIds", externalStudyIds);
+                List results = query.list();
+                Map<String, Long> transformedResults = transformResultsToMap(results);
+                return transformedResults;
             } catch (HibernateException e) {
-                throw new HibernateException("Couldn't retrieve distinct count of submission accounts.", e);
+                throw new HibernateException("Couldn't retrieve grouped sample counts.", e);
             }
         }
         return null;
+    }
+
+    private Map<String, Long> transformResultsToMap(List<Object[]> results) {
+        Map<String, Long> result = new HashMap<String, Long>();
+        for (Object[] resultItem : results) {
+            result.put((String) resultItem[0], (Long) resultItem[1]);
+        }
+        return result;
     }
 }

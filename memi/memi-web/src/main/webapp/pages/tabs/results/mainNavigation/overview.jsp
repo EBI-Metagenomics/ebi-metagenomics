@@ -11,6 +11,21 @@
     <tags:publications publications="${model.sample.publications}" relatedPublications="${model.relatedPublications}"
                        relatedLinks="${model.relatedLinks}"/>
 
+    <!-- Related publication, resources, links -->
+    <div class="sidebar-allrel">
+    <div id="sidebar-related">
+    <h2>Related links</h2>
+    <%--<span class="separator"></span>--%>
+    <ul>
+    <li>
+        <a title="Click to view entry on European Nucleotide Archive" href="https://www.ebi.ac.uk/ena/data/view/${model.analysisJob.externalRunIDs}"
+                                                      class="list_more">ENA website (${model.analysisJob.externalRunIDs})</a>
+    </li>
+    </ul>
+    </div>
+    </div>
+    <!--/ Related publication, resources, links -->
+
     <div class="main_tab_content">
         <!-- Description -->
         <h3 id="sample_desc">Description</h3>
@@ -25,8 +40,8 @@
             </c:choose>
 
             <c:choose>
-                <c:when test="${not empty model.sample.sampleClassification}">
-                    <c:set var="sampleClassification" value="${model.sample.sampleClassification}"/>
+                <c:when test="${not empty model.sample.biome}">
+                    <c:set var="sampleClassification" value="${fn:replace(fn:replace(model.sample.biome.lineage,'root:',''),':',' > ')}"/>
                 </c:when>
                 <c:otherwise>
                     <c:set var="sampleClassification" value="${notGivenId}"/>
@@ -202,7 +217,7 @@
                                 </c:otherwise>
                             </c:choose>
                         </c:if>
-
+                        <%--host associated - what showing country means ... to redefine more precisely--%>
                         <c:choose>
                             <c:when test="${empty model.sample.geoLocName}">
                                 <%--remove label when emtpy otherwise alignment problem--%>

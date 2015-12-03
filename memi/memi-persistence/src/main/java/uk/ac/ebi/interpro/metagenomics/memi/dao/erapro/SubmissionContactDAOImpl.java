@@ -70,14 +70,19 @@ public class SubmissionContactDAOImpl implements SubmissionContactDAO {
         if (submissionAccountId == null)
             return null;
         try {
-            List<Map<String, Object>> rows = this.jdbcTemplate.queryForList("select sa.submission_account_id, sa.role_metagenome_analysis FROM submission_account sa WHERE UPPER(sa.submission_account_id) = UPPER(?)",
+            List<Map<String, Object>> rows = this.jdbcTemplate.queryForList("select co.first_name, co.surname, sa.submission_account_id, co.email_address, sa.center_name, sa.role_metagenome_submitter, sa.role_metagenome_analysis FROM submission_account sa, submission_contact co WHERE sa.submission_account_id=co.submission_account_id and UPPER(sa.submission_account_id) = UPPER(?)",
                     new String[]{submissionAccountId});
             if (rows.size() > 1) {
                 log.warn("Found more then one submission accounts for account id: " + submissionAccountId);
             }
             for (Map row : rows) {
                 Submitter submitter = new Submitter();
-                submitter.setSubmissionAccountId((String) row.get("submission_account_id"));
+                submitter.setFirstName((String) row.get("first_name"));
+                submitter.setSurname((String) row.get("surname"));
+                submitter.setLoginName((String) row.get("submission_account_id"));
+                submitter.setEmailAddress((String) row.get("email_address"));
+                submitter.setCentreName((String) row.get("center_name"));
+                submitter.setRegistered(((String) row.get("role_metagenome_submitter")).equalsIgnoreCase("Y") ? true : false);
                 submitter.setConsentGiven(((String) row.get("role_metagenome_analysis")).equalsIgnoreCase("Y") ? true : false);
                 return submitter;
             }

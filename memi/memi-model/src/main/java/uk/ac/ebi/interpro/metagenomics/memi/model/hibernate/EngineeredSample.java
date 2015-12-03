@@ -53,7 +53,7 @@ public class EngineeredSample extends Sample {
         return this.getClass();
     }
 
-    public SampleType getSampleType() {
-        return SampleType.ENGINEERED;
-    }
+//    public SampleType getSampleType() {
+//        return SampleType.ENGINEERED;
+//    }
 }

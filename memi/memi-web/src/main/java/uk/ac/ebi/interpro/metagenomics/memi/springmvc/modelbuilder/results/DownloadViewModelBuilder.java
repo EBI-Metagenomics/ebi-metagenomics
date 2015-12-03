@@ -81,7 +81,7 @@ public class DownloadViewModelBuilder extends AbstractResultViewModelBuilder<Dow
         final List<DownloadLink> taxaAnalysisDownloadLinks = new ArrayList<DownloadLink>();
 
         final String linkURL = (sampleIsPublic ? "https://www.ebi.ac.uk/ena/data/view/" + externalRunId : "https://www.ebi.ac.uk/ena/submit/sra/#home");
-        sequencesDownloadSection.addOtherDownloadLink(new DownloadLink("Submitted nucleotide reads (ENA website)",
+        sequencesDownloadSection.addOtherDownloadLink(new DownloadLink("Submitted nucleotide reads",
                 "Click to download all submitted nucleotide data on the ENA website",
                 linkURL,
                 true,
@@ -112,31 +112,36 @@ public class DownloadViewModelBuilder extends AbstractResultViewModelBuilder<Dow
                     boolean checkResult = checkChunkedFilesDoExist(chunkedResultFiles, chunkedFileDefinition);
                     if (checkResult) {
 
-                        //We do need to distinguish 2 cases - case 1: single compressed file - case 2: chunked and compressed result files
-                        //Case 1 will look like: InterPro matches (TSV) - 47 MB
-                        //Case 2 will look like: InterPro matches (TSV): - Part 1 (500 MB) - Part 2 (499 MB)
-                        String linkText = chunkedFileDefinition.getLinkText();
-
                         //
                         final List<DownloadLink> downloadLinks = new ArrayList<DownloadLink>();
-                        if (chunkedFileDefinition.getIdentifier().equalsIgnoreCase("PROCESSED_READS_FILE")) {
+                        //Processed reads are different between version 1 and 2
+                        if (chunkedFileDefinition.getIdentifier().equalsIgnoreCase("MASKED_FASTA") || chunkedFileDefinition.getIdentifier().equalsIgnoreCase("PROCESSED_READS_FILE")) {
                             sequencesDownloadSection.setProcessedReadsLinks(downloadLinks);
                         } else if (chunkedFileDefinition.getIdentifier().equalsIgnoreCase("READS_WITH_PREDICTED_CDS_FILE")) {
                             sequencesDownloadSection.setReadsWithPredictedCDSLinks(downloadLinks);
                         } else if (chunkedFileDefinition.getIdentifier().equalsIgnoreCase("READS_WITH_MATCHES_FASTA_FILE")) {
                             sequencesDownloadSection.setReadsWithMatchesLinks(downloadLinks);
-                        } else if (chunkedFileDefinition.getIdentifier().equalsIgnoreCase("READS_WITH_MATCHES_FASTA_FILE")) {
+                        } else if (chunkedFileDefinition.getIdentifier().equalsIgnoreCase("READS_WITHOUT_MATCHES_FASTA_FILE")) {
                             sequencesDownloadSection.setReadsWithoutMatchesLinks(downloadLinks);
                         } else if (chunkedFileDefinition.getIdentifier().equalsIgnoreCase("PREDICTED_CDS_FILE")) {
                             sequencesDownloadSection.setPredictedCDSLinks(downloadLinks);
+                        } else if (chunkedFileDefinition.getIdentifier().equalsIgnoreCase("PREDICTED_CDS_WITHOUT_ANNOTATION_FILE")) {
+                            sequencesDownloadSection.setPredictedCDSWithoutAnnotationLinks(downloadLinks);
                         } else if (chunkedFileDefinition.getIdentifier().equalsIgnoreCase("PREDICTED_ORF_WITHOUT_ANNOTATION_FILE")) {
                             sequencesDownloadSection.setPredictedORFWithoutAnnotationLinks(downloadLinks);
-                        } else if (chunkedFileDefinition.getIdentifier().equalsIgnoreCase("PREDICTED_CDS_WITHOUT_ANNOTATION_FILE")) {
-                            sequencesDownloadSection.setPredicatedCDSWithoutAnnotationLinks(downloadLinks);
                         } else {
                             log.warn("Unknown file definition identifier: " + chunkedFileDefinition.getIdentifier() + " encountered!");
                         }
+
+                        //We do need to distinguish 2 cases - case 1: single compressed file - case 2: chunked and compressed result files
+                        //Case 1 will look like: InterPro matches (TSV) - 47 MB
+                        //Case 2 will look like: InterPro matches (TSV, 3 parts): - Part 1 (500 MB) - Part 2 (499 MB)
+                        String linkText = chunkedFileDefinition.getLinkText();
+
                         int chunkCounter = 1;
+                        //Set link prefix including the nunmber of chunks, e.g.
+                        //InterPro matches (TSV, 3 parts):
+                        String numberOfChunks = chunkedResultFiles.size() + " parts";
                         for (String chunk : chunkedResultFiles) {
                             if (chunkedResultFiles.size() > 1) {
                                 String partStr = " Part " + String.valueOf(chunkCounter);
@@ -149,20 +154,28 @@ public class DownloadViewModelBuilder extends AbstractResultViewModelBuilder<Dow
                             }
                             final File downloadFileObj = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, chunk);
 
+                            String linkPrefix = chunkedFileDefinition.getLinkText();
+                            String linkPreNumberOfChunks = numberOfChunks;
+//                          String linkPrefix = chunkedFileDefinition.getLinkText().replace(")", ", " + numberOfChunks + ")");
+
+
                             if (chunkedFileDefinition instanceof SequenceFileDefinition) {
                                 downloadLinks.add(new DownloadLink(linkText,
                                         chunkedFileDefinition.getLinkTitle(),
                                         "projects/" + externalProjectId + "/samples/" + externalSampleId + "/runs/" + externalRunId + "/results/versions/" + analysisJobReleaseVersion + "/sequences/"
                                                 + chunkedFileDefinition.getLinkURL() + "/chunks/" + String.valueOf(chunkCounter),
                                         chunkedFileDefinition.getOrder(),
-                                        getFileSize(downloadFileObj), chunkedFileDefinition.getLinkText()));
+                                        getFileSize(downloadFileObj), linkPrefix, linkPreNumberOfChunks));
 
                             } else if (chunkedFileDefinition instanceof FunctionalAnalysisFileDefinition) {
-                                interproscanDownloadLinks.add(new DownloadLink(linkText,
-                                        chunkedFileDefinition.getLinkTitle(),
-                                        "projects/" + externalProjectId + "/samples/" + externalSampleId + "/runs/" + externalRunId + "/results/versions/" + analysisJobReleaseVersion + "/function/InterProScan/chunks/" + String.valueOf(chunkCounter),
-                                        chunkedFileDefinition.getOrder(),
-                                        getFileSize(downloadFileObj), chunkedFileDefinition.getLinkText()));
+                                //Filter out amplicons
+                                if (!isAmpliconData()) {
+                                    interproscanDownloadLinks.add(new DownloadLink(linkText,
+                                            chunkedFileDefinition.getLinkTitle(),
+                                            "projects/" + externalProjectId + "/samples/" + externalSampleId + "/runs/" + externalRunId + "/results/versions/" + analysisJobReleaseVersion + "/function/InterProScan/chunks/" + String.valueOf(chunkCounter),
+                                            chunkedFileDefinition.getOrder(),
+                                            getFileSize(downloadFileObj), linkPrefix, linkPreNumberOfChunks));
+                                }
                             } else {
                                 //do nothing
                             }
@@ -259,7 +272,7 @@ public class DownloadViewModelBuilder extends AbstractResultViewModelBuilder<Dow
                     } else {
                         otherFuncAnalysisDownloadLinks.add(new DownloadLink(fileDefinition.getLinkText(),
                                 fileDefinition.getLinkTitle(),
-                                "projects/" + externalProjectId + "/samples/" + externalSampleId + "/runs/" + externalRunId + "/results/" + fileDefinition.getLinkURL() + "/versions/" + analysisJobReleaseVersion,
+                                "projects/" + externalProjectId + "/samples/" + externalSampleId + "/runs/" + externalRunId + "/results/versions/" + analysisJobReleaseVersion + "/function/" + fileDefinition.getLinkURL(),
                                 fileDefinition.getOrder(),
                                 getFileSize(fileObject)));
                     }

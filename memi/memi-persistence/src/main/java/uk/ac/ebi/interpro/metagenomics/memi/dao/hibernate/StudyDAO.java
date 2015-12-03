@@ -5,6 +5,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Represents the data access object interface for studies.
@@ -26,16 +27,16 @@ public interface StudyDAO extends ISecureEntityDAO<Study> {
      * @param propertyName      Name of the column for which the result should be order by.
      * @param isDescendingOrder Order direction.
      */
-    List<Study> retrieveOrderedPublicStudies(String propertyName, boolean isDescendingOrder);
+    List<Study> retrieveOrderedPublicStudies(String propertyName, boolean isDescendingOrder, int maxResult);
 
     /**
-     * Returns an ordered list of public studies where the submitter ID IS equal the specified submitter ID.
+     * Returns an ordered list of studies by submitter ID..
      *
-     * @param submitterId       Submitter ID for the IS equal restriction.
-     * @param propertyName      Name of the column for which the result should be order by.
-     * @param isDescendingOrder Order direction
+     * @param submissionAccountId Submitter ID for the IS equal restriction.
+     * @param propertyName        Name of the column for which the result should be order by.
+     * @param isDescendingOrder   Order direction
      */
-    List<Study> retrieveOrderedStudiesBySubmitter(long submitterId, String propertyName, boolean isDescendingOrder);
+    List<Study> retrieveOrderedStudiesBySubmitter(String submissionAccountId, String propertyName, boolean isDescendingOrder, int maxResult);
 
     /**
      * Returns a list of public studies where the submitter ID IS equal the specified submitter ID.
@@ -81,10 +82,6 @@ public interface StudyDAO extends ISecureEntityDAO<Study> {
      */
     List<Study> retrieveFilteredStudies(List<Criterion> crits, Integer startPosition, Integer pageSize, Boolean isDescendingOrder, String propertyName);
 
-    /**
-     * Returns a list of all public studies.
-     */
-    List<Study> retrievePublicStudies();
 
     Study readByStringId(String studyId);
 
@@ -92,11 +89,6 @@ public interface StudyDAO extends ISecureEntityDAO<Study> {
      * @return Number of all public studies.
      */
     Long countAllPublic();
-
-    /**
-     * @return Number of all private studies.
-     */
-    Long countAllPrivate();
 
     /**
      * @return Number of all studies not equals a specific isPublic value.
@@ -115,16 +107,28 @@ public interface StudyDAO extends ISecureEntityDAO<Study> {
     Long countPublicStudiesFilteredByBiomes(Collection<Integer> biomeIds);
 
     /**
-     * Counts all submission accounts associated to a study.
+     * Retrieves the number of runs for each study.
+     * <p/>
+     * Example result:
+     * <p/>
+     * ERP005249	2
+     * ERP010153	3
      *
-     * @return Number of submission accounts.
+     * @param externalStudyIds List of external study identifiers.
+     * @return
      */
-    Long countDistinctSubmissionAccounts();
+    Map<String, Long> retrieveRunCountsGroupedByExternalStudyId(Collection<String> externalStudyIds);
 
     /**
-     * Distinct count over column ext_study_id.
+     * Retrieves the number of samples for each study.
+     * <p/>
+     * Example result:
+     * <p/>
+     * ERP005249	1
+     * ERP010153	1
      *
-     * @return Number of distinct studies (no matter which status, public, private or something else)
+     * @param externalStudyIds List of external study identifiers.
+     * @return
      */
-    Long countDistinct();
+    Map<String, Long> retrieveSampleCountsGroupedByExternalStudyId(Collection<String> externalStudyIds);
 }

@@ -11,21 +11,41 @@
 
 <tags:publications publications="${study.publications}" relatedPublications="${model.relatedPublications}"
                    relatedLinks="${model.relatedLinks}"/>
+    <!-- Related publication, resources, links -->
+    <div class="sidebar-allrel">
+    <div id="sidebar-related">
+    <h2>Related links</h2>
+    <%--<span class="separator"></span>--%>
+    <ul>
+    <li>
+        <a title="Click to view entry on European Nucleotide Archive" href="https://www.ebi.ac.uk/ena/data/view/${study.studyId}"
+                                                      class="list_more">ENA website (${study.studyId})</a>
+    </li>
+    </ul>
+    </div>
+    </div>
+    <!--/ Related publication, resources, links -->
 
-
-<c:if test="${!study.public}">
-    <p>Private data <img alt="private" src="${pageContext.request.contextPath}/img/icon_priv_private.gif">
-        <c:choose>
-            <c:when test="${not empty study.publicReleaseDate}">
-                <c:set var="publicReleaseDate" value="${study.publicReleaseDate}"/>
-                <span class="list_date">&nbsp;(will be published on the <fmt:formatDate value="${publicReleaseDate}"
-                                                                                        pattern="dd-MMM-yyyy"/>)</span>
-            </c:when>
-            <c:otherwise>
-                <c:set var="publicReleaseDate" value="${notGivenId}"/>
-            </c:otherwise>
-        </c:choose>
-    </p>
+<%-- Show icon only for people are are logged in--%>
+<c:if test="${not empty model.submitter}">
+    <!-- Private icon-->
+    <c:if test="${!study.public}">
+        <p class="show_tooltip icon icon-functional" data-icon="L" title="Private data">Private data
+         <c:choose>
+             <c:when test="${not empty study.publicReleaseDate}">
+                 <c:set var="publicReleaseDate" value="${study.publicReleaseDate}"/>
+                 <span class="list_warn">&nbsp;(will be published on the <fmt:formatDate value="${publicReleaseDate}"
+                                                                                         pattern="dd-MMM-yyyy"/>)</span>
+             </c:when>
+             <c:otherwise>
+                 <c:set var="publicReleaseDate" value="${notGivenId}"/>
+             </c:otherwise>
+         </c:choose>
+     </p>
+    </c:if>
+    <c:if test="${study.public}">
+            <p class="show_tooltip icon icon-functional" data-icon="U" title="Public data">Public data </p>
+     </c:if>
 </c:if>
 
 
@@ -164,18 +184,25 @@
                 <tr>
 
                     <!-- Only include the the sample ID once for all runs under that sample -->
-
-
                     <c:if test="${runCountLine == 1}">
                         <td style="background-color: rgb(244, 244, 248);" id="ordered" rowspan="${run.runCount}"
-                            class="h_left"><a
+                            class="h_left table_xs_text"><a
                                 href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${run.externalSampleId}"/>"
                                 title="Sample ${run.externalSampleId}" class="fl_uppercase_title">${run.sampleName} </a>
+
+                                 <%-- Show icon only for people are are logged in--%>
+                       <c:if test="${not empty model.submitter}">
+                            <!-- Private icon-->
+                           <c:if test="${!study.public}">
+                               <span class="show_tooltip icon icon-functional" data-icon="L" title="Private data"></span>
+                           </c:if>
+                           <c:if test="${study.public}">
+                           <span class="show_tooltip icon icon-functional" data-icon="U" title="Public data"></span>
+                           </c:if>
+                       </c:if>
                         </td>
-                        <td style="background-color: rgb(244, 244, 248);" rowspan="${run.runCount}">
-                            <c:if test="${!run.public}"><img alt="private"
-                                                             src="${pageContext.request.contextPath}/img/icon_priv_private.gif">&nbsp;&nbsp;</c:if>
-                                ${run.externalSampleId}
+                        <td class="table_xs_text" style="background-color: rgb(244, 244, 248);" rowspan="${run.runCount}">
+                         ${run.externalSampleId}
                         </td>
                     </c:if>
                     <c:choose>
@@ -186,7 +213,7 @@
                             <c:set var="runCountLine" value="${runCountLine + 1}"/>
                         </c:otherwise>
                     </c:choose>
-                    <td>
+                    <td class="table_xs_text">
                         <a title="Run ${run.externalRunIds}"
                            href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${run.externalSampleId}/runs/${run.externalRunIds}/results/versions/${run.releaseVersion}"/>">
                                 ${run.externalRunIds}
@@ -217,8 +244,3 @@
     </c:otherwise>
 </c:choose>
 </div>
-
-<script type="text/javascript" defer="defer">
-    $("table.result tbody tr:even").css("background-color", "#F4F4F8");
-    $("table.result tbody tr:odd").css("background-color", "#e9e9e9");
-</script>

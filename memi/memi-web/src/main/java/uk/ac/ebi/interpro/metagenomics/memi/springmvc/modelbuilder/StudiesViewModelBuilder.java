@@ -10,9 +10,9 @@ import uk.ac.ebi.interpro.metagenomics.memi.core.tools.MemiTools;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.BiomeDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.StudyDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.Biome;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.StudyFilter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Biome;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.StudiesViewModel;
@@ -98,7 +98,7 @@ public class StudiesViewModelBuilder extends AbstractBiomeViewModelBuilder<Studi
         for (Study study : filteredStudies) {
             if (sampleDAO != null) {
                 long sampleSize = sampleDAO.retrieveSampleSizeByStudyId(study.getId());
-                study.setSampleSize(new Long(sampleSize));
+                study.setSampleCount(new Long(sampleSize));
             }
         }
     }
@@ -114,6 +114,7 @@ public class StudiesViewModelBuilder extends AbstractBiomeViewModelBuilder<Studi
         if (result != null && !result.isEmpty()) {
             for (Study study : result) {
                 MemiTools.assignBiomeIconCSSClass(study, biomeDAO);
+                MemiTools.assignBiomeIconTitle(study, biomeDAO);
             }
             return result;
         } else {
@@ -138,57 +139,57 @@ public class StudiesViewModelBuilder extends AbstractBiomeViewModelBuilder<Studi
         if (studyStatus != null) {
             crits.add(Restrictions.eq("studyStatus", studyStatus));
         }
-        if (!filter.getBiome().equals(StudyFilter.Biome.ALL)) {
+        if (!filter.getBiome().equals(Biome.ALL)) {
             List<Integer> biomeIds = new ArrayList<Integer>();
 
             // Soil
-            if (filter.getBiome().equals(StudyFilter.Biome.SOIL)) {
-                biomeIds.addAll(super.getBiomeIdsByLineage(biomeDAO, StudyFilter.Biome.SOIL.getLineages()));
+            if (filter.getBiome().equals(Biome.SOIL)) {
+                biomeIds.addAll(super.getBiomeIdsByLineage(biomeDAO, Biome.SOIL.getLineages()));
             }
             // Marine
-            else if (filter.getBiome().equals(StudyFilter.Biome.MARINE)) {
-                biomeIds.addAll(super.getBiomeIdsByLineage(biomeDAO, StudyFilter.Biome.MARINE.getLineages()));
+            else if (filter.getBiome().equals(Biome.MARINE)) {
+                biomeIds.addAll(super.getBiomeIdsByLineage(biomeDAO, Biome.MARINE.getLineages()));
             }
             // Forest Soil
-            else if (filter.getBiome().equals(StudyFilter.Biome.FOREST_SOIL)) {
-                biomeIds.addAll(super.getBiomeIdsByLineage(biomeDAO, StudyFilter.Biome.FOREST_SOIL.getLineages()));
+            else if (filter.getBiome().equals(Biome.FOREST_SOIL)) {
+                biomeIds.addAll(super.getBiomeIdsByLineage(biomeDAO, Biome.FOREST_SOIL.getLineages()));
             }
             // Freshwater
-            else if (filter.getBiome().equals(StudyFilter.Biome.FRESHWATER)) {
-                biomeIds.addAll(super.getBiomeIdsByLineage(biomeDAO, StudyFilter.Biome.FRESHWATER.getLineages()));
+            else if (filter.getBiome().equals(Biome.FRESHWATER)) {
+                biomeIds.addAll(super.getBiomeIdsByLineage(biomeDAO, Biome.FRESHWATER.getLineages()));
             }
             // Grassland
-            else if (filter.getBiome().equals(StudyFilter.Biome.GRASSLAND)) {
-                biomeIds.addAll(super.getBiomeIdsByLineage(biomeDAO, StudyFilter.Biome.GRASSLAND.getLineages()));
+            else if (filter.getBiome().equals(Biome.GRASSLAND)) {
+                biomeIds.addAll(super.getBiomeIdsByLineage(biomeDAO, Biome.GRASSLAND.getLineages()));
             }
             // Human gut
-            else if (filter.getBiome().equals(StudyFilter.Biome.HUMAN_GUT)) {
-                biomeIds.addAll(super.getBiomeIdsByLineage(biomeDAO, StudyFilter.Biome.HUMAN_GUT.getLineages()));
+            else if (filter.getBiome().equals(Biome.HUMAN_GUT)) {
+                biomeIds.addAll(super.getBiomeIdsByLineage(biomeDAO, Biome.HUMAN_GUT.getLineages()));
             }
             //Engineered
-            else if (filter.getBiome().equals(StudyFilter.Biome.ENGINEERED)) {
-                biomeIds.addAll(super.getBiomeIdsByLineage(biomeDAO, StudyFilter.Biome.ENGINEERED.getLineages()));
+            else if (filter.getBiome().equals(Biome.ENGINEERED)) {
+                biomeIds.addAll(super.getBiomeIdsByLineage(biomeDAO, Biome.ENGINEERED.getLineages()));
             }
             // Air
-            else if (filter.getBiome().equals(StudyFilter.Biome.AIR)) {
-                biomeIds.addAll(super.getBiomeIdsByLineage(biomeDAO, StudyFilter.Biome.AIR.getLineages()));
+            else if (filter.getBiome().equals(Biome.AIR)) {
+                biomeIds.addAll(super.getBiomeIdsByLineage(biomeDAO, Biome.AIR.getLineages()));
             }
             // Wastewater
-            else if (filter.getBiome().equals(StudyFilter.Biome.WASTEWATER)) {
-                biomeIds.addAll(super.getBiomeIdsByLineage(biomeDAO, StudyFilter.Biome.WASTEWATER.getLineages()));
+            else if (filter.getBiome().equals(Biome.WASTEWATER)) {
+                biomeIds.addAll(super.getBiomeIdsByLineage(biomeDAO, Biome.WASTEWATER.getLineages()));
             }
             // Human host
-            else if (filter.getBiome().equals(StudyFilter.Biome.HUMAN_HOST)) {
-                biomeIds.addAll(super.getBiomeIdsByLineage(biomeDAO, StudyFilter.Biome.HUMAN_HOST.getLineages()));
+            else if (filter.getBiome().equals(Biome.HUMAN_HOST)) {
+                biomeIds.addAll(super.getBiomeIdsByLineage(biomeDAO, Biome.HUMAN_HOST.getLineages()));
             }
             // Host-associated
-            else if (filter.getBiome().equals(StudyFilter.Biome.HOST_ASSOCIATED)) {
-                biomeIds.addAll(super.getBiomeIdsByLineage(biomeDAO, StudyFilter.Biome.HOST_ASSOCIATED.getLineages()));
+            else if (filter.getBiome().equals(Biome.HOST_ASSOCIATED)) {
+                biomeIds.addAll(super.getBiomeIdsByLineage(biomeDAO, Biome.HOST_ASSOCIATED.getLineages()));
             }
             // All Non-human hosts
-            else if (filter.getBiome().equals(StudyFilter.Biome.NON_HUMAN_HOST)) {
-                List<Integer> biomeIdsForHumanHost = super.getBiomeIdsByLineage(biomeDAO, StudyFilter.Biome.HUMAN_HOST.getLineages());
-                List<Integer> biomeIdsForAllHosts = super.getBiomeIdsByLineage(biomeDAO, StudyFilter.Biome.HOST_ASSOCIATED.getLineages());
+            else if (filter.getBiome().equals(Biome.NON_HUMAN_HOST)) {
+                List<Integer> biomeIdsForHumanHost = super.getBiomeIdsByLineage(biomeDAO, Biome.HUMAN_HOST.getLineages());
+                List<Integer> biomeIdsForAllHosts = super.getBiomeIdsByLineage(biomeDAO, Biome.HOST_ASSOCIATED.getLineages());
 
                 //human host is a subset of all hosts
                 //so to get all non human host we remove all human host identifiers from the set of all hosts
@@ -208,22 +209,22 @@ public class StudiesViewModelBuilder extends AbstractBiomeViewModelBuilder<Studi
             }
             //select * from hb_study where submitter_id=? and is_public=1;
             else if (visibility.equals(StudyFilter.StudyVisibility.MY_PUBLISHED_PROJECTS)) {
-                crits.add(Restrictions.and(Restrictions.eq("isPublic", true), Restrictions.eq("submissionAccountId", submissionAccountId)));
+                crits.add(Restrictions.and(Restrictions.eq("isPublic", 1), Restrictions.eq("submissionAccountId", submissionAccountId)));
             }
             //select * from hb_study where submitter_id=? and is_public=0;
             else if (visibility.equals(StudyFilter.StudyVisibility.MY_PREPUBLISHED_PROJECTS)) {
-                crits.add(Restrictions.and(Restrictions.eq("isPublic", false), Restrictions.eq("submissionAccountId", submissionAccountId)));
+                crits.add(Restrictions.and(Restrictions.eq("isPublic", 0), Restrictions.eq("submissionAccountId", submissionAccountId)));
             }
             //select * from hb_study where is_public=1;
             else if (visibility.equals(StudyFilter.StudyVisibility.ALL_PUBLISHED_PROJECTS)) {
-                crits.add(Restrictions.eq("isPublic", true));
+                crits.add(Restrictions.eq("isPublic", 1));
             }
             //select * from hb_study where is_public=1 or submitter_id=? and is_public=0;
             else if (visibility.equals(StudyFilter.StudyVisibility.ALL_PROJECTS)) {
-                crits.add(Restrictions.or(Restrictions.and(Restrictions.eq("isPublic", false), Restrictions.eq("submissionAccountId", submissionAccountId)), Restrictions.eq("isPublic", true)));
+                crits.add(Restrictions.or(Restrictions.and(Restrictions.eq("isPublic", 0), Restrictions.eq("submissionAccountId", submissionAccountId)), Restrictions.eq("isPublic", 1)));
             }
         } else {
-            crits.add(Restrictions.eq("isPublic", true));
+            crits.add(Restrictions.eq("isPublic", 1));
         }
 
         return crits;

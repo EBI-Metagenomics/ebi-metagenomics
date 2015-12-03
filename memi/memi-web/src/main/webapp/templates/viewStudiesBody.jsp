@@ -183,59 +183,29 @@
             <c:forEach var="study" items="${model.studies}" varStatus="status">
                 <tr>
                     <td>
-                            <%--TEMP while we implement a better solution--%>
-                        <c:choose>
-                            <c:when test="${study.biomeIconCSSClass == 'freshwater_b'}">
-                                <c:set var="biomeName" value="Freshwater" scope="page"/>
-                            </c:when>
-                            <c:when test="${study.biomeIconCSSClass == 'soil_b'}">
-                                <c:set var="biomeName" value="Soil" scope="page"/>
-                            </c:when>
-                            <c:when test="${study.biomeIconCSSClass == 'forest_b'}">
-                                <c:set var="biomeName" value="Forest" scope="page"/>
-                            </c:when>
-                            <c:when test="${study.biomeIconCSSClass == 'grassland_b'}">
-                                <c:set var="biomeName" value="Grassland" scope="page"/>
-                            </c:when>
-                            <c:when test="${study.biomeIconCSSClass == 'marine_b'}">
-                                <c:set var="biomeName" value="Marine"/>
-                            </c:when>
-                            <c:when test="${study.biomeIconCSSClass == 'human_gut_b'}">
-                                <c:set var="biomeName" value="Human gut" scope="page"/>
-                            </c:when>
-                            <c:when test="${study.biomeIconCSSClass == 'engineered_b'}">
-                                <c:set var="biomeName" value="Engineered" scope="page"/>
-                            </c:when>
-                            <c:when test="${study.biomeIconCSSClass == 'air_b'}">
-                                <c:set var="biomeName" value="Air" scope="page"/>
-                            </c:when>
-                            <c:when test="${study.biomeIconCSSClass == 'wastewater_b'}">
-                                <c:set var="biomeName" value="Wastewater" scope="page"/>
-                            </c:when>
-                            <c:when test="${study.biomeIconCSSClass == 'non_human_host_b'}">
-                                <c:set var="biomeName" value="Non-human host" scope="page"/>
-                            </c:when>
-                            <c:when test="${study.biomeIconCSSClass == 'human_host_b'}">
-                                <c:set var="biomeName" value="Human host" scope="page"/>
-                            </c:when>
-
-                            <c:otherwise>
-                                <c:set var="biomeName" value="Undefined" scope="page"/>
-                            </c:otherwise>
-                        </c:choose>
-
                         <span class="biome_icon icon_xs ${study.biomeIconCSSClass}"
-                              title="${biomeName} biome"></span>
+                              title="${study.biomeIconTitle} biome"></span>
 
                     </td>
                     <td class="h_left" id="ordered">
-                        <c:if test="${!study.public}"><img alt="private"
-                                                           src="${pageContext.request.contextPath}/img/icon_priv_private.gif">&nbsp;&nbsp;</c:if>
+
                         <a href="<c:url value="${baseURL}/projects/${study.studyId}"/>">${study.studyName}</a>
+
+                           <%-- Show icon only for people are are logged in--%>
+                           <c:if test="${not empty model.submitter}">
+                            <!-- Private icon-->
+                           <c:if test="${!study.public}">
+                               <span class="show_tooltip icon icon-functional" data-icon="L" title="Private data"></span>
+                           </c:if>
+                           <c:if test="${study.public}">
+                           <span class="show_tooltip icon icon-functional" data-icon="U" title="Public data"></span>
+                           </c:if>
+                       </c:if>
+
                     </td>
 
                     <td>
-                        <a href="<c:url value="${baseURL}/projects/${study.studyId}#samples_id"/>">${study.sampleSize}</a>
+                        <a href="<c:url value="${baseURL}/projects/${study.studyId}#samples_id"/>">${study.sampleCount}</a>
                     </td>
                     <td>${study.formattedLastReceived}</td>
                 </tr>

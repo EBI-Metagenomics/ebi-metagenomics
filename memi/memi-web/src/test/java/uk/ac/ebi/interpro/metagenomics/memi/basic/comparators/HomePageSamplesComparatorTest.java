@@ -4,7 +4,6 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import uk.ac.ebi.interpro.metagenomics.memi.core.comparators.HomePageSamplesComparator;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.HostSample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 
 import java.util.*;
@@ -41,22 +40,22 @@ public class HomePageSamplesComparatorTest extends TestCase {
     public void testCompareSortedSet() {
         Calendar calendar = null;
 
-        Sample sample1 = new HostSample();
+        Sample sample1 = new Sample();
         sample1.setSampleName("a");
         calendar = new GregorianCalendar(2011, 01, 02);
         sample1.setLastMetadataReceived(calendar.getTime());
         //
-        Sample sample2 = new HostSample();
+        Sample sample2 = new Sample();
         sample2.setSampleName("b");
         calendar = new GregorianCalendar(2011, 01, 04);
         sample2.setLastMetadataReceived(calendar.getTime());
         //
-        Sample sample3 = new HostSample();
+        Sample sample3 = new Sample();
         sample3.setSampleName("c");
         calendar = new GregorianCalendar(2011, 01, 01);
         sample3.setLastMetadataReceived(calendar.getTime());
         //
-        Sample sample4 = new HostSample();
+        Sample sample4 = new Sample();
         sample4.setSampleName("d");
         calendar = new GregorianCalendar(2011, 01, 01);
         sample4.setLastMetadataReceived(calendar.getTime());
@@ -84,22 +83,22 @@ public class HomePageSamplesComparatorTest extends TestCase {
     public void testCompareCollectionsSort() {
         Calendar calendar = null;
 
-        Sample sample1 = new HostSample();
+        Sample sample1 = new Sample();
         sample1.setSampleName("a");
         calendar = new GregorianCalendar(2011, 01, 02);
         sample1.setLastMetadataReceived(calendar.getTime());
         //
-        Sample sample2 = new HostSample();
+        Sample sample2 = new Sample();
         sample2.setSampleName("b");
         calendar = new GregorianCalendar(2011, 01, 04);
         sample2.setLastMetadataReceived(calendar.getTime());
         //
-        Sample sample3 = new HostSample();
+        Sample sample3 = new Sample();
         sample3.setSampleName("c");
         calendar = new GregorianCalendar(2011, 01, 01);
         sample3.setLastMetadataReceived(calendar.getTime());
         //
-        Sample sample4 = new HostSample();
+        Sample sample4 = new Sample();
         sample4.setSampleName("d");
         calendar = new GregorianCalendar(2011, 01, 03);
         sample4.setLastMetadataReceived(calendar.getTime());
