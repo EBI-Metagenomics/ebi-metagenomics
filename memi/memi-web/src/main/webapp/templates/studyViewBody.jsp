@@ -67,3 +67,59 @@
     });
 
 </script>
+
+<%--Only add the scripts for the Google map if the JSON data file is available--%>
+<c:if test="${model.googleMapDataAvailable}">
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/projects/${study.studyId}/map-data"></script>
+    <script type="text/javascript">
+        var script = '<script type="text/javascript" src="${pageContext.request.contextPath}/js/google-cluster-map/markerclusterer-1.0.1.js"><' + '/script>';
+        document.write(script);
+    </script>
+
+    <script type="text/javascript">
+        function initialize() {
+            var center = new google.maps.LatLng(5.0, 0.0);
+
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom:2,
+                center:center,
+                mapTypeId:google.maps.MapTypeId.ROADMAP
+            });
+
+            var markers = [];
+            var samples = data.samples
+            for (var i = 0; i < samples.length; i++) {
+                var sampleObject = samples[i];
+                //Little tweak to deal with multiple markers on exact same spot
+                sampleLatitude = sampleObject.latitude + (Math.random() * (0.0001 - 0.001) + 0.001);
+                //end tweak
+                var latLng = new google.maps.LatLng(sampleLatitude,
+                        sampleObject.longitude);
+                var sampleTitle = sampleObject.title;
+                var marker = new google.maps.Marker({
+                    position:latLng, label:sampleTitle, title:sampleTitle
+                });
+                var infoWindow = new google.maps.InfoWindow;
+                var html = "<div style='min-width:200px;max-width:400px;max-height: 200px;'><b>Sample Overview - " + sampleObject.sample_id + "</b><br>"
+                html += "Project: ${study.studyId}<br>"
+                html += "Title: <a href='${pageContext.request.contextPath}/projects/${study.studyId}/samples/" + sampleObject.sample_id + "'>" + sampleObject.title + "</a><br>"
+                html += "Classification: " + sampleObject.lineage + "<br>"
+                html += "Collection Date: " + sampleObject.collection_date + "<br>"
+                html += "Latitude: " + sampleObject.latitude + "<br>"
+                html += "Longitude: " + sampleObject.longitude
+                html += "</div>";
+                bindInfoWindow(marker, map, infoWindow, html);
+                markers.push(marker);
+            }
+            var markerCluster = new MarkerClusterer(map, markers);
+        }
+        function bindInfoWindow(marker, map, infoWindow, html) {
+            google.maps.event.addListener(marker, 'click', function () {
+                infoWindow.setContent(html);
+                infoWindow.open(map, marker);
+            });
+        }
+        google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+</c:if>

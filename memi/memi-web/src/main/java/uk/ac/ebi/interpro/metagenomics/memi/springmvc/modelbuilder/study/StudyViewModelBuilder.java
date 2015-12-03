@@ -55,8 +55,9 @@ public class StudyViewModelBuilder extends AbstractViewModelBuilder<StudyViewMod
         }
         Submitter submitter = getSessionSubmitter(sessionMgr);
         String tabDisabledOption = getTabDisabledOption();
+        boolean isGoogleMapDataAvailable = isGoogleMapDataAvailable();
         return new StudyViewModel(submitter, study, pageTitle,
-                breadcrumbs, propertyContainer, tabDisabledOption);
+                breadcrumbs, propertyContainer, tabDisabledOption, isGoogleMapDataAvailable);
     }
 
     /**
@@ -91,5 +92,18 @@ public class StudyViewModelBuilder extends AbstractViewModelBuilder<StudyViewMod
                 return disableOption; // We have data, no tabs to be disabled
             }
         }
+    }
+
+    public boolean isGoogleMapDataAvailable() {
+        // Check JSON file does exist
+        final String studyResultDirectory = study.getResultDirectory();
+        final String rootPath = propertyContainer.getPathToAnalysisDirectory();
+        final String fileName = "google-map-sample-data.json";
+        final String resultDirectoryAbsolute = rootPath + studyResultDirectory + File.separator + fileName;
+        final File googleDataFile = new File(resultDirectoryAbsolute);
+        if (googleDataFile.exists()) {
+            return true;
+        }
+        return false;
     }
 }

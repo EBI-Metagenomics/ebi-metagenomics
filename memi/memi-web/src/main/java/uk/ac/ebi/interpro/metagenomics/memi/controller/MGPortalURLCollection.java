@@ -96,6 +96,9 @@ public final class MGPortalURLCollection {
     //Project page, download tab
     public final static String PROJECT_DOWNLOAD = PROJECT + "/download";
 
+    //Google map data
+    public final static String PROJECT_MAP_DATA = PROJECT + "/map-data";
+
     //Project page - export functionality
     public final static String PROJECT_SUMMARY_EXPORT = PROJECT_DOWNLOAD + "/{releaseVersion}/export";
 

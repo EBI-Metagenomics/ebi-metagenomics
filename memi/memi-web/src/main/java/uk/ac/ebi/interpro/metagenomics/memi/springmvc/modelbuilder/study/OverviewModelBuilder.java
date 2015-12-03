@@ -14,6 +14,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.study.OverviewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.AbstractViewModelBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -64,8 +65,9 @@ public class OverviewModelBuilder extends AbstractViewModelBuilder<OverviewModel
         Submitter submitter = getSessionSubmitter(sessionMgr);
         List<QueryRunsForProjectResult> runs = getRunsForStudyViewModel(submitter);
         buildPublicationLists();
+        boolean isGoogleMapDataAvailable = isGoogleMapDataAvailable();
         return new OverviewModel(submitter, study, runs, pageTitle,
-                breadcrumbs, propertyContainer, relatedPublications, relatedLinks);
+                breadcrumbs, propertyContainer, relatedPublications, relatedLinks, isGoogleMapDataAvailable);
     }
 
     private List<QueryRunsForProjectResult> getRunsForStudyViewModel(Submitter submitter) {
@@ -96,5 +98,18 @@ public class OverviewModelBuilder extends AbstractViewModelBuilder<OverviewModel
         //Sorting lists
         Collections.sort(relatedPublications, new PublicationComparator());
         Collections.sort(relatedLinks, new PublicationComparator());
+    }
+
+    public boolean isGoogleMapDataAvailable() {
+        // Check JSON file does exist
+        final String studyResultDirectory = study.getResultDirectory();
+        final String rootPath = propertyContainer.getPathToAnalysisDirectory();
+        final String fileName = "google-map-sample-data.json";
+        final String resultDirectoryAbsolute = rootPath + studyResultDirectory + File.separator + fileName;
+        final File googleDataFile = new File(resultDirectoryAbsolute);
+        if (googleDataFile.exists()) {
+            return true;
+        }
+        return false;
     }
 }

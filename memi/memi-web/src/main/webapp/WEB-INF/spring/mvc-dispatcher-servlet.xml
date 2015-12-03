@@ -48,6 +48,7 @@
     <mvc:resources mapping="/js/jquery-1.11.1/*.*" location="/js/jquery-1.11.1/"/>
     <mvc:resources mapping="/js/highcharts-4.0.3/*.*" location="/js/Highcharts-4.0.3/"/>
     <mvc:resources mapping="/js/tweet/*.*" location="/js/tweet/"/>
+    <mvc:resources mapping="/js/google-cluster-map/*.js" location="/js/google-cluster-map/"/>
     <mvc:resources mapping="/img/backgrounds/*.*" location="/img/backgrounds/"/>
     <mvc:resources mapping="/img/funding/*.*" location="/img/funding/"/>
     <mvc:resources mapping="/img/icon/*.png" location="/img/icon/"/>
