@@ -12,16 +12,49 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<h2>Submit data</h2>
 
+
+<h2>Submit data</h2>
+<!-- Related links -->
+<!-- if video available -->
+<!--<div class="sidebar-allrel">
+        <div id="sidebar-video">
+                       <iframe width="100%" height="180" src="https://www.youtube.com/embed/Zml8jTqfQPg" frameborder="0" allowfullscreen></iframe>
+
+        </div>
+    </div>  -->
+<div class="sidebar-allrel">
+    <div id="sidebar-related">
+    <h2>Need more help?</h2>
+    <p>If you need more info on the submission process, you can either look at the:</p>
+    <ul>
+        <li>
+          <a title="Click to view an online training Quick tour about EBI Metagenomics portal" href="https://www.ebi.ac.uk/training/online/course/ebi-metagenomics-portal-quick-tour/submitting-data-ebi-metagenomics-portal"
+                                                        class="list_more"><span class="icon icon-generic" data-icon="T"></span> Training material</a>
+      </li>
+    <li>
+        <a title="Click to view" href="https://www.ebi.ac.uk/ena/submit/checklists"
+                                                      class="list_more">Sample checklists: MIxS data standard...</a>
+    </li>
+          <li>
+        <a title="Click to view" href="https://www.ebi.ac.uk/ena/submit/environmental-submissions"
+                                                      class="list_more">Submitting environmental samples</a>
+    </li>
+
+
+    </ul>
+    </div>
+    </div>
+    <!--/ Related links -->
 <p class="intro">
     We provide a free service for submission of raw metagenomics sequence data and associated metadata to the European
     Nucleotide Archive (ENA) and analysis by EBI Metagenomics.
 </p>
 
-<div class="grid_24 registration-check">
+<div class=" registration-check">
+<!-- Remove new user button when already logged in -->
+<c:if test="${empty model.submitter}">
     <div class="box-registration">
-
         <a href="<c:url value="${baseURL}/registration"/>" title="New user - start the submission"
            class="box-registration-link">
             <div class="box-registration-cont anim box-ban sq_button">
@@ -29,6 +62,7 @@
             </div>
         </a>
     </div>
+</c:if>
 
     <div class="box-registration">
         <a href="<c:url value="${baseURL}/registration/account-check"/>" title="Existing user"
