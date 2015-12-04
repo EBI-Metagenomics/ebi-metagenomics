@@ -1896,7 +1896,7 @@ a.all:active  { background: url(../img/arrow_link_click_small.jpg) no-repeat rig
 
 @media (max-width: 768px) {
 /*Homepage*/
-.jumbo-header  {background: url(../img/backgrounds/bgd_header_microbes_big_10p.png) -100px center no-repeat;background-color:#606a73;}
+.jumbo-header  {background: url(../img/backgrounds/bgd_header_microbes_big_10p.png) -100px center no-repeat; background-color: #5b7790;}
 .jumbo-header .button {margin-top: 0px;}
 .jumbo-header .lead, .jumbo-stats   {display: none;}
 .jumbo-header .button a {border-radius:0px; box-shadow:none;padding: 12px 66px;}
