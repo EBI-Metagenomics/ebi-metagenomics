@@ -639,6 +639,7 @@ list-style-type: none;
 
 /*right side box*/
 #sidebar-nav, #sidebar-steps, #sidebar-related {float:right; width: auto;font-weight:normal; border: 1px solid #E5E5E5;border-radius: 0 0 20px 0;background:  #F4F4F8;}
+#sidebar-video { border: 1px solid #E5E5E5;}
 
 #sidebar-nav {margin: 0 9px;/*padding: 0px 9px;*/ width:26%;}
 #sidebar-steps, #sidebar-related {font-size:90%;}
@@ -665,6 +666,7 @@ color:#c3c3c3;}
 /*box related links, resources*/
 #sidebar-related {margin:0;width: 94.8%; color:#3E3E3E; padding:6px;}
 #sidebar-related ul {margin:0; padding:9px; font-size: 100%; list-style-position: inside;}
+#sidebar-related .icon-generic:before {color:#3E3E3E;}
 
 #sidebar-nav ul{padding:9px; margin:9px 0;font-weight:bold; font-size:110%;}
 
