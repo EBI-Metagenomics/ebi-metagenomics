@@ -35,13 +35,14 @@
               Training material: Step by step guide to submission</a>
       </li>
     <li>
+            <a title="ENA guide to Submitting environmental samples" href="https://www.ebi.ac.uk/ena/submit/environmental-submissions"
+                                                          class="list_more">Submitting environmental samples</a>
+        </li>
+    <li>
         <a title="ENA sample checklists: MIxS data standard..." href="https://www.ebi.ac.uk/ena/submit/checklists"
                                                       class="list_more">Sample checklists: MIxS data standard...</a>
     </li>
-          <li>
-        <a title="ENA guide to Submitting environmental samples" href="https://www.ebi.ac.uk/ena/submit/environmental-submissions"
-                                                      class="list_more">Submitting environmental samples</a>
-    </li>
+
     </ul>
         <p>or <a href="http://www.ebi.ac.uk/support/metagenomics">contact us</a> directly with your question. </p>
     </div>
