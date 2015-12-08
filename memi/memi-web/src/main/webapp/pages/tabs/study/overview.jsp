@@ -177,7 +177,7 @@
                 <th scope="col">Run ID</th>
                 <th scope="col">Experiment type</th>
                 <th scope="col">Version</th>
-                <th scope="col" width="170px">Analysis results</th>
+                <th scope="col" width="170px" class="xs_hide">Analysis results</th>
             </tr>
             </thead>
             <tbody>
@@ -226,7 +226,7 @@
                         <a href="<c:url value="${baseURL}/pipelines/${run.releaseVersion}"/>"
                            title="Pipeline version ${run.releaseVersion}">${run.releaseVersion}</a>
                     </td>
-                    <td>
+                    <td class="xs_hide">
                         <a title="Taxonomic analysis" class="list_sample"
                            href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${run.externalSampleId}/runs/${run.externalRunIds}/results/versions/${run.releaseVersion}#ui-id-6"/>">Taxonomy </a>|
                         <a title="Function analysis" class="list_sample"
