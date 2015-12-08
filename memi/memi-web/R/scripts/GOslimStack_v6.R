@@ -99,7 +99,7 @@ CreateStackColForCategory <- function(abundanceTable, threshold, category) {
   ########################
   #### Chart settings ####
   ########################
-  chart$chart(height = 484) # Height of charting area
+ # chart$chart(height = 484)  Height of charting area
   #   Replace by: chart$chart(height = 444) when no vertical label
   chart$title(text = paste0("Most frequent GO terms", " (", correctNames[categoryIndice], ")"), # Title text
               floating = FALSE, # Avoid overlapping of chart and title
@@ -112,7 +112,7 @@ CreateStackColForCategory <- function(abundanceTable, threshold, category) {
   chart$yAxis(gridLineColor = "#e0e0e0", # Color of the horizontal background lines
               title = list(text = "Relative abundance (%)"), # Y axis title
               min = 0, max = 100) # Minimum and maximum values for this axis
-  chart$legend(layout = "vertical",  verticalAlign = "top", # align = "right", Legend display options
+  chart$legend( # layout = "vertical",  verticalAlign = "top", align = "right", Legend display options
                x = 0, y = 20, # Legend position options
                # width = 280,Fixed legend width so the 3 charts are aligned
                itemStyle = list(fontSize = "11px", fontWeight = "regular", color = "#606060"), # Style of legend items
