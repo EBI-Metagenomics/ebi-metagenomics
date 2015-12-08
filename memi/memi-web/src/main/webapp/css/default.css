@@ -1983,6 +1983,7 @@ table.result tbody td.table_xs_text {word-break: break-all; /*break long charact
 [class*='col-'] {width:100%; margin-bottom: 9px;}
 #bars .rChart {width:100%;}
 #pca .rChart {width:100%;}
+.ui-tabs .ui-tabs-nav .ui-tabs-anchor {padding: 2px;}/*comp. tool - reduce space around tabs icon*/
 }
 /*login window only*/
 @media (max-width: 1000px) {
