@@ -1983,7 +1983,7 @@ table.result tbody td.table_xs_text {word-break: break-all; /*break long charact
 [class*='col-'] {width:100%; margin-bottom: 9px;}
 #bars .rChart {width:100%;}
 #pca .rChart {width:100%;}
-.ui-tabs .ui-tabs-nav .ui-tabs-anchor {padding: 2px;}/*comp. tool - reduce space around tabs icon*/
+.sample_comp_result .ui-tabs .ui-tabs-nav .ui-tabs-anchor {padding: 2px;}/*comp. tool - reduce space around tabs icon*/
 .xs_hide {display:none;} /*set a global class to hide elements for small screens - easier than adding individual class*/
 table.dataTable.no-footer th:nth-child(2),table.dataTable.no-footer  td:nth-child(2) {display: none;}/*remove second column of the table in the comparison tool*/
 }
