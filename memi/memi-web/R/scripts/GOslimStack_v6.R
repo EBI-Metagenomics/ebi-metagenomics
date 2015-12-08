@@ -112,9 +112,9 @@ CreateStackColForCategory <- function(abundanceTable, threshold, category) {
   chart$yAxis(gridLineColor = "#e0e0e0", # Color of the horizontal background lines
               title = list(text = "Relative abundance (%)"), # Y axis title
               min = 0, max = 100) # Minimum and maximum values for this axis
-  chart$legend(layout = "vertical", align = "right", verticalAlign = "top", # Legend display options 
+  chart$legend(layout = "vertical",  verticalAlign = "top", # align = "right", Legend display options
                x = 0, y = 20, # Legend position options
-               width = 280, # Fixed legend width so the 3 charts are aligned
+               # width = 280,Fixed legend width so the 3 charts are aligned
                itemStyle = list(fontSize = "11px", fontWeight = "regular", color = "#606060"), # Style of legend items
                title = list(text = "GO terms list<br/><span style=\"font-size: 9px; color: #666; font-weight: normal; font-style: italic;\">Click to hide</span>", # Text of legend title
                             style = list(fontStyle = "regular"))) # Style of legend title
