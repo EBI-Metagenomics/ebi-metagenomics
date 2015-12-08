@@ -1985,7 +1985,8 @@ table.result tbody td.table_xs_text {word-break: break-all; /*break long charact
 #pca .rChart {width:100%;}
 .sample_comp_result .ui-tabs .ui-tabs-nav .ui-tabs-anchor {padding: 2px;}/*comp. tool - reduce space around tabs icon*/
 .xs_hide {display:none;} /*set a global class to hide elements for small screens - easier than adding individual class*/
-table.dataTable.no-footer th:nth-child(2),table.dataTable.no-footer  td:nth-child(2) {display: none;}/*remove second column of the table in the comparison tool*/
+table.dataTable.no-footer th:nth-child(2),table.dataTable.no-footer  td:nth-child(2) {display: none;}/*remove Go category column in the table - comparison tool*/
+table.dataTable.no-footer th:nth-child(3),table.dataTable.no-footer  td:nth-child(3) {display: none;} /*remove Go ID column in the table - comparison tool*/
 }
 /*login window only*/
 @media (max-width: 1000px) {
