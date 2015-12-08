@@ -24,25 +24,26 @@
         </div>
     </div>  -->
 <div class="sidebar-allrel">
-    <div id="sidebar-related">
-    <h2>Need more help?</h2>
-    <p>If you need more info on the submission process, you can either look at the:</p>
+    <div id="sidebar-related" class="sidebar-rel-help">
+    <h2><span data-icon="?" class="icon icon-generic"></span> Need more support?</h2>
+    <p>If you need more information about the submission process, you can either look at the:</p>
     <ul>
         <li>
-          <a title="Click to view an online training Quick tour about EBI Metagenomics portal" href="https://www.ebi.ac.uk/training/online/course/ebi-metagenomics-portal-quick-tour/submitting-data-ebi-metagenomics-portal"
-                                                        class="list_more"><span class="icon icon-generic" data-icon="T"></span> Training material</a>
+          <a title="Click to view an online training - Step by step guide to submission" href="https://www.ebi.ac.uk/training/online/course/ebi-metagenomics-portal-quick-tour/submitting-data-ebi-metagenomics-portal"
+                                                        class="list_more">
+              <!--<span class="icon icon-generic" data-icon="T"></span>  -->
+              Training material: Step by step guide to submission</a>
       </li>
     <li>
-        <a title="Click to view" href="https://www.ebi.ac.uk/ena/submit/checklists"
+        <a title="ENA sample checklists: MIxS data standard..." href="https://www.ebi.ac.uk/ena/submit/checklists"
                                                       class="list_more">Sample checklists: MIxS data standard...</a>
     </li>
           <li>
-        <a title="Click to view" href="https://www.ebi.ac.uk/ena/submit/environmental-submissions"
+        <a title="ENA guide to Submitting environmental samples" href="https://www.ebi.ac.uk/ena/submit/environmental-submissions"
                                                       class="list_more">Submitting environmental samples</a>
     </li>
-
-
     </ul>
+        <p>or <a href="http://www.ebi.ac.uk/support/metagenomics">contact us</a> directly with your question. </p>
     </div>
     </div>
     <!--/ Related links -->
