@@ -1984,6 +1984,7 @@ table.result tbody td.table_xs_text {word-break: break-all; /*break long charact
 #bars .rChart {width:100%;}
 #pca .rChart {width:100%;}
 .ui-tabs .ui-tabs-nav .ui-tabs-anchor {padding: 2px;}/*comp. tool - reduce space around tabs icon*/
+.xs_hide {display:none;} /*set a global class to hide elements for small screens - easier than adding individual class*/
 }
 /*login window only*/
 @media (max-width: 1000px) {
