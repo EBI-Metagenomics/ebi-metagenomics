@@ -63,7 +63,7 @@
                 <th scope="col">Pipeline version</th>
                 <th scope="col">Experiment type</th>
                 <th scope="col">Analysis date</th>
-                <th scope="col" width="170px">Analysis results</th>
+                <th scope="col" width="170px" class="xs_hide">Analysis results</th>
             </tr>
             </thead>
             <tbody>
@@ -76,7 +76,7 @@
                     <td><span class="capitalize">${analysisJob.experimentType.experimentType}</span>
                     </td>
                     <td>${analysisJob.completeTime}</td>
-                    <td>
+                    <td class="xs_hide">
                         <a title="Taxonomic analysis" class="list_sample"
                            href="<c:url value="${baseURL}/projects/${sample.study.studyId}/samples/${sample.sampleId}/runs/${analysisJob.externalRunIDs}/results/versions/${analysisJob.pipelineRelease.releaseVersion}#ui-id-6"/>">Taxonomy </a>|
                         <a title="Function analysis" class="list_sample"
