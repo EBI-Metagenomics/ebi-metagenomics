@@ -105,10 +105,10 @@ CreateStackColForCategory <- function(abundanceTable, threshold, category) {
               floating = FALSE, # Avoid overlapping of chart and title
               style = list(fontSize = 13, fontWeight = "bold")) # Title style
   chart$plotOptions(column = list(stacking = "percent")) # Stacking the columns. Valid values are 'normal' or 'percent'.
-  chart$xAxis(categories = c(unique(dataChart$sample)), # Display sample identifiers on x axis 
+  chart$xAxis(categories = c(unique(dataChart$sample)), # Display sample identifiers on x axis
               lineColor = "#595959", # Color of the axis
               tickColor = "", # Needed to delete ticks
-              labels = list (rotation =-90)) # Display labels vertically
+              labels = list (autoRotation:-90)) Auto-rotate labels vertically when needed
   chart$yAxis(gridLineColor = "#e0e0e0", # Color of the horizontal background lines
               title = list(text = "Relative abundance (%)"), # Y axis title
               min = 0, max = 100) # Minimum and maximum values for this axis
