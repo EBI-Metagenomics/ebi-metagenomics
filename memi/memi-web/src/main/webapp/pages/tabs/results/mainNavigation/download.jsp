@@ -13,8 +13,8 @@
         <thead>
         <tr>
             <th>Name</th>
-            <th>Data type</th>
-            <th>Compression <span class="icon icon-generic show_tooltip" data-icon="i"
+            <th class="xs_hide">Data type</th>
+            <th class="xs_hide">Compression <span class="icon icon-generic show_tooltip" data-icon="i"
                                   title="File compressed using GZIP -GZ, or GNU Zipped Archive file is a compression utility. GZ was adopted by the GNU Project, and is relatively popular on the Internet. GZIP produces files with a GZ extension, which can be decompressed by GZIP/GNUZIP program."></span>
             </th>
             <th>Format</th>
@@ -30,8 +30,8 @@
                     <tr class="row-cb">
 
                         <td>${downloadLink.linkText}</td>
-                        <td class="col_xs"><span class="dna_rna icon icon-conceptual icon-c1" data-icon="d"></span></td>
-                        <td class="col_sm"></td>
+                        <td class="col_xs xs_hide"><span class="dna_rna icon icon-conceptual icon-c1" data-icon="d"></span></td>
+                        <td class="col_sm  xs_hide"></td>
                         <td class="col_sm"></td>
                         <td><a href="${downloadLink.linkURL}" title="${downloadLink.linkTitle}"><span
                                 class="link icon icon-generic" data-icon="L"></a> <span class="filesize">
@@ -50,7 +50,7 @@
                         </c:otherwise>
                     </c:choose>
                     <td>${downloadLink.linkText}</td>
-                    <td class="col_xs">
+                    <td class="col_xs xs_hide">
                             <%--while implemented in file-definition-context--%>
                         <c:choose>
                             <c:when test="${downloadLink.linkText == 'Predicted CDS' || downloadLink.linkText ==  'Predicted CDS without annotation'}">
@@ -63,7 +63,7 @@
                             </c:otherwise>
                         </c:choose>
                     </td>
-                    <td class="col_sm">-</td>
+                    <td class="col_sm  xs_hide">-</td>
                     <td class="col_sm">FASTA</td>
                     <td><a href="<c:url value="${baseURL}/${downloadLink.linkURL}"/>" title="${downloadLink.linkTitle}"><span
                             class="icon  icon-functional" data-icon="="></span></a> <span
@@ -90,7 +90,7 @@
                     </c:choose>
                     <td><c:out value="${downloadLinkList[0].linkPrefix}"/></td>
 
-                    <td class="col_xs">
+                    <td class="col_xs xs_hide">
                             <%--while implemented in file-definition-context--%>
                         <c:choose>
                             <c:when test="${downloadLinkList[0].linkPrefix == 'InterPro matches' || downloadLinkList[0].linkPrefix ==  'InterPro matches (TSV)'}">
@@ -109,7 +109,7 @@
                         </c:choose>
 
                     </td>
-                    <td class="col_sm">GZIP</td>
+                    <td class="col_sm  xs_hide">GZIP</td>
                     <td class="col_sm"><c:out value="${linkPrefix}"/> FASTA, ${downloadLinkList[0].numberOfChunks}</td>
                     <td class="no-dash-last">
                         <c:forEach var="downloadLink" items="${downloadLinkList}" varStatus="loop">
@@ -133,7 +133,7 @@
                             </c:otherwise>
                         </c:choose>
                         <td><c:out value="${downloadLinkList[0].linkPrefix}"/></td>
-                        <td class="col_xs">
+                        <td class="col_xs  xs_hide">
                                 <%--while implemented in file-definition-context--%>
                             <c:choose>
                                 <c:when test="${downloadLink.linkText == 'Predicted CDS' || downloadLink.linkText ==  'Predicted CDS without annotation'}">
@@ -147,7 +147,7 @@
                             </c:choose>
                         </td>
 
-                        <td class="col_sm">GZIP</td>
+                        <td class="col_sm  xs_hide">GZIP</td>
                         <td class="col_sm">FASTA</td>
                         <td>
 
@@ -175,8 +175,8 @@
             <thead>
             <tr>
                 <th>Name</th>
-                <th>Data type</th>
-                <th>Compression <span class="icon icon-generic show_tooltip" data-icon="i"
+                <th class="xs_hide">Data type</th>
+                <th class="xs_hide">Compression <span class="icon icon-generic show_tooltip" data-icon="i"
                                       title="File compressed using GZIP -GZ, or GNU Zipped Archive file is a compression utility. GZ was adopted by the GNU Project, and is relatively popular on the Internet. GZIP produces files with a GZ extension, which can be decompressed by GZIP/GNUZIP program."></span>
                 </th>
                 <th>Format</th>
@@ -197,7 +197,7 @@
                             <td><c:out
                                     value="${model.downloadSection.functionalDownloadSection.interproscanDownloadLinks[0].linkPrefix}"/></td>
 
-                            <td class="col_xs">
+                            <td class="col_xs xs_hide">
                                     <%--while implemented in file-definition-context--%>
                                 <c:choose>
                                     <c:when test="${model.downloadSection.functionalDownloadSection.interproscanDownloadLinks[0].linkPrefix == 'InterPro matches' || model.downloadSection.functionalDownloadSection.interproscanDownloadLinks[0].linkPrefix ==  'Complete GO annotation' || model.downloadSection.functionalDownloadSection.interproscanDownloadLinks[0].linkPrefix ==  'GO slim annotation' }">
@@ -216,7 +216,7 @@
                                 </c:choose>
 
                             </td>
-                            <td class="col_sm">
+                            <td class="col_sm xs_hide">
                                     <%--while implemented in file-definition-context--%>
                                 <c:choose>
                                     <c:when test="${model.downloadSection.functionalDownloadSection.interproscanDownloadLinks[0].linkPrefix == 'InterPro matches'}">
@@ -258,7 +258,7 @@
                                 <td><c:out
                                         value="${model.downloadSection.functionalDownloadSection.interproscanDownloadLinks[0].linkPrefix}"/></td>
 
-                                <td class="col_xs">
+                                <td class="col_xs xs_hide">
                                         <%--while implemented in file-definition-context--%>
                                     <c:choose>
                                         <c:when test="${model.downloadSection.functionalDownloadSection.interproscanDownloadLinks[0].linkPrefix == 'InterPro matches' || model.downloadSection.functionalDownloadSection.interproscanDownloadLinks[0].linkPrefix ==  'Complete GO annotation' || model.downloadSection.functionalDownloadSection.interproscanDownloadLinks[0].linkPrefix ==  'GO slim annotation' }">
@@ -277,7 +277,7 @@
                                     </c:choose>
 
                                 </td>
-                                <td class="col_sm">
+                                <td class="col_sm xs_hide">
                                         <%--while implemented in file-definition-context--%>
                                     GZIP
                                 </td>
@@ -312,11 +312,11 @@
                 <tr class="row-function">
                     <td>${downloadLink.linkText}</td>
 
-                    <td class="col_xs">
+                    <td class="col_xs xs_hide">
                             <%--while implemented in file-definition-context--%>
                         <span class="show_tooltip icon  icon-generic big" data-icon="g" title="Chart data type"></span>
                     </td>
-                    <td class="col_sm">
+                    <td class="col_sm xs_hide">
                             <%--while implemented in file-definition-context--%>
                         <c:choose>
                             <c:when test="${downloadLink.linkText == 'InterPro matches'}">
@@ -363,8 +363,8 @@
             <thead>
             <tr>
                 <th>Name</th>
-                <th>Data type</th>
-                <th>Compression <span class="icon icon-generic show_tooltip" data-icon="i"
+                <th class="xs_hide">Data type</th>
+                <th class="xs_hide">Compression <span class="icon icon-generic show_tooltip" data-icon="i"
                                       title="File compressed using GZIP -GZ, or GNU Zipped Archive file is a compression utility. GZ was adopted by the GNU Project, and is relatively popular on the Internet. GZIP produces files with a GZ extension, which can be decompressed by GZIP/GNUZIP program."></span>
                 </th>
                 <th>Format</th>
@@ -380,7 +380,7 @@
                 <tr class="row-taxon">
 
                     <td> ${downloadLink.linkText}</td>
-                    <td class="col_xs">
+                    <td class="col_xs xs_hide">
                             <%--while implemented in file-definition-context--%>
                         <c:choose>
                             <c:when test="${downloadLinkList[0].linkPrefix == 'InterPro matches' || downloadLink.linkText ==  'Phylogenetic tree' || downloadLink.linkText == 'OTUs, reads and taxonomic assignments'}">
@@ -399,7 +399,7 @@
                         </c:choose>
 
                     </td>
-                    <td class="col_sm">-</td>
+                    <td class="col_sm xs_hide">-</td>
                     <td class="col_sm">
                             <%--file format--%>
                         <c:choose>
@@ -432,10 +432,7 @@
                         <a href="<c:url value="${baseURL}/${downloadLink.linkURL}"/>" title="${downloadLink.linkTitle}"><span
                                 class="icon  icon-functional" data-icon="="></span></a> <span
                             class="filesize"> (${downloadLink.fileSize})</span>
-
                     </td>
-
-
                         <%--<span class="list_date"> - ${downloadLink.fileSize}</span>--%>
                 </tr>
 
@@ -453,7 +450,6 @@
 </c:choose>
 </div>
 <script>
-
     $(document).ready(function () {
         //temp script to remove the last dash item in the list when partition
         $(".no-dash-last span:last-child").css("display", "none");
@@ -465,7 +461,6 @@
                 at:'bottom center' // at the bottom right of...
 
             }});
-
 
     });
 </script>
