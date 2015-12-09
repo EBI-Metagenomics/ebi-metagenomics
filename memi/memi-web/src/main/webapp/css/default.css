@@ -199,17 +199,6 @@ background: transparent url(../img/button_feedback_active_r.gif) no-repeat;
 background: transparent url(../img/button_feedback_active.gif) no-repeat;*/
 }
 
-
-#extraDiv1 {
-background: transparent url(../img/backgrounds/bgd_earth.gif) no-repeat -600px -1000px;
-position: fixed;
-bottom: 0px;
-width: 100%;
-height:  100%;
-z-index:1;
-border:0px black solid;
-}
-
 header, .banner  {background-color: white;}
 
 /*nav { float: left; width:100%;}*/
@@ -1991,7 +1980,12 @@ table.dataTable.no-footer th:nth-child(2),table.dataTable.no-footer  td:nth-chil
 table.dataTable.no-footer th:nth-child(3),table.dataTable.no-footer  td:nth-child(3) {display: none;} /*remove Go ID column in the table - comparison tool*/
 .xs-navtabs {display:block;}
 .xl-navtabs {display:none;}
+#fragment-download .pipeline_table thead th:first-child {width: 50%;} /*increase size first column download table*/
 }
+
+/*quality control tab*/
+#fragment-quality img {width:100%; max-width:540px;} /*make the image behave better with resizing*/
+
 /*login window only*/
 @media (max-width: 1000px) {
 .sub .sub_sign {display:none;}
