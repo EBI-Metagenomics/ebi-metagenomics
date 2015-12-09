@@ -1457,12 +1457,13 @@ img.ui-datepicker-trigger {float:left; /*solve a bug with chromium*/}
 .title_tab_p h2 {margin-top:0;}
 .run_title {margin-top:9px;}
 .run_title span {font-size: 80%;}
+.xs-navtabs {display: none;}/*alternative menu for small screens*/
 
 /*.sample_comp_result .ui-corner-top,*/ .sample_ana .ui-corner-top {border-top-right-radius: 0px;border-top-left-radius: 0px;}
 .sample_ana .ui-widget-content a {color:#2B8A97;}  /*links under jquery tabs*/
 .sample_ana .ui-widget-content {border: 0px solid #aaa;background: none;color: #333333;margin: 0 9px;}  /*margin for navigation tab*/
 /*.sample_comp .ui-widget-content .ui-widget-content, .sample_ana .ui-widget-content .ui-widget-content {margin: 0;} *//*non margin for graph tab*/
-.sample_ana .ui-tabs-nav { margin: 0px 0 -1px 9px;position: relative; z-index: 1;/*z-index: 500;*/}
+.sample_ana .ui-tabs-nav { margin: 0px 0 -1px 9px;position: relative; z-index: 1;}
 .sample_ana .ui-tabs-nav li {border-color: transparent /*was #e5e5e5*/;/*top:0px;*/ /*not needed anymore?*/}
 .sample_ana li.ui-tabs-selected {height: 30px; background: #fff; border-top: 1px solid rgb(213, 213, 213); border-right: 1px solid rgb(213, 213, 213); border-bottom: 0; border-left: 1px solid rgb(213, 213, 213);}
 .sample_ana li.ui-tabs-selected a:link, .sample_ana li.ui-tabs-selected a:visited {color: black;text-decoration: none;} /*works for overview*/
@@ -1539,6 +1540,7 @@ background-image: -webkit-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247
 
 .ui-tabs .ui-tabs-nav li.ico-downl {margin-left:16px;}
 .ui-tabs .ui-tabs-nav li .icon-functional:before {color:#3b4043;font-size: 164%; width: 20px; font-weight: normal;  padding-left: 3px; }
+.sample_ana .ui-tabs .ui-tabs-nav li .icon-functional:before {color:#2B8A97;font-size: 111%; padding-left: 0px; }
 
 
 .ico-pie {background: url(../img/ico_graph_pie.png) no-repeat 1px 2px;}
@@ -1983,10 +1985,12 @@ table.result tbody td.table_xs_text {word-break: break-all; /*break long charact
 [class*='col-'] {width:100%; margin-bottom: 9px;}
 #bars .rChart {width:100%;}
 #pca .rChart {width:100%;}
-.sample_comp_result .ui-tabs .ui-tabs-nav .ui-tabs-anchor {padding: 2px;}/*comp. tool - reduce space around tabs icon*/
+.sample_comp_result .ui-tabs .ui-tabs-nav .ui-tabs-anchor, .sample_ana .ui-tabs .ui-tabs-nav .ui-tabs-anchor {padding: 2px 6px;}/*comp. tool - reduce space around tabs icon*/
 .xs_hide {display:none;} /*set a global class to hide elements for small screens - easier than adding individual class*/
 table.dataTable.no-footer th:nth-child(2),table.dataTable.no-footer  td:nth-child(2) {display: none;}/*remove Go category column in the table - comparison tool*/
 table.dataTable.no-footer th:nth-child(3),table.dataTable.no-footer  td:nth-child(3) {display: none;} /*remove Go ID column in the table - comparison tool*/
+.xs-navtabs {display:block;}
+.xl-navtabs {display:none;}
 }
 /*login window only*/
 @media (max-width: 1000px) {
