@@ -1965,9 +1965,12 @@ div#local-masthead div.navbar-header {float:none;}
 }
 /***************************************** responsive  *******************************/
 @media (max-width: 768px) {  /*remove carousel, feedback, ebi search and sidebar nav for the about us for small screens*/
-.carousel, #feedback_div,  #global-search, #sidebar-nav {display: none;}
+.carousel, #feedback_div, #sidebar-nav {display: none;}
 div#local-title.logo-title img {width:100%; margin:0; padding: 18px 9px;} /*logo*/
+/*EBI template*/
 #global-footer .grid_4:nth-child(1) {display:none;}/*remove one item of the EBI bottom menu - logo -  to avoid scrolling effect*/
+#global-nav,#global-search {display: none;} /*remove search and menu - wait for EBI to implement a collapsed version of the menu*/
+/*END EBI template*/
 .sidebar-rel-help {display:none;}/*remove right hand side help box*/
 .icon_pipeline_v, .export, .sample_comp_result .tab-text {display:none;} /*remove pipeline ico and export button for table and text in comparison result tabs */
 table.result tbody td.table_xs_text {word-break: break-all; /*break long character chains on small screen*/}
