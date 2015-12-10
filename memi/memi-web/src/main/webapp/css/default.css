@@ -276,19 +276,6 @@ background-repeat: repeat-x;
 padding-bottom: 5px;
 }
 /************************* LINKS ************************************/
-#logout {color:#333;font-weight:bold;}
-
-#logout a, #logout a:link, #logout a:focus {
-color:#333;font-weight:bold;
-background:url(../img/ico_logout.jpg) no-repeat center right;
-padding-right:20px;
-border:0px red solid;
-}
-
-#logout a:hover {
-text-decoration:underline;
-}
-
 #login {display:block;color:#7E7E7E;}
 
 #login a, #login a:link, #login a:focus {
@@ -1993,6 +1980,11 @@ table.dataTable.no-footer th:nth-child(3),table.dataTable.no-footer  td:nth-chil
 @media (max-width: 1000px) {
 .sub .sub_sign {display:none;}
 .sub .sub_log {width:82%; padding: 0 9px;margin: 0; border: none; box-sizing: border-box;}}
+
+/*not logged in info not to fall on two lines*/
+@media (max-width: 900px) {
+div#local-masthead ul li.logout {display:none;}
+.xm_hide {display:none;}}
 
 /*bootstrap menu*/
 @media (max-width: 768px){
