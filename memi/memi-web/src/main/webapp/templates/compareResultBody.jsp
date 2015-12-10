@@ -2,9 +2,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<script src='${pageContext.request.contextPath}/js/highcharts-4.0.3/highcharts.src.js' type='text/javascript'></script>
-<script src='${pageContext.request.contextPath}/js/highcharts-4.0.3/highcharts-more.js' type='text/javascript'></script>
-<script src='${pageContext.request.contextPath}/js/highcharts-4.0.3/exporting.src.js' type='text/javascript'></script>
+<script src='${pageContext.request.contextPath}/js/highcharts-4.1.10/highcharts.js' type='text/javascript'></script>
+<script src='${pageContext.request.contextPath}/js/highcharts-4.1.10/highcharts-more.js' type='text/javascript'></script>
+<script src='${pageContext.request.contextPath}/js/highcharts-4.1.10/exporting.js' type='text/javascript'></script>
 <%--DataTables 1.10.0--%>
 <script src="${pageContext.request.contextPath}/js/jquery.dataTables.js"></script>
 
