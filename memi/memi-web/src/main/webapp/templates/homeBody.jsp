@@ -318,7 +318,7 @@
                 <div class="home_box alpha">
                     <h2>By selected biomes</h2>
 
-                 <div class="grid_24 list-biomes-l">
+                 <div class="grid_24">
 
                  <a class="alpha anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=SOIL"/>" title="View all <c:out value="${model.biomeMap['SOIL']}"/> soil projects">
                  <div class="list-biomes-element">
@@ -369,9 +369,7 @@
                          <div class="biome_text">Engineered (<c:out value="${model.biomeMap['ENGINEERED']}"/>)</div>
                      </div>
                      </a>
-                 </div><!-- /list-biomes-l -->
 
-                <div class="grid_24 list-biomes-l">
                           <a class="anim alpha" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=FRESHWATER"/>" title="View all <c:out value="${model.biomeMap['FRESHWATER']}"/> freshwater projects">
                             <div class="list-biomes-element">
                                 <div class="stretchy">
@@ -402,7 +400,7 @@
                              </div>
                              </a>
 
-                             <a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=AIR"/>" title="View all <c:out value="${model.biomeMap['AIR']}"/> air projects">
+                             <a class="anim xs_hide" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=AIR"/>" title="View all <c:out value="${model.biomeMap['AIR']}"/> air projects">
                              <div class="list-biomes-element">
                              <div class="stretchy">
                              <img class="spacer" alt="icon" src="<c:url value="${baseURL}/img/backgrounds/bgd_transparent_1x1.png"/>">
