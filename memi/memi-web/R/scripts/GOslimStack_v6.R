@@ -108,7 +108,7 @@ CreateStackColForCategory <- function(abundanceTable, threshold, category) {
   chart$xAxis(categories = c(unique(dataChart$sample)), # Display sample identifiers on x axis
               lineColor = "#595959", # Color of the axis
               tickColor = "", # Needed to delete ticks
-              labels = list (rotation =0)) # horizontal label - used to be rotation=-90 to display labels vertically - autoRotation:c(-90) not working (Autorotate labels for small screens)
+              labels = list (autoRotation = list(-10, -20, -30, -40, -50, -60, -70, -80, -90))) # horizontal label - used to be rotation=-90 to display labels vertically - autoRotation:c(-90) not working (Autorotate labels for small screens)
   chart$yAxis(gridLineColor = "#e0e0e0", # Color of the horizontal background lines
               title = list(text = "Relative abundance (%)"), # Y axis title
               min = 0, max = 100) # Minimum and maximum values for this axis
