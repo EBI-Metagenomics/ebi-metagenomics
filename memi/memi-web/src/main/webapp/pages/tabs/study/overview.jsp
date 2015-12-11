@@ -149,10 +149,7 @@
 <%--Google map with sample locations--%>
 <%--Only add the Google map if the JSON data file is available--%>
 <c:if test="${model.googleMapDataAvailable}">
-<p>
-    <a href="?">Reset</a> the map.
-</p>
-<div id="map-container" style="width:1040px;height:800px;"><div id="map" style="width:1040px;height:800px;"></div></div>
+<div id="map_canvas_study"></div>
 </c:if>
 
 <%--<h3>Other information</h3>--%>

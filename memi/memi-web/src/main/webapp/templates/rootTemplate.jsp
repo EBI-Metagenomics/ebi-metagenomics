@@ -198,6 +198,7 @@
 <%--little beta flag--%>
 <%--<a href="<c:url value="${baseURL}/about#intro"/>" title="About us"><div id="extra_beta" class="anim"></div></a>--%>
 
+<!--START Feedback slider functionality block -->
 <!-- The following line includes the feedback DIV and the feedback FORM -->
 <%@ include file="feedback/script/feedbackDiv.jsp" %>
 <div id="toTop" class="anim"><img src="${pageContext.request.contextPath}/img/ico_scroll_top.png" alt="Scroll to top" ><span class="scroll anim">To top </span></div>
@@ -218,5 +219,10 @@
            });
        </script>
 <!-- End Back top jQuery plugin-->
+<!--END Feedback slider functionality block -->
+
+<!--START Login functionality block -->
+<tiles:insertAttribute name="loginDialog"/>
+<!--END Login functionality block -->
 </body>
 </html>

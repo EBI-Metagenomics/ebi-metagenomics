@@ -16,6 +16,7 @@
         <put-attribute name="breadcrumbs" type="template" value="/templates/breadcrumbs.jsp"/>
         <put-attribute name="mainMenu" type="template" value="/templates/mainMenu.jsp"/>
         <put-attribute name="footer" type="template" value="/templates/footer.jsp"/>
+        <put-attribute name="loginDialog" type="template" value="/templates/loginDialog.jsp"/>
     </definition>
 
     <!-- Page bodies-->
@@ -23,12 +24,12 @@
     <definition name="home" extends="rootTemplate">
         <!-- Attributes of type definition-->
         <put-attribute name="bodyClass" type="string" value="grey"/>
-        <put-attribute name="body" type="definition" value="homeDef"/>
+        <put-attribute name="body" value="/templates/homeBody.jsp"/>
     </definition>
 
-    <definition name="homeDef" template="/templates/homeBody.jsp">
-        <put-attribute name="loginForm" type="template" value="/templates/loginForm.jsp"/>
-    </definition>
+    <!--<definition name="homeDef" template="/templates/homeBody.jsp">-->
+        <!--<put-attribute name="loginForm" type="template" value="/templates/loginForm.jsp"/>-->
+    <!--</definition>-->
 
     <definition name="about" extends="rootTemplate">
         <put-attribute name="bodyClass" type="string" value="green"/>
