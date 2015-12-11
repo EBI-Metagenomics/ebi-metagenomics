@@ -426,68 +426,6 @@
                  </div> <!-- /home_box -->
                 </div><!-- /list-biomes -->
 
-
-
-                 <%--<div id="list-biomes" class="grid_12 alpha">--%>
-                     <%--<div class="home_box alpha">--%>
-
-                     <%--<h2>By selected biomes</h2>--%>
-
-                     <%--<div class="grid_24 list-biomes-l">--%>
-
-                         <%--<div class="alpha list-biomes-element"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=SOIL"/>"--%>
-                                                      <%--title="View all <c:out value="${model.biomeMap['SOIL']}"/> soil projects"><span class="biome_icon icon_sm soil_b"></span><span class="biome_text">Soil (<c:out value="${model.biomeMap['SOIL']}"/>)</span></a></div>--%>
-
-                         <%--<div class="list-biomes-element"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=MARINE"/>"--%>
-                                                <%--title="View all <c:out value="${model.biomeMap['MARINE']}"/> marine projects"><span class="biome_icon icon_sm marine_b"></span><span class="biome_text">Marine (<c:out value="${model.biomeMap['MARINE']}"/>)</span></a></div>--%>
-
-
-                         <%--<div class="list-biomes-element"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=FOREST_SOIL"/>"--%>
-                                                      <%--title="View all <c:out value="${model.biomeMap['FOREST_SOIL']}"/> forest projects"><span class="biome_icon icon_sm forest_b"></span><span class="biome_text">Forest (<c:out value="${model.biomeMap['FOREST_SOIL']}"/>)</span></a></div>--%>
-
-                         <%--<div class="list-biomes-element"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=NON_HUMAN_HOST"/>"--%>
-                                                                       <%--title="View all <c:out value="${model.biomeMap['NON_HUMAN_HOST&']}"/> non-human host-associated projects"><span class="biome_icon icon_sm non_human_host_b"></span><span class="biome_text">Non-human host (<c:out value="${model.biomeMap['NON_HUMAN_HOST']}"/>)</span></a></div>--%>
-
-                         <%--<div class="omega list-biomes-element"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=ENGINEERED"/>"--%>
-                                                                    <%--title="View all <c:out value="${model.biomeMap['ENGINEERED']}"/> engineered projects"><span class="biome_icon icon_sm engineered_b"></span><span class="biome_text">Engineered (<c:out value="${model.biomeMap['ENGINEERED']}"/>)</span></a></div>--%>
-
-
-                           <%--</div>--%>
-                     <%--<div class="grid_24 list-biomes-l">--%>
-
-                         <%--<div class="list-biomes-element alpha"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=FRESHWATER"/>"--%>
-                                                                        <%--title="View all <c:out value="${model.biomeMap['FRESHWATER']}"/> freshwater projects"><span class="biome_icon icon_sm freshwater_b"></span><span class="biome_text">Freshwater (<c:out value="${model.biomeMap['FRESHWATER']}"/>)</span></a></div>--%>
-
-                         <%--<div class="list-biomes-element"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=GRASSLAND"/>"--%>
-                                                      <%--title="View all <c:out value="${model.biomeMap['GRASSLAND']}"/> grassland projects"><span class="biome_icon icon_sm grassland_b"></span><span class="biome_text">Grassland (<c:out value="${model.biomeMap['GRASSLAND']}"/>)</span></a></div>--%>
-
-                         <%--<div class="list-biomes-element "><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=HUMAN_GUT"/>"--%>
-                                                      <%--title="View all <c:out value="${model.biomeMap['HUMAN_GUT']}"/> human gut projects"><span class="biome_icon icon_sm human_gut_b"></span><span class="biome_text">Human gut (<c:out value="${model.biomeMap['HUMAN_GUT']}"/>)</span></a></div>--%>
-
-                         <%--<div class="list-biomes-element"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=AIR"/>"--%>
-                                                                                       <%--title="View all <c:out value="${model.biomeMap['AIR']}"/> air projects"><span class="biome_icon icon_sm air_b"></span><span class="biome_text">Air (<c:out value="${model.biomeMap['AIR']}"/>)</span></a></div>--%>
-                             <%--&lt;%&ndash;<div class="grid_4"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=HUMAN_HOST"/>"&ndash;%&gt;--%>
-                                                                         <%--&lt;%&ndash;title="View all <c:out value="${model.biomeMap['HUMAN_HOST&']}"/> human host-associated projects"><span class="biome_icon icon_sm human_host_b"></span><span class="biome_text">Human host (<c:out value="${model.biomeMap['HUMAN_HOST']}"/>)</span></a></div>&ndash;%&gt;--%>
-
-                         <%--<div class="list-biomes-element omega"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=WASTEWATER"/>"--%>
-                                                                                        <%--title="View all <c:out value="${model.biomeMap['WASTEWATER']}"/> wastewater projects"><span class="biome_icon icon_sm wastewater_b"></span><span class="biome_text">Wastewater (<c:out value="${model.biomeMap['WASTEWATER']}"/>)</span></a></div>--%>
-
-                         <%--&lt;%&ndash;<div class="grid_4 omega "><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>"&ndash;%&gt;--%>
-                                                      <%--&lt;%&ndash;title="View all  projects"><span class="biome_icon icon_sm default_b"></span><span class="biome_text">Other biomes</span></a></div>&ndash;%&gt;--%>
-                     <%--</div>--%>
-
-                         <%--&lt;%&ndash;<div class="grid_8 alpha"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=HUMAN-HOST"/>"&ndash;%&gt;--%>
-                                                                <%--&lt;%&ndash;title="View all soil projects"><span class="biome_icon icon_sm human_host_b"></span><span class="biome_text">Human (9)</span></a></div>&ndash;%&gt;--%>
-                                             <%--&lt;%&ndash;<div class="grid_8"><a class="anim" href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=NON-HUMAN-HOST"/>"&ndash;%&gt;--%>
-                                                                                    <%--&lt;%&ndash;title="View all marine projects"><span class="biome_icon icon_sm non_human_host_b"></span><span class="biome_text">Host-associated non-human (24)</span></a></div>&ndash;%&gt;--%>
-                                             <%--&lt;%&ndash;<div class="grid_8 omega"><a class="anim" href="<c:url vaue="${baseURL}/projects/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>"&ndash;%&gt;--%>
-                                                                                    <%--&lt;%&ndash;title="View all forest projects"><span class="biome_icon icon_sm default_b"></span><span class="biome_text">All biomes (3)</span></a></div>&ndash;%&gt;--%>
-
-                    <%--<a href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>"--%>
-                                                             <%--title="View projects and filter by biome" class="all">View all biomes</a>--%>
-                 <%--</div> <!-- /home_box -->--%>
-                 <%--</div>--%>
-
                  <!-- Project list box -->
                  <div class="list-contain-box grid_12 omega">
 
