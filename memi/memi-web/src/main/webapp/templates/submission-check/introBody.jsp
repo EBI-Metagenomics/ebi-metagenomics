@@ -30,9 +30,8 @@
     <ul>
         <li>
           <a title="Click to view an online training - Step by step guide to submission" href="https://www.ebi.ac.uk/training/online/course/ebi-metagenomics-portal-quick-tour/submitting-data-ebi-metagenomics-portal"
-                                                        class="list_more">
+                                                        class="list_more">Training material: Step by step guide to submission</a>
               <!--<span class="icon icon-generic" data-icon="T"></span>  -->
-              Training material: Step by step guide to submission</a>
       </li>
     <li>
             <a title="ENA guide to Submitting environmental samples" href="https://www.ebi.ac.uk/ena/submit/environmental-submissions"
