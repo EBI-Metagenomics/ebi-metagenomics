@@ -46,6 +46,7 @@
     });
 </script>
 
+<%--test Seb--%>
 <%--Only add the scripts for the Google map if the JSON data file is available--%>
 <c:if test="${model.googleMapDataAvailable}">
 
