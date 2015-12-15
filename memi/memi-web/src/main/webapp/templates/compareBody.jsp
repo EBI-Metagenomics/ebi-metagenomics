@@ -24,14 +24,14 @@ Please <a id="script_feedbackLink" href="javascript:slideFeedbackForm()" title="
 
               <div id="project-description" title="Project description">
                    <div id="description-content">
-                       <i>Select a project in the menu above.</i>
+                       <i>Select a project in the list above.</i>
                    </div>
                </div>
             <c:set var="noStudyError"><form:errors path="study" cssClass="error" element="div"/></c:set>
             <c:if test="${not empty noStudyError}">
             <script>
                 //replace info message by error message
-                $( "#description-content" ).replaceWith( "<div class='error' id='description-content study.errors'>Please select one project in the list above.</div>" );
+                $( "#description-content" ).replaceWith( "<div class='error' id='description-content study.errors'>Please select a project in the list above.</div>" );
             </script>
             </c:if>
 
