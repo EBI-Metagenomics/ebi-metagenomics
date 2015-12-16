@@ -170,7 +170,9 @@
                         <c:when test="${headerName == 'Biome'}">
                             <c:set var="headerWidth" value="40px" scope="page"/>
                         </c:when>
-                        <%--The Otherwise case is for header name Submitted date--%>
+                        <c:when test="${headerName == 'Last updated'}">
+                         <c:set var="headerId" value="xs_hide" scope="page"/>
+                        </c:when>
                         <c:otherwise>
                             <c:set var="headerWidth" value="120px" scope="page"/>
                         </c:otherwise>
@@ -207,7 +209,7 @@
                     <td>
                         <a href="<c:url value="${baseURL}/projects/${study.studyId}#samples_id"/>">${study.sampleCount}</a>
                     </td>
-                    <td>${study.formattedLastReceived}</td>
+                    <td class="xs_hide">${study.formattedLastReceived}</td>
                 </tr>
             </c:forEach>
             </tbody>
