@@ -92,7 +92,10 @@
             ${model.disabledOption}
         }).bind('tabsload', function (event, ui) {
                     <c:if test="${model.googleMapDataAvailable}">
-                    google.maps.event.addDomListener(window, 'load', initialize());
+                    var contextPath = '${pageContext.request.contextPath}';
+                    var biomeIconCSSClass = '${study.biomeIconCSSClass}';
+                    var biomeIconTitle = '${study.biomeIconTitle}';
+                    google.maps.event.addDomListener(window, 'load', initialize(contextPath, biomeIconCSSClass, biomeIconTitle));
                     </c:if>
                 });
     });

@@ -1,4 +1,4 @@
-function initialize() {
+function initialize(contextPath, biomeIconCSSClass, biomeIconTitle) {
     var center = new google.maps.LatLng(5.0, 0.0);
 
     var map = new google.maps.Map(document.getElementById('map_canvas_study'), {
@@ -35,12 +35,12 @@ function initialize() {
         //Set up the info window for the marker click event
         //Define the content string for the info window
         var contentString = "<div style='min-width:200px;max-width:650px;max-height: 350px;'>"
-        contentString += "<span class='biome_icon icon_xs show_tooltip ${study.biomeIconCSSClass}' title='${study.biomeIconTitle} biome'></span>"
+        contentString += "<span class='biome_icon icon_xs show_tooltip "+biomeIconCSSClass+"' title='"+biomeIconTitle+" biome'></span>"
         contentString += "<h3>Sample Overview - " + sampleObject.sample_id + "</h3>"
         contentString += "<p>" + sampleObject.sample_desc + "</p>"
-        contentString += '<button id="googleMapInfoButton" onclick="' + "toggleDiv('myDiv','googleMapInfoButton')" + '">More/Hide</button>';
-        contentString += '<div id="myDiv" style="display:none;"><p>Project: ${study.studyId}<br>'
-        contentString += "Title: <a href='${pageContext.request.contextPath}/projects/${study.studyId}/samples/" + sampleObject.sample_id + "'>" + sampleObject.title + "</a><br>"
+        contentString += '<button id="googleMapInfoButton" onclick="' + "toggleDiv('sampleDetailsDiv','googleMapInfoButton')" + '">More/Hide</button>';
+        contentString += '<div id="sampleDetailsDiv" style="display:none;"><p>Project: ' + sampleObject.study_id + '<br>'
+        contentString += "Title: <a href='"+contextPath+"/projects/" + sampleObject.study_id + "/samples/" + sampleObject.sample_id + "'>" + sampleObject.title + "</a><br>"
         contentString += "Classification: " + sampleObject.lineage + "<br>"
         contentString += "Collection Date: " + sampleObject.collection_date + "<br>"
         contentString += "Latitude: " + sampleObject.latitude + "<br>"
