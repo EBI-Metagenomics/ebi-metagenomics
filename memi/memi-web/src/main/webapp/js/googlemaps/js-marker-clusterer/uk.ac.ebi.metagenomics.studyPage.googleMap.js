@@ -1,10 +1,11 @@
 function initialize(contextPath, biomeIconCSSClass, biomeIconTitle) {
     var center = new google.maps.LatLng(5.0, 0.0);
 
-    var map = new google.maps.Map(document.getElementById('map_canvas_study'), {
+    var map = new google.maps.Map(document.getElementById('map_project'), {
         zoom:2,
         center:center,
-        mapTypeId:google.maps.MapTypeId.ROADMAP
+        mapTypeId:google.maps.MapTypeId.ROADMAP,
+        streetViewControl: false
     });
 
     var markers = [];
@@ -24,31 +25,37 @@ function initialize(contextPath, biomeIconCSSClass, biomeIconTitle) {
         //Define the marker image object
         //var markerImage = new google.maps.MarkerImage(imageUrl,new google.maps.Size(24, 32));
 
+        // for multiple icons - see https://developers.google.com/maps/tutorials/customizing/custom-markers
+
         var marker = new google.maps.Marker({
-            position:latLng,
-            label:sampleTitle,
-            title:sampleTitle
-            //Set the marker icon
-            //icon:markerImage
+          position:latLng,
+          //Set the marker icon
+          icon: {
+          path: google.maps.SymbolPath.CIRCLE,
+          strokeWeight:3,
+          strokeColor:"#fff",
+          fillColor:"#d42929",
+          fillOpacity:50,
+          scale: 8
+        }
         });
 
         //Set up the info window for the marker click event
         //Define the content string for the info window
-        var contentString = "<div style='min-width:200px;max-width:650px;max-height: 350px;'>"
+        var contentString = "<div class='map_info_window'>"
         contentString += "<span class='biome_icon icon_xs show_tooltip "+biomeIconCSSClass+"' title='"+biomeIconTitle+" biome'></span>"
-        contentString += "<h3>Sample Overview - " + sampleObject.sample_id + "</h3>"
-        contentString += "<p>" + sampleObject.sample_desc + "</p>"
-        contentString += '<button id="googleMapInfoButton" onclick="' + "toggleDiv('sampleDetailsDiv','googleMapInfoButton')" + '">More/Hide</button>';
-        contentString += '<div id="sampleDetailsDiv" style="display:none;"><p>Project: ' + sampleObject.study_id + '<br>'
-        contentString += "Title: <a href='"+contextPath+"/projects/" + sampleObject.study_id + "/samples/" + sampleObject.sample_id + "'>" + sampleObject.title + "</a><br>"
-        contentString += "Classification: " + sampleObject.lineage + "<br>"
-        contentString += "Collection Date: " + sampleObject.collection_date + "<br>"
-        contentString += "Latitude: " + sampleObject.latitude + "<br>"
-        contentString += "Longitude: " + sampleObject.longitude
-        contentString += "</p></div>";
+        contentString += "<h3>Sample Overview - <a href='"+contextPath+"/projects/" + sampleObject.study_id + "/samples/" + sampleObject.sample_id + "'>" + sampleObject.sample_id + "</a></h3>"
+        contentString +=  sampleObject.title + " / " + sampleObject.sample_desc + "<br/><br/>"
+//        contentString += '<button id="googleMapInfoButton" onclick="' + "toggleDiv('sampleDetailsDiv','googleMapInfoButton')" + '">More/Hide</button>';
+//        contentString += '<div id="sampleDetailsDiv" style="display:none;"><p>Project: ' + sampleObject.study_id + '<br>'
+        contentString += "<strong>Project name:</strong> " + sampleObject.study_desc + " ("+ sampleObject.study_id +")<br/>"
+        contentString += "<strong>Classification:</strong> " + sampleObject.lineage + "<br/>"
+        contentString += "<strong>Collection Date:</strong> " + sampleObject.collection_date + "<br/>"
+        contentString += "<strong>Lat/Long:</strong> " + sampleObject.latitude + ", "+ sampleObject.longitude   + "<br/>"
+        contentString += "<a class='anim map_info_more' href='"+contextPath+"/projects/" + sampleObject.study_id + "/samples/" + sampleObject.sample_id + "'>View more</a>"
         contentString += "</div>";
 
-        //Define the into window object
+        //Define the info window object
         var infoWindow = new google.maps.InfoWindow({
             content:contentString
         });
@@ -57,9 +64,24 @@ function initialize(contextPath, biomeIconCSSClass, biomeIconTitle) {
         markers.push(marker);
     }
 
-    //To use a marker clusterer, create a MarkerClusterer object and add the map plus all the markers
-    //specify a number of options to fine-tune
-    var mcOptions = {gridSize:50, maxZoom:15};
+    //set style options for marker clusters (these are the default styles)
+    var mcOptions = {gridSize:40, maxZoom:15, //define how far clustering should go
+        styles: [
+            {//medium
+            textColor:'white',
+            textSize:12,
+            height: 44,
+            width: 44,
+            url: contextPath+"/img/ico_map_clust_44.png"
+            },
+            {//big
+            textColor:'white',
+            textSize:18,
+            height: 58,
+            width: 58,
+            url: contextPath+"/img/ico_map_clust_58.png"
+            }]
+    };
     var markerCluster = new MarkerClusterer(map, markers, mcOptions);
 }
 function bindInfoWindow(marker, map, infoWindow) {
