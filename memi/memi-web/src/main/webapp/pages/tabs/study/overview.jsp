@@ -9,6 +9,37 @@
 
 <div id="project_ov">
 
+<%-- Show icon only for people are are logged in--%>
+<c:if test="${not empty model.submitter}">
+    <!-- Private icon-->
+    <c:if test="${!study.public}">
+        <p class="show_tooltip icon icon-functional" data-icon="L" title="Private data">Private data
+         <c:choose>
+             <c:when test="${not empty study.publicReleaseDate}">
+                 <c:set var="publicReleaseDate" value="${study.publicReleaseDate}"/>
+                 <span class="list_warn">&nbsp;(will be published on the <fmt:formatDate value="${publicReleaseDate}"
+                                                                                         pattern="dd-MMM-yyyy"/>)</span>
+             </c:when>
+             <c:otherwise>
+                 <c:set var="publicReleaseDate" value="${notGivenId}"/>
+             </c:otherwise>
+         </c:choose>
+     </p>
+    </c:if>
+    <c:if test="${study.public}">
+            <p class="show_tooltip icon icon-functional" data-icon="U" title="Public data">Public data </p>
+     </c:if>
+</c:if>
+
+
+<p class="project_upd_date">
+    Last updated: ${study.formattedLastReceived}</p>
+
+<!--Google map with sample locations - add the Google map if the JSON data file is available-->
+<c:if test="${model.googleMapDataAvailable}">
+<div id="map_project"></div>
+</c:if>
+
 <tags:publications publications="${study.publications}" relatedPublications="${model.relatedPublications}"
                    relatedLinks="${model.relatedLinks}"/>
     <!-- Related publication, resources, links -->
@@ -36,31 +67,8 @@
     </div>
     <!--/ Related publication, resources, links -->
 
-<%-- Show icon only for people are are logged in--%>
-<c:if test="${not empty model.submitter}">
-    <!-- Private icon-->
-    <c:if test="${!study.public}">
-        <p class="show_tooltip icon icon-functional" data-icon="L" title="Private data">Private data
-         <c:choose>
-             <c:when test="${not empty study.publicReleaseDate}">
-                 <c:set var="publicReleaseDate" value="${study.publicReleaseDate}"/>
-                 <span class="list_warn">&nbsp;(will be published on the <fmt:formatDate value="${publicReleaseDate}"
-                                                                                         pattern="dd-MMM-yyyy"/>)</span>
-             </c:when>
-             <c:otherwise>
-                 <c:set var="publicReleaseDate" value="${notGivenId}"/>
-             </c:otherwise>
-         </c:choose>
-     </p>
-    </c:if>
-    <c:if test="${study.public}">
-            <p class="show_tooltip icon icon-functional" data-icon="U" title="Public data">Public data </p>
-     </c:if>
-</c:if>
 
 
-<p class="project_upd_date">
-    Last updated: ${study.formattedLastReceived}</p>
 
 <h3 class="study_desc">Description</h3>
 
@@ -148,11 +156,7 @@
 
 </div>
 
-<%--Google map with sample locations--%>
-<%--Only add the Google map if the JSON data file is available--%>
-<c:if test="${model.googleMapDataAvailable}">
-<div id="map_canvas_study"></div>
-</c:if>
+
 
 <%--<h3>Other information</h3>--%>
 
