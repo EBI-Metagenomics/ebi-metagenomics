@@ -34,8 +34,8 @@ function initialize(contextPath, biomeIconCSSClass, biomeIconTitle) {
           path: google.maps.SymbolPath.CIRCLE,
           strokeWeight:3,
           strokeColor:"#fff",
-          fillColor:"#d42929",
-          fillOpacity:50,
+          fillColor:"#1a5286 ",  /*red #67a1b7*/
+          fillOpacity:100,
           scale: 8
         }
         });
@@ -64,23 +64,28 @@ function initialize(contextPath, biomeIconCSSClass, biomeIconTitle) {
         markers.push(marker);
     }
 
+    //transform icon into symbol - from http://stackoverflow.com/questions/33353250/google-maps-api-markerclusterer-plus-set-icon
+    var Symbol=function(id,width,height,fill,strokewidth,strokecolor){
+              var s={
+                vader:  { //star was symbol
+                          p:'M 454.5779,419.82295 328.03631,394.69439 282.01503,515.21933 210.30518,407.97233 92.539234,460.65437 117.66778,334.11278 -2.8571457,288.09151 104.38984,216.38165 51.707798,98.615703 178.2494,123.74425 224.27067,3.2193247 295.98052,110.46631 413.74648,57.784277 388.61793,184.32587 509.14286,230.34714 401.89587,302.057 z',
+                          v:'0 0 512 512'
+                        },
+                 luc:  { //map symbol
+                        p:' M 100, 100m -75, 0a 75,75 0 1,0 150,0a 75,75 0 1,0 -150,0',
+                        v:'0 0 512 512'
+                                      }
+                }
+              return ('data:image/svg+xml;base64,'+window.btoa('<svg xmlns="http://www.w3.org/2000/svg" height="'+height+'" viewBox="0 0 512 512" width="'+width+'" ><g><path stroke-width="'+strokewidth+'" stroke="'+strokecolor+'" fill="'+fill+'" d="'+s[id].p+'" /></g></svg>'));
+            }
+
+
     //set style options for marker clusters (these are the default styles)
     var mcOptions = {gridSize:40, maxZoom:15, //define how far clustering should go
-        styles: [
-            {//medium
-            textColor:'white',
-            textSize:12,
-            height: 44,
-            width: 44,
-            url: contextPath+"/img/ico_map_clust_44.png"
-            },
-            {//big
-            textColor:'white',
-            textSize:18,
-            height: 58,
-            width: 58,
-            url: contextPath+"/img/ico_map_clust_58.png"
-            }]
+        styles:[
+                {textColor:'white',width:40,height:40,url:Symbol('luc',100,100,'#1a5286',16,'white')},
+                {textColor:'white',textSize:'18',width:78,height:78,url:Symbol('luc',200,200,'#1a5286',5,'white')}
+             ]
     };
     var markerCluster = new MarkerClusterer(map, markers, mcOptions);
 }
