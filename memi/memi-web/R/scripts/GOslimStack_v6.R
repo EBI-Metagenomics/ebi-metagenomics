@@ -99,22 +99,22 @@ CreateStackColForCategory <- function(abundanceTable, threshold, category) {
   ########################
   #### Chart settings ####
   ########################
-  chart$chart(height = 484) # Height of charting area
+ # chart$chart(height = 484)  Height of charting area
   #   Replace by: chart$chart(height = 444) when no vertical label
   chart$title(text = paste0("Most frequent GO terms", " (", correctNames[categoryIndice], ")"), # Title text
               floating = FALSE, # Avoid overlapping of chart and title
               style = list(fontSize = 13, fontWeight = "bold")) # Title style
   chart$plotOptions(column = list(stacking = "percent")) # Stacking the columns. Valid values are 'normal' or 'percent'.
-  chart$xAxis(categories = c(unique(dataChart$sample)), # Display sample identifiers on x axis 
+  chart$xAxis(categories = c(unique(dataChart$sample)), # Display sample identifiers on x axis
               lineColor = "#595959", # Color of the axis
               tickColor = "", # Needed to delete ticks
-              labels = list (rotation =-90)) # Display labels vertically
+              labels = list (autoRotation = list(-10, -20, -30, -40, -50, -60, -70, -80, -90))) # horizontal label - used to be rotation=-90 to display labels vertically - autoRotation:c(-90) not working (Autorotate labels for small screens)
   chart$yAxis(gridLineColor = "#e0e0e0", # Color of the horizontal background lines
               title = list(text = "Relative abundance (%)"), # Y axis title
               min = 0, max = 100) # Minimum and maximum values for this axis
-  chart$legend(layout = "vertical", align = "right", verticalAlign = "top", # Legend display options 
-               x = 0, y = 20, # Legend position options
-               width = 280, # Fixed legend width so the 3 charts are aligned
+  chart$legend(# layout = "vertical",  verticalAlign = "top", align = "right", Legend display options
+               #x = 0, y = 20,  Legend position options
+               # width = 280,Fixed legend width so the 3 charts are aligned
                itemStyle = list(fontSize = "11px", fontWeight = "regular", color = "#606060"), # Style of legend items
                title = list(text = "GO terms list<br/><span style=\"font-size: 9px; color: #666; font-weight: normal; font-style: italic;\">Click to hide</span>", # Text of legend title
                             style = list(fontStyle = "regular"))) # Style of legend title

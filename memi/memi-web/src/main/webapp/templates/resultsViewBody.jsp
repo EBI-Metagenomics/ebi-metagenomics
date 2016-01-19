@@ -42,33 +42,30 @@
         <h2 class="fl_uppercase_title run_title extra_margin">Run <span>(${model.run.externalRunId})</span></h2>
 
         <div class="sample_ana">
-        <div id="navtabs">
-            <%--Main Tabs--%>
-            <ul>
-                <li>
-                    <a title="Overview"
-                       href="<c:url value="${baseURL}/projects/${model.run.externalProjectId}/samples/${model.run.externalSampleId}/runs/${model.run.externalRunId}/results/overview/versions/${model.analysisJob.pipelineRelease.releaseVersion}"/>"><span>Overview</span></a>
-                </li>
-                <li>
-                    <a title="Quality control"
-                       href="<c:url value="${baseURL}/projects/${model.run.externalProjectId}/samples/${model.run.externalSampleId}/runs/${model.run.externalRunId}/results/qualityControl/versions/${model.analysisJob.pipelineRelease.releaseVersion}"/>"><span>Quality control</span></a>
-                </li>
-                <li><a title="Taxonomy analysis"
-                       href="<c:url value="${baseURL}/projects/${model.run.externalProjectId}/samples/${model.run.externalSampleId}/runs/${model.run.externalRunId}/results/taxonomic/versions/${model.analysisJob.pipelineRelease.releaseVersion}"/>"><span>Taxonomic analysis</span></a>
-                </li>
-                <li>
-                    <a title="Functional analysis"
-                       href="<c:url value="${baseURL}/projects/${model.run.externalProjectId}/samples/${model.run.externalSampleId}/runs/${model.run.externalRunId}/results/functional/versions/${model.analysisJob.pipelineRelease.releaseVersion}"/>"><span>Functional analysis</span></a>
-                </li>
-                <li>
-                    <a title="Download"
-                       href="<c:url value="${baseURL}/projects/${model.run.externalProjectId}/samples/${model.run.externalSampleId}/runs/${model.run.externalRunId}/results/download/versions/${model.analysisJob.pipelineRelease.releaseVersion}"/>"><span>Download</span></a>
-                </li>
-                    <%--<li><a href="#fragment-experimental"><span>Experimental factor</span></a></li>--%>
-            </ul>
-
+        <!-- Main Tabs for normal screen -->
+        <div class="navtabs">
+                    <ul>
+                        <li>
+                            <a title="Overview"
+                               href="<c:url value="${baseURL}/projects/${model.run.externalProjectId}/samples/${model.run.externalSampleId}/runs/${model.run.externalRunId}/results/overview/versions/${model.analysisJob.pipelineRelease.releaseVersion}"/>"><span>Overview</span></a>
+                        </li>
+                        <li>
+                            <a title="Quality control"
+                               href="<c:url value="${baseURL}/projects/${model.run.externalProjectId}/samples/${model.run.externalSampleId}/runs/${model.run.externalRunId}/results/qualityControl/versions/${model.analysisJob.pipelineRelease.releaseVersion}"/>"><span class="xl-navtabs">Quality control</span><span class="xs-navtabs">QC</span></a>
+                        </li>
+                        <li><a title="Taxonomy analysis"
+                               href="<c:url value="${baseURL}/projects/${model.run.externalProjectId}/samples/${model.run.externalSampleId}/runs/${model.run.externalRunId}/results/taxonomic/versions/${model.analysisJob.pipelineRelease.releaseVersion}"/>"><span class="xl-navtabs">Taxonomic analysis</span><span class="xs-navtabs">Taxonomy</span></a>
+                        </li>
+                        <li>
+                            <a title="Functional analysis"
+                               href="<c:url value="${baseURL}/projects/${model.run.externalProjectId}/samples/${model.run.externalSampleId}/runs/${model.run.externalRunId}/results/functional/versions/${model.analysisJob.pipelineRelease.releaseVersion}"/>"><span class="xl-navtabs">Functional analysis</span><span class="xs-navtabs">Function</span></a>
+                        </li>
+                        <li>
+                            <a title="Download"
+                               href="<c:url value="${baseURL}/projects/${model.run.externalProjectId}/samples/${model.run.externalSampleId}/runs/${model.run.externalRunId}/results/download/versions/${model.analysisJob.pipelineRelease.releaseVersion}"/>"><span class="xl-navtabs">Download</span><span class="icon icon-functional xs-navtabs" data-icon="="></span></a></li></ul>
         </div>
-        <%--end navtabs--%>
+        <!-- /Main Tabs for normal screen -->
+
 
         <script type="text/javascript">
             $(function () {
@@ -85,8 +82,8 @@
         <script type="text/javascript">
             //Main navigation tabs - overview, quality control, taxonomic analysis, functional analysis, downloads
             //Ajax load approach as described here: http://jqueryui.com/tabs/#ajax
-
-            $("#navtabs").tabs({
+            //load the tabs for the two different menu sizes
+            $(".navtabs").tabs({
                 cache:true,
                 ajaxOptions:{
                     error:function (xhr, status, index, anchor) {

@@ -17,10 +17,20 @@
     <h2>Related links</h2>
     <%--<span class="separator"></span>--%>
     <ul>
+        <!--ENA links -->
     <li>
         <a title="Click to view entry on European Nucleotide Archive" href="https://www.ebi.ac.uk/ena/data/view/${study.studyId}"
                                                       class="list_more">ENA website (${study.studyId})</a>
     </li>
+        <!--NCBI links -->
+        <c:choose>
+                <c:when test="${not empty study.ncbiProjectId && study.ncbiProjectId>0}">
+     <li>
+         <a title="Click to view entry on NCBI website" href="http://www.ncbi.nlm.nih.gov/bioproject/?term=${study.ncbiProjectId}"
+                                                       class="list_more">BioProject (${study.ncbiProjectId})</a>
+     </li>
+                </c:when>
+        </c:choose>
     </ul>
     </div>
     </div>
@@ -50,14 +60,6 @@
 
 
 <p class="project_upd_date">
-    <c:choose>
-        <c:when test="${not empty study.ncbiProjectId && study.ncbiProjectId>0}">
-            BioProject <a class="ext"
-                          href="<c:url value="https://www.ebi.ac.uk/ena/data/view/Project:${study.ncbiProjectId}"/>"><c:out
-                value="${study.ncbiProjectId}"/></a> -
-        </c:when>
-        <c:otherwise></c:otherwise>
-    </c:choose>
     Last updated: ${study.formattedLastReceived}</p>
 
 <h3 class="study_desc">Description</h3>
@@ -175,7 +177,7 @@
                 <th scope="col">Run ID</th>
                 <th scope="col">Experiment type</th>
                 <th scope="col">Version</th>
-                <th scope="col" width="170px">Analysis results</th>
+                <th scope="col" width="170px" class="xs_hide">Analysis results</th>
             </tr>
             </thead>
             <tbody>
@@ -224,7 +226,7 @@
                         <a href="<c:url value="${baseURL}/pipelines/${run.releaseVersion}"/>"
                            title="Pipeline version ${run.releaseVersion}">${run.releaseVersion}</a>
                     </td>
-                    <td>
+                    <td class="xs_hide">
                         <a title="Taxonomic analysis" class="list_sample"
                            href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${run.externalSampleId}/runs/${run.externalRunIds}/results/versions/${run.releaseVersion}#ui-id-6"/>">Taxonomy </a>|
                         <a title="Function analysis" class="list_sample"

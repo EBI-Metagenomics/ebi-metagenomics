@@ -12,16 +12,50 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<h2>Submit data</h2>
 
+
+<h2>Submit data</h2>
+<!-- Related links -->
+<!-- if video available -->
+<!--<div class="sidebar-allrel">
+        <div id="sidebar-video">
+                       <iframe width="100%" height="180" src="https://www.youtube.com/embed/Zml8jTqfQPg" frameborder="0" allowfullscreen></iframe>
+
+        </div>
+    </div>  -->
+<div class="sidebar-allrel">
+    <div id="sidebar-related" class="sidebar-rel-help">
+    <h2><span data-icon="?" class="icon icon-generic"></span> Need more support?</h2>
+    <p>If you need more information about the submission process, you can either look at the:</p>
+    <ul>
+        <li>
+          <a title="Click to view an online training - Step by step guide to submission" href="https://www.ebi.ac.uk/training/online/course/ebi-metagenomics-portal-quick-tour/submitting-data-ebi-metagenomics-portal"
+                                                        class="list_more">Training material: Step by step guide to submission</a>
+              <!--<span class="icon icon-generic" data-icon="T"></span>  -->
+      </li>
+    <li>
+            <a title="ENA guide to Submitting environmental samples" href="https://www.ebi.ac.uk/ena/submit/environmental-submissions"
+                                                          class="list_more">Submitting environmental samples</a>
+        </li>
+    <li>
+        <a title="ENA sample checklists: MIxS data standard..." href="https://www.ebi.ac.uk/ena/submit/checklists"
+                                                      class="list_more">Sample checklists: MIxS data standard...</a>
+    </li>
+
+    </ul>
+        <p>or <a href="http://www.ebi.ac.uk/support/metagenomics">contact us</a> directly with your question. </p>
+    </div>
+    </div>
+    <!--/ Related links -->
 <p class="intro">
     We provide a free service for submission of raw metagenomics sequence data and associated metadata to the European
     Nucleotide Archive (ENA) and analysis by EBI Metagenomics.
 </p>
 
-<div class="grid_24 registration-check">
+<div class=" registration-check">
+<!-- Remove new user button when already logged in -->
+<c:if test="${empty model.submitter}">
     <div class="box-registration">
-
         <a href="<c:url value="${baseURL}/registration"/>" title="New user - start the submission"
            class="box-registration-link">
             <div class="box-registration-cont anim box-ban sq_button">
@@ -29,6 +63,7 @@
             </div>
         </a>
     </div>
+</c:if>
 
     <div class="box-registration">
         <a href="<c:url value="${baseURL}/registration/account-check"/>" title="Existing user"

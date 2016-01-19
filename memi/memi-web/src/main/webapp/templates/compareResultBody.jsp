@@ -2,9 +2,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<script src='${pageContext.request.contextPath}/js/highcharts-4.0.3/highcharts.src.js' type='text/javascript'></script>
-<script src='${pageContext.request.contextPath}/js/highcharts-4.0.3/highcharts-more.js' type='text/javascript'></script>
-<script src='${pageContext.request.contextPath}/js/highcharts-4.0.3/exporting.src.js' type='text/javascript'></script>
+<script src='${pageContext.request.contextPath}/js/highcharts-4.1.10/highcharts.js' type='text/javascript'></script>
+<script src='${pageContext.request.contextPath}/js/highcharts-4.1.10/highcharts-more.js' type='text/javascript'></script>
+<script src='${pageContext.request.contextPath}/js/highcharts-4.1.10/exporting.js' type='text/javascript'></script>
 <%--DataTables 1.10.0--%>
 <script src="${pageContext.request.contextPath}/js/jquery.dataTables.js"></script>
 
@@ -42,7 +42,7 @@
         <li><a href="#bars" title="view results as bar chart"><span class="ico-barh"></span> <span class="tab-text">Barcharts</span></a></li>
         <li><a href="#stack" title="view results as stacked column"><span class="ico-col"></span> <span class="tab-text">Stacked columns</span></a></li>
         <li><a href="#heatmap" title="view results as heatmap"><span class="ico-heatmap"></span><span class="tab-text">Heatmap</span></a></li>
-        <li><a href="#pca" title="view results as principal components analysis"><span class="ico-pca"></span><span class="tab-text">Principal Component Analysis</span></a></li>
+        <li><a href="#pca" title="view results as principal components analysis"><span class="ico-pca"></span><span class="tab-text"><span class="xm_hide">Principal Component Analysis</span><span class="xm-navtabs">PCA</span></a></li>
         <li><a href="#jstable" title="view results in a table"><span class="ico-table"></span><span class="tab-text">Table</span></a></li>
     </ul>
     <%-- Tabs content --%>
