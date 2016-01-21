@@ -4,6 +4,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.dao.GenericDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Run;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.PipelineRelease;
+import uk.ac.ebi.interpro.metagenomics.memi.model.valueObjects.AnalysisJobVO;
 
 import java.util.List;
 
@@ -19,5 +20,9 @@ public interface AnalysisJobDAO {
 
     public List<AnalysisJob> readBySampleId(Long sampleId, String analysisStatus);
 
+    public List<AnalysisJob> readBySampleIds(List<Long> sampleIds, String analysisStatus);
+
     public List<AnalysisJob> readByJobIds(List<Long> jobIds);
+
+    public List<AnalysisJobVO> retrieveAnalysisJobVOsDeepByStudyId(long studyId, String analysisStatus);
 }

@@ -17,9 +17,9 @@ import uk.ac.ebi.interpro.metagenomics.memi.forms.ComparisonForm;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.ExperimentTypeE;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
+import uk.ac.ebi.interpro.metagenomics.memi.model.valueObjects.AnalysisJobVO;
 import uk.ac.ebi.interpro.metagenomics.memi.services.FileObjectBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.CompareViewModel;
@@ -258,9 +258,9 @@ public class CompareController extends AbstractController implements IController
      * @param usedData - type of data chosen by the user for the comparison
      * @return Map of sample IDs and the corresponding input file paths.
      */
-    private Map<AnalysisJob, String> getInputFilePathMap(String usedData, List<AnalysisJob> completeAnalysisJobList) {
-        Map<AnalysisJob, String> resultMap = new HashMap<AnalysisJob, String>();
-        for (AnalysisJob analysisJob : completeAnalysisJobList) {
+    private Map<AnalysisJobVO, String> getInputFilePathMap(String usedData, List<AnalysisJobVO> completeAnalysisJobList) {
+        Map<AnalysisJobVO, String> resultMap = new HashMap<AnalysisJobVO, String>();
+        for (AnalysisJobVO analysisJob : completeAnalysisJobList) {
             // If statements depending on the nature of the data type chosen by the user
             DownloadableFileDefinition fileDefinition = fileDefinitionsMapV1.get(FileDefinitionId.INTERPRO_MATCHES_SUMMARY_FILE.name());
             if (usedData.equals("GO"))
@@ -298,21 +298,16 @@ public class CompareController extends AbstractController implements IController
                                          final ComparisonForm comparisonForm) {
         ModelAndView mav = new ModelAndView("/compareSamples");
         //First: Get all completed analysis jobs for the given study identifier
-        List<AnalysisJob> completeAnalysisJobList = new ArrayList<AnalysisJob>();
-        List<Sample> sampleList = sampleDAO.retrieveAllSamplesByStudyId(studyId);
-        for (Sample sample : sampleList) {
-            List<AnalysisJob> analysisJobs = analysisJobDAO.readBySampleId(sample.getId(), AnalysisJob.AnalysisJobStatus.COMPLETED.getStatus());
-            completeAnalysisJobList.addAll(analysisJobs);
-        }
+        List<AnalysisJobVO> analysisJobVOList = analysisJobDAO.retrieveAnalysisJobVOsDeepByStudyId(studyId, AnalysisJob.AnalysisJobStatus.COMPLETED.getStatus());
         // Checking if requested analysis jobs have data for the selected data type on the comparison tool submission page (handling of the 'file is empty' error)
-        // If they don't have any data, remove them from the sample list and add them to another list for missing samples
-        Map<AnalysisJob, String> sampleToFilePathMap = getInputFilePathMap(comparisonForm.getUsedData(), completeAnalysisJobList);
+        // If they don't have any data, remove them from the sample list and add them to another list of missing samples
+        Map<AnalysisJobVO, String> sampleToFilePathMap = getInputFilePathMap(comparisonForm.getUsedData(), analysisJobVOList);
 
-        List<AnalysisJob> deactivatedAnalysisJobs = new ArrayList<AnalysisJob>();
-        List<AnalysisJob> activatedAnalysisJobs = new ArrayList<AnalysisJob>();
+        List<AnalysisJobVO> deactivatedAnalysisJobs = new ArrayList<AnalysisJobVO>();
+        List<AnalysisJobVO> activatedAnalysisJobs = new ArrayList<AnalysisJobVO>();
         doFileExistenceCheck(sampleToFilePathMap, activatedAnalysisJobs, deactivatedAnalysisJobs);
         //Filter out runs with experiment type amplicon as they will never have valid functional assignments
-        List<AnalysisJob> ampliconAnalysisJobs = getListOfAmpliconRuns(activatedAnalysisJobs);
+        List<AnalysisJobVO> ampliconAnalysisJobs = getListOfAmpliconRuns(activatedAnalysisJobs);
         //Now remove all amplicon runs from the list of active runs/analysis jobs
         activatedAnalysisJobs.removeAll(ampliconAnalysisJobs);
 
@@ -322,10 +317,10 @@ public class CompareController extends AbstractController implements IController
         return mav;
     }
 
-    private List<AnalysisJob> getListOfAmpliconRuns(List<AnalysisJob> activatedAnalysisJobs) {
-        List<AnalysisJob> ampliconAnalysisJobs = new ArrayList<AnalysisJob>();
-        for (AnalysisJob analysisJob : activatedAnalysisJobs) {
-            if (analysisJob.getExperimentType().getExperimentType().equalsIgnoreCase(ExperimentTypeE.AMPLICON.getExperimentType())) {
+    private List<AnalysisJobVO> getListOfAmpliconRuns(List<AnalysisJobVO> activatedAnalysisJobs) {
+        List<AnalysisJobVO> ampliconAnalysisJobs = new ArrayList<AnalysisJobVO>();
+        for (AnalysisJobVO analysisJob : activatedAnalysisJobs) {
+            if (analysisJob.getExperimentType().equalsIgnoreCase(ExperimentTypeE.AMPLICON.getExperimentType())) {
                 ampliconAnalysisJobs.add(analysisJob);
             }
         }
@@ -342,13 +337,13 @@ public class CompareController extends AbstractController implements IController
         return mav;
     }
 
-    protected void doFileExistenceCheck(final Map<AnalysisJob, String> analysisToFilePathMap,
-                                        final List<AnalysisJob> activatedAnalysisJob,
-                                        final List<AnalysisJob> deactivatedAnalysisJob) {
+    protected void doFileExistenceCheck(final Map<AnalysisJobVO, String> analysisToFilePathMap,
+                                        final List<AnalysisJobVO> activatedAnalysisJob,
+                                        final List<AnalysisJobVO> deactivatedAnalysisJob) {
         if (analysisToFilePathMap == null || activatedAnalysisJob == null || deactivatedAnalysisJob == null) {
             throw new IllegalStateException("Input arguments of this method cannot be NULL!");
         }
-        for (AnalysisJob analysisJob : analysisToFilePathMap.keySet()) {
+        for (AnalysisJobVO analysisJob : analysisToFilePathMap.keySet()) {
             String filePath = analysisToFilePathMap.get(analysisJob);
             if (!new File(filePath).exists()) {
                 deactivatedAnalysisJob.add(analysisJob);

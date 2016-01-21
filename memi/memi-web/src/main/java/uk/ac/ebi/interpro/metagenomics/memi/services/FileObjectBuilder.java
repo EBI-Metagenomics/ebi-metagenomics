@@ -4,6 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgFile;
+import uk.ac.ebi.interpro.metagenomics.memi.model.IAnalysisJob;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.IResultFileDefinition;
 
@@ -41,7 +42,7 @@ public final class FileObjectBuilder {
         }
     }
 
-    public static File createFileObject(final AnalysisJob analysisJob,
+    public static File createFileObject(final IAnalysisJob analysisJob,
                                         final MemiPropertyContainer propertyContainer,
                                         final IResultFileDefinition resultFile) {
         //Get directory name + root path

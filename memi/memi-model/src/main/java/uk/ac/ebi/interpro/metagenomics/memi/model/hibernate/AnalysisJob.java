@@ -2,6 +2,7 @@ package uk.ac.ebi.interpro.metagenomics.memi.model.hibernate;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import uk.ac.ebi.interpro.metagenomics.memi.model.IAnalysisJob;
 
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
@@ -17,7 +18,7 @@ import java.util.Comparator;
  */
 @Entity
 @Table(name = "ANALYSIS_JOB")
-public class AnalysisJob implements Comparator<AnalysisJob>, SecureEntity {
+public class AnalysisJob implements Comparator<AnalysisJob>, SecureEntity, IAnalysisJob {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ANALYSIS_JOB_SEQUENCE")
@@ -30,7 +31,7 @@ public class AnalysisJob implements Comparator<AnalysisJob>, SecureEntity {
     @Column(name = "JOB_OPERATOR", length = 15, nullable = false)
     private String jobOperator;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PIPELINE_ID", nullable = false)
     private PipelineRelease pipelineRelease;
 
@@ -65,7 +66,7 @@ public class AnalysisJob implements Comparator<AnalysisJob>, SecureEntity {
 //    @Column(name = "EXPERIMENT_TYPE", length = 30, nullable = false)
 //    private String experimentType;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "SAMPLE_ID")
     private Sample sample;
 
