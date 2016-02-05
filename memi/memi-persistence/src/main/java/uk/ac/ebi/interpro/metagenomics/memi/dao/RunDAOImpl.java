@@ -89,8 +89,10 @@ public class RunDAOImpl implements RunDAO {
                     .append("WHERE aj.experiment_type_id=et.experiment_type_id AND aj.pipeline_id=r.pipeline_id AND sa.sample_id = aj.sample_id AND tmp.sample_id = aj.sample_id AND sa.study_id = ? ");
             if (publicOnly) {
                 sb.append("AND sa.is_public = 1 ");
-            } else{
-                sb.append("AND sa.is_public = 0 ");
+            }
+            // Allow private and public samples but no suppressed
+            else{
+                sb.append("AND sa.is_public <> 5 ");
             }
             sb.append("order by sa.ext_sample_id, aj.external_run_ids");
 
