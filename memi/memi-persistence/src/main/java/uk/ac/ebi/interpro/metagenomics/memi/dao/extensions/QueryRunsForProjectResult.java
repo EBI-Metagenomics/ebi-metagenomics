@@ -16,6 +16,7 @@ public class QueryRunsForProjectResult {
     private String submissionAccountId;
     private int isPublic;
     private String releaseVersion;
+    private String analysisStatus;
 
     public long getSampleId() {
         return sampleId;
@@ -79,6 +80,14 @@ public class QueryRunsForProjectResult {
 
     public void setIsPublic(int isPublic) {
         this.isPublic = isPublic;
+    }
+
+    public String getAnalysisStatus() {
+        return analysisStatus;
+    }
+
+    public void setAnalysisStatus(String analysisStatus) {
+        this.analysisStatus = analysisStatus;
     }
 
     public boolean isPublic() {

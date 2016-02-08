@@ -79,14 +79,15 @@ public class RunDAOImpl implements RunDAO {
             // SELECT aj.sample_id, sa.ext_sample_id, sa.sample_name, tmp.ct, aj.external_run_ids, aj.experiment_type, sa.submission_account_id, sa.is_public, r.release_version FROM analysis_job aj, pipeline_release r, sample sa, (select aj.sample_id, count(aj.sample_id) as ct from sample sa, analysis_job aj where sa.sample_id = aj.sample_id AND sa.study_id = 434 GROUP BY aj.sample_id) tmp WHERE aj.pipeline_id=r.pipeline_id AND sa.sample_id = aj.sample_id AND tmp.sample_id = aj.sample_id AND sa.study_id = 434 order by sa.ext_sample_id, aj.external_run_ids;
 
             StringBuilder sb = new StringBuilder()
-                    .append("SELECT aj.sample_id, sa.ext_sample_id as external_sample_id, sa.sample_name, tmp.run_count, aj.external_run_ids, et.experiment_type, sa.submission_account_id, sa.is_public, r.release_version ")
+                    .append("SELECT aj.sample_id, sa.ext_sample_id as external_sample_id, sa.sample_name, tmp.run_count, aj.external_run_ids, et.experiment_type, sa.submission_account_id, sa.is_public, r.release_version, st.ANALYSIS_STATUS ")
                     .append("FROM ")
+                    .append(schemaName).append(".ANALYSIS_STATUS st, ")
                     .append(schemaName).append(".analysis_job aj, ")
                     .append(schemaName).append(".pipeline_release r, ")
                     .append(schemaName).append(".sample sa, ")
                     .append(schemaName).append(".experiment_type et, ")
-                    .append("(SELECT aj.sample_id, count(aj.sample_id) as run_count FROM ").append(schemaName).append(".sample sa, ").append(schemaName).append(".analysis_job aj where sa.sample_id = aj.sample_id AND sa.study_id = ? GROUP BY aj.sample_id) tmp ")
-                    .append("WHERE aj.experiment_type_id=et.experiment_type_id AND aj.pipeline_id=r.pipeline_id AND sa.sample_id = aj.sample_id AND tmp.sample_id = aj.sample_id AND sa.study_id = ? ");
+                    .append("(SELECT aj.sample_id, count(aj.sample_id) as run_count FROM ").append(schemaName).append(".sample sa, ").append(schemaName).append(".analysis_job aj where sa.sample_id = aj.sample_id AND sa.study_id = ? AND aj.analysis_status_id <> 5 GROUP BY aj.sample_id) tmp ")
+                    .append("WHERE aj.experiment_type_id=et.experiment_type_id AND aj.pipeline_id=r.pipeline_id AND sa.sample_id = aj.sample_id AND aj.ANALYSIS_STATUS_ID=st.ANALYSIS_STATUS_ID AND tmp.sample_id = aj.sample_id AND sa.study_id = ? ");
             if (publicOnly) {
                 sb.append("AND sa.is_public = 1 ");
             }
@@ -94,9 +95,11 @@ public class RunDAOImpl implements RunDAO {
             else{
                 sb.append("AND sa.is_public <> 5 ");
             }
+            sb.append("AND st.analysis_status_id <> 5 ");
             sb.append("order by sa.ext_sample_id, aj.external_run_ids");
 
             final String sql = sb.toString();
+            System.out.println(sql);
 
             List<QueryRunsForProjectResult> results = jdbcTemplate.query(sql, new Object[]{projectId, projectId}, new BeanPropertyRowMapper<QueryRunsForProjectResult>(QueryRunsForProjectResult.class));
             return results;
