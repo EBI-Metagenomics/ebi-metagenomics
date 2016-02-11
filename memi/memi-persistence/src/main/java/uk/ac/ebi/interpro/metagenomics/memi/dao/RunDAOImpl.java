@@ -99,7 +99,6 @@ public class RunDAOImpl implements RunDAO {
             sb.append("order by sa.ext_sample_id, aj.external_run_ids");
 
             final String sql = sb.toString();
-            System.out.println(sql);
 
             List<QueryRunsForProjectResult> results = jdbcTemplate.query(sql, new Object[]{projectId, projectId}, new BeanPropertyRowMapper<QueryRunsForProjectResult>(QueryRunsForProjectResult.class));
             return results;
