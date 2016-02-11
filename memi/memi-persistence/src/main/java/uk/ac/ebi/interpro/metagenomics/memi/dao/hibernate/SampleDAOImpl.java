@@ -203,6 +203,25 @@ public class SampleDAOImpl implements SampleDAO {
     }
 
     /**
+     * Retrieves samples (public and private) by study ID.
+     *
+     * @return Public and private samples by the specified study Id.
+     */
+    @Transactional(readOnly = true)
+    public List<Long> retrieveSampleIdsByStudyId(long studyId) {
+        try {
+            Session session = sessionFactory.getCurrentSession();
+            Criteria criteria = session.createCriteria(Sample.class);
+            criteria.add(Restrictions.eq("study.id", studyId));
+            criteria.setProjection(Projections.projectionList()
+                    .add(Projections.property("id")));
+            return criteria.list();
+        } catch (HibernateException e) {
+            throw new HibernateException("Couldn't retrieve list of sample ids by the following study id: " + studyId, e);
+        }
+    }
+
+    /**
      * Retrieves public samples by study ID.
      *
      * @return Public samples by the specified study Id.

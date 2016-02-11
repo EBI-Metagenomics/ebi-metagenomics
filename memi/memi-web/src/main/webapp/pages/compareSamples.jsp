@@ -4,17 +4,17 @@
 
 <%-- Creates HTML select option for each sample of selected project that have data (sample selection - comparison tool submission page) --%>
 <c:forEach var="analysisJob" items="${analysisJobs}">
-        <option value="${analysisJob.jobId}" title="Run ${analysisJob.externalRunIDs} | ${analysisJob.sample.sampleName} | ${analysisJob.sample.sampleAlias}">${analysisJob.sample.sampleName} - ${analysisJob.externalRunIDs}</option>
+        <option value="${analysisJob.jobId}" title="Run ${analysisJob.externalRunIDs} | ${analysisJob.sampleName} | ${analysisJob.sampleAlias}">${analysisJob.sampleName} - ${analysisJob.externalRunIDs}</option>
     </c:forEach>
 
 <%-- Creates HTML select option for each sample of selected project that have no data (sample selection - comparison tool submission page) --%>
 <c:forEach var="analysisJob" items="${deactivatedAnalysisJobs}">
-    <option value="${analysisJob.jobId}" title="Run ${analysisJob.externalRunIDs} | ${analysisJob.sample.sampleName} | ${analysisJob.sample.sampleAlias}" disabled>${analysisJob.sample.sampleName} - ${analysisJob.externalRunIDs} - NO DATA AVAILABLE</option>
+    <option value="${analysisJob.jobId}" title="Run ${analysisJob.externalRunIDs} | ${analysisJob.sampleName} | ${analysisJob.sampleAlias}" disabled>${analysisJob.sampleName} - ${analysisJob.externalRunIDs} - NO DATA AVAILABLE</option>
 </c:forEach>
 
 <%-- Creates HTML select option for each sample of selected project that have no data (sample selection - comparison tool submission page) --%>
 <c:forEach var="analysisJob" items="${ampliconAnalysisJobs}">
-    <option value="${analysisJob.jobId}" title="Run ${analysisJob.externalRunIDs} | ${analysisJob.sample.sampleName} | ${analysisJob.sample.sampleAlias}" disabled>${analysisJob.sample.sampleName} - ${analysisJob.externalRunIDs} - AMPLICON DATA</option>
+    <option value="${analysisJob.jobId}" title="Run ${analysisJob.externalRunIDs} | ${analysisJob.sampleName} | ${analysisJob.sampleAlias}" disabled>${analysisJob.sampleName} - ${analysisJob.externalRunIDs} - AMPLICON DATA</option>
 </c:forEach>
 
 <%-- Sorts HTML select options alphabetically (sample selection - comparison tool submission page) --%>

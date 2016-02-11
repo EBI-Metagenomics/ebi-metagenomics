@@ -84,7 +84,7 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
         List<Study> studies = null;
         // If case: if nobody is logged in
         if (submitter == null) {
-            // Retrieve public studies limited by max result and order them by last meta data received
+            // Retrieve public studies limited by max result and order them by last created
             studies = getOrderedPublicStudies();
         }
         //  Else case: if somebody is logged in
@@ -227,7 +227,7 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
     private List<Study> getOrderedPublicStudies() {
         List<Study> studies = new ArrayList<Study>();
         if (studyDAO != null) {
-            studies = studyDAO.retrieveOrderedPublicStudies("lastMetadataReceived", true, maxRowNumberOfLatestItems);
+            studies = studyDAO.retrieveOrderedPublicStudies("firstCreated", true, maxRowNumberOfLatestItems);
             assignBiomeIconFeatures(studies);
         }
         return studies;
