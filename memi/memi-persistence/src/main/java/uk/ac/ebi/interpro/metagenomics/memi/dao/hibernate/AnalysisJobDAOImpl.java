@@ -42,12 +42,12 @@ public class AnalysisJobDAOImpl extends GenericDAOImpl<AnalysisJob, Long> implem
     }
 
     @Transactional(readOnly = true)
-    public List<AnalysisJob> readBySampleId(Long sampleId, String analysisStatus) {
+    public List<AnalysisJob> readNonSuppressedBySampleId(Long sampleId) {
         try {
             Criteria criteria = getSession().createCriteria(AnalysisJob.class);
             criteria.add(Restrictions.eq("sample.id", sampleId));
-//            criteria.createAlias("sample", "sampleAlias").add(Restrictions.eq("sampleAlias.id", sampleId));
-            criteria.createAlias("analysisStatus", "status").add(Restrictions.eq("status.analysisStatus", analysisStatus));
+            // Filter out all suppressed runs
+            criteria.createAlias("analysisStatus", "status").add(Restrictions.ne("status.analysisStatusId", 5));
             return criteria.list();
         } catch (HibernateException e) {
             throw new HibernateException("Couldn't retrieve list of analysis jobs by sample id " + sampleId, e);
