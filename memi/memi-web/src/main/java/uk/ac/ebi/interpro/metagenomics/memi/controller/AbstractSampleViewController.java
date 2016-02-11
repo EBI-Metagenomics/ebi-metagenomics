@@ -54,7 +54,7 @@ public abstract class AbstractSampleViewController extends SecuredAbstractContro
      */
     protected void populateModel(final ModelMap model, final Sample sample, final String pageTitle) {
 
-        List<AnalysisJob> analysisJobs = analysisJobDAO.readBySampleId(sample.getId(), "completed");
+        List<AnalysisJob> analysisJobs = analysisJobDAO.readNonSuppressedBySampleId(sample.getId());
 
         final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, pageTitle, getBreadcrumbs(sample), propertyContainer);
         final ViewModel defaultViewModel = builder.getModel();

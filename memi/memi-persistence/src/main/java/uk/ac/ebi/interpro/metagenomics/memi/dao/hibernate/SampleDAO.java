@@ -20,6 +20,8 @@ public interface SampleDAO extends ISecureEntityDAO<Sample> {
 
     List<Sample> retrieveAllSamplesByStudyId(long studyId);
 
+    List<Long> retrieveSampleIdsByStudyId(long studyId);
+
     List<Sample> retrievePublicSamplesByStudyId(long studyId);
 
     /**

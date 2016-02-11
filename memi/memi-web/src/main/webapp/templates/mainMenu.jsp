@@ -50,7 +50,7 @@
     </a></li>
 
     <li class="${model.tabClasses["tabClassAboutView"]}"><a href="<c:url value="${baseURL}/about"/>"
-                                                            title="About EBI Metagenomics">About <span class="xm_hide">EBI</span> Metagenomics</a>
+                                                            title="About EBI Metagenomics">About</a>
     </li>
 
 

@@ -64,7 +64,7 @@ public class StudyViewController extends AbstractStudyViewController {
         return "redirect:/projects/" + studyId;
     }
 
-    // TODO Bring this back? Not for now, and maybe we'll go to datatables anyway which will provide this export functionality
+    // TODO: Bring this back? Not for now, and maybe we'll go to datatables anyway which will provide this export functionality
 //    @RequestMapping(value = MGPortalURLCollection.PROJECT_EXPORT)
 //    public ModelAndView doExportSamples(@PathVariable final String studyId,
 //                                        final ModelMap model,

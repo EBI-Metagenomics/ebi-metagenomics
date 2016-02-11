@@ -5,9 +5,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.*;
+import uk.ac.ebi.interpro.metagenomics.memi.model.valueObjects.AnalysisJobVO;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -33,9 +36,9 @@ public class CompareControllerTest {
     @Test
     public void testDoFileExistenceCheck() throws Exception {
         //Set test method input
-        Map<AnalysisJob, String> sampleToFilePathMap = new HashMap<AnalysisJob, String>();
-        List<AnalysisJob> activeSamples = null;
-        List<AnalysisJob> deactiveSamples = null;
+        Map<AnalysisJobVO, String> sampleToFilePathMap = new HashMap<AnalysisJobVO, String>();
+        List<AnalysisJobVO> activeSamples = null;
+        List<AnalysisJobVO> deactiveSamples = null;
         try {
             controller.doFileExistenceCheck(sampleToFilePathMap, activeSamples, deactiveSamples);
             assertTrue("Method should throw an exception.", false);
@@ -43,22 +46,21 @@ public class CompareControllerTest {
             //That is expected, go ahead
         }
         //Set test method input
-        sampleToFilePathMap = new HashMap<AnalysisJob, String>();
-        activeSamples = new ArrayList<AnalysisJob>();
-        deactiveSamples = new ArrayList<AnalysisJob>();
+        sampleToFilePathMap = new HashMap<AnalysisJobVO, String>();
+        activeSamples = new ArrayList<AnalysisJobVO>();
+        deactiveSamples = new ArrayList<AnalysisJobVO>();
         //Run the test method
         controller.doFileExistenceCheck(sampleToFilePathMap, activeSamples, deactiveSamples);
         //Set test method input
-        sampleToFilePathMap = new HashMap<AnalysisJob, String>();
-        activeSamples = new ArrayList<AnalysisJob>();
-        deactiveSamples = new ArrayList<AnalysisJob>();
+        sampleToFilePathMap = new HashMap<AnalysisJobVO, String>();
+        activeSamples = new ArrayList<AnalysisJobVO>();
+        deactiveSamples = new ArrayList<AnalysisJobVO>();
         //analysis job instance
-        AnalysisJob analysisJob = new AnalysisJob("operator",
-                new PipelineRelease("changes", "2.0", Calendar.getInstance(), new TreeSet<PipelineReleaseTool>()),
-                Calendar.getInstance(), new AnalysisStatus(), "input", "output",new ExperimentType());
+        AnalysisJobVO analysisJobVO = new AnalysisJobVO();
+
         //
-        sampleToFilePathMap.put(analysisJob, "/uk/ac/ebi/test.txt");
-        sampleToFilePathMap.put(analysisJob, "/uk/ac/ebi/test_2.txt");
+        sampleToFilePathMap.put(analysisJobVO, "/uk/ac/ebi/test.txt");
+        sampleToFilePathMap.put(analysisJobVO, "/uk/ac/ebi/test_2.txt");
         controller.doFileExistenceCheck(sampleToFilePathMap, activeSamples, deactiveSamples);
     }
 
