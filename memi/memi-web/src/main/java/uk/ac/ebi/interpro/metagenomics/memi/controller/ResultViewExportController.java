@@ -5,7 +5,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.controller.results.AbstractResultViewController;
 import uk.ac.ebi.interpro.metagenomics.memi.core.tools.MemiTools;
@@ -13,12 +16,10 @@ import uk.ac.ebi.interpro.metagenomics.memi.core.tools.StreamCopyUtil;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Run;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob;
-import uk.ac.ebi.interpro.metagenomics.memi.services.ExportValueService;
 import uk.ac.ebi.interpro.metagenomics.memi.services.FileObjectBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.DownloadableFileDefinition;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.FileDefinitionId;
 
-import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,56 +37,54 @@ import java.util.Locale;
 public class ResultViewExportController extends AbstractResultViewController {
     private static final Log log = LogFactory.getLog(ResultViewExportController.class);
 
-    @Resource
-    private ExportValueService exportValueService;
-
-
-    @RequestMapping(value = {
-            MGPortalURLCollection.PROJECT_SAMPLE_RUN_RESULTS_TAXONOMY_EXPORT,
-            MGPortalURLCollection.PROJECT_SAMPLE_RUN_RESULTS_SEQUENCES_EXPORT
-    })
-    public void doHandleTaxonomyExports(@PathVariable final String projectId,
-                                        @PathVariable final String sampleId,
-                                        @PathVariable final String runId,
-                                        @PathVariable final String releaseVersion,
-                                        @RequestParam(required = true, value = "exportValue") final String exportValue,
-                                        final HttpServletResponse response,
-                                        final HttpServletRequest request) throws IOException {
+    protected void doHandleTaxonomyExports(@PathVariable final String projectId,
+                                           @PathVariable final String sampleId,
+                                           @PathVariable final String runId,
+                                           @PathVariable final String releaseVersion,
+                                           final HttpServletResponse response,
+                                           final HttpServletRequest request,
+                                           final FileDefinitionId fileDefinitionId) throws IOException {
         response.setContentType("text/html;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_OK);
         response.setLocale(Locale.ENGLISH);
 
+        // Please note: The actual security check will be done further down
         Run run = getSecuredEntity(projectId, sampleId, runId, releaseVersion);
 
-        if (run != null) {
+        if (run != null && fileDefinitionId != null) {
+            // Perform security check
             if (isAccessible(run)) {
                 AnalysisJob analysisJob = analysisJobDAO.readByRunIdAndVersionDeep(run.getExternalRunId(), releaseVersion, "completed");
                 if (analysisJob != null) {
-                    DownloadableFileDefinition fileDefinition = exportValueService.findResultFileDefinition(exportValue);
+                    DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(fileDefinitionId.name());
                     if (fileDefinition != null) {
                         File fileObject = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, fileDefinition);
-                        openDownloadDialog(response, request, analysisJob, fileDefinition.getDownloadName(), fileObject);
+                        try {
+                            openDownloadDialog(response, request, analysisJob, fileDefinition.getDownloadName(), fileObject);
+                        } catch (IndexOutOfBoundsException e) {
+                            response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+                        }
+                    } else {//analysis job is NULL
+                        response.setStatus(HttpServletResponse.SC_NO_CONTENT);
                     }
-                } else {//analysis job is NULL
-                    response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+                } else {//access denied
+                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    response.sendRedirect("/metagenomics/sample/" + sampleId + "/accessDenied");
                 }
-            } else {//access denied
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                response.sendRedirect("/metagenomics/sample/" + sampleId + "/accessDenied");
+            } else {//run is NULL
+                response.setStatus(HttpServletResponse.SC_NO_CONTENT);
             }
-        } else {//run is NULL
-            response.setStatus(HttpServletResponse.SC_NO_CONTENT);
         }
     }
 
 
-    public void doHandleFunctionalExports(final String projectId,
-                                          final String sampleId,
-                                          final String runId,
-                                          final String releaseVersion,
-                                          final Integer chunkValue,
-                                          final HttpServletResponse response,
-                                          final HttpServletRequest request) throws IOException {
+    protected void doHandleFunctionalExports(final String projectId,
+                                             final String sampleId,
+                                             final String runId,
+                                             final String releaseVersion,
+                                             final Integer chunkValue,
+                                             final HttpServletResponse response,
+                                             final HttpServletRequest request) throws IOException {
         response.setContentType("text/html;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_OK);
         response.setLocale(Locale.ENGLISH);
@@ -121,14 +120,14 @@ public class ResultViewExportController extends AbstractResultViewController {
         }
     }
 
-    public void doHandleSequenceFileExports(final String projectId,
-                                            final String sampleId,
-                                            final String runId,
-                                            final String releaseVersion,
-                                            final Integer chunkValue,
-                                            final HttpServletResponse response,
-                                            final HttpServletRequest request,
-                                            final FileDefinitionId fileDefinitionId) throws IOException {
+    protected void doHandleSequenceFileExports(final String projectId,
+                                               final String sampleId,
+                                               final String runId,
+                                               final String releaseVersion,
+                                               final Integer chunkValue,
+                                               final HttpServletResponse response,
+                                               final HttpServletRequest request,
+                                               final FileDefinitionId fileDefinitionId) throws IOException {
         response.setContentType("text/html;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_OK);
         response.setLocale(Locale.ENGLISH);
@@ -316,37 +315,10 @@ public class ResultViewExportController extends AbstractResultViewController {
                                              @PathVariable final String sampleId,
                                              @PathVariable final String runId,
                                              @PathVariable final String releaseVersion,
-                                             @PathVariable final String sequenceType,
-                                             final HttpServletResponse response, final HttpServletRequest request) {
-        FileDefinitionId fileDefinitionId = FileDefinitionId.DEFAULT;
-        if (sequenceType.equalsIgnoreCase("ProcessedReads")) {
-            if (releaseVersion.equalsIgnoreCase("1.0")) {
-                fileDefinitionId = FileDefinitionId.MASKED_FASTA;
-            } else if (releaseVersion.equalsIgnoreCase("2.0")) {
-                fileDefinitionId = FileDefinitionId.PROCESSED_READS;
-            } else {//Default value
-                fileDefinitionId = FileDefinitionId.PROCESSED_READS;
-            }
-        } else if (sequenceType.equalsIgnoreCase("ReadsWithPredictedCDS")) {
-            fileDefinitionId = FileDefinitionId.READS_WITH_PREDICTED_CDS_FILE;
-        } else if (sequenceType.equalsIgnoreCase("ReadsWithMatches")) {
-            fileDefinitionId = FileDefinitionId.READS_WITH_MATCHES_FASTA_FILE;
-        } else if (sequenceType.equalsIgnoreCase("ReadsWithoutMatches")) {
-            fileDefinitionId = FileDefinitionId.READS_WITHOUT_MATCHES_FASTA_FILE;
-        } else if (sequenceType.equalsIgnoreCase("PredictedCDS")) {
-            fileDefinitionId = FileDefinitionId.PREDICTED_CDS_FILE;
-        } else if (sequenceType.equalsIgnoreCase("PredictedORFWithoutAnnotation")) {
-            fileDefinitionId = FileDefinitionId.PREDICTED_ORF_WITHOUT_ANNOTATION_FILE;
-        } else if (sequenceType.equalsIgnoreCase("PredictedCDSWithoutAnnotation")) {
-            fileDefinitionId = FileDefinitionId.PREDICTED_CDS_WITHOUT_ANNOTATION_FILE;
-        } else {
-            log.warn("Sequence type: " + sequenceType + " not found!");
-        }
-
+                                             @PathVariable final String sequenceType) {
+        FileDefinitionId fileDefinitionId = getFileDefinitionIdBySequenceType(sequenceType, releaseVersion);
         final DownloadableFileDefinition fileDefinition = chunkedResultFilesMap.get(fileDefinitionId.name());
-
         final Run run = getSecuredEntity(projectId, sampleId, runId, releaseVersion);
-
         return checkAccessAndBuildModel(new ModelProcessingStrategy<Run>() {
             @Override
             public void processModel(ModelMap model, Run run) {
@@ -376,7 +348,12 @@ public class ResultViewExportController extends AbstractResultViewController {
                                         @PathVariable final Integer chunkValue,
                                         final HttpServletResponse response,
                                         final HttpServletRequest request) throws IOException {
-        FileDefinitionId fileDefinitionId = null;
+        FileDefinitionId fileDefinitionId = getFileDefinitionIdBySequenceType(sequenceType, releaseVersion);
+        doHandleSequenceFileExports(projectId, sampleId, runId, releaseVersion, chunkValue, response, request, fileDefinitionId);
+    }
+
+    private FileDefinitionId getFileDefinitionIdBySequenceType(final String sequenceType, final String releaseVersion) {
+        FileDefinitionId fileDefinitionId = FileDefinitionId.DEFAULT;
         if (sequenceType.equalsIgnoreCase("ProcessedReads")) {
             if (releaseVersion.equalsIgnoreCase("1.0")) {
                 fileDefinitionId = FileDefinitionId.MASKED_FASTA;
@@ -400,7 +377,44 @@ public class ResultViewExportController extends AbstractResultViewController {
         } else {
             log.warn("Sequence type: " + sequenceType + " not found!");
         }
-        doHandleSequenceFileExports(projectId, sampleId, runId, releaseVersion, chunkValue, response, request, fileDefinitionId);
+        return fileDefinitionId;
+    }
+
+    @RequestMapping(value = MGPortalURLCollection.PROJECT_SAMPLE_RUN_RESULTS_TAXONOMY_TYPE)
+    public void handleTaxonomyResultDownloads(@PathVariable final String projectId,
+                                              @PathVariable final String sampleId,
+                                              @PathVariable final String runId,
+                                              @PathVariable final String releaseVersion,
+                                              @PathVariable final String resultType,
+                                              final HttpServletResponse response,
+                                              final HttpServletRequest request) throws IOException {
+        FileDefinitionId fileDefinitionId = FileDefinitionId.DEFAULT;
+        if (resultType.equalsIgnoreCase("5S-rRNA-FASTA")) {
+            fileDefinitionId = FileDefinitionId.R_RNA_5S_FASTA_FILE;
+        } else if (resultType.equalsIgnoreCase("16S-rRNA-FASTA")) {
+            fileDefinitionId = FileDefinitionId.R_RNA_16S_FASTA_FILE;
+        } else if (resultType.equalsIgnoreCase("23S-rRNA-FASTA")) {
+            fileDefinitionId = FileDefinitionId.R_RNA_23S_FASTA_FILE;
+        } else if (resultType.equalsIgnoreCase("OTU-TSV")) {
+            if (releaseVersion.equalsIgnoreCase("1.0")) {
+                fileDefinitionId = FileDefinitionId.TAX_ANALYSIS_TSV_FILE;
+            } else {// releases version greater 2.0
+                fileDefinitionId = FileDefinitionId.OTU_TABLE_FILE;
+            }
+        } else if (resultType.equalsIgnoreCase("OTU-BIOM")) {
+            fileDefinitionId = FileDefinitionId.OTUS_BIOM_FORMAT_FILE;
+        } else if (resultType.equalsIgnoreCase("OTU-table-HDF5-BIOM")) {
+            fileDefinitionId = FileDefinitionId.HDF5_BIOM_FILE;
+        } else if (resultType.equalsIgnoreCase("OTU-table-JSON-BIOM")) {
+            fileDefinitionId = FileDefinitionId.JSON_BIOM_FILE;
+        } else if (resultType.equalsIgnoreCase("NewickTree")) {
+            fileDefinitionId = FileDefinitionId.TAX_ANALYSIS_TREE_FILE;
+        } else if (resultType.equalsIgnoreCase("NewickPrunedTree")) {
+            fileDefinitionId = FileDefinitionId.PRUNED_TREE_FILE;
+        } else {
+            log.warn("Result type: " + resultType + " not found!");
+        }
+        doHandleTaxonomyExports(projectId, sampleId, runId, releaseVersion, response, request, fileDefinitionId);
     }
 
     @Override

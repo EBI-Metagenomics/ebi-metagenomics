@@ -356,7 +356,7 @@
 </section>
 
 <section id="download_tax_analysis">
-    <c:if test="${not empty model.downloadSection.taxaAnalysisDownloadLinks}">
+    <c:if test="${not empty model.downloadSection.taxonomyDownloadSection.downloadLinks}">
         <h4>Taxonomic analysis</h4>
 
         <table class="pipeline_table">
@@ -375,7 +375,7 @@
             <tbody>
 
 
-            <c:forEach var="downloadLink" items="${model.downloadSection.taxaAnalysisDownloadLinks}" varStatus="loop">
+            <c:forEach var="downloadLink" items="${model.downloadSection.taxonomyDownloadSection.downloadLinks}" varStatus="loop">
 
                 <tr class="row-taxon">
 
