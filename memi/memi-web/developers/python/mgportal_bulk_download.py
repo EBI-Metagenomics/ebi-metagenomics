@@ -139,7 +139,7 @@ if __name__ == "__main__":
     # Parse the analysis version
     version = args['version']
 
-    root_url = "https://wwwdev.ebi.ac.uk"
+    root_url = "https://www.ebi.ac.uk"
     study_url_template = root_url + "/metagenomics/projects/%s/runs"
     number_of_chunks_url_template = root_url + "/metagenomics/projects/%s/samples/%s/runs/%s/results/versions/%s/%s/%s/chunks"
     chunk_url_template = root_url + "/metagenomics/projects/%s/samples/%s/runs/%s/results/versions/%s/%s/%s/chunks/%s"
