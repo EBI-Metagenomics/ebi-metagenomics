@@ -100,15 +100,17 @@ if __name__ == "__main__":
     # Parse script parameters
     parser = argparse.ArgumentParser(description="MGPortal bulk download tool.")
     parser.add_argument("-p", "--project_id",
-                        help="Project accession (e.g. ERP001736, SRP000319) from a project which is publicly available on the EBI Metagenomics website (https://www.ebi.ac.uk/metagenomics/projects).",
+                        help="Project accession (e.g. ERP001736, SRP000319) from a project which is publicly available on the EBI Metagenomics website (https://www.ebi.ac.uk/metagenomics/projects).**MANDATORY**",
                         required=True)
-    parser.add_argument("-o", "--output_path", help="Location where the download files are stored.",
+    parser.add_argument("-o", "--output_path",
+                        help="Location of the output directory, where the downloadable files get stored.**MANDATORY**",
                         required=True)
-    parser.add_argument("-v", "--version", help="Version of the pipeline used to generate the results.",
+    parser.add_argument("-v", "--version", help="Version of the pipeline used to generate the results.**MANDATORY**",
                         required=True)
     parser.add_argument("-t", "--file_type",
-                        help="Possible file types are: AllFunction, AllTaxonomy, AllSequences OR a comma-separated list of supported file types: " + ', '.join(
-                                default_file_type_list) + " OR a single file type.", required=False)
+                        help="Supported file types are: AllFunction, AllTaxonomy, AllSequences OR a comma-separated list of supported file types: " + ', '.join(
+                                default_file_type_list) + " OR a single file type.**OPTIONAL**\nDownloads all file types if not provided.",
+                        required=False)
     args = vars(parser.parse_args())
 
     # Parse the project accession
