@@ -14,7 +14,6 @@ import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Run;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.DownloadableFileDefinition;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.results.DownloadViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.results.DownloadViewModelBuilder;
@@ -82,7 +81,7 @@ public class DownloadViewController extends AbstractResultViewController {
                 getBreadcrumbs(run),
                 propertyContainer,
                 run,
-                fileDefinitionsMapV1,
+                fileDefinitionsMap,
                 chunkedResultFilesMap,
                 downloadableFileLists,
                 analysisJob);

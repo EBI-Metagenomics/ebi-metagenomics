@@ -65,7 +65,7 @@ public class CompareController extends AbstractController implements IController
     private AnalysisJobDAO analysisJobDAO;
 
     @Resource
-    protected Map<String, DownloadableFileDefinition> fileDefinitionsMapV1;
+    protected Map<String, DownloadableFileDefinition> fileDefinitionsMap;
 
     @Override
     public ModelAndView doGet(ModelMap model) {
@@ -262,11 +262,11 @@ public class CompareController extends AbstractController implements IController
         Map<AnalysisJobVO, String> resultMap = new HashMap<AnalysisJobVO, String>();
         for (AnalysisJobVO analysisJob : completeAnalysisJobList) {
             // If statements depending on the nature of the data type chosen by the user
-            DownloadableFileDefinition fileDefinition = fileDefinitionsMapV1.get(FileDefinitionId.INTERPRO_MATCHES_SUMMARY_FILE.name());
+            DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(FileDefinitionId.INTERPRO_MATCHES_SUMMARY_FILE.name());
             if (usedData.equals("GO"))
-                fileDefinition = fileDefinitionsMapV1.get(FileDefinitionId.GO_COMPLETE_FILE.name());
+                fileDefinition = fileDefinitionsMap.get(FileDefinitionId.GO_COMPLETE_FILE.name());
             if (usedData.equals("GOslim"))
-                fileDefinition = fileDefinitionsMapV1.get(FileDefinitionId.GO_SLIM_FILE.name());
+                fileDefinition = fileDefinitionsMap.get(FileDefinitionId.GO_SLIM_FILE.name());
             File fileObject = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, fileDefinition);
             String absoluteFilePath = fileObject.getAbsolutePath();
             resultMap.put(analysisJob, absoluteFilePath);
@@ -282,11 +282,11 @@ public class CompareController extends AbstractController implements IController
      */
     private String getInputFilePath(String usedData, AnalysisJob analysisJob) {
         // If statements depending on the nature of the data type chosen by the user
-        DownloadableFileDefinition fileDefinition = fileDefinitionsMapV1.get(FileDefinitionId.INTERPRO_MATCHES_SUMMARY_FILE.name());
+        DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(FileDefinitionId.INTERPRO_MATCHES_SUMMARY_FILE.name());
         if (usedData.equals("GO"))
-            fileDefinition = fileDefinitionsMapV1.get(FileDefinitionId.GO_COMPLETE_FILE.name());
+            fileDefinition = fileDefinitionsMap.get(FileDefinitionId.GO_COMPLETE_FILE.name());
         if (usedData.equals("GOslim"))
-            fileDefinition = fileDefinitionsMapV1.get(FileDefinitionId.GO_SLIM_FILE.name());
+            fileDefinition = fileDefinitionsMap.get(FileDefinitionId.GO_SLIM_FILE.name());
         File fileObject = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, fileDefinition);
         return fileObject.getAbsolutePath();
     }

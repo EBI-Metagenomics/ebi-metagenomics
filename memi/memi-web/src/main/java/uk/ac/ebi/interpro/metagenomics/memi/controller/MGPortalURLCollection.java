@@ -70,18 +70,12 @@ public final class MGPortalURLCollection {
 
 
     //Sequence files (seq input files, pre-processed/filtered files)
-    private final static String PROJECT_SAMPLE_RUN_RESULTS_SEQUENCES = PROJECT_SAMPLE_RUN_RESULTS + "/sequences" + PROJECT_SAMPLE_RUN_RESULTS_VERSION;
-
-    public final static String PROJECT_SAMPLE_RUN_RESULTS_SEQUENCES_EXPORT = PROJECT_SAMPLE_RUN_RESULTS_SEQUENCES + "/export";
-
-    //New sequence files URLs
     public final static String PROJECT_SAMPLE_RUN_RESULTS_SEQUENCES_SEQ_TYPE_CHUNKS = PROJECT_SAMPLE_RUN_RESULTS + PROJECT_SAMPLE_RUN_RESULTS_VERSION + "/sequences/{sequenceType}/chunks";
     public final static String PROJECT_SAMPLE_RUN_RESULTS_SEQUENCES_SEQ_TYPE_CHUNKS_VALUE = PROJECT_SAMPLE_RUN_RESULTS + PROJECT_SAMPLE_RUN_RESULTS_VERSION + "/sequences/{sequenceType}/chunks/{chunkValue}";
 
     //Taxonomy result files
-    private final static String PROJECT_SAMPLE_RUN_RESULTS_TAXONOMY = PROJECT_SAMPLE_RUN_RESULTS + "/taxonomy" + PROJECT_SAMPLE_RUN_RESULTS_VERSION;
+    public final static String PROJECT_SAMPLE_RUN_RESULTS_TAXONOMY_TYPE = PROJECT_SAMPLE_RUN_RESULTS + PROJECT_SAMPLE_RUN_RESULTS_VERSION + "/taxonomy/{resultType}";
 
-    public final static String PROJECT_SAMPLE_RUN_RESULTS_TAXONOMY_EXPORT = PROJECT_SAMPLE_RUN_RESULTS_TAXONOMY + "/export";
     //END export URLs
 
     //Sample page
@@ -95,6 +89,9 @@ public final class MGPortalURLCollection {
 
     //Project page, download tab
     public final static String PROJECT_DOWNLOAD = PROJECT + "/download";
+
+    //List of all project runs
+    public final static String PROJECT_RUNS = PROJECT + "/runs";
 
     //Project page - export functionality
     public final static String PROJECT_SUMMARY_EXPORT = PROJECT_DOWNLOAD + "/{releaseVersion}/export";

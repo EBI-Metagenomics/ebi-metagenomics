@@ -48,7 +48,7 @@ public class DownloadStudyController extends AbstractStudyViewController {
     private MemiDownloadService downloadService;
 
     @Resource
-    protected Map<String, DownloadableFileDefinition> fileDefinitionsMapV1;
+    protected Map<String, DownloadableFileDefinition> fileDefinitionsMap;
 
 
     protected String getModelViewName() {
@@ -88,7 +88,7 @@ public class DownloadStudyController extends AbstractStudyViewController {
                 pageTitle, // Not really needed as this is within an AJAX tab anyway?
                 getBreadcrumbs(study), // Not really needed as this is within an AJAX tab anyway?
                 propertyContainer,
-                fileDefinitionsMapV1,
+                fileDefinitionsMap,
                 study,
                 pipelineReleaseDAO);
 
