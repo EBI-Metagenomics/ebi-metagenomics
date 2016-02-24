@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Object which is used to build the download section on the analysis page
+ * Object which is used to build the download section on the analysis page.
  *
  * @author Maxim Scheremetjew, EMBL-EBI
  */
@@ -108,8 +108,10 @@ public class SequencesDownloadSection {
     }
 
     /**
-     * Get the list of chunked sequence
-     * @return
+     * Get the list of chunked sequence.
+     * Please note: Method call is used in the 'download' view (Java Server page).
+     *
+     * @return List of download links.
      */
     public List<List<DownloadLink>> getListOfChunkedDownloadLinks() {
         List<List<DownloadLink>> result = new ArrayList<List<DownloadLink>>();

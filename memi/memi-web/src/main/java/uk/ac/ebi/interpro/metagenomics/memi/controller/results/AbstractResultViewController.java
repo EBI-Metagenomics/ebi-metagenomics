@@ -63,7 +63,7 @@ public abstract class AbstractResultViewController extends SecuredAbstractContro
     protected List<ResultFileDefinitionImpl> taxonomicAnalysisFileDefinitions;
 
     @Resource
-    protected Map<String, DownloadableFileDefinition> fileDefinitionsMapV1;
+    protected Map<String, DownloadableFileDefinition> fileDefinitionsMap;
 
     @Resource
     protected Map<String, DownloadableFileDefinition> chunkedResultFilesMap;
