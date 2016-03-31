@@ -869,7 +869,7 @@ color: #445668;}
 #headerdiv input {border:0px; padding:0; }/*added for the mitigation template*/
 
 
-input {
+input[type=text] {
 width: 150px;
 /*background: -webkit-gradient(linear, left top, left 6, from(#FFFFFF), color-stop(4%, #EEEEEE), to(#FFFFFF));*/
 /*background: -moz-linear-gradient(top, #FFFFFF, #EEEEEE 1px, #FFFFFF 6px);*/
