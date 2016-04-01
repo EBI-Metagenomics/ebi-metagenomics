@@ -35,7 +35,7 @@
                     <h3>${model.ebiSampleSearchResults.numberOfHits} hits</h3>
                     <div class="grid_18 omega">
                         <c:forEach var="result" items="${model.ebiSampleSearchResults.entries}">
-                            <a href="${result.url}">${result.identifier}</a>: ${result.description}<br />
+                            <a href="${pageContext.request.contextPath}/projects/${result.project}/samples/${result.identifier}">${result.identifier}</a>: ${result.description}<br />
                         </c:forEach>
                     </div>
                 </c:when>

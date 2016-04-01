@@ -15,6 +15,8 @@ public interface IViewModelParams {
 
     public static final String TAB_CLASS_HOME_VIEW = "tabClassHomeView";
 
+    public static final String TAB_CLASS_SEARCH_VIEW = "tabClassSearchView";
+
     public static final String TAB_CLASS_SUBMIT_VIEW = "tabClassSubmitView";
 
     public static final String TAB_CLASS_PROJECTS_VIEW = "tabClassProjectsView";
