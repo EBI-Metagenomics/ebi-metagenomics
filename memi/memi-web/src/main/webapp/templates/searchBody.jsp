@@ -7,7 +7,7 @@
     <h2>Search EBI Metagenomics</h2>
     <div class="grid_24 clearfix" id="content">
 
-        <form:form method="GET" action="${pageContext.request.contextPath}/search/doEbiSearch" commandName="ebiSearchForm">
+        <form:form id="searchForm" method="GET" action="${pageContext.request.contextPath}/search/doEbiSearch" commandName="ebiSearchForm">
             <div class="grid_6 alpha" id="facets">
                 <c:choose>
                     <c:when test="${not empty model.ebiSampleSearchResults}">
@@ -35,7 +35,7 @@
                     <h3>${model.ebiSampleSearchResults.numberOfHits} hits</h3>
                     <div class="grid_18 omega">
                         <c:forEach var="result" items="${model.ebiSampleSearchResults.entries}">
-                            ${result.identifier}: ${result.description}<br />
+                            <a href="${result.url}">${result.identifier}</a>: ${result.description}<br />
                         </c:forEach>
                     </div>
                 </c:when>
@@ -50,5 +50,13 @@
         $(".more_citations").slideToggle();
         $("#expand_button").toggleClass("min");
     });
-
+</script>
+<script>
+    var checkboxes = document.querySelectorAll("input[name=facets]");
+    console.log("Checkboxes=" + checkboxes.length);
+    for(var i=0; i < checkboxes.length; i++) {
+        checkboxes[i].addEventListener("change", function(event){
+            document.getElementById("searchForm").submit();
+        });
+    }
 </script>

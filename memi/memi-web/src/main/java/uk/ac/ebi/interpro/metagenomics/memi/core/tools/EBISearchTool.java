@@ -67,7 +67,10 @@ public class EBISearchTool {
         log.debug("searchSamples");
         String resultFields = "id,description,project,taxonomy,biome,experiment_type";
 
-        String formattedFacetQuery = formatFacetFields(searchForm.getFacets());
+        String formattedFacetQuery = "";
+        if (searchForm.getFacets() != null) {
+            formattedFacetQuery = formatFacetFields(searchForm.getFacets());
+        }
 
         WsResult searchResults = client.getFacetedResults(
                 DOMAIN,
@@ -102,7 +105,7 @@ public class EBISearchTool {
     }
 
     String formatFacetFields(List<String> facetAndValues) {
-        StringBuilder facetQuery = new StringBuilder(",");
+        StringBuilder facetQuery = new StringBuilder();
         for (String facet : facetAndValues) {
             String[] tokens = facet.split(EBISearchFacetValue.FACET_SEPARATOR);
             if (tokens.length == 2) {
@@ -112,7 +115,9 @@ public class EBISearchTool {
                 facetQuery.append(",");
             }
         }
-        facetQuery.deleteCharAt(0);
+        if (facetQuery.length() > 0) {
+            facetQuery.deleteCharAt(0);
+        }
         return facetQuery.toString();
     }
 
