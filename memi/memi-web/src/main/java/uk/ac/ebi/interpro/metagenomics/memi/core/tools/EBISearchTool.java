@@ -109,6 +109,13 @@ public class EBISearchTool {
         return results;
     }
 
+    /**
+     * Converts Facets selected on the SearchForm from a list of type-value strings separated by
+     * EBISearchFacetValue.FACET_SEPARATOR and converts them to a comma-separated list of colon separated facet types
+     * and values
+     * @param facetAndValues
+     * @return
+     */
     String formatFacetFields(List<String> facetAndValues) {
         StringBuilder facetQuery = new StringBuilder();
         for (String facet : facetAndValues) {
