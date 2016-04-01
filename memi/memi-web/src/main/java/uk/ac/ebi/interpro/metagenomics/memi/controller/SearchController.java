@@ -77,7 +77,7 @@ public class SearchController extends AbstractController implements IController 
                 ebiSearchForm,
                 sampleSearchResults);
         final ViewModel searchModel = builder.getModel();
-        searchModel.changeToHighlightedClass(ViewModel.TAB_CLASS_ABOUT_VIEW);
+        searchModel.changeToHighlightedClass(ViewModel.TAB_CLASS_SEARCH_VIEW);
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, searchModel);
         model.addAttribute(EBISearchForm.MODEL_ATTR_NAME, ((SearchViewModel) searchModel).getEbiSearchForm());
         model.addAttribute(LoginForm.MODEL_ATTR_NAME, loginForm);

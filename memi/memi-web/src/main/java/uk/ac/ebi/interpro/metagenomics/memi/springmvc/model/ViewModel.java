@@ -50,6 +50,7 @@ public class ViewModel implements IViewModelParams {
     private Map<String, String> getDefaultMap() {
         Map<String, String> result = new HashMap<String, String>();
         result.put(TAB_CLASS_HOME_VIEW, DEFAULT_CLASS);
+        result.put(TAB_CLASS_SEARCH_VIEW, DEFAULT_CLASS);
         result.put(TAB_CLASS_SUBMIT_VIEW, DEFAULT_CLASS);
         result.put(TAB_CLASS_PROJECTS_VIEW, DEFAULT_CLASS);
         result.put(TAB_CLASS_SAMPLES_VIEW, DEFAULT_CLASS);
