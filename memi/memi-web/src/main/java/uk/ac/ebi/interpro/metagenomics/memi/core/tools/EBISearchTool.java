@@ -63,6 +63,11 @@ public class EBISearchTool {
         return facets;
     }
 
+    /**
+     * Searches the sample data stored via the EBI-Search client
+     * @param searchForm
+     * @return EBISampleSearchResults object containing the search hits and a set of facets
+     */
     public EBISampleSearchResults searchSamples(EBISearchForm searchForm) {
         log.debug("searchSamples");
         String resultFields = "id,description,project,taxonomy,biome,experiment_type";
