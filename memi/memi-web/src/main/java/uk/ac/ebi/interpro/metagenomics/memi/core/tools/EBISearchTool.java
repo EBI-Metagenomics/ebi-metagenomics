@@ -115,8 +115,9 @@ public class EBISearchTool {
                 facetQuery.append(",");
             }
         }
+        //remove any trailing commas
         if (facetQuery.length() > 0) {
-            facetQuery.deleteCharAt(0);
+            facetQuery.deleteCharAt(facetQuery.length()-1);
         }
         return facetQuery.toString();
     }
