@@ -16,6 +16,8 @@ public class EBISearchForm {
 
     int page;
 
+    int maxPage;
+
     int resultsPerPage;
 
     String sortField;
@@ -27,7 +29,8 @@ public class EBISearchForm {
     static final int DEFAULT_RESULTS_PER_PAGE = 20;
 
     public EBISearchForm() {
-        page = 0;
+        page = 1;
+        maxPage = 1;
         resultsPerPage = DEFAULT_RESULTS_PER_PAGE;
         facets = new ArrayList<String>();
     }
@@ -54,6 +57,14 @@ public class EBISearchForm {
 
     public void setPage(int page) {
         this.page = page;
+    }
+
+    public int getMaxPage() {
+        return maxPage;
+    }
+
+    public void setMaxPage(int maxPage) {
+        this.maxPage = maxPage;
     }
 
     public int getResultsPerPage() {
