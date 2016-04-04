@@ -39,7 +39,7 @@
                         <c:when test="${fn:length(model.ebiSampleSearchResults.entries) > 0}">
                             <div class="grid_18 omega">
                                 <c:forEach var="result" items="${model.ebiSampleSearchResults.entries}">
-                                    <a href="${pageContext.request.contextPath}/projects/${result.project}/samples/${result.identifier}">${result.identifier}</a>: ${result.description}<br />
+                                    <a href="${pageContext.request.contextPath}/projects/${result.project}">${result.project}: </a><a href="${pageContext.request.contextPath}/projects/${result.project}/samples/${result.identifier}">${result.identifier}</a>: ${result.description}<br />
                                 </c:forEach>
                                 <div>
                                     <input type="button" id="previousPage" value="Previous" />
