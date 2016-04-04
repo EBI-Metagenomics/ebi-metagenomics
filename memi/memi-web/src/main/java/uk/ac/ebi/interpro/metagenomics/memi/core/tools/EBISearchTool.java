@@ -10,6 +10,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ebiSearch.EBISampleS
 import uk.ac.ebi.webservices.jaxrs.EBeyeClient;
 import uk.ac.ebi.webservices.jaxrs.stubs.ebeye.*;
 
+import javax.ws.rs.BadRequestException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
@@ -77,35 +78,41 @@ public class EBISearchTool {
             formattedFacetQuery = formatFacetFields(searchForm.getFacets());
         }
 
-        WsResult searchResults = client.getFacetedResults(
-                DOMAIN,
-                searchForm.getSearchText(),
-                resultFields,
-                searchForm.getPage(),
-                searchForm.getResultsPerPage(),
-                true,
-                true,
-                null,
-                null,
-                10,
-                "",
-                formattedFacetQuery
-        );
-        Integer hits = searchResults.getHitCount();
         EBISampleSearchResults results = new EBISampleSearchResults();
-        List<EBISampleSearchEntry> entryList = results.getEntries();
-        for (WsEntry searchEntry : searchResults.getEntries().getEntry()) {
-            EBISampleSearchEntry entry = resultToEntry(searchEntry);
-            entryList.add(entry);
+
+        try {
+            WsResult searchResults = client.getFacetedResults(
+                    DOMAIN,
+                    searchForm.getSearchText(),
+                    resultFields,
+                    ((searchForm.getPage()-1) * searchForm.getResultsPerPage()),
+                    searchForm.getResultsPerPage(),
+                    true,
+                    true,
+                    null,
+                    null,
+                    10,
+                    "",
+                    formattedFacetQuery
+            );
+            Integer hits = searchResults.getHitCount();
+            List<EBISampleSearchEntry> entryList = results.getEntries();
+            for (WsEntry searchEntry : searchResults.getEntries().getEntry()) {
+                EBISampleSearchEntry entry = resultToEntry(searchEntry);
+                entryList.add(entry);
+            }
+
+            List<EBISearchFacet> facets = results.getFacets();
+            for (WsFacet searchFacet : searchResults.getFacets().getFacet()) {
+                EBISearchFacet facet = resultToFacet(searchFacet);
+                if (facet != null)
+                    facets.add(facet);
+            }
+            results.setNumberOfHits(hits);
+        } catch (BadRequestException e) {
+            results.setNumberOfHits(0);
         }
 
-        List<EBISearchFacet> facets = results.getFacets();
-        for (WsFacet searchFacet : searchResults.getFacets().getFacet()) {
-            EBISearchFacet facet = resultToFacet(searchFacet);
-            if (facet != null)
-                facets.add(facet);
-        }
-        results.setNumberOfHits(hits);
         return results;
     }
 

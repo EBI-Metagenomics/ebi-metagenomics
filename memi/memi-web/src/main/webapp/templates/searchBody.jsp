@@ -10,7 +10,8 @@
         <form:form id="searchForm" method="GET" action="${pageContext.request.contextPath}/search/doEbiSearch" commandName="ebiSearchForm">
             <div class="grid_6 alpha" id="facets">
                 <c:choose>
-                    <c:when test="${not empty model.ebiSampleSearchResults}">
+                    <c:when test="${not empty model.ebiSampleSearchResults
+                        && fn:length(model.ebiSampleSearchResults.entries) > 0}">
                         <h3>Filter your results</h3>
                         <c:forEach var="facet" items="${model.ebiSampleSearchResults.facets}">
                             <c:if test="${fn:length(facet.values) > 0}">
@@ -25,7 +26,7 @@
                 <fieldset>
                     <label for="searchText">Search: </label>
                     <span>
-                        <form:input path="searchText" />
+                        <form:input path="searchText" id="searchText"/>
                     </span>
                     <form:errors path="errorText" cssClass="error"/>
                 </fieldset>
@@ -33,19 +34,23 @@
 
             <c:choose>
                 <c:when test="${not empty model.ebiSampleSearchResults}">
-                    <h3>Showing ${ebiSearchForm.resultsPerPage} out of ${model.ebiSampleSearchResults.numberOfHits} results</h3>
-                    <div class="grid_18 omega">
-                        <c:forEach var="result" items="${model.ebiSampleSearchResults.entries}">
-                            <a href="${pageContext.request.contextPath}/projects/${result.project}/samples/${result.identifier}">${result.identifier}</a>: ${result.description}<br />
-                        </c:forEach>
-                        <div>
-                            <input type="button" id="previousPage" value="Previous" />
-                            <form:hidden id="currentPage" path="page"/>
-                            <form:hidden id="maxPage" path="maxPage"/>
-                            Page ${ebiSearchForm.page}
-                            <input type="button" id="nextPage" value="Next" />
-                        </div>
-                    </div>
+                    <h3>Showing ${fn:length(model.ebiSampleSearchResults.entries)} out of ${model.ebiSampleSearchResults.numberOfHits} results</h3>
+                    <c:choose>
+                        <c:when test="${fn:length(model.ebiSampleSearchResults.entries) > 0}">
+                            <div class="grid_18 omega">
+                                <c:forEach var="result" items="${model.ebiSampleSearchResults.entries}">
+                                    <a href="${pageContext.request.contextPath}/projects/${result.project}/samples/${result.identifier}">${result.identifier}</a>: ${result.description}<br />
+                                </c:forEach>
+                                <div>
+                                    <input type="button" id="previousPage" value="Previous" />
+                                    <form:hidden id="currentPage" path="page"/>
+                                    <form:hidden id="maxPage" path="maxPage"/>
+                                    Page ${ebiSearchForm.page}
+                                    <input type="button" id="nextPage" value="Next" />
+                                </div>
+                            </div>
+                        </c:when>
+                    </c:choose>
                 </c:when>
             </c:choose>
         </form:form>
@@ -61,12 +66,21 @@
 </script>
 <script>
     /*
+    Handle addition of text to search textfield
+    */
+    var searchElement = document.getElementById("searchText");
+    searchElement.addEventListener("submit", function() {
+        resetPage();
+    });
+
+    /*
     Handling of facet checkboxes. Triggers new search anytime a checkbox is changed
      */
     var checkboxes = document.querySelectorAll("input[name=facets]");
     console.log("Checkboxes = " + checkboxes.length);
     for(var i=0; i < checkboxes.length; i++) {
         checkboxes[i].addEventListener("change", function(event){
+            resetPage();
             document.getElementById("searchForm").submit();
         });
     }
@@ -93,6 +107,15 @@
     if (nextPageElement != null && previousPageElement != null) {
         nextPageElement.addEventListener("click", function() {changePage(true)});
         previousPageElement.addEventListener("click", function() {changePage(false)});
+    }
+
+    /*
+    called when facet fields or text field is altered to ensure new search results
+    are displayed from page one onwards
+     */
+    var resetPage = function() {
+        var currentPageElement = document.getElementById("currentPage");
+        currentPageElement.value = 1;
     }
 
 </script>
