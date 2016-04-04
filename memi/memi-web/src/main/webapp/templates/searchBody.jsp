@@ -11,7 +11,7 @@
             <div class="grid_6 alpha" id="facets">
                 <c:choose>
                     <c:when test="${not empty model.ebiSampleSearchResults
-                        && fn:length(model.ebiSampleSearchResults.entries) > 0}">
+                        && fn:length(model.ebiSampleSearchResults.facets) > 0}">
                         <h3>Filter your results</h3>
                         <c:forEach var="facet" items="${model.ebiSampleSearchResults.facets}">
                             <c:if test="${fn:length(facet.values) > 0}">
@@ -45,7 +45,7 @@
                                     <input type="button" id="previousPage" value="Previous" />
                                     <form:hidden id="currentPage" path="page"/>
                                     <form:hidden id="maxPage" path="maxPage"/>
-                                    Page ${ebiSearchForm.page}
+                                    Page ${ebiSearchForm.page} of ${ebiSearchForm.maxPage}
                                     <input type="button" id="nextPage" value="Next" />
                                 </div>
                             </div>
@@ -105,6 +105,16 @@
     var nextPageElement = document.getElementById("nextPage");
     var previousPageElement = document.getElementById("previousPage");
     if (nextPageElement != null && previousPageElement != null) {
+        //disable previous button if on first page
+        var currentPage = document.getElementById("currentPage").value;
+        if (currentPage == 1) {
+            previousPageElement.disabled = true;
+        }
+        //disable next button if on last page (can also be the first page)
+        var maxPage = document.getElementById("maxPage").value;
+        if (currentPage == maxPage) {
+            nextPageElement.disabled = true;
+        }
         nextPageElement.addEventListener("click", function() {changePage(true)});
         previousPageElement.addEventListener("click", function() {changePage(false)});
     }

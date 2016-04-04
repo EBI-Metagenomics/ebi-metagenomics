@@ -96,6 +96,8 @@ public class EBISearchTool {
                     formattedFacetQuery
             );
             Integer hits = searchResults.getHitCount();
+            int maxPage = (int) Math.ceil(new Double(hits) / new Double(searchForm.getResultsPerPage()));
+            searchForm.setMaxPage(maxPage);
             List<EBISampleSearchEntry> entryList = results.getEntries();
             for (WsEntry searchEntry : searchResults.getEntries().getEntry()) {
                 EBISampleSearchEntry entry = resultToEntry(searchEntry);
@@ -111,6 +113,7 @@ public class EBISearchTool {
             results.setNumberOfHits(hits);
         } catch (BadRequestException e) {
             results.setNumberOfHits(0);
+            searchForm.setMaxPage(0);
         }
 
         return results;
