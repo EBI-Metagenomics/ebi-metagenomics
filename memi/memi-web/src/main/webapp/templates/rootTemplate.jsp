@@ -126,9 +126,8 @@
     <noscript>
         <style type="text/css">
         #tax-Krona, #tabs-chart, #interpro-chart, #tabs-taxchart {display: none;}/*remove the Krona box  and all charts tabs when no javascript*/
-        #script_feedbackLink {display: none;}/*remove the feedback button when no javascript*/
-        #script_loginLink {display: none;}  /*remove the login button when no javascript*/
-        #mod4 {display: none;} /* remove the last item - jumping line - of the carousel when no javascript */
+        #script_feedbackLink {display: none;}/*remove feedback button*/
+        #script_loginLink {display: none;}  /*remove login button*/
         </style>
     </noscript>
 
@@ -150,35 +149,61 @@
 
       <div id="global-masthead" class="masthead grid_24">
 
-			<a href="//www.ebi.ac.uk/" title="Go to the EMBL-EBI homepage">
-                <img src="//www.ebi.ac.uk/web_guidelines/images/logos/EMBL-EBI/EMBL_EBI_Logo_white.png" alt="EMBL European Bioinformatics Institute" />
-            </a>
+			<a href="//www.ebi.ac.uk/" title="Go to the EMBL-EBI homepage"><img src="//www.ebi.ac.uk/web_guidelines/images/logos/EMBL-EBI/EMBL_EBI_Logo_white.png" alt="EMBL European Bioinformatics Institute" /></a>
 
-          <div class="nav">
-              <ul id="global-nav">
-                <li class="first active" id="services"><a href="//www.ebi.ac.uk/services">Services</a></li>
-                <li id="research"><a href="//www.ebi.ac.uk/research">Research</a></li>
-                <li id="training"><a href="//www.ebi.ac.uk/training">Training</a></li>
-                <li id="industry"><a href="//www.ebi.ac.uk/industry">Industry</a></li>
-                <li id="about" class="last"><a href="//www.ebi.ac.uk/about">About us</a></li>
-              </ul>
+      <div class="nav">
+				<ul id="global-nav">
+
+          <li class="first active" id="services"><a href="//www.ebi.ac.uk/services">Services</a></li>
+					<li id="research"><a href="//www.ebi.ac.uk/research">Research</a></li>
+					<li id="training"><a href="//www.ebi.ac.uk/training">Training</a></li>
+					<li id="industry"><a href="//www.ebi.ac.uk/industry">Industry</a></li>
+					<li id="about" class="last"><a href="//www.ebi.ac.uk/about">About us</a></li>
+				</ul>
+      </div>
+    </div>
+
+      <div id="local-masthead" class="masthead grid_24">
+          <!-- local-title - logo only patterns -->
+          <div class="logo-title grid_12 alpha" id="local-title"><h1 class="visuallyhidden">EBI metagenomics</h1> <a
+                  href="<c:url value="/"/>" title="Back to EBI metagenomics homepage"><img
+                  src="${pageContext.request.contextPath}/img/logo_metagenomics_white_web.png"
+                  alt="EBI metagenomics logo"></a>
           </div>
-    </div>
+          <!-- /local-title -->
+          <!-- local-search -->
 
-    <div id="local-masthead" class="masthead grid_24">
-    <!-- local-title - logo only patterns, see http://www.ebi.ac.uk/web/style/patterns -->
-        <div class="logo-title" id="local-title">
-            <h1 class="visuallyhidden">EBI metagenomics</h1>
-            <a href="<c:url value="/"/>" title="Back to EBI metagenomics homepage">
-                <img src="${pageContext.request.contextPath}/img/logo_metagenomics_white_web.png" alt="EBI metagenomics logo">
-            </a>
-        </div>
 
-        <nav>
-            <tiles:insertAttribute name="mainMenu"/>
-        </nav>
+                <div class="grid_12 omega">
+                  <form id="local-search" name="local-search" action="/metagenomics/search" method="get">
 
-    </div>
+                    <fieldset>
+
+                    <div class="left">
+                      <label>
+                      <input type="text" name="q" id="local-searchbox">
+                      </label>
+                      <span class="examples">Examples: <a href="#">ERP002477</a>, <a href="#">Human gut</a>, <a href="#">Host-associated: Arthropoda</a></span>
+                    </div>
+
+                    <div class="right">
+                      <input type="submit" id="searchsubmit" name="submit" value="Search" class="submit">
+                      <!-- Link for future advance search page -->
+                        <!-- <span class="adv"><a href="../search" id="adv-search" title="Advanced">Advanced</a></span> -->
+                    </div>
+
+                    </fieldset>
+
+                  </form>
+                </div>
+
+          <!-- /local-search -->
+
+          <nav>
+              <tiles:insertAttribute name="mainMenu"/>
+          </nav>
+
+      </div>
   </div>
 </div>
 <%-- END EBI main header --%>
@@ -204,6 +229,7 @@
 <%--little beta flag--%>
 <%--<a href="<c:url value="${baseURL}/about#intro"/>" title="About us"><div id="extra_beta" class="anim"></div></a>--%>
 
+<!--START Feedback slider functionality block -->
 <!-- The following line includes the feedback DIV and the feedback FORM -->
 <%@ include file="feedback/script/feedbackDiv.jsp" %>
 <div id="toTop" class="anim"><img src="${pageContext.request.contextPath}/img/ico_scroll_top.png" alt="Scroll to top" ><span class="scroll anim">To top </span></div>
@@ -224,5 +250,10 @@
            });
        </script>
 <!-- End Back top jQuery plugin-->
+<!--END Feedback slider functionality block -->
+
+<!--START Login functionality block -->
+<tiles:insertAttribute name="loginDialog"/>
+<!--END Login functionality block -->
 </body>
 </html>
