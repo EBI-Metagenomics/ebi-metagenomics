@@ -818,7 +818,23 @@ width: 972px; text-align: left;}
 
 .study_desc {margin-top:20px;}
 .study_desc_text {font-size:110%;}
+
 /*********************** FORMS ************************/
+/*top banner search*/
+div#local-masthead form fieldset {background-color: rgba(255, 255, 255, 0.4); border: 0 solid #EEE; padding:9px; margin:18px 9px;} /*full path mandatory to overwrite EBI border*/
+#local-search fieldset {background-color: rgba(255, 255, 255, 0.4); border: 0 solid #EEE; padding:9px; margin:18px 9px;}
+div#local-search form fieldset  div.left, form#local-search fieldset div.left {margin-right:9px;} /*adjustment alignment input box */
+#local-search fieldset div.left input#local-searchbox {height: 24px; } /*slightly increase height of the input*/
+#local-search fieldset div.left input#local-searchbox {color:#9E9E9E; padding-left: 5px; margin:0;}  /*make the font grey, add space on the left side of the form input box*/
+#local-search fieldset div.left input#local-searchbox:focus {color:#616161;} /*darker the font on focus*/
+div#local-search form fieldset div.right, form#local-search fieldset div.right {width: inherit;} /*need to keep full path*/
+div#headerdiv a:link, div#headerdiv a:visited { border-bottom-width: 0;   border-bottom-style: none;}
+#local-search div.right input.submit {margin:0;}/*adjustment alignment search button */
+#local-search .examples a {color:#464646;border-bottom:none;}
+#local-search .examples a:hover {color:#464646; border-bottom-width:1px; border-bottom-style: solid;}
+#local-search .examples a:visited {color:#464646;} /*keep same color all time*/
+/*/top banner search*/
+
 form legend {
 background-color: #e5e5e5;
 color: #455872;
