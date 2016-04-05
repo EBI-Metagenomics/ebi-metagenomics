@@ -126,9 +126,8 @@
     <noscript>
         <style type="text/css">
         #tax-Krona, #tabs-chart, #interpro-chart, #tabs-taxchart {display: none;}/*remove the Krona box  and all charts tabs when no javascript*/
-        #script_feedbackLink {display: none;}/*remove the feedback button when no javascript*/
-        #script_loginLink {display: none;}  /*remove the login button when no javascript*/
-        #mod4 {display: none;} /* remove the last item - jumping line - of the carousel when no javascript */
+        #script_feedbackLink {display: none;}/*remove feedback button*/
+        #script_loginLink {display: none;}  /*remove login button*/
         </style>
     </noscript>
 
@@ -164,15 +163,49 @@
       </div>
     </div>
 
-    <div id="local-masthead" class="masthead grid_24">
-    <!-- local-title - logo only patterns, see http://www.ebi.ac.uk/web/style/patterns -->
-    <div class="logo-title" id="local-title"> <h1 class="visuallyhidden">EBI metagenomics</h1> <a href="<c:url value="/"/>" title="Back to EBI metagenomics homepage"><img src="${pageContext.request.contextPath}/img/logo_metagenomics_white_web.png" alt="EBI metagenomics logo"></a> </div>
+      <div id="local-masthead" class="masthead grid_24">
+          <!-- local-title - logo only patterns -->
+          <div class="logo-title grid_12 alpha" id="local-title"><h1 class="visuallyhidden">EBI metagenomics</h1> <a
+                  href="<c:url value="/"/>" title="Back to EBI metagenomics homepage"><img
+                  src="${pageContext.request.contextPath}/img/logo_metagenomics_white_web.png"
+                  alt="EBI metagenomics logo"></a>
+          </div>
+          <!-- /local-title -->
+          <!-- local-search -->
 
-        <nav>
-            <tiles:insertAttribute name="mainMenu"/>
-        </nav>
 
-    </div>
+                <div class="grid_12 omega">
+                  <form id="local-search" name="local-search" action="[search-action]" method="post">
+
+                    <fieldset>
+
+                    <div class="left">
+                      <label>
+                      <input type="text" name="first" id="local-searchbox">
+                      </label>
+                      <!-- Include some example searchterms - keep them short and few! -->
+                      <span class="examples">Examples: <a href="[search-url-1]">[search-text-1]</a>, <a href="[search-url-1]">[search-text-2]</a>, <a href="[search-url-1]">[search-text-3]</a></span>
+                    </div>
+
+                    <div class="right">
+                      <input type="submit" name="submit" value="Search" class="submit">
+                      <!-- If your search is more complex than just a keyword search, you can link to an Advanced Search,
+                           with whatever features you want available -->
+                      <span class="adv"><a href="../search" id="adv-search" title="Advanced">Advanced</a></span>
+                    </div>
+
+                    </fieldset>
+
+                  </form>
+                </div>
+
+          <!-- /local-search -->
+
+          <nav>
+              <tiles:insertAttribute name="mainMenu"/>
+          </nav>
+
+      </div>
   </div>
 </div>
 <%-- END EBI main header --%>
