@@ -42,7 +42,8 @@
                                     data : data,
                                     color: "rgb(63, 114, 191)"
                                 }
-                            ]
+                            ],
+                            credits: false
                         });
                     });
                     $.ajax('/metagenomics//projects/${projectId}/samples/${sampleId}/runs/${runId}/results/versions/${versionId}/qc-stats/stats').done(function (rawdata) {
@@ -101,7 +102,8 @@
                                     },
                                     color: "rgba(191, 191, 63, 0.5)"
                                 }
-                            ]
+                            ],
+                            credits: false
                         });
                         $('#seq_gc_stats').highcharts({
                             chart: {
@@ -151,7 +153,8 @@
                                     },
                                     color: "rgba(191, 191, 63, 0.5)"
                                 }
-                            ]
+                            ],
+                            credits: false
                         });
                     });
 
@@ -167,7 +170,8 @@
                                 name : 'Sequences',
                                 data : data,
                                 color: "rgb(63, 114, 191)"
-                            }]
+                            }],
+                            credits: false
                         });
                     });
                     $.ajax('/metagenomics//projects/${projectId}/samples/${sampleId}/runs/${runId}/results/versions/${versionId}/qc-stats/base').done(function (rawdata) {
@@ -237,7 +241,8 @@
                                     data : data[d],
                                     color : colors[d]
                                 }
-                            })
+                            }),
+                            credits: false
                         });
                     });
                 });
