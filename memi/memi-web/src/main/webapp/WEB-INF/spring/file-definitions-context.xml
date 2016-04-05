@@ -323,6 +323,55 @@
         <property name="description" value="Quality control image produced with Google Charts API."/>
     </bean>
 
+    <bean id="qualityControlNewSummaryFile" autowire-candidate="false"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.QCFileDefinition">
+        <property name="identifier" value="QUALITY_CONTROL_NEW_SUMMARY_FILE"/>
+        <property name="relativePath" value="/qc_stats/qc_stats"/>
+        <property name="description" value="Summary values of the QC results."/>
+        <property name="linkTitle" value=""/>
+        <property name="linkURL" value=""/>
+        <property name="linkText" value=""/>
+        <property name="downloadName" value="_qc_stats"/>
+        <property name="order" value="20"/>
+    </bean>
+
+    <bean id="qualityControlGCBinFile" autowire-candidate="false"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.QCFileDefinition">
+        <property name="identifier" value="QUALITY_CONTROL_GC_BIN_FILE"/>
+        <property name="relativePath" value="/qc_stats/qc_GC_bin"/>
+        <property name="description" value="Quality control file with the GC content by bins."/>
+        <property name="linkTitle" value=""/>
+        <property name="linkURL" value=""/>
+        <property name="linkText" value=""/>
+        <property name="downloadName" value="_qc_GC_bin"/>
+        <property name="order" value="20"/>
+    </bean>
+
+    <bean id="qualityControlNucleotideHistogramFile" autowire-candidate="false"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.QCFileDefinition">
+        <property name="identifier" value="QUALITY_CONTROL_NUCLEOTIDE_HISTOGRAM_FILE"/>
+        <property name="relativePath" value="/qc_stats/qc_base"/>
+        <property name="description" value="Quality control file for the nucleotide histogram"/>
+        <property name="linkTitle" value=""/>
+        <property name="linkURL" value=""/>
+        <property name="linkText" value=""/>
+        <property name="downloadName" value="_qc_base"/>
+        <property name="order" value="20"/>
+    </bean>
+
+    <bean id="qualityControlSequenceLengthBinFile" autowire-candidate="false"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.QCFileDefinition">
+        <property name="identifier" value="QUALITY_CONTROL_SEQUENCE_LENGTH_BIN_FILE"/>
+        <property name="relativePath" value="/qc_stats/qc_length_bin"/>
+        <property name="description" value="Quality control file with the length of the sequences."/>
+        <property name="linkTitle" value=""/>
+        <property name="linkURL" value=""/>
+        <property name="linkText" value=""/>
+        <property name="downloadName" value="_qc_length_bin"/>
+        <property name="order" value="20"/>
+    </bean>
+
+
     <bean id="sequenceFeatureSummaryFile" autowire-candidate="false"
           class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.FunctionalAnalysisFileDefinition">
         <property name="identifier" value="SEQUENCE_FEATURE_SUMMARY_FILE"/>

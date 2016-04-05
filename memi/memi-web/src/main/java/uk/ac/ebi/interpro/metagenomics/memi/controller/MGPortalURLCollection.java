@@ -100,4 +100,8 @@ public final class MGPortalURLCollection {
     //POST request
     public final static String PROJECT_SAMPLE_RUN_RESULTS_IMAGE_EXPORT = PROJECT_SAMPLE_RUN_RESULTS_ENTRY + "/export";
 
+
+
+    //Quality control stats files
+    public final static String PROJECT_SAMPLE_RUN_RESULTS_QC_TYPE = PROJECT_SAMPLE_RUN_RESULTS + PROJECT_SAMPLE_RUN_RESULTS_VERSION + "/qc-stats/{resultType}";
 }

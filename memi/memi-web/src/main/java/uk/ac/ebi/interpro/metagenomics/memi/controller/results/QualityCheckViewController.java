@@ -13,10 +13,19 @@ import uk.ac.ebi.interpro.metagenomics.memi.exceptionHandling.EntryNotFoundExcep
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Run;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob;
+import uk.ac.ebi.interpro.metagenomics.memi.services.FileObjectBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.DownloadableFileDefinition;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.FileDefinitionId;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.results.QualityCheckViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.results.QualityCheckViewModelBuilder;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.IOException;
+import java.util.Locale;
 
 /**
  * The controller for the analysis results page.
@@ -64,6 +73,7 @@ public class QualityCheckViewController extends AbstractResultViewController {
         String pageTitle = "Quality check view: " + run.getExternalRunId() + "";
 
         AnalysisJob analysisJob = analysisJobDAO.readByRunIdAndVersionDeep(run.getExternalRunId(), run.getReleaseVersion(), "completed");
+
         if (analysisJob == null) {
             throw new EntryNotFoundException();
         }
@@ -82,5 +92,73 @@ public class QualityCheckViewController extends AbstractResultViewController {
         qualityCheckViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_SAMPLES_VIEW);
         model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, qualityCheckViewModel);
+        model.addAttribute("projectId", run.getExternalProjectId());
+        model.addAttribute("sampleId", run.getExternalSampleId());
+        model.addAttribute("runId", run.getExternalRunId());
+        model.addAttribute("versionId", run.getReleaseVersion());
     }
+
+
+    @RequestMapping(value = MGPortalURLCollection.PROJECT_SAMPLE_RUN_RESULTS_QC_TYPE)
+    public void handleQCResultDownloads(@PathVariable final String projectId,
+                                              @PathVariable final String sampleId,
+                                              @PathVariable final String runId,
+                                              @PathVariable final String releaseVersion,
+                                              @PathVariable final String resultType,
+                                              final HttpServletResponse response,
+                                              final HttpServletRequest request) throws IOException {
+        FileDefinitionId fileDefinitionId = FileDefinitionId.DEFAULT;
+        if (resultType.equalsIgnoreCase("base")) {
+            fileDefinitionId = FileDefinitionId.QC_BASE;
+        }else if (resultType.equalsIgnoreCase("stats")) {
+                fileDefinitionId = FileDefinitionId.QC_STATS;
+        }else if (resultType.equalsIgnoreCase("length")) {
+            fileDefinitionId = FileDefinitionId.QC_LENGTH_BIN;
+        }else if (resultType.equalsIgnoreCase("gc_bin")) {
+            fileDefinitionId = FileDefinitionId.QC_GC_BIN;
+        } else {
+            log.warn("Result type: " + resultType + " not found!");
+        }
+        doHandleQCExports(projectId, sampleId, runId, releaseVersion, response, request, fileDefinitionId);
+    }
+    protected void doHandleQCExports(@PathVariable final String projectId,
+                                           @PathVariable final String sampleId,
+                                           @PathVariable final String runId,
+                                           @PathVariable final String releaseVersion,
+                                           final HttpServletResponse response,
+                                           final HttpServletRequest request,
+                                           final FileDefinitionId fileDefinitionId) throws IOException {
+        response.setContentType("text/tab-separated-values;charset=utf-8");
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.setLocale(Locale.ENGLISH);
+
+        // Please note: The actual security check will be done further down
+        Run run = getSecuredEntity(projectId, sampleId, runId, releaseVersion);
+
+        if (run != null && fileDefinitionId != null) {
+            // Perform security check
+            if (isAccessible(run)) {
+                AnalysisJob analysisJob = analysisJobDAO.readByRunIdAndVersionDeep(run.getExternalRunId(), releaseVersion, "completed");
+                if (analysisJob != null) {
+                    DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(fileDefinitionId.name());
+                    if (fileDefinition != null) {
+                        File fileObject = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, fileDefinition);
+                        try {
+                            openDownloadDialog(response, request, analysisJob, fileDefinition.getDownloadName(), fileObject);
+                        } catch (IndexOutOfBoundsException e) {
+                            response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+                        }
+                    } else {//analysis job is NULL
+                        response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+                    }
+                } else {//access denied
+                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    response.sendRedirect("/metagenomics/sample/" + sampleId + "/accessDenied");
+                }
+            } else {//run is NULL
+                response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+            }
+        }
+    }
+
 }

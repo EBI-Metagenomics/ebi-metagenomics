@@ -30,5 +30,9 @@ public enum FileDefinitionId {
     JSON_BIOM_FILE,
     HDF5_BIOM_FILE,
     OTU_TABLE_FILE,
+    QC_BASE,
+    QC_STATS,
+    QC_GC_BIN,
+    QC_LENGTH_BIN,
     DEFAULT;
 }
