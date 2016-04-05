@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.extensions.QueryRunsForProjectResult;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Run;
+import uk.ac.ebi.interpro.metagenomics.memi.model.valueObjects.ProjectSampleRunMappingVO;
 
 import javax.sql.DataSource;
 import java.math.BigDecimal;
@@ -67,6 +68,31 @@ public class RunDAOImpl implements RunDAO {
     }
 
     /**
+     * Returns a list of all project runs.
+     *
+     * @param projectId
+     * @return Mapping between project, sample and run accessions.
+     */
+    public List<ProjectSampleRunMappingVO> retrieveListOfRunAccessionsByProjectId(long projectId) {
+        try {
+            StringBuilder sb = new StringBuilder()
+                    .append("SELECT st.ext_study_id as study_id, sa.ext_sample_id as sample_id, aj.external_run_ids as run_id ")
+                    .append("FROM ")
+                    .append(schemaName).append(".analysis_job aj, ")
+                    .append(schemaName).append(".sample sa, ")
+                    .append(schemaName).append(".study st ")
+                    .append("WHERE st.study_id = sa.study_id AND sa.sample_id = aj.sample_id AND st.study_id = ? ");
+
+            final String sql = sb.toString();
+            List<ProjectSampleRunMappingVO> results = jdbcTemplate.query(sql, new Object[]{projectId}, new BeanPropertyRowMapper<ProjectSampleRunMappingVO>(ProjectSampleRunMappingVO.class));
+            return results;
+
+        } catch (EmptyResultDataAccessException exception) {
+            throw new EmptyResultDataAccessException(1);
+        }
+    }
+
+    /**
      * List of runs for a study.
      *
      * @param projectId
@@ -92,7 +118,7 @@ public class RunDAOImpl implements RunDAO {
                 sb.append("AND sa.is_public = 1 ");
             }
             // Allow private and public samples but no suppressed
-            else{
+            else {
                 sb.append("AND sa.is_public <> 5 ");
             }
             sb.append("AND st.analysis_status_id <> 5 ");

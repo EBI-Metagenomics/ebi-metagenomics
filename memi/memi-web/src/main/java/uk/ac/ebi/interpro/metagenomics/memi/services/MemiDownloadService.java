@@ -46,6 +46,7 @@ public class MemiDownloadService {
             fis = new FileInputStream(file);
             //configure HTTP response
             assembleServletResponse(response, request, file, fis, fileName);
+            //TODO: Why do we need this delete file option?
             if (isDeleteFile) {
                 file.delete();
             }
