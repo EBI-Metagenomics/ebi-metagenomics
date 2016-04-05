@@ -32,12 +32,12 @@
                 </fieldset>
             </div>
 
-            <c:choose>
-                <c:when test="${not empty model.ebiSampleSearchResults}">
-                    <h3>Showing ${fn:length(model.ebiSampleSearchResults.entries)} out of ${model.ebiSampleSearchResults.numberOfHits} results</h3>
-                    <c:choose>
-                        <c:when test="${fn:length(model.ebiSampleSearchResults.entries) > 0}">
-                            <div class="grid_18 omega">
+            <div class="grid_18 omega">
+                <c:choose>
+                    <c:when test="${not empty model.ebiSampleSearchResults}">
+                        <h3>Showing ${fn:length(model.ebiSampleSearchResults.entries)} out of ${model.ebiSampleSearchResults.numberOfHits} results</h3>
+                        <c:choose>
+                            <c:when test="${fn:length(model.ebiSampleSearchResults.entries) > 0}">
                                 <c:forEach var="result" items="${model.ebiSampleSearchResults.entries}">
                                     <a href="${pageContext.request.contextPath}/projects/${result.project}">${result.project}: </a><a href="${pageContext.request.contextPath}/projects/${result.project}/samples/${result.identifier}">${result.identifier}</a>: ${result.description}<br />
                                 </c:forEach>
@@ -48,11 +48,15 @@
                                     Page ${ebiSearchForm.page} of ${ebiSearchForm.maxPage}
                                     <input type="button" id="nextPage" value="Next" />
                                 </div>
-                            </div>
-                        </c:when>
-                    </c:choose>
-                </c:when>
-            </c:choose>
+                            </c:when>
+                        </c:choose>
+                    </c:when>
+                </c:choose>
+                <div>
+                    Powered by <a href="http://www.ebi.ac.uk/ebisearch/" target="_blank">EBI Search</a>
+                </div>
+            </div>
+
         </form:form>
     </div>
 </div>
