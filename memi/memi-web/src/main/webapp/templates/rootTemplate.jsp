@@ -181,7 +181,7 @@
 
                     <div class="left">
                       <label>
-                      <input type="text" name="q" id="local-searchbox">
+                      <input type="search" name="q" id="local-searchbox">
                       </label>
                       <span class="examples">Examples: <a href="#">ERP002477</a>, <a href="#">Human gut</a>, <a href="#">Host-associated: Arthropoda</a></span>
                     </div>
