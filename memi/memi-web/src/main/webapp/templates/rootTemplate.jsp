@@ -150,23 +150,29 @@
 
       <div id="global-masthead" class="masthead grid_24">
 
-			<a href="//www.ebi.ac.uk/" title="Go to the EMBL-EBI homepage"><img src="//www.ebi.ac.uk/web_guidelines/images/logos/EMBL-EBI/EMBL_EBI_Logo_white.png" alt="EMBL European Bioinformatics Institute" /></a>
+			<a href="//www.ebi.ac.uk/" title="Go to the EMBL-EBI homepage">
+                <img src="//www.ebi.ac.uk/web_guidelines/images/logos/EMBL-EBI/EMBL_EBI_Logo_white.png" alt="EMBL European Bioinformatics Institute" />
+            </a>
 
-      <div class="nav">
-				<ul id="global-nav">
-
-          <li class="first active" id="services"><a href="//www.ebi.ac.uk/services">Services</a></li>
-					<li id="research"><a href="//www.ebi.ac.uk/research">Research</a></li>
-					<li id="training"><a href="//www.ebi.ac.uk/training">Training</a></li>
-					<li id="industry"><a href="//www.ebi.ac.uk/industry">Industry</a></li>
-					<li id="about" class="last"><a href="//www.ebi.ac.uk/about">About us</a></li>
-				</ul>
-      </div>
+          <div class="nav">
+              <ul id="global-nav">
+                <li class="first active" id="services"><a href="//www.ebi.ac.uk/services">Services</a></li>
+                <li id="research"><a href="//www.ebi.ac.uk/research">Research</a></li>
+                <li id="training"><a href="//www.ebi.ac.uk/training">Training</a></li>
+                <li id="industry"><a href="//www.ebi.ac.uk/industry">Industry</a></li>
+                <li id="about" class="last"><a href="//www.ebi.ac.uk/about">About us</a></li>
+              </ul>
+          </div>
     </div>
 
     <div id="local-masthead" class="masthead grid_24">
     <!-- local-title - logo only patterns, see http://www.ebi.ac.uk/web/style/patterns -->
-    <div class="logo-title" id="local-title"> <h1 class="visuallyhidden">EBI metagenomics</h1> <a href="<c:url value="/"/>" title="Back to EBI metagenomics homepage"><img src="${pageContext.request.contextPath}/img/logo_metagenomics_white_web.png" alt="EBI metagenomics logo"></a> </div>
+        <div class="logo-title" id="local-title">
+            <h1 class="visuallyhidden">EBI metagenomics</h1>
+            <a href="<c:url value="/"/>" title="Back to EBI metagenomics homepage">
+                <img src="${pageContext.request.contextPath}/img/logo_metagenomics_white_web.png" alt="EBI metagenomics logo">
+            </a>
+        </div>
 
         <nav>
             <tiles:insertAttribute name="mainMenu"/>
