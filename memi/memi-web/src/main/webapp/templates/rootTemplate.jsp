@@ -174,30 +174,30 @@
           <!-- local-search -->
 
 
-                <div class="grid_12 omega">
-                  <form id="local-search" name="local-search" action="[search-action]" method="post">
+                <%--<div class="grid_12 omega">--%>
+                  <%--<form id="local-search" name="local-search" action="[search-action]" method="post">--%>
 
-                    <fieldset>
+                    <%--<fieldset>--%>
 
-                    <div class="left">
-                      <label>
-                      <input type="text" name="first" id="local-searchbox">
-                      </label>
-                      <!-- Include some example searchterms - keep them short and few! -->
-                      <span class="examples">Examples: <a href="[search-url-1]">[search-text-1]</a>, <a href="[search-url-1]">[search-text-2]</a>, <a href="[search-url-1]">[search-text-3]</a></span>
-                    </div>
+                    <%--<div class="left">--%>
+                      <%--<label>--%>
+                      <%--<input type="text" name="first" id="local-searchbox">--%>
+                      <%--</label>--%>
+                      <%--<!-- Include some example searchterms - keep them short and few! -->--%>
+                      <%--<span class="examples">Examples: <a href="[search-url-1]">[search-text-1]</a>, <a href="[search-url-1]">[search-text-2]</a>, <a href="[search-url-1]">[search-text-3]</a></span>--%>
+                    <%--</div>--%>
 
-                    <div class="right">
-                      <input type="submit" name="submit" value="Search" class="submit">
-                      <!-- If your search is more complex than just a keyword search, you can link to an Advanced Search,
-                           with whatever features you want available -->
-                      <span class="adv"><a href="../search" id="adv-search" title="Advanced">Advanced</a></span>
-                    </div>
+                    <%--<div class="right">--%>
+                      <%--<input type="submit" name="submit" value="Search" class="submit">--%>
+                      <%--<!-- If your search is more complex than just a keyword search, you can link to an Advanced Search,--%>
+                           <%--with whatever features you want available -->--%>
+                      <%--<span class="adv"><a href="../search" id="adv-search" title="Advanced">Advanced</a></span>--%>
+                    <%--</div>--%>
 
-                    </fieldset>
+                    <%--</fieldset>--%>
 
-                  </form>
-                </div>
+                  <%--</form>--%>
+                <%--</div>--%>
 
           <!-- /local-search -->
 
