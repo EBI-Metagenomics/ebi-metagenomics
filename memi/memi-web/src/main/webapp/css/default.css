@@ -65,8 +65,7 @@ div#local-masthead ul {height: auto;width: 100%;margin-top: 0; background-color:
 div#local-masthead ul li {margin-bottom: 0; border-right: 1px solid rgba(255, 255, 255, 0.5);}/*change the dotted line*/
 div#local-masthead ul li a:link {border-bottom: 0px solid #71b360;  text-shadow:  rgba(0, 0, 0, 0.2) 1px 1px 0px; font-size: 96%; font-family: Verdana, sans-serif;}/*make it similar to interpro menu*/
 div#local-masthead ul li a:hover, div#local-masthead ul li a:focus, div#local-masthead ul li a:active {border-bottom: 0px solid #71b360; background-color: rgba(0, 0, 0, 0.2);}
-div#local-title.logo-title img {margin: 18px 9px; box-sizing: border-box;} /*make the metagenomics logo more centered */
-div#headerdiv div#local-title a  { display: block; overflow: auto; }/*to show tooltip properly*/
+div#local-title.logo-title img { margin-top: 1.5em;  margin-bottom: 1.5em; width:100%;max-width: 410px;} /*make the metagenomics logo more centered */
 div#headerdiv #global-masthead a:link {float: left;border-bottom:0;}
 div#headerdiv #global-masthead .nav a:link {float: none;}
 /*/suggested change to ebi-global.css */
@@ -821,7 +820,7 @@ width: 972px; text-align: left;}
 
 /*********************** FORMS ************************/
 /*top banner search*/
-div#local-masthead form fieldset {background-color: rgba(255, 255, 255, 0.4); border: 0 solid #EEE; padding:9px; margin:18px 9px;} /*full path mandatory to overwrite EBI border*/
+div#local-masthead form fieldset {background-color: rgba(255, 255, 255, 0.4); border: 0 solid #EEE; padding:9px; margin-right:9px;} /*full path mandatory to overwrite EBI border*/
 #local-search fieldset {background-color: rgba(255, 255, 255, 0.4); border: 0 solid #EEE; padding:9px; margin:18px 9px;}
 div#local-search form fieldset  div.left, form#local-search fieldset div.left {margin-right:9px;} /*adjustment alignment input box */
 #local-search fieldset div.left input#local-searchbox {height: 24px; } /*slightly increase height of the input*/
@@ -1763,8 +1762,9 @@ ul.sample_list li {list-style: none; display: inline;}
 .branch2 {margin-top:20px;}
 
 .block, .block-nt, .block-lb {font-size:90%;padding: 5px; display:inline-block; text-align:center; /*vertical-align: middle;*/}
-.block, .block_small {position:relative;padding: 2px; cursor:pointer; border:1px #B4D0F3 solid; width: 82px; height: 82px; border-radius:50%;line-height:7.1;background-color:#EAF0F9;color:#5983B5;}
+.block, .block_small, .block_med {position:relative;padding: 2px; cursor:pointer; border:1px #B4D0F3 solid; width: 82px; height: 82px; border-radius:50%;/*line-height:7.1;*/background-color:#EAF0F9;color:#5983B5;}
 .block.small {font-size: 67%;width: 36px; height: 36px;line-height: 4.1;}
+.block.medium {font-size: 85%;width: 56px; height: 56px;line-height: 5;}
 .block-nt {border: 1px #C3C3C3 solid; line-height:3.1;background-color: #DBDBDB;color:#777;margin-left:9px;}
 .block-lb {border: 1px #C3C3C3 solid; color:#777;}
 .block-ar {padding: 2px; border:0px #B4D0F3 solid; color:grey;display:inline-block;}
@@ -1780,35 +1780,33 @@ ul.sample_list li {list-style: none; display: inline;}
 .arrow_pip:after {left: 100%;top: 50%; border: solid rgba(0, 0, 0, 0);content: " ";height: 0;width: 0;position: absolute; pointer-events: none;  border-color: rgba(24, 33, 38, 0);border-left-color: grey; border-width: 5px;margin-top: -5px;}
 .arrow_notip {display:inline-block;background: grey;padding: 2px; width: 131px; margin-left:2px;margin-right:2px;}
 
-.rotate_t {-ms-transform: rotate(45deg); /* IE 9 */-webkit-transform: rotate(45deg); /* Chrome, Safari, Opera */transform: rotate(45deg);margin-left: -22px;margin-bottom: 12px;}
-.rotate_f {-ms-transform: rotate(-45deg); /* IE 9 */ -webkit-transform: rotate(-45deg); /* Chrome, Safari, Opera */ transform: rotate(-45deg);margin-left: -22px;margin-bottom: -12px;margin-right: 6px;/*for alignment*/}
+.rotate_t {-ms-transform: rotate(45deg); /* IE 9 */-webkit-transform: rotate(45deg); /* Chrome, Safari, Opera */transform: rotate(45deg);margin-bottom: 12px;}
+.rotate_f {-ms-transform: rotate(-45deg); /* IE 9 */ -webkit-transform: rotate(-45deg); /* Chrome, Safari, Opera */ transform: rotate(-45deg);/*margin-left: -22px;*/margin-bottom: -12px;margin-right: 6px;/*for alignment*/}
 
-/*animation*/
-.animation {
-    -webkit-animation: mymove 3s 0s forwards, mymove_second 10s 2s forwards; /* Chrome, Safari, Opera */
-    animation: mymove 3s forwards, mymove_second 10s 2s forwards;; /*forwards to keep the animation state*/
-
+/*******animation - Tryout - temp*******/
+.animation { position: absolute;
+    -webkit-animation: mymove 3s 0s forwards, mymove_second 3s 0s forwards; /* Chrome, Safari, Opera */
+    animation: mymove 3s 0s forwards, mymove_second 10s 2s forwards; /*forwards to keep the animation state*/
 }
-
 /* Chrome, Safari, Opera */
 @-webkit-keyframes mymove {
-    0%   {top: 0px;}
-    100%  {top: 200px;}
+    0%   {top: 0px; background-color: red;}
+    100%  {top: 200px;background-color: yellowgreen;}
 }
-
 @-webkit-keyframes mymove_second {
-    0%   {top: 0px;}
-    100%  {top: 200px;}
+    0%   {top: 200px; background-color: lightpink}
+    100%  {top: 200px;left:200px;background-color: blue}
 }
 /* Standard syntax */
 @keyframes mymove {
-    0%   {top: 0px;}
-    100%  {top: 200px;}
+    0%   {top: 0px;background-color: red}
+    100%  {top: 200px;background-color: yellowgreen   }
 }
 @keyframes mymove_second {
-    0%   {top: 0px;}
-    100%  {top: 200px;}
+    0%   {top: 200px;background-color: lightpink}
+    100%  {top: 200px;left:200px;background-color: blue}
 }
+ /*/ animation *******************************/
 
  /*/ pipeline chart *******************************/
 /*tooltip*/
@@ -1969,8 +1967,9 @@ div#local-masthead div.navbar-header {float:none;}
 /***************************************** responsive  *******************************/
 @media (max-width: 768px) {  /*remove carousel, feedback, ebi search and sidebar nav for the about us for small screens*/
 .carousel, #feedback_div, #sidebar-nav {display: none;}
-div#local-title.logo-title img {width:100%; margin:0; padding: 18px 9px;} /*logo*/
+/*div#local-title.logo-title img {margin:0; padding: 18px 9px;} */
 /*EBI template*/
+#local-search {display:none;}  /*top banner search*/
 #global-footer .grid_4:nth-child(1) {display:none;}/*remove one item of the EBI bottom menu - logo -  to avoid scrolling effect*/
 #global-nav,#global-search {display: none;} /*remove search and menu - wait for EBI to implement a collapsed version of the menu*/
 /*END EBI template*/
