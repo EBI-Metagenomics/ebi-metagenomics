@@ -10,6 +10,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.core.tools.MemiTools;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.BiomeDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.Biome;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.SampleFilter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
@@ -69,6 +70,7 @@ public class SamplesViewModelBuilder extends AbstractBiomeViewModelBuilder<Sampl
         log.info("Building instance of " + SamplesViewModel.class + "...");
         //Get submitter and submitter Id
         Submitter submitter = getSessionSubmitter(sessionMgr);
+        EBISearchForm ebiSearchForm = getEbiSearchForm(sessionMgr);
         String submissionAccountId = (submitter != null ? submitter.getSubmissionAccountId() : null);
         //Get filtered and sorted samples
         List<Criterion> filterCriteria = buildFilterCriteria(filter, submissionAccountId);
@@ -78,7 +80,7 @@ public class SamplesViewModelBuilder extends AbstractBiomeViewModelBuilder<Sampl
         //Get downloadable samples
         List<Sample> downloadableSamples = sampleDAO.retrieveFilteredSamples(filterCriteria, "sampleName");
 
-        return new SamplesViewModel(submitter, filteredSamples, downloadableSamples, pageTitle, breadcrumbs, propertyContainer, tableHeaderNames, pagination, filter);
+        return new SamplesViewModel(submitter, ebiSearchForm, filteredSamples, downloadableSamples, pageTitle, breadcrumbs, propertyContainer, tableHeaderNames, pagination, filter);
     }
 
     private List<Sample> getFilteredSamples(SampleDAO sampleDAO, List<Criterion> filterCriteria) {

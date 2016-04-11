@@ -3,6 +3,7 @@ package uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.results;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Run;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.*;
@@ -60,12 +61,14 @@ public class ResultViewModelBuilder extends AbstractResultViewModelBuilder<Resul
     public ResultViewModel getModel() {
         log.info("Building instance of " + ResultViewModel.class + "...");
         final Submitter submitter = getSessionSubmitter(sessionMgr);
-
+        EBISearchForm ebiSearchForm = getEbiSearchForm(sessionMgr);
         //Get analysis status
         AnalysisStatus analysisStatus = getAnalysisStatus((sample.getAnalysisCompleted() == null ? false : true));
 
 
-        final ResultViewModel resultViewModel = new ResultViewModel(submitter,
+        final ResultViewModel resultViewModel = new ResultViewModel(
+                submitter,
+                ebiSearchForm,
                 pageTitle,
                 breadcrumbs,
                 sample,

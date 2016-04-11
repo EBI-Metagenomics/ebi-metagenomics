@@ -64,7 +64,7 @@ public class StudyDownloadViewModelBuilder extends AbstractViewModelBuilder<Down
             log.info("Building instance of " + DownloadViewModel.class + "...");
         }
         final SortedMap<String, DownloadSection> downloadSectionMap = buildDownloadSection(fileDefinitionsMap, study);
-        return new DownloadViewModel(getSessionSubmitter(sessionMgr), pageTitle, breadcrumbs, propertyContainer, downloadSectionMap, study);
+        return new DownloadViewModel(getSessionSubmitter(sessionMgr), getEbiSearchForm(sessionMgr), pageTitle, breadcrumbs, propertyContainer, downloadSectionMap, study);
     }
 
     private SortedMap<String, DownloadSection> buildDownloadSection(final Map<String, DownloadableFileDefinition> fileDefinitionsMap,

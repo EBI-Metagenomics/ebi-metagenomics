@@ -1,6 +1,7 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
 
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 
 import java.util.List;
@@ -13,8 +14,8 @@ import java.util.List;
  */
 public final class HomePageErrorViewModel extends ViewModel {
 
-    public HomePageErrorViewModel(Submitter submitter, String pageTitle,
+    public HomePageErrorViewModel(Submitter submitter, EBISearchForm ebiSearchForm, String pageTitle,
                                   List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer) {
-        super(submitter, pageTitle, breadcrumbs, propertyContainer);
+        super(submitter, ebiSearchForm, pageTitle, breadcrumbs, propertyContainer);
     }
 }

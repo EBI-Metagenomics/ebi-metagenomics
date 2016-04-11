@@ -23,22 +23,25 @@ public class SearchViewModelBuilder<ViewModel extends uk.ac.ebi.interpro.metagen
 
     private MemiPropertyContainer propertyContainer;
 
-    private EBISearchForm search;
+    EBISampleSearchResults sampleSearchResults;
 
-    private EBISampleSearchResults sampleSearchResults;
-
-    public SearchViewModelBuilder(SessionManager sessionMgr, String pageTitle, List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer, EBISearchForm search, EBISampleSearchResults sampleSearchResults) {
+    public SearchViewModelBuilder(SessionManager sessionMgr, String pageTitle, List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer, EBISampleSearchResults sampleSearchResults) {
         super(sessionMgr);
         this.pageTitle = pageTitle;
         this.breadcrumbs = breadcrumbs;
         this.propertyContainer = propertyContainer;
-        this.search = search;
         this.sampleSearchResults = sampleSearchResults;
     }
 
     @Override
     public ViewModel getModel() {
         log.info("Building instance of " + SearchViewModel.class + "...");
-        return (ViewModel) new SearchViewModel(getSessionSubmitter(sessionMgr), pageTitle, breadcrumbs, propertyContainer, search, sampleSearchResults);
+        return (ViewModel) new SearchViewModel(
+                getSessionSubmitter(sessionMgr),
+                getEbiSearchForm(sessionMgr),
+                pageTitle,
+                breadcrumbs,
+                propertyContainer,
+                sampleSearchResults);
     }
 }

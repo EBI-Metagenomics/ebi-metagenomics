@@ -1,6 +1,7 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.results;
 
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
@@ -19,8 +20,8 @@ public abstract class AbstractResultViewModel extends ViewModel {
 
     public static final List<String> colorCodeList = new ArrayList<String>(10);
 
-    public AbstractResultViewModel(Submitter submitter, String pageTitle, List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer) {
-        super(submitter, pageTitle, breadcrumbs, propertyContainer);
+    public AbstractResultViewModel(Submitter submitter, EBISearchForm ebiSearchForm, String pageTitle, List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer) {
+        super(submitter, ebiSearchForm, pageTitle, breadcrumbs, propertyContainer);
     }
 
     static {

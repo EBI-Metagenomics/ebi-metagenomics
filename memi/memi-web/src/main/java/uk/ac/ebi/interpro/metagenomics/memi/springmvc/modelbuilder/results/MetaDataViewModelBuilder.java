@@ -55,7 +55,7 @@ public class MetaDataViewModelBuilder extends AbstractResultViewModelBuilder<Met
 
         buildPublicationLists();
 
-        return new MetaDataViewModel(getSessionSubmitter(sessionMgr), pageTitle, breadcrumbs, propertyContainer, sample, analysisJob, isHostAssociated, sampleAnnotations, relatedLinks, relatedPublications);
+        return new MetaDataViewModel(getSessionSubmitter(sessionMgr), getEbiSearchForm(sessionMgr), pageTitle, breadcrumbs, propertyContainer, sample, analysisJob, isHostAssociated, sampleAnnotations, relatedLinks, relatedPublications);
     }
 
     private boolean isHostAssociated(Sample sample) {

@@ -43,6 +43,6 @@ public class QualityCheckViewModelBuilder extends AbstractResultViewModelBuilder
         Sample sample = analysisJob.getSample();
         //Get analysis status
         AnalysisStatus analysisStatus = getAnalysisStatus((sample.getAnalysisCompleted() == null ? false : true));
-        return new QualityCheckViewModel(getSessionSubmitter(sessionMgr), pageTitle, breadcrumbs, propertyContainer, analysisJob.getSample(), analysisJob, analysisStatus);
+        return new QualityCheckViewModel(getSessionSubmitter(sessionMgr), getEbiSearchForm(sessionMgr), pageTitle, breadcrumbs, propertyContainer, analysisJob.getSample(), analysisJob, analysisStatus);
     }
 }

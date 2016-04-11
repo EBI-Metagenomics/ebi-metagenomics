@@ -54,7 +54,7 @@ public class TaxonomicViewModelBuilder extends AbstractResultViewModelBuilder<Ta
         final AnalysisStatus analysisStatus = getAnalysisStatus((sample.getAnalysisCompleted() == null ? false : true));
         final TaxonomyAnalysisResult taxonomyAnalysisResult = loadTaxonomyDataFromCSV();
 
-        return new TaxonomicViewModel(getSessionSubmitter(sessionMgr), pageTitle, breadcrumbs, propertyContainer, analysisJob.getSample(), run, analysisJob, analysisStatus, taxonomyAnalysisResult);
+        return new TaxonomicViewModel(getSessionSubmitter(sessionMgr), getEbiSearchForm(sessionMgr), pageTitle, breadcrumbs, propertyContainer, analysisJob.getSample(), run, analysisJob, analysisStatus, taxonomyAnalysisResult);
     }
 
     /**

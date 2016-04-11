@@ -2,6 +2,7 @@ package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
 
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.Biome;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.StudyFilter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
@@ -43,15 +44,15 @@ public class StudiesViewModel extends ViewModel {
     private List<Study.StudyStatus> studyStatusList;
 
 
-    public StudiesViewModel(Submitter submitter, Collection<Study> studies, Map<Study, Long> studySampleSizeMap, String pageTitle, List<Breadcrumb> breadcrumbs,
+    public StudiesViewModel(Submitter submitter, EBISearchForm ebiSearchForm, Collection<Study> studies, Map<Study, Long> studySampleSizeMap, String pageTitle, List<Breadcrumb> breadcrumbs,
                             MemiPropertyContainer propertyContainer, List<String> tableHeaderNames, ViewPagination pagination, StudyFilter filter) {
-        this(submitter, studies, studySampleSizeMap, filter, pageTitle, breadcrumbs, propertyContainer, tableHeaderNames, pagination);
+        this(submitter, ebiSearchForm, studies, studySampleSizeMap, filter, pageTitle, breadcrumbs, propertyContainer, tableHeaderNames, pagination);
     }
 
-    StudiesViewModel(Submitter submitter, Collection<Study> studies, Map<Study, Long> studySampleSizeMap, StudyFilter filter, String pageTitle,
+    StudiesViewModel(Submitter submitter, EBISearchForm ebiSearchForm, Collection<Study> studies, Map<Study, Long> studySampleSizeMap, StudyFilter filter, String pageTitle,
                      List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer, List<String> tableHeaderNames,
                      ViewPagination pagination) {
-        super(submitter, pageTitle, breadcrumbs, propertyContainer);
+        super(submitter, ebiSearchForm, pageTitle, breadcrumbs, propertyContainer);
         this.filter = filter;
         this.studies = studies;
         this.studyVisibilities = getDefaultStudyVisibilityList();

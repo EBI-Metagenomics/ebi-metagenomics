@@ -54,7 +54,7 @@ public class FunctionalViewModelBuilder extends AbstractResultViewModelBuilder<F
         if (!isAmpliconData()) {
             functionalAnalysisResult = getListOfInterProEntries();
         }
-        return new FunctionalViewModel(getSessionSubmitter(sessionMgr), pageTitle, breadcrumbs, propertyContainer, analysisJob.getSample(), run, analysisJob, analysisStatus, functionalAnalysisResult);
+        return new FunctionalViewModel(getSessionSubmitter(sessionMgr), getEbiSearchForm(sessionMgr), pageTitle, breadcrumbs, propertyContainer, analysisJob.getSample(), run, analysisJob, analysisStatus, functionalAnalysisResult);
     }
 
     private FunctionalAnalysisResult getListOfInterProEntries() {

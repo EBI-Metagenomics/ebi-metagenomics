@@ -63,7 +63,7 @@ public class DownloadViewModelBuilder extends AbstractResultViewModelBuilder<Dow
     public DownloadViewModel getModel() {
         log.info("Building instance of " + DownloadViewModel.class + "...");
         final DownloadSection downloadSection = buildDownloadSection(run, fileDefinitionsMap, analysisJob);
-        return new DownloadViewModel(getSessionSubmitter(sessionMgr), pageTitle, breadcrumbs, propertyContainer, downloadSection, analysisJob.getSample());
+        return new DownloadViewModel(getSessionSubmitter(sessionMgr), getEbiSearchForm(sessionMgr), pageTitle, breadcrumbs, propertyContainer, downloadSection, analysisJob.getSample());
     }
 
     private DownloadSection buildDownloadSection(final Run run,

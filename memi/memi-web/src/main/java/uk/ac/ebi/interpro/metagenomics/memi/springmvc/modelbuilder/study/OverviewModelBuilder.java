@@ -6,6 +6,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.core.comparators.PublicationComparator;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.RunDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.extensions.QueryRunsForProjectResult;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Publication;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
@@ -62,9 +63,10 @@ public class OverviewModelBuilder extends AbstractViewModelBuilder<OverviewModel
             log.info("Building instance of " + OverviewModel.class + "...");
         }
         Submitter submitter = getSessionSubmitter(sessionMgr);
+        EBISearchForm ebiSearchForm = getEbiSearchForm(sessionMgr);
         List<QueryRunsForProjectResult> runs = getRunsForStudyViewModel(submitter);
         buildPublicationLists();
-        return new OverviewModel(submitter, study, runs, pageTitle,
+        return new OverviewModel(submitter, ebiSearchForm, study, runs, pageTitle,
                 breadcrumbs, propertyContainer, relatedPublications, relatedLinks);
     }
 
