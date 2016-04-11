@@ -59,7 +59,6 @@ public abstract class AbstractSampleViewController extends SecuredAbstractContro
         final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, pageTitle, getBreadcrumbs(sample), propertyContainer);
         final ViewModel defaultViewModel = builder.getModel();
         defaultViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_SAMPLES_VIEW);
-        model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, defaultViewModel);
         model.addAttribute("analysisJobs", analysisJobs);
         model.addAttribute("sample", sample);

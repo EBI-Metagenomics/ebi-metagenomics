@@ -71,14 +71,23 @@ public class ViewStudiesController extends AbstractController implements IContro
     private MemiDownloadService downloadService;
 
     //GET request handler methods
-
+    @Override
     public ModelAndView doGet(ModelMap model) {
         log.info("Requesting doGet...");
         //build and add the page model
         populateModel(model, new StudyFilter(), 0, true);
-        model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((StudiesViewModel) model.get(ViewModel.MODEL_ATTR_NAME)).getLoginForm());
-        model.addAttribute(StudyFilter.MODEL_ATTR_NAME, ((StudiesViewModel) model.get(ViewModel.MODEL_ATTR_NAME)).getFilter());
-        return new ModelAndView(VIEW_NAME, model);
+        return buildModelAndView(
+                VIEW_NAME,
+                model,
+                new ModelPopulator() {
+                    @Override
+                    public void populateModel(ModelMap model) {
+                        model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((StudiesViewModel) model.get(ViewModel.MODEL_ATTR_NAME)).getLoginForm());
+                        model.addAttribute(StudyFilter.MODEL_ATTR_NAME, ((StudiesViewModel) model.get(ViewModel.MODEL_ATTR_NAME)).getFilter());
+
+                    }
+                }
+        );
     }
 
 
@@ -202,8 +211,18 @@ public class ViewStudiesController extends AbstractController implements IContro
         log.info("Requesting doSearch (GET method)...");
         processRequestParams(filter, searchTerm, studyVisibility, studyStatus);
         populateModel(model, filter, startPosition, true);
-        model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((StudiesViewModel) model.get(ViewModel.MODEL_ATTR_NAME)).getLoginForm());
-        return new ModelAndView(VIEW_NAME, model);
+        return buildModelAndView(
+                VIEW_NAME,
+                model,
+                new ModelPopulator() {
+                    @Override
+                    public void populateModel(ModelMap model) {
+                        model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((StudiesViewModel) model.get(ViewModel.MODEL_ATTR_NAME)).getLoginForm());
+                        model.addAttribute(StudyFilter.MODEL_ATTR_NAME, ((StudiesViewModel) model.get(ViewModel.MODEL_ATTR_NAME)).getFilter());
+
+                    }
+                }
+        );
     }
 
     private void processRequestParams(StudyFilter filter, String searchTerm, StudyFilter.StudyVisibility studyVisibility,

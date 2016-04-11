@@ -53,10 +53,17 @@ public class SubmissionController extends AbstractController {
             modelMap.addAttribute("submitterDetails", submitterDetails);
         }//Otherwise do nothing
 
-        modelMap.addAttribute(ViewModel.MODEL_ATTR_NAME, submitDataModel);
-
-        modelMap.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
-        return new ModelAndView("submission-check/intro", modelMap);
+        //return new ModelAndView("submission-check/intro", modelMap);
+        return buildModelAndView(
+            "submission-check/intro",
+            modelMap,
+            new ModelPopulator() {
+                @Override
+                public void populateModel(ModelMap model) {
+                    modelMap.addAttribute(ViewModel.MODEL_ATTR_NAME, submitDataModel);
+                }
+            }
+        );
     }
 
     @Override

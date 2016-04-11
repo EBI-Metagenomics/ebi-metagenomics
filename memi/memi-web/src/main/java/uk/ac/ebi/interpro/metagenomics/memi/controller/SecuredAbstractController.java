@@ -61,7 +61,7 @@ public abstract class SecuredAbstractController<T extends SecureEntity> extends 
     /**
      * Checks if the secure entity(study/sample) is public and owned by the logged in user/submitter.
      */
-    protected ModelAndView checkAccessAndBuildModel(ModelProcessingStrategy<T> modelProcessingStrategy, final ModelMap model, final T securedEntity, String viewName) {
+    protected ModelAndView checkAccessAndBuildModel(ModelProcessingStrategy<T> modelProcessingStrategy, final ModelMap model, final T securedEntity, final String viewName) {
         if (securedEntity == null) {
             return getEntryNotExistMAV();
         } else if (securedEntity instanceof Study || securedEntity instanceof Sample || securedEntity instanceof Run) {
@@ -77,7 +77,16 @@ public abstract class SecuredAbstractController<T extends SecureEntity> extends 
         if (model == null) {
             return null;
         }
-        return new ModelAndView(viewName, model);
+        return buildModelAndView(
+            getModelViewName(),
+            model,
+            new ModelPopulator() {
+                @Override
+                public void populateModel(ModelMap model) {
+                    model.addAttribute(viewName, model);
+                }
+            }
+        );
     }
 
     /**
@@ -90,14 +99,23 @@ public abstract class SecuredAbstractController<T extends SecureEntity> extends 
         return getModelAndView(DefaultController.ACCESS_DENIED_VIEW_NAME);
     }
 
-    private ModelAndView getModelAndView(String viewName) {
+    private ModelAndView getModelAndView(final String viewName) {
         final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager,
                 "Error page", null, propertyContainer);
         final ViewModel viewModel = builder.getModel();
         ModelMap model = new ModelMap();
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, viewModel);
-        model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
-        return new ModelAndView(viewName, model);
+        //return new ModelAndView(viewName, model);
+        return buildModelAndView(
+            getModelViewName(),
+            model,
+            new ModelPopulator() {
+                @Override
+                public void populateModel(ModelMap model) {
+                    model.addAttribute(viewName, model);
+                }
+            }
+        );
     }
 
 

@@ -89,7 +89,6 @@ public class CompareController extends AbstractController implements IController
     public ModelAndView doPostComparisonToolForm(@Valid @ModelAttribute("comparisonForm") final ComparisonForm comparisonForm,
                                                  BindingResult result,
                                                  ModelMap model) throws IOException {
-        model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
         //Build model and view for error page
         if (result.hasErrors()) {
             return buildModelAndView(

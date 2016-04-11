@@ -291,7 +291,6 @@ public class ResultViewExportController extends AbstractResultViewController {
                 if (analysisJob != null) {
                     File fileObject = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, fileDefinition);
                     List<String> listOfChunks = MemiTools.getListOfChunkedResultFiles(fileObject);
-                    model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
                     model.addAttribute("numOfChunks", listOfChunks.size());
                 }
             }
@@ -331,7 +330,6 @@ public class ResultViewExportController extends AbstractResultViewController {
                         numberOfChunks = listOfChunks.size();
                     }
                     model.addAttribute("numOfChunks", numberOfChunks);
-                    model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
 
                 }
             }

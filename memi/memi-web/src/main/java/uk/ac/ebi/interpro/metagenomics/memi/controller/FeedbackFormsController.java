@@ -62,9 +62,8 @@ public class FeedbackFormsController extends AbstractController {
     public ModelAndView doPost(@ModelAttribute("feedbackForm") @Valid FeedbackForm feedbackForm,
                                BindingResult result, ModelMap model,
                                SessionStatus status) {
-        final ModelPopulator modelPopulator = new FeebackModelPopulator();
-        modelPopulator.populateModel(model);
-        model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
+        //final ModelPopulator modelPopulator = new FeebackModelPopulator();
+        //modelPopulator.populateModel(model);
         if (result.hasErrors()) {
             log.info("Feedback form has validation errors!");
             return new ModelAndView("/feedback", model);
@@ -79,9 +78,19 @@ public class FeedbackFormsController extends AbstractController {
             log.debug("Sent an email with contact details: " + msg);
             status.setComplete();
         } else {
-            return new ModelAndView(DefaultController.EXCEPTION_PAGE_VIEW_NAME, model);
+            //return new ModelAndView(DefaultController.EXCEPTION_PAGE_VIEW_NAME, model);
+            return buildModelAndView(
+                DefaultController.EXCEPTION_PAGE_VIEW_NAME,
+                model,
+                new FeebackModelPopulator()
+            );
         }
-        return new ModelAndView("/feedbackSuccess", model);
+        //return new ModelAndView("/feedbackSuccess", model);
+        return buildModelAndView(
+                "/feedbackSuccess",
+                model,
+                new FeebackModelPopulator()
+        );
     }
 
     @RequestMapping(value = "**/feedbackSuccess", method = RequestMethod.GET)
@@ -89,14 +98,7 @@ public class FeedbackFormsController extends AbstractController {
         return buildModelAndView(
                 "feedbackSuccess",
                 model,
-                new ModelPopulator() {
-                    @Override
-                    public void populateModel(ModelMap model) {
-                        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "Thanks for submitting your data - EBI metagenomics", getBreadcrumbs(null), propertyContainer);
-                        final ViewModel defaultViewModel = builder.getModel();
-                        model.addAttribute(ViewModel.MODEL_ATTR_NAME, defaultViewModel);
-                    }
-                }
+                new FeebackModelPopulator()
         );
     }
 
