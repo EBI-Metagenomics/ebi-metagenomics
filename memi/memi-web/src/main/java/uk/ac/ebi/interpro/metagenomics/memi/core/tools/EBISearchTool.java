@@ -96,21 +96,26 @@ public class EBISearchTool {
                     formattedFacetQuery
             );
             Integer hits = searchResults.getHitCount();
-            int maxPage = (int) Math.ceil(new Double(hits) / new Double(searchForm.getResultsPerPage()));
-            searchForm.setMaxPage(maxPage);
-            List<EBISampleSearchEntry> entryList = results.getEntries();
-            for (WsEntry searchEntry : searchResults.getEntries().getEntry()) {
-                EBISampleSearchEntry entry = resultToEntry(searchEntry);
-                entryList.add(entry);
-            }
+            if (hits != null) {
+                int maxPage = (int) Math.ceil(new Double(hits) / new Double(searchForm.getResultsPerPage()));
+                searchForm.setMaxPage(maxPage);
+                List<EBISampleSearchEntry> entryList = results.getEntries();
+                for (WsEntry searchEntry : searchResults.getEntries().getEntry()) {
+                    EBISampleSearchEntry entry = resultToEntry(searchEntry);
+                    entryList.add(entry);
+                }
 
-            List<EBISearchFacet> facets = results.getFacets();
-            for (WsFacet searchFacet : searchResults.getFacets().getFacet()) {
-                EBISearchFacet facet = resultToFacet(searchFacet);
-                if (facet != null)
-                    facets.add(facet);
+                List<EBISearchFacet> facets = results.getFacets();
+                for (WsFacet searchFacet : searchResults.getFacets().getFacet()) {
+                    EBISearchFacet facet = resultToFacet(searchFacet);
+                    if (facet != null)
+                        facets.add(facet);
+                }
+                results.setNumberOfHits(hits);
+            } else {
+                results.setNumberOfHits(0);
+                searchForm.setMaxPage(0);
             }
-            results.setNumberOfHits(hits);
         } catch (BadRequestException e) {
             results.setNumberOfHits(0);
             searchForm.setMaxPage(0);
