@@ -14,8 +14,7 @@
                            <div class="block small step0"><div class="children">SeqPrep</div></div><div class="arrow_pip "></div>
                            <div class="block-lb">Initial reads</div><div class="arrow_pip"></div>
                            <div class="block step1"><div class="children">QC</div>
-                           <div class="qclist"><ul><li>Trim low quality (Trimmomatic)</li>
-                                               <li>Length filtering (Biopython)</li></ul></div></div><div class="arrow_pip"></div>
+                           </div><div class="arrow_pip"></div>
                            <div class="block-lb">Processed reads</div><div class="arrow_pip"></div>
                            <div class="block  step2"><div class="children">RNA Selection</div></div>
                        </div>  <!-- /mainbranch -->
