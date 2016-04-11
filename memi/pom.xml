@@ -149,13 +149,13 @@
     <build>
         <finalName>memi</finalName>
         <plugins>
-            <!-- Use Java 6 language features -->
+            <!-- Use Java 8 language features -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
             <!-- JavaDocs (generate: mvn javadoc:javadoc, package: mvn javadoc:jar) -->
