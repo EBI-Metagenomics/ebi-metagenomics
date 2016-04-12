@@ -306,6 +306,8 @@
 <%--little beta flag--%>
 <%--<a href="<c:url value="${baseURL}/about#intro"/>" title="About us"><div id="extra_beta" class="anim"></div></a>--%>
 
+<!-- javascript for handling search box in header and search page elements -->
+<script src="/metagenomics/js/ebiSearch.js"/>
 <!--START Feedback slider functionality block -->
 <!-- The following line includes the feedback DIV and the feedback FORM -->
 <%@ include file="feedback/script/feedbackDiv.jsp" %>
