@@ -36,18 +36,7 @@
                         file_base    = common_path + 'base',
                         numberOfLines = ${(versionId=="2.0"?4:6)};
 
-                    $.ajax(file_length)
-                            .done(function(data){
-                                drawSequenceLengthHistogram(data);
-                            })
-                            .fail(function(){
-                                $.ajax(file_length+".sub-set")
-                                        .done(function(data){
-                                            drawSequenceLengthHistogram(data,true);
-                                        });
-                            });
-
-                    var seqCount =null;
+                    var stats_data =null;
                     $.ajax(file_stats).done(function (rawdata) {
                         var data = {};
                         rawdata.split('\n').forEach(function(line){
@@ -56,23 +45,33 @@
                         });
                         drawSequncesLength(data);
                         drawGCContent(data);
-                        seqCount = data["sequence_count"];
+                        stats_data = data;
 
                     }).always(function(){
                         $.ajax(file_summary).done(function(d){
-                            drawNumberOfReadsChart(d,numberOfLines,seqCount);
+                            drawNumberOfReadsChart(d,numberOfLines,stats_data["sequence_count"]);
                         });
+                        $.ajax(file_length)
+                                .done(function(data){
+                                    drawSequenceLengthHistogram(data,false,stats_data);
+                                })
+                                .fail(function(){
+                                    $.ajax(file_length+".sub-set")
+                                            .done(function(data){
+                                                drawSequenceLengthHistogram(data,true,stats_data);
+                                            });
+                                });
+                        $.ajax(file_gc)
+                                .done(function(data){
+                                    drawSequenceGCDistribution(data,false,stats_data);
+                                })
+                                .fail(function(){
+                                    $.ajax(file_gc+".sub-set")
+                                            .done(function(data){
+                                                drawSequenceGCDistribution(data,true,stats_data);
+                                            });
+                                });
                     });
-                    $.ajax(file_gc)
-                            .done(function(data){
-                                drawSequenceGCDistribution(data);
-                            })
-                            .fail(function(){
-                                $.ajax(file_gc+".sub-set")
-                                        .done(function(data){
-                                            drawSequenceGCDistribution(data,true);
-                                        });
-                            });
 
                     $.ajax(file_base)
                             .done(function(data){
@@ -84,7 +83,6 @@
                                             drawNucleotidePositionHistogram(data,true);
                                         });
                             });
-
 
                 });
 

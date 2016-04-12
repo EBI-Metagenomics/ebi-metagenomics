@@ -59,12 +59,15 @@ var drawNumberOfReadsChart = function (rawdata, numberOfLines, sequence_count) {
             data : data,
             color: "#058dc7",
             pointPadding: -0.1
+        },{
+            name: "Reads after sampling",
+            color: "#8dc7c7"
         }],
         credits: false
     });
 };
 
-var drawSequenceLengthHistogram = function (rawdata, isFromSubset) {
+var drawSequenceLengthHistogram = function (rawdata, isFromSubset, stats) {
     var data = rawdata.split('\n').map(function(line){
         if (line.trim()!="")
             return line.split("\t").map(function(v){ return 1*v; });
@@ -72,25 +75,32 @@ var drawSequenceLengthHistogram = function (rawdata, isFromSubset) {
 
     $('#seq_len').highcharts({
         chart: { type: 'areaspline' },
-        title: { text: 'Sequence Length Histogram'},
+        title: { text: 'Reads Length Histogram'},
         subtitle: { text: (isFromSubset)?'A subset of the sequences was used to generate this chart':undefined},
         yAxis: {
-            title: { text: "Number of Reads Uploaded" }
+            title: { text: "Number of Reads" }
+        },
+        xAxis: {
+            plotBands: (stats==null)?[]:[{ // visualize the standard deviation
+                from: stats["average_length"]-stats["standard_deviation_length"],
+                to: stats["average_length"]+stats["standard_deviation_length"],
+                color: 'rgba(128, 128, 128, .2)',
+                label: {
+                    text: "Standard Deviation<br/>"+(stats["standard_deviation_length"].toFixed(2)),
+                    style: {
+                        color: "#666666",
+                        fontSize: "0.8em"
+                    }
+                }
+            }]
         },
         series : [
-            { name : 'Sequences',
+            { name : 'Reads',
                 data : [[0,0]].concat(data),
                 color: (isFromSubset)?"#8dc7c7":"#058dc7"
             }
         ],
-        legend: {
-            layout: "vertical",
-            align: "right",
-            verticalAlign: "top",
-            y: 50,
-            borderWidth: 1,
-            floating: true
-        },
+        legend: { enabled: false},
         credits: false
     });
 };
@@ -99,17 +109,22 @@ var drawSequncesLength = function(data) {
     $('#seq_stats').highcharts({
         chart: {
             type: 'bar',
-            height: 150
+            height: 120
         },
         title: false,
         xAxis: {
-            categories: ['Sequence'],
+            categories: ['Minimum', 'Average', 'Maximum'],
             title: { enabled: false }
         },
-        yAxis: {
+            yAxis: {
             min: 0,
             max: 100*(Math.floor(data["length_max"]/100)+1),
-            title: { text: 'Sequence length (bp)' }
+            title: { text: 'Sequence length (bp)' },
+            plotBands: [{ // visualize the standard deviation
+                from: data["average_length"]-data["standard_deviation_length"],
+                to: data["average_length"]+data["standard_deviation_length"],
+                color: 'rgba(128, 128, 128, .2)'
+            }]
         },
         plotOptions: {
             series: {
@@ -119,33 +134,21 @@ var drawSequncesLength = function(data) {
             }
         },
         series : [
-            { name : 'Max Length',
-                pointPadding: 0.25,
-                color: "rgb(114, 63, 191)",
-                data : [data["length_max"]]
-            },{
-                name : 'Avg Length',
-                pointPadding: 0.25,
-                color: "rgb(63, 114, 191)",
+            {   name: "Length",
+                data : [
+                    { y: data["length_min"], x:0, color: "rgb(114, 191, 63)"},
+                    { y: data["average_length"], x:1, color: "rgb(63, 114, 191)"},
+                    { y: data["length_max"], x:2, color: "rgb(114, 63, 191)"}
+                ],
+                pointPadding: -0.2,
                 tooltip: {
-                    pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>'+data["average_length"]+'</b><br/>',
-                },
-                data : [data["average_length"]]
-            },{
-                name : 'Min Length',
-                color: "rgb(114, 191, 63)",
-                pointPadding: 0.25,
-                data : [data["length_min"]]
-            },{
-                name : 'Standard Deviation',
-                threshold:data["average_length"]-data["standard_deviation_length"],
-                data : [data["average_length"]+data["standard_deviation_length"]],
-                tooltip: {
-                    pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>'+data["standard_deviation_length"]+'</b><br/>',
-                },
-                color: "rgba(191, 191, 63, 0.5)"
+                    pointFormatter: function () {
+                        return '<span style="color:'+this.color+'">\u25CF</span> '+this.category+': <b>'+(this.y).toFixed(2)+'</b><br/>';
+                    }
+                }
             }
         ],
+        legend: { enabled: false},
         credits: false
     });
 };
@@ -164,7 +167,12 @@ var drawGCContent = function(data) {
         yAxis: {
             min: 0,
             max: 100,
-            title: { text: 'GC Content (%)' }
+            title: { enabled: false },
+            plotBands: [{ // visualize the standard deviation
+                from: data["average_gc_content"]-data["standard_deviation_gc_content"],
+                to: data["average_gc_content"]+data["standard_deviation_gc_content"],
+                color: 'rgba(128, 128, 128, .2)'
+            }]
         },
         plotOptions: {
             series: {
@@ -177,8 +185,13 @@ var drawGCContent = function(data) {
             { name : 'GC Content',
                 pointPadding: 0.25,
                 color: "rgb(63, 114, 191)",
+                //tooltip: {
+                //    pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>'+data["average_gc_content"]+'</b><br/><span style="color:{point.color}">\u25CF</span> GC ratio: <b>'+data["average_gc_ratio"]+'</b><br/>',
+                //},
                 tooltip: {
-                    pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>'+data["average_gc_content"]+'</b><br/><span style="color:{point.color}">\u25CF</span> GC ratio: <b>'+data["average_gc_ratio"]+'</b><br/>',
+                    pointFormatter: function () {
+                        return '<span style="color:'+this.color+'">\u25CF</span> '+this.series.name+': <b>'+(this.y).toFixed(2)+'%</b><br/>';
+                    }
                 },
                 data : [data["average_gc_content"]]
             },{
@@ -186,25 +199,22 @@ var drawGCContent = function(data) {
                 color: "rgb(114, 63, 191)",
                 pointPadding: 0.25,
                 threshold:data["average_gc_content"],
+                //tooltip: {
+                //    pointFormat: '<span style="color:{point.color}">\u25CF</span> {this.series.name}: <b>'+(100-data["average_gc_content"])+'</b><br/>',
+                //},
                 tooltip: {
-                    pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>'+(100-data["average_gc_content"])+'</b><br/>',
+                    pointFormatter: function () {
+                        return '<span style="color:'+this.color+'">\u25CF</span> '+this.series.name+': <b>'+(100-data["average_gc_content"]).toFixed(2)+'%</b><br/>';
+                    }
                 },
                 data : [100]
-            },{
-                name : 'Standard Deviation for the GC content',
-                threshold:data["average_gc_content"]-data["standard_deviation_gc_content"],
-                data : [data["average_gc_content"]+data["standard_deviation_gc_content"]],
-                tooltip: {
-                    pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>'+data["standard_deviation_gc_content"]+'</b><br/><span style="color:{point.color}">\u25CF</span> Standard Deviation GC ratio: <b>'+data["standard_deviation_gc_ratio"]+'</b><br/>',
-                },
-                color: "rgba(191, 191, 63, 0.5)"
             }
         ],
         credits: false
     });
 };
 
-var drawSequenceGCDistribution = function (rawdata,isFromSubset) {
+var drawSequenceGCDistribution = function (rawdata,isFromSubset, stats) {
     var data = rawdata.split('\n').map(function(line){
         if (line.trim()!="")
             return line.split("\t").map(function(v){ return 1*v; });
@@ -212,23 +222,34 @@ var drawSequenceGCDistribution = function (rawdata,isFromSubset) {
     // Create the chart
     $('#seq_gc').highcharts({
         chart: { type: 'areaspline' },
-        title: { text: 'Sequence GC Distribution' },
+        title: { text: 'Reads GC Distribution' },
         subtitle: { text: (isFromSubset)?'A subset of the sequences was used to generate this chart':undefined},
-        yAxis: { title: { text: "Number of Reads Uploaded" } },
+        yAxis: {
+            title: { text: "Number of Reads" }
+        },
+        xAxis:{
 
+            plotBands: (stats==null)?[]:[{ // visualize the standard deviation
+                from: stats["average_gc_content"]-stats["standard_deviation_gc_content"],
+                to: stats["average_gc_content"]+stats["standard_deviation_gc_content"],
+                color: 'rgba(128, 128, 128, .2)',
+                borderColor: '#000000',
+                label: {
+                    text: "Standard Deviation<br/>"+(stats["standard_deviation_gc_content"].toFixed(2)),
+                    style: {
+                        color: "#666666",
+                        fontSize: "0.8em"
+                    }
+                }
+
+            }]
+        },
         series : [{
-            name : 'Sequences',
+            name : 'Reads',
             data : data,
             color: (isFromSubset)?"#8dc7c7":"#058dc7"
         }],
-        legend: {
-            layout: "vertical",
-            align: "right",
-            verticalAlign: "top",
-            y: 50,
-            borderWidth: 1,
-            floating: true
-        },
+        legend: { enabled: false },
         credits: false
     });
 };
