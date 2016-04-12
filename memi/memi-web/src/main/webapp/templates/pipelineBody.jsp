@@ -22,13 +22,13 @@
 
                         <div class="lowbranch">
                             <div class="lowbranch_func">
-                                <div class="arrow_pip rotate_f" style="margin-left: -13px; margin-right:5px;"></div><div class="block-lb" >Reads with rRNA &amp; tRNA masked</div><div class="arrow_pip"></div>
+                                <div class="arrow_pip rotate_f"></div><div class="block-lb" >Reads with rRNA &amp; tRNA masked</div><div class="arrow_pip"></div>
                                 <div class="block step3 function" ><div class="children_l">ORF predictions</div></div><div class="arrow_pip"></div>
                                 <div class="block-lb">Predicted CDS</div><div class="arrow_pip"></div>
                                 <div class="block step4 function"><div class="children_l">Functional analysis</div></div>
                             </div> <!-- /lowbranch_func -->
 
-                            <div class="lowbranch_tax">  <div class="arrow_pip rotate_t" style="margin-left: -13px;"></div>
+                            <div class="lowbranch_tax">  <div class="arrow_pip rotate_t"></div>
                                 <div class="block-lb">Reads with rRNA</div>
                                 <div class="arrow_pip"></div>
                                 <div class="block-lb">16s rRNA</div>
@@ -37,7 +37,7 @@
                             </div><!-- /lowbranch_tax -->
 
                             <div class="lowbranch_trna">
-                                <div class="arrow_pip rotate_t" style="margin-left: -13px;"></div>
+                                <div class="arrow_pip rotate_t"></div>
                                 <div class="block-lb">Reads with tRNA</div>
                             </div><!-- /branch2 -->
                         </div><!-- /branch -->
