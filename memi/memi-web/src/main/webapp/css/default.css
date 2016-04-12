@@ -1772,8 +1772,8 @@ ul.sample_list li {list-style: none; display: inline;}
 
 /*.pipe_v3 .mainbranch{padding-top:99px;}*/
 .pipe_v3 .midbranch{margin-top: 69px; margin-left: -2px;}
-.pipe_v3 .rotate_f, .pipe_v3 .rotate_t {margin-left: 0; }
-.pipe_v3 .rotate_f {margin-right: 2px; }
+.pipe_v3 .rotate_f, .pipe_v3 .rotate_t {margin-left: -13px; }
+.pipe_v3 .rotate_f {margin-right:5px;}
 .midbranch_trna {margin-top: 27px;}
 .lowbranch_tax {margin-top: 9px;}/*to show space between circles*/
 .pipe_v3 .block, .pipe_v3 .block_small, .pipe_v3 .block_med {line-height:inherit; width: 76px;  height: 76px;}
