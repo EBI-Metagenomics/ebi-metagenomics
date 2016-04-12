@@ -3,16 +3,14 @@
     <%--BEGIN READS SECTION   --%>
 
     <%--<h3>Submitted nucleotide data</h3>--%>
-    <p>The chart below shows the number of sequence reads which pass each of the quality control steps we
-        have implemented in our pipeline. Note that, for paired-end data, sequence merging may have
-        occurred and so the initial number of reads may differ from the number in ENA. For more details
-        about the data processing we employ, please see the <a href="<c:url value="${baseURL}/about#analysis"/>"  title="About Metagenomics">about page</a>.</p>
     <c:choose>
         <c:when test="${empty model.sample.analysisCompleted}"><div class="msg_error">Analysis in progress.</div></c:when>
         <c:when test="${not empty model.sample.analysisCompleted && !model.analysisStatus.qualityControlTabDisabled}">
 
+            <p>The chart below shows the number of sequence reads which pass each of the quality control steps we have implemented in our pipeline. Note that, for paired-end data, sequence merging may have occurred and so the initial number of reads may differ from the number in ENA.</p>
             <div id="qc_overview"></div>
 
+            <p>The histograms below show the distribution of sequence lengths, in basepairs, (left) and GC percentage (right) for the sequences having passed our quality control steps. Note that for large files, the distributions were compiled from a random subset of 2 millions sequence reads. The standard deviations are shown on each plot. The bar chart underneath each graph indicates the minimum, average and maximum length and average GC and AT content, respectively.</p>
             <div style="float:left;width:50%">
                 <div id="seq_len"></div>
                 <div id="seq_stats"></div>
@@ -21,11 +19,10 @@
                 <div id="seq_gc"></div>
                 <div id="seq_gc_stats"></div>
             </div>
-
+            <p>The graph below show the relative abundance of nucletotides (A, C, G, T, or ambiguous base "N") at each position starting from the beginning of each read up to the first 500 base pairs.</p>
             <div id="nucleotide"></div>
 
 
-            <div id="nucleotide"></div>
             <script>
                 $(function () {
                     var common_path = "/metagenomics/projects/${projectId}/samples/${sampleId}/runs/${runId}/results/versions/${versionId}/qc-stats/",

@@ -74,19 +74,23 @@ var drawSequenceLengthHistogram = function (rawdata, isFromSubset, stats) {
     });
 
     $('#seq_len').highcharts({
-        chart: { type: 'areaspline' },
+        chart: { type: 'areaspline',
+            marginLeft: 100 // Keep all charts left aligned
+        },
         title: { text: 'Reads Length Histogram'},
         subtitle: { text: (isFromSubset)?'A subset of the sequences was used to generate this chart':undefined},
         yAxis: {
             title: { text: "Number of Reads" }
         },
+        min: 0,
+        max: 100*(Math.floor(data["length_max"]/100)+1),
         xAxis: {
             plotBands: (stats==null)?[]:[{ // visualize the standard deviation
                 from: stats["average_length"]-stats["standard_deviation_length"],
                 to: stats["average_length"]+stats["standard_deviation_length"],
                 color: 'rgba(128, 128, 128, .2)',
                 label: {
-                    text: "Standard Deviation<br/>"+(stats["standard_deviation_length"].toFixed(2)),
+                    text: "Standard Deviation<br/>\u00B1"+(stats["standard_deviation_length"].toFixed(2)),
                     style: {
                         color: "#666666",
                         fontSize: "0.8em"
@@ -109,6 +113,8 @@ var drawSequncesLength = function(data) {
     $('#seq_stats').highcharts({
         chart: {
             type: 'bar',
+            marginLeft: 100, // Keep all charts left aligned
+            marginTop: 0, // Keep all charts left aligned
             height: 120
         },
         title: false,
@@ -157,6 +163,8 @@ var drawGCContent = function(data) {
     $('#seq_gc_stats').highcharts({
         chart: {
             type: 'bar',
+            marginLeft: 100, // Keep all charts left aligned
+            marginTop: 0, // Keep all charts left aligned
             height: 150
         },
         title: false,
@@ -221,13 +229,18 @@ var drawSequenceGCDistribution = function (rawdata,isFromSubset, stats) {
     });
     // Create the chart
     $('#seq_gc').highcharts({
-        chart: { type: 'areaspline' },
+        chart: {
+            marginLeft: 100, // Keep all charts left aligned
+            type: 'areaspline'
+        },
         title: { text: 'Reads GC Distribution' },
         subtitle: { text: (isFromSubset)?'A subset of the sequences was used to generate this chart':undefined},
         yAxis: {
             title: { text: "Number of Reads" }
         },
         xAxis:{
+            min: 0,
+            max: 100,
 
             plotBands: (stats==null)?[]:[{ // visualize the standard deviation
                 from: stats["average_gc_content"]-stats["standard_deviation_gc_content"],
@@ -235,7 +248,7 @@ var drawSequenceGCDistribution = function (rawdata,isFromSubset, stats) {
                 color: 'rgba(128, 128, 128, .2)',
                 borderColor: '#000000',
                 label: {
-                    text: "Standard Deviation<br/>"+(stats["standard_deviation_gc_content"].toFixed(2)),
+                    text: "Standard Deviation<br/>\u00B1"+(stats["standard_deviation_gc_content"].toFixed(2)),
                     style: {
                         color: "#666666",
                         fontSize: "0.8em"
@@ -284,6 +297,7 @@ var drawNucleotidePositionHistogram = function (rawdata,isFromSubset) {
             title: { enabled: false }
         },
         yAxis: {
+            min: 0,
             max: 100,
             title: { enabled: false }
         },
