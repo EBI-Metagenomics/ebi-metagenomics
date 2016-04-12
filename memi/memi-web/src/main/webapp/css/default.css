@@ -1964,16 +1964,27 @@ a.box-registration-link  {text-decoration: none; cursor: pointer;}
 
 /*bootstrap style for button*/
 div#local-masthead div.navbar-header {float:none;}
-.navbar-toggle {cursor: pointer;position: relative; float: right; padding: 9px 10px; margin-top: 8px; margin-right: 15px; margin-bottom: 8px; background-color: rgba(0, 0, 0, 0); background-image: none; border: 1px solid rgba(0, 0, 0, 0.1); border-radius: 4px;}
+.navbar-toggle { display: none; /*menu button appear only of small screens*/cursor: pointer;position: relative; float: right; padding: 9px 10px; margin-top: 8px; margin-right: 15px; margin-bottom: 8px; background-color: rgba(0, 0, 0, 0); background-image: none; border: 1px solid rgba(0, 0, 0, 0.1); border-radius: 4px;}
 .navbar-toggle:hover {background-color: rgba(0, 0, 0, 0.2);}
 .navbar-toggle .icon-bar {background-color: #fff; display: block;  width: 22px;  height: 2px;  border-radius: 1px; margin-top: 4px;}
 .collapse {display: none;}
+.navbar-collapse.collapse {display: block;}
 
-@media (min-width: 768px){
-.navbar-collapse.collapse {display: block!important;height: auto!important; padding-bottom: 0; overflow: visible!important;}
-.navbar-toggle { display: none; /*menu button appear only of small screens*/}
+/*bootstrap menu responsive*/
+@media (max-width: 768px){
+.navbar-toggle {display: block;}
+div#headerdiv nav ul {font-size: 126%;}
+div#headerdiv nav ul li, ul#local-nav li.functional {background-color: #578696;}
+div.masthead ul li {float: none;} /*make the menu vertical*/
+.navbar-collapse.collapse {display:none;}
+div.masthead ul#local-nav li.functional, div#headerdiv .logout {float: none;}
+div#headerdiv .logout {margin-left:9px;}
+div#local-masthead ul li.active-trail, div#local-masthead ul li.active-trail a:link, div#local-masthead ul li.active-trail a:visited{background-color: rgba(0, 0, 0, 0.3);}
+div#local-masthead ul li.active-trail a:link, div#local-masthead ul li.active-trail a:visited {border-bottom:0px;}
+div#headerdiv .logout {margin:0; padding-left:9px;}
 }
-/***************************************** responsive  *******************************/
+
+/***************************************** responsive  gal *******************************/
 @media (max-width: 768px) {  /*remove carousel, feedback, ebi search and sidebar nav for the about us for small screens*/
 .carousel, #feedback_div, #sidebar-nav {display: none;}
 /*div#local-title.logo-title img {margin:0; padding: 18px 9px;} */
@@ -2011,16 +2022,4 @@ table.dataTable.no-footer th:nth-child(3),table.dataTable.no-footer  td:nth-chil
 div#local-masthead ul li.logout {display:none;}
 .xm_hide {display:none;}
 .xm-navtabs {display:block;}
-}
-
-/*bootstrap menu*/
-@media (max-width: 768px){
-div#headerdiv nav ul {font-size: 126%;}
-div#headerdiv nav ul li, ul#local-nav li.functional {background-color: #578696;}
-div.masthead ul li {float: none;}
-div.masthead ul#local-nav li.functional, div#headerdiv .logout {float: none;}
-div#headerdiv .logout {margin-left:9px;}
-div#local-masthead ul li.active-trail, div#local-masthead ul li.active-trail a:link, div#local-masthead ul li.active-trail a:visited{background-color: rgba(0, 0, 0, 0.3);}
- div#local-masthead ul li.active-trail a:link, div#local-masthead ul li.active-trail a:visited {border-bottom:0px;}
-div#headerdiv .logout {margin:0; padding-left:9px;}
 }
