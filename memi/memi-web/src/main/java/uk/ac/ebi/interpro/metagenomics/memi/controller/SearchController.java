@@ -7,16 +7,13 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.core.tools.EBISearchTool;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ebiSearch.EBISampleSearchResults;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm;
-import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.SearchViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ebiSearch.EBISampleSearchResults;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.SearchViewModelBuilder;
 
 import javax.validation.Valid;
@@ -108,8 +105,7 @@ public class SearchController extends AbstractController implements IController 
      */
     private void populateModel(final ModelMap model,
                                EBISearchForm ebiSearchForm,
-                               EBISampleSearchResults sampleSearchResults,
-                               LoginForm loginForm
+                               EBISampleSearchResults sampleSearchResults
     ) {
         log.info("Building model of " + this.getClass() +  "...");
         final SearchViewModelBuilder<ViewModel> builder = new SearchViewModelBuilder(
@@ -123,7 +119,6 @@ public class SearchController extends AbstractController implements IController 
         searchModel.changeToHighlightedClass(ViewModel.TAB_CLASS_SEARCH_VIEW);
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, searchModel);
         model.addAttribute(EBISearchForm.MODEL_ATTR_NAME, ebiSearchForm);
-        model.addAttribute(LoginForm.MODEL_ATTR_NAME, loginForm);
     }
 
     protected String getModelViewName() {
