@@ -49,7 +49,7 @@
 
                     }).always(function(){
                         $.ajax(file_summary).done(function(d){
-                            drawNumberOfReadsChart(d,numberOfLines,stats_data["sequence_count"]);
+                            drawNumberOfReadsChart(d,numberOfLines,stats_data==null?null:stats_data["sequence_count"]);
                         });
                         $.ajax(file_length)
                                 .done(function(data){
