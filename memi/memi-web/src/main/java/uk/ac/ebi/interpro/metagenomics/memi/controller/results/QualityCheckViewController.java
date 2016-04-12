@@ -108,15 +108,23 @@ public class QualityCheckViewController extends AbstractResultViewController {
                                               final HttpServletResponse response,
                                               final HttpServletRequest request) throws IOException {
         FileDefinitionId fileDefinitionId = FileDefinitionId.DEFAULT;
-        if (resultType.equalsIgnoreCase("base")) {
+        if (resultType.equalsIgnoreCase("summary")) {
+            fileDefinitionId = FileDefinitionId.QC_SUMMARY;
+        } else if (resultType.equalsIgnoreCase("stats")) {
+            fileDefinitionId = FileDefinitionId.QC_STATS;
+        }else if (resultType.equalsIgnoreCase("base")) {
             fileDefinitionId = FileDefinitionId.QC_BASE;
-        }else if (resultType.equalsIgnoreCase("stats")) {
-                fileDefinitionId = FileDefinitionId.QC_STATS;
+        }else if (resultType.equalsIgnoreCase("base.sub-set")) {
+            fileDefinitionId = FileDefinitionId.QC_BASE_SUBSET;
         }else if (resultType.equalsIgnoreCase("length")) {
             fileDefinitionId = FileDefinitionId.QC_LENGTH_BIN;
+        }else if (resultType.equalsIgnoreCase("length.sub-set")) {
+            fileDefinitionId = FileDefinitionId.QC_LENGTH_BIN_SUBSET;
         }else if (resultType.equalsIgnoreCase("gc_bin")) {
             fileDefinitionId = FileDefinitionId.QC_GC_BIN;
-        } else {
+        }else if (resultType.equalsIgnoreCase("gc_bin.sub-set")) {
+            fileDefinitionId = FileDefinitionId.QC_GC_BIN_SUBSET;
+        }else {
             log.warn("Result type: " + resultType + " not found!");
         }
         doHandleQCExports(projectId, sampleId, runId, releaseVersion, response, request, fileDefinitionId);
@@ -143,11 +151,14 @@ public class QualityCheckViewController extends AbstractResultViewController {
                     DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(fileDefinitionId.name());
                     if (fileDefinition != null) {
                         File fileObject = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, fileDefinition);
-                        try {
-                            openDownloadDialog(response, request, analysisJob, fileDefinition.getDownloadName(), fileObject);
-                        } catch (IndexOutOfBoundsException e) {
-                            response.setStatus(HttpServletResponse.SC_NO_CONTENT);
-                        }
+                        if (!fileObject.exists())
+                            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                        else
+                            try {
+                                openDownloadDialog(response, request, analysisJob, fileDefinition.getDownloadName(), fileObject);
+                            } catch (IndexOutOfBoundsException e) {
+                                response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+                            }
                     } else {//analysis job is NULL
                         response.setStatus(HttpServletResponse.SC_NO_CONTENT);
                     }

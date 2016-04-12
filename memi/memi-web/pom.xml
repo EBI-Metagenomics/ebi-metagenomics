@@ -304,6 +304,7 @@
                             <maxIdleTime>60000</maxIdleTime>
                         </connector>
                     </connectors>
+                    <scanIntervalSeconds>1</scanIntervalSeconds>
                 </configuration>
                 <dependencies>
                     <dependency>
@@ -402,6 +403,7 @@
                     <version>10.2.0.2</version>
                 </dependency>
             </dependencies>
+
 
             <properties>
                 <dailyErrorAppParam>${project.build.directory}/memi-ERROR.log4j</dailyErrorAppParam>
