@@ -106,9 +106,6 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
             // Get study to run count map
             studyToRunCountMap = studyDAO.retrieveRunCountsGroupedByExternalStudyId(studyIdentifiers);
         }
-        if (ebiSearchForm == null) {
-            ebiSearchForm = new EBISearchForm();
-        }
         // If case: if nobody is logged in
         if (submitter == null) {
             Map<String, Long> biomeCountMap = buildBiomeCountMap();
