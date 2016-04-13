@@ -115,12 +115,7 @@ public class ViewSamplesController extends AbstractController implements IContro
         return buildModelAndView(
             getModelViewName(),
             model,
-            new ModelPopulator() {
-                @Override
-                public void populateModel(ModelMap model) {
-                    model.addAttribute(SampleFilter.MODEL_ATTR_NAME, ((SamplesViewModel) model.get(ViewModel.MODEL_ATTR_NAME)).getSampleFilter());
-                }
-            }
+            new SampleModelPopulator()
         );
     }
 
@@ -155,12 +150,7 @@ public class ViewSamplesController extends AbstractController implements IContro
         return buildModelAndView(
             getModelViewName(),
             model,
-            new ModelPopulator() {
-                @Override
-                public void populateModel(ModelMap model) {
-                    model.addAttribute(SampleFilter.MODEL_ATTR_NAME, ((SamplesViewModel) model.get(ViewModel.MODEL_ATTR_NAME)).getSampleFilter());
-                }
-            }
+            new SampleModelPopulator()
         );
     }
 
@@ -177,12 +167,7 @@ public class ViewSamplesController extends AbstractController implements IContro
         return buildModelAndView(
             getModelViewName(),
             model,
-            new ModelPopulator() {
-                @Override
-                public void populateModel(ModelMap model) {
-                    model.addAttribute(SampleFilter.MODEL_ATTR_NAME, ((SamplesViewModel) model.get(ViewModel.MODEL_ATTR_NAME)).getSampleFilter());
-                }
-            }
+            new SampleModelPopulator()
         );
     }
 
@@ -261,5 +246,12 @@ public class ViewSamplesController extends AbstractController implements IContro
         List<Breadcrumb> result = new ArrayList<Breadcrumb>();
         result.add(new Breadcrumb("Samples", "View samples", VIEW_NAME));
         return result;
+    }
+
+    class SampleModelPopulator implements ModelPopulator {
+        @Override
+        public void populateModel(ModelMap model) {
+            model.addAttribute(SampleFilter.MODEL_ATTR_NAME, ((SamplesViewModel) model.get(ViewModel.MODEL_ATTR_NAME)).getSampleFilter());
+        }
     }
 }
