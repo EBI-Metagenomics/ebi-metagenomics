@@ -2,6 +2,11 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!-- Google map script - used in overview-->
 <script src="https://maps.googleapis.com/maps/api/js"></script>
+<script src='${pageContext.request.contextPath}/js/highcharts-4.1.10/highcharts.js' type='text/javascript'></script>
+<script src='${pageContext.request.contextPath}/js/highcharts-4.1.10/highcharts-more.js' type='text/javascript'></script>
+<script src='${pageContext.request.contextPath}/js/highcharts-4.1.10/exporting.js' type='text/javascript'></script>
+<script src='${pageContext.request.contextPath}/js/QC_charts.js' type='text/javascript'></script>
+
 <script type="text/javascript">
     function initialize(lat, long) {
         var latlng = new google.maps.LatLng(lat, long);
