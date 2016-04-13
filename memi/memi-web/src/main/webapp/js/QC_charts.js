@@ -1,4 +1,60 @@
-var drawNumberOfReadsChart = function (rawdata, numberOfLines, sequence_count) {
+
+Highcharts.setOptions({
+    lang: {
+        downloadData: "Download Data File"
+    }
+});
+
+var getExportingStructure = function (urlToFile) {
+    return {
+        buttons: {
+            contextButton: {
+                menuItems: [{
+                    textKey: 'downloadData',
+                    onclick: function () {
+                        window.location = urlToFile;
+                    }
+                }, {
+                    separator: true
+                }, {
+                    textKey: 'printChart',
+                    onclick: function () {
+                        this.print();
+                    }
+                }, {
+                    separator: true
+                }, {
+                    textKey: 'downloadPNG',
+                    onclick: function () {
+                        this.exportChart();
+                    }
+                }, {
+                    textKey: 'downloadJPEG',
+                    onclick: function () {
+                        this.exportChart({
+                            type: 'image/jpeg'
+                        });
+                    }
+                }, {
+                    textKey: 'downloadPDF',
+                    onclick: function () {
+                        this.exportChart({
+                            type: 'application/pdf'
+                        });
+                    }
+                }, {
+                    textKey: 'downloadSVG',
+                    onclick: function () {
+                        this.exportChart({
+                            type: 'image/svg+xml'
+                        });
+                    }
+                }]
+            }
+        }
+    };
+}
+var drawNumberOfReadsChart = function (rawdata, numberOfLines, sequenceCount, urlToFile) {
     var data = [],
         categories = [
             "Initial Reads",
@@ -21,11 +77,11 @@ var drawNumberOfReadsChart = function (rawdata, numberOfLines, sequence_count) {
             });
         });
 
-    if (sequence_count!= null && data[3].y > sequence_count) {
+    if (sequenceCount!= null && data[3].y > sequenceCount) {
         categories.push("Reads after sampling for QC");
         data.push({
             x: numberOfLines,
-            y: sequence_count,
+            y: sequenceCount,
             color: "#8dc7c7"
         });
     }
@@ -63,11 +119,12 @@ var drawNumberOfReadsChart = function (rawdata, numberOfLines, sequence_count) {
             name: "Reads after sampling",
             color: "#8dc7c7"
         }],
-        credits: false
+        credits: false,
+        exporting: getExportingStructure(urlToFile)
     });
 };
 
-var drawSequenceLengthHistogram = function (rawdata, isFromSubset, stats) {
+var drawSequenceLengthHistogram = function (rawdata, isFromSubset, stats,urlToFile) {
     var data = rawdata.split('\n').map(function(line){
         if (line.trim()!="")
             return line.split("\t").map(function(v){ return 1*v; });
@@ -105,7 +162,8 @@ var drawSequenceLengthHistogram = function (rawdata, isFromSubset, stats) {
             }
         ],
         legend: { enabled: false},
-        credits: false
+        credits: false,
+        exporting: getExportingStructure(urlToFile)
     });
 };
 
@@ -155,7 +213,8 @@ var drawSequncesLength = function(data) {
             }
         ],
         legend: { enabled: false},
-        credits: false
+        credits: false,
+        exporting: { enabled: false }
     });
 };
 
@@ -218,11 +277,12 @@ var drawGCContent = function(data) {
                 data : [100]
             }
         ],
-        credits: false
+        credits: false,
+        exporting: { enabled: false }
     });
 };
 
-var drawSequenceGCDistribution = function (rawdata,isFromSubset, stats) {
+var drawSequenceGCDistribution = function (rawdata,isFromSubset, stats, urlToFile) {
     var data = rawdata.split('\n').map(function(line){
         if (line.trim()!="")
             return line.split("\t").map(function(v){ return 1*v; });
@@ -263,11 +323,15 @@ var drawSequenceGCDistribution = function (rawdata,isFromSubset, stats) {
             color: (isFromSubset)?"#8dc7c7":"#058dc7"
         }],
         legend: { enabled: false },
-        credits: false
+        credits: false,
+        exporting: getExportingStructure(urlToFile)
     });
+    $('#seq_gc').parent().parent().before(
+        '<p>The histograms below show the distribution of sequence lengths, in basepairs, (left) and GC percentage (right) for the sequences having passed our quality control steps. Note that for large files, the distributions were compiled from a random subset of 2 millions sequence reads. The standard deviations are shown on each plot. The bar chart underneath each graph indicates the minimum, average and maximum length and average GC and AT content, respectively.</p>'
+    );
 };
 
-var drawNucleotidePositionHistogram = function (rawdata,isFromSubset) {
+var drawNucleotidePositionHistogram = function (rawdata,isFromSubset,urlToFile) {
     var data = {"pos":[], "A":[], "G":[], "T":[], "C":[], "N":[]}
     var colors= {
         "A": "rgb(16, 150, 24)",
@@ -320,7 +384,11 @@ var drawNucleotidePositionHistogram = function (rawdata,isFromSubset) {
                 color : colors[d]
             }
         }),
-        credits: false
+        credits: false,
+        exporting: getExportingStructure(urlToFile)
     });
+    $('#nucleotide').before(
+        '<p>The graph below show the relative abundance of nucletotides (A, C, G, T, or ambiguous base "N") at each position starting from the beginning of each read up to the first 500 base pairs.</p>'
+    );
 };
 

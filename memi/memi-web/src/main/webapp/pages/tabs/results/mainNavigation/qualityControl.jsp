@@ -10,16 +10,17 @@
             <p>The chart below shows the number of reads which pass the quality control steps we have implemented in our pipeline. Sequence merging may have occurred with paired-end data, so the initial number of reads may differ from the number given by ENA.</p>
             <div id="qc_overview"></div>
 
-            <p>The histograms below show the distribution of sequence lengths in basepairs (left) and GC percentage (right) for the sequences having passed our quality control steps. For large files, the distributions were derived from a randomly selected subset of 2 millions sequence reads. The standard deviations are shown on each plot. The bar chart underneath each graph indicates the minimum, average and maximum length, and average GC and AT content, respectively.</p>
-            <div style="float:left;width:50%">
-                <div id="seq_len"></div>
-                <div id="seq_stats"></div>
+            <div>
+                <div style="float:left;width:50%">
+                    <div id="seq_len"></div>
+                    <div id="seq_stats"></div>
+                </div>
+                <div style="float:left;width:50%">
+                    <div id="seq_gc"></div>
+                    <div id="seq_gc_stats"></div>
+                </div>
             </div>
-            <div style="float:left;width:50%">
-                <div id="seq_gc"></div>
-                <div id="seq_gc_stats"></div>
-            </div>
-            <p>The graph below show the relative abundance of nucletotides (A, C, G, T, or ambiguous base "N") at each position starting from the beginning of each read up to the first 500 base pairs.</p>
+
             <div id="nucleotide"></div>
 
 
@@ -46,38 +47,38 @@
 
                     }).always(function(){
                         $.ajax(file_summary).done(function(d){
-                            drawNumberOfReadsChart(d,numberOfLines,stats_data==null?null:stats_data["sequence_count"]);
+                            drawNumberOfReadsChart(d,numberOfLines,stats_data==null?null:stats_data["sequence_count"],file_summary);
                         });
                         $.ajax(file_length)
                                 .done(function(data){
-                                    drawSequenceLengthHistogram(data,false,stats_data);
+                                    drawSequenceLengthHistogram(data,false,stats_data,file_length);
                                 })
                                 .fail(function(){
                                     $.ajax(file_length+".sub-set")
                                             .done(function(data){
-                                                drawSequenceLengthHistogram(data,true,stats_data);
+                                                drawSequenceLengthHistogram(data,true,stats_data,file_length+".sub-set");
                                             });
                                 });
                         $.ajax(file_gc)
                                 .done(function(data){
-                                    drawSequenceGCDistribution(data,false,stats_data);
+                                    drawSequenceGCDistribution(data, false, stats_data, file_gc);
                                 })
                                 .fail(function(){
                                     $.ajax(file_gc+".sub-set")
                                             .done(function(data){
-                                                drawSequenceGCDistribution(data,true,stats_data);
+                                                drawSequenceGCDistribution(data,true,stats_data,file_gc+".sub-set");
                                             });
                                 });
                     });
 
                     $.ajax(file_base)
                             .done(function(data){
-                                drawNucleotidePositionHistogram(data);
+                                drawNucleotidePositionHistogram(data, false, file_base);
                             })
                             .fail(function(){
                                 $.ajax(file_base+".sub-set")
                                         .done(function(data){
-                                            drawNucleotidePositionHistogram(data,true);
+                                            drawNucleotidePositionHistogram(data,true, file_base+".sub-set");
                                         });
                             });
 
