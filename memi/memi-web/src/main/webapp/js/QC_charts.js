@@ -125,10 +125,11 @@ var drawNumberOfReadsChart = function (rawdata, numberOfLines, sequenceCount, ur
 };
 
 var drawSequenceLengthHistogram = function (rawdata, isFromSubset, stats,urlToFile) {
-    var data = rawdata.split('\n').map(function(line){
-        if (line.trim()!="")
+    var data = rawdata.split('\n').filter(function(line){ return line.trim()!=""})
+        .map(function(line){
             return line.split("\t").map(function(v){ return 1*v; });
     });
+    var length_max=Math.max.apply(null,data.map(function(e){ if (e) {return e[0];} }));
 
     $('#seq_len').highcharts({
         chart: { type: 'areaspline',
@@ -139,9 +140,9 @@ var drawSequenceLengthHistogram = function (rawdata, isFromSubset, stats,urlToFi
         yAxis: {
             title: { text: "Number of Reads" }
         },
-        min: 0,
-        max: 100*(Math.floor(data["length_max"]/100)+1),
         xAxis: {
+            min: 0,
+            max: 100*(Math.floor(length_max/100)+1),
             plotBands: (stats==null)?[]:[{ // visualize the standard deviation
                 from: stats["average_length"]-stats["standard_deviation_length"],
                 to: stats["average_length"]+stats["standard_deviation_length"],
