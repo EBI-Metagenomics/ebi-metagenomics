@@ -81,9 +81,7 @@ public abstract class SecuredAbstractController<T extends SecureEntity> extends 
             model,
             new ModelPopulator() {
                 @Override
-                public void populateModel(ModelMap model) {
-                    model.addAttribute(viewName, model);
-                }
+                public void populateModel(ModelMap model) {}
             }
         );
     }
@@ -110,9 +108,7 @@ public abstract class SecuredAbstractController<T extends SecureEntity> extends 
             model,
             new ModelPopulator() {
                 @Override
-                public void populateModel(ModelMap model) {
-                    model.addAttribute(viewName, model);
-                }
+                public void populateModel(ModelMap model) {}
             }
         );
     }
