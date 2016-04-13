@@ -326,6 +326,9 @@ var drawSequenceGCDistribution = function (rawdata,isFromSubset, stats, urlToFil
         credits: false,
         exporting: getExportingStructure(urlToFile)
     });
+    $('#seq_gc').parent().parent().before(
+        '<p>The histograms below show the distribution of sequence lengths, in basepairs, (left) and GC percentage (right) for the sequences having passed our quality control steps. Note that for large files, the distributions were compiled from a random subset of 2 millions sequence reads. The standard deviations are shown on each plot. The bar chart underneath each graph indicates the minimum, average and maximum length and average GC and AT content, respectively.</p>'
+    );
 };
 
 var drawNucleotidePositionHistogram = function (rawdata,isFromSubset,urlToFile) {
@@ -384,5 +387,8 @@ var drawNucleotidePositionHistogram = function (rawdata,isFromSubset,urlToFile) 
         credits: false,
         exporting: getExportingStructure(urlToFile)
     });
+    $('#nucleotide').before(
+        '<p>The graph below show the relative abundance of nucletotides (A, C, G, T, or ambiguous base "N") at each position starting from the beginning of each read up to the first 500 base pairs.</p>'
+    );
 };
 

@@ -6,7 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
@@ -34,18 +33,27 @@ public class InfoController extends AbstractController implements IController {
 
     @Override
     public ModelAndView doGet(final ModelMap model) {
-        log.info("Requesting doGet of InfoController...");
+        log.info("Requesting doGet of " + this.getClass() +  "...");
         //build and add the page model
-        populateModel(model);
-        model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((ViewModel) model.get(ViewModel.MODEL_ATTR_NAME)).getLoginForm());
-        return new ModelAndView(VIEW_NAME, model);
+        return buildModelAndView(
+                getModelViewName(),
+                model,
+                new ModelPopulator() {
+                    @Override
+                    public void populateModel(ModelMap model) {
+                        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "About EBI metagenomics", getBreadcrumbs(null), propertyContainer);
+                        final ViewModel defaultViewModel = builder.getModel();
+                        defaultViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_ABOUT_VIEW);
+                        model.addAttribute(ViewModel.MODEL_ATTR_NAME, defaultViewModel);
+                    }
+                });
     }
 
     /**
      * Creates the MG model and adds it to the specified model map.
      */
     private void populateModel(final ModelMap model) {
-        log.info("Building model of InfoController...");
+        log.info("Building model of " + this.getClass() +  "...");
         final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "About EBI metagenomics", getBreadcrumbs(null), propertyContainer);
         final ViewModel infoModel = builder.getModel();
         infoModel.changeToHighlightedClass(ViewModel.TAB_CLASS_ABOUT_VIEW);

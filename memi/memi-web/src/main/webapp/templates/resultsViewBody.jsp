@@ -48,7 +48,7 @@
 
         <div class="sample_ana">
         <!-- Main Tabs for normal screen -->
-        <div class="navtabs">
+        <div id="navtabs">
                     <ul>
                         <li>
                             <a title="Overview"
@@ -88,7 +88,7 @@
             //Main navigation tabs - overview, quality control, taxonomic analysis, functional analysis, downloads
             //Ajax load approach as described here: http://jqueryui.com/tabs/#ajax
             //load the tabs for the two different menu sizes
-            $(".navtabs").tabs({
+            $("#navtabs").tabs({
                 cache:true,
                 ajaxOptions:{
                     error:function (xhr, status, index, anchor) {

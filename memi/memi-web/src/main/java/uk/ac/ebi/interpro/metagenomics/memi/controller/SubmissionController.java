@@ -4,13 +4,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.erapro.SubmissionContactDAO;
-import uk.ac.ebi.interpro.metagenomics.memi.forms.ConsentCheckForm;
-import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
@@ -19,7 +15,6 @@ import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.DefaultViewMo
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder;
 
 import javax.annotation.Resource;
-import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,10 +48,17 @@ public class SubmissionController extends AbstractController {
             modelMap.addAttribute("submitterDetails", submitterDetails);
         }//Otherwise do nothing
 
-        modelMap.addAttribute(ViewModel.MODEL_ATTR_NAME, submitDataModel);
-
-        modelMap.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
-        return new ModelAndView("submission-check/intro", modelMap);
+        //return new ModelAndView("submission-check/intro", modelMap);
+        return buildModelAndView(
+            "submission-check/intro",
+            modelMap,
+            new ModelPopulator() {
+                @Override
+                public void populateModel(ModelMap model) {
+                    modelMap.addAttribute(ViewModel.MODEL_ATTR_NAME, submitDataModel);
+                }
+            }
+        );
     }
 
     @Override

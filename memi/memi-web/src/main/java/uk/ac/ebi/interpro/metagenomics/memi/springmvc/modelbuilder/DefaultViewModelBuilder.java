@@ -36,6 +36,6 @@ public class DefaultViewModelBuilder extends AbstractViewModelBuilder<ViewModel>
     @Override
     public ViewModel getModel() {
         log.info("Building instance of " + ViewModel.class + "...");
-        return new ViewModel(getSessionSubmitter(sessionMgr), pageTitle, breadcrumbs, propertyContainer);
+        return new ViewModel(getSessionSubmitter(sessionMgr), getEbiSearchForm(sessionMgr), pageTitle, breadcrumbs, propertyContainer);
     }
 }

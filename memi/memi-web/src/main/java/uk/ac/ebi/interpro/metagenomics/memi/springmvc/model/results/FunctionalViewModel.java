@@ -1,6 +1,7 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.results;
 
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Run;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob;
@@ -31,6 +32,7 @@ public class FunctionalViewModel extends AbstractResultViewModel {
     private FunctionalAnalysisResult functionalAnalysisResult;
 
     public FunctionalViewModel(Submitter submitter,
+                               EBISearchForm ebiSearchForm,
                                String pageTitle,
                                List<Breadcrumb> breadcrumbs,
                                MemiPropertyContainer propertyContainer,
@@ -39,7 +41,7 @@ public class FunctionalViewModel extends AbstractResultViewModel {
                                AnalysisJob analysisJob,
                                AnalysisStatus analysisStatus,
                                FunctionalAnalysisResult functionalAnalysisResult) {
-        super(submitter, pageTitle, breadcrumbs, propertyContainer);
+        super(submitter, ebiSearchForm, pageTitle, breadcrumbs, propertyContainer);
         this.sample = sample;
         this.run = run;
         this.analysisJob = analysisJob;

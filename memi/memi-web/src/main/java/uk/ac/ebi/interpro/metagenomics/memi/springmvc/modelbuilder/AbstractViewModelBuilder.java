@@ -1,5 +1,6 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder;
 
+import uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
@@ -23,6 +24,17 @@ public abstract class AbstractViewModelBuilder<E extends ViewModel> implements V
     protected Submitter getSessionSubmitter(SessionManager sessionMgr) {
         if (sessionMgr != null && sessionMgr.getSessionBean() != null) {
             return sessionMgr.getSessionBean().getSubmitter();
+        }
+        return null;
+    }
+
+    protected EBISearchForm getEbiSearchForm(SessionManager sessionMgr) {
+        if (sessionMgr != null) {
+            if (sessionMgr.getEbiSearchForm() == null) {
+                EBISearchForm ebiSearchForm = new EBISearchForm();
+                sessionMgr.setEbiSearchForm(ebiSearchForm);
+            }
+            return sessionMgr.getEbiSearchForm();
         }
         return null;
     }

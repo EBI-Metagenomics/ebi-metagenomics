@@ -6,6 +6,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.RunDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.extensions.QueryRunsForProjectResult;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.PipelineReleaseDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.PipelineRelease;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
@@ -54,8 +55,9 @@ public class StudyViewModelBuilder extends AbstractViewModelBuilder<StudyViewMod
             log.info("Building instance of " + StudyViewModel.class + "...");
         }
         Submitter submitter = getSessionSubmitter(sessionMgr);
+        EBISearchForm ebiSearchForm = getEbiSearchForm(sessionMgr);
         String tabDisabledOption = getTabDisabledOption();
-        return new StudyViewModel(submitter, study, pageTitle,
+        return new StudyViewModel(submitter, ebiSearchForm, study, pageTitle,
                 breadcrumbs, propertyContainer, tabDisabledOption);
     }
 

@@ -65,8 +65,7 @@ div#local-masthead ul {height: auto;width: 100%;margin-top: 0; background-color:
 div#local-masthead ul li {margin-bottom: 0; border-right: 1px solid rgba(255, 255, 255, 0.5);}/*change the dotted line*/
 div#local-masthead ul li a:link {border-bottom: 0px solid #71b360;  text-shadow:  rgba(0, 0, 0, 0.2) 1px 1px 0px; font-size: 96%; font-family: Verdana, sans-serif;}/*make it similar to interpro menu*/
 div#local-masthead ul li a:hover, div#local-masthead ul li a:focus, div#local-masthead ul li a:active {border-bottom: 0px solid #71b360; background-color: rgba(0, 0, 0, 0.2);}
-div#local-title.logo-title img {margin: 18px 9px; box-sizing: border-box;} /*make the metagenomics logo more centered */
-div#headerdiv div#local-title a  { display: block; overflow: auto; }/*to show tooltip properly*/
+div#local-title.logo-title img { margin-top: 1.5em;  margin-bottom: 1.5em; width:100%;max-width: 410px;} /*make the metagenomics logo more centered */
 div#headerdiv #global-masthead a:link {float: left;border-bottom:0;}
 div#headerdiv #global-masthead .nav a:link {float: none;}
 /*/suggested change to ebi-global.css */
@@ -818,7 +817,23 @@ width: 972px; text-align: left;}
 
 .study_desc {margin-top:20px;}
 .study_desc_text {font-size:110%;}
+
 /*********************** FORMS ************************/
+/*top banner search*/
+div#local-masthead form fieldset {background-color: rgba(255, 255, 255, 0.4); border: 0 solid #EEE; padding:9px; margin-right:9px;} /*full path mandatory to overwrite EBI border*/
+#local-search fieldset {background-color: rgba(255, 255, 255, 0.4); border: 0 solid #EEE; padding:9px; margin:18px 9px;}
+div#local-search form fieldset  div.left, form#local-search fieldset div.left {margin-right:9px;} /*adjustment alignment input box */
+#local-search fieldset div.left input#local-searchbox {height: 24px; } /*slightly increase height of the input*/
+#local-search fieldset div.left input#local-searchbox {color:#9E9E9E; padding-left: 5px; margin:0;}  /*make the font grey, add space on the left side of the form input box*/
+#local-search fieldset div.left input#local-searchbox:focus {color:#616161;} /*darker the font on focus*/
+div#local-search form fieldset div.right, form#local-search fieldset div.right {width: inherit;} /*need to keep full path*/
+div#headerdiv a:link, div#headerdiv a:visited { border-bottom-width: 0;   border-bottom-style: none;}
+#local-search div.right input.submit {margin:0;}/*adjustment alignment search button */
+#local-search .examples a {color:#464646;border-bottom:none;}
+#local-search .examples a:hover {color:#464646; border-bottom-width:1px; border-bottom-style: solid;}
+#local-search .examples a:visited {color:#464646;} /*keep same color all time*/
+/*/top banner search*/
+
 form legend {
 background-color: #e5e5e5;
 color: #455872;
@@ -869,7 +884,7 @@ color: #445668;}
 #headerdiv input {border:0px; padding:0; }/*added for the mitigation template*/
 
 
-input {
+input[type=text] {
 width: 150px;
 /*background: -webkit-gradient(linear, left top, left 6, from(#FFFFFF), color-stop(4%, #EEEEEE), to(#FFFFFF));*/
 /*background: -moz-linear-gradient(top, #FFFFFF, #EEEEEE 1px, #FFFFFF 6px);*/
@@ -1741,20 +1756,31 @@ ul.sample_list li {list-style: none; display: inline;}
 .block_wrapper {overflow:hidden; margin: 0 9px 18px 9px;  min-height: 206px;/*for qclist text to appear correctly*/}
 .block_container { width: 300%; /*was 1109px*/float:left; border:0px red solid;}
 .block.step0.highlight, .block.step1.highlight, .block.step2.highlight, .block.step3.highlight, .block.step4.highlight, .block.step5.highlight {border:1px #0F6D99 solid; background-color:#0F6D99; transition: all 0.5s ease; color:white;}
-.first_branch {float:left; margin-top:44px;}
-.mainbranch {float:left;/*was margin-top:57px;*/  padding-top: 57px;height: 139px; border:0px black solid;}
-.branch {float:left;}
+.first_branch, .mainbranch ,.midbranch, .lowbranch, .branch {float:left;}
+.mainbranch {/*was margin-top:57px;*/  padding-top: 56px;height: 139px; border:0px black solid;}
+.first_branch {margin-top:44px;}
 .branch2 {margin-top:20px;}
 
 .block, .block-nt, .block-lb {font-size:90%;padding: 5px; display:inline-block; text-align:center; /*vertical-align: middle;*/}
 .block, .block_small {position:relative;padding: 2px; cursor:pointer; border:1px #B4D0F3 solid; width: 82px; height: 82px; border-radius:50%;line-height:7.1;background-color:#EAF0F9;color:#5983B5;}
 .block.small {font-size: 67%;width: 36px; height: 36px;line-height: 4.1;}
+.block.medium {font-size: 85%;width: 50px; height: 50px;}
 .block-nt {border: 1px #C3C3C3 solid; line-height:3.1;background-color: #DBDBDB;color:#777;margin-left:9px;}
 .block-lb {border: 1px #C3C3C3 solid; color:#777;}
 .block-ar {padding: 2px; border:0px #B4D0F3 solid; color:grey;display:inline-block;}
 .block-lb.small{font-size: 67%;padding: 4px;}
 
-.block.function {border:1px #DACAEC solid; background-color:#ECE2FF;color: #9B8CBA;}
+/*.pipe_v3 .mainbranch{padding-top:99px;}*/
+.pipe_v3 .midbranch{margin-top: 69px; margin-left: -2px;}
+.pipe_v3 .rotate_f, .pipe_v3 .rotate_t {margin-left: -13px; }
+.pipe_v3 .rotate_f {margin-right:5px;}
+.midbranch_trna {margin-top: 27px;}
+.lowbranch_tax {margin-top: 9px;}/*to show space between circles*/
+.pipe_v3 .block, .pipe_v3 .block_small, .pipe_v3 .block_med {line-height:inherit; width: 76px;  height: 76px;}
+.block .children {margin: 40% auto;}
+.block .children_l {margin: 25% auto;}
+
+.block.function {border:1px #DACAEC solid; background-color:#ECE2FF;color: #8C7CAE;}
 .block.taxon {border:1px #ECCACA solid; background-color:#FAEBD7;color: #A86363;}
 
 .qclist {font-size: 98%; position: absolute;top: 94px;  left: 18px; color: #777; line-height: 1.2; width: 286px; text-align: left;}
@@ -1764,30 +1790,27 @@ ul.sample_list li {list-style: none; display: inline;}
 .arrow_pip:after {left: 100%;top: 50%; border: solid rgba(0, 0, 0, 0);content: " ";height: 0;width: 0;position: absolute; pointer-events: none;  border-color: rgba(24, 33, 38, 0);border-left-color: grey; border-width: 5px;margin-top: -5px;}
 .arrow_notip {display:inline-block;background: grey;padding: 2px; width: 131px; margin-left:2px;margin-right:2px;}
 
-.rotate_t {-ms-transform: rotate(45deg); /* IE 9 */-webkit-transform: rotate(45deg); /* Chrome, Safari, Opera */transform: rotate(45deg);margin-left: -22px;margin-bottom: 12px;}
-.rotate_f {-ms-transform: rotate(-45deg); /* IE 9 */ -webkit-transform: rotate(-45deg); /* Chrome, Safari, Opera */ transform: rotate(-45deg);margin-left: -22px;margin-bottom: -12px;margin-right: 6px;/*for alignment*/}
+.rotate_t {-ms-transform: rotate(45deg); /* IE 9 */-webkit-transform: rotate(45deg); /* Chrome, Safari, Opera */transform: rotate(45deg);margin-bottom: 12px;}
+.rotate_f {-ms-transform: rotate(-45deg); /* IE 9 */ -webkit-transform: rotate(-45deg); /* Chrome, Safari, Opera */ transform: rotate(-45deg);/*margin-left: -22px;*/margin-bottom: -12px;margin-right: 6px;/*for alignment*/}
 
-/*animation*/
-.animation {
-    -webkit-animation: mymove 3s 0s forwards, mymove_second 10s 2s forwards; /* Chrome, Safari, Opera */
-    animation: mymove 3s forwards, mymove_second 10s 2s forwards;; /*forwards to keep the animation state*/
-
+/*******animation - Tryout - temp*******/
+.animation { position: absolute;
+    -webkit-animation: mymove 3s 0s forwards, mymove_second 3s 0s forwards; /* Chrome, Safari, Opera */
+    animation: mymove 3s 0s forwards, mymove_second 10s 2s forwards; /*forwards to keep the animation state*/
 }
-
 /* Chrome, Safari, Opera */
 @-webkit-keyframes mymove {
-    0%   {top: 0px;}
-    100%  {top: 200px;}
+    0%   {top: 0px; background-color: red;}
+    100%  {top: 200px;background-color: yellowgreen;}
 }
-
 @-webkit-keyframes mymove_second {
-    0%   {top: 0px;}
-    100%  {top: 200px;}
+    0%   {top: 200px; background-color: lightpink}
+    100%  {top: 200px;left:200px;background-color: blue}
 }
 /* Standard syntax */
 @keyframes mymove {
-    0%   {top: 0px;}
-    100%  {top: 200px;}
+    0%   {top: 0px;background-color: red}
+    100%  {top: 200px;background-color: yellowgreen   }
 }
 @keyframes mymove_second {
     0%   {top: 0px;}
@@ -1941,20 +1964,32 @@ a.box-registration-link  {text-decoration: none; cursor: pointer;}
 
 /*bootstrap style for button*/
 div#local-masthead div.navbar-header {float:none;}
-.navbar-toggle {cursor: pointer;position: relative; float: right; padding: 9px 10px; margin-top: 8px; margin-right: 15px; margin-bottom: 8px; background-color: rgba(0, 0, 0, 0); background-image: none; border: 1px solid rgba(0, 0, 0, 0.1); border-radius: 4px;}
+.navbar-toggle { display: none; /*menu button appear only of small screens*/cursor: pointer;position: relative; float: right; padding: 9px 10px; margin-top: 8px; margin-right: 15px; margin-bottom: 8px; background-color: rgba(0, 0, 0, 0); background-image: none; border: 1px solid rgba(0, 0, 0, 0.1); border-radius: 4px;}
 .navbar-toggle:hover {background-color: rgba(0, 0, 0, 0.2);}
 .navbar-toggle .icon-bar {background-color: #fff; display: block;  width: 22px;  height: 2px;  border-radius: 1px; margin-top: 4px;}
 .collapse {display: none;}
+.navbar-collapse.collapse {display: block;}
 
-@media (min-width: 768px){
-.navbar-collapse.collapse {display: block!important;height: auto!important; padding-bottom: 0; overflow: visible!important;}
-.navbar-toggle { display: none; /*menu button appear only of small screens*/}
+/*bootstrap menu responsive*/
+@media (max-width: 768px){
+.navbar-toggle {display: block;}
+div#headerdiv nav ul {font-size: 126%;}
+div#headerdiv nav ul li, ul#local-nav li.functional {background-color: #578696;}
+div.masthead ul li {float: none;} /*make the menu vertical*/
+.navbar-collapse.collapse {display:none;}
+div.masthead ul#local-nav li.functional, div#headerdiv .logout {float: none;}
+div#headerdiv .logout {margin-left:9px;}
+div#local-masthead ul li.active-trail, div#local-masthead ul li.active-trail a:link, div#local-masthead ul li.active-trail a:visited{background-color: rgba(0, 0, 0, 0.3);}
+div#local-masthead ul li.active-trail a:link, div#local-masthead ul li.active-trail a:visited {border-bottom:0px;}
+div#headerdiv .logout {margin:0; padding-left:9px;}
 }
-/***************************************** responsive  *******************************/
+
+/***************************************** responsive  gal *******************************/
 @media (max-width: 768px) {  /*remove carousel, feedback, ebi search and sidebar nav for the about us for small screens*/
 .carousel, #feedback_div, #sidebar-nav {display: none;}
-div#local-title.logo-title img {width:100%; margin:0; padding: 18px 9px;} /*logo*/
+/*div#local-title.logo-title img {margin:0; padding: 18px 9px;} */
 /*EBI template*/
+#local-search {display:none;}  /*top banner search*/
 #global-footer .grid_4:nth-child(1) {display:none;}/*remove one item of the EBI bottom menu - logo -  to avoid scrolling effect*/
 #global-nav,#global-search {display: none;} /*remove search and menu - wait for EBI to implement a collapsed version of the menu*/
 /*END EBI template*/
@@ -1987,16 +2022,4 @@ table.dataTable.no-footer th:nth-child(3),table.dataTable.no-footer  td:nth-chil
 div#local-masthead ul li.logout {display:none;}
 .xm_hide {display:none;}
 .xm-navtabs {display:block;}
-}
-
-/*bootstrap menu*/
-@media (max-width: 768px){
-div#headerdiv nav ul {font-size: 126%;}
-div#headerdiv nav ul li, ul#local-nav li.functional {background-color: #578696;}
-div.masthead ul li {float: none;}
-div.masthead ul#local-nav li.functional, div#headerdiv .logout {float: none;}
-div#headerdiv .logout {margin-left:9px;}
-div#local-masthead ul li.active-trail, div#local-masthead ul li.active-trail a:link, div#local-masthead ul li.active-trail a:visited{background-color: rgba(0, 0, 0, 0.3);}
- div#local-masthead ul li.active-trail a:link, div#local-masthead ul li.active-trail a:visited {border-bottom:0px;}
-div#headerdiv .logout {margin:0; padding-left:9px;}
 }

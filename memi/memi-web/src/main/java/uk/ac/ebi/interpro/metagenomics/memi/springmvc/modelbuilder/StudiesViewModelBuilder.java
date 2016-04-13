@@ -11,6 +11,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.BiomeDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.StudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.Biome;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.StudyFilter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
@@ -79,6 +80,7 @@ public class StudiesViewModelBuilder extends AbstractBiomeViewModelBuilder<Studi
     public StudiesViewModel getModel() {
         log.info("Building instance of " + StudiesViewModel.class + "...");
         Submitter submitter = getSessionSubmitter(sessionMgr);
+        EBISearchForm ebiSearchForm = getEbiSearchForm(sessionMgr);
         String submissionAccountId = (submitter != null ? submitter.getSubmissionAccountId() : null);
 
         //Get filtered studies
@@ -91,7 +93,7 @@ public class StudiesViewModelBuilder extends AbstractBiomeViewModelBuilder<Studi
 //        Map<Study, Long> sortedStudyMap = getStudySampleSizeMap(filteredStudies, sampleDAO, new ViewStudiesComparator());
 
         attachSampleSize(filteredStudies);
-        return new StudiesViewModel(submitter, filteredStudies, null, pageTitle, breadcrumbs, propertyContainer, tableHeaderNames, pagination, filter);
+        return new StudiesViewModel(submitter, ebiSearchForm, filteredStudies, null, pageTitle, breadcrumbs, propertyContainer, tableHeaderNames, pagination, filter);
     }
 
     private void attachSampleSize(List<Study> filteredStudies) {

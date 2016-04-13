@@ -3573,14 +3573,14 @@ quality format that can be printed and saved (see Help for browser compatibility
 <input type="text" size="30" id="linkText"/>',
 'Show a link to this view that can be copied for bookmarking or sharing'
 	);
-	
+    //  TO DO - replace krona?taxonomy=true URL with pipeline version e.g. 1.0?taxonomy=true
+	/*<input type="button" id="Full_screen" title="Open full screen" value="Full screen"\
+	    	onclick="window.open(\'krona?taxonomy=true\', \'Full screen\')"/>\ */
 	position = addOptionElement
 	(
 		position,
 '<input type="button" id="help"  title="help" value="?"\
 	onclick="window.open(\'https://sourceforge.net/p/krona/wiki/Browsing%20Krona%20charts/\', \'help\')"/>\
-<input type="button" id="Full_screen" title="Open full screen" value="Full screen"\
-    	onclick="window.open(\'krona?taxonomy=true\', \'Full screen\')"/>\
    '
     		);
 }

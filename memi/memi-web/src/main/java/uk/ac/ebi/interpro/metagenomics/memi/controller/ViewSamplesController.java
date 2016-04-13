@@ -14,7 +14,6 @@ import uk.ac.ebi.interpro.metagenomics.memi.core.tools.MemiTools;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.BiomeDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.files.MemiFileWriter;
-import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.SampleFilter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
@@ -65,13 +64,21 @@ public class ViewSamplesController extends AbstractController implements IContro
     @Resource
     private MemiDownloadService downloadService;
 
+    @Override
     public ModelAndView doGet(ModelMap model) {
         log.info("Requesting doGet...");
         //build and add the page model
         populateModel(model, new SampleFilter(), 0);
-        model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((SamplesViewModel) model.get(ViewModel.MODEL_ATTR_NAME)).getLoginForm());
-        model.addAttribute(SampleFilter.MODEL_ATTR_NAME, ((SamplesViewModel) model.get(ViewModel.MODEL_ATTR_NAME)).getSampleFilter());
-        return new ModelAndView(VIEW_NAME, model);
+        return buildModelAndView(
+            getModelViewName(),
+            model,
+            new ModelPopulator() {
+                @Override
+                public void populateModel(ModelMap model) {
+                    model.addAttribute(SampleFilter.MODEL_ATTR_NAME, ((SamplesViewModel) model.get(ViewModel.MODEL_ATTR_NAME)).getSampleFilter());
+                }
+            }
+        );
     }
 
 
@@ -105,7 +112,11 @@ public class ViewSamplesController extends AbstractController implements IContro
                 downloadService.openDownloadDialog(response, request, file, fileName, true);
             }
         }
-        return new ModelAndView(VIEW_NAME, model);
+        return buildModelAndView(
+            getModelViewName(),
+            model,
+            new SampleModelPopulator()
+        );
     }
 
 
@@ -136,7 +147,11 @@ public class ViewSamplesController extends AbstractController implements IContro
         } else {
             log.info("There are no samples to be exported!");
         }
-        return new ModelAndView(VIEW_NAME, model);
+        return buildModelAndView(
+            getModelViewName(),
+            model,
+            new SampleModelPopulator()
+        );
     }
 
     @RequestMapping(params = "search", value = "doSearch", method = RequestMethod.GET)
@@ -149,8 +164,11 @@ public class ViewSamplesController extends AbstractController implements IContro
 
         processRequestParams(filter, searchTerm, sampleVisibility);
         populateModel(model, filter, startPosition);
-        model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((SamplesViewModel) model.get(ViewModel.MODEL_ATTR_NAME)).getLoginForm());
-        return new ModelAndView(VIEW_NAME, model);
+        return buildModelAndView(
+            getModelViewName(),
+            model,
+            new SampleModelPopulator()
+        );
     }
 
     private void processRequestParams(SampleFilter filter, String searchTerm,
@@ -179,7 +197,6 @@ public class ViewSamplesController extends AbstractController implements IContro
         final ViewModelBuilder<SamplesViewModel> builder = new SamplesViewModelBuilder(sessionManager, "Samples list",
                 getBreadcrumbs(null), propertyContainer, getTableHeaderNames(), sampleDAO, filter, startPosition, biomeDAO);
         final SamplesViewModel samplesViewModel = builder.getModel();
-        model.addAttribute("loginForm", new LoginForm());
         samplesViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_SAMPLES_VIEW);
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, samplesViewModel);
     }
@@ -229,5 +246,12 @@ public class ViewSamplesController extends AbstractController implements IContro
         List<Breadcrumb> result = new ArrayList<Breadcrumb>();
         result.add(new Breadcrumb("Samples", "View samples", VIEW_NAME));
         return result;
+    }
+
+    class SampleModelPopulator implements ModelPopulator {
+        @Override
+        public void populateModel(ModelMap model) {
+            model.addAttribute(SampleFilter.MODEL_ATTR_NAME, ((SamplesViewModel) model.get(ViewModel.MODEL_ATTR_NAME)).getSampleFilter());
+        }
     }
 }

@@ -43,7 +43,7 @@ public class GOAnnotationViewModelBuilder extends AbstractResultViewModelBuilder
         //Add GO results
         FunctionalAnalysisResult functionalAnalysisResult = loadGODataFromCSV(new FunctionalAnalysisResult());
         //
-        return new GOAnnotationViewModel(getSessionSubmitter(sessionMgr), pageTitle, breadcrumbs, propertyContainer, functionalAnalysisResult);
+        return new GOAnnotationViewModel(getSessionSubmitter(sessionMgr), getEbiSearchForm(sessionMgr), pageTitle, breadcrumbs, propertyContainer, functionalAnalysisResult);
     }
 
 

@@ -1,6 +1,7 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.results;
 
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.*;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.FunctionalAnalysisResult;
@@ -19,11 +20,12 @@ public class GOAnnotationViewModel extends AbstractResultViewModel {
     private FunctionalAnalysisResult functionalAnalysisResult;
 
     public GOAnnotationViewModel(Submitter submitter,
+                                 EBISearchForm ebiSearchForm,
                                  String pageTitle,
                                  List<Breadcrumb> breadcrumbs,
                                  MemiPropertyContainer propertyContainer,
                                  FunctionalAnalysisResult functionalAnalysisResult) {
-        super(submitter, pageTitle, breadcrumbs, propertyContainer);
+        super(submitter, ebiSearchForm, pageTitle, breadcrumbs, propertyContainer);
         this.functionalAnalysisResult = functionalAnalysisResult;
     }
 

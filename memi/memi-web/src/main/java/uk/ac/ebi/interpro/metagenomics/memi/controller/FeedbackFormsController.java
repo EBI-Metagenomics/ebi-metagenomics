@@ -7,18 +7,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.FeedbackForm;
-import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.services.EmailNotificationService;
 import uk.ac.ebi.interpro.metagenomics.memi.services.INotificationService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.FeedbackModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.DefaultViewModelBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.FeedbackViewModelBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder;
 
@@ -62,9 +63,8 @@ public class FeedbackFormsController extends AbstractController {
     public ModelAndView doPost(@ModelAttribute("feedbackForm") @Valid FeedbackForm feedbackForm,
                                BindingResult result, ModelMap model,
                                SessionStatus status) {
-        final ModelPopulator modelPopulator = new FeebackModelPopulator();
-        modelPopulator.populateModel(model);
-        model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
+        //final ModelPopulator modelPopulator = new FeebackModelPopulator();
+        //modelPopulator.populateModel(model);
         if (result.hasErrors()) {
             log.info("Feedback form has validation errors!");
             return new ModelAndView("/feedback", model);
@@ -79,9 +79,19 @@ public class FeedbackFormsController extends AbstractController {
             log.debug("Sent an email with contact details: " + msg);
             status.setComplete();
         } else {
-            return new ModelAndView(DefaultController.EXCEPTION_PAGE_VIEW_NAME, model);
+            //return new ModelAndView(DefaultController.EXCEPTION_PAGE_VIEW_NAME, model);
+            return buildModelAndView(
+                DefaultController.EXCEPTION_PAGE_VIEW_NAME,
+                model,
+                new FeebackModelPopulator()
+            );
         }
-        return new ModelAndView("/feedbackSuccess", model);
+        //return new ModelAndView("/feedbackSuccess", model);
+        return buildModelAndView(
+                "/feedbackSuccess",
+                model,
+                new FeebackModelPopulator()
+        );
     }
 
     @RequestMapping(value = "**/feedbackSuccess", method = RequestMethod.GET)
@@ -89,14 +99,7 @@ public class FeedbackFormsController extends AbstractController {
         return buildModelAndView(
                 "feedbackSuccess",
                 model,
-                new ModelPopulator() {
-                    @Override
-                    public void populateModel(ModelMap model) {
-                        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "Thanks for submitting your data - EBI metagenomics", getBreadcrumbs(null), propertyContainer);
-                        final ViewModel defaultViewModel = builder.getModel();
-                        model.addAttribute(ViewModel.MODEL_ATTR_NAME, defaultViewModel);
-                    }
-                }
+                new FeebackModelPopulator()
         );
     }
 

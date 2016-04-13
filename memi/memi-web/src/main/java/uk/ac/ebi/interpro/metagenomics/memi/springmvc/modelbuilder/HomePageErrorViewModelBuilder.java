@@ -3,6 +3,7 @@ package uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.HomePageErrorViewModel;
@@ -39,6 +40,7 @@ public class HomePageErrorViewModelBuilder extends AbstractViewModelBuilder<Home
     public HomePageErrorViewModel getModel() {
         log.info("Building instance of " + HomePageErrorViewModel.class + "...");
         Submitter submitter = getSessionSubmitter(sessionMgr);
-        return new HomePageErrorViewModel(submitter, pageTitle, breadcrumbs, propertyContainer);
+        EBISearchForm ebiSearchForm = getEbiSearchForm(sessionMgr);
+        return new HomePageErrorViewModel(submitter, ebiSearchForm, pageTitle, breadcrumbs, propertyContainer);
     }
 }

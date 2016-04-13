@@ -13,7 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.controller.results.AbstractResultViewController;
 import uk.ac.ebi.interpro.metagenomics.memi.core.tools.MemiTools;
 import uk.ac.ebi.interpro.metagenomics.memi.core.tools.StreamCopyUtil;
-import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Run;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob;
 import uk.ac.ebi.interpro.metagenomics.memi.services.FileObjectBuilder;
@@ -291,7 +290,6 @@ public class ResultViewExportController extends AbstractResultViewController {
                 if (analysisJob != null) {
                     File fileObject = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, fileDefinition);
                     List<String> listOfChunks = MemiTools.getListOfChunkedResultFiles(fileObject);
-                    model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
                     model.addAttribute("numOfChunks", listOfChunks.size());
                 }
             }
@@ -331,7 +329,6 @@ public class ResultViewExportController extends AbstractResultViewController {
                         numberOfChunks = listOfChunks.size();
                     }
                     model.addAttribute("numOfChunks", numberOfChunks);
-                    model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
 
                 }
             }

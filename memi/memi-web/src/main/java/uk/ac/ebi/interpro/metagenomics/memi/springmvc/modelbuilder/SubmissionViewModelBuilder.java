@@ -36,6 +36,6 @@ public class SubmissionViewModelBuilder extends AbstractViewModelBuilder<Submiss
     @Override
     public SubmissionModel getModel() {
         log.info("Building instance of " + SubmissionModel.class + "...");
-        return new SubmissionModel(getSessionSubmitter(sessionMgr), pageTitle, breadcrumbs, propertyContainer);
+        return new SubmissionModel(getSessionSubmitter(sessionMgr), getEbiSearchForm(sessionMgr), pageTitle, breadcrumbs, propertyContainer);
     }
 }

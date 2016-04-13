@@ -1,6 +1,7 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
 
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 
@@ -20,6 +21,8 @@ public class ViewModel implements IViewModelParams {
 
     private LoginForm loginForm;
 
+    private EBISearchForm ebiSearchForm;
+
     //TODO: What is the base URL for?
     private final String baseURL = "";
 
@@ -37,9 +40,13 @@ public class ViewModel implements IViewModelParams {
      */
     public final static String MODEL_ATTR_NAME = "model";
 
-    public ViewModel(Submitter submitter, String pageTitle, List<Breadcrumb> breadcrumbs,
+    public ViewModel(Submitter submitter,
+                     EBISearchForm ebiSearchForm,
+                     String pageTitle,
+                     List<Breadcrumb> breadcrumbs,
                      MemiPropertyContainer propertyContainer) {
         this.submitter = submitter;
+        this.ebiSearchForm = ebiSearchForm;
         this.pageTitle = pageTitle;
         this.breadcrumbs = breadcrumbs;
         this.loginForm = new LoginForm();
@@ -50,6 +57,7 @@ public class ViewModel implements IViewModelParams {
     private Map<String, String> getDefaultMap() {
         Map<String, String> result = new HashMap<String, String>();
         result.put(TAB_CLASS_HOME_VIEW, DEFAULT_CLASS);
+        result.put(TAB_CLASS_SEARCH_VIEW, DEFAULT_CLASS);
         result.put(TAB_CLASS_SUBMIT_VIEW, DEFAULT_CLASS);
         result.put(TAB_CLASS_PROJECTS_VIEW, DEFAULT_CLASS);
         result.put(TAB_CLASS_SAMPLES_VIEW, DEFAULT_CLASS);
@@ -66,6 +74,14 @@ public class ViewModel implements IViewModelParams {
 
     public void setSubmitter(Submitter submitter) {
         this.submitter = submitter;
+    }
+
+    public EBISearchForm getEbiSearchForm() {
+        return ebiSearchForm;
+    }
+
+    public void setEbiSearchForm(EBISearchForm ebiSearchForm) {
+        this.ebiSearchForm = ebiSearchForm;
     }
 
     public String getPageTitle() {

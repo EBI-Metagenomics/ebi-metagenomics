@@ -36,6 +36,6 @@ public class FeedbackViewModelBuilder extends AbstractViewModelBuilder<FeedbackM
     @Override
     public FeedbackModel getModel() {
         log.info("Building instance of " + FeedbackModel.class + "...");
-        return new FeedbackModel(getSessionSubmitter(sessionMgr), pageTitle, breadcrumbs, propertyContainer);
+        return new FeedbackModel(getSessionSubmitter(sessionMgr), getEbiSearchForm(sessionMgr), pageTitle, breadcrumbs, propertyContainer);
     }
 }
