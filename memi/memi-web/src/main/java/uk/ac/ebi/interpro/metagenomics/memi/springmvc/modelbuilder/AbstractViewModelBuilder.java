@@ -30,10 +30,12 @@ public abstract class AbstractViewModelBuilder<E extends ViewModel> implements V
 
     protected EBISearchForm getEbiSearchForm(SessionManager sessionMgr) {
         if (sessionMgr != null) {
+            /*
             if (sessionMgr.getEbiSearchForm() == null) {
                 EBISearchForm ebiSearchForm = new EBISearchForm();
                 sessionMgr.setEbiSearchForm(ebiSearchForm);
             }
+            */
             return sessionMgr.getEbiSearchForm();
         }
         return null;
