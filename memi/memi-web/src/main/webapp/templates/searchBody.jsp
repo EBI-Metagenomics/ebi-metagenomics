@@ -30,20 +30,45 @@
             <div class="grid_18 omega">
                 <c:choose>
                     <c:when test="${not empty model.ebiSampleSearchResults}">
-                        <h3>Showing ${fn:length(model.ebiSampleSearchResults.entries)} out
-                            of ${model.ebiSampleSearchResults.numberOfHits} results</h3>
+                        <c:choose>
+                            <c:when test="${fn:length(model.ebiSampleSearchResults.entries) <= 0}">
+                                <h3>No results found</h3>
+                            </c:when>
+                            <c:otherwise>
+                                <h3>Showing ${fn:length(model.ebiSampleSearchResults.entries)} out
+                                    of ${model.ebiSampleSearchResults.numberOfHits} results</h3>
+                            </c:otherwise>
+                        </c:choose>
                         <c:choose>
                             <c:when test="${fn:length(model.ebiSampleSearchResults.entries) > 0}">
-                                <c:forEach var="result" items="${model.ebiSampleSearchResults.entries}">
-                                    <a href="${pageContext.request.contextPath}/projects/${result.project}">
-                                            ${result.project}:
-                                    </a>
-                                    <a href="${pageContext.request.contextPath}/projects/${result.project}/samples/${result.identifier}">
-                                            ${result.identifier}
-                                    </a>
-                                    : ${result.description}
-                                    <br/>
-                                </c:forEach>
+                                <table border="1" class="result">
+                                    <thead>
+                                        <tr>
+                                            <td>Project</td>
+                                            <td>Sample</td>
+                                            <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <c:forEach var="result" items="${model.ebiSampleSearchResults.entries}">
+                                        <tr>
+                                            <td>
+                                                <a href="${pageContext.request.contextPath}/projects/${result.project}">
+                                                        ${result.project}:
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="${pageContext.request.contextPath}/projects/${result.project}/samples/${result.identifier}">
+                                                        ${result.identifier}
+                                                </a>
+                                            </td>
+                                            <td>
+                                                ${result.description}
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                    </tbody>
+                                </table>
                                 <div>
                                     <input type="button" id="previousPage" value="Previous"/>
                                     <form:hidden id="currentPage" path="page"/>
