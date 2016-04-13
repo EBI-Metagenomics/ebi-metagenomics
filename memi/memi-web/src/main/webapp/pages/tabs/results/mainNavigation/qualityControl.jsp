@@ -46,38 +46,38 @@
 
                     }).always(function(){
                         $.ajax(file_summary).done(function(d){
-                            drawNumberOfReadsChart(d,numberOfLines,stats_data==null?null:stats_data["sequence_count"]);
+                            drawNumberOfReadsChart(d,numberOfLines,stats_data==null?null:stats_data["sequence_count"],file_summary);
                         });
                         $.ajax(file_length)
                                 .done(function(data){
-                                    drawSequenceLengthHistogram(data,false,stats_data);
+                                    drawSequenceLengthHistogram(data,false,stats_data,file_length);
                                 })
                                 .fail(function(){
                                     $.ajax(file_length+".sub-set")
                                             .done(function(data){
-                                                drawSequenceLengthHistogram(data,true,stats_data);
+                                                drawSequenceLengthHistogram(data,true,stats_data,file_length+".sub-set");
                                             });
                                 });
                         $.ajax(file_gc)
                                 .done(function(data){
-                                    drawSequenceGCDistribution(data,false,stats_data);
+                                    drawSequenceGCDistribution(data, false, stats_data, file_gc);
                                 })
                                 .fail(function(){
                                     $.ajax(file_gc+".sub-set")
                                             .done(function(data){
-                                                drawSequenceGCDistribution(data,true,stats_data);
+                                                drawSequenceGCDistribution(data,true,stats_data,file_gc+".sub-set");
                                             });
                                 });
                     });
 
                     $.ajax(file_base)
                             .done(function(data){
-                                drawNucleotidePositionHistogram(data);
+                                drawNucleotidePositionHistogram(data, false, file_base);
                             })
                             .fail(function(){
                                 $.ajax(file_base+".sub-set")
                                         .done(function(data){
-                                            drawNucleotidePositionHistogram(data,true);
+                                            drawNucleotidePositionHistogram(data,true, file_base+".sub-set");
                                         });
                             });
 
