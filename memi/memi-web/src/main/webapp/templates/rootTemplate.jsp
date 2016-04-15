@@ -308,12 +308,15 @@
 
 <!-- javascript for handling search box in header and search page elements -->
 <script src="${pageContext.request.contextPath}/js/ebiSearch.js" type="text/javascript"></script>
-<!--START Feedback slider functionality block -->
+<!-- JQuery datatable-->
+    <script defer="defer" src="//cdn.datatables.net/responsive/1.0.0/js/dataTables.responsive.js"></script>
+    <script defer="defer" src="${pageContext.request.contextPath}/js/jquery.dataTables.js"></script>
+
 <!-- The following line includes the feedback DIV and the feedback FORM -->
 <%@ include file="feedback/script/feedbackDiv.jsp" %>
-<div id="toTop" class="anim"><img src="${pageContext.request.contextPath}/img/ico_scroll_top.png"
-                                  alt="Scroll to top"><span class="scroll anim">To top </span></div>
-<!--Back top jQuery plugin-->
+<!--END Feedback slider functionality block -->
+<!--Back top option-->
+<div id="toTop" class="anim"><img src="${pageContext.request.contextPath}/img/ico_scroll_top.png" alt="Scroll to top"><span class="scroll anim">To top </span></div>
 <script type="text/javascript">
     $(document).ready(function () {
         $(window).scroll(function () {
@@ -329,8 +332,7 @@
         });
     });
 </script>
-<!-- End Back top jQuery plugin-->
-<!--END Feedback slider functionality block -->
+<!-- End Back top option-->
 
 </body>
 </html>
