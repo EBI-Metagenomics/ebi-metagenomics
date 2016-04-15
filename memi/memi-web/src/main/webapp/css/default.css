@@ -376,6 +376,7 @@ table.dataTable.no-footer {border-bottom: 1px solid #D5D5D5;}
 .dataTables_wrapper .dataTables_filter input { margin-left: 0.5em;}
 .dataTables_wrapper .dataTables_info {clear: both; float: left; padding-top: 0.755em;}/*showing X to X of X entries*/
 .dataTables_wrapper .dataTables_paginate {float: right; text-align: right; padding-top: 0.25em;}
+.sorting_1 {background-color: rgba(176, 196, 222, 0.11);} /*add a background-color to the column*/
 /*button navigation*/
 .dataTables_wrapper .dataTables_paginate .paginate_button { box-sizing: border-box; display: inline-block; min-width: 1.5em; padding:0.2em 0.6em; margin-left: 2px; text-align: center; text-decoration: none !important; cursor: pointer;  *cursor: hand;   color: #333333 !important;   border: 1px solid transparent;}
 .dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {color: #333333 !important;border: 1px solid #cacaca; background-color: white; background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, white), color-stop(100%, gainsboro)); /* Chrome,Safari4+ */ background: -webkit-linear-gradient(top, white 0%, gainsboro 100%);/* Chrome10+,Safari5.1+ */background: -moz-linear-gradient(top, white 0%, gainsboro 100%);/* FF3.6+ */ background: -ms-linear-gradient(top, white 0%, gainsboro 100%);/* IE10+ */ background: -o-linear-gradient(top, white 0%, gainsboro 100%); /* Opera 11.10+ */ background: linear-gradient(to bottom, white 0%, gainsboro 100%); /* W3C */} /*current button selected*/
@@ -2006,8 +2007,13 @@ table.result tbody td.table_xs_text {word-break: break-all; /*break long charact
 .sample_comp_result .ui-tabs .ui-tabs-nav .ui-tabs-anchor, .sample_ana .ui-tabs .ui-tabs-nav .ui-tabs-anchor {padding: 2px 6px;}/*comp. tool - reduce space around tabs icon*/
 .xs_hide {display:none;} /*set a global class to hide elements for small screens - easier than adding individual class*/
 #list-biomes .grid_24 a.xs_hide {display:none;} /*hide the last tow icons to avoid big scrol on small screens*/
-table.dataTable.no-footer th:nth-child(2),table.dataTable.no-footer  td:nth-child(2) {display: none;}/*remove Go category column in the table - comparison tool*/
-table.dataTable.no-footer th:nth-child(3),table.dataTable.no-footer  td:nth-child(3) {display: none;} /*remove Go ID column in the table - comparison tool*/
+/*datatable - comparison tool */
+#table th:nth-child(2), #table td:nth-child(2) {display: none;}/*remove Go category column */
+#table th:nth-child(3), #table td:nth-child(3) {display: none;} /*remove Go ID column in the table */
+/*datatable - project page */
+#associated-run th:nth-child(5), #associated-run td:nth-child(5) {display: none;}/*remove pipeline version col */
+#associated-run th:nth-child(6), #associated-run td:nth-child(6) {display: none;}/*remove analysis result col*/
+
 .xs-navtabs {display:block;}
 .xl-navtabs {display:none;}
 #fragment-download .pipeline_table thead th:first-child {width: 50%;} /*increase size first column download table*/
