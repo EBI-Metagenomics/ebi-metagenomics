@@ -343,10 +343,14 @@ background:url(../img/bgd_black_op20_8.png);
 table.dataTable {width: 100%;border-collapse: separate;}
 /*table.dataTable tbody td:nth-child(5), table.dataTable tbody td:nth-child(6) { text-align:right;}*/ /*alignment for numbers removed while we wait for column resize*/
 table.dataTable thead th, table.dataTable thead td {padding: 9px 18px; border-bottom:1px solid #D5D5D5;}
+table.dataTable.table-heading thead th {border-bottom:0px solid #D5D5D5;}
 table.dataTable thead .sorting_asc, table.dataTable thead .sorting_desc, table.dataTable thead .sorting {cursor: pointer; *cursor: hand;}
 table.dataTable thead .sorting {/*background: url("https://cdn.datatables.net/1.10.0/images/sort_both.png") no-repeat center right;*/}
 table.dataTable thead .sorting_asc {background: url(../img/ico_sort_asc.png) no-repeat center right;}
+table.dataTable.table-heading thead .sorting_asc {background: #066 url(../img/ico_sort_asc_white.png) no-repeat center right;}
+/*table.dataTable.table-heading thead .sorting_asc:after {font-family: 'EBI-Functional'; font-size: 100%; color:grey; content:'8';margin:0 1.3em;} when icon available in EBI font*/
 table.dataTable thead .sorting_desc {background: url(../img/ico_sort_desc.png) no-repeat center right;}
+table.dataTable.table-heading thead .sorting_desc {background: #066 url(../img/ico_sort_desc_white.png) no-repeat center right;}
 table.dataTable thead .sorting_asc_disabled {background: url(../img/ico_sort_asc_disabled.png) no-repeat center right;}
 table.dataTable thead .sorting_desc_disabled {background: url(../img/ico_sort_desc_disabled.png) no-repeat center right;}
 .sorting_1 {color:black;font-weight: bold;} /*sorted column*/
@@ -365,7 +369,7 @@ table.dataTable.hover tbody tr:hover, table.dataTable.hover tbody tr.odd:hover, 
 table.dataTable.no-footer {border-bottom: 1px solid #D5D5D5;}
 
 .dataTables_wrapper .dataTables_length, .dataTables_wrapper .dataTables_filter, .dataTables_wrapper .dataTables_info, .dataTables_wrapper .dataTables_processing, .dataTables_wrapper .dataTables_paginate {color: #333333;padding-left: 9px;padding-right: 9px;}
-
+.dataTables_wrapper .dataTables_filter {padding-right: 15px;}/*little extra to align filter to the table*/
 .dataTables_wrapper {position: relative;clear: both;*zoom: 1; zoom: 1;}
 .dataTables_wrapper .dataTables_length {float: left;}/*show X number of entries*/
 .dataTables_wrapper .dataTables_filter {float: right; text-align: right;}
