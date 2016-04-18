@@ -309,8 +309,9 @@
 <!-- javascript for handling search box in header and search page elements -->
 <script src="${pageContext.request.contextPath}/js/ebiSearch.js" type="text/javascript"></script>
 <!-- JQuery datatable-->
-    <script defer="defer" src="//cdn.datatables.net/responsive/1.0.0/js/dataTables.responsive.js"></script>
+    <%--<script defer="defer" src="//cdn.datatables.net/responsive/1.0.0/js/dataTables.responsive.js"></script>--%>
     <script defer="defer" src="${pageContext.request.contextPath}/js/jquery.dataTables.js"></script>
+    <script defer="defer" src="${pageContext.request.contextPath}/js/jquery.highlight.js"></script>
 
 <!-- The following line includes the feedback DIV and the feedback FORM -->
 <%@ include file="feedback/script/feedbackDiv.jsp" %>
