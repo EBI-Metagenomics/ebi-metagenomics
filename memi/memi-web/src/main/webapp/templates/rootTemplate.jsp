@@ -256,12 +256,14 @@
 
                     <fieldset>
 
-                        <div class="left">
+                        <div class="left" style="width: 75%;">
                             <label>
                                 <form:input path="searchText" id="local-searchbox" />
                             </label>
-                            <span class="examples">Examples: <a href="#">ERP002477</a>, <a href="#">Human gut</a>, <a
-                                    href="#">Host-associated: Arthropoda</a></span>
+                         <span class="examples">&nbsp; &nbsp;&nbsp;<a href="#">&nbsp;</a>&nbsp; <a href="#">&nbsp;</a>&nbsp; <a
+                                                                href="#">&nbsp;</a></span>
+                            <!-- <span class="examples">Examples: <a href="#">ERP002477</a>, <a href="#">Human gut</a>, <a
+                                    href="#">Host-associated: Arthropoda</a></span>-->
                         </div>
 
                         <div class="right">
