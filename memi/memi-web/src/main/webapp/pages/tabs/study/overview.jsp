@@ -171,8 +171,7 @@
             <%--<spring:message code="download.anchor.label.detailed"/></a>--%>
             <%--</div>--%>
 
-
-            <table border="1" class="result table-heading" id="associated-run" cellspacing="0" width="100%">
+            <table class="result table-heading" id="associated-run" >
                 <thead>
                 <tr>
                     <th>Sample Name</th>
