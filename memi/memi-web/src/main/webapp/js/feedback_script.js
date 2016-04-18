@@ -79,14 +79,14 @@ function hideFeedbackForm() {
 //        var feedbackFormRightPosition = document.getElementById("feedback_div").style.right;
     $("#feedback_div").animate({
         right: '-=437px'
-    }, 1500);
+    }, 700);
     clearFeedbackForm();
 }
 //Shows feedback form
 function showFeedbackForm() {
     $("#feedback_div").animate({
         right: '+=437px'
-    }, 1500);
+    }, 700);
 }
 
 function slideFeedbackForm() {
