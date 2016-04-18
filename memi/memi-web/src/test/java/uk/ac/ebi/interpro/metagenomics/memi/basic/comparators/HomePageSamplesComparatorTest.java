@@ -125,36 +125,20 @@ public class HomePageSamplesComparatorTest extends TestCase {
 
     @org.junit.Test
     public void testExperimentTypeSorting() {
-        Map<String, Integer> result = new TreeMap<String, Integer>(
-                new Comparator<String>() {
-                    @Override
-                    public int compare(String o1, String o2) {
-                        if (o1.equalsIgnoreCase("assemblies") || o2.equalsIgnoreCase("assemblies")) {
-                            return 1;
-                        } else if (o1.equalsIgnoreCase("metagenomics") || o2.equalsIgnoreCase("metagenomics")) {
-                            return -1;
-                        } else if (o1.equalsIgnoreCase("amplicons") || o2.equalsIgnoreCase("metatranscriptomics")) {
-                            return 1;
-                        } else if (o1.equalsIgnoreCase("metatranscriptomics") || o2.equalsIgnoreCase("amplicons")) {
-                            return -1;
-                        } else {
-                            return 0;
-                        }
-                    }
-                });
+        Map<String, Integer> result = new TreeMap<String, Integer>();
         assertEquals("Unexpected map size!", 0, result.size());
 
-        result.put("metatranscriptomics", 12);
-        result.put("amplicons", 22);
-        result.put("assemblies", 12);
-        result.put("metagenomics", 33);
+        result.put("metagenomes", 33);
+        result.put("assemblies", 11);
+        result.put("amplicons", 44);
+        result.put("metatranscriptomes", 22);
         assertEquals("Unexpected map size!", 4, result.size());
         Set<String> keySet = result.keySet();
         Object[] array = keySet.toArray();
         assertEquals(4, array.length);
-        assertEquals("metagenomics", array[0]);
-        assertEquals("metatranscriptomics", array[1]);
-        assertEquals("amplicons", array[2]);
-        assertEquals("assemblies", array[3]);
+        assertEquals("amplicons", array[0]);
+        assertEquals("assemblies", array[1]);
+        assertEquals("metagenomes", array[2]);
+        assertEquals("metatranscriptomes", array[3]);
     }
 }

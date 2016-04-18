@@ -135,32 +135,28 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
         }
     }
 
+    /**
+     * This method orders the keys of the map in a specific order.
+     *
+     * @param experimentCountMap
+     * @return
+     */
     private Map<String, Integer> transformMap(Map<String, Integer> experimentCountMap) {
-        Map<String, Integer> result = new TreeMap<String, Integer>(
-                //Comparator is tested in HomePageSamplesComparatorTest
-                new Comparator<String>() {
-                    @Override
-                    public int compare(String o1, String o2) {
-                        if (o1.equalsIgnoreCase("assemblies") || o2.equalsIgnoreCase("assemblies")) {
-                            return 1;
-                        } else if (o1.equalsIgnoreCase("metagenomics") || o2.equalsIgnoreCase("metagenomics")) {
-                            return -1;
-                        } else if (o1.equalsIgnoreCase("amplicons") || o2.equalsIgnoreCase("metatranscriptomics")) {
-                            return 1;
-                        } else if (o1.equalsIgnoreCase("metatranscriptomics") || o2.equalsIgnoreCase("amplicons")) {
-                            return -1;
-                        } else {
-                            return 0;
-                        }
-                    }
-
-                });
+        //Alphabetical sorting of the map
+        Map<String, Integer> result = new TreeMap<String, Integer>();
         for (String key : experimentCountMap.keySet()) {
             Integer value = experimentCountMap.get(key);
+            //change map keys to plural form
             if (key.equalsIgnoreCase("assembly")) {
                 result.put("assemblies", value);
+            } else if (key.equalsIgnoreCase("metatranscriptomic")) {
+                result.put("metatranscriptomes", value);
+            } else if (key.equalsIgnoreCase("metagenomic")) {
+                result.put("metagenomes", value);
+            } else if (key.equalsIgnoreCase("amplicon")) {
+                result.put("amplicons", value);
             } else {
-                result.put(key + 's', value);
+                log.warn("Unknown experiment type: " + key);
             }
         }
         return result;
