@@ -172,26 +172,25 @@
             <%--</div>--%>
 
 
-            <table border="1" class="result">
+            <table border="1" class="result table-heading" id="associated-run" cellspacing="0" width="100%">
                 <thead>
                 <tr>
-                    <th scope="col" class="h_left">Sample Name</th>
-                    <th scope="col">Sample ID</th>
-                    <th scope="col">Run ID</th>
-                    <th scope="col">Experiment type</th>
-                    <th scope="col">Version</th>
-                    <th scope="col" width="170px" class="xs_hide">Analysis results</th>
+                    <th>Sample Name</th>
+                    <th>Sample ID</th>
+                    <th>Run ID</th>
+                    <th>Experiment type</th>
+                    <th>Version</th>
+                    <th  width="170px" >Analysis results</th>
                 </tr>
                 </thead>
                 <tbody>
-                <c:set var="runCountLine" value="1"/>
+                <%--<c:set var="runCountLine" value="1"/>--%>
                 <c:forEach var="run" items="${model.runs}" varStatus="status">
                     <tr>
-
                         <!-- Only include the the sample ID once for all runs under that sample -->
-                        <c:if test="${runCountLine == 1}">
-                            <td style="background-color: rgb(244, 244, 248);" id="ordered" rowspan="${run.runCount}"
-                                class="h_left table_xs_text"><a
+                        <%--<c:if test="${runCountLine == 1}">--%>
+                            <td
+                                class="table_xs_text"><a
                                     href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${run.externalSampleId}"/>"
                                     title="Sample ${run.externalSampleId}"
                                     class="fl_uppercase_title">${run.sampleName} </a>
@@ -209,19 +208,18 @@
                                     </c:if>
                                 </c:if>
                             </td>
-                            <td class="table_xs_text" style="background-color: rgb(244, 244, 248);"
-                                rowspan="${run.runCount}">
+                            <td class="table_xs_text" >
                                     ${run.externalSampleId}
                             </td>
-                        </c:if>
-                        <c:choose>
-                            <c:when test="${runCountLine == run.runCount}">
-                                <c:set var="runCountLine" value="1"/>
-                            </c:when>
-                            <c:otherwise>
-                                <c:set var="runCountLine" value="${runCountLine + 1}"/>
-                            </c:otherwise>
-                        </c:choose>
+                        <%--</c:if>--%>
+                        <%--<c:choose>--%>
+                            <%--<c:when test="${runCountLine == run.runCount}">--%>
+                                <%--<c:set var="runCountLine" value="1"/>--%>
+                            <%--</c:when>--%>
+                            <%--<c:otherwise>--%>
+                                <%--<c:set var="runCountLine" value="${runCountLine + 1}"/>--%>
+                            <%--</c:otherwise>--%>
+                        <%--</c:choose>--%>
                         <td class="table_xs_text">
                             <c:choose>
                                 <c:when test="${run.analysisStatus == 'completed'}">
@@ -235,8 +233,8 @@
                                 </c:otherwise>
                             </c:choose>
                         </td>
-                        <td class="fl_capitalize">${run.experimentType}</td>
-                        <td style="width:60px;">
+                        <td>${run.experimentType}</td>
+                        <td style="width:5%">
                             <a href="<c:url value="${baseURL}/pipelines/${run.releaseVersion}"/>"
                                title="Pipeline version ${run.releaseVersion}">${run.releaseVersion}</a>
                         </td>
@@ -269,3 +267,44 @@
         </c:otherwise>
     </c:choose>
 </div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#associated-run').DataTable({
+            "columnDefs": [ //add style to the different columns as direct css doesn't work
+                {className:"table-align-center", "targets": [1,2,4]},
+                {className:"table-align-center fl_capitalize", "targets": [3]}
+            ],
+            "bDeferRender":true,
+            "bRetrieve":true,
+            "oLanguage": {
+                "sSearch":"Filter:"
+            },
+            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+            "fnDrawCallback": function () {
+
+                if (this.fnSettings().fnRecordsDisplay() > 10) {
+                    $('.dataTables_length').css("display", "block");
+                } else {
+                    $('.dataTables_length').css("display", "none");//Remove show all dropdown when one single result page
+                    $('.dataTables_paginate ').css("display", "none");//Remove pagination
+                }
+            }
+        });
+    });
+    $("#associated-run_filter input").addClass("filter_sp");
+
+     // Highlight the search term in the table using the filter input, using jQuery Highlight plugin
+        $('.filter_sp').keyup (function () {
+             $("#associated-run tr td").highlight($(this).val());
+               // console.log($(this).val());
+                $('#associated-run tr td').unhighlight();// highlight more than just first character entered in the text box and reiterate the span to highlight
+                $('#associated-run tr td').highlight($(this).val());
+
+        });
+    // remove highlight when click on X (clear button)
+    $('input[type=search]').on('search', function () {
+                    $('#associated-run tr td').unhighlight();
+            });
+</script>
+
