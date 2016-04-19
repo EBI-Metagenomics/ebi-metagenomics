@@ -2,11 +2,11 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<div class="container_24" id="mainContainer">
+<div class="grid_24" id="mainContainer">
 
     <h2>Search EBI Metagenomics</h2>
 
-    <div class="grid_24 clearfix" id="content">
+    <div class="grid_24">
 
         <form:form id="searchForm" method="GET" action="${pageContext.request.contextPath}/search/doEbiSearch"
                    commandName="ebiSearchForm">
@@ -18,10 +18,12 @@
                         <c:forEach var="facet" items="${model.ebiSampleSearchResults.facets}">
                             <c:if test="${fn:length(facet.values) > 0}">
                                 <h4>${facet.label}</h4>
-                                <form:checkboxes path="facets" items="${facet.values}" itemLabel="labelAndCount"
-                                                 itemValue="facetAndValue" element="div"/>
+                                <div class="extra-pad"><form:checkboxes path="facets" items="${facet.values}" itemLabel="labelAndCount"
+                                                 itemValue="facetAndValue" element="div"/> </div>
                             </c:if>
                         </c:forEach>
+                        <hr>
+                        <p><small class="text-muted">Powered by <a href="http://www.ebi.ac.uk/ebisearch/" class="ext" target="_blank">EBI Search</a></small></p>
                     </c:when>
                 </c:choose>
             </div>
@@ -33,6 +35,8 @@
                         <c:choose>
                             <c:when test="${fn:length(model.ebiSampleSearchResults.entries) <= 0}">
                                 <h3>No results found</h3>
+                                <hr>
+                                <p><small class="text-muted">Powered by <a href="http://www.ebi.ac.uk/ebisearch/" class="ext" target="_blank">EBI Search</a></small></p>
                             </c:when>
                             <c:otherwise>
                                 <h3>Showing ${fn:length(model.ebiSampleSearchResults.entries)} out
@@ -54,7 +58,7 @@
                                         <tr>
                                             <td>
                                                 <a href="${pageContext.request.contextPath}/projects/${result.project}">
-                                                        ${result.project}:
+                                                        ${result.project}
                                                 </a>
                                             </td>
                                             <td>
@@ -69,7 +73,7 @@
                                     </c:forEach>
                                     </tbody>
                                 </table>
-                                <div class="extra-pad">
+                                <div class="table-pagination">
                                     <input type="button" id="previousPage" value="Previous"/>
                                     <form:hidden id="currentPage" path="page"/>
                                     <form:hidden id="maxPage" path="maxPage"/>
@@ -81,9 +85,7 @@
                         </c:choose>
                     </c:when>
                 </c:choose>
-                <p>
-                    Powered by <a href="http://www.ebi.ac.uk/ebisearch/" target="_blank">EBI Search</a>
-                </p>
+
             </div>
 
         </form:form>
