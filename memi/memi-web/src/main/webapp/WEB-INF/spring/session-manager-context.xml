@@ -18,10 +18,19 @@
         <aop:scoped-proxy/>
     </bean>
 
+    <!-- The search form bean is property of the session manager. This makes sure that all attributes of the search form
+     object are stored within a user session -->
+    <bean id="searchFormId" class="uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm"
+          scope="session">
+        <!-- this next element effects the proxying of the surrounding bean -->
+        <aop:scoped-proxy/>
+    </bean>
+
     <!-- a singleton-scoped bean injected with a proxy to the above bean -->
     <bean id="sessionManager" class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager">
         <!-- a reference to the proxied userPreferences bean -->
         <property name="sessionBean" ref="sessionBeanRef"/>
+        <property name="ebiSearchForm" ref="searchFormId"/>
     </bean>
 
     <!-- Please use this bean to specify the path to the analysis files -->
