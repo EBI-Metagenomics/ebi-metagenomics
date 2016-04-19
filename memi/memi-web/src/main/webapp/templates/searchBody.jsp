@@ -41,12 +41,12 @@
                         </c:choose>
                         <c:choose>
                             <c:when test="${fn:length(model.ebiSampleSearchResults.entries) > 0}">
-                                <table border="1" class="result">
+                                <table border="1" class="table-light result stripe hover order-column">
                                     <thead>
                                         <tr>
-                                            <td>Project</td>
-                                            <td>Sample</td>
-                                            <td>Description</td>
+                                            <th>Project</th>
+                                            <th>Sample</th>
+                                            <th>Description</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -69,7 +69,7 @@
                                     </c:forEach>
                                     </tbody>
                                 </table>
-                                <div>
+                                <div class="extra-pad">
                                     <input type="button" id="previousPage" value="Previous"/>
                                     <form:hidden id="currentPage" path="page"/>
                                     <form:hidden id="maxPage" path="maxPage"/>
@@ -81,21 +81,11 @@
                         </c:choose>
                     </c:when>
                 </c:choose>
-                <div>
+                <p>
                     Powered by <a href="http://www.ebi.ac.uk/ebisearch/" target="_blank">EBI Search</a>
-                </div>
+                </p>
             </div>
 
         </form:form>
     </div>
 </div>
-
-<script>$(function () {
-    $("[data-toggle='tooltip']").tooltip();
-});</script>
-<script>
-    $("#expand_button").click(function () {
-        $(".more_citations").slideToggle();
-        $("#expand_button").toggleClass("min");
-    });
-</script>
