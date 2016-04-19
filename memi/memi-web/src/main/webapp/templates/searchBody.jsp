@@ -10,7 +10,7 @@
 
         <form:form id="searchForm" method="GET" action="${pageContext.request.contextPath}/search/doEbiSearch"
                    commandName="ebiSearchForm">
-            <div class="grid_6 alpha" id="facets">
+            <div class="grid_5 alpha" id="facets">
                 <c:choose>
                     <c:when test="${not empty model.ebiSampleSearchResults
                         && fn:length(model.ebiSampleSearchResults.facets) > 0}">
@@ -29,7 +29,7 @@
             </div>
 
 
-            <div class="grid_18 omega">
+            <div class="grid_19 omega">
                 <c:choose>
                     <c:when test="${not empty model.ebiSampleSearchResults}">
                         <c:choose>
@@ -45,12 +45,12 @@
                         </c:choose>
                         <c:choose>
                             <c:when test="${fn:length(model.ebiSampleSearchResults.entries) > 0}">
-                                <table border="1" class="table-light result stripe hover order-column">
+                                <table border="1" class="table-light">
                                     <thead>
                                         <tr>
                                             <th>Project</th>
                                             <th>Sample</th>
-                                            <th>Description</th>
+                                            <th width="80%">Description</th>
                                         </tr>
                                     </thead>
                                     <tbody>
