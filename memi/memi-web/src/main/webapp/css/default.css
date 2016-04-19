@@ -340,6 +340,26 @@ background:url(../img/bgd_black_op20_8.png);
 
 /**************************** TABLE ***********************************/
 
+/* MAIN TABLE - feedback form, project ov, project list, sample list*/
+.result {line-height: 1.2em; border-collapse:separate; width:100%; border-spacing:4px; padding-left:7px;/*9px is too much as we have already padding 2px in the table*/ margin-bottom: 9px;}
+.result thead th:empty{background:transparent;border:none;}
+.result thead th {font-size:120%; padding:10px; color:#fff; background-color:#708A95 /*was #006666*/; border-radius:5px 5px 0 0; box-shadow:0px 1px 1px #adadad;}
+.result tbody tr:hover {background: url(../img/bgd_black_op05_8.png);}
+.result tbody tr:nth-child(even) {background-color:#F4F4F8;}
+.result tbody tr:nth-child(odd) {background-color:#e9e9e9;}
+.result tbody td {padding:7px; vertical-align: middle; border: 1px solid #e5e5e5; border-radius:2px; color:#424242; text-shadow:1px 1px 1px #fff;  }
+.result tbody td a:hover{text-decoration:underline;/*color:red;*/}
+.table-align-center {text-align:center;}
+/* END  MAIN TABLE*/
+
+/*LIGHT TABLE*/
+.table-light {width:100%;padding:0 9px;}
+.table-light tr:nth-child(odd) {background-color: #f9f9f9;}
+.table-light tr:first-child td {border-top: 0 solid #ddd;}
+.table-light tr:last-child td {border-bottom: 1px solid #ddd;}
+.table-light tr:hover {background: url(../img/bgd_black_op05_8.png);}
+/* END  LIGHT TABLE*/
+
 /* DATATABLE - comparison tool + project */
 .dataTable {width: 100%;border-collapse: separate;}
 /*table.dataTable tbody td:nth-child(5), table.dataTable tbody td:nth-child(6) { text-align:right;}*/ /*alignment for numbers removed while we wait for column resize*/
@@ -354,17 +374,16 @@ table.dataTable.table-heading thead .sorting_asc {background: #368395  url(../im
 table.dataTable thead .sorting_desc {background: url(../img/ico_sort_desc.png) no-repeat center right;}
 table.dataTable.table-heading thead .sorting_desc {background: #368395 url(../img/ico_sort_desc_white.png) no-repeat center right;}
 
-/*Light table version*/
-.dataTable.table-light {border-collapse: collapse;}
-.dataTable.table-light thead .sorting_asc {background: #fff  url(../img/ico_sort_asc_black.png) no-repeat center right;}
-.dataTable.table-light thead .sorting_desc {background: #fff  url(../img/ico_sort_desc_black.png) no-repeat center right;}
-.dataTable.table-light thead th  {border-bottom: 1px solid #8A8A8A; color:#333; border-radius:0;  box-shadow:none; background-color: #fff; }
-.dataTable.table-light tr:nth-child(even) {background-color: #FFF;}
-/*.dataTable.table-light tr:nth-child(odd) {background-color: #f9f9f9;}*/
-/*.dataTable.table-light tr:first-child td {border-top: 0px solid #ddd;}*/
-.dataTable.table-light td {border-top: 1px solid #ddd; border-left: 0 solid #ddd; border-right: 0 solid #ddd;  border-bottom: 0 solid #ddd; padding: 8px 10px; border-radius: 0;}
-.dataTable.table-light .sorting_1 {background-color:rgba(100, 176, 197, 0.11);}
+/*Light datatable and table version*/
+.dataTable.table-light, .table-light  {border-collapse: collapse;}
+.dataTable.table-light thead .sorting_asc, .table-light thead .sorting_asc {background: #fff  url(../img/ico_sort_asc_black.png) no-repeat center right;}
+.dataTable.table-light thead .sorting_desc, .table-light thead .sorting_desc {background: #fff  url(../img/ico_sort_desc_black.png) no-repeat center right;}
+.dataTable.table-light thead th, .table-light thead th   {border-bottom: 1px solid #8A8A8A; color:#333; border-radius:0;  box-shadow:none; background-color: #fff; }
+.dataTable.table-light tr:nth-child(even), .table-light tr:nth-child(even) {background-color: #FFF;}
+.dataTable.table-light td, .table-light td  {border-top: 1px solid #ddd; border-left: 0 solid #ddd; border-right: 0 solid #ddd;  border-bottom: 0 solid #ddd; padding: 8px 10px; border-radius: 0;}
+.dataTable.table-light .sorting_1, .table-light .sorting_1  {background-color:rgba(100, 176, 197, 0.11);}
 .dataTable.table-light.hover tbody tr:hover, table.dataTable.table-light.hover tbody tr.odd:hover, table.dataTable.table-light.hover tbody tr.even:hover, table.dataTable.table-light.display tbody tr:hover, table.dataTable.table-light.display tbody tr.odd:hover, table.dataTable.table-light.display tbody tr.even:hover {background-color: rgba(154, 154, 154, 0.02);}
+.table-light.hover tbody tr:hover, .table-light.hover tbody tr.odd:hover, .table-light.hover tbody tr.even:hover, .table-light.display tbody tr:hover, .table-light.display tbody tr.odd:hover, .table-light.display tbody tr.even:hover {background-color: rgba(154, 154, 154, 0.02);}
 /*/Light table version*/
 
 .dataTable thead .sorting_asc_disabled {background: url(../img/ico_sort_asc_disabled.png) no-repeat center right;}
@@ -412,19 +431,6 @@ text-align:left;
 }
 #feedback_form table.result { margin-bottom: 0px;}
 
-
-/* MAIN TABLE - feedback form, project ov, project list, sample list*/
-.result {line-height: 1.2em; border-collapse:separate; width:100%; border-spacing:4px; padding-left:7px;/*9px is too much as we have already padding 2px in the table*/ margin-bottom: 9px;}
-.result thead th:empty{background:transparent;border:none;}
-.result thead th {font-size:120%; padding:10px; color:#fff; background-color:#708A95 /*was #006666*/; border-radius:5px 5px 0 0; box-shadow:0px 1px 1px #adadad;}
-.result tbody tr:hover {background: url(../img/bgd_black_op05_8.png);}
-.result tbody tr:nth-child(even) {background-color:#F4F4F8;}
-.result tbody tr:nth-child(odd) {background-color:#e9e9e9;}
-.result tbody td {padding:7px; vertical-align: middle; border: 1px solid #e5e5e5; border-radius:2px; color:#424242; text-shadow:1px 1px 1px #fff;  }
-.result tbody td a:hover{text-decoration:underline;/*color:red;*/}
-.table-align-center {text-align:center;}
-/*/ MAIN TABLE*/
-
 .simple_table  {padding: 0px;}
 .simple_table td {vertical-align: top;}
 
@@ -454,7 +460,7 @@ text-align:left;
 #fragment-download .pipeline_table .filesize {color: #8E8E8E; font-size:90%;}
 
 /*SEARCH TABLE*/
-.table-pagination {margin: 0 0 18px 9px;}
+.table-pagination {margin: 9px 0 18px 9px;}
 .table-pagination input[type="button"]{cursor: pointer;}
 
 /**************************** END TABLE ***********************************/
