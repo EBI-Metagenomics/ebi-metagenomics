@@ -40,7 +40,6 @@ padding: 0 9px;
 p { display: block; margin: 0 0 14px 0; clear:none;}
 
 strong, th {font-weight:bold;}
-small {font-size:80%;}
 
 ul, ol {
 list-style: disc;
@@ -53,6 +52,8 @@ ol {list-style-type: decimal;}
 ul li ul { margin:10px;}
 
 i {font-style:italic;}
+
+hr {border-top: 1px solid #eee; margin:18px 9px 9px 9px;}
 
 /*suggested change to ebi-global.css */
 div#global-masthead { border-color: rgba(255, 255, 255, 0.4); } /*like BBC top line*/
@@ -340,31 +341,46 @@ background:url(../img/bgd_black_op20_8.png);
 /**************************** TABLE ***********************************/
 
 /* DATATABLE - comparison tool + project */
-table.dataTable {width: 100%;border-collapse: separate;}
+.dataTable {width: 100%;border-collapse: separate;}
 /*table.dataTable tbody td:nth-child(5), table.dataTable tbody td:nth-child(6) { text-align:right;}*/ /*alignment for numbers removed while we wait for column resize*/
-table.dataTable thead th, table.dataTable thead td {padding: 9px 18px; border-bottom:1px solid #D5D5D5;}
+table.dataTable thead th, .dataTable thead td {padding: 9px 18px; border-bottom:1px solid #D5D5D5;}
 table.dataTable.table-heading thead th {border-bottom:0 solid #D5D5D5;}
 table.dataTable thead .sorting_asc, table.dataTable thead .sorting_desc, table.dataTable thead .sorting {cursor: pointer; *cursor: hand;}
 table.dataTable thead .sorting {/*background: url("https://cdn.datatables.net/1.10.0/images/sort_both.png") no-repeat center right;*/}
 table.dataTable thead .sorting_asc {background: url(../img/ico_sort_asc.png) no-repeat center right;}
 table.dataTable.table-heading thead .sorting_asc {background: #368395  url(../img/ico_sort_asc_white.png) no-repeat center right;}
+
 /*table.dataTable.table-heading thead .sorting_asc:after {font-family: 'EBI-Functional'; font-size: 100%; color:grey; content:'8';margin:0 1.3em;} when icon available in EBI font*/
 table.dataTable thead .sorting_desc {background: url(../img/ico_sort_desc.png) no-repeat center right;}
 table.dataTable.table-heading thead .sorting_desc {background: #368395 url(../img/ico_sort_desc_white.png) no-repeat center right;}
-table.dataTable thead .sorting_asc_disabled {background: url(../img/ico_sort_asc_disabled.png) no-repeat center right;}
-table.dataTable thead .sorting_desc_disabled {background: url(../img/ico_sort_desc_disabled.png) no-repeat center right;}
+
+/*Light table version*/
+.dataTable.table-light {border-collapse: collapse;}
+.dataTable.table-light thead .sorting_asc {background: #fff  url(../img/ico_sort_asc_black.png) no-repeat center right;}
+.dataTable.table-light thead .sorting_desc {background: #fff  url(../img/ico_sort_desc_black.png) no-repeat center right;}
+.dataTable.table-light thead th  {border-bottom: 1px solid #8A8A8A; color:#333; border-radius:0;  box-shadow:none; background-color: #fff; }
+.dataTable.table-light tr:nth-child(even) {background-color: #FFF;}
+/*.dataTable.table-light tr:nth-child(odd) {background-color: #f9f9f9;}*/
+/*.dataTable.table-light tr:first-child td {border-top: 0px solid #ddd;}*/
+.dataTable.table-light td {border-top: 1px solid #ddd; border-left: 0 solid #ddd; border-right: 0 solid #ddd;  border-bottom: 0 solid #ddd; padding: 8px 10px; border-radius: 0;}
+.dataTable.table-light .sorting_1 {background-color:rgba(100, 176, 197, 0.11);}
+.dataTable.table-light.hover tbody tr:hover, table.dataTable.table-light.hover tbody tr.odd:hover, table.dataTable.table-light.hover tbody tr.even:hover, table.dataTable.table-light.display tbody tr:hover, table.dataTable.table-light.display tbody tr.odd:hover, table.dataTable.table-light.display tbody tr.even:hover {background-color: rgba(154, 154, 154, 0.02);}
+/*/Light table version*/
+
+.dataTable thead .sorting_asc_disabled {background: url(../img/ico_sort_asc_disabled.png) no-repeat center right;}
+.dataTable thead .sorting_desc_disabled {background: url(../img/ico_sort_desc_disabled.png) no-repeat center right;}
 .sorting_1 {color:black;font-weight: bold;} /*sorted column*/
 a.next:hover, a.next:active {height:100%;}/*clash with EBI style so I have to force the height to auto*/
-table.dataTable tbody td {padding: 8px 4px;}
+.dataTable tbody td {padding: 8px 4px;}
 
-table.dataTable.row-border tbody th, table.dataTable.row-border tbody td, table.dataTable.display tbody th, table.dataTable.display tbody td {border-top: 1px solid #eeeeee;}
-table.dataTable.row-border tbody tr:first-child th, table.dataTable.row-border tbody tr:first-child td, table.dataTable.display tbody tr:first-child th, table.dataTable.display tbody tr:first-child td { border-top: none;}/*remove border for first element table*/
+.dataTable.row-border tbody th, table.dataTable.row-border tbody td, table.dataTable.display tbody th, table.dataTable.display tbody td {border-top: 1px solid #eeeeee;}
+.dataTable.row-border tbody tr:first-child th, table.dataTable.row-border tbody tr:first-child td, table.dataTable.display tbody tr:first-child th, table.dataTable.display tbody tr:first-child td { border-top: none;}/*remove border for first element table*/
 
-table.dataTable.stripe tbody tr.odd, table.dataTable.display tbody tr.odd {background-color: #ffffff;}
-table.dataTable.stripe tbody tr.even, table.dataTable.display tbody tr.even {background-color: #fafafa;}
+.dataTable.stripe tbody tr.odd, table.dataTable.display tbody tr.odd {background-color: #ffffff;}
+.dataTable.stripe tbody tr.even, table.dataTable.display tbody tr.even {background-color: #fafafa;}
 
-table.dataTable.stripe tbody tr.odd.selected, table.dataTable.display tbody tr.odd.selected, table.dataTable.stripe tbody tr.even.selected, table.dataTable.display tbody tr.even.selected {background-color: #D6E9F8;color:black; font-weight: normal;}
-table.dataTable.hover tbody tr:hover, table.dataTable.hover tbody tr.odd:hover, table.dataTable.hover tbody tr.even:hover, table.dataTable.display tbody tr:hover, table.dataTable.display tbody tr.odd:hover, table.dataTable.display tbody tr.even:hover {background-color: #E7E9F9;}
+.dataTable.stripe tbody tr.odd.selected, table.dataTable.display tbody tr.odd.selected, table.dataTable.stripe tbody tr.even.selected, table.dataTable.display tbody tr.even.selected {background-color: #D6E9F8;color:black; font-weight: normal;}
+.dataTable.hover tbody tr:hover, table.dataTable.hover tbody tr.odd:hover, table.dataTable.hover tbody tr.even:hover, table.dataTable.display tbody tr:hover, table.dataTable.display tbody tr.odd:hover, table.dataTable.display tbody tr.even:hover {background-color: #E7E9F9;}
 
 table.dataTable.no-footer {border-bottom: 1px solid #D5D5D5;}
 
@@ -400,13 +416,12 @@ text-align:left;
 /* MAIN TABLE - feedback form, project ov, project list, sample list*/
 .result {line-height: 1.2em; border-collapse:separate; width:100%; border-spacing:4px; padding-left:7px;/*9px is too much as we have already padding 2px in the table*/ margin-bottom: 9px;}
 .result thead th:empty{background:transparent;border:none;}
-.result thead th { font-size:120%; padding:10px; color:#fff; background-color:#708A95 /*was #006666*/; border-radius:5px 5px 0 0; box-shadow:0px 1px 1px #adadad;}
+.result thead th {font-size:120%; padding:10px; color:#fff; background-color:#708A95 /*was #006666*/; border-radius:5px 5px 0 0; box-shadow:0px 1px 1px #adadad;}
 .result tbody tr:hover {background: url(../img/bgd_black_op05_8.png);}
 .result tbody tr:nth-child(even) {background-color:#F4F4F8;}
 .result tbody tr:nth-child(odd) {background-color:#e9e9e9;}
 .result tbody td {padding:7px; vertical-align: middle; border: 1px solid #e5e5e5; border-radius:2px; color:#424242; text-shadow:1px 1px 1px #fff;  }
 .result tbody td a:hover{text-decoration:underline;/*color:red;*/}
-
 .table-align-center {text-align:center;}
 /*/ MAIN TABLE*/
 
@@ -437,26 +452,22 @@ text-align:left;
 #fragment-download .pipeline_table .icon-functional:before {font-size: 138%;color: #2B8A97;}
 #fragment-download .pipeline_table .icon-generic.big:before {color: #9A9A9A; font-size: 206%;}
 #fragment-download .pipeline_table .filesize {color: #8E8E8E; font-size:90%;}
-/************************ END TABLE *****************************/
+
+/*SEARCH TABLE*/
+.table-pagination {margin: 0 0 18px 9px;}
+.table-pagination input[type="button"]{cursor: pointer;}
+
+/**************************** END TABLE ***********************************/
 
 /*********************** TITLE + TEXT***************************/
 h1, h2 {font-family: helvetica, "trebuchet MS", arial, sans-serif; color:#0F6D99; /*color:#003798;*/ margin:0.83em 0;/*added for compliance*/; font-weight:normal}
 h1 {font-size:244%;}
 h2 {font-size:190%;}
 h2 span {font-size:80%; /*color: #7c8c99;*/}
-
 h3 {color:#7c8c99;font-size:160%; margin:9px 0;}
-
 h4 {font-size:140%; color:#333; margin:9px 0;}
 
-h5 {
-font-family: MyriadProRegular, sans-serif;
-color:white;    /*#2e86ec*/
-font-size:130%;
-font-weight:normal;
-margin:7px 0 ;
-padding-left:14px;
-}
+small {font-size:83%;}
 
 p, ul {font-size: 110%;color:#333; /*border:1px red solid; box-sizing: border-box;*/}
 
@@ -480,27 +491,6 @@ h2.pipeline_title {margin-bottom: 0;}
 h2.pipeline_title span {color: #7c8c99;}/*date*/
 .sidebar-allrel h2 {margin:18px 0 9px 0;}
 
-/*#sidebar-login {margin: 14px 20px 14px 20px;} */
-
-/*#sidebar-login {*/
-/*border: solid 0px black;*/
-/*background-color:white;*/
-/*padding:10px;*/
-/*box-shadow: 3px 3px 4px #b1b1b1;*/
-/*border-radius: 14px;*/
-/*}*/
-
-/*#sidebar-login h2 {*/
-/*border-radius: 14px 14px 0 0;*/
-/*padding: 2px 0 0 4px;*/
-/*margin-bottom:2px;*/
-/*}*/
-
-/*#sidebar-login img  {*/
-/*float:right;*/
-/*margin: 4px 14px 0 4px;*/
-/*}*/
-
 .step_breadcrumbs {
 margin-bottom:28px;
 border:0px solid #7C8C99;
@@ -522,7 +512,11 @@ border:0px solid #7C8C99;
 .subtitle span {font-size:80%; /*color: #7c8c99;*/}
 
 .pi_arch_title span {font-size: 140%;}
-/****************** END TITLE *************************/
+
+.extra-pad {padding-left:9px;}
+
+.text-muted {color:#999;}
+/****************** END TITLE + TEXT *************************/
 
 #submit-data {
 border: solid 0px black;
@@ -1062,9 +1056,8 @@ font-size: 140%;
 }
 /* END CAPTION for IMAGES */
 
-::-webkit-selection  { background:#7d9ca6; color:#fff; text-shadow: none; }
-::-moz-selection{ background: #7d9ca6; color:#fff; text-shadow: none; }
-::selection { background:#7d9ca6; color:#fff; text-shadow: none; }
+::-moz-selection{ background: #058dc7; color:#fff; text-shadow: none; }
+::selection { background:#058dc7; color:#fff; text-shadow: none; }
 
 
 .warning {
