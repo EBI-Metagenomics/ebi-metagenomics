@@ -2010,9 +2010,6 @@ table.result tbody td.table_xs_text {word-break: break-all; /*break long charact
 /*datatable - comparison tool */
 #table th:nth-child(2), #table td:nth-child(2) {display: none;}/*remove Go category column */
 #table th:nth-child(3), #table td:nth-child(3) {display: none;} /*remove Go ID column in the table */
-/*datatable - project page */
-#associated-run th:nth-child(5), #associated-run td:nth-child(5) {display: none;}/*remove pipeline version col */
-#associated-run th:nth-child(6), #associated-run td:nth-child(6) {display: none;}/*remove analysis result col*/
 
 .xs-navtabs {display:block;}
 .xl-navtabs {display:none;}
