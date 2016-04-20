@@ -13,7 +13,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.study.OverviewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.AbstractViewModelBuilder;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.UserManager;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -45,9 +45,9 @@ public class OverviewModelBuilder extends AbstractViewModelBuilder<OverviewModel
     private List<Publication> relatedPublications;
 
 
-    public OverviewModelBuilder(SessionManager sessionMgr, String pageTitle, List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer,
+    public OverviewModelBuilder(UserManager sessionMgr, EBISearchForm ebiSearchForm, String pageTitle, List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer,
                                 Study study, RunDAO runDAO) {
-        super(sessionMgr);
+        super(sessionMgr, ebiSearchForm);
         this.pageTitle = pageTitle;
         this.breadcrumbs = breadcrumbs;
         this.propertyContainer = propertyContainer;
@@ -63,7 +63,7 @@ public class OverviewModelBuilder extends AbstractViewModelBuilder<OverviewModel
             log.info("Building instance of " + OverviewModel.class + "...");
         }
         Submitter submitter = getSessionSubmitter(sessionMgr);
-        EBISearchForm ebiSearchForm = getEbiSearchForm(sessionMgr);
+        EBISearchForm ebiSearchForm = getEbiSearchForm();
         List<QueryRunsForProjectResult> runs = getRunsForStudyViewModel(submitter);
         buildPublicationLists();
         return new OverviewModel(submitter, ebiSearchForm, study, runs, pageTitle,

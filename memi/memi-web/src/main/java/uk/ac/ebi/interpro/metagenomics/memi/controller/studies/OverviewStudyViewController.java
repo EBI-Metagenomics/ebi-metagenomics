@@ -75,7 +75,7 @@ public class OverviewStudyViewController extends AbstractStudyViewController {
         // Assign biome CSS class to the study
         MemiTools.assignBiomeIconCSSClass(study, biomeDAO);
         String pageTitle = "Project: " + study.getStudyName() + "";
-        final ViewModelBuilder<OverviewModel> builder = new OverviewModelBuilder(sessionManager,
+        final ViewModelBuilder<OverviewModel> builder = new OverviewModelBuilder(userManager, getEbiSearchForm(),
                 pageTitle, getBreadcrumbs(study), propertyContainer, study, runDAO);
         final OverviewModel overviewModel = builder.getModel();
         overviewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_PROJECTS_VIEW);

@@ -3,8 +3,6 @@ package uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.study;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.RunDAO;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.extensions.QueryRunsForProjectResult;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.PipelineReleaseDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
@@ -13,7 +11,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.study.StudyViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.AbstractViewModelBuilder;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.UserManager;
 
 import java.io.File;
 import java.util.List;
@@ -39,9 +37,9 @@ public class StudyViewModelBuilder extends AbstractViewModelBuilder<StudyViewMod
 
     private PipelineReleaseDAO pipelineReleaseDAO;
 
-    public StudyViewModelBuilder(SessionManager sessionMgr, String pageTitle, List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer,
+    public StudyViewModelBuilder(UserManager sessionMgr, EBISearchForm ebiSearchForm, String pageTitle, List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer,
                                  Study study, PipelineReleaseDAO pipelineReleaseDAO) {
-        super(sessionMgr);
+        super(sessionMgr, ebiSearchForm);
         this.pageTitle = pageTitle;
         this.breadcrumbs = breadcrumbs;
         this.propertyContainer = propertyContainer;
@@ -55,7 +53,7 @@ public class StudyViewModelBuilder extends AbstractViewModelBuilder<StudyViewMod
             log.info("Building instance of " + StudyViewModel.class + "...");
         }
         Submitter submitter = getSessionSubmitter(sessionMgr);
-        EBISearchForm ebiSearchForm = getEbiSearchForm(sessionMgr);
+        EBISearchForm ebiSearchForm = getEbiSearchForm();
         String tabDisabledOption = getTabDisabledOption();
         return new StudyViewModel(submitter, ebiSearchForm, study, pageTitle,
                 breadcrumbs, propertyContainer, tabDisabledOption);

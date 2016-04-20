@@ -35,7 +35,8 @@ public class SubmissionController extends AbstractController {
     @RequestMapping
     public ModelAndView doGet(final ModelMap modelMap) {
         // put your initial command
-        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "Submit data", getBreadcrumbs(null), propertyContainer);
+        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(userManager, getEbiSearchForm(),
+                "Submit data", getBreadcrumbs(null), propertyContainer);
         final ViewModel submitDataModel = builder.getModel();
         submitDataModel.changeToHighlightedClass(ViewModel.TAB_CLASS_SUBMIT_VIEW);
         //Add submitter details (e.g. registration info) to the model if user is logged in
@@ -50,14 +51,14 @@ public class SubmissionController extends AbstractController {
 
         //return new ModelAndView("submission-check/intro", modelMap);
         return buildModelAndView(
-            "submission-check/intro",
-            modelMap,
-            new ModelPopulator() {
-                @Override
-                public void populateModel(ModelMap model) {
-                    modelMap.addAttribute(ViewModel.MODEL_ATTR_NAME, submitDataModel);
+                "submission-check/intro",
+                modelMap,
+                new ModelPopulator() {
+                    @Override
+                    public void populateModel(ModelMap model) {
+                        modelMap.addAttribute(ViewModel.MODEL_ATTR_NAME, submitDataModel);
+                    }
                 }
-            }
         );
     }
 

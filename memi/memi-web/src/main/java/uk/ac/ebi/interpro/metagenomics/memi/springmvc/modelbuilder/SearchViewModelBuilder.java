@@ -7,7 +7,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.SearchViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ebiSearch.EBISampleSearchResults;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.UserManager;
 
 import java.util.List;
 
@@ -25,8 +25,10 @@ public class SearchViewModelBuilder<ViewModel extends uk.ac.ebi.interpro.metagen
 
     EBISampleSearchResults sampleSearchResults;
 
-    public SearchViewModelBuilder(SessionManager sessionMgr, String pageTitle, List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer, EBISampleSearchResults sampleSearchResults) {
-        super(sessionMgr);
+    public SearchViewModelBuilder(UserManager sessionMgr, EBISearchForm ebiSearchForm, String pageTitle,
+                                  List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer,
+                                  EBISampleSearchResults sampleSearchResults) {
+        super(sessionMgr, ebiSearchForm);
         this.pageTitle = pageTitle;
         this.breadcrumbs = breadcrumbs;
         this.propertyContainer = propertyContainer;
@@ -38,7 +40,7 @@ public class SearchViewModelBuilder<ViewModel extends uk.ac.ebi.interpro.metagen
         log.info("Building instance of " + SearchViewModel.class + "...");
         return (ViewModel) new SearchViewModel(
                 getSessionSubmitter(sessionMgr),
-                getEbiSearchForm(sessionMgr),
+                getEbiSearchForm(),
                 pageTitle,
                 breadcrumbs,
                 propertyContainer,

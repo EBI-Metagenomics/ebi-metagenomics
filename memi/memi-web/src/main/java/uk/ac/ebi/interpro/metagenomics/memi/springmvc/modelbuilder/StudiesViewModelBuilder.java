@@ -18,7 +18,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.StudiesViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewPagination;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.UserManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +56,8 @@ public class StudiesViewModelBuilder extends AbstractBiomeViewModelBuilder<Studi
 
     private boolean doPagination;
 
-    public StudiesViewModelBuilder(final SessionManager sessionMgr, final String pageTitle, final List<Breadcrumb> breadcrumbs,
+    public StudiesViewModelBuilder(final UserManager sessionMgr, final EBISearchForm ebiSearchForm,
+                                   final String pageTitle, final List<Breadcrumb> breadcrumbs,
                                    final MemiPropertyContainer propertyContainer, final List<String> tableHeaderNames,
                                    final SampleDAO sampleDAO,
                                    final StudyDAO studyDAO,
@@ -64,7 +65,7 @@ public class StudiesViewModelBuilder extends AbstractBiomeViewModelBuilder<Studi
                                    final StudyFilter filter,
                                    final int startPosition,
                                    final boolean doPagination) {
-        super(sessionMgr);
+        super(sessionMgr, ebiSearchForm);
         this.pageTitle = pageTitle;
         this.breadcrumbs = breadcrumbs;
         this.propertyContainer = propertyContainer;
@@ -80,7 +81,7 @@ public class StudiesViewModelBuilder extends AbstractBiomeViewModelBuilder<Studi
     public StudiesViewModel getModel() {
         log.info("Building instance of " + StudiesViewModel.class + "...");
         Submitter submitter = getSessionSubmitter(sessionMgr);
-        EBISearchForm ebiSearchForm = getEbiSearchForm(sessionMgr);
+        EBISearchForm ebiSearchForm = getEbiSearchForm();
         String submissionAccountId = (submitter != null ? submitter.getSubmissionAccountId() : null);
 
         //Get filtered studies

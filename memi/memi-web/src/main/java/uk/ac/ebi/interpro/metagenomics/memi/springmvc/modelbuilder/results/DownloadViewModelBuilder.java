@@ -5,6 +5,7 @@ import org.apache.commons.logging.LogFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.controller.MGPortalURLCollection;
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.core.tools.MemiTools;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Run;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob;
 import uk.ac.ebi.interpro.metagenomics.memi.services.FileExistenceChecker;
@@ -12,7 +13,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.services.FileObjectBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.*;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.results.DownloadViewModel;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.UserManager;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ import java.util.Map;
 
 /**
  * Model builder class for {@link uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.results.DownloadViewModel}.
- * <p/>
+ * <p>
  * See {@link uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder} for more information of how to use.
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
@@ -44,7 +45,8 @@ public class DownloadViewModelBuilder extends AbstractResultViewModelBuilder<Dow
     private Map<String, List> downloadableFileLists;
 
 
-    public DownloadViewModelBuilder(SessionManager sessionMgr,
+    public DownloadViewModelBuilder(UserManager sessionMgr,
+                                    EBISearchForm ebiSearchForm,
                                     String pageTitle,
                                     List<Breadcrumb> breadcrumbs,
                                     MemiPropertyContainer propertyContainer,
@@ -53,7 +55,7 @@ public class DownloadViewModelBuilder extends AbstractResultViewModelBuilder<Dow
                                     Map<String, DownloadableFileDefinition> chunkedResultFilesMap,
                                     Map<String, List> downloadableFileLists,
                                     AnalysisJob analysisJob) {
-        super(sessionMgr, pageTitle, breadcrumbs, propertyContainer, null, null, null, analysisJob);
+        super(sessionMgr, ebiSearchForm, pageTitle, breadcrumbs, propertyContainer, null, null, null, analysisJob);
         this.run = run;
         this.fileDefinitionsMap = fileDefinitionsMap;
         this.chunkedResultFilesMap = chunkedResultFilesMap;
@@ -63,7 +65,7 @@ public class DownloadViewModelBuilder extends AbstractResultViewModelBuilder<Dow
     public DownloadViewModel getModel() {
         log.info("Building instance of " + DownloadViewModel.class + "...");
         final DownloadSection downloadSection = buildDownloadSection(run, fileDefinitionsMap, analysisJob);
-        return new DownloadViewModel(getSessionSubmitter(sessionMgr), getEbiSearchForm(sessionMgr), pageTitle, breadcrumbs, propertyContainer, downloadSection, analysisJob.getSample());
+        return new DownloadViewModel(getSessionSubmitter(sessionMgr), getEbiSearchForm(), pageTitle, breadcrumbs, propertyContainer, downloadSection, analysisJob.getSample());
     }
 
     private DownloadSection buildDownloadSection(final Run run,

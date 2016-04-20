@@ -10,7 +10,7 @@ import java.io.Serializable;
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
  * @since 1.0-SNAPSHOT
  */
-public class SessionBean implements Serializable {
+public class UserAuthentication implements Serializable {
 
     private Submitter submitter;
 

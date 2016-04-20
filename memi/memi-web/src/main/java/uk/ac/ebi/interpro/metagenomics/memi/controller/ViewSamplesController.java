@@ -177,7 +177,7 @@ public class ViewSamplesController extends AbstractController implements IContro
         filter.setSearchTerm(searchTerm);
 
         //The visibility parameter can only be set if a user is logged in, means a session object exists
-        if (sessionManager.getSessionBean().getSubmitter() != null) {
+        if (userManager.getUserAuthentication().getSubmitter() != null) {
             filter.setSampleVisibility((sampleVisibility != null ? sampleVisibility : SampleFilter.SampleVisibility.MY_SAMPLES));
         } else {
             filter.setSampleVisibility(SampleFilter.SampleVisibility.ALL_PUBLISHED_SAMPLES);
@@ -194,7 +194,7 @@ public class ViewSamplesController extends AbstractController implements IContro
      * Creates the MG model and adds it to the specified model map.
      */
     private void populateModel(ModelMap model, SampleFilter filter, int startPosition) {
-        final ViewModelBuilder<SamplesViewModel> builder = new SamplesViewModelBuilder(sessionManager, "Samples list",
+        final ViewModelBuilder<SamplesViewModel> builder = new SamplesViewModelBuilder(userManager, getEbiSearchForm(), "Samples list",
                 getBreadcrumbs(null), propertyContainer, getTableHeaderNames(), sampleDAO, filter, startPosition, biomeDAO);
         final SamplesViewModel samplesViewModel = builder.getModel();
         samplesViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_SAMPLES_VIEW);

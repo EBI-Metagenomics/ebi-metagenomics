@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.authentication.AuthenticationService;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.UserManager;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -31,22 +31,22 @@ public class DefaultController {
     public static final String ACCESSION_NOT_FOUND_VIEW_NAME = "accessionNotFound";
 
     @Resource
-    private SessionManager sessionManager;
+    private UserManager userManager;
 
     @Resource
     private AuthenticationService authenticationService;
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public ModelAndView indexHandler(HttpServletRequest request) {
-        if (sessionManager.getSessionBean() != null) {
-            Submitter submitter = sessionManager.getSessionBean().getSubmitter();
+        if (userManager.getUserAuthentication() != null) {
+            Submitter submitter = userManager.getUserAuthentication().getSubmitter();
             if (submitter != null) {
                 // Session has not automatically timed out so do need to perform the logout
                 if (log.isInfoEnabled()) {
                     log.info("Submitter with user name " + submitter.getLoginName() + " tries to logout...");
                 }
                 authenticationService.logout(submitter.getSessionId());
-                sessionManager.getSessionBean().removeSubmitter();
+                userManager.getUserAuthentication().removeSubmitter();
             }
         }
         String referer = request.getHeader("Referer");

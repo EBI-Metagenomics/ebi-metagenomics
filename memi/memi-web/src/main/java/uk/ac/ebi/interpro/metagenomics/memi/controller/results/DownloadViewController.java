@@ -75,7 +75,8 @@ public class DownloadViewController extends AbstractResultViewController {
         }
 
         final ViewModelBuilder<DownloadViewModel> builder = new DownloadViewModelBuilder(
-                sessionManager,
+                userManager,
+                getEbiSearchForm(),
                 pageTitle,
                 getBreadcrumbs(run),
                 propertyContainer,
