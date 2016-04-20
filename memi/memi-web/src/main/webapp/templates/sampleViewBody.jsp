@@ -62,11 +62,11 @@
             <table class="table-heading result" id="associated-run-sample">
                 <thead>
                 <tr>
-                    <th class="h_left">Run id</th>
+                    <th>Run id</th>
                     <th>Pipeline version</th>
                     <th>Experiment type</th>
                     <th>Analysis date</th>
-                    <th width="170px" class="xs_hide">Analysis results</th>
+                    <th width="170px">Analysis results</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -118,7 +118,8 @@
     $(document).ready(function () {
         $('#associated-run-sample').DataTable({
             "columnDefs": [ //add style to the different columns as direct css doesn't work
-                            {className:"table-align-center", "targets": [0,1,3]},
+                            {className:"table-align-center table_xs_text", "targets": [0,3]},
+                            {className:"table-align-center", "targets": [1]},
                             {className:"table-align-center fl_capitalize", "targets": [2]},
                             {className:"xs_hide", "targets": [4]}
                         ],
