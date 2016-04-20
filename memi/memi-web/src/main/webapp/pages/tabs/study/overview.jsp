@@ -292,20 +292,21 @@
                 }
             }
         });
+        $("#associated-run_filter input").addClass("filter_sp");
+
+             // Highlight the search term in the table using the filter input, using jQuery Highlight plugin
+                $('.filter_sp').keyup (function () {
+                     $("#associated-run tr td").highlight($(this).val());
+                       // console.log($(this).val());
+                        $('#associated-run tr td').unhighlight();// highlight more than just first character entered in the text box and reiterate the span to highlight
+                        $('#associated-run tr td').highlight($(this).val());
+
+                });
+            // remove highlight when click on X (clear button)
+            $('input[type=search]').on('search', function () {
+                            $('#associated-run tr td').unhighlight();
+                    });
     });
-    $("#associated-run_filter input").addClass("filter_sp");
 
-     // Highlight the search term in the table using the filter input, using jQuery Highlight plugin
-        $('.filter_sp').keyup (function () {
-             $("#associated-run tr td").highlight($(this).val());
-               // console.log($(this).val());
-                $('#associated-run tr td').unhighlight();// highlight more than just first character entered in the text box and reiterate the span to highlight
-                $('#associated-run tr td').highlight($(this).val());
-
-        });
-    // remove highlight when click on X (clear button)
-    $('input[type=search]').on('search', function () {
-                    $('#associated-run tr td').unhighlight();
-            });
 </script>
 
