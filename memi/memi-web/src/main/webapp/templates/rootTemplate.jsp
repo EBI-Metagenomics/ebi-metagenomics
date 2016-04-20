@@ -258,7 +258,7 @@
 
                         <div class="left" style="width: 75%;">
                             <label>
-                                <form:input path="searchText" id="local-searchbox" />
+                                <form:input path="searchText" type="search" id="local-searchbox" />
                             </label>
                          <span class="examples">&nbsp; &nbsp;&nbsp;<a href="#">&nbsp;</a>&nbsp; <a href="#">&nbsp;</a>&nbsp; <a
                                                                 href="#">&nbsp;</a></span>
