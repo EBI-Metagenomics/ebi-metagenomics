@@ -188,8 +188,7 @@
                     <tr>
                         <!-- Only include the the sample ID once for all runs under that sample -->
                         <%--<c:if test="${runCountLine == 1}">--%>
-                            <td
-                                class="table_xs_text"><a
+                            <td><a
                                     href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${run.externalSampleId}"/>"
                                     title="Sample ${run.externalSampleId}"
                                     class="fl_uppercase_title">${run.sampleName} </a>
@@ -207,7 +206,7 @@
                                     </c:if>
                                 </c:if>
                             </td>
-                            <td class="table_xs_text" >
+                            <td>
                                     ${run.externalSampleId}
                             </td>
                         <%--</c:if>--%>
@@ -219,7 +218,7 @@
                                 <%--<c:set var="runCountLine" value="${runCountLine + 1}"/>--%>
                             <%--</c:otherwise>--%>
                         <%--</c:choose>--%>
-                        <td class="table_xs_text">
+                        <td>
                             <c:choose>
                                 <c:when test="${run.analysisStatus == 'completed'}">
                                     <a title="Run ${run.externalRunIds}"
@@ -237,7 +236,7 @@
                             <a href="<c:url value="${baseURL}/pipelines/${run.releaseVersion}"/>"
                                title="Pipeline version ${run.releaseVersion}">${run.releaseVersion}</a>
                         </td>
-                        <td class="xs_hide">
+                        <td>
                             <c:choose>
                                 <c:when test="${run.analysisStatus == 'completed'}">
                                     <a title="Taxonomic analysis" class="list_sample"
@@ -271,8 +270,11 @@
     $(document).ready(function () {
         $('#associated-run').DataTable({
             "columnDefs": [ //add style to the different columns as direct css doesn't work
-                {className:"table-align-center", "targets": [1,2,4]},
-                {className:"table-align-center fl_capitalize", "targets": [3]}
+                {className:"table_xs_text", "targets": [0]},
+                {className:"table-align-center table_xs_text", "targets": [1,2]},
+                {className:"table-align-center fl_capitalize", "targets": [3]},
+                {className:"table-align-center xs_hide", "targets": [4]},
+                {className:"xs_hide", "targets": [5]}
             ],
             "bDeferRender":true,
             "bRetrieve":true,
@@ -290,20 +292,21 @@
                 }
             }
         });
+        $("#associated-run_filter input").addClass("filter_sp");
+
+             // Highlight the search term in the table using the filter input, using jQuery Highlight plugin
+                $('.filter_sp').keyup (function () {
+                     $("#associated-run tr td").highlight($(this).val());
+                       // console.log($(this).val());
+                        $('#associated-run tr td').unhighlight();// highlight more than just first character entered in the text box and reiterate the span to highlight
+                        $('#associated-run tr td').highlight($(this).val());
+
+                });
+            // remove highlight when click on X (clear button)
+            $('input[type=search]').on('search', function () {
+                            $('#associated-run tr td').unhighlight();
+                    });
     });
-    $("#associated-run_filter input").addClass("filter_sp");
 
-     // Highlight the search term in the table using the filter input, using jQuery Highlight plugin
-        $('.filter_sp').keyup (function () {
-             $("#associated-run tr td").highlight($(this).val());
-               // console.log($(this).val());
-                $('#associated-run tr td').unhighlight();// highlight more than just first character entered in the text box and reiterate the span to highlight
-                $('#associated-run tr td').highlight($(this).val());
-
-        });
-    // remove highlight when click on X (clear button)
-    $('input[type=search]').on('search', function () {
-                    $('#associated-run tr td').unhighlight();
-            });
 </script>
 
