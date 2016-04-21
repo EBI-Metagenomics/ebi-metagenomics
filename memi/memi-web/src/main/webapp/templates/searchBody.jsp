@@ -30,6 +30,7 @@
 
 
             <div class="grid_19 omega">
+                <div class="table-margin-r">
                 <c:choose>
                     <c:when test="${not empty model.ebiSampleSearchResults}">
                         <c:choose>
@@ -85,7 +86,7 @@
                         </c:choose>
                     </c:when>
                 </c:choose>
-
+                </div>
             </div>
 
         </form:form>
