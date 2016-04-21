@@ -350,6 +350,7 @@ background:url(../img/bgd_black_op20_8.png);
 .result tbody td {padding:7px; vertical-align: middle; border: 1px solid #e5e5e5; border-radius:2px; color:#424242; text-shadow:1px 1px 1px #fff;  }
 .result tbody td a:hover{text-decoration:underline;/*color:red;*/}
 .table-align-center {text-align:center;}
+.table-margin-r {margin-right:9px;}  /*need extra margin for 100%width table for EBI Template*/
 /* END  MAIN TABLE*/
 
 /*LIGHT TABLE*/
