@@ -112,16 +112,16 @@ public class SubmissionConsentCheckController extends AbstractController {
         }
 
         return buildModelAndView(
-            viewName,
-            model,
-            new ModelPopulator() {
-                @Override
-                public void populateModel(ModelMap model) {
-                    // Populate the model with additional attributes
-                    model.addAttribute("consentCheckForm", new ConsentCheckForm(true));
-                    model.addAttribute("displayUsernameBox", "none");
+                viewName,
+                model,
+                new ModelPopulator() {
+                    @Override
+                    public void populateModel(ModelMap model) {
+                        // Populate the model with additional attributes
+                        model.addAttribute("consentCheckForm", new ConsentCheckForm(true));
+                        model.addAttribute("displayUsernameBox", "none");
+                    }
                 }
-            }
         );
     }
 
@@ -223,7 +223,8 @@ public class SubmissionConsentCheckController extends AbstractController {
                 modelMap,
                 new ModelPopulator() {
                     @Override
-                    public void populateModel(ModelMap model) {}
+                    public void populateModel(ModelMap model) {
+                    }
                 }
         );
     }
@@ -252,7 +253,8 @@ public class SubmissionConsentCheckController extends AbstractController {
                 modelMap,
                 new ModelPopulator() {
                     @Override
-                    public void populateModel(ModelMap model) {}
+                    public void populateModel(ModelMap model) {
+                    }
                 }
         );
     }
@@ -270,7 +272,8 @@ public class SubmissionConsentCheckController extends AbstractController {
     }
 
     protected void populateModel(ModelMap model) {
-        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "Submit data", getBreadcrumbs(null), propertyContainer);
+        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(userManager, getEbiSearchForm(),
+                "Submit data", getBreadcrumbs(null), propertyContainer);
         final ViewModel submitDataModel = builder.getModel();
         submitDataModel.changeToHighlightedClass(ViewModel.TAB_CLASS_SUBMIT_VIEW);
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, submitDataModel);

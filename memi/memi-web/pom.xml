@@ -529,12 +529,14 @@
                     <groupId>javax.servlet</groupId>
                     <artifactId>servlet-api</artifactId>
                     <version>2.5</version>
+                    <scope>provided</scope>
                 </dependency>
 
                 <dependency>
                     <groupId>javax.servlet.jsp</groupId>
                     <artifactId>jsp-api</artifactId>
                     <version>2.1</version>
+                    <scope>provided</scope>
                 </dependency>
 
                 <dependency>
@@ -543,7 +545,6 @@
                     <version>10.2.0.2</version>
                 </dependency>
             </dependencies>
-
 
             <properties>
                 <dailyErrorAppParam>${project.build.directory}/memi-ERROR.log4j</dailyErrorAppParam>
@@ -573,7 +574,7 @@
         <profile>
             <id>prod-war</id>
             <properties>
-                <deployment.folder>/ebi/www/jlive/deploy/tc-interpro-das</deployment.folder>
+                <deployment.folder>/nfs/web_hx2/webadmin/tomcat/bases/interpro/tc-ipr-metagenomics/deploy</deployment.folder>
                 <log4j.log.file>/var/tmp/servers/tc-interpro-das/logs/metagenomics/memi.log4j</log4j.log.file>
                 <dailyErrorAppParam>/var/tmp/servers/tc-interpro-das/logs/metagenomics/memi-ERROR.log4j</dailyErrorAppParam>
                 <dailyDebugAppParam>/var/tmp/servers/tc-interpro-das/logs/metagenomics/memi-DEBUG.log4j</dailyDebugAppParam>

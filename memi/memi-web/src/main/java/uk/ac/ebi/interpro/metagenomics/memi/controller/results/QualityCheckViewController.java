@@ -78,7 +78,8 @@ public class QualityCheckViewController extends AbstractResultViewController {
         }
 
         final ViewModelBuilder<QualityCheckViewModel> builder = new QualityCheckViewModelBuilder(
-                sessionManager,
+                userManager,
+                getEbiSearchForm(),
                 pageTitle,
                 getBreadcrumbs(run),
                 propertyContainer,

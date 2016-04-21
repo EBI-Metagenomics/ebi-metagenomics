@@ -81,9 +81,9 @@ public class FeedbackFormsController extends AbstractController {
         } else {
             //return new ModelAndView(DefaultController.EXCEPTION_PAGE_VIEW_NAME, model);
             return buildModelAndView(
-                DefaultController.EXCEPTION_PAGE_VIEW_NAME,
-                model,
-                new FeebackModelPopulator()
+                    DefaultController.EXCEPTION_PAGE_VIEW_NAME,
+                    model,
+                    new FeebackModelPopulator()
             );
         }
         //return new ModelAndView("/feedbackSuccess", model);
@@ -164,8 +164,8 @@ public class FeedbackFormsController extends AbstractController {
         //Add feedback form to Velocity model
         model.put("emailMessage", message);
         //Add logged in user to Velocity model
-        if (sessionManager != null && sessionManager.getSessionBean() != null) {
-            model.put("submitter", sessionManager.getSessionBean().getSubmitter());
+        if (userManager != null && userManager.getUserAuthentication() != null) {
+            model.put("submitter", userManager.getUserAuthentication().getSubmitter());
         }
         return VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "feedback-email.vm", model);
     }
@@ -185,7 +185,8 @@ public class FeedbackFormsController extends AbstractController {
     class FeebackModelPopulator implements ModelPopulator {
         @Override
         public void populateModel(ModelMap model) {
-            final ViewModelBuilder<FeedbackModel> builder = new FeedbackViewModelBuilder(sessionManager, "Send your feedback - EBI metagenomics", getBreadcrumbs(null), propertyContainer);
+            final ViewModelBuilder<FeedbackModel> builder = new FeedbackViewModelBuilder(userManager, getEbiSearchForm(),
+                    "Send your feedback - EBI metagenomics", getBreadcrumbs(null), propertyContainer);
             final FeedbackModel feedbackViewModel = builder.getModel();
             model.addAttribute(ViewModel.MODEL_ATTR_NAME, feedbackViewModel);
         }

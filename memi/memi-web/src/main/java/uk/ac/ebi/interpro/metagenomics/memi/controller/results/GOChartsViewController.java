@@ -82,7 +82,8 @@ public class GOChartsViewController extends AbstractResultViewController {
         }
 
         final ViewModelBuilder<GOAnnotationViewModel> builder = new GOAnnotationViewModelBuilder(
-                sessionManager,
+                userManager,
+                getEbiSearchForm(),
                 pageTitle,
                 getBreadcrumbs(run),
                 propertyContainer,

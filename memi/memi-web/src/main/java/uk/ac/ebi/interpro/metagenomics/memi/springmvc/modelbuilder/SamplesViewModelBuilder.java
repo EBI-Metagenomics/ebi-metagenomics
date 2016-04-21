@@ -17,7 +17,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.SamplesViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewPagination;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.UserManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,11 +51,11 @@ public class SamplesViewModelBuilder extends AbstractBiomeViewModelBuilder<Sampl
 
     private final static int PAGE_SIZE = 10;
 
-    public SamplesViewModelBuilder(SessionManager sessionMgr, String pageTitle, List<Breadcrumb> breadcrumbs,
+    public SamplesViewModelBuilder(UserManager sessionMgr, EBISearchForm ebiSearchForm, String pageTitle, List<Breadcrumb> breadcrumbs,
                                    MemiPropertyContainer propertyContainer, List<String> tableHeaderNames,
                                    SampleDAO sampleDAO, SampleFilter filter,
                                    int startPosition, BiomeDAO biomeDAO) {
-        super(sessionMgr);
+        super(sessionMgr, ebiSearchForm);
         this.pageTitle = pageTitle;
         this.breadcrumbs = breadcrumbs;
         this.propertyContainer = propertyContainer;
@@ -70,7 +70,7 @@ public class SamplesViewModelBuilder extends AbstractBiomeViewModelBuilder<Sampl
         log.info("Building instance of " + SamplesViewModel.class + "...");
         //Get submitter and submitter Id
         Submitter submitter = getSessionSubmitter(sessionMgr);
-        EBISearchForm ebiSearchForm = getEbiSearchForm(sessionMgr);
+        EBISearchForm ebiSearchForm = getEbiSearchForm();
         String submissionAccountId = (submitter != null ? submitter.getSubmissionAccountId() : null);
         //Get filtered and sorted samples
         List<Criterion> filterCriteria = buildFilterCriteria(filter, submissionAccountId);

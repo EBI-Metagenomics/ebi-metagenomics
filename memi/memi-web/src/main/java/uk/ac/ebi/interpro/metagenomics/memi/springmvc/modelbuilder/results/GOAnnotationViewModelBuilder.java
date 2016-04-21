@@ -3,6 +3,7 @@ package uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.results;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob;
 import uk.ac.ebi.interpro.metagenomics.memi.services.FileExistenceChecker;
 import uk.ac.ebi.interpro.metagenomics.memi.services.FileObjectBuilder;
@@ -12,7 +13,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.CellularComponentGOT
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.MolecularFunctionGOTerm;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.*;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.results.GOAnnotationViewModel;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.UserManager;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ import java.util.List;
 
 /**
  * Model builder class for {@link uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.results.ResultViewModel}.
- * <p/>
+ * <p>
  * See {@link uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder} for more information of how to use.
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
@@ -30,12 +31,13 @@ public class GOAnnotationViewModelBuilder extends AbstractResultViewModelBuilder
 
     private final static Log log = LogFactory.getLog(GOAnnotationViewModelBuilder.class);
 
-    public GOAnnotationViewModelBuilder(SessionManager sessionMgr,
+    public GOAnnotationViewModelBuilder(UserManager sessionMgr,
+                                        EBISearchForm ebiSearchForm,
                                         String pageTitle,
                                         List<Breadcrumb> breadcrumbs,
                                         MemiPropertyContainer propertyContainer,
                                         AnalysisJob analysisJob) {
-        super(sessionMgr, pageTitle, breadcrumbs, propertyContainer, null, null, null, analysisJob);
+        super(sessionMgr, ebiSearchForm, pageTitle, breadcrumbs, propertyContainer, null, null, null, analysisJob);
     }
 
     public GOAnnotationViewModel getModel() {
@@ -43,7 +45,7 @@ public class GOAnnotationViewModelBuilder extends AbstractResultViewModelBuilder
         //Add GO results
         FunctionalAnalysisResult functionalAnalysisResult = loadGODataFromCSV(new FunctionalAnalysisResult());
         //
-        return new GOAnnotationViewModel(getSessionSubmitter(sessionMgr), getEbiSearchForm(sessionMgr), pageTitle, breadcrumbs, propertyContainer, functionalAnalysisResult);
+        return new GOAnnotationViewModel(getSessionSubmitter(sessionMgr), getEbiSearchForm(), pageTitle, breadcrumbs, propertyContainer, functionalAnalysisResult);
     }
 
 

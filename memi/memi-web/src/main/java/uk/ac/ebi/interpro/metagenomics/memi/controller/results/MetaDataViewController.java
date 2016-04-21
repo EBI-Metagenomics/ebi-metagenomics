@@ -74,7 +74,8 @@ public class MetaDataViewController extends AbstractResultViewController {
         }
 
         final ViewModelBuilder<MetaDataViewModel> builder = new MetaDataViewModelBuilder(
-                sessionManager,
+                userManager,
+                getEbiSearchForm(),
                 pageTitle,
                 getBreadcrumbs(run),
                 propertyContainer,

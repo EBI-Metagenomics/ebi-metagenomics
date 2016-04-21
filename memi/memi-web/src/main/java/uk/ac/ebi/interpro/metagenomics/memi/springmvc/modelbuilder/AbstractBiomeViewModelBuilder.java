@@ -2,9 +2,10 @@ package uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder;
 
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.BiomeDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.StudyDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Biome;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.UserManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +18,8 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public abstract class AbstractBiomeViewModelBuilder<E extends ViewModel> extends AbstractViewModelBuilder<E> {
-    protected AbstractBiomeViewModelBuilder(SessionManager sessionMgr) {
-        super(sessionMgr);
+    protected AbstractBiomeViewModelBuilder(UserManager sessionMgr, EBISearchForm ebiSearchForm) {
+        super(sessionMgr, ebiSearchForm);
     }
 
     protected List<Integer> getBiomeIdsByLineage(final BiomeDAO biomeDAO, final String... lineages) {

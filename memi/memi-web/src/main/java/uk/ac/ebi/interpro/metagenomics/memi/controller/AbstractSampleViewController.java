@@ -55,7 +55,8 @@ public abstract class AbstractSampleViewController extends SecuredAbstractContro
 
         List<AnalysisJob> analysisJobs = analysisJobDAO.readNonSuppressedBySampleId(sample.getId());
 
-        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, pageTitle, getBreadcrumbs(sample), propertyContainer);
+        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(userManager, getEbiSearchForm(),
+                pageTitle, getBreadcrumbs(sample), propertyContainer);
         final ViewModel defaultViewModel = builder.getModel();
         defaultViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_SAMPLES_VIEW);
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, defaultViewModel);

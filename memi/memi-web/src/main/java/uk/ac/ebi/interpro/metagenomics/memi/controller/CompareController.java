@@ -74,7 +74,8 @@ public class CompareController extends AbstractController implements IController
                 new ModelPopulator() {
                     @Override
                     public void populateModel(ModelMap model) {
-                        final ViewModelBuilder<CompareViewModel> builder = new CompareViewModelBuilder(sessionManager, "Compare runs of the same project", getBreadcrumbs(null), propertyContainer, studyDAO);
+                        final ViewModelBuilder<CompareViewModel> builder = new CompareViewModelBuilder(userManager, getEbiSearchForm(),
+                                "Compare runs of the same project", getBreadcrumbs(null), propertyContainer, studyDAO);
                         final CompareViewModel compareViewModel = builder.getModel();
                         compareViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_COMPARE_VIEW);
 
@@ -96,7 +97,8 @@ public class CompareController extends AbstractController implements IController
                     new ModelPopulator() {
                         @Override
                         public void populateModel(ModelMap model) {
-                            final ViewModelBuilder<CompareViewModel> builder = new CompareViewModelBuilder(sessionManager, "Compare runs of same project", getBreadcrumbs(null), propertyContainer, studyDAO);
+                            final ViewModelBuilder<CompareViewModel> builder = new CompareViewModelBuilder(userManager, getEbiSearchForm(),
+                                    "Compare runs of same project", getBreadcrumbs(null), propertyContainer, studyDAO);
                             final ViewModel compareViewModel = builder.getModel();
                             compareViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_COMPARE_VIEW);
                             // Retrieving list of public studies and samples + add attributes
@@ -220,7 +222,8 @@ public class CompareController extends AbstractController implements IController
                 new ModelPopulator() {
                     @Override
                     public void populateModel(ModelMap model) {
-                        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "Run comparison results", getBreadcrumbsForResultPage(), propertyContainer);
+                        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(userManager, getEbiSearchForm(),
+                                "Run comparison results", getBreadcrumbsForResultPage(), propertyContainer);
                         final ViewModel defaultViewModel = builder.getModel();
                         defaultViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_COMPARE_VIEW);
                         model.addAttribute(ViewModel.MODEL_ATTR_NAME, defaultViewModel);

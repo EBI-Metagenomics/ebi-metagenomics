@@ -6,6 +6,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.controller.studies.StudySummaryFile;
 import uk.ac.ebi.interpro.metagenomics.memi.controller.studies.StudySummaryFileFilter;
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.PipelineReleaseDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.PipelineRelease;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.services.FileExistenceChecker;
@@ -15,14 +16,14 @@ import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.Downloa
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.study.DownloadSection;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.study.DownloadViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.AbstractViewModelBuilder;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.UserManager;
 
 import java.io.File;
 import java.util.*;
 
 /**
  * Model builder class for {@link DownloadViewModel}.
- * <p/>
+ * <p>
  * See {@link uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder} for more information of how to use.
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
@@ -44,13 +45,14 @@ public class StudyDownloadViewModelBuilder extends AbstractViewModelBuilder<Down
 
     private PipelineReleaseDAO pipelineReleaseDAO;
 
-    public StudyDownloadViewModelBuilder(SessionManager sessionMgr,
+    public StudyDownloadViewModelBuilder(UserManager sessionMgr,
+                                         EBISearchForm ebiSearchForm,
                                          String pageTitle,
                                          List<Breadcrumb> breadcrumbs,
                                          MemiPropertyContainer propertyContainer,
                                          Map<String, DownloadableFileDefinition> fileDefinitionsMap,
                                          Study study, PipelineReleaseDAO pipelineReleaseDAO) {
-        super(sessionMgr);
+        super(sessionMgr, ebiSearchForm);
         this.pageTitle = pageTitle;
         this.breadcrumbs = breadcrumbs;
         this.propertyContainer = propertyContainer;
@@ -64,7 +66,7 @@ public class StudyDownloadViewModelBuilder extends AbstractViewModelBuilder<Down
             log.info("Building instance of " + DownloadViewModel.class + "...");
         }
         final SortedMap<String, DownloadSection> downloadSectionMap = buildDownloadSection(fileDefinitionsMap, study);
-        return new DownloadViewModel(getSessionSubmitter(sessionMgr), getEbiSearchForm(sessionMgr), pageTitle, breadcrumbs, propertyContainer, downloadSectionMap, study);
+        return new DownloadViewModel(getSessionSubmitter(sessionMgr), getEbiSearchForm(), pageTitle, breadcrumbs, propertyContainer, downloadSectionMap, study);
     }
 
     private SortedMap<String, DownloadSection> buildDownloadSection(final Map<String, DownloadableFileDefinition> fileDefinitionsMap,

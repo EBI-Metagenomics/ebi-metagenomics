@@ -17,7 +17,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.HomePageViewModel;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.UserManager;
 
 import java.util.*;
 
@@ -54,9 +54,9 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
     private final int maxRowNumberOfLatestItems = 15;
 
 
-    public HomePageViewModelBuilder(SessionManager sessionMgr, String pageTitle, List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer,
+    public HomePageViewModelBuilder(UserManager sessionMgr, EBISearchForm ebiSearchForm, String pageTitle, List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer,
                                     StudyDAO studyDAO, SampleDAO sampleDAO, RunDAO runDAO, BiomeDAO biomeDAO, SubmissionContactDAO submissionContactDAO) {
-        super(sessionMgr);
+        super(sessionMgr, ebiSearchForm);
         this.pageTitle = pageTitle;
         this.breadcrumbs = breadcrumbs;
         this.propertyContainer = propertyContainer;
@@ -70,7 +70,7 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
     public HomePageViewModel getModel() {
         log.info("Building instance of " + HomePageViewModel.class + "...");
         Submitter submitter = getSessionSubmitter(sessionMgr);
-        EBISearchForm ebiSearchForm = getEbiSearchForm(sessionMgr);
+        EBISearchForm ebiSearchForm = getEbiSearchForm();
         // The following values are all for the statistics section on the home page
         final Long publicSamplesCount = sampleDAO.countAllPublic();
         final Long privateSamplesCount = sampleDAO.countAllPrivate();

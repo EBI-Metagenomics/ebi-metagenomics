@@ -235,7 +235,7 @@ public class ViewStudiesController extends AbstractController implements IContro
         filter.setStudyStatus(studyStatus);
 
         //The visibility parameter can only be set if a user is logged in, means a session object exists
-        if (sessionManager.getSessionBean().getSubmitter() != null) {
+        if (userManager.getUserAuthentication().getSubmitter() != null) {
             filter.setStudyVisibility(studyVisibility);
         } else {
             filter.setStudyVisibility(StudyFilter.StudyVisibility.ALL_PUBLISHED_PROJECTS);
@@ -260,7 +260,7 @@ public class ViewStudiesController extends AbstractController implements IContro
     private void populateModel(ModelMap model, StudyFilter filter,
                                final int startPosition,
                                final boolean doPagination) {
-        final ViewModelBuilder<StudiesViewModel> builder = new StudiesViewModelBuilder(sessionManager, "Projects list",
+        final ViewModelBuilder<StudiesViewModel> builder = new StudiesViewModelBuilder(userManager, getEbiSearchForm(), "Projects list",
                 getBreadcrumbs(null), propertyContainer, getTableHeaderNames(), sampleDAO, studyDAO, biomeDAO, filter, startPosition, doPagination);
         final StudiesViewModel studiesViewModel = builder.getModel();
         studiesViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_PROJECTS_VIEW);
