@@ -347,7 +347,7 @@ background:url(../img/bgd_black_op20_8.png);
 .result tbody tr:hover {background: url(../img/bgd_black_op05_8.png);}
 .result tbody tr:nth-child(even) {background-color:#F4F4F8;}
 .result tbody tr:nth-child(odd) {background-color:#e9e9e9;}
-.result tbody td {padding:7px; vertical-align: middle; border: 1px solid #e5e5e5; border-radius:2px; color:#424242; text-shadow:1px 1px 1px #fff;  }
+.result tbody td {padding:7px; vertical-align: middle; border: 1px solid #e5e5e5; border-radius:2px; color:#424242; /*text-shadow:1px 1px 1px #fff;*/}
 .result tbody td a:hover{text-decoration:underline;/*color:red;*/}
 .table-align-center {text-align:center;}
 .table-margin-r {margin-right:9px;}  /*need extra margin for 100%width table for EBI Template*/
@@ -381,7 +381,7 @@ table.dataTable.table-heading thead .sorting_desc {background: #368395 url(../im
 .dataTable.table-light thead .sorting_desc, .table-light thead .sorting_desc {background: #fff  url(../img/ico_sort_desc_black.png) no-repeat center right;}
 .dataTable.table-light thead th, .table-light thead th   {border-bottom: 1px solid #8A8A8A; color:#333; border-radius:0;  box-shadow:none; background-color: #fff; }
 .dataTable.table-light tr:nth-child(even), .table-light tr:nth-child(even) {background-color: #FFF;}
-.dataTable.table-light td, .table-light td  {border-top: 1px solid #ddd; border-left: 0 solid #ddd; border-right: 0 solid #ddd;  border-bottom: 0 solid #ddd; padding: 8px 10px; border-radius: 0;}
+.dataTable.table-light td, .table-light td  {border-top: 1px solid #ddd; border-left: 0 solid #ddd; border-right: 0 solid #ddd;  border-bottom: 0 solid #ddd; padding:7px; border-radius: 0;}
 .dataTable.table-light .sorting_1, .table-light .sorting_1  {background-color:rgba(100, 176, 197, 0.11);}
 .dataTable.table-light.hover tbody tr:hover, table.dataTable.table-light.hover tbody tr.odd:hover, table.dataTable.table-light.hover tbody tr.even:hover, table.dataTable.table-light.display tbody tr:hover, table.dataTable.table-light.display tbody tr.odd:hover, table.dataTable.table-light.display tbody tr.even:hover {background-color: rgba(154, 154, 154, 0.02);}
 .table-light.hover tbody tr:hover, .table-light.hover tbody tr.odd:hover, .table-light.hover tbody tr.even:hover, .table-light.display tbody tr:hover, .table-light.display tbody tr.odd:hover, .table-light.display tbody tr.even:hover {background-color: rgba(154, 154, 154, 0.02);}
@@ -391,7 +391,7 @@ table.dataTable.table-heading thead .sorting_desc {background: #368395 url(../im
 .dataTable thead .sorting_desc_disabled {background: url(../img/ico_sort_desc_disabled.png) no-repeat center right;}
 .sorting_1 {color:black;font-weight: bold;} /*sorted column*/
 a.next:hover, a.next:active {height:100%;}/*clash with EBI style so I have to force the height to auto*/
-.dataTable tbody td {padding: 8px 4px;}
+/*.dataTable tbody td {padding: 8px 4px;}*/
 
 .dataTable.row-border tbody th, table.dataTable.row-border tbody td, table.dataTable.display tbody th, table.dataTable.display tbody td {border-top: 1px solid #eeeeee;}
 .dataTable.row-border tbody tr:first-child th, table.dataTable.row-border tbody tr:first-child td, table.dataTable.display tbody tr:first-child th, table.dataTable.display tbody tr:first-child td { border-top: none;}/*remove border for first element table*/
