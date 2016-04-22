@@ -68,6 +68,7 @@ public class CustomizedExceptionResolver extends SimpleMappingExceptionResolver 
     protected ModelAndView buildModelAndView(String viewName, ModelMap model, ModelPopulator populator) {
         populator.populateModel(model);
         model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
+        model.addAttribute(EBISearchForm.MODEL_ATTR_NAME, ebiSearchForm);
         return new ModelAndView(viewName, model);
     }
 
@@ -78,6 +79,7 @@ public class CustomizedExceptionResolver extends SimpleMappingExceptionResolver 
         ModelMap model = new ModelMap();
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, viewModel);
         model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
+        model.addAttribute(EBISearchForm.MODEL_ATTR_NAME, ebiSearchForm);
         return new ModelAndView(viewName, model);
     }
 
@@ -88,6 +90,7 @@ public class CustomizedExceptionResolver extends SimpleMappingExceptionResolver 
         ModelMap model = new ModelMap();
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, viewModel);
         model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
+        model.addAttribute(EBISearchForm.MODEL_ATTR_NAME, ebiSearchForm);
         return model;
     }
 
