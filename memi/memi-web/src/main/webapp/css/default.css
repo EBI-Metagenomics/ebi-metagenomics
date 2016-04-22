@@ -779,7 +779,7 @@ text-decoration:underline;
 #list-biomes .grid_24 a:hover  {color:white;text-decoration: none; background-color:  rgba(0, 0, 0, 0.25);}
 
 #list-biomes .biome_icon {margin:9px;}
-/*strechy sprite - to amake responsive sprite/biome from http://tobyj.net/responsive-sprites/*/
+/*strechy sprite - to make responsive sprite/biome from http://tobyj.net/responsive-sprites/*/
 .stretchy {margin: 0 auto;display: block; position: relative; overflow: hidden; max-width: 80px;/*sprite icon size*/}
 .stretchy .spacer {width: 100%; height: auto;}
 .stretchy .sprite {position: absolute;top: 0; left: 0; max-width: none; max-height: 2690%;}
@@ -794,8 +794,9 @@ text-decoration:underline;
 .stretchy .sprite.human_gut_b {left:-292%; top: -602%;}
 .stretchy .sprite.air_b {left:-170%; top: -724%;}
 .stretchy .sprite.wastewater_b {left:-290%; top: -724%;}
+.stretchy .sprite.plant_host_b {left: -538%; top: -482%;}
 
-/*biome homepage responsive - change size icons  for small screens */
+/*biome homepage responsive - change size icons  for small screens - NOT USED ANYMORE?*/
 @media (max-width: 768px) {
 #list-biomes .biome_icon {width: 30px; height: 30px;}
 #list-biomes .soil_b {background-position:-42px -38px;}
