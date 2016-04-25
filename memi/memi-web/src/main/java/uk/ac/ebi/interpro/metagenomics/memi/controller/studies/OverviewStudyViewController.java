@@ -1,18 +1,24 @@
 package uk.ac.ebi.interpro.metagenomics.memi.controller.studies;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonObject;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.controller.MGPortalURLCollection;
 import uk.ac.ebi.interpro.metagenomics.memi.controller.ModelProcessingStrategy;
 import uk.ac.ebi.interpro.metagenomics.memi.core.tools.MemiTools;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.RunDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.erapro.SubmissionContactDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.extensions.QueryRunsForProjectResult;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.BiomeDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.study.OverviewModel;
@@ -21,6 +27,10 @@ import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuil
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.study.OverviewModelBuilder;
 
 import javax.annotation.Resource;
+import java.util.LinkedList;
+import java.util.List;
+
+n.RequestParam;
 
 /**
  * The controller for the analysis results page.
@@ -66,6 +76,35 @@ public class OverviewStudyViewController extends AbstractStudyViewController {
     public ModelAndView ajaxLoadOverviewTab(@PathVariable final String studyId,
                                             final ModelMap model) {
         return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, getSecuredEntity(studyId), getModelViewName());
+    }
+
+    @RequestMapping(value = MGPortalURLCollection.PROJECT_OVERVIEW + "/runs")
+    public
+    @ResponseBody
+    String ajaxLoadRunData(@PathVariable final String studyId) throws JsonIOException {
+        List<QueryRunsForProjectResult> runs = new LinkedList<QueryRunsForProjectResult>();
+        Study study = getSecuredEntity(studyId);
+        if (study != null) {
+            long projectId = study.getId();
+
+            Submitter submitter = getSessionSubmitter();
+            if (submitter == null) {
+                runs = runDAO.retrieveRunsByProjectId(projectId, true);
+            } else {
+                //Check if submitter is study owner
+                if (submitter.getSubmissionAccountId().equalsIgnoreCase(study.getSubmissionAccountId())) {
+                    runs = runDAO.retrieveRunsByProjectId(projectId, false);
+                } else {
+                    runs = runDAO.retrieveRunsByProjectId(projectId, true);
+                }
+            }
+        }
+
+        Gson gson = new Gson();
+        JsonObject jsonResponse = new JsonObject();
+        jsonResponse.add("data", gson.toJsonTree(runs));
+//        System.out.println("Size of the json: " + jsonResponse.toString());
+        return jsonResponse.toString();
     }
 
     /**

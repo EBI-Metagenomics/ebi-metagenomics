@@ -171,7 +171,7 @@
             <%--<spring:message code="download.anchor.label.detailed"/></a>--%>
             <%--</div>--%>
 
-            <table class="table-heading result" id="associated-run" >
+            <table class="table-heading result" id="associated-run">
                 <thead>
                 <tr>
                     <th>Sample Name</th>
@@ -179,84 +179,84 @@
                     <th>Run ID</th>
                     <th>Experiment type</th>
                     <th>Version</th>
-                    <th  width="170px" >Analysis results</th>
+                    <th width="170px">Analysis results</th>
                 </tr>
                 </thead>
-                <tbody>
-                <%--<c:set var="runCountLine" value="1"/>--%>
-                <c:forEach var="run" items="${model.runs}" varStatus="status">
-                    <tr>
-                        <!-- Only include the the sample ID once for all runs under that sample -->
-                        <%--<c:if test="${runCountLine == 1}">--%>
-                            <td><a
-                                    href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${run.externalSampleId}"/>"
-                                    title="Sample ${run.externalSampleId}"
-                                    class="fl_uppercase_title">${run.sampleName} </a>
+                    <%--<tbody>--%>
+                    <%--<c:set var="runCountLine" value="1"/>--%>
+                    <%--<c:forEach var="run" items="${model.runs}" varStatus="status">--%>
+                    <%--<tr>--%>
+                    <%--<!-- Only include the the sample ID once for all runs under that sample -->--%>
+                    <%--&lt;%&ndash;<c:if test="${runCountLine == 1}">&ndash;%&gt;--%>
+                    <%--<td><a--%>
+                    <%--href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${run.externalSampleId}"/>"--%>
+                    <%--title="Sample ${run.externalSampleId}"--%>
+                    <%--class="fl_uppercase_title">${run.sampleName} </a>--%>
 
-                                    <%-- Show icon only for people are are logged in--%>
-                                <c:if test="${not empty model.submitter}">
-                                    <!-- Private icon-->
-                                    <c:if test="${!study.public}">
-                                        <span class="show_tooltip icon icon-functional" data-icon="L"
-                                              title="Private data"></span>
-                                    </c:if>
-                                    <c:if test="${study.public}">
-                                        <span class="show_tooltip icon icon-functional" data-icon="U"
-                                              title="Public data"></span>
-                                    </c:if>
-                                </c:if>
-                            </td>
-                            <td>
-                                    ${run.externalSampleId}
-                            </td>
-                        <%--</c:if>--%>
-                        <%--<c:choose>--%>
-                            <%--<c:when test="${runCountLine == run.runCount}">--%>
-                                <%--<c:set var="runCountLine" value="1"/>--%>
-                            <%--</c:when>--%>
-                            <%--<c:otherwise>--%>
-                                <%--<c:set var="runCountLine" value="${runCountLine + 1}"/>--%>
-                            <%--</c:otherwise>--%>
-                        <%--</c:choose>--%>
-                        <td>
-                            <c:choose>
-                                <c:when test="${run.analysisStatus == 'completed'}">
-                                    <a title="Run ${run.externalRunIds}"
-                                       href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${run.externalSampleId}/runs/${run.externalRunIds}/results/versions/${run.releaseVersion}"/>">
-                                            ${run.externalRunIds}
-                                    </a>
-                                </c:when>
-                                <c:otherwise>
-                                    ${run.externalRunIds}
-                                </c:otherwise>
-                            </c:choose>
-                        </td>
-                        <td>${run.experimentType}</td>
-                        <td style="width:5%">
-                            <a href="<c:url value="${baseURL}/pipelines/${run.releaseVersion}"/>"
-                               title="Pipeline version ${run.releaseVersion}">${run.releaseVersion}</a>
-                        </td>
-                        <td>
-                            <c:choose>
-                                <c:when test="${run.analysisStatus == 'completed'}">
-                                    <a title="Taxonomic analysis" class="list_sample"
-                                       href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${run.externalSampleId}/runs/${run.externalRunIds}/results/versions/${run.releaseVersion}#ui-id-6"/>">Taxonomy </a>|
-                                    <c:if test="${run.experimentType != 'amplicon'}">
-                                        <a title="Function analysis" class="list_sample"
-                                           href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${run.externalSampleId}/runs/${run.externalRunIds}/results/versions/${run.releaseVersion}#ui-id-8"/>">Function </a>|
-                                    </c:if>
-                                    <a title="Download results"
-                                       class="icon icon-functional list_sample" data-icon="="
-                                       href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${run.externalSampleId}/runs/${run.externalRunIds}/results/versions/${run.releaseVersion}#ui-id-10"/>"></a>
-                                </c:when>
-                                <c:otherwise>
-                                    ${run.analysisStatus}
-                                </c:otherwise>
-                            </c:choose>
-                        </td>
-                    </tr>
-                </c:forEach>
-                </tbody>
+                    <%--&lt;%&ndash; Show icon only for people are are logged in&ndash;%&gt;--%>
+                    <%--<c:if test="${not empty model.submitter}">--%>
+                    <%--<!-- Private icon-->--%>
+                    <%--<c:if test="${!study.public}">--%>
+                    <%--<span class="show_tooltip icon icon-functional" data-icon="L"--%>
+                    <%--title="Private data"></span>--%>
+                    <%--</c:if>--%>
+                    <%--<c:if test="${study.public}">--%>
+                    <%--<span class="show_tooltip icon icon-functional" data-icon="U"--%>
+                    <%--title="Public data"></span>--%>
+                    <%--</c:if>--%>
+                    <%--</c:if>--%>
+                    <%--</td>--%>
+                    <%--<td>--%>
+                    <%--${run.externalSampleId}--%>
+                    <%--</td>--%>
+                    <%--&lt;%&ndash;</c:if>&ndash;%&gt;--%>
+                    <%--&lt;%&ndash;<c:choose>&ndash;%&gt;--%>
+                    <%--&lt;%&ndash;<c:when test="${runCountLine == run.runCount}">&ndash;%&gt;--%>
+                    <%--&lt;%&ndash;<c:set var="runCountLine" value="1"/>&ndash;%&gt;--%>
+                    <%--&lt;%&ndash;</c:when>&ndash;%&gt;--%>
+                    <%--&lt;%&ndash;<c:otherwise>&ndash;%&gt;--%>
+                    <%--&lt;%&ndash;<c:set var="runCountLine" value="${runCountLine + 1}"/>&ndash;%&gt;--%>
+                    <%--&lt;%&ndash;</c:otherwise>&ndash;%&gt;--%>
+                    <%--&lt;%&ndash;</c:choose>&ndash;%&gt;--%>
+                    <%--<td>--%>
+                    <%--<c:choose>--%>
+                    <%--<c:when test="${run.analysisStatus == 'completed'}">--%>
+                    <%--<a title="Run ${run.externalRunIds}"--%>
+                    <%--href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${run.externalSampleId}/runs/${run.externalRunIds}/results/versions/${run.releaseVersion}"/>">--%>
+                    <%--${run.externalRunIds}--%>
+                    <%--</a>--%>
+                    <%--</c:when>--%>
+                    <%--<c:otherwise>--%>
+                    <%--${run.externalRunIds}--%>
+                    <%--</c:otherwise>--%>
+                    <%--</c:choose>--%>
+                    <%--</td>--%>
+                    <%--<td>${run.experimentType}</td>--%>
+                    <%--<td style="width:5%">--%>
+                    <%--<a href="<c:url value="${baseURL}/pipelines/${run.releaseVersion}"/>"--%>
+                    <%--title="Pipeline version ${run.releaseVersion}">${run.releaseVersion}</a>--%>
+                    <%--</td>--%>
+                    <%--<td>--%>
+                <c:choose>
+                    <c:when test="${run.analysisStatus == 'completed'}">
+                        <a title="Taxonomic analysis" class="list_sample"
+                           href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${run.externalSampleId}/runs/${run.externalRunIds}/results/versions/${run.releaseVersion}#ui-id-6"/>">Taxonomy </a>|
+                        <c:if test="${run.experimentType != 'amplicon'}">
+                            <a title="Function analysis" class="list_sample"
+                               href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${run.externalSampleId}/runs/${run.externalRunIds}/results/versions/${run.releaseVersion}#ui-id-8"/>">Function </a>|
+                        </c:if>
+                        <a title="Download results"
+                           class="icon icon-functional list_sample" data-icon="="
+                           href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${run.externalSampleId}/runs/${run.externalRunIds}/results/versions/${run.releaseVersion}#ui-id-10"/>"></a>
+                    </c:when>
+                    <c:otherwise>
+                        ${run.analysisStatus}
+                    </c:otherwise>
+                </c:choose>
+                    <%--</td>--%>
+                    <%--</tr>--%>
+                    <%--</c:forEach>--%>
+                    <%--</tbody>--%>
             </table>
 
         </c:when>
@@ -270,42 +270,84 @@
     $(document).ready(function () {
         $('#associated-run').DataTable({
             "columnDefs": [ //add style to the different columns as direct css doesn't work
-                {className:"table_xs_text", "targets": [0]},
-                {className:"table-align-center table_xs_text", "targets": [1,2]},
-                {className:"table-align-center fl_capitalize", "targets": [3]},
-                {className:"table-align-center xs_hide", "targets": [4]},
-                {className:"xs_hide", "targets": [5]}
+                {className: "table_xs_text", "targets": [0]},
+                {className: "table-align-center table_xs_text", "targets": [1, 2]},
+                {className: "table-align-center fl_capitalize", "targets": [3]},
+                {className: "table-align-center xs_hide", "targets": [4]},
+                {className: "xs_hide", "targets": [5]}
             ],
-            "bDeferRender":true,
-            "bRetrieve":true,
             "oLanguage": {
-                "sSearch":"Filter:"
+                "sSearch": "Filter:"
             },
-            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-            "fnDrawCallback": function () {
-
-                if (this.fnSettings().fnRecordsDisplay() > 10) {
-                    $('.dataTables_length').css("display", "block");
-                } else {
-                    $('.dataTables_length').css("display", "none");//Remove show all dropdown when one single result page
-                    $('.dataTables_paginate ').css("display", "none");//Remove pagination
+            "lengthMenu": [[25, 50, 100, -1], [25, 50, 100, "All"]],
+//            "fnDrawCallback": function () {
+//
+//                if (this.fnSettings().fnRecordsDisplay() > 10) {
+//                    $('.dataTables_length').css("display", "block");
+//                } else {
+//                    $('.dataTables_length').css("display", "none");//Remove show all dropdown when one single result page
+//                    $('.dataTables_paginate ').css("display", "none");//Remove pagination
+//                }
+//            },
+            "processing": true,
+            "ajax": {
+                "type": "GET",
+                "url": "<c:url value="${baseURL}/projects/${study.studyId}/overview/runs"/>",
+                "contentType": 'application/json; charset=utf-8',
+                "data": function (data) {
+                    return JSON.stringify(data);
                 }
-            }
+            },
+            "columns": [
+                { // render sample name with hyperlink
+                    "data": function (data, type, row, meta) {
+                        return '<a class="fl_uppercase_title" title="Sample ' + data.externalSampleId + '" href="' + '<c:url value="${baseURL}/projects/${study.studyId}/samples/"/>' + data.externalSampleId + '">' + data.sampleName + '</a>';
+                    }
+                },
+                {"data": "externalSampleId"},// render external sample id
+//                {"data": "externalRunIds"},
+                { // render external run id with hyperlink
+                    "data": function (data, type, row, meta) {
+                        return '<a title="Run ' + data.externalSampleId + '" href="' + '<c:url value="${baseURL}/projects/${study.studyId}/samples/"/>' + data.externalSampleId + '/runs/' + data.externalRunIds + '/results/versions/' + data.releaseVersion + '">' + data.externalRunIds + '</a>';
+                    }
+                },
+                {"data": "experimentType"}, // render experiment type
+                { // render pipeline version
+                    "data": function (data, type, row, meta) {
+                        return '<a title="Pipeline version ' + data.releaseVersion + '" href="' + '<c:url value="${baseURL}/pipelines/"/>' + data.releaseVersion + '">' + data.releaseVersion + '</a>';
+                    }
+                },
+                // render analysis results
+                { // render hyperlinks to analysis results
+                    "data": function (data, type, row, meta) {
+                        if (data.analysisStatus == 'completed') {
+                            var outputStr = '<a title="Taxonomic analysis" class="list_sample" href="' + '<c:url value="${baseURL}/projects/${study.studyId}/samples/"/>' + data.externalSampleId + '/runs/' + data.externalRunIds + '/results/versions/' + data.releaseVersion + '#ui-id-6">Taxonomy </a>|';
+                            if (data.experimentType != 'amplicon') {
+                                outputStr += '<a title="Function analysis" class="list_sample" href="' + '<c:url value="${baseURL}/projects/${study.studyId}/samples/"/>' + data.externalSampleId + '/runs/' + data.externalRunIds + '/results/versions/' + data.releaseVersion + '#ui-id-8"> Function </a>|';
+                            }
+                            outputStr += '<a title="Download results" class="icon icon-functional list_sample" data-icon="=" href="' + '<c:url value="${baseURL}/projects/${study.studyId}/samples/"/>' + data.externalSampleId + '/runs/' + data.externalRunIds + '/results/versions/' + data.releaseVersion + '#ui-id-10"> </a>';
+                            return outputStr;
+                        } else {
+                            return data.analysisStatus;
+                        }
+                    }
+                }
+            ]
         });
         $("#associated-run_filter input").addClass("filter_sp");
 
-             // Highlight the search term in the table using the filter input, using jQuery Highlight plugin
-                $('.filter_sp').keyup (function () {
-                     $("#associated-run tr td").highlight($(this).val());
-                       // console.log($(this).val());
-                        $('#associated-run tr td').unhighlight();// highlight more than just first character entered in the text box and reiterate the span to highlight
-                        $('#associated-run tr td').highlight($(this).val());
+        // Highlight the search term in the table using the filter input, using jQuery Highlight plugin
+        $('.filter_sp').keyup(function () {
+            $("#associated-run tr td").highlight($(this).val());
+            // console.log($(this).val());
+            $('#associated-run tr td').unhighlight();// highlight more than just first character entered in the text box and reiterate the span to highlight
+            $('#associated-run tr td').highlight($(this).val());
 
-                });
-            // remove highlight when click on X (clear button)
-            $('input[type=search]').on('search', function () {
-                            $('#associated-run tr td').unhighlight();
-                    });
+        });
+        // remove highlight when click on X (clear button)
+        $('input[type=search]').on('search', function () {
+            $('#associated-run tr td').unhighlight();
+        });
     });
 
 </script>
