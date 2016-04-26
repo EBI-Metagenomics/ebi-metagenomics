@@ -30,7 +30,6 @@ import javax.annotation.Resource;
 import java.util.LinkedList;
 import java.util.List;
 
-n.RequestParam;
 
 /**
  * The controller for the analysis results page.
