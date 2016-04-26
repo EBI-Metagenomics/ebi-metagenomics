@@ -11,6 +11,7 @@ public class EBISampleSearchEntry {
 
     String identifier;
     URL url;
+    String name;
     String description;
     String project;
     String taxonomy;
@@ -31,6 +32,14 @@ public class EBISampleSearchEntry {
 
     public void setUrl(URL url) {
         this.url = url;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {
