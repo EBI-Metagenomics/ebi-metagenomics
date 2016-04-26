@@ -105,7 +105,7 @@ public abstract class SecuredAbstractController<T extends SecureEntity> extends 
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, viewModel);
         //return new ModelAndView(viewName, model);
         return buildModelAndView(
-                getModelViewName(),
+                viewName,
                 model,
                 new ModelPopulator() {
                     @Override
