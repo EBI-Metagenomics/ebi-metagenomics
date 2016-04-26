@@ -77,7 +77,7 @@ public abstract class SecuredAbstractController<T extends SecureEntity> extends 
             return null;
         }
         return buildModelAndView(
-                getModelViewName(),
+                viewName,
                 model,
                 new ModelPopulator() {
                     @Override
