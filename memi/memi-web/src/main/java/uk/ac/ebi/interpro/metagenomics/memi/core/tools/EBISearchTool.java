@@ -35,6 +35,8 @@ public class EBISearchTool {
     private final static String BIOME = "biome";
     private final static String EXPERIMENT = "experiment_type";
 
+    private final static String GET_ALL_QUERY = "domain_source:metagenomics";
+
     EBeyeClient client;
 
     public EBISearchTool() {
@@ -82,9 +84,15 @@ public class EBISearchTool {
         EBISampleSearchResults results = new EBISampleSearchResults();
 
         try {
+
+            String searchText = searchForm.getSearchText();
+            if (searchText == null || searchText.matches("^\\s*$")) {
+                searchText = GET_ALL_QUERY;
+            }
+
             WsResult searchResults = client.getFacetedResults(
                     DOMAIN,
-                    searchForm.getSearchText(),
+                    searchText,
                     resultFields,
                     ((searchForm.getPage()-1) * searchForm.getResultsPerPage()),
                     searchForm.getResultsPerPage(),
