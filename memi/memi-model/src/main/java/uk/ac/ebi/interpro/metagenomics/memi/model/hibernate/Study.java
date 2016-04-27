@@ -25,20 +25,16 @@ public class Study implements SecureEntity, BiomeEntity {
     @Column(name = "EXT_STUDY_ID", length = 18, nullable = false)
     private String studyId;
 
-    @Column(name = "STUDY_NAME")
+    @Column(name = "STUDY_NAME", length = 255)
     private String studyName;
 
     /**
      * NCBI BioProject ID
      */
-    @Column(name = "NCBI_PROJECT_ID")
+    @Column(name = "NCBI_PROJECT_ID",  columnDefinition = "INT(11)")
     private Long ncbiProjectId;
 
-    //Deprecated - Replaced by  submissionAccountId
-//    @Column(name = "SUBMITTER_ID")
-//    private Long submitterId;
-
-    @Column(name = "SUBMISSION_ACCOUNT_ID")
+    @Column(name = "SUBMISSION_ACCOUNT_ID", length = 15)
     private String submissionAccountId;
 
     @Column(name = "STUDY_Status", length = 30)
@@ -53,14 +49,14 @@ public class Study implements SecureEntity, BiomeEntity {
      * Date when we received the last meta data or a substantial update.
      */
     @Temporal(TemporalType.DATE)
-    @Column(name = "LAST_UPDATE", columnDefinition = "DATE DEFAULT CURRENT_DATE", nullable = false)
+    @Column(name = "LAST_UPDATE", columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP", nullable = false)
     private Date lastMetadataReceived;
 
     /**
      * Date when we the study was inserted in EMG for the first time.
      */
     @Temporal(TemporalType.DATE)
-    @Column(name = "FIRST_CREATED", columnDefinition = "DATE DEFAULT SYSDATE", nullable = false)
+    @Column(name = "FIRST_CREATED", columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP", nullable = false)
     private Date firstCreated;
 
 
@@ -68,33 +64,32 @@ public class Study implements SecureEntity, BiomeEntity {
      * Associated publication.
      */
     @ManyToMany
+    @JoinTable(
+            name = "STUDY_PUBLICATION",
+            joinColumns = {@JoinColumn(name = "PUB_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "STUDY_ID")}
+    )
     private Set<Publication> publications;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "study")
     @Column(name = "Study_ID")
     private Set<Sample> samples;
 
-    @Column(name = "CENTRE_NAME")
+    @Column(name = "CENTRE_NAME", length = 255)
     private String centreName;
 
     @Column(name = "STUDY_ABSTRACT")
     @Lob
     private String studyAbstract;
 
-    @Column(name = "EXPERIMENTAL_FACTOR")
+    @Column(name = "EXPERIMENTAL_FACTOR", length = 255)
     private String experimentalFactor;
 
     /**
      * Default value is private.
      */
-    @Column(name = "IS_PUBLIC")
+    @Column(name = "IS_PUBLIC",  columnDefinition = "TINYINT(4)")
     private Integer isPublic;
-
-    /**
-     * Holds an optional URL to the study's website.
-     */
-    @Column(name = "STUDY_LINKOUT")
-    private String studyPageURL;
 
     /**
      * Specifies the origination of the study.<br>
@@ -112,14 +107,14 @@ public class Study implements SecureEntity, BiomeEntity {
     @Column(name = "AUTHOR_EMAIL", length = 100)
     private String authorEmailAddress;
 
-    @Column(name = "RESULT_DIRECTORY", length = 100, nullable = true)
+    @Column(name = "RESULT_DIRECTORY", length = 100)
     private String resultDirectory;
 
     @Transient
     private Long sampleCount;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "BIOME_ID", nullable = true)
+    @JoinColumn(name = "BIOME_ID")
     private Biome biome;
 
     @Transient
@@ -177,15 +172,6 @@ public class Study implements SecureEntity, BiomeEntity {
     public void setNcbiProjectId(Long ncbiProjectId) {
         this.ncbiProjectId = ncbiProjectId;
     }
-
-//    public Long getSubmitterId() {
-//        return submitterId;
-//    }
-//
-//    public void setSubmitterId(Long submitterId) {
-//        this.submitterId = submitterId;
-//    }
-
 
     public String getSubmissionAccountId() {
         return submissionAccountId;
@@ -319,14 +305,6 @@ public class Study implements SecureEntity, BiomeEntity {
         return "private";
     }
 
-    public String getStudyPageURL() {
-        return studyPageURL;
-    }
-
-    public void setStudyPageURL(String studyPageURL) {
-        this.studyPageURL = studyPageURL;
-    }
-
     public Date getLastMetadataReceived() {
         return lastMetadataReceived;
     }
@@ -437,7 +415,6 @@ public class Study implements SecureEntity, BiomeEntity {
         if (!studyAbstract.equals(study.studyAbstract)) return false;
         if (studyId != null ? !studyId.equals(study.studyId) : study.studyId != null) return false;
         if (!studyName.equals(study.studyName)) return false;
-        if (!studyPageURL.equals(study.studyPageURL)) return false;
         if (studyStatus != study.studyStatus) return false;
         if (!resultDirectory.equals(study.resultDirectory)) return false;
 
@@ -462,7 +439,6 @@ public class Study implements SecureEntity, BiomeEntity {
         result = 31 * result + (studyAbstract == null ? 0 : studyAbstract.hashCode());
         result = 31 * result + (experimentalFactor == null ? 0 : experimentalFactor.hashCode());
         result = 31 * result + (isPublic == null ? 0 : isPublic.hashCode());
-        result = 31 * result + (studyPageURL == null ? 0 : studyPageURL.hashCode());
         result = 31 * result + (resultDirectory == null ? 0 : resultDirectory.hashCode());
         return result;
     }

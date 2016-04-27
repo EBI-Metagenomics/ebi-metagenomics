@@ -32,7 +32,7 @@
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop>
-                <prop key="hibernate.show_sql">false</prop>
+                <prop key="hibernate.show_sql">true</prop>
                 <prop key="hibernate.format_sql">true</prop>
                 <prop key="hibernate.use_sql_comments">false</prop>
                 <!--Do not use the create value before you build up a sql dump of the hibernate tables-->
@@ -63,10 +63,6 @@
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Publication</value>
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study</value>
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample</value>
-                <!--<value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.EnvironmentSample</value>-->
-                <!--<value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.HostSample</value>-->
-                <!--<value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.EngineeredSample</value>-->
-                <!--<value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.UndefinedSample</value>-->
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.PipelineRelease</value>
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.PipelineTool</value>
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.PipelineReleaseTool</value>

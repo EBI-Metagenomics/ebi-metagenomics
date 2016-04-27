@@ -121,6 +121,11 @@ public class Sample implements SecureEntity, BiomeEntity {
      * Associated publication.
      */
     @ManyToMany
+    @JoinTable(
+            name = "SAMPLE_PUBLICATION",
+            joinColumns = {@JoinColumn(name = "PUB_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "SAMPLE_ID")}
+    )
     private Set<Publication> publications;
 
     public Sample() {

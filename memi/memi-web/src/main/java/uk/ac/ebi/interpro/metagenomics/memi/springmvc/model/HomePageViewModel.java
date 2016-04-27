@@ -58,9 +58,9 @@ public final class HomePageViewModel extends ViewModel {
 
     private int privateRunCount;
 
-    private Map<String, Integer> experimentCountMap;
+    private Map<String, Long> experimentCountMap;
 
-    private Integer numOfDataSets;
+    private Long numOfDataSets;
 
     private Map<String, Long> studyToSampleCountMap;
 
@@ -79,8 +79,8 @@ public final class HomePageViewModel extends ViewModel {
                              final int publicRunCount,
                              final int privateRunCount,
                              final Map<String, Long> biomeCountMap,
-                             final Map<String, Integer> experimentCountMap,
-                             final Integer numOfDataSets,
+                             final Map<String, Long> experimentCountMap,
+                             final Long numOfDataSets,
                              final Map<String, Long> studyToSampleCountMap,
                              final Map<String, Long> studyToRunCountMap) {
         super(submitter, pageTitle, breadcrumbs, propertyContainer);
@@ -203,11 +203,11 @@ public final class HomePageViewModel extends ViewModel {
         this.biomeMap = biomeMap;
     }
 
-    public Map<String, Integer> getExperimentCountMap() {
+    public Map<String, Long> getExperimentCountMap() {
         return experimentCountMap;
     }
 
-    public Integer getNumOfDataSets() {
+    public Long getNumOfDataSets() {
         return numOfDataSets;
     }
 
