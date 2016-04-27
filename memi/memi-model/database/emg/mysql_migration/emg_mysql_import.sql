@@ -3,26 +3,26 @@
 -- Author: Maxim Scheremetjew, EMBL-EBI, InterPro
 
 -- Drop table statements
--- drop table emg.ANALYSIS_JOB;
--- drop table emg.ANALYSIS_STATUS;
--- drop table emg.EXPERIMENT_TYPE;
--- drop table emg.PIPELINE_RELEASE_TOOL;
--- drop table emg.PIPELINE_RELEASE;
--- drop table emg.PIPELINE_TOOL;
--- -- 
--- drop table SAMPLE_PUBLICATION;
--- drop table STUDY_PUBLICATION;
--- drop table PUBLICATION;
--- --  
--- drop table emg.SAMPLE_ANN;
--- drop table emg.sample;
--- drop table emg.GSC_CV_CV; 
--- drop table emg.VARIABLE_NAMES;
--- -- 
--- drop table emg.STUDY;
--- drop table emg.BIOME_HIERARCHY_TREE;
+drop table emg.ANALYSIS_JOB;
+drop table emg.ANALYSIS_STATUS;
+drop table emg.EXPERIMENT_TYPE;
+drop table emg.PIPELINE_RELEASE_TOOL;
+drop table emg.PIPELINE_RELEASE;
+drop table emg.PIPELINE_TOOL;
+--
+drop table SAMPLE_PUBLICATION;
+drop table STUDY_PUBLICATION;
+drop table PUBLICATION;
+--
+drop table emg.SAMPLE_ANN;
+drop table emg.SAMPLE;
+drop table emg.GSC_CV_CV;
+drop table emg.VARIABLE_NAMES;
+--
+drop table emg.STUDY;
+drop table emg.BIOME_HIERARCHY_TREE;
 
--- Create table statements 
+-- Create table statements
 CREATE TABLE `PIPELINE_RELEASE` (
     `PIPELINE_ID` TINYINT AUTO_INCREMENT,
     `DESCRIPTION` TEXT,
@@ -125,7 +125,7 @@ CREATE TABLE `SAMPLE` (
     `STUDY_ID` INT,
     `SAMPLE_NAME` VARCHAR(255),
     `SAMPLE_ALIAS` VARCHAR(255),
-    `HOST_TAX_ID` BIGINT,
+    `HOST_TAX_ID` INT,
     `EXT_SAMPLE_ID` VARCHAR(15),
     `SPECIES` VARCHAR(255),
     `LATITUDE` DECIMAL(7 , 4 ),
@@ -156,7 +156,7 @@ CREATE TABLE `VARIABLE_NAMES` (
     UNIQUE (`VAR_NAME`),
     UNIQUE (`VAR_ID`)
 );
-   
+
 CREATE TABLE `GSC_CV_CV` (
     `VAR_NAME` VARCHAR(50),
     `VAR_VAL_CV` VARCHAR(60),
@@ -201,7 +201,7 @@ CREATE TABLE `ANALYSIS_JOB` (
     `RESULT_DIRECTORY` VARCHAR(100) NOT NULL,
     `EXTERNAL_RUN_IDS` VARCHAR(100),
     `SAMPLE_ID` INT,
-    `IS_PRODUCTION_RUN` TINYINT,
+    `IS_PRODUCTION_RUN` BIT,
     `EXPERIMENT_TYPE_ID` TINYINT,
     PRIMARY KEY (`JOB_ID`),
     FOREIGN KEY (`PIPELINE_ID`)
@@ -223,22 +223,22 @@ CREATE TABLE `PUBLICATION` (
     `ISSUE` VARCHAR(55),
     `MEDLINE_JOURNAL` VARCHAR(255),
     `PUB_ABSTRACT` LONGTEXT,
-    `PUBMED_CENTRAL_ID` BIGINT,
-    `PUBMED_ID` BIGINT,
+    `PUBMED_CENTRAL_ID` INT,
+    `PUBMED_ID` INT,
     `PUB_TITLE` VARCHAR(740) NOT NULL,
     `RAW_PAGES` VARCHAR(30),
     `URL` VARCHAR(740),
     `VOLUME` VARCHAR(55),
-    `PUBLISHED_YEAR` BIGINT,
+    `PUBLISHED_YEAR` SMALLINT,
     `PUB_TYPE` VARCHAR(100) NOT NULL,
     PRIMARY KEY (`PUB_ID`)
 );
 
 -- Changes:
--- Changed column names 
+-- Changed column names
 CREATE TABLE `STUDY_PUBLICATION` (
-    `STUDY_ID` INT NOT NULL COMMENT 'the study id of the study with this publication', 
-	`PUB_ID` INT NOT NULL COMMENT 'publication ID from the publication table', 
+    `STUDY_ID` INT NOT NULL COMMENT 'the study id of the study with this publication',
+	`PUB_ID` INT NOT NULL COMMENT 'publication ID from the publication table',
     PRIMARY KEY (`STUDY_ID` , `PUB_ID`),
     FOREIGN KEY (`PUB_ID`)
         REFERENCES `PUBLICATION` (`PUB_ID`),
@@ -250,8 +250,8 @@ CREATE TABLE `STUDY_PUBLICATION` (
 -- Changes:
 -- Changed column names
 CREATE TABLE `SAMPLE_PUBLICATION` (
-    `SAMPLE_ID` INT NOT NULL COMMENT 'sample_id from the sample table, of the sample associated with this publication', 
-	`PUB_ID` INT NOT NULL COMMENT 'publication ID from publication table', 	
+    `SAMPLE_ID` INT NOT NULL COMMENT 'sample_id from the sample table, of the sample associated with this publication',
+	`PUB_ID` INT NOT NULL COMMENT 'publication ID from publication table',
     PRIMARY KEY (`SAMPLE_ID` , `PUB_ID`),
     FOREIGN KEY (`SAMPLE_ID`)
         REFERENCES `SAMPLE` (`SAMPLE_ID`),
@@ -280,5 +280,5 @@ CREATE UNIQUE INDEX `VARIABLE_NAMES_PK` ON `VARIABLE_NAMES` (`VAR_ID`, `VAR_NAME
 
 -- Commented because of duplication warning
 -- CREATE UNIQUE INDEX `VARIABLE_NAMES_U2` ON `VARIABLE_NAMES` (`VAR_NAME`);
-  
+
 -- CREATE INDEX VARIABLE_NAMES_FBI1 ON VARIABLE_NAMES (UPPER(VAR_NAME));
