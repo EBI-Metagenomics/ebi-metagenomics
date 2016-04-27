@@ -114,6 +114,9 @@ var drawNumberOfReadsChart = function (rawdata, numberOfLines, sequenceCount, ur
             categories: categories,
             title: { enabled: false }
         },
+        yAxis: {
+            title: { text: "Count" }
+        },
         plotOptions: {
             series: {
                 grouping: false,
