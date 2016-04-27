@@ -96,7 +96,7 @@ var drawNumberOfReadsChart = function (rawdata, numberOfLines, sequenceCount, ur
             color: "#ccccdd",
             pointPadding: -0.1
         },{
-            name : "Number of reads",
+            name : "Reads Remaining ",
             data : data,
             color: "#058dc7",
             pointPadding: -0.1
@@ -109,7 +109,7 @@ var drawNumberOfReadsChart = function (rawdata, numberOfLines, sequenceCount, ur
 
     $('#qc_overview').highcharts({
         chart: { type: 'bar', height: 250 },
-        title: { text: 'Number of Sequence Reads'},
+        title: { text: 'Number of Sequence Reads per QC Step'},
         xAxis: {
             categories: categories,
             title: { enabled: false }
