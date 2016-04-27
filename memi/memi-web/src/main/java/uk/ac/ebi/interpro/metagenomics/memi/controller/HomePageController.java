@@ -64,21 +64,22 @@ public class HomePageController extends AbstractController implements IControlle
         log.info("Requesting doGet of " + this.getClass());
 
         return buildModelAndView(
-            getModelViewName(),
-            model,
-            new ModelPopulator() {
-                @Override
-                public void populateModel(ModelMap model) {
-                    log.info("Building model of " + HomePageController.class + "...");
-                    final ViewModelBuilder<HomePageViewModel> builder = new HomePageViewModelBuilder(
-                            sessionManager,
-                            "EBI metagenomics: archiving, analysis and integration of metagenomics data",
-                            getBreadcrumbs(null), propertyContainer, studyDAO, sampleDAO, runDAO, biomeDAO, submissionContactDAO);
-                    final HomePageViewModel hpModel = builder.getModel();
-                    hpModel.changeToHighlightedClass(ViewModel.TAB_CLASS_HOME_VIEW);
-                    model.addAttribute(ViewModel.MODEL_ATTR_NAME, hpModel);
+                getModelViewName(),
+                model,
+                new ModelPopulator() {
+                    @Override
+                    public void populateModel(ModelMap model) {
+                        log.info("Building model of " + HomePageController.class + "...");
+                        final ViewModelBuilder<HomePageViewModel> builder = new HomePageViewModelBuilder(
+                                userManager,
+                                getEbiSearchForm(),
+                                "EBI metagenomics: archiving, analysis and integration of metagenomics data",
+                                getBreadcrumbs(null), propertyContainer, studyDAO, sampleDAO, runDAO, biomeDAO, submissionContactDAO);
+                        final HomePageViewModel hpModel = builder.getModel();
+                        hpModel.changeToHighlightedClass(ViewModel.TAB_CLASS_HOME_VIEW);
+                        model.addAttribute(ViewModel.MODEL_ATTR_NAME, hpModel);
+                    }
                 }
-            }
         );
     }
 

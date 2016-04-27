@@ -33,7 +33,7 @@ public class InfoController extends AbstractController implements IController {
 
     @Override
     public ModelAndView doGet(final ModelMap model) {
-        log.info("Requesting doGet of " + this.getClass() +  "...");
+        log.info("Requesting doGet of " + this.getClass() + "...");
         //build and add the page model
         return buildModelAndView(
                 getModelViewName(),
@@ -41,7 +41,8 @@ public class InfoController extends AbstractController implements IController {
                 new ModelPopulator() {
                     @Override
                     public void populateModel(ModelMap model) {
-                        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "About EBI metagenomics", getBreadcrumbs(null), propertyContainer);
+                        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(userManager,
+                                getEbiSearchForm(), "About EBI metagenomics", getBreadcrumbs(null), propertyContainer);
                         final ViewModel defaultViewModel = builder.getModel();
                         defaultViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_ABOUT_VIEW);
                         model.addAttribute(ViewModel.MODEL_ATTR_NAME, defaultViewModel);
@@ -53,8 +54,9 @@ public class InfoController extends AbstractController implements IController {
      * Creates the MG model and adds it to the specified model map.
      */
     private void populateModel(final ModelMap model) {
-        log.info("Building model of " + this.getClass() +  "...");
-        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "About EBI metagenomics", getBreadcrumbs(null), propertyContainer);
+        log.info("Building model of " + this.getClass() + "...");
+        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(userManager, getEbiSearchForm(),
+                "About EBI metagenomics", getBreadcrumbs(null), propertyContainer);
         final ViewModel infoModel = builder.getModel();
         infoModel.changeToHighlightedClass(ViewModel.TAB_CLASS_ABOUT_VIEW);
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, infoModel);

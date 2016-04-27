@@ -37,8 +37,8 @@ public abstract class SecuredAbstractController<T extends SecureEntity> extends 
             return true;
         }
         String warningMsg = "Could not request security entity with ID " + secureEntity.getSecureEntityId() + "!";
-        if (sessionManager != null && sessionManager.getSessionBean() != null) {
-            Submitter submitter = sessionManager.getSessionBean().getSubmitter();
+        if (userManager != null && userManager.getUserAuthentication() != null) {
+            Submitter submitter = userManager.getUserAuthentication().getSubmitter();
             if (submitter != null) {
                 if (!submitter.getSubmissionAccountId().equalsIgnoreCase(secureEntity.getSubmissionAccountId())) {
                     log.warn(warningMsg + "Another submitter with ID " + submitter.getSubmissionAccountId() + " tried to access this study!");
@@ -77,12 +77,13 @@ public abstract class SecuredAbstractController<T extends SecureEntity> extends 
             return null;
         }
         return buildModelAndView(
-            getModelViewName(),
-            model,
-            new ModelPopulator() {
-                @Override
-                public void populateModel(ModelMap model) {}
-            }
+                viewName,
+                model,
+                new ModelPopulator() {
+                    @Override
+                    public void populateModel(ModelMap model) {
+                    }
+                }
         );
     }
 
@@ -97,19 +98,20 @@ public abstract class SecuredAbstractController<T extends SecureEntity> extends 
     }
 
     private ModelAndView getModelAndView(final String viewName) {
-        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager,
-                "Error page", null, propertyContainer);
+        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(userManager,
+                getEbiSearchForm(), "Error page", null, propertyContainer);
         final ViewModel viewModel = builder.getModel();
         ModelMap model = new ModelMap();
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, viewModel);
         //return new ModelAndView(viewName, model);
         return buildModelAndView(
-            getModelViewName(),
-            model,
-            new ModelPopulator() {
-                @Override
-                public void populateModel(ModelMap model) {}
-            }
+                viewName,
+                model,
+                new ModelPopulator() {
+                    @Override
+                    public void populateModel(ModelMap model) {
+                    }
+                }
         );
     }
 

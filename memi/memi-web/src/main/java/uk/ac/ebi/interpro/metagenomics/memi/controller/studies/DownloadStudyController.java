@@ -83,7 +83,8 @@ public class DownloadStudyController extends AbstractStudyViewController {
 
         final String pageTitle = "Download view: " + study.getStudyId();
         final ViewModelBuilder<DownloadViewModel> builder = new StudyDownloadViewModelBuilder(
-                sessionManager,
+                userManager,
+                getEbiSearchForm(),
                 pageTitle, // Not really needed as this is within an AJAX tab anyway?
                 getBreadcrumbs(study), // Not really needed as this is within an AJAX tab anyway?
                 propertyContainer,

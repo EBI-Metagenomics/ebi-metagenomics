@@ -26,6 +26,8 @@
                                 <div class="block step3 function" ><div class="children_l">ORF predictions</div></div><div class="arrow_pip"></div>
                                 <div class="block-lb">Predicted CDS</div><div class="arrow_pip"></div>
                                 <div class="block step4 function"><div class="children_l">Functional analysis</div></div>
+                                <div class="arrow_pip"></div>
+                                <div class="block-lb">IPR matches &amp; GO terms</div>
                             </div> <!-- /lowbranch_func -->
 
                             <div class="lowbranch_tax">  <div class="arrow_pip rotate_t"></div>
@@ -34,14 +36,16 @@
                                 <div class="block-lb">16s rRNA</div>
                                 <div class="arrow_pip"></div>
                                 <div class="block step5 taxon"><div class="children_l">Taxonomic analysis</div></div>
+                                <div class="arrow_pip"></div>
+                                <div class="block-lb">OTUs &amp; taxonomic lineage</div>
                             </div><!-- /lowbranch_tax -->
 
                             <div class="lowbranch_trna">
                                 <div class="arrow_pip rotate_t"></div>
                                 <div class="block-lb">Reads with tRNA</div>
-                            </div><!-- /branch2 -->
-                        </div><!-- /branch -->
-                    </div> <!-- /container -->
+                            </div><!-- /lowbranch_trna -->
+                        </div><!-- /lowbranch -->
+                    </div> <!-- /block_container -->
                 </div>   <!-- /block_wrapper -->
 
 

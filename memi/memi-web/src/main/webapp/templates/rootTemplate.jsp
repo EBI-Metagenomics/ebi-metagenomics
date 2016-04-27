@@ -166,42 +166,26 @@
     <!-- The following line includes the feedback dialog script. -->
     <script src="${pageContext.request.contextPath}/js/feedback_script.js" type="text/javascript"></script>
 
-    <!--[if lt IE 9]>
-    <script type="text/javascript">
-        document.createElement('header');
-        document.createElement('hgroup');
-        document.createElement('nav');
-        document.createElement('menu');
-        document.createElement('section');
-        document.createElement('article');
-        document.createElement('aside');
-        document.createElement('footer');
-        document.createElement('figure');
-        document.createElement('figcaption');
-    </script>
-    <![endif]-->  <%-- HTML5 tags working in IE8 by including this JavaScript in the head  --%>
-
     <!--Load the Google Visualization API-->
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/tablequerywrapper.js"></script>
 
     <noscript>
         <style type="text/css">
+           /*remove the Krona box  and all charts tabs when no javascript*/
             #tax-Krona, #tabs-chart, #interpro-chart, #tabs-taxchart {
                 display: none;
             }
 
-            /*remove the Krona box  and all charts tabs when no javascript*/
+            /*remove feedback button*/
             #script_feedbackLink {
                 display: none;
             }
 
-            /*remove feedback button*/
+            /*remove login button*/
             #script_loginLink {
                 display: none;
             }
-
-            /*remove login button*/
         </style>
     </noscript>
 
@@ -256,12 +240,14 @@
 
                     <fieldset>
 
-                        <div class="left">
+                        <div class="left" style="width: 75%;">
                             <label>
-                                <form:input path="searchText" id="local-searchbox" />
+                                <form:input path="searchText" type="search" id="local-searchbox" />
                             </label>
-                            <span class="examples">Examples: <a href="#">ERP002477</a>, <a href="#">Human gut</a>, <a
-                                    href="#">Host-associated: Arthropoda</a></span>
+                         <span class="examples">&nbsp; &nbsp;&nbsp;<a href="#">&nbsp;</a>&nbsp; <a href="#">&nbsp;</a>&nbsp; <a
+                                                                href="#">&nbsp;</a></span>
+                            <!-- <span class="examples">Examples: <a href="#">ERP002477</a>, <a href="#">Human gut</a>, <a
+                                    href="#">Host-associated: Arthropoda</a></span>-->
                         </div>
 
                         <div class="right">
@@ -308,12 +294,15 @@
 
 <!-- javascript for handling search box in header and search page elements -->
 <script src="${pageContext.request.contextPath}/js/ebiSearch.js" type="text/javascript"></script>
-<!--START Feedback slider functionality block -->
+<!-- JQuery datatable-->
+<script defer="defer" src="${pageContext.request.contextPath}/js/jquery.dataTables.js"></script>
+<script defer="defer" src="${pageContext.request.contextPath}/js/jquery.highlight.js"></script>
+
 <!-- The following line includes the feedback DIV and the feedback FORM -->
 <%@ include file="feedback/script/feedbackDiv.jsp" %>
-<div id="toTop" class="anim"><img src="${pageContext.request.contextPath}/img/ico_scroll_top.png"
-                                  alt="Scroll to top"><span class="scroll anim">To top </span></div>
-<!--Back top jQuery plugin-->
+<!--END Feedback slider functionality block -->
+<!--Back top option-->
+<div id="toTop" class="anim"><img src="${pageContext.request.contextPath}/img/ico_scroll_top.png" alt="Scroll to top"><span class="scroll anim">To top </span></div>
 <script type="text/javascript">
     $(document).ready(function () {
         $(window).scroll(function () {
@@ -329,8 +318,7 @@
         });
     });
 </script>
-<!-- End Back top jQuery plugin-->
-<!--END Feedback slider functionality block -->
+<!-- End Back top option-->
 
 </body>
 </html>

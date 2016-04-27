@@ -2,15 +2,15 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<div class="container_24" id="mainContainer">
+<div class="grid_24" id="mainContainer">
 
     <h2>Search EBI Metagenomics</h2>
 
-    <div class="grid_24 clearfix" id="content">
+    <div class="grid_24">
 
         <form:form id="searchForm" method="GET" action="${pageContext.request.contextPath}/search/doEbiSearch"
                    commandName="ebiSearchForm">
-            <div class="grid_6 alpha" id="facets">
+            <div class="grid_5 alpha" id="facets">
                 <c:choose>
                     <c:when test="${not empty model.ebiSampleSearchResults
                         && fn:length(model.ebiSampleSearchResults.facets) > 0}">
@@ -18,21 +18,26 @@
                         <c:forEach var="facet" items="${model.ebiSampleSearchResults.facets}">
                             <c:if test="${fn:length(facet.values) > 0}">
                                 <h4>${facet.label}</h4>
-                                <form:checkboxes path="facets" items="${facet.values}" itemLabel="labelAndCount"
-                                                 itemValue="facetAndValue" element="div"/>
+                                <div class="extra-pad"><form:checkboxes path="facets" items="${facet.values}" itemLabel="labelAndCount"
+                                                 itemValue="facetAndValue" element="div"/> </div>
                             </c:if>
                         </c:forEach>
+                        <hr>
+                        <p><small class="text-muted">Powered by <a href="http://www.ebi.ac.uk/ebisearch/" class="ext" target="_blank">EBI Search</a></small></p>
                     </c:when>
                 </c:choose>
             </div>
 
 
-            <div class="grid_18 omega">
+            <div class="grid_19 omega">
+                <div class="table-margin-r">
                 <c:choose>
                     <c:when test="${not empty model.ebiSampleSearchResults}">
                         <c:choose>
                             <c:when test="${fn:length(model.ebiSampleSearchResults.entries) <= 0}">
                                 <h3>No results found</h3>
+                                <hr>
+                                <p><small class="text-muted">Powered by <a href="http://www.ebi.ac.uk/ebisearch/" class="ext" target="_blank">EBI Search</a></small></p>
                             </c:when>
                             <c:otherwise>
                                 <h3>Showing ${fn:length(model.ebiSampleSearchResults.entries)} out
@@ -41,12 +46,13 @@
                         </c:choose>
                         <c:choose>
                             <c:when test="${fn:length(model.ebiSampleSearchResults.entries) > 0}">
-                                <table border="1" class="result">
+                                <table border="1" class="table-light">
                                     <thead>
                                         <tr>
-                                            <td>Project</td>
-                                            <td>Sample</td>
-                                            <td>Description</td>
+                                            <th>Project</th>
+                                            <th>Sample</th>
+                                            <th>Name</th>
+                                            <th width="80%">Description</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -54,7 +60,7 @@
                                         <tr>
                                             <td>
                                                 <a href="${pageContext.request.contextPath}/projects/${result.project}">
-                                                        ${result.project}:
+                                                        ${result.project}
                                                 </a>
                                             </td>
                                             <td>
@@ -63,13 +69,16 @@
                                                 </a>
                                             </td>
                                             <td>
+                                                    ${result.name}
+                                            </td>
+                                            <td>
                                                 ${result.description}
                                             </td>
                                         </tr>
                                     </c:forEach>
                                     </tbody>
                                 </table>
-                                <div>
+                                <div class="table-pagination">
                                     <input type="button" id="previousPage" value="Previous"/>
                                     <form:hidden id="currentPage" path="page"/>
                                     <form:hidden id="maxPage" path="maxPage"/>
@@ -81,21 +90,9 @@
                         </c:choose>
                     </c:when>
                 </c:choose>
-                <div>
-                    Powered by <a href="http://www.ebi.ac.uk/ebisearch/" target="_blank">EBI Search</a>
                 </div>
             </div>
 
         </form:form>
     </div>
 </div>
-
-<script>$(function () {
-    $("[data-toggle='tooltip']").tooltip();
-});</script>
-<script>
-    $("#expand_button").click(function () {
-        $(".more_citations").slideToggle();
-        $("#expand_button").toggleClass("min");
-    });
-</script>

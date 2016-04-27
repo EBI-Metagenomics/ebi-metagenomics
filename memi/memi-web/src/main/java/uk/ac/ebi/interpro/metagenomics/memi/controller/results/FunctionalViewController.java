@@ -68,7 +68,8 @@ public class FunctionalViewController extends AbstractResultViewController {
         }
 
         final ViewModelBuilder<FunctionalViewModel> builder = new FunctionalViewModelBuilder(
-                sessionManager,
+                userManager,
+                getEbiSearchForm(),
                 pageTitle,
                 getBreadcrumbs(run),
                 propertyContainer,

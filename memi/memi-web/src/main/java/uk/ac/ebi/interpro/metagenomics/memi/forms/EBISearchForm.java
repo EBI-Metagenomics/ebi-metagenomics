@@ -1,12 +1,13 @@
 package uk.ac.ebi.interpro.metagenomics.memi.forms;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by maq on 18/03/2016.
  */
-public class EBISearchForm {
+public class EBISearchForm implements Serializable {
 
     public final static String MODEL_ATTR_NAME = "ebiSearchForm";
 

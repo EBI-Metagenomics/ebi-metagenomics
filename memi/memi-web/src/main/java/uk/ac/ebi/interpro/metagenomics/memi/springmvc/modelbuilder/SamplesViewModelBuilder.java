@@ -17,7 +17,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.SamplesViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewPagination;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.UserManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,11 +51,11 @@ public class SamplesViewModelBuilder extends AbstractBiomeViewModelBuilder<Sampl
 
     private final static int PAGE_SIZE = 10;
 
-    public SamplesViewModelBuilder(SessionManager sessionMgr, String pageTitle, List<Breadcrumb> breadcrumbs,
+    public SamplesViewModelBuilder(UserManager sessionMgr, EBISearchForm ebiSearchForm, String pageTitle, List<Breadcrumb> breadcrumbs,
                                    MemiPropertyContainer propertyContainer, List<String> tableHeaderNames,
                                    SampleDAO sampleDAO, SampleFilter filter,
                                    int startPosition, BiomeDAO biomeDAO) {
-        super(sessionMgr);
+        super(sessionMgr, ebiSearchForm);
         this.pageTitle = pageTitle;
         this.breadcrumbs = breadcrumbs;
         this.propertyContainer = propertyContainer;
@@ -70,17 +70,17 @@ public class SamplesViewModelBuilder extends AbstractBiomeViewModelBuilder<Sampl
         log.info("Building instance of " + SamplesViewModel.class + "...");
         //Get submitter and submitter Id
         Submitter submitter = getSessionSubmitter(sessionMgr);
-        EBISearchForm ebiSearchForm = getEbiSearchForm(sessionMgr);
+        EBISearchForm ebiSearchForm = getEbiSearchForm();
         String submissionAccountId = (submitter != null ? submitter.getSubmissionAccountId() : null);
         //Get filtered and sorted samples
-        List<Criterion> filterCriteria = buildFilterCriteria(filter, submissionAccountId);
+        List<Criterion> filterCriteria = SamplesViewHelper.buildFilterCriteria(filter, submissionAccountId, biomeDAO);
         List<Sample> filteredSamples = getFilteredSamples(sampleDAO, filterCriteria);
         long filteredSampleCount = sampleDAO.countFilteredSamples(filterCriteria);
         ViewPagination pagination = new ViewPagination(startPosition, filteredSampleCount, PAGE_SIZE);
         //Get downloadable samples
-        List<Sample> downloadableSamples = sampleDAO.retrieveFilteredSamples(filterCriteria, "sampleName");
+//        List<Sample> downloadableSamples = sampleDAO.retrieveFilteredSamples(filterCriteria, "sampleName");
 
-        return new SamplesViewModel(submitter, ebiSearchForm, filteredSamples, downloadableSamples, pageTitle, breadcrumbs, propertyContainer, tableHeaderNames, pagination, filter);
+        return new SamplesViewModel(submitter, ebiSearchForm, filteredSamples, null, pageTitle, breadcrumbs, propertyContainer, tableHeaderNames, pagination, filter);
     }
 
     private List<Sample> getFilteredSamples(SampleDAO sampleDAO, List<Criterion> filterCriteria) {
@@ -94,116 +94,5 @@ public class SamplesViewModelBuilder extends AbstractBiomeViewModelBuilder<Sampl
         } else {
             return new ArrayList<Sample>();
         }
-    }
-
-
-//    private Class<? extends Sample> getSampleClass(Sample.SampleType type) {
-//        if (type != null) {
-//            return type.getClazz();
-//        }
-//        // Without knowing the type, return the superclass.
-//        return Sample.class;
-//    }
-
-    /**
-     * Builds a list of criteria for the specified {@link uk.ac.ebi.interpro.metagenomics.memi.forms.SampleFilter}}.
-     * These criteria can be used for a Hibernate query.
-     */
-    private List<Criterion> buildFilterCriteria(SampleFilter filter, String submissionAccountId) {
-        String searchText = filter.getSearchTerm();
-
-        List<Criterion> crits = new ArrayList<Criterion>();
-        //add search term criterion
-        if (searchText != null && searchText.trim().length() > 0) {
-            crits.add(Restrictions.or(Restrictions.ilike("sampleId", searchText, MatchMode.ANYWHERE), Restrictions.ilike("sampleName", searchText, MatchMode.ANYWHERE)));
-        }
-        //add 'isPublic' AND submitter identifier criteria
-        if (submissionAccountId != null) {
-            //Set DEFAULT visibility if not defined
-            SampleFilter.SampleVisibility visibility = (filter.getSampleVisibility() == null ? SampleFilter.SampleVisibility.MY_SAMPLES : filter.getSampleVisibility());
-            //SELECT * FROM HB_STUDY where submitter_id=?;
-            if (visibility.equals(SampleFilter.SampleVisibility.MY_SAMPLES)) {
-                crits.add(Restrictions.eq("submissionAccountId", submissionAccountId));
-            }
-            //select * from hb_study where submitter_id=? and is_public=1;
-            else if (visibility.equals(SampleFilter.SampleVisibility.MY_PUBLISHED_SAMPLES)) {
-                crits.add(Restrictions.and(Restrictions.eq("isPublic", 1), Restrictions.eq("submissionAccountId", submissionAccountId)));
-            }
-            //select * from hb_study where submitter_id=? and is_public=0;
-            else if (visibility.equals(SampleFilter.SampleVisibility.MY_PREPUBLISHED_SAMPLES)) {
-                crits.add(Restrictions.and(Restrictions.eq("isPublic", 0), Restrictions.eq("submissionAccountId", submissionAccountId)));
-            }
-            //select * from hb_study where is_public=1;
-            else if (visibility.equals(SampleFilter.SampleVisibility.ALL_PUBLISHED_SAMPLES)) {
-                crits.add(Restrictions.eq("isPublic", 1));
-            }
-            //select * from hb_study where is_public=1 or submitter_id=? and is_public=0;
-            else if (visibility.equals(SampleFilter.SampleVisibility.ALL_SAMPLES)) {
-                crits.add(Restrictions.or(Restrictions.and(Restrictions.eq("isPublic", 0), Restrictions.eq("submissionAccountId", submissionAccountId)), Restrictions.eq("isPublic", 1)));
-            }
-        } else {
-            crits.add(Restrictions.eq("isPublic", 1));
-        }
-        if (!filter.getBiome().equals(Biome.ALL)) {
-            List<Integer> biomeIds = new ArrayList<Integer>();
-
-            // Soil
-            if (filter.getBiome().equals(Biome.SOIL)) {
-                biomeIds.addAll(super.getBiomeIdsByLineage(biomeDAO, Biome.SOIL.getLineages()));
-            }
-            // Marine
-            else if (filter.getBiome().equals(Biome.MARINE)) {
-                biomeIds.addAll(super.getBiomeIdsByLineage(biomeDAO, Biome.MARINE.getLineages()));
-            }
-            // Forest Soil
-            else if (filter.getBiome().equals(Biome.FOREST_SOIL)) {
-                biomeIds.addAll(super.getBiomeIdsByLineage(biomeDAO, Biome.FOREST_SOIL.getLineages()));
-            }
-            // Freshwater
-            else if (filter.getBiome().equals(Biome.FRESHWATER)) {
-                biomeIds.addAll(super.getBiomeIdsByLineage(biomeDAO, Biome.FRESHWATER.getLineages()));
-            }
-            // Grassland
-            else if (filter.getBiome().equals(Biome.GRASSLAND)) {
-                biomeIds.addAll(super.getBiomeIdsByLineage(biomeDAO, Biome.GRASSLAND.getLineages()));
-            }
-            // Human gut
-            else if (filter.getBiome().equals(Biome.HUMAN_GUT)) {
-                biomeIds.addAll(super.getBiomeIdsByLineage(biomeDAO, Biome.HUMAN_GUT.getLineages()));
-            }
-            //Engineered
-            else if (filter.getBiome().equals(Biome.ENGINEERED)) {
-                biomeIds.addAll(super.getBiomeIdsByLineage(biomeDAO, Biome.ENGINEERED.getLineages()));
-            }
-            // Air
-            else if (filter.getBiome().equals(Biome.AIR)) {
-                biomeIds.addAll(super.getBiomeIdsByLineage(biomeDAO, Biome.AIR.getLineages()));
-            }
-            // Wastewater
-            else if (filter.getBiome().equals(Biome.WASTEWATER)) {
-                biomeIds.addAll(super.getBiomeIdsByLineage(biomeDAO, Biome.WASTEWATER.getLineages()));
-            }
-            // Human host
-            else if (filter.getBiome().equals(Biome.HUMAN_HOST)) {
-                biomeIds.addAll(super.getBiomeIdsByLineage(biomeDAO, Biome.HUMAN_HOST.getLineages()));
-            }
-            // Host-associated
-            else if (filter.getBiome().equals(Biome.HOST_ASSOCIATED)) {
-                biomeIds.addAll(super.getBiomeIdsByLineage(biomeDAO, Biome.HOST_ASSOCIATED.getLineages()));
-            }
-            // All Non-human hosts
-            else if (filter.getBiome().equals(Biome.NON_HUMAN_HOST)) {
-                List<Integer> biomeIdsForHumanHost = super.getBiomeIdsByLineage(biomeDAO, Biome.HUMAN_HOST.getLineages());
-                List<Integer> biomeIdsForAllHosts = super.getBiomeIdsByLineage(biomeDAO, Biome.HOST_ASSOCIATED.getLineages());
-
-                //human host is a subset of all hosts
-                //so to get all non human host we remove all human host identifiers from the set of all hosts
-                biomeIds.addAll(biomeIdsForAllHosts);
-                biomeIds.removeAll(biomeIdsForHumanHost);
-            }
-
-            crits.add(Restrictions.in("biome.biomeId", biomeIds));
-        }
-        return crits;
     }
 }

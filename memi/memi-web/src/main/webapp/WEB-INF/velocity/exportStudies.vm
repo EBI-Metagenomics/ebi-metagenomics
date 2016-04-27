@@ -4,9 +4,13 @@
 #foreach( $property in $tableHeaderNames )$property,#end
 
 #foreach( $study in $studies )
+#if($study.biome.biomeName)
+"$study.biome.biomeName",#{else}"",#end
 #if($study.studyName)
 "$study.studyName",#{else}"",#end
-"$study.sampleCount",#if($study.lastMetadataReceived)
-$study.lastMetadataReceived,#{else},#end
+#if($study.sampleCount)
+"$study.sampleCount",#{else}"",#end
+#if($study.lastMetadataReceived)
+$study.lastMetadataReceived,#{else}"",#end
 
 #end

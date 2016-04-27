@@ -117,7 +117,8 @@ public abstract class AbstractResultViewController extends SecuredAbstractContro
         }
 
         final ViewModelBuilder<ResultViewModel> builder = new ResultViewModelBuilder(
-                sessionManager,
+                userManager,
+                getEbiSearchForm(),
                 analysisJob.getSample(),
                 run,
                 pageTitle,

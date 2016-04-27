@@ -61,7 +61,7 @@ public class TaxonomicViewController extends AbstractResultViewController {
                                                 @PathVariable final String sampleId,
                                                 @PathVariable final String runId,
                                                 @PathVariable final String releaseVersion,
-                                                final ModelMap model)  {
+                                                final ModelMap model) {
         return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, getSecuredEntity(projectId, sampleId, runId, releaseVersion), "tabs/results/taxonomicAnalysis/taxPieChartView");
     }
 
@@ -104,7 +104,8 @@ public class TaxonomicViewController extends AbstractResultViewController {
         }
 
         final ViewModelBuilder<TaxonomicViewModel> builder = new TaxonomicViewModelBuilder(
-                sessionManager,
+                userManager,
+                getEbiSearchForm(),
                 pageTitle,
                 getBreadcrumbs(run),
                 propertyContainer,
