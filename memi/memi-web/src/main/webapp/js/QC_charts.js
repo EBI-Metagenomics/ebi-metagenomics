@@ -85,7 +85,28 @@ var drawNumberOfReadsChart = function (rawdata, numberOfLines, sequenceCount, ur
             color: "#8dc7c7"
         });
     }
-    var length = data[0];
+    var length = data[0],
+        series = [{
+            name : "Reads Filtered out",
+            data : data.map(function(n){
+                var current = length- n.y;
+                length = n.y;
+                return current;
+            }),
+            color: "#ccccdd",
+            pointPadding: -0.1
+        },{
+            name : "Number of reads",
+            data : data,
+            color: "#058dc7",
+            pointPadding: -0.1
+        }];
+    if (sequenceCount!= null && data[3].y > sequenceCount)
+        series.push({
+            name: "Reads after sampling",
+            color: "#8dc7c7"
+        });
+
     $('#qc_overview').highcharts({
         chart: { type: 'bar', height: 250 },
         title: { text: 'Number of Sequence Reads'},
@@ -101,24 +122,7 @@ var drawNumberOfReadsChart = function (rawdata, numberOfLines, sequenceCount, ur
                 stacking: 'normal'
             }
         },
-        series: [{
-            name : "Reads Filtered out",
-            data : data.map(function(n){
-                var current = length- n.y;
-                length = n.y;
-                return current;
-            }),
-            color: "#ccccdd",
-            pointPadding: -0.1
-        },{
-            name : "Number of reads",
-            data : data,
-            color: "#058dc7",
-            pointPadding: -0.1
-        },{
-            name: "Reads after sampling",
-            color: "#8dc7c7"
-        }],
+        series: series,
         credits: false,
         exporting: getExportingStructure(urlToFile)
     });
