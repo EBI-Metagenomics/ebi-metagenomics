@@ -58,11 +58,11 @@ var drawNumberOfReadsChart = function (rawdata, numberOfLines, sequenceCount, ur
     var data = [],
         categories = [
             "Initial Reads",
-            "Reads after fastq trimming and filtering",
-            "Reads after length filtering",
-            "Reads after ambiguous base filtering",
-            "Unique reads after clustering",
-            "Reads after repeat masking and filtering",
+            "Trimming",
+            "Length filtering",
+            "Ambiguous base filtering",
+            "Clustering",
+            "Repeat masking and filtering",
         ].splice(0, numberOfLines);
 
     rawdata.split('\n')
