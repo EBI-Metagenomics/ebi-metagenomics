@@ -5,14 +5,27 @@ Highcharts.setOptions({
     }
 });
 
-var getExportingStructure = function (urlToFile) {
+var getExportingStructure = function (urlToFile,content) {
     return {
         buttons: {
             contextButton: {
                 menuItems: [{
                     textKey: 'downloadData',
                     onclick: function () {
-                        window.location = urlToFile;
+                        if (typeof content == "undefined") {
+                            window.location = urlToFile;
+                        }else{
+                            var element = document.createElement('a');
+                            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
+                            element.setAttribute('download', urlToFile);
+
+                            element.style.display = 'none';
+                            document.body.appendChild(element);
+
+                            element.click();
+
+                            document.body.removeChild(element);
+                        }
                     }
                 }, {
                     separator: true
@@ -127,7 +140,11 @@ var drawNumberOfReadsChart = function (rawdata, numberOfLines, sequenceCount, ur
         },
         series: series,
         credits: false,
-        exporting: getExportingStructure(urlToFile)
+        exporting: getExportingStructure(urlToFile+".tsv",
+            categories.map(function(e,i){
+                return e + "\t"+ data[i].y;
+            }).join("\n")
+        )
     });
 };
 
