@@ -268,7 +268,7 @@
                     <c:when test="${tool == 'InterProScan' || tool == 'FragGeneScan'}">
                         <tr class="step${toolGroupMajorId} row-function">
                     </c:when>
-                    <c:when test="${tool == 'SeqPrep' ||tool == 'Trimmomatic' || tool == 'Biopython' || tool == 'UCLUST' || tool == 'RepeatMasker' || tool == 'rRNASelector'|| tool == 'tRNASelector'}">
+                    <c:when test="${tool == 'SeqPrep' ||tool == 'Trimmomatic' || tool == 'Biopython' || tool == 'HMMER'}">
                         <tr class="step${toolGroupMajorId} row-cb">
                     </c:when>
                     <c:when test="${tool == 'QIIME' }">
