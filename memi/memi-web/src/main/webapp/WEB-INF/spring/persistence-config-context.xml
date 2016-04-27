@@ -31,7 +31,7 @@
         <!--Hibernate properties-->
         <property name="hibernateProperties">
             <props>
-                <prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop>
                 <prop key="hibernate.show_sql">false</prop>
                 <prop key="hibernate.format_sql">true</prop>
                 <prop key="hibernate.use_sql_comments">false</prop>
@@ -47,14 +47,14 @@
                 <!--<prop key="hibernate.connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</prop>-->
                 <!--<prop key="hibernate.connection.autocommit">false</prop>-->
                 <!--Connection Caching-->
-                <prop key="hibernate.cache.provider_class">org.hibernate.cache.NoCacheProvider</prop>
-                <prop key="hibernate.cache.use_query_cache">false</prop>
-                <prop key="hibernate.cache.use_second_level_cache">false</prop>
+                <!--<prop key="hibernate.cache.provider_class">org.hibernate.cache.NoCacheProvider</prop>-->
+                <!--<prop key="hibernate.cache.use_query_cache">false</prop>-->
+                <!--<prop key="hibernate.cache.use_second_level_cache">false</prop>-->
                 <!--Hibernate connection properties / character encoding -->
                 <!--<prop key="hibernate.connection.defaultNChar">true</prop>  -->
-                <prop key="hibernate.connnection.charSet">UTF-8</prop>
-                <prop key="hibernate.connection.useUnicode">true</prop>
-                <prop key="hibernate.connection.characterEncoding">UTF-8</prop>
+                <!--<prop key="hibernate.connnection.charSet">UTF-8</prop>-->
+                <!--<prop key="hibernate.connection.useUnicode">true</prop>-->
+                <!--<prop key="hibernate.connection.characterEncoding">UTF-8</prop>-->
             </props>
         </property>
         <!--<property name="location" value="classpath:resources/hibernate.properties"/>-->

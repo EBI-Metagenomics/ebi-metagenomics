@@ -396,10 +396,11 @@
                     <version>2.1</version>
                 </dependency>
 
+                <!-- MySQL JDBC driver-->
                 <dependency>
-                    <groupId>com.oracle.jdbc</groupId>
-                    <artifactId>com.springsource.oracle.jdbc</artifactId>
-                    <version>10.2.0.2</version>
+                    <groupId>mysql</groupId>
+                    <artifactId>mysql-connector-java</artifactId>
+                    <version>5.1.10</version>
                 </dependency>
             </dependencies>
 
@@ -433,9 +434,12 @@
             <properties>
                 <deployment.folder>/ebi/www/jlive/deploy/tc-interpro-das</deployment.folder>
                 <log4j.log.file>/var/tmp/servers/tc-interpro-das/logs/metagenomics/memi.log4j</log4j.log.file>
-                <dailyErrorAppParam>/var/tmp/servers/tc-interpro-das/logs/metagenomics/memi-ERROR.log4j</dailyErrorAppParam>
-                <dailyDebugAppParam>/var/tmp/servers/tc-interpro-das/logs/metagenomics/memi-DEBUG.log4j</dailyDebugAppParam>
-                <dailyWarnAppParam>/var/tmp/servers/tc-interpro-das/logs/metagenomics/memi-WARN.log4j</dailyWarnAppParam>
+                <dailyErrorAppParam>/var/tmp/servers/tc-interpro-das/logs/metagenomics/memi-ERROR.log4j
+                </dailyErrorAppParam>
+                <dailyDebugAppParam>/var/tmp/servers/tc-interpro-das/logs/metagenomics/memi-DEBUG.log4j
+                </dailyDebugAppParam>
+                <dailyWarnAppParam>/var/tmp/servers/tc-interpro-das/logs/metagenomics/memi-WARN.log4j
+                </dailyWarnAppParam>
                 <log4j.log.level>WARN</log4j.log.level>
             </properties>
         </profile>

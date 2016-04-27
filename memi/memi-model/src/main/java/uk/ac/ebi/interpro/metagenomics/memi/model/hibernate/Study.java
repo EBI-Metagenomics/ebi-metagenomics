@@ -19,12 +19,7 @@ import java.util.*;
 public class Study implements SecureEntity, BiomeEntity {
 
     @Id
-    @Column(name = "STUDY_ID")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "STUDY_SEQ")
-    @SequenceGenerator(
-            name = "STUDY_SEQ",
-            sequenceName = "STUDY_SEQ")
-//            allocationSize = 1
+    @Column(name = "STUDY_ID", columnDefinition = "INT(11)")
     private long id;
 
     @Column(name = "EXT_STUDY_ID", length = 18, nullable = false)
