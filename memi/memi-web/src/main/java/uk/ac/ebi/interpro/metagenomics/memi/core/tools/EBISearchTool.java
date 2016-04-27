@@ -30,9 +30,12 @@ public class EBISearchTool {
 
     private final static String DESCRIPTION = "description";
     private final static String PROJECT = "project";
+    private final static String NAME = "name";
     private final static String TAXONOMY = "taxonomy";
     private final static String BIOME = "biome";
     private final static String EXPERIMENT = "experiment_type";
+
+    private final static String GET_ALL_QUERY = "domain_source:metagenomics";
 
     EBeyeClient client;
 
@@ -71,7 +74,7 @@ public class EBISearchTool {
      */
     public EBISampleSearchResults searchSamples(EBISearchForm searchForm) {
         log.debug("searchSamples");
-        String resultFields = "id,description,project,taxonomy,biome,experiment_type";
+        String resultFields = "id,name,description,project,taxonomy,biome,experiment_type";
 
         String formattedFacetQuery = "";
         if (searchForm.getFacets() != null) {
@@ -81,9 +84,15 @@ public class EBISearchTool {
         EBISampleSearchResults results = new EBISampleSearchResults();
 
         try {
+
+            String searchText = searchForm.getSearchText();
+            if (searchText == null || searchText.matches("^\\s*$")) {
+                searchText = GET_ALL_QUERY;
+            }
+
             WsResult searchResults = client.getFacetedResults(
                     DOMAIN,
-                    searchForm.getSearchText(),
+                    searchText,
                     resultFields,
                     ((searchForm.getPage()-1) * searchForm.getResultsPerPage()),
                     searchForm.getResultsPerPage(),
@@ -160,6 +169,8 @@ public class EBISearchTool {
         for (WsField field : searchEntry.getFields().getField()) {
             if (DESCRIPTION.equals(field.getId()) && field.getValues().getValue().size() > 0) {
                 entry.setDescription(field.getValues().getValue().get(0));
+            } else if (NAME.equals(field.getId()) && field.getValues().getValue().size() > 0) {
+                entry.setName(field.getValues().getValue().get(0));
             } else if (PROJECT.equals(field.getId()) && field.getValues().getValue().size() > 0) {
                 entry.setProject(field.getValues().getValue().get(0));
             } else if (BIOME.equals(field.getId())) {

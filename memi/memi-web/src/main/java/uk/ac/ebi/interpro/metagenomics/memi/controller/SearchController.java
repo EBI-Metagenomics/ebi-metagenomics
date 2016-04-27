@@ -41,13 +41,8 @@ public class SearchController extends AbstractController implements IController 
     @Override
     public ModelAndView doGet(final ModelMap model) {
         log.info("Requesting doGet of " + this.getClass() + "...");
-        final EBISampleSearchResults sampleSearchResults;
         EBISearchForm ebiSearchForm = getEbiSearchForm();
-        if (ebiSearchForm != null && ebiSearchForm.getSearchText() != null) {
-            sampleSearchResults = ebiSearchTool.searchSamples(ebiSearchForm);
-        } else {
-            sampleSearchResults = new EBISampleSearchResults();
-        }
+        final EBISampleSearchResults sampleSearchResults = ebiSearchTool.searchSamples(ebiSearchForm);
         return buildModelAndView(
                 getModelViewName(),
                 model,
