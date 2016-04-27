@@ -43,9 +43,9 @@
                             <div class="lowbranch_trna">
                                 <div class="arrow_pip rotate_t"></div>
                                 <div class="block-lb">Reads with tRNA</div>
-                            </div><!-- /branch2 -->
-                        </div><!-- /branch -->
-                    </div> <!-- /container -->
+                            </div><!-- /lowbranch_trna -->
+                        </div><!-- /lowbranch -->
+                    </div> <!-- /block_container -->
                 </div>   <!-- /block_wrapper -->
 
 
