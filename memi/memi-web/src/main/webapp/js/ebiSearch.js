@@ -4,14 +4,25 @@
 /*
  Handle addition of text to search textfield
  */
-var searchElement = document.getElementById("local-searchbox");
-if (searchElement != null) {
-    searchElement.addEventListener("submit", function () {
-        resetPage();
-        unsetFacets();
+
+var searchForm = document.getElementById("local-search");
+if (searchForm != null) {
+    console.log("searchForm - attaching onsubmit listener");
+    searchForm.addEventListener("submit", function () {
+        var searchElement = document.getElementById("local-searchbox");
+        var previousSearchElement = document.getElementById("previousSearch");
+        if (searchElement != null && previousSearchElement != null) {
+            newSearch = searchElement.value;
+            previousSearch = previousSearchElement.value;
+            if (newSearch != previousSearch) {
+                resetPage();
+                unsetFacets();
+            }
+        }
+        console.log("Submitting");
     });
 } else {
-    console.log("This document should contain 'local-searchbox'")
+    console.log("This document should contain 'local-search'");
 }
 
 /*
@@ -24,7 +35,12 @@ if (checkboxes != null) {
     for (var i = 0; i < checkboxes.length; i++) {
         checkboxes[i].addEventListener("change", function (event) {
             resetPage();
-            document.getElementById("searchForm").submit();
+            var searchForm = document.getElementById("local-search");
+            if (searchForm != null) {
+                searchForm.submit();
+            } else {
+                console.log("This document should contain 'local-search'");
+            }
         });
     }
 }
@@ -34,16 +50,25 @@ if (checkboxes != null) {
  */
 var changePage = function (forward) {
     var currentPageElement = document.getElementById("currentPage");
-    var currentPage = currentPageElement.value;
-    var nextPage = currentPage;
-    if (forward) {
-        nextPage++;
+    if (currentPageElement != null) {
+        var currentPage = currentPageElement.value;
+        var nextPage = currentPage;
+        if (forward) {
+            nextPage++;
+        } else {
+            nextPage--;
+        }
+        currentPageElement.value = nextPage;
+        console.log("Changing Page = " + nextPage);
     } else {
-        nextPage--;
+        console.log("Failed to find element 'currentPage'");
     }
-    currentPageElement.value = nextPage;
-    console.log("Changing Page = " + nextPage);
-    document.getElementById("searchForm").submit();
+    var searchForm = document.getElementById("local-search");
+    if (searchForm != null) {
+        searchForm.submit();
+    } else {
+        console.log("This document should contain 'local-search'");
+    }
 };
 
 var nextPageElement = document.getElementById("nextPage");
@@ -72,6 +97,7 @@ if (nextPageElement != null && previousPageElement != null) {
  are displayed from page one onwards
  */
 var resetPage = function () {
+    console.log("resetPage");
     var currentPageElement = document.getElementById("currentPage");
     if (currentPageElement != null) {
         currentPageElement.value = 1;
@@ -82,8 +108,10 @@ var resetPage = function () {
  called when local-search text field is changed to unset all facets
  */
 var unsetFacets = function () {
+    console.log("unsetFacets");
     var checkboxes = document.querySelectorAll("input[name=facets]");
     if (checkboxes != null) {
+        console.log("Facets = " + checkboxes.length);
         for (var i = 0; i < checkboxes.length; i++) {
             checkboxes[i].checked = false;
         }

@@ -251,13 +251,15 @@
                         </div>
 
                         <div class="right">
-                            <input type="submit" id="searchsubmit" name="submit" value="Search" class="submit">
+                            <input type="submit" id="searchsubmit" name="searchsubmit" value="Search" class="submit">
                             <!-- Link for future advance search page -->
                             <!-- <span class="adv"><a href="../search" id="adv-search" title="Advanced">Advanced</a></span> -->
                         </div>
 
                     </fieldset>
-
+                    <form:hidden id="currentPage" path="page"/>
+                    <form:hidden id="maxPage" path="maxPage"/>
+                    <form:hidden id="previousSearch" path="previousSearchText"/>
                 </form:form>
             </div>
 

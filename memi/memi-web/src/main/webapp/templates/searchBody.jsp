@@ -8,8 +8,8 @@
 
     <div class="grid_24">
 
-        <form:form id="searchForm" method="GET" action="${pageContext.request.contextPath}/search/doEbiSearch"
-                   commandName="ebiSearchForm">
+        <form:form id="search-facets" action="${pageContext.request.contextPath}/search/doEbiSearch"
+                   commandName="ebiSearchForm" method="get" >
             <div class="grid_5 alpha" id="facets">
                 <c:choose>
                     <c:when test="${not empty model.ebiSampleSearchResults
@@ -19,7 +19,7 @@
                             <c:if test="${fn:length(facet.values) > 0}">
                                 <h4>${facet.label}</h4>
                                 <div class="extra-pad"><form:checkboxes path="facets" items="${facet.values}" itemLabel="labelAndCount"
-                                                 itemValue="facetAndValue" element="div"/> </div>
+                                                 itemValue="facetAndValue" element="div" form="local-search"/> </div>
                             </c:if>
                         </c:forEach>
                         <hr>
@@ -80,9 +80,6 @@
                                 </table>
                                 <div class="table-pagination">
                                     <input type="button" id="previousPage" value="Previous"/>
-                                    <form:hidden id="currentPage" path="page"/>
-                                    <form:hidden id="maxPage" path="maxPage"/>
-                                    <form:hidden id="searchText" path="searchText"/>
                                     Page ${ebiSearchForm.page} of ${ebiSearchForm.maxPage}
                                     <input type="button" id="nextPage" value="Next"/>
                                 </div>
