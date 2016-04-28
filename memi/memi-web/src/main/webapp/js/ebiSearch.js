@@ -2,6 +2,38 @@
  * Created by maq on 06/04/2016.
  */
 
+var HIDDEN_CLASS = "this_hide";
+
+var compileAndSendForm = function() {
+    console.log("Compiling and sending form");
+
+    var searchForm = document.getElementById("local-search");
+    if (searchForm != null) {
+        var facetDiv = document.getElementById("facets");
+        if (facetDiv != null) {
+            var facetInputs = facetDiv.querySelectorAll("input");
+            console.log("Adding " + facetInputs.length + " facet fields");
+            for (var i =0; i < facetInputs.length; i++) {
+                facetInputs[i].classList.add(HIDDEN_CLASS);
+                searchForm.appendChild(facetInputs[i]);
+            }
+        }
+        var paginationDiv = document.getElementById("searchPagination");
+        if (paginationDiv != null) {
+            var paginationInputs = paginationDiv.querySelectorAll("input");
+            console.log("Adding " + paginationInputs.length + " pagination fields");
+            for (var i =0; i < paginationInputs.length; i++) {
+                paginationInputs[i].classList.add(HIDDEN_CLASS);
+                searchForm.appendChild(paginationInputs[i]);
+            }
+        }
+        searchForm.submit();
+    } else {
+        console.log("This document should contain 'local-search'");
+    }
+
+};
+
 /*
  Handle move of facets and pagination elements from EMG header to page body
  */
@@ -9,14 +41,14 @@ var hiddenFacetDiv = document.getElementById("hiddenFacets");
 var facetDiv = document.getElementById("facets");
 if (hiddenFacetDiv != null && facetDiv != null) {
     facetDiv.appendChild(hiddenFacetDiv);
-    hiddenFacetDiv.classList.remove("this_hide")
+    hiddenFacetDiv.classList.remove(HIDDEN_CLASS);
 }
 
 var hiddenPaginationDiv = document.getElementById("hiddenSearchPagination");
 var paginationDiv = document.getElementById("searchPagination");
 if (hiddenPaginationDiv != null && paginationDiv != null) {
     paginationDiv.appendChild(hiddenPaginationDiv);
-    hiddenPaginationDiv.classList.remove("this_hide")
+    hiddenPaginationDiv.classList.remove(HIDDEN_CLASS);
 }
 
 /*
@@ -37,6 +69,7 @@ if (searchForm != null) {
             }
         }
         console.log("Submitting");
+        compileAndSendForm();
     });
 } else {
     console.log("This document should contain 'local-search'");
@@ -52,12 +85,7 @@ if (checkboxes != null) {
     for (var i = 0; i < checkboxes.length; i++) {
         checkboxes[i].addEventListener("change", function (event) {
             resetPage();
-            var searchForm = document.getElementById("local-search");
-            if (searchForm != null) {
-                searchForm.submit();
-            } else {
-                console.log("This document should contain 'local-search'");
-            }
+            compileAndSendForm();
         });
     }
 }
@@ -81,11 +109,7 @@ var changePage = function (forward) {
         console.log("Failed to find element 'currentPage'");
     }
     var searchForm = document.getElementById("local-search");
-    if (searchForm != null) {
-        searchForm.submit();
-    } else {
-        console.log("This document should contain 'local-search'");
-    }
+    compileAndSendForm();
 };
 
 var nextPageElement = document.getElementById("nextPage");
