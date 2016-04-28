@@ -95,7 +95,7 @@ public class EBISearchTool {
                     DOMAIN,
                     searchText,
                     resultFields,
-                    ((searchForm.getPage()-1) * searchForm.getResultsPerPage()),
+                    ((searchForm.getPage() - 1) * searchForm.getResultsPerPage()),
                     searchForm.getResultsPerPage(),
                     true,
                     true,

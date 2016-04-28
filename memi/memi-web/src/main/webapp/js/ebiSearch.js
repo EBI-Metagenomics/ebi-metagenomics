@@ -1,10 +1,27 @@
 /**
  * Created by maq on 06/04/2016.
  */
+
+/*
+ Handle move of facets and pagination elements from EMG header to page body
+ */
+var hiddenFacetDiv = document.getElementById("hiddenFacets");
+var facetDiv = document.getElementById("facets");
+if (hiddenFacetDiv != null && facetDiv != null) {
+    facetDiv.appendChild(hiddenFacetDiv);
+    hiddenFacetDiv.classList.remove("this_hide")
+}
+
+var hiddenPaginationDiv = document.getElementById("hiddenSearchPagination");
+var paginationDiv = document.getElementById("searchPagination");
+if (hiddenPaginationDiv != null && paginationDiv != null) {
+    paginationDiv.appendChild(hiddenPaginationDiv);
+    hiddenPaginationDiv.classList.remove("this_hide")
+}
+
 /*
  Handle addition of text to search textfield
  */
-
 var searchForm = document.getElementById("local-search");
 if (searchForm != null) {
     console.log("searchForm - attaching onsubmit listener");
