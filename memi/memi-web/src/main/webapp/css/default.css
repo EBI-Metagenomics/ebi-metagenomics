@@ -1786,7 +1786,8 @@ ul.sample_list li {list-style: none; display: inline;}
 .pipe_v3 .rotate_f {margin-right:5px;}
 .midbranch_trna {margin-top: 27px;}
 .lowbranch_tax {margin-top: 9px;}/*to show space between circles*/
-.pipe_v3 .block, .pipe_v3 .block_small, .pipe_v3 .block_med {line-height:inherit; width: 76px;  height: 76px;}
+.pipe_v3 .block {line-height:inherit; width: 76px;  height: 76px;}
+.pipe_v3 .block.small {line-height:inherit; font-size: 67%;width: 36px; height: 36px;}
 .block .children {margin: 40% auto;}
 .block .children_l {margin: 25% auto;}
 
