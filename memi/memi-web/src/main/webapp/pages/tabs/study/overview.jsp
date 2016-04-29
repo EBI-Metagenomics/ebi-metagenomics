@@ -269,6 +269,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $('#associated-run').DataTable({
+            "autoWidth":false,// remove the auto width calculation as it doesn't resize properly with ajax call
             "columnDefs": [ //add style to the different columns as direct css doesn't work
                 {className: "table_xs_text", "targets": [0]},
                 {className: "table-align-center table_xs_text", "targets": [1, 2]},
@@ -280,15 +281,15 @@
                 "sSearch": "Filter:"
             },
             "lengthMenu": [[25, 50, 100, -1], [25, 50, 100, "All"]],
-//            "fnDrawCallback": function () {
-//
-//                if (this.fnSettings().fnRecordsDisplay() > 10) {
-//                    $('.dataTables_length').css("display", "block");
-//                } else {
-//                    $('.dataTables_length').css("display", "none");//Remove show all dropdown when one single result page
-//                    $('.dataTables_paginate ').css("display", "none");//Remove pagination
-//                }
-//            },
+            "fnDrawCallback": function () {
+
+                if (this.fnSettings().fnRecordsDisplay() > 10) {
+                    $('.dataTables_length').css("display", "block");
+                } else {
+                    $('.dataTables_length').css("display", "none");//Remove show all dropdown when one single result page
+                    $('.dataTables_paginate ').css("display", "none");//Remove pagination
+                }
+            },
             "processing": true,
             "ajax": {
                 "type": "GET",
