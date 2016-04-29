@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="eng">
@@ -251,13 +252,38 @@
                         </div>
 
                         <div class="right">
-                            <input type="submit" id="searchsubmit" name="submit" value="Search" class="submit">
+                            <input type="submit" id="searchsubmit" name="searchsubmit" value="Search" class="submit">
                             <!-- Link for future advance search page -->
                             <!-- <span class="adv"><a href="../search" id="adv-search" title="Advanced">Advanced</a></span> -->
                         </div>
 
                     </fieldset>
-
+                    <!-- hidden div used to show facets when on searchBody.jsp page -->
+                    <div id="hiddenFacets" class="this_hide">
+                        <c:choose>
+                            <c:when test="${model.modelClassName eq 'SearchViewModel'
+                            && fn:length(model.ebiSampleSearchResults.facets) > 0}">
+                                <h3>Filter your results</h3>
+                                <c:forEach var="facet" items="${model.ebiSampleSearchResults.facets}">
+                                    <c:if test="${fn:length(facet.values) > 0}">
+                                        <h4>${facet.label}</h4>
+                                        <div class="extra-pad"><form:checkboxes path="facets" items="${facet.values}" itemLabel="labelAndCount"
+                                                                                itemValue="facetAndValue" element="div" form="local-search"/> </div>
+                                    </c:if>
+                                </c:forEach>
+                                <hr>
+                                <p><small class="text-muted">Powered by <a href="http://www.ebi.ac.uk/ebisearch/" class="ext" target="_blank">EBI Search</a></small></p>
+                            </c:when>
+                        </c:choose>
+                    </div>
+                    <div id="hiddenSearchPagination" class="this_hide">
+                        <form:hidden id="currentPage" path="page"/>
+                        <form:hidden id="maxPage" path="maxPage"/>
+                        <form:hidden id="previousSearch" path="previousSearchText"/>
+                        <input type="button" id="previousPage" value="Previous"/>
+                        Page ${ebiSearchForm.page} of ${ebiSearchForm.maxPage}
+                        <input type="button" id="nextPage" value="Next"/>
+                    </div>
                 </form:form>
             </div>
 

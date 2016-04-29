@@ -78,7 +78,8 @@ public class EBISearchTool {
 
         String formattedFacetQuery = "";
         if (searchForm.getFacets() != null) {
-            formattedFacetQuery = formatFacetFields(searchForm.getFacets());
+            List<String> selectedFacets = searchForm.getFacets();
+            formattedFacetQuery = formatFacetFields(selectedFacets);
         }
 
         EBISampleSearchResults results = new EBISampleSearchResults();
@@ -94,7 +95,7 @@ public class EBISearchTool {
                     DOMAIN,
                     searchText,
                     resultFields,
-                    ((searchForm.getPage()-1) * searchForm.getResultsPerPage()),
+                    ((searchForm.getPage() - 1) * searchForm.getResultsPerPage()),
                     searchForm.getResultsPerPage(),
                     true,
                     true,

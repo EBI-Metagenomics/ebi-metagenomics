@@ -1,17 +1,78 @@
 /**
  * Created by maq on 06/04/2016.
  */
+
+var HIDDEN_CLASS = "this_hide";
+
+var compileAndSendForm = function() {
+    console.log("Compiling and sending form");
+
+    var searchForm = document.getElementById("local-search");
+    if (searchForm != null) {
+        var facetDiv = document.getElementById("facets");
+        if (facetDiv != null) {
+            var facetInputs = facetDiv.querySelectorAll("input");
+            console.log("Adding " + facetInputs.length + " facet fields");
+            for (var i =0; i < facetInputs.length; i++) {
+                facetInputs[i].classList.add(HIDDEN_CLASS);
+                searchForm.appendChild(facetInputs[i]);
+            }
+        }
+        var paginationDiv = document.getElementById("searchPagination");
+        if (paginationDiv != null) {
+            var paginationInputs = paginationDiv.querySelectorAll("input");
+            console.log("Adding " + paginationInputs.length + " pagination fields");
+            for (var i =0; i < paginationInputs.length; i++) {
+                paginationInputs[i].classList.add(HIDDEN_CLASS);
+                searchForm.appendChild(paginationInputs[i]);
+            }
+        }
+        searchForm.submit();
+    } else {
+        console.log("This document should contain 'local-search'");
+    }
+
+};
+
+/*
+ Handle move of facets and pagination elements from EMG header to page body
+ */
+var hiddenFacetDiv = document.getElementById("hiddenFacets");
+var facetDiv = document.getElementById("facets");
+if (hiddenFacetDiv != null && facetDiv != null) {
+    facetDiv.appendChild(hiddenFacetDiv);
+    hiddenFacetDiv.classList.remove(HIDDEN_CLASS);
+}
+
+var hiddenPaginationDiv = document.getElementById("hiddenSearchPagination");
+var paginationDiv = document.getElementById("searchPagination");
+if (hiddenPaginationDiv != null && paginationDiv != null) {
+    paginationDiv.appendChild(hiddenPaginationDiv);
+    hiddenPaginationDiv.classList.remove(HIDDEN_CLASS);
+}
+
 /*
  Handle addition of text to search textfield
  */
-var searchElement = document.getElementById("local-searchbox");
-if (searchElement != null) {
-    searchElement.addEventListener("submit", function () {
-        resetPage();
-        unsetFacets();
+var searchForm = document.getElementById("local-search");
+if (searchForm != null) {
+    console.log("searchForm - attaching onsubmit listener");
+    searchForm.addEventListener("submit", function () {
+        var searchElement = document.getElementById("local-searchbox");
+        var previousSearchElement = document.getElementById("previousSearch");
+        if (searchElement != null && previousSearchElement != null) {
+            newSearch = searchElement.value;
+            previousSearch = previousSearchElement.value;
+            if (newSearch != previousSearch) {
+                resetPage();
+                unsetFacets();
+            }
+        }
+        console.log("Submitting");
+        compileAndSendForm();
     });
 } else {
-    console.log("This document should contain 'local-searchbox'")
+    console.log("This document should contain 'local-search'");
 }
 
 /*
@@ -24,7 +85,7 @@ if (checkboxes != null) {
     for (var i = 0; i < checkboxes.length; i++) {
         checkboxes[i].addEventListener("change", function (event) {
             resetPage();
-            document.getElementById("searchForm").submit();
+            compileAndSendForm();
         });
     }
 }
@@ -34,16 +95,21 @@ if (checkboxes != null) {
  */
 var changePage = function (forward) {
     var currentPageElement = document.getElementById("currentPage");
-    var currentPage = currentPageElement.value;
-    var nextPage = currentPage;
-    if (forward) {
-        nextPage++;
+    if (currentPageElement != null) {
+        var currentPage = currentPageElement.value;
+        var nextPage = currentPage;
+        if (forward) {
+            nextPage++;
+        } else {
+            nextPage--;
+        }
+        currentPageElement.value = nextPage;
+        console.log("Changing Page = " + nextPage);
     } else {
-        nextPage--;
+        console.log("Failed to find element 'currentPage'");
     }
-    currentPageElement.value = nextPage;
-    console.log("Changing Page = " + nextPage);
-    document.getElementById("searchForm").submit();
+    var searchForm = document.getElementById("local-search");
+    compileAndSendForm();
 };
 
 var nextPageElement = document.getElementById("nextPage");
@@ -72,6 +138,7 @@ if (nextPageElement != null && previousPageElement != null) {
  are displayed from page one onwards
  */
 var resetPage = function () {
+    console.log("resetPage");
     var currentPageElement = document.getElementById("currentPage");
     if (currentPageElement != null) {
         currentPageElement.value = 1;
@@ -82,8 +149,10 @@ var resetPage = function () {
  called when local-search text field is changed to unset all facets
  */
 var unsetFacets = function () {
+    console.log("unsetFacets");
     var checkboxes = document.querySelectorAll("input[name=facets]");
     if (checkboxes != null) {
+        console.log("Facets = " + checkboxes.length);
         for (var i = 0; i < checkboxes.length; i++) {
             checkboxes[i].checked = false;
         }

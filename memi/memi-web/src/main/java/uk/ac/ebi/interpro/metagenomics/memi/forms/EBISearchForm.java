@@ -13,6 +13,8 @@ public class EBISearchForm implements Serializable {
 
     String searchText;
 
+    String previousSearchText;
+
     List<String> facets;
 
     int page;
@@ -42,6 +44,15 @@ public class EBISearchForm implements Serializable {
 
     public void setSearchText(String searchText) {
         this.searchText = searchText;
+    }
+
+    public String getPreviousSearchText() {
+        previousSearchText = getSearchText();
+        return previousSearchText;
+    }
+
+    public void setPreviousSearchText(String previousSearchText) {
+        this.previousSearchText = previousSearchText;
     }
 
     public List<String> getFacets() {

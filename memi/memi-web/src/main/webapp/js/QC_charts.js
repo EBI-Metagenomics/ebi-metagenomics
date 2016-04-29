@@ -5,14 +5,27 @@ Highcharts.setOptions({
     }
 });
 
-var getExportingStructure = function (urlToFile) {
+var getExportingStructure = function (urlToFile,content) {
     return {
         buttons: {
             contextButton: {
                 menuItems: [{
                     textKey: 'downloadData',
                     onclick: function () {
-                        window.location = urlToFile;
+                        if (typeof content == "undefined") {
+                            window.location = urlToFile;
+                        }else{
+                            var element = document.createElement('a');
+                            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
+                            element.setAttribute('download', urlToFile);
+
+                            element.style.display = 'none';
+                            document.body.appendChild(element);
+
+                            element.click();
+
+                            document.body.removeChild(element);
+                        }
                     }
                 }, {
                     separator: true
@@ -58,11 +71,11 @@ var drawNumberOfReadsChart = function (rawdata, numberOfLines, sequenceCount, ur
     var data = [],
         categories = [
             "Initial Reads",
-            "Reads after fastq trimming and filtering",
-            "Reads after length filtering",
-            "Reads after ambiguous base filtering",
-            "Unique reads after clustering",
-            "Reads after repeat masking and filtering",
+            "Trimming",
+            "Length filtering",
+            "Ambiguous base filtering",
+            "Clustering",
+            "Repeat masking and filtering",
         ].splice(0, numberOfLines);
 
     rawdata.split('\n')
@@ -85,23 +98,8 @@ var drawNumberOfReadsChart = function (rawdata, numberOfLines, sequenceCount, ur
             color: "#8dc7c7"
         });
     }
-    var length = data[0];
-    $('#qc_overview').highcharts({
-        chart: { type: 'bar', height: 250 },
-        title: { text: 'Number of Sequence Reads'},
-        xAxis: {
-            categories: categories,
-            title: { enabled: false }
-        },
-        plotOptions: {
-            series: {
-                grouping: false,
-                shadow: false,
-                borderWidth: 0,
-                stacking: 'normal'
-            }
-        },
-        series: [{
+    var length = data[0],
+        series = [{
             name : "Reads Filtered out",
             data : data.map(function(n){
                 var current = length- n.y;
@@ -111,16 +109,42 @@ var drawNumberOfReadsChart = function (rawdata, numberOfLines, sequenceCount, ur
             color: "#ccccdd",
             pointPadding: -0.1
         },{
-            name : "Number of reads",
+            name : "Reads Remaining ",
             data : data,
             color: "#058dc7",
             pointPadding: -0.1
-        },{
+        }];
+    if (sequenceCount!= null && data[3].y > sequenceCount)
+        series.push({
             name: "Reads after sampling",
             color: "#8dc7c7"
-        }],
+        });
+
+    $('#qc_overview').highcharts({
+        chart: { type: 'bar', height: 250 },
+        title: { text: 'Number of Sequence Reads per QC Step'},
+        xAxis: {
+            categories: categories,
+            title: { enabled: false }
+        },
+        yAxis: {
+            title: { text: "Count" }
+        },
+        plotOptions: {
+            series: {
+                grouping: false,
+                shadow: false,
+                borderWidth: 0,
+                stacking: 'normal'
+            }
+        },
+        series: series,
         credits: false,
-        exporting: getExportingStructure(urlToFile)
+        exporting: getExportingStructure(urlToFile+".tsv",
+            categories.map(function(e,i){
+                return e + "\t"+ data[i].y;
+            }).join("\n")
+        )
     });
 };
 

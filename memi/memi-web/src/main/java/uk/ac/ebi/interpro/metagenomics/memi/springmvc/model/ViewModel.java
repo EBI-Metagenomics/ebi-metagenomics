@@ -121,4 +121,8 @@ public class ViewModel implements IViewModelParams {
             tabClasses.put(key, HIGHLIGHTED_CLASS);
         }
     }
+
+    public String getModelClassName() {
+        return getClass().getSimpleName();
+    }
 }
