@@ -14,8 +14,9 @@ var compileAndSendForm = function() {
             var facetInputs = facetDiv.querySelectorAll("input");
             console.log("Adding " + facetInputs.length + " facet fields");
             for (var i =0; i < facetInputs.length; i++) {
-                facetInputs[i].classList.add(HIDDEN_CLASS);
-                searchForm.appendChild(facetInputs[i]);
+                clonedFacet = facetInputs[i].cloneNode();
+                clonedFacet.classList.add(HIDDEN_CLASS);
+                searchForm.appendChild(clonedFacet);
             }
         }
         var paginationDiv = document.getElementById("searchPagination");
@@ -23,8 +24,9 @@ var compileAndSendForm = function() {
             var paginationInputs = paginationDiv.querySelectorAll("input");
             console.log("Adding " + paginationInputs.length + " pagination fields");
             for (var i =0; i < paginationInputs.length; i++) {
-                paginationInputs[i].classList.add(HIDDEN_CLASS);
-                searchForm.appendChild(paginationInputs[i]);
+                clonedInput = paginationInputs[i].cloneNode();
+                clonedInput.classList.add(HIDDEN_CLASS);
+                searchForm.appendChild(clonedInput);
             }
         }
         searchForm.submit();
