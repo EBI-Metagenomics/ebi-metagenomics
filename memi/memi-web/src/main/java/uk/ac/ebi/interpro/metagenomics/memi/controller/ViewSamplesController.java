@@ -243,6 +243,7 @@ public class ViewSamplesController extends AbstractController implements IContro
         result.add("Sample ID");
         result.add("Sample name");
         result.add("Project name");
+        result.add("Project Status");
         return result;
     }
 
