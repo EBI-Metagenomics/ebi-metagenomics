@@ -164,12 +164,11 @@
                 <a href="<c:url value="${baseURL}/project/${study.studyId}/doExport/"/>">Export more detailed sample info to CSV</a>
             </div>--%>
 
-            <!-- Removed link temporarily-->
-            <%--<div class="export">--%>
-            <%--<a href="<c:url value="${baseURL}/project/${study.studyId}/doExport/"/>" id="csv_plus"--%>
-            <%--title="<spring:message code="studyView.download.anchor.title"/>">--%>
-            <%--<spring:message code="download.anchor.label.detailed"/></a>--%>
-            <%--</div>--%>
+            <div class="export">
+                <a href="<c:url value="${baseURL}/projects/${study.studyId}/overview/doExport"/>" id="csv_plus"
+                title="<spring:message code="studyView.download.anchor.title"/>">
+                <spring:message code="download.anchor.label.detailed"/></a>
+            </div>
 
             <table class="table-heading result" id="associated-run">
                 <thead>
