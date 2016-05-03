@@ -119,6 +119,7 @@ public class OverviewStudyViewController extends AbstractStudyViewController {
         if (runs != null && runs.size() > 0) {
             List<String> columnNames = new ArrayList<>();
             columnNames.add("Sample Name");
+            columnNames.add("Sample Description");
             columnNames.add("Sample ID");
             columnNames.add("Run ID");
             columnNames.add("Experiment type");
