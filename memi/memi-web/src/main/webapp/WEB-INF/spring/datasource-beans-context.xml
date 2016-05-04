@@ -15,9 +15,9 @@
         <property name="username" value="admin"/>
         <property name="password" value="b0SB8dgW"/>
         <!--The initial number of connections that are created when the pool is started. -->
-        <!--<property name="initialSize" value="10"/>-->
+        <property name="initialSize" value="10"/>
         <!--The maximum number of active connections that can be allocated from this pool at the same time, or negative for no limit. -->
-        <!--<property name="maxActive" value="50"/>-->
+        <property name="maxActive" value="50"/>
         <!--The maximum number of connections that can remain idle in the pool, without extra ones being released, or negative for no limit. -->
         <property name="maxIdle" value="10"/>
         <!--The maximum number of milliseconds that the pool will wait (when there are no available connections) for a connection to be returned before throwing an exception, or -1 to wait indefinitely. -->
