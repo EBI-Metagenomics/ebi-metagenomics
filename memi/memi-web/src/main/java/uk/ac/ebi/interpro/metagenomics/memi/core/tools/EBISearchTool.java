@@ -93,8 +93,8 @@ public class EBISearchTool {
         return results;
     }
 
-    public EBIProjectSearchResults projectSamples(EBISearchForm searchForm) {
-        log.debug("projectSamples");
+    public EBIProjectSearchResults searchProjects(EBISearchForm searchForm) {
+        log.debug("searchProjects");
         String resultFields = "id,name,description,"+ OLD_PROJECT + ","+ PROJECT + "," + TAXONOMY + ",biome,experiment_type";
 
         EBIProjectSearchResults results = new EBIProjectSearchResults();

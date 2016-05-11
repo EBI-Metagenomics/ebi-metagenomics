@@ -30,7 +30,7 @@ public class SearchController extends AbstractController implements IController 
 
     public static final String VIEW_NAME = "search";
 
-    public static final String VIEW_SEARCH = "doEbiSearch";
+    public static final String VIEW_SEARCH = "doSampleSearch";
 
     public EBISearchTool ebiSearchTool;
 
@@ -67,10 +67,10 @@ public class SearchController extends AbstractController implements IController 
     }
 
     @RequestMapping(value = "/" + SearchController.VIEW_SEARCH)
-    public ModelAndView doEbiSearch(@Valid @ModelAttribute(EBISearchForm.MODEL_ATTR_NAME) final EBISearchForm ebiSearchForm,
-                                    BindingResult result,
-                                    ModelMap model) {
-        log.info("Requesting doEbiSearch of " + this.getClass() + "...");
+    public ModelAndView doSampleSearch(@Valid @ModelAttribute(EBISearchForm.MODEL_ATTR_NAME) final EBISearchForm ebiSearchForm,
+                                       BindingResult result,
+                                       ModelMap model) {
+        log.info("Requesting doSampleSearch of " + this.getClass() + "...");
 
         final EBISampleSearchResults sampleSearchResults = ebiSearchTool.searchSamples(ebiSearchForm);
         return buildModelAndView(
@@ -90,8 +90,6 @@ public class SearchController extends AbstractController implements IController 
                         );
                         final ViewModel searchModel = builder.getModel();
                         searchModel.changeToHighlightedClass(ViewModel.TAB_CLASS_SEARCH_VIEW);
-//                        Is this not set in the abstract class
-//                        model.addAttribute(EBISearchForm.MODEL_ATTR_NAME, ebiSearchForm);
                         model.addAttribute(ViewModel.MODEL_ATTR_NAME, searchModel);
                     }
                 }

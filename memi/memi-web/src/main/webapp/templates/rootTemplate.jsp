@@ -236,7 +236,7 @@
 
 
             <div class="grid_12 omega">
-                <form:form id="local-search" action="${pageContext.request.contextPath}/search/doEbiSearch"
+                <form:form id="local-search" action="${pageContext.request.contextPath}/search/doSampleSearch"
                       commandName="ebiSearchForm" method="get">
 
                     <fieldset>
