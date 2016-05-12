@@ -655,7 +655,7 @@
                     </div>
                     <div class="home_box alpha">
                         <img alt="American Gut Study Logo"
-                             src="<c:url value="${baseURL}/img/pict_home_american_gut.jpg"/>" style="max-width:590px;"/>
+                             src="<c:url value="${baseURL}/img/pict_home_american_gut.jpg"/>" style="max-width:300px;float:left;margin:15px;"/>
                         <p/>The microbial population (or microbiome) of the human gut is involved in a wide range of important processes, such as digestion, production of vitamins and other nutrients, detoxification, protection from pathogens, and helping to shape the host immune system. Gut microbial communities represent substantial reservoirs of genetic and metabolic diversity: different people have different types of microorganisms in their gut, and community composition can change over time or with diet.
 
                         <p/>The importance of the gut microbiota in health and disease is becoming increasingly recognised. Microbiome composition seems to be vital in maintaining a healthy gut, and community perturbance has been associated with a wide range of diseases, including obesity, diabetes, IBS and cancer. In order to better understand such associations, and to work out what constitutes normal or unhealthy gut populations, it is important to analyse samples from a broad range of people, with a variety of ages, diets and lifestyles.
