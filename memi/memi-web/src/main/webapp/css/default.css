@@ -1888,7 +1888,7 @@ ul.sample_list li {list-style: none; display: inline;}
 
 .home_box {border:1px #cbcbcb solid; overflow:hidden /*when resizing*/;   padding: 18px 9px; min-height: 322px; }
 .home_box p {color: #606a73;}
-.hlight-spot .home_box {height: 430px; overflow: scroll}
+.hlight-spot .home_box {height: 430px; overflow: auto}
 .hlight-spot .home_box p, .hlight-info .home_box p  {border:0px pink solid; margin-left:0;  margin-right:0; padding-left:0;padding-right:0;font-size:120%; }
 .hlight-spot .home_box img {margin-bottom: 9px; width: 100%;/*resize img with screen*/}
 .hlight-info .home_box img {margin: 0 9px 9px 0; float:left; width:17%;}
