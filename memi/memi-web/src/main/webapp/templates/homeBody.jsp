@@ -695,12 +695,12 @@
                     </div>
                     -->
                 </div>
-                <div id="hlight-box-tools" class="grid_12 alpha hlight-spot">
+                <div id="hlight-box-tools" class="grid_12 omega hlight-spot">
                     <div class="hlight_title_cont">
                         <div class="hlight_maintitle"><h1>Tools</h1></div>
                         <div class="hlight_subtitle"><h2>Functional sample comparison</h2></div>
                     </div>
-                    <div class="home_box alpha">
+                    <div class="home_box omega">
                         <img alt="Example of Go terms analysis result page"
                              src="<c:url value="${baseURL}/img/pict_home_comparison_566.png"/>"
                              style="max-width: 566px;"/>
