@@ -1888,6 +1888,8 @@ ul.sample_list li {list-style: none; display: inline;}
 
 .home_box {border:1px #cbcbcb solid; overflow:hidden /*when resizing*/;   padding: 18px 9px; min-height: 322px; }
 .home_box p {color: #606a73;}
+.hlight-spot.alpha .hlight_title_cont {margin-left: 18px;} /*important to keep to align titles*/
+.hlight-spot.omega .hlight_title_cont {margin-right: 18px;}
 .hlight-spot .home_box {height: 430px; overflow: auto}
 .hlight-spot .home_box p, .hlight-info .home_box p  {border:0px pink solid; margin-left:0;  margin-right:0; padding-left:0;padding-right:0;font-size:120%; }
 .hlight-spot .home_box img {margin-bottom: 9px; width: 100%;/*resize img with screen*/}
@@ -1907,7 +1909,7 @@ a.all {float:right; display: block; background: url(../img/arrow_link_small.jpg)
 a.all:hover, a.all:focus { background: url(../img/arrow_link_over_small.jpg) no-repeat  right top;}
 a.all:active  { background: url(../img/arrow_link_click_small.jpg) no-repeat right top;}
 
-.hlight_title_cont {margin-left: 18px; display:block; overflow: auto; border:0px red solid;}
+.hlight_title_cont {display:block; overflow: auto; border:0px red solid;}
 .hlight_maintitle {display:block; float:left;border:0px red solid;}
 .hlight_subtitle {display:block; float:right;margin-top: 18px; margin-right: 2px; border:0px black solid;}
 .hlight_subtitle h2 {font-size: 137%;}
