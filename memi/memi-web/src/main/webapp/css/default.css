@@ -1866,7 +1866,7 @@ ul.sample_list li {list-style: none; display: inline;}
 .jumbo-user-box .icon-functional:before {color:#C34533; font-size: 137%;}
 /*HOMEPAGE - stats*/
 .jumbo-stats {text-align: center; color:#606a73;font-size: 120%;line-height: 1.4;}
-/*.jumbo-stats  .grid_24 {bZorder:1px solid blue; box-sizing:border-box;}*/
+/*.jumbo-stats  .grid_24 {border:1px solid blue; box-sizing:border-box;}*/
 .jumbo-stats .jumbo-stats-box {overflow: hidden;/*small screens -remove overlap*/}
 .jumbo-stats .jumbo-stats-box .grid_6.alpha {max-width: 41px;}
 .jumbo-stats .jumbo-stats-box span.icon {font-size: 216%;}
@@ -1890,7 +1890,6 @@ ul.sample_list li {list-style: none; display: inline;}
 .home_box p {color: #606a73;}
 .hlight-spot.alpha .hlight_title_cont {margin-left: 18px;} /*important to keep to align titles*/
 .hlight-spot.omega .hlight_title_cont {margin-right: 18px;}
-.hlight-spot .home_box {height: 430px; overflow: auto}
 .hlight-spot .home_box p, .hlight-info .home_box p  {border:0px pink solid; margin-left:0;  margin-right:0; padding-left:0;padding-right:0;font-size:120%; }
 .hlight-spot .home_box img {margin-bottom: 9px; width: 100%;/*resize img with screen*/}
 .hlight-info .home_box img {margin: 0 9px 9px 0; float:left; width:17%;}
@@ -1921,7 +1920,9 @@ a.all:active  { background: url(../img/arrow_link_click_small.jpg) no-repeat rig
 .jumbo-news-centred a, .jumbo-news-centred a:visited {color:#0c4d7b;}
 .jumbo-news-centred .icon-socialmedia:before {color:#0c4d7b;}
 
-.list-contain-box .list-project-l, .list-contain-box .list-sample-l {height: 250px; position: relative;  width: 100%;  overflow-x: hidden; overflow-y: scroll;}
+.hlight-text-scroll, .list-contain-box .list-project-l, .list-contain-box .list-sample-l {position: relative;  width: 100%;  overflow-x: hidden; overflow-y: auto;}
+.list-project-l, .list-sample-l {height: 250px;}
+.hlight-text-scroll {height: 394px;}
 .list-contain-box .list-project-l .icon-functional:before, .list-contain-box .list-sample-l .icon-functional:before, table.result .icon-functional:before, #project_ov .icon-functional:before, #sample_ov .icon-functional:before {color: #777;}
 /*END HOMEPAGE*/
 
@@ -1935,6 +1936,8 @@ a.all:active  { background: url(../img/arrow_link_click_small.jpg) no-repeat rig
 .jumbo-header .mega-lock {display: none;}/*remove lock shape private*/
 .jumbo-news-centred {width: 66%;}
 .hlight_subtitle {margin-right:18px;}
+.hlight-spot.omega .hlight_title_cont {margin-left:18px;}
+.hlight-spot.omega .hlight_subtitle {margin-right:0;}
 #list-biomes .grid_24 a {height:inherit; width:32%;/*3x3*/}
 #list-biomes, .grid_12.list-contain-box, #hlight-box-spotlight, #hlight-box-tools {width:100%;margin-left: 0;margin-right: 0;}
 #list-biomes .home_box , .list-contain-box .home_box, #hlight-box-spotlight .home_box, #hlight-box-tools .home_box {margin:9px 18px;}
