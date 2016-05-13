@@ -654,6 +654,7 @@
                         <div class="hlight_subtitle"><h2>American Gut project</h2></div>
                     </div>
                     <div class="home_box alpha">
+                        <div class="hlight-text-scroll">
                         <img alt="American Gut Study Logo"
                              src="<c:url value="${baseURL}/img/pict_home_american_gut.jpg"/>" style="max-width:50%;float:left;margin:15px;"/>
                         <p/>The microbial population (or microbiome) of the human gut is involved in a wide range of important processes, such as digestion, production of vitamins and other nutrients, detoxification, protection from pathogens, and helping to shape the host immune system. Gut microbial communities represent substantial reservoirs of genetic and metabolic diversity: different people have different types of microorganisms in their gut, and community composition can change over time or with diet.
@@ -666,8 +667,9 @@
 
                         <p/>EBI Metagenomics has analysed the 16S rRNA gene amplicon sequence data for over 8,000 samples from the American Gut project (ERP012803) that have been deposited with the ENA to date. The taxonomic analysis for each sequencing run can be visualised on (or downloaded from) the EBI Metagenomics web site (for example, <a href="${baseURL}/metagenomics/projects/ERP012803/samples/ERS915520/runs/ERR1073439/results/versions/2.0">ERR1073439</a>). Users can also download the whole data set, summarised at both the phylum and full taxonomic classification level, as results matrix files (<a href="${baseURL}/metagenomics/projects/ERP012803">ERP012803</a>).
 
+                        </div>
                         <a href="<c:url value="${baseURL}/projects/ERP012803"/>"
-                           title="View American Gut project" class="all">Look at the data</a>
+                                                   title="View American Gut project" class="all">Look at the data</a>
                     </div>
                     <!--
                     <div class="hlight_title_cont">
@@ -701,6 +703,7 @@
                         <div class="hlight_subtitle"><h2>Functional sample comparison</h2></div>
                     </div>
                     <div class="home_box omega">
+                        <div class="hlight-text-scroll">
                         <img alt="Example of Go terms analysis result page"
                              src="<c:url value="${baseURL}/img/pict_home_comparison_566.png"/>"
                              style="max-width: 566px;"/>
@@ -709,15 +712,12 @@
                             of Gene Ontology (GO) terms, specially developed to describe metagenomic data. </p>
                         <p>You can visualise the results using a range of interactive charts (bar charts, stacked
                             columns, Principal Component Analysis and heatmaps).
-                                <%--or view the results in a table format--%>
                             The different charts can be exported in PNG, PDF and SVG formats, so that they can easily be
                             included in presentations and publications.
-                                <%--<br/> Note that the functional comparison tool only works for non-amplicon datasets.--%>
                         </p>
-
-                        <a href="<c:url value="${baseURL}/compare"/>" title="Compare samples" class="all">Compare
-                            samples</a>
                     </div>
+                        <a href="<c:url value="${baseURL}/compare"/>" title="Compare samples" class="all">Compare
+                                                  samples</a>
                 </div>
             </div>
         </section>
