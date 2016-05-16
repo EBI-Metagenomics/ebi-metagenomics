@@ -78,46 +78,48 @@ The ENA only accepts data that is intended for public release. However, any data
 <h3 id="analysis">How we analyse the data</h3>
 <p>The latest version of the pipeline includes the following steps:</p>
 <!-- Pipeline chart for version 2.0-->
-<a title="EBI metagenomics - pipeline releases" href="<c:url value="${baseURL}/pipelines/2.0"/>">
-       <div class="block_wrapper">
+<a title="EBI metagenomics - latest pipeline release" href="<c:url value="${baseURL}/pipelines/3.0"/>">
+    <div class="block_wrapper">
 
-           <div class="block_container">
+        <div class="block_container pipe_v3">
 
-               <div class="mainbranch">
-                   <div class="block-lb" id="item_03">Raw reads</div><div class="arrow_pip "></div>
-                   <div class="block small step0" id="item_000" data-toggle="tooltip" title="Paired-end overlapping reads are merged - we do not perform assembly.">SeqPrep</div><div class="arrow_pip "></div>
-                   <div class="block-lb" id="item_01">Initial reads</div><div class="arrow_pip"></div>
-                   <div class="block step1" id="item_02" title="Trimmomatic: Low quality trimming (low quality ends and sequences with > 10% undetermined nucleotides removed). Adapter sequences removed using Biopython SeqIO package. Biopython: Sequences < 100 nucleotides in length removed.">QC
-                       <div class="qclist"><ul><li>Trim low quality (Trimmomatic)</li>
-                                       <li>Length filtering (Biopython)</li></ul></div>
-                   </div><div class="arrow_pip"></div>
-                   <div class="block-lb" id="item_03">Processed reads</div><div class="arrow_pip"></div>
-                   <div class="block step2" id="item_04" title="Prokaryotic rRNA reads are filtered. We use the hidden Markov models to identify rRNA sequences.">rRNASelector</div>
-               </div>
+            <div class="mainbranch">
+                <div class="block-lb">Raw reads</div><div class="arrow_pip "></div>
+                <div class="block small step0"><div class="children">SeqPrep</div></div><div class="arrow_pip "></div>
+                <div class="block-lb">Initial reads</div><div class="arrow_pip"></div>
+                <div class="block step1"><div class="children">QC</div>
+                </div><div class="arrow_pip"></div>
+                <div class="block-lb" >Processed reads</div><div class="arrow_pip"></div>
+                <div class="block step2"><div class="children_l">ncRNA selection</div></div>
+            </div>
 
+            <div class="lowbranch">
+                <div class="lowbranch_func">
+                    <div class="arrow_pip rotate_f"></div><div class="block-lb" >Reads with rRNA &amp; tRNA masked</div><div class="arrow_pip"></div>
+                    <div class="block step3 function" ><div class="children_l">ORF predictions</div></div><div class="arrow_pip"></div>
+                    <div class="block-lb">Predicted CDS</div><div class="arrow_pip"></div>
+                    <div class="block step4 function"><div class="children_l">Functional analysis</div></div>
+                    <div class="arrow_pip"></div>
+                    <div class="block-lb">IPR matches &amp; GO terms</div>
+                </div> <!-- /lowbranch_func -->
 
+                <div class="lowbranch_tax">  <div class="arrow_pip rotate_t"></div>
+                    <div class="block-lb">Reads with rRNA</div>
+                    <div class="arrow_pip"></div>
+                    <div class="block-lb">16s rRNA</div>
+                    <div class="arrow_pip"></div>
+                    <div class="block step5 taxon"><div class="children_l">Taxonomic analysis</div></div>
+                    <div class="arrow_pip"></div>
+                    <div class="block-lb">OTUs &amp; taxonomic lineage</div>
+                </div><!-- /lowbranch_tax -->
 
-               <div class="branch">
-                   <div class="branch1">
-                       <div class="arrow_pip rotate_f"></div><div class="block-lb" id="item_05">Reads with rRNA masked</div><div class="arrow_pip"></div>
-                       <div class="block step3 function" id="item_06" title="Reads with predicted coding sequences (pCDS) above 60 nucleotides in length.">FragGeneScan</div><div class="arrow_pip"></div>
-                       <div class="block-lb" id="item_07">Predicted CDS</div><div class="arrow_pip"></div>
-                       <div class="block step4 function" id="item_08" title="Matches are generated against predicted CDS, using a subset of databases (Pfam, TIGRFAM, PRINTS, PROSITE patterns, Gene3d) from InterPro release 31.0. A summary of Gene Ontology (GO) terms derived from InterPro matches to your sample is provided. It is generated using a reduced list of GO terms called GO slim">InterProScan</div>
-                       <div class="block-nt">Functional analysis</div>
-                   </div> <!-- /branch1 -->
-
-                   <div class="branch2">  <div class="arrow_pip rotate_t"></div>
-                       <div class="block-lb" id="item_09">Reads with rRNA</div>
-                       <div class="arrow_pip"></div>
-                       <div class="block-lb" id="item_11">16s rRNA</div>
-                       <div class="arrow_pip"></div>
-                       <div class="block step5 taxon" id="item_10" title="16s rRNA are annotated using the Greengenes reference database (default closed-reference OTU picking protocol with Greengenes 13.8 reference with reverse strand matching enabled).">QIIME</div>
-                       <div class="block-nt">Taxonomic analysis</div>
-                   </div><!-- /branch2 -->
-
-               </div><!-- /branch -->
-           </div> <!-- /container -->
-       </div>   <!-- /block_wrapper -->
+                <div class="lowbranch_trna">
+                    <div class="arrow_pip rotate_t"></div>
+                    <div class="block-lb">Reads with tRNA</div>
+                </div><!-- /lowbranch_trna -->
+            </div><!-- /lowbranch -->
+        </div> <!-- /block_container -->
+    </div>   <!-- /block_wrapper -->
     </a>
        <!-- /pipeline chart version 2.0-->
 <%--<ol id="p-steps">--%>

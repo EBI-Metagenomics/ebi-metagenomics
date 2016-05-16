@@ -35,6 +35,11 @@
         <put-attribute name="body" value="/templates/aboutBody.jsp"/>
     </definition>
 
+    <definition name="search" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="green"/>
+        <put-attribute name="body" value="/templates/searchBody.jsp"/>
+    </definition>
+
     <!-- Start submission check multi-form -->
 
     <definition name="registIntro" extends="rootTemplate">

@@ -3,6 +3,7 @@ package uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.results;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Run;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
@@ -12,7 +13,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.TaxonomyData;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.*;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.results.FunctionalViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.results.TaxonomicViewModel;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.UserManager;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ import java.util.List;
 
 /**
  * Model builder class for {@link uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.results.ResultViewModel}.
- * <p/>
+ * <p>
  * See {@link uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder} for more information of how to use.
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
@@ -33,7 +34,8 @@ public class TaxonomicViewModelBuilder extends AbstractResultViewModelBuilder<Ta
 
     private Run run;
 
-    public TaxonomicViewModelBuilder(SessionManager sessionMgr,
+    public TaxonomicViewModelBuilder(UserManager sessionMgr,
+                                     EBISearchForm ebiSearchForm,
                                      String pageTitle,
                                      List<Breadcrumb> breadcrumbs,
                                      MemiPropertyContainer propertyContainer,
@@ -42,7 +44,8 @@ public class TaxonomicViewModelBuilder extends AbstractResultViewModelBuilder<Ta
                                      List<FunctionalAnalysisFileDefinition> functionalAnalysisFileDefinitions,
                                      List<ResultFileDefinitionImpl> taxonomicAnalysisFileDefinitions,
                                      AnalysisJob analysisJob) {
-        super(sessionMgr, pageTitle, breadcrumbs, propertyContainer, qualityControlFileDefinitions, functionalAnalysisFileDefinitions, taxonomicAnalysisFileDefinitions, analysisJob);
+        super(sessionMgr, ebiSearchForm, pageTitle, breadcrumbs, propertyContainer, qualityControlFileDefinitions,
+                functionalAnalysisFileDefinitions, taxonomicAnalysisFileDefinitions, analysisJob);
         this.run = run;
     }
 
@@ -54,7 +57,7 @@ public class TaxonomicViewModelBuilder extends AbstractResultViewModelBuilder<Ta
         final AnalysisStatus analysisStatus = getAnalysisStatus((sample.getAnalysisCompleted() == null ? false : true));
         final TaxonomyAnalysisResult taxonomyAnalysisResult = loadTaxonomyDataFromCSV();
 
-        return new TaxonomicViewModel(getSessionSubmitter(sessionMgr), pageTitle, breadcrumbs, propertyContainer, analysisJob.getSample(), run, analysisJob, analysisStatus, taxonomyAnalysisResult);
+        return new TaxonomicViewModel(getSessionSubmitter(sessionMgr), getEbiSearchForm(), pageTitle, breadcrumbs, propertyContainer, analysisJob.getSample(), run, analysisJob, analysisStatus, taxonomyAnalysisResult);
     }
 
     /**

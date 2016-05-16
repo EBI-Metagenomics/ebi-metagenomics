@@ -40,7 +40,6 @@ padding: 0 9px;
 p { display: block; margin: 0 0 14px 0; clear:none;}
 
 strong, th {font-weight:bold;}
-small {font-size:80%;}
 
 ul, ol {
 list-style: disc;
@@ -54,6 +53,8 @@ ul li ul { margin:10px;}
 
 i {font-style:italic;}
 
+hr {border-top: 1px solid #eee; margin:18px 9px 9px 9px;}
+
 /*suggested change to ebi-global.css */
 div#global-masthead { border-color: rgba(255, 255, 255, 0.4); } /*like BBC top line*/
 div#headerdiv div.nav ul {font-size: 90%;height: 100%;}/*smaller font for global navigation e.g. BBC & make the size of border full height in case the height of nav is changing*/
@@ -65,8 +66,7 @@ div#local-masthead ul {height: auto;width: 100%;margin-top: 0; background-color:
 div#local-masthead ul li {margin-bottom: 0; border-right: 1px solid rgba(255, 255, 255, 0.5);}/*change the dotted line*/
 div#local-masthead ul li a:link {border-bottom: 0px solid #71b360;  text-shadow:  rgba(0, 0, 0, 0.2) 1px 1px 0px; font-size: 96%; font-family: Verdana, sans-serif;}/*make it similar to interpro menu*/
 div#local-masthead ul li a:hover, div#local-masthead ul li a:focus, div#local-masthead ul li a:active {border-bottom: 0px solid #71b360; background-color: rgba(0, 0, 0, 0.2);}
-div#local-title.logo-title img {margin: 18px 9px; box-sizing: border-box;} /*make the metagenomics logo more centered */
-div#headerdiv div#local-title a  { display: block; overflow: auto; }/*to show tooltip properly*/
+div#local-title.logo-title img { margin-top: 1.5em;  margin-bottom: 1.5em; width:100%;max-width: 410px;} /*make the metagenomics logo more centered */
 div#headerdiv #global-masthead a:link {float: left;border-bottom:0;}
 div#headerdiv #global-masthead .nav a:link {float: none;}
 /*/suggested change to ebi-global.css */
@@ -340,39 +340,79 @@ background:url(../img/bgd_black_op20_8.png);
 
 /**************************** TABLE ***********************************/
 
-/* DATATABLE used for the comparison tool. */
-table.dataTable {width: 100%;border-collapse: separate;}
+/* MAIN TABLE - feedback form, project ov, project list, sample list*/
+.result {line-height: 1.2em; border-collapse:separate; width:100%; border-spacing:4px; padding-left:7px;/*9px is too much as we have already padding 2px in the table*/ margin-bottom: 9px;}
+.result thead th:empty{background:transparent;border:none;}
+.result thead th {font-size:120%; padding:10px; color:#fff; background-color:#708A95 /*was #006666*/; border-radius:5px 5px 0 0; box-shadow:0px 1px 1px #adadad;}
+.result tbody tr:hover {background: url(../img/bgd_black_op05_8.png);}
+.result tbody tr:nth-child(even) {background-color:#F4F4F8;}
+.result tbody tr:nth-child(odd) {background-color:#e9e9e9;}
+.result tbody td {padding:7px; vertical-align: middle; border: 1px solid #e5e5e5; border-radius:2px; color:#424242; /*text-shadow:1px 1px 1px #fff;*/}
+.result tbody td a:hover{text-decoration:underline;/*color:red;*/}
+.table-align-center {text-align:center;}
+.table-margin-r {margin-right:9px;}  /*need extra margin for 100%width table for EBI Template*/
+/* END  MAIN TABLE*/
+
+/*LIGHT TABLE*/
+.table-light {width:100%;padding:0 9px;}
+.table-light tr:nth-child(odd) {background-color: #f9f9f9;}
+.table-light tr:first-child td {border-top: 0 solid #ddd;}
+.table-light tr:last-child td {border-bottom: 1px solid #ddd;}
+.table-light tr:hover {background: url(../img/bgd_black_op05_8.png);}
+/* END  LIGHT TABLE*/
+
+/* DATATABLE - comparison tool + project */
+.dataTable {width: 100%;border-collapse: separate;}
 /*table.dataTable tbody td:nth-child(5), table.dataTable tbody td:nth-child(6) { text-align:right;}*/ /*alignment for numbers removed while we wait for column resize*/
-table.dataTable thead th, table.dataTable thead td {padding: 9px 18px; border-bottom:1px solid #D5D5D5;}
+table.dataTable thead th, .dataTable thead td {padding: 9px 18px; border-bottom:1px solid #D5D5D5;}
+table.dataTable.table-heading thead th {border-bottom:0 solid #D5D5D5;}
 table.dataTable thead .sorting_asc, table.dataTable thead .sorting_desc, table.dataTable thead .sorting {cursor: pointer; *cursor: hand;}
 table.dataTable thead .sorting {/*background: url("https://cdn.datatables.net/1.10.0/images/sort_both.png") no-repeat center right;*/}
 table.dataTable thead .sorting_asc {background: url(../img/ico_sort_asc.png) no-repeat center right;}
+table.dataTable.table-heading thead .sorting_asc {background: #368395  url(../img/ico_sort_asc_white.png) no-repeat center right;}
+
+/*table.dataTable.table-heading thead .sorting_asc:after {font-family: 'EBI-Functional'; font-size: 100%; color:grey; content:'8';margin:0 1.3em;} when icon available in EBI font*/
 table.dataTable thead .sorting_desc {background: url(../img/ico_sort_desc.png) no-repeat center right;}
-table.dataTable thead .sorting_asc_disabled {background: url(../img/ico_sort_asc_disabled.png) no-repeat center right;}
-table.dataTable thead .sorting_desc_disabled {background: url(../img/ico_sort_desc_disabled.png) no-repeat center right;}
+table.dataTable.table-heading thead .sorting_desc {background: #368395 url(../img/ico_sort_desc_white.png) no-repeat center right;}
+
+/*Light datatable and table version*/
+.dataTable.table-light, .table-light  {border-collapse: collapse;}
+.dataTable.table-light thead .sorting_asc, .table-light thead .sorting_asc {background: #fff  url(../img/ico_sort_asc_black.png) no-repeat center right;}
+.dataTable.table-light thead .sorting_desc, .table-light thead .sorting_desc {background: #fff  url(../img/ico_sort_desc_black.png) no-repeat center right;}
+.dataTable.table-light thead th, .table-light thead th   {border-bottom: 1px solid #8A8A8A; color:#333; border-radius:0;  box-shadow:none; background-color: #fff; }
+.dataTable.table-light tr:nth-child(even), .table-light tr:nth-child(even) {background-color: #FFF;}
+.dataTable.table-light td, .table-light td  {border-top: 1px solid #ddd; border-left: 0 solid #ddd; border-right: 0 solid #ddd;  border-bottom: 0 solid #ddd; padding:7px; border-radius: 0;}
+.dataTable.table-light .sorting_1, .table-light .sorting_1  {background-color:rgba(100, 176, 197, 0.11);}
+.dataTable.table-light.hover tbody tr:hover, table.dataTable.table-light.hover tbody tr.odd:hover, table.dataTable.table-light.hover tbody tr.even:hover, table.dataTable.table-light.display tbody tr:hover, table.dataTable.table-light.display tbody tr.odd:hover, table.dataTable.table-light.display tbody tr.even:hover {background-color: rgba(154, 154, 154, 0.02);}
+.table-light.hover tbody tr:hover, .table-light.hover tbody tr.odd:hover, .table-light.hover tbody tr.even:hover, .table-light.display tbody tr:hover, .table-light.display tbody tr.odd:hover, .table-light.display tbody tr.even:hover {background-color: rgba(154, 154, 154, 0.02);}
+/*/Light table version*/
+
+.dataTable thead .sorting_asc_disabled {background: url(../img/ico_sort_asc_disabled.png) no-repeat center right;}
+.dataTable thead .sorting_desc_disabled {background: url(../img/ico_sort_desc_disabled.png) no-repeat center right;}
 .sorting_1 {color:black;font-weight: bold;} /*sorted column*/
 a.next:hover, a.next:active {height:100%;}/*clash with EBI style so I have to force the height to auto*/
-table.dataTable tbody td {padding: 8px 4px;}
+/*.dataTable tbody td {padding: 8px 4px;}*/
 
-table.dataTable.row-border tbody th, table.dataTable.row-border tbody td, table.dataTable.display tbody th, table.dataTable.display tbody td {border-top: 1px solid #eeeeee;}
-table.dataTable.row-border tbody tr:first-child th, table.dataTable.row-border tbody tr:first-child td, table.dataTable.display tbody tr:first-child th, table.dataTable.display tbody tr:first-child td { border-top: none;}/*remove border for first element table*/
+.dataTable.row-border tbody th, table.dataTable.row-border tbody td, table.dataTable.display tbody th, table.dataTable.display tbody td {border-top: 1px solid #eeeeee;}
+.dataTable.row-border tbody tr:first-child th, table.dataTable.row-border tbody tr:first-child td, table.dataTable.display tbody tr:first-child th, table.dataTable.display tbody tr:first-child td { border-top: none;}/*remove border for first element table*/
 
-table.dataTable.stripe tbody tr.odd, table.dataTable.display tbody tr.odd {background-color: #ffffff;}
-table.dataTable.stripe tbody tr.even, table.dataTable.display tbody tr.even {background-color: #fafafa;}
+.dataTable.stripe tbody tr.odd, table.dataTable.display tbody tr.odd {background-color: #ffffff;}
+.dataTable.stripe tbody tr.even, table.dataTable.display tbody tr.even {background-color: #fafafa;}
 
-table.dataTable.stripe tbody tr.odd.selected, table.dataTable.display tbody tr.odd.selected, table.dataTable.stripe tbody tr.even.selected, table.dataTable.display tbody tr.even.selected {background-color: #D6E9F8;color:black; font-weight: normal;}
-table.dataTable.hover tbody tr:hover, table.dataTable.hover tbody tr.odd:hover, table.dataTable.hover tbody tr.even:hover, table.dataTable.display tbody tr:hover, table.dataTable.display tbody tr.odd:hover, table.dataTable.display tbody tr.even:hover {background-color: #E7E9F9;}
+.dataTable.stripe tbody tr.odd.selected, table.dataTable.display tbody tr.odd.selected, table.dataTable.stripe tbody tr.even.selected, table.dataTable.display tbody tr.even.selected {background-color: #D6E9F8;color:black; font-weight: normal;}
+.dataTable.hover tbody tr:hover, table.dataTable.hover tbody tr.odd:hover, table.dataTable.hover tbody tr.even:hover, table.dataTable.display tbody tr:hover, table.dataTable.display tbody tr.odd:hover, table.dataTable.display tbody tr.even:hover {background-color: #E7E9F9;}
 
 table.dataTable.no-footer {border-bottom: 1px solid #D5D5D5;}
 
 .dataTables_wrapper .dataTables_length, .dataTables_wrapper .dataTables_filter, .dataTables_wrapper .dataTables_info, .dataTables_wrapper .dataTables_processing, .dataTables_wrapper .dataTables_paginate {color: #333333;padding-left: 9px;padding-right: 9px;}
-
+.dataTables_wrapper .dataTables_filter {padding-right: 15px;}/*little extra to align filter to the table*/
 .dataTables_wrapper {position: relative;clear: both;*zoom: 1; zoom: 1;}
 .dataTables_wrapper .dataTables_length {float: left;}/*show X number of entries*/
 .dataTables_wrapper .dataTables_filter {float: right; text-align: right;}
 .dataTables_wrapper .dataTables_filter input { margin-left: 0.5em;}
 .dataTables_wrapper .dataTables_info {clear: both; float: left; padding-top: 0.755em;}/*showing X to X of X entries*/
 .dataTables_wrapper .dataTables_paginate {float: right; text-align: right; padding-top: 0.25em;}
+.sorting_1 {background-color: rgba(176, 196, 222, 0.11);} /*add a background-color to the column*/
 /*button navigation*/
 .dataTables_wrapper .dataTables_paginate .paginate_button { box-sizing: border-box; display: inline-block; min-width: 1.5em; padding:0.2em 0.6em; margin-left: 2px; text-align: center; text-decoration: none !important; cursor: pointer;  *cursor: hand;   color: #333333 !important;   border: 1px solid transparent;}
 .dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {color: #333333 !important;border: 1px solid #cacaca; background-color: white; background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, white), color-stop(100%, gainsboro)); /* Chrome,Safari4+ */ background: -webkit-linear-gradient(top, white 0%, gainsboro 100%);/* Chrome10+,Safari5.1+ */background: -moz-linear-gradient(top, white 0%, gainsboro 100%);/* FF3.6+ */ background: -ms-linear-gradient(top, white 0%, gainsboro 100%);/* IE10+ */ background: -o-linear-gradient(top, white 0%, gainsboro 100%); /* Opera 11.10+ */ background: linear-gradient(to bottom, white 0%, gainsboro 100%); /* W3C */} /*current button selected*/
@@ -381,29 +421,16 @@ table.dataTable.no-footer {border-bottom: 1px solid #D5D5D5;}
 .dataTables_wrapper .dataTables_paginate .paginate_button:active {outline: none;background-color: #2b2b2b;background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #2b2b2b), color-stop(100%, #0c0c0c));/* Chrome,Safari4+ */  background: -webkit-linear-gradient(top, #2b2b2b 0%, #0c0c0c 100%);/* Chrome10+,Safari5.1+ */    background: -moz-linear-gradient(top, #2b2b2b 0%, #0c0c0c 100%);/* FF3.6+ */          background: -ms-linear-gradient(top, #2b2b2b 0%, #0c0c0c 100%);/* IE10+ */         background: -o-linear-gradient(top, #2b2b2b 0%, #0c0c0c 100%);/* Opera 11.10+ */  background: linear-gradient(to bottom, #2b2b2b 0%, #0c0c0c 100%);/* W3C */ box-shadow: inset 0 0 3px #111;}
 /*END button navigation*/
 .dataTables_wrapper:after { visibility: hidden; display: block; content: ""; clear: both; height: 0;}
-/* END DATATABLE used for the comparison tool. */
+table.dataTable .highlight {background-color: #ffffa3;}
+/* END DATATABLE - comparison tool + project */
 
-.h_left {text-align:left;}
+
 #small {width:70%;} /*table in analysis result changed in % for mitigation*/
 
 #feedback_form table tbody td, #feedback_form_no table tbody td{
 text-align:left;
 }
 #feedback_form table.result { margin-bottom: 0px;}
-/* MAIN RESULT TABLE*/
-table.result td.h_left {text-align:left;}
-/*table used on the feedback form, project and sample list*/
-table.result {line-height: 1.2em; border-collapse:separate; width:100%; border-spacing:4px; padding-left:7px;/*9px is too much as we have already padding 2px in the table*/ margin-bottom: 18px;}
-table.result tbody tr:hover {/*background: url(../img/bgd_black_op05_8.png);*/}
-table.result tbody td{ padding:7px; text-align:center; vertical-align: middle; border: 1px solid #e5e5e5; -moz-border-radius:2px; -webkit-border-radius:2px; border-radius:2px; color:#424242;/* text-shadow:1px 1px 1px #fff;  */ }/*keep the prefix*/
-table.result tbody td a:hover{text-decoration:underline;/*color:red;*/}
-table.result thead th:empty{background:transparent;border:none;}
-table.result thead th { font-size:120%; padding:10px; color:#fff; background-color:#006666; border-radius:5px 5px 0 0; box-shadow:0px 1px 1px #adadad;}
-table.result td.showHideRelated { font-weight: bold;}
-table.result td.showHideRelated:hover {background-color: #006666; }
-table.result tbody tr:nth-child(even) {background-color:#F4F4F8;}
-table.result tbody tr:nth-child(odd) {background-color:#e9e9e9;}
-/*/ MAIN RESULT TABLE*/
 
 .simple_table  {padding: 0px;}
 .simple_table td {vertical-align: top;}
@@ -432,26 +459,22 @@ table.result tbody tr:nth-child(odd) {background-color:#e9e9e9;}
 #fragment-download .pipeline_table .icon-functional:before {font-size: 138%;color: #2B8A97;}
 #fragment-download .pipeline_table .icon-generic.big:before {color: #9A9A9A; font-size: 206%;}
 #fragment-download .pipeline_table .filesize {color: #8E8E8E; font-size:90%;}
-/************************ END TABLE *****************************/
+
+/*SEARCH TABLE*/
+.table-pagination {margin: 9px 0 18px 9px;}
+.table-pagination input[type="button"]{cursor: pointer;}
+
+/**************************** END TABLE ***********************************/
 
 /*********************** TITLE + TEXT***************************/
 h1, h2 {font-family: helvetica, "trebuchet MS", arial, sans-serif; color:#0F6D99; /*color:#003798;*/ margin:0.83em 0;/*added for compliance*/; font-weight:normal}
 h1 {font-size:244%;}
 h2 {font-size:190%;}
 h2 span {font-size:80%; /*color: #7c8c99;*/}
-
 h3 {color:#7c8c99;font-size:160%; margin:9px 0;}
-
 h4 {font-size:140%; color:#333; margin:9px 0;}
 
-h5 {
-font-family: MyriadProRegular, sans-serif;
-color:white;    /*#2e86ec*/
-font-size:130%;
-font-weight:normal;
-margin:7px 0 ;
-padding-left:14px;
-}
+small {font-size:83%;}
 
 p, ul {font-size: 110%;color:#333; /*border:1px red solid; box-sizing: border-box;*/}
 
@@ -475,27 +498,6 @@ h2.pipeline_title {margin-bottom: 0;}
 h2.pipeline_title span {color: #7c8c99;}/*date*/
 .sidebar-allrel h2 {margin:18px 0 9px 0;}
 
-/*#sidebar-login {margin: 14px 20px 14px 20px;} */
-
-/*#sidebar-login {*/
-/*border: solid 0px black;*/
-/*background-color:white;*/
-/*padding:10px;*/
-/*box-shadow: 3px 3px 4px #b1b1b1;*/
-/*border-radius: 14px;*/
-/*}*/
-
-/*#sidebar-login h2 {*/
-/*border-radius: 14px 14px 0 0;*/
-/*padding: 2px 0 0 4px;*/
-/*margin-bottom:2px;*/
-/*}*/
-
-/*#sidebar-login img  {*/
-/*float:right;*/
-/*margin: 4px 14px 0 4px;*/
-/*}*/
-
 .step_breadcrumbs {
 margin-bottom:28px;
 border:0px solid #7C8C99;
@@ -517,7 +519,11 @@ border:0px solid #7C8C99;
 .subtitle span {font-size:80%; /*color: #7c8c99;*/}
 
 .pi_arch_title span {font-size: 140%;}
-/****************** END TITLE *************************/
+
+.extra-pad {padding-left:9px;}
+
+.text-muted {color:#999;}
+/****************** END TITLE + TEXT *************************/
 
 #submit-data {
 border: solid 0px black;
@@ -731,6 +737,10 @@ text-decoration:underline;
 .biome_icon.icon_lg.air_b {background-position: -222px -1396px;}
 .biome_icon.icon_lg.wastewater_b {background-position: -420px -1396px;}
 .biome_icon.icon_lg.default_b {background-position: -622px -1396px;}
+.biome_icon.icon_lg.vulcano_b {background-position: -20px -1596px;}
+.biome_icon.icon_lg.hotspring_b {background-position: -222px -1596px;}
+.biome_icon.icon_lg.cave_b {background-position: -420px -1596px;}
+.biome_icon.icon_lg.plant_host_b {background-position: -622px -1596px;}
 /*biome medium icon*/
 .biome_icon.icon_sm {width:75px; height:75px;}
 .biome_icon.icon_sm.soil_b {background-position: -40px -396px;}
@@ -745,6 +755,10 @@ text-decoration:underline;
 .biome_icon.icon_sm.air_b {background-position: -142px -596px;}
 .biome_icon.icon_sm.wastewater_b {background-position: -241px -596px;}
 .biome_icon.icon_sm.default_b {background-position: -342px -596px;}
+.biome_icon.icon_sm.vulcano_b {background-position:-40px -695px;}
+.biome_icon.icon_sm.hotspring_b {background-position:-142px -695px;}
+.biome_icon.icon_sm.cave_b {background-position:-241px -695px;}
+.biome_icon.icon_sm.plant_host_b {background-position:-342px -695px;}
 /*biome small icon*/
 .biome_icon.icon_xs {width: 30px; height: 30px;}
 .biome_icon.icon_xs.soil_b {background-position:-42px -38px;}
@@ -759,6 +773,10 @@ text-decoration:underline;
 .biome_icon.icon_xs.air_b {background-position: -82px -118px;}
 .biome_icon.icon_xs.wastewater_b {background-position: -122px -118px;}
 .biome_icon.icon_xs.default_b {background-position: -162px -118px;}
+.biome_icon.icon_xs.vulcano_b {background-position: -42px -157px;}
+.biome_icon.icon_xs.hotspring_b {background-position: -82px -157px;}
+.biome_icon.icon_xs.cave_b {background-position: -122px -157px;}
+.biome_icon.icon_xs.plant_host_b {background-position: -162px -157px;}
 /*biome homepage*/
 #list-biomes .list-biomes-l {margin-top: 9px;}
 #list-biomes .list-biomes-l:last-of-type {margin-bottom: 9px;}/*add extra margin to align box content*/
@@ -770,7 +788,7 @@ text-decoration:underline;
 #list-biomes .grid_24 a:hover  {color:white;text-decoration: none; background-color:  rgba(0, 0, 0, 0.25);}
 
 #list-biomes .biome_icon {margin:9px;}
-/*strechy sprite - to amake responsive sprite/biome from http://tobyj.net/responsive-sprites/*/
+/*strechy sprite - to make responsive sprite/biome from http://tobyj.net/responsive-sprites/*/
 .stretchy {margin: 0 auto;display: block; position: relative; overflow: hidden; max-width: 80px;/*sprite icon size*/}
 .stretchy .spacer {width: 100%; height: auto;}
 .stretchy .sprite {position: absolute;top: 0; left: 0; max-width: none; max-height: 2690%;}
@@ -779,30 +797,37 @@ text-decoration:underline;
 .stretchy .sprite.marine_b {left:-170%; top: -480%;}
 .stretchy .sprite.forest_b {left: -292%;top: -480%;}
 .stretchy .sprite.non_human_host_b {left:-414%; top: -480%;}
-.stretchy .sprite.engineered_b {left:-47%; top: -724%;}
 .stretchy .sprite.freshwater_b {left:-47%; top: -602%;}
 .stretchy .sprite.grassland_b {left:-170%; top: -602%;}
 .stretchy .sprite.human_gut_b {left:-292%; top: -602%;}
+.stretchy .sprite.human_host_b {left:-414%; top: -602%;}
+.stretchy .sprite.engineered_b {left:-47%; top: -724%;}
 .stretchy .sprite.air_b {left:-170%; top: -724%;}
-.stretchy .sprite.wastewater_b {left:-290%; top: -724%;}
+.stretchy .sprite.wastewater_b {left:-292%; top: -724%;}
+.stretchy .sprite.default_b {left:-414%; top: -724%;}
+.stretchy .sprite.vulcano_b {left: -47%; top: -845%;}
+.stretchy .sprite.hotspring_b {left: -170%; top: -845%;}
+.stretchy .sprite.cave_b {left: -292%; top: -845%;}
+.stretchy .sprite.plant_host_b {left: -414%; top: -845%;}
 
-/*biome homepage responsive - change size icons  for small screens */
-@media (max-width: 768px) {
-#list-biomes .biome_icon {width: 30px; height: 30px;}
-#list-biomes .soil_b {background-position:-42px -38px;}
-#list-biomes .marine_b {background-position: -82px -38px;}
-#list-biomes .forest_b {background-position: -122px -38px;}
-#list-biomes .freshwater_b {background-position: -42px -78px;}
-#list-biomes .grassland_b {background-position: -82px -78px;}
-#list-biomes .human_gut_b {background-position: -122px -78px;}
-#list-biomes .human_host_b {background-position: -162px -78px;}
-#list-biomes .non_human_host_b {background-position: -162px -38px;}
-#list-biomes .engineered_b {background-position: -42px -118px;}
-#list-biomes .air_b {background-position: -82px -118px;}
-#list-biomes .wastewater_b {background-position: -122px -118px;}
-#list-biomes .default_b {background-position: -162px -118px;}
-#list-biomes .grid_24 a {font-weight: normal;}
-}
+
+/*biome homepage responsive - change size icons  for small screens - NOT USED ANYMORE?*/
+/*@media (max-width: 768px) {*/
+/*#list-biomes .biome_icon {width: 30px; height: 30px;}*/
+/*#list-biomes .soil_b {background-position:-42px -38px;}*/
+/*#list-biomes .marine_b {background-position: -82px -38px;}*/
+/*#list-biomes .forest_b {background-position: -122px -38px;}*/
+/*#list-biomes .freshwater_b {background-position: -42px -78px;}*/
+/*#list-biomes .grassland_b {background-position: -82px -78px;}*/
+/*#list-biomes .human_gut_b {background-position: -122px -78px;}*/
+/*#list-biomes .human_host_b {background-position: -162px -78px;}*/
+/*#list-biomes .non_human_host_b {background-position: -162px -38px;}*/
+/*#list-biomes .engineered_b {background-position: -42px -118px;}*/
+/*#list-biomes .air_b {background-position: -82px -118px;}*/
+/*#list-biomes .wastewater_b {background-position: -122px -118px;}*/
+/*#list-biomes .default_b {background-position: -162px -118px;}*/
+/*#list-biomes .grid_24 a {font-weight: normal;}*/
+/*}*/
 /*biome project page*/
 .biome_project {float: right; margin-right: 18px;}
 
@@ -818,7 +843,23 @@ width: 972px; text-align: left;}
 
 .study_desc {margin-top:20px;}
 .study_desc_text {font-size:110%;}
+
 /*********************** FORMS ************************/
+/*top banner search*/
+div#local-masthead form fieldset {background-color: rgba(255, 255, 255, 0.4); border: 0 solid #EEE; padding:9px; margin-right:9px;} /*full path mandatory to overwrite EBI border*/
+#local-search fieldset {background-color: rgba(255, 255, 255, 0.4); border: 0 solid #EEE; padding:9px; margin:18px 9px;}
+div#local-search form fieldset  div.left, form#local-search fieldset div.left {margin-right:9px;} /*adjustment alignment input box */
+#local-search fieldset div.left input#local-searchbox {height: 24px; } /*slightly increase height of the input*/
+#local-search fieldset div.left input#local-searchbox {color:#9E9E9E; padding-left: 5px; margin:0;}  /*make the font grey, add space on the left side of the form input box*/
+#local-search fieldset div.left input#local-searchbox:focus {color:#616161;} /*darker the font on focus*/
+div#local-search form fieldset div.right, form#local-search fieldset div.right {width: inherit;} /*need to keep full path*/
+div#headerdiv a:link, div#headerdiv a:visited { border-bottom-width: 0;   border-bottom-style: none;}
+#local-search div.right input.submit {margin:0;}/*adjustment alignment search button */
+#local-search .examples a {color:#464646;border-bottom:none;}
+#local-search .examples a:hover {color:#464646; border-bottom-width:1px; border-bottom-style: solid;}
+#local-search .examples a:visited {color:#464646;} /*keep same color all time*/
+/*/top banner search*/
+
 form legend {
 background-color: #e5e5e5;
 color: #455872;
@@ -869,7 +910,7 @@ color: #445668;}
 #headerdiv input {border:0px; padding:0; }/*added for the mitigation template*/
 
 
-input {
+input[type=text] {
 width: 150px;
 /*background: -webkit-gradient(linear, left top, left 6, from(#FFFFFF), color-stop(4%, #EEEEEE), to(#FFFFFF));*/
 /*background: -moz-linear-gradient(top, #FFFFFF, #EEEEEE 1px, #FFFFFF 6px);*/
@@ -1041,9 +1082,8 @@ font-size: 140%;
 }
 /* END CAPTION for IMAGES */
 
-::-webkit-selection  { background:#7d9ca6; color:#fff; text-shadow: none; }
-::-moz-selection{ background: #7d9ca6; color:#fff; text-shadow: none; }
-::selection { background:#7d9ca6; color:#fff; text-shadow: none; }
+::-moz-selection{ background: #058dc7; color:#fff; text-shadow: none; }
+::selection { background:#058dc7; color:#fff; text-shadow: none; }
 
 
 .warning {
@@ -1741,20 +1781,32 @@ ul.sample_list li {list-style: none; display: inline;}
 .block_wrapper {overflow:hidden; margin: 0 9px 18px 9px;  min-height: 206px;/*for qclist text to appear correctly*/}
 .block_container { width: 300%; /*was 1109px*/float:left; border:0px red solid;}
 .block.step0.highlight, .block.step1.highlight, .block.step2.highlight, .block.step3.highlight, .block.step4.highlight, .block.step5.highlight {border:1px #0F6D99 solid; background-color:#0F6D99; transition: all 0.5s ease; color:white;}
-.first_branch {float:left; margin-top:44px;}
-.mainbranch {float:left;/*was margin-top:57px;*/  padding-top: 57px;height: 139px; border:0px black solid;}
-.branch {float:left;}
+.first_branch, .mainbranch ,.midbranch, .lowbranch, .branch {float:left;}
+.mainbranch {/*was margin-top:57px;*/  padding-top: 56px;height: 139px; border:0px black solid;}
+.first_branch {margin-top:44px;}
 .branch2 {margin-top:20px;}
 
 .block, .block-nt, .block-lb {font-size:90%;padding: 5px; display:inline-block; text-align:center; /*vertical-align: middle;*/}
 .block, .block_small {position:relative;padding: 2px; cursor:pointer; border:1px #B4D0F3 solid; width: 82px; height: 82px; border-radius:50%;line-height:7.1;background-color:#EAF0F9;color:#5983B5;}
 .block.small {font-size: 67%;width: 36px; height: 36px;line-height: 4.1;}
+.block.medium {font-size: 85%;width: 50px; height: 50px;}
 .block-nt {border: 1px #C3C3C3 solid; line-height:3.1;background-color: #DBDBDB;color:#777;margin-left:9px;}
 .block-lb {border: 1px #C3C3C3 solid; color:#777;}
 .block-ar {padding: 2px; border:0px #B4D0F3 solid; color:grey;display:inline-block;}
 .block-lb.small{font-size: 67%;padding: 4px;}
 
-.block.function {border:1px #DACAEC solid; background-color:#ECE2FF;color: #9B8CBA;}
+/*.pipe_v3 .mainbranch{padding-top:99px;}*/
+.pipe_v3 .midbranch{margin-top: 69px; margin-left: -2px;}
+.pipe_v3 .rotate_f, .pipe_v3 .rotate_t {margin-left: -13px; }
+.pipe_v3 .rotate_f {margin-right:5px;}
+.midbranch_trna {margin-top: 27px;}
+.lowbranch_tax {margin-top: 9px;}/*to show space between circles*/
+.pipe_v3 .block {line-height:inherit; width: 76px;  height: 76px;}
+.pipe_v3 .block.small {line-height:inherit; font-size: 67%;width: 36px; height: 36px;}
+.block .children {margin: 40% auto;}
+.block .children_l {margin: 25% auto;}
+
+.block.function {border:1px #DACAEC solid; background-color:#ECE2FF;color: #8C7CAE;}
 .block.taxon {border:1px #ECCACA solid; background-color:#FAEBD7;color: #A86363;}
 
 .qclist {font-size: 98%; position: absolute;top: 94px;  left: 18px; color: #777; line-height: 1.2; width: 286px; text-align: left;}
@@ -1764,30 +1816,27 @@ ul.sample_list li {list-style: none; display: inline;}
 .arrow_pip:after {left: 100%;top: 50%; border: solid rgba(0, 0, 0, 0);content: " ";height: 0;width: 0;position: absolute; pointer-events: none;  border-color: rgba(24, 33, 38, 0);border-left-color: grey; border-width: 5px;margin-top: -5px;}
 .arrow_notip {display:inline-block;background: grey;padding: 2px; width: 131px; margin-left:2px;margin-right:2px;}
 
-.rotate_t {-ms-transform: rotate(45deg); /* IE 9 */-webkit-transform: rotate(45deg); /* Chrome, Safari, Opera */transform: rotate(45deg);margin-left: -22px;margin-bottom: 12px;}
-.rotate_f {-ms-transform: rotate(-45deg); /* IE 9 */ -webkit-transform: rotate(-45deg); /* Chrome, Safari, Opera */ transform: rotate(-45deg);margin-left: -22px;margin-bottom: -12px;margin-right: 6px;/*for alignment*/}
+.rotate_t {-ms-transform: rotate(45deg); /* IE 9 */-webkit-transform: rotate(45deg); /* Chrome, Safari, Opera */transform: rotate(45deg);margin-bottom: 12px;}
+.rotate_f {-ms-transform: rotate(-45deg); /* IE 9 */ -webkit-transform: rotate(-45deg); /* Chrome, Safari, Opera */ transform: rotate(-45deg);/*margin-left: -22px;*/margin-bottom: -12px;margin-right: 6px;/*for alignment*/}
 
-/*animation*/
-.animation {
-    -webkit-animation: mymove 3s 0s forwards, mymove_second 10s 2s forwards; /* Chrome, Safari, Opera */
-    animation: mymove 3s forwards, mymove_second 10s 2s forwards;; /*forwards to keep the animation state*/
-
+/*******animation - Tryout - temp*******/
+.animation { position: absolute;
+    -webkit-animation: mymove 3s 0s forwards, mymove_second 3s 0s forwards; /* Chrome, Safari, Opera */
+    animation: mymove 3s 0s forwards, mymove_second 10s 2s forwards; /*forwards to keep the animation state*/
 }
-
 /* Chrome, Safari, Opera */
 @-webkit-keyframes mymove {
-    0%   {top: 0px;}
-    100%  {top: 200px;}
+    0%   {top: 0px; background-color: red;}
+    100%  {top: 200px;background-color: yellowgreen;}
 }
-
 @-webkit-keyframes mymove_second {
-    0%   {top: 0px;}
-    100%  {top: 200px;}
+    0%   {top: 200px; background-color: lightpink}
+    100%  {top: 200px;left:200px;background-color: blue}
 }
 /* Standard syntax */
 @keyframes mymove {
-    0%   {top: 0px;}
-    100%  {top: 200px;}
+    0%   {top: 0px;background-color: red}
+    100%  {top: 200px;background-color: yellowgreen   }
 }
 @keyframes mymove_second {
     0%   {top: 0px;}
@@ -1817,7 +1866,7 @@ ul.sample_list li {list-style: none; display: inline;}
 .jumbo-user-box .icon-functional:before {color:#C34533; font-size: 137%;}
 /*HOMEPAGE - stats*/
 .jumbo-stats {text-align: center; color:#606a73;font-size: 120%;line-height: 1.4;}
-/*.jumbo-stats  .grid_24 {bZorder:1px solid blue; box-sizing:border-box;}*/
+/*.jumbo-stats  .grid_24 {border:1px solid blue; box-sizing:border-box;}*/
 .jumbo-stats .jumbo-stats-box {overflow: hidden;/*small screens -remove overlap*/}
 .jumbo-stats .jumbo-stats-box .grid_6.alpha {max-width: 41px;}
 .jumbo-stats .jumbo-stats-box span.icon {font-size: 216%;}
@@ -1839,6 +1888,8 @@ ul.sample_list li {list-style: none; display: inline;}
 
 .home_box {border:1px #cbcbcb solid; overflow:hidden /*when resizing*/;   padding: 18px 9px; min-height: 322px; }
 .home_box p {color: #606a73;}
+.hlight-spot.alpha .hlight_title_cont {margin-left: 18px;} /*important to keep to align titles*/
+.hlight-spot.omega .hlight_title_cont {margin-right: 18px;}
 .hlight-spot .home_box p, .hlight-info .home_box p  {border:0px pink solid; margin-left:0;  margin-right:0; padding-left:0;padding-right:0;font-size:120%; }
 .hlight-spot .home_box img {margin-bottom: 9px; width: 100%;/*resize img with screen*/}
 .hlight-info .home_box img {margin: 0 9px 9px 0; float:left; width:17%;}
@@ -1857,7 +1908,7 @@ a.all {float:right; display: block; background: url(../img/arrow_link_small.jpg)
 a.all:hover, a.all:focus { background: url(../img/arrow_link_over_small.jpg) no-repeat  right top;}
 a.all:active  { background: url(../img/arrow_link_click_small.jpg) no-repeat right top;}
 
-.hlight_title_cont {margin-left: 18px; display:block; overflow: auto; border:0px red solid;}
+.hlight_title_cont {display:block; overflow: auto; border:0px red solid;}
 .hlight_maintitle {display:block; float:left;border:0px red solid;}
 .hlight_subtitle {display:block; float:right;margin-top: 18px; margin-right: 2px; border:0px black solid;}
 .hlight_subtitle h2 {font-size: 137%;}
@@ -1869,7 +1920,9 @@ a.all:active  { background: url(../img/arrow_link_click_small.jpg) no-repeat rig
 .jumbo-news-centred a, .jumbo-news-centred a:visited {color:#0c4d7b;}
 .jumbo-news-centred .icon-socialmedia:before {color:#0c4d7b;}
 
-.list-contain-box .list-project-l, .list-contain-box .list-sample-l {height: 250px; position: relative;  width: 100%;  overflow-x: hidden; overflow-y: scroll;}
+.hlight-text-scroll, .list-contain-box .list-project-l, .list-contain-box .list-sample-l {position: relative;  width: 100%;  overflow-x: hidden; overflow-y: auto;}
+.list-project-l, .list-sample-l {height: 250px;}
+.hlight-text-scroll {height: 394px;}
 .list-contain-box .list-project-l .icon-functional:before, .list-contain-box .list-sample-l .icon-functional:before, table.result .icon-functional:before, #project_ov .icon-functional:before, #sample_ov .icon-functional:before {color: #777;}
 /*END HOMEPAGE*/
 
@@ -1883,6 +1936,8 @@ a.all:active  { background: url(../img/arrow_link_click_small.jpg) no-repeat rig
 .jumbo-header .mega-lock {display: none;}/*remove lock shape private*/
 .jumbo-news-centred {width: 66%;}
 .hlight_subtitle {margin-right:18px;}
+.hlight-spot.omega .hlight_title_cont {margin-left:18px;}
+.hlight-spot.omega .hlight_subtitle {margin-right:0;}
 #list-biomes .grid_24 a {height:inherit; width:32%;/*3x3*/}
 #list-biomes, .grid_12.list-contain-box, #hlight-box-spotlight, #hlight-box-tools {width:100%;margin-left: 0;margin-right: 0;}
 #list-biomes .home_box , .list-contain-box .home_box, #hlight-box-spotlight .home_box, #hlight-box-tools .home_box {margin:9px 18px;}
@@ -1941,20 +1996,32 @@ a.box-registration-link  {text-decoration: none; cursor: pointer;}
 
 /*bootstrap style for button*/
 div#local-masthead div.navbar-header {float:none;}
-.navbar-toggle {cursor: pointer;position: relative; float: right; padding: 9px 10px; margin-top: 8px; margin-right: 15px; margin-bottom: 8px; background-color: rgba(0, 0, 0, 0); background-image: none; border: 1px solid rgba(0, 0, 0, 0.1); border-radius: 4px;}
+.navbar-toggle { display: none; /*menu button appear only of small screens*/cursor: pointer;position: relative; float: right; padding: 9px 10px; margin-top: 8px; margin-right: 15px; margin-bottom: 8px; background-color: rgba(0, 0, 0, 0); background-image: none; border: 1px solid rgba(0, 0, 0, 0.1); border-radius: 4px;}
 .navbar-toggle:hover {background-color: rgba(0, 0, 0, 0.2);}
 .navbar-toggle .icon-bar {background-color: #fff; display: block;  width: 22px;  height: 2px;  border-radius: 1px; margin-top: 4px;}
 .collapse {display: none;}
+.navbar-collapse.collapse {display: block;}
 
-@media (min-width: 768px){
-.navbar-collapse.collapse {display: block!important;height: auto!important; padding-bottom: 0; overflow: visible!important;}
-.navbar-toggle { display: none; /*menu button appear only of small screens*/}
+/*bootstrap menu responsive*/
+@media (max-width: 768px){
+.navbar-toggle {display: block;}
+div#headerdiv nav ul {font-size: 126%;}
+div#headerdiv nav ul li, ul#local-nav li.functional {background-color: #578696;}
+div.masthead ul li {float: none;} /*make the menu vertical*/
+.navbar-collapse.collapse {display:none;}
+div.masthead ul#local-nav li.functional, div#headerdiv .logout {float: none;}
+div#headerdiv .logout {margin-left:9px;}
+div#local-masthead ul li.active-trail, div#local-masthead ul li.active-trail a:link, div#local-masthead ul li.active-trail a:visited{background-color: rgba(0, 0, 0, 0.3);}
+div#local-masthead ul li.active-trail a:link, div#local-masthead ul li.active-trail a:visited {border-bottom:0px;}
+div#headerdiv .logout {margin:0; padding-left:9px;}
 }
-/***************************************** responsive  *******************************/
+
+/***************************************** responsive  gal *******************************/
 @media (max-width: 768px) {  /*remove carousel, feedback, ebi search and sidebar nav for the about us for small screens*/
 .carousel, #feedback_div, #sidebar-nav {display: none;}
-div#local-title.logo-title img {width:100%; margin:0; padding: 18px 9px;} /*logo*/
+/*div#local-title.logo-title img {margin:0; padding: 18px 9px;} */
 /*EBI template*/
+#local-search {display:none;}  /*top banner search*/
 #global-footer .grid_4:nth-child(1) {display:none;}/*remove one item of the EBI bottom menu - logo -  to avoid scrolling effect*/
 #global-nav,#global-search {display: none;} /*remove search and menu - wait for EBI to implement a collapsed version of the menu*/
 /*END EBI template*/
@@ -1967,8 +2034,10 @@ table.result tbody td.table_xs_text {word-break: break-all; /*break long charact
 .sample_comp_result .ui-tabs .ui-tabs-nav .ui-tabs-anchor, .sample_ana .ui-tabs .ui-tabs-nav .ui-tabs-anchor {padding: 2px 6px;}/*comp. tool - reduce space around tabs icon*/
 .xs_hide {display:none;} /*set a global class to hide elements for small screens - easier than adding individual class*/
 #list-biomes .grid_24 a.xs_hide {display:none;} /*hide the last tow icons to avoid big scrol on small screens*/
-table.dataTable.no-footer th:nth-child(2),table.dataTable.no-footer  td:nth-child(2) {display: none;}/*remove Go category column in the table - comparison tool*/
-table.dataTable.no-footer th:nth-child(3),table.dataTable.no-footer  td:nth-child(3) {display: none;} /*remove Go ID column in the table - comparison tool*/
+/*datatable - comparison tool */
+#table th:nth-child(2), #table td:nth-child(2) {display: none;}/*remove Go category column */
+#table th:nth-child(3), #table td:nth-child(3) {display: none;} /*remove Go ID column in the table */
+
 .xs-navtabs {display:block;}
 .xl-navtabs {display:none;}
 #fragment-download .pipeline_table thead th:first-child {width: 50%;} /*increase size first column download table*/
@@ -1987,16 +2056,4 @@ table.dataTable.no-footer th:nth-child(3),table.dataTable.no-footer  td:nth-chil
 div#local-masthead ul li.logout {display:none;}
 .xm_hide {display:none;}
 .xm-navtabs {display:block;}
-}
-
-/*bootstrap menu*/
-@media (max-width: 768px){
-div#headerdiv nav ul {font-size: 126%;}
-div#headerdiv nav ul li, ul#local-nav li.functional {background-color: #578696;}
-div.masthead ul li {float: none;}
-div.masthead ul#local-nav li.functional, div#headerdiv .logout {float: none;}
-div#headerdiv .logout {margin-left:9px;}
-div#local-masthead ul li.active-trail, div#local-masthead ul li.active-trail a:link, div#local-masthead ul li.active-trail a:visited{background-color: rgba(0, 0, 0, 0.3);}
- div#local-masthead ul li.active-trail a:link, div#local-masthead ul li.active-trail a:visited {border-bottom:0px;}
-div#headerdiv .logout {margin:0; padding-left:9px;}
 }

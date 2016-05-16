@@ -46,7 +46,8 @@ public class PipelinePageController extends AbstractController {
                 new ModelPopulator() {
                     @Override
                     public void populateModel(ModelMap model) {
-                        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "Pipeline Version", getSubPageBreadcrumbs(releaseVersion), propertyContainer);
+                        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(userManager, getEbiSearchForm(),
+                                "Pipeline Version", getSubPageBreadcrumbs(releaseVersion), propertyContainer);
                         final ViewModel defaultViewModel = builder.getModel();
                         defaultViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_ABOUT_VIEW);
                         model.addAttribute(ViewModel.MODEL_ATTR_NAME, defaultViewModel);
@@ -72,7 +73,8 @@ public class PipelinePageController extends AbstractController {
                 new ModelPopulator() {
                     @Override
                     public void populateModel(ModelMap model) {
-                        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "Pipelines", getBreadcrumbs(null), propertyContainer);
+                        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(userManager,
+                                getEbiSearchForm(), "Pipelines", getBreadcrumbs(null), propertyContainer);
                         final ViewModel defaultViewModel = builder.getModel();
                         defaultViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_ABOUT_VIEW);
                         model.addAttribute(ViewModel.MODEL_ATTR_NAME, defaultViewModel);

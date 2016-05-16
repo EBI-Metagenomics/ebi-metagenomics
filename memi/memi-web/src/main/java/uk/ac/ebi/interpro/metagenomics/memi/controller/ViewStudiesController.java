@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.core.StudyStatusEditor;
 import uk.ac.ebi.interpro.metagenomics.memi.core.StudyVisibilityEditor;
 import uk.ac.ebi.interpro.metagenomics.memi.core.VelocityTemplateWriter;
+import uk.ac.ebi.interpro.metagenomics.memi.core.tools.MemiTools;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.BiomeDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.StudyDAO;
@@ -25,7 +26,6 @@ import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.StudiesViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.StudiesViewModelBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder;
-import uk.ac.ebi.interpro.metagenomics.memi.core.tools.MemiTools;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -71,14 +71,23 @@ public class ViewStudiesController extends AbstractController implements IContro
     private MemiDownloadService downloadService;
 
     //GET request handler methods
-
+    @Override
     public ModelAndView doGet(ModelMap model) {
         log.info("Requesting doGet...");
         //build and add the page model
         populateModel(model, new StudyFilter(), 0, true);
-        model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((StudiesViewModel) model.get(ViewModel.MODEL_ATTR_NAME)).getLoginForm());
-        model.addAttribute(StudyFilter.MODEL_ATTR_NAME, ((StudiesViewModel) model.get(ViewModel.MODEL_ATTR_NAME)).getFilter());
-        return new ModelAndView(VIEW_NAME, model);
+        return buildModelAndView(
+                VIEW_NAME,
+                model,
+                new ModelPopulator() {
+                    @Override
+                    public void populateModel(ModelMap model) {
+                        model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((StudiesViewModel) model.get(ViewModel.MODEL_ATTR_NAME)).getLoginForm());
+                        model.addAttribute(StudyFilter.MODEL_ATTR_NAME, ((StudiesViewModel) model.get(ViewModel.MODEL_ATTR_NAME)).getFilter());
+
+                    }
+                }
+        );
     }
 
 
@@ -138,7 +147,8 @@ public class ViewStudiesController extends AbstractController implements IContro
 
             // TODO Not a good idea to hold all file content text in a big string - this could get very large! OK for now with not much data...
             // TODO Refactor Study and Sample table CSV exports and detailed exports to use common method!
-            StringBuffer fileContent = new StringBuffer("STUDY_ID,PROJECT_NAME,NUMBER_OF_SAMPLES,SUBMITTED_DATE,ANALYSIS,NCBI_PROJECT_ID,PUBLIC_RELEASE_DATE,CENTRE_NAME,EXPERIMENTAL_FACTOR,IS_PUBLIC,STUDY_LINKOUT,STUDY_ABSTRACT");
+            //StringBuffer fileContent = new StringBuffer("STUDY_ID,PROJECT_NAME,NUMBER_OF_SAMPLES,SUBMITTED_DATE,ANALYSIS,NCBI_PROJECT_ID,PUBLIC_RELEASE_DATE,CENTRE_NAME,EXPERIMENTAL_FACTOR,IS_PUBLIC,STUDY_LINKOUT,STUDY_ABSTRACT");
+            StringBuffer fileContent = new StringBuffer("Study ID,Project Name,Number Of Samples,Submitted Date,Analysis,NCBI Project ID,Public Release Date,Centre Name,Experimental Factor,Is Public,Study Linkout,Study Abstract");
             fileContent.append("\n");
 
             for (Study study : studies) {
@@ -202,8 +212,18 @@ public class ViewStudiesController extends AbstractController implements IContro
         log.info("Requesting doSearch (GET method)...");
         processRequestParams(filter, searchTerm, studyVisibility, studyStatus);
         populateModel(model, filter, startPosition, true);
-        model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((StudiesViewModel) model.get(ViewModel.MODEL_ATTR_NAME)).getLoginForm());
-        return new ModelAndView(VIEW_NAME, model);
+        return buildModelAndView(
+                VIEW_NAME,
+                model,
+                new ModelPopulator() {
+                    @Override
+                    public void populateModel(ModelMap model) {
+                        model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((StudiesViewModel) model.get(ViewModel.MODEL_ATTR_NAME)).getLoginForm());
+                        model.addAttribute(StudyFilter.MODEL_ATTR_NAME, ((StudiesViewModel) model.get(ViewModel.MODEL_ATTR_NAME)).getFilter());
+
+                    }
+                }
+        );
     }
 
     private void processRequestParams(StudyFilter filter, String searchTerm, StudyFilter.StudyVisibility studyVisibility,
@@ -216,7 +236,7 @@ public class ViewStudiesController extends AbstractController implements IContro
         filter.setStudyStatus(studyStatus);
 
         //The visibility parameter can only be set if a user is logged in, means a session object exists
-        if (sessionManager.getSessionBean().getSubmitter() != null) {
+        if (userManager.getUserAuthentication().getSubmitter() != null) {
             filter.setStudyVisibility(studyVisibility);
         } else {
             filter.setStudyVisibility(StudyFilter.StudyVisibility.ALL_PUBLISHED_PROJECTS);
@@ -241,7 +261,7 @@ public class ViewStudiesController extends AbstractController implements IContro
     private void populateModel(ModelMap model, StudyFilter filter,
                                final int startPosition,
                                final boolean doPagination) {
-        final ViewModelBuilder<StudiesViewModel> builder = new StudiesViewModelBuilder(sessionManager, "Projects list",
+        final ViewModelBuilder<StudiesViewModel> builder = new StudiesViewModelBuilder(userManager, getEbiSearchForm(), "Projects list",
                 getBreadcrumbs(null), propertyContainer, getTableHeaderNames(), sampleDAO, studyDAO, biomeDAO, filter, startPosition, doPagination);
         final StudiesViewModel studiesViewModel = builder.getModel();
         studiesViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_PROJECTS_VIEW);

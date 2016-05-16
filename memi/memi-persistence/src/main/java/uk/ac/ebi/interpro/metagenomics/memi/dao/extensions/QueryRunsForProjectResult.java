@@ -10,6 +10,7 @@ public class QueryRunsForProjectResult {
     private long sampleId;
     private String externalSampleId;
     private String sampleName;
+    private String sampleDescription;
     private int runCount;
     private String externalRunIds;
     private String experimentType;
@@ -40,6 +41,14 @@ public class QueryRunsForProjectResult {
 
     public void setSampleName(String sampleName) {
         this.sampleName = sampleName;
+    }
+
+    public String getSampleDescription() {
+        return sampleDescription;
+    }
+
+    public void setSampleDescription(String sampleDescription) {
+        this.sampleDescription = sampleDescription;
     }
 
     public int getRunCount() {

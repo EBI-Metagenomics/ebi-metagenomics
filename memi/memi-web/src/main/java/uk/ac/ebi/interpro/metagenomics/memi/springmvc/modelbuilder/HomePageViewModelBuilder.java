@@ -11,12 +11,13 @@ import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.BiomeDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.StudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.Biome;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.HomePageViewModel;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.UserManager;
 
 import java.util.*;
 
@@ -53,9 +54,9 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
     private final int maxRowNumberOfLatestItems = 15;
 
 
-    public HomePageViewModelBuilder(SessionManager sessionMgr, String pageTitle, List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer,
+    public HomePageViewModelBuilder(UserManager sessionMgr, EBISearchForm ebiSearchForm, String pageTitle, List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer,
                                     StudyDAO studyDAO, SampleDAO sampleDAO, RunDAO runDAO, BiomeDAO biomeDAO, SubmissionContactDAO submissionContactDAO) {
-        super(sessionMgr);
+        super(sessionMgr, ebiSearchForm);
         this.pageTitle = pageTitle;
         this.breadcrumbs = breadcrumbs;
         this.propertyContainer = propertyContainer;
@@ -69,6 +70,7 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
     public HomePageViewModel getModel() {
         log.info("Building instance of " + HomePageViewModel.class + "...");
         Submitter submitter = getSessionSubmitter(sessionMgr);
+        EBISearchForm ebiSearchForm = getEbiSearchForm();
         // The following values are all for the statistics section on the home page
         final Long publicSamplesCount = sampleDAO.countAllPublic();
         final Long privateSamplesCount = sampleDAO.countAllPrivate();
@@ -104,11 +106,10 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
             // Get study to run count map
             studyToRunCountMap = studyDAO.retrieveRunCountsGroupedByExternalStudyId(studyIdentifiers);
         }
-
         // If case: if nobody is logged in
         if (submitter == null) {
             Map<String, Long> biomeCountMap = buildBiomeCountMap();
-            return new HomePageViewModel(submitter, pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems, publicSamplesCount,
+            return new HomePageViewModel(submitter, ebiSearchForm, pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems, publicSamplesCount,
                     privateSamplesCount, publicStudiesCount, privateStudiesCount, studies, publicRunCount, privateRunCount, biomeCountMap, transformedExperimentCountMap, numOfDataSets,
                     studyToSampleCountMap, studyToRunCountMap);
         }
@@ -128,38 +129,34 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
             final Long mySamplesCount = (mySamples != null ? new Long(mySamples.size()) : new Long(0));
 //            final Long myStudiesCount = (myStudies != null ? new Long(myStudies.size()) : new Long(0));
 
-            return new HomePageViewModel(submitterDetails, studies, mySamples, pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems,
+            return new HomePageViewModel(submitterDetails, ebiSearchForm, studies, mySamples, pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems,
                     mySamplesCount, new Long(studies.size()), publicSamplesCount, privateSamplesCount, publicStudiesCount, privateStudiesCount, publicRunCount, privateRunCount,
                     studyToSampleCountMap, studyToRunCountMap);
         }
     }
 
+    /**
+     * This method orders the keys of the map in a specific order.
+     *
+     * @param experimentCountMap
+     * @return
+     */
     private Map<String, Integer> transformMap(Map<String, Integer> experimentCountMap) {
-        Map<String, Integer> result = new TreeMap<String, Integer>(
-                //Comparator is tested in HomePageSamplesComparatorTest
-                new Comparator<String>() {
-                    @Override
-                    public int compare(String o1, String o2) {
-                        if (o1.equalsIgnoreCase("assemblies") || o2.equalsIgnoreCase("assemblies")) {
-                            return 1;
-                        } else if (o1.equalsIgnoreCase("metagenomics") || o2.equalsIgnoreCase("metagenomics")) {
-                            return -1;
-                        } else if (o1.equalsIgnoreCase("amplicons") || o2.equalsIgnoreCase("metatranscriptomics")) {
-                            return 1;
-                        } else if (o1.equalsIgnoreCase("metatranscriptomics") || o2.equalsIgnoreCase("amplicons")) {
-                            return -1;
-                        } else {
-                            return 0;
-                        }
-                    }
-
-                });
+        //Alphabetical sorting of the map
+        Map<String, Integer> result = new TreeMap<String, Integer>();
         for (String key : experimentCountMap.keySet()) {
             Integer value = experimentCountMap.get(key);
+            //change map keys to plural form
             if (key.equalsIgnoreCase("assembly")) {
                 result.put("assemblies", value);
+            } else if (key.equalsIgnoreCase("metatranscriptomic")) {
+                result.put("metatranscriptomes", value);
+            } else if (key.equalsIgnoreCase("metagenomic")) {
+                result.put("metagenomes", value);
+            } else if (key.equalsIgnoreCase("amplicon")) {
+                result.put("amplicons", value);
             } else {
-                result.put(key + 's', value);
+                log.warn("Unknown experiment type: " + key);
             }
         }
         return result;

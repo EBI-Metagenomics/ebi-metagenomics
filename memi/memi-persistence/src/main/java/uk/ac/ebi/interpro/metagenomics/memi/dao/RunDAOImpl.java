@@ -105,7 +105,7 @@ public class RunDAOImpl implements RunDAO {
             // SELECT aj.sample_id, sa.ext_sample_id, sa.sample_name, tmp.ct, aj.external_run_ids, aj.experiment_type, sa.submission_account_id, sa.is_public, r.release_version FROM analysis_job aj, pipeline_release r, sample sa, (select aj.sample_id, count(aj.sample_id) as ct from sample sa, analysis_job aj where sa.sample_id = aj.sample_id AND sa.study_id = 434 GROUP BY aj.sample_id) tmp WHERE aj.pipeline_id=r.pipeline_id AND sa.sample_id = aj.sample_id AND tmp.sample_id = aj.sample_id AND sa.study_id = 434 order by sa.ext_sample_id, aj.external_run_ids;
 
             StringBuilder sb = new StringBuilder()
-                    .append("SELECT aj.sample_id, sa.ext_sample_id as external_sample_id, sa.sample_name, tmp.run_count, aj.external_run_ids, et.experiment_type, sa.submission_account_id, sa.is_public, r.release_version, st.ANALYSIS_STATUS ")
+                    .append("SELECT aj.sample_id, sa.ext_sample_id as external_sample_id, sa.sample_name, sa.sample_desc as sample_description, tmp.run_count, aj.external_run_ids, et.experiment_type, sa.submission_account_id, sa.is_public, r.release_version, st.ANALYSIS_STATUS ")
                     .append("FROM ")
                     .append(schemaName).append(".ANALYSIS_STATUS st, ")
                     .append(schemaName).append(".analysis_job aj, ")

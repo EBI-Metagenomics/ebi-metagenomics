@@ -3,7 +3,101 @@
 <h2 class="pipeline_title">Pipeline version ${releaseVersion}  <span>- ${releaseDate}</span></h2>
 
 <c:choose>
+    <c:when test="${releaseVersion == '3.0'}">
+        <!-- Pipeline chart for version 3.0 v2-->
 
+                <div class="block_wrapper">
+
+                    <div class="block_container pipe_v3">
+
+                        <div class="mainbranch">
+                            <div class="block-lb">Raw reads</div><div class="arrow_pip "></div>
+                            <div class="block small step0"><div class="children">SeqPrep</div></div><div class="arrow_pip "></div>
+                            <div class="block-lb">Initial reads</div><div class="arrow_pip"></div>
+                            <div class="block step1"><div class="children">QC</div>
+                            </div><div class="arrow_pip"></div>
+                            <div class="block-lb" >Processed reads</div><div class="arrow_pip"></div>
+                            <div class="block step2"><div class="children_l">ncRNA selection</div></div>
+                        </div>
+
+                        <div class="lowbranch">
+                            <div class="lowbranch_func">
+                                <div class="arrow_pip rotate_f"></div><div class="block-lb" >Reads with rRNA &amp; tRNA masked</div><div class="arrow_pip"></div>
+                                <div class="block step3 function" ><div class="children_l">ORF predictions</div></div><div class="arrow_pip"></div>
+                                <div class="block-lb">Predicted CDS</div><div class="arrow_pip"></div>
+                                <div class="block step4 function"><div class="children_l">Functional analysis</div></div>
+                                <div class="arrow_pip"></div>
+                                <div class="block-lb">IPR matches &amp; GO terms</div>
+                            </div> <!-- /lowbranch_func -->
+
+                            <div class="lowbranch_tax">  <div class="arrow_pip rotate_t"></div>
+                                <div class="block-lb">Reads with rRNA</div>
+                                <div class="arrow_pip"></div>
+                                <div class="block-lb">16s rRNA</div>
+                                <div class="arrow_pip"></div>
+                                <div class="block step5 taxon"><div class="children_l">Taxonomic analysis</div></div>
+                                <div class="arrow_pip"></div>
+                                <div class="block-lb">OTUs &amp; taxonomic lineage</div>
+                            </div><!-- /lowbranch_tax -->
+
+                            <div class="lowbranch_trna">
+                                <div class="arrow_pip rotate_t"></div>
+                                <div class="block-lb">Reads with tRNA</div>
+                            </div><!-- /lowbranch_trna -->
+                        </div><!-- /lowbranch -->
+                    </div> <!-- /block_container -->
+                </div>   <!-- /block_wrapper -->
+
+
+        <!-- /pipeline chart version 3.0 v2 -->
+
+        <!-- Pipeline chart for version 3.0 v1-->
+               <%--<div class="block_wrapper">--%>
+
+                   <%--<div class="block_container pipe_v3">--%>
+
+                       <%--<div class="mainbranch">--%>
+                           <%--<div class="block-lb">Raw reads</div><div class="arrow_pip "></div>--%>
+                           <%--<div class="block small step0"><div class="children">SeqPrep</div></div><div class="arrow_pip "></div>--%>
+                           <%--<div class="block-lb">Initial reads</div><div class="arrow_pip"></div>--%>
+                           <%--<div class="block step1"><div class="children">QC</div>--%>
+                           <%--</div><div class="arrow_pip"></div>--%>
+                           <%--<div class="block-lb">Processed reads</div><div class="arrow_pip"></div>--%>
+                           <%--<div class="block  step2"><div class="children">RNA Selection</div></div>--%>
+                       <%--</div>  <!-- /mainbranch -->--%>
+
+                       <%--<div class="midbranch">--%>
+                        <%--<div class="midbranch_rrna"> <div class="arrow_pip rotate_f"></div>--%>
+                            <%--<div class="block medium step2"><div class="children">rRNA</div></div>--%>
+                        <%--</div> <!-- /midbranch_rrna -->--%>
+
+                        <%--<div class="midbranch_trna">  <div class="arrow_pip rotate_t"></div>--%>
+                            <%--<div class="block medium step2"><div class="children">tRNA</div></div>--%>
+                        <%--</div><!-- /midbranch_trna -->--%>
+                       <%--</div>--%>
+
+                       <%--<div class="lowbranch">--%>
+                           <%--<div class="lowbranch_func">--%>
+                               <%--<div class="arrow_pip rotate_f" style="margin-left: -16px;margin-right:5px;"></div><div class="block-lb">Reads with rRNA &amp; tRNA masked</div><div class="arrow_pip"></div>--%>
+                               <%--<div class="block step3 function" ><div class="children">ORF predictions</div></div><div class="arrow_pip"></div>--%>
+                               <%--<div class="block-lb">Predicted CDS</div><div class="arrow_pip"></div>--%>
+                               <%--<div class="block step4 function" ><div class="children_l">Functional analysis</div></div>--%>
+                           <%--</div> <!-- /lowbranch_func -->--%>
+
+                           <%--<div class="lowbranch_tax"> <div class="arrow_pip rotate_t" style="margin-left: -16px;"></div>--%>
+                               <%--<div class="block-lb">Reads with rRNA</div>--%>
+                               <%--<div class="arrow_pip"></div>--%>
+                               <%--<div class="block-lb">16s rRNA</div>--%>
+                               <%--<div class="arrow_pip"></div>--%>
+                               <%--<div class="block step5 taxon"><div class="children_l">Taxonomic analysis</div></div>--%>
+                           <%--</div><!-- /lowbranch_tax -->--%>
+                       <%--</div><!-- /lowbranch -->--%>
+
+                   <%--</div> <!-- /container -->--%>
+               <%--</div>   <!-- /block_wrapper -->--%>
+               <!-- /pipeline chart version 3.0 v1 -->
+
+    </c:when>
     <c:when test="${releaseVersion == '2.0'}">
 
         <!-- Pipeline chart for version 2.0-->
@@ -12,33 +106,33 @@
             <div class="block_container">
 
                 <div class="mainbranch">
-                    <div class="block-lb" id="item_03">Raw reads</div><div class="arrow_pip "></div>
-                                                <div class="block small step0" id="item_000">SeqPrep</div><div class="arrow_pip "></div>
-                                                <div class="block-lb" id="item_01">Initial reads</div><div class="arrow_pip"></div>
-                    <div class="block step1" id="item_02">QC
+                    <div class="block-lb">Raw reads</div><div class="arrow_pip "></div>
+                                                <div class="block small step0">SeqPrep</div><div class="arrow_pip "></div>
+                                                <div class="block-lb">Initial reads</div><div class="arrow_pip"></div>
+                    <div class="block step1">QC
                         <div class="qclist"><ul><li>Trim low quality (Trimmomatic)</li>
                                         <li>Length filtering (Biopython)</li></ul></div></div><div class="arrow_pip"></div>
-                    <div class="block-lb" id="item_03">Processed reads</div><div class="arrow_pip"></div>
-                    <div class="block step2" id="item_04">rRNASelector</div>
+                    <div class="block-lb" >Processed reads</div><div class="arrow_pip"></div>
+                    <div class="block step2">rRNASelector</div>
                 </div>
 
 
 
                 <div class="branch">
                     <div class="branch1">
-                        <div class="arrow_pip rotate_f"></div><div class="block-lb" id="item_05">Reads with rRNA masked</div><div class="arrow_pip"></div>
-                        <div class="block step3 function" id="item_06">FragGeneScan</div><div class="arrow_pip"></div>
-                        <div class="block-lb" id="item_07">Predicted CDS</div><div class="arrow_pip"></div>
-                        <div class="block step4 function" id="item_08">InterProScan</div>
+                        <div class="arrow_pip rotate_f"></div><div class="block-lb" >Reads with rRNA masked</div><div class="arrow_pip"></div>
+                        <div class="block step3 function" >FragGeneScan</div><div class="arrow_pip"></div>
+                        <div class="block-lb">Predicted CDS</div><div class="arrow_pip"></div>
+                        <div class="block step4 function">InterProScan</div>
                         <div class="block-nt">Functional analysis</div>
                     </div> <!-- /branch1 -->
 
                     <div class="branch2">  <div class="arrow_pip rotate_t"></div>
-                        <div class="block-lb" id="item_09">Reads with rRNA</div>
+                        <div class="block-lb">Reads with rRNA</div>
                         <div class="arrow_pip"></div>
-                        <div class="block-lb" id="item_11">16s rRNA</div>
+                        <div class="block-lb">16s rRNA</div>
                         <div class="arrow_pip"></div>
-                        <div class="block step5 taxon" id="item_10">QIIME</div>
+                        <div class="block step5 taxon">QIIME</div>
                         <div class="block-nt">Taxonomic analysis</div>
                     </div><!-- /branch2 -->
 
@@ -54,36 +148,36 @@
                     <div class="block_container">
 
                         <div class="mainbranch">
-                            <div class="block-lb" id="item_03">Raw reads</div><div class="arrow_pip "></div>
-                            <div class="block small step0" id="item_000">SeqPrep</div><div class="arrow_pip "></div>
-                            <div class="block-lb" id="item_01">Initial reads</div><div class="arrow_pip"></div>
-                            <div class="block step1" id="item_02">QC
+                            <div class="block-lb">Raw reads</div><div class="arrow_pip "></div>
+                            <div class="block small step0">SeqPrep</div><div class="arrow_pip "></div>
+                            <div class="block-lb">Initial reads</div><div class="arrow_pip"></div>
+                            <div class="block step1">QC
                                 <div class="qclist"><ul><li>Trim low quality (Trimmomatic)</li>
                                                             <li>Length filtering (Biopython)</li>
                                                             <li>Duplicate Removal (UCLUST & Prefix)</li>
                                                             <li>Filtering low complexity region (RepeatMasker)</li></ul></div>
                             </div><div class="arrow_pip"></div>
-                            <div class="block-lb" id="item_03">Processed reads</div><div class="arrow_pip"></div>
-                            <div class="block step2" id="item_04">rRNASelector</div>
+                            <div class="block-lb">Processed reads</div><div class="arrow_pip"></div>
+                            <div class="block step2">rRNASelector</div>
                         </div>
 
 
 
                         <div class="branch">
                             <div class="branch1">
-                                <div class="arrow_pip rotate_f"></div><div class="block-lb" id="item_05">Reads without rRNA</div><div class="arrow_pip"></div>
-                                <div class="block step3 function" id="item_06">FragGeneScan</div><div class="arrow_pip"></div>
-                                <div class="block-lb" id="item_07">Predicted CDS</div><div class="arrow_pip"></div>
-                                <div class="block step4 function" id="item_08">InterProScan</div>
+                                <div class="arrow_pip rotate_f"></div><div class="block-lb">Reads without rRNA</div><div class="arrow_pip"></div>
+                                <div class="block step3 function">FragGeneScan</div><div class="arrow_pip"></div>
+                                <div class="block-lb">Predicted CDS</div><div class="arrow_pip"></div>
+                                <div class="block step4 function">InterProScan</div>
                                 <div class="block-nt">Functional analysis</div>
                             </div> <!-- /branch1 -->
 
                             <div class="branch2">  <div class="arrow_pip rotate_t"></div>
-                                <div class="block-lb" id="item_09">Reads with rRNA</div>
+                                <div class="block-lb">Reads with rRNA</div>
                                 <div class="arrow_pip"></div>
-                                <div class="block-lb" id="item_11">16s rRNA</div>
+                                <div class="block-lb">16s rRNA</div>
                                 <div class="arrow_pip"></div>
-                                <div class="block step5 taxon" id="item_10">QIIME</div>
+                                <div class="block step5 taxon">QIIME</div>
                                 <div class="block-nt">Taxonomic analysis</div>
                             </div><!-- /branch2 -->
 
@@ -151,6 +245,57 @@
 <h3>Pipeline tools & steps</h3>
 
 <c:choose>
+    <c:when test="${releaseVersion == '3.0'}">
+        <!-- Table version 3.0 -->
+        <table class="pipeline_table">
+            <thead>
+            <tr>
+                <th width="4px"></th>
+                <th>Tools</th>
+                <th >Version</th>
+                <th>Description</th>
+                <th>How we use it</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <!-- Change table row class for each tool -->
+            <c:forEach var="pipelineReleaseTool" items="${pipelineReleaseTools}" varStatus="status">
+                <c:set var="pipelineTool" value="${pipelineReleaseTool.pk.pipelineTool}"/>
+                <c:set var="tool" value="${pipelineTool.toolName}"/>
+                <c:set var="toolGroupMajorId" value="${pipelineReleaseTool.toolGroupMajorId}"/>
+                <c:choose>
+                    <c:when test="${tool == 'InterProScan' || tool == 'FragGeneScan'}">
+                        <tr class="step${toolGroupMajorId} row-function">
+                    </c:when>
+                    <c:when test="${tool == 'SeqPrep' ||tool == 'Trimmomatic' || tool == 'Biopython' || tool == 'HMMER'}">
+                        <tr class="step${toolGroupMajorId} row-cb">
+                    </c:when>
+                    <c:when test="${tool == 'QIIME' }">
+                        <tr class="step${toolGroupMajorId} row-taxon">
+                    </c:when>
+
+                    <c:otherwise>
+                        <tr class="step row-cb">
+                        <script>
+                            //alert("tool not defined");
+                        </script>
+                    </c:otherwise>
+                </c:choose>
+                <td>
+                    <!-- Showing a step number, add one as the first step is not a tool in the database -->
+                    ${pipelineReleaseTool.toolGroupId + 1.0}
+                </td>
+                <td ><a class="ext" href="${pipelineTool.webLink}">${pipelineTool.toolName}</a></td>
+                <td>${pipelineTool.toolVersion}</td>
+                <td>${pipelineTool.description}</td>
+                <td>${pipelineReleaseTool.howToolUsedDesc}</td>
+                </tr>
+
+            </c:forEach>
+            </tbody>
+        </table>
+    </c:when>
     <c:when test="${releaseVersion == '2.0'}">
 <!-- Table version 2.0 -->
 <table class="pipeline_table">

@@ -2,6 +2,7 @@ package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
 
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.Biome;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.SampleFilter;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.StudyFilter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
@@ -42,15 +43,15 @@ public class SamplesViewModel extends ViewModel {
     private ViewPagination pagination;
 
 
-    public SamplesViewModel(Submitter submitter, Collection<Sample> samples, Collection<Sample> downloadableSamples, String pageTitle, List<Breadcrumb> breadcrumbs,
+    public SamplesViewModel(Submitter submitter, EBISearchForm ebiSearchForm, Collection<Sample> samples, Collection<Sample> downloadableSamples, String pageTitle, List<Breadcrumb> breadcrumbs,
                             MemiPropertyContainer propertyContainer, List<String> tableHeaderNames, ViewPagination pagination, SampleFilter filter) {
-        this(submitter, samples, downloadableSamples, filter, pageTitle, breadcrumbs, propertyContainer, tableHeaderNames, pagination);
+        this(submitter, ebiSearchForm, samples, downloadableSamples, filter, pageTitle, breadcrumbs, propertyContainer, tableHeaderNames, pagination);
     }
 
-    SamplesViewModel(Submitter submitter, Collection<Sample> samples, Collection<Sample> downloadableSamples, SampleFilter filter, String pageTitle,
+    SamplesViewModel(Submitter submitter, EBISearchForm ebiSearchForm, Collection<Sample> samples, Collection<Sample> downloadableSamples, SampleFilter filter, String pageTitle,
                      List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer, List<String> tableHeaderNames,
                      ViewPagination pagination) {
-        super(submitter, pageTitle, breadcrumbs, propertyContainer);
+        super(submitter, ebiSearchForm, pageTitle, breadcrumbs, propertyContainer);
         this.sampleFilter = filter;
         this.samples = samples;
         this.downloadableSamples = downloadableSamples;
