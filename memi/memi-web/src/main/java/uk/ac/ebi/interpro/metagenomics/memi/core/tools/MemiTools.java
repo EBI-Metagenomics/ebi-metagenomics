@@ -35,26 +35,33 @@ public class MemiTools {
         }
         Biome biome = biomeEntity.getBiome();
         if (biome != null) {
-            // Look up CSS class
-            int biomeId = biomeEntity.getBiome().getBiomeId();
-            if (MemiTools.biomeIconCSSMap.containsKey(biomeId)) {
-                biomeEntity.setBiomeIconCSSClass(MemiTools.biomeIconCSSMap.get(biomeId));
-            }
-            // no CSS class entry exists for the biome entry
-            // traverse up the tree for all ancestors
-            else {
-                List<Biome> ancestors = biomeDAO.getAllAncestorsInDescOrder(biomeEntity.getBiome());
-                for (Biome ancestor : ancestors) {
-                    if (MemiTools.biomeIconCSSMap.containsKey(ancestor.getBiomeId())) {
-                        biomeEntity.setBiomeIconCSSClass(MemiTools.biomeIconCSSMap.get(ancestor.getBiomeId()));
-                        break;
-                    }
-                }
-            }
+            assignBiomeIconCSSClass(biome, biomeDAO);
         }
         if (biomeEntity.getBiomeIconCSSClass() == null) {
             // Set the default icon class
             biomeEntity.setBiomeIconCSSClass(MemiTools.biomeIconCSSMap.get(0));
+        }
+    }
+
+    public static void assignBiomeIconCSSClass(final Biome biome, final BiomeDAO biomeDAO) {
+        if (biomeIconCSSMap.isEmpty()) {
+            buildBiomeIconMap(biomeDAO);
+        }
+        // Look up CSS class
+        int biomeId = biome.getBiomeId();
+        if (MemiTools.biomeIconCSSMap.containsKey(biomeId)) {
+            biome.setCssClass(MemiTools.biomeIconCSSMap.get(biomeId));
+        }
+        // no CSS class entry exists for the biome entry
+        // traverse up the tree for all ancestors
+        else {
+            List<Biome> ancestors = biomeDAO.getAllAncestorsInDescOrder(biome);
+            for (Biome ancestor : ancestors) {
+                if (MemiTools.biomeIconCSSMap.containsKey(ancestor.getBiomeId())) {
+                    biome.setCssClass(MemiTools.biomeIconCSSMap.get(ancestor.getBiomeId()));
+                    break;
+                }
+            }
         }
     }
 
@@ -64,26 +71,33 @@ public class MemiTools {
         }
         Biome biome = biomeEntity.getBiome();
         if (biome != null) {
-            // Look up biome icon title
-            int biomeId = biomeEntity.getBiome().getBiomeId();
-            if (MemiTools.biomeIconTitleMap.containsKey(biomeId)) {
-                biomeEntity.setBiomeIconTitle(MemiTools.biomeIconTitleMap.get(biomeId));
-            }
-            // no title entry exists for the biome entry
-            // traverse up the tree for all ancestors
-            else {
-                List<Biome> ancestors = biomeDAO.getAllAncestorsInDescOrder(biomeEntity.getBiome());
-                for (Biome ancestor : ancestors) {
-                    if (MemiTools.biomeIconTitleMap.containsKey(ancestor.getBiomeId())) {
-                        biomeEntity.setBiomeIconTitle(MemiTools.biomeIconTitleMap.get(ancestor.getBiomeId()));
-                        break;
-                    }
-                }
-            }
+            assignBiomeIconTitle(biome, biomeDAO);
         }
         if (biomeEntity.getBiomeIconTitle() == null) {
             // Set the default icon class
             biomeEntity.setBiomeIconTitle(MemiTools.biomeIconTitleMap.get(0));
+        }
+    }
+
+    public static void assignBiomeIconTitle(final Biome biome, final BiomeDAO biomeDAO) {
+        if (biomeIconTitleMap.isEmpty()) {
+            buildBiomeIconMap(biomeDAO);
+        }
+            // Look up biome icon title
+        int biomeId = biome.getBiomeId();
+        if (MemiTools.biomeIconTitleMap.containsKey(biomeId)) {
+            biome.setIconTitle(MemiTools.biomeIconTitleMap.get(biomeId));
+        }
+        // no title entry exists for the biome entry
+        // traverse up the tree for all ancestors
+        else {
+            List<Biome> ancestors = biomeDAO.getAllAncestorsInDescOrder(biome);
+            for (Biome ancestor : ancestors) {
+                if (MemiTools.biomeIconTitleMap.containsKey(ancestor.getBiomeId())) {
+                    biome.setIconTitle(MemiTools.biomeIconTitleMap.get(ancestor.getBiomeId()));
+                    break;
+                }
+            }
         }
     }
 

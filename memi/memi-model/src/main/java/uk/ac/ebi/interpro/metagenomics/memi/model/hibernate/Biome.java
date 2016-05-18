@@ -38,6 +38,12 @@ public class Biome {
     @Column(name = "LINEAGE", length = 110, nullable = false)
     private String lineage;
 
+    @Transient
+    private String cssClass;
+
+    @Transient
+    private String iconTitle;
+
     public Biome() {
     }
 
@@ -131,4 +137,26 @@ public class Biome {
         result = 31 * result + (lineage != null ? lineage.hashCode() : 0);
         return result;
     }
+
+    public String getIconTitle() {
+        return iconTitle;
+    }
+
+    public void setIconTitle(String iconTitle) {
+        this.iconTitle = iconTitle;
+    }
+
+    public String getCssClass() {
+        return cssClass;
+    }
+
+    public void setCssClass(String cssClass) {
+        this.cssClass = cssClass;
+    }
+    public String getFormattedLineage() {
+        return lineage
+                .replaceAll("root:","")
+                .replaceAll(":"," &larr; ");
+    }
+
 }

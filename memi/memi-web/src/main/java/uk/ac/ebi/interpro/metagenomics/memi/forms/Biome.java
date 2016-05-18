@@ -1,5 +1,9 @@
 package uk.ac.ebi.interpro.metagenomics.memi.forms;
 
+import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created with IntelliJ IDEA.
  * User: maxim
@@ -28,6 +32,12 @@ public enum Biome {
     SOIL("Soil", "root:Environmental:Terrestrial:Soil"),
     WASTEWATER("Wastewater", "root:Engineered:Wastewater");
 
+    private static final Map<String,Biome> lookup = new HashMap<String,Biome>();
+    static {
+        for(Biome b : EnumSet.allOf(Biome.class))
+            for(String lineage : b.getLineages())
+                lookup.put(lineage, b);
+    }
     private String name;
 
     private String[] lineages;
@@ -50,5 +60,11 @@ public enum Biome {
 
     public String[] getLineages() {
         return lineages;
+    }
+
+    public static Biome get(String lineage) {
+        if (lookup.containsKey(lineage))
+            return lookup.get(lineage);
+        return null;
     }
 }
