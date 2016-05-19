@@ -7,11 +7,11 @@
 <c:choose>
     <c:when test="${not empty biome_counter}">
 
-        <table border="1"  class="table-heading result" id="list-biomes">
+        <table border="1" class="table-heading result" id="list-biomes">
             <thead>
                 <tr>
-                    <td></td>
-                    <th class="biome" abbr="Biome" scope="col">Biome</th>
+                    <th>Biome</th>
+                    <th class="biome" abbr="Biome" scope="col">Lineage</th>
                     <th class="number-projects" abbr="num_proj" scope="col">Number of Projects</th>
                 </tr>
             </thead>
@@ -38,7 +38,15 @@
         <br/>
         <script>
             $(document).ready(function() {
-                $('#list-biomes').DataTable();
+                $('#list-biomes').DataTable({
+                  "columnDefs": [ //add style to the different columns as direct css doesn't work
+                        {className: "table-align-center table-sm-width", "targets": [0, 2]},
+                    ],
+                    "oLanguage": {
+                        "sSearch": "Filter:"
+                    },
+                    "lengthMenu": [[25, 50, 100, -1], [25, 50, 100, "All"]]
+                });
             } );
         </script>
     </c:when>
