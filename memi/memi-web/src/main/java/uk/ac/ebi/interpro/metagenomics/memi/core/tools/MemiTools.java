@@ -109,8 +109,11 @@ public class MemiTools {
         MemiTools.biomeIconTitleMap.put(0, "Undefined");
 
         // add 1:1 mapping biomes
-        List<Biome> biomes = biomeDAO.readByLineages("root:Environmental:Terrestrial:Soil", "root:Environmental:Air", "root:Engineered", "root:Environmental:Aquatic:Freshwater", "root:Host-associated:Human:Digestive system:Large intestine"
-                , "root:Environmental:Aquatic:Marine", "root:Engineered:Wastewater", "root:Host-associated:Human", "root:Host-associated");
+        List<Biome> biomes = biomeDAO.readByLineages("root:Environmental:Terrestrial:Soil", "root:Environmental:Air", "root:Engineered",
+                "root:Environmental:Aquatic:Freshwater", "root:Host-associated:Human:Digestive system:Large intestine",
+                "root:Environmental:Aquatic:Marine", "root:Engineered:Wastewater", "root:Host-associated:Human", "root:Host-associated",
+                "root:Host-associated:Plants", "root:Environmental:Terrestrial:Volcanic", "root:Environmental:Aquatic:Thermal springs",
+                "root:Environmental:Terrestrial:Rock-dwelling (subaerial biofilm)", "root:Environmental:Aquatic:Freshwater:Groundwater:Cave water");
         for (Biome biome : biomes) {
             String biomeName = biome.getBiomeName();
             if (biomeName.equalsIgnoreCase("Air")) {
@@ -140,6 +143,21 @@ public class MemiTools {
             } else if (biomeName.equalsIgnoreCase("Wastewater")) {
                 MemiTools.biomeIconCSSMap.put(biome.getBiomeId(), "wastewater_b");
                 MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Wastewater");
+            } else if (biomeName.equalsIgnoreCase("Plants")) {
+                MemiTools.biomeIconCSSMap.put(biome.getBiomeId(), "plant_host_b");
+                MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Plants");
+            } else if (biomeName.equalsIgnoreCase("Volcanic")) {
+                MemiTools.biomeIconCSSMap.put(biome.getBiomeId(), "vulcano_b");
+                MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Volcanic");
+            } else if (biomeName.equalsIgnoreCase("Thermal springs")) {
+                MemiTools.biomeIconCSSMap.put(biome.getBiomeId(), "hotspring_b");
+                MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Thermal springs");
+            } else if (biomeName.equalsIgnoreCase("Cave water")) {
+                MemiTools.biomeIconCSSMap.put(biome.getBiomeId(), "cave_b");
+                MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Cave water");
+            } else if (biomeName.equalsIgnoreCase("Rock-dwelling (subaerial biofilm)")) {
+                MemiTools.biomeIconCSSMap.put(biome.getBiomeId(), "cave_b");
+                MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Rock-dwelling (subaerial biofilm)");
             }
         }
         // add grassland biomes
