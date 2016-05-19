@@ -31,7 +31,7 @@ public class BiomesPageController extends AbstractController implements IControl
     /**
      * View name of this controller which is used several times.
      */
-    public static final String VIEW_NAME = "biomes_contact";
+    public static final String VIEW_NAME = "biomes";
 
     @Resource
     private BiomeDAO biomeDAO;
@@ -46,7 +46,7 @@ public class BiomesPageController extends AbstractController implements IControl
                     @Override
                     public void populateModel(ModelMap model) {
                         final ViewModelBuilder<BiomeViewModel> builder = new BiomesViewModelBuilder(userManager,
-                                getEbiSearchForm(), "Contact us", getBreadcrumbs(null), propertyContainer, biomeDAO);
+                                getEbiSearchForm(), "Biomes", getBreadcrumbs(null), propertyContainer, biomeDAO);
                         final BiomeViewModel defaultViewModel = builder.getModel();
 //                        defaultViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_CONTACT_VIEW);
                         model.addAttribute(BiomeViewModel.MODEL_ATTR_NAME, defaultViewModel);
@@ -68,7 +68,7 @@ public class BiomesPageController extends AbstractController implements IControl
 
     protected List<Breadcrumb> getBreadcrumbs(SecureEntity entity) {
         List<Breadcrumb> result = new ArrayList<Breadcrumb>();
-        result.add(new Breadcrumb("Contact", "Contact us", VIEW_NAME));
+        result.add(new Breadcrumb("Biomes", "List of all biomes", VIEW_NAME));
         return result;
     }
 }
