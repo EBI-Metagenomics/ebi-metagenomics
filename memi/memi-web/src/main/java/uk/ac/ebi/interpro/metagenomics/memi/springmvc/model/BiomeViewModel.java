@@ -33,8 +33,6 @@ public class BiomeViewModel extends ViewModel {
                           BiomeDAO biomeDAO) {
         super(submitter, ebiSearchForm, pageTitle, breadcrumbs, propertyContainer);
         this.biomeDAO = biomeDAO;
-//        List tmp = biomeDAO.countProjects();
-//        log.info("BiomeDAO: " + tmp + "...");
     }
 
     public BiomeDAO getBiomeDAO() {
