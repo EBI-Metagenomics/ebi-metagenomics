@@ -340,7 +340,7 @@ background:url(../img/bgd_black_op20_8.png);
 
 /**************************** TABLE ***********************************/
 
-/* MAIN TABLE - feedback form, project ov, project list, sample list*/
+/* MAIN TABLE - feedback form, project ov, project list, sample list, biome list*/
 .result {line-height: 1.2em; border-collapse:separate; width:100%; border-spacing:4px; padding-left:7px;/*9px is too much as we have already padding 2px in the table*/ margin-bottom: 9px;}
 .result thead th:empty{background:transparent;border:none;}
 .result thead th {font-size:120%; padding:10px; color:#fff; background-color:#708A95 /*was #006666*/; border-radius:5px 5px 0 0; box-shadow:0px 1px 1px #adadad;}
@@ -351,6 +351,7 @@ background:url(../img/bgd_black_op20_8.png);
 .result tbody td a:hover{text-decoration:underline;/*color:red;*/}
 .table-align-center {text-align:center;}
 .table-margin-r {margin-right:9px;}  /*need extra margin for 100%width table for EBI Template*/
+.table-sm-width {width:10%;}
 /* END  MAIN TABLE*/
 
 /*LIGHT TABLE*/
