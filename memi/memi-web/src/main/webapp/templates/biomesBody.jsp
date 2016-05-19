@@ -47,6 +47,22 @@
                     },
                     "lengthMenu": [[25, 50, 100, -1], [25, 50, 100, "All"]]
                 });
+
+                $("#list-biomes_filter input").addClass("filter_sp");
+
+                // Highlight the search term in the table using the filter input, using jQuery Highlight plugin
+                $('.filter_sp').keyup(function () {
+                    $("#list-biomes tr td").highlight($(this).val());
+                    // console.log($(this).val());
+                    $('#list-biomes tr td').unhighlight();// highlight more than just first character entered in the text box and reiterate the span to highlight
+                    $('#list-biomes tr td').highlight($(this).val());
+
+                });
+                // remove highlight when click on X (clear button)
+                $('input[type=search]').on('search', function () {
+                    $('#list-biomes tr td').unhighlight();
+                });
+
             } );
         </script>
     </c:when>
