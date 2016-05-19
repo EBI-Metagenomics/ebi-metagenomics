@@ -36,6 +36,7 @@ public class MemiTools {
         Biome biome = biomeEntity.getBiome();
         if (biome != null) {
             assignBiomeIconCSSClass(biome, biomeDAO);
+            biomeEntity.setBiomeIconCSSClass(biome.getCssClass());
         }
         if (biomeEntity.getBiomeIconCSSClass() == null) {
             // Set the default icon class
@@ -72,6 +73,7 @@ public class MemiTools {
         Biome biome = biomeEntity.getBiome();
         if (biome != null) {
             assignBiomeIconTitle(biome, biomeDAO);
+            biomeEntity.setBiomeIconTitle(biome.getIconTitle());
         }
         if (biomeEntity.getBiomeIconTitle() == null) {
             // Set the default icon class
