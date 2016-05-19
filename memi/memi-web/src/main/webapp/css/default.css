@@ -351,7 +351,7 @@ background:url(../img/bgd_black_op20_8.png);
 .result tbody td a:hover{text-decoration:underline;/*color:red;*/}
 .table-align-center {text-align:center;}
 .table-margin-r {margin-right:9px;}  /*need extra margin for 100%width table for EBI Template*/
-.table-sm-width {width:10%;}
+.table-sm-width {width:12%;}
 /* END  MAIN TABLE*/
 
 /*LIGHT TABLE*/
