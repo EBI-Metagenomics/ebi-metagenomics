@@ -48,26 +48,26 @@
                                 <table border="1" class="table-light">
                                     <thead>
                                     <tr>
-                                        <th>Project</th>
+                                        <th class="xs_hide">Project</th>
                                         <th>Sample</th>
-                                        <th>Name</th>
+                                        <th class="xs_hide">Name</th>
                                         <th >Description</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <c:forEach var="result" items="${model.ebiSampleSearchResults.entries}">
                                         <tr>
-                                            <td class="col_sm">
+                                            <td class="col_sm xs_hide">
                                                 <a href="${pageContext.request.contextPath}/projects/${result.project}">
                                                         ${result.project}
                                                 </a>
                                             </td>
-                                            <td class="col_sm">
+                                            <td class="col_sm ">
                                                 <a href="${pageContext.request.contextPath}/projects/${result.project}/samples/${result.identifier}">
                                                         ${result.identifier}
                                                 </a>
                                             </td>
-                                            <td>
+                                            <td class="xs_hide">
                                                 <c:choose>
                                                     <c:when test="${fn:length(result.name)>70}">
                                                         <c:set var="shortName" value="${fn:substring(result.description, 0, 70)}"/>
