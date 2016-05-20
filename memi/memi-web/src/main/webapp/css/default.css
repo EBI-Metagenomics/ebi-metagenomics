@@ -2045,7 +2045,7 @@ div#local-title.logo-title.grid_12.alpha {width:84%;}/*increase logo box width t
 /*END EBI template*/
 .sidebar-rel-help {display:none;}/*remove right hand side help box*/
 .icon_pipeline_v, .export, .sample_comp_result .tab-text {display:none;} /*remove pipeline ico and export button for table and text in comparison result tabs */
-table.result tbody td.table_xs_text {word-break: break-all; /*break long character chains on small screen*/}
+.table_xs_text {word-break: break-all; /*break long character chains on small screen*/}
 [class*='col-'] {width:100%; margin-bottom: 9px;}
 #bars .rChart {width:100%;}
 #pca .rChart {width:100%;}
