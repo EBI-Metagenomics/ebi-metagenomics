@@ -75,6 +75,11 @@ div#headerdiv #global-masthead .nav a:link {float: none;}
 div#headerdiv { background-color: #fff; font-size:100%; font-family: Verdana, sans-serif; }/*replace default font-size: 11px;*/
 div#local-masthead ul li.active-trail a:link, div#local-masthead ul li.active-trail a:visited {padding-top: 2px;border-bottom: 3px solid #666;background-color: #111;}/*style not defined in mitigation*/
 div#local-masthead ul li.active, div#local-masthead ul li.active-trail { background-color: #111; }  /*style not defined in mitigation*/
+/*responsive search that make it behave strangely*/
+@media only screen and (min-width: 1100px){
+div#local-search form, form#local-search {
+    float: none;
+}}
 /*/change to ebi-mitigation.css*/
 
 /*imported from ebi-visual.css*/
@@ -859,6 +864,15 @@ div#headerdiv a:link, div#headerdiv a:visited { border-bottom-width: 0;   border
 #local-search .examples a:hover {color:#464646; border-bottom-width:1px; border-bottom-style: solid;}
 #local-search .examples a:visited {color:#464646;} /*keep same color all time*/
 /*/top banner search*/
+
+/*Small screens search form*/
+.local-search-xs {display: none; margin: 0 9px;}/*shown only for small screens*/
+.local-search-xs input[type=search]{width:100%;}
+.local-search-xs input[type=submit]{width:100%;}
+@media (max-width: 768px) {
+    .local-search-xs {display: block;}
+}
+/*/Small screens search form*/
 
 form legend {
 background-color: #e5e5e5;
@@ -2021,6 +2035,8 @@ div#headerdiv .logout {margin:0; padding-left:9px;}
 .carousel, #feedback_div, #sidebar-nav {display: none;}
 /*div#local-title.logo-title img {margin:0; padding: 18px 9px;} */
 /*EBI template*/
+div#local-title.logo-title img {margin-top: 0.5em; margin-bottom: 0.5em;}/*reduce margin for logo*/
+div#local-title.logo-title.grid_12.alpha {width:84%;}/*increase logo box width to increase size logo on small screens*/
 #local-search {display:none;}  /*top banner search*/
 #global-footer .grid_4:nth-child(1) {display:none;}/*remove one item of the EBI bottom menu - logo -  to avoid scrolling effect*/
 #global-nav,#global-search {display: none;} /*remove search and menu - wait for EBI to implement a collapsed version of the menu*/
@@ -2037,10 +2053,10 @@ table.result tbody td.table_xs_text {word-break: break-all; /*break long charact
 /*datatable - comparison tool */
 #table th:nth-child(2), #table td:nth-child(2) {display: none;}/*remove Go category column */
 #table th:nth-child(3), #table td:nth-child(3) {display: none;} /*remove Go ID column in the table */
-
 .xs-navtabs {display:block;}
 .xl-navtabs {display:none;}
 #fragment-download .pipeline_table thead th:first-child {width: 50%;} /*increase size first column download table*/
+H2 {margin: 0.43em 0;}/*reduce margin for titles on small device*/
 }
 
 /*quality control tab*/
