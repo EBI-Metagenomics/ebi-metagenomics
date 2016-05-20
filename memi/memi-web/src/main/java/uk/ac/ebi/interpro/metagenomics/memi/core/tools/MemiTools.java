@@ -35,8 +35,7 @@ public class MemiTools {
         }
         Biome biome = biomeEntity.getBiome();
         if (biome != null) {
-            assignBiomeIconCSSClass(biome, biomeDAO);
-            biomeEntity.setBiomeIconCSSClass(biome.getCssClass());
+            biomeEntity.setBiomeIconCSSClass(getBiomeIconCSSClass(biome, biomeDAO));
         }
         if (biomeEntity.getBiomeIconCSSClass() == null) {
             // Set the default icon class
@@ -44,14 +43,14 @@ public class MemiTools {
         }
     }
 
-    public static void assignBiomeIconCSSClass(final Biome biome, final BiomeDAO biomeDAO) {
+    public static String getBiomeIconCSSClass(final Biome biome, final BiomeDAO biomeDAO) {
         if (biomeIconCSSMap.isEmpty()) {
             buildBiomeIconMap(biomeDAO);
         }
         // Look up CSS class
         int biomeId = biome.getBiomeId();
         if (MemiTools.biomeIconCSSMap.containsKey(biomeId)) {
-            biome.setCssClass(MemiTools.biomeIconCSSMap.get(biomeId));
+            return MemiTools.biomeIconCSSMap.get(biomeId);
         }
         // no CSS class entry exists for the biome entry
         // traverse up the tree for all ancestors
@@ -59,11 +58,11 @@ public class MemiTools {
             List<Biome> ancestors = biomeDAO.getAllAncestorsInDescOrder(biome);
             for (Biome ancestor : ancestors) {
                 if (MemiTools.biomeIconCSSMap.containsKey(ancestor.getBiomeId())) {
-                    biome.setCssClass(MemiTools.biomeIconCSSMap.get(ancestor.getBiomeId()));
-                    break;
+                    return MemiTools.biomeIconCSSMap.get(ancestor.getBiomeId());
                 }
             }
         }
+        return null;
     }
 
     public static void assignBiomeIconTitle(final BiomeEntity biomeEntity, final BiomeDAO biomeDAO) {
@@ -72,8 +71,7 @@ public class MemiTools {
         }
         Biome biome = biomeEntity.getBiome();
         if (biome != null) {
-            assignBiomeIconTitle(biome, biomeDAO);
-            biomeEntity.setBiomeIconTitle(biome.getIconTitle());
+            biomeEntity.setBiomeIconTitle(getBiomeIconTitle(biome, biomeDAO));
         }
         if (biomeEntity.getBiomeIconTitle() == null) {
             // Set the default icon class
@@ -81,14 +79,14 @@ public class MemiTools {
         }
     }
 
-    public static void assignBiomeIconTitle(final Biome biome, final BiomeDAO biomeDAO) {
+    public static String getBiomeIconTitle(final Biome biome, final BiomeDAO biomeDAO) {
         if (biomeIconTitleMap.isEmpty()) {
             buildBiomeIconMap(biomeDAO);
         }
             // Look up biome icon title
         int biomeId = biome.getBiomeId();
         if (MemiTools.biomeIconTitleMap.containsKey(biomeId)) {
-            biome.setIconTitle(MemiTools.biomeIconTitleMap.get(biomeId));
+            return MemiTools.biomeIconTitleMap.get(biomeId);
         }
         // no title entry exists for the biome entry
         // traverse up the tree for all ancestors
@@ -96,11 +94,11 @@ public class MemiTools {
             List<Biome> ancestors = biomeDAO.getAllAncestorsInDescOrder(biome);
             for (Biome ancestor : ancestors) {
                 if (MemiTools.biomeIconTitleMap.containsKey(ancestor.getBiomeId())) {
-                    biome.setIconTitle(MemiTools.biomeIconTitleMap.get(ancestor.getBiomeId()));
-                    break;
+                    return MemiTools.biomeIconTitleMap.get(ancestor.getBiomeId());
                 }
             }
         }
+        return null;
     }
 
     private static void buildBiomeIconMap(final BiomeDAO biomeDAO) {
@@ -243,4 +241,10 @@ public class MemiTools {
     public static List<String> getListOfChunkedResultFiles(File file) {
         return readLines(file);
     }
+    public static String formatLineage(String lineage) {
+        return lineage
+                .replaceAll("root:","")
+                .replaceAll(":"," &larr; ");
+    }
+
 }

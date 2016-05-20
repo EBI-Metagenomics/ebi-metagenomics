@@ -16,19 +16,19 @@
                 </tr>
             </thead>
             <tbody>
-                <c:forEach var="biome" items="${biome_counter}" varStatus="status">
+                <c:forEach var="row" items="${biome_counter}" varStatus="status">
                     <tr>
                         <td>
-                            <span style="display: none">${biome[1].lineage}</span>
-                            <span class="biome_icon icon_xs ${biome[1].cssClass}"
-                                  title="${biome[1].iconTitle} biome"></span>
+                            <span style="display: none">${row['biome'].lineage}</span>
+                            <span class="biome_icon icon_xs ${row['cssClass']}"
+                                  title="${row['iconTitle']} biome"></span>
                         </td>
                         <td>
-                            <a href="projects/doSearch?searchTerm=&biomeLineage=${biome[1].lineage}&search=Search">${biome[1].biomeName}</a><br/>
-                            ${biome[1].formattedLineage}
+                            <a href="projects/doSearch?searchTerm=&biomeLineage=${row['biome'].lineage}&search=Search">${row['biome'].biomeName}</a><br/>
+                            ${row['formattedLineage']}.
                         </td>
                         <td>
-                            <a href="projects/doSearch?searchTerm=&biomeLineage=${biome[1].lineage}&search=Search">${biome[0]}</a>
+                            <a href="projects/doSearch?searchTerm=&biomeLineage=${row['biome'].lineage}&search=Search">${row['numProjects']}</a>
                         </td>
                     </tr>
 

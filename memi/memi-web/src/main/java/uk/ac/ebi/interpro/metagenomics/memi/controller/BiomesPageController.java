@@ -17,6 +17,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuil
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -50,11 +51,17 @@ public class BiomesPageController extends AbstractController implements IControl
                         final BiomeViewModel defaultViewModel = builder.getModel();
 //                        defaultViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_CONTACT_VIEW);
                         model.addAttribute(BiomeViewModel.MODEL_ATTR_NAME, defaultViewModel);
-                        List<Object[]> result = defaultViewModel.getBiomeDAO().countProjects();
-                        if (result != null && !result.isEmpty()) {
-                            for (Object[] row : result) {
-                                MemiTools.assignBiomeIconCSSClass((Biome)row[1], biomeDAO);
-                                MemiTools.assignBiomeIconTitle((Biome)row[1], biomeDAO);
+                        List<Object[]> raw_result = defaultViewModel.getBiomeDAO().countProjects();
+                        List<HashMap> result = new ArrayList<HashMap>();
+                        if (raw_result != null && !raw_result.isEmpty()) {
+                            for (Object[] row : raw_result) {
+                                HashMap b = new HashMap();
+                                b.put("biome", row[1]);
+                                b.put("numProjects", row[0]);
+                                b.put("cssClass", MemiTools.getBiomeIconCSSClass((Biome)row[1], biomeDAO));
+                                b.put("iconTitle", MemiTools.getBiomeIconTitle((Biome)row[1], biomeDAO));
+                                b.put("formattedLineage", MemiTools.formatLineage(((Biome)row[1]).getLineage()));
+                                result.add(b);
                             }
                         }
                         model.addAttribute(BiomeViewModel.MODEL_COUNTER, result);
