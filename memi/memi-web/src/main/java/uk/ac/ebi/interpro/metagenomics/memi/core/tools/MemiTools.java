@@ -244,7 +244,7 @@ public class MemiTools {
     public static String formatLineage(String lineage) {
         return lineage
                 .replaceAll("root:","")
-                .replaceAll(":"," &larr; ");
+                .replaceAll(":"," - ");
     }
 
 }
