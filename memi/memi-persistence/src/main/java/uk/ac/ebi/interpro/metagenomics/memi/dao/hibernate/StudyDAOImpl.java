@@ -130,7 +130,7 @@ public class StudyDAOImpl implements StudyDAO {
     public Long countPublicStudiesFilteredByBiomes(Collection<Integer> biomeIds) {
         Session session = sessionFactory.getCurrentSession();
         if (session != null) {
-            if (biomeIds != null || !biomeIds.isEmpty()) {
+            if (biomeIds != null && !biomeIds.isEmpty()) {
                 Criteria criteria = session.createCriteria(Study.class)
                         .add(Restrictions.eq("isPublic", 1))
                         .add(Restrictions.in("biome.biomeId", biomeIds))

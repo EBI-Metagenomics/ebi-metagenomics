@@ -9,10 +9,10 @@
     <!--Metagenomics datasource-->
     <bean id="memiDataSource" class="org.apache.commons.dbcp.BasicDataSource"
           destroy-method="close">
-        <property name="driverClassName" value="${jcp.jdbc.oracle.driverClassName}"/>
-        <property name="url" value="${jcp.jdbc.oracle.ipdev.url}"/>
-        <property name="username" value="${jcp.jdbc.oracle.ipdev.username}"/>
-        <property name="password" value="${jcp.jdbc.oracle.ipdev.password}"/>
+        <property name="driverClassName" value="${datasource.mysql.driverClassName}"/>
+        <property name="url" value="${datasource.mysql.url}"/>
+        <property name="username" value="${datasource.mysql.username}"/>
+        <property name="password" value="${datasource.mysql.password}"/>
         <!--The initial number of connections that are created when the pool is started. -->
         <property name="initialSize" value="10"/>
         <!--The maximum number of active connections that can be allocated from this pool at the same time, or negative for no limit. -->
