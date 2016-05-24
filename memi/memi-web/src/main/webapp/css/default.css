@@ -75,6 +75,11 @@ div#headerdiv #global-masthead .nav a:link {float: none;}
 div#headerdiv { background-color: #fff; font-size:100%; font-family: Verdana, sans-serif; }/*replace default font-size: 11px;*/
 div#local-masthead ul li.active-trail a:link, div#local-masthead ul li.active-trail a:visited {padding-top: 2px;border-bottom: 3px solid #666;background-color: #111;}/*style not defined in mitigation*/
 div#local-masthead ul li.active, div#local-masthead ul li.active-trail { background-color: #111; }  /*style not defined in mitigation*/
+/*responsive search that make it behave strangely*/
+@media only screen and (min-width: 1100px){
+div#local-search form, form#local-search {
+    float: none;
+}}
 /*/change to ebi-mitigation.css*/
 
 /*imported from ebi-visual.css*/
@@ -339,6 +344,9 @@ background:url(../img/bgd_black_op20_8.png);
 /**************************** END LINKS ********************************/
 
 /**************************** TABLE ***********************************/
+/*specific column size*/
+.col_sm {width: 10%;}
+.col_xs {width: 8%;}
 
 /* MAIN TABLE - feedback form, project ov, project list, sample list*/
 .result {line-height: 1.2em; border-collapse:separate; width:100%; border-spacing:4px; padding-left:7px;/*9px is too much as we have already padding 2px in the table*/ margin-bottom: 9px;}
@@ -430,31 +438,31 @@ table.dataTable .highlight {background-color: #ffffa3;}
 #feedback_form table tbody td, #feedback_form_no table tbody td{
 text-align:left;
 }
-#feedback_form table.result { margin-bottom: 0px;}
+#feedback_form table.result { margin-bottom: 0;}
 
-.simple_table  {padding: 0px;}
+.simple_table  {padding: 0;}
 .simple_table td {vertical-align: top;}
 
  /*Table used in the pipeline page*/
 .pipeline_table {margin:9px; border: 0px #E4E8ED solid; border-collapse: collapse; color: #333;}
-.pipeline_table th {padding: 9px 18px;text-align: left; }
-.pipeline_table td {padding: 9px; }
+.pipeline_table th {padding: 9px 18px;text-align: left;}
+.pipeline_table td {padding: 9px;}
 .pipeline_table tbody tr:first-child {border-top:1px #b9b9b9 solid;}
-.pipeline_table tr.row-cb {background-color: #EAF0F9;border-bottom:1px #D1DDED solid; }
-.pipeline_table tr.row-taxon {background-color: #FAEBD7;border-bottom:1px #ECCACA solid; }
-.pipeline_table tr.row-function {background-color: #ECE2FF;border-bottom:1px #DACAEC solid;}
-.pipeline_table tr.highlight {background-color: #0F6D99;color: White;  transition: all 0.5s ease;}
-.pipeline_table tr.highlight a {color: #D4FBC1; }
+.pipeline_table tr.row-cb {background-color: #EAF0F9; border-bottom:1px #D1DDED solid;}
+.pipeline_table tr.row-taxon {background-color: #FAEBD7; border-bottom:1px #ECCACA solid;}
+.pipeline_table tr.row-function {background-color: #ECE2FF; border-bottom:1px #DACAEC solid;}
+.pipeline_table tr.highlight {background-color: #0F6D99; color: White; transition: all 0.5s ease;}
+.pipeline_table tr.highlight a {color: #D4FBC1;}
+
 /*Table used in the download page*/
-#fragment-download .pipeline_table  {vertical-align: middle; margin:0; width: 100%;}
+#fragment-download .pipeline_table {vertical-align: middle; margin:0; width: 100%;}
 #fragment-download .pipeline_table thead th {padding: 9px;}
 #fragment-download .pipeline_table thead th:first-child {width:22%;}
-#fragment-download .pipeline_table td {  padding: 0px 9px;}
-#fragment-download .pipeline_table .col_sm {width: 10%;}
-#fragment-download .pipeline_table .col_xs {width: 8%;}
+#fragment-download .pipeline_table td {padding: 0px 9px;}
+
 #fragment-download .pipeline_table span.icon {vertical-align: text-top; /*try to center the icon*/border:0px red solid;}
-.dna_rna:before {font-size:277%; color: #34a9d5;  position: relative; top: 6px; /*try to center the icon*/ }
-.protein:before { font-size:277%;color: purple; position: relative; top: 6px; /*try to center the icon*/}
+.dna_rna:before {font-size:277%; color: #34a9d5; position: relative; top: 6px; /*try to center the icon*/ }
+.protein:before {font-size:277%;color: purple; position: relative; top: 6px; /*try to center the icon*/}
 .link:before  {color:#2B8A97;font-size:130%;}
 #fragment-download .pipeline_table .icon-functional:before {font-size: 138%;color: #2B8A97;}
 #fragment-download .pipeline_table .icon-generic.big:before {color: #9A9A9A; font-size: 206%;}
@@ -722,7 +730,6 @@ text-decoration:underline;
 /************* BIOME ************/
 /*biome gal*/
 .biome_icon {display: inline-block; background-image: url(../img/ico_biome_sprite.png);}
-/*biome large icon - TO DO later*/
 /*biome large icon*/
 .biome_icon.icon_lg {width:150px; height:150px;}
 .biome_icon.icon_lg.soil_b {background-position: -20px -998px;}
@@ -859,6 +866,15 @@ div#headerdiv a:link, div#headerdiv a:visited { border-bottom-width: 0;   border
 #local-search .examples a:hover {color:#464646; border-bottom-width:1px; border-bottom-style: solid;}
 #local-search .examples a:visited {color:#464646;} /*keep same color all time*/
 /*/top banner search*/
+
+/*Small screens search form*/
+.local-search-xs {display: none; margin: 0 9px;}/*shown only for small screens*/
+.local-search-xs input[type=search]{width:100%;}
+.local-search-xs input[type=submit]{width:100%;}
+@media (max-width: 768px) {
+    .local-search-xs {display: block;}
+}
+/*/Small screens search form*/
 
 form legend {
 background-color: #e5e5e5;
@@ -2021,13 +2037,15 @@ div#headerdiv .logout {margin:0; padding-left:9px;}
 .carousel, #feedback_div, #sidebar-nav {display: none;}
 /*div#local-title.logo-title img {margin:0; padding: 18px 9px;} */
 /*EBI template*/
+div#local-title.logo-title img {margin-top: 0.5em; margin-bottom: 0.5em;}/*reduce margin for logo*/
+div#local-title.logo-title.grid_12.alpha {width:84%;}/*increase logo box width to increase size logo on small screens*/
 #local-search {display:none;}  /*top banner search*/
 #global-footer .grid_4:nth-child(1) {display:none;}/*remove one item of the EBI bottom menu - logo -  to avoid scrolling effect*/
 #global-nav,#global-search {display: none;} /*remove search and menu - wait for EBI to implement a collapsed version of the menu*/
 /*END EBI template*/
 .sidebar-rel-help {display:none;}/*remove right hand side help box*/
 .icon_pipeline_v, .export, .sample_comp_result .tab-text {display:none;} /*remove pipeline ico and export button for table and text in comparison result tabs */
-table.result tbody td.table_xs_text {word-break: break-all; /*break long character chains on small screen*/}
+.table_xs_text {word-break: break-all; /*break long character chains on small screen*/}
 [class*='col-'] {width:100%; margin-bottom: 9px;}
 #bars .rChart {width:100%;}
 #pca .rChart {width:100%;}
@@ -2037,10 +2055,10 @@ table.result tbody td.table_xs_text {word-break: break-all; /*break long charact
 /*datatable - comparison tool */
 #table th:nth-child(2), #table td:nth-child(2) {display: none;}/*remove Go category column */
 #table th:nth-child(3), #table td:nth-child(3) {display: none;} /*remove Go ID column in the table */
-
 .xs-navtabs {display:block;}
 .xl-navtabs {display:none;}
 #fragment-download .pipeline_table thead th:first-child {width: 50%;} /*increase size first column download table*/
+H2 {margin: 0.43em 0;}/*reduce margin for titles on small device*/
 }
 
 /*quality control tab*/

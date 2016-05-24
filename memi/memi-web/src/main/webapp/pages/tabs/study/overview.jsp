@@ -280,15 +280,15 @@
                 "sSearch": "Filter:"
             },
             "lengthMenu": [[25, 50, 100, -1], [25, 50, 100, "All"]],
-            "fnDrawCallback": function () {
-
+             //fnDrawCallBack doesn't work, doesn't wait for data to be loaded with Ajax
+ /*           "fnDrawCallback": function () {
                 if (this.fnSettings().fnRecordsDisplay() > 10) {
                     $('.dataTables_length').css("display", "block");
                 } else {
                     $('.dataTables_length').css("display", "none");//Remove show all dropdown when one single result page
                     $('.dataTables_paginate ').css("display", "none");//Remove pagination
                 }
-            },
+            },*/
             "processing": true,
             "ajax": {
                 "type": "GET",

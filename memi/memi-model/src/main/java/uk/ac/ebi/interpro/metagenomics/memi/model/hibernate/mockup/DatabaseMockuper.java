@@ -185,24 +185,7 @@ public class DatabaseMockuper {
                     rows = rows.subList(1, rows.size());
 
                     for (String[] row : rows) {
-                        Sample s;
-                        String type = row[3];
-                        if (type.startsWith("Environmental")) {
-                            s = new EnvironmentSample();
-                            ((EnvironmentSample) s).setLatLon(row[5]);
-                            ((EnvironmentSample) s).setEnvironmentalBiome(row[11]);
-                            ((EnvironmentSample) s).setEnvironmentalFeature(row[12]);
-                            ((EnvironmentSample) s).setEnvironmentalMaterial(row[13]);
-
-                        } else {
-                            s = new Sample();
-                            s.setHostSex((row[41].equals("female") ? Sample.HostSex.FEMALE : Sample.HostSex.MALE));
-//                            String taxonId = row[17];
-//                            if (taxonId != null && taxonId.trim().length() > 0) {
-//                                ((HostSample) s).setHostTaxonomyId(new Integer(Integer.parseInt(taxonId)));
-//                            }
-                            s.setPhenotype(row[47]);
-                        }
+                        Sample s = new Sample();
                         s.setSampleId(row[0]);
                         String studyId = row[1];
 //                        s.setSampleTitle(row[2]);
@@ -240,7 +223,6 @@ public class DatabaseMockuper {
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
-                        s.setMiscellaneous(row[56]);
                         s.setSampleDescription(row[57]);
                         s.setPublic((row[58].equals("TRUE") ? 1 : 0));
                         Set<Sample> samples = result.get(studyId);

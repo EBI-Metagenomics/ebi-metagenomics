@@ -79,9 +79,9 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
         final int publicRunCount = runDAO.countAllPublic();
         final int privateRunCount = runDAO.countAllPrivate();
 
-        final Map<String, Integer> experimentCountMap = runDAO.retrieveRunCountsGroupedByExperimentType(3);
-        final Map<String, Integer> transformedExperimentCountMap = transformMap(experimentCountMap);
-        final Integer numOfDataSets = getNumOfDataSets(experimentCountMap);
+        final Map<String, Long> experimentCountMap = runDAO.retrieveRunCountsGroupedByExperimentType(3);
+        final Map<String, Long> transformedExperimentCountMap = transformMap(experimentCountMap);
+        final Long numOfDataSets = getNumOfDataSets(experimentCountMap);
 
         List<Study> studies = null;
         // If case: if nobody is logged in
@@ -141,11 +141,11 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
      * @param experimentCountMap
      * @return
      */
-    private Map<String, Integer> transformMap(Map<String, Integer> experimentCountMap) {
+    private Map<String, Long> transformMap(Map<String, Long> experimentCountMap) {
         //Alphabetical sorting of the map
-        Map<String, Integer> result = new TreeMap<String, Integer>();
+        Map<String, Long> result = new TreeMap<String, Long>();
         for (String key : experimentCountMap.keySet()) {
-            Integer value = experimentCountMap.get(key);
+            Long value = experimentCountMap.get(key);
             //change map keys to plural form
             if (key.equalsIgnoreCase("assembly")) {
                 result.put("assemblies", value);
@@ -162,8 +162,8 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
         return result;
     }
 
-    private Integer getNumOfDataSets(Map<String, Integer> experimentCountMap) {
-        Integer result = 0;
+    private Long getNumOfDataSets(Map<String, Long> experimentCountMap) {
+        Long result = 0L;
         for (String key : experimentCountMap.keySet()) {
             result += experimentCountMap.get(key);
         }

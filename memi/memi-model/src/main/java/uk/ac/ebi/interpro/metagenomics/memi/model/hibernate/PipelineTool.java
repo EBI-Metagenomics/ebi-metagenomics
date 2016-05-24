@@ -21,17 +21,13 @@ import java.util.SortedSet;
 public class PipelineTool implements Comparator<PipelineTool> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TOOL_SEQ")
-    @Column(name = "TOOL_ID")
-    @SequenceGenerator(
-            name = "TOOL_SEQ",
-            sequenceName = "PIPELINE_TOOL_SEQ")
+    @Column(name = "TOOL_ID", columnDefinition = "SMALLINT(6)")
     private long toolId;
 
     @Column(name = "TOOL_NAME", length = 30, nullable = false)
     private String toolName;
 
-    @Column(name = "DESCRIPTION", length = 1000, nullable = false)
+    @Column(name = "DESCRIPTION", columnDefinition = "TEXT", nullable = false)
     private String description;
 
     @Column(name = "WEB_LINK", length = 500)
@@ -50,8 +46,7 @@ public class PipelineTool implements Comparator<PipelineTool> {
     @Lob
     private String configurationFile;
 
-    @Column(name = "NOTES")
-    @Lob
+    @Column(name = "NOTES", columnDefinition = "TEXT")
     private String notes;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.pipelineTool")

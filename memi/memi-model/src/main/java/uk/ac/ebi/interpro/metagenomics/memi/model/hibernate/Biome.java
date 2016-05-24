@@ -20,19 +20,19 @@ import java.util.Comparator;
 public class Biome {
 
     @Id
-    @Column(name = "BIOME_ID", precision = 4, scale = 0)
+    @Column(name = "BIOME_ID", columnDefinition = "SMALLINT(6)")
     private int biomeId;
 
     @Column(name = "BIOME_NAME", length = 60, nullable = false)
     private String biomeName;
 
-    @Column(name = "LFT", precision = 4, scale = 0, nullable = false)
+    @Column(name = "LFT", nullable = false, columnDefinition = "SMALLINT(6)")
     private int left;
 
-    @Column(name = "RGT", precision = 4, scale = 0, nullable = false)
+    @Column(name = "RGT", nullable = false, columnDefinition = "SMALLINT(6)")
     private int right;
 
-    @Column(name = "DEPTH", precision = 1, scale = 0, nullable = false)
+    @Column(name = "DEPTH", nullable = false, columnDefinition = "TINYINT(4)")
     private int depth;
 
     @Column(name = "LINEAGE", length = 110, nullable = false)
