@@ -21,19 +21,13 @@ import java.util.*;
 public class PipelineRelease implements Comparator<PipelineRelease> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PIPELINE_REL_SEQ")
-    @Column(name = "PIPELINE_ID")
-    @SequenceGenerator(
-            name = "PIPELINE_REL_SEQ",
-            sequenceName = "PIPELINE_RELEASE_SEQ")
-    private long pipelineId;
+    @Column(name = "PIPELINE_ID", columnDefinition = "TINYINT(4)")
+    private int pipelineId;
 
-    @Column(name = "DESCRIPTION")
-    @Lob
+    @Column(name = "DESCRIPTION", columnDefinition = "TEXT")
     private String description;
 
-    @Column(name = "CHANGES", nullable = false)
-    @Lob
+    @Column(name = "CHANGES", nullable = false, columnDefinition = "TEXT")
     private String changes;
 
     @Column(name = "RELEASE_VERSION", length = 20, nullable = false)
@@ -57,11 +51,11 @@ public class PipelineRelease implements Comparator<PipelineRelease> {
         this.pipelineReleaseTools = pipelineReleaseTools;
     }
 
-    public long getPipelineId() {
+    public int getPipelineId() {
         return pipelineId;
     }
 
-    public void setPipelineId(long pipelineId) {
+    public void setPipelineId(int pipelineId) {
         this.pipelineId = pipelineId;
     }
 

@@ -20,15 +20,10 @@ import java.util.Comparator;
 public class Publication implements Comparator<Publication> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PUB_SEQ")
-    @Column(name = "PUB_ID")
-    @SequenceGenerator(
-            name = "PUB_SEQ",
-            sequenceName = "PUBLICATION_SEQ")
-//        allocationSize = 1
+    @Column(name = "PUB_ID", columnDefinition = "INT(11)")
     private long pubId;
 
-    @Column(name = "PUB_TYPE", length = 30, nullable = false)
+    @Column(name = "PUB_TYPE", length = 100, nullable = false)
     private String pubType;
 
     @Column(name = "ISBN", length = 10)
@@ -40,7 +35,7 @@ public class Publication implements Comparator<Publication> {
     @Column(name = "ISSUE", length = 55)
     private String issue;
 
-    @Column(name = "PUBLISHED_YEAR", length = 4)
+    @Column(name = "PUBLISHED_YEAR", columnDefinition = "SMALLINT(6)")
     private Integer year;
 
     @Column(name = "PUB_TITLE", length = 740, nullable = false)
@@ -52,10 +47,10 @@ public class Publication implements Comparator<Publication> {
     @Column(name = "RAW_PAGES", length = 30)
     private String rawPages;
 
-    @Column(name = "MEDLINE_JOURNAL")
+    @Column(name = "MEDLINE_JOURNAL", length = 255)
     private String medlineJournal;
 
-    @Column(name = "ISO_JOURNAL")
+    @Column(name = "ISO_JOURNAL", length = 255)
     private String isoJournal;
 
     /**
@@ -67,10 +62,10 @@ public class Publication implements Comparator<Publication> {
     @Column(name = "DOI", length = 1500)
     private String doi;
 
-    @Column(name = "PUBMED_ID", length = 10)
+    @Column(name = "PUBMED_ID", columnDefinition = "INT(11)")
     private Integer pubMedId;
 
-    @Column(name = "PUBMED_CENTRAL_ID", length = 10)
+    @Column(name = "PUBMED_CENTRAL_ID", columnDefinition = "INT(11)")
     private Integer pubMedCentralId;
 
     @Column(name = "PUB_ABSTRACT")

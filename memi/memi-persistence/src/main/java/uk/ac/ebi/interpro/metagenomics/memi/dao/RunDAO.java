@@ -21,7 +21,7 @@ public interface RunDAO {
 
     public int countAllPrivate();
 
-    public Map<String, Integer> retrieveRunCountsGroupedByExperimentType(int analysisStatusI);
+    public Map<String, Long> retrieveRunCountsGroupedByExperimentType(int analysisStatusI);
 
     public List<QueryRunsForProjectResult> retrieveRunsByProjectId(long projectId, boolean publicOnly);
 

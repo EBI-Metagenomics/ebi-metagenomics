@@ -116,21 +116,6 @@
             <version>${org.springframework.version}</version>
             <scope>test</scope>
         </dependency>
-        <!-- Contains the Oracle JDBC driver -->
-        <dependency>
-            <groupId>com.oracle.jdbc</groupId>
-            <artifactId>com.springsource.oracle.jdbc</artifactId>
-            <version>10.2.0.2</version>
-            <!-- Possibly should be "provided" -->
-            <!--<scope>provided</scope>-->
-        </dependency>
-        <!-- MySQL JDBC driver-->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.14</version>
-            <scope>runtime</scope>
-        </dependency>
         <!-- CSV formatted file parser-->
         <dependency>
             <groupId>net.sf.opencsv</groupId>

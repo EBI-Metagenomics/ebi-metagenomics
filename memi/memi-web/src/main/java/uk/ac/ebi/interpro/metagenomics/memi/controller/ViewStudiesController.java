@@ -182,13 +182,6 @@ public class ViewStudiesController extends AbstractController implements IContro
 
                 fileContent.append(study.isPublic()).append(',');
 
-                String spu = study.getStudyPageURL();
-                if (spu == null || spu.equals("")) {
-                    fileContent.append(',');
-                } else {
-                    fileContent.append(spu).append(',');
-                }
-
                 fileContent.append("\"").append(study.getStudyAbstract()).append("\",");
 
                 fileContent.append("\n");
