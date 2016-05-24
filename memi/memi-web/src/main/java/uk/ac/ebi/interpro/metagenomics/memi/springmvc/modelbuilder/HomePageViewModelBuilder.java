@@ -141,11 +141,11 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
      * @param experimentCountMap
      * @return
      */
-    private Map<String, Integer> transformMap(Map<String, Integer> experimentCountMap) {
+    private Map<String, Long> transformMap(Map<String, Long> experimentCountMap) {
         //Alphabetical sorting of the map
-        Map<String, Integer> result = new TreeMap<String, Integer>();
+        Map<String, Long> result = new TreeMap<String, Long>();
         for (String key : experimentCountMap.keySet()) {
-            Integer value = experimentCountMap.get(key);
+            Long value = experimentCountMap.get(key);
             //change map keys to plural form
             if (key.equalsIgnoreCase("assembly")) {
                 result.put("assemblies", value);
