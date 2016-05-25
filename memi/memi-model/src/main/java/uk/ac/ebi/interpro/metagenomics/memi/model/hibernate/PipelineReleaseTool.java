@@ -28,7 +28,7 @@ public class PipelineReleaseTool implements Serializable {
     private BigDecimal toolGroupId;
 
     // An extra column on the pipeline release/tools join table
-    @Column(name = "HOW_TOOL_USED_DESC", nullable = false, length = 1000)
+    @Column(name = "HOW_TOOL_USED_DESC", nullable = false, columnDefinition = "TEXT")
     private String howToolUsedDesc;
 
     public PipelineReleaseTool() {

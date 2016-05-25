@@ -31,7 +31,7 @@
         <!--Hibernate properties-->
         <property name="hibernateProperties">
             <props>
-                <prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop>
                 <prop key="hibernate.show_sql">false</prop>
                 <prop key="hibernate.format_sql">true</prop>
                 <prop key="hibernate.use_sql_comments">false</prop>
@@ -51,7 +51,7 @@
                 <prop key="hibernate.cache.use_query_cache">false</prop>
                 <prop key="hibernate.cache.use_second_level_cache">false</prop>
                 <!--Hibernate connection properties / character encoding -->
-                <!--<prop key="hibernate.connection.defaultNChar">true</prop>  -->
+                <prop key="hibernate.connection.defaultNChar">true</prop>
                 <prop key="hibernate.connnection.charSet">UTF-8</prop>
                 <prop key="hibernate.connection.useUnicode">true</prop>
                 <prop key="hibernate.connection.characterEncoding">UTF-8</prop>
@@ -63,10 +63,6 @@
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Publication</value>
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study</value>
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample</value>
-                <!--<value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.EnvironmentSample</value>-->
-                <!--<value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.HostSample</value>-->
-                <!--<value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.EngineeredSample</value>-->
-                <!--<value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.UndefinedSample</value>-->
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.PipelineRelease</value>
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.PipelineTool</value>
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.PipelineReleaseTool</value>
