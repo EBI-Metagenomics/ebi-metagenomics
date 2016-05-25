@@ -48,23 +48,6 @@ public class HttpHeadFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 
-        //TODO: First try to fix the catch exceptions (IllegalStateException, HttpSessionRequiredException) down below
-        // Get http session
-//        HttpSession httpSession = httpServletRequest.getSession();
-//        if (httpSession == null) {
-//            // TODO: Not sure how to handle this at the moment
-//
-//        } else {
-//            // Get search form session attribute
-//            if (httpSession.getAttribute("ebiSearchForm") != null) {
-//                // don't do anything
-//            } else {
-//                // attach a new instance of the session attribute
-//                httpServletRequest.setAttribute("ebiSearchForm", new EBISearchForm());
-//            }
-//
-//        }
-
         if (isHttpHead(httpServletRequest)) {
             HttpServletResponse httpServletResponse = (HttpServletResponse) response;
             NoBodyResponseWrapper noBodyResponseWrapper = new NoBodyResponseWrapper(httpServletResponse);
@@ -72,14 +55,7 @@ public class HttpHeadFilter implements Filter {
             chain.doFilter(new ForceGetRequestWrapper(httpServletRequest), noBodyResponseWrapper);
             noBodyResponseWrapper.setContentLength();
         } else {
-            try {
-                // TODO: We need to investigate why and when those exceptions are thrown and fix them
-                chain.doFilter(request, response);
-            } catch (IllegalStateException e1) {
-                log.error("Caught IllegalStateException: ", e1);
-            } catch (HttpSessionRequiredException e2) {
-                log.error("Caught HttpSessionRequiredException: ", e2);
-            }
+            chain.doFilter(request, response);
         }
     }
 
