@@ -206,7 +206,9 @@ public class StudiesViewModelBuilder extends AbstractBiomeViewModelBuilder<Studi
                 biomeIds.removeAll(biomeIdsForHumanHost);
             }
 
-            crits.add(Restrictions.in("biome.biomeId", biomeIds));
+            if (!biomeIds.isEmpty()) {
+                crits.add(Restrictions.in("biome.biomeId", biomeIds));
+            }
         }
         //add is public and submitter identifier criteria
         if (submissionAccountId != null) {

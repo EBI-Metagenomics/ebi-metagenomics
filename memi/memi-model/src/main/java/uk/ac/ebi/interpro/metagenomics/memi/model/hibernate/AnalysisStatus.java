@@ -21,7 +21,7 @@ import java.util.Set;
 public class AnalysisStatus {
 
     @Id
-    @Column(name = "ANALYSIS_STATUS_ID")
+    @Column(name = "ANALYSIS_STATUS_ID", columnDefinition = "TINYINT(4)")
     private int analysisStatusId;
 
     @Column(name = "ANALYSIS_STATUS", length = 15, nullable = false)

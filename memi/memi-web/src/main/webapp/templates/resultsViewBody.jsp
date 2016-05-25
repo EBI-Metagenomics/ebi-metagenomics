@@ -259,5 +259,5 @@
     //    }
 </script>
 
-<script type="text/javascript" src="https://canvg.googlecode.com/svn/trunk/rgbcolor.js"></script>
-<script type="text/javascript" src="https://canvg.googlecode.com/svn/trunk/canvg.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/rgbcolor.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/canvg.js"></script>

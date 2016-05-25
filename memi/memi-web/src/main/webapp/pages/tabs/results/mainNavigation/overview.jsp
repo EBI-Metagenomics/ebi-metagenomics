@@ -102,22 +102,6 @@
                     </c:otherwise>
                     </c:choose>
                     </div>
-
-                    <c:if test="${not empty model.sample.hostSex}">
-                        <c:set var="hostSex" value="${model.sample.hostSex}"/>
-                        <div class="result_row">
-                            <div class="result_row_label">Sex:</div>
-                            <div class="result_row_data">${fn:toLowerCase(hostSex)}</div>
-                        </div>
-                    </c:if>
-
-                    <c:if test="${not empty model.sample.phenotype}">
-                        <c:set var="phenotype" value="${model.sample.phenotype}"/>
-                        <div class="result_row">
-                            <div class="result_row_label">Phenotype:</div>
-                            <div class="result_row_data"><c:out value="${phenotype}"/></div>
-                        </div>
-                    </c:if>
                 </div>
             </c:when>
 

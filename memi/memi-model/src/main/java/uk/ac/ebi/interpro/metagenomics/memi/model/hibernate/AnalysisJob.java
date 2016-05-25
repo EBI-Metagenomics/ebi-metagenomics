@@ -2,6 +2,7 @@ package uk.ac.ebi.interpro.metagenomics.memi.model.hibernate;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.hibernate.annotations.Type;
 import uk.ac.ebi.interpro.metagenomics.memi.model.IAnalysisJob;
 
 import javax.persistence.*;
@@ -21,11 +22,7 @@ import java.util.Comparator;
 public class AnalysisJob implements Comparator<AnalysisJob>, SecureEntity, IAnalysisJob {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ANALYSIS_JOB_SEQUENCE")
-    @Column(name = "JOB_ID")
-    @SequenceGenerator(
-            name = "ANALYSIS_JOB_SEQUENCE",
-            sequenceName = "ANALYSIS_JOB_SEQ")
+    @Column(name = "JOB_ID", columnDefinition = "BIGINT(20)")
     private long jobId;
 
     @Column(name = "JOB_OPERATOR", length = 15, nullable = false)
@@ -47,7 +44,7 @@ public class AnalysisJob implements Comparator<AnalysisJob>, SecureEntity, IAnal
     @JoinColumn(name = "ANALYSIS_STATUS_ID", nullable = false)
     private AnalysisStatus analysisStatus;
 
-    @Column(name = "RE_RUN_COUNT", precision = 2, scale = 0)
+    @Column(name = "RE_RUN_COUNT", columnDefinition = "TINYINT(4)")
     private int reRunCount;
 
     @Column(name = "INPUT_FILE_NAME", length = 50, nullable = false)
