@@ -13,6 +13,11 @@
  */
 package uk.ac.ebi.interpro.metagenomics.memi.core;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.web.HttpSessionRequiredException;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm;
+
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -20,10 +25,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServletResponseWrapper;
+import javax.servlet.http.*;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
@@ -34,6 +36,9 @@ import java.io.UnsupportedEncodingException;
  * filter handles all the details.
  */
 public class HttpHeadFilter implements Filter {
+
+    private static final Log log = LogFactory.getLog(HttpHeadFilter.class);
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         //Do nothing
@@ -43,6 +48,23 @@ public class HttpHeadFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 
+        //TODO: First try to fix the catch exceptions (IllegalStateException, HttpSessionRequiredException) down below
+        // Get http session
+//        HttpSession httpSession = httpServletRequest.getSession();
+//        if (httpSession == null) {
+//            // TODO: Not sure how to handle this at the moment
+//
+//        } else {
+//            // Get search form session attribute
+//            if (httpSession.getAttribute("ebiSearchForm") != null) {
+//                // don't do anything
+//            } else {
+//                // attach a new instance of the session attribute
+//                httpServletRequest.setAttribute("ebiSearchForm", new EBISearchForm());
+//            }
+//
+//        }
+
         if (isHttpHead(httpServletRequest)) {
             HttpServletResponse httpServletResponse = (HttpServletResponse) response;
             NoBodyResponseWrapper noBodyResponseWrapper = new NoBodyResponseWrapper(httpServletResponse);
@@ -50,7 +72,14 @@ public class HttpHeadFilter implements Filter {
             chain.doFilter(new ForceGetRequestWrapper(httpServletRequest), noBodyResponseWrapper);
             noBodyResponseWrapper.setContentLength();
         } else {
-            chain.doFilter(request, response);
+            try {
+                // TODO: We need to investigate why and when those exceptions are thrown and fix them
+                chain.doFilter(request, response);
+            } catch (IllegalStateException e1) {
+                log.error("Caught IllegalStateException: ", e1);
+            } catch (HttpSessionRequiredException e2) {
+                log.error("Caught HttpSessionRequiredException: ", e2);
+            }
         }
     }
 
