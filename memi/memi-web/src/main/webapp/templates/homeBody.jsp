@@ -651,6 +651,29 @@
                 <div id="hlight-box-spotlight" class="grid_12 alpha hlight-spot">
                     <div class="hlight_title_cont">
                         <div class="hlight_maintitle"><h1>Spotlight</h1></div>
+                        <div class="hlight_subtitle"><h2>American Gut project</h2></div>
+                    </div>
+                    <div class="home_box alpha">
+                        <div class="hlight-text-scroll">
+                        <img alt="American Gut Study Logo"
+                             src="<c:url value="${baseURL}/img/pict_home_american_gut_sm.jpg"/>" style="max-width:50%;float:left;margin:18px;"/>
+                        <p/>The microbial population (or microbiome) of the human gut is involved in a wide range of important processes, such as digestion, production of vitamins and other nutrients, detoxification, protection from pathogens, and helping to shape the host immune system. Gut microbial communities represent substantial reservoirs of genetic and metabolic diversity: different people have different types of microorganisms in their gut, and community composition can change over time or with diet.
+
+                        <p/>The importance of the gut microbiota in health and disease is becoming increasingly recognised. Microbiome composition seems to be vital in maintaining a healthy gut, and community perturbance has been associated with a wide range of diseases, including obesity, diabetes, IBS and cancer. In order to better understand such associations, and to work out what constitutes normal or unhealthy gut populations, it is important to analyse samples from a broad range of people, with a variety of ages, diets and lifestyles.
+
+                        <p/>American Gut (<a href="http://americangut.org">americangut.org</a>) is an extensive crowd-sourced citizen science project, aiming to shed light on the connections between human microbiome and health. For a small monetary contribution (covering sample processing, sequencing and analysis costs), the organisers mail volunteers a dietary and lifestyle questionnaire and sample collection kit. Samples and questionnaires are then sent back for analysis. The project also contains samples and data from a related project in the UK, "The British Gut" (<a href="http://britishgut.org/">britishgut.org</a>).
+
+                        <p/>Once received by the laboratory, samples are anonymised, DNA is extracted and microbial 16S rRNA genes are amplified, sequenced and analysed to help reveal gut community composition. The analysis results can be accessed via the American Gut website, and the anonymised sequence sets are also submitted to public sequence data archives, such as the European Nucleotide Archive (ENA), for reuse and re-analysis by the scientific community.
+
+                        <p/>EBI Metagenomics has analysed the 16S rRNA gene amplicon sequence data for over 8,000 samples from the American Gut project (ERP012803) that have been deposited with the ENA to date. The taxonomic analysis for each sequencing run can be visualised on (or downloaded from) the EBI Metagenomics web site (for example, <a href="${baseURL}/metagenomics/projects/ERP012803/samples/ERS915520/runs/ERR1073439/results/versions/2.0">ERR1073439</a>). Users can also download the whole data set, summarised at both the phylum and full taxonomic classification level, as results matrix files (<a href="${baseURL}/metagenomics/projects/ERP012803">ERP012803</a>).
+
+                        </div>
+                        <a href="<c:url value="${baseURL}/projects/ERP012803"/>"
+                                                   title="View American Gut project" class="all">Look at the data</a>
+                    </div>
+                    <!--
+                    <div class="hlight_title_cont">
+                        <div class="hlight_maintitle"><h1>Spotlight</h1></div>
                         <div class="hlight_subtitle"><h2>TARA ocean project</h2></div>
                     </div>
                     <div class="home_box alpha">
@@ -672,13 +695,15 @@
                         <a href="<c:url value="${baseURL}/projects/ERP001736"/>"
                            title="View Tara project" class="all">Look at the data</a>
                     </div>
+                    -->
                 </div>
-                <div id="hlight-box-tools" class="grid_12 alpha hlight-spot">
+                <div id="hlight-box-tools" class="grid_12 omega hlight-spot">
                     <div class="hlight_title_cont">
                         <div class="hlight_maintitle"><h1>Tools</h1></div>
                         <div class="hlight_subtitle"><h2>Functional sample comparison</h2></div>
                     </div>
-                    <div class="home_box alpha">
+                    <div class="home_box omega">
+                        <div class="hlight-text-scroll">
                         <img alt="Example of Go terms analysis result page"
                              src="<c:url value="${baseURL}/img/pict_home_comparison_566.png"/>"
                              style="max-width: 566px;"/>
@@ -687,15 +712,12 @@
                             of Gene Ontology (GO) terms, specially developed to describe metagenomic data. </p>
                         <p>You can visualise the results using a range of interactive charts (bar charts, stacked
                             columns, Principal Component Analysis and heatmaps).
-                                <%--or view the results in a table format--%>
                             The different charts can be exported in PNG, PDF and SVG formats, so that they can easily be
                             included in presentations and publications.
-                                <%--<br/> Note that the functional comparison tool only works for non-amplicon datasets.--%>
                         </p>
-
-                        <a href="<c:url value="${baseURL}/compare"/>" title="Compare samples" class="all">Compare
-                            samples</a>
                     </div>
+                        <a href="<c:url value="${baseURL}/compare"/>" title="Compare samples" class="all">Compare
+                                                  samples</a>
                 </div>
             </div>
         </section>

@@ -12,7 +12,5 @@
 "$sample.sampleName",#{else}"",#end
 #if($sample.study.studyName)
 "$sample.study.studyName",#{else}"",#end
-#if($sample.analysisCompleted)
-"Finished",#{else}"In progress",#end
 
 #end

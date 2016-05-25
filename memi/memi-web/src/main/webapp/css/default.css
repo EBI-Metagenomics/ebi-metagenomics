@@ -75,6 +75,11 @@ div#headerdiv #global-masthead .nav a:link {float: none;}
 div#headerdiv { background-color: #fff; font-size:100%; font-family: Verdana, sans-serif; }/*replace default font-size: 11px;*/
 div#local-masthead ul li.active-trail a:link, div#local-masthead ul li.active-trail a:visited {padding-top: 2px;border-bottom: 3px solid #666;background-color: #111;}/*style not defined in mitigation*/
 div#local-masthead ul li.active, div#local-masthead ul li.active-trail { background-color: #111; }  /*style not defined in mitigation*/
+/*responsive search that make it behave strangely*/
+@media only screen and (min-width: 1100px){
+div#local-search form, form#local-search {
+    float: none;
+}}
 /*/change to ebi-mitigation.css*/
 
 /*imported from ebi-visual.css*/
@@ -339,6 +344,9 @@ background:url(../img/bgd_black_op20_8.png);
 /**************************** END LINKS ********************************/
 
 /**************************** TABLE ***********************************/
+/*specific column size*/
+.col_sm {width: 10%;}
+.col_xs {width: 8%;}
 
 /* MAIN TABLE - feedback form, project ov, project list, sample list*/
 .result {line-height: 1.2em; border-collapse:separate; width:100%; border-spacing:4px; padding-left:7px;/*9px is too much as we have already padding 2px in the table*/ margin-bottom: 9px;}
@@ -430,31 +438,31 @@ table.dataTable .highlight {background-color: #ffffa3;}
 #feedback_form table tbody td, #feedback_form_no table tbody td{
 text-align:left;
 }
-#feedback_form table.result { margin-bottom: 0px;}
+#feedback_form table.result { margin-bottom: 0;}
 
-.simple_table  {padding: 0px;}
+.simple_table  {padding: 0;}
 .simple_table td {vertical-align: top;}
 
  /*Table used in the pipeline page*/
 .pipeline_table {margin:9px; border: 0px #E4E8ED solid; border-collapse: collapse; color: #333;}
-.pipeline_table th {padding: 9px 18px;text-align: left; }
-.pipeline_table td {padding: 9px; }
+.pipeline_table th {padding: 9px 18px;text-align: left;}
+.pipeline_table td {padding: 9px;}
 .pipeline_table tbody tr:first-child {border-top:1px #b9b9b9 solid;}
-.pipeline_table tr.row-cb {background-color: #EAF0F9;border-bottom:1px #D1DDED solid; }
-.pipeline_table tr.row-taxon {background-color: #FAEBD7;border-bottom:1px #ECCACA solid; }
-.pipeline_table tr.row-function {background-color: #ECE2FF;border-bottom:1px #DACAEC solid;}
-.pipeline_table tr.highlight {background-color: #0F6D99;color: White;  transition: all 0.5s ease;}
-.pipeline_table tr.highlight a {color: #D4FBC1; }
+.pipeline_table tr.row-cb {background-color: #EAF0F9; border-bottom:1px #D1DDED solid;}
+.pipeline_table tr.row-taxon {background-color: #FAEBD7; border-bottom:1px #ECCACA solid;}
+.pipeline_table tr.row-function {background-color: #ECE2FF; border-bottom:1px #DACAEC solid;}
+.pipeline_table tr.highlight {background-color: #0F6D99; color: White; transition: all 0.5s ease;}
+.pipeline_table tr.highlight a {color: #D4FBC1;}
+
 /*Table used in the download page*/
-#fragment-download .pipeline_table  {vertical-align: middle; margin:0; width: 100%;}
+#fragment-download .pipeline_table {vertical-align: middle; margin:0; width: 100%;}
 #fragment-download .pipeline_table thead th {padding: 9px;}
 #fragment-download .pipeline_table thead th:first-child {width:22%;}
-#fragment-download .pipeline_table td {  padding: 0px 9px;}
-#fragment-download .pipeline_table .col_sm {width: 10%;}
-#fragment-download .pipeline_table .col_xs {width: 8%;}
+#fragment-download .pipeline_table td {padding: 0px 9px;}
+
 #fragment-download .pipeline_table span.icon {vertical-align: text-top; /*try to center the icon*/border:0px red solid;}
-.dna_rna:before {font-size:277%; color: #34a9d5;  position: relative; top: 6px; /*try to center the icon*/ }
-.protein:before { font-size:277%;color: purple; position: relative; top: 6px; /*try to center the icon*/}
+.dna_rna:before {font-size:277%; color: #34a9d5; position: relative; top: 6px; /*try to center the icon*/ }
+.protein:before {font-size:277%;color: purple; position: relative; top: 6px; /*try to center the icon*/}
 .link:before  {color:#2B8A97;font-size:130%;}
 #fragment-download .pipeline_table .icon-functional:before {font-size: 138%;color: #2B8A97;}
 #fragment-download .pipeline_table .icon-generic.big:before {color: #9A9A9A; font-size: 206%;}
@@ -722,7 +730,6 @@ text-decoration:underline;
 /************* BIOME ************/
 /*biome gal*/
 .biome_icon {display: inline-block; background-image: url(../img/ico_biome_sprite.png);}
-/*biome large icon - TO DO later*/
 /*biome large icon*/
 .biome_icon.icon_lg {width:150px; height:150px;}
 .biome_icon.icon_lg.soil_b {background-position: -20px -998px;}
@@ -859,6 +866,15 @@ div#headerdiv a:link, div#headerdiv a:visited { border-bottom-width: 0;   border
 #local-search .examples a:hover {color:#464646; border-bottom-width:1px; border-bottom-style: solid;}
 #local-search .examples a:visited {color:#464646;} /*keep same color all time*/
 /*/top banner search*/
+
+/*Small screens search form*/
+.local-search-xs {display: none; margin: 0 9px;}/*shown only for small screens*/
+.local-search-xs input[type=search]{width:100%;}
+.local-search-xs input[type=submit]{width:100%;}
+@media (max-width: 768px) {
+    .local-search-xs {display: block;}
+}
+/*/Small screens search form*/
 
 form legend {
 background-color: #e5e5e5;
@@ -1866,7 +1882,7 @@ ul.sample_list li {list-style: none; display: inline;}
 .jumbo-user-box .icon-functional:before {color:#C34533; font-size: 137%;}
 /*HOMEPAGE - stats*/
 .jumbo-stats {text-align: center; color:#606a73;font-size: 120%;line-height: 1.4;}
-/*.jumbo-stats  .grid_24 {bZorder:1px solid blue; box-sizing:border-box;}*/
+/*.jumbo-stats  .grid_24 {border:1px solid blue; box-sizing:border-box;}*/
 .jumbo-stats .jumbo-stats-box {overflow: hidden;/*small screens -remove overlap*/}
 .jumbo-stats .jumbo-stats-box .grid_6.alpha {max-width: 41px;}
 .jumbo-stats .jumbo-stats-box span.icon {font-size: 216%;}
@@ -1888,6 +1904,8 @@ ul.sample_list li {list-style: none; display: inline;}
 
 .home_box {border:1px #cbcbcb solid; overflow:hidden /*when resizing*/;   padding: 18px 9px; min-height: 322px; }
 .home_box p {color: #606a73;}
+.hlight-spot.alpha .hlight_title_cont {margin-left: 18px;} /*important to keep to align titles*/
+.hlight-spot.omega .hlight_title_cont {margin-right: 18px;}
 .hlight-spot .home_box p, .hlight-info .home_box p  {border:0px pink solid; margin-left:0;  margin-right:0; padding-left:0;padding-right:0;font-size:120%; }
 .hlight-spot .home_box img {margin-bottom: 9px; width: 100%;/*resize img with screen*/}
 .hlight-info .home_box img {margin: 0 9px 9px 0; float:left; width:17%;}
@@ -1906,7 +1924,7 @@ a.all {float:right; display: block; background: url(../img/arrow_link_small.jpg)
 a.all:hover, a.all:focus { background: url(../img/arrow_link_over_small.jpg) no-repeat  right top;}
 a.all:active  { background: url(../img/arrow_link_click_small.jpg) no-repeat right top;}
 
-.hlight_title_cont {margin-left: 18px; display:block; overflow: auto; border:0px red solid;}
+.hlight_title_cont {display:block; overflow: auto; border:0px red solid;}
 .hlight_maintitle {display:block; float:left;border:0px red solid;}
 .hlight_subtitle {display:block; float:right;margin-top: 18px; margin-right: 2px; border:0px black solid;}
 .hlight_subtitle h2 {font-size: 137%;}
@@ -1918,7 +1936,9 @@ a.all:active  { background: url(../img/arrow_link_click_small.jpg) no-repeat rig
 .jumbo-news-centred a, .jumbo-news-centred a:visited {color:#0c4d7b;}
 .jumbo-news-centred .icon-socialmedia:before {color:#0c4d7b;}
 
-.list-contain-box .list-project-l, .list-contain-box .list-sample-l {height: 250px; position: relative;  width: 100%;  overflow-x: hidden; overflow-y: scroll;}
+.hlight-text-scroll, .list-contain-box .list-project-l, .list-contain-box .list-sample-l {position: relative;  width: 100%;  overflow-x: hidden; overflow-y: auto;}
+.list-project-l, .list-sample-l {height: 250px;}
+.hlight-text-scroll {height: 394px;}
 .list-contain-box .list-project-l .icon-functional:before, .list-contain-box .list-sample-l .icon-functional:before, table.result .icon-functional:before, #project_ov .icon-functional:before, #sample_ov .icon-functional:before {color: #777;}
 /*END HOMEPAGE*/
 
@@ -1932,6 +1952,8 @@ a.all:active  { background: url(../img/arrow_link_click_small.jpg) no-repeat rig
 .jumbo-header .mega-lock {display: none;}/*remove lock shape private*/
 .jumbo-news-centred {width: 66%;}
 .hlight_subtitle {margin-right:18px;}
+.hlight-spot.omega .hlight_title_cont {margin-left:18px;}
+.hlight-spot.omega .hlight_subtitle {margin-right:0;}
 #list-biomes .grid_24 a {height:inherit; width:32%;/*3x3*/}
 #list-biomes, .grid_12.list-contain-box, #hlight-box-spotlight, #hlight-box-tools {width:100%;margin-left: 0;margin-right: 0;}
 #list-biomes .home_box , .list-contain-box .home_box, #hlight-box-spotlight .home_box, #hlight-box-tools .home_box {margin:9px 18px;}
@@ -2015,13 +2037,15 @@ div#headerdiv .logout {margin:0; padding-left:9px;}
 .carousel, #feedback_div, #sidebar-nav {display: none;}
 /*div#local-title.logo-title img {margin:0; padding: 18px 9px;} */
 /*EBI template*/
+div#local-title.logo-title img {margin-top: 0.5em; margin-bottom: 0.5em;}/*reduce margin for logo*/
+div#local-title.logo-title.grid_12.alpha {width:84%;}/*increase logo box width to increase size logo on small screens*/
 #local-search {display:none;}  /*top banner search*/
 #global-footer .grid_4:nth-child(1) {display:none;}/*remove one item of the EBI bottom menu - logo -  to avoid scrolling effect*/
 #global-nav,#global-search {display: none;} /*remove search and menu - wait for EBI to implement a collapsed version of the menu*/
 /*END EBI template*/
 .sidebar-rel-help {display:none;}/*remove right hand side help box*/
 .icon_pipeline_v, .export, .sample_comp_result .tab-text {display:none;} /*remove pipeline ico and export button for table and text in comparison result tabs */
-table.result tbody td.table_xs_text {word-break: break-all; /*break long character chains on small screen*/}
+.table_xs_text {word-break: break-all; /*break long character chains on small screen*/}
 [class*='col-'] {width:100%; margin-bottom: 9px;}
 #bars .rChart {width:100%;}
 #pca .rChart {width:100%;}
@@ -2031,10 +2055,10 @@ table.result tbody td.table_xs_text {word-break: break-all; /*break long charact
 /*datatable - comparison tool */
 #table th:nth-child(2), #table td:nth-child(2) {display: none;}/*remove Go category column */
 #table th:nth-child(3), #table td:nth-child(3) {display: none;} /*remove Go ID column in the table */
-
 .xs-navtabs {display:block;}
 .xl-navtabs {display:none;}
 #fragment-download .pipeline_table thead th:first-child {width: 50%;} /*increase size first column download table*/
+H2 {margin: 0.43em 0;}/*reduce margin for titles on small device*/
 }
 
 /*quality control tab*/
