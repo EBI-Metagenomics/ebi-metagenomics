@@ -35,27 +35,34 @@ public class MemiTools {
         }
         Biome biome = biomeEntity.getBiome();
         if (biome != null) {
-            // Look up CSS class
-            int biomeId = biomeEntity.getBiome().getBiomeId();
-            if (MemiTools.biomeIconCSSMap.containsKey(biomeId)) {
-                biomeEntity.setBiomeIconCSSClass(MemiTools.biomeIconCSSMap.get(biomeId));
-            }
-            // no CSS class entry exists for the biome entry
-            // traverse up the tree for all ancestors
-            else {
-                List<Biome> ancestors = biomeDAO.getAllAncestorsInDescOrder(biomeEntity.getBiome());
-                for (Biome ancestor : ancestors) {
-                    if (MemiTools.biomeIconCSSMap.containsKey(ancestor.getBiomeId())) {
-                        biomeEntity.setBiomeIconCSSClass(MemiTools.biomeIconCSSMap.get(ancestor.getBiomeId()));
-                        break;
-                    }
-                }
-            }
+            biomeEntity.setBiomeIconCSSClass(getBiomeIconCSSClass(biome, biomeDAO));
         }
         if (biomeEntity.getBiomeIconCSSClass() == null) {
             // Set the default icon class
             biomeEntity.setBiomeIconCSSClass(MemiTools.biomeIconCSSMap.get(0));
         }
+    }
+
+    public static String getBiomeIconCSSClass(final Biome biome, final BiomeDAO biomeDAO) {
+        if (biomeIconCSSMap.isEmpty()) {
+            buildBiomeIconMap(biomeDAO);
+        }
+        // Look up CSS class
+        int biomeId = biome.getBiomeId();
+        if (MemiTools.biomeIconCSSMap.containsKey(biomeId)) {
+            return MemiTools.biomeIconCSSMap.get(biomeId);
+        }
+        // no CSS class entry exists for the biome entry
+        // traverse up the tree for all ancestors
+        else {
+            List<Biome> ancestors = biomeDAO.getAllAncestorsInDescOrder(biome);
+            for (Biome ancestor : ancestors) {
+                if (MemiTools.biomeIconCSSMap.containsKey(ancestor.getBiomeId())) {
+                    return MemiTools.biomeIconCSSMap.get(ancestor.getBiomeId());
+                }
+            }
+        }
+        return null;
     }
 
     public static void assignBiomeIconTitle(final BiomeEntity biomeEntity, final BiomeDAO biomeDAO) {
@@ -64,27 +71,34 @@ public class MemiTools {
         }
         Biome biome = biomeEntity.getBiome();
         if (biome != null) {
-            // Look up biome icon title
-            int biomeId = biomeEntity.getBiome().getBiomeId();
-            if (MemiTools.biomeIconTitleMap.containsKey(biomeId)) {
-                biomeEntity.setBiomeIconTitle(MemiTools.biomeIconTitleMap.get(biomeId));
-            }
-            // no title entry exists for the biome entry
-            // traverse up the tree for all ancestors
-            else {
-                List<Biome> ancestors = biomeDAO.getAllAncestorsInDescOrder(biomeEntity.getBiome());
-                for (Biome ancestor : ancestors) {
-                    if (MemiTools.biomeIconTitleMap.containsKey(ancestor.getBiomeId())) {
-                        biomeEntity.setBiomeIconTitle(MemiTools.biomeIconTitleMap.get(ancestor.getBiomeId()));
-                        break;
-                    }
-                }
-            }
+            biomeEntity.setBiomeIconTitle(getBiomeIconTitle(biome, biomeDAO));
         }
         if (biomeEntity.getBiomeIconTitle() == null) {
             // Set the default icon class
             biomeEntity.setBiomeIconTitle(MemiTools.biomeIconTitleMap.get(0));
         }
+    }
+
+    public static String getBiomeIconTitle(final Biome biome, final BiomeDAO biomeDAO) {
+        if (biomeIconTitleMap.isEmpty()) {
+            buildBiomeIconMap(biomeDAO);
+        }
+            // Look up biome icon title
+        int biomeId = biome.getBiomeId();
+        if (MemiTools.biomeIconTitleMap.containsKey(biomeId)) {
+            return MemiTools.biomeIconTitleMap.get(biomeId);
+        }
+        // no title entry exists for the biome entry
+        // traverse up the tree for all ancestors
+        else {
+            List<Biome> ancestors = biomeDAO.getAllAncestorsInDescOrder(biome);
+            for (Biome ancestor : ancestors) {
+                if (MemiTools.biomeIconTitleMap.containsKey(ancestor.getBiomeId())) {
+                    return MemiTools.biomeIconTitleMap.get(ancestor.getBiomeId());
+                }
+            }
+        }
+        return null;
     }
 
     private static void buildBiomeIconMap(final BiomeDAO biomeDAO) {
@@ -93,8 +107,11 @@ public class MemiTools {
         MemiTools.biomeIconTitleMap.put(0, "Undefined");
 
         // add 1:1 mapping biomes
-        List<Biome> biomes = biomeDAO.readByLineages("root:Environmental:Terrestrial:Soil", "root:Environmental:Air", "root:Engineered", "root:Environmental:Aquatic:Freshwater", "root:Host-associated:Human:Digestive system:Large intestine"
-                , "root:Environmental:Aquatic:Marine", "root:Engineered:Wastewater", "root:Host-associated:Human", "root:Host-associated");
+        List<Biome> biomes = biomeDAO.readByLineages("root:Environmental:Terrestrial:Soil", "root:Environmental:Air", "root:Engineered",
+                "root:Environmental:Aquatic:Freshwater", "root:Host-associated:Human:Digestive system:Large intestine",
+                "root:Environmental:Aquatic:Marine", "root:Engineered:Wastewater", "root:Host-associated:Human", "root:Host-associated",
+                "root:Host-associated:Plants", "root:Environmental:Terrestrial:Volcanic", "root:Environmental:Aquatic:Thermal springs",
+                "root:Environmental:Terrestrial:Rock-dwelling (subaerial biofilm)", "root:Environmental:Aquatic:Freshwater:Groundwater:Cave water");
         for (Biome biome : biomes) {
             String biomeName = biome.getBiomeName();
             if (biomeName.equalsIgnoreCase("Air")) {
@@ -124,6 +141,21 @@ public class MemiTools {
             } else if (biomeName.equalsIgnoreCase("Wastewater")) {
                 MemiTools.biomeIconCSSMap.put(biome.getBiomeId(), "wastewater_b");
                 MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Wastewater");
+            } else if (biomeName.equalsIgnoreCase("Plants")) {
+                MemiTools.biomeIconCSSMap.put(biome.getBiomeId(), "plant_host_b");
+                MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Plants");
+            } else if (biomeName.equalsIgnoreCase("Volcanic")) {
+                MemiTools.biomeIconCSSMap.put(biome.getBiomeId(), "vulcano_b");
+                MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Volcanic");
+            } else if (biomeName.equalsIgnoreCase("Thermal springs")) {
+                MemiTools.biomeIconCSSMap.put(biome.getBiomeId(), "hotspring_b");
+                MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Thermal springs");
+            } else if (biomeName.equalsIgnoreCase("Cave water")) {
+                MemiTools.biomeIconCSSMap.put(biome.getBiomeId(), "cave_b");
+                MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Cave water");
+            } else if (biomeName.equalsIgnoreCase("Rock-dwelling (subaerial biofilm)")) {
+                MemiTools.biomeIconCSSMap.put(biome.getBiomeId(), "cave_b");
+                MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Rock-dwelling (subaerial biofilm)");
             }
         }
         // add grassland biomes
@@ -209,4 +241,10 @@ public class MemiTools {
     public static List<String> getListOfChunkedResultFiles(File file) {
         return readLines(file);
     }
+    public static String formatLineage(String lineage) {
+        return lineage
+                .replaceAll("root:","")
+                .replaceAll(":"," - ");
+    }
+
 }

@@ -530,7 +530,7 @@
                             </a>
 
                         </div><!-- /list-biomes-l -->
-                        <a href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>"
+                        <a href="<c:url value="${baseURL}/biomes"/>"
                            title="View projects and filter by biome" class="all">View all biomes</a>
                     </div> <!-- /home_box -->
                 </div>

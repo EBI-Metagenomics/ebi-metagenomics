@@ -131,4 +131,5 @@ public class Biome {
         result = 31 * result + (lineage != null ? lineage.hashCode() : 0);
         return result;
     }
+
 }
