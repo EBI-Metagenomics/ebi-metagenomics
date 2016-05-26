@@ -139,10 +139,10 @@
                     <c:choose>
                         <c:when test="${model.pagination.existNextStartPos}">
                             <div class="pag-next"><a
-                                    href="<c:url value="${baseURL}/projects/doSearch?searchTerm=${model.filter.searchTerm}&studyVisibility=${model.filter.studyVisibility.upperCaseString}&biome=${model.filter.biome}&search=Search&startPosition=${model.pagination.nextStartPos}"/>"
+                                    href="<c:url value="${baseURL}/projects/doSearch?searchTerm=${model.filter.searchTerm}&studyVisibility=${model.filter.studyVisibility.upperCaseString}&biomeLineage=${model.filter.biomeLineage}&biome=${model.filter.biome}&search=Search&startPosition=${model.pagination.nextStartPos}"/>"
                                     id="csv" title="<c:out value="${nextId}"/>"></a></div>
                             <div class="pag-last"><a
-                                    href="<c:url value="${baseURL}/projects/doSearch?searchTerm=${model.filter.searchTerm}&studyVisibility=${model.filter.studyVisibility.upperCaseString}&biome=${model.filter.biome}&search=Search&startPosition=${model.pagination.lastLinkPosition}"/>"
+                                    href="<c:url value="${baseURL}/projects/doSearch?searchTerm=${model.filter.searchTerm}&studyVisibility=${model.filter.studyVisibility.upperCaseString}&biomeLineage=${model.filter.biomeLineage}&biome=${model.filter.biome}&search=Search&startPosition=${model.pagination.lastLinkPosition}"/>"
                                     id="csv" title="<c:out value="${lastId}"/>"></a></div>
                         </c:when>
                         <c:otherwise>

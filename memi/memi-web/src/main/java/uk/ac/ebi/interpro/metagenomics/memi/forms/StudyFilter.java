@@ -22,6 +22,8 @@ public class StudyFilter {
 
     private Biome biome;
 
+    private String biomeLineage;
+
     public StudyFilter() {
         //set default values
         this.studyVisibility = StudyVisibility.ALL_PUBLISHED_PROJECTS;
@@ -59,6 +61,14 @@ public class StudyFilter {
 
     public void setBiome(Biome biome) {
         this.biome = biome;
+    }
+
+    public String getBiomeLineage() {
+        return biomeLineage;
+    }
+
+    public void setBiomeLineage(String biomeLineage) {
+        this.biomeLineage = biomeLineage;
     }
 
     /**

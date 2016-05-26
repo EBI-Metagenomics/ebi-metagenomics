@@ -1,0 +1,114 @@
+1. Open SQLDeveloper
+2. Open menu > Tools > Database Export
+3. In the 'Source/Destination' dialog
+    a) Select database connection e.g. EMGDEV or EMGPRO
+    b) Unselect 'Export DDL', leave export data default options
+    c) Specified export file
+    d) Click next
+4. In the 'Types to Export' dialog
+    a) Unselect Views and Materialized Views
+5. In the 'Specify data' dialog
+    a) Click 'Lookup' button
+    b) Only select the following tables:
+        ANALYSIS_JOB
+        ANALYSIS_STATUS
+        BIOME_HIERARCHY_TREE
+        EXPERIMENT_TYPE
+        GSC_CV_CV
+        PIPELINE_RELEASE
+        PIPELINE_RELEASE_TOOL
+        PIPELINE_TOOL
+        PUBLICATION
+        SAMPLE
+        SAMPLE_ANN
+        SAMPLE_PUBLICATION
+        STUDY
+        STUDY_PUBLICATION
+        VARIABLE_NAMES
+    c) Edit and remove the following table columns:
+        Study:
+            Remove column STUDY_LINKOUT (deprecated)
+            Remove column SUBMITTER_ID (deprecated)
+            Remove column STUDY_TYPE (deprecated)
+
+        SAMPLE:
+            -- Remove column DTYPE (deprecated)
+            -- Remove column HOST_SEX (deprecated)
+            -- Remove column SAMPLE_CLASSIFICATION (deprecated)
+            -- Remove column MISC (never used)
+            -- Remove column PHENOTYPE (deprecated)
+            -- Remove column LAT_LON (deprecated)
+            -- Remove column SUBMITTER_ID (deprecated)
+
+        ANALYSIS_JOB:
+            -- Remove column experiment_type (deprecated)
+    d) Click next
+    e) In the 'Export summary' dialog click the Finish button
+6. From the exported file you can use the insert statement from the following tables straight away:
+
+    ANALYSIS_STATUS
+    BIOME_HIERARCHY_TREE
+    EXPERIMENT_TYPE
+    PIPELINE_TOOL
+    PIPELINE_RELEASE_TOOL
+    GSC_CV_CV
+
+7. For the other tables email and ask Conor to give you an PostgreSQL data export dump which will contain columns of data type CLOB as well
+
+    a)
+    From this data export dump use the insert statements for the following tables:
+
+        publication
+        variable_names
+        pipeline_release
+        study_publication
+        study
+
+    ... and find and replace ,E' by ,'
+    ... and find and replace (E' by ('
+    ... also find and replace "INSERT INTO publication" by "INSERT INTO PUBLICATION" (simply upper case table name)
+    ... also find and replace "INSERT INTO variable_names" by "INSERT INTO VARIABLE_NAMES" (simply upper case table name)
+    ... also find and replace "INSERT INTO pipeline_release" by "INSERT INTO PIPELINE_RELEASE" (simply upper case table name)
+    ... also find and replace "INSERT INTO study_publication" by "INSERT INTO STUDY_PUBLICATION"
+    ... also find and replace "INSERT INTO study" by "INSERT INTO STUDY"
+    ... also find and replace "study_study_id,publications_pub_id" by "study_id,pub_id"
+
+    b) For the following tables create individual SQL scripts
+
+        SAMPLE, SAMPLE_PUBLICATION (1 script)
+        SAMPLE_ANN (1 script)
+        ANALYSIS_JOB (1 script)
+
+
+        ... and find and replace ,E' by ,'
+        ... and find and replace (E' by ('
+        ... also find and replace "sample_sample_id,publications_pub_id" by "sample_id,pub_id"
+        ... also find and replace "INSERT INTO sample_publication" by "INSERT INTO SAMPLE_PUBLICATION"
+        ... also find and replace "INSERT INTO sample" by "INSERT INTO SAMPLE"
+        ... also find and replace "INSERT INTO analysis_job" by "INSERT INTO ANALYSIS_JOB"
+        ... also find and replace "INSERT INTO sample_ann" by "INSERT INTO SAMPLE_ANN"
+
+
+
+
+8. Put all insert statements for the following tables into 1 SQL script (in order)
+
+    ANALYSIS_STATUS
+    EXPERIMENT_TYPE
+    BIOME_HIERARCHY_TREE
+    PIPELINE_RELEASE
+    PIPELINE_TOOL
+    PIPELINE_RELEASE_TOOL
+    PUBLICATION
+    VARIABLE_NAMES
+    GSC_CV_CV
+    STUDY
+    STUDY_PUBLICATION
+
+9. Run the statements as follow:
+
+    a) Open terminal
+    b) Login to mysql: mysql -u? -p? -h? -P?
+    c) In the mysql shell call:
+        mysql> source <script-name>.sql
+

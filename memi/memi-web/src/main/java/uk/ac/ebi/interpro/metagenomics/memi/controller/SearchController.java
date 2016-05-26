@@ -4,9 +4,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.core.tools.EBISearchTool;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm;
@@ -30,7 +30,7 @@ public class SearchController extends AbstractController implements IController 
 
     public static final String VIEW_NAME = "search";
 
-    public static final String VIEW_SEARCH = "doSampleSearch";
+    public static final String VIEW_SEARCH = "doEbiSearch";
 
     public EBISearchTool ebiSearchTool;
 
@@ -66,11 +66,10 @@ public class SearchController extends AbstractController implements IController 
         );
     }
 
-    @RequestMapping(value = "/" + SearchController.VIEW_SEARCH)
-    public ModelAndView doSampleSearch(@Valid @ModelAttribute(EBISearchForm.MODEL_ATTR_NAME) final EBISearchForm ebiSearchForm,
-                                       BindingResult result,
-                                       ModelMap model) {
-        log.info("Requesting doSampleSearch of " + this.getClass() + "...");
+    @RequestMapping(value = "/" + SearchController.VIEW_SEARCH, method = RequestMethod.POST)
+    public ModelAndView doEbiSearch(@Valid @ModelAttribute(EBISearchForm.MODEL_ATTR_NAME) final EBISearchForm ebiSearchForm,
+                                    ModelMap model) {
+        log.info("Requesting doEbiSearch of " + this.getClass() + "...");
 
         final EBISampleSearchResults sampleSearchResults = ebiSearchTool.searchSamples(ebiSearchForm);
         return buildModelAndView(
@@ -90,6 +89,8 @@ public class SearchController extends AbstractController implements IController 
                         );
                         final ViewModel searchModel = builder.getModel();
                         searchModel.changeToHighlightedClass(ViewModel.TAB_CLASS_SEARCH_VIEW);
+//                        Is this not set in the abstract class
+//                        model.addAttribute(EBISearchForm.MODEL_ATTR_NAME, ebiSearchForm);
                         model.addAttribute(ViewModel.MODEL_ATTR_NAME, searchModel);
                     }
                 }

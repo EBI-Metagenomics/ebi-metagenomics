@@ -39,7 +39,7 @@ public class SampleAnnotationDAOImpl implements SampleAnnotationDAO {
     @Transactional(readOnly = true)
     public Collection<EmgSampleAnnotation> getSampleAnnotations(Long sampleId) {
         log.info("Querying sample annotations from sample: " + sampleId + "...");
-        final String oracleSql = "select vn.var_name, sa.var_val_cv, sa.var_val_ucv,sa.units from EMG.sample_ann sa join EMG.variable_names vn on (sa.var_id=vn.var_id) where sa.sample_id=?";
+        final String oracleSql = "select vn.var_name, sa.var_val_cv, sa.var_val_ucv,sa.units from SAMPLE_ANN sa join VARIABLE_NAMES vn on (sa.var_id=vn.var_id) where sa.sample_id=?";
         List<EmgSampleAnnotation> result = new ArrayList<EmgSampleAnnotation>();
         try {
 //            List<Map<String, Object>> rows = this.jdbcTemplate.queryForList("select var_name, var_val_cv, var_val_ucv, units from sample_ann where sample_id=?", new Long[]{sampleId});

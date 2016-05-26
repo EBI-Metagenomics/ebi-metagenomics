@@ -11,11 +11,14 @@ import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.GenericDAOImpl;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Biome;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Biome;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.User;
 
 import java.util.Collection;
 import java.util.List;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 
 /**
  * Represents the implementation class of {@link uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.AnalysisJobDAO}.
@@ -25,6 +28,7 @@ import java.util.List;
  */
 @Repository
 public class BiomeDAOImpl extends GenericDAOImpl<Biome, Long> implements BiomeDAO {
+    private final static Log log = LogFactory.getLog(BiomeDAOImpl.class);
 
     public BiomeDAOImpl() {
     }
@@ -74,6 +78,22 @@ public class BiomeDAOImpl extends GenericDAOImpl<Biome, Long> implements BiomeDA
             return criteria.list();
         } catch (HibernateException e) {
             throw new HibernateException("Couldn't retrieve list of biomes using the greater/less than clause!", e);
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public List<Object[]> countProjects(){
+        try {
+            Criteria criteria = getSession().createCriteria(Study.class)
+                    .add(Restrictions.eq("isPublic", 1))
+                    .setProjection( Projections.projectionList()
+                            .add(Projections.rowCount())
+                            .add(Projections.groupProperty("biome"),"bm"))
+                    .addOrder(Order.asc("bm"));
+//            criteria.addOrder( Order.asc("bm.lineage") );
+            return criteria.list();
+        } catch (HibernateException e) {
+            throw new HibernateException("Couldn't count the biomes ", e);
         }
     }
 

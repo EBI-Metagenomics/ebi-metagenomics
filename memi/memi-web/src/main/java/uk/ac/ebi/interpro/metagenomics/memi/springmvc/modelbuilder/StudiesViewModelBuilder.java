@@ -131,12 +131,18 @@ public class StudiesViewModelBuilder extends AbstractBiomeViewModelBuilder<Studi
      */
     private List<Criterion> buildFilterCriteria(final StudyFilter filter, final String submissionAccountId) {
         String searchText = filter.getSearchTerm();
+        String biomeLineage = filter.getBiomeLineage();
         Study.StudyStatus studyStatus = filter.getStudyStatus();
 
         List<Criterion> crits = new ArrayList<Criterion>();
         //add search term criterion
         if (searchText != null && searchText.trim().length() > 0) {
             crits.add(Restrictions.or(Restrictions.ilike("studyId", searchText, MatchMode.ANYWHERE), Restrictions.ilike("studyName", searchText, MatchMode.ANYWHERE)));
+        }
+        if (biomeLineage != null && biomeLineage.trim().length() > 0) {
+//            List<Integer> biomeIds = new ArrayList<Integer>();
+//            biomeIds.addAll(super.getBiomeIdsByLineage(biomeDAO, biomeLineage));
+            crits.add(Restrictions.eq("biome.biomeId", biomeDAO.readByLineage(biomeLineage).getBiomeId()));
         }
         //add study status criterion
         if (studyStatus != null) {
@@ -200,7 +206,9 @@ public class StudiesViewModelBuilder extends AbstractBiomeViewModelBuilder<Studi
                 biomeIds.removeAll(biomeIdsForHumanHost);
             }
 
-            crits.add(Restrictions.in("biome.biomeId", biomeIds));
+            if (!biomeIds.isEmpty()) {
+                crits.add(Restrictions.in("biome.biomeId", biomeIds));
+            }
         }
         //add is public and submitter identifier criteria
         if (submissionAccountId != null) {
