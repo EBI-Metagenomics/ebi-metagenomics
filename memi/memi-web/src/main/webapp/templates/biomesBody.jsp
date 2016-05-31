@@ -45,7 +45,8 @@
                     "oLanguage": {
                         "sSearch": "Filter:"
                     },
-                    "lengthMenu": [[25, 50, 100, -1], [25, 50, 100, "All"]]
+                    "lengthMenu": [[25, 50, 100, -1], [25, 50, 100, "All"]],
+                    "order": [[ 2, "desc" ]]
                 });
 
                 $("#list-biomes_filter input").addClass("filter_sp");
