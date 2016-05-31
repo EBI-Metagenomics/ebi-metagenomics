@@ -25,7 +25,7 @@
                         </td>
                         <td>
                             <a href="projects/doSearch?searchTerm=&biomeLineage=${row['biome'].lineage}&search=Search">${row['biome'].biomeName}</a><br/>
-                            ${row['formattedLineage']}.
+                            ${row['formattedLineage']}
                         </td>
                         <td>
                             <a href="projects/doSearch?searchTerm=&biomeLineage=${row['biome'].lineage}&search=Search">${row['numProjects']}</a>
