@@ -20,7 +20,7 @@
             <fieldset>
                 <div class="result_row">
 
-                    <label for="text">Text:</label>
+                    <label for="text" class="study_search">Text:</label>
                         <%-- Autocompletion temporarily disabled since it will not scale well with this current implementaion.
           Need to get the autocomplete text from the database before this feature is activated! --%>
                         <%--<form:input id="autocomplete" path="searchTerm"/><br/>--%>
@@ -29,7 +29,7 @@
                 </div>
 
                 <div class="result_row">
-                    <label for="biome">Biomes:</label>
+                    <label for="biome" class="study_search">Biomes:</label>
                      <span>
                       <form:select id="biomeId" path="biome">
                           <form:option value="ALL" label="All"></form:option>
@@ -54,10 +54,16 @@
                       </form:select>
                      </span>
                 </div>
-
+                <c:if test="${not empty model.filter.biomeLineage}">
+                    <div class="result_row">
+                        <label for="biome" class="study_search">Biome Lineage:</label>
+                        <div class="lineage">${model.filter.formattedBiomeLineage}</div>
+                        <form:hidden path="biomeLineage" id="biomeLineage" value="${model.filter.biomeLineage}" />
+                    </div>
+                </c:if>
                 <c:if test="${not empty model.submitter}">
                     <div class="result_row">
-                        <label for="privacy">Privacy:</label>
+                        <label for="privacy" class="study_search">Privacy:</label>
                      <span>
                       <form:select id="studyVisibility" path="studyVisibility">
                           <form:options items="${model.studyVisibilities}"/>

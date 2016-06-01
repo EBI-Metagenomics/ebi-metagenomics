@@ -1,5 +1,6 @@
 package uk.ac.ebi.interpro.metagenomics.memi.forms;
 
+import uk.ac.ebi.interpro.metagenomics.memi.core.tools.MemiTools;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 
 /**
@@ -65,6 +66,10 @@ public class StudyFilter {
 
     public String getBiomeLineage() {
         return biomeLineage;
+    }
+
+    public String getFormattedBiomeLineage() {
+        return MemiTools.formatLineage(biomeLineage);
     }
 
     public void setBiomeLineage(String biomeLineage) {
