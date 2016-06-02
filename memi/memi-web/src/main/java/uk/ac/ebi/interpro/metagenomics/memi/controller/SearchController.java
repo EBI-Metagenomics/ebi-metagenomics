@@ -4,9 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.core.tools.EBISearchTool;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm;
@@ -31,6 +29,8 @@ public class SearchController extends AbstractController implements IController 
     public static final String VIEW_NAME = "search";
 
     public static final String VIEW_SEARCH = "doEbiSearch";
+    public static final String VIEW_AJAX = "doAjaxSearch";
+
 
     public EBISearchTool ebiSearchTool;
 
@@ -70,6 +70,7 @@ public class SearchController extends AbstractController implements IController 
     public ModelAndView doEbiSearch(@Valid @ModelAttribute(EBISearchForm.MODEL_ATTR_NAME) final EBISearchForm ebiSearchForm,
                                     ModelMap model) {
         log.info("Requesting doEbiSearch of " + this.getClass() + "...");
+        log.info("Search for " + ebiSearchForm.getSearchText());
 
         final EBISampleSearchResults sampleSearchResults = ebiSearchTool.searchSamples(ebiSearchForm);
         return buildModelAndView(
@@ -95,6 +96,12 @@ public class SearchController extends AbstractController implements IController 
                     }
                 }
         );
+    }
+
+    @RequestMapping(value = "/" + SearchController.VIEW_AJAX, method = RequestMethod.POST)
+    public @ResponseBody String doAjaxSearch(@RequestBody EBISearchForm ebiSearchForm) {
+        log.info("Requesting doAjaxSearch of " + this.getClass() + "...");
+        return "worked";
     }
 
     /**

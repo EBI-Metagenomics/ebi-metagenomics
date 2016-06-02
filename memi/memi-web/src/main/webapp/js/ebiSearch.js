@@ -9,6 +9,26 @@ var compileAndSendForm = function() {
 
     var searchForm = document.getElementById("local-search");
     if (searchForm != null) {
+
+    } else {
+        console.log("This document should contain 'local-search'");
+    }
+
+    var onSearchPage = document.getElementById("onSearchPage");
+    if (onSearchPage != null) {
+        console.log("OnSearchPage");
+        var httpReq = new XMLHttpRequest();
+        var url = "doAjaxSearch";
+        httpReq.open("POST", url);
+        httpReq.send(searchForm);
+
+        console.log("sent form");
+    } else {
+        console.log("Not OnSearchPage");
+        searchForm.submit();
+    }
+
+    /*
         var facetDiv = document.getElementById("facets");
         if (facetDiv != null) {
             var facetInputs = facetDiv.querySelectorAll("input");
@@ -29,10 +49,8 @@ var compileAndSendForm = function() {
                 searchForm.appendChild(clonedInput);
             }
         }
-        searchForm.submit();
-    } else {
-        console.log("This document should contain 'local-search'");
-    }
+    */
+
 
 };
 
