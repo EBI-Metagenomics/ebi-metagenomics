@@ -99,7 +99,7 @@ public class SearchController extends AbstractController implements IController 
     }
 
     @RequestMapping(value = "/" + SearchController.VIEW_AJAX, method = RequestMethod.POST)
-    public @ResponseBody String doAjaxSearch(@RequestBody EBISearchForm ebiSearchForm) {
+    public @ResponseBody String doAjaxSearch(@RequestBody String ebiSearchForm) {
         log.info("Requesting doAjaxSearch of " + this.getClass() + "...");
         return "worked";
     }

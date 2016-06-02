@@ -7,6 +7,8 @@ var HIDDEN_CLASS = "this_hide";
 var compileAndSendForm = function() {
     console.log("Compiling and sending form");
 
+    var submitForm = true;
+
     var searchForm = document.getElementById("local-search");
     if (searchForm != null) {
 
@@ -20,14 +22,19 @@ var compileAndSendForm = function() {
         var httpReq = new XMLHttpRequest();
         var url = "doAjaxSearch";
         httpReq.open("POST", url);
-        httpReq.send(searchForm);
-
+        httpReq.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        httpReq.onreadystatechange = function() {
+            console.log("Got response " + httpReq.status);
+        };
+        httpReq.send(JSON.stringify(searchForm));
+        submitForm = false;
         console.log("sent form");
     } else {
         console.log("Not OnSearchPage");
         searchForm.submit();
     }
 
+    return submitForm;
     /*
         var facetDiv = document.getElementById("facets");
         if (facetDiv != null) {
@@ -89,7 +96,7 @@ if (searchForm != null) {
             }
         }
         console.log("Submitting");
-        compileAndSendForm();
+        return compileAndSendForm();
     });
 } else {
     console.log("This document should contain 'local-search'");
@@ -105,7 +112,7 @@ if (checkboxes != null) {
     for (var i = 0; i < checkboxes.length; i++) {
         checkboxes[i].addEventListener("change", function (event) {
             resetPage();
-            compileAndSendForm();
+            return compileAndSendForm();
         });
     }
 }
@@ -129,7 +136,7 @@ var changePage = function (forward) {
         console.log("Failed to find element 'currentPage'");
     }
     var searchForm = document.getElementById("local-search");
-    compileAndSendForm();
+    return compileAndSendForm();
 };
 
 var nextPageElement = document.getElementById("nextPage");
