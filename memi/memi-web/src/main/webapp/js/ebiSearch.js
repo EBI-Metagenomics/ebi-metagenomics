@@ -4,10 +4,8 @@
 
 var HIDDEN_CLASS = "this_hide";
 
-var compileAndSendForm = function() {
+var compileAndSendForm = function(submitEvent) {
     console.log("Compiling and sending form");
-
-    var submitForm = true;
 
     var searchForm = document.getElementById("local-search");
     if (searchForm != null) {
@@ -19,22 +17,28 @@ var compileAndSendForm = function() {
     var onSearchPage = document.getElementById("onSearchPage");
     if (onSearchPage != null) {
         console.log("OnSearchPage");
+        if (submitEvent != null) {
+            submitEvent.preventDefault();
+        }
         var httpReq = new XMLHttpRequest();
         var url = "doAjaxSearch";
         httpReq.open("POST", url);
         httpReq.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        httpReq.onreadystatechange = function() {
-            console.log("Got response " + httpReq.status);
+        httpReq.onreadystatechange = function(event) {
+            if (httpReq.readyState == XMLHttpRequest.DONE) {
+                var readyState = httpReq.readyState;
+                var response = httpReq.response;
+            } else if (httpReq.readyState == XMLHttpRequest.ERROR) {
+
+            }
+
         };
         httpReq.send(JSON.stringify(searchForm));
-        submitForm = false;
-        console.log("sent form");
     } else {
         console.log("Not OnSearchPage");
         searchForm.submit();
     }
 
-    return submitForm;
     /*
         var facetDiv = document.getElementById("facets");
         if (facetDiv != null) {
@@ -84,7 +88,7 @@ if (hiddenPaginationDiv != null && paginationDiv != null) {
 var searchForm = document.getElementById("local-search");
 if (searchForm != null) {
     console.log("searchForm - attaching onsubmit listener");
-    searchForm.addEventListener("submit", function () {
+    searchForm.addEventListener("submit", function (event) {
         var searchElement = document.getElementById("local-searchbox");
         var previousSearchElement = document.getElementById("previousSearch");
         if (searchElement != null && previousSearchElement != null) {
@@ -95,8 +99,8 @@ if (searchForm != null) {
                 unsetFacets();
             }
         }
-        console.log("Submitting");
-        return compileAndSendForm();
+        console.log("Submitting compileAndSendForm()");
+        compileAndSendForm(event);
     });
 } else {
     console.log("This document should contain 'local-search'");
@@ -112,7 +116,8 @@ if (checkboxes != null) {
     for (var i = 0; i < checkboxes.length; i++) {
         checkboxes[i].addEventListener("change", function (event) {
             resetPage();
-            return compileAndSendForm();
+            console.log("checkbox compileAndSendForm()")
+            compileAndSendForm();
         });
     }
 }
@@ -136,7 +141,8 @@ var changePage = function (forward) {
         console.log("Failed to find element 'currentPage'");
     }
     var searchForm = document.getElementById("local-search");
-    return compileAndSendForm();
+    console.log("changepage compileAndSendForm()")
+    compileAndSendForm();
 };
 
 var nextPageElement = document.getElementById("nextPage");
