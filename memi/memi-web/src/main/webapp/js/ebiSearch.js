@@ -16,7 +16,7 @@ var compileAndSendForm = function(submitEvent) {
 
     var onSearchPage = document.getElementById("onSearchPage");
     if (onSearchPage != null) {
-        console.log("OnSearchPage");
+        console.log("Submitting ajax search");
         if (submitEvent != null) {
             submitEvent.preventDefault();
         }
@@ -24,18 +24,24 @@ var compileAndSendForm = function(submitEvent) {
         var url = "doAjaxSearch";
         httpReq.open("POST", url);
         httpReq.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+        //handle response
         httpReq.onreadystatechange = function(event) {
             if (httpReq.readyState == XMLHttpRequest.DONE) {
                 var readyState = httpReq.readyState;
                 var response = httpReq.response;
-            } else if (httpReq.readyState == XMLHttpRequest.ERROR) {
-
             }
-
         };
+
+        //error handling
+        httpReq.addEventListener("error", function(event){
+            console.log("Ajax error");
+            searchForm.submit();
+        });
+
         httpReq.send(JSON.stringify(searchForm));
     } else {
-        console.log("Not OnSearchPage");
+        console.log("Submitting standard search");
         searchForm.submit();
     }
 
@@ -99,7 +105,6 @@ if (searchForm != null) {
                 unsetFacets();
             }
         }
-        console.log("Submitting compileAndSendForm()");
         compileAndSendForm(event);
     });
 } else {
@@ -116,7 +121,6 @@ if (checkboxes != null) {
     for (var i = 0; i < checkboxes.length; i++) {
         checkboxes[i].addEventListener("change", function (event) {
             resetPage();
-            console.log("checkbox compileAndSendForm()")
             compileAndSendForm();
         });
     }
@@ -140,8 +144,6 @@ var changePage = function (forward) {
     } else {
         console.log("Failed to find element 'currentPage'");
     }
-    var searchForm = document.getElementById("local-search");
-    console.log("changepage compileAndSendForm()")
     compileAndSendForm();
 };
 
