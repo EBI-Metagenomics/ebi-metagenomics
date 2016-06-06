@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by maq on 06/05/2016.
  */
-public class EBIProjectSearchEntry {
+public class EBIProjectSearchEntry implements EBISearchEntry {
 
     String identifier;
     URL url;
