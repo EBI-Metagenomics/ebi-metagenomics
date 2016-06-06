@@ -21,25 +21,41 @@ public class EBISearchTool {
 
     public static final String ES_SEARCH_WEBSERVICE_URL = "http://wwwdev.ebi.ac.uk/ebisearch/ws/rest";
 
-    public final static String SAMPLES_DOMAIN = "metagenomics_samples";
-    public final static String PROJECTS_DOMAIN = "metagenomics_projects";
-    public final static String OLD_SAMPLE_DOMAIN = "metagenomics";
+    public enum Domain {
+        SAMPLE_DOMAIN(
+                "Samples",
+                "metagenomics_samples",
+                "id,displayName,description,biome,experiment_type,metagenomics_project,taxonomy"),
+        PROJECT_DOMAIN(
+                "Projects",
+                "metagenomics_projects",
+                "id,displayName,description,biome,experiment_type,metagenomics_sample,taxonomy"),
+        RUN_DOMAIN(
+                "Runs",
+                "metagenomics_runs",
+                "id,name,organism,experiment_type,go,interpro,metagenomics_sample"),
+        OLD_SAMPLE_DOMAIN(
+                "Samples",
+                "metagenomics",
+                "id,displayName,description,biome,experiment_type,taxonomy,project");
+
+        private String displayName;
+        private String domain;
+        private String fields;
+        Domain(String displayName, String domain, String fields) {
+            this.displayName = displayName;
+            this.domain = domain;
+            this.fields = fields;
+        }
+        public String getDisplayName() { return displayName; }
+        public String getDomain() { return domain; }
+        public String getQuery() { return "domain_source:" + domain; }
+        public String getFields() { return  fields; }
+    }
+
+    public final static Domain DEFAULT_DOMAIN = Domain.SAMPLE_DOMAIN;
 
     private final static String FACET = "facet";
-
-    private final static String DESCRIPTION = "description";
-    private final static String PROJECT = "METAGENOMICS_PROJECT";
-    private final static String SAMPLE = "METAGENOMICS_SAMPLE";
-    private final static String OLD_PROJECT = "project";
-    private final static String NAME = "name";
-    private final static String CENTRE = "centre_name";
-    private final static String TAXONOMY = "TAXONOMY";
-    private final static String BIOME = "biome";
-    private final static String EXPERIMENT = "experiment_type";
-
-    private final static String GET_ALL_SAMPLES_QUERY = "domain_source:" + SAMPLES_DOMAIN;
-    private final static String GET_ALL_PROJECTS_QUERY = "domain_source:" + PROJECTS_DOMAIN;
-    private final static String GET_ALL_OLD_SAMPLES_QUERY = "domain_source:" + OLD_SAMPLE_DOMAIN;
 
 
     EBeyeClient client;
@@ -51,24 +67,62 @@ public class EBISearchTool {
     }
 
     /**
+     * Searches for data indexed by the EBI-Search
+     * @param searchForm
+     * @return
+     */
+    public EBISearchResults search(EBISearchForm searchForm) {
+        log.debug("search");
+        Domain selectedDomain = getSelectedDomain(searchForm);
+        if (selectedDomain == null) {
+            selectedDomain = DEFAULT_DOMAIN;
+        }
+        EBISearchResults results = new EBISearchResults();
+
+        switch (selectedDomain) {
+            case PROJECT_DOMAIN:
+                //searchProjects(searchForm, selectedDomain)
+                break;
+            case SAMPLE_DOMAIN:
+                results.setSearchType(EBISearchResults.SearchType.SAMPLE);
+                searchSamples(searchForm, selectedDomain, results);
+                break;
+            case RUN_DOMAIN:
+                break;
+        }
+
+        return results;
+    }
+
+    Domain getSelectedDomain(EBISearchForm searchForm) {
+        log.debug("getSelectedDomain");
+        Domain selectedDomain = null;
+
+        List<String> facets = searchForm.getFacets();
+        if (facets != null) {
+
+        }
+
+        return selectedDomain;
+    }
+
+    /**
      * Searches the sample data stored via the EBI-Search client
      * @param searchForm
      * @return EBISampleSearchResults object containing the search hits and a set of facets
      */
-    public EBISampleSearchResults searchSamples(EBISearchForm searchForm) {
+    public void searchSamples(EBISearchForm searchForm, Domain domain, EBISearchResults results) {
         log.debug("searchSamples");
-        String resultFields = "id,name,description,"+ OLD_PROJECT + ","+ PROJECT + "," + TAXONOMY + ",biome,experiment_type";
-
-        EBISampleSearchResults results = new EBISampleSearchResults();
+        String resultFields = domain.getFields();
 
         try {
-            WsResult searchResults = runSearch(searchForm, SAMPLES_DOMAIN, GET_ALL_SAMPLES_QUERY, resultFields);
+            WsResult searchResults = runSearch(searchForm, domain.getDomain(), domain.getQuery(), resultFields);
 
             Integer hits = searchResults.getHitCount();
             if (hits != null) {
                 int maxPage = (int) Math.ceil(new Double(hits) / new Double(searchForm.getResultsPerPage()));
                 searchForm.setMaxPage(maxPage);
-                List<EBISampleSearchEntry> entryList = results.getEntries();
+                List<EBISampleSearchEntry> entryList = results.getSamples();
                 for (WsEntry searchEntry : searchResults.getEntries().getEntry()) {
                     EBISampleSearchEntry entry = sampleResultToEntry(searchEntry);
                     entryList.add(entry);
@@ -89,18 +143,17 @@ public class EBISearchTool {
             results.setNumberOfHits(0);
             searchForm.setMaxPage(0);
         }
-
-        return results;
     }
 
+    /*
     public EBIProjectSearchResults searchProjects(EBISearchForm searchForm) {
         log.debug("searchProjects");
-        String resultFields = "id,name,description,"+ OLD_PROJECT + ","+ PROJECT + "," + TAXONOMY + ",biome,experiment_type";
+        String resultFields = ;
 
         EBIProjectSearchResults results = new EBIProjectSearchResults();
 
         try {
-            WsResult searchResults = runSearch(searchForm, PROJECTS_DOMAIN, GET_ALL_PROJECTS_QUERY, resultFields);
+            WsResult searchResults = runSearch(searchForm, Domain.PROJECT_DOMAIN.domainName, GET_ALL_PROJECTS_QUERY, resultFields);
 
             Integer hits = searchResults.getHitCount();
 
@@ -132,6 +185,7 @@ public class EBISearchTool {
 
         return results;
     }
+    */
 
     /**
      * Runs the search using SearchForm on the supplied domain query, with the supplied fields
@@ -199,6 +253,7 @@ public class EBISearchTool {
         return facetQuery.toString();
     }
 
+    /*
     EBIProjectSearchEntry projectResultToEntry(WsEntry searchEntry) {
         EBIProjectSearchEntry entry = new EBIProjectSearchEntry();
         entry.setIdentifier(searchEntry.getId());
@@ -223,6 +278,7 @@ public class EBISearchTool {
         }
         return entry;
     }
+    */
 
     EBISampleSearchEntry sampleResultToEntry(WsEntry searchEntry) {
         EBISampleSearchEntry entry = new EBISampleSearchEntry();
@@ -233,19 +289,19 @@ public class EBISearchTool {
             e.printStackTrace();
         }
         for (WsField field : searchEntry.getFields().getField()) {
-            if (DESCRIPTION.equals(field.getId()) && field.getValues().getValue().size() > 0) {
+            if (EBISampleSearchEntry.DESCRIPTION.equals(field.getId()) && field.getValues().getValue().size() > 0) {
                 entry.setDescription(field.getValues().getValue().get(0));
-            } else if (NAME.equals(field.getId()) && field.getValues().getValue().size() > 0) {
+            } else if (EBISampleSearchEntry.NAME.equals(field.getId()) && field.getValues().getValue().size() > 0) {
                 entry.setName(field.getValues().getValue().get(0));
-            } else if (PROJECT.equals(field.getId()) && field.getValues().getValue().size() > 0) {
+            } else if (EBISampleSearchEntry.PROJECT.equals(field.getId()) && field.getValues().getValue().size() > 0) {
                 entry.setProject(field.getValues().getValue().get(0));
-            } else if (OLD_PROJECT.equals(field.getId()) && field.getValues().getValue().size() > 0) {
+            } else if (EBISampleSearchEntry.OLD_PROJECT.equals(field.getId()) && field.getValues().getValue().size() > 0) {
                 entry.setProject(field.getValues().getValue().get(0));
-            } else if (BIOME.equals(field.getId())) {
+            } else if (EBISampleSearchEntry.BIOME.equals(field.getId())) {
                 entry.setBiomes(field.getValues().getValue());
-            } else if (EXPERIMENT.equals(field.getId()) && field.getValues().getValue().size() > 0) {
+            } else if (EBISampleSearchEntry.EXPERIMENT.equals(field.getId()) && field.getValues().getValue().size() > 0) {
                 entry.setExperimentTypes(field.getValues().getValue());
-            } else if (TAXONOMY.equals(field.getId()) && field.getValues().getValue().size() > 0) {
+            } else if (EBISampleSearchEntry.TAXONOMY.equals(field.getId()) && field.getValues().getValue().size() > 0) {
                 entry.setTaxonomy(field.getValues().getValue().get(0));
             }
         }
