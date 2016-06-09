@@ -19,13 +19,15 @@ public class EBISearchTool {
 
     private final static Log log = LogFactory.getLog(EBISearchTool.class);
 
+    private final static String DOMAIN_SOURCE_FACET = "domain_source";
+
     public static final String ES_SEARCH_WEBSERVICE_URL = "http://wwwdev.ebi.ac.uk/ebisearch/ws/rest";
 
     public enum Domain {
         SAMPLE_DOMAIN(
                 "Samples",
                 "metagenomics_samples",
-                "id,displayName,description,biome,experiment_type,metagenomics_project,taxonomy"),
+                "id,name,description,biome,experiment_type,METAGENOMICS_PROJECT,TAXONOMY"),
         PROJECT_DOMAIN(
                 "Projects",
                 "metagenomics_projects",
@@ -114,33 +116,35 @@ public class EBISearchTool {
     public void searchSamples(EBISearchForm searchForm, Domain domain, EBISearchResults results) {
         log.debug("searchSamples");
         String resultFields = domain.getFields();
+        EBISampleSearchResults sampleResults = results.getSamples();
 
         try {
             WsResult searchResults = runSearch(searchForm, domain.getDomain(), domain.getQuery(), resultFields);
 
             Integer hits = searchResults.getHitCount();
+
             if (hits != null) {
                 int maxPage = (int) Math.ceil(new Double(hits) / new Double(searchForm.getResultsPerPage()));
                 searchForm.setMaxPage(maxPage);
-                List<EBISampleSearchEntry> entryList = results.getSamples();
+                List<EBISampleSearchEntry> entryList = sampleResults.getEntries();
                 for (WsEntry searchEntry : searchResults.getEntries().getEntry()) {
                     EBISampleSearchEntry entry = sampleResultToEntry(searchEntry);
                     entryList.add(entry);
                 }
 
-                List<EBISearchFacet> facets = results.getFacets();
+                List<EBISearchFacet> facets = sampleResults.getFacets();
                 for (WsFacet searchFacet : searchResults.getFacets().getFacet()) {
                     EBISearchFacet facet = resultToFacet(searchFacet);
-                    if (facet != null)
+                    if (facet != null && !facet.getIdentifier().equals(DOMAIN_SOURCE_FACET))
                         facets.add(facet);
                 }
-                results.setNumberOfHits(hits);
+                sampleResults.setNumberOfHits(hits);
             } else {
-                results.setNumberOfHits(0);
+                sampleResults.setNumberOfHits(0);
                 searchForm.setMaxPage(0);
             }
         } catch (BadRequestException e) {
-            results.setNumberOfHits(0);
+            sampleResults.setNumberOfHits(0);
             searchForm.setMaxPage(0);
         }
     }

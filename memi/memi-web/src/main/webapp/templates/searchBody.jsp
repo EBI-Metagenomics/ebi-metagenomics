@@ -31,20 +31,20 @@
         <div class="grid_19 omega">
             <div class="table-margin-r">
                 <c:choose>
-                    <c:when test="${not empty model.ebiSampleSearchResults}">
+                    <c:when test="${not empty model.searchResults}">
                         <c:choose>
-                            <c:when test="${fn:length(model.ebiSampleSearchResults.entries) <= 0}">
+                            <c:when test="${fn:length(model.searchResults.samples.entries) <= 0}">
                                 <h3>No results found</h3>
                                 <hr>
                                 <p><small class="text-muted">Powered by <a href="http://www.ebi.ac.uk/ebisearch/" class="ext" target="_blank">EBI Search</a></small></p>
                             </c:when>
                             <c:otherwise>
-                                <h3>Showing ${fn:length(model.ebiSampleSearchResults.entries)} out
-                                    of ${model.ebiSampleSearchResults.numberOfHits} results</h3>
+                                <h3>Showing ${fn:length(model.searchResults.samples.entries)} out
+                                    of ${model.searchResults.samples.numberOfHits} results</h3>
                             </c:otherwise>
                         </c:choose>
                         <c:choose>
-                            <c:when test="${fn:length(model.ebiSampleSearchResults.entries) > 0}">
+                            <c:when test="${fn:length(model.searchResults.samples.entries) > 0}">
                                 <table border="1" class="table-light">
                                     <thead>
                                     <tr>
@@ -55,7 +55,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <c:forEach var="result" items="${model.ebiSampleSearchResults.entries}">
+                                    <c:forEach var="result" items="${model.searchResults.samples.entries}">
                                         <tr>
                                             <td class="col_sm xs_hide">
                                                 <a href="${pageContext.request.contextPath}/projects/${result.project}">
