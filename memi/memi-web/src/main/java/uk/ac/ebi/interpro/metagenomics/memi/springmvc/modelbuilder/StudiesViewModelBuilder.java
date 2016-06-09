@@ -2,9 +2,7 @@ package uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.*;
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.core.tools.MemiTools;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.BiomeDAO;
@@ -142,7 +140,15 @@ public class StudiesViewModelBuilder extends AbstractBiomeViewModelBuilder<Studi
         if (biomeLineage != null && biomeLineage.trim().length() > 0) {
 //            List<Integer> biomeIds = new ArrayList<Integer>();
 //            biomeIds.addAll(super.getBiomeIdsByLineage(biomeDAO, biomeLineage));
-            crits.add(Restrictions.eq("biome.biomeId", biomeDAO.readByLineage(biomeLineage).getBiomeId()));
+            uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Biome biome = biomeDAO.readByLineage(biomeLineage);
+            if(filter.isIncludingChildren()) {
+                DetachedCriteria biomeIds = DetachedCriteria.forClass(uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Biome.class)
+                        .setProjection(Projections.projectionList()
+                                .add(Projections.property("biomeId"), "biomeId"))
+                        .add(Restrictions.between("left",  biome.getLeft(), biome.getRight()));
+                crits.add(Subqueries.propertyIn("biome", biomeIds));
+            }else
+                crits.add(Restrictions.eq("biome.biomeId", biome.getBiomeId()));
         }
         //add study status criterion
         if (studyStatus != null) {

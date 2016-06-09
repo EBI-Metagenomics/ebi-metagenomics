@@ -23,4 +23,7 @@ public interface BiomeDAO {
     public List<Biome> getAllAncestorsInDescOrder(Biome biome);
 
     public List<Object[]> countProjects();
+
+    public Long countProjectsIncludingChildren(Biome biome);
+
 }

@@ -13,6 +13,7 @@
                     <th>Biome</th>
                     <th class="biome" abbr="Biome" scope="col">Lineage</th>
                     <th class="number-projects" abbr="num_proj" scope="col">Number of Projects</th>
+                    <th class="number-projects" abbr="num_proj" scope="col">Including Children</th>
                 </tr>
             </thead>
             <tbody>
@@ -30,6 +31,9 @@
                         <td>
                             <a href="projects/doSearch?searchTerm=&biomeLineage=${row['biome'].lineage}&search=Search">${row['numProjects']}</a>
                         </td>
+                        <td>
+                            <a href="projects/doSearch?searchTerm=&biomeLineage=${row['biome'].lineage}&includeChildren=true&search=Search">${row['numProjectsIncludingChildren']}</a>
+                        </td>
                     </tr>
 
                 </c:forEach>
@@ -40,7 +44,7 @@
             $(document).ready(function() {
                 $('#list-biomes').DataTable({
                   "columnDefs": [ //add style to the different columns as direct css doesn't work
-                        {className: "table-align-center table-sm-width", "targets": [0, 2]},
+                        {className: "table-align-center table-sm-width", "targets": [0, 2, 3]},
                     ],
                     "oLanguage": {
                         "sSearch": "Filter:"

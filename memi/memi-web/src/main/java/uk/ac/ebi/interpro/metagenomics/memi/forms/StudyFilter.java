@@ -25,6 +25,8 @@ public class StudyFilter {
 
     private String biomeLineage;
 
+    private boolean includeChildren;
+
     public StudyFilter() {
         //set default values
         this.studyVisibility = StudyVisibility.ALL_PUBLISHED_PROJECTS;
@@ -74,6 +76,13 @@ public class StudyFilter {
 
     public void setBiomeLineage(String biomeLineage) {
         this.biomeLineage = biomeLineage;
+    }
+
+    public void setIncludeChildren(boolean includeChildren) {
+        this.includeChildren = includeChildren;
+    }
+    public boolean isIncludingChildren() {
+        return includeChildren;
     }
 
     /**

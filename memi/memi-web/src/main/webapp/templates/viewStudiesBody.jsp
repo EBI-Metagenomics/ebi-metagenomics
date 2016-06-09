@@ -28,6 +28,7 @@
                     <form:errors path="searchTerm" cssClass="error"/>
                 </div>
 
+                <c:if test="${empty model.filter.biomeLineage}">
                 <div class="result_row">
                     <label for="biome" class="study_search">Biomes:</label>
                      <span>
@@ -54,6 +55,7 @@
                       </form:select>
                      </span>
                 </div>
+                </c:if>
                 <c:if test="${not empty model.filter.biomeLineage}">
                     <div class="result_row">
                         <label for="biome" class="study_search">Biome Lineage:</label>
