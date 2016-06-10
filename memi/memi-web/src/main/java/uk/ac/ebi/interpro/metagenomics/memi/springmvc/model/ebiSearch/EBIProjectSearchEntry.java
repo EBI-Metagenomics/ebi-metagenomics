@@ -9,6 +9,13 @@ import java.util.List;
  */
 public class EBIProjectSearchEntry implements EBISearchEntry {
 
+    public static final String DESCRIPTION = "description";
+    public static final String NAME = "name";
+    public static final String BIOME_NAME = "biome_name";
+    public static final String CENTRE_NAME = "centre_name";
+    public static final String SAMPLE = "METAGENOMICS_SAMPLE";
+
+
     String identifier;
     URL url;
     String name;

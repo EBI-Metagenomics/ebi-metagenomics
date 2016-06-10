@@ -19,15 +19,15 @@ public class EBISampleSearchEntry implements EBISearchEntry{
     List<String> experimentTypes = new ArrayList<String>();
 
     public final static String OLD_NAME = "displayName";
+    public final static String OLD_PROJECT = "project";
 
     public final static String NAME = "name";
     public final static String DESCRIPTION = "description";
-    public final static String CENTRE = "centre_name";
     public final static String TAXONOMY = "TAXONOMY";
     public final static String BIOME = "biome";
     public final static String EXPERIMENT = "experiment_type";
     public final static String PROJECT = "METAGENOMICS_PROJECT";
-    public final static String OLD_PROJECT = "project";
+
 
     public String getIdentifier() {
         return identifier;

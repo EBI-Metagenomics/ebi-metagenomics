@@ -10,7 +10,7 @@ public class EBIRunSearchResults {
 
     int numberOfHits;
 
-    List<EBISampleSearchEntry> entries = new ArrayList<EBISampleSearchEntry>();
+    List<EBIRunSearchEntry> entries = new ArrayList<EBIRunSearchEntry>();
 
     List<EBISearchFacet> facets = new ArrayList<EBISearchFacet>();
 
@@ -22,11 +22,11 @@ public class EBIRunSearchResults {
         this.numberOfHits = numberOfHits;
     }
 
-    public List<EBISampleSearchEntry> getEntries() {
+    public List<EBIRunSearchEntry> getEntries() {
         return entries;
     }
 
-    public void setEntries(List<EBISampleSearchEntry> entries) {
+    public void setEntries(List<EBIRunSearchEntry> entries) {
         this.entries = entries;
     }
 

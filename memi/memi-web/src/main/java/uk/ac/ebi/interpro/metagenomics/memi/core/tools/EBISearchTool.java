@@ -31,11 +31,11 @@ public class EBISearchTool {
         PROJECT_DOMAIN(
                 "Projects",
                 "metagenomics_projects",
-                "id,displayName,description,biome,experiment_type,metagenomics_sample,taxonomy"),
+                "id,name,description,biome_name,METAGENOMICS_SAMPLE"),
         RUN_DOMAIN(
                 "Runs",
-                "metagenomics_runs",
-                "id,name,organism,experiment_type,go,interpro,metagenomics_sample"),
+                "metagenomics_run",
+                "id,experiment_type,pipeline_version,METAGENOMICS_SAMPLE,METAGENOMICS_PROJECT"),
         OLD_SAMPLE_DOMAIN(
                 "Samples",
                 "metagenomics",
@@ -78,18 +78,22 @@ public class EBISearchTool {
         Domain selectedDomain = getSelectedDomain(searchForm);
         if (selectedDomain == null) {
             selectedDomain = DEFAULT_DOMAIN;
+            selectedDomain = Domain.RUN_DOMAIN;
         }
         EBISearchResults results = new EBISearchResults();
 
         switch (selectedDomain) {
             case PROJECT_DOMAIN:
-                //searchProjects(searchForm, selectedDomain)
+                results.setSearchType(EBISearchResults.SearchType.PROJECT);
+                searchProjects(searchForm, selectedDomain, results);
                 break;
             case SAMPLE_DOMAIN:
                 results.setSearchType(EBISearchResults.SearchType.SAMPLE);
                 searchSamples(searchForm, selectedDomain, results);
                 break;
             case RUN_DOMAIN:
+                results.setSearchType(EBISearchResults.SearchType.RUN);
+                searchRuns(searchForm, selectedDomain, results);
                 break;
         }
 
@@ -115,11 +119,10 @@ public class EBISearchTool {
      */
     public void searchSamples(EBISearchForm searchForm, Domain domain, EBISearchResults results) {
         log.debug("searchSamples");
-        String resultFields = domain.getFields();
         EBISampleSearchResults sampleResults = results.getSamples();
 
         try {
-            WsResult searchResults = runSearch(searchForm, domain.getDomain(), domain.getQuery(), resultFields);
+            WsResult searchResults = runSearch(searchForm, domain.getDomain(), domain.getQuery(), domain.getFields());
 
             Integer hits = searchResults.getHitCount();
 
@@ -135,7 +138,7 @@ public class EBISearchTool {
                 List<EBISearchFacet> facets = sampleResults.getFacets();
                 for (WsFacet searchFacet : searchResults.getFacets().getFacet()) {
                     EBISearchFacet facet = resultToFacet(searchFacet);
-                    if (facet != null && !facet.getIdentifier().equals(DOMAIN_SOURCE_FACET))
+                    if (facet != null)
                         facets.add(facet);
                 }
                 sampleResults.setNumberOfHits(hits);
@@ -149,47 +152,81 @@ public class EBISearchTool {
         }
     }
 
-    /*
-    public EBIProjectSearchResults searchProjects(EBISearchForm searchForm) {
-        log.debug("searchProjects");
-        String resultFields = ;
 
-        EBIProjectSearchResults results = new EBIProjectSearchResults();
+    public void searchProjects(EBISearchForm searchForm, Domain domain, EBISearchResults results) {
+        log.debug("searchProjects");
+
+        EBIProjectSearchResults projectResults = results.getProjects();
 
         try {
-            WsResult searchResults = runSearch(searchForm, Domain.PROJECT_DOMAIN.domainName, GET_ALL_PROJECTS_QUERY, resultFields);
+            WsResult searchResults = runSearch(searchForm, domain.getDomain(), domain.getQuery(), domain.getFields());
 
             Integer hits = searchResults.getHitCount();
 
             if (hits != null) {
                 int maxPage = (int) Math.ceil(new Double(hits) / new Double(searchForm.getResultsPerPage()));
                 searchForm.setMaxPage(maxPage);
-                List<EBIProjectSearchEntry> entryList = results.getEntries();
+                List<EBIProjectSearchEntry> entryList = projectResults.getEntries();
                 for (WsEntry searchEntry : searchResults.getEntries().getEntry()) {
                     EBIProjectSearchEntry entry = projectResultToEntry(searchEntry);
                     entryList.add(entry);
                 }
 
-                List<EBISearchFacet> facets = results.getFacets();
+                List<EBISearchFacet> facets = projectResults.getFacets();
                 for (WsFacet searchFacet : searchResults.getFacets().getFacet()) {
                     EBISearchFacet facet = resultToFacet(searchFacet);
                     if (facet != null)
                         facets.add(facet);
                 }
-                results.setNumberOfHits(hits);
+                projectResults.setNumberOfHits(hits);
             } else {
-                results.setNumberOfHits(0);
+                projectResults.setNumberOfHits(0);
                 searchForm.setMaxPage(0);
             }
 
         } catch (BadRequestException e) {
-            results.setNumberOfHits(0);
+            projectResults.setNumberOfHits(0);
             searchForm.setMaxPage(0);
         }
-
-        return results;
     }
-    */
+
+    public void searchRuns(EBISearchForm searchForm, Domain domain, EBISearchResults results) {
+        log.debug("searchRuns");
+
+        EBIRunSearchResults runResults = results.getRuns();
+
+        try {
+            String fields = domain.getFields();
+            WsResult searchResults = runSearch(searchForm, domain.getDomain(), domain.getQuery(), fields);
+
+            Integer hits = searchResults.getHitCount();
+
+            if (hits != null) {
+                int maxPage = (int) Math.ceil(new Double(hits) / new Double(searchForm.getResultsPerPage()));
+                searchForm.setMaxPage(maxPage);
+                List<EBIRunSearchEntry> entryList = runResults.getEntries();
+                for (WsEntry searchEntry : searchResults.getEntries().getEntry()) {
+                    EBIRunSearchEntry entry = runResultToEntry(searchEntry);
+                    entryList.add(entry);
+                }
+
+                List<EBISearchFacet> facets = runResults.getFacets();
+                for (WsFacet searchFacet : searchResults.getFacets().getFacet()) {
+                    EBISearchFacet facet = resultToFacet(searchFacet);
+                    if (facet != null)
+                        facets.add(facet);
+                }
+                runResults.setNumberOfHits(hits);
+            } else {
+                runResults.setNumberOfHits(0);
+                searchForm.setMaxPage(0);
+            }
+
+        } catch (BadRequestException e) {
+            runResults.setNumberOfHits(0);
+            searchForm.setMaxPage(0);
+        }
+    }
 
     /**
      * Runs the search using SearchForm on the supplied domain query, with the supplied fields
@@ -257,7 +294,6 @@ public class EBISearchTool {
         return facetQuery.toString();
     }
 
-    /*
     EBIProjectSearchEntry projectResultToEntry(WsEntry searchEntry) {
         EBIProjectSearchEntry entry = new EBIProjectSearchEntry();
         entry.setIdentifier(searchEntry.getId());
@@ -268,21 +304,21 @@ public class EBISearchTool {
         }
 
         for (WsField field : searchEntry.getFields().getField()) {
-            if (DESCRIPTION.equals(field.getId()) && field.getValues().getValue().size() > 0) {
+            if (EBIProjectSearchEntry.DESCRIPTION.equals(field.getId()) && field.getValues().getValue().size() > 0) {
                 entry.setDescription(field.getValues().getValue().get(0));
-            } else if (NAME.equals(field.getId()) && field.getValues().getValue().size() > 0) {
+            } else if (EBIProjectSearchEntry.NAME.equals(field.getId()) && field.getValues().getValue().size() > 0) {
                 entry.setName(field.getValues().getValue().get(0));
-            } else if (CENTRE.equals(field.getId()) && field.getValues().getValue().size() > 0) {
+            } else if (EBIProjectSearchEntry.CENTRE_NAME.equals(field.getId()) && field.getValues().getValue().size() > 0) {
                 entry.setCentreName(field.getValues().getValue().get(0));
-            } else if (BIOME.equals(field.getId())) {
+            } else if (EBIProjectSearchEntry.BIOME_NAME.equals(field.getId())) {
                 entry.setBiomes(field.getValues().getValue());
-            } else if (SAMPLE.equals(field.getId()) && field.getValues().getValue().size() > 0) {
+            } else if (EBIProjectSearchEntry.SAMPLE.equals(field.getId()) && field.getValues().getValue().size() > 0) {
                 entry.setSamples(field.getValues().getValue());
             }
         }
         return entry;
     }
-    */
+
 
     EBISampleSearchEntry sampleResultToEntry(WsEntry searchEntry) {
         EBISampleSearchEntry entry = new EBISampleSearchEntry();
@@ -299,31 +335,59 @@ public class EBISearchTool {
                 entry.setName(field.getValues().getValue().get(0));
             } else if (EBISampleSearchEntry.PROJECT.equals(field.getId()) && field.getValues().getValue().size() > 0) {
                 entry.setProject(field.getValues().getValue().get(0));
-            } else if (EBISampleSearchEntry.OLD_PROJECT.equals(field.getId()) && field.getValues().getValue().size() > 0) {
-                entry.setProject(field.getValues().getValue().get(0));
-            } else if (EBISampleSearchEntry.BIOME.equals(field.getId())) {
+            }  else if (EBISampleSearchEntry.BIOME.equals(field.getId())) {
                 entry.setBiomes(field.getValues().getValue());
             } else if (EBISampleSearchEntry.EXPERIMENT.equals(field.getId()) && field.getValues().getValue().size() > 0) {
                 entry.setExperimentTypes(field.getValues().getValue());
             } else if (EBISampleSearchEntry.TAXONOMY.equals(field.getId()) && field.getValues().getValue().size() > 0) {
                 entry.setTaxonomy(field.getValues().getValue().get(0));
+            } else if (EBISampleSearchEntry.OLD_NAME.equals(field.getId()) && field.getValues().getValue().size() > 0) {
+                entry.setName(field.getValues().getValue().get(0));
+            } else if (EBISampleSearchEntry.OLD_PROJECT.equals(field.getId()) && field.getValues().getValue().size() > 0) {
+                entry.setProject(field.getValues().getValue().get(0));
+            }
+        }
+        return entry;
+    }
+
+    EBIRunSearchEntry runResultToEntry(WsEntry searchEntry) {
+        EBIRunSearchEntry entry = new EBIRunSearchEntry();
+        entry.setIdentifier(searchEntry.getId());
+        try {
+            entry.setUrl(new URL(searchEntry.getFieldURLs().getFieldURL().get(0).getValue()));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        for (WsField field : searchEntry.getFields().getField()) {
+            if (EBIRunSearchEntry.EXPERIMENT_TYPE.equals(field.getId()) && field.getValues().getValue().size() > 0) {
+                entry.setExperimentType(field.getValues().getValue().get(0));
+            } else if (EBIRunSearchEntry.PIPELINE_VERSION.equals(field.getId()) && field.getValues().getValue().size() > 0) {
+                entry.setPipelineVersion(field.getValues().getValue().get(0));
+            } else if (EBIRunSearchEntry.SAMPLE.equals(field.getId()) && field.getValues().getValue().size() > 0) {
+                entry.setSample(field.getValues().getValue().get(0));
+            } else if (EBIRunSearchEntry.PROJECT.equals(field.getId())) {
+                entry.setProject(field.getValues().getValue().get(0));
             }
         }
         return entry;
     }
 
     EBISearchFacet resultToFacet(WsFacet searchFacet) {
-        EBISearchFacet facet = new EBISearchFacet();
-        facet.setIdentifier(searchFacet.getId());
-        facet.setLabel(searchFacet.getLabel());
-        List<EBISearchFacetValue> values = facet.getValues();
-        for (WsFacetValue searchValue : searchFacet.getFacetValues().getFacetValue()) {
-            EBISearchFacetValue value = new EBISearchFacetValue();
-            value.setType(facet.getIdentifier());
-            value.setCount(searchValue.getCount());
-            value.setLabel(searchValue.getLabel());
-            value.setValue(searchValue.getValue());
-            values.add(value);
+        EBISearchFacet facet = null;
+        if (!DOMAIN_SOURCE_FACET.equals(searchFacet.getId())) {
+            facet = new EBISearchFacet();
+            facet.setIdentifier(searchFacet.getId());
+            facet.setLabel(searchFacet.getLabel());
+            List<EBISearchFacetValue> values = facet.getValues();
+            for (WsFacetValue searchValue : searchFacet.getFacetValues().getFacetValue()) {
+                EBISearchFacetValue value = new EBISearchFacetValue();
+                value.setType(facet.getIdentifier());
+                value.setCount(searchValue.getCount());
+                value.setLabel(searchValue.getLabel());
+                value.setValue(searchValue.getValue());
+                values.add(value);
+            }
         }
         return facet;
     }
