@@ -59,7 +59,11 @@
                 <c:if test="${not empty model.filter.biomeLineage}">
                     <div class="result_row">
                         <label for="biome" class="study_search">Biome Lineage:</label>
-                        <div class="lineage">${model.filter.formattedBiomeLineage}</div>
+                        <div class="lineage">${model.filter.formattedBiomeLineage}
+                            <c:if test="${ not model.filter.includingChildren}">*<br/>
+                                *<span class="list_warn">Excluding children</span>
+                            </c:if>
+                        </div>
                         <form:hidden path="biomeLineage" id="biomeLineage" value="${model.filter.biomeLineage}" />
                     </div>
                 </c:if>

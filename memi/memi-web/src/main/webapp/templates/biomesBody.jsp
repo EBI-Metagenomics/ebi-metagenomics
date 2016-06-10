@@ -12,8 +12,8 @@
                 <tr>
                     <th>Biome</th>
                     <th class="biome" abbr="Biome" scope="col">Lineage</th>
-                    <th class="number-projects" abbr="num_proj" scope="col">Number of Projects</th>
-                    <th class="number-projects" abbr="num_proj" scope="col">Including Children</th>
+                    <th class="number-projects" abbr="num_proj" scope="col">Number of projects</th>
+                    <th class="number-projects" abbr="num_proj" scope="col">Projects including children</th>
                 </tr>
             </thead>
             <tbody>
