@@ -64,6 +64,7 @@
                                 *<span class="list_warn">Excluding children</span>
                             </c:if>
                         </div>
+                        <form:hidden path="includingChildren" id="includingChildren" value="${model.filter.includingChildren}" />
                         <form:hidden path="biomeLineage" id="biomeLineage" value="${model.filter.biomeLineage}" />
                     </div>
                 </c:if>
@@ -136,10 +137,10 @@
                         <c:when test="${model.pagination.existPreviousStartPos}">
 
                             <div class="pag-first"><a
-                                    href="<c:url value="${baseURL}/projects/doSearch?searchTerm=${model.filter.searchTerm}&studyVisibility=${model.filter.studyVisibility.upperCaseString}&biome=${model.filter.biome}&search=Search&startPosition=${model.pagination.start}"/>"
+                                    href="<c:url value="${baseURL}/projects/doSearch?searchTerm=${model.filter.searchTerm}&studyVisibility=${model.filter.studyVisibility.upperCaseString}&biomeLineage=${model.filter.biomeLineage}&includingChildren=${model.filter.includingChildren}&biome=${model.filter.biome}&search=Search&startPosition=${model.pagination.start}"/>"
                                     id="csv" title="<c:out value="${firstId}"/>"></a></div>
                             <div class="pag-prev"><a
-                                    href="<c:url value="${baseURL}/projects/doSearch?searchTerm=${model.filter.searchTerm}&studyVisibility=${model.filter.studyVisibility.upperCaseString}&biome=${model.filter.biome}&search=Search&startPosition=${model.pagination.previousStartPos}"/>"
+                                    href="<c:url value="${baseURL}/projects/doSearch?searchTerm=${model.filter.searchTerm}&studyVisibility=${model.filter.studyVisibility.upperCaseString}&biomeLineage=${model.filter.biomeLineage}&includingChildren=${model.filter.includingChildren}&biome=${model.filter.biome}&search=Search&startPosition=${model.pagination.previousStartPos}"/>"
                                     id="csv" title="<c:out value="${prevId}"/>"></a></div>
                         </c:when>
                         <c:otherwise>
@@ -151,10 +152,10 @@
                     <c:choose>
                         <c:when test="${model.pagination.existNextStartPos}">
                             <div class="pag-next"><a
-                                    href="<c:url value="${baseURL}/projects/doSearch?searchTerm=${model.filter.searchTerm}&studyVisibility=${model.filter.studyVisibility.upperCaseString}&biomeLineage=${model.filter.biomeLineage}&biome=${model.filter.biome}&search=Search&startPosition=${model.pagination.nextStartPos}"/>"
+                                    href="<c:url value="${baseURL}/projects/doSearch?searchTerm=${model.filter.searchTerm}&studyVisibility=${model.filter.studyVisibility.upperCaseString}&biomeLineage=${model.filter.biomeLineage}&includingChildren=${model.filter.includingChildren}&biome=${model.filter.biome}&search=Search&startPosition=${model.pagination.nextStartPos}"/>"
                                     id="csv" title="<c:out value="${nextId}"/>"></a></div>
                             <div class="pag-last"><a
-                                    href="<c:url value="${baseURL}/projects/doSearch?searchTerm=${model.filter.searchTerm}&studyVisibility=${model.filter.studyVisibility.upperCaseString}&biomeLineage=${model.filter.biomeLineage}&biome=${model.filter.biome}&search=Search&startPosition=${model.pagination.lastLinkPosition}"/>"
+                                    href="<c:url value="${baseURL}/projects/doSearch?searchTerm=${model.filter.searchTerm}&studyVisibility=${model.filter.studyVisibility.upperCaseString}&biomeLineage=${model.filter.biomeLineage}&includingChildren=${model.filter.includingChildren}&biome=${model.filter.biome}&search=Search&startPosition=${model.pagination.lastLinkPosition}"/>"
                                     id="csv" title="<c:out value="${lastId}"/>"></a></div>
                         </c:when>
                         <c:otherwise>

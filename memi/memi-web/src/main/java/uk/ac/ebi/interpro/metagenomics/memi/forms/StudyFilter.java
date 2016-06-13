@@ -25,7 +25,7 @@ public class StudyFilter {
 
     private String biomeLineage;
 
-    private boolean includeChildren;
+    private boolean includingChildren;
 
     public StudyFilter() {
         //set default values
@@ -77,12 +77,13 @@ public class StudyFilter {
     public void setBiomeLineage(String biomeLineage) {
         this.biomeLineage = biomeLineage;
     }
-
-    public void setIncludeChildren(boolean includeChildren) {
-        this.includeChildren = includeChildren;
-    }
+    
     public boolean isIncludingChildren() {
-        return includeChildren;
+        return includingChildren;
+    }
+
+    public void setIncludingChildren(boolean includingChildren) {
+        this.includingChildren = includingChildren;
     }
 
     /**

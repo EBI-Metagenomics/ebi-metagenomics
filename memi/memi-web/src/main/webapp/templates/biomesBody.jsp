@@ -32,7 +32,7 @@
                             <a href="projects/doSearch?searchTerm=&biomeLineage=${row['biome'].lineage}&search=Search">${row['numProjects']}</a>
                         </td>
                         <td>
-                            <a href="projects/doSearch?searchTerm=&biomeLineage=${row['biome'].lineage}&includeChildren=true&search=Search">${row['numProjectsIncludingChildren']}</a>
+                            <a href="projects/doSearch?searchTerm=&biomeLineage=${row['biome'].lineage}&includingChildren=true&search=Search">${row['numProjectsIncludingChildren']}</a>
                         </td>
                     </tr>
 

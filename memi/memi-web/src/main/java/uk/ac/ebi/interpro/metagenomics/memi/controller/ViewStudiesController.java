@@ -200,12 +200,12 @@ public class ViewStudiesController extends AbstractController implements IContro
     public ModelAndView doSearch(@ModelAttribute(StudyFilter.MODEL_ATTR_NAME) StudyFilter filter, ModelMap model,
                                  @RequestParam(required = false) final String searchTerm,
                                  @RequestParam(required = false) final String biomeLineage,
-                                 @RequestParam(required = false) final String includeChildren,
+                                 @RequestParam(required = false) final String includingChildren,
                                  @RequestParam(required = false) final StudyFilter.StudyVisibility studyVisibility,
                                  @RequestParam(required = false) final Study.StudyStatus studyStatus,
                                  @RequestParam(required = false, defaultValue = "0", value = "startPosition") final int startPosition) {
         log.info("Requesting doSearch (GET method)...");
-        processRequestParams(filter, searchTerm, studyVisibility, studyStatus, biomeLineage, (includeChildren!= null && includeChildren.equalsIgnoreCase("true")));
+        processRequestParams(filter, searchTerm, studyVisibility, studyStatus, biomeLineage, (includingChildren != null && includingChildren.equalsIgnoreCase("true")));
         populateModel(model, filter, startPosition, true);
         return buildModelAndView(
                 VIEW_NAME,
@@ -226,12 +226,12 @@ public class ViewStudiesController extends AbstractController implements IContro
         processRequestParams(filter,searchTerm, studyVisibility, studyStatus,"",false);
     }
     private void processRequestParams(StudyFilter filter, String searchTerm, StudyFilter.StudyVisibility studyVisibility,
-                                      Study.StudyStatus studyStatus, String biomeLineage, boolean includeChildren) {
+                                      Study.StudyStatus studyStatus, String biomeLineage, boolean includingChildren) {
         //Set filter parameters
         //Set parameter search term
         filter.setSearchTerm(searchTerm);
         filter.setBiomeLineage(biomeLineage);
-        filter.setIncludeChildren(includeChildren);
+        filter.setIncludingChildren(includingChildren);
 
         //Set parameter study status
         filter.setStudyStatus(studyStatus);
