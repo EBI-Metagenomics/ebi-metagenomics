@@ -66,8 +66,8 @@ public class Study implements SecureEntity, BiomeEntity {
     @ManyToMany
     @JoinTable(
             name = "STUDY_PUBLICATION",
-            joinColumns = {@JoinColumn(name = "PUB_ID")},
-            inverseJoinColumns = {@JoinColumn(name = "STUDY_ID")}
+            joinColumns = {@JoinColumn(name = "STUDY_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "PUB_ID")}
     )
     private Set<Publication> publications;
 
