@@ -417,7 +417,7 @@ table.dataTable.no-footer {border-bottom: 1px solid #D5D5D5;}
 .dataTables_wrapper .dataTables_filter {padding-right: 15px;}/*little extra to align filter to the table*/
 .dataTables_wrapper {position: relative;clear: both;*zoom: 1; zoom: 1;}
 .dataTables_wrapper .dataTables_length {float: left;}/*show X number of entries*/
-.dataTables_wrapper .dataTables_filter {float: right; text-align: right;}
+.dataTables_wrapper .dataTables_filter { text-align: right; } /*float: right;*/
 .dataTables_wrapper .dataTables_filter input { margin-left: 0.5em;}
 .dataTables_wrapper .dataTables_info {clear: both; float: left; padding-top: 0.755em;}/*showing X to X of X entries*/
 .dataTables_wrapper .dataTables_paginate {float: right; text-align: right; padding-top: 0.25em;}
