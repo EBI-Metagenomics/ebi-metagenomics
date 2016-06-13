@@ -5,6 +5,8 @@ import org.hibernate.HibernateException;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Subqueries;
 import org.hibernate.transform.Transformers;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -92,6 +94,31 @@ public class BiomeDAOImpl extends GenericDAOImpl<Biome, Long> implements BiomeDA
                     .addOrder(Order.asc("bm"));
 //            criteria.addOrder( Order.asc("bm.lineage") );
             return criteria.list();
+        } catch (HibernateException e) {
+            throw new HibernateException("Couldn't count the biomes ", e);
+        }
+    }
+    @Transactional(readOnly = true)
+    public Long countProjectsIncludingChildren(Biome biome){
+        try {
+            DetachedCriteria biomeIds = DetachedCriteria.forClass(Biome.class)
+                    .setProjection(Projections.projectionList()
+                            .add(Projections.property("biomeId"), "biomeId"))
+                    .add(Restrictions.between("left",  biome.getLeft(), biome.getRight()));
+//            List x = biomeIds.list();
+//            x.add(biome.getBiomeId());
+
+            Criteria criteria = getSession().createCriteria(Study.class,"s")
+                    .add(Restrictions.eq("isPublic", 1))
+                    .add(Subqueries.propertyIn("s.biome", biomeIds))
+                    .setProjection(Projections.rowCount());
+//            Object y = criteria.uniqueResult();
+
+            try {
+                return (Long) criteria.uniqueResult();
+            } catch (HibernateException e) {
+                throw new HibernateException("Cannot retrieve study count filtered by biomes!", e);
+            }
         } catch (HibernateException e) {
             throw new HibernateException("Couldn't count the biomes ", e);
         }

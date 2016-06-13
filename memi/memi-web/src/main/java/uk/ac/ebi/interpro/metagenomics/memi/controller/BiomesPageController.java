@@ -58,6 +58,7 @@ public class BiomesPageController extends AbstractController implements IControl
                                 HashMap b = new HashMap();
                                 b.put("biome", row[1]);
                                 b.put("numProjects", row[0]);
+                                b.put("numProjectsIncludingChildren", defaultViewModel.getBiomeDAO().countProjectsIncludingChildren((Biome)row[1])); //defaultViewModel.getBiomeDAO().countProjects(row[0])
                                 b.put("cssClass", MemiTools.getBiomeIconCSSClass((Biome)row[1], biomeDAO));
                                 b.put("iconTitle", MemiTools.getBiomeIconTitle((Biome)row[1], biomeDAO));
                                 b.put("formattedLineage", MemiTools.formatLineage(((Biome)row[1]).getLineage()));
