@@ -2,7 +2,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <div id="content-full">
-    <h2>All Biomes</h2>
+    <h2>Browse all biomes</h2>
 
 <c:choose>
     <c:when test="${not empty biome_counter}">

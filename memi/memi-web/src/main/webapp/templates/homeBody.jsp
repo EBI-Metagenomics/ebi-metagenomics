@@ -402,7 +402,7 @@
                             </c:forEach>
                         </div><!-- /list-biomes-l -->
                         <a href="<c:url value="${baseURL}/biomes"/>"
-                           title="View projects and filter by biome" class="all">View all biomes</a>
+                           title="View projects and filter by biome" class="all">Browse all biomes</a>
                     </div> <!-- /home_box -->
                 </div>
                 <!-- /list-biomes -->
