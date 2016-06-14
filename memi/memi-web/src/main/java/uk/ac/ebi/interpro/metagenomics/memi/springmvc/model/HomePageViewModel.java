@@ -5,6 +5,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.BiomeLogoModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +35,7 @@ public final class HomePageViewModel extends ViewModel {
     /**
      * Maps biomes with biome counts
      */
-    private Map<String, Long> biomeMap;
+    private List<BiomeLogoModel> biomeMap;
 
     private List<Sample> mySamples;
 
@@ -80,7 +81,7 @@ public final class HomePageViewModel extends ViewModel {
                              final List<Study> studies,
                              final int publicRunCount,
                              final int privateRunCount,
-                             final Map<String, Long> biomeCountMap,
+                             final List<BiomeLogoModel> biomeCountMap,
                              final Map<String, Long> experimentCountMap,
                              final Long numOfDataSets,
                              final Map<String, Long> studyToSampleCountMap,
@@ -198,11 +199,11 @@ public final class HomePageViewModel extends ViewModel {
         return privateRunCount;
     }
 
-    public Map<String, Long> getBiomeMap() {
+    public List<BiomeLogoModel> getBiomeMap() {
         return biomeMap;
     }
 
-    public void setBiomeMap(Map<String, Long> biomeMap) {
+    public void setBiomeMap(List<BiomeLogoModel> biomeMap) {
         this.biomeMap = biomeMap;
     }
 

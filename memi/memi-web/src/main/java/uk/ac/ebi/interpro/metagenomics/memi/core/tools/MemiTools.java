@@ -128,10 +128,10 @@ public class MemiTools {
                 MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Non-human host");
             } else if (biomeName.equalsIgnoreCase("Human")) {
                 MemiTools.biomeIconCSSMap.put(biome.getBiomeId(), "human_host_b");
-                MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Human");
+                MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Host-associated human");
             } else if (biomeName.equalsIgnoreCase("Large intestine")) {
                 MemiTools.biomeIconCSSMap.put(biome.getBiomeId(), "human_gut_b");
-                MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Human gut");
+                MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Human gut (Large intestine)");
             } else if (biomeName.equalsIgnoreCase("Marine")) {
                 MemiTools.biomeIconCSSMap.put(biome.getBiomeId(), "marine_b");
                 MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Marine");
@@ -143,7 +143,7 @@ public class MemiTools {
                 MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Wastewater");
             } else if (biomeName.equalsIgnoreCase("Plants")) {
                 MemiTools.biomeIconCSSMap.put(biome.getBiomeId(), "plant_host_b");
-                MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Plants");
+                MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Host-associated plant");
             } else if (biomeName.equalsIgnoreCase("Volcanic")) {
                 MemiTools.biomeIconCSSMap.put(biome.getBiomeId(), "vulcano_b");
                 MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Volcanic");
@@ -171,6 +171,11 @@ public class MemiTools {
             MemiTools.biomeIconCSSMap.put(biome.getBiomeId(), "forest_b");
             MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Forest soil");
         }
+        //add Host-associated mammals biome
+        Biome biome = biomeDAO.readByLineage("root:Host-associated:Mammals");
+        MemiTools.biomeIconCSSMap.put(biome.getBiomeId(), "non_human_host_b");
+        MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Host-associated mammals");
+
     }
 
 

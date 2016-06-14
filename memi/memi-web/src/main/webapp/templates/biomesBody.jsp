@@ -25,7 +25,7 @@
                                   title="${row['iconTitle']} biome"></span>
                         </td>
                         <td>
-                            <a href="projects/doSearch?searchTerm=&biomeLineage=${row['biome'].lineage}&search=Search">${row['biome'].biomeName}</a><br/>
+                            <a href="projects/doSearch?searchTerm=&biomeLineage=${row['biome'].lineage}&includingChildren=true&search=Search">${row['biome'].biomeName}</a><br/>
                             ${row['formattedLineage']}
                         </td>
                         <td>
