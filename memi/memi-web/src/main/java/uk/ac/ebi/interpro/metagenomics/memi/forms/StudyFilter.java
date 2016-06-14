@@ -1,5 +1,6 @@
 package uk.ac.ebi.interpro.metagenomics.memi.forms;
 
+import uk.ac.ebi.interpro.metagenomics.memi.core.tools.MemiTools;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 
 /**
@@ -21,6 +22,10 @@ public class StudyFilter {
     private StudyVisibility studyVisibility;
 
     private Biome biome;
+
+    private String biomeLineage;
+
+    private boolean includingChildren;
 
     public StudyFilter() {
         //set default values
@@ -59,6 +64,26 @@ public class StudyFilter {
 
     public void setBiome(Biome biome) {
         this.biome = biome;
+    }
+
+    public String getBiomeLineage() {
+        return biomeLineage;
+    }
+
+    public String getFormattedBiomeLineage() {
+        return MemiTools.formatLineage(biomeLineage);
+    }
+
+    public void setBiomeLineage(String biomeLineage) {
+        this.biomeLineage = biomeLineage;
+    }
+    
+    public boolean isIncludingChildren() {
+        return includingChildren;
+    }
+
+    public void setIncludingChildren(boolean includingChildren) {
+        this.includingChildren = includingChildren;
     }
 
     /**

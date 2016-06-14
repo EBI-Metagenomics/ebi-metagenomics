@@ -381,157 +381,28 @@
                         <h2>By selected biomes</h2>
 
                         <div class="grid_24">
-
-                            <a class="alpha anim"
-                               href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=SOIL"/>"
-                               title="View all <c:out value="${model.biomeMap['SOIL']}"/> soil projects">
-                                <div class="list-biomes-element">
-                                    <div class="stretchy">
-                                        <img class="spacer" alt="icon"
-                                             src="<c:url value="${baseURL}/img/backgrounds/bgd_transparent_1x1.png"/>">
-                                        <img class="sprite soil_b"
-                                             src="<c:url value="${baseURL}/img/ico_biome_sprite.png"/>">
+                            <c:forEach var="biome" items="${model.biomeMap}" varStatus="status">
+                                <c:set var="cssClass" value="anim"/>
+                                <c:if test="${status.last}">
+                                    <c:set var="cssClass" value="anim xs_hide"/>
+                                </c:if>
+                                <a class="${cssClass}"
+                                   href="<c:url value="${baseURL}/projects/doSearch?search=Search&includingChildren=true&biomeLineage=${biome.lineage}"/>"
+                                   title="View all <c:out value="${biome.numberOfProjects}"/> ${biome.label} projects">
+                                    <div class="list-biomes-element">
+                                        <div class="stretchy">
+                                            <img class="spacer" alt="icon"
+                                                 src="<c:url value="${baseURL}/img/backgrounds/bgd_transparent_1x1.png"/>">
+                                            <img class="sprite ${biome.css}"
+                                                 src="<c:url value="${baseURL}/img/ico_biome_sprite.png"/>">
+                                        </div>
+                                        <div class="biome_text">${biome.label} (<c:out value="${biome.numberOfProjects}"/>)</div>
                                     </div>
-                                    <div class="biome_text">Soil (<c:out value="${model.biomeMap['SOIL']}"/>)</div>
-                                </div>
-                            </a>
-
-                            <a class=" anim"
-                               href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=MARINE"/>"
-                               title="View all <c:out value="${model.biomeMap['MARINE']}"/> marine projects">
-                                <div class="list-biomes-element">
-                                    <div class="stretchy">
-                                        <img class="spacer" alt="icon"
-                                             src="<c:url value="${baseURL}/img/backgrounds/bgd_transparent_1x1.png"/>">
-                                        <img class="sprite marine_b" alt=""
-                                             src="<c:url value="${baseURL}/img/ico_biome_sprite.png"/>">
-                                    </div>
-                                    <div class="biome_text">Marine (<c:out value="${model.biomeMap['MARINE']}"/>)</div>
-                                </div>
-                            </a>
-
-                            <a class="anim"
-                               href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=FOREST_SOIL"/>"
-                               title="View all <c:out value="${model.biomeMap['FOREST_SOIL']}"/> forest projects">
-                                <div class="list-biomes-element">
-                                    <div class="stretchy">
-                                        <img class="spacer" alt="icon"
-                                             src="<c:url value="${baseURL}/img/backgrounds/bgd_transparent_1x1.png"/>">
-                                        <img class="sprite forest_b" alt=""
-                                             src="<c:url value="${baseURL}/img/ico_biome_sprite.png"/>">
-                                    </div>
-                                    <div class="biome_text">Forest (<c:out value="${model.biomeMap['FOREST_SOIL']}"/>)
-                                    </div>
-                                </div>
-                            </a>
-
-                            <a class="anim"
-                               href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=NON_HUMAN_HOST"/>"
-                               title="View all <c:out value="${model.biomeMap['NON_HUMAN_HOST&']}"/> non-human host-associated projects">
-                                <div class="list-biomes-element">
-                                    <div class="stretchy">
-                                        <img class="spacer" alt="icon"
-                                             src="<c:url value="${baseURL}/img/backgrounds/bgd_transparent_1x1.png"/>">
-                                        <img class="sprite non_human_host_b" alt=""
-                                             src="<c:url value="${baseURL}/img/ico_biome_sprite.png"/>">
-                                    </div>
-                                    <div class="biome_text">Non-human host (<c:out
-                                            value="${model.biomeMap['NON_HUMAN_HOST']}"/>)
-                                    </div>
-                                </div>
-                            </a>
-
-                            <a class="anim omega"
-                               href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=ENGINEERED"/>"
-                               title="View all <c:out value="${model.biomeMap['ENGINEERED']}"/> engineered projects">
-                                <div class="list-biomes-element">
-                                    <div class="stretchy">
-                                        <img class="spacer" alt="icon"
-                                             src="<c:url value="${baseURL}/img/backgrounds/bgd_transparent_1x1.png"/>">
-                                        <img class="sprite engineered_b" alt=""
-                                             src="<c:url value="${baseURL}/img/ico_biome_sprite.png"/>">
-                                    </div>
-                                    <div class="biome_text">Engineered (<c:out value="${model.biomeMap['ENGINEERED']}"/>)</div>
-                                </div>
-                            </a>
-
-                            <a class="anim alpha"
-                               href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=FRESHWATER"/>"
-                               title="View all <c:out value="${model.biomeMap['FRESHWATER']}"/> freshwater projects">
-                                <div class="list-biomes-element">
-                                    <div class="stretchy">
-                                        <img class="spacer" alt="icon"
-                                             src="<c:url value="${baseURL}/img/backgrounds/bgd_transparent_1x1.png"/>">
-                                        <img class="sprite freshwater_b"
-                                             src="<c:url value="${baseURL}/img/ico_biome_sprite.png"/>">
-                                    </div>
-                                    <div class="biome_text">Freshwater (<c:out value="${model.biomeMap['FRESHWATER']}"/>)</div>
-                                </div>
-                            </a>
-
-                            <a class="anim"
-                               href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=GRASSLAND"/>"
-                               title="View all <c:out value="${model.biomeMap['GRASSLAND']}"/> grassland projects">
-                                <div class="list-biomes-element">
-                                    <div class="stretchy">
-                                        <img class="spacer" alt="icon"
-                                             src="<c:url value="${baseURL}/img/backgrounds/bgd_transparent_1x1.png"/>">
-                                        <img class="sprite grassland_b"
-                                             src="<c:url value="${baseURL}/img/ico_biome_sprite.png"/>">
-                                    </div>
-                                    <div class="biome_text">Grassland (<c:out
-                                            value="${model.biomeMap['GRASSLAND']}"/>)
-                                    </div>
-                                </div>
-                            </a>
-
-                            <a class="anim"
-                               href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=HUMAN_GUT"/>"
-                               title="View all <c:out value="${model.biomeMap['HUMAN_GUT']}"/> human gut projects">
-                                <div class="list-biomes-element">
-                                    <div class="stretchy">
-                                        <img class="spacer" alt="icon"
-                                             src="<c:url value="${baseURL}/img/backgrounds/bgd_transparent_1x1.png"/>">
-                                        <img class="sprite human_gut_b"
-                                             src="<c:url value="${baseURL}/img/ico_biome_sprite.png"/>">
-                                    </div>
-                                    <div class="biome_text">Human gut (<c:out
-                                            value="${model.biomeMap['HUMAN_GUT']}"/>)
-                                    </div>
-                                </div>
-                            </a>
-
-                            <a class="anim xs_hide"
-                               href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=AIR"/>"
-                               title="View all <c:out value="${model.biomeMap['AIR']}"/> air projects">
-                                <div class="list-biomes-element">
-                                    <div class="stretchy">
-                                        <img class="spacer" alt="icon"
-                                             src="<c:url value="${baseURL}/img/backgrounds/bgd_transparent_1x1.png"/>">
-                                        <img class="sprite air_b"
-                                             src="<c:url value="${baseURL}/img/ico_biome_sprite.png"/>">
-                                    </div>
-                                    <div class="biome_text">Air (<c:out value="${model.biomeMap['AIR']}"/>)</div>
-                                </div>
-                            </a>
-
-                            <a class="anim omega"
-                               href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=WASTEWATER"/>"
-                               title="View all <c:out value="${model.biomeMap['WASTEWATER']}"/> wastewater projects">
-                                <div class="list-biomes-element">
-                                    <div class="stretchy">
-                                        <img class="spacer" alt="icon"
-                                             src="<c:url value="${baseURL}/img/backgrounds/bgd_transparent_1x1.png"/>">
-                                        <img class="sprite wastewater_b"
-                                             src="<c:url value="${baseURL}/img/ico_biome_sprite.png"/>">
-                                    </div>
-                                    <div class="biome_text">Wastewater (<c:out value="${model.biomeMap['WASTEWATER']}"/>)</div>
-                                </div>
-                            </a>
-
+                                </a>
+                            </c:forEach>
                         </div><!-- /list-biomes-l -->
-                        <a href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>"
-                           title="View projects and filter by biome" class="all">View all biomes</a>
+                        <a href="<c:url value="${baseURL}/biomes"/>"
+                           title="View projects and filter by biome" class="all">Browse all biomes</a>
                     </div> <!-- /home_box -->
                 </div>
                 <!-- /list-biomes -->

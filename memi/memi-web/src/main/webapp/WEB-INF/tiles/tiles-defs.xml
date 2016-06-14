@@ -144,6 +144,11 @@
         <put-attribute name="body" value="/templates/contactBody.jsp"/>
     </definition>
 
+    <definition name="biomes" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="ebigreen"/>
+        <put-attribute name="body" value="/templates/biomesBody.jsp"/>
+    </definition>
+
     <definition name="pipelines" extends="rootTemplate">
         <put-attribute name="bodyClass" type="string" value="ebigreen"/>
         <put-attribute name="body" value="/templates/pipelinesBody.jsp"/>
