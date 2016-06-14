@@ -123,9 +123,9 @@ public class MemiTools {
             } else if (biomeName.equalsIgnoreCase("Freshwater")) {
                 MemiTools.biomeIconCSSMap.put(biome.getBiomeId(), "freshwater_b");
                 MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Freshwater");
-            } else if (biomeName.equalsIgnoreCase("Host-associated")) {
-                MemiTools.biomeIconCSSMap.put(biome.getBiomeId(), "non_human_host_b");
-                MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Non-human host");
+//            } else if (biomeName.equalsIgnoreCase("Host-associated")) {
+//                MemiTools.biomeIconCSSMap.put(biome.getBiomeId(), "non_human_host_b");
+//                MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Non-human host");
             } else if (biomeName.equalsIgnoreCase("Human")) {
                 MemiTools.biomeIconCSSMap.put(biome.getBiomeId(), "human_host_b");
                 MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Host-associated human");
