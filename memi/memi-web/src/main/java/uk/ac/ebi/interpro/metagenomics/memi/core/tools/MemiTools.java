@@ -108,7 +108,7 @@ public class MemiTools {
 
         // add 1:1 mapping biomes
         List<Biome> biomes = biomeDAO.readByLineages("root:Environmental:Terrestrial:Soil", "root:Environmental:Air", "root:Engineered",
-                "root:Environmental:Aquatic:Freshwater", "root:Host-associated:Human:Digestive system:Large intestine",
+                "root:Environmental:Aquatic:Freshwater", "root:Host-associated:Human:Digestive system",
                 "root:Environmental:Aquatic:Marine", "root:Engineered:Wastewater", "root:Host-associated:Human", "root:Host-associated",
                 "root:Host-associated:Plants", "root:Environmental:Terrestrial:Volcanic", "root:Environmental:Aquatic:Thermal springs",
                 "root:Environmental:Terrestrial:Rock-dwelling (subaerial biofilm)", "root:Environmental:Aquatic:Freshwater:Groundwater:Cave water");
@@ -129,9 +129,9 @@ public class MemiTools {
             } else if (biomeName.equalsIgnoreCase("Human")) {
                 MemiTools.biomeIconCSSMap.put(biome.getBiomeId(), "human_host_b");
                 MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Host-associated human");
-            } else if (biomeName.equalsIgnoreCase("Large intestine")) {
+            } else if (biomeName.equalsIgnoreCase("Digestive system")) {
                 MemiTools.biomeIconCSSMap.put(biome.getBiomeId(), "human_gut_b");
-                MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Human gut (Large intestine)");
+                MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Human digestive system");
             } else if (biomeName.equalsIgnoreCase("Marine")) {
                 MemiTools.biomeIconCSSMap.put(biome.getBiomeId(), "marine_b");
                 MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Marine");

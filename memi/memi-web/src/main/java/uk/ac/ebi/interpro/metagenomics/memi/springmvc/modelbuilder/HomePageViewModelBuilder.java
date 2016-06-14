@@ -57,7 +57,7 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
             "root:Environmental:Terrestrial:Soil",
             "root:Environmental:Aquatic:Marine",
             "root:Host-associated:Human",
-            "root:Host-associated:Human:Digestive system:Large intestine",
+            "root:Host-associated:Human:Digestive system",
             "root:Host-associated:Plants",
             "root:Host-associated:Mammals",
             "root:Engineered",
