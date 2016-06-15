@@ -8,12 +8,7 @@ import java.util.List;
  */
 public class EBISearchResults {
 
-    public enum SearchType {
-        RUN, SAMPLE, PROJECT
-    }
-
-    public SearchType searchType;
-
+    String[] dataTypes = {"projects", "samples", "runs"};
     EBISampleSearchResults samples;
     EBIProjectSearchResults projects;
     EBIRunSearchResults runs;
@@ -24,12 +19,8 @@ public class EBISearchResults {
         runs = new EBIRunSearchResults();
     }
 
-    public SearchType getSearchType() {
-        return searchType;
-    }
-
-    public void setSearchType(SearchType searchType) {
-        this.searchType = searchType;
+    public String[] getDataTypes() {
+        return dataTypes;
     }
 
     public EBISampleSearchResults getSamples() {

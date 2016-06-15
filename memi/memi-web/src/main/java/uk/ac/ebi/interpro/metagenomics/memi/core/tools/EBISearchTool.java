@@ -1,5 +1,7 @@
 package uk.ac.ebi.interpro.metagenomics.memi.core.tools;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.*;
@@ -24,19 +26,19 @@ public class EBISearchTool {
     public static final String ES_SEARCH_WEBSERVICE_URL = "http://wwwdev.ebi.ac.uk/ebisearch/ws/rest";
 
     public enum Domain {
-        SAMPLE_DOMAIN(
+        SAMPLES(
                 "Samples",
                 "metagenomics_samples",
                 "id,name,description,biome,experiment_type,METAGENOMICS_PROJECT,TAXONOMY"),
-        PROJECT_DOMAIN(
+        PROJECTS(
                 "Projects",
                 "metagenomics_projects",
                 "id,name,description,biome_name,METAGENOMICS_SAMPLE"),
-        RUN_DOMAIN(
+        RUNS(
                 "Runs",
-                "metagenomics_run",
+                "metagenomics_runs",
                 "id,experiment_type,pipeline_version,METAGENOMICS_SAMPLE,METAGENOMICS_PROJECT"),
-        OLD_SAMPLE_DOMAIN(
+        OLD_SAMPLES(
                 "Samples",
                 "metagenomics",
                 "id,displayName,description,biome,experiment_type,taxonomy,project");
@@ -53,19 +55,22 @@ public class EBISearchTool {
         public String getDomain() { return domain; }
         public String getQuery() { return "domain_source:" + domain; }
         public String getFields() { return  fields; }
+        public String toString() { return displayName.toLowerCase(); }
     }
 
-    public final static Domain DEFAULT_DOMAIN = Domain.SAMPLE_DOMAIN;
+    public final static Domain DEFAULT_DOMAIN = Domain.SAMPLES;
 
     private final static String FACET = "facet";
 
-
     EBeyeClient client;
+    Gson gson;
 
     public EBISearchTool() {
         client = new EBeyeClient();
         client.setDebugLevel(5);
         client.setServiceEndPoint(ES_SEARCH_WEBSERVICE_URL);
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gson = gsonBuilder.create();
     }
 
     /**
@@ -73,31 +78,17 @@ public class EBISearchTool {
      * @param searchForm
      * @return
      */
-    public EBISearchResults search(EBISearchForm searchForm) {
+    public String search(EBISearchForm searchForm) {
         log.debug("search");
         Domain selectedDomain = getSelectedDomain(searchForm);
-        if (selectedDomain == null) {
-            selectedDomain = DEFAULT_DOMAIN;
-            selectedDomain = Domain.RUN_DOMAIN;
-        }
+
         EBISearchResults results = new EBISearchResults();
 
-        switch (selectedDomain) {
-            case PROJECT_DOMAIN:
-                results.setSearchType(EBISearchResults.SearchType.PROJECT);
-                searchProjects(searchForm, selectedDomain, results);
-                break;
-            case SAMPLE_DOMAIN:
-                results.setSearchType(EBISearchResults.SearchType.SAMPLE);
-                searchSamples(searchForm, selectedDomain, results);
-                break;
-            case RUN_DOMAIN:
-                results.setSearchType(EBISearchResults.SearchType.RUN);
-                searchRuns(searchForm, selectedDomain, results);
-                break;
-        }
-
-        return results;
+        searchProjects(searchForm, Domain.PROJECTS, results);
+        searchSamples(searchForm, Domain.SAMPLES, results);
+        searchRuns(searchForm, Domain.RUNS, results);
+        String json = gson.toJson(results);
+        return json;
     }
 
     Domain getSelectedDomain(EBISearchForm searchForm) {

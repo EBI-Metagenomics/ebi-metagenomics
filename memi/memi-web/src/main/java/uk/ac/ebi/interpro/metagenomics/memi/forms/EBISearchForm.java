@@ -23,6 +23,8 @@ public class EBISearchForm implements Serializable {
 
     int resultsPerPage;
 
+    String searchType;
+
     String sortField;
 
     Boolean ascendingOrder;
@@ -36,6 +38,7 @@ public class EBISearchForm implements Serializable {
         maxPage = 1;
         resultsPerPage = DEFAULT_RESULTS_PER_PAGE;
         facets = new ArrayList<String>();
+        searchType = "projects";
     }
 
     public String getSearchText() {
@@ -86,6 +89,8 @@ public class EBISearchForm implements Serializable {
     public void setResultsPerPage(int resultsPerPage) {
         this.resultsPerPage = resultsPerPage;
     }
+
+
 
     public String getSortField() {
         return sortField;

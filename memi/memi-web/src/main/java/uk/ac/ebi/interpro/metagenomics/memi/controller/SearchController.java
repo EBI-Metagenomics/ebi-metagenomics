@@ -43,7 +43,7 @@ public class SearchController extends AbstractController implements IController 
     public ModelAndView doGet(final ModelMap model) {
         log.info("Requesting doGet of " + this.getClass() + "...");
         EBISearchForm ebiSearchForm = getEbiSearchForm();
-        final EBISearchResults searchResults = ebiSearchTool.search(ebiSearchForm);
+        final String searchResults = ebiSearchTool.search(ebiSearchForm);
         return buildModelAndView(
                 getModelViewName(),
                 model,
@@ -73,7 +73,7 @@ public class SearchController extends AbstractController implements IController 
         log.info("Requesting doEbiSearch of " + this.getClass() + "...");
         log.info("Search for " + ebiSearchForm.getSearchText());
 
-        final EBISearchResults searchResults = ebiSearchTool.search(ebiSearchForm);
+        final String searchResults = ebiSearchTool.search(ebiSearchForm);
         return buildModelAndView(
                 getModelViewName(),
                 model,
@@ -110,7 +110,7 @@ public class SearchController extends AbstractController implements IController 
      */
     private void populateModel(final ModelMap model,
                                EBISearchForm ebiSearchForm,
-                               EBISearchResults searchResults
+                               String searchResults
     ) {
         log.info("Building model of " + this.getClass() + "...");
         final SearchViewModelBuilder<ViewModel> builder = new SearchViewModelBuilder(

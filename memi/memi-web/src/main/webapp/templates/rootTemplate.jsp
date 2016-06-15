@@ -256,45 +256,13 @@
                             <!-- Link for future advance search page -->
                             <!-- <span class="adv"><a href="../search" id="adv-search" title="Advanced">Advanced</a></span> -->
                         </div>
-
                     </fieldset>
                     <!-- hidden div used to show facets when on searchBody.jsp page -->
                     <div id="hiddenFacets" class="this_hide">
                         <c:choose>
                             <c:when test="${model.modelClassName eq 'SearchViewModel'}">
-
-                                <!-- projects -->
-                                <div id="projectFacets">
-                                    <c:forEach var="facet" items="${model.searchResults.projects.facets}">
-                                        <c:if test="${fn:length(facet.values) > 0}">
-                                            <h4>${facet.label}</h4>
-                                            <form:checkboxes path="facets" items="${facet.values}" itemLabel="labelAndCount"
-                                                             itemValue="facetAndValue" element="div" form="local-search"/>
-                                        </c:if>
-                                    </c:forEach>
-                                </div>
-                                <!-- samples -->
-                                <div id="sampleFacets">
-                                    <c:forEach var="facet" items="${model.searchResults.samples.facets}">
-                                        <c:if test="${fn:length(facet.values) > 0}">
-                                            <h4>${facet.label}</h4>
-                                            <form:checkboxes path="facets" items="${facet.values}" itemLabel="labelAndCount"
-                                                             itemValue="facetAndValue" element="div" form="local-search"/>
-                                        </c:if>
-                                    </c:forEach>
-                                </div>
-                                <!-- runs -->
-                                <div id="runFacets">
-                                    <c:forEach var="facet" items="${model.searchResults.runs.facets}">
-                                        <c:if test="${fn:length(facet.values) > 0}">
-                                            <h4>${facet.label}</h4>
-                                            <form:checkboxes path="facets" items="${facet.values}" itemLabel="labelAndCount"
-                                                             itemValue="facetAndValue" element="div" form="local-search"/>
-                                        </c:if>
-                                    </c:forEach>
-                                </div>
-                                <hr>
-                                <p><small class="text-muted">Powered by <a href="http://www.ebi.ac.uk/ebisearch/" class="ext" target="_blank">EBI Search</a></small></p>
+                                <input type="hidden" id="SearchResults" name="searchResults" value="${model.searchResults}"/>
+                                <div id="SearchResultsDiv">${model.searchResults}</div>
                             </c:when>
                         </c:choose>
                     </div>

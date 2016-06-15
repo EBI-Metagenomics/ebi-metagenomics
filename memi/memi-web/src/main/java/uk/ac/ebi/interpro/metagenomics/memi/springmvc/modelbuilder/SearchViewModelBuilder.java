@@ -24,11 +24,11 @@ public class SearchViewModelBuilder<ViewModel extends uk.ac.ebi.interpro.metagen
 
     private MemiPropertyContainer propertyContainer;
 
-    EBISearchResults searchResults;
+    String searchResults;
 
     public SearchViewModelBuilder(UserManager sessionMgr, EBISearchForm ebiSearchForm, String pageTitle,
                                   List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer,
-                                  EBISearchResults searchResults) {
+                                  String searchResults) {
         super(sessionMgr, ebiSearchForm);
         this.pageTitle = pageTitle;
         this.breadcrumbs = breadcrumbs;
