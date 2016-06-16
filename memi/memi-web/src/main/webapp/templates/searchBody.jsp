@@ -3,8 +3,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <div class="grid_24" id="mainContainer">
-    <div id="onSearchPage" /><!--used to determine whether search form is submitted via ajax -->
-
     <h2>Search EBI Metagenomics</h2>
 
     <form:form class="local-search-xs" action="${pageContext.request.contextPath}/search/doEbiSearch"
@@ -25,7 +23,7 @@
 
         </div>
     </form:form>
-    <div id="searchTabs" class="grid_24"></div>
+    <div class="grid_24" id="searchTabs"></div>
 
     <div class="grid_24">
         <div id="projects">

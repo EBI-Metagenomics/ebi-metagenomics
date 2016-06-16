@@ -1,5 +1,6 @@
 package uk.ac.ebi.interpro.metagenomics.memi.controller;
 
+import com.google.gson.Gson;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
@@ -11,12 +12,14 @@ import uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ebiSearch.EBISampleSearchResults;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ebiSearch.EBISearchResults;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.SearchViewModelBuilder;
 
 import javax.validation.Valid;
+import java.io.StringReader;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -43,7 +46,7 @@ public class SearchController extends AbstractController implements IController 
     public ModelAndView doGet(final ModelMap model) {
         log.info("Requesting doGet of " + this.getClass() + "...");
         EBISearchForm ebiSearchForm = getEbiSearchForm();
-        final String searchResults = ebiSearchTool.search(ebiSearchForm);
+        final String searchResults = ebiSearchTool.searchAllDomains(ebiSearchForm);
         return buildModelAndView(
                 getModelViewName(),
                 model,
@@ -73,7 +76,7 @@ public class SearchController extends AbstractController implements IController 
         log.info("Requesting doEbiSearch of " + this.getClass() + "...");
         log.info("Search for " + ebiSearchForm.getSearchText());
 
-        final String searchResults = ebiSearchTool.search(ebiSearchForm);
+        final String searchResults = ebiSearchTool.searchAllDomains(ebiSearchForm);
         return buildModelAndView(
                 getModelViewName(),
                 model,
@@ -91,8 +94,6 @@ public class SearchController extends AbstractController implements IController 
                         );
                         final ViewModel searchModel = builder.getModel();
                         searchModel.changeToHighlightedClass(ViewModel.TAB_CLASS_SEARCH_VIEW);
-//                        Is this not set in the abstract class
-//                        model.addAttribute(EBISearchForm.MODEL_ATTR_NAME, ebiSearchForm);
                         model.addAttribute(ViewModel.MODEL_ATTR_NAME, searchModel);
                     }
                 }
@@ -100,9 +101,13 @@ public class SearchController extends AbstractController implements IController 
     }
 
     @RequestMapping(value = "/" + SearchController.VIEW_AJAX, method = RequestMethod.POST)
-    public @ResponseBody String doAjaxSearch(@RequestBody String ebiSearchForm) {
+    public @ResponseBody String doAjaxSearch(@RequestBody String encodedJsonForm) throws UnsupportedEncodingException {
         log.info("Requesting doAjaxSearch of " + this.getClass() + "...");
-        return "worked";
+        String jsonSearchForm = URLDecoder.decode(encodedJsonForm, "UTF-8");
+        Gson gson = new Gson();
+        EBISearchForm searchForm = gson.fromJson(jsonSearchForm, EBISearchForm.class);
+        String results = ebiSearchTool.search(searchForm);
+        return results;
     }
 
     /**

@@ -80,10 +80,30 @@ public class EBISearchTool {
      */
     public String search(EBISearchForm searchForm) {
         log.debug("search");
-        Domain selectedDomain = getSelectedDomain(searchForm);
-
         EBISearchResults results = new EBISearchResults();
 
+        Domain selectedDomain = getSelectedDomain(searchForm);
+        if (selectedDomain != null) {
+            switch (selectedDomain) {
+                case PROJECTS:
+                    searchProjects(searchForm, selectedDomain, results);
+                    break;
+                case SAMPLES:
+                    searchSamples(searchForm, selectedDomain, results);
+                    break;
+                case RUNS:
+                    searchRuns(searchForm, selectedDomain, results);
+                    break;
+            }
+        }
+
+        String json = gson.toJson(results);
+        return json;
+    }
+
+    public String searchAllDomains(EBISearchForm searchForm) {
+        EBISearchResults results = new EBISearchResults();
+        //default behaviour is to search all domains
         searchProjects(searchForm, Domain.PROJECTS, results);
         searchSamples(searchForm, Domain.SAMPLES, results);
         searchRuns(searchForm, Domain.RUNS, results);
@@ -94,12 +114,9 @@ public class EBISearchTool {
     Domain getSelectedDomain(EBISearchForm searchForm) {
         log.debug("getSelectedDomain");
         Domain selectedDomain = null;
-
-        List<String> facets = searchForm.getFacets();
-        if (facets != null) {
-
+        if (searchForm.getSearchType() != null) {
+            selectedDomain = Domain.valueOf(searchForm.getSearchType().toUpperCase());
         }
-
         return selectedDomain;
     }
 

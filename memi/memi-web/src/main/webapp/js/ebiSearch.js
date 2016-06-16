@@ -3,13 +3,104 @@
  */
 
 var HIDDEN_CLASS = "this_hide";
+var FACET_SEPARATOR = "____";
 
+/*
+Behaviour methods
+ */
+
+/**
+ * reset page numbering for datatype div to first page
+ * @param dataType
+ */
+var resetPage = function(dataType) {
+    console.log("Resetting page for " + dataType);
+}
+
+/**
+ * Fetches new data for datatype via ajax
+ * @param dataType
+ */
+var fetchDataViaAjax = function(dataType, page) {
+    console.log("Fetching ajax data for " + dataType);
+    var searchForm = document.getElementById("local-search");
+    if (searchForm != null) {
+        //setup the query object
+        var searchText = document.getElementById("local-searchbox").value;
+        var checkedFacets = [];
+        var facetContainer = document.getElementById(dataType + "-searchFacets");
+        if (facetContainer != null) {
+            var facetElements = facetContainer.getElementsByTagName("input");
+            for (var i=0; i < facetElements.length; i++) {
+                var facetElement = facetElements[i];
+                if (facetElement.name === 'facets' && facetElement.checked) {
+                    checkedFacets.push(facetElement.value);
+                }
+            }
+        } else {
+            console.log("Expect to find div id " + dataType + "-searchFacets on page");
+        }
+        console.log("SearchText = " + searchText);
+        var query = {
+            searchText: searchText,
+            facets: checkedFacets,
+            page: page,
+            searchType: dataType
+        };
+        var jsonQuery = JSON.stringify(query);
+        console.log(jsonQuery);
+
+        //setup the request
+        var httpReq = new XMLHttpRequest();
+        var url = "doAjaxSearch";
+        httpReq.open("POST", url);
+        httpReq.setRequestHeader("Content-type", "application/json");
+
+        //handle response
+        httpReq.onreadystatechange = function(event) {
+            if (httpReq.readyState == XMLHttpRequest.DONE) {
+                var readyState = httpReq.readyState;
+                var response = httpReq.response;
+                var data = JSON.parse(response);
+                displayFacets(data[dataType].facets, dataType, checkedFacets);
+                displaySearchResults(data, dataType);
+            }
+        };
+
+        //error handling
+        httpReq.addEventListener("error", function(event){
+            console.log("Ajax error");
+            searchForm.submit();
+        });
+
+
+        httpReq.send(jsonQuery);
+
+    } else {
+        console.log("This page should contain 'local-search'");
+    }
+}
+
+/*
+Initialisation methods
+ */
+
+/**
+ * Adds a jquery ui tab set to the supplied div
+ * @param container
+ * @param disabledList
+ */
 var setupJQueryTabs = function(container, disabledList) {
     $(container).tabs({
         disabled: disabledList,
     });
 };
 
+/**
+ * displays a set of tabs based on the datatypes property of the data
+ * @param data
+ * @returns {Element}
+ */
 var displayTabHeader = function(data) {
     var tabContainer = document.getElementById("searchTabs");
     if (tabContainer != null) {
@@ -23,7 +114,7 @@ var displayTabHeader = function(data) {
                 console.log(dataType);
                 var tabItem = document.createElement("li");
                 var tabLink = document.createElement("a");
-                tabLink.id = dataType;
+                tabLink.id = dataType + "-link";
                 tabLink.value = dataType;
                 tabLink.href = "#" + dataType;
 
@@ -32,13 +123,15 @@ var displayTabHeader = function(data) {
                 } else {
                     disabledList.push(0);
                 }
-                console.log(tabItem.getAttribute("count"));
+
                 var titleText = dataType.charAt(0).toUpperCase() + dataType.slice(1); //capitalise first letter
                 //tabLink.text = titleText;
                 titleText += " (" + data[dataType].numberOfHits + ")";
+                /*
                 var tabLinkSpan = document.createElement("span");
                 tabLinkSpan.innerHTML = titleText;
-                tabLink.appendChild(tabLinkSpan);
+                */
+                tabLink.innerHTML = titleText;
                 tabItem.appendChild(tabLink)
                 tabList.appendChild(tabItem);
             }
@@ -54,50 +147,64 @@ var displayTabHeader = function(data) {
     return tabContainer;
 };
 
-var displayFacetGroup = function(facetGroup, container ,facetCount) {
+/**
+ * Creates title and set of checkbox inputs for a supplied facet groups
+ * @param facetGroup
+ * @param container
+ * @param dataType
+ */
+var displayFacetGroup = function(facetGroup, container, dataType, checkedFacets) {
     facetGroupTitle = document.createElement("h4");
     facetGroupTitle.innerHTML = facetGroup.label;
     container.appendChild(facetGroupTitle);
     for (i in facetGroup.values) {
-        facetCount++;
         facet = facetGroup.values[i];
 
         facetDiv = document.createElement("div");
         facetInput = document.createElement("input");
-        facetInput.id = "facets" + facetCount;
+        facetInput.id = facet.type + i;
         facetInput.name = "facets";
         facetInput.form = "local-search";
         facetInput.type = "checkbox";
-        facetInput.value = facet.type + "___" + facet.value;
+        facetInput.value = facet.type + FACET_SEPARATOR + facet.value;
+        if (checkedFacets != null && checkedFacets.indexOf(facetInput.value) >= 0) {
+            facetInput.checked = true;
+        }
+        facetInput.addEventListener("change", function(event) {
+            fetchDataViaAjax(dataType, 1);
+        });
+
         facetLabel = document.createElement("label");
         facetLabel.htmlFor = facetInput.id;
         facetLabel.innerHTML = facet.label + " (" + facet.count + ")";
+
         facetDiv.appendChild(facetInput);
         facetDiv.appendChild(facetLabel);
+
         facetContainerDiv = document.createElement("div");
         facetContainerDiv.className = "extra-pad";
         facetContainerDiv.appendChild(facetDiv);
-        springInput = document.createElement("input");
-        springInput.type = "hidden";
-        springInput.name = "_facets";
-        springInput.value = "on";
-        facetContainerDiv.appendChild(springInput);
 
         container.appendChild(facetContainerDiv);
     }
 };
 
-var displayFacets = function(facetGroups, dataType) {
+/**
+ * Fills in facet values for divs corresponding to each datatype
+ * @param facetGroups
+ * @param dataType
+ */
+var displayFacets = function(facetGroups, dataType, checkedFacets) {
     var facetContainer = document.getElementById(dataType + "-searchFacets");
     if (facetContainer != null) {
+        facetContainer.innerHTML = ""; //clear out old facets
         facetContainerTitle = document.createElement("h3");
         facetContainerTitle.innerHTML = "Filter your results";
 
         facetContainer.appendChild(facetContainerTitle);
-        facetCount = 0;
-        for (i in facetGroups) {
+        for (var i =0; i < facetGroups.length; i++) {
             var facetGroup = facetGroups[i];
-            displayFacetGroup(facetGroup, facetContainer, facetCount);
+            displayFacetGroup(facetGroup, facetContainer, dataType, checkedFacets);
             console.log("FacetGroup " + facetGroup.label);
         }
 
@@ -114,6 +221,11 @@ var displayFacets = function(facetGroups, dataType) {
     }
 };
 
+/**
+ * Creates table header cells and table row
+ * @param columns
+ * @param table
+ */
 var addTableHeader = function(columns, table) {
     tableHeadRow = document.createElement("tr");
 
@@ -132,6 +244,11 @@ var addTableHeader = function(columns, table) {
     table.appendChild(tableHead);
 }
 
+/**
+ * Creates a data table row and table cells
+ * @param columns
+ * @param table
+ */
 var addTableRow = function(columns, table) {
     tableRow = document.createElement("tr");
     for (i in columns) {
@@ -153,6 +270,11 @@ var addTableRow = function(columns, table) {
     table.appendChild(tableRow);
 };
 
+/**
+ * Setup for project table
+ * @param data
+ * @param container
+ */
 var displayProjectTable = function(data, container) {
     console.log("Showing project data");
 
@@ -186,6 +308,11 @@ var displayProjectTable = function(data, container) {
     container.appendChild(table);
 };
 
+/**
+ * Setup for sample table
+ * @param data
+ * @param container
+ */
 var displaySampleTable = function(data, container) {
     console.log("Showing sample data");
     table = document.createElement("table");
@@ -222,16 +349,22 @@ var displaySampleTable = function(data, container) {
     container.appendChild(table);
 };
 
+/**
+ * setup run table
+ * @param data
+ * @param container
+ */
 var displayRunTable = function(data, container) {
-    console.log("Showing sample data");
+    console.log("Showing run data");
     table = document.createElement("table");
     table.border = 1;
     table.className = "table-light";
 
     var headerData = [
         {name: "Run"},
-        {name: "Project", className: "xs_hide"},
         {name: "Sample", className: "xs_hide"},
+        {name: "Project", className: "xs_hide"},
+        {name: "Experiment Type"},
         {name: "Pipeline Version", className: "xs_hide"},
     ];
 
@@ -249,17 +382,20 @@ var displayRunTable = function(data, container) {
                 + entry.pipelineVersion
             },
             {
-                name: entry.project,
-                className: "xs_hide",
-                url: "http:/metagenomics/projects/ " + entry.project,
-            },
-            {
                 name: entry.sample,
                 className: "xs_hide",
                 url: "http:/metagenomics/projects/ "
                 + entry.project + "/samples/"
                 + entry.sample,
 
+            },
+            {
+                name: entry.project,
+                className: "xs_hide",
+                url: "http:/metagenomics/projects/ " + entry.project,
+            },
+            {
+                name: entry.experimentType
             },
             {
                 name: entry.pipelineVersion,
@@ -274,20 +410,26 @@ var displayRunTable = function(data, container) {
     container.appendChild(table);
 };
 
+/**
+ * Displays table data for each datatype
+ * @param data
+ * @param dataType
+ */
 var displaySearchResults = function(data, dataType) {
-    displayData = data[dataType];
+    displayAllData = data[dataType];
     resultsContainer = document.getElementById(dataType + "-searchData");
     if (resultsContainer != null) {
+        resultsContainer.innerHTML = ""; //clear results div
         resultsTitle = document.createElement("h3");
-        resultsTitle.innerHTML = "Showing " + displayData.entries.length
-                                    + " out of " + displayData.numberOfHits + " results";
+        resultsTitle.innerHTML = "Showing " + displayAllData.entries.length
+                                    + " out of " + displayAllData.numberOfHits + " results";
         resultsContainer.appendChild(resultsTitle);
         if (dataType == "projects") {
-            displayProjectTable(displayData, resultsContainer);
+            displayProjectTable(displayAllData, resultsContainer);
         } else if (dataType == "samples") {
-            displaySampleTable(displayData, resultsContainer);
+            displaySampleTable(displayAllData, resultsContainer);
         } else if (dataType == "runs") {
-            displayRunTable(displayData, resultsContainer);
+            displayRunTable(displayAllData, resultsContainer);
         } else {
             console.log("Unknown data type " + dataType);
         }
@@ -297,7 +439,12 @@ var displaySearchResults = function(data, dataType) {
     }
 };
 
-var displayData = function(data, tab) {
+/**
+ * Displays facets and data table for each datatype
+ * @param data
+ * @param tab
+ */
+var displayAllData = function(data, tab) {
 
     for (i in data.dataTypes) {
         var dataType = data.dataTypes[i];
@@ -312,13 +459,13 @@ var displayData = function(data, tab) {
     var tabContainer = displayTabHeader(data);
 }
 
-/*
- Handle processing of search results returned in JSP
+/**
+ * Handle processing of search results returned in JSP
  */
 var searchResultDiv = document.getElementById("SearchResultsDiv");
 if (searchResultDiv != null) {
     var searchValue = searchResultDiv.innerHTML;
     var searchResults = JSON.parse(searchValue);
-    displayData(searchResults);
+    displayAllData(searchResults);
 }
 

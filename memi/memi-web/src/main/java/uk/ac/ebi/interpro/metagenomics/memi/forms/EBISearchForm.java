@@ -90,6 +90,10 @@ public class EBISearchForm implements Serializable {
         this.resultsPerPage = resultsPerPage;
     }
 
+    public String getSearchType() { return searchType; }
+
+    public void setSearchType(String searchType) { this.searchType = searchType; }
+
 
 
     public String getSortField() {
@@ -115,4 +119,5 @@ public class EBISearchForm implements Serializable {
     public void setErrorText(String errorText) {
         this.errorText = errorText;
     }
+
 }
