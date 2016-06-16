@@ -6,13 +6,18 @@ import java.util.List;
 /**
  * Created by maq on 06/05/2016.
  */
-public class EBIProjectSearchResults {
+public class EBIProjectSearchResults implements ISearchResults{
 
     int numberOfHits;
+    int page;
+    int maxPage;
+    int resultsPerPage = EBISearchResults.DEFAULT_RESULTS_PER_PAGE;
 
     List<EBIProjectSearchEntry> entries = new ArrayList<>();
 
     List<EBISearchFacet> facets = new ArrayList<>();
+
+    List<String> checkedFacets = new ArrayList<>();
 
     public int getNumberOfHits() {
         return numberOfHits;
@@ -36,5 +41,35 @@ public class EBIProjectSearchResults {
 
     public void setFacets(List<EBISearchFacet> facets) {
         this.facets = facets;
+    }
+
+    public List<String> getCheckedFacets() { return checkedFacets; }
+
+    public void setCheckedFacets(List<String> checkedFacets) { this.checkedFacets = checkedFacets; }
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    public int getMaxPage() {
+        return maxPage;
+    }
+
+    public void setMaxPage(int maxPage) {
+        this.maxPage = maxPage;
+    }
+
+    @Override
+    public int getResultsPerPage() {
+        return resultsPerPage;
+    }
+
+    @Override
+    public void setResultsPerPage(int resultsPerPage) {
+        this.resultsPerPage = resultsPerPage;
     }
 }

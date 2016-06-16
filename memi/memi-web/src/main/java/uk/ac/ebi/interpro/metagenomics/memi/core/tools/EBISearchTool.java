@@ -75,24 +75,22 @@ public class EBISearchTool {
 
     /**
      * Searches for data indexed by the EBI-Search
-     * @param searchForm
+     * @param
      * @return
      */
-    public String search(EBISearchForm searchForm) {
+    public String search(EBISearchResults results) {
         log.debug("search");
-        EBISearchResults results = new EBISearchResults();
-
-        Domain selectedDomain = getSelectedDomain(searchForm);
+        Domain selectedDomain = getSelectedDomain(results);
         if (selectedDomain != null) {
             switch (selectedDomain) {
                 case PROJECTS:
-                    searchProjects(searchForm, selectedDomain, results);
+                    searchProjects(selectedDomain, results);
                     break;
                 case SAMPLES:
-                    searchSamples(searchForm, selectedDomain, results);
+                    searchSamples(selectedDomain, results);
                     break;
                 case RUNS:
-                    searchRuns(searchForm, selectedDomain, results);
+                    searchRuns(selectedDomain, results);
                     break;
             }
         }
@@ -101,42 +99,41 @@ public class EBISearchTool {
         return json;
     }
 
-    public String searchAllDomains(EBISearchForm searchForm) {
-        EBISearchResults results = new EBISearchResults();
+    public String searchAllDomains(EBISearchResults results) {
         //default behaviour is to search all domains
-        searchProjects(searchForm, Domain.PROJECTS, results);
-        searchSamples(searchForm, Domain.SAMPLES, results);
-        searchRuns(searchForm, Domain.RUNS, results);
+        searchProjects(Domain.PROJECTS, results);
+        searchSamples(Domain.SAMPLES, results);
+        searchRuns(Domain.RUNS, results);
         String json = gson.toJson(results);
         return json;
     }
 
-    Domain getSelectedDomain(EBISearchForm searchForm) {
+    Domain getSelectedDomain(EBISearchResults results) {
         log.debug("getSelectedDomain");
         Domain selectedDomain = null;
-        if (searchForm.getSearchType() != null) {
-            selectedDomain = Domain.valueOf(searchForm.getSearchType().toUpperCase());
+        if (results.getSearchType() != null) {
+            selectedDomain = Domain.valueOf(results.getSearchType().toUpperCase());
         }
         return selectedDomain;
     }
 
     /**
      * Searches the sample data stored via the EBI-Search client
-     * @param searchForm
+     * @param
      * @return EBISampleSearchResults object containing the search hits and a set of facets
      */
-    public void searchSamples(EBISearchForm searchForm, Domain domain, EBISearchResults results) {
+    public void searchSamples(Domain domain, EBISearchResults results) {
         log.debug("searchSamples");
         EBISampleSearchResults sampleResults = results.getSamples();
 
         try {
-            WsResult searchResults = runSearch(searchForm, domain.getDomain(), domain.getQuery(), domain.getFields());
+            WsResult searchResults = runSearch(sampleResults, results.getSearchText(), domain.getDomain(), domain.getQuery(), domain.getFields());
 
             Integer hits = searchResults.getHitCount();
 
             if (hits != null) {
-                int maxPage = (int) Math.ceil(new Double(hits) / new Double(searchForm.getResultsPerPage()));
-                searchForm.setMaxPage(maxPage);
+                int maxPage = (int) Math.ceil(new Double(hits) / new Double(results.getResultsPerPage()));
+                sampleResults.setMaxPage(maxPage);
                 List<EBISampleSearchEntry> entryList = sampleResults.getEntries();
                 for (WsEntry searchEntry : searchResults.getEntries().getEntry()) {
                     EBISampleSearchEntry entry = sampleResultToEntry(searchEntry);
@@ -152,28 +149,28 @@ public class EBISearchTool {
                 sampleResults.setNumberOfHits(hits);
             } else {
                 sampleResults.setNumberOfHits(0);
-                searchForm.setMaxPage(0);
+                sampleResults.setMaxPage(0);
             }
         } catch (BadRequestException e) {
             sampleResults.setNumberOfHits(0);
-            searchForm.setMaxPage(0);
+            sampleResults.setMaxPage(0);
         }
     }
 
 
-    public void searchProjects(EBISearchForm searchForm, Domain domain, EBISearchResults results) {
+    public void searchProjects(Domain domain, EBISearchResults results) {
         log.debug("searchProjects");
 
         EBIProjectSearchResults projectResults = results.getProjects();
 
         try {
-            WsResult searchResults = runSearch(searchForm, domain.getDomain(), domain.getQuery(), domain.getFields());
+            WsResult searchResults = runSearch(projectResults, results.getSearchText(), domain.getDomain(), domain.getQuery(), domain.getFields());
 
             Integer hits = searchResults.getHitCount();
 
             if (hits != null) {
-                int maxPage = (int) Math.ceil(new Double(hits) / new Double(searchForm.getResultsPerPage()));
-                searchForm.setMaxPage(maxPage);
+                int maxPage = (int) Math.ceil(new Double(hits) / new Double(results.getResultsPerPage()));
+                projectResults.setMaxPage(maxPage);
                 List<EBIProjectSearchEntry> entryList = projectResults.getEntries();
                 for (WsEntry searchEntry : searchResults.getEntries().getEntry()) {
                     EBIProjectSearchEntry entry = projectResultToEntry(searchEntry);
@@ -189,29 +186,29 @@ public class EBISearchTool {
                 projectResults.setNumberOfHits(hits);
             } else {
                 projectResults.setNumberOfHits(0);
-                searchForm.setMaxPage(0);
+                projectResults.setMaxPage(0);
             }
 
         } catch (BadRequestException e) {
             projectResults.setNumberOfHits(0);
-            searchForm.setMaxPage(0);
+            projectResults.setMaxPage(0);
         }
     }
 
-    public void searchRuns(EBISearchForm searchForm, Domain domain, EBISearchResults results) {
+    public void searchRuns(Domain domain, EBISearchResults results) {
         log.debug("searchRuns");
 
         EBIRunSearchResults runResults = results.getRuns();
 
         try {
             String fields = domain.getFields();
-            WsResult searchResults = runSearch(searchForm, domain.getDomain(), domain.getQuery(), fields);
+            WsResult searchResults = runSearch(runResults, results.getSearchText(), domain.getDomain(), domain.getQuery(), fields);
 
             Integer hits = searchResults.getHitCount();
 
             if (hits != null) {
-                int maxPage = (int) Math.ceil(new Double(hits) / new Double(searchForm.getResultsPerPage()));
-                searchForm.setMaxPage(maxPage);
+                int maxPage = (int) Math.ceil(new Double(hits) / new Double(results.getResultsPerPage()));
+                runResults.setMaxPage(maxPage);
                 List<EBIRunSearchEntry> entryList = runResults.getEntries();
                 for (WsEntry searchEntry : searchResults.getEntries().getEntry()) {
                     EBIRunSearchEntry entry = runResultToEntry(searchEntry);
@@ -227,39 +224,38 @@ public class EBISearchTool {
                 runResults.setNumberOfHits(hits);
             } else {
                 runResults.setNumberOfHits(0);
-                searchForm.setMaxPage(0);
+                runResults.setMaxPage(0);
             }
 
         } catch (BadRequestException e) {
             runResults.setNumberOfHits(0);
-            searchForm.setMaxPage(0);
+            runResults.setMaxPage(0);
         }
     }
 
     /**
      * Runs the search using SearchForm on the supplied domain query, with the supplied fields
-     * @param searchForm
+     * @param searchResults
      * @param domain
      * @param defaultQuery
      * @param resultFields
      * @return
      */
-    WsResult runSearch(EBISearchForm searchForm, String domain, String defaultQuery, String resultFields) {
+    WsResult runSearch(ISearchResults searchResults, String searchText, String domain, String defaultQuery, String resultFields) {
         String formattedFacetQuery = "";
-        if (searchForm.getFacets() != null) {
-            List<String> selectedFacets = searchForm.getFacets();
+        if (searchResults.getCheckedFacets() != null) {
+            List<String> selectedFacets = searchResults.getCheckedFacets();
             formattedFacetQuery = formatFacetFields(selectedFacets);
         }
 
-        String searchText = searchForm.getSearchText();
         if (searchText == null || searchText.matches("^\\s*$")) {
             searchText = defaultQuery;
         }
 
-        int resultsIndex = ((searchForm.getPage() - 1) * searchForm.getResultsPerPage());
-        int numResults = searchForm.getResultsPerPage();
+        int resultsIndex = ((searchResults.getPage() - 1) * searchResults.getResultsPerPage());
+        int numResults = searchResults.getResultsPerPage();
 
-        WsResult searchResults = client.getFacetedResults(
+        WsResult webSearchResults = client.getFacetedResults(
                 domain,
                 searchText,
                 resultFields,
@@ -274,7 +270,7 @@ public class EBISearchTool {
                 formattedFacetQuery
         );
 
-        return searchResults;
+        return webSearchResults;
     }
 
     /**

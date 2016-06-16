@@ -266,14 +266,6 @@
                             </c:when>
                         </c:choose>
                     </div>
-                    <div id="hiddenSearchPagination" class="this_hide">
-                        <form:hidden id="currentPage" path="page"/>
-                        <form:hidden id="maxPage" path="maxPage"/>
-                        <form:hidden id="previousSearch" path="previousSearchText"/>
-                        <input type="button" id="previousPage" value="Previous"/>
-                        Page ${ebiSearchForm.page} of ${ebiSearchForm.maxPage}
-                        <input type="button" id="nextPage" value="Next"/>
-                    </div>
                 </form:form>
             </div>
 

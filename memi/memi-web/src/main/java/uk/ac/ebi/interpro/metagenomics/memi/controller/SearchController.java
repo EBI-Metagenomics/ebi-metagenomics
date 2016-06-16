@@ -12,6 +12,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ebiSearch.EBISearchResults;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.SearchViewModelBuilder;
 
 import javax.validation.Valid;
@@ -46,7 +47,9 @@ public class SearchController extends AbstractController implements IController 
     public ModelAndView doGet(final ModelMap model) {
         log.info("Requesting doGet of " + this.getClass() + "...");
         EBISearchForm ebiSearchForm = getEbiSearchForm();
-        final String searchResults = ebiSearchTool.searchAllDomains(ebiSearchForm);
+        EBISearchResults results = new EBISearchResults();
+        results.setSearchText(ebiSearchForm.getSearchText());
+        final String searchResults = ebiSearchTool.searchAllDomains(results);
         return buildModelAndView(
                 getModelViewName(),
                 model,
@@ -76,7 +79,9 @@ public class SearchController extends AbstractController implements IController 
         log.info("Requesting doEbiSearch of " + this.getClass() + "...");
         log.info("Search for " + ebiSearchForm.getSearchText());
 
-        final String searchResults = ebiSearchTool.searchAllDomains(ebiSearchForm);
+        EBISearchResults results = new EBISearchResults();
+        results.setSearchText(ebiSearchForm.getSearchText());
+        final String searchResults = ebiSearchTool.searchAllDomains(results);
         return buildModelAndView(
                 getModelViewName(),
                 model,
@@ -106,8 +111,10 @@ public class SearchController extends AbstractController implements IController 
         String jsonSearchForm = URLDecoder.decode(encodedJsonForm, "UTF-8");
         Gson gson = new Gson();
         EBISearchForm searchForm = gson.fromJson(jsonSearchForm, EBISearchForm.class);
-        String results = ebiSearchTool.search(searchForm);
-        return results;
+        EBISearchResults results = new EBISearchResults();
+        results.setSearchText(searchForm.getSearchText());
+        String jsonResults = ebiSearchTool.search(results);
+        return jsonResults;
     }
 
     /**

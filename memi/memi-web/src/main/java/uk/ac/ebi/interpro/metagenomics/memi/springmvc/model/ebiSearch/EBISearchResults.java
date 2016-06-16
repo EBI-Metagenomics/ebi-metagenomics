@@ -8,15 +8,22 @@ import java.util.List;
  */
 public class EBISearchResults {
 
+    static final int DEFAULT_RESULTS_PER_PAGE = 20;
+
     String[] dataTypes = {"projects", "samples", "runs"};
     EBISampleSearchResults samples;
     EBIProjectSearchResults projects;
     EBIRunSearchResults runs;
+    String searchText;
+    String searchType;
+    int resultsPerPage;
 
     public EBISearchResults() {
         samples = new EBISampleSearchResults();
         projects = new EBIProjectSearchResults();
         runs = new EBIRunSearchResults();
+        searchText = "";
+        resultsPerPage = DEFAULT_RESULTS_PER_PAGE;
     }
 
     public String[] getDataTypes() {
@@ -46,4 +53,16 @@ public class EBISearchResults {
     public void setRuns(EBIRunSearchResults runs) {
         this.runs = runs;
     }
+
+    public String getSearchText() { return searchText; }
+
+    public void setSearchText(String searchText) { this.searchText = searchText; }
+
+    public String getSearchType() { return searchType; }
+
+    public void setSearchType(String searchType) { this.searchType = searchType; }
+
+    public int getResultsPerPage() { return resultsPerPage; }
+
+    public void setResultsPerPage(int resultsPerPage) { this.resultsPerPage = resultsPerPage; }
 }
