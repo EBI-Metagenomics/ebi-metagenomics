@@ -9,7 +9,7 @@ import java.util.List;
 public class EBIRunSearchResults implements ISearchResults{
 
     int numberOfHits;
-    int page;
+    int page = 1;
     int maxPage;
     int resultsPerPage = EBISearchResults.DEFAULT_RESULTS_PER_PAGE;
 
