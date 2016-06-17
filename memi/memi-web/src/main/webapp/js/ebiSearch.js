@@ -442,6 +442,27 @@ var displaySearchResults = function(data, dataType) {
     }
 };
 
+var displayPagination = function(data, dataType) {
+    console.log("Adding pagination for " + dataType);
+    paginationContainer = document.getElementById(dataType + "-searchPagination");
+    if (paginationContainer != null) {
+        var prevButton = document.createElement("input");
+        prevButton.type = "button";
+        prevButton.id = dataType + "-prevPage";
+        prevButton.value = "Previous";
+        var nextButton = document.createElement("input");
+        nextButton.type = "button";
+        nextButton.id = dataType + "-nextPage";
+        nextButton.value = "Next";
+        paginationContainer.appendChild(prevButton);
+        paginationContainer.innerHTML += " Page " + data[dataType].page + " of " + data[dataType].maxPage + " ";
+        paginationContainer.appendChild(nextButton);
+    } else {
+        console.log("Expected to find div with id '" + dataType + "-searchPagination'");
+    }
+
+};
+
 /**
  * Displays facets and data table for each datatype
  * @param data
@@ -455,6 +476,7 @@ var displayAllData = function(data, tab) {
         if (dataTypeContainer != null) {
             displayFacets(data[dataType].facets, dataType);
             displaySearchResults(data, dataType);
+            displayPagination(data, dataType);
         } else {
             console.log("Expected to find div with id " + dataType);
         }

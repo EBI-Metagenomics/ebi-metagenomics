@@ -11,7 +11,7 @@ public class EBIProjectSearchResults implements ISearchResults{
     int numberOfHits;
     int page = 1;
     int maxPage;
-    int resultsPerPage = 10;
+    int resultsPerPage = EBISearchResults.DEFAULT_RESULTS_PER_PAGE;
 
     List<EBIProjectSearchEntry> entries = new ArrayList<>();
 
