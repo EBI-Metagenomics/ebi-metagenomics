@@ -67,6 +67,7 @@ var fetchDataViaAjax = function(dataType, page) {
                 var data = JSON.parse(response);
                 displayFacets(data[dataType].facets, dataType, checkedFacets);
                 displaySearchResults(data, dataType);
+                displayPagination(data, dataType);
             }
         };
 
@@ -446,6 +447,7 @@ var displayPagination = function(data, dataType) {
     console.log("Adding pagination for " + dataType);
     paginationContainer = document.getElementById(dataType + "-searchPagination");
     if (paginationContainer != null) {
+        paginationContainer.innerHTML = "";
         var prevButton = document.createElement("input");
         prevButton.type = "button";
         prevButton.id = dataType + "-prevPage";
@@ -453,6 +455,10 @@ var displayPagination = function(data, dataType) {
         if (data[dataType].page <= 1 ) {
             prevButton.disabled = true;
         }
+        prevButton.addEventListener('click', function(event) {
+            fetchDataViaAjax(dataType, (data[dataType].page - 1));
+        });
+
         var nextButton = document.createElement("input");
         nextButton.type = "button";
         nextButton.id = dataType + "-nextPage";
@@ -460,18 +466,14 @@ var displayPagination = function(data, dataType) {
         if (data[dataType].page >= data[dataType].maxPage) {
             nextButton.disabled = true;
         }
-
-        prevButton.addEventListener('click', function(event) {
-            fetchDataViaAjax(dataType, data[dataType].page - 1);
-        });
-
         nextButton.addEventListener('click', function(event) {
-            fetchDataViaAjax(dataType, data[dataType].page + 1);
+            fetchDataViaAjax(dataType, (data[dataType].page + 1));
         });
 
-
+        var textSpan = document.createElement("span");
+        textSpan.textContent = " Page " + data[dataType].page + " of " + data[dataType].maxPage + " ";
         paginationContainer.appendChild(prevButton);
-        paginationContainer.innerHTML += " Page " + data[dataType].page + " of " + data[dataType].maxPage + " ";
+        paginationContainer.appendChild(textSpan);
         paginationContainer.appendChild(nextButton);
     } else {
         console.log("Expected to find div with id '" + dataType + "-searchPagination'");
