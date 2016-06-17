@@ -43,9 +43,12 @@ var fetchDataViaAjax = function(dataType, page) {
         console.log("SearchText = " + searchText);
         var query = {
             searchText: searchText,
-            facets: checkedFacets,
-            page: page,
             searchType: dataType
+        };
+        query[dataType] = {
+            checkedFacets: checkedFacets,
+            page: page,
+
         };
         var jsonQuery = JSON.stringify(query);
         console.log(jsonQuery);
@@ -73,7 +76,7 @@ var fetchDataViaAjax = function(dataType, page) {
             searchForm.submit();
         });
 
-
+        console.log(jsonQuery);
         httpReq.send(jsonQuery);
 
     } else {
@@ -285,8 +288,8 @@ var displayProjectTable = function(data, container) {
     var headerData = [
         {name: "Project"},
         {name: "Name"},
-        {name: "Description", className: "xs_hide"},
-        {name: "Biome", className: "xs_hide"}
+        {name: "Biome", className: "xs_hide"},
+        {name: "Description", className: "xs_hide"}
     ];
 
     addTableHeader(headerData, table);
@@ -299,8 +302,8 @@ var displayProjectTable = function(data, container) {
                 url: "http:/metagenomics/projects/" + entry.identifier
             },
             {name: entry.name},
-            {name: entry.description, className: "xs_hide"},
-            {name: entry.biomes[0], className: "xs_hide"}
+            {name: entry.biomes[0], className: "xs_hide"},
+            {name: entry.description, className: "xs_hide"}
         ];
         addTableRow(rowData, table);
     }

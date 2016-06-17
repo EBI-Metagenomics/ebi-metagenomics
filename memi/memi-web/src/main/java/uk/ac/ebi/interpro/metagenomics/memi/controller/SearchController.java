@@ -110,9 +110,7 @@ public class SearchController extends AbstractController implements IController 
         log.info("Requesting doAjaxSearch of " + this.getClass() + "...");
         String jsonSearchForm = URLDecoder.decode(encodedJsonForm, "UTF-8");
         Gson gson = new Gson();
-        EBISearchForm searchForm = gson.fromJson(jsonSearchForm, EBISearchForm.class);
-        EBISearchResults results = new EBISearchResults();
-        results.setSearchText(searchForm.getSearchText());
+        EBISearchResults results = gson.fromJson(jsonSearchForm, EBISearchResults.class);
         String jsonResults = ebiSearchTool.search(results);
         return jsonResults;
     }
