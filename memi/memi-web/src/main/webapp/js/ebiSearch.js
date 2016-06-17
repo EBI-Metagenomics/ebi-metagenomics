@@ -95,9 +95,12 @@ Initialisation methods
  * @param disabledList
  */
 var setupJQueryTabs = function(container, disabledList) {
+    $(container).tabs();
+    /*
     $(container).tabs({
         disabled: disabledList,
     });
+    */
 };
 
 /**
@@ -139,7 +142,7 @@ var displayTabHeader = function(data) {
                 tabItem.appendChild(tabLink)
                 tabList.appendChild(tabItem);
             }
-            tabContainer.appendChild(tabList);
+            tabContainer.insertBefore(tabList, document.getElementById("tabDiv"));
             setupJQueryTabs(tabContainer, disabledList);
         } else {
             console.log("Tabs already exist");
@@ -487,7 +490,7 @@ var displayPagination = function(data, dataType) {
  * @param tab
  */
 var displayAllData = function(data, tab) {
-
+    var tabContainer = displayTabHeader(data);
     for (i in data.dataTypes) {
         var dataType = data.dataTypes[i];
         var dataTypeContainer = document.getElementById(dataType);
@@ -499,7 +502,6 @@ var displayAllData = function(data, tab) {
             console.log("Expected to find div with id " + dataType);
         }
     }
-    var tabContainer = displayTabHeader(data);
 }
 
 /**

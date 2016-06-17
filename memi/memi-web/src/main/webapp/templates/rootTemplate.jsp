@@ -244,11 +244,9 @@
                         <div class="left">
                             <label>
                                 <form:input path="searchText" type="search" id="local-searchbox" />
+                                <span class="examples">&nbsp; &nbsp;&nbsp;<a href="#">&nbsp;</a>&nbsp; <a href="#">&nbsp;</a>&nbsp; <a
+                                        href="#">&nbsp;</a></span>
                             </label>
-                         <%--<span class="examples">&nbsp; &nbsp;&nbsp;<a href="#">&nbsp;</a>&nbsp; <a href="#">&nbsp;</a>&nbsp; <a--%>
-                                                                <%--href="#">&nbsp;</a></span>--%>
-                            <span class="examples" style="visibility: hidden;">Examples: <a href="#">ERP002477</a>, <a href="#">Human gut</a>, <a
-                                    href="#">Host-associated: Arthropoda</a></span>
                         </div>
 
                         <div class="right">

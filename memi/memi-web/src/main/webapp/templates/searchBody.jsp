@@ -24,34 +24,33 @@
         </div>
     </form:form>
 
-    <div id="searchTabs" class="grid_24">
+    <div class="grid_24"  id="searchTabs">
+        <div id="tabDiv"></div>
+        <div id="projects">
+            <div class="grid_5 alpha" id="projects-searchFacets"></div>
 
-            <div id="projects">
-                <div class="grid_5 alpha" id="projects-searchFacets"></div>
-
-                <div class="grid_19 omega">
-                    <div class="table-margin-r" id="projects-searchData"></div>
-                    <div id="projects-searchPagination" class="table-pagination"></div>
-                </div>
+            <div class="grid_19 omega">
+                <div class="table-margin-r" id="projects-searchData"></div>
+                <div id="projects-searchPagination" class="table-pagination"></div>
             </div>
+        </div>
+        <div id="samples">
+            <div class="grid_5 alpha" id="samples-searchFacets"></div>
 
-            <div id="samples">
-                <div class="grid_5 alpha" id="samples-searchFacets"></div>
-
-                <div class="grid_19 omega">
-                    <div class="table-margin-r" id="samples-searchData"></div>
-                    <div id="samples-searchPagination" class="table-pagination"></div>
-                </div>
+            <div class="grid_19 omega">
+                <div class="table-margin-r" id="samples-searchData"></div>
+                <div id="samples-searchPagination" class="table-pagination"></div>
             </div>
+        </div>
 
-            <div id="runs">
-                <div class="grid_5 alpha" id="runs-searchFacets"></div>
+        <div id="runs">
+            <div class="grid_5 alpha" id="runs-searchFacets"></div>
 
-                <div class="grid_19 omega">
-                    <div class="table-margin-r" id="runs-searchData"></div>
-                    <div id="runs-searchPagination" class="table-pagination"></div>
-                </div>
+            <div class="grid_19 omega">
+                <div class="table-margin-r" id="runs-searchData"></div>
+                <div id="runs-searchPagination" class="table-pagination"></div>
             </div>
+        </div>
 
     </div>
 </div>
