@@ -450,10 +450,26 @@ var displayPagination = function(data, dataType) {
         prevButton.type = "button";
         prevButton.id = dataType + "-prevPage";
         prevButton.value = "Previous";
+        if (data[dataType].page <= 1 ) {
+            prevButton.disabled = true;
+        }
         var nextButton = document.createElement("input");
         nextButton.type = "button";
         nextButton.id = dataType + "-nextPage";
         nextButton.value = "Next";
+        if (data[dataType].page >= data[dataType].maxPage) {
+            nextButton.disabled = true;
+        }
+
+        prevButton.addEventListener('click', function(event) {
+            fetchDataViaAjax(dataType, data[dataType].page - 1);
+        });
+
+        nextButton.addEventListener('click', function(event) {
+            fetchDataViaAjax(dataType, data[dataType].page + 1);
+        });
+
+
         paginationContainer.appendChild(prevButton);
         paginationContainer.innerHTML += " Page " + data[dataType].page + " of " + data[dataType].maxPage + " ";
         paginationContainer.appendChild(nextButton);
