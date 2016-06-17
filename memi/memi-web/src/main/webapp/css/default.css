@@ -75,11 +75,7 @@ div#headerdiv #global-masthead .nav a:link {float: none;}
 div#headerdiv { background-color: #fff; font-size:100%; font-family: Verdana, sans-serif; }/*replace default font-size: 11px;*/
 div#local-masthead ul li.active-trail a:link, div#local-masthead ul li.active-trail a:visited {padding-top: 2px;border-bottom: 3px solid #666;background-color: #111;}/*style not defined in mitigation*/
 div#local-masthead ul li.active, div#local-masthead ul li.active-trail { background-color: #111; }  /*style not defined in mitigation*/
-/*responsive search that make it behave strangely*/
-@media only screen and (min-width: 1100px){
-div#local-search form, form#local-search {
-    float: none;
-}}
+
 /*/change to ebi-mitigation.css*/
 
 /*imported from ebi-visual.css*/
@@ -417,7 +413,7 @@ table.dataTable.no-footer {border-bottom: 1px solid #D5D5D5;}
 .dataTables_wrapper .dataTables_filter {padding-right: 15px;}/*little extra to align filter to the table*/
 .dataTables_wrapper {position: relative;clear: both;*zoom: 1; zoom: 1;}
 .dataTables_wrapper .dataTables_length {float: left;}/*show X number of entries*/
-.dataTables_wrapper .dataTables_filter {float: right; text-align: right;}
+.dataTables_wrapper .dataTables_filter { text-align: right; } /*float: right;*/
 .dataTables_wrapper .dataTables_filter input { margin-left: 0.5em;}
 .dataTables_wrapper .dataTables_info {clear: both; float: left; padding-top: 0.755em;}/*showing X to X of X entries*/
 .dataTables_wrapper .dataTables_paginate {float: right; text-align: right; padding-top: 0.25em;}
@@ -1017,7 +1013,7 @@ overflow:auto;
 
 .form_row input {float:left; }
 
-.filter_button {color:#cecece; margin-left:94px;}
+.filter_button {color:#cecece; text-align: center}
 
 /*run page overview*/
 .result_row {padding: 4px 0px; border: 0px solid #ffaa22; overflow:auto;}
@@ -1182,7 +1178,18 @@ background: url(../img/bgd_contentfull_menu.gif) -14px;
 border: 0px solid #556f8c;
 margin-left:9px;
 }
-
+.filter_form label.study_search {
+    width: 35%;
+    float: left;
+    text-align: right;
+    padding-right: 10px;
+    color: #606060;
+}
+.filter_form div.lineage {
+    display: table;
+    padding-left: 4px;
+    font-size: 0.9em;
+}
 #map_canvas, #map_country {float:right; border: 1px solid #006AF6;display:block;width:50%;height:140px;}/*google map*/
 
 /*login window*/

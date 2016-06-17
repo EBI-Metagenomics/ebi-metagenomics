@@ -108,7 +108,7 @@ public class MemiTools {
 
         // add 1:1 mapping biomes
         List<Biome> biomes = biomeDAO.readByLineages("root:Environmental:Terrestrial:Soil", "root:Environmental:Air", "root:Engineered",
-                "root:Environmental:Aquatic:Freshwater", "root:Host-associated:Human:Digestive system:Large intestine",
+                "root:Environmental:Aquatic:Freshwater", "root:Host-associated:Human:Digestive system",
                 "root:Environmental:Aquatic:Marine", "root:Engineered:Wastewater", "root:Host-associated:Human", "root:Host-associated",
                 "root:Host-associated:Plants", "root:Environmental:Terrestrial:Volcanic", "root:Environmental:Aquatic:Thermal springs",
                 "root:Environmental:Terrestrial:Rock-dwelling (subaerial biofilm)", "root:Environmental:Aquatic:Freshwater:Groundwater:Cave water");
@@ -123,15 +123,15 @@ public class MemiTools {
             } else if (biomeName.equalsIgnoreCase("Freshwater")) {
                 MemiTools.biomeIconCSSMap.put(biome.getBiomeId(), "freshwater_b");
                 MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Freshwater");
-            } else if (biomeName.equalsIgnoreCase("Host-associated")) {
-                MemiTools.biomeIconCSSMap.put(biome.getBiomeId(), "non_human_host_b");
-                MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Non-human host");
+//            } else if (biomeName.equalsIgnoreCase("Host-associated")) {
+//                MemiTools.biomeIconCSSMap.put(biome.getBiomeId(), "non_human_host_b");
+//                MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Non-human host");
             } else if (biomeName.equalsIgnoreCase("Human")) {
                 MemiTools.biomeIconCSSMap.put(biome.getBiomeId(), "human_host_b");
-                MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Human");
-            } else if (biomeName.equalsIgnoreCase("Large intestine")) {
+                MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Host-associated human");
+            } else if (biomeName.equalsIgnoreCase("Digestive system")) {
                 MemiTools.biomeIconCSSMap.put(biome.getBiomeId(), "human_gut_b");
-                MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Human gut");
+                MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Human digestive system");
             } else if (biomeName.equalsIgnoreCase("Marine")) {
                 MemiTools.biomeIconCSSMap.put(biome.getBiomeId(), "marine_b");
                 MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Marine");
@@ -143,7 +143,7 @@ public class MemiTools {
                 MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Wastewater");
             } else if (biomeName.equalsIgnoreCase("Plants")) {
                 MemiTools.biomeIconCSSMap.put(biome.getBiomeId(), "plant_host_b");
-                MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Plants");
+                MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Host-associated plant");
             } else if (biomeName.equalsIgnoreCase("Volcanic")) {
                 MemiTools.biomeIconCSSMap.put(biome.getBiomeId(), "vulcano_b");
                 MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Volcanic");
@@ -171,6 +171,11 @@ public class MemiTools {
             MemiTools.biomeIconCSSMap.put(biome.getBiomeId(), "forest_b");
             MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Forest soil");
         }
+        //add Host-associated mammals biome
+        Biome biome = biomeDAO.readByLineage("root:Host-associated:Mammals");
+        MemiTools.biomeIconCSSMap.put(biome.getBiomeId(), "non_human_host_b");
+        MemiTools.biomeIconTitleMap.put(biome.getBiomeId(), "Host-associated mammals");
+
     }
 
 

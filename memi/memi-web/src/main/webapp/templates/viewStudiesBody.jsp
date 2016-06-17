@@ -20,7 +20,7 @@
             <fieldset>
                 <div class="result_row">
 
-                    <label for="text">Text:</label>
+                    <label for="text" class="study_search">Text:</label>
                         <%-- Autocompletion temporarily disabled since it will not scale well with this current implementaion.
           Need to get the autocomplete text from the database before this feature is activated! --%>
                         <%--<form:input id="autocomplete" path="searchTerm"/><br/>--%>
@@ -28,8 +28,9 @@
                     <form:errors path="searchTerm" cssClass="error"/>
                 </div>
 
+                <c:if test="${empty model.filter.biomeLineage}">
                 <div class="result_row">
-                    <label for="biome">Biomes:</label>
+                    <label for="biome" class="study_search">Biomes:</label>
                      <span>
                       <form:select id="biomeId" path="biome">
                           <form:option value="ALL" label="All"></form:option>
@@ -54,10 +55,22 @@
                       </form:select>
                      </span>
                 </div>
-
+                </c:if>
+                <c:if test="${not empty model.filter.biomeLineage}">
+                    <div class="result_row">
+                        <label for="biome" class="study_search">Biome Lineage:</label>
+                        <div class="lineage">${model.filter.formattedBiomeLineage}
+                            <c:if test="${ not model.filter.includingChildren}">*<br/>
+                                *<span class="list_warn">Excluding children</span>
+                            </c:if>
+                        </div>
+                        <form:hidden path="includingChildren" id="includingChildren" value="${model.filter.includingChildren}" />
+                        <form:hidden path="biomeLineage" id="biomeLineage" value="${model.filter.biomeLineage}" />
+                    </div>
+                </c:if>
                 <c:if test="${not empty model.submitter}">
                     <div class="result_row">
-                        <label for="privacy">Privacy:</label>
+                        <label for="privacy" class="study_search">Privacy:</label>
                      <span>
                       <form:select id="studyVisibility" path="studyVisibility">
                           <form:options items="${model.studyVisibilities}"/>
@@ -124,10 +137,10 @@
                         <c:when test="${model.pagination.existPreviousStartPos}">
 
                             <div class="pag-first"><a
-                                    href="<c:url value="${baseURL}/projects/doSearch?searchTerm=${model.filter.searchTerm}&studyVisibility=${model.filter.studyVisibility.upperCaseString}&biome=${model.filter.biome}&search=Search&startPosition=${model.pagination.start}"/>"
+                                    href="<c:url value="${baseURL}/projects/doSearch?searchTerm=${model.filter.searchTerm}&studyVisibility=${model.filter.studyVisibility.upperCaseString}&biomeLineage=${model.filter.biomeLineage}&includingChildren=${model.filter.includingChildren}&biome=${model.filter.biome}&search=Search&startPosition=${model.pagination.start}"/>"
                                     id="csv" title="<c:out value="${firstId}"/>"></a></div>
                             <div class="pag-prev"><a
-                                    href="<c:url value="${baseURL}/projects/doSearch?searchTerm=${model.filter.searchTerm}&studyVisibility=${model.filter.studyVisibility.upperCaseString}&biome=${model.filter.biome}&search=Search&startPosition=${model.pagination.previousStartPos}"/>"
+                                    href="<c:url value="${baseURL}/projects/doSearch?searchTerm=${model.filter.searchTerm}&studyVisibility=${model.filter.studyVisibility.upperCaseString}&biomeLineage=${model.filter.biomeLineage}&includingChildren=${model.filter.includingChildren}&biome=${model.filter.biome}&search=Search&startPosition=${model.pagination.previousStartPos}"/>"
                                     id="csv" title="<c:out value="${prevId}"/>"></a></div>
                         </c:when>
                         <c:otherwise>
@@ -139,10 +152,10 @@
                     <c:choose>
                         <c:when test="${model.pagination.existNextStartPos}">
                             <div class="pag-next"><a
-                                    href="<c:url value="${baseURL}/projects/doSearch?searchTerm=${model.filter.searchTerm}&studyVisibility=${model.filter.studyVisibility.upperCaseString}&biomeLineage=${model.filter.biomeLineage}&biome=${model.filter.biome}&search=Search&startPosition=${model.pagination.nextStartPos}"/>"
+                                    href="<c:url value="${baseURL}/projects/doSearch?searchTerm=${model.filter.searchTerm}&studyVisibility=${model.filter.studyVisibility.upperCaseString}&biomeLineage=${model.filter.biomeLineage}&includingChildren=${model.filter.includingChildren}&biome=${model.filter.biome}&search=Search&startPosition=${model.pagination.nextStartPos}"/>"
                                     id="csv" title="<c:out value="${nextId}"/>"></a></div>
                             <div class="pag-last"><a
-                                    href="<c:url value="${baseURL}/projects/doSearch?searchTerm=${model.filter.searchTerm}&studyVisibility=${model.filter.studyVisibility.upperCaseString}&biomeLineage=${model.filter.biomeLineage}&biome=${model.filter.biome}&search=Search&startPosition=${model.pagination.lastLinkPosition}"/>"
+                                    href="<c:url value="${baseURL}/projects/doSearch?searchTerm=${model.filter.searchTerm}&studyVisibility=${model.filter.studyVisibility.upperCaseString}&biomeLineage=${model.filter.biomeLineage}&includingChildren=${model.filter.includingChildren}&biome=${model.filter.biome}&search=Search&startPosition=${model.pagination.lastLinkPosition}"/>"
                                     id="csv" title="<c:out value="${lastId}"/>"></a></div>
                         </c:when>
                         <c:otherwise>

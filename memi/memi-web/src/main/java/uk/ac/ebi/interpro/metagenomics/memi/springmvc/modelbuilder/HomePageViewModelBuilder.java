@@ -53,6 +53,18 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
      */
     private final int maxRowNumberOfLatestItems = 15;
 
+    private final String[] lineages = new String[]{
+            "root:Environmental:Terrestrial:Soil",
+            "root:Environmental:Aquatic:Marine",
+            "root:Host-associated:Human",
+            "root:Host-associated:Human:Digestive system",
+            "root:Host-associated:Plants",
+            "root:Host-associated:Mammals",
+            "root:Engineered",
+            "root:Environmental:Terrestrial:Soil:Forest soil",
+            "root:Environmental:Aquatic:Freshwater",
+            "root:Environmental:Terrestrial:Soil:Grasslands"
+    };
 
     public HomePageViewModelBuilder(UserManager sessionMgr, EBISearchForm ebiSearchForm, String pageTitle, List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer,
                                     StudyDAO studyDAO, SampleDAO sampleDAO, RunDAO runDAO, BiomeDAO biomeDAO, SubmissionContactDAO submissionContactDAO) {
@@ -108,7 +120,7 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
         }
         // If case: if nobody is logged in
         if (submitter == null) {
-            Map<String, Long> biomeCountMap = buildBiomeCountMap();
+            List<BiomeLogoModel> biomeCountMap = buildBiomeCountMap();
             return new HomePageViewModel(submitter, ebiSearchForm, pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems, publicSamplesCount,
                     privateSamplesCount, publicStudiesCount, privateStudiesCount, studies, publicRunCount, privateRunCount, biomeCountMap, transformedExperimentCountMap, numOfDataSets,
                     studyToSampleCountMap, studyToRunCountMap);
@@ -169,8 +181,29 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
         }
         return result;
     }
+    private List<BiomeLogoModel> buildBiomeCountMap() {
+        final List<BiomeLogoModel> biomesCountMap = new ArrayList<BiomeLogoModel>();
+        for (String lineage : lineages) {
+            uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Biome biome = biomeDAO.readByLineage(lineage);
+            biomesCountMap.add(
+                    new BiomeLogoModel(
+                            MemiTools.getBiomeIconTitle(biome, biomeDAO),
+                            biome.getLineage(),
+                            MemiTools.getBiomeIconCSSClass(biome, biomeDAO),
+                            super.countStudiesFilteredByBiomes(studyDAO, biomeDAO, biome.getLineage())
+                    )
+            );
+        }
+        biomesCountMap.sort(new Comparator<BiomeLogoModel>() {
+            @Override
+            public int compare(BiomeLogoModel biome1, BiomeLogoModel biome2) {
+                return (int)biome2.getNumberOfProjects()-(int)biome1.getNumberOfProjects();
+            }
+        });
 
-    private Map<String, Long> buildBiomeCountMap() {
+        return biomesCountMap;
+    }
+    private Map<String, Long> buildBiomeCountMapOld() {
         final Map<String, Long> biomesCountMap = new HashMap<String, Long>();
         //Add number of soil biomes
         long studyCount = super.countStudiesFilteredByBiomes(studyDAO, biomeDAO, Biome.SOIL.getLineages());
@@ -275,4 +308,5 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
         }
         return samples;
     }
+
 }
