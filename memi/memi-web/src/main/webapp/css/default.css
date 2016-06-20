@@ -75,11 +75,7 @@ div#headerdiv #global-masthead .nav a:link {float: none;}
 div#headerdiv { background-color: #fff; font-size:100%; font-family: Verdana, sans-serif; }/*replace default font-size: 11px;*/
 div#local-masthead ul li.active-trail a:link, div#local-masthead ul li.active-trail a:visited {padding-top: 2px;border-bottom: 3px solid #666;background-color: #111;}/*style not defined in mitigation*/
 div#local-masthead ul li.active, div#local-masthead ul li.active-trail { background-color: #111; }  /*style not defined in mitigation*/
-/*responsive search that make it behave strangely*/
-@media only screen and (min-width: 1100px){
-div#local-search form, form#local-search {
-    float: none;
-}}
+
 /*/change to ebi-mitigation.css*/
 
 /*imported from ebi-visual.css*/
