@@ -68,6 +68,7 @@ var getExportingStructure = function (urlToFile,content) {
     };
 }
 var drawNumberOfReadsChart = function (rawdata, numberOfLines, sequenceCount, urlToFile) {
+    if (typeof rawdata == "undefined" || rawdata == null) return;
     var data = [],
         categories = [
             "Initial Reads",
@@ -76,28 +77,40 @@ var drawNumberOfReadsChart = function (rawdata, numberOfLines, sequenceCount, ur
             "Ambiguous base filtering",
             "Clustering",
             "Repeat masking and filtering",
-        ].splice(0, numberOfLines);
+        ].splice(0, numberOfLines),
+        remainders = 0;
 
     rawdata.split('\n')
         .splice(0, numberOfLines)
         .forEach(function(line,i){
-            var line = line.split("\t");
+            var line = line.split("\t"),
+                value =Number(line[1]);
             //categories.push(line[0]);
-            data.push({
-                y: line[1]*1,
-                x:i,
-                color: "#058dc7"
-            });
+            if (value>-1)
+                data.push({
+                    y: value,
+                    x: data.length,
+                    color: "#058dc7"
+                });
+            else
+                categories[i] = null;
+
+            if (i==3) remainders = value;
         });
 
-    if (sequenceCount!= null && data[3].y > sequenceCount) {
+    if (sequenceCount!= null && remainders > sequenceCount) {
         categories.push("Reads after sampling for QC");
         data.push({
-            x: numberOfLines,
+            x: data.length,
             y: sequenceCount,
             color: "#8dc7c7"
         });
     }
+    if (data.length<2){
+        $('#qc_overview').html("<div class='msg_error'>There are not Quality control results associatted with this sample.</div>");
+        return;
+    }
+    categories = categories.filter(function(value){ return value!=null});
     var length = data[0],
         series = [{
             name : "Reads Filtered out",
@@ -114,7 +127,7 @@ var drawNumberOfReadsChart = function (rawdata, numberOfLines, sequenceCount, ur
             color: "#058dc7",
             pointPadding: -0.1
         }];
-    if (sequenceCount!= null && data[3].y > sequenceCount)
+    if (sequenceCount!= null && remainders > sequenceCount)
         series.push({
             name: "Reads after sampling",
             color: "#8dc7c7"
@@ -149,6 +162,7 @@ var drawNumberOfReadsChart = function (rawdata, numberOfLines, sequenceCount, ur
 };
 
 var drawSequenceLengthHistogram = function (rawdata, isFromSubset, stats,urlToFile) {
+    if (typeof rawdata == "undefined" || rawdata == null) return;
     var data = rawdata.split('\n').filter(function(line){ return line.trim()!=""})
         .map(function(line){
             return line.split("\t").map(function(v){ return 1*v; });
@@ -193,6 +207,7 @@ var drawSequenceLengthHistogram = function (rawdata, isFromSubset, stats,urlToFi
 };
 
 var drawSequncesLength = function(data) {
+    if (typeof data == "undefined" || data == null) return;
     $('#seq_stats').highcharts({
         chart: {
             type: 'bar',
@@ -244,6 +259,7 @@ var drawSequncesLength = function(data) {
 };
 
 var drawGCContent = function(data) {
+    if (typeof data == "undefined" || data == null) return;
     $('#seq_gc_stats').highcharts({
         chart: {
             type: 'bar',
@@ -308,6 +324,7 @@ var drawGCContent = function(data) {
 };
 
 var drawSequenceGCDistribution = function (rawdata,isFromSubset, stats, urlToFile) {
+    if (typeof rawdata == "undefined" || rawdata == null) return;
     var data = rawdata.split('\n').map(function(line){
         if (line.trim()!="")
             return line.split("\t").map(function(v){ return 1*v; });
@@ -357,6 +374,7 @@ var drawSequenceGCDistribution = function (rawdata,isFromSubset, stats, urlToFil
 };
 
 var drawNucleotidePositionHistogram = function (rawdata,isFromSubset,urlToFile) {
+    if (typeof rawdata == "undefined" || rawdata == null) return;
     var data = {"pos":[], "A":[], "G":[], "T":[], "C":[], "N":[]}
     var colors= {
         "A": "rgb(16, 150, 24)",
