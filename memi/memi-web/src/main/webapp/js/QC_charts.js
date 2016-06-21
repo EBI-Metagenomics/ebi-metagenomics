@@ -107,7 +107,7 @@ var drawNumberOfReadsChart = function (rawdata, numberOfLines, sequenceCount, ur
         });
     }
     if (data.length<2){
-        $('#qc_overview').html("<div class='msg_error'>There are not Quality control results associatted with this sample.</div>");
+        $('#qc_overview').html("<div class='msg_error'>There is no quality control data available for this run.</div>");
         return;
     }
     categories = categories.filter(function(value){ return value!=null});
