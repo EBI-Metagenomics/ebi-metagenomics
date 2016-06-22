@@ -55,9 +55,10 @@ var fetchDataViaAjax = function(dataType, page) {
 
         //setup the request
         var httpReq = new XMLHttpRequest();
-        var url = "doAjaxSearch";
+        var url = "search/doAjaxSearch";
         httpReq.open("POST", url);
         httpReq.setRequestHeader("Content-type", "application/json");
+        httpReq.setRequestHeader("Accept", "application/json");
 
         //handle response
         httpReq.onreadystatechange = function(event) {
