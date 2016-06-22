@@ -134,9 +134,9 @@ var displayTabHeader = function(data) {
                 var titleText = dataType.charAt(0).toUpperCase() + dataType.slice(1); //capitalise first letter
                 //tabLink.text = titleText;
                 titleText += " (" + data[dataType].numberOfHits + ")";
-                var tabLinkSpan = document.createElement("span");
-                tabLinkSpan.innerHTML = titleText;
-                //tabLink.innerHTML = titleText;
+                //var tabLinkSpan = document.createElement("span");
+                //tabLinkSpan.innerHTML = titleText;
+                tabLink.innerHTML = titleText;
                 tabItem.appendChild(tabLink)
                 tabList.appendChild(tabItem);
             }
