@@ -2,6 +2,11 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
+<div id="spinnerDiv" class="modal">
+    <div class="modal-spinner">
+        <img id="loader" src="/metagenomics/img/spinner.gif" />
+    </div>
+</div>
 <div class="grid_24" id="mainContainer">
     <h2>Search EBI Metagenomics</h2>
 
@@ -51,6 +56,6 @@
                 <div id="runs-searchPagination" class="table-pagination"></div>
             </div>
         </div>
-
     </div>
+
 </div>

@@ -2,6 +2,12 @@
  * Created by maq on 06/04/2016.
  */
 
+//load css for the modal box
+var linkElement = document.createElement("link");
+linkElement.rel = "stylesheet";
+linkElement.href = "/metagenomics/css/ajax-modal.css"; //Replace here
+document.head.appendChild(linkElement);
+
 var HIDDEN_CLASS = "this_hide";
 var FACET_SEPARATOR = "____";
 
@@ -51,8 +57,7 @@ var fetchDataViaAjax = function(dataType, page) {
 
         };
         var jsonQuery = JSON.stringify(query);
-        console.log(jsonQuery);
-
+        
         //setup the request
         var httpReq = new XMLHttpRequest();
         var url = "/metagenomics/search/doAjaxSearch";
@@ -63,6 +68,7 @@ var fetchDataViaAjax = function(dataType, page) {
         //handle response
         httpReq.onreadystatechange = function(event) {
             if (httpReq.readyState == XMLHttpRequest.DONE) {
+                document.getElementById("spinnerDiv").style.display = "none";
                 var readyState = httpReq.readyState;
                 var response = httpReq.response;
                 var data = JSON.parse(response);
@@ -78,11 +84,12 @@ var fetchDataViaAjax = function(dataType, page) {
 
         //error handling
         httpReq.addEventListener("error", function(event){
+            document.getElementById("spinnerDiv").style.display = "none";
             console.log("Ajax error");
             searchForm.submit();
         });
 
-        console.log(jsonQuery);
+        document.getElementById("spinnerDiv").style.display = "block";
         httpReq.send(jsonQuery);
 
     } else {

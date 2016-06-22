@@ -112,6 +112,12 @@ public class EBISearchTool {
 
         } catch (InternalServerErrorException e) {
             results.setError("Something has gone wrong with the search server. Please try again later and report this error to metagenomics-help@ebi.ac.uk");
+            results.getRuns().setNumberOfHits(0);
+            results.getRuns().setMaxPage(0);
+            results.getProjects().setNumberOfHits(0);
+            results.getProjects().setMaxPage(0);
+            results.getSamples().setNumberOfHits(0);
+            results.getSamples().setMaxPage(0);
         }
         String json = gson.toJson(results);
         return json;
