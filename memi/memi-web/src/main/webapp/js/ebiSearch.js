@@ -55,7 +55,7 @@ var fetchDataViaAjax = function(dataType, page) {
 
         //setup the request
         var httpReq = new XMLHttpRequest();
-        var url = "search/doAjaxSearch";
+        var url = "/metagenomics/search/doAjaxSearch";
         httpReq.open("POST", url);
         httpReq.setRequestHeader("Content-type", "application/json");
         httpReq.setRequestHeader("Accept", "application/json");
@@ -66,6 +66,10 @@ var fetchDataViaAjax = function(dataType, page) {
                 var readyState = httpReq.readyState;
                 var response = httpReq.response;
                 var data = JSON.parse(response);
+                if (data.error != null) {
+                    var error = data.error;
+                    console.log("Got error: " + error);
+                }
                 displayFacets(data[dataType].facets, dataType, checkedFacets);
                 displaySearchResults(data, dataType);
                 displayPagination(data, dataType);
