@@ -313,7 +313,7 @@ var displayProjectTable = function(data, container) {
         var rowData = [
             {
                 name: entry.identifier,
-                url: "http://metagenomics/projects/" + entry.identifier
+                url: "/metagenomics/projects/" + entry.identifier
             },
             {name: entry.name},
             {name: entry.biomes[0], className: "xs_hide"},
@@ -350,11 +350,11 @@ var displaySampleTable = function(data, container) {
         var rowData = [
             {
                 name: entry.identifier,
-                url: "http://metagenomics/projects/ " + entry.project + "/samples/" + entry.identifier},
+                url: "/metagenomics/projects/ " + entry.project + "/samples/" + entry.identifier},
             {
                 name: entry.project,
                 className: "xs_hide",
-                url: "http://metagenomics/projects/ " + entry.project,
+                url: "/metagenomics/projects/ " + entry.project,
             },
             {name: entry.name},
             {name: entry.description, className: "xs_hide"},
@@ -392,7 +392,7 @@ var displayRunTable = function(data, container) {
         var rowData = [
             {
                 name: entry.identifier,
-                url: "http://metagenomics/projects/ "
+                url: "/metagenomics/projects/ "
                 + entry.project + "/samples/"
                 + entry.sample + "/runs/"
                 + entry.identifier + "/results/versions/"
@@ -401,7 +401,7 @@ var displayRunTable = function(data, container) {
             {
                 name: entry.sample,
                 className: "xs_hide",
-                url: "http://metagenomics/projects/ "
+                url: "/metagenomics/projects/ "
                 + entry.project + "/samples/"
                 + entry.sample,
 
@@ -409,7 +409,7 @@ var displayRunTable = function(data, container) {
             {
                 name: entry.project,
                 className: "xs_hide",
-                url: "http://metagenomics/projects/ " + entry.project,
+                url: "/metagenomics/projects/ " + entry.project,
             },
             {
                 name: entry.experimentType
@@ -417,7 +417,7 @@ var displayRunTable = function(data, container) {
             {
                 name: entry.pipelineVersion,
                 className: "xs_hide",
-                url: "http://metagenomics/pipelines/" + entry.pipelineVersion,
+                url: "/metagenomics/pipelines/" + entry.pipelineVersion,
             },
 
         ];
