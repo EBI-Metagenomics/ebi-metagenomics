@@ -3,7 +3,7 @@ import static junit.framework.Assert.*;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
 
 import org.junit.After;
@@ -40,7 +40,7 @@ public class NewTest {
     }
     @Before
     public void beforeTest() {
-        driver = new ChromeDriver();
+        driver = new FirefoxDriver();
         driver.get(memiURL);
 
         screenshotHelper = new ScreenshotHelper();
