@@ -1,10 +1,11 @@
-package uk.ac.ebi.interpro.metagenomics.memi.functional;
+package uk.ac.ebi.interpro.metagenomics.memi.integration;
 import static junit.framework.Assert.*;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import java.util.UUID;
 
 import org.junit.After;
 import org.junit.Before;
@@ -15,12 +16,16 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.io.File;
 import java.io.IOException;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 public class NewTest {
     private WebDriver driver;
     private ScreenshotHelper screenshotHelper;
     private boolean takeScreenShot = true;
     private WebDriverWait wait;
-    private String memiURL= "https://www.ebi.ac.uk/metagenomics/";
+    private String memiURL= "http://localhost:8082/metagenomics/";
+    private final static Log log = LogFactory.getLog(NewTest.class);
 
     @Test
     public void testHomePage() {
@@ -41,16 +46,23 @@ public class NewTest {
     @Before
     public void beforeTest() {
         driver = new FirefoxDriver();
+        wait = new WebDriverWait(driver, 3);
         driver.get(memiURL);
-
+        wait.until(ExpectedConditions.titleContains("EBI"));
         screenshotHelper = new ScreenshotHelper();
         takeScreenShot = true;
-        wait = new WebDriverWait(driver, 3);
     }
     @After
     public void afterTest() throws IOException {
-        if (takeScreenShot)
-            screenshotHelper.saveScreenshot("screenshot.png");
+        if (takeScreenShot) {
+            String uuid = "target/screenshot_"+UUID.randomUUID().toString()+".png";
+            log.error("Trying to create a screenshot for the failed test: ["+uuid+"]");
+            try {
+                screenshotHelper.saveScreenshot(uuid);
+            } catch (Exception e){
+                log.error("Screenshot not saved: "+e);
+            }
+        }
         driver.quit();
     }
     private class ScreenshotHelper {
