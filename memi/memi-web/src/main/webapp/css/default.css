@@ -1919,6 +1919,7 @@ ul.sample_list li {list-style: none; display: inline;}
 .hlight-info .home_box img {margin: 0 9px 9px 0; float:left; width:17%;}
 .home_box.alpha {margin: 0 0 18px 18px;}
 .home_box.omega {margin: 0 18px 18px 0;}
+.home_box.alpha.omega {margin: 18px;}
 .home_box h2 {margin:0 0 9px 0; padding:0;font-size: 168%;}
 
 .badge {display: inline-block;  min-width: 10px; padding: 3px 7px;  font-size: 50%; font-weight: bold;  line-height: 1;  color: #fff;  text-align: center;   white-space: nowrap; vertical-align: middle;  background-color: #777;  border-radius: 10px; }
