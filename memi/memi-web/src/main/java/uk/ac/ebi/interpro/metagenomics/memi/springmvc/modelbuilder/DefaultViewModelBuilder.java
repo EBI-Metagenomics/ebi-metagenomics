@@ -3,9 +3,10 @@ package uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.UserManager;
 
 import java.util.List;
 
@@ -26,8 +27,9 @@ public class DefaultViewModelBuilder extends AbstractViewModelBuilder<ViewModel>
 
     private MemiPropertyContainer propertyContainer;
 
-    public DefaultViewModelBuilder(SessionManager sessionMgr, String pageTitle, List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer) {
-        super(sessionMgr);
+    public DefaultViewModelBuilder(UserManager sessionMgr, EBISearchForm ebiSearchForm, String pageTitle,
+                                   List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer) {
+        super(sessionMgr, ebiSearchForm);
         this.pageTitle = pageTitle;
         this.breadcrumbs = breadcrumbs;
         this.propertyContainer = propertyContainer;
@@ -36,6 +38,6 @@ public class DefaultViewModelBuilder extends AbstractViewModelBuilder<ViewModel>
     @Override
     public ViewModel getModel() {
         log.info("Building instance of " + ViewModel.class + "...");
-        return new ViewModel(getSessionSubmitter(sessionMgr), pageTitle, breadcrumbs, propertyContainer);
+        return new ViewModel(getSessionSubmitter(sessionMgr), getEbiSearchForm(), pageTitle, breadcrumbs, propertyContainer);
     }
 }

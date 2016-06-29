@@ -2,134 +2,108 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<div class="container_24" id="mainContainer">
+
+<div class="grid_24" id="mainContainer">
 
     <h2>Search EBI Metagenomics</h2>
-    <div class="grid_24 clearfix" id="content">
+    <form:form class="local-search-xs" action="${pageContext.request.contextPath}/search/doEbiSearch"
+               commandName="ebiSearchForm" method="POST">
+        <div class="grid_24">
 
-        <form:form id="searchForm" method="GET" action="${pageContext.request.contextPath}/search/doEbiSearch" commandName="ebiSearchForm">
-            <div class="grid_6 alpha" id="facets">
-                <c:choose>
-                    <c:when test="${not empty model.ebiSampleSearchResults
-                        && fn:length(model.ebiSampleSearchResults.facets) > 0}">
-                        <h3>Filter your results</h3>
-                        <c:forEach var="facet" items="${model.ebiSampleSearchResults.facets}">
-                            <c:if test="${fn:length(facet.values) > 0}">
-                                <h4>${facet.label}</h4>
-                                <form:checkboxes path="facets" items="${facet.values}" itemLabel="labelAndCount" itemValue="facetAndValue" element="div" />
-                            </c:if>
-                        </c:forEach>
-                    </c:when>
-                </c:choose>
-            </div>
-            <div class="grid_18 omega" id="searchInput">
+            <div class="grid_18 alpha">
+
                 <fieldset>
-                    <label for="searchText">Search: </label>
-                    <span>
-                        <form:input path="searchText" id="searchText"/>
-                    </span>
-                    <form:errors path="errorText" cssClass="error"/>
+                    <label>
+                        <form:input path="searchText" type="search"/>
+                    </label>
                 </fieldset>
-            </div>
 
-            <div class="grid_18 omega">
+            </div>
+            <div class="grid_6 omega"> <input type="submit" id="searchsubmit" name="searchsubmit" value="Search" class="submit"></div>
+
+        </div>
+    </form:form>
+    <div class="grid_24">
+
+        <div class="grid_5 alpha" id="facets"></div>
+
+
+        <div class="grid_19 omega">
+            <div class="table-margin-r">
                 <c:choose>
                     <c:when test="${not empty model.ebiSampleSearchResults}">
-                        <h3>Showing ${fn:length(model.ebiSampleSearchResults.entries)} out of ${model.ebiSampleSearchResults.numberOfHits} results</h3>
+                        <c:choose>
+                            <c:when test="${fn:length(model.ebiSampleSearchResults.entries) <= 0}">
+                                <h3>No results found</h3>
+                                <hr>
+                                <p><small class="text-muted">Powered by <a href="http://www.ebi.ac.uk/ebisearch/" class="ext" target="_blank">EBI Search</a></small></p>
+                            </c:when>
+                            <c:otherwise>
+                                <h3>Showing ${fn:length(model.ebiSampleSearchResults.entries)} out
+                                    of ${model.ebiSampleSearchResults.numberOfHits} results</h3>
+                            </c:otherwise>
+                        </c:choose>
                         <c:choose>
                             <c:when test="${fn:length(model.ebiSampleSearchResults.entries) > 0}">
-                                <c:forEach var="result" items="${model.ebiSampleSearchResults.entries}">
-                                    <a href="${pageContext.request.contextPath}/projects/${result.project}">${result.project}: </a><a href="${pageContext.request.contextPath}/projects/${result.project}/samples/${result.identifier}">${result.identifier}</a>: ${result.description}<br />
-                                </c:forEach>
-                                <div>
-                                    <input type="button" id="previousPage" value="Previous" />
-                                    <form:hidden id="currentPage" path="page"/>
-                                    <form:hidden id="maxPage" path="maxPage"/>
-                                    Page ${ebiSearchForm.page} of ${ebiSearchForm.maxPage}
-                                    <input type="button" id="nextPage" value="Next" />
-                                </div>
+                                <table border="1" class="table-light">
+                                    <thead>
+                                    <tr>
+                                        <th class="xs_hide">Project</th>
+                                        <th>Sample</th>
+                                        <th class="xs_hide">Name</th>
+                                        <th >Description</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <c:forEach var="result" items="${model.ebiSampleSearchResults.entries}">
+                                        <tr>
+                                            <td class="col_sm xs_hide">
+                                                <a href="${pageContext.request.contextPath}/projects/${result.project}">
+                                                        ${result.project}
+                                                </a>
+                                            </td>
+                                            <td class="col_sm ">
+                                                <a href="${pageContext.request.contextPath}/projects/${result.project}/samples/${result.identifier}">
+                                                        ${result.identifier}
+                                                </a>
+                                            </td>
+                                            <td class="xs_hide">
+                                                <c:choose>
+                                                    <c:when test="${fn:length(result.name)>70}">
+                                                        <c:set var="shortName" value="${fn:substring(result.description, 0, 70)}"/>
+                                                        ${shortName} ...
+                                                    </c:when>
+
+                                                    <c:otherwise>
+                                                        ${result.name}
+                                                    </c:otherwise>
+                                                </c:choose>
+
+                                            </td>
+                                            <td>
+                                                <c:choose>
+                                                    <c:when test="${fn:length(result.description)>200}">
+                                                        <c:set var="shortDesc" value="${fn:substring(result.description, 0, 200)}"/>
+                                                        ${shortDesc} ...
+                                                    </c:when>
+
+                                                    <c:otherwise>
+                                                        ${result.description}
+                                                    </c:otherwise>
+                                                </c:choose>
+
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                    </tbody>
+                                </table>
+                                <div id="searchPagination" class="table-pagination"></div>
                             </c:when>
                         </c:choose>
                     </c:when>
                 </c:choose>
-                <div>
-                    Powered by <a href="http://www.ebi.ac.uk/ebisearch/" target="_blank">EBI Search</a>
-                </div>
             </div>
+        </div>
 
-        </form:form>
     </div>
 </div>
-
-<script>$(function () { $("[data-toggle='tooltip']").tooltip(); });</script>
-<script>
-    $("#expand_button").click(function(){
-        $(".more_citations").slideToggle();
-        $("#expand_button").toggleClass("min");
-    });
-</script>
-<script>
-    /*
-    Handle addition of text to search textfield
-    */
-    var searchElement = document.getElementById("searchText");
-    searchElement.addEventListener("submit", function() {
-        resetPage();
-    });
-
-    /*
-    Handling of facet checkboxes. Triggers new search anytime a checkbox is changed
-     */
-    var checkboxes = document.querySelectorAll("input[name=facets]");
-    console.log("Checkboxes = " + checkboxes.length);
-    for(var i=0; i < checkboxes.length; i++) {
-        checkboxes[i].addEventListener("change", function(event){
-            resetPage();
-            document.getElementById("searchForm").submit();
-        });
-    }
-
-    /*
-    Handling of next/previous page clicks
-     */
-    var changePage = function(forward) {
-        var currentPageElement = document.getElementById("currentPage");
-        var currentPage = currentPageElement.value;
-        var nextPage = currentPage;
-        if(forward) {
-            nextPage++;
-        } else {
-            nextPage--;
-        }
-        currentPageElement.value = nextPage;
-        console.log("Changing Page = " + nextPage);
-        document.getElementById("searchForm").submit();
-    };
-
-    var nextPageElement = document.getElementById("nextPage");
-    var previousPageElement = document.getElementById("previousPage");
-    if (nextPageElement != null && previousPageElement != null) {
-        //disable previous button if on first page
-        var currentPage = document.getElementById("currentPage").value;
-        if (currentPage == 1) {
-            previousPageElement.disabled = true;
-        }
-        //disable next button if on last page (can also be the first page)
-        var maxPage = document.getElementById("maxPage").value;
-        if (currentPage == maxPage) {
-            nextPageElement.disabled = true;
-        }
-        nextPageElement.addEventListener("click", function() {changePage(true)});
-        previousPageElement.addEventListener("click", function() {changePage(false)});
-    }
-
-    /*
-    called when facet fields or text field is altered to ensure new search results
-    are displayed from page one onwards
-     */
-    var resetPage = function() {
-        var currentPageElement = document.getElementById("currentPage");
-        currentPageElement.value = 1;
-    }
-
-</script>

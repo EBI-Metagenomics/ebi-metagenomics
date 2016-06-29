@@ -1,6 +1,7 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
 
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 
@@ -17,8 +18,8 @@ public class CompareViewModel extends ViewModel {
 
     private List<Study> filteredStudies;
 
-    public CompareViewModel(Submitter submitter, String pageTitle, List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer, List<Study> filteredStudies) {
-        super(submitter, pageTitle, breadcrumbs, propertyContainer);
+    public CompareViewModel(Submitter submitter, EBISearchForm ebiSearchForm, String pageTitle, List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer, List<Study> filteredStudies) {
+        super(submitter, ebiSearchForm, pageTitle, breadcrumbs, propertyContainer);
         this.filteredStudies = filteredStudies;
     }
 

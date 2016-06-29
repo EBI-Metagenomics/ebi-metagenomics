@@ -4,6 +4,7 @@ import au.com.bytecode.opencsv.CSVReader;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.ExperimentTypeE;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob;
@@ -17,7 +18,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.tabActi
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.results.AbstractResultViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.AbstractViewModelBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.UserManager;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -51,7 +52,8 @@ public abstract class AbstractResultViewModelBuilder<E extends AbstractResultVie
     protected List<Breadcrumb> breadcrumbs;
 
 
-    protected AbstractResultViewModelBuilder(SessionManager sessionMgr,
+    protected AbstractResultViewModelBuilder(UserManager sessionMgr,
+                                             EBISearchForm ebiSearchForm,
                                              String pageTitle,
                                              List<Breadcrumb> breadcrumbs,
                                              MemiPropertyContainer propertyContainer,
@@ -59,7 +61,7 @@ public abstract class AbstractResultViewModelBuilder<E extends AbstractResultVie
                                              List<FunctionalAnalysisFileDefinition> functionalAnalysisFileDefinitions,
                                              List<ResultFileDefinitionImpl> taxonomicAnalysisFileDefinitions,
                                              AnalysisJob analysisJob) {
-        super(sessionMgr);
+        super(sessionMgr, ebiSearchForm);
         this.pageTitle = pageTitle;
         this.breadcrumbs = breadcrumbs;
         this.propertyContainer = propertyContainer;
@@ -69,9 +71,9 @@ public abstract class AbstractResultViewModelBuilder<E extends AbstractResultVie
         this.analysisJob = analysisJob;
     }
 
-    protected Submitter getSessionSubmitter(SessionManager sessionMgr) {
-        if (sessionMgr != null && sessionMgr.getSessionBean() != null) {
-            return sessionMgr.getSessionBean().getSubmitter();
+    protected Submitter getSessionSubmitter(UserManager sessionMgr) {
+        if (sessionMgr != null && sessionMgr.getUserAuthentication() != null) {
+            return sessionMgr.getUserAuthentication().getSubmitter();
         }
         return null;
     }

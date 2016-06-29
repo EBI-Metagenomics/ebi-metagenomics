@@ -1,9 +1,11 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
 
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.BiomeLogoModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +35,7 @@ public final class HomePageViewModel extends ViewModel {
     /**
      * Maps biomes with biome counts
      */
-    private Map<String, Long> biomeMap;
+    private List<BiomeLogoModel> biomeMap;
 
     private List<Sample> mySamples;
 
@@ -58,15 +60,16 @@ public final class HomePageViewModel extends ViewModel {
 
     private int privateRunCount;
 
-    private Map<String, Integer> experimentCountMap;
+    private Map<String, Long> experimentCountMap;
 
-    private Integer numOfDataSets;
+    private Long numOfDataSets;
 
     private Map<String, Long> studyToSampleCountMap;
 
     private Map<String, Long> studyToRunCountMap;
 
     public HomePageViewModel(final Submitter submitter,
+                             final EBISearchForm ebiSearchForm,
                              final String pageTitle,
                              final List<Breadcrumb> breadcrumbs,
                              final MemiPropertyContainer propertyContainer,
@@ -78,12 +81,12 @@ public final class HomePageViewModel extends ViewModel {
                              final List<Study> studies,
                              final int publicRunCount,
                              final int privateRunCount,
-                             final Map<String, Long> biomeCountMap,
-                             final Map<String, Integer> experimentCountMap,
-                             final Integer numOfDataSets,
+                             final List<BiomeLogoModel> biomeCountMap,
+                             final Map<String, Long> experimentCountMap,
+                             final Long numOfDataSets,
                              final Map<String, Long> studyToSampleCountMap,
                              final Map<String, Long> studyToRunCountMap) {
-        super(submitter, pageTitle, breadcrumbs, propertyContainer);
+        super(submitter, ebiSearchForm, pageTitle, breadcrumbs, propertyContainer);
 //        this.publicSamples = publicSamples;
         this.myStudiesMap = new TreeMap<Study, Long>();
         this.mySamples = new ArrayList<Sample>();
@@ -105,6 +108,7 @@ public final class HomePageViewModel extends ViewModel {
 
     public HomePageViewModel(final Submitter submitter,
 //                             final Map<Study, Long> myStudiesMap,
+                             final EBISearchForm ebiSearchForm,
                              final List<Study> studies,
                              final List<Sample> mySamples,
                              final String pageTitle,
@@ -121,7 +125,7 @@ public final class HomePageViewModel extends ViewModel {
                              final int privateRunCount,
                              final Map<String, Long> studyToSampleCountMap,
                              final Map<String, Long> studyToRunCountMap) {
-        this(submitter, pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems,
+        this(submitter, ebiSearchForm, pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems,
                 publicSamplesCount, privateSamplesCount, publicStudiesCount, privateStudiesCount,studies, publicRunCount, privateRunCount,
                 null, null, null, studyToSampleCountMap, studyToRunCountMap);
 //        this.myStudiesMap = myStudiesMap;
@@ -195,19 +199,19 @@ public final class HomePageViewModel extends ViewModel {
         return privateRunCount;
     }
 
-    public Map<String, Long> getBiomeMap() {
+    public List<BiomeLogoModel> getBiomeMap() {
         return biomeMap;
     }
 
-    public void setBiomeMap(Map<String, Long> biomeMap) {
+    public void setBiomeMap(List<BiomeLogoModel> biomeMap) {
         this.biomeMap = biomeMap;
     }
 
-    public Map<String, Integer> getExperimentCountMap() {
+    public Map<String, Long> getExperimentCountMap() {
         return experimentCountMap;
     }
 
-    public Integer getNumOfDataSets() {
+    public Long getNumOfDataSets() {
         return numOfDataSets;
     }
 

@@ -15,7 +15,6 @@ import uk.ac.ebi.interpro.metagenomics.memi.authentication.AuthenticationService
 import uk.ac.ebi.interpro.metagenomics.memi.authentication.MGPortalAuthResult;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.erapro.SubmissionContactDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.ConsentCheckForm;
-import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.services.EmailNotificationService;
@@ -65,10 +64,19 @@ public class SubmissionConsentCheckController extends AbstractController {
     public ModelAndView handleNewUserRequest(final ModelMap model) {
         // Populate model with necessary standard attributes
         populateModel(model);
-        // Populate the model with additional attributes
-        model.addAttribute("consentCheckForm", new ConsentCheckForm(true));
-        model.addAttribute("displayUsernameBox", "none");
-        return new ModelAndView("submission-check/accountCheck", model);
+        //return new ModelAndView("submission-check/accountCheck", model);
+        return buildModelAndView(
+                "submission-check/accountCheck",
+                model,
+                new ModelPopulator() {
+                    @Override
+                    public void populateModel(ModelMap model) {
+                        // Populate the model with additional attributes
+                        model.addAttribute("consentCheckForm", new ConsentCheckForm(true));
+                        model.addAttribute("displayUsernameBox", "none");
+                    }
+                }
+        );
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -78,11 +86,12 @@ public class SubmissionConsentCheckController extends AbstractController {
                                              final HttpServletResponse response) {
         populateModel(model);
         final Submitter submitter = form.getSubmitter();
+        String viewName;
         //Used this boolean flag to indicate if a submitter registered with us or just gave consent
         //If FALSE then he just registered, otherwise he gave consent
         final boolean isRegistered = submitter.isRegistered();
         if (isRegistered && bindingResult.hasFieldErrors("consentCheck")) {
-            return new ModelAndView("submission-check/userNameCheckSummary", model);
+            viewName = "submission-check/userNameCheckSummary";
         }
 
         ((EmailNotificationService) emailService).setReceiverCC(submitter.getEmailAddress());
@@ -97,10 +106,23 @@ public class SubmissionConsentCheckController extends AbstractController {
         response.addCookie(registrationCookie); //put cookie in response
 
         if (isRegistered) {
-            return new ModelAndView("submission-check/giveConsentSummary", model);
+            viewName = "submission-check/giveConsentSummary";
         } else {
-            return new ModelAndView("submission-check/registrationSummary", model);
+            viewName = "submission-check/registrationSummary";
         }
+
+        return buildModelAndView(
+                viewName,
+                model,
+                new ModelPopulator() {
+                    @Override
+                    public void populateModel(ModelMap model) {
+                        // Populate the model with additional attributes
+                        model.addAttribute("consentCheckForm", new ConsentCheckForm(true));
+                        model.addAttribute("displayUsernameBox", "none");
+                    }
+                }
+        );
     }
 
     @RequestMapping(value = "/account-check")
@@ -108,9 +130,18 @@ public class SubmissionConsentCheckController extends AbstractController {
         // Populate model with necessary standard attributes
         populateModel(model);
         // Populate the model with additional attributes
-        model.addAttribute("consentCheckForm", new ConsentCheckForm());
-        model.addAttribute("displayUsernameBox", "none");
-        return new ModelAndView("submission-check/accountCheck", model);
+        return buildModelAndView(
+                "submission-check/accountCheck",
+                model,
+                new ModelPopulator() {
+                    @Override
+                    public void populateModel(ModelMap model) {
+                        // Populate the model with additional attributes
+                        model.addAttribute("consentCheckForm", new ConsentCheckForm(true));
+                        model.addAttribute("displayUsernameBox", "none");
+                    }
+                }
+        );
     }
 
     /**
@@ -122,11 +153,11 @@ public class SubmissionConsentCheckController extends AbstractController {
                                                   final BindingResult bindingResult,
                                                   final ModelMap modelMap,
                                                   @CookieValue(value = "reg-delay", defaultValue = "notAvailable") String registrationCookie) {
+        String viewName;
         populateModel(modelMap);
         if (bindingResult.hasFieldErrors("userName") || bindingResult.hasFieldErrors("password") || bindingResult.hasFieldErrors("email")) {
-            return new ModelAndView("submission-check/accountCheck", modelMap);
+            viewName = "submission-check/accountCheck";
         }
-
         final String userName = form.getUserName();
         final String email = form.getEmail();
         final String password = form.getPassword();
@@ -137,7 +168,7 @@ public class SubmissionConsentCheckController extends AbstractController {
             bindingResult.addError(new FieldError("loginForm", "userName", userName, false, null, null, ""));
             bindingResult.addError(new FieldError("loginForm", "password", password, false, null, null, authResult.getErrorMessage()));
             modelMap.addAttribute("displayUsernameBox", "block");
-            return new ModelAndView("submission-check/accountCheck", modelMap);
+            viewName = "submission-check/accountCheck";
 
         } else {//NOT FAILED
 
@@ -170,23 +201,32 @@ public class SubmissionConsentCheckController extends AbstractController {
                     if (isRegistered) {
                         //  Case 3
                         if (isConsentGiven) {
-                            return new ModelAndView("submission-check/redirectToWebin", modelMap);
+                            viewName = "submission-check/redirectToWebin";
                         } else {//  Case 2
-                            return new ModelAndView("submission-check/userNameCheckSummary", modelMap);
+                            viewName = "submission-check/userNameCheckSummary";
                         }
                     } else {//  Case 1
-                        return new ModelAndView("submission-check/registerAndGiveConsent", modelMap);
+                        viewName = "submission-check/registerAndGiveConsent";
                     }
                 } else {
-                    return new ModelAndView("submission-check/notMainContact", modelMap);
+                    viewName = "submission-check/notMainContact";
                 }
             } else {
                 bindingResult.addError(new FieldError("loginForm", "userName", userName, false, null, null, ""));
                 bindingResult.addError(new FieldError("loginForm", "password", password, false, null, null, "Invalid username or email or password"));
                 modelMap.addAttribute("displayUsernameBox", "block");
-                return new ModelAndView("submission-check/accountCheck", modelMap);
+                viewName = "submission-check/accountCheck";
             }
         }
+        return buildModelAndView(
+                viewName,
+                modelMap,
+                new ModelPopulator() {
+                    @Override
+                    public void populateModel(ModelMap model) {
+                    }
+                }
+        );
     }
 
     /**
@@ -207,9 +247,16 @@ public class SubmissionConsentCheckController extends AbstractController {
                                       final HttpServletResponse response,
                                       final SessionStatus status,
                                       final ModelMap modelMap) {
-        modelMap.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
         status.setComplete();
-        return new ModelAndView("submission-check/intro", modelMap);
+        return buildModelAndView(
+                "submission-check/intro",
+                modelMap,
+                new ModelPopulator() {
+                    @Override
+                    public void populateModel(ModelMap model) {
+                    }
+                }
+        );
     }
 
 
@@ -225,11 +272,11 @@ public class SubmissionConsentCheckController extends AbstractController {
     }
 
     protected void populateModel(ModelMap model) {
-        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "Submit data", getBreadcrumbs(null), propertyContainer);
+        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(userManager, getEbiSearchForm(),
+                "Submit data", getBreadcrumbs(null), propertyContainer);
         final ViewModel submitDataModel = builder.getModel();
         submitDataModel.changeToHighlightedClass(ViewModel.TAB_CLASS_SUBMIT_VIEW);
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, submitDataModel);
-        model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
     }
 
 }

@@ -39,6 +39,17 @@
         <entry key="GO_COMPLETE_FILE" value-ref="fullGOAnnotationFile"/>
         <entry key="GO_SLIM_FILE" value-ref="goSlimAnnotationFile"/>
         <!--<entry key="INTERPRO_MATCHES_SUMMARY_FILE" value-ref="interProMatchesSummaryFile"/>-->
+
+        <!--QC stats data-->
+        <entry key="QC_SUMMARY" value-ref="qualityControlSummary"/>
+        <entry key="QC_STATS" value-ref="qualityControlNewSummaryFile"/>
+        <entry key="QC_BASE" value-ref="qualityControlNucleotideHistogramFile"/>
+        <entry key="QC_BASE_SUBSET" value-ref="qualityControlNucleotideHistogramFileSubset"/>
+        <entry key="QC_GC_BIN" value-ref="qualityControlGCBinFile"/>
+        <entry key="QC_GC_BIN_SUBSET" value-ref="qualityControlGCBinFileSubset"/>
+        <entry key="QC_LENGTH_BIN" value-ref="qualityControlSequenceLengthBinFile"/>
+        <entry key="QC_LENGTH_BIN_SUBSET" value-ref="qualityControlSequenceLengthBinFileSubset"/>
+
     </util:map>
 
     <util:map id="chunkedResultFilesMap" map-class="java.util.HashMap" key-type="java.lang.String"

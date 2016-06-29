@@ -12,16 +12,23 @@
 
     <!-- The session bean holds the current logged in user/submitter reference-->
     <!-- an HTTP Session-scoped bean exposed as a proxy -->
-    <bean id="sessionBeanRef" class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionBean"
+    <bean id="userAuthentication" class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.UserAuthentication"
           scope="session">
         <!-- this next element effects the proxying of the surrounding bean -->
         <aop:scoped-proxy/>
     </bean>
 
+    <!-- an HTTP Session-scoped bean exposed as a proxy -->
+    <!-- Ref: http://docs.spring.io/spring/docs/3.1.0.M1/spring-framework-reference/html/beans.html#beans-factory-scopes-other-injection -->
+    <bean id="ebiSearchForm" class="uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm" scope="session">
+        <!-- this next element effects the proxying of the surrounding bean -->
+        <aop:scoped-proxy/>
+    </bean>
+
     <!-- a singleton-scoped bean injected with a proxy to the above bean -->
-    <bean id="sessionManager" class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager">
+    <bean id="sessionManager" class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.UserManager">
         <!-- a reference to the proxied userPreferences bean -->
-        <property name="sessionBean" ref="sessionBeanRef"/>
+        <property name="userAuthentication" ref="userAuthentication"/>
     </bean>
 
     <!-- Please use this bean to specify the path to the analysis files -->

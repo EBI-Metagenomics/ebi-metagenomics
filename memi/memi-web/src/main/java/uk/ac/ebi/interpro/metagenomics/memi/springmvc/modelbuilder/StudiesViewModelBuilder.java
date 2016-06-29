@@ -2,22 +2,21 @@ package uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.*;
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.core.tools.MemiTools;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.BiomeDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.StudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.Biome;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.StudyFilter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.StudiesViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewPagination;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.UserManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +54,8 @@ public class StudiesViewModelBuilder extends AbstractBiomeViewModelBuilder<Studi
 
     private boolean doPagination;
 
-    public StudiesViewModelBuilder(final SessionManager sessionMgr, final String pageTitle, final List<Breadcrumb> breadcrumbs,
+    public StudiesViewModelBuilder(final UserManager sessionMgr, final EBISearchForm ebiSearchForm,
+                                   final String pageTitle, final List<Breadcrumb> breadcrumbs,
                                    final MemiPropertyContainer propertyContainer, final List<String> tableHeaderNames,
                                    final SampleDAO sampleDAO,
                                    final StudyDAO studyDAO,
@@ -63,7 +63,7 @@ public class StudiesViewModelBuilder extends AbstractBiomeViewModelBuilder<Studi
                                    final StudyFilter filter,
                                    final int startPosition,
                                    final boolean doPagination) {
-        super(sessionMgr);
+        super(sessionMgr, ebiSearchForm);
         this.pageTitle = pageTitle;
         this.breadcrumbs = breadcrumbs;
         this.propertyContainer = propertyContainer;
@@ -79,6 +79,7 @@ public class StudiesViewModelBuilder extends AbstractBiomeViewModelBuilder<Studi
     public StudiesViewModel getModel() {
         log.info("Building instance of " + StudiesViewModel.class + "...");
         Submitter submitter = getSessionSubmitter(sessionMgr);
+        EBISearchForm ebiSearchForm = getEbiSearchForm();
         String submissionAccountId = (submitter != null ? submitter.getSubmissionAccountId() : null);
 
         //Get filtered studies
@@ -91,7 +92,7 @@ public class StudiesViewModelBuilder extends AbstractBiomeViewModelBuilder<Studi
 //        Map<Study, Long> sortedStudyMap = getStudySampleSizeMap(filteredStudies, sampleDAO, new ViewStudiesComparator());
 
         attachSampleSize(filteredStudies);
-        return new StudiesViewModel(submitter, filteredStudies, null, pageTitle, breadcrumbs, propertyContainer, tableHeaderNames, pagination, filter);
+        return new StudiesViewModel(submitter, ebiSearchForm, filteredStudies, null, pageTitle, breadcrumbs, propertyContainer, tableHeaderNames, pagination, filter);
     }
 
     private void attachSampleSize(List<Study> filteredStudies) {
@@ -128,12 +129,26 @@ public class StudiesViewModelBuilder extends AbstractBiomeViewModelBuilder<Studi
      */
     private List<Criterion> buildFilterCriteria(final StudyFilter filter, final String submissionAccountId) {
         String searchText = filter.getSearchTerm();
+        String biomeLineage = filter.getBiomeLineage();
         Study.StudyStatus studyStatus = filter.getStudyStatus();
 
         List<Criterion> crits = new ArrayList<Criterion>();
         //add search term criterion
         if (searchText != null && searchText.trim().length() > 0) {
             crits.add(Restrictions.or(Restrictions.ilike("studyId", searchText, MatchMode.ANYWHERE), Restrictions.ilike("studyName", searchText, MatchMode.ANYWHERE)));
+        }
+        if (biomeLineage != null && biomeLineage.trim().length() > 0) {
+//            List<Integer> biomeIds = new ArrayList<Integer>();
+//            biomeIds.addAll(super.getBiomeIdsByLineage(biomeDAO, biomeLineage));
+            uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Biome biome = biomeDAO.readByLineage(biomeLineage);
+            if(filter.isIncludingChildren()) {
+                DetachedCriteria biomeIds = DetachedCriteria.forClass(uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Biome.class)
+                        .setProjection(Projections.projectionList()
+                                .add(Projections.property("biomeId"), "biomeId"))
+                        .add(Restrictions.between("left",  biome.getLeft(), biome.getRight()));
+                crits.add(Subqueries.propertyIn("biome", biomeIds));
+            }else
+                crits.add(Restrictions.eq("biome.biomeId", biome.getBiomeId()));
         }
         //add study status criterion
         if (studyStatus != null) {
@@ -197,7 +212,9 @@ public class StudiesViewModelBuilder extends AbstractBiomeViewModelBuilder<Studi
                 biomeIds.removeAll(biomeIdsForHumanHost);
             }
 
-            crits.add(Restrictions.in("biome.biomeId", biomeIds));
+            if (!biomeIds.isEmpty()) {
+                crits.add(Restrictions.in("biome.biomeId", biomeIds));
+            }
         }
         //add is public and submitter identifier criteria
         if (submissionAccountId != null) {

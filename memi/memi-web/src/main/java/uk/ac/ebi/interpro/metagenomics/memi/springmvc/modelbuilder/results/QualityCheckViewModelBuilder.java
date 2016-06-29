@@ -3,6 +3,7 @@ package uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.results;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
@@ -10,13 +11,13 @@ import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.Analysi
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.FunctionalAnalysisFileDefinition;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.ResultFileDefinitionImpl;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.results.QualityCheckViewModel;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.UserManager;
 
 import java.util.List;
 
 /**
  * Model builder class for {@link uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.results.QualityCheckViewModel}.
- * <p/>
+ * <p>
  * See {@link uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder} for more information of how to use.
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
@@ -26,7 +27,8 @@ public class QualityCheckViewModelBuilder extends AbstractResultViewModelBuilder
 
     private final static Log log = LogFactory.getLog(QualityCheckViewModelBuilder.class);
 
-    public QualityCheckViewModelBuilder(SessionManager sessionMgr,
+    public QualityCheckViewModelBuilder(UserManager sessionMgr,
+                                        EBISearchForm ebiSearchForm,
                                         String pageTitle,
                                         List<Breadcrumb> breadcrumbs,
                                         MemiPropertyContainer propertyContainer,
@@ -34,7 +36,8 @@ public class QualityCheckViewModelBuilder extends AbstractResultViewModelBuilder
                                         List<FunctionalAnalysisFileDefinition> functionalAnalysisFileDefinitions,
                                         List<ResultFileDefinitionImpl> taxonomicAnalysisFileDefinitions,
                                         AnalysisJob analysisJob) {
-        super(sessionMgr, pageTitle, breadcrumbs, propertyContainer, qualityControlFileDefinitions, functionalAnalysisFileDefinitions, taxonomicAnalysisFileDefinitions, analysisJob);
+        super(sessionMgr, ebiSearchForm, pageTitle, breadcrumbs, propertyContainer, qualityControlFileDefinitions,
+                functionalAnalysisFileDefinitions, taxonomicAnalysisFileDefinitions, analysisJob);
     }
 
     public QualityCheckViewModel getModel() {
@@ -43,6 +46,6 @@ public class QualityCheckViewModelBuilder extends AbstractResultViewModelBuilder
         Sample sample = analysisJob.getSample();
         //Get analysis status
         AnalysisStatus analysisStatus = getAnalysisStatus((sample.getAnalysisCompleted() == null ? false : true));
-        return new QualityCheckViewModel(getSessionSubmitter(sessionMgr), pageTitle, breadcrumbs, propertyContainer, analysisJob.getSample(), analysisJob, analysisStatus);
+        return new QualityCheckViewModel(getSessionSubmitter(sessionMgr), getEbiSearchForm(), pageTitle, breadcrumbs, propertyContainer, analysisJob.getSample(), analysisJob, analysisStatus);
     }
 }

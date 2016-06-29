@@ -3,10 +3,11 @@ package uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.HomePageErrorViewModel;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.UserManager;
 
 import java.util.List;
 
@@ -27,9 +28,9 @@ public class HomePageErrorViewModelBuilder extends AbstractViewModelBuilder<Home
 
     private MemiPropertyContainer propertyContainer;
 
-    public HomePageErrorViewModelBuilder(SessionManager sessionMgr, String pageTitle, List<Breadcrumb> breadcrumbs,
+    public HomePageErrorViewModelBuilder(UserManager sessionMgr, EBISearchForm ebiSearchForm, String pageTitle, List<Breadcrumb> breadcrumbs,
                                          MemiPropertyContainer propertyContainer) {
-        super(sessionMgr);
+        super(sessionMgr, ebiSearchForm);
         this.pageTitle = pageTitle;
         this.breadcrumbs = breadcrumbs;
         this.propertyContainer = propertyContainer;
@@ -39,6 +40,7 @@ public class HomePageErrorViewModelBuilder extends AbstractViewModelBuilder<Home
     public HomePageErrorViewModel getModel() {
         log.info("Building instance of " + HomePageErrorViewModel.class + "...");
         Submitter submitter = getSessionSubmitter(sessionMgr);
-        return new HomePageErrorViewModel(submitter, pageTitle, breadcrumbs, propertyContainer);
+        EBISearchForm ebiSearchForm = getEbiSearchForm();
+        return new HomePageErrorViewModel(submitter, ebiSearchForm, pageTitle, breadcrumbs, propertyContainer);
     }
 }

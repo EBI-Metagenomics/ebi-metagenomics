@@ -10,7 +10,6 @@ import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.controller.MGPortalURLCollection;
 import uk.ac.ebi.interpro.metagenomics.memi.controller.ModelProcessingStrategy;
 import uk.ac.ebi.interpro.metagenomics.memi.exceptionHandling.EntryNotFoundException;
-import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Run;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
@@ -76,7 +75,8 @@ public class DownloadViewController extends AbstractResultViewController {
         }
 
         final ViewModelBuilder<DownloadViewModel> builder = new DownloadViewModelBuilder(
-                sessionManager,
+                userManager,
+                getEbiSearchForm(),
                 pageTitle,
                 getBreadcrumbs(run),
                 propertyContainer,
@@ -88,7 +88,6 @@ public class DownloadViewController extends AbstractResultViewController {
         final DownloadViewModel downloadViewModel = builder.getModel();
 
         downloadViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_SAMPLES_VIEW);
-        model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, downloadViewModel);
     }
 }

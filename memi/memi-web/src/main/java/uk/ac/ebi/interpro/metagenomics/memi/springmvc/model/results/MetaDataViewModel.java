@@ -1,6 +1,7 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.results;
 
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgSampleAnnotation;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob;
@@ -35,6 +36,7 @@ public class MetaDataViewModel extends AbstractResultViewModel {
 
 
     public MetaDataViewModel(Submitter submitter,
+                             EBISearchForm ebiSearchForm,
                              String pageTitle,
                              List<Breadcrumb> breadcrumbs,
                              MemiPropertyContainer propertyContainer,
@@ -44,7 +46,7 @@ public class MetaDataViewModel extends AbstractResultViewModel {
                              List<EmgSampleAnnotation> sampleAnnotations,
                              List<Publication> relatedLinks,
                              List<Publication> relatedPublications) {
-        super(submitter, pageTitle, breadcrumbs, propertyContainer);
+        super(submitter, ebiSearchForm, pageTitle, breadcrumbs, propertyContainer);
         this.sample = sample;
         this.analysisJob = analysisJob;
         this.isHostAssociated = isHostAssociated;

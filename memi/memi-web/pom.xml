@@ -7,7 +7,7 @@
     <parent>
         <artifactId>memi</artifactId>
         <groupId>uk.ac.ebi.interpro.metagenomics</groupId>
-        <version>1.1</version>
+        <version>2.2.2</version>
     </parent>
 
     <groupId>uk.ac.ebi.interpro.metagenomics</groupId>
@@ -394,8 +394,6 @@
             <artifactId>geronimo-osgi-registry</artifactId>
             <version>1.0</version>
         </dependency>
-
-
         <dependency>
             <groupId>commons-collections</groupId>
             <artifactId>commons-collections</artifactId>
@@ -416,12 +414,32 @@
             <artifactId>commons-lang</artifactId>
             <version>2.6</version>
         </dependency>
-
         <dependency>
             <groupId>EBI</groupId>
             <artifactId>EBeye_JAXRS</artifactId>
             <version>1</version>
         </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.6.2</version>
+        </dependency>
+
+        <!-- MySQL JDBC driver-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.38</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.oracle.jdbc</groupId>
+            <artifactId>com.springsource.oracle.jdbc</artifactId>
+            <version>10.2.0.2</version>
+            <!-- Possibly should be "provided" -->
+            <!--<scope>provided</scope>-->
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -444,6 +462,7 @@
                             <maxIdleTime>60000</maxIdleTime>
                         </connector>
                     </connectors>
+                    <scanIntervalSeconds>1</scanIntervalSeconds>
                 </configuration>
                 <dependencies>
                     <dependency>
@@ -528,18 +547,14 @@
                     <groupId>javax.servlet</groupId>
                     <artifactId>servlet-api</artifactId>
                     <version>2.5</version>
+                    <scope>provided</scope>
                 </dependency>
 
                 <dependency>
                     <groupId>javax.servlet.jsp</groupId>
                     <artifactId>jsp-api</artifactId>
                     <version>2.1</version>
-                </dependency>
-
-                <dependency>
-                    <groupId>com.oracle.jdbc</groupId>
-                    <artifactId>com.springsource.oracle.jdbc</artifactId>
-                    <version>10.2.0.2</version>
+                    <scope>provided</scope>
                 </dependency>
             </dependencies>
 
@@ -571,7 +586,7 @@
         <profile>
             <id>prod-war</id>
             <properties>
-                <deployment.folder>/ebi/www/jlive/deploy/tc-interpro-das</deployment.folder>
+                <deployment.folder>/nfs/web_hx2/webadmin/tomcat/bases/interpro/tc-ipr-metagenomics/deploy</deployment.folder>
                 <log4j.log.file>/var/tmp/servers/tc-interpro-das/logs/metagenomics/memi.log4j</log4j.log.file>
                 <dailyErrorAppParam>/var/tmp/servers/tc-interpro-das/logs/metagenomics/memi-ERROR.log4j</dailyErrorAppParam>
                 <dailyDebugAppParam>/var/tmp/servers/tc-interpro-das/logs/metagenomics/memi-DEBUG.log4j</dailyDebugAppParam>

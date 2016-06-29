@@ -42,14 +42,14 @@ public abstract class LoginController extends AbstractController {
 //        final String applicationErrorMessage = "Application error! We are sorry for any inconvenience.";
 //        final String loginValidationErrorMessage = "Login failed. Incorrect combination of user name and password.";
         //ensure that the user ref is cleared before process the login, in case anything unexpected happened
-        sessionManager.getSessionBean().removeSubmitter();
+        userManager.getUserAuthentication().removeSubmitter();
 
         MGPortalAuthResult authResult = authenticationService.login(loginForm.getUserName(), loginForm.getPassword());
         if (authResult.failed()) {
             bindingResult.addError(new FieldError("loginForm", "userName", loginForm.getUserName(), false, null, null, ""));
             bindingResult.addError(new FieldError("loginForm", "password", loginForm.getPassword(), false, null, null, authResult.getErrorMessage()));
         } else {
-            sessionManager.getSessionBean().setSubmitter(authResult.getSubmitter());
+            userManager.getUserAuthentication().setSubmitter(authResult.getSubmitter());
         }
 
         //clear the command object from the session

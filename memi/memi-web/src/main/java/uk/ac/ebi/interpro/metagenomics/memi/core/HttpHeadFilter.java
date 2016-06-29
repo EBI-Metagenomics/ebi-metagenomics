@@ -13,6 +13,11 @@
  */
 package uk.ac.ebi.interpro.metagenomics.memi.core;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.web.HttpSessionRequiredException;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm;
+
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -20,10 +25,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServletResponseWrapper;
+import javax.servlet.http.*;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
@@ -34,6 +36,9 @@ import java.io.UnsupportedEncodingException;
  * filter handles all the details.
  */
 public class HttpHeadFilter implements Filter {
+
+    private static final Log log = LogFactory.getLog(HttpHeadFilter.class);
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         //Do nothing

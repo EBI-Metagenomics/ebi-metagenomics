@@ -12,7 +12,6 @@ import java.util.List;
  */
 public class SearchViewModel extends ViewModel {
 
-    EBISearchForm ebiSearchForm;
     EBISampleSearchResults ebiSampleSearchResults;
 
     /**
@@ -21,20 +20,14 @@ public class SearchViewModel extends ViewModel {
      */
     public final static String MODEL_ATTR_NAME = "model";
 
-    public SearchViewModel(Submitter submitter, String pageTitle, List<Breadcrumb> breadcrumbs,
-                           MemiPropertyContainer propertyContainer, EBISearchForm search,
+    public SearchViewModel(Submitter submitter,
+                           EBISearchForm ebiSearchForm,
+                           String pageTitle,
+                           List<Breadcrumb> breadcrumbs,
+                           MemiPropertyContainer propertyContainer,
                            EBISampleSearchResults sampleSearchResults) {
-        super(submitter, pageTitle, breadcrumbs, propertyContainer);
-        this.ebiSearchForm = search;
+        super(submitter, ebiSearchForm, pageTitle, breadcrumbs, propertyContainer);
         this.ebiSampleSearchResults = sampleSearchResults;
-    }
-
-    public EBISearchForm getEbiSearchForm() {
-        return ebiSearchForm;
-    }
-
-    public void setEbiSearchForm(EBISearchForm ebiSearchForm) {
-        this.ebiSearchForm = ebiSearchForm;
     }
 
     public EBISampleSearchResults getEbiSampleSearchResults() {

@@ -13,7 +13,6 @@ import uk.ac.ebi.interpro.metagenomics.memi.controller.ModelProcessingStrategy;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.AnalysisJobDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.PipelineReleaseDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.exceptionHandling.EntryNotFoundException;
-import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
@@ -84,7 +83,8 @@ public class DownloadStudyController extends AbstractStudyViewController {
 
         final String pageTitle = "Download view: " + study.getStudyId();
         final ViewModelBuilder<DownloadViewModel> builder = new StudyDownloadViewModelBuilder(
-                sessionManager,
+                userManager,
+                getEbiSearchForm(),
                 pageTitle, // Not really needed as this is within an AJAX tab anyway?
                 getBreadcrumbs(study), // Not really needed as this is within an AJAX tab anyway?
                 propertyContainer,
@@ -94,7 +94,6 @@ public class DownloadStudyController extends AbstractStudyViewController {
 
         final DownloadViewModel downloadViewModel = builder.getModel();
         downloadViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_PROJECTS_VIEW); // Not really needed as this is within an AJAX tab anyway?
-        model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm()); // Not really needed as this is within an AJAX tab anyway?
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, downloadViewModel);
     }
 

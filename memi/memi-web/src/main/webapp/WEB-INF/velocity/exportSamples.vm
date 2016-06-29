@@ -4,13 +4,13 @@
 #foreach( $property in $sampleProperties )$property,#end
 
 #foreach( $sample in $samples )
+#if($sample.biome.biomeName)
+"$sample.biome.biomeName",#{else}"",#end
+#if($sample.sampleId)
+"$sample.sampleId",#{else}"",#end
 #if($sample.sampleName)
 "$sample.sampleName",#{else}"",#end
 #if($sample.study.studyName)
 "$sample.study.studyName",#{else}"",#end
-#if($sample.sampleTypeAsString)
-"$sample.sampleTypeAsString",#{else}"",#end
-#if($sample.analysisCompleted)
-"Finished",#{else}"In progress",#end
 
 #end
