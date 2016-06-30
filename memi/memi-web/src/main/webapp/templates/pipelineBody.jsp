@@ -6,6 +6,50 @@
     <c:when test="${releaseVersion == '3.0'}">
         <!-- Pipeline chart for version 3.0 v2-->
 
+        <%--<div class="block_wrapper">--%>
+
+            <%--<div class="block_container pipe_v3">--%>
+
+                <%--<div class="mainbranch">--%>
+                    <%--<div class="block-lb">Raw reads</div><div class="arrow_pip "></div>--%>
+                    <%--<div class="block small step0"><div class="children">SeqPrep</div></div><div class="arrow_pip "></div>--%>
+                    <%--<div class="block-lb">Initial reads</div><div class="arrow_pip"></div>--%>
+                    <%--<div class="block step1"><div class="children">QC</div>--%>
+                    <%--</div><div class="arrow_pip"></div>--%>
+                    <%--<div class="block-lb">Processed reads</div><div class="arrow_pip"></div>--%>
+                    <%--<div class="block  step2"><div class="children">RNA Selection</div></div>--%>
+                <%--</div>  <!-- /mainbranch -->--%>
+
+                <%--<div class="midbranch">--%>
+                    <%--<div class="midbranch_rrna"> <div class="arrow_pip rotate_f"></div>--%>
+                        <%--<div class="block medium step2"><div class="children">rRNA</div></div>--%>
+                    <%--</div> <!-- /midbranch_rrna -->--%>
+
+                    <%--<div class="midbranch_trna">  <div class="arrow_pip rotate_t"></div>--%>
+                        <%--<div class="block medium step2"><div class="children">tRNA</div></div>--%>
+                    <%--</div><!-- /midbranch_trna -->--%>
+                <%--</div>--%>
+
+                <%--<div class="lowbranch">--%>
+                    <%--<div class="lowbranch_func">--%>
+                        <%--<div class="arrow_pip rotate_f" style="margin-left: -16px;margin-right:5px;"></div><div class="block-lb">Reads with rRNA masked</div><div class="arrow_pip"></div>--%>
+                        <%--<div class="block step3 function" ><div class="children">ORF predictions</div></div><div class="arrow_pip"></div>--%>
+                        <%--<div class="block-lb">Predicted CDS</div><div class="arrow_pip"></div>--%>
+                        <%--<div class="block step4 function" ><div class="children_l">Functional analysis</div></div>--%>
+                    <%--</div> <!-- /lowbranch_func -->--%>
+
+                    <%--<div class="lowbranch_tax"> <div class="arrow_pip rotate_t" style="margin-left: -16px;"></div>--%>
+                        <%--<div class="block-lb">Reads with rRNA</div>--%>
+                        <%--<div class="arrow_pip"></div>--%>
+                        <%--<div class="block-lb">16s rRNA</div>--%>
+                        <%--<div class="arrow_pip"></div>--%>
+                        <%--<div class="block step5 taxon"><div class="children_l">Taxonomic analysis</div></div>--%>
+                    <%--</div><!-- /lowbranch_tax -->--%>
+                <%--</div><!-- /lowbranch -->--%>
+
+            <%--</div> <!-- /container -->--%>
+        <%--</div>   <!-- /block_wrapper -->--%>
+
                 <div class="block_wrapper">
 
                     <div class="block_container pipe_v3">
@@ -282,9 +326,13 @@
                         </script>
                     </c:otherwise>
                 </c:choose>
+                <fmt:formatNumber var="toolGroupId"
+                                  type="number"
+                                  value="${pipelineReleaseTool.toolGroupId+ 1.0}"
+                                  maxFractionDigits="1"/>
                 <td>
                     <!-- Showing a step number, add one as the first step is not a tool in the database -->
-                    ${pipelineReleaseTool.toolGroupId + 1.0}
+                    ${toolGroupId}
                 </td>
                 <td ><a class="ext" href="${pipelineTool.webLink}">${pipelineTool.toolName}</a></td>
                 <td>${pipelineTool.toolVersion}</td>
@@ -334,9 +382,13 @@
                 </script>
             </c:otherwise>
         </c:choose>
+        <fmt:formatNumber var="toolGroupId"
+                          type="number"
+                          value="${pipelineReleaseTool.toolGroupId+ 1.0}"
+                          maxFractionDigits="1"/>
         <td>
             <!-- Showing a step number, add one as the first step is not a tool in the database -->
-            ${pipelineReleaseTool.toolGroupId + 1.0}
+                ${toolGroupId}
         </td>
         <td ><a class="ext" href="${pipelineTool.webLink}">${pipelineTool.toolName}</a></td>
         <td>${pipelineTool.toolVersion}</td>
@@ -387,9 +439,13 @@
                             </script>
                         </c:otherwise>
                     </c:choose>
+                    <fmt:formatNumber var="toolGroupId"
+                                      type="number"
+                                      value="${pipelineReleaseTool.toolGroupId+ 1.0}"
+                                      maxFractionDigits="1"/>
                     <td>
                         <!-- Showing a step number, add one as the first step is not a tool in the database -->
-                        ${pipelineReleaseTool.toolGroupId + 1.0}
+                            ${toolGroupId}
                     </td>
                     <td ><a class="ext" href="${pipelineTool.webLink}">${pipelineTool.toolName}</a></td>
                     <td>${pipelineTool.toolVersion}</td>
