@@ -97,7 +97,7 @@ var drawNumberOfReadsChart = function (rawdata, numberOfLines, sequenceCount, ur
         });
 
     if (sequenceCount!= null && remainders > sequenceCount) {
-        categories.push("Reads after sampling for QC");
+        categories.push("Reads subsampled for QC analysis");
         data.push({
             x: data.length,
             y: sequenceCount,
