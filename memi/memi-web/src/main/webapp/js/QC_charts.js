@@ -75,8 +75,6 @@ var drawNumberOfReadsChart = function (rawdata, numberOfLines, sequenceCount, ur
             "Trimming",
             "Length filtering",
             "Ambiguous base filtering",
-            "Clustering",
-            "Repeat masking and filtering",
         ].splice(0, numberOfLines),
         remainders = 0;
 
@@ -99,7 +97,7 @@ var drawNumberOfReadsChart = function (rawdata, numberOfLines, sequenceCount, ur
         });
 
     if (sequenceCount!= null && remainders > sequenceCount) {
-        categories.push("Reads after sampling for QC");
+        categories.push("Reads subsampled for QC analysis");
         data.push({
             x: data.length,
             y: sequenceCount,
@@ -169,6 +167,8 @@ var drawSequenceLengthHistogram = function (rawdata, isFromSubset, stats,urlToFi
     });
     var length_max=Math.max.apply(null,data.map(function(e){ if (e) {return e[0];} }));
 
+    var init_point = data[0][0] - 1;
+
     $('#seq_len').highcharts({
         chart: { type: 'areaspline',
             marginLeft: 100 // Keep all charts left aligned
@@ -196,7 +196,7 @@ var drawSequenceLengthHistogram = function (rawdata, isFromSubset, stats,urlToFi
         },
         series : [
             { name : 'Reads',
-                data : [[0,0]].concat(data),
+                data : [[init_point,0]].concat(data),
                 color: (isFromSubset)?"#8dc7c7":"#058dc7"
             }
         ],
