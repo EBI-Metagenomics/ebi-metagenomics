@@ -9,7 +9,7 @@
     <c:choose>
         <c:when test="${pipelineRelease.releaseVersion == '3.0'}">
                 <ul><li>Updated tools: InterProScan, FraGeneScan, QIIME and Trimmomatic</li>
-                    <li>Updated GO slim based on the analysis of X billion functional annotations</li>
+                    <li>Updated GO slim, based on the analysis of over 22 billion (22x10^9) billion functional annotations</li>
                     <li>Added identification and masking of transfer RNA genes</li>
                     <li>Improved quality control statistics (sequence length summary, GC and nucleotide distribution)</li></ul>
             </c:when>

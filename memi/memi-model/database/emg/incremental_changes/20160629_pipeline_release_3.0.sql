@@ -33,3 +33,8 @@ INSERT INTO emg.PIPELINE_RELEASE_TOOL (pipeline_id, tool_id, tool_group_id, how_
 INSERT INTO emg.PIPELINE_RELEASE_TOOL (pipeline_id, tool_id, tool_group_id, how_tool_used_desc) values (3,14,4,'Matches are generated against predicted CDS, using a sub set of databases (Pfam, TIGRFAM, PRINTS, PROSITE patterns, Gene3d) from InterPro release 57.0. A summary of Gene Ontology (GO) terms derived from InterPro matches to your sample is provided. It is generated using a reduced list of GO terms called GO slim (version <a href="http://www.geneontology.org/ontology/subsets/goslim_metagenomics.obo" class="ext">goslim_goa</a>).');
 -- QIIME
 INSERT INTO emg.PIPELINE_RELEASE_TOOL (pipeline_id, tool_id, tool_group_id, how_tool_used_desc) values (3,13,5,'16s rRNA are annotated using the Greengenes reference database (default closed-reference OTU picking protocol with Greengenes 13.8 reference with reverse strand matching enabled).');
+
+
+update emg.PIPELINE_RELEASE_TOOL set HOW_TOOL_USED_DESC='Matches are generated against predicted CDS, using a sub set of databases (Pfam, TIGRFAM, PRINTS, PROSITE patterns, Gene3d) from InterPro release 58.0. A summary of Gene Ontology (GO) terms derived from InterPro matches to your sample is provided. It is generated using a reduced list of GO terms called GO slim (version <a href="http://www.geneontology.org/ontology/subsets/goslim_metagenomics.obo" class="ext">goslim_goa</a>).' where PIPELINE_ID=3 and TOOL_ID=14;
+
+update emg.PIPELINE_TOOL set WEB_LINK='https://sourceforge.net/projects/fraggenescan/' where TOOL_ID=16;
