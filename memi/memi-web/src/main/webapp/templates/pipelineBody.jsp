@@ -326,9 +326,13 @@
                         </script>
                     </c:otherwise>
                 </c:choose>
+                <fmt:formatNumber var="toolGroupId"
+                                  type="number"
+                                  value="${pipelineReleaseTool.toolGroupId+ 1.0}"
+                                  maxFractionDigits="1"/>
                 <td>
                     <!-- Showing a step number, add one as the first step is not a tool in the database -->
-                    ${pipelineReleaseTool.toolGroupId + 1.0}
+                    ${toolGroupId}
                 </td>
                 <td ><a class="ext" href="${pipelineTool.webLink}">${pipelineTool.toolName}</a></td>
                 <td>${pipelineTool.toolVersion}</td>
@@ -378,9 +382,13 @@
                 </script>
             </c:otherwise>
         </c:choose>
+        <fmt:formatNumber var="toolGroupId"
+                          type="number"
+                          value="${pipelineReleaseTool.toolGroupId+ 1.0}"
+                          maxFractionDigits="1"/>
         <td>
             <!-- Showing a step number, add one as the first step is not a tool in the database -->
-            ${pipelineReleaseTool.toolGroupId + 1.0}
+                ${toolGroupId}
         </td>
         <td ><a class="ext" href="${pipelineTool.webLink}">${pipelineTool.toolName}</a></td>
         <td>${pipelineTool.toolVersion}</td>
@@ -431,9 +439,13 @@
                             </script>
                         </c:otherwise>
                     </c:choose>
+                    <fmt:formatNumber var="toolGroupId"
+                                      type="number"
+                                      value="${pipelineReleaseTool.toolGroupId+ 1.0}"
+                                      maxFractionDigits="1"/>
                     <td>
                         <!-- Showing a step number, add one as the first step is not a tool in the database -->
-                        ${pipelineReleaseTool.toolGroupId + 1.0}
+                            ${toolGroupId}
                     </td>
                     <td ><a class="ext" href="${pipelineTool.webLink}">${pipelineTool.toolName}</a></td>
                     <td>${pipelineTool.toolVersion}</td>
