@@ -32,7 +32,7 @@
                         file_stats   = common_path + 'stats',
                         file_gc      = common_path + 'gc_bin',
                         file_base    = common_path + 'base',
-                        numberOfLines = ${(versionId=="2.0"?4:6)};
+                        numberOfLines = 4;
 
                     var stats_data =null;
                     $.ajax(file_stats).done(function (rawdata) {

@@ -100,6 +100,8 @@ public class DownloadViewModelBuilder extends AbstractResultViewModelBuilder<Dow
             downloadableFileList = downloadableFileLists.get("v1");
         } else if (analysisJobReleaseVersion.equalsIgnoreCase("2.0")) {
             downloadableFileList = downloadableFileLists.get("v2");
+        } else if (analysisJobReleaseVersion.equalsIgnoreCase("3.0")) {
+            downloadableFileList = downloadableFileLists.get("v3");
         } else {
             downloadableFileList = new ArrayList<String>();
         }
@@ -132,6 +134,8 @@ public class DownloadViewModelBuilder extends AbstractResultViewModelBuilder<Dow
                             sequencesDownloadSection.setReadsWithoutMatchesLinks(downloadLinks);
                         } else if (chunkedFileDefinition.getIdentifier().equalsIgnoreCase("PREDICTED_CDS_FILE")) {
                             sequencesDownloadSection.setPredictedCDSLinks(downloadLinks);
+                        } else if (chunkedFileDefinition.getIdentifier().equalsIgnoreCase("PREDICTED_CDS_WITH_ANNOTATION_FILE")) {
+                            sequencesDownloadSection.setPredictedCDSWithAnnotationLinks(downloadLinks);
                         } else if (chunkedFileDefinition.getIdentifier().equalsIgnoreCase("PREDICTED_CDS_WITHOUT_ANNOTATION_FILE")) {
                             sequencesDownloadSection.setPredictedCDSWithoutAnnotationLinks(downloadLinks);
                         } else if (chunkedFileDefinition.getIdentifier().equalsIgnoreCase("PREDICTED_ORF_WITHOUT_ANNOTATION_FILE")) {
