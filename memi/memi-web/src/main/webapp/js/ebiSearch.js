@@ -2,12 +2,6 @@
  * Created by maq on 06/04/2016.
  */
 
-//load css for the modal box
-var linkElement = document.createElement("link");
-linkElement.rel = "stylesheet";
-linkElement.href = "/metagenomics/css/ajax-modal.css"; //Replace here
-document.head.appendChild(linkElement);
-
 var HIDDEN_CLASS = "this_hide";
 var FACET_SEPARATOR = "____";
 
@@ -57,25 +51,20 @@ var fetchDataViaAjax = function(dataType, page) {
 
         };
         var jsonQuery = JSON.stringify(query);
-        
+        console.log(jsonQuery);
+
         //setup the request
         var httpReq = new XMLHttpRequest();
-        var url = "/metagenomics/search/doAjaxSearch";
+        var url = "doAjaxSearch";
         httpReq.open("POST", url);
         httpReq.setRequestHeader("Content-type", "application/json");
-        httpReq.setRequestHeader("Accept", "application/json");
 
         //handle response
         httpReq.onreadystatechange = function(event) {
             if (httpReq.readyState == XMLHttpRequest.DONE) {
-                document.getElementById("spinnerDiv").style.display = "none";
                 var readyState = httpReq.readyState;
                 var response = httpReq.response;
                 var data = JSON.parse(response);
-                if (data.error != null) {
-                    var error = data.error;
-                    console.log("Got error: " + error);
-                }
                 displayFacets(data[dataType].facets, dataType, checkedFacets);
                 displaySearchResults(data, dataType);
                 displayPagination(data, dataType);
@@ -84,12 +73,11 @@ var fetchDataViaAjax = function(dataType, page) {
 
         //error handling
         httpReq.addEventListener("error", function(event){
-            document.getElementById("spinnerDiv").style.display = "none";
             console.log("Ajax error");
             searchForm.submit();
         });
 
-        document.getElementById("spinnerDiv").style.display = "block";
+        console.log(jsonQuery);
         httpReq.send(jsonQuery);
 
     } else {
@@ -146,7 +134,7 @@ var displayTabHeader = function(data) {
                 var titleText = dataType.charAt(0).toUpperCase() + dataType.slice(1); //capitalise first letter
                 //tabLink.text = titleText;
                 titleText += " (" + data[dataType].numberOfHits + ")";
-                //var tabLinkSpan = document.createElement("span");
+                var tabLinkSpan = document.createElement("span");
                 //tabLinkSpan.innerHTML = titleText;
                 tabLink.innerHTML = titleText;
                 tabItem.appendChild(tabLink)
@@ -313,7 +301,7 @@ var displayProjectTable = function(data, container) {
         var rowData = [
             {
                 name: entry.identifier,
-                url: "/metagenomics/projects/" + entry.identifier
+                url: "http:/metagenomics/projects/" + entry.identifier
             },
             {name: entry.name},
             {name: entry.biomes[0], className: "xs_hide"},
@@ -350,11 +338,11 @@ var displaySampleTable = function(data, container) {
         var rowData = [
             {
                 name: entry.identifier,
-                url: "/metagenomics/projects/ " + entry.project + "/samples/" + entry.identifier},
+                url: "http:/metagenomics/projects/ " + entry.project + "/samples/" + entry.identifier},
             {
                 name: entry.project,
                 className: "xs_hide",
-                url: "/metagenomics/projects/ " + entry.project,
+                url: "http:/metagenomics/projects/ " + entry.project,
             },
             {name: entry.name},
             {name: entry.description, className: "xs_hide"},
@@ -392,7 +380,7 @@ var displayRunTable = function(data, container) {
         var rowData = [
             {
                 name: entry.identifier,
-                url: "/metagenomics/projects/ "
+                url: "http:/metagenomics/projects/ "
                 + entry.project + "/samples/"
                 + entry.sample + "/runs/"
                 + entry.identifier + "/results/versions/"
@@ -401,7 +389,7 @@ var displayRunTable = function(data, container) {
             {
                 name: entry.sample,
                 className: "xs_hide",
-                url: "/metagenomics/projects/ "
+                url: "http:/metagenomics/projects/ "
                 + entry.project + "/samples/"
                 + entry.sample,
 
@@ -409,7 +397,7 @@ var displayRunTable = function(data, container) {
             {
                 name: entry.project,
                 className: "xs_hide",
-                url: "/metagenomics/projects/ " + entry.project,
+                url: "http:/metagenomics/projects/ " + entry.project,
             },
             {
                 name: entry.experimentType
@@ -417,7 +405,7 @@ var displayRunTable = function(data, container) {
             {
                 name: entry.pipelineVersion,
                 className: "xs_hide",
-                url: "/metagenomics/pipelines/" + entry.pipelineVersion,
+                url: "http:/metagenomics/pipelines/" + entry.pipelineVersion,
             },
 
         ];
