@@ -24,6 +24,8 @@ public class SequencesDownloadSection {
 
     private List<DownloadLink> predictedCDSWithoutAnnotationLinks;
 
+    private List<DownloadLink> predictedCDSWithAnnotationLinks;
+
     private List<DownloadLink> otherDownloadLinks;
 
     public SequencesDownloadSection() {
@@ -35,6 +37,7 @@ public class SequencesDownloadSection {
         this.predictedCDSLinks = new ArrayList<DownloadLink>();
         this.predictedORFWithoutAnnotationLinks = new ArrayList<DownloadLink>();
         this.predictedCDSWithoutAnnotationLinks = new ArrayList<DownloadLink>();
+        this.predictedCDSWithAnnotationLinks = new ArrayList<DownloadLink>();
     }
 
     public List<DownloadLink> getProcessedReadsLinks() {
@@ -93,6 +96,14 @@ public class SequencesDownloadSection {
         this.predictedCDSWithoutAnnotationLinks = predictedCDSWithoutAnnotationLinks;
     }
 
+    public List<DownloadLink> getPredictedCDSWithAnnotationLinks() {
+        return predictedCDSWithAnnotationLinks;
+    }
+
+    public void setPredictedCDSWithAnnotationLinks(List<DownloadLink> predictedCDSWithAnnotationLinks) {
+        this.predictedCDSWithAnnotationLinks = predictedCDSWithAnnotationLinks;
+    }
+
     public List<DownloadLink> getOtherDownloadLinks() {
         return otherDownloadLinks;
     }
@@ -120,6 +131,7 @@ public class SequencesDownloadSection {
         result.add(getReadsWithMatchesLinks());
         result.add(getReadsWithoutMatchesLinks());
         result.add(getPredictedCDSLinks());
+        result.add(getPredictedCDSWithAnnotationLinks());
         result.add(getPredictedCDSWithoutAnnotationLinks());
         result.add(getPredictedORFWithoutAnnotationLinks());
         return result;

@@ -371,6 +371,8 @@ public class ResultViewExportController extends AbstractResultViewController {
             fileDefinitionId = FileDefinitionId.PREDICTED_ORF_WITHOUT_ANNOTATION_FILE;
         } else if (sequenceType.equalsIgnoreCase("PredictedCDSWithoutAnnotation")) {
             fileDefinitionId = FileDefinitionId.PREDICTED_CDS_WITHOUT_ANNOTATION_FILE;
+        } else if (sequenceType.equalsIgnoreCase("PredictedCDSWithAnnotation")) {
+            fileDefinitionId = FileDefinitionId.PREDICTED_CDS_WITH_ANNOTATION_FILE;
         } else {
             log.warn("Sequence type: " + sequenceType + " not found!");
         }
