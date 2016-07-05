@@ -80,6 +80,9 @@ var fetchDataViaAjax = function(dataType, page) {
                 displayFacets(data[dataType].facets, dataType, checkedFacets);
                 displaySearchResults(data, dataType);
                 displayPagination(data, dataType);
+                displayTabHeader(data);
+                var tabLink = document.getElementById(dataType + "-link");
+                setTabText(data, dataType, tabLink);
             }
         };
 
@@ -116,6 +119,12 @@ var setupJQueryTabs = function(container, disabledList) {
     */
 };
 
+var setTabText = function(data, dataType, element) {
+    var titleText = dataType.charAt(0).toUpperCase() + dataType.slice(1); //capitalise first letter
+    titleText += " (" + data[dataType].numberOfHits + ")";
+    element.innerHTML = titleText;
+};
+
 /**
  * displays a set of tabs based on the datatypes property of the data
  * @param data
@@ -137,21 +146,17 @@ var displayTabHeader = function(data) {
                 tabLink.id = dataType + "-link";
                 tabLink.value = dataType;
                 tabLink.href = "#" + dataType;
+                setTabText(data, dataType, tabLink);
 
                 if (data[dataType].numberOfHits > 0) {
                     disabledList.push(1);
                 } else {
                     disabledList.push(0);
                 }
-
-                var titleText = dataType.charAt(0).toUpperCase() + dataType.slice(1); //capitalise first letter
-                //tabLink.text = titleText;
-                titleText += " (" + data[dataType].numberOfHits + ")";
-                var tabLinkSpan = document.createElement("span");
-                //tabLinkSpan.innerHTML = titleText;
-                tabLink.innerHTML = titleText;
                 tabItem.appendChild(tabLink)
                 tabList.appendChild(tabItem);
+
+
             }
             tabContainer.insertBefore(tabList, document.getElementById("tabDiv"));
             setupJQueryTabs(tabContainer, disabledList);
