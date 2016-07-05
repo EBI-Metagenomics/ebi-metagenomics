@@ -358,7 +358,12 @@ public class EBISearchTool {
         EBIRunSearchEntry entry = new EBIRunSearchEntry();
         entry.setIdentifier(searchEntry.getId());
         try {
-            entry.setUrl(new URL(searchEntry.getFieldURLs().getFieldURL().get(0).getValue()));
+            if (searchEntry.getFieldURLs() != null
+                    && searchEntry.getFieldURLs().getFieldURL() != null
+                    && searchEntry.getFieldURLs().getFieldURL().size() > 0) {
+                URL url = new URL(searchEntry.getFieldURLs().getFieldURL().get(0).getValue());
+                entry.setUrl(url);
+            }
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
