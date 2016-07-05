@@ -5,6 +5,13 @@
 var HIDDEN_CLASS = "this_hide";
 var FACET_SEPARATOR = "____";
 
+//load css for the modal box
+var linkElement = document.createElement("link");
+linkElement.rel = "stylesheet";
+linkElement.href = "/metagenomics/css/ajax-modal.css"; //Replace here
+document.head.appendChild(linkElement);
+
+
 /*
 Behaviour methods
  */
@@ -51,20 +58,25 @@ var fetchDataViaAjax = function(dataType, page) {
 
         };
         var jsonQuery = JSON.stringify(query);
-        console.log(jsonQuery);
 
         //setup the request
         var httpReq = new XMLHttpRequest();
-        var url = "doAjaxSearch";
+        var url = "/metagenomics/search/doAjaxSearch";
         httpReq.open("POST", url);
         httpReq.setRequestHeader("Content-type", "application/json");
+        httpReq.setRequestHeader("Accept", "application/json");
 
         //handle response
         httpReq.onreadystatechange = function(event) {
             if (httpReq.readyState == XMLHttpRequest.DONE) {
+                document.getElementById("spinnerDiv").style.display = "none";
                 var readyState = httpReq.readyState;
                 var response = httpReq.response;
                 var data = JSON.parse(response);
+                if (data.error != null) {
+                    var error = data.error;
+                    console.log("Got error: " + error);
+                }
                 displayFacets(data[dataType].facets, dataType, checkedFacets);
                 displaySearchResults(data, dataType);
                 displayPagination(data, dataType);
@@ -73,11 +85,12 @@ var fetchDataViaAjax = function(dataType, page) {
 
         //error handling
         httpReq.addEventListener("error", function(event){
+            document.getElementById("spinnerDiv").style.display = "none";
             console.log("Ajax error");
             searchForm.submit();
         });
 
-        console.log(jsonQuery);
+        document.getElementById("spinnerDiv").style.display = "block";
         httpReq.send(jsonQuery);
 
     } else {
