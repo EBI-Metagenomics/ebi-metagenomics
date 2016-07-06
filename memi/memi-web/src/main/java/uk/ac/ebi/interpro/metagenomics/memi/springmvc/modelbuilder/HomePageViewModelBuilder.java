@@ -167,6 +167,8 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
                 result.put("metagenomes", value);
             } else if (key.equalsIgnoreCase("amplicon")) {
                 result.put("amplicons", value);
+            } else if (key.equalsIgnoreCase("metabarcoding")) {
+                result.put("metabarcoding", value);
             } else {
                 log.warn("Unknown experiment type: " + key);
             }
@@ -181,6 +183,7 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
         }
         return result;
     }
+
     private List<BiomeLogoModel> buildBiomeCountMap() {
         final List<BiomeLogoModel> biomesCountMap = new ArrayList<BiomeLogoModel>();
         for (String lineage : lineages) {
@@ -197,12 +200,13 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
         biomesCountMap.sort(new Comparator<BiomeLogoModel>() {
             @Override
             public int compare(BiomeLogoModel biome1, BiomeLogoModel biome2) {
-                return (int)biome2.getNumberOfProjects()-(int)biome1.getNumberOfProjects();
+                return (int) biome2.getNumberOfProjects() - (int) biome1.getNumberOfProjects();
             }
         });
 
         return biomesCountMap;
     }
+
     private Map<String, Long> buildBiomeCountMapOld() {
         final Map<String, Long> biomesCountMap = new HashMap<String, Long>();
         //Add number of soil biomes
