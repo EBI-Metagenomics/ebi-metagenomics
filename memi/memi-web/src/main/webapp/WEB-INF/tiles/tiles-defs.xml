@@ -36,6 +36,11 @@
         <put-attribute name="body" value="/templates/aboutBody.jsp"/>
     </definition>
 
+    <definition name="search" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="green"/>
+        <put-attribute name="body" value="/templates/searchBody.jsp"/>
+    </definition>
+
     <!-- Start submission check multi-form -->
 
     <definition name="registIntro" extends="rootTemplate">
@@ -138,6 +143,11 @@
     <definition name="contact" extends="rootTemplate">
         <put-attribute name="bodyClass" type="string" value="ebigreen"/>
         <put-attribute name="body" value="/templates/contactBody.jsp"/>
+    </definition>
+
+    <definition name="biomes" extends="rootTemplate">
+        <put-attribute name="bodyClass" type="string" value="ebigreen"/>
+        <put-attribute name="body" value="/templates/biomesBody.jsp"/>
     </definition>
 
     <definition name="pipelines" extends="rootTemplate">

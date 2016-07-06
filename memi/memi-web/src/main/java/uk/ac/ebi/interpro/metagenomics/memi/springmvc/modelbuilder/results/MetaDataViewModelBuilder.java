@@ -4,11 +4,12 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.core.comparators.PublicationComparator;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgSampleAnnotation;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.*;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.results.MetaDataViewModel;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.UserManager;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,7 +17,7 @@ import java.util.List;
 
 /**
  * Model builder class for {@link uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.results.QualityCheckViewModel}.
- * <p/>
+ * <p>
  * See {@link uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder} for more information of how to use.
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
@@ -34,13 +35,14 @@ public class MetaDataViewModelBuilder extends AbstractResultViewModelBuilder<Met
 
     private List<EmgSampleAnnotation> sampleAnnotations;
 
-    public MetaDataViewModelBuilder(SessionManager sessionMgr,
+    public MetaDataViewModelBuilder(UserManager sessionMgr,
+                                    EBISearchForm ebiSearchForm,
                                     String pageTitle,
                                     List<Breadcrumb> breadcrumbs,
                                     MemiPropertyContainer propertyContainer,
                                     AnalysisJob analysisJob,
                                     List<EmgSampleAnnotation> sampleAnnotations) {
-        super(sessionMgr, pageTitle, breadcrumbs, propertyContainer, null, null, null, analysisJob);
+        super(sessionMgr, ebiSearchForm, pageTitle, breadcrumbs, propertyContainer, null, null, null, analysisJob);
         this.sample = analysisJob.getSample();
         this.sampleAnnotations = sampleAnnotations;
         this.relatedLinks = new ArrayList<Publication>();
@@ -55,7 +57,7 @@ public class MetaDataViewModelBuilder extends AbstractResultViewModelBuilder<Met
 
         buildPublicationLists();
 
-        return new MetaDataViewModel(getSessionSubmitter(sessionMgr), pageTitle, breadcrumbs, propertyContainer, sample, analysisJob, isHostAssociated, sampleAnnotations, relatedLinks, relatedPublications);
+        return new MetaDataViewModel(getSessionSubmitter(sessionMgr), getEbiSearchForm(), pageTitle, breadcrumbs, propertyContainer, sample, analysisJob, isHostAssociated, sampleAnnotations, relatedLinks, relatedPublications);
     }
 
     private boolean isHostAssociated(Sample sample) {

@@ -48,10 +48,6 @@
 
     <import resource="downloadable-files-context.xml"/>
 
-    <bean id="exportValueService" class="uk.ac.ebi.interpro.metagenomics.memi.services.ExportValueService">
-        <constructor-arg ref="fileDefinitionsMapV1"/>
-    </bean>
-
     <bean id="authenticationClient" name="authenticationClient"
           class="uk.ac.ebi.ena.authentication.client.AuthenticationClientImpl">
         <constructor-arg ref="enaWebServiceUrl"/>

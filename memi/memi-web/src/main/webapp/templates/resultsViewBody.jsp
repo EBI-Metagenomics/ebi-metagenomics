@@ -2,6 +2,11 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!-- Google map script - used in overview-->
 <script src="https://maps.googleapis.com/maps/api/js"></script>
+<script src='${pageContext.request.contextPath}/js/highcharts-4.1.10/highcharts.js' type='text/javascript'></script>
+<script src='${pageContext.request.contextPath}/js/highcharts-4.1.10/highcharts-more.js' type='text/javascript'></script>
+<script src='${pageContext.request.contextPath}/js/highcharts-4.1.10/exporting.js' type='text/javascript'></script>
+<script src='${pageContext.request.contextPath}/js/QC_charts.js' type='text/javascript'></script>
+
 <script type="text/javascript">
     function initialize(lat, long) {
         var latlng = new google.maps.LatLng(lat, long);
@@ -43,7 +48,7 @@
 
         <div class="sample_ana">
         <!-- Main Tabs for normal screen -->
-        <div class="navtabs">
+        <div id="navtabs">
                     <ul>
                         <li>
                             <a title="Overview"
@@ -83,7 +88,7 @@
             //Main navigation tabs - overview, quality control, taxonomic analysis, functional analysis, downloads
             //Ajax load approach as described here: http://jqueryui.com/tabs/#ajax
             //load the tabs for the two different menu sizes
-            $(".navtabs").tabs({
+            $("#navtabs").tabs({
                 cache:true,
                 ajaxOptions:{
                     error:function (xhr, status, index, anchor) {
@@ -254,5 +259,5 @@
     //    }
 </script>
 
-<script type="text/javascript" src="https://canvg.googlecode.com/svn/trunk/rgbcolor.js"></script>
-<script type="text/javascript" src="https://canvg.googlecode.com/svn/trunk/canvg.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/rgbcolor.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/canvg.js"></script>

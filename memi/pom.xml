@@ -5,7 +5,7 @@
 
     <groupId>uk.ac.ebi.interpro.metagenomics</groupId>
     <artifactId>memi</artifactId>
-    <version>1.1</version>
+    <version>2.2.2</version>
     <packaging>pom</packaging>
 
     <name>memi</name>
@@ -64,9 +64,9 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <org.springframework.version>3.1.4.RELEASE</org.springframework.version>
-        <memi-web.module.version>2.1-SNAPSHOT</memi-web.module.version>
-        <memi-persistence.module.version>1.7-SNAPSHOT</memi-persistence.module.version>
-        <memi-model.module.version>1.8-SNAPSHOT</memi-model.module.version>
+        <memi-web.module.version>2.2.2-SNAPSHOT</memi-web.module.version>
+        <memi-persistence.module.version>2.0-SNAPSHOT</memi-persistence.module.version>
+        <memi-model.module.version>2.0-SNAPSHOT</memi-model.module.version>
         <memi-business.module.version>1.0</memi-business.module.version>
     </properties>
 
@@ -116,21 +116,6 @@
             <version>${org.springframework.version}</version>
             <scope>test</scope>
         </dependency>
-        <!-- Contains the Oracle JDBC driver -->
-        <dependency>
-            <groupId>com.oracle.jdbc</groupId>
-            <artifactId>com.springsource.oracle.jdbc</artifactId>
-            <version>10.2.0.2</version>
-            <!-- Possibly should be "provided" -->
-            <!--<scope>provided</scope>-->
-        </dependency>
-        <!-- MySQL JDBC driver-->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.14</version>
-            <scope>runtime</scope>
-        </dependency>
         <!-- CSV formatted file parser-->
         <dependency>
             <groupId>net.sf.opencsv</groupId>
@@ -149,13 +134,13 @@
     <build>
         <finalName>memi</finalName>
         <plugins>
-            <!-- Use Java 6 language features -->
+            <!-- Use Java 8 language features -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
             <!-- JavaDocs (generate: mvn javadoc:javadoc, package: mvn javadoc:jar) -->

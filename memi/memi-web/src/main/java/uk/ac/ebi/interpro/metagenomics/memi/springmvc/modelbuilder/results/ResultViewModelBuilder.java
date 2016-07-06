@@ -3,6 +3,7 @@ package uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.results;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Run;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.*;
@@ -10,13 +11,13 @@ import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.*;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.*;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.AnalysisStatus;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.results.ResultViewModel;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.UserManager;
 
 import java.util.*;
 
 /**
  * Model builder class for {@link uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.results.ResultViewModel}.
- * <p/>
+ * <p>
  * See {@link uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder} for more information of how to use.
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
@@ -37,7 +38,8 @@ public class ResultViewModelBuilder extends AbstractResultViewModelBuilder<Resul
 
     private final List<String> archivedSequences;
 
-    public ResultViewModelBuilder(SessionManager sessionMgr,
+    public ResultViewModelBuilder(UserManager sessionMgr,
+                                  EBISearchForm ebiSearchForm,
                                   Sample sample,
                                   Run run,
                                   String pageTitle,
@@ -48,7 +50,8 @@ public class ResultViewModelBuilder extends AbstractResultViewModelBuilder<Resul
                                   List<ResultFileDefinitionImpl> qualityControlFileDefinitions,
                                   List<FunctionalAnalysisFileDefinition> functionalAnalysisFileDefinitions,
                                   List<ResultFileDefinitionImpl> taxonomicAnalysisFileDefinitions) {
-        super(sessionMgr, pageTitle, breadcrumbs, propertyContainer, qualityControlFileDefinitions, functionalAnalysisFileDefinitions, taxonomicAnalysisFileDefinitions, analysisJob);
+        super(sessionMgr, ebiSearchForm, pageTitle, breadcrumbs, propertyContainer, qualityControlFileDefinitions,
+                functionalAnalysisFileDefinitions, taxonomicAnalysisFileDefinitions, analysisJob);
         this.sample = sample;
         this.pageTitle = pageTitle;
         this.breadcrumbs = breadcrumbs;
@@ -60,12 +63,14 @@ public class ResultViewModelBuilder extends AbstractResultViewModelBuilder<Resul
     public ResultViewModel getModel() {
         log.info("Building instance of " + ResultViewModel.class + "...");
         final Submitter submitter = getSessionSubmitter(sessionMgr);
-
+        EBISearchForm ebiSearchForm = getEbiSearchForm();
         //Get analysis status
         AnalysisStatus analysisStatus = getAnalysisStatus((sample.getAnalysisCompleted() == null ? false : true));
 
 
-        final ResultViewModel resultViewModel = new ResultViewModel(submitter,
+        final ResultViewModel resultViewModel = new ResultViewModel(
+                submitter,
+                ebiSearchForm,
                 pageTitle,
                 breadcrumbs,
                 sample,

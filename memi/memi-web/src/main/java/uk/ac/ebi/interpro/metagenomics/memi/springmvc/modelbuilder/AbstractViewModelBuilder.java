@@ -1,8 +1,9 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder;
 
+import uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.UserManager;
 
 /**
  * Represents an abstract instance of a view model builder. Each extended view model builder needs to implement the getModel() method.
@@ -14,16 +15,23 @@ import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
  */
 public abstract class AbstractViewModelBuilder<E extends ViewModel> implements ViewModelBuilder<E> {
 
-    protected SessionManager sessionMgr;
+    protected UserManager sessionMgr;
 
-    protected AbstractViewModelBuilder(SessionManager sessionMgr) {
+    private EBISearchForm ebiSearchForm;
+
+    protected AbstractViewModelBuilder(UserManager sessionMgr, EBISearchForm ebiSearchForm) {
         this.sessionMgr = sessionMgr;
+        this.ebiSearchForm = ebiSearchForm;
     }
 
-    protected Submitter getSessionSubmitter(SessionManager sessionMgr) {
-        if (sessionMgr != null && sessionMgr.getSessionBean() != null) {
-            return sessionMgr.getSessionBean().getSubmitter();
+    protected Submitter getSessionSubmitter(UserManager sessionMgr) {
+        if (sessionMgr != null && sessionMgr.getUserAuthentication() != null) {
+            return sessionMgr.getUserAuthentication().getSubmitter();
         }
         return null;
+    }
+
+    public EBISearchForm getEbiSearchForm() {
+        return ebiSearchForm;
     }
 }

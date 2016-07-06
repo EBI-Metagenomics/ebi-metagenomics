@@ -17,11 +17,7 @@ import java.util.Set;
 public class Sample implements SecureEntity, BiomeEntity {
 
     @Id
-    @Column(name = "SAMPLE_ID")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SAMPLE_SEQ")
-    @SequenceGenerator(
-            name = "SAMPLE_SEQ",
-            sequenceName = "SAMPLE_SEQ")
+    @Column(name = "SAMPLE_ID", columnDefinition = "INT(11)")
     private long id;
 
     @ManyToOne
@@ -31,61 +27,54 @@ public class Sample implements SecureEntity, BiomeEntity {
     @Column(name = "EXT_SAMPLE_ID", nullable = false, length = 15)
     private String sampleId;
 
-    @Column(name = "SAMPLE_ALIAS")
+    @Column(name = "SAMPLE_ALIAS", length = 255)
     private String sampleAlias;
 
-    @Column(name = "SAMPLE_NAME")
+    @Column(name = "SAMPLE_NAME", length = 255)
     private String sampleName;
 
     @Column(name = "SAMPLE_DESC")
     @Lob
     private String sampleDescription;
 
-//    @Column(name = "SAMPLE_CLASSIFICATION")
-//    private String sampleClassification;
-
-    @Column(name = "GEO_LOC_NAME")
+    @Column(name = "GEO_LOC_NAME", length = 255)
     private String geoLocName;
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "COLLECTION_DATE")
+    @Column(name = "COLLECTION_DATE", columnDefinition = "DATETIME")
     private Date collectionDate;
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "METADATA_RECEIVED")
+    @Column(name = "METADATA_RECEIVED", columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP")
     private Date metadataReceived;
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "SEQUENCEDATA_RECEIVED")
+    @Column(name = "SEQUENCEDATA_RECEIVED", columnDefinition = "DATETIME")
     private Date sequenceDataReceived;
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "SEQUENCEDATA_ARCHIVED")
+    @Column(name = "SEQUENCEDATA_ARCHIVED", columnDefinition = "DATETIME")
     private Date sequenceDataArchived;
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "ANALYSIS_COMPLETED")
+    @Column(name = "ANALYSIS_COMPLETED", columnDefinition = "DATETIME")
     private Date analysisCompleted;
 
     /**
      * Date when we received the last meta data or a substantial update.
      */
     @Temporal(TemporalType.DATE)
-    @Column(name = "LAST_UPDATE", columnDefinition = "DATE DEFAULT CURRENT_DATE", nullable = false)
+    @Column(name = "LAST_UPDATE", columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP", nullable = false)
     private Date lastMetadataReceived;
 
     /**
      * Single samples of public study could be private. Default value is private.
      */
-    @Column(name = "IS_PUBLIC")
+    @Column(name = "IS_PUBLIC", columnDefinition = "TINYINT(4)")
     private Integer isPublic;
 
-    @Column(name = "SUBMISSION_ACCOUNT_ID")
+    @Column(name = "SUBMISSION_ACCOUNT_ID", length = 15)
     private String submissionAccountId;
-
-    @Column(name = "MISC")
-    @Lob
-    private String miscellaneous;
 
     @Column(name = "LATITUDE", precision = 7, scale = 4)
     private BigDecimal latitude;
@@ -93,17 +82,14 @@ public class Sample implements SecureEntity, BiomeEntity {
     @Column(name = "LONGITUDE", precision = 7, scale = 4)
     private BigDecimal longitude;
 
-    @Column(name = "ENVIRONMENT_BIOME")
+    @Column(name = "ENVIRONMENT_BIOME", length = 255)
     private String environmentalBiome;
 
-    @Column(name = "ENVIRONMENT_FEATURE")
+    @Column(name = "ENVIRONMENT_FEATURE", length = 255)
     private String environmentalFeature;
 
-    @Column(name = "ENVIRONMENT_MATERIAL")
+    @Column(name = "ENVIRONMENT_MATERIAL", length = 255)
     private String environmentalMaterial;
-
-    @Column(name = "PHENOTYPE")
-    private String phenotype;
 
     /**
      * Host taxonomy ID (e.g. 9606 for Homo sapiens)
@@ -111,16 +97,11 @@ public class Sample implements SecureEntity, BiomeEntity {
     @Column(name = "HOST_TAX_ID")
     private Integer hostTaxonomyId;
 
-
     /**
      * Name of the species for instance Homo sapiens
      */
-    @Column(name = "SPECIES", nullable = true)
+    @Column(name = "SPECIES", nullable = true, length = 255)
     private String species;
-
-    @Column(name = "HOST_SEX", length = 30)
-    @Enumerated(EnumType.STRING)
-    private HostSex hostSex;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "BIOME_ID", nullable = true)
@@ -140,6 +121,11 @@ public class Sample implements SecureEntity, BiomeEntity {
      * Associated publication.
      */
     @ManyToMany
+    @JoinTable(
+            name = "SAMPLE_PUBLICATION",
+            joinColumns = {@JoinColumn(name = "PUB_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "SAMPLE_ID")}
+    )
     private Set<Publication> publications;
 
     public Sample() {
@@ -201,14 +187,6 @@ public class Sample implements SecureEntity, BiomeEntity {
     public void setSampleDescription(String sampleDescription) {
         this.sampleDescription = sampleDescription;
     }
-
-//    public String getSampleClassification() {
-//        return sampleClassification;
-//    }
-
-//    public void setSampleClassification(String sampleClassification) {
-//        this.sampleClassification = sampleClassification;
-//    }
 
     public String getGeoLocName() {
         return geoLocName;
@@ -295,14 +273,6 @@ public class Sample implements SecureEntity, BiomeEntity {
         }
     }
 
-    public String getMiscellaneous() {
-        return miscellaneous;
-    }
-
-    public void setMiscellaneous(String miscellaneous) {
-        this.miscellaneous = miscellaneous;
-    }
-
     public String getSampleAlias() {
         return sampleAlias;
     }
@@ -359,28 +329,12 @@ public class Sample implements SecureEntity, BiomeEntity {
         this.environmentalMaterial = environmentalMaterial;
     }
 
-    public String getPhenotype() {
-        return phenotype;
-    }
-
-    public void setPhenotype(String phenotype) {
-        this.phenotype = phenotype;
-    }
-
     public Integer getHostTaxonomyId() {
         return hostTaxonomyId;
     }
 
     public void setHostTaxonomyId(Integer hostTaxonomyId) {
         this.hostTaxonomyId = hostTaxonomyId;
-    }
-
-    public HostSex getHostSex() {
-        return hostSex;
-    }
-
-    public void setHostSex(HostSex hostSex) {
-        this.hostSex = hostSex;
     }
 
     public String getSpecies() {
@@ -423,55 +377,9 @@ public class Sample implements SecureEntity, BiomeEntity {
         this.analysisJobs = analysisJobs;
     }
 
-    //    @Transient
-//    public abstract Class<? extends Sample> getClazz();
-
-//    @Transient
-//    public abstract SampleType getSampleType();
-
-//    @Transient
-//    public String getSampleTypeAsString() {
-//        return getSampleType().toString();
-//    }
-
     @Override
     @Transient
     public String getSecureEntityId() {
         return getSampleId();
-    }
-
-
-//    public enum SampleType {
-//        ENVIRONMENTAL(EnvironmentSample.class, "Environmental"),
-//        HOST_ASSOCIATED(HostSample.class, "Host associated"),
-//        ENGINEERED(EngineeredSample.class, "Man-made"),
-//        UNDEFINED(UndefinedSample.class, "Undefined");
-//
-//        private Class<? extends Sample> clazz;
-//
-//        private String type;
-//
-//        private SampleType(Class<? extends Sample> clazz, String type) {
-//            this.clazz = clazz;
-//            this.type = type;
-//        }
-//
-//        public Class<? extends Sample> getClazz() {
-//            return clazz;
-//        }
-//
-//        @Override
-//        public String toString() {
-//            return type;
-//        }
-//
-//        public String getUpperCaseString() {
-//            String result = type.replace(" ", "_");
-//            return result.toUpperCase();
-//        }
-//    }
-
-    public enum HostSex {
-        FEMALE, MALE;
     }
 }

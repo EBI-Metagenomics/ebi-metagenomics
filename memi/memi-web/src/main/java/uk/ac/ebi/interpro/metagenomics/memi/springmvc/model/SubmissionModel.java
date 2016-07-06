@@ -1,6 +1,7 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
 
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.SubmissionForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 
@@ -16,9 +17,9 @@ public class SubmissionModel extends ViewModel {
 
     private SubmissionForm subForm;
 
-    public SubmissionModel(Submitter submitter, String pageTitle, List<Breadcrumb> breadcrumbs,
+    public SubmissionModel(Submitter submitter, EBISearchForm ebiSearchForm, String pageTitle, List<Breadcrumb> breadcrumbs,
                            MemiPropertyContainer propertyContainer) {
-        super(submitter, pageTitle, breadcrumbs, propertyContainer);
+        super(submitter, ebiSearchForm, pageTitle, breadcrumbs, propertyContainer);
         this.subForm = new SubmissionForm();
     }
 

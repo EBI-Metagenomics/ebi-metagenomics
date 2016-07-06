@@ -3,6 +3,10 @@ package uk.ac.ebi.interpro.metagenomics.memi.controller;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.velocity.app.VelocityEngine;
+import org.hibernate.HibernateException;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.WebDataBinder;
@@ -14,14 +18,22 @@ import uk.ac.ebi.interpro.metagenomics.memi.core.tools.MemiTools;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.BiomeDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.files.MemiFileWriter;
-import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.Biome;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.SampleFilter;
+import uk.ac.ebi.interpro.metagenomics.memi.model.Run;
+import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
+import uk.ac.ebi.interpro.metagenomics.memi.services.FileObjectBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.SamplesViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.DownloadableFileDefinition;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.FileDefinitionId;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.SamplesViewHelper;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.SamplesViewModelBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder;
 
@@ -29,6 +41,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -65,47 +78,75 @@ public class ViewSamplesController extends AbstractController implements IContro
     @Resource
     private MemiDownloadService downloadService;
 
+    @Override
     public ModelAndView doGet(ModelMap model) {
         log.info("Requesting doGet...");
         //build and add the page model
         populateModel(model, new SampleFilter(), 0);
-        model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((SamplesViewModel) model.get(ViewModel.MODEL_ATTR_NAME)).getLoginForm());
-        model.addAttribute(SampleFilter.MODEL_ATTR_NAME, ((SamplesViewModel) model.get(ViewModel.MODEL_ATTR_NAME)).getSampleFilter());
-        return new ModelAndView(VIEW_NAME, model);
+        return buildModelAndView(
+                getModelViewName(),
+                model,
+                new ModelPopulator() {
+                    @Override
+                    public void populateModel(ModelMap model) {
+                        model.addAttribute(SampleFilter.MODEL_ATTR_NAME, ((SamplesViewModel) model.get(ViewModel.MODEL_ATTR_NAME)).getSampleFilter());
+                    }
+                }
+        );
     }
 
+    protected void doHandleSampleExport(final SampleFilter filter,
+                                        final HttpServletResponse response,
+                                        final HttpServletRequest request) throws IOException, HibernateException {
+        response.setContentType("text/html;charset=utf-8");
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.setLocale(Locale.ENGLISH);
 
-    /**
-     * Handles the export of the samples table.
-     */
-    @RequestMapping(value = "doExportTable", method = RequestMethod.GET)
-    public ModelAndView doExportSampleTable(@ModelAttribute(SampleFilter.MODEL_ATTR_NAME) SampleFilter filter,
-                                            @RequestParam(required = false) final SampleFilter.SampleVisibility sampleVisibility,
-                                            @RequestParam(required = false) final String searchTerm,
-                                            @RequestParam(required = true) final int startPosition,
-                                            final HttpServletResponse response, final HttpServletRequest request) {
-        log.info("Requesting exportSamples (GET method)...");
+        //Get submitter account ID if exists
+        Submitter submitter = getSessionSubmitter();
+        String submissionAccountId = (submitter != null ? submitter.getSubmissionAccountId() : null);
+        //Create sample filter criteria
+        List<Criterion> filterCriteria = SamplesViewHelper.buildFilterCriteria(filter, submissionAccountId, biomeDAO);
+        //Get list of filtered samples which will be provided for download
+        List<Sample> downloadableSamples = sampleDAO.retrieveFilteredSamples(filterCriteria, "sampleName");
 
-        final ModelMap model = new ModelMap();
-        processRequestParams(filter, searchTerm, sampleVisibility);
-        populateModel(model, filter, startPosition);
-        Collection<Sample> samples = ((SamplesViewModel) model.get(ViewModel.MODEL_ATTR_NAME)).getDownloadableSamples();
-
-        if (samples != null && samples.size() > 0) {
+        if (downloadableSamples != null && downloadableSamples.size() > 0) {
             //Create velocity spring_model
             Map<String, Object> velocityModel = new HashMap<String, Object>();
             velocityModel.put("sampleProperties", getTableHeaderNames());
-            velocityModel.put("samples", samples);
+            velocityModel.put("samples", downloadableSamples);
             velocityModel.put("columnLength", MAX_CHARS_PER_COLUMN);
             //Create file content
             String fileContent = VelocityTemplateWriter.createFileContent(velocityEngine, VELOCITY_TEMPLATE_LOCATION_PATH, velocityModel);
             File file = MemiFileWriter.writeCSVFile(fileContent);
             String fileName = MemiTools.createFileName("mg_samples_");
             if (file != null && file.canRead()) {
-                downloadService.openDownloadDialog(response, request, file, fileName, true);
+                try {
+                    //Open download dialog
+                    downloadService.openDownloadDialog(response, request, file, fileName, true);
+                } catch (IndexOutOfBoundsException e) {
+                    response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+                }
+            } else {//If no temp file has been writen
+                response.setStatus(HttpServletResponse.SC_NO_CONTENT);
             }
+        } else {//If list of samples is NULL or zero
+            response.setStatus(HttpServletResponse.SC_NO_CONTENT);
         }
-        return new ModelAndView(VIEW_NAME, model);
+    }
+
+    /**
+     * Handles the export of the samples table.
+     */
+    @RequestMapping(value = "doExportTable")
+    public void doExportSampleTable(@ModelAttribute(SampleFilter.MODEL_ATTR_NAME) SampleFilter filter,
+//                                    @RequestParam(required = false) final SampleFilter.SampleVisibility sampleVisibility,
+//                                    @RequestParam(required = false) final String searchTerm,
+//                                    @RequestParam(required = true) final int startPosition,
+                                    final HttpServletResponse response,
+                                    final HttpServletRequest request) throws IOException, HibernateException {
+        log.info("Exporting filtered samples of the sample table...");
+        doHandleSampleExport(filter, response, request);
     }
 
 
@@ -136,7 +177,11 @@ public class ViewSamplesController extends AbstractController implements IContro
         } else {
             log.info("There are no samples to be exported!");
         }
-        return new ModelAndView(VIEW_NAME, model);
+        return buildModelAndView(
+                getModelViewName(),
+                model,
+                new SampleModelPopulator()
+        );
     }
 
     @RequestMapping(params = "search", value = "doSearch", method = RequestMethod.GET)
@@ -149,8 +194,11 @@ public class ViewSamplesController extends AbstractController implements IContro
 
         processRequestParams(filter, searchTerm, sampleVisibility);
         populateModel(model, filter, startPosition);
-        model.addAttribute(LoginForm.MODEL_ATTR_NAME, ((SamplesViewModel) model.get(ViewModel.MODEL_ATTR_NAME)).getLoginForm());
-        return new ModelAndView(VIEW_NAME, model);
+        return buildModelAndView(
+                getModelViewName(),
+                model,
+                new SampleModelPopulator()
+        );
     }
 
     private void processRequestParams(SampleFilter filter, String searchTerm,
@@ -159,7 +207,7 @@ public class ViewSamplesController extends AbstractController implements IContro
         filter.setSearchTerm(searchTerm);
 
         //The visibility parameter can only be set if a user is logged in, means a session object exists
-        if (sessionManager.getSessionBean().getSubmitter() != null) {
+        if (userManager.getUserAuthentication().getSubmitter() != null) {
             filter.setSampleVisibility((sampleVisibility != null ? sampleVisibility : SampleFilter.SampleVisibility.MY_SAMPLES));
         } else {
             filter.setSampleVisibility(SampleFilter.SampleVisibility.ALL_PUBLISHED_SAMPLES);
@@ -176,10 +224,9 @@ public class ViewSamplesController extends AbstractController implements IContro
      * Creates the MG model and adds it to the specified model map.
      */
     private void populateModel(ModelMap model, SampleFilter filter, int startPosition) {
-        final ViewModelBuilder<SamplesViewModel> builder = new SamplesViewModelBuilder(sessionManager, "Samples list",
+        final ViewModelBuilder<SamplesViewModel> builder = new SamplesViewModelBuilder(userManager, getEbiSearchForm(), "Samples list",
                 getBreadcrumbs(null), propertyContainer, getTableHeaderNames(), sampleDAO, filter, startPosition, biomeDAO);
         final SamplesViewModel samplesViewModel = builder.getModel();
-        model.addAttribute("loginForm", new LoginForm());
         samplesViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_SAMPLES_VIEW);
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, samplesViewModel);
     }
@@ -229,5 +276,12 @@ public class ViewSamplesController extends AbstractController implements IContro
         List<Breadcrumb> result = new ArrayList<Breadcrumb>();
         result.add(new Breadcrumb("Samples", "View samples", VIEW_NAME));
         return result;
+    }
+
+    class SampleModelPopulator implements ModelPopulator {
+        @Override
+        public void populateModel(ModelMap model) {
+            model.addAttribute(SampleFilter.MODEL_ATTR_NAME, ((SamplesViewModel) model.get(ViewModel.MODEL_ATTR_NAME)).getSampleFilter());
+        }
     }
 }

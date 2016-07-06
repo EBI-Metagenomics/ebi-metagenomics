@@ -1,6 +1,8 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.study;
 
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.extensions.QueryRunsForProjectResult;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
@@ -22,10 +24,10 @@ public class StudyViewModel extends ViewModel {
     /* True if JSON file (name: google-map-sample-data.json) does exist. The JSON file is necessary to render the Google Map.*/
     private boolean isGoogleMapDataAvailable;
 
-    public StudyViewModel(Submitter submitter, Study study, String pageTitle,
+    public StudyViewModel(Submitter submitter, EBISearchForm ebiSearchForm, Study study, String pageTitle,
                           List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer, final String disabledOption,
                           final boolean isGoogleMapDataAvailable) {
-        super(submitter, pageTitle, breadcrumbs, propertyContainer);
+        super(submitter, ebiSearchForm, pageTitle, breadcrumbs, propertyContainer);
         this.study = study;
         this.disabledOption = disabledOption;
         this.isGoogleMapDataAvailable = isGoogleMapDataAvailable;

@@ -1,6 +1,7 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.results;
 
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgSampleAnnotation;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Run;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
@@ -26,12 +27,13 @@ public class DownloadViewModel extends AbstractResultViewModel {
     private Sample sample;
 
     public DownloadViewModel(Submitter submitter,
+                             EBISearchForm ebiSearchForm,
                              String pageTitle,
                              List<Breadcrumb> breadcrumbs,
                              MemiPropertyContainer propertyContainer,
                              DownloadSection downloadSection,
                              Sample sample) {
-        super(submitter, pageTitle, breadcrumbs, propertyContainer);
+        super(submitter, ebiSearchForm, pageTitle, breadcrumbs, propertyContainer);
         this.downloadSection = downloadSection;
         this.sample = sample;
     }

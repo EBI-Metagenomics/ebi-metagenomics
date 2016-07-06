@@ -59,20 +59,20 @@
             </p>
         </c:when>
         <c:otherwise>
-            <table border="1" class="result">
+            <table class="table-heading result" id="associated-run-sample">
                 <thead>
                 <tr>
-                    <th scope="col" class="h_left">Run id</th>
-                    <th scope="col">Pipeline version</th>
-                    <th scope="col">Experiment type</th>
-                    <th scope="col">Analysis date</th>
-                    <th scope="col" width="170px" class="xs_hide">Analysis results</th>
+                    <th>Run id</th>
+                    <th>Pipeline version</th>
+                    <th>Experiment type</th>
+                    <th>Analysis date</th>
+                    <th width="170px">Analysis results</th>
                 </tr>
                 </thead>
                 <tbody>
                 <c:forEach var="analysisJob" items="${analysisJobs}" varStatus="status">
                     <tr>
-                        <td class="h_left table_xs_text">
+                        <td>
                             <c:choose>
                                 <c:when test="${analysisJob.analysisStatus.analysisStatus == 'completed'}">
                                     <a title="Overview"
@@ -84,10 +84,9 @@
                             </c:choose>
                         </td>
                         <td>${analysisJob.pipelineRelease.releaseVersion}</td>
-                        <td><span class="capitalize">${analysisJob.experimentType.experimentType}</span>
-                        </td>
+                        <td>${analysisJob.experimentType.experimentType}</td>
                         <td>${analysisJob.completeTime}</td>
-                        <td class="xs_hide">
+                        <td>
                             <c:set var="analysisStatus" value="${analysisJob.analysisStatus.analysisStatus}"
                                    scope="page"/>
                             <c:choose>
@@ -114,3 +113,48 @@
         </c:otherwise>
     </c:choose>
 </div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#associated-run-sample').DataTable({
+            "columnDefs": [ //add style to the different columns as direct css doesn't work
+                            {className:"table-align-center table_xs_text", "targets": [0,3]},
+                            {className:"table-align-center", "targets": [1]},
+                            {className:"table-align-center fl_capitalize", "targets": [2]},
+                            {className:"xs_hide", "targets": [4]}
+                        ],
+            "bDeferRender":true,
+            "bRetrieve":true,
+            "oLanguage": {
+                "sSearch":"Filter:"
+            },
+            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+            "fnDrawCallback": function () {
+
+                if (this.fnSettings().fnRecordsDisplay() > 10) {
+                    $('.dataTables_length').css("display", "block");
+                } else {
+                    $('.dataTables_length').css("display", "none");//Remove show all dropdown when one single result page
+                    $('.dataTables_paginate ').css("display", "none");//Remove pagination
+                }
+            }
+        });
+
+         //add class to filter to use for highlighting terms
+        $("#associated-run-sample_filter input").addClass("filter_sp");
+          // Highlight the search term in the table using the filter input, using jQuery Highlight plugin
+        $('.filter_sp').keyup (function () {
+             $("#associated-run-sample tr td").highlight($(this).val());
+               // console.log($(this).val());
+                $('#associated-run-sample tr td').unhighlight();// highlight more than just first character entered in the text box and reiterate the span to highlight
+                $('#associated-run-sample tr td').highlight($(this).val());
+
+        });
+        // remove highlight when click on X (clear button)
+        $('input[type=search]').on('search', function () {
+                        $('#associated-run-sample tr td').unhighlight();
+                });
+
+    });
+
+</script>

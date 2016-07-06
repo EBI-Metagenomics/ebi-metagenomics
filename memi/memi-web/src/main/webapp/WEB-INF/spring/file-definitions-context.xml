@@ -123,6 +123,16 @@
     </bean>
 
     <!--Taxonomic data file definitions-->
+    <!-- List of mappings between download links (on the website) and result files on file system -->
+    <!-- Download link name                                 | file name suffix -->
+    <!-- Reads encoding 5S rRNA                             | _5SrRNA.fasta -->
+    <!-- Reads encoding 16S rRNA                            | _16SrRNA.fasta -->
+    <!-- Reads encoding 23S rRNA                            | _23SrRNA.fasta -->
+    <!-- OTUs, reads and taxonomic assignments (TSV)        | _otu.tsv -->
+    <!-- OTUs, reads and taxonomic assignments (Biom)       | _otu.biom -->
+    <!-- OTUs, reads and taxonomic assignments (HDF5 Biom)  | _otu_table_hdf5.biom -->
+    <!-- OTUs, reads and taxonomic assignments (JSON Biom)  | _otu_table_json.biom -->
+    <!-- Phylogenetic tree                                  | _newick.tre (version 1)  | _pruned.tree (version 2) -->
 
     <bean id="rRNA5sFile" autowire-candidate="false"
           class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.TaxonomicAnalysisFileDefinition">
@@ -132,7 +142,8 @@
         <property name="linkText" value="Reads encoding 5S rRNA"/>
         <property name="order" value="1"/>
         <property name="linkTitle" value="Click to download reads encoding 5S rRNA (FASTA)"/>
-        <property name="linkURL" value="/export?contentType=text&amp;exportValue=5SrRNA"/>
+        <property name="linkURL" value="5S-rRNA-FASTA"/>
+        <!--All versions-->
     </bean>
 
     <bean id="rRNA16sFile" autowire-candidate="false"
@@ -143,7 +154,8 @@
         <property name="linkText" value="Reads encoding 16S rRNA"/>
         <property name="order" value="2"/>
         <property name="linkTitle" value="Click to download reads encoding 16S rRNA (FASTA)"/>
-        <property name="linkURL" value="/export?contentType=text&amp;exportValue=16SrRNA"/>
+        <property name="linkURL" value="16S-rRNA-FASTA"/>
+        <!--All versions-->
     </bean>
 
     <bean id="rRNA23sFile" autowire-candidate="false"
@@ -154,7 +166,8 @@
         <property name="linkText" value="Reads encoding 23S rRNA"/>
         <property name="order" value="3"/>
         <property name="linkTitle" value="Click to download reads encoding 23S rRNA (FASTA)"/>
-        <property name="linkURL" value="/export?contentType=text&amp;exportValue=23SrRNA"/>
+        <property name="linkURL" value="23S-rRNA-FASTA"/>
+        <!--All versions-->
     </bean>
 
     <bean id="otuBiomFile" autowire-candidate="false"
@@ -165,7 +178,8 @@
         <property name="linkText" value="OTUs, reads and taxonomic assignments"/>
         <property name="order" value="5"/>
         <property name="linkTitle" value="Click to download the converted OTU table in biom format"/>
-        <property name="linkURL" value="/export?contentType=text&amp;exportValue=biom"/>
+        <property name="linkURL" value="OTU-BIOM"/>
+        <property name="releaseVersion" value="1.0"/>
     </bean>
 
     <bean id="newickFile" autowire-candidate="false"
@@ -176,7 +190,8 @@
         <property name="linkText" value="Phylogenetic tree"/>
         <property name="order" value="6"/>
         <property name="linkTitle" value="Click to download the phylogenetic tree file (Newick format)"/>
-        <property name="linkURL" value="/export?contentType=text&amp;exportValue=tree"/>
+        <property name="linkURL" value="NewickTree"/>
+        <property name="releaseVersion" value="1.0"/>
     </bean>
 
     <bean id="otuTsvFile" autowire-candidate="false"
@@ -188,7 +203,8 @@
         <property name="linkText" value="OTUs, reads and taxonomic assignments"/>
         <property name="order" value="4"/>
         <property name="linkTitle" value="Click to download the OTU table in TSV format"/>
-        <property name="linkURL" value="/export?contentType=text&amp;exportValue=taxa"/>
+        <property name="linkURL" value="OTU-TSV"/>
+        <property name="releaseVersion" value="1.0"/>
     </bean>
 
     <bean id="otuTableFile" autowire-candidate="false"
@@ -200,8 +216,8 @@
         <property name="linkText" value="OTUs, reads and taxonomic assignments"/>
         <property name="order" value="7"/>
         <property name="linkTitle" value="Click to download the OTU table in TSV format"/>
-        <!--TODO: Implement the request mapping-->
-        <property name="linkURL" value="/export?contentType=text&amp;exportValue=otuTable"/>
+        <property name="linkURL" value="OTU-TSV"/>
+        <property name="releaseVersion" value="2.0"/>
     </bean>
 
     <bean id="hdf5BiomFile" autowire-candidate="false"
@@ -213,8 +229,8 @@
         <property name="linkText" value="OTUs, reads and taxonomic assignments"/>
         <property name="order" value="8"/>
         <property name="linkTitle" value="Click to download the converted OTU table in HDF5 biom format"/>
-        <!--TODO: Implement the request mapping-->
-        <property name="linkURL" value="/export?contentType=text&amp;exportValue=hdf5Biom"/>
+        <property name="linkURL" value="OTU-table-HDF5-BIOM"/>
+        <property name="releaseVersion" value="2.0"/>
     </bean>
 
     <bean id="JSONBiomFile" autowire-candidate="false"
@@ -226,8 +242,8 @@
         <property name="linkText" value="OTUs, reads and taxonomic assignments"/>
         <property name="order" value="9"/>
         <property name="linkTitle" value="Click to download the converted OTU table in JSON biom format"/>
-        <!--TODO: Implement the request mapping-->
-        <property name="linkURL" value="/export?contentType=text&amp;exportValue=JSONBiom"/>
+        <property name="linkURL" value="OTU-table-JSON-BIOM"/>
+        <property name="releaseVersion" value="2.0"/>
     </bean>
 
     <bean id="prunedTreeFile" autowire-candidate="false"
@@ -239,22 +255,9 @@
         <property name="linkText" value="Phylogenetic tree"/>
         <property name="order" value="10"/>
         <property name="linkTitle" value="Click to download the phylogenetic tree file (Newick format)"/>
-        <!--TODO: Implement the request mapping-->
-        <property name="linkURL" value="/export?contentType=text&amp;exportValue=prunedTree"/>
+        <property name="linkURL" value="NewickPrunedTree"/>
+        <property name="releaseVersion" value="2.0"/>
     </bean>
-
-    <!--<bean id="qiimeLogFile" autowire-candidate="false"-->
-    <!--class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.TaxonomicAnalysisFileDefinition">-->
-    <!--<property name="relativePath" value="/cr_otus/uclust_ref_picked_otus/"/>-->
-    <!--<property name="fileNameEnding" value="_16S_rRNA_QIIME_otus.log"/>-->
-    <!--<property name="description" value="N/A"/>-->
-    <!--<property name="downloadName" value="_16S_rRNA_QIIME_otus.log"/>-->
-    <!--<property name="linkText" value="16S rRNA QIIME OTUs log file"/>-->
-    <!--<property name="order" value="9"/>-->
-    <!--<property name="linkTitle" value="Click to download the 16S rRNA QIIME OTUs log file"/>-->
-    <!--&lt;!&ndash;TODO: Implement the request mapping&ndash;&gt;-->
-    <!--<property name="linkURL" value="/export?contentType=text&amp;exportValue=qiimeLog"/>-->
-    <!--</bean>-->
 
     <!--Since pipeline version 2.0 QIIME -->
 
@@ -318,6 +321,102 @@
         <property name="identifier" value="QUALITY_CONTROL_SUMMARY_FILE"/>
         <property name="relativePath" value="/charts/qc.png"/>
         <property name="description" value="Quality control image produced with Google Charts API."/>
+    </bean>
+
+    <bean id="qualityControlNewSummaryFile" autowire-candidate="false"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.QCFileDefinition">
+        <property name="identifier" value="QUALITY_CONTROL_NEW_SUMMARY_FILE"/>
+        <property name="relativePath" value="/qc-statistics/summary.out"/>
+        <property name="description" value="Summary values of the QC results."/>
+        <property name="linkTitle" value=""/>
+        <property name="linkURL" value=""/>
+        <property name="linkText" value=""/>
+        <property name="downloadName" value="_qc_stats"/>
+        <property name="order" value="20"/>
+    </bean>
+
+    <bean id="qualityControlGCBinFile" autowire-candidate="false"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.QCFileDefinition">
+        <property name="identifier" value="QUALITY_CONTROL_GC_BIN_FILE"/>
+        <property name="relativePath" value="/qc-statistics/GC-distribution.out.full_bin"/>
+        <property name="description" value="Quality control file with the GC content by bins."/>
+        <property name="linkTitle" value=""/>
+        <property name="linkURL" value=""/>
+        <property name="linkText" value=""/>
+        <property name="downloadName" value="_qc_GC_bin"/>
+        <property name="order" value="20"/>
+    </bean>
+
+    <bean id="qualityControlGCBinFileSubset" autowire-candidate="false"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.QCFileDefinition">
+        <property name="identifier" value="QUALITY_CONTROL_GC_BIN_FILE_SUBSET"/>
+        <property name="relativePath" value="/qc-statistics/GC-distribution.out.sub-set_bin"/>
+        <property name="description" value="Quality control file with the GC content by bins (subset)."/>
+        <property name="linkTitle" value=""/>
+        <property name="linkURL" value=""/>
+        <property name="linkText" value=""/>
+        <property name="downloadName" value="_qc_GC_bin"/>
+        <property name="order" value="20"/>
+    </bean>
+
+    <bean id="qualityControlNucleotideHistogramFile" autowire-candidate="false"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.QCFileDefinition">
+        <property name="identifier" value="QUALITY_CONTROL_NUCLEOTIDE_HISTOGRAM_FILE"/>
+        <property name="relativePath" value="/qc-statistics/nucleotide-distribution.out.full"/>
+        <property name="description" value="Quality control file for the nucleotide histogram"/>
+        <property name="linkTitle" value=""/>
+        <property name="linkURL" value=""/>
+        <property name="linkText" value=""/>
+        <property name="downloadName" value="_qc_base"/>
+        <property name="order" value="20"/>
+    </bean>
+
+    <bean id="qualityControlNucleotideHistogramFileSubset" autowire-candidate="false"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.QCFileDefinition">
+        <property name="identifier" value="QUALITY_CONTROL_NUCLEOTIDE_HISTOGRAM_FILE_SUBSET"/>
+        <property name="relativePath" value="/qc-statistics/nucleotide-distribution.out.sub-set"/>
+        <property name="description" value="Quality control file for the nucleotide histogram (subset)"/>
+        <property name="linkTitle" value=""/>
+        <property name="linkURL" value=""/>
+        <property name="linkText" value=""/>
+        <property name="downloadName" value="_qc_base"/>
+        <property name="order" value="20"/>
+    </bean>
+
+    <bean id="qualityControlSequenceLengthBinFile" autowire-candidate="false"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.QCFileDefinition">
+        <property name="identifier" value="QUALITY_CONTROL_SEQUENCE_LENGTH_BIN_FILE"/>
+        <property name="relativePath" value="/qc-statistics/seq-length.out.full_bin"/>
+        <property name="description" value="Quality control file with the length of the sequences."/>
+        <property name="linkTitle" value=""/>
+        <property name="linkURL" value=""/>
+        <property name="linkText" value=""/>
+        <property name="downloadName" value="_qc_length_bin"/>
+        <property name="order" value="20"/>
+    </bean>
+
+    <bean id="qualityControlSequenceLengthBinFileSubset" autowire-candidate="false"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.QCFileDefinition">
+        <property name="identifier" value="QUALITY_CONTROL_SEQUENCE_LENGTH_BIN_FILE_SUBSET"/>
+        <property name="relativePath" value="/qc-statistics/seq-length.out.sub-set_bin"/>
+        <property name="description" value="Quality control file with the length of the sequences. (subset)"/>
+        <property name="linkTitle" value=""/>
+        <property name="linkURL" value=""/>
+        <property name="linkText" value=""/>
+        <property name="downloadName" value="_qc_length_bin"/>
+        <property name="order" value="20"/>
+    </bean>
+
+    <bean id="qualityControlSummary" autowire-candidate="false"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.QCFileDefinition">
+        <property name="identifier" value="QUALITY_CONTROL_SUMMARY"/>
+        <property name="relativePath" value="/charts/new.summary"/>
+        <property name="description" value="Quality control file with result summary."/>
+        <property name="linkTitle" value=""/>
+        <property name="linkURL" value=""/>
+        <property name="linkText" value=""/>
+        <property name="downloadName" value="_qc_lsummary"/>
+        <property name="order" value="20"/>
     </bean>
 
     <bean id="sequenceFeatureSummaryFile" autowire-candidate="false"
@@ -433,6 +532,18 @@
         <property name="linkURL" value="PredictedCDS"/>
     </bean>
 
+    <bean id="chunkedPredictedCDSWithAnnotation" autowire-candidate="false"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.SequenceFileDefinition">
+        <property name="identifier" value="PREDICTED_CDS_WITH_ANNOTATION_FILE"/>
+        <property name="fileNameEnding" value="_CDS_annotated.faa.chunks"/>
+        <property name="description" value="Predicted CDS with annotation"/>
+        <property name="downloadName" value="_CDS_annotated.faa.gz"/>
+        <property name="linkText" value="Predicted CDS with annotation"/>
+        <property name="order" value="6"/>
+        <property name="linkTitle" value="Click to download predicted CDS with annotation (FASTA)"/>
+        <property name="linkURL" value="PredictedCDSWithAnnotation"/>
+    </bean>
+
     <bean id="chunkedPredictedCDSWithoutAnnotation" autowire-candidate="false"
           class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.SequenceFileDefinition">
         <property name="identifier" value="PREDICTED_CDS_WITHOUT_ANNOTATION_FILE"/>
@@ -440,7 +551,7 @@
         <property name="description" value="Predicted CDS without annotation"/>
         <property name="downloadName" value="_CDS_unannotated.faa.gz"/>
         <property name="linkText" value="Predicted CDS without annotation"/>
-        <property name="order" value="6"/>
+        <property name="order" value="7"/>
         <property name="linkTitle" value="Click to download predicted CDS without annotation (FASTA)"/>
         <property name="linkURL" value="PredictedCDSWithoutAnnotation"/>
     </bean>
@@ -452,11 +563,10 @@
         <property name="description" value="Predicted open reading frames without annotation (FASTA)"/>
         <property name="downloadName" value="_ORF_unannotated.ffn.gz"/>
         <property name="linkText" value="Predicted ORF without annotation"/>
-        <property name="order" value="7"/>
+        <property name="order" value="8"/>
         <property name="linkTitle" value="Click to download predicted ORF without annotation (FASTA)"/>
         <property name="linkURL" value="PredictedORFWithoutAnnotation"/>
     </bean>
-
 
 
 </beans>

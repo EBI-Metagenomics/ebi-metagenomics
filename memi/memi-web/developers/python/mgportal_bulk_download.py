@@ -1,8 +1,8 @@
 '''
 Created on 27/10/2015
 @author: Maxim Scheremetjew
-amended 4/11/2015 by Hubert DENISE
-version: 1.0-rc1
+amended 23/02/2016 by Maxim Scheremetjew
+version: 1.0-rc2
 '''
 
 import argparse
@@ -10,6 +10,7 @@ import csv
 import os
 import urllib
 from urllib2 import URLError
+
 
 def _download_resource_by_url(url, output_file_name):
     """Kicks off a download and stores the file at the given path.
@@ -32,12 +33,12 @@ def _download_resource_by_url(url, output_file_name):
     print "Download finished."
 
 
-def _get_number_of_chunks(study_id, sample_id, run_id, version, domain, file_type):
+def _get_number_of_chunks(url_template, study_id, sample_id, run_id, version, domain, file_type):
     """
     Returns the number of chunks for the given set of parameters (study, sample and run identifier).
     """
     print "Getting the number of chunks from the following URL..."
-    url_get_number_of_chunks = "https://www.ebi.ac.uk/metagenomics/projects/%s/samples/%s/runs/%s/results/versions/%s/%s/%s/chunks" % (
+    url_get_number_of_chunks = url_template % (
         study_id, sample_id, run_id, version, domain, file_type)
     print url_get_number_of_chunks
     try:
@@ -57,36 +58,63 @@ def _get_number_of_chunks(study_id, sample_id, run_id, version, domain, file_typ
         raise
 
 
-def _print_program_settings(input_file, output_path, version, file_type):
-    print "Running the program with the following setting...\n"
-    print "Input file: " + input_file
-    print "Output directory: " + output_path
-    print "Analysis version: " + version
-    print "Selected file types: " + file_type
+def _get_file_stream_handler(url_template, study_id):
+    """
+    Returns a file stream handler for the given URL.
+    """
+    print "Getting the list of project runs..."
+    url_get_project_runs = url_template % (study_id)
+    try:
+        return urllib.urlopen(url_get_project_runs)
+    except URLError as url_error:
+        print(url_error)
+        raise
+    except  IOError as io_error:
+        print(io_error)
+        raise
+    except ValueError as e:
+        print(e)
+        print "Could not retrieve any runs. Open the retrieval URL further down in your browser and see if you get any results back. Program will exit now."
+        print url_get_project_runs
+        raise
+
+
+def _print_program_settings(project_id, version, selected_file_types_list, output_path, root_url):
+    print "Running the program with the following setting..."
+    print "Project: " + project_id
+    print "Pipeline version: " + version
+    print "Selected file types: " + ",".join(selected_file_types_list)
+    print "Root URL: " + root_url
+    print "Writing result to: " + output_path
 
 
 if __name__ == "__main__":
+    function_file_type_list = ["InterProScan", "GOAnnotations", "GOSlimAnnotations"]
+    sequences_file_type_list = ["ProcessedReads", "ReadsWithPredictedCDS", "ReadsWithMatches", "ReadsWithoutMatches",
+                                "PredictedCDS", "PredictedCDSWithoutAnnotation", "PredictedORFWithoutAnnotation"]
+    taxonomy_file_type_list = ["5S-rRNA-FASTA", "16S-rRNA-FASTA", "23S-rRNA-FASTA", "OTU-TSV", "OTU-BIOM",
+                               "OTU-table-HDF5-BIOM", "OTU-table-JSON-BIOM", "NewickTree", "NewickPrunedTree"]
     # Default list of available file types
-    default_file_type_list = ["InterProScan", "GOAnnotations", "GOSlimAnnotations", "ProcessedReads",
-                              "ReadsWithPredictedCDS", "ReadsWithMatches", "ReadsWithoutMatches", "PredictedCDS",
-                              "PredictedCDSWithoutAnnotation", "PredictedORFWithoutAnnotation"]
+    default_file_type_list = sequences_file_type_list + function_file_type_list + taxonomy_file_type_list
 
-    #Parse script parameters
+    # Parse script parameters
     parser = argparse.ArgumentParser(description="MGPortal bulk download tool.")
-    parser.add_argument("-i", "--input_file",
-        help="Tab-separated file, which contains the mapping between project, sample and run.",
-        required=True)
-    parser.add_argument("-o", "--output_path", help="Location where the download files are stored.",
-        required=True)
-    parser.add_argument("-v", "--version", help="Version of the pipeline used to generate the results.",
-        required=True)
+    parser.add_argument("-p", "--project_id",
+                        help="Project accession (e.g. ERP001736, SRP000319) from a project which is publicly available on the EBI Metagenomics website (https://www.ebi.ac.uk/metagenomics/projects).**MANDATORY**",
+                        required=True)
+    parser.add_argument("-o", "--output_path",
+                        help="Location of the output directory, where the downloadable files get stored.**MANDATORY**",
+                        required=True)
+    parser.add_argument("-v", "--version", help="Version of the pipeline used to generate the results.**MANDATORY**",
+                        required=True)
     parser.add_argument("-t", "--file_type",
-        help="Possible file types are: AllFunctional OR comma-separated list of supported file types: " + ', '.join(
-            default_file_type_list) + " OR single file type.", required=False)
+                        help="Supported file types are: AllFunction, AllTaxonomy, AllSequences OR a comma-separated list of supported file types: " + ', '.join(
+                                default_file_type_list) + " OR a single file type.**OPTIONAL**\nDownloads all file types if not provided.",
+                        required=False)
     args = vars(parser.parse_args())
 
-    # Parse the path to the input file
-    input_file = args['input_file']
+    # Parse the project accession
+    study_id = args['project_id']
 
     # Parse the values for the file type parameter
     selected_file_types_list = []
@@ -97,8 +125,12 @@ if __name__ == "__main__":
         # Remove whitespaces
         selected_file_types_str = args['file_type'].replace(" ", "")
         # Set all functional result file types
-        if selected_file_types_str == "AllFunctional":
-            selected_file_types_list = default_file_type_list
+        if selected_file_types_str == "AllFunction":
+            selected_file_types_list = function_file_type_list
+        elif selected_file_types_str == "AllTaxonomy":
+            selected_file_types_list = taxonomy_file_type_list
+        elif selected_file_types_str == "AllSequences":
+            selected_file_types_list = sequences_file_type_list
         # Set defined file types
         elif len(selected_file_types_str.split(",")) > 1:
             selected_file_types_list = selected_file_types_str.split(",")
@@ -109,13 +141,22 @@ if __name__ == "__main__":
     # Parse the analysis version
     version = args['version']
 
+    root_url = "https://www.ebi.ac.uk"
+    study_url_template = root_url + "/metagenomics/projects/%s/runs"
+    number_of_chunks_url_template = root_url + "/metagenomics/projects/%s/samples/%s/runs/%s/results/versions/%s/%s/%s/chunks"
+    chunk_url_template = root_url + "/metagenomics/projects/%s/samples/%s/runs/%s/results/versions/%s/%s/%s/chunks/%s"
+    download_url_template = root_url + "/metagenomics/projects/%s/samples/%s/runs/%s/results/versions/%s/%s/%s"
+
     # Print out the program settings
-    domain = None
-    fileExtension = None
+    _print_program_settings(study_id, version, selected_file_types_list, args['output_path'], root_url)
+
+    # Iterating over all file types
     for file_type in selected_file_types_list:
+        domain = None
+        fileExtension = None
         # Boolean flag to indicate if a file type is chunked or not
         is_chunked = True
-        # Set the result file domain (sequences or function) dependent on the file type
+        # Set the result file domain (sequences, function or taxonomy) dependent on the file type
         # Set output file extension (tsv, faa or fasta) dependent on the file type
         if file_type == 'InterProScan':
             domain = "function"
@@ -127,33 +168,62 @@ if __name__ == "__main__":
         elif file_type == 'PredictedCDS' or file_type == 'PredicatedCDSWithoutAnnotation':
             domain = "sequences"
             fileExtension = ".faa.gz"
+        elif file_type == '5S-rRNA-FASTA' or file_type == '16S-rRNA-FASTA' or file_type == '23S-rRNA-FASTA':
+            is_chunked = False
+            domain = "taxonomy"
+            fileExtension = ".fasta"
+        # NewickPrunedTree is version 2 only
+        # NewickTree is version 1 only
+        elif file_type == 'NewickPrunedTree' or file_type == 'NewickTree':
+            if file_type == 'NewickPrunedTree' and version == '1.0':
+                continue
+            if file_type == 'NewickTree' and version == '2.0':
+                continue
+            is_chunked = False
+            domain = "taxonomy"
+            fileExtension = ".tree"
+        elif file_type == 'OTU-TSV':
+            is_chunked = False
+            domain = "taxonomy"
+            fileExtension = ".tsv"
+        # OTU-BIOM is version 1 only
+        # OTU-table-HDF5-BIOM and OTU-table-JSON-BIOM are version 2 only
+        elif file_type == 'OTU-BIOM' or file_type == 'OTU-table-HDF5-BIOM' or file_type == 'OTU-table-JSON-BIOM':
+            if file_type == 'OTU-BIOM' and version == '2.0':
+                continue
+            if (file_type == 'OTU-table-HDF5-BIOM' or file_type == 'OTU-table-JSON-BIOM') and version == '1.0':
+                continue
+            is_chunked = False
+            domain = "taxonomy"
+            fileExtension = ".biom"
         else:
             domain = "sequences"
             fileExtension = ".fasta.gz"
-            # Parse the input file and iterate over each line (each run) and build the download link using the variables from above
-        with open(input_file, 'r') as tsv_file:
-            reader = csv.reader(tsv_file, delimiter='\t')
-            for study_id, sample_id, run_id in reader:
-                print study_id + ", " + sample_id + ", " + run_id
 
-                output_path = args['output_path'] + "/" + study_id + "/" + file_type
-                if not os.path.exists(output_path):
-                    os.makedirs(output_path)
+        # Retrieve a file stream handler from the given URL and iterate over each line (each run) and build the download link using the variables from above
+        file_stream_handler = _get_file_stream_handler(study_url_template, study_id)
+        reader = csv.reader(file_stream_handler, delimiter=',')
+        for study_id, sample_id, run_id in reader:
+            print study_id + ", " + sample_id + ", " + run_id
 
-                if is_chunked:
-                    number_of_chunks = _get_number_of_chunks(study_id, sample_id, run_id, version, domain, file_type)
+            output_path = args['output_path'] + "/" + study_id + "/" + file_type
+            if not os.path.exists(output_path):
+                os.makedirs(output_path)
 
-                    for chunk in range(1, number_of_chunks + 1):
-                        output_file_name = output_path + "/" + run_id.replace(" ", "").replace(",",
-                            "-") + "_" + file_type + "_" + str(chunk) + fileExtension
-                        rootUrl = "https://www.ebi.ac.uk/metagenomics/projects/%s/samples/%s/runs/%s/results/versions/%s/%s/%s/chunks/%s" % (
-                            study_id, sample_id, run_id, version, domain, file_type, chunk)
-                        _download_resource_by_url(rootUrl, output_file_name)
-                else:
+            if is_chunked:
+                number_of_chunks = _get_number_of_chunks(number_of_chunks_url_template, study_id, sample_id, run_id,
+                                                         version, domain, file_type)
+
+                for chunk in range(1, number_of_chunks + 1):
                     output_file_name = output_path + "/" + run_id.replace(" ", "").replace(",",
-                        "-") + "_" + file_type + fileExtension
-                    rootUrl = "https://www.ebi.ac.uk/metagenomics/projects/%s/samples/%s/runs/%s/results/versions/%s/%s/%s" % (
-                        study_id, sample_id, run_id, version, domain, file_type)
+                                                                                           "-") + "_" + file_type + "_" + str(
+                            chunk) + fileExtension
+                    rootUrl = chunk_url_template % (study_id, sample_id, run_id, version, domain, file_type, chunk)
                     _download_resource_by_url(rootUrl, output_file_name)
+            else:
+                output_file_name = output_path + "/" + run_id.replace(" ", "").replace(",",
+                                                                                       "-") + "_" + file_type + fileExtension
+                rootUrl = download_url_template % (study_id, sample_id, run_id, version, domain, file_type)
+                _download_resource_by_url(rootUrl, output_file_name)
 
     print "Program finished."

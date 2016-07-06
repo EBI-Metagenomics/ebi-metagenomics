@@ -2,8 +2,10 @@ package uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.results;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import uk.ac.ebi.interpro.metagenomics.memi.controller.MGPortalURLCollection;
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.core.tools.MemiTools;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Run;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob;
 import uk.ac.ebi.interpro.metagenomics.memi.services.FileExistenceChecker;
@@ -11,7 +13,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.services.FileObjectBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.*;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.results.DownloadViewModel;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.SessionManager;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.UserManager;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -21,7 +23,7 @@ import java.util.Map;
 
 /**
  * Model builder class for {@link uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.results.DownloadViewModel}.
- * <p/>
+ * <p>
  * See {@link uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder} for more information of how to use.
  *
  * @author Maxim Scheremetjew, EMBL-EBI, InterPro
@@ -43,7 +45,8 @@ public class DownloadViewModelBuilder extends AbstractResultViewModelBuilder<Dow
     private Map<String, List> downloadableFileLists;
 
 
-    public DownloadViewModelBuilder(SessionManager sessionMgr,
+    public DownloadViewModelBuilder(UserManager sessionMgr,
+                                    EBISearchForm ebiSearchForm,
                                     String pageTitle,
                                     List<Breadcrumb> breadcrumbs,
                                     MemiPropertyContainer propertyContainer,
@@ -52,7 +55,7 @@ public class DownloadViewModelBuilder extends AbstractResultViewModelBuilder<Dow
                                     Map<String, DownloadableFileDefinition> chunkedResultFilesMap,
                                     Map<String, List> downloadableFileLists,
                                     AnalysisJob analysisJob) {
-        super(sessionMgr, pageTitle, breadcrumbs, propertyContainer, null, null, null, analysisJob);
+        super(sessionMgr, ebiSearchForm, pageTitle, breadcrumbs, propertyContainer, null, null, null, analysisJob);
         this.run = run;
         this.fileDefinitionsMap = fileDefinitionsMap;
         this.chunkedResultFilesMap = chunkedResultFilesMap;
@@ -62,24 +65,27 @@ public class DownloadViewModelBuilder extends AbstractResultViewModelBuilder<Dow
     public DownloadViewModel getModel() {
         log.info("Building instance of " + DownloadViewModel.class + "...");
         final DownloadSection downloadSection = buildDownloadSection(run, fileDefinitionsMap, analysisJob);
-        return new DownloadViewModel(getSessionSubmitter(sessionMgr), pageTitle, breadcrumbs, propertyContainer, downloadSection, analysisJob.getSample());
+        return new DownloadViewModel(getSessionSubmitter(sessionMgr), getEbiSearchForm(), pageTitle, breadcrumbs, propertyContainer, downloadSection, analysisJob.getSample());
     }
 
     private DownloadSection buildDownloadSection(final Run run,
                                                  final Map<String, DownloadableFileDefinition> fileDefinitionsMap,
                                                  final AnalysisJob analysisJob) {
+        // Get various necessary attributes like accessions and status
         final String externalSampleId = run.getExternalSampleId();
         final String externalProjectId = run.getExternalProjectId();
         final String externalRunId = run.getExternalRunId();
         final boolean sampleIsPublic = run.isPublic();
         final String analysisJobReleaseVersion = analysisJob.getPipelineRelease().getReleaseVersion();
 
+        // Instantiate download links and sections
         final SequencesDownloadSection sequencesDownloadSection = new SequencesDownloadSection();
+        final TaxonomyDownloadSection taxonomyDownloadSection = new TaxonomyDownloadSection();
         final List<DownloadLink> otherSeqDataDownloadLinks = new ArrayList<DownloadLink>();
         final List<DownloadLink> otherFuncAnalysisDownloadLinks = new ArrayList<DownloadLink>();
         final List<DownloadLink> interproscanDownloadLinks = new ArrayList<DownloadLink>();
-        final List<DownloadLink> taxaAnalysisDownloadLinks = new ArrayList<DownloadLink>();
 
+        // Build external link to ENA website
         final String linkURL = (sampleIsPublic ? "https://www.ebi.ac.uk/ena/data/view/" + externalRunId : "https://www.ebi.ac.uk/ena/submit/sra/#home");
         sequencesDownloadSection.addOtherDownloadLink(new DownloadLink("Submitted nucleotide reads",
                 "Click to download all submitted nucleotide data on the ENA website",
@@ -87,32 +93,35 @@ public class DownloadViewModelBuilder extends AbstractResultViewModelBuilder<Dow
                 true,
                 1));
 
-        //Set the list of downloadable files depending on the pipeline version
+        // Set the list of downloadable files depending on the pipeline version
+        // Those sets are defined in a Spring configuration file and injected in the controller
         List<String> downloadableFileList = null;
         if (analysisJobReleaseVersion.equals("1.0")) {
             downloadableFileList = downloadableFileLists.get("v1");
         } else if (analysisJobReleaseVersion.equalsIgnoreCase("2.0")) {
             downloadableFileList = downloadableFileLists.get("v2");
+        } else if (analysisJobReleaseVersion.equalsIgnoreCase("3.0")) {
+            downloadableFileList = downloadableFileLists.get("v3");
         } else {
             downloadableFileList = new ArrayList<String>();
         }
 
+        // Iterate over the list of pre-defined downloadable files
+        // Please note: Some downloadable files are chunked and compressed (e.g. all sequence files are chunked) and others not
         for (String downloadableFile : downloadableFileList) {
-            //first check if there is a chunked version of this file
+            // First check if there is a chunked version of this file
             DownloadableFileDefinition chunkedFileDefinition = chunkedResultFilesMap.get(downloadableFile);
-            //If so
+            //If chunked and compressed
             if (chunkedFileDefinition != null) {
                 File chunkedFileObject = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, chunkedFileDefinition);
                 boolean doesExist = FileExistenceChecker.checkFileExistence(chunkedFileObject);
                 if (doesExist && chunkedFileObject.length() > 0) {
-
-                    //get result file chunks as a list of absolute file paths
+                    // Get result file chunks as a list of absolute file paths
                     List<String> chunkedResultFiles = MemiTools.getListOfChunkedResultFiles(chunkedFileObject);
-                    //Loop through the list of chunked files and check they do exist and are not empty
+                    // Loop through the list of chunked files and check if they do exist and are not empty
                     boolean checkResult = checkChunkedFilesDoExist(chunkedResultFiles, chunkedFileDefinition);
+                    // Only further proceed if exists
                     if (checkResult) {
-
-                        //
                         final List<DownloadLink> downloadLinks = new ArrayList<DownloadLink>();
                         //Processed reads are different between version 1 and 2
                         if (chunkedFileDefinition.getIdentifier().equalsIgnoreCase("MASKED_FASTA") || chunkedFileDefinition.getIdentifier().equalsIgnoreCase("PROCESSED_READS_FILE")) {
@@ -125,6 +134,8 @@ public class DownloadViewModelBuilder extends AbstractResultViewModelBuilder<Dow
                             sequencesDownloadSection.setReadsWithoutMatchesLinks(downloadLinks);
                         } else if (chunkedFileDefinition.getIdentifier().equalsIgnoreCase("PREDICTED_CDS_FILE")) {
                             sequencesDownloadSection.setPredictedCDSLinks(downloadLinks);
+                        } else if (chunkedFileDefinition.getIdentifier().equalsIgnoreCase("PREDICTED_CDS_WITH_ANNOTATION_FILE")) {
+                            sequencesDownloadSection.setPredictedCDSWithAnnotationLinks(downloadLinks);
                         } else if (chunkedFileDefinition.getIdentifier().equalsIgnoreCase("PREDICTED_CDS_WITHOUT_ANNOTATION_FILE")) {
                             sequencesDownloadSection.setPredictedCDSWithoutAnnotationLinks(downloadLinks);
                         } else if (chunkedFileDefinition.getIdentifier().equalsIgnoreCase("PREDICTED_ORF_WITHOUT_ANNOTATION_FILE")) {
@@ -187,18 +198,18 @@ public class DownloadViewModelBuilder extends AbstractResultViewModelBuilder<Dow
                         log.warn(chunkedFileObject.getAbsolutePath());
                         log.warn("Will go on with the unchunked version.");
                         processUnchunkedFileDefinition(downloadableFile, analysisJobReleaseVersion, externalProjectId, externalSampleId, externalRunId,
-                                otherSeqDataDownloadLinks, otherFuncAnalysisDownloadLinks, taxaAnalysisDownloadLinks);
+                                otherSeqDataDownloadLinks, otherFuncAnalysisDownloadLinks, taxonomyDownloadSection);
                     }
                 } else {//Chunk summary file does not exist
                     log.warn("The following .chunks file does not exist:");
                     log.warn(chunkedFileObject.getAbsolutePath());
                     log.warn("Will go on with the unchunked version.");
                     processUnchunkedFileDefinition(downloadableFile, analysisJobReleaseVersion, externalProjectId, externalSampleId, externalRunId,
-                            otherSeqDataDownloadLinks, otherFuncAnalysisDownloadLinks, taxaAnalysisDownloadLinks);
+                            otherSeqDataDownloadLinks, otherFuncAnalysisDownloadLinks, taxonomyDownloadSection);
                 }
             } else {//No chunked version of this file
                 processUnchunkedFileDefinition(downloadableFile, analysisJobReleaseVersion, externalProjectId, externalSampleId, externalRunId,
-                        otherSeqDataDownloadLinks, otherFuncAnalysisDownloadLinks, taxaAnalysisDownloadLinks);
+                        otherSeqDataDownloadLinks, otherFuncAnalysisDownloadLinks, taxonomyDownloadSection);
             }
 
         }
@@ -207,8 +218,10 @@ public class DownloadViewModelBuilder extends AbstractResultViewModelBuilder<Dow
         Collections.sort(otherSeqDataDownloadLinks, DownloadLink.DownloadLinkComparator);
         sequencesDownloadSection.addOtherDownloadLinks(otherSeqDataDownloadLinks);
         Collections.sort(otherFuncAnalysisDownloadLinks, DownloadLink.DownloadLinkComparator);
-        Collections.sort(taxaAnalysisDownloadLinks, DownloadLink.DownloadLinkComparator);
-        return new DownloadSection(sequencesDownloadSection, new FunctionalDownloadSection(interproscanDownloadLinks, otherFuncAnalysisDownloadLinks), taxaAnalysisDownloadLinks);
+        return new DownloadSection(
+                sequencesDownloadSection,
+                new FunctionalDownloadSection(interproscanDownloadLinks, otherFuncAnalysisDownloadLinks),
+                taxonomyDownloadSection);
     }
 
     /**
@@ -236,7 +249,7 @@ public class DownloadViewModelBuilder extends AbstractResultViewModelBuilder<Dow
     private void processUnchunkedFileDefinition(final String downloadableFile, final String analysisJobReleaseVersion,
                                                 final String externalProjectId, final String externalSampleId, final String externalRunId,
                                                 final List<DownloadLink> seqDataDownloadLinks, final List<DownloadLink> otherFuncAnalysisDownloadLinks,
-                                                final List<DownloadLink> taxaAnalysisDownloadLinks) {
+                                                final TaxonomyDownloadSection taxonomyDownloadSection) {
         DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(downloadableFile);
         File fileObject = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, fileDefinition);
         boolean doesExist = FileExistenceChecker.checkFileExistence(fileObject);
@@ -250,13 +263,23 @@ public class DownloadViewModelBuilder extends AbstractResultViewModelBuilder<Dow
                             fileDefinition.getOrder(),
                             getFileSize(fileObject)));
                 }
-            } else if (fileDefinition instanceof TaxonomicAnalysisFileDefinition) {
-                taxaAnalysisDownloadLinks.add(new DownloadLink(fileDefinition.getLinkText(),
-                        fileDefinition.getLinkTitle(),
-                        "projects/" + externalProjectId + "/samples/" + externalSampleId + "/runs/" + externalRunId + "/results/taxonomy" + "/versions/" + analysisJobReleaseVersion + fileDefinition.getLinkURL(),
-                        fileDefinition.getOrder(),
-                        getFileSize(fileObject)));
-            } else if (fileDefinition instanceof FunctionalAnalysisFileDefinition) {
+            }// If taxonomy section downloadable file
+            else if (fileDefinition instanceof TaxonomicAnalysisFileDefinition) {
+                String linkText = fileDefinition.getLinkText();
+                String linkTitle = fileDefinition.getLinkTitle();
+                String linkURL = MGPortalURLCollection.PROJECT_SAMPLE_RUN_RESULTS_TAXONOMY_TYPE
+                        .replace("{projectId}", externalProjectId)
+                        .replace("{sampleId}", externalSampleId)
+                        .replace("{runId}", externalRunId)
+                        .replace("{releaseVersion:\\d\\.\\d}", analysisJobReleaseVersion)
+                        // TODO: Introduce new result type
+                        .replace("{resultType}", fileDefinition.getLinkURL());
+                int order = fileDefinition.getOrder();
+                String fileSize = getFileSize(fileObject);
+                DownloadLink taxonomyDownloadLink = new DownloadLink(linkText, linkTitle, linkURL, order, fileSize);
+                taxonomyDownloadSection.addDownloadLink(taxonomyDownloadLink);
+            } // If functional download section downloadable file
+            else if (fileDefinition instanceof FunctionalAnalysisFileDefinition) {
                 //Filter out amplicons
                 if (!isAmpliconData()) {
                     if (fileDefinition.getIdentifier().equals("INTERPROSCAN_RESULT_FILE")) {

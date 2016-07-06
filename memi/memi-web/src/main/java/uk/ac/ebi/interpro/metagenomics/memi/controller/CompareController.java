@@ -14,7 +14,6 @@ import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.AnalysisJobDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.StudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.ComparisonForm;
-import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.ExperimentTypeE;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
@@ -65,7 +64,7 @@ public class CompareController extends AbstractController implements IController
     private AnalysisJobDAO analysisJobDAO;
 
     @Resource
-    protected Map<String, DownloadableFileDefinition> fileDefinitionsMapV1;
+    protected Map<String, DownloadableFileDefinition> fileDefinitionsMap;
 
     @Override
     public ModelAndView doGet(ModelMap model) {
@@ -75,7 +74,8 @@ public class CompareController extends AbstractController implements IController
                 new ModelPopulator() {
                     @Override
                     public void populateModel(ModelMap model) {
-                        final ViewModelBuilder<CompareViewModel> builder = new CompareViewModelBuilder(sessionManager, "Compare runs of the same project", getBreadcrumbs(null), propertyContainer, studyDAO);
+                        final ViewModelBuilder<CompareViewModel> builder = new CompareViewModelBuilder(userManager, getEbiSearchForm(),
+                                "Compare runs of the same project", getBreadcrumbs(null), propertyContainer, studyDAO);
                         final CompareViewModel compareViewModel = builder.getModel();
                         compareViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_COMPARE_VIEW);
 
@@ -89,7 +89,6 @@ public class CompareController extends AbstractController implements IController
     public ModelAndView doPostComparisonToolForm(@Valid @ModelAttribute("comparisonForm") final ComparisonForm comparisonForm,
                                                  BindingResult result,
                                                  ModelMap model) throws IOException {
-        model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
         //Build model and view for error page
         if (result.hasErrors()) {
             return buildModelAndView(
@@ -98,7 +97,8 @@ public class CompareController extends AbstractController implements IController
                     new ModelPopulator() {
                         @Override
                         public void populateModel(ModelMap model) {
-                            final ViewModelBuilder<CompareViewModel> builder = new CompareViewModelBuilder(sessionManager, "Compare runs of same project", getBreadcrumbs(null), propertyContainer, studyDAO);
+                            final ViewModelBuilder<CompareViewModel> builder = new CompareViewModelBuilder(userManager, getEbiSearchForm(),
+                                    "Compare runs of same project", getBreadcrumbs(null), propertyContainer, studyDAO);
                             final ViewModel compareViewModel = builder.getModel();
                             compareViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_COMPARE_VIEW);
                             // Retrieving list of public studies and samples + add attributes
@@ -222,7 +222,8 @@ public class CompareController extends AbstractController implements IController
                 new ModelPopulator() {
                     @Override
                     public void populateModel(ModelMap model) {
-                        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(sessionManager, "Run comparison results", getBreadcrumbsForResultPage(), propertyContainer);
+                        final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(userManager, getEbiSearchForm(),
+                                "Run comparison results", getBreadcrumbsForResultPage(), propertyContainer);
                         final ViewModel defaultViewModel = builder.getModel();
                         defaultViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_COMPARE_VIEW);
                         model.addAttribute(ViewModel.MODEL_ATTR_NAME, defaultViewModel);
@@ -262,11 +263,11 @@ public class CompareController extends AbstractController implements IController
         Map<AnalysisJobVO, String> resultMap = new HashMap<AnalysisJobVO, String>();
         for (AnalysisJobVO analysisJob : completeAnalysisJobList) {
             // If statements depending on the nature of the data type chosen by the user
-            DownloadableFileDefinition fileDefinition = fileDefinitionsMapV1.get(FileDefinitionId.INTERPRO_MATCHES_SUMMARY_FILE.name());
+            DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(FileDefinitionId.INTERPRO_MATCHES_SUMMARY_FILE.name());
             if (usedData.equals("GO"))
-                fileDefinition = fileDefinitionsMapV1.get(FileDefinitionId.GO_COMPLETE_FILE.name());
+                fileDefinition = fileDefinitionsMap.get(FileDefinitionId.GO_COMPLETE_FILE.name());
             if (usedData.equals("GOslim"))
-                fileDefinition = fileDefinitionsMapV1.get(FileDefinitionId.GO_SLIM_FILE.name());
+                fileDefinition = fileDefinitionsMap.get(FileDefinitionId.GO_SLIM_FILE.name());
             File fileObject = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, fileDefinition);
             String absoluteFilePath = fileObject.getAbsolutePath();
             resultMap.put(analysisJob, absoluteFilePath);
@@ -282,11 +283,11 @@ public class CompareController extends AbstractController implements IController
      */
     private String getInputFilePath(String usedData, AnalysisJob analysisJob) {
         // If statements depending on the nature of the data type chosen by the user
-        DownloadableFileDefinition fileDefinition = fileDefinitionsMapV1.get(FileDefinitionId.INTERPRO_MATCHES_SUMMARY_FILE.name());
+        DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(FileDefinitionId.INTERPRO_MATCHES_SUMMARY_FILE.name());
         if (usedData.equals("GO"))
-            fileDefinition = fileDefinitionsMapV1.get(FileDefinitionId.GO_COMPLETE_FILE.name());
+            fileDefinition = fileDefinitionsMap.get(FileDefinitionId.GO_COMPLETE_FILE.name());
         if (usedData.equals("GOslim"))
-            fileDefinition = fileDefinitionsMapV1.get(FileDefinitionId.GO_SLIM_FILE.name());
+            fileDefinition = fileDefinitionsMap.get(FileDefinitionId.GO_SLIM_FILE.name());
         File fileObject = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, fileDefinition);
         return fileObject.getAbsolutePath();
     }

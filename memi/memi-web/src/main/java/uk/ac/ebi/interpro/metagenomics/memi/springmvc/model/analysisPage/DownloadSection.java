@@ -1,7 +1,5 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage;
 
-import java.util.List;
-
 /**
  * Object which is used to build the download section on the analysis page.
  *
@@ -12,25 +10,25 @@ public class DownloadSection {
 
     private FunctionalDownloadSection functionalDownloadSection;
 
-    private List<DownloadLink> taxaAnalysisDownloadLinks;
+    private TaxonomyDownloadSection taxonomyDownloadSection;
 
     public DownloadSection(SequencesDownloadSection sequencesDownloadSection,
                            FunctionalDownloadSection functionalDownloadSection,
-                           List<DownloadLink> taxaAnalysisDownloadLinks) {
+                           TaxonomyDownloadSection taxonomyDownloadSection) {
         this.sequencesDownloadSection = sequencesDownloadSection;
         this.functionalDownloadSection = functionalDownloadSection;
-        this.taxaAnalysisDownloadLinks = taxaAnalysisDownloadLinks;
+        this.taxonomyDownloadSection = taxonomyDownloadSection;
     }
 
     public SequencesDownloadSection getSequencesDownloadSection() {
         return sequencesDownloadSection;
     }
 
-    public List<DownloadLink> getTaxaAnalysisDownloadLinks() {
-        return taxaAnalysisDownloadLinks;
-    }
-
     public FunctionalDownloadSection getFunctionalDownloadSection() {
         return functionalDownloadSection;
+    }
+
+    public TaxonomyDownloadSection getTaxonomyDownloadSection() {
+        return taxonomyDownloadSection;
     }
 }

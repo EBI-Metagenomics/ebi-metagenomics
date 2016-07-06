@@ -53,7 +53,7 @@
                     <td class="col_xs xs_hide">
                             <%--while implemented in file-definition-context--%>
                         <c:choose>
-                            <c:when test="${downloadLink.linkText == 'Predicted CDS' || downloadLink.linkText ==  'Predicted CDS without annotation'}">
+                            <c:when test="${fn:startsWith(downloadLink.linkPrefix, 'Predicted CDS')}">
                                 <span class="show_tooltip protein icon icon-conceptual icon-c3" data-icon="P"
                                       title="Protein (AA) data type"></span>
                             </c:when>
@@ -98,7 +98,7 @@
                                       title="Chart data type"></span>
                             </c:when>
 
-                            <c:when test="${downloadLinkList[0].linkPrefix == 'Predicted CDS' || downloadLinkList[0].linkPrefix ==  'Predicted CDS without annotation'}">
+                            <c:when test="${fn:startsWith(downloadLinkList[0].linkPrefix, 'Predicted CDS')}">
                                 <span class="show_tooltip protein icon icon-conceptual icon-c3" data-icon="P"
                                       title="Protein (AA) data type"></span>
                             </c:when>
@@ -136,7 +136,7 @@
                         <td class="col_xs  xs_hide">
                                 <%--while implemented in file-definition-context--%>
                             <c:choose>
-                                <c:when test="${downloadLink.linkText == 'Predicted CDS' || downloadLink.linkText ==  'Predicted CDS without annotation'}">
+                                <c:when test="${fn:startsWith(downloadLinkList[0].linkPrefix, 'Predicted CDS')}">
                                     <span class="show_tooltip protein icon icon-conceptual icon-c3" data-icon="P"
                                           title="Protein (AA) data type"></span>
                                 </c:when>
@@ -356,7 +356,7 @@
 </section>
 
 <section id="download_tax_analysis">
-    <c:if test="${not empty model.downloadSection.taxaAnalysisDownloadLinks}">
+    <c:if test="${not empty model.downloadSection.taxonomyDownloadSection.downloadLinks}">
         <h4>Taxonomic analysis</h4>
 
         <table class="pipeline_table">
@@ -375,7 +375,7 @@
             <tbody>
 
 
-            <c:forEach var="downloadLink" items="${model.downloadSection.taxaAnalysisDownloadLinks}" varStatus="loop">
+            <c:forEach var="downloadLink" items="${model.downloadSection.taxonomyDownloadSection.downloadLinks}" varStatus="loop">
 
                 <tr class="row-taxon">
 
@@ -383,12 +383,12 @@
                     <td class="col_xs xs_hide">
                             <%--while implemented in file-definition-context--%>
                         <c:choose>
-                            <c:when test="${downloadLinkList[0].linkPrefix == 'InterPro matches' || downloadLink.linkText ==  'Phylogenetic tree' || downloadLink.linkText == 'OTUs, reads and taxonomic assignments'}">
+                            <c:when test="${downloadLink.linkPrefix == 'InterPro matches' || downloadLink.linkText ==  'Phylogenetic tree' || downloadLink.linkText == 'OTUs, reads and taxonomic assignments'}">
                                 <span class="show_tooltip icon  icon-generic big" data-icon="g"
                                       title="Chart data type"></span>
                             </c:when>
 
-                            <c:when test="${downloadLinkList[0].linkPrefix == 'Predicted CDS' || downloadLinkList[0].linkPrefix ==  'Predicted CDS without annotation'}">
+                            <c:when test="${downloadLink.linkPrefix == 'Predicted CDS' || downloadLink.linkPrefix ==  'Predicted CDS without annotation'}">
                                 <span class="show_tooltip protein icon icon-conceptual icon-c3" data-icon="P"
                                       title="Protein (AA)data type"></span>
                             </c:when>

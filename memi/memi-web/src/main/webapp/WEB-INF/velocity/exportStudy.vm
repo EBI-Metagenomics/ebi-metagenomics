@@ -1,0 +1,17 @@
+#foreach( $property in $tableHeaderNames )$property,#end
+
+#foreach( $run in $runs )
+#if($run.sampleName)
+"$run.sampleName",#{else}"",#end
+#if($run.sampleDescription)
+"$run.sampleDescription",#{else}"",#end
+#if($run.externalSampleId)
+"$run.externalSampleId",#{else}"",#end
+#if($run.externalRunIds)
+"$run.externalRunIds",#{else}"",#end
+#if($run.experimentType)
+"$run.experimentType",#{else}"",#end
+#if($run.releaseVersion)
+$run.releaseVersion,#{else}"",#end
+
+#end

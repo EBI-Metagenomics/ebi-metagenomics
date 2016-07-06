@@ -8,7 +8,6 @@ import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.AnalysisJobDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.temp.SampleAnnotationDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.exceptionHandling.EntryNotFoundException;
-import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Run;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
@@ -63,7 +62,7 @@ public abstract class AbstractResultViewController extends SecuredAbstractContro
     protected List<ResultFileDefinitionImpl> taxonomicAnalysisFileDefinitions;
 
     @Resource
-    protected Map<String, DownloadableFileDefinition> fileDefinitionsMapV1;
+    protected Map<String, DownloadableFileDefinition> fileDefinitionsMap;
 
     @Resource
     protected Map<String, DownloadableFileDefinition> chunkedResultFilesMap;
@@ -118,7 +117,8 @@ public abstract class AbstractResultViewController extends SecuredAbstractContro
         }
 
         final ViewModelBuilder<ResultViewModel> builder = new ResultViewModelBuilder(
-                sessionManager,
+                userManager,
+                getEbiSearchForm(),
                 analysisJob.getSample(),
                 run,
                 pageTitle,
@@ -134,7 +134,6 @@ public abstract class AbstractResultViewController extends SecuredAbstractContro
         final ResultViewModel resultModel = builder.getModel();
 
         resultModel.changeToHighlightedClass(ViewModel.DEFAULT_CLASS);
-        model.addAttribute(LoginForm.MODEL_ATTR_NAME, new LoginForm());
         model.addAttribute(ViewModel.MODEL_ATTR_NAME, resultModel);
     }
 }

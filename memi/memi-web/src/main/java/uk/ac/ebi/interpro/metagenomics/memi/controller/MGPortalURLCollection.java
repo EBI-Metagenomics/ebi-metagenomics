@@ -70,18 +70,12 @@ public final class MGPortalURLCollection {
 
 
     //Sequence files (seq input files, pre-processed/filtered files)
-    private final static String PROJECT_SAMPLE_RUN_RESULTS_SEQUENCES = PROJECT_SAMPLE_RUN_RESULTS + "/sequences" + PROJECT_SAMPLE_RUN_RESULTS_VERSION;
-
-    public final static String PROJECT_SAMPLE_RUN_RESULTS_SEQUENCES_EXPORT = PROJECT_SAMPLE_RUN_RESULTS_SEQUENCES + "/export";
-
-    //New sequence files URLs
     public final static String PROJECT_SAMPLE_RUN_RESULTS_SEQUENCES_SEQ_TYPE_CHUNKS = PROJECT_SAMPLE_RUN_RESULTS + PROJECT_SAMPLE_RUN_RESULTS_VERSION + "/sequences/{sequenceType}/chunks";
     public final static String PROJECT_SAMPLE_RUN_RESULTS_SEQUENCES_SEQ_TYPE_CHUNKS_VALUE = PROJECT_SAMPLE_RUN_RESULTS + PROJECT_SAMPLE_RUN_RESULTS_VERSION + "/sequences/{sequenceType}/chunks/{chunkValue}";
 
     //Taxonomy result files
-    private final static String PROJECT_SAMPLE_RUN_RESULTS_TAXONOMY = PROJECT_SAMPLE_RUN_RESULTS + "/taxonomy" + PROJECT_SAMPLE_RUN_RESULTS_VERSION;
+    public final static String PROJECT_SAMPLE_RUN_RESULTS_TAXONOMY_TYPE = PROJECT_SAMPLE_RUN_RESULTS + PROJECT_SAMPLE_RUN_RESULTS_VERSION + "/taxonomy/{resultType}";
 
-    public final static String PROJECT_SAMPLE_RUN_RESULTS_TAXONOMY_EXPORT = PROJECT_SAMPLE_RUN_RESULTS_TAXONOMY + "/export";
     //END export URLs
 
     //Sample page
@@ -99,6 +93,9 @@ public final class MGPortalURLCollection {
     //Google map data
     public final static String PROJECT_MAP_DATA = PROJECT + "/map-data";
 
+    //List of all project runs
+    public final static String PROJECT_RUNS = PROJECT + "/runs";
+
     //Project page - export functionality
     public final static String PROJECT_SUMMARY_EXPORT = PROJECT_DOWNLOAD + "/{releaseVersion}/export";
 
@@ -106,4 +103,8 @@ public final class MGPortalURLCollection {
     //POST request
     public final static String PROJECT_SAMPLE_RUN_RESULTS_IMAGE_EXPORT = PROJECT_SAMPLE_RUN_RESULTS_ENTRY + "/export";
 
+
+
+    //Quality control stats files
+    public final static String PROJECT_SAMPLE_RUN_RESULTS_QC_TYPE = PROJECT_SAMPLE_RUN_RESULTS + PROJECT_SAMPLE_RUN_RESULTS_VERSION + "/qc-stats/{resultType}";
 }

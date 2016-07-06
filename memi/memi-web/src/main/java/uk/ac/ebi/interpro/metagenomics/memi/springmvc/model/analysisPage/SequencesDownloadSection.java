@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Object which is used to build the download section on the analysis page
+ * Object which is used to build the download section on the analysis page.
  *
  * @author Maxim Scheremetjew, EMBL-EBI
  */
@@ -24,6 +24,8 @@ public class SequencesDownloadSection {
 
     private List<DownloadLink> predictedCDSWithoutAnnotationLinks;
 
+    private List<DownloadLink> predictedCDSWithAnnotationLinks;
+
     private List<DownloadLink> otherDownloadLinks;
 
     public SequencesDownloadSection() {
@@ -35,6 +37,7 @@ public class SequencesDownloadSection {
         this.predictedCDSLinks = new ArrayList<DownloadLink>();
         this.predictedORFWithoutAnnotationLinks = new ArrayList<DownloadLink>();
         this.predictedCDSWithoutAnnotationLinks = new ArrayList<DownloadLink>();
+        this.predictedCDSWithAnnotationLinks = new ArrayList<DownloadLink>();
     }
 
     public List<DownloadLink> getProcessedReadsLinks() {
@@ -93,6 +96,14 @@ public class SequencesDownloadSection {
         this.predictedCDSWithoutAnnotationLinks = predictedCDSWithoutAnnotationLinks;
     }
 
+    public List<DownloadLink> getPredictedCDSWithAnnotationLinks() {
+        return predictedCDSWithAnnotationLinks;
+    }
+
+    public void setPredictedCDSWithAnnotationLinks(List<DownloadLink> predictedCDSWithAnnotationLinks) {
+        this.predictedCDSWithAnnotationLinks = predictedCDSWithAnnotationLinks;
+    }
+
     public List<DownloadLink> getOtherDownloadLinks() {
         return otherDownloadLinks;
     }
@@ -108,8 +119,10 @@ public class SequencesDownloadSection {
     }
 
     /**
-     * Get the list of chunked sequence
-     * @return
+     * Get the list of chunked sequence.
+     * Please note: Method call is used in the 'download' view (Java Server page).
+     *
+     * @return List of download links.
      */
     public List<List<DownloadLink>> getListOfChunkedDownloadLinks() {
         List<List<DownloadLink>> result = new ArrayList<List<DownloadLink>>();
@@ -118,6 +131,7 @@ public class SequencesDownloadSection {
         result.add(getReadsWithMatchesLinks());
         result.add(getReadsWithoutMatchesLinks());
         result.add(getPredictedCDSLinks());
+        result.add(getPredictedCDSWithAnnotationLinks());
         result.add(getPredictedCDSWithoutAnnotationLinks());
         result.add(getPredictedORFWithoutAnnotationLinks());
         return result;

@@ -1,6 +1,7 @@
 package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.results;
 
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
+import uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
@@ -26,13 +27,14 @@ public class QualityCheckViewModel extends AbstractResultViewModel {
     private AnalysisStatus analysisStatus;
 
     public QualityCheckViewModel(Submitter submitter,
+                                 EBISearchForm ebiSearchForm,
                                  String pageTitle,
                                  List<Breadcrumb> breadcrumbs,
                                  MemiPropertyContainer propertyContainer,
                                  Sample sample,
                                  AnalysisJob analysisJob,
                                  AnalysisStatus analysisStatus) {
-        super(submitter, pageTitle, breadcrumbs, propertyContainer);
+        super(submitter, ebiSearchForm, pageTitle, breadcrumbs, propertyContainer);
         this.sample = sample;
         this.analysisJob = analysisJob;
         this.analysisStatus = analysisStatus;
