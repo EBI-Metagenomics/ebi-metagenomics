@@ -118,9 +118,9 @@
                     <div class="grid_24">
                         <div class="grid_6 alpha"><span class="icon icon-functional" data-icon="U"></span><br/><span
                                 class="stat-lock-title">Public</span></div>
-                        <div class="grid_6"><span class="high_nb">${model.publicRunCount}</span><br/><span
-                                class="high_nb">${model.publicSamplesCount}</span><br/><span
-                                class="high_nb">${model.publicStudiesCount}</span></div>
+                        <div class="grid_6"><span class="high_nb">${model.dataStatistics.numOfPublicRuns}</span><br/><span
+                                class="high_nb">${model.dataStatistics.numOfPublicSamples}</span><br/><span
+                                class="high_nb">${model.dataStatistics.numOfPublicStudies}</span></div>
                         <div class="grid_12 omega"> runs <br/> samples <br/> projects</div>
                     </div>
                 </div>
@@ -128,9 +128,9 @@
                     <div class="grid_24">
                         <div class="grid_6 alpha"><span class="icon icon-functional" data-icon="L"></span><br/><span
                                 class="stat-lock-title">Private</span></div>
-                        <div class="grid_6"><span class="high_nb">${model.privateRunCount}</span><br/><span
-                                class="high_nb">${model.privateSamplesCount}</span><br/><span
-                                class="high_nb">${model.privateStudiesCount}</span></div>
+                        <div class="grid_6"><span class="high_nb">${model.dataStatistics.numOfPrivateRuns}</span><br/><span
+                                class="high_nb">${model.dataStatistics.numOfPrivateSamples}</span><br/><span
+                                class="high_nb">${model.dataStatistics.numOfPrivateStudies}</span></div>
                         <div class="grid_12 omega"> runs <br/> samples <br/> projects</div>
                     </div>
                 </div>
@@ -413,7 +413,7 @@
                     <div class="home_box omega">
                         <h2>Latest projects <span class="badge"><a
                                 href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>"
-                                title="View all ${model.publicStudiesCount} public projects">${model.publicStudiesCount}</a></span>
+                                title="View all ${model.dataStatistics.numOfPublicStudies} public projects">${model.dataStatistics.numOfPublicStudies}</a></span>
                         </h2>
                         <div class="list-project-l">
                                 <%--The count starts at 0, that is why we subtract 1 from the end value--%>

@@ -2,6 +2,7 @@ package uk.ac.ebi.interpro.metagenomics.memi.dao;
 
 import uk.ac.ebi.interpro.metagenomics.memi.dao.extensions.QueryRunsForProjectResult;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Run;
+import uk.ac.ebi.interpro.metagenomics.memi.model.valueObjects.DataStatisticsVO;
 import uk.ac.ebi.interpro.metagenomics.memi.model.valueObjects.ProjectSampleRunMappingVO;
 
 import java.util.List;
@@ -22,6 +23,8 @@ public interface RunDAO {
     public int countAllPrivate();
 
     public Map<String, Long> retrieveRunCountsGroupedByExperimentType(int analysisStatusI);
+
+    public DataStatisticsVO retrieveStatistics();
 
     public List<QueryRunsForProjectResult> retrieveRunsByProjectId(long projectId, boolean publicOnly);
 

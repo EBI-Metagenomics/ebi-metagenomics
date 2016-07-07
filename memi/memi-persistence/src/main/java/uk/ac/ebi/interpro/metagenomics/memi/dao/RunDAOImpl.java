@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.extensions.QueryRunsForProjectResult;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Run;
+import uk.ac.ebi.interpro.metagenomics.memi.model.valueObjects.DataStatisticsVO;
 import uk.ac.ebi.interpro.metagenomics.memi.model.valueObjects.ProjectSampleRunMappingVO;
 
 import javax.sql.DataSource;
@@ -62,6 +63,32 @@ public class RunDAOImpl implements RunDAO {
                 result.put((String) (row.get("EXPERIMENT_TYPE")), (Long) row.get("COUNT"));
             }
             return result;
+        } catch (DataAccessException exception) {
+            throw exception;
+        }
+    }
+
+    public DataStatisticsVO retrieveStatistics() {
+        try {
+            DataStatisticsVO stats = new DataStatisticsVO();
+            String sql = "select p.is_public, count(distinct p.EXT_STUDY_ID) as num_of_studies, count(distinct sa.EXT_SAMPLE_ID) as num_of_samples, count(distinct aj.EXTERNAL_RUN_IDS) as num_of_runs from STUDY p join SAMPLE sa on (p.STUDY_ID = sa.STUDY_ID) join ANALYSIS_JOB aj on (sa.SAMPLE_ID = aj.SAMPLE_ID) where p.IS_PUBLIC in (0,1) and sa.IS_PUBLIC in (0,1) and aj.ANALYSIS_STATUS_ID = 3 group by p.IS_PUBLIC";
+            List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
+            for (Map<String, Object> row : rows) {
+                int isPublic = (Integer) row.get("IS_PUBLIC");
+                long numOfStudies = (Long) row.get("num_of_studies");
+                long numOfSamples = (Long) row.get("num_of_samples");
+                long numOfRuns = (Long) row.get("num_of_runs");
+                if (isPublic == 1) {
+                    stats.setNumOfPublicStudies(numOfStudies);
+                    stats.setNumOfPublicSamples(numOfSamples);
+                    stats.setNumOfPublicRuns(numOfRuns);
+                } else {
+                    stats.setNumOfPrivateStudies(numOfStudies);
+                    stats.setNumOfPrivateSamples(numOfSamples);
+                    stats.setNumOfPrivateRuns(numOfRuns);
+                }
+            }
+            return stats;
         } catch (DataAccessException exception) {
             throw exception;
         }

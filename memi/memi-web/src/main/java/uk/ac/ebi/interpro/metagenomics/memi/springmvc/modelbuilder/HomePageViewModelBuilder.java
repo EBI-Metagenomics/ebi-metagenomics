@@ -15,6 +15,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
+import uk.ac.ebi.interpro.metagenomics.memi.model.valueObjects.DataStatisticsVO;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.HomePageViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.UserManager;
@@ -84,12 +85,7 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
         Submitter submitter = getSessionSubmitter(sessionMgr);
         EBISearchForm ebiSearchForm = getEbiSearchForm();
         // The following values are all for the statistics section on the home page
-        final Long publicSamplesCount = sampleDAO.countAllPublic();
-        final Long privateSamplesCount = sampleDAO.countAllPrivate();
-        final Long publicStudiesCount = studyDAO.countAllPublic();
-        final Long privateStudiesCount = studyDAO.countAllWithNotEqualsEx(1);
-        final int publicRunCount = runDAO.countAllPublic();
-        final int privateRunCount = runDAO.countAllPrivate();
+        DataStatisticsVO dataStatistics = runDAO.retrieveStatistics();
 
         final Map<String, Long> experimentCountMap = runDAO.retrieveRunCountsGroupedByExperimentType(3);
         final Map<String, Long> transformedExperimentCountMap = transformMap(experimentCountMap);
@@ -121,9 +117,9 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
         // If case: if nobody is logged in
         if (submitter == null) {
             List<BiomeLogoModel> biomeCountMap = buildBiomeCountMap();
-            return new HomePageViewModel(submitter, ebiSearchForm, pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems, publicSamplesCount,
-                    privateSamplesCount, publicStudiesCount, privateStudiesCount, studies, publicRunCount, privateRunCount, biomeCountMap, transformedExperimentCountMap, numOfDataSets,
-                    studyToSampleCountMap, studyToRunCountMap);
+            return new HomePageViewModel(submitter, ebiSearchForm, pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems,
+                    studies, biomeCountMap, transformedExperimentCountMap, numOfDataSets, studyToSampleCountMap, studyToRunCountMap,
+                    dataStatistics);
         }
         //  Else case: if somebody is logged in
         else {
@@ -142,8 +138,7 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
 //            final Long myStudiesCount = (myStudies != null ? new Long(myStudies.size()) : new Long(0));
 
             return new HomePageViewModel(submitterDetails, ebiSearchForm, studies, mySamples, pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems,
-                    mySamplesCount, new Long(studies.size()), publicSamplesCount, privateSamplesCount, publicStudiesCount, privateStudiesCount, publicRunCount, privateRunCount,
-                    studyToSampleCountMap, studyToRunCountMap);
+                    mySamplesCount, new Long(studies.size()), studyToSampleCountMap, studyToRunCountMap, dataStatistics);
         }
     }
 
