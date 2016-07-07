@@ -37,7 +37,13 @@
 
 <!--Google map with sample locations - add the Google map if the JSON data file is available-->
 <c:if test="${model.googleMapDataAvailable}">
+<div id="map-container">
+    <div class="btn-full-screen" style="text-align: right">
+        <button id="btn-enter-full-screen" class="ui-button icon icon-functional" data-icon="Y">Full Screen</button>
+        <button id="btn-exit-full-screen" class="ui-button" style="display: none">Exit full Screen</button>
+    </div>
 <div id="map_project"></div>
+</div>
 </c:if>
 
 <tags:publications publications="${study.publications}" relatedPublications="${model.relatedPublications}"
@@ -359,3 +365,49 @@
 
 </script>
 
+<script>
+    //jquery solution for full screen map - https://gist.github.com/lou/1550454
+    $(function() {
+        var map = new google.maps.Map(document.getElementById("map_project"), {});
+
+        var googleMapWidth = $("#map_project").css('width');
+        var googleMapHeight = $("#map_project").css('height');
+
+        $('#btn-enter-full-screen').click(function(){
+            $("#map-container").css("position", 'fixed').
+            css('top', 0).
+            css('left', 0).
+            css('z-index', 1000).
+            css("width", '100%').
+            css("background-color", 'rgba(0, 0, 0, 0.6)').
+            css("height", '100%');
+
+            $("#map_project").css("position", 'relative').
+            css("height", '94%');//not 100% to avoid cropping map at the bottom
+
+            google.maps.event.trigger(map, 'resize');
+
+            // Gui
+            $('#btn-enter-full-screen').toggle();
+            $('#btn-exit-full-screen').toggle();
+            return false;
+        });
+
+        $('#btn-exit-full-screen').click(function(){
+            $("#map-container").css("position", 'relative').
+            css('top', 0).
+            css("background-color", 'transparent').
+            css("height", 383);
+
+            $("#map_project").css("position", 'relative').
+            css("height", '360');
+
+            google.maps.event.trigger(map, 'resize');
+
+            // Gui
+            $('#btn-enter-full-screen').toggle();
+            $('#btn-exit-full-screen').toggle();
+            return false;
+        });
+    });
+</script>
