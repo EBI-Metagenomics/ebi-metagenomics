@@ -1487,6 +1487,18 @@ img.ui-datepicker-trigger {float:left; /*solve a bug with chromium*/}
 .col-1-8 { width: 12.5%;}
 .grid:last-of-type {padding-right: 0;}
 #func_chart_pie_go_mf, #func_chart_pie_go_cc, #func_chart_pie_go_bp, #func_chart_bar_go_bp, #func_chart_bar_go_cc, #func_chart_bar_go_mf, #func_chart_pie_ipro, #tax_chart_col, #tax_chart_bar_phy, #tax_chart_bar_dom, #tax_chart_pie_phy, #tax_chart_pie_dom {width:100%;}
+
+/*UI BUTTON - MAP*/
+.ui-button {padding: .4em 1.1em;line-height: 1.4;color: #525252; margin:0 9px; border: 1px solid rgba(0,0,0,0.1);
+    background-image: linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));
+    background-image: -moz-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));
+    background-image: -o-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));
+    background-image: -webkit-gradient(linear,left top,left bottom,from(rgba(255,255,255,.85)),to(rgba(247,247,247,.85)));
+    background-image: -webkit-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));  border-radius: 0px;outline:0;}
+.ui-button:hover {color:black; border: 1px #d0d0d0 solid;}
+.ui-button.icon-functional:before {color:#777; }
+.ui-button.icon-functional:hover:before {color: #525252;}
+
 /*EXPORT BUTTON - ANALYSIS PAGE*/
 ul.export_list {z-index: 1;display: none;border: 1px solid #949494; padding: 5px;background-color: #FFF;font-size: 1em;list-style: none;outline: none;margin:0;}
 .sample_comp_result .chart-block .ui-buttonset, .sample_ana .chart-block .ui-buttonset {/*text-align: right;*/ }
@@ -1528,6 +1540,7 @@ background-image: -webkit-gradient(linear,left top,left bottom,from(rgba(255,255
 background-image: -webkit-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85)); }
 .sample_ana #tabs-chart .ui-tabs-nav li.ui-state-hover a, .sample_ana #interpro-chart .ui-tabs-nav li.ui-state-hover a, .sample_ana #tabs-taxchart .ui-tabs-nav li.ui-state-hover a  {text-decoration: none;}
 .sample_ana #tabs-chart .ui-tabs-nav li a:hover, .sample_ana #interpro-chart .ui-tabs-nav li a:hover, .sample_ana #tabs-taxchart .ui-tabs-nav li a:hover  {border: 1px solid #c6c6c6;box-shadow:1px 1px 1px rgba(0, 0, 0, 0.3);-moz-box-shadow:1px 1px 1px rgba(0, 0, 0, 0.3); -khtml-box-shadow:1px 1px 1px rgba(0, 0, 0, 0.3); -webkit-box-shadow:0px 0px 3px rgba(0, 0, 0, 0.3) ; text-decoration:none;}
+
 .sample_ana #tabs-chart li.ui-tabs-selected, .sample_ana #interpro-chart li.ui-tabs-selected, .sample_ana #tabs-taxchart li.ui-tabs-selected {/*height: 37px;*/height: 28px;background: #fff; border: none; top:1px;}
 .sample_ana #tabs-chart .ui-tabs-panel, .sample_ana #interpro-chart .ui-tabs-panel {margin: 0; padding:0; position: relative; border: 0px solid rgb(213, 213, 213); border-bottom-left-radius: 0px;border-bottom-right-radius: 0px; overflow:hidden;/*to solve a scrolling issue*/}
 .sample_ana #tabs-taxchart .ui-tabs-panel {margin: 0;  position: relative; border: 0px solid rgb(213, 213, 213); border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;} /*don't use overflow:auto with Krona*/
@@ -1916,7 +1929,7 @@ a.all:active  { background: url(../img/arrow_link_click_small.jpg) no-repeat rig
 .hlight-text-scroll, .list-contain-box .list-project-l, .list-contain-box .list-sample-l {position: relative;  width: 100%;  overflow-x: hidden; overflow-y: auto;}
 .list-project-l, .list-sample-l {height: 250px;}
 .hlight-text-scroll {height: 394px;}
-.list-contain-box .list-project-l .icon-functional:before, .list-contain-box .list-sample-l .icon-functional:before, table.result .icon-functional:before, #project_ov .icon-functional:before, #sample_ov .icon-functional:before {color: #777;}
+.list-contain-box .list-project-l .icon-functional:before, .list-contain-box .list-sample-l .icon-functional:before, table.result .icon-functional:before,  #sample_ov .icon-functional:before {color: #777;}
 /*END HOMEPAGE*/
 
 
