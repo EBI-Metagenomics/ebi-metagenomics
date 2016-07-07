@@ -44,7 +44,7 @@ function initialize(contextPath, biomeIconCSSClass, biomeIconTitle) {
         //Define the content string for the info window
         var contentString = "<div class='map_info_window'>"
         contentString += "<span class='biome_icon icon_xs show_tooltip "+biomeIconCSSClass+"' title='"+biomeIconTitle+" biome'></span>"
-        contentString += "<h3>Sample Overview - <a href='"+contextPath+"/projects/" + sampleObject.study_id + "/samples/" + sampleObject.sample_id + "'>" + sampleObject.sample_id + "</a></h3>"
+        contentString += "<h3>Sample - <a href='"+contextPath+"/projects/" + sampleObject.study_id + "/samples/" + sampleObject.sample_id + "'>" + sampleObject.sample_id + "</a></h3>"
         contentString +=  sampleObject.title + " / " + sampleObject.sample_desc + "<br/><br/>"
 //        contentString += '<button id="googleMapInfoButton" onclick="' + "toggleDiv('sampleDetailsDiv','googleMapInfoButton')" + '">More/Hide</button>';
 //        contentString += '<div id="sampleDetailsDiv" style="display:none;"><p>Project: ' + sampleObject.study_id + '<br>'
@@ -52,7 +52,7 @@ function initialize(contextPath, biomeIconCSSClass, biomeIconTitle) {
         contentString += "<strong>Classification:</strong> " + sampleObject.lineage + "<br/>"
         contentString += "<strong>Collection Date:</strong> " + sampleObject.collection_date + "<br/>"
         contentString += "<strong>Lat/Long:</strong> " + sampleObject.latitude + ", "+ sampleObject.longitude   + "<br/>"
-        contentString += "<a class='anim map_info_more' href='"+contextPath+"/projects/" + sampleObject.study_id + "/samples/" + sampleObject.sample_id + "'>View more</a>"
+        contentString += "<a class='anim map_info_more'  target='_blank' href='"+contextPath+"/projects/" + sampleObject.study_id + "/samples/" + sampleObject.sample_id + "'>View more</a>"
         contentString += "</div>";
 
         //Define the info window object
