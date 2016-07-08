@@ -10,7 +10,7 @@
 <div class="grid_24" id="mainContainer">
     <h2>Search EBI Metagenomics</h2>
 
-    <form:form class="local-search-xs" action="${pageContext.request.contextPath}/search/doEbiSearch"
+    <form:form class="local-search-xs" action="${pageContext.request.contextPath}/search"
                commandName="ebiSearchForm" method="POST">
 
         <div class="grid_24">

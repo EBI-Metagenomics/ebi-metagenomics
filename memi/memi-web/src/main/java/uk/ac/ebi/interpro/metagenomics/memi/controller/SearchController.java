@@ -32,7 +32,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping(value = "/" + SearchController.VIEW_NAME)
-public class SearchController extends AbstractController implements IController {
+public class SearchController extends AbstractController {
     private final Log log = LogFactory.getLog(SearchController.class);
 
     public static final String VIEW_NAME = "search";
@@ -48,37 +48,7 @@ public class SearchController extends AbstractController implements IController 
         ebiSearchTool = new EBISearchTool();
     }
 
-    @Override
-    public ModelAndView doGet(final ModelMap model) {
-        log.info("Requesting doGet of " + this.getClass() + "...");
-        EBISearchForm ebiSearchForm = getEbiSearchForm();
-        EBISearchResults results = new EBISearchResults();
-        results.setSearchText(ebiSearchForm.getSearchText());
-        final String searchResults = ebiSearchTool.searchAllDomains(results);
-        return buildModelAndView(
-                getModelViewName(),
-                model,
-                new ModelPopulator() {
-                    @Override
-                    public void populateModel(ModelMap model) {
-                        log.info("Building model of " + this.getClass() + "...");
-                        final SearchViewModelBuilder<ViewModel> builder = new SearchViewModelBuilder(
-                                userManager,
-                                getEbiSearchForm(),
-                                "Search EBI metagenomics",
-                                getBreadcrumbs(null),
-                                propertyContainer,
-                                searchResults
-                        );
-                        final ViewModel searchModel = builder.getModel();
-                        searchModel.changeToHighlightedClass(ViewModel.TAB_CLASS_SEARCH_VIEW);
-                        model.addAttribute(ViewModel.MODEL_ATTR_NAME, searchModel);
-                    }
-                }
-        );
-    }
-
-    @RequestMapping(value = "/" + VIEW_SEARCH, method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public ModelAndView doEbiSearch(ModelMap model, HttpServletRequest request,
                                     HttpServletResponse response) {
         String searchText = "";
