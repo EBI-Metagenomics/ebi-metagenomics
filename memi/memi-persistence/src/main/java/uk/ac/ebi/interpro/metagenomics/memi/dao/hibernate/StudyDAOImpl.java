@@ -8,9 +8,11 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
+import uk.ac.ebi.interpro.metagenomics.memi.model.valueObjects.StudyStatisticsVO;
 
 import java.util.*;
 
@@ -455,5 +457,29 @@ public class StudyDAOImpl implements StudyDAO {
             result.put((String) resultItem[0], (Long) resultItem[1]);
         }
         return result;
+    }
+
+    public StudyStatisticsVO retrieveStatistics() {
+        Session session = sessionFactory.getCurrentSession();
+        if (session != null) {
+            try {
+                StudyStatisticsVO stats = new StudyStatisticsVO();
+                Query query = session.createQuery("select p.isPublic, count(distinct p.studyId) as num_of_studies from Study p where p.isPublic in (0,1) group by p.isPublic");
+                List<Object[]> results = query.list();
+                for (Object[] rowFields : results) {
+                    int isPublic = (Integer) rowFields[0];
+                    long numOfStudies = (Long) rowFields[1];
+                    if (isPublic == 1) {
+                        stats.setNumOfPublicStudies(numOfStudies);
+                    } else {
+                        stats.setNumOfPrivateStudies(numOfStudies);
+                    }
+                }
+                return stats;
+            } catch (DataAccessException exception) {
+                throw exception;
+            }
+        }
+        return null;
     }
 }

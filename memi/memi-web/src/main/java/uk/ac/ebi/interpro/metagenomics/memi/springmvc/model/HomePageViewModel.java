@@ -5,7 +5,6 @@ import uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
-import uk.ac.ebi.interpro.metagenomics.memi.model.valueObjects.DataStatisticsVO;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.BiomeLogoModel;
 
 import java.util.ArrayList;
@@ -57,7 +56,7 @@ public final class HomePageViewModel extends ViewModel {
 
     private Map<String, Long> studyToRunCountMap;
 
-    private DataStatisticsVO dataStatistics;
+    private DataStatistics dataStatistics;
 
     public HomePageViewModel(final Submitter submitter,
                              final EBISearchForm ebiSearchForm,
@@ -71,7 +70,7 @@ public final class HomePageViewModel extends ViewModel {
                              final Long numOfDataSets,
                              final Map<String, Long> studyToSampleCountMap,
                              final Map<String, Long> studyToRunCountMap,
-                             final DataStatisticsVO dataStatistics) {
+                             final DataStatistics dataStatistics) {
         super(submitter, ebiSearchForm, pageTitle, breadcrumbs, propertyContainer);
 //        this.publicSamples = publicSamples;
         this.myStudiesMap = new TreeMap<Study, Long>();
@@ -100,7 +99,7 @@ public final class HomePageViewModel extends ViewModel {
                              final Long myStudiesCount,
                              final Map<String, Long> studyToSampleCountMap,
                              final Map<String, Long> studyToRunCountMap,
-                             final DataStatisticsVO dataStatistics) {
+                             final DataStatistics dataStatistics) {
         this(submitter, ebiSearchForm, pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems,
                 studies, null, null, null, studyToSampleCountMap, studyToRunCountMap, dataStatistics);
 //        this.myStudiesMap = myStudiesMap;
@@ -174,7 +173,7 @@ public final class HomePageViewModel extends ViewModel {
         return studyToRunCountMap;
     }
 
-    public DataStatisticsVO getDataStatistics() {
+    public DataStatistics getDataStatistics() {
         return dataStatistics;
     }
 }

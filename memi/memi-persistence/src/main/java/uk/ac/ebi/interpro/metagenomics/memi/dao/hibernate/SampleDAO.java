@@ -2,6 +2,8 @@ package uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate;
 
 import org.hibernate.criterion.Criterion;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
+import uk.ac.ebi.interpro.metagenomics.memi.model.valueObjects.SampleStatisticsVO;
+import uk.ac.ebi.interpro.metagenomics.memi.model.valueObjects.StudyStatisticsVO;
 
 import java.util.List;
 
@@ -102,7 +104,5 @@ public interface SampleDAO extends ISecureEntityDAO<Sample> {
 
     long retrieveSampleSizeByStudyId(long studyId);
 
-    Long countAllPublic();
-
-    Long countAllPrivate();
+    public SampleStatisticsVO retrieveStatistics();
 }

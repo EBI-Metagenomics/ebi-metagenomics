@@ -15,8 +15,11 @@ import uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
-import uk.ac.ebi.interpro.metagenomics.memi.model.valueObjects.DataStatisticsVO;
+import uk.ac.ebi.interpro.metagenomics.memi.model.valueObjects.RunStatisticsVO;
+import uk.ac.ebi.interpro.metagenomics.memi.model.valueObjects.SampleStatisticsVO;
+import uk.ac.ebi.interpro.metagenomics.memi.model.valueObjects.StudyStatisticsVO;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.DataStatistics;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.HomePageViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.UserManager;
 
@@ -85,7 +88,10 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
         Submitter submitter = getSessionSubmitter(sessionMgr);
         EBISearchForm ebiSearchForm = getEbiSearchForm();
         // The following values are all for the statistics section on the home page
-        DataStatisticsVO dataStatistics = runDAO.retrieveStatistics();
+        StudyStatisticsVO studyStatistics = studyDAO.retrieveStatistics();
+        SampleStatisticsVO sampleStatistics = sampleDAO.retrieveStatistics();
+        RunStatisticsVO runStatistics = runDAO.retrieveStatistics();
+        DataStatistics dataStatistics = new DataStatistics(studyStatistics, sampleStatistics, runStatistics);
 
         final Map<String, Long> experimentCountMap = runDAO.retrieveRunCountsGroupedByExperimentType(3);
         final Map<String, Long> transformedExperimentCountMap = transformMap(experimentCountMap);
