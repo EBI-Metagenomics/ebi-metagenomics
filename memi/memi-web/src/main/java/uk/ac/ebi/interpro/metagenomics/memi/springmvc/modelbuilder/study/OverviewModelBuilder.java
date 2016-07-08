@@ -64,9 +64,8 @@ public class OverviewModelBuilder extends AbstractViewModelBuilder<OverviewModel
         }
         Submitter submitter = getSessionSubmitter(sessionMgr);
         EBISearchForm ebiSearchForm = getEbiSearchForm();
-        List<QueryRunsForProjectResult> runs = getRunsForStudyViewModel(submitter);
         buildPublicationLists();
-        return new OverviewModel(submitter, ebiSearchForm, study, runs, pageTitle,
+        return new OverviewModel(submitter, ebiSearchForm, study, pageTitle,
                 breadcrumbs, propertyContainer, relatedPublications, relatedLinks);
     }
 
