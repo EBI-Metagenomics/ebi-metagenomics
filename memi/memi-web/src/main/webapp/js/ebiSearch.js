@@ -4,6 +4,7 @@
 
 var HIDDEN_CLASS = "this_hide";
 var FACET_SEPARATOR = "____";
+var SEARCH_TAB_CLASS = "search-tab";
 
 //load css for the modal box
 var linkElement = document.createElement("link");
@@ -111,12 +112,28 @@ Initialisation methods
  * @param disabledList
  */
 var setupJQueryTabs = function(container, disabledList) {
-    $(container).tabs();
-    /*
+    selectedTab = 0;
+    var children = container.getElementsByClassName(SEARCH_TAB_CLASS);
+    console.log("Children " + children.length);
+
+    for (var i=0; i < children.length; i++) {
+        console.log("Checking " + i);
+        if (disabledList.indexOf(i) == -1) {
+            console.log("Disabled " + i + " in " + disabledList);
+            selectedTab = i;
+            break;
+        }
+    }
+
+    console.log("Selectedtab " + selectedTab);
     $(container).tabs({
         disabled: disabledList,
+        active: selectedTab
     });
-    */
+
+
+
+
 };
 
 var setTabText = function(data, dataType, element) {
@@ -140,18 +157,16 @@ var displayTabHeader = function(data) {
             var disabledList = [];
             for (i in dataTypes) {
                 var dataType = dataTypes[i];
-                console.log(dataType);
                 var tabItem = document.createElement("li");
+                tabItem.className = SEARCH_TAB_CLASS;
                 var tabLink = document.createElement("a");
                 tabLink.id = dataType + "-link";
                 tabLink.value = dataType;
                 tabLink.href = "#" + dataType;
                 setTabText(data, dataType, tabLink);
 
-                if (data[dataType].numberOfHits > 0) {
-                    disabledList.push(1);
-                } else {
-                    disabledList.push(0);
+                if (data[dataType].numberOfHits == 0) {
+                    disabledList.push(parseInt(i));
                 }
                 tabItem.appendChild(tabLink)
                 tabList.appendChild(tabItem);
