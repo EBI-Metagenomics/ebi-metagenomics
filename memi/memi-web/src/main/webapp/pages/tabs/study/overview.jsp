@@ -361,6 +361,7 @@
         $('input[type=search]').on('search', function () {
             $('#associated-run tr td').unhighlight();
         });
+
     });
 
 </script>
@@ -397,7 +398,7 @@
             $("#map-container").css("position", 'relative').
             css('top', 0).
             css("background-color", 'transparent').
-            css("height", 383);
+            css("height", 394);
 
             $("#map_project").css("position", 'relative').
             css("height", '360');
