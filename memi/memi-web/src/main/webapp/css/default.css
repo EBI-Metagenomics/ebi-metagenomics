@@ -75,7 +75,6 @@ div#headerdiv #global-masthead .nav a:link {float: none;}
 div#headerdiv { background-color: #fff; font-size:100%; font-family: Verdana, sans-serif; }/*replace default font-size: 11px;*/
 div#local-masthead ul li.active-trail a:link, div#local-masthead ul li.active-trail a:visited {padding-top: 2px;border-bottom: 3px solid #666;background-color: #111;}/*style not defined in mitigation*/
 div#local-masthead ul li.active, div#local-masthead ul li.active-trail { background-color: #111; }  /*style not defined in mitigation*/
-
 /*/change to ebi-mitigation.css*/
 
 /*imported from ebi-visual.css*/
@@ -1192,7 +1191,7 @@ margin-left:9px;
 #map_project {border: 1px solid #006AF6;display:block; height:360px;margin:0 9px;}/*google map - project overview*/
 .map_info_window h3 {font-size: 139%;}
 .map_info_window .biome_icon {float: left; margin-right: 9px;}
-.map_info_window a.map_info_more {display: block; text-align: center;  padding: 3px 1px; background-color: #1A5286; width: 20%;margin: 9px auto 0px;opacity: 0.85;}
+.map_info_window a.map_info_more {display: block; text-align: center;  padding: 3px 1px; background-color: #1A5286; width: 20%; min-width:100px; margin: 9px auto 0px;opacity: 0.85;}
 .map_info_window a:hover.map_info_more {opacity: 1; text-decoration: none;}
 .sample_ana .ui-widget-content .map_info_window a.map_info_more {color:white;} /*overwrite old style*/
 /*login window*/
@@ -1489,7 +1488,7 @@ img.ui-datepicker-trigger {float:left; /*solve a bug with chromium*/}
 #func_chart_pie_go_mf, #func_chart_pie_go_cc, #func_chart_pie_go_bp, #func_chart_bar_go_bp, #func_chart_bar_go_cc, #func_chart_bar_go_mf, #func_chart_pie_ipro, #tax_chart_col, #tax_chart_bar_phy, #tax_chart_bar_dom, #tax_chart_pie_phy, #tax_chart_pie_dom {width:100%;}
 
 /*UI BUTTON - MAP*/
-.ui-button {padding: .4em 1.1em;line-height: 1.4;color: #525252; margin:0 9px; border: 1px solid rgba(0,0,0,0.1);
+.ui-button {padding: .4em 2.1em .4em 1em;line-height: 1.4;color: #525252; margin:0 9px; border: 1px solid rgba(0,0,0,0.1);
     background-image: linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));
     background-image: -moz-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));
     background-image: -o-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));
@@ -1497,7 +1496,7 @@ img.ui-datepicker-trigger {float:left; /*solve a bug with chromium*/}
     background-image: -webkit-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));  border-radius: 0px;outline:0;}
 .ui-button:hover {color:black; border: 1px #d0d0d0 solid;}
 .ui-button.icon-functional:before {color:#777; }
-.ui-button.icon-functional:hover:before {color: #525252;}
+.ui-button.icon-functional:hover:before {color:tomat;}
 
 /*EXPORT BUTTON - ANALYSIS PAGE*/
 ul.export_list {z-index: 1;display: none;border: 1px solid #949494; padding: 5px;background-color: #FFF;font-size: 1em;list-style: none;outline: none;margin:0;}
