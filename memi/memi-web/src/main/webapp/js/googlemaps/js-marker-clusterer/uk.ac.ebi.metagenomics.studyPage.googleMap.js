@@ -42,16 +42,21 @@ function initialize(contextPath, biomeIconCSSClass, biomeIconTitle) {
 
         //Set up the info window for the marker click event
         //Define the content string for the info window
+        var sampleDesc = sampleObject.sample_desc;
+        if (sampleDesc.length > 118){
+            sampleDesc = sampleDesc.substring(0, 117)+'...';
+        }
         var contentString = "<div class='map_info_window'>"
         contentString += "<span class='biome_icon icon_xs show_tooltip "+biomeIconCSSClass+"' title='"+biomeIconTitle+" biome'></span>"
         contentString += "<h3>Sample - <a href='"+contextPath+"/projects/" + sampleObject.study_id + "/samples/" + sampleObject.sample_id + "'>" + sampleObject.sample_id + "</a></h3>"
-        contentString +=  sampleObject.title + " / " + sampleObject.sample_desc + "<br/><br/>"
+        contentString +=  sampleObject.sample_name + " / " + sampleDesc + "<br/><br/>"
 //        contentString += '<button id="googleMapInfoButton" onclick="' + "toggleDiv('sampleDetailsDiv','googleMapInfoButton')" + '">More/Hide</button>';
 //        contentString += '<div id="sampleDetailsDiv" style="display:none;"><p>Project: ' + sampleObject.study_id + '<br>'
-        contentString += "<strong>Project name:</strong> " + sampleObject.study_desc + " ("+ sampleObject.study_id +")<br/>"
+        contentString += "<strong>Project name:</strong> " + sampleObject.study_name + " ("+ sampleObject.study_id +")<br/>"
         contentString += "<strong>Classification:</strong> " + sampleObject.lineage + "<br/>"
         contentString += "<strong>Collection Date:</strong> " + sampleObject.collection_date + "<br/>"
         contentString += "<strong>Lat/Long:</strong> " + sampleObject.latitude + ", "+ sampleObject.longitude   + "<br/>"
+        contentString += "<strong>Sampling depth:</strong> " + sampleObject.sampling_depth + " m<br/>"
         contentString += "<a class='anim map_info_more'  target='_blank' href='"+contextPath+"/projects/" + sampleObject.study_id + "/samples/" + sampleObject.sample_id + "'>View more</a>"
         contentString += "</div>";
 
