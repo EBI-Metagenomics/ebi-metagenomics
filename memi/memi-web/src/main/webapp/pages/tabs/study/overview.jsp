@@ -397,6 +397,7 @@
         $('#btn-exit-full-screen').click(function(){
             $("#map-container").css("position", 'relative').
             css('top', 0).
+            css('z-index', 1).
             css("background-color", 'transparent').
             css("height", 394);
 
