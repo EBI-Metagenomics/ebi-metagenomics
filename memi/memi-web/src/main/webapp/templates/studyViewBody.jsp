@@ -50,10 +50,9 @@
 <%--Only add the scripts for the Google map if the JSON data file is available--%>
 <c:if test="${model.googleMapDataAvailable}">
 
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAivAQNT-w_7wzIJ9nf7E9GTOzn1mkDGzE" type="text/javascript"></script>    <script type="text/javascript" src="${pageContext.request.contextPath}/projects/${study.studyId}/map-data"></script>
     <%--Javascript for Marker Clusterer – A Google Maps JavaScript API utility library--%>
     <%--https://github.com/googlemaps/js-marker-clusterer/blob/gh-pages/README.md--%>
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/projects/${study.studyId}/map-data"></script>
     <script type="text/javascript"
             src="${pageContext.request.contextPath}/js/googlemaps/js-marker-clusterer/markerclusterer_compiled-1.0.js"></script>
     <script type="text/javascript"
