@@ -1189,6 +1189,7 @@ margin-left:9px;
 /*google map*/
 #map_canvas, #map_country {float:right; border: 1px solid #006AF6;display:block;width:50%;height:140px;}/*google map - samples overview*/
 #map_project {border: 1px solid #006AF6;display:block; height:360px;margin:0 9px;}/*google map - project overview*/
+.map_info_window {font-size: 91%;}
 .map_info_window h3 {font-size: 139%;}
 .map_info_window .biome_icon {float: left; margin-right: 9px;}
 .map_info_window a.map_info_more {display: block; text-align: center;  padding: 3px 1px; background-color: #1A5286; width: 20%; min-width:100px; margin: 0 auto;opacity: 0.8;}
