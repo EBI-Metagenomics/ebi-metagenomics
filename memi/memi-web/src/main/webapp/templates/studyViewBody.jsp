@@ -58,15 +58,6 @@
     <script type="text/javascript"
             src="${pageContext.request.contextPath}/js/googlemaps/js-marker-clusterer/uk.ac.ebi.metagenomics.studyPage.googleMap.js"></script>
 
-    <script type="text/javascript">
-        function toggleDiv(divId, buttonId) {
-            var divElement = document.getElementById(divId);
-            if (divElement.style.display == 'block')
-                divElement.style.display = 'none';
-            else
-                divElement.style.display = 'block';
-        }
-    </script>
 </c:if>
 
 <%--script for tabs--%>
