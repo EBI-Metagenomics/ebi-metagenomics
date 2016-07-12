@@ -1191,7 +1191,7 @@ margin-left:9px;
 #map_project {border: 1px solid #006AF6;display:block; height:360px;margin:0 9px;}/*google map - project overview*/
 .map_info_window h3 {font-size: 139%;}
 .map_info_window .biome_icon {float: left; margin-right: 9px;}
-.map_info_window a.map_info_more {display: block; text-align: center;  padding: 3px 1px; background-color: #1A5286; width: 20%; min-width:100px; margin: 9px auto 0px;opacity: 0.85;}
+.map_info_window a.map_info_more {display: block; text-align: center;  padding: 3px 1px; background-color: #1A5286; width: 20%; min-width:100px; margin: 0 auto;opacity: 0.8;}
 .map_info_window a:hover.map_info_more {opacity: 1; text-decoration: none;}
 .sample_ana .ui-widget-content .map_info_window a.map_info_more {color:white;} /*overwrite old style*/
 /*login window*/
