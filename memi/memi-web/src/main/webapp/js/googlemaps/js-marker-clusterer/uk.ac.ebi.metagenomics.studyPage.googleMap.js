@@ -50,8 +50,6 @@ function initialize(contextPath, biomeIconCSSClass, biomeIconTitle) {
         contentString += "<span class='biome_icon icon_xs show_tooltip "+biomeIconCSSClass+"' title='"+biomeIconTitle+" biome'></span>"
         contentString += "<h3>Sample - <a href='"+contextPath+"/projects/" + sampleObject.study_id + "/samples/" + sampleObject.sample_id + "'>" + sampleObject.sample_id + "</a></h3>"
         contentString +=  sampleObject.sample_name + " / " + sampleDesc + "<br/><br/>"
-//        contentString += '<button id="googleMapInfoButton" onclick="' + "toggleDiv('sampleDetailsDiv','googleMapInfoButton')" + '">More/Hide</button>';
-//        contentString += '<div id="sampleDetailsDiv" style="display:none;"><p>Project: ' + sampleObject.study_id + '<br>'
         contentString += "<strong>Project name:</strong> " + sampleObject.study_name + " ("+ sampleObject.study_id +")<br/>"
         contentString += "<strong>Classification:</strong> " + sampleObject.lineage + "<br/>"
         contentString += "<strong>Collection Date:</strong> " + sampleObject.collection_date + "<br/>"
