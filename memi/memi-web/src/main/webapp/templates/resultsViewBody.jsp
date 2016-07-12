@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!-- Google map script - used in overview-->
-<script src="https://maps.googleapis.com/maps/api/js"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAivAQNT-w_7wzIJ9nf7E9GTOzn1mkDGzE" type="text/javascript"></script>
 <script src='${pageContext.request.contextPath}/js/highcharts-4.1.10/highcharts.js' type='text/javascript'></script>
 <script src='${pageContext.request.contextPath}/js/highcharts-4.1.10/highcharts-more.js' type='text/javascript'></script>
 <script src='${pageContext.request.contextPath}/js/highcharts-4.1.10/exporting.js' type='text/javascript'></script>
