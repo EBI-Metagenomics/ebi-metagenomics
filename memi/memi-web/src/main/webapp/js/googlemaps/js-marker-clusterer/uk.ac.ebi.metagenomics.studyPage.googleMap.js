@@ -2,7 +2,7 @@ function initialize(contextPath, biomeIconCSSClass, biomeIconTitle) {
     var center = new google.maps.LatLng(5.0, 0.0);
 
     var map = new google.maps.Map(document.getElementById('map_project'), {
-        zoom:2,
+        zoom:1,
         center:center,
         mapTypeId:google.maps.MapTypeId.ROADMAP,
         streetViewControl: false
@@ -50,11 +50,16 @@ function initialize(contextPath, biomeIconCSSClass, biomeIconTitle) {
         contentString += "<span class='biome_icon icon_xs show_tooltip "+biomeIconCSSClass+"' title='"+biomeIconTitle+" biome'></span>"
         contentString += "<h3>Sample - <a href='"+contextPath+"/projects/" + sampleObject.study_id + "/samples/" + sampleObject.sample_id + "'>" + sampleObject.sample_id + "</a></h3>"
         contentString +=  sampleObject.sample_name + " / " + sampleDesc + "<br/><br/>"
-        contentString += "<strong>Project name:</strong> " + sampleObject.study_name + " ("+ sampleObject.study_id +")<br/>"
+        //contentString += "<strong>Project name:</strong> " + sampleObject.study_name + " ("+ sampleObject.study_id +")<br/>"
         contentString += "<strong>Classification:</strong> " + sampleObject.lineage + "<br/>"
         contentString += "<strong>Collection Date:</strong> " + sampleObject.collection_date + "<br/>"
         contentString += "<strong>Lat/Long:</strong> " + sampleObject.latitude + ", "+ sampleObject.longitude   + "<br/>"
-        contentString += "<strong>Sampling depth:</strong> " + sampleObject.sampling_depth + " m<br/>"
+        contentString += "<strong>Sampling depth:</strong> "
+        if (sampleObject.sampling_depth != null) {
+            contentString += sampleObject.sampling_depth + " m<br/>"
+        } else {
+            contentString += "N/A <br/>"
+        }
         contentString += "<a class='anim map_info_more'  target='_blank' href='"+contextPath+"/projects/" + sampleObject.study_id + "/samples/" + sampleObject.sample_id + "'>View more</a>"
         contentString += "</div>";
 
