@@ -75,7 +75,7 @@
                        value="${fn:replace(fn:replace(sample.biome.lineage,'root:',''),':',' > ')}"/>
             </c:when>
             <c:otherwise>
-                <c:set var="sampleClassification" value="${notGivenId}"/>
+                <c:set var="sampleClassification" value="(not given)"/>
             </c:otherwise>
         </c:choose>
 
@@ -110,7 +110,7 @@
                                     value="${sample.species}"/></em></a></div>
                         </c:when>
                         <c:otherwise>
-                            <c:out value="${notGivenId}"/>
+                            <c:out value="(not given)"/>
                         </c:otherwise>
                     </c:choose>
                 </div>
@@ -128,7 +128,7 @@
                         <c:set var="environmentalBiome" value="${sample.environmentalBiome}"/>
                     </c:when>
                     <c:otherwise>
-                        <c:set var="environmentalBiome" value="${notGivenId}"/>
+                        <c:set var="environmentalBiome" value="(not given)"/>
                     </c:otherwise>
                 </c:choose>
 
@@ -144,7 +144,7 @@
                         <c:set var="environmentalFeature" value="${sample.environmentalFeature}"/>
                     </c:when>
                     <c:otherwise>
-                        <c:set var="environmentalFeature" value="${notGivenId}"/>
+                        <c:set var="environmentalFeature" value="(not given)"/>
                     </c:otherwise>
                 </c:choose>
 
@@ -161,7 +161,7 @@
                         <c:set var="environmentalMaterial" value="${sample.environmentalMaterial}"/>
                     </c:when>
                     <c:otherwise>
-                        <c:set var="environmentalMaterial" value="${notGivenId}"/>
+                        <c:set var="environmentalMaterial" value="(not given)"/>
                     </c:otherwise>
                 </c:choose>
 
@@ -202,7 +202,7 @@
                                             type="text/javascript"> initialize(${sample.latitude}, ${sample.longitude})</script>
                                 </c:when>
                                 <c:otherwise>
-                                    <c:set var="latLon" value="${notGivenId}"/>
+                                    <c:set var="latLon" value="(not given)"/>
                                 </c:otherwise>
                             </c:choose>
 
@@ -229,7 +229,7 @@
                                 </div>
                             </c:when>
                             <c:otherwise>
-                                <c:set var="geoLocName" value="${notGivenId}"/>
+                                <c:set var="geoLocName" value="(not given)"/>
                             </c:otherwise>
                         </c:choose>
                     </c:otherwise>
