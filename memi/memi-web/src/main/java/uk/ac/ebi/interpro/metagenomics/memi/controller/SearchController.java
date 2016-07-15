@@ -51,6 +51,8 @@ public class SearchController extends AbstractController {
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView doEbiSearch(ModelMap model, HttpServletRequest request,
                                     HttpServletResponse response) {
+
+        /*
         String searchText = "";
         Map<String, String[]> parameters = request.getParameterMap();
         if (parameters.containsKey(SEARCH_TERM) && parameters.get(SEARCH_TERM) != null) {
@@ -67,6 +69,7 @@ public class SearchController extends AbstractController {
         final String searchResults = ebiSearchTool.searchAllDomains(results);
         final EBISearchForm searchForm = getEbiSearchForm();
         searchForm.setSearchText(searchText);
+        */
         return buildModelAndView(
                 getModelViewName(),
                 model,
@@ -76,11 +79,11 @@ public class SearchController extends AbstractController {
                         log.info("Building model of " + this.getClass() + "...");
                         final SearchViewModelBuilder<ViewModel> builder = new SearchViewModelBuilder(
                                 userManager,
-                                searchForm,
+                                null,
                                 "Search EBI metagenomics",
                                 getBreadcrumbs(null),
                                 propertyContainer,
-                                searchResults
+                                null
                         );
                         final ViewModel searchModel = builder.getModel();
                         searchModel.changeToHighlightedClass(ViewModel.TAB_CLASS_SEARCH_VIEW);
