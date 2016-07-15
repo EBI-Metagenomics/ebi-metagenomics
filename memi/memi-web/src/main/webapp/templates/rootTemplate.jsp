@@ -236,35 +236,25 @@
 
 
             <div class="grid_12 omega">
-                <form:form id="local-search" action="${pageContext.request.contextPath}/search"
-                      commandName="ebiSearchForm" method="GET">
+                <form id="local-search" action="javascript:search();">
 
                     <fieldset>
 
                         <div class="left">
                             <label>
-                                <form:input path="searchText" type="search" id="local-searchbox" />
+                                <input type="search" id="local-searchbox" />
                                 <span class="examples">&nbsp; &nbsp;&nbsp;<a href="#">&nbsp;</a>&nbsp; <a href="#">&nbsp;</a>&nbsp; <a
                                         href="#">&nbsp;</a></span>
                             </label>
                         </div>
 
                         <div class="right">
-                            <input type="submit" id="searchsubmit" name="searchsubmit" value="Search" class="submit">
+                            <input type="submit" id="searchsubmit" value="Search" class="submit">
                             <!-- Link for future advance search page -->
                             <!-- <span class="adv"><a href="../search" id="adv-search" title="Advanced">Advanced</a></span> -->
                         </div>
                     </fieldset>
-                    <!-- hidden div used to show facets when on searchBody.jsp page -->
-                    <div id="hiddenFacets" class="this_hide">
-                        <c:choose>
-                            <c:when test="${model.modelClassName eq 'SearchViewModel'}">
-                                <input type="hidden" id="SearchResults" name="searchResults" value="${model.searchResults}"/>
-                                <div id="SearchResultsDiv">${model.searchResults}</div>
-                            </c:when>
-                        </c:choose>
-                    </div>
-                </form:form>
+                </form>
             </div>
 
             <!-- /local-search -->

@@ -11,7 +11,7 @@
     <h2>Search EBI Metagenomics</h2>
 
     <form:form class="local-search-xs" action="${pageContext.request.contextPath}/search"
-               commandName="ebiSearchForm" method="POST">
+               commandName="ebiSearchForm" method="GET">
 
         <div class="grid_24">
 

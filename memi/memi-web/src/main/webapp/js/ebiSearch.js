@@ -5,17 +5,24 @@
 var HIDDEN_CLASS = "this_hide";
 var FACET_SEPARATOR = "____";
 var SEARCH_TAB_CLASS = "search-tab";
-
-//load css for the modal box
-var linkElement = document.createElement("link");
-linkElement.rel = "stylesheet";
-linkElement.href = "/metagenomics/css/ajax-modal.css"; //Replace here
-document.head.appendChild(linkElement);
-
+var BASE_URL = "https://wwwdev.ebi.ac.uk/ebisearch/ws/rest/";
+var PROJECT = "Projects";
+var SAMPLE = "Samples";
+var RUN = "Runs";
+var DATA_TYPES = [PROJECT, SAMPLE, RUN];
 
 /*
 Behaviour methods
  */
+
+var loadCss = function() {
+    //load css for the modal box
+    var linkElement = document.createElement("link");
+    linkElement.rel = "stylesheet";
+    linkElement.href = "/metagenomics/css/ajax-modal.css"; //Replace here
+    document.head.appendChild(linkElement);
+
+}
 
 /**
  * reset page numbering for datatype div to first page
@@ -114,26 +121,19 @@ Initialisation methods
 var setupJQueryTabs = function(container, disabledList) {
     selectedTab = 0;
     var children = container.getElementsByClassName(SEARCH_TAB_CLASS);
-    console.log("Children " + children.length);
 
     for (var i=0; i < children.length; i++) {
         console.log("Checking " + i);
         if (disabledList.indexOf(i) == -1) {
-            console.log("Disabled " + i + " in " + disabledList);
             selectedTab = i;
             break;
         }
     }
 
-    console.log("Selectedtab " + selectedTab);
     $(container).tabs({
         disabled: disabledList,
         active: selectedTab
     });
-
-
-
-
 };
 
 var setTabText = function(data, dataType, element) {
@@ -535,13 +535,214 @@ var displayAllData = function(data, tab) {
     }
 }
 
+var saveFormState = function() {
+    var tabContainer = document.getElementById("searchTabs");
+    if (tabContainer) {
+        var selected = $(tabContainer).tabs('option', 'active');
+        console.log("Saving state " + selected);
+        sessionStorage.activeTab = selected;
+    }
+};
+
+var restoreFormState = function() {
+    var tabContainer = document.getElementById("searchTabs");
+    if (tabContainer) {
+        var selected = sessionStorage.activeTab;
+        console.log("Loading state " + selected);
+        if (selected) {
+            var selected = $(tabContainer).tabs('option', 'active', selected);
+        }
+    }
+
+};
+
 /**
  * Handle processing of search results returned in JSP
  */
+/*
 var searchResultDiv = document.getElementById("SearchResultsDiv");
 if (searchResultDiv != null) {
     var searchValue = searchResultDiv.innerHTML;
     var searchResults = JSON.parse(searchValue);
     displayAllData(searchResults);
+    restoreFormState(searchResults);
+}
+*/
+
+window.onunload = function(event) {
+    console.log("Unloading");
+    saveFormState();
+};
+
+var displayProjects = function(httpReq) {
+    console.log("displayProjects");
+    var resultString = httpReq.response;
+    var results = JSON.parse(resultString);
+    console.log(results);
+};
+
+var projectError = function(httpReq) {
+    console.log("projectError");
 }
 
+var runAjax = function(method, url, parameters, callback, errCallback) {
+    var httpReq = new XMLHttpRequest();
+    httpReq.open(method, url);
+    httpReq.send(parameters);
+
+    //handle response
+    httpReq.onload = function(event) {
+        var readyState = httpReq.readyState;
+        callback(httpReq);
+    };
+
+    //error handling
+    httpReq.onerror = function (event) {
+        if (errCallback) {
+            errCallback(httpReq);
+        } else {
+            console.log("Ajax error");
+        }
+    };
+};
+
+var parametersToString = function(parameters) {
+    var parameterString = "?";
+    for (var i in parameters) {
+        console.log("Encoding " + i + " = " + parameters[i]);
+        parameterString += i + "=" + parameters[i] + "&";
+    }
+    parameterString = parameterString.substr(0, parameterString.length - 1);
+    return parameterString;
+}
+
+var runProjectSearch = function(searchText, size, start, facets, facetCount) {
+    var projectDomain = "metagenomics_projects";
+    console.log("Searchtext = " + searchText);
+    if (searchText != null && searchText !== "") {
+        searchText = encodeURIComponent(searchText);
+    } else {
+        searchText = "domain_source:" + projectDomain;
+    }
+    var parameters = {
+        "query": searchText,
+        "format": "json",
+         "size": size,
+         "start": start,
+         "fields": "id,name,description,biome_name,METAGENOMICS_SAMPLE",
+         "facetcount": facetCount
+    };
+
+    if (facets != null) {
+        parameters.push("facets");
+        parameters.push(facets);
+    }
+
+    var paramFragment = parametersToString(parameters);
+    var url = BASE_URL + projectDomain + paramFragment;
+    console.log("runProjectSearch = " + url);
+    runAjax("GET", url, null, displayProjects, projectError);
+};
+
+var runNewSearch = function() {
+    var searchElementID = "local-searchbox";
+    var searchElement = document.getElementById(searchElementID);
+    if (searchElement) {
+        var searchText = searchElement.value;
+        runProjectSearch(searchText, 10, 0, null, 10);
+        //runSampleSearch(searchText);
+        //runRunSearch(searchText);
+
+    } else {
+        console.log("Expected to find text input element " + searchElementID);
+    }
+};
+
+/**
+ * Adds a jquery ui tab set to the supplied div
+ * @param container
+ * @param disabledList
+ */
+var setupJQueryTabs = function(container, disabledList) {
+    selectedTab = 0;
+    var children = container.getElementsByClassName(SEARCH_TAB_CLASS);
+
+    for (var i=0; i < children.length; i++) {
+        console.log("Checking " + i);
+        if (disabledList.indexOf(i) == -1) {
+            selectedTab = i;
+            break;
+        }
+    }
+
+    $(container).tabs({
+        disabled: disabledList,
+        active: selectedTab
+    });
+};
+
+var setTabText = function(data, dataType, element) {
+    var titleText = dataType.charAt(0).toUpperCase() + dataType.slice(1); //capitalise first letter
+    if (data != null) {
+        titleText += " (" + data[dataType].numberOfHits + ")";
+    }
+    element.innerHTML = titleText;
+};
+
+/**
+ * displays a set of tabs based on the datatypes property of the data
+ * @param data
+ * @returns {Element}
+ */
+var displayTabHeader = function(data) {
+    var tabContainer = document.getElementById("searchTabs");
+    if (tabContainer != null) {
+        var tabList = tabContainer.getElementsByTagName("ul");
+        if (tabList == null || tabList.length <= 0) {
+            tabList = document.createElement("ul");
+            var disabledList = [];
+            for (i in DATA_TYPES) {
+                var dataType = DATA_TYPES[i];
+                var tabItem = document.createElement("li");
+                tabItem.className = SEARCH_TAB_CLASS;
+                var tabLink = document.createElement("a");
+                tabLink.id = dataType + "-link";
+                tabLink.value = dataType;
+                tabLink.href = "#" + dataType;
+                setTabText(data, dataType, tabLink);
+
+                if (data != null && data[dataType].numberOfHits == 0) {
+                    disabledList.push(parseInt(i));
+                }
+                tabItem.appendChild(tabLink)
+                tabList.appendChild(tabItem);
+
+
+            }
+            tabContainer.insertBefore(tabList, document.getElementById("tabDiv"));
+            setupJQueryTabs(tabContainer, disabledList);
+        } else {
+            console.log("Tabs already exist");
+        }
+
+    } else {
+        console.log("Expected to find div with id 'searchTabs'");
+    }
+    return tabContainer;
+};
+
+
+var search = function search() {
+    //load search page unless page has already been loaded
+    runAjax("GET", "search", null, function(httpReq) {
+        var response = httpReq.response;
+        console.log("Loading search template");
+        document.documentElement.innerHTML = response;
+        loadCss();
+        displayTabHeader(null);
+        runNewSearch();
+    }, function(httpReq) {
+        console.log("Failed to load page template");
+    });
+
+};
