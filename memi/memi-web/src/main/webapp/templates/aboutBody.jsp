@@ -78,7 +78,7 @@ The ENA only accepts data that is intended for public release. However, any data
 <h3 id="analysis">How we analyse the data</h3>
 <p>The latest version of the pipeline includes the following steps:</p>
 <!-- Pipeline chart for version 2.0-->
-<a title="EBI metagenomics - latest pipeline release" href="<c:url value="${baseURL}/pipelines/2.0"/>">
+<a title="EBI metagenomics - latest pipeline release" href="<c:url value="${baseURL}/pipelines/3.0"/>">
     <div class="block_wrapper">
 
         <div class="block_container pipe_v3">

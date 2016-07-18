@@ -25,13 +25,18 @@ public class OverviewModel extends ViewModel {
 
     private List<Publication> relatedPublications;
 
-    public OverviewModel(Submitter submitter, EBISearchForm ebiSearchForm, Study study, String pageTitle,
+    /* True if JSON file (name: google-map-sample-data.json) does exist. The JSON file is necessary to render the Google Map.*/
+    private boolean isGoogleMapDataAvailable;
+
+    public OverviewModel(Submitter submitter, EBISearchForm ebiSearchForm, Study study, List<QueryRunsForProjectResult> runs, String pageTitle,
                          List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer,
-                         List<Publication> relatedPublications, List<Publication> relatedLinks) {
+                         List<Publication> relatedPublications, List<Publication> relatedLinks,
+                         final boolean isGoogleMapDataAvailable) {
         super(submitter, ebiSearchForm, pageTitle, breadcrumbs, propertyContainer);
         this.study = study;
         this.relatedLinks = relatedLinks;
         this.relatedPublications = relatedPublications;
+        this.isGoogleMapDataAvailable = isGoogleMapDataAvailable;
     }
 
     public List<Publication> getRelatedLinks() {
@@ -48,5 +53,9 @@ public class OverviewModel extends ViewModel {
 
     public void setStudy(Study study) {
         this.study = study;
+    }
+
+    public boolean isGoogleMapDataAvailable() {
+        return isGoogleMapDataAvailable;
     }
 }

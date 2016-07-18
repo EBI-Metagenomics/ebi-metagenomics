@@ -44,19 +44,19 @@
 
                                 <c:when test="${!downloadLink.externalLink}"><%-- CASE 3 - multiple "single link/no partition" NON ZIP - non ENA  links--%>
 
-                                    <c:choose>
-                                        <c:when test="${downloadLink.linkText == 'Processed nucleotide reads'}">
-                                            <tr class="row-cb">
-                                        </c:when>
-                                        <c:otherwise>
-                                            <tr class="row-function">
-                                        </c:otherwise>
-                                    </c:choose>
-                                    <td>${downloadLink.linkText}</td>
-                                    <td class="col_xs xs_hide">
-                                            <%--while implemented in file-definition-context--%>
-                                        <c:choose>
-                                            <c:when test="${downloadLink.linkText == 'Predicted CDS' || downloadLink.linkText ==  'Predicted CDS without annotation'}">
+                    <c:choose>
+                        <c:when test="${downloadLink.linkText == 'Processed nucleotide reads'}">
+                            <tr class="row-cb">
+                        </c:when>
+                        <c:otherwise>
+                            <tr class="row-function">
+                        </c:otherwise>
+                    </c:choose>
+                    <td>${downloadLink.linkText}</td>
+                    <td class="col_xs xs_hide">
+                            <%--while implemented in file-definition-context--%>
+                        <c:choose>
+                            <c:when test="${fn:startsWith(downloadLink.linkPrefix, 'Predicted CDS')}">
                                 <span class="show_tooltip protein icon icon-conceptual icon-c3" data-icon="P"
                                       title="Protein (AA) data type"></span>
                                             </c:when>
@@ -102,7 +102,7 @@
                                       title="Chart data type"></span>
                                             </c:when>
 
-                                            <c:when test="${downloadLinkList[0].linkPrefix == 'Predicted CDS' || downloadLinkList[0].linkPrefix ==  'Predicted CDS without annotation'}">
+                            <c:when test="${fn:startsWith(downloadLinkList[0].linkPrefix, 'Predicted CDS')}">
                                 <span class="show_tooltip protein icon icon-conceptual icon-c3" data-icon="P"
                                       title="Protein (AA) data type"></span>
                                             </c:when>
@@ -123,25 +123,25 @@
                                                 class="filesize"> (${downloadLink.fileSize})</span> <span>-</span>
                                         </c:forEach>
 
-                                    </td>
-                                    </tr>
-                                </c:when>
-                                <c:otherwise>
-                                    <%--CASE2 multiple "single link/no partition" ZIPPED --%>
-                                    <c:forEach var="downloadLink" items="${downloadLinkList}" varStatus="loop">
-                                        <c:choose>
-                                            <c:when test="${downloadLinkList[0].linkPrefix == 'Processed nucleotide reads'}">
-                                                <tr class="row-cb">
-                                            </c:when>
-                                            <c:otherwise>
-                                                <tr class="row-function">
-                                            </c:otherwise>
-                                        </c:choose>
-                                        <td><c:out value="${downloadLinkList[0].linkPrefix}"/></td>
-                                        <td class="col_xs  xs_hide">
-                                                <%--while implemented in file-definition-context--%>
-                                            <c:choose>
-                                                <c:when test="${downloadLink.linkText == 'Predicted CDS' || downloadLink.linkText ==  'Predicted CDS without annotation'}">
+                    </td>
+                    </tr>
+                </c:when>
+                <c:otherwise>
+                    <%--CASE2 multiple "single link/no partition" ZIPPED --%>
+                    <c:forEach var="downloadLink" items="${downloadLinkList}" varStatus="loop">
+                        <c:choose>
+                            <c:when test="${downloadLinkList[0].linkPrefix == 'Processed nucleotide reads'}">
+                                <tr class="row-cb">
+                            </c:when>
+                            <c:otherwise>
+                                <tr class="row-function">
+                            </c:otherwise>
+                        </c:choose>
+                        <td><c:out value="${downloadLinkList[0].linkPrefix}"/></td>
+                        <td class="col_xs  xs_hide">
+                                <%--while implemented in file-definition-context--%>
+                            <c:choose>
+                                <c:when test="${fn:startsWith(downloadLinkList[0].linkPrefix, 'Predicted CDS')}">
                                     <span class="show_tooltip protein icon icon-conceptual icon-c3" data-icon="P"
                                           title="Protein (AA) data type"></span>
                                                 </c:when>
@@ -394,16 +394,16 @@
 
                                 <tr class="row-taxon">
 
-                                    <td> ${downloadLink.linkText}</td>
-                                    <td class="col_xs xs_hide">
-                                            <%--while implemented in file-definition-context--%>
-                                        <c:choose>
-                                            <c:when test="${downloadLinkList[0].linkPrefix == 'InterPro matches' || downloadLink.linkText ==  'Phylogenetic tree' || downloadLink.linkText == 'OTUs, reads and taxonomic assignments'}">
+                    <td> ${downloadLink.linkText}</td>
+                    <td class="col_xs xs_hide">
+                            <%--while implemented in file-definition-context--%>
+                        <c:choose>
+                            <c:when test="${downloadLink.linkPrefix == 'InterPro matches' || downloadLink.linkText ==  'Phylogenetic tree' || downloadLink.linkText == 'OTUs, reads and taxonomic assignments'}">
                                 <span class="show_tooltip icon  icon-generic big" data-icon="g"
                                       title="Chart data type"></span>
                                             </c:when>
 
-                                            <c:when test="${downloadLinkList[0].linkPrefix == 'Predicted CDS' || downloadLinkList[0].linkPrefix ==  'Predicted CDS without annotation'}">
+                            <c:when test="${downloadLink.linkPrefix == 'Predicted CDS' || downloadLink.linkPrefix ==  'Predicted CDS without annotation'}">
                                 <span class="show_tooltip protein icon icon-conceptual icon-c3" data-icon="P"
                                       title="Protein (AA)data type"></span>
                                             </c:when>
