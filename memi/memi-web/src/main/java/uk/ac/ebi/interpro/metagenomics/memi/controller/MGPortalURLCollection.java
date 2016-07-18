@@ -90,6 +90,9 @@ public final class MGPortalURLCollection {
     //Project page, download tab
     public final static String PROJECT_DOWNLOAD = PROJECT + "/download";
 
+    //Google map data
+    public final static String PROJECT_MAP_DATA = PROJECT + "/map-data";
+
     //List of all project runs
     public final static String PROJECT_RUNS = PROJECT + "/runs";
 

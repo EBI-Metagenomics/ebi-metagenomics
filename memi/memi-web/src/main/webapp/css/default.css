@@ -75,7 +75,6 @@ div#headerdiv #global-masthead .nav a:link {float: none;}
 div#headerdiv { background-color: #fff; font-size:100%; font-family: Verdana, sans-serif; }/*replace default font-size: 11px;*/
 div#local-masthead ul li.active-trail a:link, div#local-masthead ul li.active-trail a:visited {padding-top: 2px;border-bottom: 3px solid #666;background-color: #111;}/*style not defined in mitigation*/
 div#local-masthead ul li.active, div#local-masthead ul li.active-trail { background-color: #111; }  /*style not defined in mitigation*/
-
 /*/change to ebi-mitigation.css*/
 
 /*imported from ebi-visual.css*/
@@ -489,10 +488,6 @@ font-size:200%;
 margin:0px 0 7px 0;
 }
 
-.carousel h3 {
-color:#3e3e3e;
-}
-
 .intro {font-size:144%; color:#445668;}/*intro text*/
 
 #sidebar h2, #sidebar-related h2, #sidebar-steps h2 {
@@ -747,22 +742,22 @@ text-decoration:underline;
 .biome_icon.icon_lg.plant_host_b {background-position: -622px -1596px;}
 /*biome medium icon*/
 .biome_icon.icon_sm {width:75px; height:75px;}
-.biome_icon.icon_sm.soil_b {background-position: -40px -396px;}
+.biome_icon.icon_sm.soil_b {background-position: -41px -396px;}
 .biome_icon.icon_sm.marine_b {background-position: -142px -396px;}
 .biome_icon.icon_sm.forest_b {background-position: -241px -396px;}
-.biome_icon.icon_sm.human_gut_b {background-position: -241px -497px;}
-.biome_icon.icon_sm.human_host_b {background-position: -341px -497px;}
-.biome_icon.icon_sm.non_human_host_b {background-position: -341px -397px;}
+.biome_icon.icon_sm.human_gut_b {background-position: -241px -496px;}
+.biome_icon.icon_sm.human_host_b {background-position: -341px -496px;}
+.biome_icon.icon_sm.non_human_host_b {background-position: -342px -396px;}
 .biome_icon.icon_sm.freshwater_b {background-position: -40px -497px;}
-.biome_icon.icon_sm.grassland_b {background-position: -142px -497px;}
-.biome_icon.icon_sm.engineered_b {background-position: -40px -596px;}
+.biome_icon.icon_sm.grassland_b {background-position: -142px -496px;}
+.biome_icon.icon_sm.engineered_b {background-position: -41px -596px;}
 .biome_icon.icon_sm.air_b {background-position: -142px -596px;}
 .biome_icon.icon_sm.wastewater_b {background-position: -241px -596px;}
 .biome_icon.icon_sm.default_b {background-position: -342px -596px;}
-.biome_icon.icon_sm.vulcano_b {background-position:-40px -695px;}
+.biome_icon.icon_sm.vulcano_b {background-position:-41px -695px;}
 .biome_icon.icon_sm.hotspring_b {background-position:-142px -695px;}
 .biome_icon.icon_sm.cave_b {background-position:-241px -695px;}
-.biome_icon.icon_sm.plant_host_b {background-position:-342px -695px;}
+.biome_icon.icon_sm.plant_host_b {background-position:-342px -696px;}
 /*biome small icon*/
 .biome_icon.icon_xs {width: 30px; height: 30px;}
 .biome_icon.icon_xs.soil_b {background-position:-42px -38px;}
@@ -1190,8 +1185,16 @@ margin-left:9px;
     padding-left: 4px;
     font-size: 0.9em;
 }
-#map_canvas, #map_country {float:right; border: 1px solid #006AF6;display:block;width:50%;height:140px;}/*google map*/
 
+/*google map*/
+#map_canvas, #map_country {float:right; border: 1px solid #006AF6;display:block;width:50%;height:140px;}/*google map - samples overview*/
+#map_project {border: 1px solid #006AF6;display:block; height:360px;margin:0 9px;}/*google map - project overview*/
+.map_info_window {font-size: 91%;}
+.map_info_window h3 {font-size: 139%;}
+.map_info_window .biome_icon {float: left; margin-right: 9px;}
+.map_info_window a.map_info_more {display: block; text-align: center;  padding: 3px 1px; background-color: #1A5286; width: 20%; min-width:100px; margin: 0 auto;opacity: 0.8;}
+.map_info_window a:hover.map_info_more {opacity: 1; text-decoration: none;}
+.sample_ana .ui-widget-content .map_info_window a.map_info_more {color:white;} /*overwrite old style*/
 /*login window*/
 .sub {display:block;overflow:auto;}
 .sub .sub_log, .sub .sub_sign {-moz-border-radius: 20px;-khtml-border-radius: 20px;-webkit-border-radius: 20px;border-radius: 20px;float: left; display:block; border: 1px solid #e5e5e5;}/*keep rounded prefix for the box*/
@@ -1229,18 +1232,6 @@ span.form_help ul li{
 #breadcrumb a {color:#999; text-decoration: none;}
 #breadcrumb a:hover,#breadcrumb a:active {color:#999;text-decoration: underline;}
 
-/* carousel */
-.carousel {text-align:center; margin:0;border:0px green solid;zoom:1; font-size:110%;min-width:860px;display: block;}
-
-.carousel div{margin:0;padding:0;}
-.carousel:focus{outline:0px solid #0092bf;}/*removed the annoying effect on the slideshow*/
-.carousel-wrap{
-display:inline-block;
-vertical-align:middle;
-/*908px for 3 slides; 628px for 2 slides*/margin:0;
-width:840px; /*for EBI compliant 1024px screen*/
-}
-
 /* pagination*/
 div.center-wrap{/*overflow:hidden; remove because of bug in Firefox*/ clear:both;zoom:1; text-align:center; margin-top: 14px;}
 div.center-wrap div{border:0px solid red;margin:2px 0; display:block; }
@@ -1254,31 +1245,6 @@ background:#dedede;
 color:#dedede;
 cursor:pointer;-moz-border-radius:12px;webkit-border-radius:12px;border-radius:12px;} /*keep the round prefix as main feature*/
 div.center-wrap a.active{background:#9e9e9e;color:#9e9e9e;/*font-weight:bold;color:#525044;*/}
-
-/* carousel buttons more info  */
-.find_more {
-position: absolute;
-bottom: 5px;left: 8px;height: auto;}
-.find_more a {color:white;text-decoration:none; background:url(../img/backgrounds/bgd_button_login_off.gif) repeat-x; border: 0px solid #1f54bc; border-radius: 4px; box-shadow:0px 2px 2px #adadad;padding:4px 8px;cursor: pointer;}
-.find_more a:hover{background:url(../img/backgrounds/bgd_button_login_over.gif) repeat-x;}
-.find_more a:active{background:url(../img/backgrounds/bgd_button_login_active.gif) repeat-x;}
-
-/* carousel navigation arrows */
-.carousel .carousel-control{
-overflow:hidden;
-display:inline-block;
-vertical-align:middle;
-width:44px;
-height:64px;cursor:pointer;line-height:999px;zoom:1;border:0px solid black;
-position:relative;
-z-index:20;top:-40px;}
-
-.carousel .carousel-control {font-size: 0;}/*fix a bug with Firefox that shows text by default / alternative of using text-indent property that doesn't work with IE  */
-
-.carousel .carousel-next{ background:url(../img/carousel_r.png) 0 0 no-repeat; margin-left:-37px; outline:0;/*remove blue selection on click*/}
-.carousel .carousel-previous{background:url(../img/carousel_l.png) 0 0 no-repeat; margin-right:-34px; outline:0;/*remove blue selection on click*/}
-.carousel .carousel-control:hover{-moz-opacity:.7;opacity:0.70;filter:alpha(opacity=70);}
-.carousel .disabled,.carousel .disabled:hover{-moz-opacity:.2;opacity:0.20;filter:alpha(opacity=20);cursor:default;}
 
 /*table pagination*/
 .pag-next, .pag-last, .pag-prev, .pag-first, .pag-next-off, .pag-prev-off, .pag-first-off, .pag-last-off {float:left;padding:0 4px;}
@@ -1312,17 +1278,6 @@ z-index:20;top:-40px;}
 .module .content .cent {border:0px solid red; padding:7px 14px 7px 100px;}
 .module .content h3 {font-size:150%; margin:-3px 0 7px 0; padding:0 7px; font-weight:normal;}
 .module .content p {padding:0 7px;line-height:1.2; margin:0;}
-
-
-
-
-.IE .js .carousel-wrap{display:inline;}
-.carousel ul{margin:0;padding:0;zoom:1;}
-.js ul li{overflow:hidden;display:inline;float:left;width:500px;text-align:center;zoom:1;}
-
-.carousel ul{padding:0;list-style:none;}
-.carousel ul li{position:relative;width:283px; border:0px solid red;margin:0;
-    float:left; /* used for no-script version */}
 
 /*POPUP LOGIN DIALOG*/
 #login_dialog_div {cursor: default;/*remove waiting cursor*/display:none; /*solve a bug  of conflict between popup and carousel on IE6 and IE7*/ border: 0px solid #AAA; background:none;/*remove double background+border*/}
@@ -1532,6 +1487,18 @@ img.ui-datepicker-trigger {float:left; /*solve a bug with chromium*/}
 .col-1-8 { width: 12.5%;}
 .grid:last-of-type {padding-right: 0;}
 #func_chart_pie_go_mf, #func_chart_pie_go_cc, #func_chart_pie_go_bp, #func_chart_bar_go_bp, #func_chart_bar_go_cc, #func_chart_bar_go_mf, #func_chart_pie_ipro, #tax_chart_col, #tax_chart_bar_phy, #tax_chart_bar_dom, #tax_chart_pie_phy, #tax_chart_pie_dom {width:100%;}
+
+/*UI BUTTON - MAP*/
+.ui-button {padding: .4em 2.1em .4em 1em;line-height: 1.4;color: #525252; margin:0 9px; border: 1px solid rgba(0,0,0,0.1);
+    background-image: linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));
+    background-image: -moz-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));
+    background-image: -o-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));
+    background-image: -webkit-gradient(linear,left top,left bottom,from(rgba(255,255,255,.85)),to(rgba(247,247,247,.85)));
+    background-image: -webkit-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));  border-radius: 0px;outline:0;}
+.ui-button:hover {color:black; border: 1px #d0d0d0 solid;}
+.ui-button.icon-functional:before {color:#777; }
+.ui-button.icon-functional:hover:before {color:tomat;}
+
 /*EXPORT BUTTON - ANALYSIS PAGE*/
 ul.export_list {z-index: 1;display: none;border: 1px solid #949494; padding: 5px;background-color: #FFF;font-size: 1em;list-style: none;outline: none;margin:0;}
 .sample_comp_result .chart-block .ui-buttonset, .sample_ana .chart-block .ui-buttonset {/*text-align: right;*/ }
@@ -1573,6 +1540,7 @@ background-image: -webkit-gradient(linear,left top,left bottom,from(rgba(255,255
 background-image: -webkit-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85)); }
 .sample_ana #tabs-chart .ui-tabs-nav li.ui-state-hover a, .sample_ana #interpro-chart .ui-tabs-nav li.ui-state-hover a, .sample_ana #tabs-taxchart .ui-tabs-nav li.ui-state-hover a  {text-decoration: none;}
 .sample_ana #tabs-chart .ui-tabs-nav li a:hover, .sample_ana #interpro-chart .ui-tabs-nav li a:hover, .sample_ana #tabs-taxchart .ui-tabs-nav li a:hover  {border: 1px solid #c6c6c6;box-shadow:1px 1px 1px rgba(0, 0, 0, 0.3);-moz-box-shadow:1px 1px 1px rgba(0, 0, 0, 0.3); -khtml-box-shadow:1px 1px 1px rgba(0, 0, 0, 0.3); -webkit-box-shadow:0px 0px 3px rgba(0, 0, 0, 0.3) ; text-decoration:none;}
+
 .sample_ana #tabs-chart li.ui-tabs-selected, .sample_ana #interpro-chart li.ui-tabs-selected, .sample_ana #tabs-taxchart li.ui-tabs-selected {/*height: 37px;*/height: 28px;background: #fff; border: none; top:1px;}
 .sample_ana #tabs-chart .ui-tabs-panel, .sample_ana #interpro-chart .ui-tabs-panel {margin: 0; padding:0; position: relative; border: 0px solid rgb(213, 213, 213); border-bottom-left-radius: 0px;border-bottom-right-radius: 0px; overflow:hidden;/*to solve a scrolling issue*/}
 .sample_ana #tabs-taxchart .ui-tabs-panel {margin: 0;  position: relative; border: 0px solid rgb(213, 213, 213); border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;} /*don't use overflow:auto with Krona*/
@@ -1961,7 +1929,7 @@ a.all:active  { background: url(../img/arrow_link_click_small.jpg) no-repeat rig
 .hlight-text-scroll, .list-contain-box .list-project-l, .list-contain-box .list-sample-l {position: relative;  width: 100%;  overflow-x: hidden; overflow-y: auto;}
 .list-project-l, .list-sample-l {height: 250px;}
 .hlight-text-scroll {height: 394px;}
-.list-contain-box .list-project-l .icon-functional:before, .list-contain-box .list-sample-l .icon-functional:before, table.result .icon-functional:before, #project_ov .icon-functional:before, #sample_ov .icon-functional:before {color: #777;}
+.list-contain-box .list-project-l .icon-functional:before, .list-contain-box .list-sample-l .icon-functional:before, table.result .icon-functional:before,  #sample_ov .icon-functional:before {color: #777;}
 /*END HOMEPAGE*/
 
 
