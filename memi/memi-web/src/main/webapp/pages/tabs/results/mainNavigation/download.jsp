@@ -403,7 +403,7 @@
                                       title="Chart data type"></span>
                                             </c:when>
 
-                            <c:when test="${downloadLink.linkPrefix == 'Predicted CDS' || downloadLink.linkPrefix ==  'Predicted CDS without annotation'}">
+                            <c:when test="${fn:startsWith(downloadLink.linkPrefix, 'Predicted CDS')}">
                                 <span class="show_tooltip protein icon icon-conceptual icon-c3" data-icon="P"
                                       title="Protein (AA)data type"></span>
                                             </c:when>
