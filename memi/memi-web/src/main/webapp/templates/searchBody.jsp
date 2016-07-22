@@ -31,29 +31,29 @@
 
     <div class="grid_24"  id="searchTabs">
         <div id="tabDiv"></div>
-        <div id="projects">
-            <div class="grid_5 alpha" id="projects-searchFacets"></div>
+        <div id="Projects">
+            <div class="grid_5 alpha" id="Projects-searchFacets"></div>
 
             <div class="grid_19 omega">
-                <div class="table-margin-r" id="projects-searchData"></div>
-                <div id="projects-searchPagination" class="table-pagination"></div>
+                <div class="table-margin-r" id="Projects-searchData"></div>
+                <div id="Projects-searchPagination" class="table-pagination"></div>
             </div>
         </div>
-        <div id="samples">
-            <div class="grid_5 alpha" id="samples-searchFacets"></div>
+        <div id="Samples">
+            <div class="grid_5 alpha" id="Samples-searchFacets"></div>
 
             <div class="grid_19 omega">
-                <div class="table-margin-r" id="samples-searchData"></div>
-                <div id="samples-searchPagination" class="table-pagination"></div>
+                <div class="table-margin-r" id="Samples-searchData"></div>
+                <div id="Samples-searchPagination" class="table-pagination"></div>
             </div>
         </div>
 
-        <div id="runs">
-            <div class="grid_5 alpha" id="runs-searchFacets"></div>
+        <div id="Runs">
+            <div class="grid_5 alpha" id="Runs-searchFacets"></div>
 
             <div class="grid_19 omega">
-                <div class="table-margin-r" id="runs-searchData"></div>
-                <div id="runs-searchPagination" class="table-pagination"></div>
+                <div class="table-margin-r" id="Runs-searchData"></div>
+                <div id="Runs-searchPagination" class="table-pagination"></div>
             </div>
         </div>
     </div>
