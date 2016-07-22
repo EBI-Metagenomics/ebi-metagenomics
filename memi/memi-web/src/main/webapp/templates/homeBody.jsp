@@ -489,37 +489,40 @@
                     </div>
                 </div>
             </div>
+        </section>
+
+        <section class="jumbo-citation">
             <div class="grid_24">
-                <div class="alpha omega hlight-spot">
+                <div class="hlight-spot alpha">
                     <div class="hlight_title_cont">
-                        <div class="hlight_subtitle"><h2>How to cite us</h2></div>
+                        <div class="hlight_maintitle"><h1>How to cite</h1></div>
                     </div>
                     <div class="home_box alpha omega" style="min-height: auto;">
-                        <div>
+
                             <img
-                                alt="Cover of the Nucleic Acids Research journal"
-                                src="<c:url value="${baseURL}/img/nucleic_acids_research_D1_cover.gif"/>"
-                                style="width: auto; float: left; margin-right: 18px;"
+                                    alt="Cover of the Nucleic Acids Research journal"
+                                    src="<c:url value="${baseURL}/img/nucleic_acids_research_D1_cover.gif"/>"
+                                    style="width: auto; float: left; margin-right: 18px;"
                             />
                             <p>
                                 To cite EBI Metagenomics, please refer to the following publication:
                             </p>
                             <p>
-                              Alex Mitchell, Francois Bucchini, Guy Cochrane, Hubert Denise, Petra ten Hoopen, Matthew Fraser, Sebastien Pesseat, Simon Potter, Maxim Scheremetjew, Peter Sterk and Robert D. Finn (2015).
-                              <br />
-                              <strong>
-                                  EBI metagenomics in 2016 - an expanding and evolving resource for the analysis and archiving of metagenomic data.
-                              </strong>
-                              Nucleic Acids Research (2015) doi:
-                              <a
-                                  title="EBI metagenomics in 2016 - an expanding and evolving resource for the analysis and archiving of metagenomic data"
-                                  href="http://nar.oxfordjournals.org/content/44/D1/D595.full"
-                                  class="ext"
-                              >
-                                  10.1093/nar/gkv1195
-                              </a>
+                                Alex Mitchell, Francois Bucchini, Guy Cochrane, Hubert Denise, Petra ten Hoopen, Matthew Fraser, Sebastien Pesseat, Simon Potter, Maxim Scheremetjew, Peter Sterk and Robert D. Finn (2015).
+                                <br />
+                                <strong>
+                                    EBI metagenomics in 2016 - an expanding and evolving resource for the analysis and archiving of metagenomic data.
+                                </strong>
+                                Nucleic Acids Research (2015) doi:
+                                <a
+                                        title="EBI metagenomics in 2016 - an expanding and evolving resource for the analysis and archiving of metagenomic data"
+                                        href="http://nar.oxfordjournals.org/content/44/D1/D595.full"
+                                        class="ext"
+                                >
+                                    10.1093/nar/gkv1195
+                                </a>
                             </p>
-                        </div>
+
                         <a href="<c:url value="${baseURL}/about#h_cite"/>" title="About page - How to cite" class="all">
                             More citations
                         </a>
