@@ -273,7 +273,7 @@
             <c:otherwise>
 
                 <!-- biomes box - strechy to resize sprite - need to keep the image in the page + spacer (no background)-->
-                <div id="list-biomes" class="grid_12 alpha">
+                <div class="grid_12 alpha list-biomes">
                     <div class="home_box alpha">
                         <h2>By selected biomes</h2>
 
@@ -364,7 +364,7 @@
     <c:when test="${not empty model.submitter}"> <!-- private-->
         <section class="hlight_item">
             <div class="grid_24">
-                <div id="hlight-box-spotlight" class="grid_12 alpha hlight-info">
+                <div class="grid_12 alpha hlight-info">
                     <div class="hlight_title_cont">
                         <div class="hlight_maintitle"><h1>Tracking data submission</h1></div>
                         <div class="hlight_subtitle" style="margin-top:0;"><h2 class="icon icon-generic"
@@ -386,7 +386,7 @@
                             us to get some update</a>.</p>
                     </div>
                 </div>
-                <div id="hlight-box-spotlight" class="grid_12 alpha hlight-info">
+                <div class="grid_12 alpha hlight-info">
                     <div class="hlight_title_cont">
                         <div class="hlight_maintitle"><h1>Data confidentiality</h1></div>
                         <div class="hlight_subtitle" style="margin-top:0;"><h2 class="icon icon-generic"
@@ -416,7 +416,7 @@
 
         <section class="hlight_item">
             <div class="grid_24">
-                <div id="hlight-box-spotlight" class="grid_12 alpha hlight-spot">
+                <div class="hlight-spot grid_12 alpha">
                     <div class="hlight_title_cont">
                         <div class="hlight_maintitle"><h1>Spotlight</h1></div>
                         <div class="hlight_subtitle"><h2>American Gut project</h2></div>
@@ -465,7 +465,7 @@
                     </div>
                     -->
                 </div>
-                <div id="hlight-box-tools" class="grid_12 omega hlight-spot">
+                <div class="hlight-spot grid_12 omega">
                     <div class="hlight_title_cont">
                         <div class="hlight_maintitle"><h1>Tools</h1></div>
                         <div class="hlight_subtitle"><h2>Functional sample comparison</h2></div>
