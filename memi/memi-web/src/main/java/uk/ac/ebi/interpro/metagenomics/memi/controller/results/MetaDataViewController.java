@@ -10,15 +10,12 @@ import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.controller.MGPortalURLCollection;
 import uk.ac.ebi.interpro.metagenomics.memi.controller.ModelProcessingStrategy;
 import uk.ac.ebi.interpro.metagenomics.memi.exceptionHandling.EntryNotFoundException;
-import uk.ac.ebi.interpro.metagenomics.memi.model.EmgSampleAnnotation;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Run;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.results.MetaDataViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.results.MetaDataViewModelBuilder;
-
-import java.util.List;
 
 /**
  * The controller for the overview tab on the analysis results page.
@@ -66,8 +63,6 @@ public class MetaDataViewController extends AbstractResultViewController {
     protected void populateModel(final ModelMap model, final Run run) {
         String pageTitle = "Meta data view: " + run.getExternalRunId() + "";
 
-        final List<EmgSampleAnnotation> sampleAnnotations = (List<EmgSampleAnnotation>) sampleAnnotationDAO.getSampleAnnotations(run.getSampleId());
-
         AnalysisJob analysisJob = analysisJobDAO.readByRunIdAndVersionDeep(run.getExternalRunId(), run.getReleaseVersion(), "completed");
         if (analysisJob == null) {
             throw new EntryNotFoundException();
@@ -79,8 +74,7 @@ public class MetaDataViewController extends AbstractResultViewController {
                 pageTitle,
                 getBreadcrumbs(run),
                 propertyContainer,
-                analysisJob,
-                sampleAnnotations);
+                analysisJob);
         final MetaDataViewModel metaDataViewModel = builder.getModel();
 
         metaDataViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_SAMPLES_VIEW);
