@@ -573,16 +573,16 @@
     $("iframe").ready(function () {
         var timer = setInterval(function () {
             if ($($("iframe").contents()).find(".avatar").length > 0) {
-                $($("iframe").contents()).find(".avatar, .p-author, .footer, .retweet-credit").css({display: "none"});
-                $($("iframe").contents()).find(".permalink").css({float: "none"});
-                $($("iframe").contents()).find(".header, .inline-media").css({'text-align': "center"});
-                $($("iframe").contents()).find("li").css({'padding': "0 0 0 0"});
-                $($("iframe").contents()).find(".e-entry-title").css({
+                $($("iframe").contents()).find(".avatar, .timeline-Tweet-author, .timeline-Tweet-media").css({display: "none"});
+//                $($("iframe").contents()).find(".permalink").css({float: "none"});
+                $($("iframe").contents()).find(".timeline-Tweet-retweetCredit").css({'text-align': "center"});/*style retweet info text*/
+//                $($("iframe").contents()).find("li").css({'padding': "0 0 0 0"});
+                $($("iframe").contents()).find(".timeline-Tweet-text").css({
                     'text-align': "center",
                     'font-size': '157%',
                     'line-height': '1.4'
-                });
-                $($("iframe").contents()).find("img.autosized-media").css({'max-height': '175px'});
+                });/*style tweet main text*/
+                $($("iframe").contents()).find("img.autosized-media").css({'max-height': '175px'});/*don't know if this is relevant anymore*/
                 clearInterval(timer);
             }
         }, 100);
