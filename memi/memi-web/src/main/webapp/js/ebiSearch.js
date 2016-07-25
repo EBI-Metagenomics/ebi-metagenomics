@@ -11,11 +11,6 @@ var SAMPLE = "Samples";
 var RUN = "Runs";
 var DATA_TYPES = [PROJECT, SAMPLE, RUN];
 var FACET_SOURCE = "Source";
-var PROJECT_RESULTS_NUM = 10;
-var SAMPLE_RESULTS_NUM = 10;
-var RUN_RESULTS_NUM = 20;
-var DEFAULT_SEARCH_START = 0;
-var FACET_NUM = 10;
 
 /*
 Behaviour methods
@@ -103,6 +98,11 @@ var restoreFormState = function() {
 window.onunload = function(event) {
     console.log("Unloading");
     saveFormState();
+};
+
+window.onload = function(event) {
+    console.log("Unloading");
+    restoreFormState();
 };
 
 var displayPagination = function(results, dataType) {
@@ -244,7 +244,7 @@ var displayProjectTable = function(results, container) {
         var rowData = [
             {
                 name: entry["id"],
-                url: "http:/metagenomics/projects/" + entry["id"]
+                url: "http://" + window.location.host + "/metagenomics/projects/" + entry["id"]
             },
             {name: entry.fields.name[0]},
             {name: entry.fields.biome_name[0], className: "xs_hide"},
@@ -280,11 +280,11 @@ var displaySampleTable = function(results, container) {
         var rowData = [
             {
                 name: entry["id"],
-                url: "http:/metagenomics/projects/" + entry["fields"]["METAGENOMICS_PROJECT"][0] + " samples/" +  entry["id"]
+                url: "http://" + window.location.host + "/metagenomics/projects/" + entry["fields"]["METAGENOMICS_PROJECT"][0] + "/samples/" +  entry["id"]
             },
             {
                 name: entry["fields"]["METAGENOMICS_PROJECT"][0],
-                url: "http:/metagenomics/projects/" + entry["fields"]["METAGENOMICS_PROJECT"][0]
+                url: "http://" + window.location.host + "/metagenomics/projects/" + entry["fields"]["METAGENOMICS_PROJECT"][0]
             },
             {name: entry.fields.name[0]},
             {name: entry.fields.description[0], className: "xs_hide"}
@@ -320,7 +320,7 @@ var displayRunTable = function(results, container) {
         var rowData = [
             {
                 name: entry.id,
-                url: "http:/metagenomics/projects/ "
+                url: "http://" + window.location.host + "/metagenomics/projects/"
                 + entry.fields.METAGENOMICS_PROJECT[0] + "/samples/"
                 + entry.fields.METAGENOMICS_SAMPLE[0] + "/runs/"
                 + entry.id + "/results/versions/"
@@ -329,7 +329,7 @@ var displayRunTable = function(results, container) {
             {
                 name: entry.fields.METAGENOMICS_SAMPLE[0],
                 className: "xs_hide",
-                url: "http:/metagenomics/projects/ "
+                url: "http://" + window.location.host + "/metagenomics/projects/"
                 + entry.fields.METAGENOMICS_PROJECT[0] + "/samples/"
                 + entry.fields.METAGENOMICS_SAMPLE[0],
 
@@ -337,7 +337,7 @@ var displayRunTable = function(results, container) {
             {
                 name: entry.fields.METAGENOMICS_PROJECT[0],
                 className: "xs_hide",
-                url: "http:/metagenomics/projects/ " + entry.fields.METAGENOMICS_PROJECT[0],
+                url: "http://" + window.location.host + "/metagenomics/projects/" + entry.fields.METAGENOMICS_PROJECT[0],
             },
             {
                 name: entry.fields.experiment_type[0]
@@ -345,7 +345,7 @@ var displayRunTable = function(results, container) {
             {
                 name: entry.fields.pipeline_version[0],
                 className: "xs_hide",
-                url: "http:/metagenomics/pipelines/" + entry.fields.pipeline_version[0],
+                url: "http://" + window.location.host + "/metagenomics/pipelines/" + entry.fields.pipeline_version[0],
             },
 
         ];
@@ -712,6 +712,12 @@ var search = function search() {
     });
 
 };
+
+var PROJECT_RESULTS_NUM = 10;
+var SAMPLE_RESULTS_NUM = 10;
+var RUN_RESULTS_NUM = 20;
+var DEFAULT_SEARCH_START = 0;
+var FACET_NUM = 10;
 
 //need to define these objects after definition of callback functions
 var projectSearchSettings = {
