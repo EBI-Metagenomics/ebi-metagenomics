@@ -782,7 +782,7 @@ text-decoration:underline;
 #list-biomes .list-biomes-l a.omega {margin-right: 0%; }
 #list-biomes .list-biomes-l a.alpha {margin-left: 0%; }
 #list-biomes .biome_text {display: block; padding-top: 4px; word-wrap: break-word;}
-#list-biomes .grid_24 a {display: inline-block; vertical-align: text-top; padding: 3px;font-weight: bold; color:#6f6f6f; width:18.9%;text-align: center;  zoom: 1; border:0px solid black; box-sizing: border-box;}
+#list-biomes .grid_24 a {display: inline-block; vertical-align: text-top; padding: 0;font-weight: bold; color:#6f6f6f; width:18.9%;text-align: center;  zoom: 1; border:0px solid black; box-sizing: border-box;}
 /*#list-biomes .grid_24 a  {display: inline-block; vertical-align: text-top; padding: 4px;font-weight: bold; color:#6f6f6f; width:17%;text-align: center;  zoom: 1;  margin-left: 1%;  margin-right: 1%; border:0px solid black; box-sizing: border-box;}*/
 #list-biomes .grid_24 a:hover  {color:white;text-decoration: none; background-color:  rgba(0, 0, 0, 0.25);}
 
@@ -1928,7 +1928,7 @@ a.all:active  { background: url(../img/arrow_link_click_small.jpg) no-repeat rig
 .jumbo-news-centred .icon-socialmedia:before {color:#0c4d7b;}
 
 .hlight-text-scroll, .list-contain-box .list-project-l, .list-contain-box .list-sample-l {position: relative;  width: 100%;  overflow-x: hidden; overflow-y: auto;}
-.list-project-l, .list-sample-l {height: 250px;}
+.list-project-l, .list-sample-l {height: 264px;}
 .hlight-text-scroll {height: 394px;}
 .list-contain-box .list-project-l .icon-functional:before, .list-contain-box .list-sample-l .icon-functional:before, table.result .icon-functional:before,  #sample_ov .icon-functional:before {color: #777;}
 /*END HOMEPAGE*/
