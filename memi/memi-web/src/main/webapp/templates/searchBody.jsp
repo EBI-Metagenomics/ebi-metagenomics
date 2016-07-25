@@ -10,7 +10,7 @@
 <div class="grid_24" id="mainContainer">
     <h2>Search EBI Metagenomics</h2>
 
-    <form:form class="local-search-xs" action="${pageContext.request.contextPath}/search"
+    <form class="local-search-xs" action="javascript:search();"
                commandName="ebiSearchForm" method="GET">
 
         <div class="grid_24">
@@ -19,7 +19,7 @@
 
                 <fieldset>
                     <label>
-                        <form:input path="searchText" type="search"/>
+                        <input path="searchText" type="search" id="local-searchbox-xs"/>
                     </label>
                 </fieldset>
 
@@ -27,7 +27,7 @@
             <div class="grid_6 omega"> <input type="submit" id="searchsubmit" name="searchsubmit" value="Search" class="submit"></div>
 
         </div>
-    </form:form>
+    </form>
 
     <div class="grid_24"  id="searchTabs">
         <div id="tabDiv"></div>
