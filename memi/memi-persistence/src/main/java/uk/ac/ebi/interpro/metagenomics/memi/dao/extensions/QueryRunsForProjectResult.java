@@ -18,6 +18,7 @@ public class QueryRunsForProjectResult {
     private int isPublic;
     private String releaseVersion;
     private String analysisStatus;
+    private String instrumentModel;
 
     public long getSampleId() {
         return sampleId;
@@ -112,5 +113,13 @@ public class QueryRunsForProjectResult {
 
     public void setReleaseVersion(String releaseVersion) {
         this.releaseVersion = releaseVersion;
+    }
+
+    public String getInstrumentModel() {
+        return instrumentModel;
+    }
+
+    public void setInstrumentModel(String instrumentModel) {
+        this.instrumentModel = instrumentModel;
     }
 }

@@ -11,6 +11,8 @@
 "$run.externalRunIds",#{else}"",#end
 #if($run.experimentType)
 "$run.experimentType",#{else}"",#end
+#if($run.instrumentModel)
+"$run.instrumentModel",#{else}"",#end
 #if($run.releaseVersion)
 $run.releaseVersion,#{else}"",#end
 

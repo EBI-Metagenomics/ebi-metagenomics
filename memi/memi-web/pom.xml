@@ -50,7 +50,7 @@
         <tiles.version>2.2.2</tiles.version>
         <hibernate-validator.version>4.3.0.Final</hibernate-validator.version>
         <javax.validation-api.version>1.0.0.GA</javax.validation-api.version>
-        <ena-authentication.client.version>1.6.0</ena-authentication.client.version>
+        <ena-authentication.client.version>1.8.1</ena-authentication.client.version>
     </properties>
 
     <!-- Most of the dependencies are ordered by topics (e.g. Spring) or by scope -->
@@ -586,11 +586,15 @@
         <profile>
             <id>prod-war</id>
             <properties>
-                <deployment.folder>/nfs/web_hx2/webadmin/tomcat/bases/interpro/tc-ipr-metagenomics/deploy</deployment.folder>
+                <deployment.folder>/nfs/web_hx2/webadmin/tomcat/bases/interpro/tc-ipr-metagenomics/deploy
+                </deployment.folder>
                 <log4j.log.file>/var/tmp/servers/tc-interpro-das/logs/metagenomics/memi.log4j</log4j.log.file>
-                <dailyErrorAppParam>/var/tmp/servers/tc-interpro-das/logs/metagenomics/memi-ERROR.log4j</dailyErrorAppParam>
-                <dailyDebugAppParam>/var/tmp/servers/tc-interpro-das/logs/metagenomics/memi-DEBUG.log4j</dailyDebugAppParam>
-                <dailyWarnAppParam>/var/tmp/servers/tc-interpro-das/logs/metagenomics/memi-WARN.log4j</dailyWarnAppParam>
+                <dailyErrorAppParam>/var/tmp/servers/tc-interpro-das/logs/metagenomics/memi-ERROR.log4j
+                </dailyErrorAppParam>
+                <dailyDebugAppParam>/var/tmp/servers/tc-interpro-das/logs/metagenomics/memi-DEBUG.log4j
+                </dailyDebugAppParam>
+                <dailyWarnAppParam>/var/tmp/servers/tc-interpro-das/logs/metagenomics/memi-WARN.log4j
+                </dailyWarnAppParam>
                 <log4j.log.level>WARN</log4j.log.level>
             </properties>
         </profile>

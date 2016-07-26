@@ -2,20 +2,20 @@ package uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.Criteria;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import org.hibernate.*;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
+import uk.ac.ebi.interpro.metagenomics.memi.model.valueObjects.SampleStatisticsVO;
+import uk.ac.ebi.interpro.metagenomics.memi.model.valueObjects.StudyStatisticsVO;
 
 import java.util.*;
 
@@ -462,6 +462,30 @@ public class SampleDAOImpl implements SampleDAO {
 
     //TODO: Do implement
     public Long getMaximumPrimaryKey() {
+        return null;
+    }
+
+    public SampleStatisticsVO retrieveStatistics() {
+        Session session = sessionFactory.getCurrentSession();
+        if (session != null) {
+            try {
+                SampleStatisticsVO stats = new SampleStatisticsVO();
+                Query query = session.createQuery("select sa.isPublic, count(distinct sa.sampleId) as num_of_samples from Sample sa where sa.isPublic in (0,1) group by sa.isPublic");
+                List<Object[]> results = query.list();
+                for (Object[] rowFields : results) {
+                    int isPublic = (Integer) rowFields[0];
+                    long numOfSamples = (Long) rowFields[1];
+                    if (isPublic == 1) {
+                        stats.setNumOfPublicSamples(numOfSamples);
+                    } else {
+                        stats.setNumOfPrivateSamples(numOfSamples);
+                    }
+                }
+                return stats;
+            } catch (DataAccessException exception) {
+                throw exception;
+            }
+        }
         return null;
     }
 }

@@ -44,21 +44,9 @@ public final class HomePageViewModel extends ViewModel {
      */
     private final int maxRowNumberOfLatestItems;
 
-    private Long publicSamplesCount;
-
-    private Long privateSamplesCount;
-
-    private Long publicStudiesCount;
-
-    private Long privateStudiesCount;
-
     private Long mySamplesCount;
 
     private Long myStudiesCount;
-
-    private int publicRunCount;
-
-    private int privateRunCount;
 
     private Map<String, Long> experimentCountMap;
 
@@ -68,41 +56,33 @@ public final class HomePageViewModel extends ViewModel {
 
     private Map<String, Long> studyToRunCountMap;
 
+    private DataStatistics dataStatistics;
+
     public HomePageViewModel(final Submitter submitter,
                              final EBISearchForm ebiSearchForm,
                              final String pageTitle,
                              final List<Breadcrumb> breadcrumbs,
                              final MemiPropertyContainer propertyContainer,
                              final int maxRowNumberOfLatestItems,
-                             final Long publicSamplesCount,
-                             final Long privateSamplesCount,
-                             final Long publicStudiesCount,
-                             final Long privateStudiesCount,
                              final List<Study> studies,
-                             final int publicRunCount,
-                             final int privateRunCount,
                              final List<BiomeLogoModel> biomeCountMap,
                              final Map<String, Long> experimentCountMap,
                              final Long numOfDataSets,
                              final Map<String, Long> studyToSampleCountMap,
-                             final Map<String, Long> studyToRunCountMap) {
+                             final Map<String, Long> studyToRunCountMap,
+                             final DataStatistics dataStatistics) {
         super(submitter, ebiSearchForm, pageTitle, breadcrumbs, propertyContainer);
 //        this.publicSamples = publicSamples;
         this.myStudiesMap = new TreeMap<Study, Long>();
         this.mySamples = new ArrayList<Sample>();
         this.maxRowNumberOfLatestItems = maxRowNumberOfLatestItems;
-        this.privateSamplesCount = privateSamplesCount;
-        this.publicSamplesCount = publicSamplesCount;
-        this.publicStudiesCount = publicStudiesCount;
-        this.privateStudiesCount = privateStudiesCount;
         this.studies = studies;
-        this.publicRunCount = publicRunCount;
-        this.privateRunCount = privateRunCount;
         this.biomeMap = biomeCountMap;
         this.experimentCountMap = experimentCountMap;
         this.numOfDataSets = numOfDataSets;
         this.studyToSampleCountMap = studyToSampleCountMap;
         this.studyToRunCountMap = studyToRunCountMap;
+        this.dataStatistics = dataStatistics;
 
     }
 
@@ -117,17 +97,11 @@ public final class HomePageViewModel extends ViewModel {
                              final int maxRowNumberOfLatestItems,
                              final Long mySamplesCount,
                              final Long myStudiesCount,
-                             final Long publicSamplesCount,
-                             final Long privateSamplesCount,
-                             final Long publicStudiesCount,
-                             final Long privateStudiesCount,
-                             final int publicRunCount,
-                             final int privateRunCount,
                              final Map<String, Long> studyToSampleCountMap,
-                             final Map<String, Long> studyToRunCountMap) {
+                             final Map<String, Long> studyToRunCountMap,
+                             final DataStatistics dataStatistics) {
         this(submitter, ebiSearchForm, pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems,
-                publicSamplesCount, privateSamplesCount, publicStudiesCount, privateStudiesCount,studies, publicRunCount, privateRunCount,
-                null, null, null, studyToSampleCountMap, studyToRunCountMap);
+                studies, null, null, null, studyToSampleCountMap, studyToRunCountMap, dataStatistics);
 //        this.myStudiesMap = myStudiesMap;
         this.mySamples = mySamples;
         this.mySamplesCount = mySamplesCount;
@@ -167,36 +141,12 @@ public final class HomePageViewModel extends ViewModel {
         return maxRowNumberOfLatestItems;
     }
 
-    public Long getPublicSamplesCount() {
-        return publicSamplesCount;
-    }
-
-    public Long getPrivateSamplesCount() {
-        return privateSamplesCount;
-    }
-
-    public Long getPublicStudiesCount() {
-        return publicStudiesCount;
-    }
-
-    public Long getPrivateStudiesCount() {
-        return privateStudiesCount;
-    }
-
     public Long getMySamplesCount() {
         return mySamplesCount;
     }
 
     public Long getMyStudiesCount() {
         return myStudiesCount;
-    }
-
-    public int getPublicRunCount() {
-        return publicRunCount;
-    }
-
-    public int getPrivateRunCount() {
-        return privateRunCount;
     }
 
     public List<BiomeLogoModel> getBiomeMap() {
@@ -221,5 +171,9 @@ public final class HomePageViewModel extends ViewModel {
 
     public Map<String, Long> getStudyToRunCountMap() {
         return studyToRunCountMap;
+    }
+
+    public DataStatistics getDataStatistics() {
+        return dataStatistics;
     }
 }

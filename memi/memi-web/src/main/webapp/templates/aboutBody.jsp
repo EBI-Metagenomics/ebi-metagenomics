@@ -147,7 +147,7 @@ The ENA only accepts data that is intended for public release. However, any data
 
 <p>To cite EBI Metagenomics, please refer to the following publication:<br/><br/>
 Alex Mitchell, Francois Bucchini, Guy Cochrane, Hubert Denise, Petra ten Hoopen, Matthew Fraser, Sebastien Pesseat, Simon Potter, Maxim Scheremetjew, Peter Sterk and Robert D. Finn (2015).<br/>
-<strong>EBI metagenomics in 2016 - an expanding and evolving resource for the analysis and archiving of metagenomic data.</strong> Nucleic Acids Research (2015) doi: <a title="EBI metagenomics in 2016 - an expanding and evolving resource for the analysis and archiving of metagenomic data" href="http://nar.oxfordjournals.org/content/early/2015/11/17/nar.gkv1195.full" class="ext">10.1093/nar/gkv1195</a>
+<strong>EBI metagenomics in 2016 - an expanding and evolving resource for the analysis and archiving of metagenomic data.</strong> Nucleic Acids Research (2015) doi: <a title="EBI metagenomics in 2016 - an expanding and evolving resource for the analysis and archiving of metagenomic data" href="http://nar.oxfordjournals.org/content/44/D1/D595.full" class="ext">10.1093/nar/gkv1195</a>
 </p>
 <p id="expand_button">View previous citations</p>
 <div class="more_citations">
