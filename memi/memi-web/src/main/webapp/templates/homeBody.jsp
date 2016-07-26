@@ -118,9 +118,9 @@
                     <div class="grid_24">
                         <div class="grid_6 alpha"><span class="icon icon-functional" data-icon="U"></span><br/><span
                                 class="stat-lock-title">Public</span></div>
-                        <div class="grid_6"><span class="high_nb">${model.publicRunCount}</span><br/><span
-                                class="high_nb">${model.publicSamplesCount}</span><br/><span
-                                class="high_nb">${model.publicStudiesCount}</span></div>
+                        <div class="grid_6"><span class="high_nb">${model.dataStatistics.runStatistics.numOfPublicRuns}</span><br/><span
+                                class="high_nb">${model.dataStatistics.sampleStatistics.numOfPublicSamples}</span><br/><span
+                                class="high_nb">${model.dataStatistics.studyStatistics.numOfPublicStudies}</span></div>
                         <div class="grid_12 omega"> runs <br/> samples <br/> projects</div>
                     </div>
                 </div>
@@ -128,9 +128,9 @@
                     <div class="grid_24">
                         <div class="grid_6 alpha"><span class="icon icon-functional" data-icon="L"></span><br/><span
                                 class="stat-lock-title">Private</span></div>
-                        <div class="grid_6"><span class="high_nb">${model.privateRunCount}</span><br/><span
-                                class="high_nb">${model.privateSamplesCount}</span><br/><span
-                                class="high_nb">${model.privateStudiesCount}</span></div>
+                        <div class="grid_6"><span class="high_nb">${model.dataStatistics.runStatistics.numOfPrivateRuns}</span><br/><span
+                                class="high_nb">${model.dataStatistics.sampleStatistics.numOfPrivateSamples}</span><br/><span
+                                class="high_nb">${model.dataStatistics.studyStatistics.numOfPrivateStudies}</span></div>
                         <div class="grid_12 omega"> runs <br/> samples <br/> projects</div>
                     </div>
                 </div>
@@ -273,7 +273,7 @@
             <c:otherwise>
 
                 <!-- biomes box - strechy to resize sprite - need to keep the image in the page + spacer (no background)-->
-                <div id="list-biomes" class="grid_12 alpha">
+                <div class="grid_12 alpha list-biomes">
                     <div class="home_box alpha">
                         <h2>By selected biomes</h2>
 
@@ -310,7 +310,7 @@
                     <div class="home_box omega">
                         <h2>Latest projects <span class="badge"><a
                                 href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>"
-                                title="View all ${model.publicStudiesCount} public projects">${model.publicStudiesCount}</a></span>
+                                title="View all ${model.dataStatistics.studyStatistics.numOfPublicStudies} public projects">${model.dataStatistics.studyStatistics.numOfPublicStudies}</a></span>
                         </h2>
                         <div class="list-project-l">
                                 <%--The count starts at 0, that is why we subtract 1 from the end value--%>
@@ -364,7 +364,7 @@
     <c:when test="${not empty model.submitter}"> <!-- private-->
         <section class="hlight_item">
             <div class="grid_24">
-                <div id="hlight-box-spotlight" class="grid_12 alpha hlight-info">
+                <div class="grid_12 alpha hlight-info">
                     <div class="hlight_title_cont">
                         <div class="hlight_maintitle"><h1>Tracking data submission</h1></div>
                         <div class="hlight_subtitle" style="margin-top:0;"><h2 class="icon icon-generic"
@@ -386,7 +386,7 @@
                             us to get some update</a>.</p>
                     </div>
                 </div>
-                <div id="hlight-box-spotlight" class="grid_12 alpha hlight-info">
+                <div class="grid_12 alpha hlight-info">
                     <div class="hlight_title_cont">
                         <div class="hlight_maintitle"><h1>Data confidentiality</h1></div>
                         <div class="hlight_subtitle" style="margin-top:0;"><h2 class="icon icon-generic"
@@ -416,7 +416,7 @@
 
         <section class="hlight_item">
             <div class="grid_24">
-                <div id="hlight-box-spotlight" class="grid_12 alpha hlight-spot">
+                <div class="hlight-spot grid_12 alpha">
                     <div class="hlight_title_cont">
                         <div class="hlight_maintitle"><h1>Spotlight</h1></div>
                         <div class="hlight_subtitle"><h2>American Gut project</h2></div>
@@ -465,7 +465,7 @@
                     </div>
                     -->
                 </div>
-                <div id="hlight-box-tools" class="grid_12 omega hlight-spot">
+                <div class="hlight-spot grid_12 omega">
                     <div class="hlight_title_cont">
                         <div class="hlight_maintitle"><h1>Tools</h1></div>
                         <div class="hlight_subtitle"><h2>Functional sample comparison</h2></div>
@@ -483,9 +483,50 @@
                             The different charts can be exported in PNG, PDF and SVG formats, so that they can easily be
                             included in presentations and publications.
                         </p>
-                    </div>
+                        </div>
                         <a href="<c:url value="${baseURL}/compare"/>" title="Compare samples" class="all">Compare
                                                   samples</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="jumbo-citation">
+            <div class="grid_24">
+                <div class="hlight-spot alpha">
+                    <div class="hlight_title_cont">
+                        <div class="hlight_maintitle"><h1>How to cite</h1></div>
+                    </div>
+                    <div class="home_box alpha omega" style="min-height: auto;">
+
+                            <img
+                                    alt="Cover of the Nucleic Acids Research journal"
+                                    src="<c:url value="${baseURL}/img/nucleic_acids_research_D1_cover.gif"/>"
+                                    style="width: auto; float: left; margin-right: 18px;"
+                            />
+                            <p>
+                                To cite EBI Metagenomics, please refer to the following publication:
+                            </p>
+                            <p>
+                                Alex Mitchell, Francois Bucchini, Guy Cochrane, Hubert Denise, Petra ten Hoopen, Matthew Fraser, Sebastien Pesseat, Simon Potter, Maxim Scheremetjew, Peter Sterk and Robert D. Finn (2015).
+                                <br />
+                                <strong>
+                                    EBI metagenomics in 2016 - an expanding and evolving resource for the analysis and archiving of metagenomic data.
+                                </strong>
+                                Nucleic Acids Research (2015) doi:
+                                <a
+                                        title="EBI metagenomics in 2016 - an expanding and evolving resource for the analysis and archiving of metagenomic data"
+                                        href="http://nar.oxfordjournals.org/content/44/D1/D595.full"
+                                        class="ext"
+                                >
+                                    10.1093/nar/gkv1195
+                                </a>
+                            </p>
+
+                        <a href="<c:url value="${baseURL}/about#h_cite"/>" title="About page - How to cite" class="all">
+                            More citations
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>
@@ -532,16 +573,16 @@
     $("iframe").ready(function () {
         var timer = setInterval(function () {
             if ($($("iframe").contents()).find(".avatar").length > 0) {
-                $($("iframe").contents()).find(".avatar, .p-author, .footer, .retweet-credit").css({display: "none"});
-                $($("iframe").contents()).find(".permalink").css({float: "none"});
-                $($("iframe").contents()).find(".header, .inline-media").css({'text-align': "center"});
-                $($("iframe").contents()).find("li").css({'padding': "0 0 0 0"});
-                $($("iframe").contents()).find(".e-entry-title").css({
+                $($("iframe").contents()).find(".avatar, .timeline-Tweet-author, .timeline-Tweet-media").css({display: "none"});
+//                $($("iframe").contents()).find(".permalink").css({float: "none"});
+                $($("iframe").contents()).find(".timeline-Tweet-retweetCredit").css({'text-align': "center"});/*style retweet info text*/
+//                $($("iframe").contents()).find("li").css({'padding': "0 0 0 0"});
+                $($("iframe").contents()).find(".timeline-Tweet-text").css({
                     'text-align': "center",
                     'font-size': '157%',
                     'line-height': '1.4'
-                });
-                $($("iframe").contents()).find("img.autosized-media").css({'max-height': '175px'});
+                });/*style tweet main text*/
+                $($("iframe").contents()).find("img.autosized-media").css({'max-height': '175px'});/*don't know if this is relevant anymore*/
                 clearInterval(timer);
             }
         }, 100);

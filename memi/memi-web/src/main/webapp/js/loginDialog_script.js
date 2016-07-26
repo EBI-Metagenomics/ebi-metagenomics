@@ -6,7 +6,8 @@ $(function() {
         data: $("#login_form").serialize(),
         dataType: 'html',
         success: function() {
-            window.location = self.location;
+            var root = location.protocol + '//' + location.host;
+            window.location = root + "/metagenomics";
         },
         //The following part handles server side detected form validation errors
         error: function(xhr, ajaxOptions, thrownError) {
