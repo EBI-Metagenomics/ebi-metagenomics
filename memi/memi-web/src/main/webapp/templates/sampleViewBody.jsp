@@ -120,60 +120,62 @@
 
         <c:otherwise>
 
-            <h3>Environmental conditions</h3>
-            <div class="output_form">
+            <c:if test="${not empty sample.environmentalBiome or not empty sample.environmentalFeature or not empty sample.environmentalMaterial}">
+                <h3>Environmental conditions</h3>
+                <div class="output_form">
 
-                <c:choose>
-                    <c:when test="${not empty sample.environmentalBiome}">
-                        <c:set var="environmentalBiome" value="${sample.environmentalBiome}"/>
-                    </c:when>
-                    <c:otherwise>
-                        <c:set var="environmentalBiome" value="(not given)"/>
-                    </c:otherwise>
-                </c:choose>
+                    <c:choose>
+                        <c:when test="${not empty sample.environmentalBiome}">
+                            <c:set var="environmentalBiome" value="${sample.environmentalBiome}"/>
+                        </c:when>
+                        <c:otherwise>
+                            <c:set var="environmentalBiome" value="(not given)"/>
+                        </c:otherwise>
+                    </c:choose>
 
-                <div class="result_row">
-                    <div class="result_row_label">Biome:</div>
-                    <div class="result_row_data"><%--${fn:toLowerCase(environmentalBiome)}--%>
-                            ${environmentalBiome}
+                    <div class="result_row">
+                        <div class="result_row_label">Biome:</div>
+                        <div class="result_row_data"><%--${fn:toLowerCase(environmentalBiome)}--%>
+                                ${environmentalBiome}
+                        </div>
                     </div>
-                </div>
 
-                <c:choose>
-                    <c:when test="${not empty sample.environmentalFeature}">
-                        <c:set var="environmentalFeature" value="${sample.environmentalFeature}"/>
-                    </c:when>
-                    <c:otherwise>
-                        <c:set var="environmentalFeature" value="(not given)"/>
-                    </c:otherwise>
-                </c:choose>
+                    <c:choose>
+                        <c:when test="${not empty sample.environmentalFeature}">
+                            <c:set var="environmentalFeature" value="${sample.environmentalFeature}"/>
+                        </c:when>
+                        <c:otherwise>
+                            <c:set var="environmentalFeature" value="(not given)"/>
+                        </c:otherwise>
+                    </c:choose>
 
-                <div class="result_row">
-                    <div class="result_row_label">Experimental feature:</div>
-                    <div class="result_row_data">
-                            <%--${fn:toLowerCase(environmentalFeature)}--%>
-                            ${environmentalFeature}
+                    <div class="result_row">
+                        <div class="result_row_label">Experimental feature:</div>
+                        <div class="result_row_data">
+                                <%--${fn:toLowerCase(environmentalFeature)}--%>
+                                ${environmentalFeature}
+                        </div>
                     </div>
-                </div>
 
-                <c:choose>
-                    <c:when test="${not empty sample.environmentalMaterial}">
-                        <c:set var="environmentalMaterial" value="${sample.environmentalMaterial}"/>
-                    </c:when>
-                    <c:otherwise>
-                        <c:set var="environmentalMaterial" value="(not given)"/>
-                    </c:otherwise>
-                </c:choose>
+                    <c:choose>
+                        <c:when test="${not empty sample.environmentalMaterial}">
+                            <c:set var="environmentalMaterial" value="${sample.environmentalMaterial}"/>
+                        </c:when>
+                        <c:otherwise>
+                            <c:set var="environmentalMaterial" value="(not given)"/>
+                        </c:otherwise>
+                    </c:choose>
 
-                <div class="result_row">
-                    <div class="result_row_label">Material:</div>
-                    <div class="result_row_data">
-                            <%--${fn:toLowerCase(environmentalMaterial)}--%>
-                            ${environmentalMaterial}
+                    <div class="result_row">
+                        <div class="result_row_label">Material:</div>
+                        <div class="result_row_data">
+                                <%--${fn:toLowerCase(environmentalMaterial)}--%>
+                                ${environmentalMaterial}
+                        </div>
                     </div>
-                </div>
 
-            </div>
+                </div>
+            </c:if>
         </c:otherwise>
     </c:choose>
     <!--/ Host associated/environmental -->
@@ -243,8 +245,8 @@
 
     <!-- Other info box -->
     <c:if test="${not empty sampleAnnotations}">
-        <h3 id="expand_button" style="">Other information</h3>
-        <div class="output_form more_sample_meta_data" style="display: none">
+        <h3 id="expand_button" style="">Sample meta data</h3>
+        <div class="output_form more_sample_meta_data">
             <table class="simple_table">
                 <tbody>
                 <c:forEach var="annotation" items="${sampleAnnotations}" varStatus="status">
