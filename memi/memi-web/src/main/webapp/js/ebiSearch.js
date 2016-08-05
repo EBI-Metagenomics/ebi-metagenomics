@@ -16,6 +16,23 @@ var FACET_SOURCE = "Source";
 Behaviour methods
  */
 
+window.onunload = function(event) {
+    console.log("Unloading");
+    var searchElementID = "local-searchbox";
+    var searchElement = document.getElementById(searchElementID);
+    if (searchElement != null) {
+        saveFormState();
+    }
+};
+
+window.onload = function(event) {
+    console.log("Loading");
+    var searchElementID = "local-searchbox";
+    var searchElement = document.getElementById(searchElementID);
+    loadCss();
+    restoreFormState();
+};
+
 var loadCss = function() {
     //load css for the modal box
     var linkElement = document.createElement("link");
@@ -93,16 +110,6 @@ var restoreFormState = function() {
         }
     }
 
-};
-
-window.onunload = function(event) {
-    console.log("Unloading");
-    saveFormState();
-};
-
-window.onload = function(event) {
-    console.log("Unloading");
-    restoreFormState();
 };
 
 var displayPagination = function(results, dataType) {
@@ -184,7 +191,52 @@ var displayFacetGroup = function(facetGroup, container, dataType, checkedFacets)
         facetContainerDiv.className = "extra-pad";
         facetContainerDiv.appendChild(facetDiv);
 
+        if (facet.children != null) {
+            displayHierarchicalChildren(facetContainerDiv, facet, 1, checkedFacets, dataType);
+        }
         container.appendChild(facetContainerDiv);
+    }
+};
+
+var displayHierarchicalChildren = function(container, facet, indent, checkedFacets, dataType) {
+    var children = facet.children;
+    console.log("Facet with children: " + children.length);
+    for (var i = 0; i < children.length; i++) {
+        var childFacet = children[i];
+        console.log("Child facet: " + indent + " name: " + childFacet.label);
+
+        var identifier = dataType + FACET_SEPARATOR + facet.value + FACET_SEPARATOR + childFacet.value;
+
+        var facetDiv = document.createElement("div");
+        var facetInput = document.createElement("input");
+        facetInput.id = identifier;
+        facetInput.name = facet.id;
+        facetInput.form = "local-search";
+        facetInput.type = "checkbox";
+        facetInput.value = childFacet.value;
+        if (checkedFacets != null && checkedFacets.indexOf(facetInput.value) >= 0) {
+            facetInput.checked = true;
+        }
+        facetInput.addEventListener("change", function(event) {
+            prepareSearchSettings(true);
+            runDomainSearch(searchSettings[dataType]);
+        });
+
+        var facetLabel = document.createElement("label");
+        facetLabel.htmlFor = facetInput.id;
+        facetLabel.innerHTML = childFacet.label + " (" + childFacet.count + ")";
+
+        for (var j=0; j < indent; j++) {
+
+        }
+        facetDiv.appendChild(facetInput);
+        facetDiv.appendChild(facetLabel);
+        container.appendChild(facetDiv);
+
+        if (childFacet.children != null) {
+            indent++;
+            displayHierarchicalChildren(container, childFacet.children, indent, checkedFacets, dataType);
+        }
     }
 };
 
@@ -504,6 +556,7 @@ var runDomainSearch = function(searchSettings) {
         "start": searchSettings.page * searchSettings.resultsNum,
         "fields": searchSettings.fields,
         "facetcount": searchSettings.facetNum,
+        "facetsdepth": 2,
     };
 
     if (searchSettings.facets != null) {
@@ -710,7 +763,6 @@ var search = function search() {
     }, function(httpReq) {
         console.log("Error: Failed to load page template");
     });
-
 };
 
 var PROJECT_RESULTS_NUM = 10;
