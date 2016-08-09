@@ -171,6 +171,12 @@
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/tablequerywrapper.js"></script>
 
+    <%--bonsai jquery tree plugin --%>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.bonsai.js"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/jquery.bonsai.css" type="text/css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/svg-icons.css" type="text/css"/>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.qubit.js"></script>
+
     <noscript>
         <style type="text/css">
            /*remove the Krona box  and all charts tabs when no javascript*/
