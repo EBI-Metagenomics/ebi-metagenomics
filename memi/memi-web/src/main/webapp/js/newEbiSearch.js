@@ -13,7 +13,7 @@ var DATA_TYPES = [PROJECT, SAMPLE, RUN];
 var FACET_SOURCE = "Source";
 
 /*
-Behaviour methods
+ Behaviour methods
  */
 
 window.onunload = function(event) {
@@ -158,17 +158,6 @@ var displayPagination = function(results, dataType) {
 
 };
 
-var isFacetGroupHierarchical = function(facetGroup) {
-    var isHierarchical = false;
-    for (var i=0; i < facetGroup.facetValues.length; i++) {
-        if (facetGroup.facetValues[i].hasOwnProperty("children")) {
-            isHierarchical = true;
-            break;
-        }
-    }
-    return isHierarchical;
-};
-
 var displayFacetGroup = function(facetGroup, container, dataType, checkedFacets) {
 
     var facetGroupContainer = document.createElement("div");
@@ -208,77 +197,33 @@ var displayFacetGroup = function(facetGroup, container, dataType, checkedFacets)
         facetContainerDiv.className = "extra-pad";
         facetContainerDiv.appendChild(facetItem);
 
+        if (facet.children != null) {
+            displayHierarchicalChildren(facetContainerDiv, facet, 1, checkedFacets, dataType);
+            $('#' + groupContainerId).bonsai({
+                expandAll: true,
+                checkboxes: true
+            });
+        }
         facetGroupContainer.appendChild(facetContainerDiv);
     }
 };
 
-var displayHierarchicalFacetGroup = function(facetGroup, container, dataType, checkedFacets) {
-
-    var facetGroupContainer = document.createElement("div");
-    var groupContainerId = dataType + FACET_SEPARATOR + facetGroup.id;
-    //facetGroupContainer.id = groupContainerId;
-    container.appendChild(facetGroupContainer);
-
-    facetGroupTitle = document.createElement("h4");
-    facetGroupTitle.innerHTML = facetGroup.label;
-    facetGroupContainer.appendChild(facetGroupTitle);
-
-    var facetGroupList = document.createElement("ul");
-    facetGroupList.id = groupContainerId;
-    facetGroupContainer.appendChild(facetGroupList);
-    for (var i=0; i < facetGroup.facetValues.length; i++) {
-        facet = facetGroup.facetValues[i];
-        var identifier = dataType + FACET_SEPARATOR + facetGroup.id + FACET_SEPARATOR + facet.value;
-        facetItem = document.createElement("li");
-        facetInput = document.createElement("input");
-        facetInput.id = identifier;
-        facetInput.name = facetGroup.id;
-        facetInput.form = "local-search";
-        facetInput.type = "checkbox";
-        facetInput.value = facet.value;
-        if (checkedFacets != null && checkedFacets.indexOf(facetInput.value) >= 0) {
-            facetInput.checked = true;
-        }
-        facetInput.addEventListener("change", function(event) {
-            prepareSearchSettings(true);
-            runDomainSearch(searchSettings[dataType]);
-        });
-
-        facetItem.appendChild(facetInput);
-        facetItem.appendChild(document.createTextNode(facet.label + " (" + facet.count + ")"));
-
-        if (facet.children != null) {
-            var facetChildList = document.createElement("ul");
-            displayHierarchicalChildren(facetChildList, facet, facetGroup, dataType, facetInput.value, checkedFacets);
-            facetItem.appendChild(facetChildList);
-            //TODO MAQ this is a quick fix for a bug in hierarchical searches - Nicola will fix this soon
-            facetGroupList.appendChild(facetItem);
-        }
-    }
-    $("#"+groupContainerId).bonsai({
-        checkboxes: true,
-        handleDuplicateCheckboxes: true
-    });
-
-};
-
-var displayHierarchicalChildren = function(container, facet, facetGroup, dataType, parentPath, checkedFacets) {
+var displayHierarchicalChildren = function(container, facet, indent, checkedFacets, dataType) {
     var children = facet.children;
     console.log("Facet with children: " + children.length);
     for (var i = 0; i < children.length; i++) {
         var childFacet = children[i];
-        console.log("Child facet: " + facetGroup.id + " name: " + childFacet.label);
+        console.log("Child facet: " + indent + " name: " + childFacet.label);
 
-        var value = parentPath + "/" + childFacet.value;
-        var identifier = dataType + FACET_SEPARATOR + facetGroup.id + FACET_SEPARATOR + value;
+        var identifier = dataType + FACET_SEPARATOR + facet.value + FACET_SEPARATOR + childFacet.value;
 
-        var facetItem = document.createElement("li");
+        var facetDiv = document.createElement("div");
         var facetInput = document.createElement("input");
         facetInput.id = identifier;
-        facetInput.name = facetGroup.id;
+        facetInput.name = facet.id;
         facetInput.form = "local-search";
         facetInput.type = "checkbox";
-        facetInput.value = value;
+        facetInput.value = childFacet.value;
         if (checkedFacets != null && checkedFacets.indexOf(facetInput.value) >= 0) {
             facetInput.checked = true;
         }
@@ -287,14 +232,23 @@ var displayHierarchicalChildren = function(container, facet, facetGroup, dataTyp
             runDomainSearch(searchSettings[dataType]);
         });
 
+        var facetLabel = document.createElement("label");
+        facetLabel.htmlFor = facetInput.id;
+        facetLabel.innerHTML = childFacet.label + " (" + childFacet.count + ")";
+
+        var indentText = "";
+        for (var j=0; j < indent; j++) {
+            indentText += "-->";
+        }
+        facetItem.appendChild(document.createTextNode(indentText));
+
         facetItem.appendChild(facetInput);
-        facetItem.appendChild(document.createTextNode(childFacet.label + " (" + childFacet.count + ")"));
+        facetItem.appendChild(facetLabel);
         container.appendChild(facetItem);
 
         if (childFacet.children != null) {
-            var facetChildList = document.createElement("ul");
-            displayHierarchicalChildren(container, childFacet, facetGroup, dataType, facetInput.value, checkedFacets);
-            facetItem.appendChild(facetChildList);
+            indent++;
+            displayHierarchicalChildren(container, childFacet, indent, checkedFacets, dataType);
         }
     }
 };
@@ -307,21 +261,11 @@ var displayFacets = function(facetGroups, dataType, checkedFacets) {
         facetContainerTitle.innerHTML = "Filter your results";
 
         facetContainer.appendChild(facetContainerTitle);
-        //TODO MAQ tidy this up later
-        if (dataType == SAMPLE) {
-            displaySampleRangeInputs(facetContainer);
-        }
         for (var i =0; i < facetGroups.length; i++) {
             var facetGroup = facetGroups[i];
             if (facetGroup.label !== FACET_SOURCE) {
-                if (isFacetGroupHierarchical(facetGroup)) {
-                    displayHierarchicalFacetGroup(facetGroup, facetContainer, dataType, checkedFacets);
-                    console.log("FacetGroup Hierarchical " + facetGroup.label);
-                } else {
-                    displayFacetGroup(facetGroup, facetContainer, dataType, checkedFacets);
-                    console.log("FacetGroup " + facetGroup.label);
-                }
-
+                displayFacetGroup(facetGroup, facetContainer, dataType, checkedFacets);
+                console.log("FacetGroup " + facetGroup.label);
             }
         }
 
@@ -338,69 +282,6 @@ var displayFacets = function(facetGroups, dataType, checkedFacets) {
     }
 };
 
-var displaySampleRangeInputs = function(container, dataType) {
-    var rangeContainerDiv = document.createElement("div");
-    container.appendChild(rangeContainerDiv);
-
-    tempRangeTitle = document.createElement("h4");
-    tempRangeTitle.innerHTML = "Temperature";
-    rangeContainerDiv.appendChild(tempRangeTitle);
-
-    tempInput = document.createElement("input");
-    tempInput.type = "range";
-    tempInput.setAttribute("multiple", "");
-    tempInput.valueLow = 0;
-    tempInput.valueHigh = 100;
-    tempInput.setAttribute("value", "0,100");
-    tempInput.id = dataType + FACET_SEPARATOR + "temperature";
-
-    tempLabel = document.createElement("label");
-    tempLabel.innerHTML = " °C";
-    tempLabel.htmlFor = tempInput.id;
-    rangeContainerDiv.appendChild(tempInput);
-    rangeContainerDiv.appendChild(tempLabel);
-
-    depthRangeTitle = document.createElement("h4");
-    depthRangeTitle.innerHTML = "Depth";
-    rangeContainerDiv.appendChild(depthRangeTitle);
-
-    depthInput = document.createElement("input");
-    depthInput.type = "range";
-    depthInput.setAttribute("multiple", "");
-    depthInput.valueLow = 0;
-    depthInput.valueHigh = 100;
-    depthInput.setAttribute("value", "0,100");
-    depthInput.id = dataType + FACET_SEPARATOR + "depth";
-
-    depthLabel = document.createElement("label");
-    depthLabel.innerHTML = " m";
-    depthLabel.htmlFor = depthInput.id;
-    rangeContainerDiv.appendChild(depthInput);
-    rangeContainerDiv.appendChild(depthLabel);
-
-
-    phRangeTitle = document.createElement("h4");
-    phRangeTitle.innerHTML = "pH";
-    rangeContainerDiv.appendChild(phRangeTitle);
-
-    phInput = document.createElement("input");
-    phInput.type = "range";
-    phInput.setAttribute("multiple", "");
-    phInput.setAttribute("valueLow", "0");
-    phInput.setAttribute("valueHigh", "14");
-    phInput.setAttribute("value", "0,100"); //this seems to be a percentage
-    phInput.id = dataType + FACET_SEPARATOR + "ph";
-
-    phLabel = document.createElement("label");
-    phLabel.innerHTML = " pH";
-    phLabel.htmlFor = phInput.id;
-    rangeContainerDiv.appendChild(phInput);
-    rangeContainerDiv.appendChild(phLabel);
-
-    multirange(tempInput);
-    multirange(depthInput);
-    multirange(phInput);
-};
 
 /**
  * Setup for project table
@@ -588,7 +469,8 @@ var displayProjects = function(httpReq) {
     console.log("Search returned " + results.hitCount + " project results");
     setTabText(results.hitCount, PROJECT);
     displayProjectData(results);
-    displayFacets(results.facets, PROJECT, null);
+    displayBonsaiFacets(results.facets, PROJECT, null);
+    //displayFacets(results.facets, PROJECT, null);
     displayPagination(results, PROJECT);
     reapplySearchSettings();
 };
@@ -600,7 +482,8 @@ var displaySamples = function(httpReq) {
     console.log("Search returned " + results.hitCount + " sample results");
     setTabText(results.hitCount, SAMPLE);
     displaySampleData(results);
-    displayFacets(results.facets, SAMPLE, null);
+    displayBonsaiFacets(results.facets, SAMPLE, null);
+    //displayFacets(results.facets, SAMPLE, null);
     displayPagination(results, SAMPLE);
     reapplySearchSettings();
 };
@@ -612,7 +495,8 @@ var displayRuns = function(httpReq) {
     console.log("Search returned " + results.hitCount + " run results");
     setTabText(results.hitCount, RUN);
     displayRunData(results);
-    displayFacets(results.facets, RUN, null);
+    displayBonsaiFacets(results.facets, RUN, null);
+    //displayFacets(results.facets, RUN, null);
     displayPagination(results, RUN);
     reapplySearchSettings();
 };
@@ -688,7 +572,7 @@ var runDomainSearch = function(searchSettings) {
         "start": searchSettings.page * searchSettings.resultsNum,
         "fields": searchSettings.fields,
         "facetcount": searchSettings.facetNum,
-        "facetsdepth": 2
+        "facetsdepth": 3,
     };
 
     if (searchSettings.facets != null) {
@@ -704,7 +588,7 @@ var runDomainSearch = function(searchSettings) {
 };
 
 var runNewSearch = function() {
-    
+
     for(var i=0; i < DATA_TYPES.length; i++) {
         var dataType = DATA_TYPES[i];
         var searchSetting = searchSettings[dataType];
@@ -780,10 +664,10 @@ var displayTabHeader = function() {
                 setTabText(null, dataType, tabLink);
 
                 /*
-                if (data != null && data[dataType].numberOfHits == 0) {
-                    disabledList.push(parseInt(i));
-                }
-                */
+                 if (data != null && data[dataType].numberOfHits == 0) {
+                 disabledList.push(parseInt(i));
+                 }
+                 */
                 tabItem.appendChild(tabLink)
                 tabList.appendChild(tabItem);
             }
@@ -851,7 +735,6 @@ var reapplySearchSettings = function(searchText) {
             var searchSetting = searchSettings[dataType];
             var facetContainer = document.getElementById(dataType + "-searchFacets");
             if (facetContainer != null) {
-
                 if (searchSetting.facets != null) {
                     var facets = searchSetting.facets;
                     var facetTypes = Object.keys(facets);

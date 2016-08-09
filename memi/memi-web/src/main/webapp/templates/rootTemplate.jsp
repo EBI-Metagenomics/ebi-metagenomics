@@ -176,6 +176,10 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/jquery.bonsai.css" type="text/css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/svg-icons.css" type="text/css"/>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.qubit.js"></script>
+    <%--multirange input plugin --%>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/multirange.css" type="text/css"/>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/multirange.js"></script>
+
 
     <noscript>
         <style type="text/css">
