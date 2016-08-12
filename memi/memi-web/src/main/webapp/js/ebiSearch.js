@@ -6,11 +6,116 @@ var HIDDEN_CLASS = "this_hide";
 var FACET_SEPARATOR = "____";
 var SEARCH_TAB_CLASS = "search-tab";
 var BASE_URL = "https://wwwdev.ebi.ac.uk/ebisearch/ws/rest/";
-var PROJECT = "Projects";
-var SAMPLE = "Samples";
-var RUN = "Runs";
-var DATA_TYPES = [PROJECT, SAMPLE, RUN];
+
 var FACET_SOURCE = "Source";
+
+var SearchSettings = function(Object) {
+    var PROJECT_RESULTS_NUM = 10;
+    var SAMPLE_RESULTS_NUM = 10;
+    var RUN_RESULTS_NUM = 20;
+    var DEFAULT_SEARCH_START = 0;
+    var FACET_NUM = 10;
+
+    var PROJECT = "Projects";
+    var SAMPLE = "Samples";
+    var RUN = "Runs";
+    var DATA_TYPES = [PROJECT, SAMPLE, RUN];
+
+    PROJECT = projectSettings;
+    SAMPLE = sampleSettings;
+    RUN = runSettings;
+
+    var searchText = "";
+
+//need to define these objects after definition of callback functions
+    var projectSettings = {
+        type: PROJECT,
+        resultsNum: PROJECT_RESULTS_NUM,
+        page: DEFAULT_SEARCH_START,
+        facetNum: FACET_NUM,
+        facets: null,
+        domain: "metagenomics_projects",
+        fields: "id,name,description,biome_name,METAGENOMICS_SAMPLE",
+        successCallback: displayProjects,
+        errorCallback: projectError
+    };
+
+    var sampleSettings = {
+        type: SAMPLE,
+        resultsNum: SAMPLE_RESULTS_NUM,
+        page: DEFAULT_SEARCH_START,
+        facetNum: FACET_NUM,
+        facets: null,
+        domain: "metagenomics_samples",
+        fields: "id,name,description,experiment_type,METAGENOMICS_PROJECT",
+        successCallback: displaySamples,
+        errorCallback: sampleError
+    };
+
+    var runSettings = {
+        type: RUN,
+        resultsNum: RUN_RESULTS_NUM,
+        page: DEFAULT_SEARCH_START,
+        facetNum: FACET_NUM,
+        facets: null,
+        domain: "metagenomics_runs",
+        fields: "id,experiment_type,pipeline_version,METAGENOMICS_SAMPLE,METAGENOMICS_PROJECT",
+        successCallback: displayRuns,
+        errorCallback: runError
+    };
+
+    var displayProjects = function(httpReq) {
+        console.log("displayProjects");
+        var resultString = httpReq.response;
+        var results = JSON.parse(resultString);
+        console.log("Search returned " + results.hitCount + " project results");
+        setTabText(results.hitCount, PROJECT);
+        displayProjectData(results);
+        displayFacets(results.facets, PROJECT, null);
+        displayPagination(results, PROJECT);
+        reapplySearchSettings();
+    };
+
+    var displaySamples = function(httpReq) {
+        console.log("displaySamples");
+        var resultString = httpReq.response;
+        var results = JSON.parse(resultString);
+        console.log("Search returned " + results.hitCount + " sample results");
+        setTabText(results.hitCount, SAMPLE);
+        displaySampleData(results);
+        displayFacets(results.facets, SAMPLE, null);
+        displayPagination(results, SAMPLE);
+        reapplySearchSettings();
+    };
+
+    var displayRuns = function(httpReq) {
+        console.log("displayRuns");
+        var resultString = httpReq.response;
+        var results = JSON.parse(resultString);
+        console.log("Search returned " + results.hitCount + " run results");
+        setTabText(results.hitCount, RUN);
+        displayRunData(results);
+        displayFacets(results.facets, RUN, null);
+        displayPagination(results, RUN);
+        reapplySearchSettings();
+    };
+
+    var projectError = function(httpReq) {
+        console.log("Error: Project Search error");
+    }
+
+    var sampleError = function(httpReq) {
+        console.log("Error: Sample Search error");
+    }
+
+    var runError = function(httpReq) {
+        console.log("Error: Run Search error");
+    }
+};
+
+var searchSettings = new SearchSettings();
+
+
 
 /*
 Behaviour methods
@@ -581,46 +686,6 @@ var displayRunData = function(results) {
     }
 };
 
-var displayProjects = function(httpReq) {
-    console.log("displayProjects");
-    var resultString = httpReq.response;
-    var results = JSON.parse(resultString);
-    console.log("Search returned " + results.hitCount + " project results");
-    setTabText(results.hitCount, PROJECT);
-    displayProjectData(results);
-    displayFacets(results.facets, PROJECT, null);
-    displayPagination(results, PROJECT);
-    reapplySearchSettings();
-};
-
-var displaySamples = function(httpReq) {
-    console.log("displaySamples");
-    var resultString = httpReq.response;
-    var results = JSON.parse(resultString);
-    console.log("Search returned " + results.hitCount + " sample results");
-    setTabText(results.hitCount, SAMPLE);
-    displaySampleData(results);
-    displayFacets(results.facets, SAMPLE, null);
-    displayPagination(results, SAMPLE);
-    reapplySearchSettings();
-};
-
-var displayRuns = function(httpReq) {
-    console.log("displayRuns");
-    var resultString = httpReq.response;
-    var results = JSON.parse(resultString);
-    console.log("Search returned " + results.hitCount + " run results");
-    setTabText(results.hitCount, RUN);
-    displayRunData(results);
-    displayFacets(results.facets, RUN, null);
-    displayPagination(results, RUN);
-    reapplySearchSettings();
-};
-
-var searchError = function(httpReq) {
-    console.log("Error: Search error");
-}
-
 var runAjax = function(method, url, parameters, callback, errCallback) {
     var httpReq = new XMLHttpRequest();
     httpReq.open(method, url);
@@ -708,6 +773,7 @@ var runNewSearch = function() {
     for(var i=0; i < DATA_TYPES.length; i++) {
         var dataType = DATA_TYPES[i];
         var searchSetting = searchSettings[dataType];
+        searchSetting.facets = null;
         runDomainSearch(searchSetting);
     }
 
@@ -805,10 +871,10 @@ var prepareSearchSettings = function(resetPage) {
     var searchText = "";
     if (searchElement) {
         searchText = searchElement.value;
-        for(var i=0; i < DATA_TYPES.length; i++) {
-            var dataType = DATA_TYPES[i];
+        for(var i=0; i < searchSettings.DATA_TYPES.length; i++) {
+            var dataType = searchSettings.DATA_TYPES[i];
             var searchSetting = searchSettings[dataType];
-            searchSetting.searchText = searchText;
+            searchSettings.searchText = searchText;
             var facetContainer = document.getElementById(dataType + "-searchFacets");
             if (facetContainer != null) {
                 var facets = {};
@@ -824,7 +890,7 @@ var prepareSearchSettings = function(resetPage) {
                         facets[type].push(value);
                     }
                 }
-                searchSetting.facets = facets;
+                searchSettings.facets = facets;
             } else {
                 console.log("Error: Expected to find div " + dataType + "-searchFacets");
             }
@@ -893,58 +959,11 @@ var search = function search() {
         reapplySearchSettings(searchText);
         displayTabHeader();
         runNewSearch();
+        console.log("about to push state")
+        history.pushState(null, "search", "/metagenomics/search")
     }, function(httpReq) {
         console.log("Error: Failed to load page template");
     });
 };
 
-var PROJECT_RESULTS_NUM = 10;
-var SAMPLE_RESULTS_NUM = 10;
-var RUN_RESULTS_NUM = 20;
-var DEFAULT_SEARCH_START = 0;
-var FACET_NUM = 10;
 
-//need to define these objects after definition of callback functions
-var projectSearchSettings = {
-    type: PROJECT,
-    resultsNum: PROJECT_RESULTS_NUM,
-    page: DEFAULT_SEARCH_START,
-    facetNum: FACET_NUM,
-    searchText: "",
-    facets: null,
-    domain: "metagenomics_projects",
-    fields: "id,name,description,biome_name,METAGENOMICS_SAMPLE",
-    successCallback: displayProjects,
-    errorCallback: searchError
-};
-
-var sampleSearchSettings = {
-    type: SAMPLE,
-    resultsNum: SAMPLE_RESULTS_NUM,
-    page: DEFAULT_SEARCH_START,
-    facetNum: FACET_NUM,
-    searchText: "",
-    facets: null,
-    domain: "metagenomics_samples",
-    fields: "id,name,description,experiment_type,METAGENOMICS_PROJECT",
-    successCallback: displaySamples,
-    errorCallback: searchError
-};
-
-var runSearchSettings = {
-    type: RUN,
-    resultsNum: RUN_RESULTS_NUM,
-    page: DEFAULT_SEARCH_START,
-    facetNum: FACET_NUM,
-    searchText: "",
-    facets: null,
-    domain: "metagenomics_runs",
-    fields: "id,experiment_type,pipeline_version,METAGENOMICS_SAMPLE,METAGENOMICS_PROJECT",
-    successCallback: displayRuns,
-    errorCallback: searchError
-};
-
-var searchSettings = {};
-searchSettings[PROJECT] = projectSearchSettings;
-searchSettings[SAMPLE] = sampleSearchSettings;
-searchSettings[RUN] = runSearchSettings;
