@@ -9,113 +9,139 @@ var BASE_URL = "https://wwwdev.ebi.ac.uk/ebisearch/ws/rest/";
 
 var FACET_SOURCE = "Source";
 
-var SearchSettings = function(Object) {
-    var PROJECT_RESULTS_NUM = 10;
-    var SAMPLE_RESULTS_NUM = 10;
-    var RUN_RESULTS_NUM = 20;
-    var DEFAULT_SEARCH_START = 0;
-    var FACET_NUM = 10;
+var GLOBAL_SEARCH_SETTINGS = {
+    PROJECT_RESULTS_NUM: 10,
+    SAMPLE_RESULTS_NUM: 10,
+    RUN_RESULTS_NUM: 20,
+    DEFAULT_SEARCH_START: 0,
+    FACET_NUM: 10,
 
-    var PROJECT = "Projects";
-    var SAMPLE = "Samples";
-    var RUN = "Runs";
-    var DATA_TYPES = [PROJECT, SAMPLE, RUN];
-
-    PROJECT = projectSettings;
-    SAMPLE = sampleSettings;
-    RUN = runSettings;
-
-    var searchText = "";
-
-//need to define these objects after definition of callback functions
-    var projectSettings = {
-        type: PROJECT,
-        resultsNum: PROJECT_RESULTS_NUM,
-        page: DEFAULT_SEARCH_START,
-        facetNum: FACET_NUM,
-        facets: null,
-        domain: "metagenomics_projects",
-        fields: "id,name,description,biome_name,METAGENOMICS_SAMPLE",
-        successCallback: displayProjects,
-        errorCallback: projectError
-    };
-
-    var sampleSettings = {
-        type: SAMPLE,
-        resultsNum: SAMPLE_RESULTS_NUM,
-        page: DEFAULT_SEARCH_START,
-        facetNum: FACET_NUM,
-        facets: null,
-        domain: "metagenomics_samples",
-        fields: "id,name,description,experiment_type,METAGENOMICS_PROJECT",
-        successCallback: displaySamples,
-        errorCallback: sampleError
-    };
-
-    var runSettings = {
-        type: RUN,
-        resultsNum: RUN_RESULTS_NUM,
-        page: DEFAULT_SEARCH_START,
-        facetNum: FACET_NUM,
-        facets: null,
-        domain: "metagenomics_runs",
-        fields: "id,experiment_type,pipeline_version,METAGENOMICS_SAMPLE,METAGENOMICS_PROJECT",
-        successCallback: displayRuns,
-        errorCallback: runError
-    };
-
-    var displayProjects = function(httpReq) {
-        console.log("displayProjects");
-        var resultString = httpReq.response;
-        var results = JSON.parse(resultString);
-        console.log("Search returned " + results.hitCount + " project results");
-        setTabText(results.hitCount, PROJECT);
-        displayProjectData(results);
-        displayFacets(results.facets, PROJECT, null);
-        displayPagination(results, PROJECT);
-        reapplySearchSettings();
-    };
-
-    var displaySamples = function(httpReq) {
-        console.log("displaySamples");
-        var resultString = httpReq.response;
-        var results = JSON.parse(resultString);
-        console.log("Search returned " + results.hitCount + " sample results");
-        setTabText(results.hitCount, SAMPLE);
-        displaySampleData(results);
-        displayFacets(results.facets, SAMPLE, null);
-        displayPagination(results, SAMPLE);
-        reapplySearchSettings();
-    };
-
-    var displayRuns = function(httpReq) {
-        console.log("displayRuns");
-        var resultString = httpReq.response;
-        var results = JSON.parse(resultString);
-        console.log("Search returned " + results.hitCount + " run results");
-        setTabText(results.hitCount, RUN);
-        displayRunData(results);
-        displayFacets(results.facets, RUN, null);
-        displayPagination(results, RUN);
-        reapplySearchSettings();
-    };
-
-    var projectError = function(httpReq) {
-        console.log("Error: Project Search error");
-    }
-
-    var sampleError = function(httpReq) {
-        console.log("Error: Sample Search error");
-    }
-
-    var runError = function(httpReq) {
-        console.log("Error: Run Search error");
-    }
+    PROJECT: "Projects",
+    PROJECT_DOMAIN: "metagenomics_projects",
+    PROJECT_FIELDS: "id,name,description,biome_name,METAGENOMICS_SAMPLE",
+    SAMPLE: "Samples",
+    SAMPLE_DOMAIN: "metagenomics_samples",
+    SAMPLE_FIELDS: "id,name,description,experiment_type,METAGENOMICS_PROJECT",
+    RUN: "Runs",
+    RUN_DOMAIN: "metagenomics_runs",
+    RUN_FIELDS: "id,experiment_type,pipeline_version,METAGENOMICS_SAMPLE,METAGENOMICS_PROJECT",
 };
 
-var searchSettings = new SearchSettings();
+var displayProjects = function(httpReq) {
+    console.log("displayProjects");
+    var resultString = httpReq.response;
+    var results = JSON.parse(resultString);
+    console.log("Search returned " + results.hitCount + " project results");
+    setTabText(results.hitCount, GLOBAL_SEARCH_SETTINGS.PROJECT);
+    displayProjectData(results);
+    displayFacets(results.facets, GLOBAL_SEARCH_SETTINGS.PROJECT, null);
+    displayPagination(results, GLOBAL_SEARCH_SETTINGS.PROJECT);
+    reapplySearchSettings();
+};
 
+var displaySamples = function(httpReq) {
+    console.log("displaySamples");
+    var resultString = httpReq.response;
+    var results = JSON.parse(resultString);
+    console.log("Search returned " + results.hitCount + " sample results");
+    setTabText(results.hitCount, GLOBAL_SEARCH_SETTINGS.SAMPLE);
+    displaySampleData(results);
+    displayFacets(results.facets, GLOBAL_SEARCH_SETTINGS.SAMPLE, null);
+    displayPagination(results, GLOBAL_SEARCH_SETTINGS.SAMPLE);
+    reapplySearchSettings();
+};
 
+var displayRuns = function(httpReq) {
+    console.log("displayRuns");
+    var resultString = httpReq.response;
+    var results = JSON.parse(resultString);
+    console.log("Search returned " + results.hitCount + " run results");
+    setTabText(results.hitCount, GLOBAL_SEARCH_SETTINGS.RUN);
+    displayRunData(results);
+    displayFacets(results.facets, GLOBAL_SEARCH_SETTINGS.RUN, null);
+    displayPagination(results, GLOBAL_SEARCH_SETTINGS.RUN);
+    reapplySearchSettings();
+};
+
+var projectError = function(httpReq) {
+    console.log("Error: Project Search error");
+}
+
+var sampleError = function(httpReq) {
+    console.log("Error: Sample Search error");
+}
+
+var runError = function(httpReq) {
+    console.log("Error: Run Search error");
+}
+
+function SearchSettings (type,
+                         resultsNum,
+                         page,
+                         facetNum,
+                         facets,
+                         domain,
+                         fields,
+                         successCallback,
+                         errorCallback) {
+    this.type = type;
+    this.resultsNum = resultsNum;
+    this.page = page;
+    this.facetNum = facetNum;
+    this.facets = facets;
+    this.domain = domain;
+    this.fields = fields;
+    this.successCallback = successCallback;
+    this.errorCallback = errorCallback;
+    this.searchText = "";
+};
+
+var projectSettings = new SearchSettings(
+    GLOBAL_SEARCH_SETTINGS.PROJECT,
+    GLOBAL_SEARCH_SETTINGS.PROJECT_RESULTS_NUM,
+    GLOBAL_SEARCH_SETTINGS.DEFAULT_SEARCH_START,
+    GLOBAL_SEARCH_SETTINGS.FACET_NUM,
+    null,
+    GLOBAL_SEARCH_SETTINGS.PROJECT_DOMAIN,
+    GLOBAL_SEARCH_SETTINGS.PROJECT_FIELDS,
+    displayProjects,
+    projectError
+);
+
+var sampleSettings = new SearchSettings(
+    GLOBAL_SEARCH_SETTINGS.SAMPLE,
+    GLOBAL_SEARCH_SETTINGS.SAMPLE_RESULTS_NUM,
+    GLOBAL_SEARCH_SETTINGS.DEFAULT_SEARCH_START,
+    GLOBAL_SEARCH_SETTINGS.FACET_NUM,
+    null,
+    GLOBAL_SEARCH_SETTINGS.SAMPLE_DOMAIN,
+    GLOBAL_SEARCH_SETTINGS.SAMPLE_FIELDS,
+    displaySamples,
+    sampleError
+);
+
+var runSettings = new SearchSettings(
+    GLOBAL_SEARCH_SETTINGS.RUN,
+    GLOBAL_SEARCH_SETTINGS.RUN_RESULTS_NUM,
+    GLOBAL_SEARCH_SETTINGS.DEFAULT_SEARCH_START,
+    GLOBAL_SEARCH_SETTINGS.FACET_NUM,
+    null,
+    GLOBAL_SEARCH_SETTINGS.RUN_DOMAIN,
+    GLOBAL_SEARCH_SETTINGS.RUN_FIELDS,
+    displayRuns,
+    sampleError
+);
+
+var DatatypeSettings = {};
+DatatypeSettings.DATA_TYPES = [
+    GLOBAL_SEARCH_SETTINGS.PROJECT,
+    GLOBAL_SEARCH_SETTINGS.SAMPLE,
+    GLOBAL_SEARCH_SETTINGS.RUN
+];
+
+DatatypeSettings[GLOBAL_SEARCH_SETTINGS.PROJECT] = projectSettings;
+DatatypeSettings[GLOBAL_SEARCH_SETTINGS.SAMPLE] = sampleSettings;
+DatatypeSettings[GLOBAL_SEARCH_SETTINGS.RUN] = runSettings;
 
 /*
 Behaviour methods
@@ -219,6 +245,8 @@ var restoreFormState = function() {
 
 var displayPagination = function(results, dataType) {
     console.log("Adding pagination for " + dataType);
+    var searchSetting = DatatypeSettings[dataType];
+
     paginationContainer = document.getElementById(dataType + "-searchPagination");
     if (paginationContainer != null) {
         paginationContainer.innerHTML = "";
@@ -227,13 +255,12 @@ var displayPagination = function(results, dataType) {
         prevButton.id = dataType + "-prevPage";
         prevButton.value = "Previous";
 
-        if (projectSearchSettings.page <= 0 ) {
+        if (searchSetting.page <= 0 ) {
             prevButton.disabled = true;
         }
         prevButton.addEventListener('click', function(event) {
-            var searchSetting = searchSettings[dataType];
             searchSetting.page--;
-            prepareSearchSettings(false);
+            copyFormValuesToSettings(false);
             runDomainSearch(searchSetting);
         });
 
@@ -241,19 +268,19 @@ var displayPagination = function(results, dataType) {
         nextButton.type = "button";
         nextButton.id = dataType + "-nextPage";
         nextButton.value = "Next";
-        var maxPage = Math.ceil(results.hitCount/projectSearchSettings.resultsNum);
-        if ((projectSearchSettings.page+1) >= maxPage) {
+        var maxPage = Math.ceil(results.hitCount/searchSetting.resultsNum);
+        if ((searchSetting.page+1) >= maxPage) {
             nextButton.disabled = true;
         }
         nextButton.addEventListener('click', function(event) {
-            var searchSetting = searchSettings[dataType];
+            var searchSetting = SearchSettings[dataType];
             searchSetting.page++;
-            prepareSearchSettings(false);
+            copyFormValuesToSettings(false);
             runDomainSearch(searchSetting);
         });
 
         var textSpan = document.createElement("span");
-        textSpan.textContent = " Page " + (projectSearchSettings.page+1) + " of " + (maxPage) + " ";
+        textSpan.textContent = " Page " + (searchSetting.page+1) + " of " + (maxPage) + " ";
         paginationContainer.appendChild(prevButton);
         paginationContainer.appendChild(textSpan);
         paginationContainer.appendChild(nextButton);
@@ -298,7 +325,7 @@ var displayFacetGroup = function(facetGroup, container, dataType, checkedFacets)
             facetInput.checked = true;
         }
         facetInput.addEventListener("change", function(event) {
-            prepareSearchSettings(true);
+            copyFormValuesToSettings(true);
             runDomainSearch(searchSettings[dataType]);
         });
 
@@ -345,7 +372,7 @@ var displayHierarchicalFacetGroup = function(facetGroup, container, dataType, ch
             facetInput.checked = true;
         }
         facetInput.addEventListener("change", function(event) {
-            prepareSearchSettings(true);
+            copyFormValuesToSettings(true);
             runDomainSearch(searchSettings[dataType]);
         });
 
@@ -388,7 +415,7 @@ var displayHierarchicalChildren = function(container, facet, facetGroup, dataTyp
             facetInput.checked = true;
         }
         facetInput.addEventListener("change", function(event) {
-            prepareSearchSettings(true);
+            copyFormValuesToSettings(true);
             runDomainSearch(searchSettings[dataType]);
         });
 
@@ -413,7 +440,7 @@ var displayFacets = function(facetGroups, dataType, checkedFacets) {
 
         facetContainer.appendChild(facetContainerTitle);
         //TODO MAQ tidy this up later
-        if (dataType == SAMPLE) {
+        if (dataType == GLOBAL_SEARCH_SETTINGS.SAMPLE) {
             displaySampleRangeInputs(facetContainer);
         }
         for (var i =0; i < facetGroups.length; i++) {
@@ -645,7 +672,7 @@ var displayRunTable = function(results, container) {
 };
 
 var displayProjectData = function(results) {
-    resultsContainer = document.getElementById(PROJECT + "-searchData");
+    resultsContainer = document.getElementById(GLOBAL_SEARCH_SETTINGS.PROJECT + "-searchData");
     if (resultsContainer != null) {
         resultsContainer.innerHTML = ""; //clear results div
         resultsTitle = document.createElement("h3");
@@ -654,12 +681,12 @@ var displayProjectData = function(results) {
         resultsContainer.appendChild(resultsTitle);
         displayProjectTable(results, resultsContainer);
     } else {
-        console.log("Error: Expected to find div with id '" + PROJECT + "-searchData'");
+        console.log("Error: Expected to find div with id '" + GLOBAL_SEARCH_SETTINGS.PROJECT + "-searchData'");
     }
 };
 
 var displaySampleData = function(results) {
-    resultsContainer = document.getElementById(SAMPLE + "-searchData");
+    resultsContainer = document.getElementById(GLOBAL_SEARCH_SETTINGS.SAMPLE + "-searchData");
     if (resultsContainer != null) {
         resultsContainer.innerHTML = ""; //clear results div
         resultsTitle = document.createElement("h3");
@@ -668,12 +695,12 @@ var displaySampleData = function(results) {
         resultsContainer.appendChild(resultsTitle);
         displaySampleTable(results, resultsContainer);
     } else {
-        console.log("Error: Expected to find div with id '" + SAMPLE + "-searchData'");
+        console.log("Error: Expected to find div with id '" + GLOBAL_SEARCH_SETTINGS.SAMPLE + "-searchData'");
     }
 };
 
 var displayRunData = function(results) {
-    resultsContainer = document.getElementById(RUN + "-searchData");
+    resultsContainer = document.getElementById(GLOBAL_SEARCH_SETTINGS.RUN + "-searchData");
     if (resultsContainer != null) {
         resultsContainer.innerHTML = ""; //clear results div
         resultsTitle = document.createElement("h3");
@@ -682,7 +709,7 @@ var displayRunData = function(results) {
         resultsContainer.appendChild(resultsTitle);
         displayRunTable(results, resultsContainer);
     } else {
-        console.log("Error: Expected to find div with id '" + RUN + "-searchData'");
+        console.log("Error: Expected to find div with id '" + GLOBAL_SEARCH_SETTINGS.RUN + "-searchData'");
     }
 };
 
@@ -770,9 +797,9 @@ var runDomainSearch = function(searchSettings) {
 
 var runNewSearch = function() {
     
-    for(var i=0; i < DATA_TYPES.length; i++) {
-        var dataType = DATA_TYPES[i];
-        var searchSetting = searchSettings[dataType];
+    for(var i=0; i < DatatypeSettings.DATA_TYPES.length; i++) {
+        var dataType = DatatypeSettings.DATA_TYPES[i];
+        var searchSetting = DatatypeSettings[dataType];
         searchSetting.facets = null;
         runDomainSearch(searchSetting);
     }
@@ -835,8 +862,8 @@ var displayTabHeader = function() {
             tabList = document.createElement("ul");
 
             var disabledList = [];
-            for (i in DATA_TYPES) {
-                var dataType = DATA_TYPES[i];
+            for (i in DatatypeSettings.DATA_TYPES) {
+                var dataType = DatatypeSettings.DATA_TYPES[i];
                 var tabItem = document.createElement("li");
                 tabItem.className = SEARCH_TAB_CLASS;
                 var tabLink = document.createElement("a");
@@ -865,16 +892,16 @@ var displayTabHeader = function() {
     return tabContainer;
 };
 
-var prepareSearchSettings = function(resetPage) {
+var copyFormValuesToSettings = function(resetPage) {
     var searchElementID = "local-searchbox";
     var searchElement = document.getElementById(searchElementID);
     var searchText = "";
     if (searchElement) {
         searchText = searchElement.value;
-        for(var i=0; i < searchSettings.DATA_TYPES.length; i++) {
-            var dataType = searchSettings.DATA_TYPES[i];
-            var searchSetting = searchSettings[dataType];
-            searchSettings.searchText = searchText;
+        for(var i=0; i < DatatypeSettings.DATA_TYPES.length; i++) {
+            var dataType = DatatypeSettings.DATA_TYPES[i];
+            var searchSetting = DatatypeSettings[dataType];
+            searchSetting.searchText = searchText;
             var facetContainer = document.getElementById(dataType + "-searchFacets");
             if (facetContainer != null) {
                 var facets = {};
@@ -912,9 +939,9 @@ var reapplySearchSettings = function(searchText) {
             searchElement.value = searchText;
         }
 
-        for(var i=0; i < DATA_TYPES.length; i++) {
-            var dataType = DATA_TYPES[i];
-            var searchSetting = searchSettings[dataType];
+        for(var i=0; i < DatatypeSettings.DATA_TYPES.length; i++) {
+            var dataType = DatatypeSettings.DATA_TYPES[i];
+            var searchSetting = DatatypeSettings[dataType];
             var facetContainer = document.getElementById(dataType + "-searchFacets");
             if (facetContainer != null) {
 
@@ -950,13 +977,13 @@ var reapplySearchSettings = function(searchText) {
  * and then then populates search tabs with results
  */
 var search = function search() {
-    var searchText = prepareSearchSettings(true);
+    //var searchText = copyFormValuesToSettings(true);
     runAjax("GET", "search", null, function(httpReq) {
         var response = httpReq.response;
         console.log("Loading search template");
         document.documentElement.innerHTML = response;
         loadCss();
-        reapplySearchSettings(searchText);
+        //reapplySearchSettings(searchText);
         displayTabHeader();
         runNewSearch();
         console.log("about to push state")
