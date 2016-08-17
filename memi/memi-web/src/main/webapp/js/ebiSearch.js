@@ -34,19 +34,18 @@ function SearchSettings (type,
                          facets,
                          domain,
                          fields,
-                         numericalFields,
-                         successCallback,
-                         errorCallback) {
+                         numericalFields) {
     this.type = type;
     this.resultsNum = resultsNum;
     this.page = page;
     this.facetNum = facetNum;
+    if (facets == null) {
+        facets = {};
+    }
     this.facets = facets;
     this.domain = domain;
     this.fields = fields;
     this.numericalFields = numericalFields;
-    this.successCallback = successCallback;
-    this.errorCallback = errorCallback;
     this.searchText = "";
 };
 
@@ -57,9 +56,7 @@ function NumericalRangeField (name, displayName, unit, minimum, maximum, selecte
     this.minimum = minimum;
     this.maximum = maximum;
     this.selectedMinimum = selectedMinimum;
-    this.percentageMinimum = (selectedMinimum/maximum-minimum) * 100;
     this.selectedMaximum = selectedMaximum;
-    this.percentageMaximum =(selectedMaximum/maximum-minimum) * 100;
     this.callback = "searchRange";
 };
 
@@ -259,7 +256,6 @@ var displayPagination = function(results, dataType) {
     } else {
         console.log("Error: Expected to find div with id '" + dataType + "-searchPagination'");
     }
-
 };
 
 var isFacetGroupHierarchical = function(facetGroup) {
@@ -273,10 +269,26 @@ var isFacetGroupHierarchical = function(facetGroup) {
     return isHierarchical;
 };
 
-var facetValueChanged = function (facet, searchSetting) {
+var facetValueChanged = function (facetInput, facetType, facet, searchSetting) {
     facetInput.addEventListener("change", function(event) {
-        copyFormValuesToSettings(true);
-        runDomainSearch(searchSettings[dataType]);
+        //copyFormValuesToSettings(true);
+        if (facetInput.checked) {
+            if (!searchSetting.hasOwnProperty(facetType)) {
+                searchSetting.facets[facetType] = [];
+            }
+            searchSetting.facets[facetType].push(facet.value);
+        } else {
+            if (searchSetting.facets.hasOwnProperty(facetType)) {
+                var valueIndex = searchSetting.facets[facetType].indexOf(facet.value);
+                if (valueIndex < -1) {
+                    searchSetting.facets[facetType] = searchSetting.facets[facetType].splice(valueIndex, 1);
+                }
+            } else {
+                console.log("Error - expected to find facet type: " + facetType);
+            }
+        }
+        console.log("Facet clicked " + facet.value + " Setting: " + Object.keys(searchSetting.facets));
+        runDomainSearch(searchSetting);
     });
 };
 
@@ -304,7 +316,7 @@ var displayFacetGroup = function(facetGroup, container, dataType, checkedFacets)
             facetInput.checked = true;
         }
 
-        facetValueChanged(facet, DatatypeSettings[dataType]);
+        facetValueChanged(facetInput, facetGroup.id, facet, DatatypeSettings[dataType]);
 
         facetLabel = document.createElement("label");
         facetLabel.htmlFor = facetInput.id;
@@ -834,7 +846,7 @@ var runDomainSearch = function(searchSettings) {
         parameters.facets = searchSettings.facets;
     }
     if (searchSettings.numericalFields != null) {
-        parameters.numbericalFields = searchSettings.numericalFields;
+        //MAQ parameters.numericalFields = searchSettings.numericalFields;
     }
 
     //console.log("SEARCH: Size: " + parameters.size + " start = " + parameters.start);
@@ -857,7 +869,7 @@ var runNewSearch = function() {
     for(var i=0; i < DatatypeSettings.DATA_TYPES.length; i++) {
         var dataType = DatatypeSettings.DATA_TYPES[i];
         var searchSetting = DatatypeSettings[dataType];
-        searchSetting.facets = null;
+        searchSetting.facets = {};
         runDomainSearch(searchSetting);
     }
 
