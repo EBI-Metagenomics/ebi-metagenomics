@@ -27,54 +27,6 @@ var GLOBAL_SEARCH_SETTINGS = {
     RUN_FIELDS: "id,experiment_type,pipeline_version,METAGENOMICS_SAMPLE,METAGENOMICS_PROJECT",
 };
 
-var displayProjects = function(httpReq) {
-    console.log("displayProjects");
-    var resultString = httpReq.response;
-    var results = JSON.parse(resultString);
-    console.log("Search returned " + results.hitCount + " project results");
-    setTabText(results.hitCount, GLOBAL_SEARCH_SETTINGS.PROJECT);
-    displayProjectData(results);
-    displayFacets(results.facets, GLOBAL_SEARCH_SETTINGS.PROJECT, null);
-    displayPagination(results, GLOBAL_SEARCH_SETTINGS.PROJECT);
-    reapplySearchSettings();
-};
-
-var displaySamples = function(httpReq) {
-    console.log("displaySamples");
-    var resultString = httpReq.response;
-    var results = JSON.parse(resultString);
-    console.log("Search returned " + results.hitCount + " sample results");
-    setTabText(results.hitCount, GLOBAL_SEARCH_SETTINGS.SAMPLE);
-    displaySampleData(results);
-    displayFacets(results.facets, GLOBAL_SEARCH_SETTINGS.SAMPLE, null);
-    displayPagination(results, GLOBAL_SEARCH_SETTINGS.SAMPLE);
-    reapplySearchSettings();
-};
-
-var displayRuns = function(httpReq) {
-    console.log("displayRuns");
-    var resultString = httpReq.response;
-    var results = JSON.parse(resultString);
-    console.log("Search returned " + results.hitCount + " run results");
-    setTabText(results.hitCount, GLOBAL_SEARCH_SETTINGS.RUN);
-    displayRunData(results);
-    displayFacets(results.facets, GLOBAL_SEARCH_SETTINGS.RUN, null);
-    displayPagination(results, GLOBAL_SEARCH_SETTINGS.RUN);
-    reapplySearchSettings();
-};
-
-var projectError = function(httpReq) {
-    console.log("Error: Project Search error");
-}
-
-var sampleError = function(httpReq) {
-    console.log("Error: Sample Search error");
-}
-
-var runError = function(httpReq) {
-    console.log("Error: Run Search error");
-}
-
 function SearchSettings (type,
                          resultsNum,
                          page,
@@ -82,6 +34,7 @@ function SearchSettings (type,
                          facets,
                          domain,
                          fields,
+                         numericalFields,
                          successCallback,
                          errorCallback) {
     this.type = type;
@@ -91,9 +44,23 @@ function SearchSettings (type,
     this.facets = facets;
     this.domain = domain;
     this.fields = fields;
+    this.numericalFields = numericalFields;
     this.successCallback = successCallback;
     this.errorCallback = errorCallback;
     this.searchText = "";
+};
+
+function NumericalRangeField (name, displayName, unit, minimum, maximum, selectedMinimum, selectedMaximum, callbackName) {
+    this.name = name;
+    this.displayName = displayName;
+    this.unit = unit;
+    this.minimum = minimum;
+    this.maximum = maximum;
+    this.selectedMinimum = selectedMinimum;
+    this.percentageMinimum = (selectedMinimum/maximum-minimum) * 100;
+    this.selectedMaximum = selectedMaximum;
+    this.percentageMaximum =(selectedMaximum/maximum-minimum) * 100;
+    this.callback = "searchRange";
 };
 
 var projectSettings = new SearchSettings(
@@ -104,9 +71,12 @@ var projectSettings = new SearchSettings(
     null,
     GLOBAL_SEARCH_SETTINGS.PROJECT_DOMAIN,
     GLOBAL_SEARCH_SETTINGS.PROJECT_FIELDS,
-    displayProjects,
-    projectError
+    null
 );
+
+var sampleTemperature = new NumericalRangeField("temperature", "Temperature", "°C", 0, 200, 0, 200);
+var sampleDepth = new NumericalRangeField("depth", "Depth", "Metres", 0, 1000, 0, 1000);
+var samplePH = new NumericalRangeField("pH", "pH", null, 0, 14, 0, 14);
 
 var sampleSettings = new SearchSettings(
     GLOBAL_SEARCH_SETTINGS.SAMPLE,
@@ -116,9 +86,12 @@ var sampleSettings = new SearchSettings(
     null,
     GLOBAL_SEARCH_SETTINGS.SAMPLE_DOMAIN,
     GLOBAL_SEARCH_SETTINGS.SAMPLE_FIELDS,
-    displaySamples,
-    sampleError
+    [sampleTemperature, sampleDepth, samplePH]
 );
+
+var runTemperature = new NumericalRangeField("temperature", "Temperature", "°C", 0, 200, 0, 200);
+var runDepth = new NumericalRangeField("depth", "Depth", "Metres", 0, 1000, 0, 1000);
+var runPH = new NumericalRangeField("pH", "pH", null, 0, 14, 0, 14);
 
 var runSettings = new SearchSettings(
     GLOBAL_SEARCH_SETTINGS.RUN,
@@ -128,8 +101,7 @@ var runSettings = new SearchSettings(
     null,
     GLOBAL_SEARCH_SETTINGS.RUN_DOMAIN,
     GLOBAL_SEARCH_SETTINGS.RUN_FIELDS,
-    displayRuns,
-    sampleError
+    [runTemperature, runDepth, runPH]
 );
 
 var DatatypeSettings = {};
@@ -301,6 +273,13 @@ var isFacetGroupHierarchical = function(facetGroup) {
     return isHierarchical;
 };
 
+var facetValueChanged = function (facet, searchSetting) {
+    facetInput.addEventListener("change", function(event) {
+        copyFormValuesToSettings(true);
+        runDomainSearch(searchSettings[dataType]);
+    });
+};
+
 var displayFacetGroup = function(facetGroup, container, dataType, checkedFacets) {
 
     var facetGroupContainer = document.createElement("div");
@@ -324,10 +303,8 @@ var displayFacetGroup = function(facetGroup, container, dataType, checkedFacets)
         if (checkedFacets != null && checkedFacets.indexOf(facetInput.value) >= 0) {
             facetInput.checked = true;
         }
-        facetInput.addEventListener("change", function(event) {
-            copyFormValuesToSettings(true);
-            runDomainSearch(searchSettings[dataType]);
-        });
+
+        facetValueChanged(facet, DatatypeSettings[dataType]);
 
         facetLabel = document.createElement("label");
         facetLabel.htmlFor = facetInput.id;
@@ -352,6 +329,7 @@ var displayHierarchicalFacetGroup = function(facetGroup, container, dataType, ch
     container.appendChild(facetGroupContainer);
 
     facetGroupTitle = document.createElement("h4");
+    facetGroupTitle.innerHTML = facetGroup.label;
     facetGroupTitle.innerHTML = facetGroup.label;
     facetGroupContainer.appendChild(facetGroupTitle);
 
@@ -439,9 +417,11 @@ var displayFacets = function(facetGroups, dataType, checkedFacets) {
         facetContainerTitle.innerHTML = "Filter your results";
 
         facetContainer.appendChild(facetContainerTitle);
-        //TODO MAQ tidy this up later
-        if (dataType == GLOBAL_SEARCH_SETTINGS.SAMPLE) {
-            displaySampleRangeInputs(facetContainer);
+        var searchSettings = DatatypeSettings[dataType];
+        if (searchSettings.hasOwnProperty("numericalFields")
+            && searchSettings.numericalFields != null) {
+            displayNumericalInputs(facetContainer, searchSettings);
+            //displaySampleRangeInputs(facetContainer, dataType);
         }
         for (var i =0; i < facetGroups.length; i++) {
             var facetGroup = facetGroups[i];
@@ -470,68 +450,49 @@ var displayFacets = function(facetGroups, dataType, checkedFacets) {
     }
 };
 
-var displaySampleRangeInputs = function(container, dataType) {
+var displayNumericalInputs = function(container, searchSettings) {
     var rangeContainerDiv = document.createElement("div");
     container.appendChild(rangeContainerDiv);
 
-    tempRangeTitle = document.createElement("h4");
-    tempRangeTitle.innerHTML = "Temperature";
-    rangeContainerDiv.appendChild(tempRangeTitle);
+    for (var i = 0; i < searchSettings.numericalFields.length; i++) {
 
-    tempInput = document.createElement("input");
-    tempInput.type = "range";
-    tempInput.setAttribute("multiple", "");
-    tempInput.valueLow = 0;
-    tempInput.valueHigh = 100;
-    tempInput.setAttribute("value", "0,100");
-    tempInput.id = dataType + FACET_SEPARATOR + "temperature";
+        var numericalField = searchSettings.numericalFields[i];
+        var fieldContainer = document.createElement("div");
+        rangeContainerDiv.appendChild(fieldContainer);
+        var rangeTitle = document.createElement("h4");
+        rangeTitle.innerHTML = numericalField.displayName;
+        fieldContainer.appendChild(rangeTitle);
 
-    tempLabel = document.createElement("label");
-    tempLabel.innerHTML = " °C";
-    tempLabel.htmlFor = tempInput.id;
-    rangeContainerDiv.appendChild(tempInput);
-    rangeContainerDiv.appendChild(tempLabel);
+        var rangeInput = document.createElement("input");
+        rangeInput.type = "range";
+        rangeInput.setAttribute("multiple", "");
+        rangeInput.setAttribute("min", numericalField.minimum);
+        rangeInput.setAttribute("max", numericalField.maximum);
+        var selectedRange = numericalField.selectedMinimum + "," + numericalField.selectedMaximum;
+        rangeInput.setAttribute("value", selectedRange);
+        fieldContainer.id = searchSettings.type + FACET_SEPARATOR + numericalField.name;
+        fieldContainer.appendChild(rangeInput);
+        multirange(rangeInput); //requires multirange library loaded
 
-    depthRangeTitle = document.createElement("h4");
-    depthRangeTitle.innerHTML = "Depth";
-    rangeContainerDiv.appendChild(depthRangeTitle);
+        var rangeLabel = document.createElement("label");
+        if (numericalField.unit != null) {
+            rangeLabel.innerHTML = " " + numericalField.unit;
+            rangeLabel.htmlFor = rangeInput.id;
+            fieldContainer.appendChild(rangeLabel);
+        }
 
-    depthInput = document.createElement("input");
-    depthInput.type = "range";
-    depthInput.setAttribute("multiple", "");
-    depthInput.valueLow = 0;
-    depthInput.valueHigh = 100;
-    depthInput.setAttribute("value", "0,100");
-    depthInput.id = dataType + FACET_SEPARATOR + "depth";
+        numericalFieldValueChange(fieldContainer, numericalField);
+    }
 
-    depthLabel = document.createElement("label");
-    depthLabel.innerHTML = " m";
-    depthLabel.htmlFor = depthInput.id;
-    rangeContainerDiv.appendChild(depthInput);
-    rangeContainerDiv.appendChild(depthLabel);
+};
 
-
-    phRangeTitle = document.createElement("h4");
-    phRangeTitle.innerHTML = "pH";
-    rangeContainerDiv.appendChild(phRangeTitle);
-
-    phInput = document.createElement("input");
-    phInput.type = "range";
-    phInput.setAttribute("multiple", "");
-    phInput.setAttribute("valueLow", "0");
-    phInput.setAttribute("valueHigh", "14");
-    phInput.setAttribute("value", "0,100"); //this seems to be a percentage
-    phInput.id = dataType + FACET_SEPARATOR + "ph";
-
-    phLabel = document.createElement("label");
-    phLabel.innerHTML = " pH";
-    phLabel.htmlFor = phInput.id;
-    rangeContainerDiv.appendChild(phInput);
-    rangeContainerDiv.appendChild(phLabel);
-
-    multirange(tempInput);
-    multirange(depthInput);
-    multirange(phInput);
+var numericalFieldValueChange = function(fieldContainer, numericalField) {
+    fieldContainer.addEventListener("change", function(event){
+        var tokens = event.target.value.split(",");
+        numericalField.selectedMinimum = tokens[0];
+        numericalField.selectedMaximum = tokens[1];
+        console.log(numericalField.displayName + " range: " + tokens);
+    });
 };
 
 /**
@@ -713,6 +674,92 @@ var displayRunData = function(results) {
     }
 };
 
+var displayProjects = function(httpReq) {
+    console.log("displayProjects");
+    var resultString = httpReq.response;
+    var results = JSON.parse(resultString);
+    console.log("Search returned " + results.hitCount + " project results");
+    setTabText(results.hitCount, GLOBAL_SEARCH_SETTINGS.PROJECT);
+    displayProjectData(results);
+    displayFacets(results.facets, GLOBAL_SEARCH_SETTINGS.PROJECT, null);
+    displayPagination(results, GLOBAL_SEARCH_SETTINGS.PROJECT);
+    reapplySearchSettings();
+};
+
+var displaySamples = function(httpReq) {
+    console.log("displaySamples");
+    var resultString = httpReq.response;
+    var results = JSON.parse(resultString);
+    console.log("Search returned " + results.hitCount + " sample results");
+    setTabText(results.hitCount, GLOBAL_SEARCH_SETTINGS.SAMPLE);
+    displaySampleData(results);
+    displayFacets(results.facets, GLOBAL_SEARCH_SETTINGS.SAMPLE, null);
+    displayPagination(results, GLOBAL_SEARCH_SETTINGS.SAMPLE);
+    reapplySearchSettings();
+};
+
+var displayRuns = function(httpReq) {
+    console.log("displayRuns");
+    var resultString = httpReq.response;
+    var results = JSON.parse(resultString);
+    console.log("Search returned " + results.hitCount + " run results");
+    setTabText(results.hitCount, GLOBAL_SEARCH_SETTINGS.RUN);
+    displayRunData(results);
+    displayFacets(results.facets, GLOBAL_SEARCH_SETTINGS.RUN, null);
+    displayPagination(results, GLOBAL_SEARCH_SETTINGS.RUN);
+    reapplySearchSettings();
+};
+
+var displayDomainData = function(httpReq, searchSettings) {
+    console.log("displayDomain: " + searchSettings.type);
+    var resultString = httpReq.response;
+    var results = JSON.parse(resultString);
+    console.log(
+        "Search returned "
+        + results.hitCount + " "
+        + searchSettings.type + " results"
+    );
+
+    setTabText(results.hitCount, searchSettings.type);
+    if (searchSettings.type == GLOBAL_SEARCH_SETTINGS.PROJECT) {
+        displayProjectData(results)
+    } else if (searchSettings.type == GLOBAL_SEARCH_SETTINGS.SAMPLE) {
+        displaySampleData(results);
+    } else if (searchSettings.type == GLOBAL_SEARCH_SETTINGS.RUN) {
+        displayRunData(results);
+    } else {
+        console.log("Error: DisplayDomainData - Unknown data type '" + searchSettings.type + "'");
+    }
+    displayFacets(results.facets, searchSettings.type, null);
+    displayPagination(results, searchSettings.type);
+    //reapplySearchSettings();
+
+}
+
+var displaySearchError = function (httpReq, searchSettings) {
+    if (searchSettings.type == DatatypeSettings.PROJECT) {
+        projectError(httpReq)
+    } else if (searchSettings.type == DatatypeSettings.SAMPLE) {
+        projectError(httpReq)
+    } else if (searchSettings.type == DatatypeSettings.RUN) {
+        runError(httpReq)
+    } else {
+        console.log("Error: HandleSearchError - Unknown data type '" + searchSettings.type + "'");
+    }
+};
+
+var projectError = function(httpReq) {
+    console.log("Error: Project Search error");
+}
+
+var sampleError = function(httpReq) {
+    console.log("Error: Sample Search error");
+}
+
+var runError = function(httpReq) {
+    console.log("Error: Run Search error");
+}
+
 var runAjax = function(method, url, parameters, callback, errCallback) {
     var httpReq = new XMLHttpRequest();
     httpReq.open(method, url);
@@ -786,13 +833,23 @@ var runDomainSearch = function(searchSettings) {
     if (searchSettings.facets != null) {
         parameters.facets = searchSettings.facets;
     }
+    if (searchSettings.numericalFields != null) {
+        parameters.numbericalFields = searchSettings.numericalFields;
+    }
 
     //console.log("SEARCH: Size: " + parameters.size + " start = " + parameters.start);
 
     var paramFragment = parametersToString(parameters);
     var url = BASE_URL + searchSettings.domain + paramFragment;
     console.log("Running domain search = " + url);
-    runAjax("GET", url, null, searchSettings.successCallback, searchSettings.errorCallback);
+    var successCallback = function(httpReq) {
+        displayDomainData(httpReq, searchSettings);
+    };
+    var errorCallback = function(httpReq) {
+        displaySearchError(httpReq, searchSettings);
+    };
+
+    runAjax("GET", url, null, successCallback, errorCallback);
 };
 
 var runNewSearch = function() {
@@ -976,7 +1033,7 @@ var reapplySearchSettings = function(searchText) {
  * Main page setup. Calls Metagenomics server to get header, footer etc
  * and then then populates search tabs with results
  */
-var search = function search() {
+var search = function() {
     //var searchText = copyFormValuesToSettings(true);
     runAjax("GET", "search", null, function(httpReq) {
         var response = httpReq.response;
