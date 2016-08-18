@@ -212,11 +212,11 @@ var restoreFormState = function() {
 
 };
 
-var displayPagination = function(results, dataType) {
-    console.log("Adding pagination for " + dataType);
-    var searchSetting = DatatypeSettings[dataType];
+var displayPagination = function(results, searchSettings) {
+    console.log("Adding pagination for " + searchSettings.type);
+    var dataType = searchSettings.type;
 
-    paginationContainer = document.getElementById(dataType + "-searchPagination");
+    var paginationContainer = document.getElementById(dataType + "-searchPagination");
     if (paginationContainer != null) {
         paginationContainer.innerHTML = "";
         var prevButton = document.createElement("input");
@@ -224,32 +224,29 @@ var displayPagination = function(results, dataType) {
         prevButton.id = dataType + "-prevPage";
         prevButton.value = "Previous";
 
-        if (searchSetting.page <= 0 ) {
+        if (searchSettings.page <= 0 ) {
             prevButton.disabled = true;
         }
         prevButton.addEventListener('click', function(event) {
-            searchSetting.page--;
-            copyFormValuesToSettings(false);
-            runDomainSearch(searchSetting);
+            searchSettings.page--;
+            runDomainSearch(searchSettings);
         });
 
         var nextButton = document.createElement("input");
         nextButton.type = "button";
         nextButton.id = dataType + "-nextPage";
         nextButton.value = "Next";
-        var maxPage = Math.ceil(results.hitCount/searchSetting.resultsNum);
-        if ((searchSetting.page+1) >= maxPage) {
+        var maxPage = Math.ceil(results.hitCount/searchSettings.resultsNum);
+        if ((searchSettings.page+1) >= maxPage) {
             nextButton.disabled = true;
         }
         nextButton.addEventListener('click', function(event) {
-            var searchSetting = SearchSettings[dataType];
-            searchSetting.page++;
-            copyFormValuesToSettings(false);
-            runDomainSearch(searchSetting);
+            searchSettings.page++;
+            runDomainSearch(searchSettings);
         });
 
         var textSpan = document.createElement("span");
-        textSpan.textContent = " Page " + (searchSetting.page+1) + " of " + (maxPage) + " ";
+        textSpan.textContent = " Page " + (searchSettings.page+1) + " of " + (maxPage) + " ";
         paginationContainer.appendChild(prevButton);
         paginationContainer.appendChild(textSpan);
         paginationContainer.appendChild(nextButton);
@@ -269,63 +266,65 @@ var isFacetGroupHierarchical = function(facetGroup) {
     return isHierarchical;
 };
 
-var facetValueChanged = function (facetInput, facetType, facet, searchSetting) {
+var facetValueChanged = function (facetInput, facetType, facet, searchSettings) {
     facetInput.addEventListener("change", function(event) {
         //copyFormValuesToSettings(true);
         if (facetInput.checked) {
-            if (!searchSetting.hasOwnProperty(facetType)) {
-                searchSetting.facets[facetType] = [];
+            if (!searchSettings.facets.hasOwnProperty(facetType)) {
+                searchSettings.facets[facetType] = [];
             }
-            searchSetting.facets[facetType].push(facet.value);
+            searchSettings.facets[facetType].push(facet.value);
         } else {
-            if (searchSetting.facets.hasOwnProperty(facetType)) {
-                var valueIndex = searchSetting.facets[facetType].indexOf(facet.value);
+            if (searchSettings.facets.hasOwnProperty(facetType)) {
+                var valueIndex = searchSettings.facets[facetType].indexOf(facet.value);
                 if (valueIndex < -1) {
-                    searchSetting.facets[facetType] = searchSetting.facets[facetType].splice(valueIndex, 1);
+                    searchSettings.facets[facetType] = searchSettings.facets[facetType].splice(valueIndex, 1);
                 }
             } else {
                 console.log("Error - expected to find facet type: " + facetType);
             }
         }
-        console.log("Facet clicked " + facet.value + " Setting: " + Object.keys(searchSetting.facets));
-        runDomainSearch(searchSetting);
+        console.log("Facet clicked " + facet.value + " Setting: " + Object.keys(searchSettings.facets));
+        runDomainSearch(searchSettings);
     });
 };
 
-var displayFacetGroup = function(facetGroup, container, dataType, checkedFacets) {
-
+var displayFacetGroup = function(facetGroup, container, searchSettings) {
+    var dataType = searchSettings.type;
     var facetGroupContainer = document.createElement("div");
     var groupContainerId = dataType + FACET_SEPARATOR + facetGroup.id;
     facetGroupContainer.id = groupContainerId;
     container.appendChild(facetGroupContainer);
 
-    facetGroupTitle = document.createElement("h4");
+    var facetGroupTitle = document.createElement("h4");
     facetGroupTitle.innerHTML = facetGroup.label;
     facetGroupContainer.appendChild(facetGroupTitle);
     for (var i=0; i < facetGroup.facetValues.length; i++) {
-        facet = facetGroup.facetValues[i];
+        var facet = facetGroup.facetValues[i];
         var identifier = dataType + FACET_SEPARATOR + facetGroup.id + FACET_SEPARATOR + facet.value;
-        facetItem = document.createElement("div");
-        facetInput = document.createElement("input");
+        var facetItem = document.createElement("div");
+        var facetInput = document.createElement("input");
         facetInput.id = identifier;
         facetInput.name = facetGroup.id;
         facetInput.form = "local-search";
         facetInput.type = "checkbox";
         facetInput.value = facet.value;
-        if (checkedFacets != null && checkedFacets.indexOf(facetInput.value) >= 0) {
+        if (searchSettings.facets != null
+            && searchSettings.facets.hasOwnProperty(facetGroup.id)
+            && searchSettings.facets[facetGroup.id].indexOf(facetInput.value) >= 0) {
             facetInput.checked = true;
         }
 
-        facetValueChanged(facetInput, facetGroup.id, facet, DatatypeSettings[dataType]);
+        facetValueChanged(facetInput, facetGroup.id, facet, searchSettings);
 
-        facetLabel = document.createElement("label");
+        var facetLabel = document.createElement("label");
         facetLabel.htmlFor = facetInput.id;
         facetLabel.innerHTML = facet.label + " (" + facet.count + ")";
 
         facetItem.appendChild(facetInput);
         facetItem.appendChild(facetLabel);
 
-        facetContainerDiv = document.createElement("div");
+        var facetContainerDiv = document.createElement("div");
         facetContainerDiv.className = "extra-pad";
         facetContainerDiv.appendChild(facetItem);
 
@@ -333,14 +332,14 @@ var displayFacetGroup = function(facetGroup, container, dataType, checkedFacets)
     }
 };
 
-var displayHierarchicalFacetGroup = function(facetGroup, container, dataType, checkedFacets) {
-
+var displayHierarchicalFacetGroup = function(facetGroup, container, searchSettings) {
+    var dataType = searchSettings.type;
     var facetGroupContainer = document.createElement("div");
     var groupContainerId = dataType + FACET_SEPARATOR + facetGroup.id;
     //facetGroupContainer.id = groupContainerId;
     container.appendChild(facetGroupContainer);
 
-    facetGroupTitle = document.createElement("h4");
+    var facetGroupTitle = document.createElement("h4");
     facetGroupTitle.innerHTML = facetGroup.label;
     facetGroupTitle.innerHTML = facetGroup.label;
     facetGroupContainer.appendChild(facetGroupTitle);
@@ -349,18 +348,20 @@ var displayHierarchicalFacetGroup = function(facetGroup, container, dataType, ch
     facetGroupList.id = groupContainerId;
     facetGroupContainer.appendChild(facetGroupList);
     for (var i=0; i < facetGroup.facetValues.length; i++) {
-        facet = facetGroup.facetValues[i];
+        var facet = facetGroup.facetValues[i];
         var identifier = dataType + FACET_SEPARATOR + facetGroup.id + FACET_SEPARATOR + facet.value;
-        facetItem = document.createElement("li");
-        facetInput = document.createElement("input");
+        var facetItem = document.createElement("li");
+        var facetInput = document.createElement("input");
         facetInput.id = identifier;
         facetInput.name = facetGroup.id;
         facetInput.form = "local-search";
         facetInput.type = "checkbox";
         facetInput.value = facet.value;
+        /*
         if (checkedFacets != null && checkedFacets.indexOf(facetInput.value) >= 0) {
             facetInput.checked = true;
         }
+        */
         facetInput.addEventListener("change", function(event) {
             copyFormValuesToSettings(true);
             runDomainSearch(searchSettings[dataType]);
@@ -371,7 +372,7 @@ var displayHierarchicalFacetGroup = function(facetGroup, container, dataType, ch
 
         if (facet.children != null) {
             var facetChildList = document.createElement("ul");
-            displayHierarchicalChildren(facetChildList, facet, facetGroup, dataType, facetInput.value, checkedFacets);
+            displayHierarchicalChildren(facetChildList, facet, facetGroup, facetInput.value, searchSettings);
             facetItem.appendChild(facetChildList);
             //TODO MAQ this is a quick fix for a bug in hierarchical searches - Nicola will fix this soon
             facetGroupList.appendChild(facetItem);
@@ -384,7 +385,8 @@ var displayHierarchicalFacetGroup = function(facetGroup, container, dataType, ch
 
 };
 
-var displayHierarchicalChildren = function(container, facet, facetGroup, dataType, parentPath, checkedFacets) {
+var displayHierarchicalChildren = function(container, facet, facetGroup, parentPath, searchSettings) {
+    var dataType = searchSettings.type;
     var children = facet.children;
     console.log("Facet with children: " + children.length);
     for (var i = 0; i < children.length; i++) {
@@ -401,9 +403,11 @@ var displayHierarchicalChildren = function(container, facet, facetGroup, dataTyp
         facetInput.form = "local-search";
         facetInput.type = "checkbox";
         facetInput.value = value;
+        /*
         if (checkedFacets != null && checkedFacets.indexOf(facetInput.value) >= 0) {
             facetInput.checked = true;
         }
+        */
         facetInput.addEventListener("change", function(event) {
             copyFormValuesToSettings(true);
             runDomainSearch(searchSettings[dataType]);
@@ -421,15 +425,15 @@ var displayHierarchicalChildren = function(container, facet, facetGroup, dataTyp
     }
 };
 
-var displayFacets = function(facetGroups, dataType, checkedFacets) {
+var displayFacets = function(facetGroups, searchSettings) {
+    var dataType = searchSettings.type;
     var facetContainer = document.getElementById(dataType + "-searchFacets");
     if (facetContainer != null) {
         facetContainer.innerHTML = ""; //clear out old facets
-        facetContainerTitle = document.createElement("h3");
+        var facetContainerTitle = document.createElement("h3");
         facetContainerTitle.innerHTML = "Filter your results";
 
         facetContainer.appendChild(facetContainerTitle);
-        var searchSettings = DatatypeSettings[dataType];
         if (searchSettings.hasOwnProperty("numericalFields")
             && searchSettings.numericalFields != null) {
             displayNumericalInputs(facetContainer, searchSettings);
@@ -439,10 +443,10 @@ var displayFacets = function(facetGroups, dataType, checkedFacets) {
             var facetGroup = facetGroups[i];
             if (facetGroup.label !== FACET_SOURCE) {
                 if (isFacetGroupHierarchical(facetGroup)) {
-                    displayHierarchicalFacetGroup(facetGroup, facetContainer, dataType, checkedFacets);
+                    displayHierarchicalFacetGroup(facetGroup, facetContainer, searchSettings);
                     console.log("FacetGroup Hierarchical " + facetGroup.label);
                 } else {
-                    displayFacetGroup(facetGroup, facetContainer, dataType, checkedFacets);
+                    displayFacetGroup(facetGroup, facetContainer, searchSettings);
                     console.log("FacetGroup " + facetGroup.label);
                 }
 
@@ -686,42 +690,6 @@ var displayRunData = function(results) {
     }
 };
 
-var displayProjects = function(httpReq) {
-    console.log("displayProjects");
-    var resultString = httpReq.response;
-    var results = JSON.parse(resultString);
-    console.log("Search returned " + results.hitCount + " project results");
-    setTabText(results.hitCount, GLOBAL_SEARCH_SETTINGS.PROJECT);
-    displayProjectData(results);
-    displayFacets(results.facets, GLOBAL_SEARCH_SETTINGS.PROJECT, null);
-    displayPagination(results, GLOBAL_SEARCH_SETTINGS.PROJECT);
-    reapplySearchSettings();
-};
-
-var displaySamples = function(httpReq) {
-    console.log("displaySamples");
-    var resultString = httpReq.response;
-    var results = JSON.parse(resultString);
-    console.log("Search returned " + results.hitCount + " sample results");
-    setTabText(results.hitCount, GLOBAL_SEARCH_SETTINGS.SAMPLE);
-    displaySampleData(results);
-    displayFacets(results.facets, GLOBAL_SEARCH_SETTINGS.SAMPLE, null);
-    displayPagination(results, GLOBAL_SEARCH_SETTINGS.SAMPLE);
-    reapplySearchSettings();
-};
-
-var displayRuns = function(httpReq) {
-    console.log("displayRuns");
-    var resultString = httpReq.response;
-    var results = JSON.parse(resultString);
-    console.log("Search returned " + results.hitCount + " run results");
-    setTabText(results.hitCount, GLOBAL_SEARCH_SETTINGS.RUN);
-    displayRunData(results);
-    displayFacets(results.facets, GLOBAL_SEARCH_SETTINGS.RUN, null);
-    displayPagination(results, GLOBAL_SEARCH_SETTINGS.RUN);
-    reapplySearchSettings();
-};
-
 var displayDomainData = function(httpReq, searchSettings) {
     console.log("displayDomain: " + searchSettings.type);
     var resultString = httpReq.response;
@@ -742,8 +710,8 @@ var displayDomainData = function(httpReq, searchSettings) {
     } else {
         console.log("Error: DisplayDomainData - Unknown data type '" + searchSettings.type + "'");
     }
-    displayFacets(results.facets, searchSettings.type, null);
-    displayPagination(results, searchSettings.type);
+    displayFacets(results.facets, searchSettings);
+    displayPagination(results, searchSettings);
     //reapplySearchSettings();
 
 }
