@@ -115,7 +115,7 @@ DatatypeSettings[GLOBAL_SEARCH_SETTINGS.RUN] = runSettings;
 /*
 Behaviour methods
  */
-
+/*
 window.onunload = function(event) {
     console.log("Unloading");
     var searchElementID = "local-searchbox";
@@ -130,9 +130,10 @@ window.onload = function(event) {
     var searchElementID = "local-searchbox";
     var searchElement = document.getElementById(searchElementID);
     loadCss();
+
     restoreFormState();
 };
-
+*/
 var loadCss = function() {
     //load css for the modal box
     var linkElement = document.createElement("link");
@@ -266,7 +267,7 @@ var isFacetGroupHierarchical = function(facetGroup) {
     return isHierarchical;
 };
 
-var facetValueChanged = function (facetInput, facetType, facet, searchSettings) {
+var addFacetValueChangListener = function (facetInput, facetType, facet, searchSettings) {
     facetInput.addEventListener("change", function(event) {
         //copyFormValuesToSettings(true);
         if (facetInput.checked) {
@@ -277,8 +278,8 @@ var facetValueChanged = function (facetInput, facetType, facet, searchSettings) 
         } else {
             if (searchSettings.facets.hasOwnProperty(facetType)) {
                 var valueIndex = searchSettings.facets[facetType].indexOf(facet.value);
-                if (valueIndex < -1) {
-                    searchSettings.facets[facetType] = searchSettings.facets[facetType].splice(valueIndex, 1);
+                if (valueIndex > -1) {
+                    searchSettings.facets[facetType].splice(valueIndex, 1);
                 }
             } else {
                 console.log("Error - expected to find facet type: " + facetType);
@@ -315,7 +316,7 @@ var displayFacetGroup = function(facetGroup, container, searchSettings) {
             facetInput.checked = true;
         }
 
-        facetValueChanged(facetInput, facetGroup.id, facet, searchSettings);
+        addFacetValueChangListener(facetInput, facetGroup.id, facet, searchSettings);
 
         var facetLabel = document.createElement("label");
         facetLabel.htmlFor = facetInput.id;
@@ -363,8 +364,7 @@ var displayHierarchicalFacetGroup = function(facetGroup, container, searchSettin
         }
         */
         facetInput.addEventListener("change", function(event) {
-            copyFormValuesToSettings(true);
-            runDomainSearch(searchSettings[dataType]);
+            runDomainSearch(searchSettings);
         });
 
         facetItem.appendChild(facetInput);
@@ -409,8 +409,7 @@ var displayHierarchicalChildren = function(container, facet, facetGroup, parentP
         }
         */
         facetInput.addEventListener("change", function(event) {
-            copyFormValuesToSettings(true);
-            runDomainSearch(searchSettings[dataType]);
+            runDomainSearch(searchSettings);
         });
 
         facetItem.appendChild(facetInput);
@@ -419,7 +418,7 @@ var displayHierarchicalChildren = function(container, facet, facetGroup, parentP
 
         if (childFacet.children != null) {
             var facetChildList = document.createElement("ul");
-            displayHierarchicalChildren(container, childFacet, facetGroup, dataType, facetInput.value, checkedFacets);
+            displayHierarchicalChildren(container, childFacet, facetGroup, facetInput.value, searchSettings);
             facetItem.appendChild(facetChildList);
         }
     }
@@ -497,17 +496,18 @@ var displayNumericalInputs = function(container, searchSettings) {
             fieldContainer.appendChild(rangeLabel);
         }
 
-        numericalFieldValueChange(fieldContainer, numericalField);
+        addNumericalFieldValueChangeListener(fieldContainer, numericalField, searchSettings);
     }
 
 };
 
-var numericalFieldValueChange = function(fieldContainer, numericalField) {
+var addNumericalFieldValueChangeListener = function(fieldContainer, numericalField, searchSettings) {
     fieldContainer.addEventListener("change", function(event){
         var tokens = event.target.value.split(",");
         numericalField.selectedMinimum = tokens[0];
         numericalField.selectedMaximum = tokens[1];
         console.log(numericalField.displayName + " range: " + tokens);
+        //MAQ runDomainSearch(searchSettings);
     });
 };
 
@@ -1024,7 +1024,7 @@ var search = function() {
         displayTabHeader();
         runNewSearch();
         console.log("about to push state")
-        history.pushState(null, "search", "/metagenomics/search")
+        history.pushState(JSON.stringify(DatatypeSettings), "search", "/metagenomics/search")
     }, function(httpReq) {
         console.log("Error: Failed to load page template");
     });
