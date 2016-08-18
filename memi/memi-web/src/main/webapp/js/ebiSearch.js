@@ -27,6 +27,8 @@ var GLOBAL_SEARCH_SETTINGS = {
     RUN_FIELDS: "id,experiment_type,pipeline_version,METAGENOMICS_SAMPLE,METAGENOMICS_PROJECT",
 };
 
+var DatatypeSettings = {};
+
 function SearchSettings (type,
                          resultsNum,
                          page,
@@ -62,57 +64,60 @@ function NumericalRangeField (name, displayName, unit, minimum, maximum, selecte
     this.callback = "searchRange";
 };
 
-var projectSettings = new SearchSettings(
-    GLOBAL_SEARCH_SETTINGS.PROJECT,
-    GLOBAL_SEARCH_SETTINGS.PROJECT_RESULTS_NUM,
-    GLOBAL_SEARCH_SETTINGS.DEFAULT_SEARCH_START,
-    GLOBAL_SEARCH_SETTINGS.FACET_NUM,
-    null,
-    GLOBAL_SEARCH_SETTINGS.PROJECT_DOMAIN,
-    GLOBAL_SEARCH_SETTINGS.PROJECT_FIELDS,
-    null
-);
+var initialiseSettings = function() {
+    var projectSettings = new SearchSettings(
+        GLOBAL_SEARCH_SETTINGS.PROJECT,
+        GLOBAL_SEARCH_SETTINGS.PROJECT_RESULTS_NUM,
+        GLOBAL_SEARCH_SETTINGS.DEFAULT_SEARCH_START,
+        GLOBAL_SEARCH_SETTINGS.FACET_NUM,
+        null,
+        GLOBAL_SEARCH_SETTINGS.PROJECT_DOMAIN,
+        GLOBAL_SEARCH_SETTINGS.PROJECT_FIELDS,
+        null
+    );
 
-var sampleTemperature = new NumericalRangeField("temperature", "Temperature", "°C", 0, 200, 0, 200);
-var sampleDepth = new NumericalRangeField("depth", "Depth", "Metres", 0, 1000, 0, 1000);
-var samplePH = new NumericalRangeField("pH", "pH", null, 0, 14, 0, 14);
+    var sampleTemperature = new NumericalRangeField("temperature", "Temperature", "°C", 0, 200, 0, 200);
+    var sampleDepth = new NumericalRangeField("depth", "Depth", "Metres", 0, 1000, 0, 1000);
+    var samplePH = new NumericalRangeField("pH", "pH", null, 0, 14, 0, 14);
 
-var sampleSettings = new SearchSettings(
-    GLOBAL_SEARCH_SETTINGS.SAMPLE,
-    GLOBAL_SEARCH_SETTINGS.SAMPLE_RESULTS_NUM,
-    GLOBAL_SEARCH_SETTINGS.DEFAULT_SEARCH_START,
-    GLOBAL_SEARCH_SETTINGS.FACET_NUM,
-    null,
-    GLOBAL_SEARCH_SETTINGS.SAMPLE_DOMAIN,
-    GLOBAL_SEARCH_SETTINGS.SAMPLE_FIELDS,
-    [sampleTemperature, sampleDepth, samplePH]
-);
+    var sampleSettings = new SearchSettings(
+        GLOBAL_SEARCH_SETTINGS.SAMPLE,
+        GLOBAL_SEARCH_SETTINGS.SAMPLE_RESULTS_NUM,
+        GLOBAL_SEARCH_SETTINGS.DEFAULT_SEARCH_START,
+        GLOBAL_SEARCH_SETTINGS.FACET_NUM,
+        null,
+        GLOBAL_SEARCH_SETTINGS.SAMPLE_DOMAIN,
+        GLOBAL_SEARCH_SETTINGS.SAMPLE_FIELDS,
+        [sampleTemperature, sampleDepth, samplePH]
+    );
 
-var runTemperature = new NumericalRangeField("temperature", "Temperature", "°C", 0, 200, 0, 200);
-var runDepth = new NumericalRangeField("depth", "Depth", "Metres", 0, 1000, 0, 1000);
-var runPH = new NumericalRangeField("pH", "pH", null, 0, 14, 0, 14);
+    var runTemperature = new NumericalRangeField("temperature", "Temperature", "°C", 0, 200, 0, 200);
+    var runDepth = new NumericalRangeField("depth", "Depth", "Metres", 0, 1000, 0, 1000);
+    var runPH = new NumericalRangeField("pH", "pH", null, 0, 14, 0, 14);
 
-var runSettings = new SearchSettings(
-    GLOBAL_SEARCH_SETTINGS.RUN,
-    GLOBAL_SEARCH_SETTINGS.RUN_RESULTS_NUM,
-    GLOBAL_SEARCH_SETTINGS.DEFAULT_SEARCH_START,
-    GLOBAL_SEARCH_SETTINGS.FACET_NUM,
-    null,
-    GLOBAL_SEARCH_SETTINGS.RUN_DOMAIN,
-    GLOBAL_SEARCH_SETTINGS.RUN_FIELDS,
-    [runTemperature, runDepth, runPH]
-);
+    var runSettings = new SearchSettings(
+        GLOBAL_SEARCH_SETTINGS.RUN,
+        GLOBAL_SEARCH_SETTINGS.RUN_RESULTS_NUM,
+        GLOBAL_SEARCH_SETTINGS.DEFAULT_SEARCH_START,
+        GLOBAL_SEARCH_SETTINGS.FACET_NUM,
+        null,
+        GLOBAL_SEARCH_SETTINGS.RUN_DOMAIN,
+        GLOBAL_SEARCH_SETTINGS.RUN_FIELDS,
+        [runTemperature, runDepth, runPH]
+    );
 
-var DatatypeSettings = {};
-DatatypeSettings.DATA_TYPES = [
-    GLOBAL_SEARCH_SETTINGS.PROJECT,
-    GLOBAL_SEARCH_SETTINGS.SAMPLE,
-    GLOBAL_SEARCH_SETTINGS.RUN
-];
+    DatatypeSettings.DATA_TYPES = [
+        GLOBAL_SEARCH_SETTINGS.PROJECT,
+        GLOBAL_SEARCH_SETTINGS.SAMPLE,
+        GLOBAL_SEARCH_SETTINGS.RUN
+    ];
 
-DatatypeSettings[GLOBAL_SEARCH_SETTINGS.PROJECT] = projectSettings;
-DatatypeSettings[GLOBAL_SEARCH_SETTINGS.SAMPLE] = sampleSettings;
-DatatypeSettings[GLOBAL_SEARCH_SETTINGS.RUN] = runSettings;
+    DatatypeSettings[GLOBAL_SEARCH_SETTINGS.PROJECT] = projectSettings;
+    DatatypeSettings[GLOBAL_SEARCH_SETTINGS.SAMPLE] = sampleSettings;
+    DatatypeSettings[GLOBAL_SEARCH_SETTINGS.RUN] = runSettings;
+
+};
+
 
 /*
 Behaviour methods
@@ -126,16 +131,25 @@ window.onunload = function(event) {
         saveFormState();
     }
 };
+*/
 
-window.onload = function(event) {
+window.addEventListener("onload", function(event){
     console.log("Loading");
     var searchElementID = "local-searchbox";
     var searchElement = document.getElementById(searchElementID);
     loadCss();
+    //search();
+});
 
-    restoreFormState();
-};
-*/
+window.addEventListener("onload", function(event){
+    console.log("Loading");
+    var searchElementID = "local-searchbox";
+    var searchElement = document.getElementById(searchElementID);
+    loadCss();
+    //search();
+});
+
+
 var loadCss = function() {
     //load css for the modal box
     var linkElement = document.createElement("link");
@@ -706,6 +720,16 @@ var displayRunData = function(results) {
 
 var displayDomainData = function(httpReq, searchSettings) {
     console.log("displayDomain: " + searchSettings.type);
+
+    var searchElementID = "local-searchbox";
+    var searchElement = document.getElementById(searchElementID);
+    var searchText = "";
+    if (searchElement != null) {
+        searchElement.value = searchSettings.searchText;
+    } else {
+        console.log("Error expected to find input with id " + searchElementID);
+    }
+
     var resultString = httpReq.response;
     var results = JSON.parse(resultString);
     console.log(
@@ -789,7 +813,7 @@ var parametersToString = function(parameters) {
                 var facetValues = value[facetType];
                 for (var k = 0; k < facetValues.length; k++) {
                     var facetValue = facetValues[k];
-                    facetString += facetType + ":" + facetValue + ",";
+                    facetString += facetType + ":" + encodeURIComponent(facetValue) + ",";
                 }
                 //remove final trailing comma ','
                 facetString = facetString.substr(0, facetString.length - 1);
@@ -807,15 +831,15 @@ var parametersToString = function(parameters) {
 
 var runDomainSearch = function(searchSettings) {
     console.log("Searchtext = " + searchSettings.searchText);
-    if (searchSettings.searchText != null && searchSettings.searchText !== "") {
-        //searchSettings.searchText = encodeURIComponent(searchSettings.searchText);
-        searchSettings.searchText = searchSettings.searchText;
+    var searchText = searchSettings.searchText;
+    if  (searchText != null && searchText !== "") {
+        searchText = encodeURIComponent(searchText);
     } else {
-        searchSettings.searchText = "domain_source:" + searchSettings.domain;
+        searchText = "domain_source:" + searchSettings.domain;
     }
 
     var parameters = {
-        "query": searchSettings.searchText,
+        "query": searchText,
         "format": "json",
         "size": searchSettings.resultsNum,
         "start": searchSettings.page * searchSettings.resultsNum,
@@ -846,18 +870,13 @@ var runDomainSearch = function(searchSettings) {
     runAjax("GET", url, null, successCallback, errorCallback);
 };
 
-var runNewSearch = function() {
-    
-    for(var i=0; i < DatatypeSettings.DATA_TYPES.length; i++) {
-        var dataType = DatatypeSettings.DATA_TYPES[i];
+var runNewSearch = function(allSearchSettings) {
+    for(var i=0; i < allSearchSettings.DATA_TYPES.length; i++) {
+        var dataType = allSearchSettings.DATA_TYPES[i];
         var searchSetting = DatatypeSettings[dataType];
         searchSetting.facets = {};
         runDomainSearch(searchSetting);
     }
-
-    //runDomainSearch(projectSearchSettings);
-    //runDomainSearch(sampleSearchSettings);
-    //runDomainSearch(runSearchSettings)
 };
 
 /**
@@ -943,7 +962,8 @@ var displayTabHeader = function() {
     return tabContainer;
 };
 
-var copyFormValuesToSettings = function(resetPage) {
+var prepareNewSearchSettings = function() {
+    initialiseSettings();
     var searchElementID = "local-searchbox";
     var searchElement = document.getElementById(searchElementID);
     var searchText = "";
@@ -953,33 +973,11 @@ var copyFormValuesToSettings = function(resetPage) {
             var dataType = DatatypeSettings.DATA_TYPES[i];
             var searchSetting = DatatypeSettings[dataType];
             searchSetting.searchText = searchText;
-            var facetContainer = document.getElementById(dataType + "-searchFacets");
-            if (facetContainer != null) {
-                var facets = {};
-                var facetElements = facetContainer.getElementsByTagName("input");
-                for (var j=0; j < facetElements.length; j++) {
-                    var facetElement = facetElements[j];
-                    if (facetElement.checked) {
-                        var type = facetElement.name;
-                        var value = facetElement.value;
-                        if (!facets.hasOwnProperty(type)) {
-                            facets[type] = [];
-                        }
-                        facets[type].push(value);
-                    }
-                }
-                searchSettings.facets = facets;
-            } else {
-                console.log("Error: Expected to find div " + dataType + "-searchFacets");
-            }
-            if (resetPage) {
-                searchSetting.page = 0;
-            }
         }
     } else {
         console.log("Error: Expected to find text input element " + searchElementID);
     }
-    return searchText;
+    return DatatypeSettings;
 };
 
 var reapplySearchSettings = function(searchText) {
@@ -1028,17 +1026,16 @@ var reapplySearchSettings = function(searchText) {
  * and then then populates search tabs with results
  */
 var search = function() {
-    //var searchText = copyFormValuesToSettings(true);
+    var allSearchSettings = prepareNewSearchSettings();
     runAjax("GET", "search", null, function(httpReq) {
         var response = httpReq.response;
         console.log("Loading search template");
         document.documentElement.innerHTML = response;
         loadCss();
-        //reapplySearchSettings(searchText);
         displayTabHeader();
-        runNewSearch();
+        runNewSearch(allSearchSettings);
         console.log("about to push state")
-        history.pushState(JSON.stringify(DatatypeSettings), "search", "/metagenomics/search")
+        history.pushState(JSON.stringify(allSearchSettings), "search", "/metagenomics/search")
     }, function(httpReq) {
         console.log("Error: Failed to load page template");
     });
