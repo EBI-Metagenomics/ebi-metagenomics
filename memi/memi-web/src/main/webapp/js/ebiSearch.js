@@ -43,6 +43,8 @@ function SearchSettings (type,
         facets = {};
     }
     this.facets = facets;
+    this.bonsaiTrees = {};
+    this.bonsaiState = {};
     this.domain = domain;
     this.fields = fields;
     this.numericalFields = numericalFields;
@@ -267,17 +269,20 @@ var isFacetGroupHierarchical = function(facetGroup) {
     return isHierarchical;
 };
 
-var addFacetValueChangListener = function (facetInput, facetType, facet, searchSettings) {
+var addFacetValueChangeListener = function (facetInput, facetType, facet, searchSettings, bonsaiTreeID) {
     facetInput.addEventListener("change", function(event) {
-        //copyFormValuesToSettings(true);
+        if (bonsaiTreeID != null) {
+            var bonsaiTree = $("#"+bonsaiTreeID).data('bonsai');
+            searchSettings.bonsaiState[facetType] = bonsaiTree.serialize();
+        }
         if (facetInput.checked) {
             if (!searchSettings.facets.hasOwnProperty(facetType)) {
                 searchSettings.facets[facetType] = [];
             }
-            searchSettings.facets[facetType].push(facet.value);
+            searchSettings.facets[facetType].push(facetInput.value);
         } else {
             if (searchSettings.facets.hasOwnProperty(facetType)) {
-                var valueIndex = searchSettings.facets[facetType].indexOf(facet.value);
+                var valueIndex = searchSettings.facets[facetType].indexOf(facetInput.value);
                 if (valueIndex > -1) {
                     searchSettings.facets[facetType].splice(valueIndex, 1);
                 }
@@ -285,7 +290,7 @@ var addFacetValueChangListener = function (facetInput, facetType, facet, searchS
                 console.log("Error - expected to find facet type: " + facetType);
             }
         }
-        console.log("Facet clicked " + facet.value + " Setting: " + Object.keys(searchSettings.facets));
+        console.log("Facet clicked " + facetInput.value + " Setting: " + Object.keys(searchSettings.facets));
         runDomainSearch(searchSettings);
     });
 };
@@ -316,7 +321,7 @@ var displayFacetGroup = function(facetGroup, container, searchSettings) {
             facetInput.checked = true;
         }
 
-        addFacetValueChangListener(facetInput, facetGroup.id, facet, searchSettings);
+        addFacetValueChangeListener(facetInput, facetGroup.id, facet, searchSettings, null);
 
         var facetLabel = document.createElement("label");
         facetLabel.htmlFor = facetInput.id;
@@ -348,6 +353,10 @@ var displayHierarchicalFacetGroup = function(facetGroup, container, searchSettin
     var facetGroupList = document.createElement("ul");
     facetGroupList.id = groupContainerId;
     facetGroupContainer.appendChild(facetGroupList);
+    $("#"+groupContainerId).bonsai({
+        checkboxes: true,
+        handleDuplicateCheckboxes: true
+    });
     for (var i=0; i < facetGroup.facetValues.length; i++) {
         var facet = facetGroup.facetValues[i];
         var identifier = dataType + FACET_SEPARATOR + facetGroup.id + FACET_SEPARATOR + facet.value;
@@ -358,34 +367,38 @@ var displayHierarchicalFacetGroup = function(facetGroup, container, searchSettin
         facetInput.form = "local-search";
         facetInput.type = "checkbox";
         facetInput.value = facet.value;
-        /*
-        if (checkedFacets != null && checkedFacets.indexOf(facetInput.value) >= 0) {
+
+        if (searchSettings.facets != null
+            && searchSettings.facets.hasOwnProperty(facetGroup.id)
+            && searchSettings.facets[facetGroup.id].indexOf(facetInput.value) > -1) {
             facetInput.checked = true;
+            facetInput.setAttribute("data-checked", "");
         }
-        */
-        facetInput.addEventListener("change", function(event) {
-            runDomainSearch(searchSettings);
-        });
+
+        addFacetValueChangeListener(facetInput, facetGroup.id, facet, searchSettings, groupContainerId);
 
         facetItem.appendChild(facetInput);
         facetItem.appendChild(document.createTextNode(facet.label + " (" + facet.count + ")"));
 
         if (facet.children != null) {
             var facetChildList = document.createElement("ul");
-            displayHierarchicalChildren(facetChildList, facet, facetGroup, facetInput.value, searchSettings);
+            displayHierarchicalChildren(facetChildList, facet, facetGroup, facetInput.value, searchSettings, groupContainerId);
             facetItem.appendChild(facetChildList);
             //TODO MAQ this is a quick fix for a bug in hierarchical searches - Nicola will fix this soon
             facetGroupList.appendChild(facetItem);
         }
     }
-    $("#"+groupContainerId).bonsai({
-        checkboxes: true,
-        handleDuplicateCheckboxes: true
-    });
+    var bonsaiTree = $("#"+groupContainerId).data('bonsai');
+    bonsaiTree.update();
+    if ( searchSettings.bonsaiState.hasOwnProperty(facetGroup.id)
+        && searchSettings.bonsaiState[facetGroup.id] != null) {
+        bonsaiTree.restore(searchSettings.bonsaiState[facetGroup.id]);
+        //$("#"+groupContainerId).bonsai('restore', searchSettings.bonsaiState[facetGroup.id]);
+    }
 
 };
 
-var displayHierarchicalChildren = function(container, facet, facetGroup, parentPath, searchSettings) {
+var displayHierarchicalChildren = function(container, facet, facetGroup, parentPath, searchSettings, bonsaiTreeID) {
     var dataType = searchSettings.type;
     var children = facet.children;
     console.log("Facet with children: " + children.length);
@@ -403,14 +416,15 @@ var displayHierarchicalChildren = function(container, facet, facetGroup, parentP
         facetInput.form = "local-search";
         facetInput.type = "checkbox";
         facetInput.value = value;
-        /*
-        if (checkedFacets != null && checkedFacets.indexOf(facetInput.value) >= 0) {
+
+        if (searchSettings.facets != null
+            && searchSettings.facets.hasOwnProperty(facetGroup.id)
+            && searchSettings.facets[facetGroup.id].indexOf(facetInput.value) > -1) {
             facetInput.checked = true;
+            facetInput.setAttribute("data-checked", "");
         }
-        */
-        facetInput.addEventListener("change", function(event) {
-            runDomainSearch(searchSettings);
-        });
+
+        addFacetValueChangeListener(facetInput, facetGroup.id, facet, searchSettings, bonsaiTreeID);
 
         facetItem.appendChild(facetInput);
         facetItem.appendChild(document.createTextNode(childFacet.label + " (" + childFacet.count + ")"));
@@ -418,7 +432,7 @@ var displayHierarchicalChildren = function(container, facet, facetGroup, parentP
 
         if (childFacet.children != null) {
             var facetChildList = document.createElement("ul");
-            displayHierarchicalChildren(container, childFacet, facetGroup, facetInput.value, searchSettings);
+            displayHierarchicalChildren(container, childFacet, facetGroup, facetInput.value, searchSettings, bonsaiTreeID);
             facetItem.appendChild(facetChildList);
         }
     }
