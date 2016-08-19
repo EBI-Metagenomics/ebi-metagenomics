@@ -27,12 +27,20 @@ import java.util.Map;
 @Controller
 public class LoginFormController extends LoginController {
 
+
     @RequestMapping(value = "**/doLogin", method = RequestMethod.POST)
     public
     @ResponseBody
     Map<String, String> doProcessLogin(@ModelAttribute("loginForm") @Valid LoginForm loginForm,
                                        final BindingResult bindingResult, HttpServletResponse response,
                                        final SessionStatus sessionStatus) {
+        /**
+         *  Note: The page reload after login is triggered by the AJAX success function in the JavaScript file called
+         *  loginDialog_script.js
+         *
+         *   window.location = root + "/metagenomics";
+         *
+         */
         if (bindingResult.hasErrors()) {
             response.setStatus(HttpServletResponse.SC_CONFLICT);
             return null;

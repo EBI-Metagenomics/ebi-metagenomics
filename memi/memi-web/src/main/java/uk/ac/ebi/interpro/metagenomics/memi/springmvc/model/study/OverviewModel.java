@@ -18,7 +18,6 @@ import java.util.List;
  * @since 1.0-SNAPSHOT
  */
 public class OverviewModel extends ViewModel {
-    private List<QueryRunsForProjectResult> runs;
 
     private Study study;
 
@@ -34,7 +33,6 @@ public class OverviewModel extends ViewModel {
                          List<Publication> relatedPublications, List<Publication> relatedLinks,
                          final boolean isGoogleMapDataAvailable) {
         super(submitter, ebiSearchForm, pageTitle, breadcrumbs, propertyContainer);
-        this.runs = runs;
         this.study = study;
         this.relatedLinks = relatedLinks;
         this.relatedPublications = relatedPublications;
@@ -47,14 +45,6 @@ public class OverviewModel extends ViewModel {
 
     public List<Publication> getRelatedPublications() {
         return relatedPublications;
-    }
-
-    public List<QueryRunsForProjectResult> getRuns() {
-        return runs;
-    }
-
-    public void setRuns(List<QueryRunsForProjectResult> runs) {
-        this.runs = runs;
     }
 
     public Study getStudy() {
