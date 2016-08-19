@@ -16,6 +16,7 @@ var GLOBAL_SEARCH_SETTINGS = {
     DEFAULT_SEARCH_START: 0,
     FACET_NUM: 10,
 
+
     PROJECT: "Projects",
     PROJECT_DOMAIN: "metagenomics_projects",
     PROJECT_FIELDS: "id,name,description,biome_name,METAGENOMICS_SAMPLE",
@@ -25,6 +26,9 @@ var GLOBAL_SEARCH_SETTINGS = {
     RUN: "Runs",
     RUN_DOMAIN: "metagenomics_runs",
     RUN_FIELDS: "id,experiment_type,pipeline_version,METAGENOMICS_SAMPLE,METAGENOMICS_PROJECT",
+    METAGENOMICS_SEARCH_TEXT : "www.ebi.ac.uk.metagenomics.searchsettings",
+    METAGENOMICS_SEARCH_SETTINGS : "www.ebi.ac.uk.metagenomics.searchsettings",
+    METAGENOMICS_SEARCH_SETTINGS_SELECTED_TAB: "www.ebi.ac.uk.metagenomics.selectedFacet"
 };
 
 var DatatypeSettings = {};
@@ -78,7 +82,7 @@ var initialiseSettings = function() {
 
     var sampleTemperature = new NumericalRangeField("temperature", "Temperature", "°C", 0, 200, 0, 200);
     var sampleDepth = new NumericalRangeField("depth", "Depth", "Metres", 0, 1000, 0, 1000);
-    var samplePH = new NumericalRangeField("pH", "pH", null, 0, 14, 0, 14);
+    //var samplePH = new NumericalRangeField("pH", "pH", null, 0, 14, 0, 14);
 
     var sampleSettings = new SearchSettings(
         GLOBAL_SEARCH_SETTINGS.SAMPLE,
@@ -88,12 +92,12 @@ var initialiseSettings = function() {
         null,
         GLOBAL_SEARCH_SETTINGS.SAMPLE_DOMAIN,
         GLOBAL_SEARCH_SETTINGS.SAMPLE_FIELDS,
-        [sampleTemperature, sampleDepth, samplePH]
+        [sampleTemperature, sampleDepth]
     );
 
     var runTemperature = new NumericalRangeField("temperature", "Temperature", "°C", 0, 200, 0, 200);
     var runDepth = new NumericalRangeField("depth", "Depth", "Metres", 0, 1000, 0, 1000);
-    var runPH = new NumericalRangeField("pH", "pH", null, 0, 14, 0, 14);
+    //var runPH = new NumericalRangeField("pH", "pH", null, 0, 14, 0, 14);
 
     var runSettings = new SearchSettings(
         GLOBAL_SEARCH_SETTINGS.RUN,
@@ -103,7 +107,7 @@ var initialiseSettings = function() {
         null,
         GLOBAL_SEARCH_SETTINGS.RUN_DOMAIN,
         GLOBAL_SEARCH_SETTINGS.RUN_FIELDS,
-        [runTemperature, runDepth, runPH]
+        [runTemperature, runDepth]
     );
 
     DatatypeSettings.DATA_TYPES = [
@@ -115,40 +119,54 @@ var initialiseSettings = function() {
     DatatypeSettings[GLOBAL_SEARCH_SETTINGS.PROJECT] = projectSettings;
     DatatypeSettings[GLOBAL_SEARCH_SETTINGS.SAMPLE] = sampleSettings;
     DatatypeSettings[GLOBAL_SEARCH_SETTINGS.RUN] = runSettings;
-
 };
-
 
 /*
 Behaviour methods
  */
-/*
-window.onunload = function(event) {
-    console.log("Unloading");
+
+window.onload = function (event){
+    console.log("onload");
     var searchElementID = "local-searchbox";
     var searchElement = document.getElementById(searchElementID);
     if (searchElement != null) {
-        saveFormState();
+        var searchText = sessionStorage.getItem(GLOBAL_SEARCH_SETTINGS.METAGENOMICS_SEARCH_TEXT)
+        if (searchText != null) {
+            searchElement.value = searchText;
+        }
+    } else {
+        console.log("Error: expected input with id = " + searchElementID);
+    }
+    var seachPageElementID = "searchTabs";
+    var searchPageTabElement = document.getElementById(seachPageElementID);
+    if (searchPageTabElement != null) {
+        initialiseSettings();
+        for (var i=0; i < DatatypeSettings.DATA_TYPES.length; i++) {
+            var dataType = DatatypeSettings.DATA_TYPES[i];
+            var searchSetting = sessionStorage.getItem(GLOBAL_SEARCH_SETTINGS.METAGENOMICS_SEARCH_SETTINGS + dataType);
+            if (searchSetting != null) {
+                DatatypeSettings[dataType] = JSON.parse(searchSetting);
+            }
+        }
+        loadPageFromServer(runNewSearch, DatatypeSettings);
     }
 };
-*/
 
-window.addEventListener("onload", function(event){
-    console.log("Loading");
-    var searchElementID = "local-searchbox";
-    var searchElement = document.getElementById(searchElementID);
-    loadCss();
-    //search();
-});
+window.popstate =  function(event){
+    console.log("popstate");
+    var state = event.state;
+    var seachPageElementID = "searchTabs";
+    var searchPageTabElement = document.getElementById(seachPageElementID);
+    if (searchPageTabElement != null) {
+        loadCss();
+        DatatypeSettings = JSON.parse(state);
+        runNewSearch(DatatypeSettings);
+    }
+};
 
-window.addEventListener("onload", function(event){
-    console.log("Loading");
-    var searchElementID = "local-searchbox";
-    var searchElement = document.getElementById(searchElementID);
-    loadCss();
-    //search();
-});
-
+window.onunload = function(event) {
+    console.log("Unloading");
+};
 
 var loadCss = function() {
     //load css for the modal box
@@ -524,18 +542,18 @@ var displayNumericalInputs = function(container, searchSettings) {
             fieldContainer.appendChild(rangeLabel);
         }
 
-        addNumericalFieldValueChangeListener(fieldContainer, numericalField, searchSettings);
+        addNumericalFieldValueChangeListener(fieldContainer, rangeInput, numericalField, searchSettings);
     }
 
 };
 
-var addNumericalFieldValueChangeListener = function(fieldContainer, numericalField, searchSettings) {
+var addNumericalFieldValueChangeListener = function(fieldContainer, fieldInput, numericalField, searchSettings) {
     fieldContainer.addEventListener("change", function(event){
-        var tokens = event.target.value.split(",");
+        var tokens = fieldInput.value.split(",");
         numericalField.selectedMinimum = tokens[0];
         numericalField.selectedMaximum = tokens[1];
         console.log(numericalField.displayName + " range: " + tokens);
-        //MAQ runDomainSearch(searchSettings);
+        runDomainSearch(searchSettings);
     });
 };
 
@@ -676,45 +694,22 @@ var displayRunTable = function(results, container) {
     container.appendChild(table);
 };
 
-var displayProjectData = function(results) {
-    resultsContainer = document.getElementById(GLOBAL_SEARCH_SETTINGS.PROJECT + "-searchData");
+var displayData = function(results, dataType, dsiplaytableFunction) {
+    resultsContainer = document.getElementById(dataType + "-searchData");
     if (resultsContainer != null) {
         resultsContainer.innerHTML = ""; //clear results div
         resultsTitle = document.createElement("h3");
-        resultsTitle.innerHTML = "Showing " + results.entries.length
-            + " out of " + results.hitCount + " results";
-        resultsContainer.appendChild(resultsTitle);
-        displayProjectTable(results, resultsContainer);
-    } else {
-        console.log("Error: Expected to find div with id '" + GLOBAL_SEARCH_SETTINGS.PROJECT + "-searchData'");
-    }
-};
+        if (results.hasOwnProperty("entries") && results.entries != null) {
+            resultsTitle.innerHTML = "Showing " + results.entries.length
+                + " out of " + results.hitCount + " results";
+            resultsContainer.appendChild(resultsTitle);
+            dsiplaytableFunction(results, resultsContainer);
+        } else {
+            resultsTitle.innerHTML = "Search returned no results";
+        }
 
-var displaySampleData = function(results) {
-    resultsContainer = document.getElementById(GLOBAL_SEARCH_SETTINGS.SAMPLE + "-searchData");
-    if (resultsContainer != null) {
-        resultsContainer.innerHTML = ""; //clear results div
-        resultsTitle = document.createElement("h3");
-        resultsTitle.innerHTML = "Showing " + results.entries.length
-            + " out of " + results.hitCount + " results";
-        resultsContainer.appendChild(resultsTitle);
-        displaySampleTable(results, resultsContainer);
     } else {
-        console.log("Error: Expected to find div with id '" + GLOBAL_SEARCH_SETTINGS.SAMPLE + "-searchData'");
-    }
-};
-
-var displayRunData = function(results) {
-    resultsContainer = document.getElementById(GLOBAL_SEARCH_SETTINGS.RUN + "-searchData");
-    if (resultsContainer != null) {
-        resultsContainer.innerHTML = ""; //clear results div
-        resultsTitle = document.createElement("h3");
-        resultsTitle.innerHTML = "Showing " + results.entries.length
-            + " out of " + results.hitCount + " results";
-        resultsContainer.appendChild(resultsTitle);
-        displayRunTable(results, resultsContainer);
-    } else {
-        console.log("Error: Expected to find div with id '" + GLOBAL_SEARCH_SETTINGS.RUN + "-searchData'");
+        console.log("Error: Expected to find div with id '" + dataType + "-searchData'");
     }
 };
 
@@ -740,11 +735,11 @@ var displayDomainData = function(httpReq, searchSettings) {
 
     setTabText(results.hitCount, searchSettings.type);
     if (searchSettings.type == GLOBAL_SEARCH_SETTINGS.PROJECT) {
-        displayProjectData(results)
+        displayData(results, searchSettings.type, displayProjectTable);
     } else if (searchSettings.type == GLOBAL_SEARCH_SETTINGS.SAMPLE) {
-        displaySampleData(results);
+        displayData(results, searchSettings.type, displaySampleTable);
     } else if (searchSettings.type == GLOBAL_SEARCH_SETTINGS.RUN) {
-        displayRunData(results);
+        displayData(results, searchSettings.type, displayRunTable);
     } else {
         console.log("Error: DisplayDomainData - Unknown data type '" + searchSettings.type + "'");
     }
@@ -831,15 +826,38 @@ var parametersToString = function(parameters) {
 
 var runDomainSearch = function(searchSettings) {
     console.log("Searchtext = " + searchSettings.searchText);
+    sessionStorage.setItem(GLOBAL_SEARCH_SETTINGS.METAGENOMICS_SEARCH_TEXT, searchSettings.searchText);
+    sessionStorage.setItem(GLOBAL_SEARCH_SETTINGS.METAGENOMICS_SEARCH_SETTINGS + searchSettings.type,  JSON.stringify(searchSettings));
+
+    console.log("about to push state");
+    history.pushState(JSON.stringify(DatatypeSettings), "search", "/metagenomics/search");
+
     var searchText = searchSettings.searchText;
-    if  (searchText != null && searchText !== "") {
-        searchText = encodeURIComponent(searchText);
-    } else {
+    if  (searchText == null || searchText == "") {
         searchText = "domain_source:" + searchSettings.domain;
     }
-
+    var numericalQuery = null;
+    if (searchSettings.numericalFields != null) {
+        var queries = [];
+        for(var i=0; i < searchSettings.numericalFields.length; i++) {
+            var numericalField = searchSettings.numericalFields[i];
+            if (numericalField.selectedMinimum > numericalField.minimum
+                || numericalField.selectedMaximum < numericalField.maximum) {
+                var fieldQuery = numericalField.name
+                    + ":[" + numericalField.selectedMinimum
+                    + " TO " + numericalField.selectedMaximum + "]";
+                queries.push(fieldQuery);
+            }
+        }
+        if (queries.length > 0) {
+            numericalQuery = queries.join(" AND ");
+        }
+    }
+    if (numericalQuery != null) {
+        searchText += " AND " + numericalQuery;
+    }
     var parameters = {
-        "query": searchText,
+        "query": encodeURIComponent(searchText),
         "format": "json",
         "size": searchSettings.resultsNum,
         "start": searchSettings.page * searchSettings.resultsNum,
@@ -851,11 +869,6 @@ var runDomainSearch = function(searchSettings) {
     if (searchSettings.facets != null) {
         parameters.facets = searchSettings.facets;
     }
-    if (searchSettings.numericalFields != null) {
-        //MAQ parameters.numericalFields = searchSettings.numericalFields;
-    }
-
-    //console.log("SEARCH: Size: " + parameters.size + " start = " + parameters.start);
 
     var paramFragment = parametersToString(parameters);
     var url = BASE_URL + searchSettings.domain + paramFragment;
@@ -873,7 +886,7 @@ var runDomainSearch = function(searchSettings) {
 var runNewSearch = function(allSearchSettings) {
     for(var i=0; i < allSearchSettings.DATA_TYPES.length; i++) {
         var dataType = allSearchSettings.DATA_TYPES[i];
-        var searchSetting = DatatypeSettings[dataType];
+        var searchSetting = allSearchSettings[dataType];
         searchSetting.facets = {};
         runDomainSearch(searchSetting);
     }
@@ -885,19 +898,28 @@ var runNewSearch = function(allSearchSettings) {
  * @param disabledList
  */
 var setupJQueryTabs = function(container, disabledList) {
-    selectedTab = 0;
+    var selectedTab = sessionStorage.getItem(GLOBAL_SEARCH_SETTINGS.METAGENOMICS_SEARCH_SETTINGS_SELECTED_TAB);
+    if (selectedTab == null) {
+        selectedTab = 0;
+    }
     var children = container.getElementsByClassName(SEARCH_TAB_CLASS);
 
+    /*
     for (var i=0; i < children.length; i++) {
         if (disabledList.indexOf(i) == -1) {
             selectedTab = i;
             break;
         }
     }
+    */
 
     $(container).tabs({
         disabled: disabledList,
-        active: selectedTab
+        active: selectedTab,
+        activate: function(event, ui) {
+            var selectedTab = $('#tabs').tabs('option', 'active');
+            sessionStorage.setItem(GLOBAL_SEARCH_SETTINGS.METAGENOMICS_SEARCH_SETTINGS_SELECTED_TAB, selectedTab)
+        }
     });
 };
 
@@ -980,45 +1002,19 @@ var prepareNewSearchSettings = function() {
     return DatatypeSettings;
 };
 
-var reapplySearchSettings = function(searchText) {
-    var searchElementID = "local-searchbox";
-    var searchElement = document.getElementById(searchElementID);
-    if (searchElement) {
-        if (searchText != null) {
-            searchElement.value = searchText;
+var loadPageFromServer = function(callback, callbackArgs) {
+    runAjax("GET", "/metagenomics/search", null, function(httpReq) {
+        var response = httpReq.response;
+        console.log("Loading search template");
+        document.documentElement.innerHTML = response;
+        loadCss();
+        displayTabHeader();
+        if (callback != null) {
+            callback(callbackArgs);
         }
-
-        for(var i=0; i < DatatypeSettings.DATA_TYPES.length; i++) {
-            var dataType = DatatypeSettings.DATA_TYPES[i];
-            var searchSetting = DatatypeSettings[dataType];
-            var facetContainer = document.getElementById(dataType + "-searchFacets");
-            if (facetContainer != null) {
-
-                if (searchSetting.facets != null) {
-                    var facets = searchSetting.facets;
-                    var facetTypes = Object.keys(facets);
-                    for(var j=0; j < facetTypes.length; j++) {
-                        var facetType = facetTypes[j];
-                        var facetValues = facets[facetType];
-                        for (var k=0; k < facetValues.length; k++) {
-                            var facetValue = facetValues[k];
-                            var inputId = dataType + FACET_SEPARATOR + facetType + FACET_SEPARATOR + facetValue;
-                            var inputElement = document.getElementById(inputId);
-                            if (inputElement != null) {
-                                inputElement.checked = true;
-                            } else {
-                                console.log("Error: Failed to find input with ID " + inputId);
-                            }
-                        }
-                        console.log("Facet " + facetType);
-                    }
-                }
-            }
-        }
-    } else {
-        console.log("Error: Expected to find text input element " + searchElementID);
-    }
-
+    }, function(httpReq) {
+        console.log("Error: Failed to load page template");
+    });
 };
 
 /**
@@ -1027,18 +1023,7 @@ var reapplySearchSettings = function(searchText) {
  */
 var search = function() {
     var allSearchSettings = prepareNewSearchSettings();
-    runAjax("GET", "search", null, function(httpReq) {
-        var response = httpReq.response;
-        console.log("Loading search template");
-        document.documentElement.innerHTML = response;
-        loadCss();
-        displayTabHeader();
-        runNewSearch(allSearchSettings);
-        console.log("about to push state")
-        history.pushState(JSON.stringify(allSearchSettings), "search", "/metagenomics/search")
-    }, function(httpReq) {
-        console.log("Error: Failed to load page template");
-    });
+    loadPageFromServer(runNewSearch, allSearchSettings);
 };
 
 
