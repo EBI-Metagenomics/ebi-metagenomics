@@ -2,6 +2,7 @@ package uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate;
 
 import org.hibernate.criterion.Criterion;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
+import uk.ac.ebi.interpro.metagenomics.memi.model.valueObjects.StudyStatisticsVO;
 
 import java.util.Collection;
 import java.util.List;
@@ -131,4 +132,6 @@ public interface StudyDAO extends ISecureEntityDAO<Study> {
      * @return
      */
     Map<String, Long> retrieveSampleCountsGroupedByExternalStudyId(Collection<String> externalStudyIds);
+
+    public StudyStatisticsVO retrieveStatistics();
 }
