@@ -25,7 +25,7 @@ var GLOBAL_SEARCH_SETTINGS = {
     SAMPLE_FIELDS: "id,name,description,experiment_type,METAGENOMICS_PROJECT",
     RUN: "Runs",
     RUN_DOMAIN: "metagenomics_runs",
-    RUN_FIELDS: "id,experiment_type,pipeline_version,METAGENOMICS_SAMPLE,METAGENOMICS_PROJECT",
+    RUN_FIELDS: "id,experiment_type,pipeline_version,METAGENOMICS_SAMPLES,METAGENOMICS_PROJECTS",
     METAGENOMICS_SEARCH_TEXT : "www.ebi.ac.uk.metagenomics.searchsettings",
     METAGENOMICS_SEARCH_SETTINGS : "www.ebi.ac.uk.metagenomics.searchsettings",
     METAGENOMICS_SEARCH_SETTINGS_SELECTED_TAB: "www.ebi.ac.uk.metagenomics.selectedFacet"
@@ -660,23 +660,23 @@ var displayRunTable = function(results, container) {
             {
                 name: entry.id,
                 url: "http://" + window.location.host + "/metagenomics/projects/"
-                + entry.fields.METAGENOMICS_PROJECT[0] + "/samples/"
-                + entry.fields.METAGENOMICS_SAMPLE[0] + "/runs/"
+                + entry.fields.METAGENOMICS_PROJECTS[0] + "/samples/"
+                + entry.fields.METAGENOMICS_SAMPLES[0] + "/runs/"
                 + entry.id + "/results/versions/"
                 + entry.fields.pipeline_version[0]
             },
             {
-                name: entry.fields.METAGENOMICS_SAMPLE[0],
+                name: entry.fields.METAGENOMICS_SAMPLES[0],
                 className: "xs_hide",
                 url: "http://" + window.location.host + "/metagenomics/projects/"
-                + entry.fields.METAGENOMICS_PROJECT[0] + "/samples/"
-                + entry.fields.METAGENOMICS_SAMPLE[0],
+                + entry.fields.METAGENOMICS_PROJECTS[0] + "/samples/"
+                + entry.fields.METAGENOMICS_SAMPLES[0],
 
             },
             {
-                name: entry.fields.METAGENOMICS_PROJECT[0],
+                name: entry.fields.METAGENOMICS_PROJECTS[0],
                 className: "xs_hide",
-                url: "http://" + window.location.host + "/metagenomics/projects/" + entry.fields.METAGENOMICS_PROJECT[0],
+                url: "http://" + window.location.host + "/metagenomics/projects/" + entry.fields.METAGENOMICS_PROJECTS[0],
             },
             {
                 name: entry.fields.experiment_type[0]
