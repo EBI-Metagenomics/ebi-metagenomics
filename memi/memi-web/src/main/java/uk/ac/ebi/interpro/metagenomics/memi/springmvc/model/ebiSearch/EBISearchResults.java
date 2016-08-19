@@ -17,6 +17,7 @@ public class EBISearchResults {
     String searchText;
     String searchType;
     int resultsPerPage;
+    String error;
 
     public EBISearchResults() {
         samples = new EBISampleSearchResults();
@@ -65,4 +66,12 @@ public class EBISearchResults {
     public int getResultsPerPage() { return resultsPerPage; }
 
     public void setResultsPerPage(int resultsPerPage) { this.resultsPerPage = resultsPerPage; }
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
 }

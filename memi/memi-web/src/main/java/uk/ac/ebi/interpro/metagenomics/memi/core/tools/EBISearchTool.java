@@ -10,6 +10,7 @@ import uk.ac.ebi.webservices.jaxrs.EBeyeClient;
 import uk.ac.ebi.webservices.jaxrs.stubs.ebeye.*;
 
 import javax.ws.rs.BadRequestException;
+import javax.ws.rs.InternalServerErrorException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
@@ -81,29 +82,43 @@ public class EBISearchTool {
     public String search(EBISearchResults results) {
         log.debug("search");
         Domain selectedDomain = getSelectedDomain(results);
-        if (selectedDomain != null) {
-            switch (selectedDomain) {
-                case PROJECTS:
-                    searchProjects(selectedDomain, results);
-                    break;
-                case SAMPLES:
-                    searchSamples(selectedDomain, results);
-                    break;
-                case RUNS:
-                    searchRuns(selectedDomain, results);
-                    break;
+        try {
+            if (selectedDomain != null) {
+                switch (selectedDomain) {
+                    case PROJECTS:
+                        searchProjects(selectedDomain, results);
+                        break;
+                    case SAMPLES:
+                        searchSamples(selectedDomain, results);
+                        break;
+                    case RUNS:
+                        searchRuns(selectedDomain, results);
+                        break;
+                }
             }
+        } catch (InternalServerErrorException e) {
+            results.setError("Something has gone wrong with the search server. Please try again later and report this error to metagenomics-help@ebi.ac.uk");
         }
-
         String json = gson.toJson(results);
         return json;
     }
 
     public String searchAllDomains(EBISearchResults results) {
         //default behaviour is to search all domains
-        searchProjects(Domain.PROJECTS, results);
-        searchSamples(Domain.SAMPLES, results);
-        searchRuns(Domain.RUNS, results);
+        try {
+            searchProjects(Domain.PROJECTS, results);
+            searchSamples(Domain.SAMPLES, results);
+            searchRuns(Domain.RUNS, results);
+
+        } catch (InternalServerErrorException e) {
+            results.setError("Something has gone wrong with the search server. Please try again later and report this error to metagenomics-help@ebi.ac.uk");
+            results.getRuns().setNumberOfHits(0);
+            results.getRuns().setMaxPage(0);
+            results.getProjects().setNumberOfHits(0);
+            results.getProjects().setMaxPage(0);
+            results.getSamples().setNumberOfHits(0);
+            results.getSamples().setMaxPage(0);
+        }
         String json = gson.toJson(results);
         return json;
     }
@@ -122,7 +137,7 @@ public class EBISearchTool {
      * @param
      * @return EBISampleSearchResults object containing the search hits and a set of facets
      */
-    public void searchSamples(Domain domain, EBISearchResults results) {
+    public void searchSamples(Domain domain, EBISearchResults results) throws InternalServerErrorException {
         log.debug("searchSamples");
         EBISampleSearchResults sampleResults = results.getSamples();
 
@@ -158,7 +173,7 @@ public class EBISearchTool {
     }
 
 
-    public void searchProjects(Domain domain, EBISearchResults results) {
+    public void searchProjects(Domain domain, EBISearchResults results) throws InternalServerErrorException {
         log.debug("searchProjects");
 
         EBIProjectSearchResults projectResults = results.getProjects();
@@ -195,7 +210,7 @@ public class EBISearchTool {
         }
     }
 
-    public void searchRuns(Domain domain, EBISearchResults results) {
+    public void searchRuns(Domain domain, EBISearchResults results) throws InternalServerErrorException {
         log.debug("searchRuns");
 
         EBIRunSearchResults runResults = results.getRuns();

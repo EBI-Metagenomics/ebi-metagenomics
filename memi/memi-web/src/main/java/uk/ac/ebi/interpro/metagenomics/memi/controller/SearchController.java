@@ -3,6 +3,7 @@ package uk.ac.ebi.interpro.metagenomics.memi.controller;
 import com.google.gson.Gson;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,8 @@ import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ebiSearch.EBISearchResults;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.SearchViewModelBuilder;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
@@ -22,13 +25,14 @@ import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by maq on 17/03/2016.
  */
 @Controller
 @RequestMapping(value = "/" + SearchController.VIEW_NAME)
-public class SearchController extends AbstractController implements IController {
+public class SearchController extends AbstractController {
     private final Log log = LogFactory.getLog(SearchController.class);
 
     public static final String VIEW_NAME = "search";
@@ -36,6 +40,7 @@ public class SearchController extends AbstractController implements IController 
     public static final String VIEW_SEARCH = "doEbiSearch";
     public static final String VIEW_AJAX = "doAjaxSearch";
 
+    private static final String SEARCH_TERM = "searchText";
 
     public EBISearchTool ebiSearchTool;
 
@@ -43,45 +48,28 @@ public class SearchController extends AbstractController implements IController 
         ebiSearchTool = new EBISearchTool();
     }
 
-    @Override
-    public ModelAndView doGet(final ModelMap model) {
-        log.info("Requesting doGet of " + this.getClass() + "...");
-        EBISearchForm ebiSearchForm = getEbiSearchForm();
-        EBISearchResults results = new EBISearchResults();
-        results.setSearchText(ebiSearchForm.getSearchText());
-        final String searchResults = ebiSearchTool.searchAllDomains(results);
-        return buildModelAndView(
-                getModelViewName(),
-                model,
-                new ModelPopulator() {
-                    @Override
-                    public void populateModel(ModelMap model) {
-                        log.info("Building model of " + this.getClass() + "...");
-                        final SearchViewModelBuilder<ViewModel> builder = new SearchViewModelBuilder(
-                                userManager,
-                                getEbiSearchForm(),
-                                "Search EBI metagenomics",
-                                getBreadcrumbs(null),
-                                propertyContainer,
-                                searchResults
-                        );
-                        final ViewModel searchModel = builder.getModel();
-                        searchModel.changeToHighlightedClass(ViewModel.TAB_CLASS_SEARCH_VIEW);
-                        model.addAttribute(ViewModel.MODEL_ATTR_NAME, searchModel);
-                    }
-                }
-        );
-    }
+    @RequestMapping(method = RequestMethod.GET)
+    public ModelAndView doEbiSearch(ModelMap model, HttpServletRequest request,
+                                    HttpServletResponse response) {
 
-    @RequestMapping(value = "/" + SearchController.VIEW_SEARCH, method = RequestMethod.POST)
-    public ModelAndView doEbiSearch(@Valid @ModelAttribute(EBISearchForm.MODEL_ATTR_NAME) final EBISearchForm ebiSearchForm,
-                                    ModelMap model) {
+        /*
+        String searchText = "";
+        Map<String, String[]> parameters = request.getParameterMap();
+        if (parameters.containsKey(SEARCH_TERM) && parameters.get(SEARCH_TERM) != null) {
+            String[] searchTerms = parameters.get(SEARCH_TERM);
+            if (searchTerms.length > 0) {
+                searchText = searchTerms[0];
+            }
+        }
+
         log.info("Requesting doEbiSearch of " + this.getClass() + "...");
-        log.info("Search for " + ebiSearchForm.getSearchText());
-
+        log.info("Search for '" + searchText + "'");
         EBISearchResults results = new EBISearchResults();
-        results.setSearchText(ebiSearchForm.getSearchText());
+        results.setSearchText(searchText);
         final String searchResults = ebiSearchTool.searchAllDomains(results);
+        final EBISearchForm searchForm = getEbiSearchForm();
+        searchForm.setSearchText(searchText);
+        */
         return buildModelAndView(
                 getModelViewName(),
                 model,
@@ -91,11 +79,11 @@ public class SearchController extends AbstractController implements IController 
                         log.info("Building model of " + this.getClass() + "...");
                         final SearchViewModelBuilder<ViewModel> builder = new SearchViewModelBuilder(
                                 userManager,
-                                getEbiSearchForm(),
+                                null,
                                 "Search EBI metagenomics",
                                 getBreadcrumbs(null),
                                 propertyContainer,
-                                searchResults
+                                null
                         );
                         final ViewModel searchModel = builder.getModel();
                         searchModel.changeToHighlightedClass(ViewModel.TAB_CLASS_SEARCH_VIEW);
