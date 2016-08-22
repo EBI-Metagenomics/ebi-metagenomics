@@ -804,14 +804,13 @@ var removeSpinner = function(searchSettings) {
 };
 
 var displaySearchError = function (httpReq, searchSettings) {
-    if (searchSettings.type == DatatypeSettings.PROJECT) {
-        projectError(httpReq)
-    } else if (searchSettings.type == DatatypeSettings.SAMPLE) {
-        projectError(httpReq)
-    } else if (searchSettings.type == DatatypeSettings.RUN) {
-        runError(httpReq)
+    var dataType = searchSettings.type;
+    setTabText("Error", dataType);
+    resultsContainer = document.getElementById(dataType + "-searchData");
+    if (resultsContainer != null) {
+        resultsContainer.innerHTML = "<div>A problem was encountered running the search. Please try again later.</div><div>If the problem persists please send contact us <a href='/metagenomics/contact'>here</a></div>";
     } else {
-        console.log("Error: HandleSearchError - Unknown data type '" + searchSettings.type + "'");
+        console.log("Error: Expected to find div with id '" + dataType + "-searchData'");
     }
 };
 
@@ -823,7 +822,12 @@ var runAjax = function(method, url, parameters, callback, errCallback) {
     //handle response
     httpReq.onload = function(event) {
         var readyState = httpReq.readyState;
-        callback(httpReq);
+        if (httpReq.status == 200) {
+            callback(httpReq);
+        } else {
+            errCallback(httpReq);
+        }
+
     };
 
     //error handling
