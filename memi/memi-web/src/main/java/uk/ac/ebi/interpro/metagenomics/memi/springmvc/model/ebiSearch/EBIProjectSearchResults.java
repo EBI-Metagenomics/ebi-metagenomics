@@ -4,18 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by maq on 21/03/2016.
+ * Created by maq on 06/05/2016.
  */
-public class EBISampleSearchResults implements ISearchResults{
+public class EBIProjectSearchResults implements ISearchResults{
 
     int numberOfHits;
     int page = 1;
     int maxPage;
     int resultsPerPage = EBISearchResults.DEFAULT_RESULTS_PER_PAGE;
 
-    List<EBISampleSearchEntry> entries = new ArrayList<EBISampleSearchEntry>();
+    List<EBIProjectSearchEntry> entries = new ArrayList<>();
 
-    List<EBISearchFacet> facets = new ArrayList<EBISearchFacet>();
+    List<EBISearchFacet> facets = new ArrayList<>();
 
     List<String> checkedFacets = new ArrayList<>();
 
@@ -27,11 +27,21 @@ public class EBISampleSearchResults implements ISearchResults{
         this.numberOfHits = numberOfHits;
     }
 
-    public List<EBISampleSearchEntry> getEntries() {
+    public List<EBIProjectSearchEntry> getEntries() {
         return entries;
     }
 
-    public List<EBISearchFacet> getFacets() { return facets; }
+    public void setEntries(List<EBIProjectSearchEntry> entries) {
+        this.entries = entries;
+    }
+
+    public List<EBISearchFacet> getFacets() {
+        return facets;
+    }
+
+    public void setFacets(List<EBISearchFacet> facets) {
+        this.facets = facets;
+    }
 
     public List<String> getCheckedFacets() { return checkedFacets; }
 

@@ -171,6 +171,16 @@
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/tablequerywrapper.js"></script>
 
+    <%--bonsai jquery tree plugin --%>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.bonsai.js"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/jquery.bonsai.css" type="text/css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/svg-icons.css" type="text/css"/>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.qubit.js"></script>
+    <%--multirange input plugin --%>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/multirange.css" type="text/css"/>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/multirange.js"></script>
+
+
     <noscript>
         <style type="text/css">
            /*remove the Krona box  and all charts tabs when no javascript*/
@@ -236,55 +246,25 @@
 
 
             <div class="grid_12 omega">
-                <form:form id="local-search" action="${pageContext.request.contextPath}/search/doEbiSearch"
-                      commandName="ebiSearchForm" method="POST">
+                <form id="local-search" action="javascript:search();">
 
                     <fieldset>
 
                         <div class="left">
                             <label>
-                                <form:input path="searchText" type="search" id="local-searchbox" />
+                                <input type="search" id="local-searchbox" />
+                                <span class="examples">&nbsp; &nbsp;&nbsp;<a href="#">&nbsp;</a>&nbsp; <a href="#">&nbsp;</a>&nbsp; <a
+                                        href="#">&nbsp;</a></span>
                             </label>
-                         <%--<span class="examples">&nbsp; &nbsp;&nbsp;<a href="#">&nbsp;</a>&nbsp; <a href="#">&nbsp;</a>&nbsp; <a--%>
-                                                                <%--href="#">&nbsp;</a></span>--%>
-                            <span class="examples" style="visibility: hidden;">Examples: <a href="#">ERP002477</a>, <a href="#">Human gut</a>, <a
-                                    href="#">Host-associated: Arthropoda</a></span>
                         </div>
 
                         <div class="right">
-                            <input type="submit" id="searchsubmit" name="searchsubmit" value="Search" class="submit">
+                            <input type="submit" id="searchsubmit" value="Search" class="submit">
                             <!-- Link for future advance search page -->
                             <!-- <span class="adv"><a href="../search" id="adv-search" title="Advanced">Advanced</a></span> -->
                         </div>
-
                     </fieldset>
-                    <!-- hidden div used to show facets when on searchBody.jsp page -->
-                    <div id="hiddenFacets" class="this_hide">
-                        <c:choose>
-                            <c:when test="${model.modelClassName eq 'SearchViewModel'
-                            && fn:length(model.ebiSampleSearchResults.facets) > 0}">
-                                <h3>Filter your results</h3>
-                                <c:forEach var="facet" items="${model.ebiSampleSearchResults.facets}">
-                                    <c:if test="${fn:length(facet.values) > 0}">
-                                        <h4>${facet.label}</h4>
-                                        <div class="extra-pad"><form:checkboxes path="facets" items="${facet.values}" itemLabel="labelAndCount"
-                                                                                itemValue="facetAndValue" element="div" form="local-search"/> </div>
-                                    </c:if>
-                                </c:forEach>
-                                <hr>
-                                <p><small class="text-muted">Powered by <a href="http://www.ebi.ac.uk/ebisearch/" class="ext" target="_blank">EBI Search</a></small></p>
-                            </c:when>
-                        </c:choose>
-                    </div>
-                    <div id="hiddenSearchPagination" class="this_hide">
-                        <form:hidden id="currentPage" path="page"/>
-                        <form:hidden id="maxPage" path="maxPage"/>
-                        <form:hidden id="previousSearch" path="previousSearchText"/>
-                        <input type="button" id="previousPage" value="Previous"/>
-                        Page ${ebiSearchForm.page} of ${ebiSearchForm.maxPage}
-                        <input type="button" id="nextPage" value="Next"/>
-                    </div>
-                </form:form>
+                </form>
             </div>
 
             <!-- /local-search -->
