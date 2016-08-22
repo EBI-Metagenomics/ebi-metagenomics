@@ -758,6 +758,18 @@ var showSpinner = function(searchSettings) {
     } else {
         console.log("Error: Expected to find div with id '" + dataType + "-searchData'");
     }
+    facetsContainer = document.getElementById(dataType + "-searchFacets");
+    if (facetsContainer != null) {
+        facetsContainer.innerHTML = "";
+    } else {
+        console.log("Error: Expected to find div with id '" + dataType + "-searchFacets'");
+    }
+    var paginationContainer = document.getElementById(dataType + "-searchPagination");
+    if (paginationContainer != null) {
+        paginationContainer.innerHTML = "";
+    } else {
+        console.log("Error: Expected to find div with id '" + dataType + "-searchPagination'");
+    }
 
 };
 
