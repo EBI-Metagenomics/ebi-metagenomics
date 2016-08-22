@@ -226,6 +226,7 @@ var addTableRow = function(columns, table) {
     table.appendChild(tableRow);
 };
 
+/*
 var saveFormState = function() {
     var tabContainer = document.getElementById("searchTabs");
     if (tabContainer) {
@@ -235,7 +236,7 @@ var saveFormState = function() {
     }
 };
 
-var restoreFormState = function() {
+var restoreTabState = function() {
     var tabContainer = document.getElementById("searchTabs");
     if (tabContainer) {
         var selected = sessionStorage.activeTab;
@@ -246,9 +247,10 @@ var restoreFormState = function() {
     }
 
 };
+*/
 
 var displayPagination = function(results, searchSettings) {
-    console.log("Adding pagination for " + searchSettings.type);
+    //console.log("Adding pagination for " + searchSettings.type);
     var dataType = searchSettings.type;
 
     var paginationContainer = document.getElementById(dataType + "-searchPagination");
@@ -436,7 +438,7 @@ var displayHierarchicalChildren = function(container, facet, facetGroup, parentP
     console.log("Facet with children: " + children.length);
     for (var i = 0; i < children.length; i++) {
         var childFacet = children[i];
-        console.log("Child facet: " + facetGroup.id + " name: " + childFacet.label);
+        //console.log("Child facet: " + facetGroup.id + " name: " + childFacet.label);
 
         var value = parentPath + "/" + childFacet.value;
         var identifier = dataType + FACET_SEPARATOR + facetGroup.id + FACET_SEPARATOR + value;
@@ -489,10 +491,10 @@ var displayFacets = function(facetGroups, searchSettings) {
             if (facetGroup.label !== FACET_SOURCE) {
                 if (isFacetGroupHierarchical(facetGroup)) {
                     displayHierarchicalFacetGroup(facetGroup, facetContainer, searchSettings);
-                    console.log("FacetGroup Hierarchical " + facetGroup.label);
+                    //console.log("FacetGroup Hierarchical " + facetGroup.label);
                 } else {
                     displayFacetGroup(facetGroup, facetContainer, searchSettings);
-                    console.log("FacetGroup " + facetGroup.label);
+                    //console.log("FacetGroup " + facetGroup.label);
                 }
 
             }
@@ -745,9 +747,23 @@ var displayDomainData = function(httpReq, searchSettings) {
     }
     displayFacets(results.facets, searchSettings);
     displayPagination(results, searchSettings);
-    //reapplySearchSettings();
-
 }
+
+var showSpinner = function(searchSettings) {
+    var dataType = searchSettings.type;
+    setTabText("Searching", dataType);
+    resultsContainer = document.getElementById(dataType + "-searchData");
+    if (resultsContainer != null) {
+        resultsContainer.innerHTML = "";
+    } else {
+        console.log("Error: Expected to find div with id '" + dataType + "-searchData'");
+    }
+
+};
+
+var removeSpinner = function(searchSettings) {
+
+};
 
 var displaySearchError = function (httpReq, searchSettings) {
     if (searchSettings.type == DatatypeSettings.PROJECT) {
@@ -760,18 +776,6 @@ var displaySearchError = function (httpReq, searchSettings) {
         console.log("Error: HandleSearchError - Unknown data type '" + searchSettings.type + "'");
     }
 };
-
-var projectError = function(httpReq) {
-    console.log("Error: Project Search error");
-}
-
-var sampleError = function(httpReq) {
-    console.log("Error: Sample Search error");
-}
-
-var runError = function(httpReq) {
-    console.log("Error: Run Search error");
-}
 
 var runAjax = function(method, url, parameters, callback, errCallback) {
     var httpReq = new XMLHttpRequest();
@@ -873,7 +877,9 @@ var runDomainSearch = function(searchSettings) {
     var paramFragment = parametersToString(parameters);
     var url = BASE_URL + searchSettings.domain + paramFragment;
     console.log("Running domain search = " + url);
+    showSpinner(searchSettings);
     var successCallback = function(httpReq) {
+        removeSpinner(searchSettings);
         displayDomainData(httpReq, searchSettings);
     };
     var errorCallback = function(httpReq) {
@@ -917,8 +923,8 @@ var setupJQueryTabs = function(container, disabledList) {
         disabled: disabledList,
         active: selectedTab,
         activate: function(event, ui) {
-            var selectedTab = $('#tabs').tabs('option', 'active');
-            sessionStorage.setItem(GLOBAL_SEARCH_SETTINGS.METAGENOMICS_SEARCH_SETTINGS_SELECTED_TAB, selectedTab)
+            var selectedTab = $(container).tabs('option', 'active');
+            sessionStorage.setItem(GLOBAL_SEARCH_SETTINGS.METAGENOMICS_SEARCH_SETTINGS_SELECTED_TAB, selectedTab);
         }
     });
 };
