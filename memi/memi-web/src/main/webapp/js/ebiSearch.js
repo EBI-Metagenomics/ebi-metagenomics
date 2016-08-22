@@ -808,7 +808,7 @@ var displaySearchError = function (httpReq, searchSettings) {
     setTabText("Error", dataType);
     resultsContainer = document.getElementById(dataType + "-searchData");
     if (resultsContainer != null) {
-        resultsContainer.innerHTML = "<div>A problem was encountered running the search. Please try again later.</div><div>If the problem persists please send contact us <a href='/metagenomics/contact'>here</a></div>";
+        resultsContainer.innerHTML = "<div>A problem was encountered running the search. Please try again later.</div><div>If the problem persists please contact us <a href='/metagenomics/contact'>here</a></div>";
     } else {
         console.log("Error: Expected to find div with id '" + dataType + "-searchData'");
     }
