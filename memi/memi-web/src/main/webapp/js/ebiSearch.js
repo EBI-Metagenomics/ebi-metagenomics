@@ -848,13 +848,15 @@ var parametersToString = function(parameters) {
             for (var j=0; j < facetTypes.length; j++) {
                 var facetType = facetTypes[j];
                 var facetValues = value[facetType];
-                for (var k = 0; k < facetValues.length; k++) {
-                    var facetValue = facetValues[k];
-                    facetString += facetType + ":" + encodeURIComponent(facetValue) + ",";
+                if (facetValues.length > 0) {
+                    for (var k = 0; k < facetValues.length; k++) {
+                        var facetValue = facetValues[k];
+                        facetString += facetType + ":" + encodeURIComponent(facetValue) + ",";
+                    }
+                    //remove final trailing comma ','
+                    facetString = facetString.substr(0, facetString.length - 1);
+                    parameterString += type + "=" + facetString + "&";
                 }
-                //remove final trailing comma ','
-                facetString = facetString.substr(0, facetString.length - 1);
-                parameterString += type + "=" + facetString + "&";
             }
         } else {
             parameterString += type + "=" + value + "&";
