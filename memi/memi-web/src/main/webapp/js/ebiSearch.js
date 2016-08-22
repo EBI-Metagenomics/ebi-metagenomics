@@ -553,7 +553,11 @@ var displayNumericalInputs = function(container, searchSettings) {
         selectedRangeContainer.name = "selected-range";
         selectedRangeContainer.style["text-align"] = "left";
         if (numericalField.selectedMinimum != numericalField.minimum || numericalField.selectedMaximum != numericalField.maximum) {
-            var selectedRangeText = document.createTextNode("Filtering: " + numericalField.selectedMinimum + " to " + numericalField.selectedMaximum);
+            var rangeString = "Filtering: " + numericalField.selectedMinimum + " to " + numericalField.selectedMaximum;
+            if (numericalField.unit != null) {
+                rangeString += " " + numericalField.unit;
+            }
+            var selectedRangeText = document.createTextNode(rangeString);
             selectedRangeContainer.appendChild(selectedRangeText);
         }
         fieldContainer.appendChild(selectedRangeContainer);
@@ -569,7 +573,11 @@ var addNumericalFieldValueChangeListener = function(fieldContainer, selectedRang
         numericalField.selectedMaximum = tokens[1];
         selectedRangeContainer.innerHTML = "";
         if (numericalField.selectedMinimum != numericalField.minimum || numericalField.selectedMaximum != numericalField.maximum) {
-            var selectedRangeText = document.createTextNode("Filtering: " + numericalField.selectedMinimum + " to " + numericalField.selectedMaximum);
+            var rangeString = "Range: " + numericalField.selectedMinimum + " to " + numericalField.selectedMaximum;
+            if (numericalField.unit != null) {
+                rangeString += " " + numericalField.unit;
+            }
+            var selectedRangeText = document.createTextNode(rangeString);
             selectedRangeContainer.appendChild(selectedRangeText);
         }
         console.log(numericalField.displayName + " range: " + tokens);
