@@ -80,7 +80,7 @@ var initialiseSettings = function() {
         null
     );
 
-    var sampleTemperature = new NumericalRangeField("temperature", "Temperature", "°C", 0, 200, 0, 200);
+    var sampleTemperature = new NumericalRangeField("temperature", "Temperature", "°C", 0, 100, 0, 100);
     var sampleDepth = new NumericalRangeField("depth", "Depth", "Metres", 0, 1000, 0, 1000);
     //var samplePH = new NumericalRangeField("pH", "pH", null, 0, 14, 0, 14);
 
@@ -95,7 +95,7 @@ var initialiseSettings = function() {
         [sampleTemperature, sampleDepth]
     );
 
-    var runTemperature = new NumericalRangeField("temperature", "Temperature", "°C", 0, 200, 0, 200);
+    var runTemperature = new NumericalRangeField("temperature", "Temperature", "°C", 0, 100, 0, 100);
     var runDepth = new NumericalRangeField("depth", "Depth", "Metres", 0, 1000, 0, 1000);
     //var runPH = new NumericalRangeField("pH", "pH", null, 0, 14, 0, 14);
 
@@ -484,7 +484,6 @@ var displayFacets = function(facetGroups, searchSettings) {
         if (searchSettings.hasOwnProperty("numericalFields")
             && searchSettings.numericalFields != null) {
             displayNumericalInputs(facetContainer, searchSettings);
-            //displaySampleRangeInputs(facetContainer, dataType);
         }
         for (var i =0; i < facetGroups.length; i++) {
             var facetGroup = facetGroups[i];
@@ -534,7 +533,13 @@ var displayNumericalInputs = function(container, searchSettings) {
         var selectedRange = numericalField.selectedMinimum + "," + numericalField.selectedMaximum;
         rangeInput.setAttribute("value", selectedRange);
         fieldContainer.id = searchSettings.type + FACET_SEPARATOR + numericalField.name;
+
+        var minText = document.createTextNode(numericalField.minimum + " ");
+        var maxText = document.createTextNode(" " + numericalField.maximum);
+
+        fieldContainer.appendChild(minText);
         fieldContainer.appendChild(rangeInput);
+        fieldContainer.appendChild(maxText);
         multirange(rangeInput); //requires multirange library loaded
 
         var rangeLabel = document.createElement("label");
@@ -544,16 +549,29 @@ var displayNumericalInputs = function(container, searchSettings) {
             fieldContainer.appendChild(rangeLabel);
         }
 
-        addNumericalFieldValueChangeListener(fieldContainer, rangeInput, numericalField, searchSettings);
-    }
+        var selectedRangeContainer = document.createElement("div");
+        selectedRangeContainer.name = "selected-range";
+        selectedRangeContainer.style["text-align"] = "left";
+        if (numericalField.selectedMinimum != numericalField.minimum || numericalField.selectedMaximum != numericalField.maximum) {
+            var selectedRangeText = document.createTextNode("Filtering: " + numericalField.selectedMinimum + " to " + numericalField.selectedMaximum);
+            selectedRangeContainer.appendChild(selectedRangeText);
+        }
+        fieldContainer.appendChild(selectedRangeContainer);
 
+        addNumericalFieldValueChangeListener(fieldContainer, selectedRangeContainer, rangeInput, numericalField, searchSettings);
+    }
 };
 
-var addNumericalFieldValueChangeListener = function(fieldContainer, fieldInput, numericalField, searchSettings) {
+var addNumericalFieldValueChangeListener = function(fieldContainer, selectedRangeContainer, fieldInput, numericalField, searchSettings) {
     fieldContainer.addEventListener("change", function(event){
         var tokens = fieldInput.value.split(",");
         numericalField.selectedMinimum = tokens[0];
         numericalField.selectedMaximum = tokens[1];
+        selectedRangeContainer.innerHTML = "";
+        if (numericalField.selectedMinimum != numericalField.minimum || numericalField.selectedMaximum != numericalField.maximum) {
+            var selectedRangeText = document.createTextNode("Filtering: " + numericalField.selectedMinimum + " to " + numericalField.selectedMaximum);
+            selectedRangeContainer.appendChild(selectedRangeText);
+        }
         console.log(numericalField.displayName + " range: " + tokens);
         runDomainSearch(searchSettings);
     });
