@@ -191,7 +191,7 @@
                                                 value="${model.studyToSampleCountMap[study.studyId]} sample"/><c:if
                                                 test='${model.studyToSampleCountMap[study.studyId] > 1}'>s</c:if></a>
                                             <c:choose>
-                                                <c:when test="${study.public}">
+                                                <c:when test="${study['public']}">
                                                     <span class="show_tooltip icon icon-functional" data-icon="U"
                                                           title="Public data"></span>
                                                 </c:when>
@@ -243,10 +243,10 @@
                                             <%--<span class="list_date">${sample.metadataReceived}:</span>--%>
                                         <a href="<c:url value="${baseURL}/projects/${sample.study.studyId}/samples/${sample.sampleId}"/>"
                                            class="list_more fl_uppercase_title">${sample.sampleName}
-                                            <c:if test="${!sample.public}"><span
+                                            <c:if test="${!sample['public']}"><span
                                                     class="show_tooltip icon icon-functional" data-icon="L"
                                                     title="Private data"></span></c:if>
-                                            <c:if test="${sample.public}"><span
+                                            <c:if test="${sample['public']}"><span
                                                     class="show_tooltip icon icon-functional" data-icon="U"
                                                     title="Public data"></span></c:if>
                                         </a>
