@@ -586,14 +586,13 @@
         <profile>
             <id>prod-war</id>
             <properties>
-                <deployment.folder>/nfs/web_hx2/webadmin/tomcat/bases/interpro/tc-ipr-metagenomics/deploy
-                </deployment.folder>
-                <log4j.log.file>/var/tmp/servers/tc-interpro-das/logs/metagenomics/memi.log4j</log4j.log.file>
-                <dailyErrorAppParam>/var/tmp/servers/tc-interpro-das/logs/metagenomics/memi-ERROR.log4j
+                <deployment.folder>${catalina.base}/deploy</deployment.folder>
+                <log4j.log.file>/var/tmp/tc-ipr-metagenomics/temp/memi.log4j</log4j.log.file>
+                <dailyErrorAppParam>/var/tmp/tc-ipr-metagenomics/temp/memi-ERROR.log4j
                 </dailyErrorAppParam>
-                <dailyDebugAppParam>/var/tmp/servers/tc-interpro-das/logs/metagenomics/memi-DEBUG.log4j
+                <dailyDebugAppParam>/var/tmp/tc-ipr-metagenomics/temp/memi-DEBUG.log4j
                 </dailyDebugAppParam>
-                <dailyWarnAppParam>/var/tmp/servers/tc-interpro-das/logs/metagenomics/memi-WARN.log4j
+                <dailyWarnAppParam>/var/tmp/tc-ipr-metagenomics/temp/memi-WARN.log4j
                 </dailyWarnAppParam>
                 <log4j.log.level>WARN</log4j.log.level>
             </properties>
