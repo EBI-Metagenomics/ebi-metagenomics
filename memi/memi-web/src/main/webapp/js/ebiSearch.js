@@ -5,7 +5,7 @@
 var HIDDEN_CLASS = "this_hide";
 var FACET_SEPARATOR = "____";
 var SEARCH_TAB_CLASS = "search-tab";
-var BASE_URL = "https://www.ebi.ac.uk/ebisearch/ws/rest/";
+var BASE_URL = "https://wwwdev.ebi.ac.uk/ebisearch/ws/rest/";
 
 var FACET_SOURCE = "Source";
 
