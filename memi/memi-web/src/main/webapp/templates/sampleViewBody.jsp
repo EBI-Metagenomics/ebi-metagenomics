@@ -49,12 +49,12 @@
     <%-- Show icon only for people are are logged in--%>
     <c:if test="${not empty model.submitter}">
         <!-- Private icon-->
-        <c:if test="${!sample.public}">
+        <c:if test="${!sample['public']}">
             <p class="show_tooltip icon icon-functional" data-icon="L" title="Private data">Private data
 
             </p>
         </c:if>
-        <c:if test="${sample.public}">
+        <c:if test="${sample['public']}">
             <p class="show_tooltip icon icon-functional" data-icon="U" title="Public data">Public data </p>
         </c:if>
     </c:if>
@@ -245,7 +245,7 @@
 
     <!-- Other info box -->
     <c:if test="${not empty sampleAnnotations}">
-        <h3 id="expand_button" style="">Sample meta data</h3>
+        <h3 id="expand_button" style="">Sample metadata</h3>
         <div class="output_form more_sample_meta_data">
             <table class="simple_table">
                 <tbody>

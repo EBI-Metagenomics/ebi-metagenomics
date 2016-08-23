@@ -12,7 +12,7 @@
     <%-- Show icon only for people are are logged in--%>
     <c:if test="${not empty model.submitter}">
         <!-- Private icon-->
-        <c:if test="${!study.public}">
+        <c:if test="${!study['public']}">
             <p class="show_tooltip icon icon-functional" data-icon="L" title="Private data">Private data
                 <c:choose>
                     <c:when test="${not empty study.publicReleaseDate}">
@@ -26,7 +26,7 @@
                 </c:choose>
             </p>
         </c:if>
-        <c:if test="${study.public}">
+        <c:if test="${study['public']}">
             <p class="show_tooltip icon icon-functional" data-icon="U" title="Public data">Public data </p>
         </c:if>
     </c:if>
