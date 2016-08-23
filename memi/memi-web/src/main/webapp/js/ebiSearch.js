@@ -857,10 +857,12 @@ var parametersToString = function(parameters) {
                         var facetValue = facetValues[k];
                         facetString += facetType + ":" + encodeURIComponent(facetValue) + ",";
                     }
-                    //remove final trailing comma ','
-                    facetString = facetString.substr(0, facetString.length - 1);
-                    parameterString += type + "=" + facetString + "&";
                 }
+            }
+            //remove final trailing comma ','
+            facetString = facetString.substr(0, facetString.length - 1);
+            if (facetString.length > 0) {
+                parameterString += type + "=" + facetString + "&";
             }
         } else {
             parameterString += type + "=" + value + "&";
