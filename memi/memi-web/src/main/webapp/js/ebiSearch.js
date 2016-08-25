@@ -18,20 +18,21 @@ var GLOBAL_SEARCH_SETTINGS = {
     RUN_RESULTS_NUM: 20,
     DEFAULT_SEARCH_START: 0,
     FACET_NUM: 10,
-
+    DEFAULT_FACET_DEPTH: 2,
 
     PROJECT: "Projects",
     PROJECT_DOMAIN: "metagenomics_projects",
-    PROJECT_FIELDS: "id,name,description,biome_name,METAGENOMICS_SAMPLE",
+    PROJECT_FIELDS: "id,name,description,biome_name,METAGENOMICS_SAMPLES",
     SAMPLE: "Samples",
     SAMPLE_DOMAIN: "metagenomics_samples",
-    SAMPLE_FIELDS: "id,name,description,experiment_type,METAGENOMICS_PROJECT",
+    SAMPLE_FIELDS: "id,name,description,experiment_type,METAGENOMICS_PROJECTS",
     RUN: "Runs",
     RUN_DOMAIN: "metagenomics_runs",
     RUN_FIELDS: "id,experiment_type,pipeline_version,METAGENOMICS_SAMPLES,METAGENOMICS_PROJECTS",
     METAGENOMICS_SEARCH_TEXT : "www.ebi.ac.uk.metagenomics.searchsettings",
     METAGENOMICS_SEARCH_SETTINGS : "www.ebi.ac.uk.metagenomics.searchsettings",
-    METAGENOMICS_SEARCH_SETTINGS_SELECTED_TAB: "www.ebi.ac.uk.metagenomics.selectedFacet"
+    METAGENOMICS_SEARCH_SETTINGS_SELECTED_TAB: "www.ebi.ac.uk.metagenomics.selectedFacet",
+    MORE_FACETS_ID: "more-facets-div"
 };
 
 var DatatypeSettings = {};
@@ -229,29 +230,6 @@ var addTableRow = function(columns, table) {
     table.appendChild(tableRow);
 };
 
-/*
-var saveFormState = function() {
-    var tabContainer = document.getElementById("searchTabs");
-    if (tabContainer) {
-        var selected = $(tabContainer).tabs('option', 'active');
-        console.log("Saving state " + selected);
-        sessionStorage.activeTab = selected;
-    }
-};
-
-var restoreTabState = function() {
-    var tabContainer = document.getElementById("searchTabs");
-    if (tabContainer) {
-        var selected = sessionStorage.activeTab;
-        console.log("Loading state " + selected);
-        if (selected) {
-            var selected = $(tabContainer).tabs('option', 'active', selected);
-        }
-    }
-
-};
-*/
-
 var displayPagination = function(results, searchSettings) {
     //console.log("Adding pagination for " + searchSettings.type);
     var dataType = searchSettings.type;
@@ -332,6 +310,56 @@ var addFacetValueChangeListener = function (facetInput, facetType, facet, search
     });
 };
 
+var addClearFacetListener = function(searchSettings, facetGroup, element) {
+    element.addEventListener("click", function(event){
+        if (searchSettings.facets.hasOwnProperty(facetGroup.id)
+            && searchSettings.facets[facetGroup.id] != null
+            && searchSettings.facets[facetGroup.id].length > 0) {
+            searchSettings.facets[facetGroup.id] = [];
+            runDomainSearch(searchSettings);
+        }
+    });
+};
+
+var addMoreFacetsListener = function (searchSettings, facetGroup, element, container) {
+    element.addEventListener("click", function(event){
+        var parameters = {
+            "query": encodeURIComponent("domain_source:" + searchSettings.domain),
+            "format": "json",
+            "size": 0,
+            "facetfields": facetGroup.id,
+            "facetcount": facetGroup.total
+        };
+
+        var moreFacetsDiv = createMoreFacetsDialog(facets, searchSettings, facetGroup);
+
+        var paramFragment = parametersToString(parameters);
+        var url = BASE_URL + searchSettings.domain + paramFragment;
+        console.log("Getting more facets from: " + url);
+        runAjax("GET", url, null, function(event) {
+            //success
+            var facets = event.results;
+            showMoreFacetsInDialog()
+        }, function(event) {
+            //error
+        });
+
+    });
+};
+
+var createMoreFacetsDialog = function (searchSettings, facetGroup){
+    var moreFacetsDiv = document.createElement("div");
+    moreFacetsDiv.id = GLOBAL_SEARCH_SETTINGS.MORE_FACETS_ID;
+    var title = document.createElement("h4");
+    title.innerHTML = facetGroup.label;
+    moreFacetsDiv.appendChild(title);
+    var contentsDiv = document.createElement("div");
+    contentsDiv.id = "contents";
+    moreFacetsDiv.appendChild(contentsDiv);
+    contentsDiv.appendChild(document.createTextNode("Loading facets"));
+    return moreFacetsDiv;
+};
+
 var displayFacetGroup = function(facetGroup, container, searchSettings) {
     var dataType = searchSettings.type;
     var facetGroupContainer = document.createElement("div");
@@ -373,6 +401,26 @@ var displayFacetGroup = function(facetGroup, container, searchSettings) {
 
         facetGroupContainer.appendChild(facetContainerDiv);
     }
+    var extraControlsDiv = document.createElement("div");
+    extraControlsDiv.classList.add("extra-pad");
+    /*
+    var moreFacetsLink = document.createElement("a");
+    moreFacetsLink.innerHTML = "More...";
+    extraControlsDiv.appendChild(moreFacetsLink);
+    addMoreFacetsListener(searchSettings, facetGroup, moreFacetsLink, facetGroupContainer);
+    */
+    if (searchSettings.facets.hasOwnProperty(facetGroup.id)
+        && searchSettings.facets[facetGroup.id] != null
+        && searchSettings.facets[facetGroup.id].length > 0) {
+        //var textNode = document.createTextNode(" | ");
+        var clearFacetsLink = document.createElement("a");
+        clearFacetsLink.innerHTML = "Clear Selection";
+        //extraControlsDiv.appendChild(textNode);
+        extraControlsDiv.appendChild(clearFacetsLink);
+        addClearFacetListener(searchSettings, facetGroup, clearFacetsLink);
+    }
+
+    facetGroupContainer.appendChild(extraControlsDiv);
 };
 
 var displayHierarchicalFacetGroup = function(facetGroup, container, searchSettings) {
@@ -650,11 +698,11 @@ var displaySampleTable = function(results, container) {
         var rowData = [
             {
                 name: entry["id"],
-                url: "http://" + window.location.host + "/metagenomics/projects/" + entry["fields"]["METAGENOMICS_PROJECT"][0] + "/samples/" +  entry["id"]
+                url: "http://" + window.location.host + "/metagenomics/projects/" + entry["fields"]["METAGENOMICS_PROJECTS"][0] + "/samples/" +  entry["id"]
             },
             {
-                name: entry["fields"]["METAGENOMICS_PROJECT"][0],
-                url: "http://" + window.location.host + "/metagenomics/projects/" + entry["fields"]["METAGENOMICS_PROJECT"][0]
+                name: entry["fields"]["METAGENOMICS_PROJECTS"][0],
+                url: "http://" + window.location.host + "/metagenomics/projects/" + entry["fields"]["METAGENOMICS_PROJECTS"][0]
             },
             {name: entry.fields.name[0]},
             {name: entry.fields.description[0], className: "xs_hide"}
@@ -916,7 +964,7 @@ var runDomainSearch = function(searchSettings) {
         "start": searchSettings.page * searchSettings.resultsNum,
         "fields": searchSettings.fields,
         "facetcount": searchSettings.facetNum,
-        "facetsdepth": 2
+        "facetsdepth": GLOBAL_SEARCH_SETTINGS.DEFAULT_FACET_DEPTH
     };
 
     if (searchSettings.facets != null) {
