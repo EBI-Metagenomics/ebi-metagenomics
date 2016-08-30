@@ -7,7 +7,7 @@ var FACET_SEPARATOR = "____";
 var SEARCH_TAB_CLASS = "search-tab";
 var DEV_BASE_URL = "https://wwwdev.ebi.ac.uk/ebisearch/ws/rest/";
 var MASTER_BASE_URL = "https://www.ebi.ac.uk/ebisearch/ws/rest/";
-var BASE_URL = DEV_BASE_URL; //TODO replace this depending on whether running on wwwdev.ebi.ac.uk or www.ebi.ac.uk - should be shifted to config option.
+var BASE_URL = MASTER_BASE_URL; //TODO replace this depending on whether running on wwwdev.ebi.ac.uk or www.ebi.ac.uk - should be shifted to config option.
 
 
 var FACET_SOURCE = "Source";
@@ -321,6 +321,7 @@ var addClearFacetListener = function(searchSettings, facetGroup, element) {
     });
 };
 
+
 var addMoreFacetsListener = function (searchSettings, facetGroup, element, container) {
     element.addEventListener("click", function(event){
         var parameters = {
@@ -331,33 +332,118 @@ var addMoreFacetsListener = function (searchSettings, facetGroup, element, conta
             "facetcount": facetGroup.total
         };
 
-        var moreFacetsDiv = createMoreFacetsDialog(facets, searchSettings, facetGroup);
-
+        var moreFacetsDiv = createMoreFacetsDialog(searchSettings, facetGroup);
+        var modalLayerDiv = createModalDiv(searchSettings, facetGroup);
+        modalLayerDiv.appendChild(moreFacetsDiv);
+        document.body.appendChild(modalLayerDiv);
         var paramFragment = parametersToString(parameters);
         var url = BASE_URL + searchSettings.domain + paramFragment;
         console.log("Getting more facets from: " + url);
         runAjax("GET", url, null, function(event) {
             //success
-            var facets = event.results;
-            showMoreFacetsInDialog()
+            var results = JSON.parse(event.response);
+            showMoreFacetsInDialog(searchSettings, results, moreFacetsDiv);
         }, function(event) {
-            //error
+            showMoreFacetsError(moreFacetsDiv);
         });
 
     });
 };
 
+var createModalDiv = function (searchSettings, facetGroup) {
+    var modalDiv = document.createElement("div");
+    modalDiv.id = GLOBAL_SEARCH_SETTINGS.MORE_FACETS_ID;
+
+    modalDiv.style.position = "fixed";
+    modalDiv.style.zIndex = "91";
+    modalDiv.style.left = "0";
+    modalDiv.style.top = "0";
+    modalDiv.style.width = "100%";
+    modalDiv.style.height = "100%";
+    modalDiv.style.overflow = "auto";
+    modalDiv.style.backgroundColor = "rgba(0,0,0,0.6)";
+    //modalDiv.style.opacity = "0.6";
+    return modalDiv;
+};
+
 var createMoreFacetsDialog = function (searchSettings, facetGroup){
-    var moreFacetsDiv = document.createElement("div");
-    moreFacetsDiv.id = GLOBAL_SEARCH_SETTINGS.MORE_FACETS_ID;
+
+    var contentDiv = document.createElement("div");
+    contentDiv.style.backgroundColor = "rgb(255,255,255)";
+    contentDiv.style.margin = "30% auto";
+    contentDiv.style.padding = "20px";
+    contentDiv.style.border = "1px solid #888";
+    contentDiv.style.width = "80%";
+    contentDiv.style.display = "block";
+    //contentDiv.style.opacity = "1";
+
+    var titleDiv = document.createElement("div");
     var title = document.createElement("h4");
     title.innerHTML = facetGroup.label;
-    moreFacetsDiv.appendChild(title);
-    var contentsDiv = document.createElement("div");
-    contentsDiv.id = "contents";
-    moreFacetsDiv.appendChild(contentsDiv);
-    contentsDiv.appendChild(document.createTextNode("Loading facets"));
-    return moreFacetsDiv;
+    titleDiv.appendChild(title);
+
+    var textFilterDiv = document.createElement("div");
+    var textFilter = document.createElement("input");
+    textFilter.type = "text";
+    textFilterDiv.appendChild(textFilter);
+
+    var messageDiv = document.createElement("div");
+    messageDiv.classList.add("more-facets-content");
+    contents.style.overflow = "auto";
+    messageDiv.appendChild(document.createTextNode("Loading facets"));
+    messageDiv.style.columnCount = "3";
+
+    contentDiv.appendChild(titleDiv);
+    contentDiv.appendChild(textFilterDiv);
+    contentDiv.appendChild(messageDiv);
+    return contentDiv;
+};
+
+var showMoreFacetsInDialog = function(searchSettings, results, container) {
+    var dataType = searchSettings.type;
+    var facets = results.facets[0];
+    var contentDivs = container.getElementsByClassName("more-facets-content");
+    var contentDiv = null;
+
+    if (contentDivs != null && contentDivs.length == 1) {
+        contentDiv = contentDivs[0];
+    } else {
+        console.log("Expect to find exactly one child div with class 'more-facets-content'");
+    }
+
+    contentDiv.innerHTML = "";
+    var list = document.createElement("ul");
+    list.style.listStyle = "None";
+
+    for(var i=0; i < facets.facetValues.length; i++) {
+        var facet = facets.facetValues[i];
+        var identifier = "morefacets." + dataType + FACET_SEPARATOR + facets.id + FACET_SEPARATOR + facet.value;
+
+        var listItem = document.createElement("li");
+        list.appendChild(listItem);
+        var facetInput = document.createElement("input");
+        facetInput.id = identifier;
+        facetInput.form = "local-search";
+        facetInput.type = "checkbox";
+        facetInput.value = facet.value;
+        if (searchSettings.facets != null
+            && searchSettings.facets.hasOwnProperty(facets.id)
+            && searchSettings.facets[facets.id].indexOf(facetInput.value) >= 0) {
+            facetInput.checked = true;
+        }
+        var facetLabel = document.createElement("label");
+        facetLabel.htmlFor = facetInput.id;
+        facetLabel.innerHTML = facet.label + " (" + facet.count + ")";
+
+        listItem.appendChild(facetInput);
+        listItem.appendChild(facetLabel);
+
+    }
+    contentDiv.appendChild(list);
+};
+
+var showMoreFacetsError = function(container) {
+
 };
 
 var displayFacetGroup = function(facetGroup, container, searchSettings) {
@@ -403,19 +489,19 @@ var displayFacetGroup = function(facetGroup, container, searchSettings) {
     }
     var extraControlsDiv = document.createElement("div");
     extraControlsDiv.classList.add("extra-pad");
-    /*
+
     var moreFacetsLink = document.createElement("a");
     moreFacetsLink.innerHTML = "More...";
     extraControlsDiv.appendChild(moreFacetsLink);
     addMoreFacetsListener(searchSettings, facetGroup, moreFacetsLink, facetGroupContainer);
-    */
+
     if (searchSettings.facets.hasOwnProperty(facetGroup.id)
         && searchSettings.facets[facetGroup.id] != null
         && searchSettings.facets[facetGroup.id].length > 0) {
-        //var textNode = document.createTextNode(" | ");
+        var textNode = document.createTextNode(" | ");
         var clearFacetsLink = document.createElement("a");
         clearFacetsLink.innerHTML = "Clear Selection";
-        //extraControlsDiv.appendChild(textNode);
+        extraControlsDiv.appendChild(textNode);
         extraControlsDiv.appendChild(clearFacetsLink);
         addClearFacetListener(searchSettings, facetGroup, clearFacetsLink);
     }
