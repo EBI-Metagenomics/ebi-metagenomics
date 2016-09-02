@@ -572,7 +572,7 @@
         <profile>
             <id>test-war</id>
             <properties>
-                <deployment.folder>/nfs/web-hx/webadmin/tomcat/bases/interpro/tc-ipr-emg_dev/deploy</deployment.folder>
+                <deployment.folder>${catalina.base}/deploy</deployment.folder>
                 <log4j.log.file>/var/tmp/tc-ipr-emg_dev/logs/metagenomics/memi.log4j</log4j.log.file>
                 <dailyErrorAppParam>/var/tmp/tc-ipr-emg_dev/logs/metagenomics/memi-ERROR.log4j</dailyErrorAppParam>
                 <dailyDebugAppParam>/var/tmp/tc-ipr-emg_dev/logs/metagenomics/memi-DEBUG.log4j</dailyDebugAppParam>
