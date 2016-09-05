@@ -24,32 +24,39 @@
         </div>
     </form>
 
-    <div class="grid_24"  id="searchTabs">
+    <div  id="searchTabs">
         <div id="tabDiv"></div>
         <div id="Projects">
-            <div class="grid_5 alpha" id="Projects-searchFacets"></div>
+            <div class="search-container" style="overflow: auto;">
+            <div class="search-filter grid_5 alpha" id="Projects-searchFacets"></div>
 
-            <div class="grid_19 omega">
+            <div class="search-page grid_19 omega">
                 <div class="table-margin-r" id="Projects-searchData"></div>
                 <div id="Projects-searchPagination" class="table-pagination"></div>
             </div>
+            </div>
         </div>
-        <div id="Samples">
-            <div class="grid_5 alpha" id="Samples-searchFacets"></div>
 
-            <div class="grid_19 omega">
+        <div id="Samples" >
+            <div class="search-container" style="overflow: auto;">
+            <div class="search-filter grid_5 alpha" id="Samples-searchFacets"></div>
+
+            <div class="search-page grid_19 omega">
                 <div class="table-margin-r" id="Samples-searchData"></div>
-                <div id="Samples-searchPagination" class="table-pagination"></div>
+                <div class="table-pagination" id="Samples-searchPagination"></div>
+            </div>
             </div>
         </div>
 
         <div id="Runs">
-            <div class="grid_5 alpha" id="Runs-searchFacets"></div>
+            <div class="search-container" style="overflow: auto;">
+            <div class="search-filter grid_5 alpha" id="Runs-searchFacets"></div>
 
-            <div class="grid_19 omega">
+            <div class="search-page grid_19 omega">
                 <div class="table-margin-r" id="Runs-searchData"></div>
                 <div id="Runs-searchPagination" class="table-pagination"></div>
             </div>
+        </div>
         </div>
     </div>
 
