@@ -5,6 +5,7 @@
 var HIDDEN_CLASS = "this_hide";
 var FACET_SEPARATOR = "____";
 var SEARCH_TAB_CLASS = "search-tab";
+var BASE_URL = "https://wwwdev.ebi.ac.uk/ebisearch/ws/rest/";
 var DEV_BASE_URL = "https://wwwdev.ebi.ac.uk/ebisearch/ws/rest/";
 var MASTER_BASE_URL = "https://www.ebi.ac.uk/ebisearch/ws/rest/";
 var BASE_URL = MASTER_BASE_URL; //TODO replace this depending on whether running on wwwdev.ebi.ac.uk or www.ebi.ac.uk - should be shifted to config option.
