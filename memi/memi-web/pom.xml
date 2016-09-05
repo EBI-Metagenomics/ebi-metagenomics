@@ -415,11 +415,6 @@
             <version>2.6</version>
         </dependency>
         <dependency>
-            <groupId>EBI</groupId>
-            <artifactId>EBeye_JAXRS</artifactId>
-            <version>1</version>
-        </dependency>
-        <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
             <version>2.6.2</version>
@@ -458,7 +453,7 @@
                     </webAppConfig>
                     <connectors>
                         <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
-                            <port>8082</port>
+                            <port>8000</port>
                             <maxIdleTime>60000</maxIdleTime>
                         </connector>
                     </connectors>

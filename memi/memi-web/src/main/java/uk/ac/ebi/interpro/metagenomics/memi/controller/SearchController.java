@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import uk.ac.ebi.interpro.metagenomics.memi.core.tools.EBISearchTool;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
@@ -42,34 +41,12 @@ public class SearchController extends AbstractController {
 
     private static final String SEARCH_TERM = "searchText";
 
-    public EBISearchTool ebiSearchTool;
-
-    public SearchController() {
-        ebiSearchTool = new EBISearchTool();
-    }
+    public SearchController() {}
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView doEbiSearch(ModelMap model, HttpServletRequest request,
                                     HttpServletResponse response) {
 
-        /*
-        String searchText = "";
-        Map<String, String[]> parameters = request.getParameterMap();
-        if (parameters.containsKey(SEARCH_TERM) && parameters.get(SEARCH_TERM) != null) {
-            String[] searchTerms = parameters.get(SEARCH_TERM);
-            if (searchTerms.length > 0) {
-                searchText = searchTerms[0];
-            }
-        }
-
-        log.info("Requesting doEbiSearch of " + this.getClass() + "...");
-        log.info("Search for '" + searchText + "'");
-        EBISearchResults results = new EBISearchResults();
-        results.setSearchText(searchText);
-        final String searchResults = ebiSearchTool.searchAllDomains(results);
-        final EBISearchForm searchForm = getEbiSearchForm();
-        searchForm.setSearchText(searchText);
-        */
         return buildModelAndView(
                 getModelViewName(),
                 model,
@@ -91,16 +68,6 @@ public class SearchController extends AbstractController {
                     }
                 }
         );
-    }
-
-    @RequestMapping(value = "/" + SearchController.VIEW_AJAX, method = RequestMethod.POST)
-    public @ResponseBody String doAjaxSearch(@RequestBody String encodedJsonForm) throws UnsupportedEncodingException {
-        log.info("Requesting doAjaxSearch of " + this.getClass() + "...");
-        String jsonSearchForm = URLDecoder.decode(encodedJsonForm, "UTF-8");
-        Gson gson = new Gson();
-        EBISearchResults results = gson.fromJson(jsonSearchForm, EBISearchResults.class);
-        String jsonResults = ebiSearchTool.search(results);
-        return jsonResults;
     }
 
     /**
