@@ -334,9 +334,10 @@ var addMoreFacetsListener = function (searchSettings, facetGroup, element, conta
         };
 
         var moreFacetsDiv = createMoreFacetsDialog(searchSettings, facetGroup);
-        var modalLayerDiv = createModalDiv(searchSettings, facetGroup);
-        modalLayerDiv.appendChild(moreFacetsDiv);
-        document.body.appendChild(modalLayerDiv);
+        var modalOverlay = createModalOverlay(searchSettings, facetGroup);
+        modalOverlay.appendChild(moreFacetsDiv);
+        document.body.appendChild(modalOverlay);
+        document.body.style.overflow = "hidden"; //this is reset afterwards
         var paramFragment = parametersToString(parameters);
         var url = BASE_URL + searchSettings.domain + paramFragment;
         console.log("Getting more facets from: " + url);
@@ -351,53 +352,74 @@ var addMoreFacetsListener = function (searchSettings, facetGroup, element, conta
     });
 };
 
-var createModalDiv = function (searchSettings, facetGroup) {
-    var modalDiv = document.createElement("div");
-    modalDiv.id = GLOBAL_SEARCH_SETTINGS.MORE_FACETS_ID;
+var createModalOverlay = function (searchSettings, facetGroup) {
+    var modalOverlay = document.createElement("div");
+    modalOverlay.id = GLOBAL_SEARCH_SETTINGS.MORE_FACETS_ID;
 
-    modalDiv.style.position = "fixed";
-    modalDiv.style.zIndex = "91";
-    modalDiv.style.left = "0";
-    modalDiv.style.top = "0";
-    modalDiv.style.width = "100%";
-    modalDiv.style.height = "100%";
-    modalDiv.style.overflow = "auto";
-    modalDiv.style.backgroundColor = "rgba(0,0,0,0.6)";
-    //modalDiv.style.opacity = "0.6";
-    return modalDiv;
+    modalOverlay.style.position = "fixed";
+    modalOverlay.style.zIndex = "91";
+    modalOverlay.style.left = "0";
+    modalOverlay.style.top = "0";
+    modalOverlay.style.width = "100%";
+    modalOverlay.style.height = "100%";
+    modalOverlay.style.overflow = "auto";
+    modalOverlay.style.backgroundColor = "rgba(0,0,0,0.6)";
+    //modalOverlay.style.opacity = "0.6";
+    return modalOverlay;
 };
 
 var createMoreFacetsDialog = function (searchSettings, facetGroup){
 
-    var contentDiv = document.createElement("div");
-    contentDiv.style.backgroundColor = "rgb(255,255,255)";
-    contentDiv.style.margin = "30% auto";
-    contentDiv.style.padding = "20px";
-    contentDiv.style.border = "1px solid #888";
-    contentDiv.style.width = "80%";
-    contentDiv.style.display = "block";
-    //contentDiv.style.opacity = "1";
+    var dialogDiv = document.createElement("div");
+    dialogDiv.style.backgroundColor = "rgb(255,255,255)";
+    dialogDiv.style.margin = "5% auto";
+    dialogDiv.style.padding = "20px";
+    dialogDiv.style.border = "1px solid #888";
+    dialogDiv.style.width = "80%";
+    dialogDiv.style.height = "60%";
+    dialogDiv.style.overflow = "hidden";
+    dialogDiv.style.display = "block";
 
-    var titleDiv = document.createElement("div");
-    var title = document.createElement("h4");
+    var headerDiv = document.createElement("div");
+    headerDiv.style.borderStyle = "solid";
+    headerDiv.style.width = "100%";
+
+    var title = document.createElement("h3");
     title.innerHTML = facetGroup.label;
-    titleDiv.appendChild(title);
+    headerDiv.appendChild(title);
 
-    var textFilterDiv = document.createElement("div");
+
     var textFilter = document.createElement("input");
     textFilter.type = "text";
-    textFilterDiv.appendChild(textFilter);
+    headerDiv.appendChild(textFilter);
 
-    var messageDiv = document.createElement("div");
-    messageDiv.classList.add("more-facets-content");
-    contents.style.overflow = "auto";
-    messageDiv.appendChild(document.createTextNode("Loading facets"));
-    messageDiv.style.columnCount = "3";
+    var facetsDiv = document.createElement("div");
+    facetsDiv.classList.add("more-facets-content");
+    facetsDiv.style.overflow = "scroll";
+    facetsDiv.style.columnCount = "auto";
+    facetsDiv.style.columnWidth = "20em"
+    facetsDiv.style.borderStyle = "dashed";
+    facetsDiv.style.position = "relative";
+    facetsDiv.style.width = "100%";
+    facetsDiv.style.height = "90%";
+    facetsDiv.appendChild(document.createTextNode("Loading facets"));
 
-    contentDiv.appendChild(titleDiv);
-    contentDiv.appendChild(textFilterDiv);
-    contentDiv.appendChild(messageDiv);
-    return contentDiv;
+
+
+    /*
+    var headerContainerDiv = document.createElement("div");
+    headerContainerDiv.appendChild(headerDiv);
+
+    dialogDiv.appendChild(headerContainerDiv);
+
+    var facetContainerDiv = document.createElement("div");
+    facetContainerDiv.appendChild(facetsDiv);
+
+     */
+    dialogDiv.appendChild(headerDiv);
+    //dialogDiv.appendChild(facetContainerDiv);
+    dialogDiv.appendChild(facetsDiv);
+    return dialogDiv;
 };
 
 var showMoreFacetsInDialog = function(searchSettings, results, container) {
@@ -483,7 +505,7 @@ var displayFacetGroup = function(facetGroup, container, searchSettings) {
         facetItem.appendChild(facetLabel);
 
         var facetContainerDiv = document.createElement("div");
-        facetContainerDiv.className = "extra-pad";
+        facetContainerDiv.classList.add("extra-pad");
         facetContainerDiv.appendChild(facetItem);
 
         facetGroupContainer.appendChild(facetContainerDiv);
@@ -639,7 +661,7 @@ var displayFacets = function(facetGroups, searchSettings) {
 
         var searchInfoP = document.createElement("p");
         var searchInfoSmall = document.createElement("small");
-        searchInfoSmall.className = "text-muted";
+        searchInfoSmall.classList.add("text-muted");
         searchInfoSmall.innerHTML = "Powered by ";
         searchInfoSmall.innerHTML += '<a href="http://www.ebi.ac.uk/ebisearch/" class="ext" target="_blank">EBI Search</a>';
         searchInfoP.appendChild(searchInfoSmall);
@@ -733,7 +755,7 @@ var displayProjectTable = function(results, container) {
 
     table = document.createElement("table");
     table.border = 1;
-    table.className = "table-light";
+    table.classList.add("table-light");
 
     var headerData = [
         {name: "Project"},
@@ -769,7 +791,7 @@ var displaySampleTable = function(results, container) {
     console.log("Showing sample data");
     table = document.createElement("table");
     table.border = 1;
-    table.className = "table-light";
+    table.classList.add("table-light");
 
     var headerData = [
         {name: "Sample"},
@@ -808,7 +830,7 @@ var displayRunTable = function(results, container) {
     console.log("Showing run data");
     table = document.createElement("table");
     table.border = 1;
-    table.className = "table-light";
+    table.classList.add("table-light");
 
     var headerData = [
         {name: "Run"},
@@ -1147,7 +1169,9 @@ var displayTabHeader = function() {
             for (i in DatatypeSettings.DATA_TYPES) {
                 var dataType = DatatypeSettings.DATA_TYPES[i];
                 var tabItem = document.createElement("li");
-                tabItem.className = SEARCH_TAB_CLASS;
+                tabItem.classList.add(SEARCH_TAB_CLASS);
+
+
                 var tabLink = document.createElement("a");
                 tabLink.id = dataType + "-link";
                 tabLink.value = dataType;
@@ -1163,6 +1187,7 @@ var displayTabHeader = function() {
                 tabList.appendChild(tabItem);
             }
             tabContainer.insertBefore(tabList, document.getElementById("tabDiv"));
+
             setupJQueryTabs(tabContainer, disabledList);
         } else {
             console.log("Tabs already exist");

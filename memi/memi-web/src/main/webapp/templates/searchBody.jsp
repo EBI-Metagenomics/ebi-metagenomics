@@ -2,7 +2,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<div class="grid_24" id="mainContainer">
+<div class="grid_24 sample_ana" id="mainContainer">
     <h2>Search EBI Metagenomics</h2>
 
     <form class="local-search-xs" action="javascript:search();"
