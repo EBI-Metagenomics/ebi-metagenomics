@@ -325,12 +325,14 @@ var addClearFacetListener = function(searchSettings, facetGroup, element) {
 
 var addMoreFacetsListener = function (searchSettings, facetGroup, element, container) {
     element.addEventListener("click", function(event){
+        var facetCount = facetGroup.total;
+        facetCount = 500;//MAQ a quick hack to handle an error in the ebi-search site at the moment
         var parameters = {
             "query": encodeURIComponent("domain_source:" + searchSettings.domain),
             "format": "json",
             "size": 0,
             "facetfields": facetGroup.id,
-            "facetcount": facetGroup.total
+            "facetcount": facetCount
         };
 
         var moreFacetsDiv = createMoreFacetsDialog(searchSettings, facetGroup);
@@ -396,29 +398,20 @@ var createMoreFacetsDialog = function (searchSettings, facetGroup){
     var facetsDiv = document.createElement("div");
     facetsDiv.classList.add("more-facets-content");
     facetsDiv.style.overflow = "scroll";
-    facetsDiv.style.columnCount = "auto";
-    facetsDiv.style.columnWidth = "20em"
+    //facetsDiv.style.columnCount = "auto";
+    //facetsDiv.style.columnWidth = "20em"
     facetsDiv.style.borderStyle = "dashed";
     facetsDiv.style.position = "relative";
     facetsDiv.style.width = "100%";
-    facetsDiv.style.height = "90%";
+    facetsDiv.style.height = "80%";
     facetsDiv.appendChild(document.createTextNode("Loading facets"));
 
+    var footerDiv = document.createElement("div");
+    footerDiv.appendChild(document.createTextNode("Footer"));
 
-
-    /*
-    var headerContainerDiv = document.createElement("div");
-    headerContainerDiv.appendChild(headerDiv);
-
-    dialogDiv.appendChild(headerContainerDiv);
-
-    var facetContainerDiv = document.createElement("div");
-    facetContainerDiv.appendChild(facetsDiv);
-
-     */
     dialogDiv.appendChild(headerDiv);
-    //dialogDiv.appendChild(facetContainerDiv);
     dialogDiv.appendChild(facetsDiv);
+    dialogDiv.appendChild(footerDiv);
     return dialogDiv;
 };
 
@@ -443,6 +436,11 @@ var showMoreFacetsInDialog = function(searchSettings, results, container) {
         var identifier = "morefacets." + dataType + FACET_SEPARATOR + facets.id + FACET_SEPARATOR + facet.value;
 
         var listItem = document.createElement("li");
+
+        listItem.style.display = "inline-block";
+        listItem.style.width = "250px";
+        listItem.style.height = "25px";
+
         list.appendChild(listItem);
         var facetInput = document.createElement("input");
         facetInput.id = identifier;
@@ -1185,6 +1183,7 @@ var displayTabHeader = function() {
                 */
                 tabItem.appendChild(tabLink)
                 tabList.appendChild(tabItem);
+                tabList.classList.add("sample_ana");
             }
             tabContainer.insertBefore(tabList, document.getElementById("tabDiv"));
 
