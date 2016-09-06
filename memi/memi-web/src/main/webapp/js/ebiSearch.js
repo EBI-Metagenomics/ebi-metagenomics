@@ -33,7 +33,8 @@ var GLOBAL_SEARCH_SETTINGS = {
     METAGENOMICS_SEARCH_TEXT : "www.ebi.ac.uk.metagenomics.searchsettings",
     METAGENOMICS_SEARCH_SETTINGS : "www.ebi.ac.uk.metagenomics.searchsettings",
     METAGENOMICS_SEARCH_SETTINGS_SELECTED_TAB: "www.ebi.ac.uk.metagenomics.selectedFacet",
-    MORE_FACETS_ID: "more-facets-div"
+    MODAL_OVERLAY_ID: "modal-overlay-div",
+    MORE_FACET_INPUT: "more-facet-input"
 };
 
 var DatatypeSettings = {};
@@ -346,7 +347,7 @@ var addMoreFacetsListener = function (searchSettings, facetGroup, element, conta
         runAjax("GET", url, null, function(event) {
             //success
             var results = JSON.parse(event.response);
-            showMoreFacetsInDialog(searchSettings, results, moreFacetsDiv);
+            showMoreFacetsInDialog(searchSettings, results, moreFacetsDiv, modalOverlay);
         }, function(event) {
             showMoreFacetsError(moreFacetsDiv);
         });
@@ -356,7 +357,7 @@ var addMoreFacetsListener = function (searchSettings, facetGroup, element, conta
 
 var createModalOverlay = function (searchSettings, facetGroup) {
     var modalOverlay = document.createElement("div");
-    modalOverlay.id = GLOBAL_SEARCH_SETTINGS.MORE_FACETS_ID;
+    modalOverlay.id = GLOBAL_SEARCH_SETTINGS.MODAL_OVERLAY_ID;
 
     modalOverlay.style.position = "fixed";
     modalOverlay.style.zIndex = "91";
@@ -366,8 +367,19 @@ var createModalOverlay = function (searchSettings, facetGroup) {
     modalOverlay.style.height = "100%";
     modalOverlay.style.overflow = "auto";
     modalOverlay.style.backgroundColor = "rgba(0,0,0,0.6)";
+    modalOverlay.style.userFocusPointer = "wait";
     //modalOverlay.style.opacity = "0.6";
     return modalOverlay;
+};
+
+var removeModalOverlay = function() {
+    var modalOverlay = document.getElementById(GLOBAL_SEARCH_SETTINGS.MODAL_OVERLAY_ID)
+    if (modalOverlay != null) {
+        var parent = modalOverlay.parentElement;
+        parent.removeChild(modalOverlay);
+    } else {
+        console.log("Error: expected to find div with id=" + GLOBAL_SEARCH_SETTINGS.MODAL_OVERLAY_ID);
+    }
 };
 
 var createMoreFacetsDialog = function (searchSettings, facetGroup){
@@ -383,7 +395,6 @@ var createMoreFacetsDialog = function (searchSettings, facetGroup){
     dialogDiv.style.display = "block";
 
     var headerDiv = document.createElement("div");
-    headerDiv.style.borderStyle = "solid";
     headerDiv.style.width = "100%";
 
     var title = document.createElement("h3");
@@ -393,21 +404,38 @@ var createMoreFacetsDialog = function (searchSettings, facetGroup){
 
     var textFilter = document.createElement("input");
     textFilter.type = "text";
+    textFilter.style.margin = "10px";
     headerDiv.appendChild(textFilter);
 
     var facetsDiv = document.createElement("div");
     facetsDiv.classList.add("more-facets-content");
     facetsDiv.style.overflow = "scroll";
-    //facetsDiv.style.columnCount = "auto";
-    //facetsDiv.style.columnWidth = "20em"
-    facetsDiv.style.borderStyle = "dashed";
     facetsDiv.style.position = "relative";
     facetsDiv.style.width = "100%";
     facetsDiv.style.height = "80%";
     facetsDiv.appendChild(document.createTextNode("Loading facets"));
 
     var footerDiv = document.createElement("div");
-    footerDiv.appendChild(document.createTextNode("Footer"));
+    var applyButton = document.createElement("input");
+    applyButton.type = "button";
+    applyButton.value = "Filter";
+    applyButton.style.margin = "10px";
+    applyButton.addEventListener("click", function(event){
+        runMoreFacetsSearch(searchSettings, facetsDiv);
+    });
+
+    var cancelButton = document.createElement("input");
+    cancelButton.type = "button";
+    cancelButton.value = "Cancel";
+    cancelButton.style.marginBottom = "10px";
+    cancelButton.addEventListener(
+        "click", function(event) {
+            removeModalOverlay();
+        }
+    );
+
+    footerDiv.appendChild(applyButton);
+    footerDiv.appendChild(cancelButton);
 
     dialogDiv.appendChild(headerDiv);
     dialogDiv.appendChild(facetsDiv);
@@ -433,7 +461,8 @@ var showMoreFacetsInDialog = function(searchSettings, results, container) {
 
     for(var i=0; i < facets.facetValues.length; i++) {
         var facet = facets.facetValues[i];
-        var identifier = "morefacets." + dataType + FACET_SEPARATOR + facets.id + FACET_SEPARATOR + facet.value;
+        //prefixing id with 'morefacets' to ensure input id is unique
+        var identifier = "morefacets" + FACET_SEPARATOR + dataType + FACET_SEPARATOR + facets.id + FACET_SEPARATOR + facet.value;
 
         var listItem = document.createElement("li");
 
@@ -446,6 +475,7 @@ var showMoreFacetsInDialog = function(searchSettings, results, container) {
         facetInput.id = identifier;
         facetInput.form = "local-search";
         facetInput.type = "checkbox";
+        facetInput.classList.add("more-facet-input");
         facetInput.value = facet.value;
         if (searchSettings.facets != null
             && searchSettings.facets.hasOwnProperty(facets.id)
@@ -465,6 +495,32 @@ var showMoreFacetsInDialog = function(searchSettings, results, container) {
 
 var showMoreFacetsError = function(container) {
 
+};
+
+var runMoreFacetsSearch = function(searchSettings, container) {
+    var facetInputs = document.getElementsByClassName(GLOBAL_SEARCH_SETTINGS.MORE_FACET_INPUT);
+    for (var i=0; i < facetInputs.length; i++) {
+        var checkbox = facetInputs[i];
+        var tokens = checkbox.id.split(FACET_SEPARATOR);
+        var facetType = tokens[2];
+        var facetValue = tokens[3];
+        if (!searchSettings.facets.hasOwnProperty(facetType)) {
+            searchSettings.facets[facetType] = [];
+        }
+
+        if (checkbox.checked) {
+            if (searchSettings.facets[facetType].indexOf(facetValue) == -1) {
+                searchSettings.facets[facetType].push(facetValue);
+            }
+        } else {
+            var facetValueIndex = searchSettings.facets[facetType].indexOf(facetValue);
+            if (facetValueIndex != -1) {
+                searchSettings.facets[facetType].splice(facetValueIndex, 1);
+            }
+        }
+    }
+    removeModalOverlay();
+    runDomainSearch(searchSettings);
 };
 
 var displayFacetGroup = function(facetGroup, container, searchSettings) {
@@ -1183,7 +1239,6 @@ var displayTabHeader = function() {
                 */
                 tabItem.appendChild(tabLink)
                 tabList.appendChild(tabItem);
-                tabList.classList.add("sample_ana");
             }
             tabContainer.insertBefore(tabList, document.getElementById("tabDiv"));
 
