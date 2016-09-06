@@ -340,7 +340,6 @@ var addMoreFacetsListener = function (searchSettings, facetGroup, element, conta
         var modalOverlay = createModalOverlay(searchSettings, facetGroup);
         modalOverlay.appendChild(moreFacetsDiv);
         document.body.appendChild(modalOverlay);
-        document.body.style.overflow = "hidden"; //this is reset afterwards
         var paramFragment = parametersToString(parameters);
         var url = BASE_URL + searchSettings.domain + paramFragment;
         console.log("Getting more facets from: " + url);
@@ -369,6 +368,7 @@ var createModalOverlay = function (searchSettings, facetGroup) {
     modalOverlay.style.backgroundColor = "rgba(0,0,0,0.6)";
     modalOverlay.style.userFocusPointer = "wait";
     //modalOverlay.style.opacity = "0.6";
+    document.body.style.overflow = "hidden"; //this is reset when overlay is removed
     return modalOverlay;
 };
 
@@ -380,6 +380,7 @@ var removeModalOverlay = function() {
     } else {
         console.log("Error: expected to find div with id=" + GLOBAL_SEARCH_SETTINGS.MODAL_OVERLAY_ID);
     }
+    document.body.style.overflow = "auto";
 };
 
 var createMoreFacetsDialog = function (searchSettings, facetGroup){
@@ -467,9 +468,9 @@ var showMoreFacetsInDialog = function(searchSettings, results, container) {
         var listItem = document.createElement("li");
 
         listItem.style.display = "inline-block";
-        listItem.style.width = "250px";
-        listItem.style.height = "25px";
-
+        listItem.style.width = "350px";
+        listItem.style.padding = "5px";
+        
         list.appendChild(listItem);
         var facetInput = document.createElement("input");
         facetInput.id = identifier;
