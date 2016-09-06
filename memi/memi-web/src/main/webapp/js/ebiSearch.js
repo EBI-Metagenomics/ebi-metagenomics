@@ -327,7 +327,10 @@ var addClearFacetListener = function(searchSettings, facetGroup, element) {
 var addMoreFacetsListener = function (searchSettings, facetGroup, element, container) {
     element.addEventListener("click", function(event){
         var facetCount = facetGroup.total;
-        facetCount = 500;//MAQ a quick hack to handle an error in the ebi-search site at the moment
+        if (facetCount > 1000) {
+            facetCount = 1000;
+        }
+        console.log("Fetching " + facetCount + " more facets");
         var parameters = {
             "query": encodeURIComponent("domain_source:" + searchSettings.domain),
             "format": "json",
@@ -416,6 +419,23 @@ var createMoreFacetsDialog = function (searchSettings, facetGroup){
     facetsDiv.style.height = "80%";
     facetsDiv.appendChild(document.createTextNode("Loading facets"));
 
+    textFilter.addEventListener("keyup", function(event){
+        var listItems = facetsDiv.getElementsByTagName("li");
+        for(var i=0; i < listItems.length; i++) {
+            var listItem = listItems[i];
+            var input = listItem.getElementsByTagName("input")[0];
+            var filterText = textFilter.value;
+            if (filterText != null && filterText != "") {
+                var listItemText = input.value;
+                if (listItemText.toLowerCase().indexOf(filterText.toLowerCase()) == -1) {
+                    listItem.style.display = "none";
+                }
+            } else {
+                listItem.style.display = "inline-block";
+            }
+        }
+    });
+
     var footerDiv = document.createElement("div");
     var applyButton = document.createElement("input");
     applyButton.type = "button";
@@ -466,11 +486,10 @@ var showMoreFacetsInDialog = function(searchSettings, results, container) {
         var identifier = "morefacets" + FACET_SEPARATOR + dataType + FACET_SEPARATOR + facets.id + FACET_SEPARATOR + facet.value;
 
         var listItem = document.createElement("li");
-
         listItem.style.display = "inline-block";
         listItem.style.width = "350px";
         listItem.style.padding = "5px";
-        
+
         list.appendChild(listItem);
         var facetInput = document.createElement("input");
         facetInput.id = identifier;
