@@ -86,9 +86,9 @@ var initialiseSettings = function() {
         null
     );
 
-    var sampleTemperature = new NumericalRangeField("temperature", "Temperature", "°C", 0, 100, 0, 100);
-    var sampleDepth = new NumericalRangeField("depth", "Depth", "Metres", 0, 1000, 0, 1000);
-    //var samplePH = new NumericalRangeField("pH", "pH", null, 0, 14, 0, 14);
+    var sampleTemperature = new NumericalRangeField("temperature", "Temperature", "°C", -20, 110, -20, 110);
+    var sampleDepth = new NumericalRangeField("depth", "Depth", "Metres", 0, 2000, 0, 2000);
+    var samplePH = new NumericalRangeField("pH", "pH", null, 0, 14, 0, 14);
 
     var sampleSettings = new SearchSettings(
         GLOBAL_SEARCH_SETTINGS.SAMPLE,
@@ -98,12 +98,12 @@ var initialiseSettings = function() {
         null,
         GLOBAL_SEARCH_SETTINGS.SAMPLE_DOMAIN,
         GLOBAL_SEARCH_SETTINGS.SAMPLE_FIELDS,
-        [sampleTemperature, sampleDepth]
+        [sampleTemperature, sampleDepth, samplePH]
     );
 
-    var runTemperature = new NumericalRangeField("temperature", "Temperature", "°C", 0, 100, 0, 100);
-    var runDepth = new NumericalRangeField("depth", "Depth", "Metres", 0, 1000, 0, 1000);
-    //var runPH = new NumericalRangeField("pH", "pH", null, 0, 14, 0, 14);
+    var runTemperature = new NumericalRangeField("temperature", "Temperature", "°C", -20, 110, -20, 110);
+    var runDepth = new NumericalRangeField("depth", "Depth", "Metres", 0, 2000, 0, 2000);
+    var runPH = new NumericalRangeField("pH", "pH", null, 0, 14, 0, 14);
 
     var runSettings = new SearchSettings(
         GLOBAL_SEARCH_SETTINGS.RUN,
@@ -113,7 +113,7 @@ var initialiseSettings = function() {
         null,
         GLOBAL_SEARCH_SETTINGS.RUN_DOMAIN,
         GLOBAL_SEARCH_SETTINGS.RUN_FIELDS,
-        [runTemperature, runDepth]
+        [runTemperature, runDepth, runPH]
     );
 
     DatatypeSettings.DATA_TYPES = [
@@ -150,9 +150,11 @@ window.onload = function (event){
         for (var i=0; i < DatatypeSettings.DATA_TYPES.length; i++) {
             var dataType = DatatypeSettings.DATA_TYPES[i];
             var searchSetting = sessionStorage.getItem(GLOBAL_SEARCH_SETTINGS.METAGENOMICS_SEARCH_SETTINGS + dataType);
+            /* MAQ - remove after testing
             if (searchSetting != null) {
                 DatatypeSettings[dataType] = JSON.parse(searchSetting);
             }
+            */
         }
         loadPageFromServer(runNewSearch, DatatypeSettings);
     }
@@ -754,10 +756,22 @@ var displayNumericalInputs = function(container, searchSettings) {
 
         var numericalField = searchSettings.numericalFields[i];
         var fieldContainer = document.createElement("div");
+        fieldContainer.id = searchSettings.type + FACET_SEPARATOR + numericalField.name;
+        fieldContainer.style.textAlign = "center";
+
         rangeContainerDiv.appendChild(fieldContainer);
         var rangeTitle = document.createElement("h4");
         rangeTitle.innerHTML = numericalField.displayName;
+        if (numericalField.unit != null) {
+            rangeTitle.innerHTML += " (" + numericalField.unit + ")"
+        }
         fieldContainer.appendChild(rangeTitle);
+
+        var rangeContainer = document.createElement("span");
+        rangeContainer.style.paddingLeft = "5px";
+        rangeContainer.style.paddingRight = "5px";
+        rangeContainer.style.paddingBottom = "10px";
+        rangeContainer.style.display = "inline-block";
 
         var rangeInput = document.createElement("input");
         rangeInput.type = "range";
@@ -766,22 +780,35 @@ var displayNumericalInputs = function(container, searchSettings) {
         rangeInput.setAttribute("max", numericalField.maximum);
         var selectedRange = numericalField.selectedMinimum + "," + numericalField.selectedMaximum;
         rangeInput.setAttribute("value", selectedRange);
-        fieldContainer.id = searchSettings.type + FACET_SEPARATOR + numericalField.name;
+        rangeContainer.appendChild(rangeInput);
 
-        var minText = document.createTextNode(numericalField.minimum + " ");
-        var maxText = document.createTextNode(" " + numericalField.maximum);
+        var minText = document.createElement("span");
+        minText.appendChild(document.createTextNode(numericalField.minimum));
+        minText.style.float = "left";
+        var maxText = document.createElement("span");
+        maxText.appendChild(document.createTextNode(numericalField.maximum));
+        maxText.style.float = "right";
+
+        var minInput = document.createElement("input");
+        minInput.style.type = "number";
+        minInput.style.width = "5em";
+        minInput.style.float = "left";
+
+        var maxInput = document.createElement("input");
+        maxInput.style.type = "number";
+        maxInput.style.width = "5em";
+        maxInput.style.float = "right";
+
+        var inputBoxContainer = document.createElement("fieldset");
+        inputBoxContainer.style.textAlign = "center";
+        inputBoxContainer.appendChild(minInput);
+        inputBoxContainer.appendChild(document.createTextNode(" to "));
+        inputBoxContainer.appendChild(maxInput);
 
         fieldContainer.appendChild(minText);
-        fieldContainer.appendChild(rangeInput);
+        fieldContainer.appendChild(rangeContainer);
         fieldContainer.appendChild(maxText);
         multirange(rangeInput); //requires multirange library loaded
-
-        var rangeLabel = document.createElement("label");
-        if (numericalField.unit != null) {
-            rangeLabel.innerHTML = " " + numericalField.unit;
-            rangeLabel.htmlFor = rangeInput.id;
-            fieldContainer.appendChild(rangeLabel);
-        }
 
         var selectedRangeContainer = document.createElement("div");
         selectedRangeContainer.name = "selected-range";
@@ -795,6 +822,7 @@ var displayNumericalInputs = function(container, searchSettings) {
             selectedRangeContainer.appendChild(selectedRangeText);
         }
         fieldContainer.appendChild(selectedRangeContainer);
+        fieldContainer.appendChild(inputBoxContainer);
 
         addNumericalFieldValueChangeListener(fieldContainer, selectedRangeContainer, rangeInput, numericalField, searchSettings);
     }
