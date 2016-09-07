@@ -98,7 +98,7 @@ var initialiseSettings = function() {
         null,
         GLOBAL_SEARCH_SETTINGS.SAMPLE_DOMAIN,
         GLOBAL_SEARCH_SETTINGS.SAMPLE_FIELDS,
-        [sampleTemperature, sampleDepth, samplePH]
+        [sampleTemperature, sampleDepth]
     );
 
     var runTemperature = new NumericalRangeField("temperature", "Temperature", "°C", -20, 110, -20, 110);
@@ -113,7 +113,7 @@ var initialiseSettings = function() {
         null,
         GLOBAL_SEARCH_SETTINGS.RUN_DOMAIN,
         GLOBAL_SEARCH_SETTINGS.RUN_FIELDS,
-        [runTemperature, runDepth, runPH]
+        [runTemperature, runDepth]
     );
 
     DatatypeSettings.DATA_TYPES = [
@@ -765,6 +765,7 @@ var displayNumericalInputs = function(container, searchSettings) {
         if (numericalField.unit != null) {
             rangeTitle.innerHTML += " (" + numericalField.unit + ")"
         }
+        rangeTitle.style.textAlign = "left";
         fieldContainer.appendChild(rangeTitle);
 
         var rangeContainer = document.createElement("span");
@@ -790,14 +791,18 @@ var displayNumericalInputs = function(container, searchSettings) {
         maxText.style.float = "right";
 
         var minInput = document.createElement("input");
+        minInput.placeholder = numericalField.minimum;
         minInput.style.type = "number";
         minInput.style.width = "5em";
         minInput.style.float = "left";
+        minInput.classList.add("min-input");
 
         var maxInput = document.createElement("input");
+        maxInput.placeholder = numericalField.maximum;
         maxInput.style.type = "number";
         maxInput.style.width = "5em";
         maxInput.style.float = "right";
+        maxInput.classList.add("max-input");
 
         var inputBoxContainer = document.createElement("fieldset");
         inputBoxContainer.style.textAlign = "center";
@@ -813,39 +818,74 @@ var displayNumericalInputs = function(container, searchSettings) {
         var selectedRangeContainer = document.createElement("div");
         selectedRangeContainer.name = "selected-range";
         selectedRangeContainer.style["text-align"] = "left";
-        if (numericalField.selectedMinimum != numericalField.minimum || numericalField.selectedMaximum != numericalField.maximum) {
-            var rangeString = "Filtering: " + numericalField.selectedMinimum + " to " + numericalField.selectedMaximum;
-            if (numericalField.unit != null) {
-                rangeString += " " + numericalField.unit;
-            }
-            var selectedRangeText = document.createTextNode(rangeString);
-            selectedRangeContainer.appendChild(selectedRangeText);
+        if (numericalField.selectedMinimum != numericalField.minimum) {
+            minInput.value = numericalField.selectedMinimum;
+        }
+        if (numericalField.selectedMaximum != numericalField.maximum) {
+            maxInput.value = numericalField.selectedMaximum;
         }
         fieldContainer.appendChild(selectedRangeContainer);
         fieldContainer.appendChild(inputBoxContainer);
 
-        addNumericalFieldValueChangeListener(fieldContainer, selectedRangeContainer, rangeInput, numericalField, searchSettings);
+        addNumericalFieldValueChangeListener(rangeContainer, minInput, maxInput, rangeInput, numericalField, searchSettings);
     }
 };
 
-var addNumericalFieldValueChangeListener = function(fieldContainer, selectedRangeContainer, fieldInput, numericalField, searchSettings) {
-    fieldContainer.addEventListener("change", function(event){
-        var tokens = fieldInput.value.split(",");
-        numericalField.selectedMinimum = tokens[0];
-        numericalField.selectedMaximum = tokens[1];
-        selectedRangeContainer.innerHTML = "";
-        if (numericalField.selectedMinimum != numericalField.minimum || numericalField.selectedMaximum != numericalField.maximum) {
-            var rangeString = "Range: " + numericalField.selectedMinimum + " to " + numericalField.selectedMaximum;
-            if (numericalField.unit != null) {
-                rangeString += " " + numericalField.unit;
-            }
-            var selectedRangeText = document.createTextNode(rangeString);
-            selectedRangeContainer.appendChild(selectedRangeText);
+var addNumericalFieldValueChangeListener = function(rangeContainer, minInput, maxInput, fieldInput, numericalField, searchSettings) {
+    rangeContainer.addEventListener("input", function(event) {
+        updateTextBoxes(rangeContainer, minInput, maxInput, fieldInput, numericalField);
+    });
+
+    rangeContainer.addEventListener("change", function(event) {
+        updateTextBoxes(rangeContainer, minInput, maxInput, fieldInput, numericalField);
+        runDomainSearch(searchSettings);
+    });
+
+    minInput.addEventListener("change", function(event) {
+        var minValue = minInput.value;
+
+        if (minValue != null
+            && minValue != ""
+            && minValue > numericalField.minimum) {
+            numericalField.selectedMinimum = minValue;
         }
-        console.log(numericalField.displayName + " range: " + tokens);
+
+        runDomainSearch(searchSettings);
+    });
+
+    maxInput.addEventListener("change", function(event) {
+        var maxValue = maxInput.value;
+
+        if (maxValue != null
+            && maxValue != ""
+            && maxValue < numericalField.maximum) {
+            numericalField.selectedMaximum = maxValue;
+        }
         runDomainSearch(searchSettings);
     });
 };
+
+var updateTextBoxes = function(container, minInput, maxInput, fieldInput, numericalField) {
+    var tokens = fieldInput.value.split(",");
+    numericalField.selectedMinimum = tokens[0];
+    numericalField.selectedMaximum = tokens[1];
+
+    console.log(numericalField.displayName + " range: " + tokens);
+
+    //update text inputs
+    if (numericalField.selectedMinimum != numericalField.minimum) {
+        minInput.value = numericalField.selectedMinimum;
+    } else {
+        minInput.value = "";
+        minInput.placeholder = numericalField.minimum;
+    }
+    if (numericalField.selectedMaximum != numericalField.maximum) {
+        maxInput.value = numericalField.selectedMaximum;
+    } else {
+        maxInput.value = "";
+        maxInput.placeholder = numericalField.maximum;
+    }
+}
 
 /**
  * Setup for project table
