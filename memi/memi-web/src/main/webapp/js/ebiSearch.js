@@ -19,7 +19,8 @@ var GLOBAL_SEARCH_SETTINGS = {
     RUN_RESULTS_NUM: 20,
     DEFAULT_SEARCH_START: 0,
     FACET_NUM: 10,
-    DEFAULT_FACET_DEPTH: 4,
+    DEFAULT_FACET_DEPTH: 2,
+    DEFAULT_MORE_FACETS_DEPTH: 10,
 
     PROJECT: "Projects",
     PROJECT_DOMAIN: "metagenomics_projects",
@@ -326,7 +327,7 @@ var addClearFacetListener = function(searchSettings, facetGroup, element) {
 };
 
 
-var addMoreFacetsListener = function (searchSettings, facetGroup, element, container) {
+var addMoreFacetsListener = function (searchSettings, facetGroup, element, container, moreFacetsCallback) {
     element.addEventListener("click", function(event){
         var facetCount = facetGroup.total;
         if (facetCount > 1000) {
@@ -338,7 +339,8 @@ var addMoreFacetsListener = function (searchSettings, facetGroup, element, conta
             "format": "json",
             "size": 0,
             "facetfields": facetGroup.id,
-            "facetcount": facetCount
+            "facetcount": facetCount,
+            "facetsdepth": GLOBAL_SEARCH_SETTINGS.DEFAULT_MORE_FACETS_DEPTH
         };
 
         var moreFacetsDiv = createMoreFacetsDialog(searchSettings, facetGroup);
@@ -351,7 +353,7 @@ var addMoreFacetsListener = function (searchSettings, facetGroup, element, conta
         runAjax("GET", url, null, function(event) {
             //success
             var results = JSON.parse(event.response);
-            showMoreFacetsInDialog(searchSettings, results, moreFacetsDiv, modalOverlay);
+            moreFacetsCallback(searchSettings, results, moreFacetsDiv, modalOverlay);
         }, function(event) {
             showMoreFacetsError(moreFacetsDiv);
         });
@@ -466,6 +468,74 @@ var createMoreFacetsDialog = function (searchSettings, facetGroup){
     return dialogDiv;
 };
 
+var showMoreHierarchicalFacetsInDialog = function(searchSettings, results, container) {
+    var dataType = searchSettings.type;
+    var facets = results.facets[0];
+    var contentDivs = container.getElementsByClassName("more-facets-content");
+    var contentDiv = null;
+
+    if (contentDivs != null && contentDivs.length == 1) {
+        contentDiv = contentDivs[0];
+    } else {
+        console.log("Expect to find exactly one child div with class 'more-facets-content'");
+    }
+
+    var treeId = "more-hierarchical-facets-" + facets.id;
+    contentDiv.innerHTML = "";
+    var list = document.createElement("ul");
+    list.id = treeId;
+    list.style.listStyle = "None";
+    addMoreHierarchicalFacetsToList(searchSettings, facets.facetValues, facets.id, null, list);
+    contentDiv.appendChild(list);
+    $("#"+treeId).bonsai({
+        checkboxes: true,
+        expandAll: true,
+        handleDuplicateCheckboxes: true
+    });
+};
+
+var addMoreHierarchicalFacetsToList = function(searchSettings, facets, facetGroupId, facetValuePrefix, list) {
+    for(var i=0; i < facets.length; i++) {
+        var facet = facets[i];
+        var listItem = document.createElement("li");
+
+        var facetValue = facet.value;
+        if (facetValuePrefix != null) {
+            facetValue = facetValuePrefix + "/" + facet.value;
+        }
+
+        var facetInput = document.createElement("input");
+        facetInput.type = "checkbox";
+        facetInput.classList.add("more-facet-input");
+        facetInput.value = facetValue;
+        if (searchSettings.facets != null
+            && searchSettings.facets.hasOwnProperty(facetGroupId)
+            && searchSettings.facets[facetGroupId].indexOf(facetInput.value) >= 0) {
+            facetInput.checked = true;
+        }
+        facetInput.id = "morefacets" + FACET_SEPARATOR + facetGroupId + FACET_SEPARATOR + facetValue;
+
+        var facetLabel = document.createElement("label");
+        facetLabel.htmlFor = facetInput.id;
+        facetLabel.innerHTML = facet.label + " (" + facet.count + ")";
+        listItem.appendChild(facetInput);
+        listItem.appendChild(facetLabel);
+        list.appendChild(listItem);
+
+        if (facet.hasOwnProperty("children")
+            && facet.children != null
+            && facet.children.length > 0) {
+            var subList = document.createElement("ul");
+            var subListHolder = document.createElement("li");
+            subListHolder.appendChild(subList);
+            list.appendChild(subListHolder);
+            addMoreHierarchicalFacetsToList(searchSettings, facet.children, facetGroupId, facetValue, subList);
+        }
+
+
+    }
+};
+
 var showMoreFacetsInDialog = function(searchSettings, results, container) {
     var dataType = searchSettings.type;
     var facets = results.facets[0];
@@ -495,7 +565,6 @@ var showMoreFacetsInDialog = function(searchSettings, results, container) {
         list.appendChild(listItem);
         var facetInput = document.createElement("input");
         facetInput.id = identifier;
-        facetInput.form = "local-search";
         facetInput.type = "checkbox";
         facetInput.classList.add("more-facet-input");
         facetInput.value = facet.value;
@@ -593,7 +662,7 @@ var displayFacetGroup = function(facetGroup, container, searchSettings) {
         var moreFacetsLink = document.createElement("a");
         moreFacetsLink.innerHTML = "More...";
         extraControlsDiv.appendChild(moreFacetsLink);
-        addMoreFacetsListener(searchSettings, facetGroup, moreFacetsLink, facetGroupContainer);
+        addMoreFacetsListener(searchSettings, facetGroup, moreFacetsLink, facetGroupContainer, showMoreFacetsInDialog);
     }
 
     if (searchSettings.facets.hasOwnProperty(facetGroup.id)
@@ -669,6 +738,28 @@ var displayHierarchicalFacetGroup = function(facetGroup, container, searchSettin
         && searchSettings.bonsaiState[facetGroup.id] != null) {
         bonsaiTree.restore(searchSettings.bonsaiState[facetGroup.id]);
         //$("#"+groupContainerId).bonsai('restore', searchSettings.bonsaiState[facetGroup.id]);
+    }
+
+    var extraControlsDiv = document.createElement("div");
+    extraControlsDiv.classList.add("extra-pad");
+    var moreFacetsLink = document.createElement("a");
+    moreFacetsLink.innerHTML = "More...";
+    extraControlsDiv.appendChild(moreFacetsLink);
+    facetGroupContainer.appendChild(extraControlsDiv);
+
+    addMoreFacetsListener(searchSettings, facetGroup, moreFacetsLink, facetGroupContainer, showMoreHierarchicalFacetsInDialog);
+
+
+    if (searchSettings.facets.hasOwnProperty(facetGroup.id)
+        && searchSettings.facets[facetGroup.id] != null
+        && searchSettings.facets[facetGroup.id].length > 0) {
+        var textNode = document.createTextNode(" | ");
+        extraControlsDiv.appendChild(textNode);
+
+        var clearFacetsLink = document.createElement("a");
+        clearFacetsLink.innerHTML = "Clear Selection";
+        extraControlsDiv.appendChild(clearFacetsLink);
+        addClearFacetListener(searchSettings, facetGroup, clearFacetsLink);
     }
 };
 
