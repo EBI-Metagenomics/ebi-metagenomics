@@ -19,7 +19,7 @@ var GLOBAL_SEARCH_SETTINGS = {
     RUN_RESULTS_NUM: 20,
     DEFAULT_SEARCH_START: 0,
     FACET_NUM: 10,
-    DEFAULT_FACET_DEPTH: 2,
+    DEFAULT_FACET_DEPTH: 4,
 
     PROJECT: "Projects",
     PROJECT_DOMAIN: "metagenomics_projects",
@@ -659,10 +659,10 @@ var displayHierarchicalFacetGroup = function(facetGroup, container, searchSettin
             var facetChildList = document.createElement("ul");
             displayHierarchicalChildren(facetChildList, facet, facetGroup, facetInput.value, searchSettings, groupContainerId);
             facetItem.appendChild(facetChildList);
-            //TODO MAQ this is a quick fix for a bug in hierarchical searches - Nicola will fix this soon
             facetGroupList.appendChild(facetItem);
         }
     }
+
     var bonsaiTree = $("#"+groupContainerId).data('bonsai');
     bonsaiTree.update();
     if ( searchSettings.bonsaiState.hasOwnProperty(facetGroup.id)
@@ -670,7 +670,6 @@ var displayHierarchicalFacetGroup = function(facetGroup, container, searchSettin
         bonsaiTree.restore(searchSettings.bonsaiState[facetGroup.id]);
         //$("#"+groupContainerId).bonsai('restore', searchSettings.bonsaiState[facetGroup.id]);
     }
-
 };
 
 var displayHierarchicalChildren = function(container, facet, facetGroup, parentPath, searchSettings, bonsaiTreeID) {
@@ -707,7 +706,7 @@ var displayHierarchicalChildren = function(container, facet, facetGroup, parentP
 
         if (childFacet.children != null) {
             var facetChildList = document.createElement("ul");
-            displayHierarchicalChildren(container, childFacet, facetGroup, facetInput.value, searchSettings, bonsaiTreeID);
+            displayHierarchicalChildren(facetChildList, childFacet, facetGroup, facetInput.value, searchSettings, bonsaiTreeID);
             facetItem.appendChild(facetChildList);
         }
     }
