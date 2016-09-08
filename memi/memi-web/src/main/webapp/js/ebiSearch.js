@@ -589,18 +589,23 @@ var displayFacetGroup = function(facetGroup, container, searchSettings) {
     var extraControlsDiv = document.createElement("div");
     extraControlsDiv.classList.add("extra-pad");
 
-    var moreFacetsLink = document.createElement("a");
-    moreFacetsLink.innerHTML = "More...";
-    extraControlsDiv.appendChild(moreFacetsLink);
-    addMoreFacetsListener(searchSettings, facetGroup, moreFacetsLink, facetGroupContainer);
+    if (facetGroup.total > 10) {
+        var moreFacetsLink = document.createElement("a");
+        moreFacetsLink.innerHTML = "More...";
+        extraControlsDiv.appendChild(moreFacetsLink);
+        addMoreFacetsListener(searchSettings, facetGroup, moreFacetsLink, facetGroupContainer);
+    }
 
     if (searchSettings.facets.hasOwnProperty(facetGroup.id)
         && searchSettings.facets[facetGroup.id] != null
         && searchSettings.facets[facetGroup.id].length > 0) {
-        var textNode = document.createTextNode(" | ");
+        if (facetGroup.total > 10) {
+            var textNode = document.createTextNode(" | ");
+            extraControlsDiv.appendChild(textNode);
+        }
+
         var clearFacetsLink = document.createElement("a");
         clearFacetsLink.innerHTML = "Clear Selection";
-        extraControlsDiv.appendChild(textNode);
         extraControlsDiv.appendChild(clearFacetsLink);
         addClearFacetListener(searchSettings, facetGroup, clearFacetsLink);
     }
