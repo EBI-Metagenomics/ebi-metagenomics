@@ -35,7 +35,10 @@ var GLOBAL_SEARCH_SETTINGS = {
     METAGENOMICS_SEARCH_SETTINGS : "www.ebi.ac.uk.metagenomics.searchsettings",
     METAGENOMICS_SEARCH_SETTINGS_SELECTED_TAB: "www.ebi.ac.uk.metagenomics.selectedFacet",
     MODAL_OVERLAY_ID: "modal-overlay-div",
-    MORE_FACET_INPUT: "more-facet-input"
+    MORE_FACET_INPUT_CLASS: "more-facet-input",
+    MORE_FACET_TEXT_FILTER_CLASS: "more-facet-text-filter",
+    MORE_FACET_CONTENT_CLASS: "more-facet-content",
+    HIERARCHICAL_FACET_CLASS: "hierarchical-facet-list"
 };
 
 var DatatypeSettings = {};
@@ -409,14 +412,14 @@ var createMoreFacetsDialog = function (searchSettings, facetGroup){
     title.innerHTML = facetGroup.label;
     headerDiv.appendChild(title);
 
-
     var textFilter = document.createElement("input");
     textFilter.type = "text";
     textFilter.style.margin = "10px";
+    textFilter.classList.add(GLOBAL_SEARCH_SETTINGS.MORE_FACET_TEXT_FILTER_CLASS);
     headerDiv.appendChild(textFilter);
 
     var facetsDiv = document.createElement("div");
-    facetsDiv.classList.add("more-facets-content");
+    facetsDiv.classList.add(GLOBAL_SEARCH_SETTINGS.MORE_FACET_CONTENT_CLASS);
     facetsDiv.style.overflow = "scroll";
     facetsDiv.style.position = "relative";
     facetsDiv.style.width = "100%";
@@ -471,30 +474,43 @@ var createMoreFacetsDialog = function (searchSettings, facetGroup){
 var showMoreHierarchicalFacetsInDialog = function(searchSettings, results, container) {
     var dataType = searchSettings.type;
     var facets = results.facets[0];
-    var contentDivs = container.getElementsByClassName("more-facets-content");
+
+    var contentDivs = container.getElementsByClassName(GLOBAL_SEARCH_SETTINGS.MORE_FACET_CONTENT_CLASS);
     var contentDiv = null;
 
     if (contentDivs != null && contentDivs.length == 1) {
         contentDiv = contentDivs[0];
     } else {
-        console.log("Expect to find exactly one child div with class 'more-facets-content'");
+        console.log("Expect to find exactly one child div with class " + GLOBAL_SEARCH_SETTINGS.MORE_FACET_CONTENT_CLASS);
+    }
+
+    var textFilter = container.getElementsByClassName(GLOBAL_SEARCH_SETTINGS.MORE_FACET_TEXT_FILTER_CLASS);
+    if (textFilter != null && textFilter.length == 1) {
+        var textInput = textFilter[0];
+        textInput.style.display = "none";
+    } else {
+        console.log("Expect to find exactly one child div with class " + GLOBAL_SEARCH_SETTINGS.MORE_FACET_TEXT_FILTER_CLASS);
     }
 
     var treeId = "more-hierarchical-facets-" + facets.id;
     contentDiv.innerHTML = "";
+    contentDiv.classList.add(GLOBAL_SEARCH_SETTINGS.HIERARCHICAL_FACET_CLASS)
     var list = document.createElement("ul");
     list.id = treeId;
-    list.style.listStyle = "None";
     addMoreHierarchicalFacetsToList(searchSettings, facets.facetValues, facets.id, null, list);
     contentDiv.appendChild(list);
+    console.log("Converting more facet list to bonsai tree");
+
     $("#"+treeId).bonsai({
         checkboxes: true,
         expandAll: true,
         handleDuplicateCheckboxes: true
     });
+
 };
 
 var addMoreHierarchicalFacetsToList = function(searchSettings, facets, facetGroupId, facetValuePrefix, list) {
+    var dataType = searchSettings.type;
     for(var i=0; i < facets.length; i++) {
         var facet = facets[i];
         var listItem = document.createElement("li");
@@ -506,14 +522,14 @@ var addMoreHierarchicalFacetsToList = function(searchSettings, facets, facetGrou
 
         var facetInput = document.createElement("input");
         facetInput.type = "checkbox";
-        facetInput.classList.add("more-facet-input");
+        facetInput.classList.add(GLOBAL_SEARCH_SETTINGS.MORE_FACET_INPUT_CLASS);
         facetInput.value = facetValue;
         if (searchSettings.facets != null
             && searchSettings.facets.hasOwnProperty(facetGroupId)
             && searchSettings.facets[facetGroupId].indexOf(facetInput.value) >= 0) {
             facetInput.checked = true;
         }
-        facetInput.id = "morefacets" + FACET_SEPARATOR + facetGroupId + FACET_SEPARATOR + facetValue;
+        facetInput.id = "morefacets" + FACET_SEPARATOR + dataType + FACET_SEPARATOR + facetGroupId + FACET_SEPARATOR + facetValue;
 
         var facetLabel = document.createElement("label");
         facetLabel.htmlFor = facetInput.id;
@@ -526,9 +542,7 @@ var addMoreHierarchicalFacetsToList = function(searchSettings, facets, facetGrou
             && facet.children != null
             && facet.children.length > 0) {
             var subList = document.createElement("ul");
-            var subListHolder = document.createElement("li");
-            subListHolder.appendChild(subList);
-            list.appendChild(subListHolder);
+            listItem.appendChild(subList);
             addMoreHierarchicalFacetsToList(searchSettings, facet.children, facetGroupId, facetValue, subList);
         }
 
@@ -539,13 +553,13 @@ var addMoreHierarchicalFacetsToList = function(searchSettings, facets, facetGrou
 var showMoreFacetsInDialog = function(searchSettings, results, container) {
     var dataType = searchSettings.type;
     var facets = results.facets[0];
-    var contentDivs = container.getElementsByClassName("more-facets-content");
+    var contentDivs = container.getElementsByClassName(GLOBAL_SEARCH_SETTINGS.MORE_FACET_CONTENT_CLASS);
     var contentDiv = null;
 
     if (contentDivs != null && contentDivs.length == 1) {
         contentDiv = contentDivs[0];
     } else {
-        console.log("Expect to find exactly one child div with class 'more-facets-content'");
+        console.log("Expect to find exactly one child div with class " + GLOBAL_SEARCH_SETTINGS.MORE_FACET_CONTENT_CLASS);
     }
 
     contentDiv.innerHTML = "";
@@ -566,7 +580,7 @@ var showMoreFacetsInDialog = function(searchSettings, results, container) {
         var facetInput = document.createElement("input");
         facetInput.id = identifier;
         facetInput.type = "checkbox";
-        facetInput.classList.add("more-facet-input");
+        facetInput.classList.add(GLOBAL_SEARCH_SETTINGS.MORE_FACET_INPUT_CLASS);
         facetInput.value = facet.value;
         if (searchSettings.facets != null
             && searchSettings.facets.hasOwnProperty(facets.id)
@@ -589,7 +603,7 @@ var showMoreFacetsError = function(container) {
 };
 
 var runMoreFacetsSearch = function(searchSettings, container) {
-    var facetInputs = document.getElementsByClassName(GLOBAL_SEARCH_SETTINGS.MORE_FACET_INPUT);
+    var facetInputs = document.getElementsByClassName(GLOBAL_SEARCH_SETTINGS.MORE_FACET_INPUT_CLASS);
     for (var i=0; i < facetInputs.length; i++) {
         var checkbox = facetInputs[i];
         var tokens = checkbox.id.split(FACET_SEPARATOR);
@@ -600,6 +614,7 @@ var runMoreFacetsSearch = function(searchSettings, container) {
         }
 
         if (checkbox.checked) {
+            console.log("Checkbox: " + checkbox.value + " checked " + facetType + " = " + facetValue);
             if (searchSettings.facets[facetType].indexOf(facetValue) == -1) {
                 searchSettings.facets[facetType].push(facetValue);
             }
@@ -686,6 +701,7 @@ var displayHierarchicalFacetGroup = function(facetGroup, container, searchSettin
     var dataType = searchSettings.type;
     var facetGroupContainer = document.createElement("div");
     var groupContainerId = dataType + FACET_SEPARATOR + facetGroup.id;
+    facetGroupContainer.classList.add(GLOBAL_SEARCH_SETTINGS.HIERARCHICAL_FACET_CLASS);
     //facetGroupContainer.id = groupContainerId;
     container.appendChild(facetGroupContainer);
 
@@ -697,6 +713,7 @@ var displayHierarchicalFacetGroup = function(facetGroup, container, searchSettin
     var facetGroupList = document.createElement("ul");
     facetGroupList.id = groupContainerId;
     facetGroupContainer.appendChild(facetGroupList);
+    console.log("Converting facet list to bonsai tree");
     $("#"+groupContainerId).bonsai({
         checkboxes: true,
         handleDuplicateCheckboxes: true
