@@ -399,7 +399,7 @@ var createMoreFacetsDialog = function (searchSettings, facetGroup){
     dialogDiv.style.padding = "20px";
     dialogDiv.style.border = "1px solid #888";
     dialogDiv.style.width = "80%";
-    dialogDiv.style.height = "60%";
+    dialogDiv.style.height = "80%";
     dialogDiv.style.overflow = "hidden";
     dialogDiv.style.display = "block";
 
@@ -442,6 +442,7 @@ var createMoreFacetsDialog = function (searchSettings, facetGroup){
     });
 
     var footerDiv = document.createElement("div");
+    footerDiv.height = "20%";
     var applyButton = document.createElement("input");
     applyButton.type = "button";
     applyButton.value = "Filter";
