@@ -1,10 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 
-<!--  warning message-->
-<div class="msg_help blue_h" style="width:96%; margin: 9px auto; font-size: 120%;"> <span class="icon icon-generic" data-icon="i"></span> Please note, some features - such as login, data submission and data download - will be <strong>unavailable from August 26th to 30th</strong> due to maintenance. The service will be suspended at 12:00 <abbr title="British Summer Time">BST</abbr> on August 26th. The service is expected to resume by 14:00 on August 30th.</div>
-<!-- /warning message -->
-
 <c:choose>
     <c:when test="${not empty model.submitter}">
         <section class="jumbo-header private-area" style="position: relative;">
