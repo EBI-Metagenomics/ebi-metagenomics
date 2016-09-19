@@ -398,7 +398,7 @@
                     <div class="home_box alpha">
                         <p><img src="${pageContext.request.contextPath}/img/ico_conf_big.png" alt="Data archiving"/>
                             Data submitted to us can be kept confidential (accessible only via secure user login) to allow the data
-                            producer time to publish their findings. It should be noted that all submitted data must eventually be
+                            producers time to publish their findings. It should be noted that all submitted data must eventually be
                             suitable for public release.</p>
                         <p>The default confidential hold period is two years, but this can be changed using the ENA Webin submission tool.
                             Should you wish to make your confidential data publicly available before the confidential hold period expires,
