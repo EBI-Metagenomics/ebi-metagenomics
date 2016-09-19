@@ -3,7 +3,7 @@
 
 <c:choose>
     <c:when test="${not empty model.submitter}">
-        <section class="jumbo-header private-area">
+        <section class="jumbo-header private-area" style="position: relative;">
             <div class="close_section anim"><span class="show_tooltip" title="Close this section" id="this_close">&#10006;</span>
             </div>
                 <%--<div class="close_section anim"><span class="icon icon-functional" data-icon="x" title="Close this section" id="this_close"></span></div>--%>
@@ -64,7 +64,8 @@
         </section>
     </c:when>
     <c:otherwise>
-        <section class="jumbo-header">
+
+        <section class="jumbo-header" style="position: relative;">
             <div class="close_section anim"><span class="show_tooltip" title="Close this section" id="this_close">&#10006;</span>
             </div>
             <p class="lead">Submit, analyse, visualize and compare your data.</p>
@@ -118,9 +119,9 @@
                     <div class="grid_24">
                         <div class="grid_6 alpha"><span class="icon icon-functional" data-icon="U"></span><br/><span
                                 class="stat-lock-title">Public</span></div>
-                        <div class="grid_6"><span class="high_nb">${model.publicRunCount}</span><br/><span
-                                class="high_nb">${model.publicSamplesCount}</span><br/><span
-                                class="high_nb">${model.publicStudiesCount}</span></div>
+                        <div class="grid_6"><span class="high_nb">${model.dataStatistics.runStatistics.numOfPublicRuns}</span><br/><span
+                                class="high_nb">${model.dataStatistics.sampleStatistics.numOfPublicSamples}</span><br/><span
+                                class="high_nb">${model.dataStatistics.studyStatistics.numOfPublicStudies}</span></div>
                         <div class="grid_12 omega"> runs <br/> samples <br/> projects</div>
                     </div>
                 </div>
@@ -128,9 +129,9 @@
                     <div class="grid_24">
                         <div class="grid_6 alpha"><span class="icon icon-functional" data-icon="L"></span><br/><span
                                 class="stat-lock-title">Private</span></div>
-                        <div class="grid_6"><span class="high_nb">${model.privateRunCount}</span><br/><span
-                                class="high_nb">${model.privateSamplesCount}</span><br/><span
-                                class="high_nb">${model.privateStudiesCount}</span></div>
+                        <div class="grid_6"><span class="high_nb">${model.dataStatistics.runStatistics.numOfPrivateRuns}</span><br/><span
+                                class="high_nb">${model.dataStatistics.sampleStatistics.numOfPrivateSamples}</span><br/><span
+                                class="high_nb">${model.dataStatistics.studyStatistics.numOfPrivateStudies}</span></div>
                         <div class="grid_12 omega"> runs <br/> samples <br/> projects</div>
                     </div>
                 </div>
@@ -138,109 +139,6 @@
         </section>
     </c:otherwise>
 </c:choose>
-<%--Caroussel--%>
-<%--<!--[if IE 6]><div id="IE6" class="IE"><![endif]--> <!--[if IE 7]><div id="IE7" class="IE"><![endif]--> <!--[if IE & ((!IE 6) & (!IE 7))]><div><![endif]--> <!--[if !IE]>--><div><!--<![endif]-->--%>
-<%--<div class="carousel">--%>
-
-<%--<ul>--%>
-<%--<li>--%>
-<%--<!-- module 1 -->--%>
-<%--<div class="module" id="mod1">--%>
-<%--<div class="top_corners"></div>--%>
-<%--<div class="content">--%>
-<%--<h3>Easy submission</h3>--%>
-
-<%--<div class="cent"><img src="${pageContext.request.contextPath}/img/icons_sub.png"--%>
-<%--alt="easy submission"/></div>--%>
-<%--<p>Manually supported submission process, with help available for--%>
-<%--meta-data provision. Accepted data formats include SFF (454) and FASTQ (Illumina and--%>
-<%--IonTorrent).<br/></p>--%>
-
-<%--<div class="find_more"><a href="${pageContext.request.contextPath}/about#features_1"--%>
-<%--title="find out more about easy submission"><span>Find out more</span></a>--%>
-<%--</div>--%>
-<%--</div>--%>
-<%--<div class="bottom_corners"></div>--%>
-<%--</div>--%>
-<%--</li>--%>
-<%--<li>--%>
-<%--<!-- module 2 -->--%>
-<%--<div class="module" id="mod2">--%>
-<%--<div class="top_corners"></div>--%>
-<%--<div class="content">--%>
-<%--<h3>Powerful analysis</h3>--%>
-
-<%--<div class="cent"><img src="${pageContext.request.contextPath}/img/icons_ana.png"--%>
-<%--alt="powerful analysis"/></div>--%>
-<%--<p>Functional analysis of metagenomic sequences using InterPro - a powerful and--%>
-<%--sophisticated alternative to BLAST-based analyses. Taxonomy diversity analysis is--%>
-<%--performed using Qiime. <br/></p>--%>
-
-<%--<div class="find_more"><a href="${pageContext.request.contextPath}/about#features_2"--%>
-<%--title="find out more about analysis"><span>Find out more</span></a>--%>
-<%--</div>--%>
-<%--</div>--%>
-<%--<div class="bottom_corners"></div>--%>
-<%--</div>--%>
-<%--</li>--%>
-<%--<li>--%>
-<%--<!-- module 3 -->--%>
-<%--<div class="module" id="mod3">--%>
-<%--<div class="top_corners"></div>--%>
-<%--<div class="content">--%>
-<%--<h3>Data archiving</h3>--%>
-
-<%--<div class="cent"><img src="${pageContext.request.contextPath}/img/icons_arc.png"--%>
-<%--alt="data archiving"/></div>--%>
-<%--<p>Data automatically archived at the European Nucleotide Archive (ENA), ensuring accession--%>
-<%--numbers are supplied - a prerequisite for publication in many journals.</p>--%>
-
-<%--<div class="find_more"><a href="${pageContext.request.contextPath}/about#features_3"--%>
-<%--title="find out more about data archiving"><span>Find out more</span></a>--%>
-<%--</div>--%>
-<%--</div>--%>
-<%--<div class="bottom_corners"></div>--%>
-<%--</div>--%>
-<%--</li>--%>
-<%--<li>--%>
-<%--<!-- module 4 -->--%>
-<%--<div class="module" id="mod4">--%>
-<%--<div class="top_corners"></div>--%>
-<%--<div class="content">--%>
-<%--<h3>Submit your data</h3>--%>
-
-<%--<div class="cent"><img src="${pageContext.request.contextPath}/img/icons_submit.png"--%>
-<%--alt=""--%>
-<%--width="71" height="71"/></div>--%>
-<%--&lt;%&ndash;</c:url>&ndash;%&gt;--%>
-<%--<p style="padding-bottom:7px; "> You can click on <a href="<c:url value="${baseURL}/submit"/>"--%>
-<%--title="Submit data">Submit data</a>--%>
-<%--to send us your nucleotide sequences for analysis.--%>
-
-<%--(Note: you will need to  <a  href="https://www.ebi.ac.uk/ena/submit/sra/#metagenome_registration"--%>
-<%--title="Click here to register for a new ENA submitter account">register</a>--%>
-<%--first). </p>--%>
-<%--<c:choose>--%>
-<%--<c:when test="${empty model.submitter}">--%>
-<%--<div class="find_more"><a href="<c:url value="${baseURL}/submitData"/>"--%>
-<%--title="submit data for analysis"><span>Submit your data</span></a>--%>
-<%--</div>--%>
-<%--</c:when>--%>
-<%--<c:otherwise>--%>
-<%--<div class="find_more"><a href="<c:url value="${baseURL}/submit"/>"--%>
-<%--title="submit data for analysis"><span>Submit your data</span></a>--%>
-<%--</div>--%>
-<%--</c:otherwise>--%>
-<%--</c:choose>--%>
-
-<%--</div>--%>
-<%--<div class="bottom_corners"></div>--%>
-<%--</div>--%>
-<%--</li>--%>
-<%--</ul>--%>
-<%--</div>--%>
-<%--</div>--%>
-
 
 <section class="list-data">
     <div class="grid_24 jumbo-list-data-container">
@@ -289,7 +187,7 @@
                                                 value="${model.studyToSampleCountMap[study.studyId]} sample"/><c:if
                                                 test='${model.studyToSampleCountMap[study.studyId] > 1}'>s</c:if></a>
                                             <c:choose>
-                                                <c:when test="${study.public}">
+                                                <c:when test="${study['public']}">
                                                     <span class="show_tooltip icon icon-functional" data-icon="U"
                                                           title="Public data"></span>
                                                 </c:when>
@@ -341,10 +239,10 @@
                                             <%--<span class="list_date">${sample.metadataReceived}:</span>--%>
                                         <a href="<c:url value="${baseURL}/projects/${sample.study.studyId}/samples/${sample.sampleId}"/>"
                                            class="list_more fl_uppercase_title">${sample.sampleName}
-                                            <c:if test="${!sample.public}"><span
+                                            <c:if test="${!sample['public']}"><span
                                                     class="show_tooltip icon icon-functional" data-icon="L"
                                                     title="Private data"></span></c:if>
-                                            <c:if test="${sample.public}"><span
+                                            <c:if test="${sample['public']}"><span
                                                     class="show_tooltip icon icon-functional" data-icon="U"
                                                     title="Public data"></span></c:if>
                                         </a>
@@ -376,162 +274,33 @@
             <c:otherwise>
 
                 <!-- biomes box - strechy to resize sprite - need to keep the image in the page + spacer (no background)-->
-                <div id="list-biomes" class="grid_12 alpha">
+                <div class="grid_12 alpha list-biomes">
                     <div class="home_box alpha">
                         <h2>By selected biomes</h2>
 
                         <div class="grid_24">
-
-                            <a class="alpha anim"
-                               href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=SOIL"/>"
-                               title="View all <c:out value="${model.biomeMap['SOIL']}"/> soil projects">
-                                <div class="list-biomes-element">
-                                    <div class="stretchy">
-                                        <img class="spacer" alt="icon"
-                                             src="<c:url value="${baseURL}/img/backgrounds/bgd_transparent_1x1.png"/>">
-                                        <img class="sprite soil_b"
-                                             src="<c:url value="${baseURL}/img/ico_biome_sprite.png"/>">
+                            <c:forEach var="biome" items="${model.biomeMap}" varStatus="status">
+                                <c:set var="cssClass" value="anim"/>
+                                <c:if test="${status.last}">
+                                    <c:set var="cssClass" value="anim xs_hide"/>
+                                </c:if>
+                                <a class="${cssClass}"
+                                   href="<c:url value="${baseURL}/projects/doSearch?search=Search&includingChildren=true&biomeLineage=${biome.lineage}"/>"
+                                   title="View all <c:out value="${biome.numberOfProjects}"/> ${biome.label} projects">
+                                    <div class="list-biomes-element">
+                                        <div class="stretchy">
+                                            <img class="spacer" alt="icon"
+                                                 src="<c:url value="${baseURL}/img/backgrounds/bgd_transparent_1x1.png"/>">
+                                            <img class="sprite ${biome.css}"
+                                                 src="<c:url value="${baseURL}/img/ico_biome_sprite.png"/>">
+                                        </div>
+                                        <div class="biome_text">${biome.label} (<c:out value="${biome.numberOfProjects}"/>)</div>
                                     </div>
-                                    <div class="biome_text">Soil (<c:out value="${model.biomeMap['SOIL']}"/>)</div>
-                                </div>
-                            </a>
-
-                            <a class=" anim"
-                               href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=MARINE"/>"
-                               title="View all <c:out value="${model.biomeMap['MARINE']}"/> marine projects">
-                                <div class="list-biomes-element">
-                                    <div class="stretchy">
-                                        <img class="spacer" alt="icon"
-                                             src="<c:url value="${baseURL}/img/backgrounds/bgd_transparent_1x1.png"/>">
-                                        <img class="sprite marine_b" alt=""
-                                             src="<c:url value="${baseURL}/img/ico_biome_sprite.png"/>">
-                                    </div>
-                                    <div class="biome_text">Marine (<c:out value="${model.biomeMap['MARINE']}"/>)</div>
-                                </div>
-                            </a>
-
-                            <a class="anim"
-                               href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=FOREST_SOIL"/>"
-                               title="View all <c:out value="${model.biomeMap['FOREST_SOIL']}"/> forest projects">
-                                <div class="list-biomes-element">
-                                    <div class="stretchy">
-                                        <img class="spacer" alt="icon"
-                                             src="<c:url value="${baseURL}/img/backgrounds/bgd_transparent_1x1.png"/>">
-                                        <img class="sprite forest_b" alt=""
-                                             src="<c:url value="${baseURL}/img/ico_biome_sprite.png"/>">
-                                    </div>
-                                    <div class="biome_text">Forest (<c:out value="${model.biomeMap['FOREST_SOIL']}"/>)
-                                    </div>
-                                </div>
-                            </a>
-
-                            <a class="anim"
-                               href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=NON_HUMAN_HOST"/>"
-                               title="View all <c:out value="${model.biomeMap['NON_HUMAN_HOST&']}"/> non-human host-associated projects">
-                                <div class="list-biomes-element">
-                                    <div class="stretchy">
-                                        <img class="spacer" alt="icon"
-                                             src="<c:url value="${baseURL}/img/backgrounds/bgd_transparent_1x1.png"/>">
-                                        <img class="sprite non_human_host_b" alt=""
-                                             src="<c:url value="${baseURL}/img/ico_biome_sprite.png"/>">
-                                    </div>
-                                    <div class="biome_text">Non-human host (<c:out
-                                            value="${model.biomeMap['NON_HUMAN_HOST']}"/>)
-                                    </div>
-                                </div>
-                            </a>
-
-                            <a class="anim omega"
-                               href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=ENGINEERED"/>"
-                               title="View all <c:out value="${model.biomeMap['ENGINEERED']}"/> engineered projects">
-                                <div class="list-biomes-element">
-                                    <div class="stretchy">
-                                        <img class="spacer" alt="icon"
-                                             src="<c:url value="${baseURL}/img/backgrounds/bgd_transparent_1x1.png"/>">
-                                        <img class="sprite engineered_b" alt=""
-                                             src="<c:url value="${baseURL}/img/ico_biome_sprite.png"/>">
-                                    </div>
-                                    <div class="biome_text">Engineered (<c:out value="${model.biomeMap['ENGINEERED']}"/>)</div>
-                                </div>
-                            </a>
-
-                            <a class="anim alpha"
-                               href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=FRESHWATER"/>"
-                               title="View all <c:out value="${model.biomeMap['FRESHWATER']}"/> freshwater projects">
-                                <div class="list-biomes-element">
-                                    <div class="stretchy">
-                                        <img class="spacer" alt="icon"
-                                             src="<c:url value="${baseURL}/img/backgrounds/bgd_transparent_1x1.png"/>">
-                                        <img class="sprite freshwater_b"
-                                             src="<c:url value="${baseURL}/img/ico_biome_sprite.png"/>">
-                                    </div>
-                                    <div class="biome_text">Freshwater (<c:out value="${model.biomeMap['FRESHWATER']}"/>)</div>
-                                </div>
-                            </a>
-
-                            <a class="anim"
-                               href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=GRASSLAND"/>"
-                               title="View all <c:out value="${model.biomeMap['GRASSLAND']}"/> grassland projects">
-                                <div class="list-biomes-element">
-                                    <div class="stretchy">
-                                        <img class="spacer" alt="icon"
-                                             src="<c:url value="${baseURL}/img/backgrounds/bgd_transparent_1x1.png"/>">
-                                        <img class="sprite grassland_b"
-                                             src="<c:url value="${baseURL}/img/ico_biome_sprite.png"/>">
-                                    </div>
-                                    <div class="biome_text">Grassland (<c:out
-                                            value="${model.biomeMap['GRASSLAND']}"/>)
-                                    </div>
-                                </div>
-                            </a>
-
-                            <a class="anim"
-                               href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=HUMAN_GUT"/>"
-                               title="View all <c:out value="${model.biomeMap['HUMAN_GUT']}"/> human gut projects">
-                                <div class="list-biomes-element">
-                                    <div class="stretchy">
-                                        <img class="spacer" alt="icon"
-                                             src="<c:url value="${baseURL}/img/backgrounds/bgd_transparent_1x1.png"/>">
-                                        <img class="sprite human_gut_b"
-                                             src="<c:url value="${baseURL}/img/ico_biome_sprite.png"/>">
-                                    </div>
-                                    <div class="biome_text">Human gut (<c:out
-                                            value="${model.biomeMap['HUMAN_GUT']}"/>)
-                                    </div>
-                                </div>
-                            </a>
-
-                            <a class="anim xs_hide"
-                               href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=AIR"/>"
-                               title="View all <c:out value="${model.biomeMap['AIR']}"/> air projects">
-                                <div class="list-biomes-element">
-                                    <div class="stretchy">
-                                        <img class="spacer" alt="icon"
-                                             src="<c:url value="${baseURL}/img/backgrounds/bgd_transparent_1x1.png"/>">
-                                        <img class="sprite air_b"
-                                             src="<c:url value="${baseURL}/img/ico_biome_sprite.png"/>">
-                                    </div>
-                                    <div class="biome_text">Air (<c:out value="${model.biomeMap['AIR']}"/>)</div>
-                                </div>
-                            </a>
-
-                            <a class="anim omega"
-                               href="<c:url value="${baseURL}/projects/doSearch?search=Search&biome=WASTEWATER"/>"
-                               title="View all <c:out value="${model.biomeMap['WASTEWATER']}"/> wastewater projects">
-                                <div class="list-biomes-element">
-                                    <div class="stretchy">
-                                        <img class="spacer" alt="icon"
-                                             src="<c:url value="${baseURL}/img/backgrounds/bgd_transparent_1x1.png"/>">
-                                        <img class="sprite wastewater_b"
-                                             src="<c:url value="${baseURL}/img/ico_biome_sprite.png"/>">
-                                    </div>
-                                    <div class="biome_text">Wastewater (<c:out value="${model.biomeMap['WASTEWATER']}"/>)</div>
-                                </div>
-                            </a>
-
+                                </a>
+                            </c:forEach>
                         </div><!-- /list-biomes-l -->
-                        <a href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>"
-                           title="View projects and filter by biome" class="all">View all biomes</a>
+                        <a href="<c:url value="${baseURL}/biomes"/>"
+                           title="View projects and filter by biome" class="all">Browse all biomes</a>
                     </div> <!-- /home_box -->
                 </div>
                 <!-- /list-biomes -->
@@ -542,7 +311,7 @@
                     <div class="home_box omega">
                         <h2>Latest projects <span class="badge"><a
                                 href="<c:url value="${baseURL}/projects/doSearch?search=Search&studyVisibility=ALL_PUBLISHED_PROJECTS"/>"
-                                title="View all ${model.publicStudiesCount} public projects">${model.publicStudiesCount}</a></span>
+                                title="View all ${model.dataStatistics.studyStatistics.numOfPublicStudies} public projects">${model.dataStatistics.studyStatistics.numOfPublicStudies}</a></span>
                         </h2>
                         <div class="list-project-l">
                                 <%--The count starts at 0, that is why we subtract 1 from the end value--%>
@@ -596,7 +365,7 @@
     <c:when test="${not empty model.submitter}"> <!-- private-->
         <section class="hlight_item">
             <div class="grid_24">
-                <div id="hlight-box-spotlight" class="grid_12 alpha hlight-info">
+                <div class="grid_12 alpha hlight-info">
                     <div class="hlight_title_cont">
                         <div class="hlight_maintitle"><h1>Tracking data submission</h1></div>
                         <div class="hlight_subtitle" style="margin-top:0;"><h2 class="icon icon-generic"
@@ -618,7 +387,7 @@
                             us to get some update</a>.</p>
                     </div>
                 </div>
-                <div id="hlight-box-spotlight" class="grid_12 alpha hlight-info">
+                <div class="grid_12 alpha hlight-info">
                     <div class="hlight_title_cont">
                         <div class="hlight_maintitle"><h1>Data confidentiality</h1></div>
                         <div class="hlight_subtitle" style="margin-top:0;"><h2 class="icon icon-generic"
@@ -648,7 +417,7 @@
 
         <section class="hlight_item">
             <div class="grid_24">
-                <div id="hlight-box-spotlight" class="grid_12 alpha hlight-spot">
+                <div class="hlight-spot grid_12 alpha">
                     <div class="hlight_title_cont">
                         <div class="hlight_maintitle"><h1>Spotlight</h1></div>
                         <div class="hlight_subtitle"><h2>American Gut project</h2></div>
@@ -697,7 +466,7 @@
                     </div>
                     -->
                 </div>
-                <div id="hlight-box-tools" class="grid_12 omega hlight-spot">
+                <div class="hlight-spot grid_12 omega">
                     <div class="hlight_title_cont">
                         <div class="hlight_maintitle"><h1>Tools</h1></div>
                         <div class="hlight_subtitle"><h2>Functional sample comparison</h2></div>
@@ -715,9 +484,50 @@
                             The different charts can be exported in PNG, PDF and SVG formats, so that they can easily be
                             included in presentations and publications.
                         </p>
-                    </div>
+                        </div>
                         <a href="<c:url value="${baseURL}/compare"/>" title="Compare samples" class="all">Compare
                                                   samples</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="jumbo-citation">
+            <div class="grid_24">
+                <div class="hlight-spot alpha">
+                    <div class="hlight_title_cont">
+                        <div class="hlight_maintitle"><h1>How to cite</h1></div>
+                    </div>
+                    <div class="home_box alpha omega" style="min-height: auto;">
+
+                            <img
+                                    alt="Cover of the Nucleic Acids Research journal"
+                                    src="<c:url value="${baseURL}/img/nucleic_acids_research_D1_cover.gif"/>"
+                                    style="width: auto; float: left; margin-right: 18px;"
+                            />
+                            <p>
+                                To cite EBI Metagenomics, please refer to the following publication:
+                            </p>
+                            <p>
+                                Alex Mitchell, Francois Bucchini, Guy Cochrane, Hubert Denise, Petra ten Hoopen, Matthew Fraser, Sebastien Pesseat, Simon Potter, Maxim Scheremetjew, Peter Sterk and Robert D. Finn (2015).
+                                <br />
+                                <strong>
+                                    EBI metagenomics in 2016 - an expanding and evolving resource for the analysis and archiving of metagenomic data.
+                                </strong>
+                                Nucleic Acids Research (2015) doi:
+                                <a
+                                        title="EBI metagenomics in 2016 - an expanding and evolving resource for the analysis and archiving of metagenomic data"
+                                        href="http://nar.oxfordjournals.org/content/44/D1/D595.full"
+                                        class="ext"
+                                >
+                                    10.1093/nar/gkv1195
+                                </a>
+                            </p>
+
+                        <a href="<c:url value="${baseURL}/about#h_cite"/>" title="About page - How to cite" class="all">
+                            More citations
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>
@@ -764,16 +574,16 @@
     $("iframe").ready(function () {
         var timer = setInterval(function () {
             if ($($("iframe").contents()).find(".avatar").length > 0) {
-                $($("iframe").contents()).find(".avatar, .p-author, .footer, .retweet-credit").css({display: "none"});
-                $($("iframe").contents()).find(".permalink").css({float: "none"});
-                $($("iframe").contents()).find(".header, .inline-media").css({'text-align': "center"});
-                $($("iframe").contents()).find("li").css({'padding': "0 0 0 0"});
-                $($("iframe").contents()).find(".e-entry-title").css({
+                $($("iframe").contents()).find(".avatar, .timeline-Tweet-author, .timeline-Tweet-media").css({display: "none"});
+//                $($("iframe").contents()).find(".permalink").css({float: "none"});
+                $($("iframe").contents()).find(".timeline-Tweet-retweetCredit").css({'text-align': "center"});/*style retweet info text*/
+//                $($("iframe").contents()).find("li").css({'padding': "0 0 0 0"});
+                $($("iframe").contents()).find(".timeline-Tweet-text").css({
                     'text-align': "center",
                     'font-size': '157%',
                     'line-height': '1.4'
-                });
-                $($("iframe").contents()).find("img.autosized-media").css({'max-height': '175px'});
+                });/*style tweet main text*/
+                $($("iframe").contents()).find("img.autosized-media").css({'max-height': '175px'});/*don't know if this is relevant anymore*/
                 clearInterval(timer);
             }
         }, 100);

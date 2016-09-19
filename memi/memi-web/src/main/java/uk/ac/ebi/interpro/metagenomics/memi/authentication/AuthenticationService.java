@@ -15,7 +15,7 @@ import java.util.List;
 
 /**
  * Represents an authentication service using ENA's authentication client API. You will find more documentation on how to use ENA's API on Confluence, if you search for 'ena-authentication'.
- * <p/>
+ * <p>
  * NOTE: As ENA do not have a load balancer in place yet for both tomcat instance,
  * we need to cope with 2 authentication clients at the moment.
  *
@@ -40,6 +40,9 @@ public class AuthenticationService {
         }//If authentication failed
         catch (AuthException authException) {
             handleAuthException(mgPortalAuthResult, authException);
+        } catch (Exception exe) {
+            log.error("Unexpected exception during login", exe);
+            throw new AuthException(exe.getMessage());
         }
         mgPortalAuthResult.setSubmitter(submitter);
         return mgPortalAuthResult;
@@ -58,6 +61,9 @@ public class AuthenticationService {
     private void handleAuthException(final MGPortalAuthResult authResult,
                                      final AuthException authException) {
         String message = authException.getMessage();
+        if (message == null || message.isEmpty()) {
+            message = "Authentication failed unexpected.";
+        }
         authResult.setErrorMessage(message);
         log.info("Authentication failed: " + message);
         if (message.equalsIgnoreCase("404 Not Found")) {

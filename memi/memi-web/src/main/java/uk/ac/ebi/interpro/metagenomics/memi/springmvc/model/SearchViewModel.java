@@ -3,7 +3,6 @@ package uk.ac.ebi.interpro.metagenomics.memi.springmvc.model;
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ebiSearch.EBISampleSearchResults;
 
 import java.util.List;
 
@@ -12,7 +11,7 @@ import java.util.List;
  */
 public class SearchViewModel extends ViewModel {
 
-    EBISampleSearchResults ebiSampleSearchResults;
+    String searchResults;
 
     /**
      * Please notice to use this name for all the different model types. Otherwise the main menu would not work
@@ -25,16 +24,12 @@ public class SearchViewModel extends ViewModel {
                            String pageTitle,
                            List<Breadcrumb> breadcrumbs,
                            MemiPropertyContainer propertyContainer,
-                           EBISampleSearchResults sampleSearchResults) {
+                           String searchResults) {
         super(submitter, ebiSearchForm, pageTitle, breadcrumbs, propertyContainer);
-        this.ebiSampleSearchResults = sampleSearchResults;
+        this.searchResults = searchResults;
     }
 
-    public EBISampleSearchResults getEbiSampleSearchResults() {
-        return ebiSampleSearchResults;
-    }
+    public String getSearchResults() { return searchResults; }
 
-    public void setEbiSampleSearchResults(EBISampleSearchResults ebiSampleSearchResults) {
-        this.ebiSampleSearchResults = ebiSampleSearchResults;
-    }
+    public void setSearchResults(String searchResults) { this.searchResults = searchResults; }
 }

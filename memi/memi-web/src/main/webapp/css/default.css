@@ -75,11 +75,6 @@ div#headerdiv #global-masthead .nav a:link {float: none;}
 div#headerdiv { background-color: #fff; font-size:100%; font-family: Verdana, sans-serif; }/*replace default font-size: 11px;*/
 div#local-masthead ul li.active-trail a:link, div#local-masthead ul li.active-trail a:visited {padding-top: 2px;border-bottom: 3px solid #666;background-color: #111;}/*style not defined in mitigation*/
 div#local-masthead ul li.active, div#local-masthead ul li.active-trail { background-color: #111; }  /*style not defined in mitigation*/
-/*responsive search that make it behave strangely*/
-@media only screen and (min-width: 1100px){
-div#local-search form, form#local-search {
-    float: none;
-}}
 /*/change to ebi-mitigation.css*/
 
 /*imported from ebi-visual.css*/
@@ -348,7 +343,7 @@ background:url(../img/bgd_black_op20_8.png);
 .col_sm {width: 10%;}
 .col_xs {width: 8%;}
 
-/* MAIN TABLE - feedback form, project ov, project list, sample list*/
+/* MAIN TABLE - feedback form, project ov, project list, sample list, biome list*/
 .result {line-height: 1.2em; border-collapse:separate; width:100%; border-spacing:4px; padding-left:7px;/*9px is too much as we have already padding 2px in the table*/ margin-bottom: 9px;}
 .result thead th:empty{background:transparent;border:none;}
 .result thead th {font-size:120%; padding:10px; color:#fff; background-color:#708A95 /*was #006666*/; border-radius:5px 5px 0 0; box-shadow:0px 1px 1px #adadad;}
@@ -359,6 +354,7 @@ background:url(../img/bgd_black_op20_8.png);
 .result tbody td a:hover{text-decoration:underline;/*color:red;*/}
 .table-align-center {text-align:center;}
 .table-margin-r {margin-right:9px;}  /*need extra margin for 100%width table for EBI Template*/
+.table-sm-width {width:10%;}
 /* END  MAIN TABLE*/
 
 /*LIGHT TABLE*/
@@ -416,7 +412,7 @@ table.dataTable.no-footer {border-bottom: 1px solid #D5D5D5;}
 .dataTables_wrapper .dataTables_filter {padding-right: 15px;}/*little extra to align filter to the table*/
 .dataTables_wrapper {position: relative;clear: both;*zoom: 1; zoom: 1;}
 .dataTables_wrapper .dataTables_length {float: left;}/*show X number of entries*/
-.dataTables_wrapper .dataTables_filter {float: right; text-align: right;}
+.dataTables_wrapper .dataTables_filter { text-align: right; } /*float: right;*/
 .dataTables_wrapper .dataTables_filter input { margin-left: 0.5em;}
 .dataTables_wrapper .dataTables_info {clear: both; float: left; padding-top: 0.755em;}/*showing X to X of X entries*/
 .dataTables_wrapper .dataTables_paginate {float: right; text-align: right; padding-top: 0.25em;}
@@ -490,10 +486,6 @@ p, ul {font-size: 110%;color:#333; /*border:1px red solid; box-sizing: border-bo
 color:#605f5f;
 font-size:200%;
 margin:0px 0 7px 0;
-}
-
-.carousel h3 {
-color:#3e3e3e;
 }
 
 .intro {font-size:144%; color:#445668;}/*intro text*/
@@ -750,22 +742,22 @@ text-decoration:underline;
 .biome_icon.icon_lg.plant_host_b {background-position: -622px -1596px;}
 /*biome medium icon*/
 .biome_icon.icon_sm {width:75px; height:75px;}
-.biome_icon.icon_sm.soil_b {background-position: -40px -396px;}
+.biome_icon.icon_sm.soil_b {background-position: -41px -396px;}
 .biome_icon.icon_sm.marine_b {background-position: -142px -396px;}
 .biome_icon.icon_sm.forest_b {background-position: -241px -396px;}
-.biome_icon.icon_sm.human_gut_b {background-position: -241px -497px;}
-.biome_icon.icon_sm.human_host_b {background-position: -341px -497px;}
-.biome_icon.icon_sm.non_human_host_b {background-position: -341px -397px;}
+.biome_icon.icon_sm.human_gut_b {background-position: -241px -496px;}
+.biome_icon.icon_sm.human_host_b {background-position: -341px -496px;}
+.biome_icon.icon_sm.non_human_host_b {background-position: -342px -396px;}
 .biome_icon.icon_sm.freshwater_b {background-position: -40px -497px;}
-.biome_icon.icon_sm.grassland_b {background-position: -142px -497px;}
-.biome_icon.icon_sm.engineered_b {background-position: -40px -596px;}
+.biome_icon.icon_sm.grassland_b {background-position: -142px -496px;}
+.biome_icon.icon_sm.engineered_b {background-position: -41px -596px;}
 .biome_icon.icon_sm.air_b {background-position: -142px -596px;}
 .biome_icon.icon_sm.wastewater_b {background-position: -241px -596px;}
 .biome_icon.icon_sm.default_b {background-position: -342px -596px;}
-.biome_icon.icon_sm.vulcano_b {background-position:-40px -695px;}
+.biome_icon.icon_sm.vulcano_b {background-position:-41px -695px;}
 .biome_icon.icon_sm.hotspring_b {background-position:-142px -695px;}
 .biome_icon.icon_sm.cave_b {background-position:-241px -695px;}
-.biome_icon.icon_sm.plant_host_b {background-position:-342px -695px;}
+.biome_icon.icon_sm.plant_host_b {background-position:-342px -696px;}
 /*biome small icon*/
 .biome_icon.icon_xs {width: 30px; height: 30px;}
 .biome_icon.icon_xs.soil_b {background-position:-42px -38px;}
@@ -785,18 +777,18 @@ text-decoration:underline;
 .biome_icon.icon_xs.cave_b {background-position: -122px -157px;}
 .biome_icon.icon_xs.plant_host_b {background-position: -162px -157px;}
 /*biome homepage*/
-#list-biomes .list-biomes-l {margin-top: 9px;}
-#list-biomes .list-biomes-l:last-of-type {margin-bottom: 9px;}/*add extra margin to align box content*/
-#list-biomes .list-biomes-l a.omega {margin-right: 0%; }
-#list-biomes .list-biomes-l a.alpha {margin-left: 0%; }
-#list-biomes .biome_text {display: block; padding-top: 4px; word-wrap: break-word;}
-#list-biomes .grid_24 a {display: inline-block; vertical-align: text-top; padding: 3px;font-weight: bold; color:#6f6f6f; width:18.9%;text-align: center;  zoom: 1; border:0px solid black; box-sizing: border-box;}
-/*#list-biomes .grid_24 a  {display: inline-block; vertical-align: text-top; padding: 4px;font-weight: bold; color:#6f6f6f; width:17%;text-align: center;  zoom: 1;  margin-left: 1%;  margin-right: 1%; border:0px solid black; box-sizing: border-box;}*/
-#list-biomes .grid_24 a:hover  {color:white;text-decoration: none; background-color:  rgba(0, 0, 0, 0.25);}
+/*.list-biomes .list-biomes-l {margin-top: 9px;}*/
+/*.list-biomes .list-biomes-l:last-of-type {margin-bottom: 9px;}!*add extra margin to align box content*!*/
+/*.list-biomes .list-biomes-l a.omega {margin-right: 0%; }*/
+/*.list-biomes .list-biomes-l a.alpha {margin-left: 0%; }*/
+.list-biomes .biome_text {display: block; padding-top: 4px; word-wrap: break-word;}
+.list-biomes .grid_24 a {display: inline-block; vertical-align: text-top; padding: 0;font-weight: bold; color:#6f6f6f; width:18.9%;text-align: center;  zoom: 1; border:0px solid black; box-sizing: border-box;}
+/*.list-biomes .grid_24 a  {display: inline-block; vertical-align: text-top; padding: 4px;font-weight: bold; color:#6f6f6f; width:17%;text-align: center;  zoom: 1;  margin-left: 1%;  margin-right: 1%; border:0px solid black; box-sizing: border-box;}*/
+.list-biomes .grid_24 a:hover  {color:white;text-decoration: none; background-color:  rgba(0, 0, 0, 0.25);}
 
-#list-biomes .biome_icon {margin:9px;}
+/*.list-biomes .biome_icon {margin:9px;} not used anymore?*/
 /*strechy sprite - to make responsive sprite/biome from http://tobyj.net/responsive-sprites/*/
-.stretchy {margin: 0 auto;display: block; position: relative; overflow: hidden; max-width: 80px;/*sprite icon size*/}
+.stretchy {margin: 0 auto;display: block; position: relative; overflow: hidden; max-width: 82px;/*sprite icon size*/}
 .stretchy .spacer {width: 100%; height: auto;}
 .stretchy .sprite {position: absolute;top: 0; left: 0; max-width: none; max-height: 2690%;}
 
@@ -820,20 +812,20 @@ text-decoration:underline;
 
 /*biome homepage responsive - change size icons  for small screens - NOT USED ANYMORE?*/
 /*@media (max-width: 768px) {*/
-/*#list-biomes .biome_icon {width: 30px; height: 30px;}*/
-/*#list-biomes .soil_b {background-position:-42px -38px;}*/
-/*#list-biomes .marine_b {background-position: -82px -38px;}*/
-/*#list-biomes .forest_b {background-position: -122px -38px;}*/
-/*#list-biomes .freshwater_b {background-position: -42px -78px;}*/
-/*#list-biomes .grassland_b {background-position: -82px -78px;}*/
-/*#list-biomes .human_gut_b {background-position: -122px -78px;}*/
-/*#list-biomes .human_host_b {background-position: -162px -78px;}*/
-/*#list-biomes .non_human_host_b {background-position: -162px -38px;}*/
-/*#list-biomes .engineered_b {background-position: -42px -118px;}*/
-/*#list-biomes .air_b {background-position: -82px -118px;}*/
-/*#list-biomes .wastewater_b {background-position: -122px -118px;}*/
-/*#list-biomes .default_b {background-position: -162px -118px;}*/
-/*#list-biomes .grid_24 a {font-weight: normal;}*/
+/*.list-biomes .biome_icon {width: 30px; height: 30px;}*/
+/*.list-biomes .soil_b {background-position:-42px -38px;}*/
+/*.list-biomes .marine_b {background-position: -82px -38px;}*/
+/*.list-biomes .forest_b {background-position: -122px -38px;}*/
+/*.list-biomes .freshwater_b {background-position: -42px -78px;}*/
+/*.list-biomes .grassland_b {background-position: -82px -78px;}*/
+/*.list-biomes .human_gut_b {background-position: -122px -78px;}*/
+/*.list-biomes .human_host_b {background-position: -162px -78px;}*/
+/*.list-biomes .non_human_host_b {background-position: -162px -38px;}*/
+/*.list-biomes .engineered_b {background-position: -42px -118px;}*/
+/*.list-biomes .air_b {background-position: -82px -118px;}*/
+/*.list-biomes .wastewater_b {background-position: -122px -118px;}*/
+/*.list-biomes .default_b {background-position: -162px -118px;}*/
+/*.list-biomes .grid_24 a {font-weight: normal;}*/
 /*}*/
 /*biome project page*/
 .biome_project {float: right; margin-right: 18px;}
@@ -1016,7 +1008,7 @@ overflow:auto;
 
 .form_row input {float:left; }
 
-.filter_button {color:#cecece; margin-left:94px;}
+.filter_button {color:#cecece; text-align: center}
 
 /*run page overview*/
 .result_row {padding: 4px 0px; border: 0px solid #ffaa22; overflow:auto;}
@@ -1181,9 +1173,28 @@ background: url(../img/bgd_contentfull_menu.gif) -14px;
 border: 0px solid #556f8c;
 margin-left:9px;
 }
+.filter_form label.study_search {
+    width: 35%;
+    float: left;
+    text-align: right;
+    padding-right: 10px;
+    color: #606060;
+}
+.filter_form div.lineage {
+    display: table;
+    padding-left: 4px;
+    font-size: 0.9em;
+}
 
-#map_canvas, #map_country {float:right; border: 1px solid #006AF6;display:block;width:50%;height:140px;}/*google map*/
-
+/*google map*/
+#map_canvas, #map_country {float:right; border: 1px solid #006AF6;display:block;width:50%;height:140px;}/*google map - samples overview*/
+#map_project {border: 1px solid #006AF6;display:block; height:360px;margin:0 9px;}/*google map - project overview*/
+.map_info_window {font-size: 91%;}
+.map_info_window h3 {font-size: 139%;}
+.map_info_window .biome_icon {float: left; margin-right: 9px;}
+.map_info_window a.map_info_more {display: block; text-align: center;  padding: 3px 1px; background-color: #1A5286; width: 20%; min-width:100px; margin: 0 auto;opacity: 0.8;}
+.map_info_window a:hover.map_info_more {opacity: 1; text-decoration: none;}
+.sample_ana .ui-widget-content .map_info_window a.map_info_more {color:white;} /*overwrite old style*/
 /*login window*/
 .sub {display:block;overflow:auto;}
 .sub .sub_log, .sub .sub_sign {-moz-border-radius: 20px;-khtml-border-radius: 20px;-webkit-border-radius: 20px;border-radius: 20px;float: left; display:block; border: 1px solid #e5e5e5;}/*keep rounded prefix for the box*/
@@ -1221,18 +1232,6 @@ span.form_help ul li{
 #breadcrumb a {color:#999; text-decoration: none;}
 #breadcrumb a:hover,#breadcrumb a:active {color:#999;text-decoration: underline;}
 
-/* carousel */
-.carousel {text-align:center; margin:0;border:0px green solid;zoom:1; font-size:110%;min-width:860px;display: block;}
-
-.carousel div{margin:0;padding:0;}
-.carousel:focus{outline:0px solid #0092bf;}/*removed the annoying effect on the slideshow*/
-.carousel-wrap{
-display:inline-block;
-vertical-align:middle;
-/*908px for 3 slides; 628px for 2 slides*/margin:0;
-width:840px; /*for EBI compliant 1024px screen*/
-}
-
 /* pagination*/
 div.center-wrap{/*overflow:hidden; remove because of bug in Firefox*/ clear:both;zoom:1; text-align:center; margin-top: 14px;}
 div.center-wrap div{border:0px solid red;margin:2px 0; display:block; }
@@ -1246,31 +1245,6 @@ background:#dedede;
 color:#dedede;
 cursor:pointer;-moz-border-radius:12px;webkit-border-radius:12px;border-radius:12px;} /*keep the round prefix as main feature*/
 div.center-wrap a.active{background:#9e9e9e;color:#9e9e9e;/*font-weight:bold;color:#525044;*/}
-
-/* carousel buttons more info  */
-.find_more {
-position: absolute;
-bottom: 5px;left: 8px;height: auto;}
-.find_more a {color:white;text-decoration:none; background:url(../img/backgrounds/bgd_button_login_off.gif) repeat-x; border: 0px solid #1f54bc; border-radius: 4px; box-shadow:0px 2px 2px #adadad;padding:4px 8px;cursor: pointer;}
-.find_more a:hover{background:url(../img/backgrounds/bgd_button_login_over.gif) repeat-x;}
-.find_more a:active{background:url(../img/backgrounds/bgd_button_login_active.gif) repeat-x;}
-
-/* carousel navigation arrows */
-.carousel .carousel-control{
-overflow:hidden;
-display:inline-block;
-vertical-align:middle;
-width:44px;
-height:64px;cursor:pointer;line-height:999px;zoom:1;border:0px solid black;
-position:relative;
-z-index:20;top:-40px;}
-
-.carousel .carousel-control {font-size: 0;}/*fix a bug with Firefox that shows text by default / alternative of using text-indent property that doesn't work with IE  */
-
-.carousel .carousel-next{ background:url(../img/carousel_r.png) 0 0 no-repeat; margin-left:-37px; outline:0;/*remove blue selection on click*/}
-.carousel .carousel-previous{background:url(../img/carousel_l.png) 0 0 no-repeat; margin-right:-34px; outline:0;/*remove blue selection on click*/}
-.carousel .carousel-control:hover{-moz-opacity:.7;opacity:0.70;filter:alpha(opacity=70);}
-.carousel .disabled,.carousel .disabled:hover{-moz-opacity:.2;opacity:0.20;filter:alpha(opacity=20);cursor:default;}
 
 /*table pagination*/
 .pag-next, .pag-last, .pag-prev, .pag-first, .pag-next-off, .pag-prev-off, .pag-first-off, .pag-last-off {float:left;padding:0 4px;}
@@ -1304,17 +1278,6 @@ z-index:20;top:-40px;}
 .module .content .cent {border:0px solid red; padding:7px 14px 7px 100px;}
 .module .content h3 {font-size:150%; margin:-3px 0 7px 0; padding:0 7px; font-weight:normal;}
 .module .content p {padding:0 7px;line-height:1.2; margin:0;}
-
-
-
-
-.IE .js .carousel-wrap{display:inline;}
-.carousel ul{margin:0;padding:0;zoom:1;}
-.js ul li{overflow:hidden;display:inline;float:left;width:500px;text-align:center;zoom:1;}
-
-.carousel ul{padding:0;list-style:none;}
-.carousel ul li{position:relative;width:283px; border:0px solid red;margin:0;
-    float:left; /* used for no-script version */}
 
 /*POPUP LOGIN DIALOG*/
 #login_dialog_div {cursor: default;/*remove waiting cursor*/display:none; /*solve a bug  of conflict between popup and carousel on IE6 and IE7*/ border: 0px solid #AAA; background:none;/*remove double background+border*/}
@@ -1524,6 +1487,18 @@ img.ui-datepicker-trigger {float:left; /*solve a bug with chromium*/}
 .col-1-8 { width: 12.5%;}
 .grid:last-of-type {padding-right: 0;}
 #func_chart_pie_go_mf, #func_chart_pie_go_cc, #func_chart_pie_go_bp, #func_chart_bar_go_bp, #func_chart_bar_go_cc, #func_chart_bar_go_mf, #func_chart_pie_ipro, #tax_chart_col, #tax_chart_bar_phy, #tax_chart_bar_dom, #tax_chart_pie_phy, #tax_chart_pie_dom {width:100%;}
+
+/*UI BUTTON - MAP*/
+.ui-button {padding: .4em 2.1em .4em 1em;line-height: 1.4;color: #525252; margin:0 9px; border: 1px solid rgba(0,0,0,0.1);
+    background-image: linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));
+    background-image: -moz-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));
+    background-image: -o-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));
+    background-image: -webkit-gradient(linear,left top,left bottom,from(rgba(255,255,255,.85)),to(rgba(247,247,247,.85)));
+    background-image: -webkit-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));  border-radius: 0px;outline:0;}
+.ui-button:hover {color:black; border: 1px #d0d0d0 solid;}
+.ui-button.icon-functional:before {color:#777; }
+.ui-button.icon-functional:hover:before {color:tomat;}
+
 /*EXPORT BUTTON - ANALYSIS PAGE*/
 ul.export_list {z-index: 1;display: none;border: 1px solid #949494; padding: 5px;background-color: #FFF;font-size: 1em;list-style: none;outline: none;margin:0;}
 .sample_comp_result .chart-block .ui-buttonset, .sample_ana .chart-block .ui-buttonset {/*text-align: right;*/ }
@@ -1565,6 +1540,7 @@ background-image: -webkit-gradient(linear,left top,left bottom,from(rgba(255,255
 background-image: -webkit-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85)); }
 .sample_ana #tabs-chart .ui-tabs-nav li.ui-state-hover a, .sample_ana #interpro-chart .ui-tabs-nav li.ui-state-hover a, .sample_ana #tabs-taxchart .ui-tabs-nav li.ui-state-hover a  {text-decoration: none;}
 .sample_ana #tabs-chart .ui-tabs-nav li a:hover, .sample_ana #interpro-chart .ui-tabs-nav li a:hover, .sample_ana #tabs-taxchart .ui-tabs-nav li a:hover  {border: 1px solid #c6c6c6;box-shadow:1px 1px 1px rgba(0, 0, 0, 0.3);-moz-box-shadow:1px 1px 1px rgba(0, 0, 0, 0.3); -khtml-box-shadow:1px 1px 1px rgba(0, 0, 0, 0.3); -webkit-box-shadow:0px 0px 3px rgba(0, 0, 0, 0.3) ; text-decoration:none;}
+
 .sample_ana #tabs-chart li.ui-tabs-selected, .sample_ana #interpro-chart li.ui-tabs-selected, .sample_ana #tabs-taxchart li.ui-tabs-selected {/*height: 37px;*/height: 28px;background: #fff; border: none; top:1px;}
 .sample_ana #tabs-chart .ui-tabs-panel, .sample_ana #interpro-chart .ui-tabs-panel {margin: 0; padding:0; position: relative; border: 0px solid rgb(213, 213, 213); border-bottom-left-radius: 0px;border-bottom-right-radius: 0px; overflow:hidden;/*to solve a scrolling issue*/}
 .sample_ana #tabs-taxchart .ui-tabs-panel {margin: 0;  position: relative; border: 0px solid rgb(213, 213, 213); border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;} /*don't use overflow:auto with Krona*/
@@ -1811,6 +1787,20 @@ ul.sample_list li {list-style: none; display: inline;}
 .block-ar {padding: 2px; border:0px #B4D0F3 solid; color:grey;display:inline-block;}
 .block-lb.small{font-size: 67%;padding: 4px;}
 
+/** pipeline release 3 branch changes
+.pipe_v3 .mainbranch{padding-top:99px;}
+.pipe_v3 .midbranch{margin-top: 69px; margin-left: -2px;}
+.pipe_v3 .rotate_f, .pipe_v3 .rotate_t {margin-left: 0; }
+.pipe_v3 .rotate_f {margin-right: 2px; }
+.midbranch_trna {margin-top: 27px;}
+.lowbranch_tax {margin-top: -5px;}
+.pipe_v3 .block, .pipe_v3 .block_small, .pipe_v3 .block_med {line-height:inherit;}
+.block .children {margin: 40% auto;}
+.block .children_l {margin: 25% auto;}
+
+.block.function {border:1px #DACAEC solid; background-color:#ECE2FF;color: #9B8CBA;}
+**/
+
 /*.pipe_v3 .mainbranch{padding-top:99px;}*/
 .pipe_v3 .midbranch{margin-top: 69px; margin-left: -2px;}
 .pipe_v3 .rotate_f, .pipe_v3 .rotate_t {margin-left: -13px; }
@@ -1902,20 +1892,22 @@ ul.sample_list li {list-style: none; display: inline;}
 .hlight_subtitle h2  {margin:0;padding:0;}
 .hlight_subtitle .icon-generic:before {font-size:152%; color:#1a5286;}
 
-.home_box {border:1px #cbcbcb solid; overflow:hidden /*when resizing*/;   padding: 18px 9px; min-height: 322px; }
+.home_box {border:1px #cbcbcb solid; overflow:hidden /*when resizing*/; padding: 18px 9px; min-height: 322px; }
+.home_box h2 {margin:0 0 9px 0; padding:0;font-size: 168%;}
 .home_box p {color: #606a73;}
 .hlight-spot.alpha .hlight_title_cont {margin-left: 18px;} /*important to keep to align titles*/
 .hlight-spot.omega .hlight_title_cont {margin-right: 18px;}
-.hlight-spot .home_box p, .hlight-info .home_box p  {border:0px pink solid; margin-left:0;  margin-right:0; padding-left:0;padding-right:0;font-size:120%; }
+.hlight-spot .home_box p, .hlight-info .home_box p  {margin-left:0;  margin-right:0; padding-left:0;padding-right:0;font-size:120%;}
 .hlight-spot .home_box img {margin-bottom: 9px; width: 100%;/*resize img with screen*/}
 .hlight-info .home_box img {margin: 0 9px 9px 0; float:left; width:17%;}
 .home_box.alpha {margin: 0 0 18px 18px;}
 .home_box.omega {margin: 0 18px 18px 0;}
-.home_box h2 {margin:0 0 9px 0; padding:0;font-size: 168%;}
+.home_box.alpha.omega {margin: 0 18px 18px 18px;}
 
-.badge {display: inline-block;  min-width: 10px; padding: 3px 7px;  font-size: 50%; font-weight: bold;  line-height: 1;  color: #fff;  text-align: center;   white-space: nowrap; vertical-align: middle;  background-color: #777;  border-radius: 10px; }
+.badge {background-color: rgba(0, 0, 0, 0.4); display: inline-block;  min-width: 10px; padding: 3px 7px;  font-size: 50%; font-weight: bold;  line-height: 1;  color: #fff;  text-align: center;   white-space: nowrap; vertical-align: middle; border-radius: 10px; }
+.badge:hover {background-color: rgba(0, 0, 0, 0.6);}
 .badge a {color: #fff;}
-.badge a:hover {text-decoration: none;}
+.badge a:hover {text-decoration: none; }
 
 .list-data, .jumbo-stats  {margin-bottom: 18px; display: block;  overflow: hidden; border: 0px red solid;}
 .jumbo-stats {margin-top: 18px;/*used when section collapse*/}
@@ -1937,9 +1929,9 @@ a.all:active  { background: url(../img/arrow_link_click_small.jpg) no-repeat rig
 .jumbo-news-centred .icon-socialmedia:before {color:#0c4d7b;}
 
 .hlight-text-scroll, .list-contain-box .list-project-l, .list-contain-box .list-sample-l {position: relative;  width: 100%;  overflow-x: hidden; overflow-y: auto;}
-.list-project-l, .list-sample-l {height: 250px;}
+.list-project-l, .list-sample-l {height: 264px;}
 .hlight-text-scroll {height: 394px;}
-.list-contain-box .list-project-l .icon-functional:before, .list-contain-box .list-sample-l .icon-functional:before, table.result .icon-functional:before, #project_ov .icon-functional:before, #sample_ov .icon-functional:before {color: #777;}
+.list-contain-box .list-project-l .icon-functional:before, .list-contain-box .list-sample-l .icon-functional:before, table.result .icon-functional:before,  #sample_ov .icon-functional:before {color: #777;}
 /*END HOMEPAGE*/
 
 
@@ -1954,9 +1946,9 @@ a.all:active  { background: url(../img/arrow_link_click_small.jpg) no-repeat rig
 .hlight_subtitle {margin-right:18px;}
 .hlight-spot.omega .hlight_title_cont {margin-left:18px;}
 .hlight-spot.omega .hlight_subtitle {margin-right:0;}
-#list-biomes .grid_24 a {height:inherit; width:32%;/*3x3*/}
-#list-biomes, .grid_12.list-contain-box, #hlight-box-spotlight, #hlight-box-tools {width:100%;margin-left: 0;margin-right: 0;}
-#list-biomes .home_box , .list-contain-box .home_box, #hlight-box-spotlight .home_box, #hlight-box-tools .home_box {margin:9px 18px;}
+.list-biomes .grid_24 a {height:inherit; width:32%;/*3x3*/}
+.grid_12.list-biomes, .grid_12.list-contain-box, .grid_12.hlight-spot {width:100%;margin-left: 0;margin-right: 0;}
+.list-biomes .home_box , .list-contain-box .home_box, .hlight-spot .home_box {margin:9px 18px;}
 }
 
 /*Submit data - registration check*/
@@ -2051,7 +2043,7 @@ div#local-title.logo-title.grid_12.alpha {width:84%;}/*increase logo box width t
 #pca .rChart {width:100%;}
 .sample_comp_result .ui-tabs .ui-tabs-nav .ui-tabs-anchor, .sample_ana .ui-tabs .ui-tabs-nav .ui-tabs-anchor {padding: 2px 6px;}/*comp. tool - reduce space around tabs icon*/
 .xs_hide {display:none;} /*set a global class to hide elements for small screens - easier than adding individual class*/
-#list-biomes .grid_24 a.xs_hide {display:none;} /*hide the last tow icons to avoid big scrol on small screens*/
+.list-biomes .grid_24 a.xs_hide {display:none;} /*hide the last tow icons to avoid big scrol on small screens*/
 /*datatable - comparison tool */
 #table th:nth-child(2), #table td:nth-child(2) {display: none;}/*remove Go category column */
 #table th:nth-child(3), #table td:nth-child(3) {display: none;} /*remove Go ID column in the table */
@@ -2075,3 +2067,5 @@ div#local-masthead ul li.logout {display:none;}
 .xm_hide {display:none;}
 .xm-navtabs {display:block;}
 }
+
+.hierarchical-facet-list ul {font-size: 1rem}

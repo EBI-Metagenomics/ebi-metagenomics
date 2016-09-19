@@ -5,10 +5,9 @@
 <div id="fragment-taxonomy">
 
     <div class="main_tab_full_content">
-        <p>These are the results from the taxonomic analysis steps of our pipeline. You can switch between
-            different views of the data using the menu of icons below (pie, bar, stacked and interactive krona
-            charts). If you wish to download the full set of results, all files are listed under the
-            "Download" tab.</p>
+        <p>These are the results from the taxonomic analysis steps of our pipeline. You can switch between different
+            views of the data using the menu of icons below (pie, bar, stacked and interactive krona charts). The data
+            used to build these charts can be found under the "Download" tab.</p>
 
         <c:choose>
             <c:when test="${empty model.sample.analysisCompleted}">
@@ -16,14 +15,14 @@
             </c:when>
             <c:when test="${not empty model.sample.analysisCompleted && !model.analysisStatus.taxonomicAnalysisTabDisabled}">
                 <h3>Top taxonomy Hits</h3>
-              
+
                 <div id="tabs-taxchart">
                     <ul>
                         <li class="selector_tab">Switch view:</li>
                             <%--<li><a href="#tax-table" title="Table view"><span class="ico-table"></span></a></li>--%>
                         <li class="but_krona"><a class="show_tooltip" title="Krona chart view"
-                                                      href="<c:url value="${baseURL}/projects/${model.run.externalProjectId}/samples/${model.run.externalSampleId}/runs/${model.run.externalRunId}/results/kronaChartView/versions/${model.analysisJob.pipelineRelease.releaseVersion}"/>"><span
-                                                       class="ico-krona"></span></a></li>
+                                                 href="<c:url value="${baseURL}/projects/${model.run.externalProjectId}/samples/${model.run.externalSampleId}/runs/${model.run.externalRunId}/results/kronaChartView/versions/${model.analysisJob.pipelineRelease.releaseVersion}"/>"><span
+                                class="ico-krona"></span></a></li>
                         <li><a class="show_tooltip" title="Pie chart view"
                                href="<c:url value="${baseURL}/projects/${model.run.externalProjectId}/samples/${model.run.externalSampleId}/runs/${model.run.externalRunId}/results/taxPieChartView/versions/${model.analysisJob.pipelineRelease.releaseVersion}"/>"><span
                                 class="ico-pie"></span></a></li>
@@ -33,7 +32,7 @@
                         <li><a class="show_tooltip" title="Stacked Column chart view"
                                href="<c:url value="${baseURL}/projects/${model.run.externalProjectId}/samples/${model.run.externalSampleId}/runs/${model.run.externalRunId}/results/taxColumnChartView/versions/${model.analysisJob.pipelineRelease.releaseVersion}"/>"><span
                                 class="ico-col"></span></a></li>
-        </ul>
+                    </ul>
                 </div>
 
             </c:when>
@@ -48,13 +47,13 @@
 
     //Ajax load approach as described here: http://jqueryui.com/tabs/#ajax
     $("#tabs-taxchart").tabs({
-        cache:true,
-        ajaxOptions:{
-            error:function (xhr, status, index, anchor) {
+        cache: true,
+        ajaxOptions: {
+            error: function (xhr, status, index, anchor) {
                 $(anchor.hash).html("<div class='msg_error'>Couldn't load this tab. We'll try to fix this as soon as possible.</div>");
             }
         },
-        spinner:false
+        spinner: false
 
     });
     //Default functionality

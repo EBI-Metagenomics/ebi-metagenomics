@@ -19,6 +19,7 @@
         <entry key="READS_WITHOUT_MATCHES_FASTA_FILE" value-ref="readsWithoutInterProMatchesFile"/>
         <entry key="PREDICTED_CDS_FILE" value-ref="predictedCDSFile"/>
         <entry key="PREDICTED_CDS_WITH_INTERPRO_MATCHES_FILE" value-ref="predictedCDSWithInterProMatchesFile"/>
+        <entry key="PREDICTED_CDS_WITH_ANNOTATION_FILE" value-ref="chunkedPredictedCDSWithAnnotation"/>
         <entry key="PREDICTED_CDS_WITHOUT_ANNOTATION_FILE" value-ref="predictedCDSWithoutAnnotation"/>
         <entry key="PREDICTED_ORF_WITHOUT_ANNOTATION_FILE" value-ref="predictedORFWithoutAnnotation"/>
         <!--<entry key="READS_WITHOUT_MATCHES_FASTA_FILE" value-ref="readsWithoutMatchesFile"/>-->
@@ -63,6 +64,7 @@
         <entry key="READS_WITH_MATCHES_FASTA_FILE" value-ref="chunkedReadsWithInterProMatchesFile"/>
         <entry key="READS_WITHOUT_MATCHES_FASTA_FILE" value-ref="chunkedReadsWithoutInterProMatchesFile"/>
         <entry key="PREDICTED_CDS_FILE" value-ref="chunkedPredictedCDSFile"/>
+        <entry key="PREDICTED_CDS_WITH_ANNOTATION_FILE" value-ref="chunkedPredictedCDSWithAnnotation"/>
         <entry key="PREDICTED_CDS_WITHOUT_ANNOTATION_FILE" value-ref="chunkedPredictedCDSWithoutAnnotation"/>
         <entry key="PREDICTED_ORF_WITHOUT_ANNOTATION_FILE" value-ref="chunkedPredictedORFWithoutAnnotation"/>
 
@@ -75,8 +77,31 @@
               value-type="java.util.ArrayList">
         <entry key="v1" value-ref="downloadableFileListV1"/>
         <entry key="v2" value-ref="downloadableFileListV2"/>
+        <entry key="v3" value-ref="downloadableFileListV3"/>
     </util:map>
 
+    <util:list id="downloadableFileListV3" value-type="java.lang.String">
+        <!--sequence data files-->
+        <value>PROCESSED_READS</value>
+        <value>READS_WITH_PREDICTED_CDS_FILE</value>
+        <value>READS_WITH_MATCHES_FASTA_FILE</value>
+        <value>READS_WITHOUT_MATCHES_FASTA_FILE</value>
+        <value>PREDICTED_CDS_WITH_ANNOTATION_FILE</value>
+        <value>PREDICTED_CDS_WITHOUT_ANNOTATION_FILE</value>
+        <value>PREDICTED_ORF_WITHOUT_ANNOTATION_FILE</value>
+        <!--functional result files-->
+        <value>INTERPROSCAN_RESULT_FILE</value>
+        <value>GO_COMPLETE_FILE</value>
+        <value>GO_SLIM_FILE</value>
+        <!--taxonomy result files-->
+        <value>R_RNA_5S_FASTA_FILE</value>
+        <value>R_RNA_16S_FASTA_FILE</value>
+        <value>R_RNA_23S_FASTA_FILE</value>
+        <value>OTU_TABLE_FILE</value>
+        <value>HDF5_BIOM_FILE</value>
+        <value>JSON_BIOM_FILE</value>
+        <value>PRUNED_TREE_FILE</value>
+    </util:list>
 
     <util:list id="downloadableFileListV2" value-type="java.lang.String">
         <!--sequence data files-->

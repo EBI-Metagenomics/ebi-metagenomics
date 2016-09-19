@@ -5,7 +5,7 @@
 
     <groupId>uk.ac.ebi.interpro.metagenomics</groupId>
     <artifactId>memi</artifactId>
-    <version>3.0</version>
+    <version>2.2.2</version>
     <packaging>pom</packaging>
 
     <name>memi</name>
@@ -64,7 +64,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <org.springframework.version>3.1.4.RELEASE</org.springframework.version>
-        <memi-web.module.version>3.0-SNAPSHOT</memi-web.module.version>
+        <memi-web.module.version>3.0.2-SNAPSHOT</memi-web.module.version>
         <memi-persistence.module.version>2.0-SNAPSHOT</memi-persistence.module.version>
         <memi-model.module.version>2.0-SNAPSHOT</memi-model.module.version>
         <memi-business.module.version>1.0</memi-business.module.version>

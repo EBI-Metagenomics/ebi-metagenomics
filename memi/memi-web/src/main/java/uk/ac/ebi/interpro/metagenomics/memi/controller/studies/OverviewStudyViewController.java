@@ -111,8 +111,7 @@ public class OverviewStudyViewController extends AbstractStudyViewController {
     @RequestMapping(value = MGPortalURLCollection.PROJECT_OVERVIEW + "/doExport")
     public ModelAndView doExportStudy(@PathVariable final String studyId,
                                       HttpServletRequest request,
-                                      HttpServletResponse response,
-                                      final ModelMap model) {
+                                      HttpServletResponse response) {
         log.info("doExportStudy");
         List<QueryRunsForProjectResult> runs = getProjectRuns(studyId);
 
@@ -123,6 +122,7 @@ public class OverviewStudyViewController extends AbstractStudyViewController {
             columnNames.add("Sample ID");
             columnNames.add("Run ID");
             columnNames.add("Experiment type");
+            columnNames.add("Instrument model");
             columnNames.add("Release version");
 
             //Create velocity spring_model

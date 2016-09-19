@@ -11,7 +11,6 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.UserManager;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * Represents a common controller, which currently holds request mappings
@@ -37,7 +36,7 @@ public class DefaultController {
     private AuthenticationService authenticationService;
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    public ModelAndView indexHandler(HttpServletRequest request) {
+    public ModelAndView logoutHandler() {
         if (userManager.getUserAuthentication() != null) {
             Submitter submitter = userManager.getUserAuthentication().getSubmitter();
             if (submitter != null) {
@@ -49,10 +48,6 @@ public class DefaultController {
                 userManager.getUserAuthentication().removeSubmitter();
             }
         }
-        String referer = request.getHeader("Referer");
-        if (referer == null || referer.length() == 0) {
-            referer = "/metagenomics";
-        }
-        return new ModelAndView("redirect:" + referer);
+        return new ModelAndView("redirect:/");
     }
 }

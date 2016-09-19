@@ -1,44 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<!-- Google map script - used in overview-->
-<script src="https://maps.googleapis.com/maps/api/js"></script>
 <script src='${pageContext.request.contextPath}/js/highcharts-4.1.10/highcharts.js' type='text/javascript'></script>
 <script src='${pageContext.request.contextPath}/js/highcharts-4.1.10/highcharts-more.js' type='text/javascript'></script>
 <script src='${pageContext.request.contextPath}/js/highcharts-4.1.10/exporting.js' type='text/javascript'></script>
 <script src='${pageContext.request.contextPath}/js/QC_charts.js' type='text/javascript'></script>
-
-<script type="text/javascript">
-    function initialize(lat, long) {
-        var latlng = new google.maps.LatLng(lat, long);
-        google.maps.MarkerOptions
-        var myOptions = {
-            zoom:4,
-            center:latlng,
-            mapTypeId:google.maps.MapTypeId.ROADMAP,
-            streetViewControl: false
-        };
-        var map = new google.maps.Map(document.getElementById("map_canvas"),
-                myOptions);
-        var marker = new google.maps.Marker({
-            position:latlng,
-            map:map
-        });
-//       IF WE WANT TO IMPLEMENT A SHOW COUNTRY BOUNDARIES VERSION - doesn't work for "Indian ocean"
-// var map2 = new google.maps.Map(document.getElementById('map_country'), {
-//           center: latlng,
-//           zoom: 3
-//         });
-
-         <%--var layer = new google.maps.FusionTablesLayer({--%>
-           <%--query: {--%>
-               <%--select: 'geometry',--%>
-                   <%--from: '1N2LBk4JHwWpOY4d9fobIn27lfnZ5MDy-NoqqRpk',--%>
-                   <%--where: "Name IN ('${model.sample.geoLocName}')"--%>
-           <%--}--%>
-         <%--});--%>
-         <%--layer.setMap(map2);--%>
-    }
-</script>
 
 <c:choose>
     <c:when test="${not empty model.sample}">
@@ -259,5 +224,5 @@
     //    }
 </script>
 
-<script type="text/javascript" src="https://canvg.googlecode.com/svn/trunk/rgbcolor.js"></script>
-<script type="text/javascript" src="https://canvg.googlecode.com/svn/trunk/canvg.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/rgbcolor.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/canvg.js"></script>

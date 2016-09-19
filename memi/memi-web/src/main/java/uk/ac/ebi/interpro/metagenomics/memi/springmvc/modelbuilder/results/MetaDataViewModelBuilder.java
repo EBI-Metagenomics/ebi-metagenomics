@@ -5,8 +5,9 @@ import org.apache.commons.logging.LogFactory;
 import uk.ac.ebi.interpro.metagenomics.memi.core.MemiPropertyContainer;
 import uk.ac.ebi.interpro.metagenomics.memi.core.comparators.PublicationComparator;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.EBISearchForm;
-import uk.ac.ebi.interpro.metagenomics.memi.model.EmgSampleAnnotation;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.*;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Publication;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.results.MetaDataViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.UserManager;
@@ -33,18 +34,14 @@ public class MetaDataViewModelBuilder extends AbstractResultViewModelBuilder<Met
 
     private List<Publication> relatedPublications;
 
-    private List<EmgSampleAnnotation> sampleAnnotations;
-
     public MetaDataViewModelBuilder(UserManager sessionMgr,
                                     EBISearchForm ebiSearchForm,
                                     String pageTitle,
                                     List<Breadcrumb> breadcrumbs,
                                     MemiPropertyContainer propertyContainer,
-                                    AnalysisJob analysisJob,
-                                    List<EmgSampleAnnotation> sampleAnnotations) {
+                                    AnalysisJob analysisJob) {
         super(sessionMgr, ebiSearchForm, pageTitle, breadcrumbs, propertyContainer, null, null, null, analysisJob);
         this.sample = analysisJob.getSample();
-        this.sampleAnnotations = sampleAnnotations;
         this.relatedLinks = new ArrayList<Publication>();
         this.relatedPublications = new ArrayList<Publication>();
     }
@@ -53,26 +50,9 @@ public class MetaDataViewModelBuilder extends AbstractResultViewModelBuilder<Met
         log.debug("Building instance of " + MetaDataViewModel.class + "...");
         //Get the sample object from the analysis job
         Sample sample = analysisJob.getSample();
-        final boolean isHostAssociated = isHostAssociated(sample);
-
         buildPublicationLists();
 
-        return new MetaDataViewModel(getSessionSubmitter(sessionMgr), getEbiSearchForm(), pageTitle, breadcrumbs, propertyContainer, sample, analysisJob, isHostAssociated, sampleAnnotations, relatedLinks, relatedPublications);
-    }
-
-    private boolean isHostAssociated(Sample sample) {
-        if (sample != null) {
-            Biome biome = sample.getBiome();
-            if (biome != null) {
-                String lineage = biome.getLineage();
-                if (lineage != null) {
-                    if (lineage.startsWith("root:Host-associated")) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
+        return new MetaDataViewModel(getSessionSubmitter(sessionMgr), getEbiSearchForm(), pageTitle, breadcrumbs, propertyContainer, sample, analysisJob, relatedLinks, relatedPublications);
     }
 
     /**

@@ -18,7 +18,6 @@ import java.util.List;
  * @since 1.0-SNAPSHOT
  */
 public class OverviewModel extends ViewModel {
-    private List<QueryRunsForProjectResult> runs;
 
     private Study study;
 
@@ -26,14 +25,18 @@ public class OverviewModel extends ViewModel {
 
     private List<Publication> relatedPublications;
 
+    /* True if JSON file (name: google-map-sample-data.json) does exist. The JSON file is necessary to render the Google Map.*/
+    private boolean isGoogleMapDataAvailable;
+
     public OverviewModel(Submitter submitter, EBISearchForm ebiSearchForm, Study study, List<QueryRunsForProjectResult> runs, String pageTitle,
                          List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer,
-                         List<Publication> relatedPublications, List<Publication> relatedLinks) {
+                         List<Publication> relatedPublications, List<Publication> relatedLinks,
+                         final boolean isGoogleMapDataAvailable) {
         super(submitter, ebiSearchForm, pageTitle, breadcrumbs, propertyContainer);
-        this.runs = runs;
         this.study = study;
         this.relatedLinks = relatedLinks;
         this.relatedPublications = relatedPublications;
+        this.isGoogleMapDataAvailable = isGoogleMapDataAvailable;
     }
 
     public List<Publication> getRelatedLinks() {
@@ -44,19 +47,15 @@ public class OverviewModel extends ViewModel {
         return relatedPublications;
     }
 
-    public List<QueryRunsForProjectResult> getRuns() {
-        return runs;
-    }
-
-    public void setRuns(List<QueryRunsForProjectResult> runs) {
-        this.runs = runs;
-    }
-
     public Study getStudy() {
         return study;
     }
 
     public void setStudy(Study study) {
         this.study = study;
+    }
+
+    public boolean isGoogleMapDataAvailable() {
+        return isGoogleMapDataAvailable;
     }
 }

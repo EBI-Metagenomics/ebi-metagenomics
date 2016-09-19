@@ -21,4 +21,9 @@ public interface BiomeDAO {
     public List<Integer> getListOfBiomeIdsBetween(int lowValue, int highValue);
 
     public List<Biome> getAllAncestorsInDescOrder(Biome biome);
+
+    public List<Object[]> countProjects();
+
+    public Long countProjectsIncludingChildren(Biome biome);
+
 }

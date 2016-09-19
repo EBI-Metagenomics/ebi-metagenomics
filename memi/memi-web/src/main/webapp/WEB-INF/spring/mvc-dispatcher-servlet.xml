@@ -48,9 +48,11 @@
     <mvc:resources mapping="/js/jquery-1.11.1/*.*" location="/js/jquery-1.11.1/"/>
     <mvc:resources mapping="/js/highcharts-4.1.10/*.*" location="/js/Highcharts-4.1.10/"/>
     <mvc:resources mapping="/js/tweet/*.*" location="/js/tweet/"/>
+    <mvc:resources mapping="/js/googlemaps/js-marker-clusterer/*.js" location="/js/googlemaps/js-marker-clusterer/"/>
     <mvc:resources mapping="/img/backgrounds/*.*" location="/img/backgrounds/"/>
     <mvc:resources mapping="/img/funding/*.*" location="/img/funding/"/>
     <mvc:resources mapping="/img/icon/*.png" location="/img/icon/"/>
+    <mvc:resources mapping="/geneontology/subsets/*.obo" location="/resources/geneontology/subsets/"/>
     <mvc:resources mapping="/*.ico" location="/"/>
 
     <!-- Forwards requests to the "/" resource to the "welcome" view -->
