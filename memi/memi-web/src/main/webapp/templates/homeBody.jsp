@@ -371,20 +371,22 @@
                         <div class="hlight_subtitle" style="margin-top:0;"><h2 class="icon icon-generic"
                                                                                data-icon="i"></h2></div>
                     </div>
-                    <div class="home_box alpha"><p><img src="${pageContext.request.contextPath}/img/ico_sub_big.png"
-                                                        alt="Tracking submission"/> EBI Metagenomics service offers a
-                        manually-assisted submission route, with help available to ensure data and metadata formatting
-                        comply with the European Nucleotide Archive (ENA) data schema and the Genomic Standards
-                        Consortium (GSC) sample metadata guidelines.</p>
-                        <p>You may find delays between the moment you submit your data in ENA and the moment you will
-                            find them available in this private section of the EBI metagenomics. It doesn't necessarily
-                            means there is something wrong with your data. We just need some time to get your data
-                            analysed (usually 1-2 weeks). It needs to go through the analysis pipeline before it will
-                            appear in this private area.
-                        </p>
-                        <p>If you have been waiting for more than a month, you are welcome to <a
-                                href="mailto:metagenomics-help@ebi.ac.uk?subject=EBI Metagenomics private area: data submission status">contact
-                            us to get some update</a>.</p>
+                    <div class="home_box alpha">
+                        <p><img src="${pageContext.request.contextPath}/img/ico_sub_big.png" alt="Tracking submission"/>
+                            EBI Metagenomics offers a manually-assisted submission route, with help available to ensure data
+                            and metadata formatting comply with the European Nucleotide Archive (ENA) data schema and the
+                            Genomic Standards Consortium (GSC) sample metadata guidelines. If you have problems with your submission,
+                            please contact <a
+                                href="mailto:datasubs@ebi.ac.uk?subject=EBI Metagenomics private area: data submission status">
+                            datasubs@ebi.ac.uk</a> (for submission related queries) or <a
+                                href="mailto:metagenomics-help@ebi.ac.uk?subject=EBI Metagenomics private area: general query">
+                            metagenomics-help@ebi.ac.uk</a> (for more general queries).</p>
+                        <p>Once your data is submitted to ENA, it will be archived and then analysed by the EBI Metagenomics pipeline.
+                            This may take some time (typically 1-2 weeks, depending on the data size). You will receive an email when
+                            the analysis is complete, and the results will appear in this section of the site.</p>
+                        <p>If you have been waiting for more than a month for your results, please <a
+                                href="mailto:metagenomics-help@ebi.ac.uk?subject=EBI Metagenomics private area: submission status">
+                            contact us</a> to check the status of the submission/analysis.</p>
                     </div>
                 </div>
                 <div class="grid_12 alpha hlight-info">
@@ -393,21 +395,16 @@
                         <div class="hlight_subtitle" style="margin-top:0;"><h2 class="icon icon-generic"
                                                                                data-icon="i"></h2></div>
                     </div>
-                    <div class="home_box alpha"><p><img src="${pageContext.request.contextPath}/img/ico_conf_big.png"
-                                                        alt="Data archiving"/> Data submitted to us can be kept
-                        confidential (and only accessible after secure user login) to allow the data producer to publish
-                        their findings. It should be noted that ALL data must eventually be suitable for public release.
-                    </p>
-                        <p>The default is two years but you can set it up for any length suitable to you in the ENA
-                            Webin submission tools. Upon analysis, result data will be posted on our website however, if
-                            private, only you will be able to access them as login will be necessary for access.
+                    <div class="home_box alpha">
+                        <p><img src="${pageContext.request.contextPath}/img/ico_conf_big.png" alt="Data archiving"/>
+                            Data submitted to us can be kept confidential (accessible only via secure user login) to allow the data
+                            producer time to publish their findings. It should be noted that all submitted data must eventually be
+                            suitable for public release.</p>
+                        <p>The default confidential hold period is two years, but this can be changed using the ENA Webin submission tool.
+                            Should you wish to make your confidential data publicly available before the confidential hold period expires,
+                            you can reset the release date using the Webin tool.
                         </p>
-                        <p>Once you published the results, you can <a href="https://www.ebi.ac.uk/ena/submit/sra/#home"
-                                                                      title="Reset release date"> reset the date for
-                            release </a> or we can do it for you if you <a
-                                href="mailto:metagenomics-help@ebi.ac.uk?subject=EBI Metagenomics private area: reset release date">sent
-                            us an email</a>.
-                        </p></div>
+                    </div>
                 </div>
             </div>
         </section>
