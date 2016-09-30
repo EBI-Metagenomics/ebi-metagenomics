@@ -580,7 +580,7 @@ var showMoreFacetsInDialog = function(searchSettings, results, container) {
         facetInput.id = identifier;
         facetInput.type = "checkbox";
         facetInput.classList.add(GLOBAL_SEARCH_SETTINGS.MORE_FACET_INPUT_CLASS);
-        facetInput.value = facet.value;
+        facetInput.value = facet.label;
         if (searchSettings.facets != null
             && searchSettings.facets.hasOwnProperty(facets.id)
             && searchSettings.facets[facets.id].indexOf(facetInput.value) >= 0) {
