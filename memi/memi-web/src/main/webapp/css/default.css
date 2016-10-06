@@ -73,8 +73,8 @@ div#headerdiv #global-masthead .nav a:link {float: none;}
 
 /*change to ebi-mitigation.css*/
 div#headerdiv { background-color: #fff; font-size:100%; font-family: Verdana, sans-serif; }/*replace default font-size: 11px;*/
-div#local-masthead ul li.active-trail a:link, div#local-masthead ul li.active-trail a:visited {padding-top: 2px;border-bottom: 3px solid #666;background-color: #111;}/*style not defined in mitigation*/
-div#local-masthead ul li.active, div#local-masthead ul li.active-trail { background-color: #111; }  /*style not defined in mitigation*/
+div#local-masthead ul li.active-trail a:link, div#local-masthead ul li.active-trail a:visited {/*padding-top: 2px;border-bottom: 3px solid #666;*/background-color: #111;}/*style not defined in mitigation*/
+div#local-masthead ul li.active, div#local-masthead ul li.active-trail {background-color: #111; }  /*style not defined in mitigation*/
 /*/change to ebi-mitigation.css*/
 
 /*imported from ebi-visual.css*/
@@ -1629,11 +1629,11 @@ background-image: -webkit-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247
 ul.color_legend {list-style-type: square; list-style-position:inside;}
 
 /*GOOGLE CHART -TABLE  FILTER*/
-#tax_table_filter, #tax_table_col_filter, #tax_table_bar_filter, #func_table_filter {padding-left: 9px; background-color: #E6E6E6;}
+/*#tax_table_filter, #tax_table_col_filter, #tax_table_bar_filter, #func_table_filter {padding-left: 9px; background-color: #E6E6E6;}*/
 #tax_table_filter input, #tax_table_col_filter input, #tax_table_bar_filter input, #func_table_filter input {padding: 1px;margin: 3px 0;}
 #toolbar_div {display: block; float:left;}/*not used yet*/
 .sample_ana .google-visualization-table-table td:first-child {border-left:1px #eee solid;}/*solve a bug where border disappear just for first col*/
-.google-visualization-table-table ._cc {margin: 0px 6px 0 2px; width:8px; height:8px; display:inline-block;}/*puce in table*/
+.puce-square-legend {margin-right: 6px; width:10px; height:10px; display:inline-block;}/*puce in table*/
 .puce_chart {margin: 0px 4px 0 2px; width:8px; height:8px; display:inline-block; background-color:#b9b9b9;}
 
 /*GOOGLE TOOLBAR*/
