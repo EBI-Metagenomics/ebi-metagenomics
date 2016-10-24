@@ -259,7 +259,7 @@ public class DownloadViewModelBuilder extends AbstractResultViewModelBuilder<Dow
                 if (fileDefinition.getReleaseVersion() == null || fileDefinition.getReleaseVersion().equals(analysisJobReleaseVersion)) {
                     seqDataDownloadLinks.add(new DownloadLink(fileDefinition.getLinkText(),
                             fileDefinition.getLinkTitle(),
-                            "projects/" + externalProjectId + "/samples/" + externalSampleId + "/runs/" + externalRunId + "/results/sequences" + "/versions/" + analysisJobReleaseVersion + fileDefinition.getLinkURL(),
+                            "projects/" + externalProjectId + "/samples/" + externalSampleId + "/runs/" + externalRunId + "/results/versions/" + analysisJobReleaseVersion + "/sequences" + fileDefinition.getLinkURL(),
                             fileDefinition.getOrder(),
                             getFileSize(fileObject)));
                 }
