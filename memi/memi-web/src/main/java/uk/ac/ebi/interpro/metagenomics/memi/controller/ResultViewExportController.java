@@ -379,7 +379,7 @@ public class ResultViewExportController extends AbstractResultViewController {
         return fileDefinitionId;
     }
 
-    @RequestMapping(value = MGPortalURLCollection.PROJECT_SAMPLE_RUN_RESULTS_TAXONOMY_TYPE)
+    @RequestMapping(value = {MGPortalURLCollection.PROJECT_SAMPLE_RUN_RESULTS_TAXONOMY_TYPE, MGPortalURLCollection.PROJECT_SAMPLE_RUN_RESULTS_SEQUENCES_SEQ_TYPE})
     public void handleTaxonomyResultDownloads(@PathVariable final String projectId,
                                               @PathVariable final String sampleId,
                                               @PathVariable final String runId,
@@ -410,6 +410,8 @@ public class ResultViewExportController extends AbstractResultViewController {
             fileDefinitionId = FileDefinitionId.TAX_ANALYSIS_TREE_FILE;
         } else if (resultType.equalsIgnoreCase("NewickPrunedTree")) {
             fileDefinitionId = FileDefinitionId.PRUNED_TREE_FILE;
+        } else if (resultType.equalsIgnoreCase("ncRNA-tRNA-FASTA")) {
+            fileDefinitionId = FileDefinitionId.NC_RNA_T_RNA_FILE;
         } else {
             log.warn("Result type: " + resultType + " not found!");
         }

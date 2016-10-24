@@ -568,5 +568,17 @@
         <property name="linkURL" value="PredictedORFWithoutAnnotation"/>
     </bean>
 
-
+    <!-- Non coding RNA -->
+    <bean id="ncRNA_tRNAFile" autowire-candidate="false"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.SequenceFileDefinition">
+        <property name="identifier" value="NC_RNA_T_RNA_FILE"/>
+        <property name="relativePath" value="/RNA-selector/*_tRNAselect.fasta"/>
+        <property name="description" value="tRNAs detected using HMMER tools."/>
+        <property name="linkTitle" value="Click to download all detected tRNAs (FASTA)"/>
+        <property name="linkURL" value="ncRNA-tRNA-FASTA"/>
+        <property name="linkText" value="Detected tRNAs"/>
+        <property name="downloadName" value="_tRNA.fasta"/>
+        <property name="order" value="10"/>
+        <property name="releaseVersion" value="3.0"/>
+    </bean>
 </beans>

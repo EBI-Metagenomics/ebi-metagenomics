@@ -69,9 +69,12 @@ public final class MGPortalURLCollection {
     public final static String PROJECT_SAMPLE_RUN_RESULTS_FUNCTION_INTERPROSCAN_CHUNKS_VALUE = PROJECT_SAMPLE_RUN_RESULTS + PROJECT_SAMPLE_RUN_RESULTS_VERSION + "/function/InterProScan/chunks/{chunkValue}";
 
 
-    //Sequence files (seq input files, pre-processed/filtered files)
+    //Chunked sequence files (seq input files, pre-processed/filtered files)
     public final static String PROJECT_SAMPLE_RUN_RESULTS_SEQUENCES_SEQ_TYPE_CHUNKS = PROJECT_SAMPLE_RUN_RESULTS + PROJECT_SAMPLE_RUN_RESULTS_VERSION + "/sequences/{sequenceType}/chunks";
     public final static String PROJECT_SAMPLE_RUN_RESULTS_SEQUENCES_SEQ_TYPE_CHUNKS_VALUE = PROJECT_SAMPLE_RUN_RESULTS + PROJECT_SAMPLE_RUN_RESULTS_VERSION + "/sequences/{sequenceType}/chunks/{chunkValue}";
+
+    //Taxonomy result files
+    public final static String PROJECT_SAMPLE_RUN_RESULTS_SEQUENCES_SEQ_TYPE = PROJECT_SAMPLE_RUN_RESULTS + PROJECT_SAMPLE_RUN_RESULTS_VERSION + "/sequences/{resultType}";
 
     //Taxonomy result files
     public final static String PROJECT_SAMPLE_RUN_RESULTS_TAXONOMY_TYPE = PROJECT_SAMPLE_RUN_RESULTS + PROJECT_SAMPLE_RUN_RESULTS_VERSION + "/taxonomy/{resultType}";
@@ -102,7 +105,6 @@ public final class MGPortalURLCollection {
     //Google image export function (for PNG and SVG file exports) on the taxonomy and functional tab
     //POST request
     public final static String PROJECT_SAMPLE_RUN_RESULTS_IMAGE_EXPORT = PROJECT_SAMPLE_RUN_RESULTS_ENTRY + "/export";
-
 
 
     //Quality control stats files

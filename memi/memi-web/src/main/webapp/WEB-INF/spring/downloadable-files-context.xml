@@ -51,6 +51,9 @@
         <entry key="QC_LENGTH_BIN" value-ref="qualityControlSequenceLengthBinFile"/>
         <entry key="QC_LENGTH_BIN_SUBSET" value-ref="qualityControlSequenceLengthBinFileSubset"/>
 
+        <!--non coding RNAs-->
+        <entry key="NC_RNA_T_RNA_FILE" value-ref="ncRNA_tRNAFile"/>
+
     </util:map>
 
     <util:map id="chunkedResultFilesMap" map-class="java.util.HashMap" key-type="java.lang.String"
@@ -101,6 +104,10 @@
         <value>HDF5_BIOM_FILE</value>
         <value>JSON_BIOM_FILE</value>
         <value>PRUNED_TREE_FILE</value>
+        <!--non-coding RNA-->
+        <value>NC_RNA_T_RNA_FILE</value>
+
+
     </util:list>
 
     <util:list id="downloadableFileListV2" value-type="java.lang.String">

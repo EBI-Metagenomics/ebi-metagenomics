@@ -26,10 +26,12 @@ public class SequencesDownloadSection {
 
     private List<DownloadLink> predictedCDSWithAnnotationLinks;
 
-    private List<DownloadLink> otherDownloadLinks;
+    private List<DownloadLink> externalDownloadLinks;
+
+    private List<DownloadLink> unchunkedDownloadLinks;
 
     public SequencesDownloadSection() {
-        this.otherDownloadLinks = new ArrayList<DownloadLink>();
+        this.externalDownloadLinks = new ArrayList<DownloadLink>();
         this.processedReadsLinks = new ArrayList<DownloadLink>();
         this.readsWithPredictedCDSLinks = new ArrayList<DownloadLink>();
         this.readsWithMatchesLinks = new ArrayList<DownloadLink>();
@@ -38,6 +40,7 @@ public class SequencesDownloadSection {
         this.predictedORFWithoutAnnotationLinks = new ArrayList<DownloadLink>();
         this.predictedCDSWithoutAnnotationLinks = new ArrayList<DownloadLink>();
         this.predictedCDSWithAnnotationLinks = new ArrayList<DownloadLink>();
+        this.unchunkedDownloadLinks = new ArrayList<DownloadLink>();
     }
 
     public List<DownloadLink> getProcessedReadsLinks() {
@@ -104,19 +107,30 @@ public class SequencesDownloadSection {
         this.predictedCDSWithAnnotationLinks = predictedCDSWithAnnotationLinks;
     }
 
-    public List<DownloadLink> getOtherDownloadLinks() {
-        return otherDownloadLinks;
+    public List<DownloadLink> getExternalDownloadLinks() {
+        return externalDownloadLinks;
     }
 
-    public void addOtherDownloadLink(DownloadLink otherDownloadLink) {
-        this.otherDownloadLinks.add(otherDownloadLink);
+    public void addExternalDownloadLink(DownloadLink externalDownloadLink) {
+        this.externalDownloadLinks.add(externalDownloadLink);
     }
 
-    public void addOtherDownloadLinks(List<DownloadLink> otherDownloadLinks) {
-        for (DownloadLink downloadLink : otherDownloadLinks) {
-            this.otherDownloadLinks.add(downloadLink);
-        }
+    public void addExternalDownloadLinks(List<DownloadLink> externalDownloadLinks) {
+        this.externalDownloadLinks.addAll(externalDownloadLinks);
     }
+
+    public List<DownloadLink> getUnchunkedDownloadLinks() {
+        return unchunkedDownloadLinks;
+    }
+
+    public void addUnchunkedDownloadLink(DownloadLink unchunkedDownloadLink) {
+        this.unchunkedDownloadLinks.add(unchunkedDownloadLink);
+    }
+
+    public void addUnchunkedDownloadLinks(List<DownloadLink> unchunkedDownloadLinks) {
+        this.unchunkedDownloadLinks.addAll(unchunkedDownloadLinks);
+    }
+
 
     /**
      * Get the list of chunked sequence.
