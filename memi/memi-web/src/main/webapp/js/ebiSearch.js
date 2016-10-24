@@ -137,6 +137,26 @@ Behaviour methods
 
 window.onload = function (event){
     console.log("onload");
+    initialisePage();
+};
+
+window.popstate =  function(event){
+    console.log("popstate");
+    var state = event.state;
+    var seachPageElementID = "searchTabs";
+    var searchPageTabElement = document.getElementById(seachPageElementID);
+    if (searchPageTabElement != null) {
+        loadCss();
+        DatatypeSettings = JSON.parse(state);
+        runNewSearch(DatatypeSettings);
+    }
+};
+
+window.onunload = function(event) {
+    console.log("Unloading");
+};
+
+var initialisePage = function() {
     var searchElementID = "local-searchbox";
     var searchElement = document.getElementById(searchElementID);
     if (searchElement != null) {
@@ -162,29 +182,12 @@ window.onload = function (event){
     }
 };
 
-window.popstate =  function(event){
-    console.log("popstate");
-    var state = event.state;
-    var seachPageElementID = "searchTabs";
-    var searchPageTabElement = document.getElementById(seachPageElementID);
-    if (searchPageTabElement != null) {
-        loadCss();
-        DatatypeSettings = JSON.parse(state);
-        runNewSearch(DatatypeSettings);
-    }
-};
-
-window.onunload = function(event) {
-    console.log("Unloading");
-};
-
 var loadCss = function() {
     //load css for the modal box
     var linkElement = document.createElement("link");
     linkElement.rel = "stylesheet";
     linkElement.href = "/metagenomics/css/ajax-modal.css";
     document.head.appendChild(linkElement);
-
 }
 
 /**
@@ -351,9 +354,9 @@ var addMoreFacetsListener = function (searchSettings, facetGroup, element, conta
         var paramFragment = parametersToString(parameters);
         var url = BASE_URL + searchSettings.domain + paramFragment;
         console.log("Getting more facets from: " + url);
-        runAjax("GET", url, null, function(event) {
+        runAjax("GET", "json", url, null, function(event) {
             //success
-            var results = JSON.parse(event.response);
+            var results = event.response;
             moreFacetsCallback(searchSettings, results, moreFacetsDiv, modalOverlay);
         }, function(event) {
             showMoreFacetsError(moreFacetsDiv);
@@ -580,7 +583,7 @@ var showMoreFacetsInDialog = function(searchSettings, results, container) {
         facetInput.id = identifier;
         facetInput.type = "checkbox";
         facetInput.classList.add(GLOBAL_SEARCH_SETTINGS.MORE_FACET_INPUT_CLASS);
-        facetInput.value = facet.value;
+        facetInput.value = facet.label;
         if (searchSettings.facets != null
             && searchSettings.facets.hasOwnProperty(facets.id)
             && searchSettings.facets[facets.id].indexOf(facetInput.value) >= 0) {
@@ -1166,8 +1169,7 @@ var displayDomainData = function(httpReq, searchSettings) {
         console.log("Error expected to find input with id " + searchElementID);
     }
 
-    var resultString = httpReq.response;
-    var results = JSON.parse(resultString);
+    var results = httpReq.response;
     console.log(
         "Search returned "
         + results.hitCount + " "
@@ -1227,8 +1229,11 @@ var displaySearchError = function (httpReq, searchSettings) {
     }
 };
 
-var runAjax = function(method, url, parameters, callback, errCallback) {
+var runAjax = function(method, responseType, url, parameters, callback, errCallback) {
     var httpReq = new XMLHttpRequest();
+    if (responseType != null) {
+        httpReq.responseType = responseType;
+    }
     httpReq.open(method, url);
     httpReq.send(parameters);
 
@@ -1345,7 +1350,7 @@ var runDomainSearch = function(searchSettings) {
         displaySearchError(httpReq, searchSettings);
     };
 
-    runAjax("GET", url, null, successCallback, errorCallback);
+    runAjax("GET", "json", url, null, successCallback, errorCallback);
 };
 
 var runNewSearch = function(allSearchSettings) {
@@ -1471,15 +1476,18 @@ var prepareNewSearchSettings = function() {
 };
 
 var loadPageFromServer = function(callback, callbackArgs) {
-    runAjax("GET", "/metagenomics/search", null, function(httpReq) {
+    runAjax("GET", "document", "/metagenomics/search", null, function(httpReq) {
         var response = httpReq.response;
         console.log("Loading search template");
-        document.documentElement.innerHTML = response;
+
+        document = response;
         loadCss();
+
         displayTabHeader();
         if (callback != null) {
             callback(callbackArgs);
         }
+
     }, function(httpReq) {
         console.log("Error: Failed to load page template");
     });
@@ -1491,7 +1499,14 @@ var loadPageFromServer = function(callback, callbackArgs) {
  */
 var search = function() {
     var allSearchSettings = prepareNewSearchSettings();
-    loadPageFromServer(runNewSearch, allSearchSettings);
+    for (var i=0; i < allSearchSettings.DATA_TYPES.length; i++) {
+        var dataType = allSearchSettings.DATA_TYPES[i];
+        var searchSettings = allSearchSettings[dataType];
+        sessionStorage.setItem(GLOBAL_SEARCH_SETTINGS.METAGENOMICS_SEARCH_TEXT, searchSettings.searchText);
+        sessionStorage.setItem(GLOBAL_SEARCH_SETTINGS.METAGENOMICS_SEARCH_SETTINGS + searchSettings.type,  JSON.stringify(searchSettings));
+    }
+    //loadPageFromServer(runNewSearch, allSearchSettings);
+    window.location = window.location.protocol + "//" + window.location.host + "/metagenomics/search";
 };
 
 

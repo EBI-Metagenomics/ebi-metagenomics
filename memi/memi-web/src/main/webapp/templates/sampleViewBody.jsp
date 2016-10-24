@@ -245,7 +245,7 @@
 
     <!-- Other info box -->
     <c:if test="${not empty sampleAnnotations}">
-        <h3 id="expand_button" style="">Sample metadata</h3>
+        <h3 id="redux_button">Sample metadata</h3>
         <div class="output_form more_sample_meta_data">
             <table class="simple_table">
                 <tbody>
@@ -376,5 +376,10 @@
         $(".more_sample_meta_data").slideToggle();
         $("#expand_button").toggleClass("min");
     });
+    $("#redux_button").click(function () {
+        $(".more_sample_meta_data").slideToggle();
+        $("#redux_button").toggleClass("max");
+    });
+
 
 </script>
