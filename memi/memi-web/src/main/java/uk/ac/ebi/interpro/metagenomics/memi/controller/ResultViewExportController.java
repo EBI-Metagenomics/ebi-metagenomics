@@ -98,7 +98,7 @@ public class ResultViewExportController extends AbstractResultViewController {
                     DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(fileDefinitionId.name());
                     if (fileDefinition != null) {
                         DownloadableFileDefinition fileDefinitionClone = (DownloadableFileDefinition) fileDefinition.clone();
-                        if (fileDefinitionClone.getIdentifier().equalsIgnoreCase("NC_RNA_T_RNA_FILE")) {
+                        if (fileDefinitionClone.getIdentifier() != null && fileDefinitionClone.getIdentifier().equalsIgnoreCase("NC_RNA_T_RNA_FILE")) {
                             String inputFileName = analysisJob.getInputFileName();
                             String relativePath = fileDefinitionClone.getRelativePath();
                             String newRelativePath = relativePath.replace("*", inputFileName);
