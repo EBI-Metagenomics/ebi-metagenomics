@@ -97,9 +97,16 @@ public class ResultViewExportController extends AbstractResultViewController {
                 if (analysisJob != null) {
                     DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(fileDefinitionId.name());
                     if (fileDefinition != null) {
-                        File fileObject = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, fileDefinition);
+                        DownloadableFileDefinition fileDefinitionClone = (DownloadableFileDefinition) fileDefinition.clone();
+                        if (fileDefinitionClone.getIdentifier().equalsIgnoreCase("NC_RNA_T_RNA_FILE")) {
+                            String inputFileName = analysisJob.getInputFileName();
+                            String relativePath = fileDefinitionClone.getRelativePath();
+                            String newRelativePath = relativePath.replace("*", inputFileName);
+                            fileDefinitionClone.setRelativePath(newRelativePath);
+                        }
+                        File fileObject = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, fileDefinitionClone);
                         try {
-                            openDownloadDialog(response, request, analysisJob, fileDefinition.getDownloadName(), fileObject);
+                            openDownloadDialog(response, request, analysisJob, fileDefinitionClone.getDownloadName(), fileObject);
                         } catch (IndexOutOfBoundsException e) {
                             response.setStatus(HttpServletResponse.SC_NO_CONTENT);
                         }
@@ -419,7 +426,7 @@ public class ResultViewExportController extends AbstractResultViewController {
         return fileDefinitionId;
     }
 
-    @RequestMapping(value = MGPortalURLCollection.PROJECT_SAMPLE_RUN_RESULTS_TAXONOMY_TYPE)
+    @RequestMapping(value = {MGPortalURLCollection.PROJECT_SAMPLE_RUN_RESULTS_TAXONOMY_TYPE, MGPortalURLCollection.PROJECT_SAMPLE_RUN_RESULTS_SEQUENCES_SEQ_TYPE})
     public void handleTaxonomyResultDownloads(@PathVariable final String projectId,
                                               @PathVariable final String sampleId,
                                               @PathVariable final String runId,
@@ -450,6 +457,8 @@ public class ResultViewExportController extends AbstractResultViewController {
             fileDefinitionId = FileDefinitionId.TAX_ANALYSIS_TREE_FILE;
         } else if (resultType.equalsIgnoreCase("NewickPrunedTree")) {
             fileDefinitionId = FileDefinitionId.PRUNED_TREE_FILE;
+        } else if (resultType.equalsIgnoreCase("ncRNA-tRNA-FASTA")) {
+            fileDefinitionId = FileDefinitionId.NC_RNA_T_RNA_FILE;
         } else {
             log.warn("Result type: " + resultType + " not found!");
         }
