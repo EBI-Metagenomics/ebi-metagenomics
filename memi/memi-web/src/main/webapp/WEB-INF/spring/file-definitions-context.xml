@@ -576,7 +576,7 @@
         <property name="description" value="tRNAs predicted using HMMER tools."/>
         <property name="linkTitle" value="Click to download all predicted tRNAs (FASTA)"/>
         <property name="linkURL" value="ncRNA-tRNA-FASTA"/>
-        <property name="linkText" value="‘Predicted tRNAs"/>
+        <property name="linkText" value="Predicted tRNAs"/>
         <property name="downloadName" value="_tRNA.fasta"/>
         <property name="order" value="10"/>
         <property name="releaseVersion" value="3.0"/>
