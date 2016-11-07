@@ -1,7 +1,7 @@
 '''
 Created on 27/10/2015
 @author: Maxim Scheremetjew
-amended 23/02/2016 by Maxim Scheremetjew
+amended 07/11/2016 by Maxim Scheremetjew
 version: 1.1
 '''
 
