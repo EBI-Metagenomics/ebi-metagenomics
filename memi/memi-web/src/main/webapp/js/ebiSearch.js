@@ -520,20 +520,20 @@ var FacetManager = function(settingsManager, searchManager) {
                 "size": 0,
                 "facetfields": facetGroup.id,
                 "facetcount": facetCount,
-                "facetsdepth": GLOBAL_SEARCH_SETTINGS.DEFAULT_MORE_FACETS_DEPTH
+                "facetsdepth": self.settingsManager.GLOBAL_SEARCH_SETTINGS.DEFAULT_MORE_FACETS_DEPTH
             };
 
-            var moreFacetsDiv = createMoreFacetsDialog(searchSettings, facetGroup);
-            var modalOverlay = createModalOverlay(searchSettings, facetGroup);
+            var moreFacetsDiv = self.createMoreFacetsDialog(searchSettings, facetGroup);
+            var modalOverlay = self.createModalOverlay(searchSettings, facetGroup);
             modalOverlay.appendChild(moreFacetsDiv);
             document.body.appendChild(modalOverlay);
-            var paramFragment = parametersToString(parameters);
-            var url = BASE_URL + searchSettings.domain + paramFragment;
+            var paramFragment = self.searchManager.parametersToString(parameters);
+            var url = self.settingsManager.getEBISearchURL() + searchSettings.domain + paramFragment;
             console.log("Getting more facets from: " + url);
             self.searchManager.runAjax("GET", "json", url, null, function(event) {
                 //success
                 var results = event.response;
-                moreFacetsCallback(searchSettings, results, moreFacetsDiv, modalOverlay);
+                moreFacetsCallback(self, searchSettings, results, moreFacetsDiv, modalOverlay);
             }, function(event) {
                 self.showMoreFacetsError(moreFacetsDiv);
             });
@@ -543,7 +543,7 @@ var FacetManager = function(settingsManager, searchManager) {
 
     this.createModalOverlay = function (searchSettings, facetGroup) {
         var modalOverlay = document.createElement("div");
-        modalOverlay.id = GLOBAL_SEARCH_SETTINGS.MODAL_OVERLAY_ID;
+        modalOverlay.id = this.settingsManager.GLOBAL_SEARCH_SETTINGS.MODAL_OVERLAY_ID;
 
         modalOverlay.style.position = "fixed";
         modalOverlay.style.zIndex = "91";
@@ -560,7 +560,9 @@ var FacetManager = function(settingsManager, searchManager) {
     };
 
     this.removeModalOverlay = function() {
-        var modalOverlay = document.getElementById(GLOBAL_SEARCH_SETTINGS.MODAL_OVERLAY_ID)
+        var modalOverlay = document.getElementById(
+            this.settingsManager.GLOBAL_SEARCH_SETTINGS.MODAL_OVERLAY_ID
+        );
         if (modalOverlay != null) {
             var parent = modalOverlay.parentElement;
             parent.removeChild(modalOverlay);
@@ -571,7 +573,7 @@ var FacetManager = function(settingsManager, searchManager) {
     };
 
     this.createMoreFacetsDialog = function (searchSettings, facetGroup){
-
+        var self = this;
         var dialogDiv = document.createElement("div");
         dialogDiv.style.backgroundColor = "rgb(255,255,255)";
         dialogDiv.style.margin = "5% auto";
@@ -592,11 +594,11 @@ var FacetManager = function(settingsManager, searchManager) {
         var textFilter = document.createElement("input");
         textFilter.type = "text";
         textFilter.style.margin = "10px";
-        textFilter.classList.add(GLOBAL_SEARCH_SETTINGS.MORE_FACET_TEXT_FILTER_CLASS);
+        textFilter.classList.add(self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_TEXT_FILTER_CLASS);
         headerDiv.appendChild(textFilter);
 
         var facetsDiv = document.createElement("div");
-        facetsDiv.classList.add(GLOBAL_SEARCH_SETTINGS.MORE_FACET_CONTENT_CLASS);
+        facetsDiv.classList.add(self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_CONTENT_CLASS);
         facetsDiv.style.overflow = "scroll";
         facetsDiv.style.position = "relative";
         facetsDiv.style.width = "100%";
@@ -627,7 +629,7 @@ var FacetManager = function(settingsManager, searchManager) {
         applyButton.value = "Filter";
         applyButton.style.margin = "10px";
         applyButton.addEventListener("click", function(event){
-            runMoreFacetsSearch(searchSettings, facetsDiv);
+            self.runMoreFacetsSearch(searchSettings, facetsDiv);
         });
 
         var cancelButton = document.createElement("input");
@@ -636,7 +638,7 @@ var FacetManager = function(settingsManager, searchManager) {
         cancelButton.style.marginBottom = "10px";
         cancelButton.addEventListener(
             "click", function(event) {
-                removeModalOverlay();
+                self.removeModalOverlay();
             }
         );
 
@@ -728,22 +730,26 @@ var FacetManager = function(settingsManager, searchManager) {
         }
     };
 
-    this.showMoreFacetsInDialog = function(searchSettings, results, container) {
+    this.showMoreFacetsInDialog = function(self, searchSettings, results, container) {
         var dataType = searchSettings.type;
         var facets = results.facets[0];
-        var contentDivs = container.getElementsByClassName(GLOBAL_SEARCH_SETTINGS.MORE_FACET_CONTENT_CLASS);
+        var contentDivs = container.getElementsByClassName(
+            self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_CONTENT_CLASS
+        );
         var contentDiv = null;
 
         if (contentDivs != null && contentDivs.length == 1) {
             contentDiv = contentDivs[0];
         } else {
-            console.log("Expect to find exactly one child div with class " + GLOBAL_SEARCH_SETTINGS.MORE_FACET_CONTENT_CLASS);
+            console.log("Expect to find exactly one child div with class "
+                + self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_CONTENT_CLASS);
         }
 
         contentDiv.innerHTML = "";
         var list = document.createElement("ul");
         list.style.listStyle = "None";
 
+        var FACET_SEPARATOR = self.settingsManager.FACET_SEPARATOR;
         for(var i=0; i < facets.facetValues.length; i++) {
             var facet = facets.facetValues[i];
             //prefixing id with 'morefacets' to ensure input id is unique
@@ -758,7 +764,7 @@ var FacetManager = function(settingsManager, searchManager) {
             var facetInput = document.createElement("input");
             facetInput.id = identifier;
             facetInput.type = "checkbox";
-            facetInput.classList.add(GLOBAL_SEARCH_SETTINGS.MORE_FACET_INPUT_CLASS);
+            facetInput.classList.add(self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_INPUT_CLASS);
             facetInput.value = facet.label;
             if (searchSettings.facets != null
                 && searchSettings.facets.hasOwnProperty(facets.id)
@@ -781,10 +787,12 @@ var FacetManager = function(settingsManager, searchManager) {
     };
 
     this.runMoreFacetsSearch = function(searchSettings, container) {
-        var facetInputs = document.getElementsByClassName(GLOBAL_SEARCH_SETTINGS.MORE_FACET_INPUT_CLASS);
+        var facetInputs = document.getElementsByClassName(
+            this.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_INPUT_CLASS
+        );
         for (var i=0; i < facetInputs.length; i++) {
             var checkbox = facetInputs[i];
-            var tokens = checkbox.id.split(FACET_SEPARATOR);
+            var tokens = checkbox.id.split(this.settingsManager.FACET_SEPARATOR);
             var facetType = tokens[2];
             var facetValue = tokens[3];
             if (!searchSettings.facets.hasOwnProperty(facetType)) {
@@ -1410,7 +1418,7 @@ var SearchManager = function(settingsManager, pageManager) {
         };
     };
 
-    var parametersToString = function(parameters) {
+    this.parametersToString = function(parameters) {
         var parameterString = "?";
         var types = Object.keys(parameters);
         for (var i = 0; i < types.length; i++) {
@@ -1490,7 +1498,7 @@ var SearchManager = function(settingsManager, pageManager) {
             parameters.facets = searchSettings.facets;
         }
 
-        var paramFragment = parametersToString(parameters);
+        var paramFragment = this.parametersToString(parameters);
         var url = this.settingsManager.getEBISearchURL()  + searchSettings.domain + paramFragment;
         console.log("Running domain search = " + url);
         this.pageManager.showSpinner(searchSettings);
