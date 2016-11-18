@@ -651,33 +651,39 @@ var FacetManager = function(settingsManager, searchManager) {
         return dialogDiv;
     };
 
-    this.showMoreHierarchicalFacetsInDialog = function(searchSettings, results, container) {
+    this.showMoreHierarchicalFacetsInDialog = function(self, searchSettings, results, container) {
         var dataType = searchSettings.type;
         var facets = results.facets[0];
 
-        var contentDivs = container.getElementsByClassName(GLOBAL_SEARCH_SETTINGS.MORE_FACET_CONTENT_CLASS);
+        var contentDivs = container.getElementsByClassName(
+            self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_CONTENT_CLASS
+        );
         var contentDiv = null;
 
         if (contentDivs != null && contentDivs.length == 1) {
             contentDiv = contentDivs[0];
         } else {
-            console.log("Expect to find exactly one child div with class " + GLOBAL_SEARCH_SETTINGS.MORE_FACET_CONTENT_CLASS);
+            console.log("Expect to find exactly one child div with class " +
+                self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_CONTENT_CLASS);
         }
 
-        var textFilter = container.getElementsByClassName(GLOBAL_SEARCH_SETTINGS.MORE_FACET_TEXT_FILTER_CLASS);
+        var textFilter = container.getElementsByClassName(
+            self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_TEXT_FILTER_CLASS
+        );
         if (textFilter != null && textFilter.length == 1) {
             var textInput = textFilter[0];
             textInput.style.display = "none";
         } else {
-            console.log("Expect to find exactly one child div with class " + GLOBAL_SEARCH_SETTINGS.MORE_FACET_TEXT_FILTER_CLASS);
+            console.log("Expect to find exactly one child div with class " +
+                self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_TEXT_FILTER_CLASS);
         }
 
         var treeId = "more-hierarchical-facets-" + facets.id;
         contentDiv.innerHTML = "";
-        contentDiv.classList.add(GLOBAL_SEARCH_SETTINGS.HIERARCHICAL_FACET_CLASS)
+        contentDiv.classList.add(self.settingsManager.GLOBAL_SEARCH_SETTINGS.HIERARCHICAL_FACET_CLASS)
         var list = document.createElement("ul");
         list.id = treeId;
-        addMoreHierarchicalFacetsToList(searchSettings, facets.facetValues, facets.id, null, list);
+        self.addMoreHierarchicalFacetsToList(searchSettings, facets.facetValues, facets.id, null, list);
         contentDiv.appendChild(list);
         console.log("Converting more facet list to bonsai tree");
 
@@ -691,6 +697,8 @@ var FacetManager = function(settingsManager, searchManager) {
 
     this.addMoreHierarchicalFacetsToList = function(searchSettings, facets, facetGroupId, facetValuePrefix, list) {
         var dataType = searchSettings.type;
+        var GLOBAL_SEARCH_SETTINGS = this.settingsManager.GLOBAL_SEARCH_SETTINGS;
+        var FACET_SEPARATOR = this.settingsManager.FACET_SEPARATOR;
         for(var i=0; i < facets.length; i++) {
             var facet = facets[i];
             var listItem = document.createElement("li");
@@ -723,7 +731,7 @@ var FacetManager = function(settingsManager, searchManager) {
                 && facet.children.length > 0) {
                 var subList = document.createElement("ul");
                 listItem.appendChild(subList);
-                addMoreHierarchicalFacetsToList(searchSettings, facet.children, facetGroupId, facetValue, subList);
+                this.addMoreHierarchicalFacetsToList(searchSettings, facet.children, facetGroupId, facetValue, subList);
             }
 
 
@@ -1135,13 +1143,14 @@ var FacetManager = function(settingsManager, searchManager) {
     };
 
     this.addNumericalFieldValueChangeListener = function(rangeContainer, minInput, maxInput, fieldInput, numericalField, searchSettings) {
+        var self = this;
         rangeContainer.addEventListener("input", function(event) {
-            updateTextBoxes(rangeContainer, minInput, maxInput, fieldInput, numericalField);
+            self.updateTextBoxes(rangeContainer, minInput, maxInput, fieldInput, numericalField);
         });
 
         rangeContainer.addEventListener("change", function(event) {
-            updateTextBoxes(rangeContainer, minInput, maxInput, fieldInput, numericalField);
-            runDomainSearch(searchSettings);
+            self.updateTextBoxes(rangeContainer, minInput, maxInput, fieldInput, numericalField);
+            self.searchManager.runDomainSearch(searchSettings);
         });
 
         minInput.addEventListener("change", function(event) {
@@ -1153,7 +1162,7 @@ var FacetManager = function(settingsManager, searchManager) {
                 numericalField.selectedMinimum = minValue;
             }
 
-            runDomainSearch(searchSettings);
+            self.searchManager.runDomainSearch(searchSettings);
         });
 
         maxInput.addEventListener("change", function(event) {
@@ -1164,7 +1173,7 @@ var FacetManager = function(settingsManager, searchManager) {
                 && maxValue < numericalField.maximum) {
                 numericalField.selectedMaximum = maxValue;
             }
-            runDomainSearch(searchSettings);
+            self.searchManager.runDomainSearch(searchSettings);
         });
     };
 
