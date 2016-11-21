@@ -45,9 +45,6 @@ var SettingsManager = function() {
 
     this.FACET_SOURCE = "Source";
 
-    this.DatatypeSettings = {};
-    this.DatatypeSettings.DATA_TYPES = {};
-
     this.GLOBAL_SEARCH_SETTINGS = {
         PROJECT_RESULTS_NUM: 10,
         SAMPLE_RESULTS_NUM: 10,
@@ -80,6 +77,14 @@ var SettingsManager = function() {
         SEARCH_RESULTS_ID: "searchTabs"
     };
 
+    this.DatatypeSettings = {};
+    this.DatatypeSettings.DATA_TYPES = {};
+    this.DatatypeSettings.DATA_TYPES = [
+        this.GLOBAL_SEARCH_SETTINGS.PROJECT,
+        this.GLOBAL_SEARCH_SETTINGS.SAMPLE,
+        this.GLOBAL_SEARCH_SETTINGS.RUN
+    ];
+
     this.getEBISearchURL = function() {
         var EBISEARCH_PATH = "ebisearch/ws/rest/";
         var host = window.location.hostname;
@@ -93,53 +98,57 @@ var SettingsManager = function() {
         return searchURL;
     };
 
-    this.initialiseSettings = function() {
-        var projectSettings = new SearchSettings(
-            this.GLOBAL_SEARCH_SETTINGS.PROJECT,
-            this.GLOBAL_SEARCH_SETTINGS.PROJECT_RESULTS_NUM,
-            this.GLOBAL_SEARCH_SETTINGS.DEFAULT_SEARCH_START,
-            this.GLOBAL_SEARCH_SETTINGS.FACET_NUM,
-            null,
-            this.GLOBAL_SEARCH_SETTINGS.PROJECT_DOMAIN,
-            this.GLOBAL_SEARCH_SETTINGS.PROJECT_FIELDS,
-            null
-        );
+    this.initialiseSettings = function(fullReset) {
+        var projectSettings = this.getSearchSettings(this.GLOBAL_SEARCH_SETTINGS.PROJECT);
+        var sampleSettings = this.getSearchSettings(this.GLOBAL_SEARCH_SETTINGS.SAMPLE);
+        var runSettings = this.getSearchSettings(this.GLOBAL_SEARCH_SETTINGS.RUN);
+
+        if (fullReset || projectSettings == null) {
+            projectSettings = new SearchSettings(
+                this.GLOBAL_SEARCH_SETTINGS.PROJECT,
+                this.GLOBAL_SEARCH_SETTINGS.PROJECT_RESULTS_NUM,
+                this.GLOBAL_SEARCH_SETTINGS.DEFAULT_SEARCH_START,
+                this.GLOBAL_SEARCH_SETTINGS.FACET_NUM,
+                null,
+                this.GLOBAL_SEARCH_SETTINGS.PROJECT_DOMAIN,
+                this.GLOBAL_SEARCH_SETTINGS.PROJECT_FIELDS,
+                null
+            );
+        }
+
+        if (fullReset || sampleSettings == null) {
+            sampleSettings = new SearchSettings(
+                this.GLOBAL_SEARCH_SETTINGS.SAMPLE,
+                this.GLOBAL_SEARCH_SETTINGS.SAMPLE_RESULTS_NUM,
+                this.GLOBAL_SEARCH_SETTINGS.DEFAULT_SEARCH_START,
+                this.GLOBAL_SEARCH_SETTINGS.FACET_NUM,
+                null,
+                this.GLOBAL_SEARCH_SETTINGS.SAMPLE_DOMAIN,
+                this.GLOBAL_SEARCH_SETTINGS.SAMPLE_FIELDS,
+                [sampleTemperature, sampleDepth]
+            );
+        }
+
+        if (fullReset || runSettings == null) {
+            runSettings = new SearchSettings(
+                this.GLOBAL_SEARCH_SETTINGS.RUN,
+                this.GLOBAL_SEARCH_SETTINGS.RUN_RESULTS_NUM,
+                this.GLOBAL_SEARCH_SETTINGS.DEFAULT_SEARCH_START,
+                this.GLOBAL_SEARCH_SETTINGS.FACET_NUM,
+                null,
+                this.GLOBAL_SEARCH_SETTINGS.RUN_DOMAIN,
+                this.GLOBAL_SEARCH_SETTINGS.RUN_FIELDS,
+                [runTemperature, runDepth]
+            );
+        }
 
         var sampleTemperature = new NumericalRangeField("temperature", "Temperature", "°C", -20, 110, -20, 110);
         var sampleDepth = new NumericalRangeField("depth", "Depth", "Metres", 0, 2000, 0, 2000);
         var samplePH = new NumericalRangeField("pH", "pH", null, 0, 14, 0, 14);
 
-        var sampleSettings = new SearchSettings(
-            this.GLOBAL_SEARCH_SETTINGS.SAMPLE,
-            this.GLOBAL_SEARCH_SETTINGS.SAMPLE_RESULTS_NUM,
-            this.GLOBAL_SEARCH_SETTINGS.DEFAULT_SEARCH_START,
-            this.GLOBAL_SEARCH_SETTINGS.FACET_NUM,
-            null,
-            this.GLOBAL_SEARCH_SETTINGS.SAMPLE_DOMAIN,
-            this.GLOBAL_SEARCH_SETTINGS.SAMPLE_FIELDS,
-            [sampleTemperature, sampleDepth]
-        );
-
         var runTemperature = new NumericalRangeField("temperature", "Temperature", "°C", -20, 110, -20, 110);
         var runDepth = new NumericalRangeField("depth", "Depth", "Metres", 0, 2000, 0, 2000);
         var runPH = new NumericalRangeField("pH", "pH", null, 0, 14, 0, 14);
-
-        var runSettings = new SearchSettings(
-            this.GLOBAL_SEARCH_SETTINGS.RUN,
-            this.GLOBAL_SEARCH_SETTINGS.RUN_RESULTS_NUM,
-            this.GLOBAL_SEARCH_SETTINGS.DEFAULT_SEARCH_START,
-            this.GLOBAL_SEARCH_SETTINGS.FACET_NUM,
-            null,
-            this.GLOBAL_SEARCH_SETTINGS.RUN_DOMAIN,
-            this.GLOBAL_SEARCH_SETTINGS.RUN_FIELDS,
-            [runTemperature, runDepth]
-        );
-
-        this.DatatypeSettings.DATA_TYPES = [
-            this.GLOBAL_SEARCH_SETTINGS.PROJECT,
-            this.GLOBAL_SEARCH_SETTINGS.SAMPLE,
-            this.GLOBAL_SEARCH_SETTINGS.RUN
-        ];
 
         this.DatatypeSettings[this.GLOBAL_SEARCH_SETTINGS.PROJECT] = projectSettings;
         this.DatatypeSettings[this.GLOBAL_SEARCH_SETTINGS.SAMPLE] = sampleSettings;
@@ -374,6 +383,7 @@ var TableManager = function(searchManager) {
     };
 
     this.displayPagination = function(results, searchSettings) {
+        var self = this;
         //console.log("Adding pagination for " + searchSettings.type);
         var dataType = searchSettings.type;
 
@@ -390,7 +400,7 @@ var TableManager = function(searchManager) {
             }
             prevButton.addEventListener('click', function(event) {
                 searchSettings.page--;
-                this.searchManager.runDomainSearch(searchSettings);
+                self.searchManager.runDomainSearch(searchSettings);
             });
 
             var nextButton = document.createElement("input");
@@ -403,7 +413,7 @@ var TableManager = function(searchManager) {
             }
             nextButton.addEventListener('click', function(event) {
                 searchSettings.page++;
-                this.searchManager.runDomainSearch(searchSettings);
+                self.searchManager.runDomainSearch(searchSettings);
             });
 
             var textSpan = document.createElement("span");
@@ -1375,9 +1385,10 @@ var SearchManager = function(settingsManager, pageManager) {
     this.settingsManager = settingsManager;
     this.pageManager = pageManager;
 
-    this.prepareNewSearchSettings = function() {
-
-    }
+    this.resetSettings = function() {
+        var allSearchSettings = self.settingsManager.initialiseSettings(false);
+        return allSearchSettings;
+    };
 
     this.loadPageFromServer = function() {
         self = this;
@@ -1386,13 +1397,11 @@ var SearchManager = function(settingsManager, pageManager) {
             console.log("Loading search template");
 
             document.innerHTML = response;
-            this.pageManager.loadCss();
-            this.pageManager.populateSearchInputs();
-            var allSearchSettings = self.settingsManager.initialiseSettings();
-
-            this.pageManager.displayTabHeader(settingsManager);
+            self.pageManager.loadCss();
+            self.pageManager.populateSearchInputs();
+            self.pageManager.displayTabHeader(settingsManager);
+            var allSearchSettings = self.resetSettings();
             self.runNewSearch(allSearchSettings);
-
         }, function(httpReq) {
             console.log("Error: Failed to load page template");
         });
@@ -1462,6 +1471,7 @@ var SearchManager = function(settingsManager, pageManager) {
     }
 
     this.runDomainSearch = function(searchSettings) {
+        var self = this;
         console.log("Searchtext = " + searchSettings.searchText);
         this.settingsManager.setSearchText(searchSettings.searchText);
         this.settingsManager.setSearchSettings(searchSettings.type, searchSettings);
@@ -1510,16 +1520,16 @@ var SearchManager = function(settingsManager, pageManager) {
         var paramFragment = this.parametersToString(parameters);
         var url = this.settingsManager.getEBISearchURL()  + searchSettings.domain + paramFragment;
         console.log("Running domain search = " + url);
-        this.pageManager.showSpinner(searchSettings);
+        self.pageManager.showSpinner(searchSettings);
         var successCallback = function(httpReq) {
-            this.pageManager.removeSpinner(searchSettings);
-            this.pageManager.displayDomainData(httpReq, searchSettings);
+            self.pageManager.removeSpinner(searchSettings);
+            self.pageManager.displayDomainData(httpReq, searchSettings);
         };
         var errorCallback = function(httpReq) {
-            this.pageManager.displaySearchError(httpReq, searchSettings);
+            self.pageManager.displaySearchError(httpReq, searchSettings);
         };
 
-        this.runAjax("GET", "json", url, null, successCallback, errorCallback);
+        self.runAjax("GET", "json", url, null, successCallback, errorCallback);
     };
 
     this.runNewSearch = function(allSearchSettings, pageManager) {
@@ -1537,8 +1547,13 @@ var PageManager = function() {
     this.tabManager = new TabManager();
     this.searchManager = new SearchManager(this.settingsManager, this);
     this.resultsManager = new ResultsManager();
-    this.tableManager = new TableManager();
+    this.tableManager = new TableManager(this.searchManager);
     this.facetManager = new FacetManager(this.settingsManager, this.searchManager);
+
+    this.isSearchPage = function() {
+        var searchPageDiv = document.getElementById(this.settingsManager.GLOBAL_SEARCH_SETTINGS.SEARCH_RESULTS_ID)
+        return searchPageDiv != null ? true : false;
+    }
 
     this.populateSearchInputs = function() {
         //copy search text to search boxes
@@ -1625,10 +1640,77 @@ var PageManager = function() {
     this.initialisePage = function () {
         this.searchManager.loadPageFromServer();
     };
+
+    this.runSmallSearch = function() {
+        var smallSearchBox = document.getElementById(this.settingsManager.GLOBAL_SEARCH_SETTINGS.SEARCH_BOX_SMALL_ID);
+        if (smallSearchBox != null) {
+            smallSearchBoxText = smallSearchBox.value;
+            var searchBox = document.getElementById(this.settingsManager.GLOBAL_SEARCH_SETTINGS.SEARCH_BOX_ID);
+            if (searchBox != null) {
+                searchBoxText = searchBox.value;
+                if (smallSearchBoxText != searchBoxText) {
+                    searchBox.value = smallSearchBoxText;
+                }
+                this.runSearch();
+            } else {
+                console.log(
+                    "Error: Expected to find input with ID "
+                    + this.settingsManager.GLOBAL_SEARCH_SETTINGS.SEARCH_BOX_ID
+                );
+            }
+        } else {
+            console.log(
+                "Error: Expected to find input with ID "
+                + this.settingsManager.GLOBAL_SEARCH_SETTINGS.SEARCH_BOX_SMALL_ID
+            );
+        }
+    }
+
+    this.runSearch = function() {
+        var searchBox = document.getElementById(this.settingsManager.GLOBAL_SEARCH_SETTINGS.SEARCH_BOX_ID);
+        var searchBoxText = null;
+        if (searchBox != null) {
+            searchBoxText = searchBox.value;
+            var storedSearchText = this.settingsManager.getSearchText();
+            var resetSearch = false;
+            console.log("running search");
+            if (searchBoxText != storedSearchText) {
+                resetSearch = true;
+            }
+
+            if (this.isSearchPage()) {
+                for(var i = 0; i < this.settingsManager.DatatypeSettings.DATA_TYPES.length; i++) {
+                    var dataType = this.settingsManager.DatatypeSettings.DATA_TYPES[i];
+                    var settings = this.settingsManager.getSearchSettings(dataType);
+                    settings.searchText = searchBoxText;
+                    if (resetSearch) {
+                        settings.facets = {};
+                        settings.page = 0;
+                    }
+                    this.searchManager.runDomainSearch(settings);
+                }
+            } else {
+                window.location = "/metagenomics/search"
+            }
+        } else {
+            console.log(
+                "Error: Expected to find input with ID "
+                + this.settingsManager.GLOBAL_SEARCH_SETTINGS.SEARCH_BOX_ID
+            );
+        }
+
+    }
 };
 
 var pageManager = new PageManager();
-pageManager.initialisePage();
+window.onload = function (event){
+    pageManager.populateSearchInputs();
+    if (pageManager.isSearchPage()) {
+        pageManager.initialisePage();
+    }
+};
+
+
 
 
 

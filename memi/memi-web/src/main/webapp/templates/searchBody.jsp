@@ -5,7 +5,7 @@
 <div class="grid_24 sample_ana" id="mainContainer">
     <h2>Search EBI Metagenomics</h2>
 
-    <form class="local-search-xs" action="javascript:search();"
+    <form class="local-search-xs" action="javascript:pageManager.runSmallSearch();"
                commandName="ebiSearchForm" method="GET">
 
         <div class="grid_24">

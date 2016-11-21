@@ -14,7 +14,7 @@
 <ul id="local-nav" class="collapse navbar-collapse nav navbar-nav">
     <li class="${model.tabClasses["tabClassHomeView"]} first"><a href="<c:url value="${baseURL}/"/>"
                                                                  title="Home">Home</a></li>
-    <li class="${model.tabClasses["tabClassSearchView"]} first"><a href="javascript:search();"
+    <li class="${model.tabClasses["tabClassSearchView"]} first"><a href="javascript:pageManager.runSearch();"
                                                                  title="Search">Search</a></li>
     <li class="${model.tabClasses["tabClassSubmitView"]}"><a href="<c:url value="${baseURL}/submission"/>"
                                                              class="more_desc" title="Submit data">Submit

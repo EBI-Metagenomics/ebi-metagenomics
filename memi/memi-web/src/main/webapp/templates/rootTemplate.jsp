@@ -246,7 +246,7 @@
 
 
             <div class="grid_12 omega">
-                <form id="local-search" action="javascript:search();">
+                <form id="local-search" action="javascript:pageManager.runSearch();">
 
                     <fieldset>
 
