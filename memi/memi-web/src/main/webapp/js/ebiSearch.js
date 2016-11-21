@@ -889,7 +889,7 @@ var FacetManager = function(settingsManager, searchManager) {
         if (searchSettings.facets.hasOwnProperty(facetGroup.id)
             && searchSettings.facets[facetGroup.id] != null
             && searchSettings.facets[facetGroup.id].length > 0) {
-            if (facetGroup.total > 10) {
+            if (facetGroup.total > this.settingsManager.GLOBAL_SEARCH_SETTINGS.FACET_NUM) {
                 var textNode = document.createTextNode(" | ");
                 extraControlsDiv.appendChild(textNode);
             }
@@ -1536,7 +1536,6 @@ var SearchManager = function(settingsManager, pageManager) {
         for(var i=0; i < allSearchSettings.DATA_TYPES.length; i++) {
             var dataType = allSearchSettings.DATA_TYPES[i];
             var searchSetting = allSearchSettings[dataType];
-            searchSetting.facets = {};
             this.runDomainSearch(searchSetting, pageManager);
         }
     };
