@@ -103,6 +103,14 @@ var SettingsManager = function() {
         var sampleSettings = this.getSearchSettings(this.GLOBAL_SEARCH_SETTINGS.SAMPLE);
         var runSettings = this.getSearchSettings(this.GLOBAL_SEARCH_SETTINGS.RUN);
 
+        var sampleTemperature = new NumericalRangeField("temperature", "Temperature", "°C", -20, 110, -20, 110);
+        var sampleDepth = new NumericalRangeField("depth", "Depth", "Metres", 0, 2000, 0, 2000);
+        var samplePH = new NumericalRangeField("pH", "pH", null, 0, 14, 0, 14);
+
+        var runTemperature = new NumericalRangeField("temperature", "Temperature", "°C", -20, 110, -20, 110);
+        var runDepth = new NumericalRangeField("depth", "Depth", "Metres", 0, 2000, 0, 2000);
+        var runPH = new NumericalRangeField("pH", "pH", null, 0, 14, 0, 14);
+
         if (fullReset || projectSettings == null) {
             projectSettings = new SearchSettings(
                 this.GLOBAL_SEARCH_SETTINGS.PROJECT,
@@ -141,14 +149,6 @@ var SettingsManager = function() {
                 [runTemperature, runDepth]
             );
         }
-
-        var sampleTemperature = new NumericalRangeField("temperature", "Temperature", "°C", -20, 110, -20, 110);
-        var sampleDepth = new NumericalRangeField("depth", "Depth", "Metres", 0, 2000, 0, 2000);
-        var samplePH = new NumericalRangeField("pH", "pH", null, 0, 14, 0, 14);
-
-        var runTemperature = new NumericalRangeField("temperature", "Temperature", "°C", -20, 110, -20, 110);
-        var runDepth = new NumericalRangeField("depth", "Depth", "Metres", 0, 2000, 0, 2000);
-        var runPH = new NumericalRangeField("pH", "pH", null, 0, 14, 0, 14);
 
         this.DatatypeSettings[this.GLOBAL_SEARCH_SETTINGS.PROJECT] = projectSettings;
         this.DatatypeSettings[this.GLOBAL_SEARCH_SETTINGS.SAMPLE] = sampleSettings;
@@ -193,9 +193,10 @@ var SettingsManager = function() {
     };
 };
 
-var TableManager = function(searchManager) {
+var TableManager = function(searchManager, settingsManager) {
 
     this.searchManager = searchManager;
+    this.settingsManager = settingsManager;
 
     /**
      * Setup for project table
@@ -208,29 +209,48 @@ var TableManager = function(searchManager) {
         table.border = 1;
         table.classList.add("table-light");
 
+        var headerData = this.getProjectHeader();
+
+        this.addTableHeader(headerData, table);
+
+        for (var i=0; i < results.entries.length; i++) {
+            var entry = results.entries[i];
+            var rowData = this.getProjectRow(entry);
+            this.addTableRow(rowData, table);
+        }
+        container.appendChild(table);
+    };
+
+    /**
+     * Returns object used for populating project table header
+     * @returns {[*,*,*,*]}
+     */
+    this.getProjectHeader = function() {
         var headerData = [
             {name: "Project"},
             {name: "Name"},
             {name: "Biome", className: "xs_hide"},
             {name: "Description", className: "xs_hide"}
         ];
+        return headerData;
+    };
 
-        this.addTableHeader(headerData, table);
-
-        for (var i=0; i < results.entries.length; i++) {
-            var entry = results.entries[i];
-            var rowData = [
-                {
-                    name: entry["id"],
-                    url: "http://" + window.location.host + "/metagenomics/projects/" + entry["id"]
-                },
-                {name: entry.fields.name[0]},
-                {name: entry.fields.biome_name[0], className: "xs_hide"},
-                {name: entry.fields.description[0], className: "xs_hide"}
-            ];
-            this.addTableRow(rowData, table);
-        }
-        container.appendChild(table);
+    /**
+     * returns object representing row in project table
+     * @param entry
+     * @returns {[*,*,*,*]}
+     */
+    this.getProjectRow = function(entry) {
+        var rowData = [
+            {
+                name: entry["id"],
+                url: "http://" + window.location.host + "/metagenomics/projects/" + entry["id"]
+            },
+            {name: entry.fields.name[0]},
+            {name: entry.fields.biome_name[0], className: "xs_hide"},
+            {name: entry.fields.description[0], className: "xs_hide"}
+        ];
+        return rowData;
     };
 
     /**
@@ -244,33 +264,53 @@ var TableManager = function(searchManager) {
         table.border = 1;
         table.classList.add("table-light");
 
+        var headerData = this.getSampleHeader();
+
+        this.addTableHeader(headerData, table);
+
+        for (var i=0; i < results.entries.length; i++) {
+            var entry = results.entries[i];
+            var rowData = this.getSampleRow(entry);
+            this.addTableRow(rowData, table);
+        }
+        container.appendChild(table);
+    };
+
+    /**
+     * Returns object used for populating sample table header
+     * @returns {[*,*,*,*]}
+     */
+    this.getSampleHeader = function() {
         var headerData = [
             {name: "Sample"},
             {name: "Project", className: "xs_hide"},
             {name: "Name"},
             {name: "Description", className: "xs_hide"},
         ];
-
-        this.addTableHeader(headerData, table);
-
-        for (var i=0; i < results.entries.length; i++) {
-            var entry = results.entries[i];
-            var rowData = [
-                {
-                    name: entry["id"],
-                    url: "http://" + window.location.host + "/metagenomics/projects/" + entry["fields"]["METAGENOMICS_PROJECTS"][0] + "/samples/" +  entry["id"]
-                },
-                {
-                    name: entry["fields"]["METAGENOMICS_PROJECTS"][0],
-                    url: "http://" + window.location.host + "/metagenomics/projects/" + entry["fields"]["METAGENOMICS_PROJECTS"][0]
-                },
-                {name: entry.fields.name[0]},
-                {name: entry.fields.description[0], className: "xs_hide"}
-            ];
-            this.addTableRow(rowData, table);
-        }
-        container.appendChild(table);
+        return headerData;
     };
+
+    /**
+     * returns object representing row in sample table
+     * @param entry
+     * @returns {[*,*,*,*]}
+     */
+    this.getSampleRow = function(entry) {
+        var rowData = [
+            {
+                name: entry["id"],
+                url: "http://" + window.location.host + "/metagenomics/projects/" + entry["fields"]["METAGENOMICS_PROJECTS"][0] + "/samples/" +  entry["id"]
+            },
+            {
+                name: entry["fields"]["METAGENOMICS_PROJECTS"][0],
+                url: "http://" + window.location.host + "/metagenomics/projects/" + entry["fields"]["METAGENOMICS_PROJECTS"][0]
+            },
+            {name: entry.fields.name[0]},
+            {name: entry.fields.description[0], className: "xs_hide"}
+        ];
+        return rowData;
+    };
+
 
     /**
      * setup run table
@@ -283,6 +323,24 @@ var TableManager = function(searchManager) {
         table.border = 1;
         table.classList.add("table-light");
 
+        var headerData = this.getRunHeader();
+
+        this.addTableHeader(headerData, table);
+
+        for (var i=0; i < results.entries.length; i++) {
+            var entry = results.entries[i];
+            var rowData = this.getRunRow(entry);
+            this.addTableRow(rowData, table);
+        }
+
+        container.appendChild(table);
+    };
+
+    /**
+     * Returns object used for populating run table header
+     * @returns {[*,*,*,*]}
+     */
+    this.getRunHeader = function() {
         var headerData = [
             {name: "Run"},
             {name: "Sample", className: "xs_hide"},
@@ -290,47 +348,47 @@ var TableManager = function(searchManager) {
             {name: "Experiment Type"},
             {name: "Pipeline Version", className: "xs_hide"},
         ];
+        return headerData;
+    };
 
-        this.addTableHeader(headerData, table);
+    /**
+     * returns object representing row in run table
+     * @param entry
+     * @returns {[*,*,*,*]}
+     */
+    this.getRunRow = function(entry) {
+        var rowData = [
+            {
+                name: entry.id,
+                url: "http://" + window.location.host + "/metagenomics/projects/"
+                + entry.fields.METAGENOMICS_PROJECTS[0] + "/samples/"
+                + entry.fields.METAGENOMICS_SAMPLES[0] + "/runs/"
+                + entry.id + "/results/versions/"
+                + entry.fields.pipeline_version[0]
+            },
+            {
+                name: entry.fields.METAGENOMICS_SAMPLES[0],
+                className: "xs_hide",
+                url: "http://" + window.location.host + "/metagenomics/projects/"
+                + entry.fields.METAGENOMICS_PROJECTS[0] + "/samples/"
+                + entry.fields.METAGENOMICS_SAMPLES[0],
 
-        for (var i=0; i < results.entries.length; i++) {
-            var entry = results.entries[i];
-            var rowData = [
-                {
-                    name: entry.id,
-                    url: "http://" + window.location.host + "/metagenomics/projects/"
-                    + entry.fields.METAGENOMICS_PROJECTS[0] + "/samples/"
-                    + entry.fields.METAGENOMICS_SAMPLES[0] + "/runs/"
-                    + entry.id + "/results/versions/"
-                    + entry.fields.pipeline_version[0]
-                },
-                {
-                    name: entry.fields.METAGENOMICS_SAMPLES[0],
-                    className: "xs_hide",
-                    url: "http://" + window.location.host + "/metagenomics/projects/"
-                    + entry.fields.METAGENOMICS_PROJECTS[0] + "/samples/"
-                    + entry.fields.METAGENOMICS_SAMPLES[0],
-
-                },
-                {
-                    name: entry.fields.METAGENOMICS_PROJECTS[0],
-                    className: "xs_hide",
-                    url: "http://" + window.location.host + "/metagenomics/projects/" + entry.fields.METAGENOMICS_PROJECTS[0],
-                },
-                {
-                    name: entry.fields.experiment_type[0]
-                },
-                {
-                    name: entry.fields.pipeline_version[0],
-                    className: "xs_hide",
-                    url: "http://" + window.location.host + "/metagenomics/pipelines/" + entry.fields.pipeline_version[0],
-                },
-
-            ];
-            this.addTableRow(rowData, table);
-        }
-
-        container.appendChild(table);
+            },
+            {
+                name: entry.fields.METAGENOMICS_PROJECTS[0],
+                className: "xs_hide",
+                url: "http://" + window.location.host + "/metagenomics/projects/" + entry.fields.METAGENOMICS_PROJECTS[0],
+            },
+            {
+                name: entry.fields.experiment_type[0]
+            },
+            {
+                name: entry.fields.pipeline_version[0],
+                className: "xs_hide",
+                url: "http://" + window.location.host + "/metagenomics/pipelines/" + entry.fields.pipeline_version[0],
+            },
+        ];
+        return rowData;
     };
 
     /**
@@ -426,39 +484,59 @@ var TableManager = function(searchManager) {
         }
     };
 
-    this.displayTable = function(results, container) {
-        console.log("Showing sample data");
-        table = document.createElement("table");
-        table.border = 1;
-        table.classList.add("table-light");
+    this.displayDownloadButton = function(results, searchSettings) {
+        var self = this;
+        try {
+            var isFileSaverSupported = !!new Blob;
+            if (isFileSaverSupported) {
+                var dataType = searchSettings.type;
+                console.log("displayDownloadButton: " + dataType);
 
-        var headerData = [
-            {name: "Sample"},
-            {name: "Project", className: "xs_hide"},
-            {name: "Name"},
-            {name: "Description", className: "xs_hide"},
-        ];
-
-        this.addTableHeader(headerData, table);
-
-        for (var i=0; i < results.entries.length; i++) {
-            var entry = results.entries[i];
-            var rowData = [
-                {
-                    name: entry["id"],
-                    url: "http://" + window.location.host + "/metagenomics/projects/" + entry["fields"]["METAGENOMICS_PROJECTS"][0] + "/samples/" +  entry["id"]
-                },
-                {
-                    name: entry["fields"]["METAGENOMICS_PROJECTS"][0],
-                    url: "http://" + window.location.host + "/metagenomics/projects/" + entry["fields"]["METAGENOMICS_PROJECTS"][0]
-                },
-                {name: entry.fields.name[0]},
-                {name: entry.fields.description[0], className: "xs_hide"}
-            ];
-            this.addTableRow(rowData, table);
+                var downloadContainer = document.getElementById(dataType + "-download");
+                if (downloadContainer != null) {
+                    var downloadID = dataType + "downloadButton";
+                    var downloadButton = document.getElementById(downloadID);
+                    if (downloadButton == null) {
+                        downloadButton = document.createElement("input");
+                        downloadButton.type = "button";
+                        downloadButton.id = downloadID;
+                        downloadButton.value = "Download";
+                        downloadContainer.appendChild(downloadButton);
+                        downloadButton.addEventListener("click", function(event){
+                            self.downloadSearchResults(results, searchSettings);
+                        });
+                    }
+                } else {
+                    console.log("Error: Expected to find div with id '" + dataType + "'-download")
+                }
+            }
+        } catch (e) {
+            console.log("Error: Blob type not supported consider upgrading to modern browser (Chrome or Firefox)");
         }
-        container.appendChild(table);
     };
+
+    this.downloadSearchResults = function(results, searchSettings) {
+        var dataType = searchSettings.type;
+
+        var headerFunction;
+        var rowFunction;
+        if (dataType === this.settingsManager.GLOBAL_SEARCH_SETTINGS.PROJECT) {
+            headerFunction = this.getProjectHeader;
+            rowFunction = this.getProjectRow;
+        } else if (dataType === this.settingsManager.GLOBAL_SEARCH_SETTINGS.SAMPLE) {
+            headerFunction = this.getSampleHeader;
+            rowFunction = this.getSampleRow;
+        } else if (dataType === this.settingsManager.GLOBAL_SEARCH_SETTINGS.RUN) {
+            headerFunction = this.getRunHeader;
+            rowFunction = this.getRunRow;
+        } else {
+            console.log("Error: Unkown datatype");
+        }
+
+        var data = [];
+        data.push(headerFunction());
+        this.searchManager.runDownloadSearch(rowFunction, data, searchSettings, null);
+    }
 };
 
 var FacetManager = function(settingsManager, searchManager) {
@@ -1367,6 +1445,7 @@ var ResultsManager = function() {
         this.displayData(results, searchSettings.type, tableManager, settingsManager);
         facetManager.displayFacets(results.facets, searchSettings);
         tableManager.displayPagination(results, searchSettings);
+        tableManager.displayDownloadButton(results, searchSettings);
     };
 
     this.displaySearchError = function (httpReq, searchSettings) {
@@ -1470,15 +1549,7 @@ var SearchManager = function(settingsManager, pageManager) {
         return parameterString;
     }
 
-    this.runDomainSearch = function(searchSettings) {
-        var self = this;
-        console.log("Searchtext = " + searchSettings.searchText);
-        this.settingsManager.setSearchText(searchSettings.searchText);
-        this.settingsManager.setSearchSettings(searchSettings.type, searchSettings);
-
-        console.log("about to push state");
-        //history.pushState(JSON.stringify(searchSettings), "search", "/metagenomics/search");
-
+    this.settingsToURL = function(searchSettings) {
         var searchText = searchSettings.searchText;
         if  (searchText == null || searchText == "") {
             searchText = "domain_source:" + searchSettings.domain;
@@ -1519,15 +1590,30 @@ var SearchManager = function(settingsManager, pageManager) {
 
         var paramFragment = this.parametersToString(parameters);
         var url = this.settingsManager.getEBISearchURL()  + searchSettings.domain + paramFragment;
-        console.log("Running domain search = " + url);
+        return url;
+    };
+
+    this.runDomainSearch = function(searchSettings) {
+        var self = this;
+        console.log("Searchtext = " + searchSettings.searchText);
+        this.settingsManager.setSearchText(searchSettings.searchText);
+        this.settingsManager.setSearchSettings(searchSettings.type, searchSettings);
+
+        console.log("about to push state");
+        //history.pushState(JSON.stringify(searchSettings), "search", "/metagenomics/search");
+
         self.pageManager.showSpinner(searchSettings);
         var successCallback = function(httpReq) {
             self.pageManager.removeSpinner(searchSettings);
             self.pageManager.displayDomainData(httpReq, searchSettings);
         };
         var errorCallback = function(httpReq) {
+            self.pageManager.removeSpinner(searchSettings);
             self.pageManager.displaySearchError(httpReq, searchSettings);
         };
+
+        var url = self.settingsToURL(searchSettings);
+        console.log("Running domain search = " + url);
 
         self.runAjax("GET", "json", url, null, successCallback, errorCallback);
     };
@@ -1539,6 +1625,60 @@ var SearchManager = function(settingsManager, pageManager) {
             this.runDomainSearch(searchSetting, pageManager);
         }
     };
+
+    this.runDownloadSearch = function (rowFunction, data, searchSettings, results) {
+        var self = this;
+
+        if (results == null) {
+            var searchSettings = JSON.parse(JSON.stringify(searchSettings));
+            searchSettings.resultsNum = 100;
+            searchSettings.page = 0;
+        }
+
+        if (results != null) {
+            for(var i = 0; i < results.length; i++) {
+                var entry = rowFunction(results[i]);
+                data.push(entry);
+            }
+        }
+
+        var url = this.settingsToURL(searchSettings);
+
+
+        //self.pageManager.showSpinner(searchSettings);
+        var successCallback = function(httpReq) {
+            //self.pageManager.removeSpinner(searchSettings);
+            if (data.length <= httpReq.response.hitCount) {
+                var remainingEntries = (httpReq.response.hitCount - data.length) + 1;
+                if (remainingEntries < searchSettings.resultsNum) {
+                    searchSettings.resultsNum = remainingEntries;
+                }
+                searchSettings.page++;
+                self.runDownloadSearch(rowFunction, data, searchSettings, httpReq.response.entries);
+            } else {
+                self.saveResults(data, searchSettings);
+            }
+
+        };
+        var errorCallback = function(httpReq) {
+            //self.pageManager.removeSpinner(searchSettings);
+            //self.pageManager.displaySearchError(httpReq, searchSettings);
+        };
+        self.runAjax("GET", "json", url, null, successCallback, errorCallback);
+    };
+
+    this.saveResults = function(data, searchSettings) {
+        var lines = data.map(function(tokens){
+            var values = tokens.map(function (item) {
+                return item.name;
+            })
+            var line = values.join("\t");
+            line += "\n";
+            return line;
+        });
+        var blob = new Blob(lines, {type: "text/plain;charset=utf-8"});
+        saveAs(blob, "metagenomics.txt");
+    };
 };
 
 var PageManager = function() {
@@ -1546,7 +1686,7 @@ var PageManager = function() {
     this.tabManager = new TabManager();
     this.searchManager = new SearchManager(this.settingsManager, this);
     this.resultsManager = new ResultsManager();
-    this.tableManager = new TableManager(this.searchManager);
+    this.tableManager = new TableManager(this.searchManager, this.settingsManager);
     this.facetManager = new FacetManager(this.settingsManager, this.searchManager);
 
     this.isSearchPage = function() {

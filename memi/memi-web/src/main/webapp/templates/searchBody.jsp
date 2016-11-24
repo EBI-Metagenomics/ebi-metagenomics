@@ -33,6 +33,7 @@
             <div class="search-page grid_19 omega">
                 <div class="table-margin-r" id="Projects-searchData"></div>
                 <div id="Projects-searchPagination" class="table-pagination"></div>
+                <div id="Projects-download" class="table-download"></div>
             </div>
             </div>
         </div>
@@ -43,7 +44,8 @@
 
             <div class="search-page grid_19 omega">
                 <div class="table-margin-r" id="Samples-searchData"></div>
-                <div class="table-pagination" id="Samples-searchPagination"></div>
+                <div id="Samples-searchPagination" class="table-pagination"></div>
+                <div id="Samples-download" class="table-download"></div>
             </div>
             </div>
         </div>
@@ -55,6 +57,7 @@
             <div class="search-page grid_19 omega">
                 <div class="table-margin-r" id="Runs-searchData"></div>
                 <div id="Runs-searchPagination" class="table-pagination"></div>
+                <div id="Runs-download" class="table-download"></div>
             </div>
         </div>
         </div>
