@@ -445,43 +445,50 @@ var TableManager = function(searchManager, settingsManager) {
         //console.log("Adding pagination for " + searchSettings.type);
         var dataType = searchSettings.type;
 
-        var paginationContainer = document.getElementById(dataType + "-searchPagination");
-        if (paginationContainer != null) {
-            paginationContainer.innerHTML = "";
-            var prevButton = document.createElement("input");
-            prevButton.type = "button";
-            prevButton.id = dataType + "-prevPage";
-            prevButton.value = "Previous";
+        var pageElements = ["header", "footer"];
+        for (var i=0; i < pageElements.length; i++) {
+            var element = pageElements[i];
 
-            if (searchSettings.page <= 0 ) {
-                prevButton.disabled = true;
+            var paginationContainer = document.getElementById(dataType + "-" + element + "-searchPagination");
+            if (paginationContainer != null) {
+                paginationContainer.innerHTML = "";
+                var prevButton = document.createElement("input");
+                prevButton.type = "button";
+                prevButton.id = element + "-" + dataType + "-prevPage";
+                prevButton.value = "Previous";
+
+                if (searchSettings.page <= 0 ) {
+                    prevButton.disabled = true;
+                }
+                prevButton.addEventListener('click', function(event) {
+                    searchSettings.page--;
+                    self.searchManager.runDomainSearch(searchSettings);
+                });
+
+                var nextButton = document.createElement("input");
+                nextButton.type = "button";
+                nextButton.id = element + "-" + dataType + "-nextPage";
+                nextButton.value = "Next";
+                var maxPage = Math.ceil(results.hitCount/searchSettings.resultsNum);
+                if ((searchSettings.page+1) >= maxPage) {
+                    nextButton.disabled = true;
+                }
+                nextButton.addEventListener('click', function(event) {
+                    searchSettings.page++;
+                    self.searchManager.runDomainSearch(searchSettings);
+                });
+
+                var textContent = " Page " + (searchSettings.page+1) + " of " + (maxPage) + " ";
+                var textNode = document.createTextNode(textContent);
+                paginationContainer.appendChild(prevButton);
+                paginationContainer.appendChild(textNode);
+                paginationContainer.appendChild(nextButton);
+            } else {
+                console.log("Error: Expected to find div with id '" + dataType + "-" + element + "-searchPagination'");
             }
-            prevButton.addEventListener('click', function(event) {
-                searchSettings.page--;
-                self.searchManager.runDomainSearch(searchSettings);
-            });
 
-            var nextButton = document.createElement("input");
-            nextButton.type = "button";
-            nextButton.id = dataType + "-nextPage";
-            nextButton.value = "Next";
-            var maxPage = Math.ceil(results.hitCount/searchSettings.resultsNum);
-            if ((searchSettings.page+1) >= maxPage) {
-                nextButton.disabled = true;
-            }
-            nextButton.addEventListener('click', function(event) {
-                searchSettings.page++;
-                self.searchManager.runDomainSearch(searchSettings);
-            });
-
-            var textSpan = document.createElement("span");
-            textSpan.textContent = " Page " + (searchSettings.page+1) + " of " + (maxPage) + " ";
-            paginationContainer.appendChild(prevButton);
-            paginationContainer.appendChild(textSpan);
-            paginationContainer.appendChild(nextButton);
-        } else {
-            console.log("Error: Expected to find div with id '" + dataType + "-searchPagination'");
         }
+
     };
 
     this.displayDownloadButton = function(results, searchSettings) {
@@ -492,23 +499,30 @@ var TableManager = function(searchManager, settingsManager) {
                 var dataType = searchSettings.type;
                 console.log("displayDownloadButton: " + dataType);
 
-                var downloadContainer = document.getElementById(dataType + "-download");
-                if (downloadContainer != null) {
-                    var downloadID = dataType + "downloadButton";
-                    var downloadButton = document.getElementById(downloadID);
-                    if (downloadButton == null) {
-                        downloadButton = document.createElement("input");
-                        downloadButton.type = "button";
-                        downloadButton.id = downloadID;
-                        downloadButton.value = "Download";
-                        downloadContainer.appendChild(downloadButton);
-                        downloadButton.addEventListener("click", function(event){
-                            self.downloadSearchResults(results, searchSettings);
-                        });
-                    }
-                } else {
-                    console.log("Error: Expected to find div with id '" + dataType + "'-download")
+                var pageElements = ["header", "footer"];
+                for (var i=0; i < pageElements.length; i++) {
+                    var element = pageElements[i];
+                    var downloadContainer = document.getElementById(dataType + "-" + element + "-download");
+                    if (downloadContainer != null) {
+                        var downloadID = dataType + "downloadButton";
+                        var downloadButton = document.getElementById(downloadID);
+                        if (downloadButton == null) {
+                            downloadButton = document.createElement("input");
+                            downloadButton.type = "button";
+                            downloadButton.id = element + "-" + downloadID;
+                            downloadButton.value = "Download";
+                            downloadContainer.appendChild(downloadButton);
+                            downloadButton.addEventListener("click", function (event) {
+                                self.downloadSearchResults(results, searchSettings);
+                            });
+                        }
+                    } else {
+                    console.log("Error: Expected to find div with id '" + dataType + "-" + element + "'-download")
                 }
+                }
+
+
+
             }
         } catch (e) {
             console.log("Error: Blob type not supported consider upgrading to modern browser (Chrome or Firefox)");
@@ -1391,14 +1405,23 @@ var TabManager = function() {
 
 var ResultsManager = function() {
     this.displayData = function(results, dataType, tableManager, settingsManager) {
-        resultsContainer = document.getElementById(dataType + "-searchData");
-        if (resultsContainer != null) {
-            resultsContainer.innerHTML = ""; //clear results div
-            resultsTitle = document.createElement("h3");
+        var hitNumText = document.getElementById(dataType + "-hitnum-text");
+        if (hitNumText != null) {
+            hitNumText.innerHTML = "";
+            var resultsTitle = document.createElement("h3");
             if (results.hasOwnProperty("entries") && results.entries != null) {
                 resultsTitle.innerHTML = "Showing " + results.entries.length
                     + " out of " + results.hitCount + " results";
-                resultsContainer.appendChild(resultsTitle);
+                hitNumText.appendChild(resultsTitle);
+            }
+        } else {
+            console.log("Error: Expected to find div with id '" + dataType + "-hitnum-text'");
+        }
+
+        var resultsContainer = document.getElementById(dataType + "-searchData");
+        if (resultsContainer != null) {
+            resultsContainer.innerHTML = ""; //clear results div
+            if (results.hasOwnProperty("entries") && results.entries != null) {
                 if (dataType == settingsManager.GLOBAL_SEARCH_SETTINGS.PROJECT) {
                     tableManager.displayProjectTable(results, resultsContainer);
                 } else if (dataType == settingsManager.GLOBAL_SEARCH_SETTINGS.SAMPLE) {
@@ -1602,6 +1625,7 @@ var SearchManager = function(settingsManager, pageManager) {
         console.log("about to push state");
         //history.pushState(JSON.stringify(searchSettings), "search", "/metagenomics/search");
 
+        self.pageManager.clearDomainResults(searchSettings);
         self.pageManager.showSpinner(searchSettings);
         var successCallback = function(httpReq) {
             self.pageManager.removeSpinner(searchSettings);
@@ -1644,10 +1668,10 @@ var SearchManager = function(settingsManager, pageManager) {
 
         var url = this.settingsToURL(searchSettings);
 
-
-        //self.pageManager.showSpinner(searchSettings);
+        self.pageManager.showSpinner(searchSettings);
         var successCallback = function(httpReq) {
-            //self.pageManager.removeSpinner(searchSettings);
+            self.pageManager.removeSpinner(searchSettings);
+            console.log("Downloaded " + (data.length-1) + " of " + httpReq.response.hitCount);
             if (data.length <= httpReq.response.hitCount) {
                 var remainingEntries = (httpReq.response.hitCount - data.length) + 1;
                 if (remainingEntries < searchSettings.resultsNum) {
@@ -1661,8 +1685,8 @@ var SearchManager = function(settingsManager, pageManager) {
 
         };
         var errorCallback = function(httpReq) {
-            //self.pageManager.removeSpinner(searchSettings);
-            //self.pageManager.displaySearchError(httpReq, searchSettings);
+            self.pageManager.removeSpinner(searchSettings);
+            console.log("Error: Something went wrong during data download");
         };
         self.runAjax("GET", "json", url, null, successCallback, errorCallback);
     };
@@ -1726,7 +1750,7 @@ var PageManager = function() {
         document.head.appendChild(linkElement);
     }
 
-    this.showSpinner = function(searchSettings) {
+    this.clearDomainResults = function(searchSettings) {
         var dataType = searchSettings.type;
         this.tabManager.setTabText("Searching", dataType);
         resultsContainer = document.getElementById(dataType + "-searchData");
@@ -1741,17 +1765,60 @@ var PageManager = function() {
         } else {
             console.log("Error: Expected to find div with id '" + dataType + "-searchFacets'");
         }
-        var paginationContainer = document.getElementById(dataType + "-searchPagination");
-        if (paginationContainer != null) {
-            paginationContainer.innerHTML = "";
-        } else {
-            console.log("Error: Expected to find div with id '" + dataType + "-searchPagination'");
+        var pageElements = ["header", "footer"];
+        for(var i=0; i < pageElements.length; i++) {
+            var element = pageElements[i];
+            var paginationContainer = document.getElementById(dataType + "-" + element + "-searchPagination");
+            if (paginationContainer != null) {
+                paginationContainer.innerHTML = "";
+            } else {
+                console.log("Error: Expected to find div with id '" + dataType + "-" + element + "-searchPagination'");
+            }
+            var downloadContainer = document.getElementById(dataType + "-" + element + "-download");
+            if (downloadContainer != null) {
+                downloadContainer.innerHTML = "";
+            } else {
+                console.log("Error: Expected to find div with id '" + dataType + "-" + element + "-download'");
+            }
+            var hitNumContainer = document.getElementById(dataType + "-hitnum-text");
+            if (hitNumContainer != null) {
+                hitNumContainer.innerHTML = "";
+            } else {
+                console.log("Error: Expected to find div with id '" + dataType + "-hitNum-text'");
+            }
         }
+
 
     };
 
-    this.removeSpinner = function(searchSettings) {
+    this.showSpinner = function(searchSettings) {
+        var overlay = document.getElementById("search-overlay");
+        if (overlay != null) {
+            overlay.style.display = "block";
+            var spinnerContainer = document.getElementById("spinner");
+            if (spinnerContainer != null) {
+                spinnerContainer.classList.add("spinner");
+            } else {
+                console.log("Error: Expected to find div with id 'spinner'");
+            }
+        } else {
+            console.log("Error: Expected to find element with id search-overlay");
+        }
+    };
 
+    this.removeSpinner = function(searchSettings) {
+        var overlay = document.getElementById("search-overlay");
+        if (overlay != null) {
+            overlay.style.display = "none";
+            var spinnerContainer = document.getElementById("spinner");
+            if (spinnerContainer != null) {
+                spinnerContainer.classList.remove("spinner");
+            } else {
+                console.log("Error: Expected to find div with id 'spinner'");
+            }
+        } else {
+            console.log("Error: Expected to find element with id search-overlay");
+        }
     };
 
     this.displaySearchError = function (httpReq, searchSettings) {

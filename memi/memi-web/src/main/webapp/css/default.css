@@ -465,8 +465,15 @@ text-align:left;
 #fragment-download .pipeline_table .filesize {color: #8E8E8E; font-size:90%;}
 
 /*SEARCH TABLE*/
-.table-pagination {margin: 9px 0 18px 9px;}
+.table-pagination {
+    margin: 9px 0 18px 9px;
+    float: left;
+}
 .table-pagination input[type="button"]{cursor: pointer;}
+.table-download {
+    margin: 9px 0 18px 9px;
+    float: right;
+}
 
 /**************************** END TABLE ***********************************/
 
@@ -2069,3 +2076,40 @@ div#local-masthead ul li.logout {display:none;}
 }
 
 .hierarchical-facet-list ul {font-size: 1rem}
+
+/* search page spinner and overlay */
+.searchTitle {
+    padding: 0 9px;
+    font-size: 190%;
+    font-family: helvetica, "trebuchet MS", arial, sans-serif;
+    color: #0F6D99;
+    margin: 0.83em 0;
+    font-weight: normal;
+    float: left;
+}
+
+.overlay {
+    z-index: 99;
+    display: block;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    right: 0;
+    top: 0;
+    display: none;
+}
+
+.spinner {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #2B8A97; /* Blue */
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+    animation: spin 2s linear infinite;
+    float: left;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

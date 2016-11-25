@@ -3,7 +3,10 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <div class="grid_24 sample_ana" id="mainContainer">
-    <h2>Search EBI Metagenomics</h2>
+    <div style="overflow: auto">
+        <div class="searchTitle">Search EBI Metagenomics</div>
+        <div id="spinner" class="spinner"></div>
+    </div>
 
     <form class="local-search-xs" action="javascript:pageManager.runSmallSearch();"
                commandName="ebiSearchForm" method="GET">
@@ -31,9 +34,21 @@
             <div class="search-filter grid_5 alpha" id="Projects-searchFacets"></div>
 
             <div class="search-page grid_19 omega">
-                <div class="table-margin-r" id="Projects-searchData"></div>
-                <div id="Projects-searchPagination" class="table-pagination"></div>
-                <div id="Projects-download" class="table-download"></div>
+                <div id="Projects-hitnum-text"></div>
+
+                <div id="Projects-table-header">
+                    <div id="Projects-header-searchPagination" class="table-pagination"></div>
+                    <div id="Projects-header-download" class="table-download"></div>
+                </div>
+
+                <div class="table-margin-r" id="Projects-searchData">
+
+                </div>
+
+                <div id="Projects-table-footer">
+                    <div id="Projects-footer-searchPagination" class="table-pagination"></div>
+                    <div id="Projects-footer-download" class="table-download"></div>
+                </div>
             </div>
             </div>
         </div>
@@ -43,9 +58,19 @@
             <div class="search-filter grid_5 alpha" id="Samples-searchFacets"></div>
 
             <div class="search-page grid_19 omega">
+                <div id="Samples-hitnum-text"></div>
+
+                <div id="Samples-table-header">
+                    <div id="Samples-header-searchPagination" class="table-pagination"></div>
+                    <div id="Samples-header-download" class="table-download"></div>
+                </div>
+
                 <div class="table-margin-r" id="Samples-searchData"></div>
-                <div id="Samples-searchPagination" class="table-pagination"></div>
-                <div id="Samples-download" class="table-download"></div>
+
+                <div id="Samples-table-footer">
+                    <div id="Samples-footer-searchPagination" class="table-pagination"></div>
+                    <div id="Samples-footer-download" class="table-download"></div>
+                </div>
             </div>
             </div>
         </div>
@@ -55,12 +80,22 @@
             <div class="search-filter grid_5 alpha" id="Runs-searchFacets"></div>
 
             <div class="search-page grid_19 omega">
+                <div id="Runs-hitnum-text"></div>
+
+                <div id="Runs-table-header">
+                    <div id="Runs-header-searchPagination" class="table-pagination"></div>
+                    <div id="Runs-header-download" class="table-download"></div>
+                </div>
+
                 <div class="table-margin-r" id="Runs-searchData"></div>
-                <div id="Runs-searchPagination" class="table-pagination"></div>
-                <div id="Runs-download" class="table-download"></div>
+
+                <div id="Runs-table-footer">
+                    <div id="Runs-footer-searchPagination" class="table-pagination"></div>
+                    <div id="Runs-footer-download" class="table-download"></div>
+                </div>
             </div>
         </div>
         </div>
     </div>
-
+    <div id="search-overlay" class="overlay"></div>
 </div>
