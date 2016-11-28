@@ -1504,7 +1504,7 @@ img.ui-datepicker-trigger {float:left; /*solve a bug with chromium*/}
     background-image: -webkit-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));  border-radius: 0px;outline:0;}
 .ui-button:hover {color:black; border: 1px #d0d0d0 solid;}
 .ui-button.icon-functional:before {color:#777; }
-.ui-button.icon-functional:hover:before {color:tomat;}
+.ui-button.icon-functional:hover:before {color:tomato;}
 
 /*EXPORT BUTTON - ANALYSIS PAGE*/
 ul.export_list {z-index: 1;display: none;border: 1px solid #949494; padding: 5px;background-color: #FFF;font-size: 1em;list-style: none;outline: none;margin:0;}
