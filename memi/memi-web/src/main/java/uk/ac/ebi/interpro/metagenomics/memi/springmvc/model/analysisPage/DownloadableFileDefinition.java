@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Required;
 /**
  * @author Maxim Scheremetjew
  */
-public abstract class DownloadableFileDefinition implements IResultFileDefinition {
+public abstract class DownloadableFileDefinition implements IResultFileDefinition, Cloneable {
     private String identifier;
 
     private String description;
@@ -120,5 +120,14 @@ public abstract class DownloadableFileDefinition implements IResultFileDefinitio
 
     public void setReleaseVersion(String releaseVersion) {
         this.releaseVersion = releaseVersion;
+    }
+
+    public DownloadableFileDefinition clone() {
+        try {
+            return (DownloadableFileDefinition) super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
     }
 }

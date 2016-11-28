@@ -300,7 +300,7 @@
 
 <!-- javascript for handling search box in header and search page elements -->
 <script src="${pageContext.request.contextPath}/js/FileSaver.min.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/js/ebiSearch.js?v1.0" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/js/ebiSearch.js?v1.2" type="text/javascript"></script>
 <!-- JQuery datatable-->
 <script defer="defer" src="${pageContext.request.contextPath}/js/jquery.dataTables.js"></script>
 <script defer="defer" src="${pageContext.request.contextPath}/js/jquery.highlight.js"></script>

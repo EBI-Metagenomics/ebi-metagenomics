@@ -59,4 +59,8 @@
 
     <bean id="authenticationService" class="uk.ac.ebi.interpro.metagenomics.memi.authentication.AuthenticationService"/>
 
+    <bean id="exportValueService" class="uk.ac.ebi.interpro.metagenomics.memi.services.ExportValueService">
+        <constructor-arg ref="fileDefinitionsMap"/>
+    </bean>
+
 </beans>

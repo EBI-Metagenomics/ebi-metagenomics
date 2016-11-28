@@ -1,8 +1,8 @@
 '''
 Created on 27/10/2015
 @author: Maxim Scheremetjew
-amended 23/02/2016 by Maxim Scheremetjew
-version: 1.0-rc2
+amended 07/11/2016 by Maxim Scheremetjew
+version: 1.1
 '''
 
 import argparse
@@ -49,13 +49,14 @@ def _get_number_of_chunks(url_template, study_id, sample_id, run_id, version, do
     except URLError as url_error:
         print(url_error)
         raise
-    except  IOError as io_error:
+    except IOError as io_error:
         print(io_error)
         raise
     except ValueError as e:
         print(e)
-        print "Could not retrieve the number of chunks. Check the version number in the URL. Program will exit now."
-        raise
+        print "Skipping this run! Could not retrieve the number of chunks for this URL. " \
+              "Check the version number in the URL and check if the run is available online."
+        return 0
 
 
 def _get_file_stream_handler(url_template, study_id):
@@ -91,7 +92,8 @@ def _print_program_settings(project_id, version, selected_file_types_list, outpu
 if __name__ == "__main__":
     function_file_type_list = ["InterProScan", "GOAnnotations", "GOSlimAnnotations"]
     sequences_file_type_list = ["ProcessedReads", "ReadsWithPredictedCDS", "ReadsWithMatches", "ReadsWithoutMatches",
-                                "PredictedCDS", "PredictedCDSWithoutAnnotation", "PredictedORFWithoutAnnotation"]
+                                "PredictedCDS", "PredictedCDSWithoutAnnotation", "PredictedCDSWithAnnotation",
+                                "PredictedORFWithoutAnnotation", "ncRNA-tRNA-FASTA"]
     taxonomy_file_type_list = ["5S-rRNA-FASTA", "16S-rRNA-FASTA", "23S-rRNA-FASTA", "OTU-TSV", "OTU-BIOM",
                                "OTU-table-HDF5-BIOM", "OTU-table-JSON-BIOM", "NewickTree", "NewickPrunedTree"]
     # Default list of available file types
@@ -111,7 +113,14 @@ if __name__ == "__main__":
                         help="Supported file types are: AllFunction, AllTaxonomy, AllSequences OR a comma-separated list of supported file types: " + ', '.join(
                                 default_file_type_list) + " OR a single file type.**OPTIONAL**\nDownloads all file types if not provided.",
                         required=False)
+    parser.add_argument("-vb", "--verbose", help="Switches on the verbose mode.**OPTIONAL**",
+                        required=False)
     args = vars(parser.parse_args())
+
+    # Turn on verbose mode if option is set
+    verbose = False
+    if 'verbose' in args.keys():
+        verbose = True
 
     # Parse the project accession
     study_id = args['project_id']
@@ -165,9 +174,22 @@ if __name__ == "__main__":
             domain = "function"
             fileExtension = ".csv"
             is_chunked = False
-        elif file_type == 'PredictedCDS' or file_type == 'PredicatedCDSWithoutAnnotation':
+        # PredictedCDS is version 1.0 and 2.0 only, from version 3.0 on this file type was replaced by
+        # PredictedCDSWithAnnotation (PredictedCDS can be gained by concatenation of the 2 sequence file types now)
+        elif file_type == 'PredictedCDS' or file_type == 'PredicatedCDSWithoutAnnotation' or file_type == \
+                'PredictedCDSWithAnnotation':
+            if file_type == 'PredictedCDSWithAnnotation' and (version == '1.0' or version == '2.0'):
+                print "File type '" + file_type + "' is not available for version " + version + "!"
+                continue
+            elif file_type == 'PredictedCDS' and version == '3.0':
+                print "File type '" + file_type + "' is not available for version " + version + "!"
+                continue
             domain = "sequences"
             fileExtension = ".faa.gz"
+        elif file_type == 'ncRNA-tRNA-FASTA':
+            domain = "sequences"
+            fileExtension = ".fasta"
+            is_chunked = False
         elif file_type == '5S-rRNA-FASTA' or file_type == '16S-rRNA-FASTA' or file_type == '23S-rRNA-FASTA':
             is_chunked = False
             domain = "taxonomy"
@@ -176,8 +198,10 @@ if __name__ == "__main__":
         # NewickTree is version 1 only
         elif file_type == 'NewickPrunedTree' or file_type == 'NewickTree':
             if file_type == 'NewickPrunedTree' and version == '1.0':
+                print "File type '" + file_type + "' is not available for version " + version + "!"
                 continue
             if file_type == 'NewickTree' and version == '2.0':
+                print "File type '" + file_type + "' is not available for version " + version + "!"
                 continue
             is_chunked = False
             domain = "taxonomy"
@@ -190,8 +214,10 @@ if __name__ == "__main__":
         # OTU-table-HDF5-BIOM and OTU-table-JSON-BIOM are version 2 only
         elif file_type == 'OTU-BIOM' or file_type == 'OTU-table-HDF5-BIOM' or file_type == 'OTU-table-JSON-BIOM':
             if file_type == 'OTU-BIOM' and version == '2.0':
+                print "File type '" + file_type + "' is not available for version " + version + "!"
                 continue
             if (file_type == 'OTU-table-HDF5-BIOM' or file_type == 'OTU-table-JSON-BIOM') and version == '1.0':
+                print "File type '" + file_type + "' is not available for version " + version + "!"
                 continue
             is_chunked = False
             domain = "taxonomy"

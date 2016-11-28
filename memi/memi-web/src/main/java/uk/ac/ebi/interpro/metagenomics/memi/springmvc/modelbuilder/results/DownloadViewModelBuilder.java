@@ -81,13 +81,13 @@ public class DownloadViewModelBuilder extends AbstractResultViewModelBuilder<Dow
         // Instantiate download links and sections
         final SequencesDownloadSection sequencesDownloadSection = new SequencesDownloadSection();
         final TaxonomyDownloadSection taxonomyDownloadSection = new TaxonomyDownloadSection();
-        final List<DownloadLink> otherSeqDataDownloadLinks = new ArrayList<DownloadLink>();
+        final List<DownloadLink> unchunkedSeqDataDownloadLinks = new ArrayList<DownloadLink>();
         final List<DownloadLink> otherFuncAnalysisDownloadLinks = new ArrayList<DownloadLink>();
         final List<DownloadLink> interproscanDownloadLinks = new ArrayList<DownloadLink>();
 
         // Build external link to ENA website
         final String linkURL = (sampleIsPublic ? "https://www.ebi.ac.uk/ena/data/view/" + externalRunId : "https://www.ebi.ac.uk/ena/submit/sra/#home");
-        sequencesDownloadSection.addOtherDownloadLink(new DownloadLink("Submitted nucleotide reads",
+        sequencesDownloadSection.addExternalDownloadLink(new DownloadLink("Submitted nucleotide reads",
                 "Click to download all submitted nucleotide data on the ENA website",
                 linkURL,
                 true,
@@ -198,25 +198,25 @@ public class DownloadViewModelBuilder extends AbstractResultViewModelBuilder<Dow
                         log.warn(chunkedFileObject.getAbsolutePath());
                         log.warn("Will go on with the unchunked version.");
                         processUnchunkedFileDefinition(downloadableFile, analysisJobReleaseVersion, externalProjectId, externalSampleId, externalRunId,
-                                otherSeqDataDownloadLinks, otherFuncAnalysisDownloadLinks, taxonomyDownloadSection);
+                                unchunkedSeqDataDownloadLinks, otherFuncAnalysisDownloadLinks, taxonomyDownloadSection);
                     }
                 } else {//Chunk summary file does not exist
                     log.warn("The following .chunks file does not exist:");
                     log.warn(chunkedFileObject.getAbsolutePath());
                     log.warn("Will go on with the unchunked version.");
                     processUnchunkedFileDefinition(downloadableFile, analysisJobReleaseVersion, externalProjectId, externalSampleId, externalRunId,
-                            otherSeqDataDownloadLinks, otherFuncAnalysisDownloadLinks, taxonomyDownloadSection);
+                            unchunkedSeqDataDownloadLinks, otherFuncAnalysisDownloadLinks, taxonomyDownloadSection);
                 }
             } else {//No chunked version of this file
                 processUnchunkedFileDefinition(downloadableFile, analysisJobReleaseVersion, externalProjectId, externalSampleId, externalRunId,
-                        otherSeqDataDownloadLinks, otherFuncAnalysisDownloadLinks, taxonomyDownloadSection);
+                        unchunkedSeqDataDownloadLinks, otherFuncAnalysisDownloadLinks, taxonomyDownloadSection);
             }
 
         }
 
 
-        Collections.sort(otherSeqDataDownloadLinks, DownloadLink.DownloadLinkComparator);
-        sequencesDownloadSection.addOtherDownloadLinks(otherSeqDataDownloadLinks);
+        Collections.sort(unchunkedSeqDataDownloadLinks, DownloadLink.DownloadLinkComparator);
+        sequencesDownloadSection.addUnchunkedDownloadLinks(unchunkedSeqDataDownloadLinks);
         Collections.sort(otherFuncAnalysisDownloadLinks, DownloadLink.DownloadLinkComparator);
         return new DownloadSection(
                 sequencesDownloadSection,
@@ -251,52 +251,64 @@ public class DownloadViewModelBuilder extends AbstractResultViewModelBuilder<Dow
                                                 final List<DownloadLink> seqDataDownloadLinks, final List<DownloadLink> otherFuncAnalysisDownloadLinks,
                                                 final TaxonomyDownloadSection taxonomyDownloadSection) {
         DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(downloadableFile);
-        File fileObject = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, fileDefinition);
+        // Replace the asterix (*) in the relative path attribute of non coding RNA file definition by the input file name
+        // e.g. /RNA-selector/*_tRNAselect.fasta
+        String fileDefinitionId = fileDefinition.getIdentifier();
+        //Create a clone and manipulate the new instance rather then the original
+        DownloadableFileDefinition fileDefinitionClone = (DownloadableFileDefinition) fileDefinition.clone();
+        if (fileDefinitionId != null && fileDefinitionClone.getIdentifier().equalsIgnoreCase("NC_RNA_T_RNA_FILE")) {
+            String inputFileName = analysisJob.getInputFileName();
+            String relativePath = fileDefinitionClone.getRelativePath();
+            String newRelativePath = relativePath.replace("*", inputFileName);
+            fileDefinitionClone.setRelativePath(newRelativePath);
+        }
+
+        File fileObject = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, fileDefinitionClone);
         boolean doesExist = FileExistenceChecker.checkFileExistence(fileObject);
         if (doesExist && fileObject.length() > 0) {
-            if (fileDefinition instanceof SequenceFileDefinition) {
+            if (fileDefinitionClone instanceof SequenceFileDefinition) {
                 //filter out certain files by release version
-                if (fileDefinition.getReleaseVersion() == null || fileDefinition.getReleaseVersion().equals(analysisJobReleaseVersion)) {
-                    seqDataDownloadLinks.add(new DownloadLink(fileDefinition.getLinkText(),
-                            fileDefinition.getLinkTitle(),
-                            "projects/" + externalProjectId + "/samples/" + externalSampleId + "/runs/" + externalRunId + "/results/sequences" + "/versions/" + analysisJobReleaseVersion + fileDefinition.getLinkURL(),
-                            fileDefinition.getOrder(),
+                if (fileDefinitionClone.getReleaseVersion() == null || fileDefinitionClone.getReleaseVersion().equals(analysisJobReleaseVersion)) {
+                    seqDataDownloadLinks.add(new DownloadLink(fileDefinitionClone.getLinkText(),
+                            fileDefinitionClone.getLinkTitle(),
+                            "projects/" + externalProjectId + "/samples/" + externalSampleId + "/runs/" + externalRunId + "/results/versions/" + analysisJobReleaseVersion + "/sequences/" + fileDefinitionClone.getLinkURL(),
+                            fileDefinitionClone.getOrder(),
                             getFileSize(fileObject)));
                 }
             }// If taxonomy section downloadable file
-            else if (fileDefinition instanceof TaxonomicAnalysisFileDefinition) {
-                String linkText = fileDefinition.getLinkText();
-                String linkTitle = fileDefinition.getLinkTitle();
+            else if (fileDefinitionClone instanceof TaxonomicAnalysisFileDefinition) {
+                String linkText = fileDefinitionClone.getLinkText();
+                String linkTitle = fileDefinitionClone.getLinkTitle();
                 String linkURL = MGPortalURLCollection.PROJECT_SAMPLE_RUN_RESULTS_TAXONOMY_TYPE
                         .replace("{projectId}", externalProjectId)
                         .replace("{sampleId}", externalSampleId)
                         .replace("{runId}", externalRunId)
                         .replace("{releaseVersion:\\d\\.\\d}", analysisJobReleaseVersion)
                         // TODO: Introduce new result type
-                        .replace("{resultType}", fileDefinition.getLinkURL());
-                int order = fileDefinition.getOrder();
+                        .replace("{resultType}", fileDefinitionClone.getLinkURL());
+                int order = fileDefinitionClone.getOrder();
                 String fileSize = getFileSize(fileObject);
                 DownloadLink taxonomyDownloadLink = new DownloadLink(linkText, linkTitle, linkURL, order, fileSize);
                 taxonomyDownloadSection.addDownloadLink(taxonomyDownloadLink);
             } // If functional download section downloadable file
-            else if (fileDefinition instanceof FunctionalAnalysisFileDefinition) {
+            else if (fileDefinitionClone instanceof FunctionalAnalysisFileDefinition) {
                 //Filter out amplicons
                 if (!isAmpliconData()) {
-                    if (fileDefinition.getIdentifier().equals("INTERPROSCAN_RESULT_FILE")) {
+                    if (fileDefinitionClone.getIdentifier().equals("INTERPROSCAN_RESULT_FILE")) {
                         String filePath = fileObject.getAbsolutePath();
                         File newFileObject = new File(filePath + ".chunks");
                         if (!FileExistenceChecker.checkFileExistence(newFileObject)) {
-                            otherFuncAnalysisDownloadLinks.add(new DownloadLink(fileDefinition.getLinkText(),
-                                    fileDefinition.getLinkTitle(),
-                                    "projects/" + externalProjectId + "/samples/" + externalSampleId + "/runs/" + externalRunId + "/results/" + fileDefinition.getLinkURL() + "/versions/" + analysisJobReleaseVersion,
-                                    fileDefinition.getOrder(),
+                            otherFuncAnalysisDownloadLinks.add(new DownloadLink(fileDefinitionClone.getLinkText(),
+                                    fileDefinitionClone.getLinkTitle(),
+                                    "projects/" + externalProjectId + "/samples/" + externalSampleId + "/runs/" + externalRunId + "/results/" + fileDefinitionClone.getLinkURL() + "/versions/" + analysisJobReleaseVersion,
+                                    fileDefinitionClone.getOrder(),
                                     getFileSize(fileObject)));
                         }
                     } else {
-                        otherFuncAnalysisDownloadLinks.add(new DownloadLink(fileDefinition.getLinkText(),
-                                fileDefinition.getLinkTitle(),
-                                "projects/" + externalProjectId + "/samples/" + externalSampleId + "/runs/" + externalRunId + "/results/versions/" + analysisJobReleaseVersion + "/function/" + fileDefinition.getLinkURL(),
-                                fileDefinition.getOrder(),
+                        otherFuncAnalysisDownloadLinks.add(new DownloadLink(fileDefinitionClone.getLinkText(),
+                                fileDefinitionClone.getLinkTitle(),
+                                "projects/" + externalProjectId + "/samples/" + externalSampleId + "/runs/" + externalRunId + "/results/versions/" + analysisJobReleaseVersion + "/function/" + fileDefinitionClone.getLinkURL(),
+                                fileDefinitionClone.getOrder(),
                                 getFileSize(fileObject)));
                     }
                 }

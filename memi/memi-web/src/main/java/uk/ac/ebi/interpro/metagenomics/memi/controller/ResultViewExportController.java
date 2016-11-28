@@ -5,20 +5,19 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.controller.results.AbstractResultViewController;
 import uk.ac.ebi.interpro.metagenomics.memi.core.tools.MemiTools;
 import uk.ac.ebi.interpro.metagenomics.memi.core.tools.StreamCopyUtil;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Run;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob;
+import uk.ac.ebi.interpro.metagenomics.memi.services.ExportValueService;
 import uk.ac.ebi.interpro.metagenomics.memi.services.FileObjectBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.DownloadableFileDefinition;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.FileDefinitionId;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,6 +34,47 @@ import java.util.Locale;
 @Controller
 public class ResultViewExportController extends AbstractResultViewController {
     private static final Log log = LogFactory.getLog(ResultViewExportController.class);
+
+    @Resource
+    private ExportValueService exportValueService;
+
+
+    @RequestMapping(value = {
+            MGPortalURLCollection.PROJECT_SAMPLE_RUN_RESULTS_SEQUENCES_EXPORT
+    })
+    public void doHandleTaxonomyExports(@PathVariable final String projectId,
+                                        @PathVariable final String sampleId,
+                                        @PathVariable final String runId,
+                                        @PathVariable final String releaseVersion,
+                                        @RequestParam(required = true, value = "exportValue") final String exportValue,
+                                        final HttpServletResponse response,
+                                        final HttpServletRequest request) throws IOException {
+        response.setContentType("text/html;charset=utf-8");
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.setLocale(Locale.ENGLISH);
+
+        Run run = getSecuredEntity(projectId, sampleId, runId, releaseVersion);
+
+        if (run != null) {
+            if (isAccessible(run)) {
+                AnalysisJob analysisJob = analysisJobDAO.readByRunIdAndVersionDeep(run.getExternalRunId(), releaseVersion, "completed");
+                if (analysisJob != null) {
+                    DownloadableFileDefinition fileDefinition = exportValueService.findResultFileDefinition(exportValue);
+                    if (fileDefinition != null) {
+                        File fileObject = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, fileDefinition);
+                        openDownloadDialog(response, request, analysisJob, fileDefinition.getDownloadName(), fileObject);
+                    }
+                } else {//analysis job is NULL
+                    response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+                }
+            } else {//access denied
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.sendRedirect("/metagenomics/sample/" + sampleId + "/accessDenied");
+            }
+        } else {//run is NULL
+            response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+        }
+    }
 
     protected void doHandleTaxonomyExports(@PathVariable final String projectId,
                                            @PathVariable final String sampleId,
@@ -57,9 +97,16 @@ public class ResultViewExportController extends AbstractResultViewController {
                 if (analysisJob != null) {
                     DownloadableFileDefinition fileDefinition = fileDefinitionsMap.get(fileDefinitionId.name());
                     if (fileDefinition != null) {
-                        File fileObject = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, fileDefinition);
+                        DownloadableFileDefinition fileDefinitionClone = (DownloadableFileDefinition) fileDefinition.clone();
+                        if (fileDefinitionClone.getIdentifier() != null && fileDefinitionClone.getIdentifier().equalsIgnoreCase("NC_RNA_T_RNA_FILE")) {
+                            String inputFileName = analysisJob.getInputFileName();
+                            String relativePath = fileDefinitionClone.getRelativePath();
+                            String newRelativePath = relativePath.replace("*", inputFileName);
+                            fileDefinitionClone.setRelativePath(newRelativePath);
+                        }
+                        File fileObject = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, fileDefinitionClone);
                         try {
-                            openDownloadDialog(response, request, analysisJob, fileDefinition.getDownloadName(), fileObject);
+                            openDownloadDialog(response, request, analysisJob, fileDefinitionClone.getDownloadName(), fileObject);
                         } catch (IndexOutOfBoundsException e) {
                             response.setStatus(HttpServletResponse.SC_NO_CONTENT);
                         }
@@ -379,7 +426,7 @@ public class ResultViewExportController extends AbstractResultViewController {
         return fileDefinitionId;
     }
 
-    @RequestMapping(value = MGPortalURLCollection.PROJECT_SAMPLE_RUN_RESULTS_TAXONOMY_TYPE)
+    @RequestMapping(value = {MGPortalURLCollection.PROJECT_SAMPLE_RUN_RESULTS_TAXONOMY_TYPE, MGPortalURLCollection.PROJECT_SAMPLE_RUN_RESULTS_SEQUENCES_SEQ_TYPE})
     public void handleTaxonomyResultDownloads(@PathVariable final String projectId,
                                               @PathVariable final String sampleId,
                                               @PathVariable final String runId,
@@ -410,6 +457,8 @@ public class ResultViewExportController extends AbstractResultViewController {
             fileDefinitionId = FileDefinitionId.TAX_ANALYSIS_TREE_FILE;
         } else if (resultType.equalsIgnoreCase("NewickPrunedTree")) {
             fileDefinitionId = FileDefinitionId.PRUNED_TREE_FILE;
+        } else if (resultType.equalsIgnoreCase("ncRNA-tRNA-FASTA")) {
+            fileDefinitionId = FileDefinitionId.NC_RNA_T_RNA_FILE;
         } else {
             log.warn("Result type: " + resultType + " not found!");
         }
