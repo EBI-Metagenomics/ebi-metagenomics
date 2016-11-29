@@ -98,7 +98,7 @@
                         <div class="grid_6">
                             <c:forEach var="experimentCountEntry"
                                        items="${model.experimentCountMap}">
-                                <span class="high_nb">${experimentCountEntry.value}</span><br/>
+                                <span class="high_nb" id="${experimentCountEntry.key}-statistics">${experimentCountEntry.value}</span><br/>
                             </c:forEach>
                         </div>
                         <div class="grid_12 omega">
@@ -119,9 +119,10 @@
                     <div class="grid_24">
                         <div class="grid_6 alpha"><span class="icon icon-functional" data-icon="U"></span><br/><span
                                 class="stat-lock-title">Public</span></div>
-                        <div class="grid_6"><span class="high_nb">${model.dataStatistics.runStatistics.numOfPublicRuns}</span><br/><span
-                                class="high_nb">${model.dataStatistics.sampleStatistics.numOfPublicSamples}</span><br/><span
-                                class="high_nb">${model.dataStatistics.studyStatistics.numOfPublicStudies}</span></div>
+                        <div class="grid_6">
+                            <span id="Runs-statistics" class="high_nb">${model.dataStatistics.runStatistics.numOfPublicRuns}</span><br/>
+                            <span id="Samples-statistics" class="high_nb">${model.dataStatistics.sampleStatistics.numOfPublicSamples}</span><br/>
+                            <span id="Projects-statistics" class="high_nb">${model.dataStatistics.studyStatistics.numOfPublicStudies}</span></div>
                         <div class="grid_12 omega"> runs <br/> samples <br/> projects</div>
                     </div>
                 </div>

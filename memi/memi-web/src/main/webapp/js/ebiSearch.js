@@ -74,7 +74,9 @@ var SettingsManager = function() {
 
         SEARCH_BOX_ID: "local-searchbox",
         SEARCH_BOX_SMALL_ID: "local-searchbox-xs",
-        SEARCH_RESULTS_ID: "searchTabs"
+        SEARCH_RESULTS_ID: "searchTabs",
+
+        HOMEPAGE_STATS_ID: "stat-public"
     };
 
     this.DatatypeSettings = {};
@@ -1509,12 +1511,32 @@ var SearchManager = function(settingsManager, pageManager) {
         });
     };
 
-    this.runAjax = function(method, responseType, url, parameters, callback, errCallback) {
+    this.runAjax = function(method,
+                            responseType,
+                            url,
+                            parameters,
+                            callback,
+                            errCallback,
+                            timeout,
+                            timeoutCallback) {
         var httpReq = new XMLHttpRequest();
         if (responseType != null) {
             httpReq.responseType = responseType;
         }
+
         httpReq.open(method, url);
+
+        if (timeout != null) {
+            httpReq.timeout = timeout;
+            httpReq.ontimeout = function(event) {
+                if (timeoutCallback) {
+                    timeoutCallback(httpReq);
+                } else {
+                    console.log("Timeout occurred");
+                }
+            };
+        }
+
         httpReq.send(parameters);
 
         //handle response
@@ -1525,7 +1547,6 @@ var SearchManager = function(settingsManager, pageManager) {
             } else {
                 errCallback(httpReq);
             }
-
         };
 
         //error handling
@@ -1718,6 +1739,11 @@ var PageManager = function() {
         return searchPageDiv != null ? true : false;
     }
 
+    this.isHomePage = function() {
+        var statsDiv = document.getElementById(this.settingsManager.GLOBAL_SEARCH_SETTINGS.HOMEPAGE_STATS_ID);
+        return statsDiv != null ? true : false;
+    };
+
     this.populateSearchInputs = function() {
         //copy search text to search boxes
         var searchText = this.settingsManager.getSearchText();
@@ -1906,6 +1932,127 @@ var PageManager = function() {
         }
 
     }
+
+    this.updateHomepageStats = function() {
+        this.updatePublicStats();
+        this.updateExperimentStats();
+    }
+
+    this.updateExperimentStats = function() {
+        var experimentTypes = [
+            {
+                display: "amplicons",
+                search: "amplicon"
+            },
+            {
+                display: "assemblies",
+                search: "assembly"
+            },
+            {
+                display: "metabarcoding",
+                search: "metabarcoding"
+            },
+            {
+                display: "metagenomes",
+                search: "metagenomic"
+            },
+            {
+                display: "metatranscriptomes",
+                search: "metatranscriptomic"
+            }
+        ];
+
+        var settings = this.settingsManager.getSearchSettings(this.settingsManager.GLOBAL_SEARCH_SETTINGS.RUN);
+        var settingsCopy = JSON.parse(JSON.stringify(settings)); //make a shallow copy of settings
+
+        for (var i = 0; i < experimentTypes.length; i++) {
+            var experimentType = experimentTypes[i];
+            var experimentStatElement = document.getElementById(experimentType.display + "-statistics");
+            if (experimentStatElement != null) {
+                var previousValue = experimentStatElement.innerHTML;
+                var facet = {experiment_type:[experimentType.search]};
+                experimentStatElement.innerHTML = "";
+                settingsCopy.searchText = "";
+                settingsCopy.facets = facet;
+                settingsCopy.facetNum = 0;
+                settingsCopy.numericalFields = {};
+                settingsCopy.resultsNum = 0;
+                var url = this.searchManager.settingsToURL(settingsCopy);
+                this.searchManager.runAjax("GET", "json", url, null,
+                    this.updateStatsElement(settingsCopy, experimentStatElement, facet),
+                    this.onStatsUpdateError(settingsCopy, experimentStatElement, previousValue),
+                    1000,
+                    this.onStatsTimeout(settingsCopy, experimentStatElement, previousValue)
+                );
+            } else {
+                console.log("Error: Expected to find element with id '" + experimentType + "-statistics'");
+            }
+        }
+    };
+
+    this.updatePublicStats = function() {
+        var dataTypes = this.settingsManager.DatatypeSettings.DATA_TYPES;
+        for (var i = 0; i < dataTypes.length; i++) {
+            var dataType = dataTypes[i];
+            var typeStatElement = document.getElementById(dataType + "-statistics");
+            if (typeStatElement != null) {
+                var previousValue = typeStatElement.innerHTML;
+                typeStatElement.innerHTML = "";
+                var settings = this.settingsManager.getSearchSettings(dataType);
+                var settingsCopy = JSON.parse(JSON.stringify(settings)); //make a shallow copy of settings
+                settingsCopy.searchText = "";
+                settingsCopy.facets = {};
+                settingsCopy.facetNum = 0;
+                settingsCopy.numericalFields = {};
+                settingsCopy.resultsNum = 0;
+                var url = this.searchManager.settingsToURL(settingsCopy);
+                this.searchManager.runAjax("GET", "json", url, null,
+                    this.updateStatsElement(settingsCopy, typeStatElement),
+                    this.onStatsUpdateError(settingsCopy, typeStatElement, previousValue),
+                    1000,
+                    this.onStatsTimeout(settingsCopy, typeStatElement, previousValue)
+                );
+            } else {
+                    console.log("Error: Expected to find element with id '" + settingsCopy.type + "-statistics'");
+            }
+        }
+    };
+
+    this.updateStatsElement = function(settingsCopy, typeStatElement, runFacet) {
+        var self = this;
+        return function(httpRes) {
+            var hitCount = httpRes.response.hitCount;
+            console.log(settingsCopy.type + " stats success: " + hitCount);
+            var statsLink = document.createElement("a");
+            statsLink.innerHTML = hitCount;
+            typeStatElement.appendChild(statsLink);
+            typeStatElement.onclick = function(event) {
+                var selectedTabNum = self.settingsManager.DatatypeSettings.DATA_TYPES.indexOf(settingsCopy.type);
+                var allSettings = self.settingsManager.initialiseSettings(true);
+                self.settingsManager.setSelectedTab(selectedTabNum);
+                if (runFacet != null) {
+                    var settings = allSettings[self.settingsManager.GLOBAL_SEARCH_SETTINGS.RUN];
+                    settings.facets = runFacet;
+                    self.settingsManager.setSearchSettings(settings.type, settings);
+                }
+                window.location = "/metagenomics/search";
+            };
+        }
+    };
+
+    this.onStatsUpdateError = function(settingsCopy, typeStatElement, previousValue) {
+        return function(httpRes) {
+            console.log("Error fetching " + settingsCopy.type + " counts for homepage");
+            typeStatElement.innerHTML = previousValue;
+        };
+    };
+
+    this.onStatsTimeout = function(settingsCopy, typeStatElement, previousValue) {
+        return function(httpRes) {
+            console.log("Error: Time fetching " + settingsCopy.type + " counts for homepage");
+            typeStatElement.innerHTML = previousValue;
+        };
+    };
 };
 
 var pageManager = new PageManager();
@@ -1913,6 +2060,8 @@ window.onload = function (event){
     pageManager.populateSearchInputs();
     if (pageManager.isSearchPage()) {
         pageManager.initialisePage();
+    } else if (pageManager.isHomePage()) {
+        pageManager.updateHomepageStats();
     }
 };
 
