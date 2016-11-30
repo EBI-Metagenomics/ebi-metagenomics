@@ -1839,7 +1839,15 @@ var HomePageManager = function(settingsManager, searchManager) {
             typeStatElement.appendChild(statsLink);
             typeStatElement.onclick = function(event) {
                 var selectedTabNum = self.settingsManager.DatatypeSettings.DATA_TYPES.indexOf(settingsCopy.type);
+                //reset search settings
                 var allSettings = self.settingsManager.initialiseSettings(true);
+                allSettings.searchText = "";
+                self.settingsManager.setSearchText("");
+                for (var i = 0; i < self.settingsManager.DatatypeSettings.DATA_TYPES.length; i++) {
+                    var dataType = self.settingsManager.DatatypeSettings.DATA_TYPES[i];
+                    var settings = allSettings[dataType];
+                    self.settingsManager.setSearchSettings(dataType, settings);
+                }
                 self.settingsManager.setSelectedTab(selectedTabNum);
                 if (runFacet != null) {
                     var settings = allSettings[self.settingsManager.GLOBAL_SEARCH_SETTINGS.RUN];
@@ -2064,6 +2072,17 @@ var PageManager = function() {
                     this.searchManager.runDomainSearch(settings);
                 }
             } else {
+                for(var i = 0; i < this.settingsManager.DatatypeSettings.DATA_TYPES.length; i++) {
+                    var dataType = this.settingsManager.DatatypeSettings.DATA_TYPES[i];
+                    var settings = this.settingsManager.getSearchSettings(dataType);
+                    settings.searchText = searchBoxText;
+                    if (resetSearch) {
+                        settings.facets = {};
+                        settings.page = 0;
+                    }
+                    this.settingsManager.setSearchSettings(dataType, settings);
+                }
+                this.settingsManager.setSearchText(searchBoxText);
                 window.location = "/metagenomics/search"
             }
         } else {
@@ -2076,7 +2095,9 @@ var PageManager = function() {
     }
 
     this.updateHomepageStats = function() {
-        this.settingsManager.initialiseSettings();
+        if (!this.settingsManager.areSettingsInitialisted()) {
+            this.settingsManager.initialiseSettings();
+        }
         this.homePageManager.updatePublicStats();
         this.homePageManager.updateExperimentStats();
     }
