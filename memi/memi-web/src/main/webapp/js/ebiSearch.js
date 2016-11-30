@@ -89,11 +89,11 @@ var SettingsManager = function() {
 
     this.areSettingsInitialisted = function() {
         var areSettingsReady = true;
-        for(var i = 0; i < this.DatatypeSettings.DATA_TYPES; i++) {
+        for(var i = 0; i < this.DatatypeSettings.DATA_TYPES.length; i++) {
             var dataType = this.DatatypeSettings.DATA_TYPES[i];
             var settings = this.getSearchSettings(dataType);
             if (settings == null) {
-                areSettingsInitialised = false;
+                areSettingsReady = false;
             }
         }
         return areSettingsReady;
