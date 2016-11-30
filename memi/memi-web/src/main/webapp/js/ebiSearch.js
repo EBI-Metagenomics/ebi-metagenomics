@@ -71,6 +71,7 @@ var SettingsManager = function() {
         MORE_FACET_TEXT_FILTER_CLASS: "more-facet-text-filter",
         MORE_FACET_CONTENT_CLASS: "more-facet-content",
         HIERARCHICAL_FACET_CLASS: "hierarchical-facet-list",
+        HOMEPAGE_LINK_CLASS: "homepage-search-link",
 
         SEARCH_BOX_ID: "local-searchbox",
         SEARCH_BOX_SMALL_ID: "local-searchbox-xs",
@@ -86,6 +87,10 @@ var SettingsManager = function() {
         this.GLOBAL_SEARCH_SETTINGS.SAMPLE,
         this.GLOBAL_SEARCH_SETTINGS.RUN
     ];
+
+    this.areCssVariablesSupported = function() {
+        return window.CSS && window.CSS.supports && window.CSS.supports('--fake-var', 0);
+    };
 
     this.areSettingsInitialisted = function() {
         var areSettingsReady = true;
@@ -1213,15 +1218,24 @@ var FacetManager = function(settingsManager, searchManager) {
             rangeInput.setAttribute("min", numericalField.minimum);
             rangeInput.setAttribute("max", numericalField.maximum);
             var selectedRange = numericalField.selectedMinimum + "," + numericalField.selectedMaximum;
-            rangeInput.setAttribute("value", selectedRange);
-            rangeContainer.appendChild(rangeInput);
 
-            var minText = document.createElement("span");
-            minText.appendChild(document.createTextNode(numericalField.minimum));
-            minText.style.float = "left";
-            var maxText = document.createElement("span");
-            maxText.appendChild(document.createTextNode(numericalField.maximum));
-            maxText.style.float = "right";
+            if(this.settingsManager.areCssVariablesSupported()) {
+                rangeInput.setAttribute("value", selectedRange);
+                rangeContainer.appendChild(rangeInput);
+
+                var minText = document.createElement("span");
+                minText.appendChild(document.createTextNode(numericalField.minimum));
+                minText.style.float = "left";
+                var maxText = document.createElement("span");
+                maxText.appendChild(document.createTextNode(numericalField.maximum));
+                maxText.style.float = "right";
+
+                multirange(rangeInput); //requires multirange library loaded
+
+                fieldContainer.appendChild(minText);
+                fieldContainer.appendChild(rangeContainer);
+                fieldContainer.appendChild(maxText);
+            }
 
             var minInput = document.createElement("input");
             minInput.placeholder = numericalField.minimum;
@@ -1242,11 +1256,6 @@ var FacetManager = function(settingsManager, searchManager) {
             inputBoxContainer.appendChild(minInput);
             inputBoxContainer.appendChild(document.createTextNode(" to "));
             inputBoxContainer.appendChild(maxInput);
-
-            fieldContainer.appendChild(minText);
-            fieldContainer.appendChild(rangeContainer);
-            fieldContainer.appendChild(maxText);
-            multirange(rangeInput); //requires multirange library loaded
 
             var selectedRangeContainer = document.createElement("div");
             selectedRangeContainer.name = "selected-range";
@@ -1282,6 +1291,8 @@ var FacetManager = function(settingsManager, searchManager) {
                 && minValue != ""
                 && minValue > numericalField.minimum) {
                 numericalField.selectedMinimum = minValue;
+            } else {
+                numericalField.selectedMinimum = numericalField.minimum;
             }
 
             self.searchManager.runDomainSearch(searchSettings);
@@ -1294,7 +1305,11 @@ var FacetManager = function(settingsManager, searchManager) {
                 && maxValue != ""
                 && maxValue < numericalField.maximum) {
                 numericalField.selectedMaximum = maxValue;
+            } else {
+                numericalField.selectedMaximum = numericalField.maximum;
             }
+
+
             self.searchManager.runDomainSearch(searchSettings);
         });
     };
@@ -1835,6 +1850,7 @@ var HomePageManager = function(settingsManager, searchManager) {
             var hitCount = httpRes.response.hitCount;
             console.log(settingsCopy.type + " stats success: " + hitCount);
             var statsLink = document.createElement("a");
+            statsLink.classList.add(self.settingsManager.GLOBAL_SEARCH_SETTINGS.HOMEPAGE_LINK_CLASS);
             statsLink.innerHTML = hitCount;
             typeStatElement.appendChild(statsLink);
             typeStatElement.onclick = function(event) {
@@ -2101,8 +2117,6 @@ var PageManager = function() {
         this.homePageManager.updatePublicStats();
         this.homePageManager.updateExperimentStats();
     }
-
-
 };
 
 var pageManager = new PageManager();
