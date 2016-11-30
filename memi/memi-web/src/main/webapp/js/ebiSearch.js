@@ -87,6 +87,18 @@ var SettingsManager = function() {
         this.GLOBAL_SEARCH_SETTINGS.RUN
     ];
 
+    this.areSettingsInitialisted = function() {
+        var areSettingsReady = true;
+        for(var i = 0; i < this.DatatypeSettings.DATA_TYPES; i++) {
+            var dataType = this.DatatypeSettings.DATA_TYPES[i];
+            var settings = this.getSearchSettings(dataType);
+            if (settings == null) {
+                areSettingsInitialised = false;
+            }
+        }
+        return areSettingsReady;
+    };
+
     this.getEBISearchURL = function() {
         var EBISEARCH_PATH = "ebisearch/ws/rest/";
         var host = window.location.hostname;
@@ -155,11 +167,17 @@ var SettingsManager = function() {
         this.DatatypeSettings[this.GLOBAL_SEARCH_SETTINGS.PROJECT] = projectSettings;
         this.DatatypeSettings[this.GLOBAL_SEARCH_SETTINGS.SAMPLE] = sampleSettings;
         this.DatatypeSettings[this.GLOBAL_SEARCH_SETTINGS.RUN] = runSettings;
-        var storedSearchText = this.getSearchText();
+        var searchText = this.getSearchText();
+        if (searchText == null) {
+            searchText = "";
+        }
         for(var i = 0; i < this.DatatypeSettings.DATA_TYPES.length; i++) {
             var settings = this.DatatypeSettings[this.DatatypeSettings.DATA_TYPES[i]];
-            settings["searchText"] = storedSearchText;
+            settings["searchText"] = searchText;
+            this.setSearchText(searchText);
+            this.setSearchSettings(this.DatatypeSettings.DATA_TYPES[i], settings);
         }
+
         return this.DatatypeSettings;
     };
 
@@ -1726,6 +1744,129 @@ var SearchManager = function(settingsManager, pageManager) {
     };
 };
 
+var HomePageManager = function(settingsManager, searchManager) {
+
+    this.settingsManager = settingsManager;
+    this.searchManager = searchManager;
+
+    this.updateExperimentStats = function() {
+        var experimentTypes = [
+            {
+                display: "amplicons",
+                search: "amplicon"
+            },
+            {
+                display: "assemblies",
+                search: "assembly"
+            },
+            {
+                display: "metabarcoding",
+                search: "metabarcoding"
+            },
+            {
+                display: "metagenomes",
+                search: "metagenomic"
+            },
+            {
+                display: "metatranscriptomes",
+                search: "metatranscriptomic"
+            }
+        ];
+
+        var settings = this.settingsManager.getSearchSettings(this.settingsManager.GLOBAL_SEARCH_SETTINGS.RUN);
+        var settingsCopy = JSON.parse(JSON.stringify(settings)); //make a shallow copy of settings
+
+        for (var i = 0; i < experimentTypes.length; i++) {
+            var experimentType = experimentTypes[i];
+            var experimentStatElement = document.getElementById(experimentType.display + "-statistics");
+            if (experimentStatElement != null) {
+                var previousValue = experimentStatElement.innerHTML;
+                var facet = {experiment_type:[experimentType.search]};
+                experimentStatElement.innerHTML = "";
+                settingsCopy.searchText = "";
+                settingsCopy.facets = facet;
+                settingsCopy.facetNum = 0;
+                settingsCopy.numericalFields = {};
+                settingsCopy.resultsNum = 0;
+                var url = this.searchManager.settingsToURL(settingsCopy);
+                this.searchManager.runAjax("GET", "json", url, null,
+                    this.updateStatsElement(settingsCopy, experimentStatElement, facet),
+                    this.onStatsUpdateError(settingsCopy, experimentStatElement, previousValue),
+                    1000,
+                    this.onStatsTimeout(settingsCopy, experimentStatElement, previousValue)
+                );
+            } else {
+                console.log("Error: Expected to find element with id '" + experimentType + "-statistics'");
+            }
+        }
+    };
+
+    this.updatePublicStats = function() {
+        var dataTypes = this.settingsManager.DatatypeSettings.DATA_TYPES;
+        for (var i = 0; i < dataTypes.length; i++) {
+            var dataType = dataTypes[i];
+            var typeStatElement = document.getElementById(dataType + "-statistics");
+            if (typeStatElement != null) {
+                var previousValue = typeStatElement.innerHTML;
+                typeStatElement.innerHTML = "";
+                var settings = this.settingsManager.getSearchSettings(dataType);
+                var settingsCopy = JSON.parse(JSON.stringify(settings)); //make a shallow copy of settings
+                settingsCopy.searchText = "";
+                settingsCopy.facets = {};
+                settingsCopy.facetNum = 0;
+                settingsCopy.numericalFields = {};
+                settingsCopy.resultsNum = 0;
+                var url = this.searchManager.settingsToURL(settingsCopy);
+                this.searchManager.runAjax("GET", "json", url, null,
+                    this.updateStatsElement(settingsCopy, typeStatElement),
+                    this.onStatsUpdateError(settingsCopy, typeStatElement, previousValue),
+                    1000,
+                    this.onStatsTimeout(settingsCopy, typeStatElement, previousValue)
+                );
+            } else {
+                console.log("Error: Expected to find element with id '" + settingsCopy.type + "-statistics'");
+            }
+        }
+    };
+
+    this.updateStatsElement = function(settingsCopy, typeStatElement, runFacet) {
+        var self = this;
+        return function(httpRes) {
+            var hitCount = httpRes.response.hitCount;
+            console.log(settingsCopy.type + " stats success: " + hitCount);
+            var statsLink = document.createElement("a");
+            statsLink.innerHTML = hitCount;
+            typeStatElement.appendChild(statsLink);
+            typeStatElement.onclick = function(event) {
+                var selectedTabNum = self.settingsManager.DatatypeSettings.DATA_TYPES.indexOf(settingsCopy.type);
+                var allSettings = self.settingsManager.initialiseSettings(true);
+                self.settingsManager.setSelectedTab(selectedTabNum);
+                if (runFacet != null) {
+                    var settings = allSettings[self.settingsManager.GLOBAL_SEARCH_SETTINGS.RUN];
+                    settings.facets = runFacet;
+                    self.settingsManager.setSearchSettings(settings.type, settings);
+                }
+                window.location = "/metagenomics/search";
+            };
+        }
+    };
+
+    this.onStatsUpdateError = function(settingsCopy, typeStatElement, previousValue) {
+        return function(httpRes) {
+            console.log("Error fetching " + settingsCopy.type + " counts for homepage");
+            typeStatElement.innerHTML = previousValue;
+        };
+    };
+
+    this.onStatsTimeout = function(settingsCopy, typeStatElement, previousValue) {
+        return function(httpRes) {
+            console.log("Error: Time fetching " + settingsCopy.type + " counts for homepage");
+            typeStatElement.innerHTML = previousValue;
+        };
+    };
+
+};
+
 var PageManager = function() {
     this.settingsManager = new SettingsManager();
     this.tabManager = new TabManager();
@@ -1733,6 +1874,7 @@ var PageManager = function() {
     this.resultsManager = new ResultsManager();
     this.tableManager = new TableManager(this.searchManager, this.settingsManager);
     this.facetManager = new FacetManager(this.settingsManager, this.searchManager);
+    this.homePageManager = new HomePageManager(this.settingsManager, this.searchManager);
 
     this.isSearchPage = function() {
         var searchPageDiv = document.getElementById(this.settingsManager.GLOBAL_SEARCH_SETTINGS.SEARCH_RESULTS_ID)
@@ -1934,125 +2076,12 @@ var PageManager = function() {
     }
 
     this.updateHomepageStats = function() {
-        this.updatePublicStats();
-        this.updateExperimentStats();
+        this.settingsManager.initialiseSettings();
+        this.homePageManager.updatePublicStats();
+        this.homePageManager.updateExperimentStats();
     }
 
-    this.updateExperimentStats = function() {
-        var experimentTypes = [
-            {
-                display: "amplicons",
-                search: "amplicon"
-            },
-            {
-                display: "assemblies",
-                search: "assembly"
-            },
-            {
-                display: "metabarcoding",
-                search: "metabarcoding"
-            },
-            {
-                display: "metagenomes",
-                search: "metagenomic"
-            },
-            {
-                display: "metatranscriptomes",
-                search: "metatranscriptomic"
-            }
-        ];
 
-        var settings = this.settingsManager.getSearchSettings(this.settingsManager.GLOBAL_SEARCH_SETTINGS.RUN);
-        var settingsCopy = JSON.parse(JSON.stringify(settings)); //make a shallow copy of settings
-
-        for (var i = 0; i < experimentTypes.length; i++) {
-            var experimentType = experimentTypes[i];
-            var experimentStatElement = document.getElementById(experimentType.display + "-statistics");
-            if (experimentStatElement != null) {
-                var previousValue = experimentStatElement.innerHTML;
-                var facet = {experiment_type:[experimentType.search]};
-                experimentStatElement.innerHTML = "";
-                settingsCopy.searchText = "";
-                settingsCopy.facets = facet;
-                settingsCopy.facetNum = 0;
-                settingsCopy.numericalFields = {};
-                settingsCopy.resultsNum = 0;
-                var url = this.searchManager.settingsToURL(settingsCopy);
-                this.searchManager.runAjax("GET", "json", url, null,
-                    this.updateStatsElement(settingsCopy, experimentStatElement, facet),
-                    this.onStatsUpdateError(settingsCopy, experimentStatElement, previousValue),
-                    1000,
-                    this.onStatsTimeout(settingsCopy, experimentStatElement, previousValue)
-                );
-            } else {
-                console.log("Error: Expected to find element with id '" + experimentType + "-statistics'");
-            }
-        }
-    };
-
-    this.updatePublicStats = function() {
-        var dataTypes = this.settingsManager.DatatypeSettings.DATA_TYPES;
-        for (var i = 0; i < dataTypes.length; i++) {
-            var dataType = dataTypes[i];
-            var typeStatElement = document.getElementById(dataType + "-statistics");
-            if (typeStatElement != null) {
-                var previousValue = typeStatElement.innerHTML;
-                typeStatElement.innerHTML = "";
-                var settings = this.settingsManager.getSearchSettings(dataType);
-                var settingsCopy = JSON.parse(JSON.stringify(settings)); //make a shallow copy of settings
-                settingsCopy.searchText = "";
-                settingsCopy.facets = {};
-                settingsCopy.facetNum = 0;
-                settingsCopy.numericalFields = {};
-                settingsCopy.resultsNum = 0;
-                var url = this.searchManager.settingsToURL(settingsCopy);
-                this.searchManager.runAjax("GET", "json", url, null,
-                    this.updateStatsElement(settingsCopy, typeStatElement),
-                    this.onStatsUpdateError(settingsCopy, typeStatElement, previousValue),
-                    1000,
-                    this.onStatsTimeout(settingsCopy, typeStatElement, previousValue)
-                );
-            } else {
-                    console.log("Error: Expected to find element with id '" + settingsCopy.type + "-statistics'");
-            }
-        }
-    };
-
-    this.updateStatsElement = function(settingsCopy, typeStatElement, runFacet) {
-        var self = this;
-        return function(httpRes) {
-            var hitCount = httpRes.response.hitCount;
-            console.log(settingsCopy.type + " stats success: " + hitCount);
-            var statsLink = document.createElement("a");
-            statsLink.innerHTML = hitCount;
-            typeStatElement.appendChild(statsLink);
-            typeStatElement.onclick = function(event) {
-                var selectedTabNum = self.settingsManager.DatatypeSettings.DATA_TYPES.indexOf(settingsCopy.type);
-                var allSettings = self.settingsManager.initialiseSettings(true);
-                self.settingsManager.setSelectedTab(selectedTabNum);
-                if (runFacet != null) {
-                    var settings = allSettings[self.settingsManager.GLOBAL_SEARCH_SETTINGS.RUN];
-                    settings.facets = runFacet;
-                    self.settingsManager.setSearchSettings(settings.type, settings);
-                }
-                window.location = "/metagenomics/search";
-            };
-        }
-    };
-
-    this.onStatsUpdateError = function(settingsCopy, typeStatElement, previousValue) {
-        return function(httpRes) {
-            console.log("Error fetching " + settingsCopy.type + " counts for homepage");
-            typeStatElement.innerHTML = previousValue;
-        };
-    };
-
-    this.onStatsTimeout = function(settingsCopy, typeStatElement, previousValue) {
-        return function(httpRes) {
-            console.log("Error: Time fetching " + settingsCopy.type + " counts for homepage");
-            typeStatElement.innerHTML = previousValue;
-        };
-    };
 };
 
 var pageManager = new PageManager();
