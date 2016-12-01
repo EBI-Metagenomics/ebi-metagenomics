@@ -1511,7 +1511,10 @@ var ResultsManager = function() {
         tabManager.setTabText("Error", dataType);
         resultsContainer = document.getElementById(dataType + "-searchData");
         if (resultsContainer != null) {
-            resultsContainer.innerHTML = "<div>A problem was encountered running the search. Please try again later.</div><div>If the problem persists please contact us <a href='/metagenomics/contact'>here</a></div>";
+            resultsContainer.innerHTML = "<div>A problem was encountered running the search. Please try again later.</div>";
+            resultsContainer.innerHTML += "<div>If the problem persists please contact us <a href='/metagenomics/contact'>here</a></div>";
+            resultsContainer.innerHTML += "<div>There are some known issues with Microsoft Internet Explorer.</div>";
+            //resultsContainer.innerHTML += "<div>Please consider using Microsoft Edge, Chrome, Firefox or any other modern Browser.</div>";
         } else {
             console.log("Error: Expected to find div with id '" + dataType + "-searchData'");
         }
@@ -1749,14 +1752,18 @@ var SearchManager = function(settingsManager, pageManager) {
     this.saveResults = function(data, searchSettings) {
         var lines = data.map(function(tokens){
             var values = tokens.map(function (item) {
-                return item.name;
+                var value = item.name;
+                value = value.replace(/\"/g, '\\"');
+                //value = value.replace(/\s+/g, ' '); //removing newlines etc
+                value = '"' + value + '"';
+                return value;
             })
             var line = values.join("\t");
             line += "\n";
             return line;
         });
         var blob = new Blob(lines, {type: "text/plain;charset=utf-8"});
-        saveAs(blob, "metagenomics.txt");
+        saveAs(blob, "metagenomics_" + searchSettings.type.toLowerCase() + ".tsv");
     };
 };
 
