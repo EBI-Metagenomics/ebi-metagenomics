@@ -1555,6 +1555,7 @@ var SearchManager = function(settingsManager, pageManager) {
                             errCallback,
                             timeout,
                             timeoutCallback) {
+        var self = this;
         var httpReq = new XMLHttpRequest();
 
         httpReq.open(method, url);
@@ -1580,20 +1581,28 @@ var SearchManager = function(settingsManager, pageManager) {
         httpReq.onload = function(event) {
             var readyState = httpReq.readyState;
             if (httpReq.status == 200) {
-                callback(httpReq);
+                self.fixInternetExplorerBug(httpReq, callback);
             } else {
-                errCallback(httpReq);
+                self.fixInternetExplorerBug(httpReq, errCallback);
             }
         };
 
         //error handling
         httpReq.onerror = function (event) {
             if (errCallback) {
-                errCallback(httpReq);
+                self.fixInternetExplorerBug(httpReq, errCallback);
             } else {
                 console.log("Ajax error");
             }
         };
+    };
+
+    this.fixInternetExplorerBug = function(httpRes, callback) {
+        //IE specific code. Grrrrr
+        if (typeof  httpRes.response === "string") {
+            httpRes.response = JSON.parse(httpRes.response);
+        }
+        callback(httpRes);
     };
 
     this.parametersToString = function(parameters) {
@@ -1856,10 +1865,7 @@ var HomePageManager = function(settingsManager, searchManager) {
         var self = this;
         return function(httpRes) {
             var hitCount = httpRes.response.hitCount;
-            if (hitCount == null && httpRes.response != null) {
-                var response = JSON.parse(httpRes.response);
-                hitCount = response.hitCount;
-            }
+
             console.log(settingsCopy.type + " stats success: " + hitCount);
 
             if (hitCount != null) {
