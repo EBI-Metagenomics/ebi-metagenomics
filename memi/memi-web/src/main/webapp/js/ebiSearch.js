@@ -1855,7 +1855,11 @@ var HomePageManager = function(settingsManager, searchManager) {
     this.updateStatsElement = function(settingsCopy, typeStatElement, runFacet, previousValue) {
         var self = this;
         return function(httpRes) {
-            var hitCount = httpRes.response["hitCount"];
+            var hitCount = httpRes.response.hitCount;
+            if (hitCount == null && httpRes.response != null) {
+                var response = JSON.parse(httpRes.response);
+                hitCount = response.hitCount;
+            }
             console.log(settingsCopy.type + " stats success: " + hitCount);
 
             if (hitCount != null) {
