@@ -176,10 +176,6 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/jquery.bonsai.css" type="text/css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/svg-icons.css" type="text/css"/>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.qubit.js"></script>
-    <%--multirange input plugin --%>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/multirange.css" type="text/css"/>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/js/multirange.js"></script>
-
 
     <noscript>
         <style type="text/css">
@@ -301,6 +297,16 @@
 <!-- javascript for handling search box in header and search page elements -->
 <script src="${pageContext.request.contextPath}/js/FileSaver.min.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/js/ebiSearch.js?v1.2" type="text/javascript"></script>
+<%--multirange input plugin --%>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/multirange.css" type="text/css"/>
+<script>
+    var pageManager = new PageManager();
+    if (pageManager.settingsManager.areCssVariablesSupported()) {
+        document.write('<script type="text/javascript" src="js/multirange.js"><\/script>');
+    }
+
+</script>
+
 <!-- JQuery datatable-->
 <script defer="defer" src="${pageContext.request.contextPath}/js/jquery.dataTables.js"></script>
 <script defer="defer" src="${pageContext.request.contextPath}/js/jquery.highlight.js"></script>
