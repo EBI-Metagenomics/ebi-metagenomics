@@ -1506,9 +1506,9 @@ var ResultsManager = function() {
         tableManager.displayDownloadButton(results, searchSettings);
     };
 
-    this.displaySearchError = function (httpReq, searchSettings) {
+    this.displaySearchError = function (httpReq, searchSettings, tabManager) {
         var dataType = searchSettings.type;
-        setTabText("Error", dataType);
+        tabManager.setTabText("Error", dataType);
         resultsContainer = document.getElementById(dataType + "-searchData");
         if (resultsContainer != null) {
             resultsContainer.innerHTML = "<div>A problem was encountered running the search. Please try again later.</div><div>If the problem persists please contact us <a href='/metagenomics/contact'>here</a></div>";
@@ -1553,11 +1553,12 @@ var SearchManager = function(settingsManager, pageManager) {
                             timeout,
                             timeoutCallback) {
         var httpReq = new XMLHttpRequest();
+
+        httpReq.open(method, url);
+
         if (responseType != null) {
             httpReq.responseType = responseType;
         }
-
-        httpReq.open(method, url);
 
         if (timeout != null) {
             httpReq.timeout = timeout;
@@ -2014,7 +2015,7 @@ var PageManager = function() {
     };
 
     this.displaySearchError = function (httpReq, searchSettings) {
-        this.resultsManager.displaySearchError(httpReq, searchSettings);
+        this.resultsManager.displaySearchError(httpReq, searchSettings, this.tabManager);
     };
 
     this.displayDomainData = function (httpReq, searchSettings) {
