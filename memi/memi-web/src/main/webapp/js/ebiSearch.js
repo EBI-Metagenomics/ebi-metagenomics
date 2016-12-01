@@ -657,9 +657,9 @@ var FacetManager = function(settingsManager, searchManager) {
             var paramFragment = self.searchManager.parametersToString(parameters);
             var url = self.settingsManager.getEBISearchURL() + searchSettings.domain + paramFragment;
             console.log("Getting more facets from: " + url);
-            self.searchManager.runAjax("GET", "json", url, null, function(event) {
+            self.searchManager.runAjax("GET", "json", url, null, function(response) {
                 //success
-                var results = event.response;
+                var results = response;
                 moreFacetsCallback(self, searchSettings, results, moreFacetsDiv, modalOverlay);
             }, function(event) {
                 self.showMoreFacetsError(moreFacetsDiv);
@@ -1475,7 +1475,7 @@ var ResultsManager = function() {
         }
     };
 
-    this.displayDomainData = function(httpReq,
+    this.displayDomainData = function(response,
                                       searchSettings,
                                       settingsManager,
                                       tabManager,
@@ -1492,7 +1492,7 @@ var ResultsManager = function() {
             console.log("Error expected to find input with id " + searchElementID);
         }
 
-        var results = httpReq.response;
+        var results = response;
         console.log(
             "Search returned "
             + results.hitCount + " "
@@ -1532,8 +1532,8 @@ var SearchManager = function(settingsManager, pageManager) {
 
     this.loadPageFromServer = function() {
         self = this;
-        this.runAjax("GET", "document", "/metagenomics/search", null, function(httpReq) {
-            var response = httpReq.response;
+        this.runAjax("GET", "document", "/metagenomics/search", null, function(response) {
+            var response = response;
             console.log("Loading search template");
 
             document.innerHTML = response;
@@ -1562,6 +1562,7 @@ var SearchManager = function(settingsManager, pageManager) {
 
         if (responseType != null) {
             httpReq.responseType = responseType;
+
         }
 
         if (timeout != null) {
@@ -1599,10 +1600,14 @@ var SearchManager = function(settingsManager, pageManager) {
 
     this.fixInternetExplorerBug = function(httpRes, callback) {
         //IE specific code. Grrrrr
+        var response;
         if (typeof  httpRes.response === "string") {
-            httpRes.response = JSON.parse(httpRes.response);
+            var response = JSON.parse(httpRes.response);
+        } else {
+            response = httpRes.response;
         }
-        callback(httpRes);
+
+        callback(response);
     };
 
     this.parametersToString = function(parameters) {
@@ -1736,16 +1741,16 @@ var SearchManager = function(settingsManager, pageManager) {
         var url = this.settingsToURL(searchSettings);
 
         self.pageManager.showSpinner(searchSettings);
-        var successCallback = function(httpReq) {
+        var successCallback = function(response) {
             self.pageManager.removeSpinner(searchSettings);
-            console.log("Downloaded " + (data.length-1) + " of " + httpReq.response.hitCount);
-            if (data.length <= httpReq.response.hitCount) {
-                var remainingEntries = (httpReq.response.hitCount - data.length) + 1;
+            console.log("Downloaded " + (data.length-1) + " of " + response.hitCount);
+            if (data.length <= response.hitCount) {
+                var remainingEntries = (response.hitCount - data.length) + 1;
                 if (remainingEntries < searchSettings.resultsNum) {
                     searchSettings.resultsNum = remainingEntries;
                 }
                 searchSettings.page++;
-                self.runDownloadSearch(rowFunction, data, searchSettings, httpReq.response.entries);
+                self.runDownloadSearch(rowFunction, data, searchSettings, response.entries);
             } else {
                 self.saveResults(data, searchSettings);
             }
@@ -1863,8 +1868,8 @@ var HomePageManager = function(settingsManager, searchManager) {
 
     this.updateStatsElement = function(settingsCopy, typeStatElement, runFacet, previousValue) {
         var self = this;
-        return function(httpRes) {
-            var hitCount = httpRes.response.hitCount;
+        return function(response) {
+            var hitCount = response.hitCount;
 
             console.log(settingsCopy.type + " stats success: " + hitCount);
 
