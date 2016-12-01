@@ -1813,7 +1813,7 @@ var HomePageManager = function(settingsManager, searchManager) {
                 settingsCopy.resultsNum = 0;
                 var url = this.searchManager.settingsToURL(settingsCopy);
                 this.searchManager.runAjax("GET", "json", url, null,
-                    this.updateStatsElement(settingsCopy, experimentStatElement, facet),
+                    this.updateStatsElement(settingsCopy, experimentStatElement, facet, previousValue),
                     this.onStatsUpdateError(settingsCopy, experimentStatElement, previousValue),
                     1000,
                     this.onStatsTimeout(settingsCopy, experimentStatElement, previousValue)
@@ -1852,34 +1852,40 @@ var HomePageManager = function(settingsManager, searchManager) {
         }
     };
 
-    this.updateStatsElement = function(settingsCopy, typeStatElement, runFacet) {
+    this.updateStatsElement = function(settingsCopy, typeStatElement, runFacet, previousValue) {
         var self = this;
         return function(httpRes) {
-            var hitCount = httpRes.response.hitCount;
+            var hitCount = httpRes.response["hitCount"];
             console.log(settingsCopy.type + " stats success: " + hitCount);
-            var statsLink = document.createElement("a");
-            statsLink.classList.add(self.settingsManager.GLOBAL_SEARCH_SETTINGS.HOMEPAGE_LINK_CLASS);
-            statsLink.innerHTML = hitCount;
-            typeStatElement.appendChild(statsLink);
-            typeStatElement.onclick = function(event) {
-                var selectedTabNum = self.settingsManager.DatatypeSettings.DATA_TYPES.indexOf(settingsCopy.type);
-                //reset search settings
-                var allSettings = self.settingsManager.initialiseSettings(true);
-                allSettings.searchText = "";
-                self.settingsManager.setSearchText("");
-                for (var i = 0; i < self.settingsManager.DatatypeSettings.DATA_TYPES.length; i++) {
-                    var dataType = self.settingsManager.DatatypeSettings.DATA_TYPES[i];
-                    var settings = allSettings[dataType];
-                    self.settingsManager.setSearchSettings(dataType, settings);
-                }
-                self.settingsManager.setSelectedTab(selectedTabNum);
-                if (runFacet != null) {
-                    var settings = allSettings[self.settingsManager.GLOBAL_SEARCH_SETTINGS.RUN];
-                    settings.facets = runFacet;
-                    self.settingsManager.setSearchSettings(settings.type, settings);
-                }
-                window.location = "/metagenomics/search";
-            };
+
+            if (hitCount != null) {
+                var statsLink = document.createElement("a");
+                statsLink.classList.add(self.settingsManager.GLOBAL_SEARCH_SETTINGS.HOMEPAGE_LINK_CLASS);
+                statsLink.innerHTML = hitCount;
+                typeStatElement.appendChild(statsLink);
+                typeStatElement.onclick = function(event) {
+                    var selectedTabNum = self.settingsManager.DatatypeSettings.DATA_TYPES.indexOf(settingsCopy.type);
+                    //reset search settings
+                    var allSettings = self.settingsManager.initialiseSettings(true);
+                    allSettings.searchText = "";
+                    self.settingsManager.setSearchText("");
+                    for (var i = 0; i < self.settingsManager.DatatypeSettings.DATA_TYPES.length; i++) {
+                        var dataType = self.settingsManager.DatatypeSettings.DATA_TYPES[i];
+                        var settings = allSettings[dataType];
+                        self.settingsManager.setSearchSettings(dataType, settings);
+                    }
+                    self.settingsManager.setSelectedTab(selectedTabNum);
+                    if (runFacet != null) {
+                        var settings = allSettings[self.settingsManager.GLOBAL_SEARCH_SETTINGS.RUN];
+                        settings.facets = runFacet;
+                        self.settingsManager.setSearchSettings(settings.type, settings);
+                    }
+                    window.location = "/metagenomics/search";
+                };
+            } else {
+                statsLink.innerHTML = previousValue;
+            }
+
         }
     };
 
