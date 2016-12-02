@@ -1766,11 +1766,19 @@ var SearchManager = function(settingsManager, pageManager) {
     this.saveResults = function(data, searchSettings) {
         var lines = data.map(function(tokens){
             var values = tokens.map(function (item) {
-                var value = item.name;
-                value = value.replace(/\"/g, '\\"');
-                //value = value.replace(/\s+/g, ' '); //removing newlines etc
-                value = '"' + value + '"';
-                return value;
+                if (item != null) {
+                    var value = item.name;
+                    if (value != null) {
+                        value = value.replace(/\"/g, '\\"');
+                        //value = value.replace(/\s+/g, ' '); //removing newlines etc
+                        value = '"' + value + '"';
+                        return value;
+                    } else {
+                        return "";
+                    }
+                } else {
+                    return "";
+                }
             })
             var line = values.join("\t");
             line += "\n";
