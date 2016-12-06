@@ -5,7 +5,7 @@
 <div class="grid_24 sample_ana" id="mainContainer">
     <div style="overflow: auto">
         <div class="searchTitle">Search EBI Metagenomics</div>
-        <div id="spinner" class="spinner"></div>
+        <canvas id="spinner" class="spinner" width="50" height="50"></canvas>
     </div>
 
     <form class="local-search-xs" action="javascript:pageManager.runSmallSearch();"

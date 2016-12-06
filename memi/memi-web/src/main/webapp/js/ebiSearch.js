@@ -76,6 +76,8 @@ var SettingsManager = function() {
         SEARCH_BOX_ID: "local-searchbox",
         SEARCH_BOX_SMALL_ID: "local-searchbox-xs",
         SEARCH_RESULTS_ID: "searchTabs",
+        SPINNER_ID: "spinner",
+        SPINNER_OVERLAY_ID: "search-overlay",
 
         HOMEPAGE_STATS_ID: "stat-public"
     };
@@ -860,8 +862,6 @@ var FacetManager = function(settingsManager, searchManager) {
                 listItem.appendChild(subList);
                 this.addMoreHierarchicalFacetsToList(searchSettings, facet.children, facetGroupId, facetValue, subList);
             }
-
-
         }
     };
 
@@ -1698,7 +1698,7 @@ var SearchManager = function(settingsManager, pageManager) {
         //history.pushState(JSON.stringify(searchSettings), "search", "/metagenomics/search");
 
         self.pageManager.clearDomainResults(searchSettings);
-        self.pageManager.showSpinner(searchSettings);
+        self.pageManager.showSpinner(searchSettings, false);
         var successCallback = function(httpReq) {
             self.pageManager.removeSpinner(searchSettings);
             self.pageManager.displayDomainData(httpReq, searchSettings);
@@ -1729,6 +1729,7 @@ var SearchManager = function(settingsManager, pageManager) {
             var searchSettings = JSON.parse(JSON.stringify(searchSettings));
             searchSettings.resultsNum = 100;
             searchSettings.page = 0;
+            self.context = self.pageManager.showSpinner(searchSettings, true);
         }
 
         if (results != null) {
@@ -1736,14 +1737,16 @@ var SearchManager = function(settingsManager, pageManager) {
                 var entry = rowFunction(results[i]);
                 data.push(entry);
             }
+
         }
 
         var url = this.settingsToURL(searchSettings);
 
-        self.pageManager.showSpinner(searchSettings);
         var successCallback = function(response) {
-            self.pageManager.removeSpinner(searchSettings);
-            console.log("Downloaded " + (data.length-1) + " of " + response.hitCount);
+            //console.log("Downloaded " + (data.length-1) + " of " + response.hitCount);
+            var percentage = (data.length-1)/response.hitCount;
+            self.pageManager.drawPercentageCircle(self.context, percentage);
+
             if (data.length <= response.hitCount) {
                 var remainingEntries = (response.hitCount - data.length) + 1;
                 if (remainingEntries < searchSettings.resultsNum) {
@@ -1752,6 +1755,7 @@ var SearchManager = function(settingsManager, pageManager) {
                 searchSettings.page++;
                 self.runDownloadSearch(rowFunction, data, searchSettings, response.entries);
             } else {
+                self.pageManager.removeSpinner(searchSettings);
                 self.saveResults(data, searchSettings);
             }
 
@@ -2020,33 +2024,71 @@ var PageManager = function() {
 
     };
 
-    this.showSpinner = function(searchSettings) {
-        var overlay = document.getElementById("search-overlay");
+    this.showSpinner = function(searchSettings, determinate) {
+        console.log("showSpinner()");
+        var global = this.settingsManager.GLOBAL_SEARCH_SETTINGS;
+        var overlay = document.getElementById(global.SPINNER_OVERLAY_ID);
         if (overlay != null) {
             overlay.style.display = "block";
-            var spinnerContainer = document.getElementById("spinner");
-            if (spinnerContainer != null) {
-                spinnerContainer.classList.add("spinner");
+            var spinnerCanvas = document.getElementById(global.SPINNER_ID);
+            if (spinnerCanvas != null) {
+                spinnerCanvas.classList.add("spinner");
+                spinnerCanvas.style.display = "block";
+                var context = spinnerCanvas.getContext("2d");
+                this.drawBaseCircle(context);
+                if (determinate) {
+                    this.drawPercentageCircle(context, 0.0);
+                } else {
+                    this.drawPercentageCircle(context, 0.4);
+                }
+                return context;
             } else {
-                console.log("Error: Expected to find div with id 'spinner'");
+                console.log("Error: Expected to find div with id '" + global.SPINNER_ID+ "'");
             }
         } else {
-            console.log("Error: Expected to find element with id search-overlay");
+            console.log("Error: Expected to find element with id " + global.SPINNER_OVERLAY_ID);
         }
     };
 
+    this.drawBaseCircle = function(context) {
+        context.beginPath();
+        context.lineWidth = 10;
+        context.strokeStyle = '#F0F0F0';
+        context.arc(25, 25, 20, 0, 6.28319, false);
+        context.stroke();
+        context.closePath();
+    };
+
+    this.drawPercentageCircle = function(context, percentage) {
+        context.beginPath();
+        var degrees = 360.0 * percentage
+        var radians = (degrees * Math.PI)/180
+        context.arc(25, 25, 20, 0, radians, false);
+        context.fillStyle = "rgba(0,0,200,0)";
+        context.fill();
+
+        // draw the stroke
+        context.lineWidth = 8;
+        context.strokeStyle = '#2B8A97';
+        context.stroke();
+        context.closePath();
+    };
+
     this.removeSpinner = function(searchSettings) {
-        var overlay = document.getElementById("search-overlay");
+        console.log("removeSpinner()");
+        var global = this.settingsManager.GLOBAL_SEARCH_SETTINGS;
+        var overlay = document.getElementById(global.SPINNER_OVERLAY_ID);
         if (overlay != null) {
             overlay.style.display = "none";
-            var spinnerContainer = document.getElementById("spinner");
-            if (spinnerContainer != null) {
-                spinnerContainer.classList.remove("spinner");
+            var spinnerCanvas = document.getElementById("spinner");
+            if (spinnerCanvas != null) {
+                spinnerCanvas.classList.remove("spinner");
+                spinnerCanvas.style.display = "none";
             } else {
-                console.log("Error: Expected to find div with id 'spinner'");
+                console.log("Error: Expected to find div with id '" + global.SPINNER_ID+ "'");
             }
         } else {
-            console.log("Error: Expected to find element with id search-overlay");
+            console.log("Error: Expected to find element with id " + global.SPINNER_OVERLAY_ID);
         }
     };
 

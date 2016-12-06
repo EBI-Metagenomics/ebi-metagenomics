@@ -2100,15 +2100,9 @@ div#local-masthead ul li.logout {display:none;}
 }
 
 .spinner {
-    border: 10px solid #f3f3f3; /* Light grey */
-    border-top: 10px solid #2B8A97; /* Blue */
-    border-radius: 70%;
-    width: 15px;
-    height: 15px;
     animation: spin 0.8s linear infinite;
-    float: left;
-    display: inline-block;
-    margin-top: 20px;
+    margin-top: 15px;
+    transform-origin: center;
 }
 
 @keyframes spin {
