@@ -1788,6 +1788,61 @@ var SearchManager = function(settingsManager, pageManager) {
             line += "\n";
             return line;
         });
+
+        //the first line describes all the search parameters
+        var today = new Date();
+        var date = today.getDate();
+        var month = today.getMonth() + 1;
+        var year = today.getFullYear();
+        var hour = today.getHours();
+        var minute = today.getMinutes();
+
+        var searchDescription = "Time:year=" + year + ",month=" + month + ",date=" + date + ",hour=" + hour + ",minute=" + minute + ";";
+        searchDescription += "Type:" + searchSettings.type + ";";
+        searchDescription += "Text:" + searchSettings.searchText + ";";
+        var facetNames = Object.keys(searchSettings.facets);
+        var facetDescription = "";
+        if (facetNames != null && facetNames.length > 0) {
+            facetDescription = "Facets:"
+            for(var i=0; i < facetNames.length; i++) {
+                var facetName = facetNames[i];
+                if (searchSettings.facets[facetName].length > 0) {
+                    facetDescription += facetName + "=";
+                    var facetValues = searchSettings.facets[facetName];
+                    for(var j=0; j < facetValues.length; j++) {
+                        var value = facetValues[j];
+                        facetDescription += "'" + value + "'";
+                        if (value !== facetValues[facetValues.length-1]
+                            && facetName == facetNames[facetNames.length-1]) {
+                            facetDescription += ",";
+                        }
+                    }
+                }
+
+            }
+            facetDescription += ";";
+        }
+
+        if (facetDescription.length > 0) {
+            searchDescription += facetDescription;
+        }
+
+        if (searchSettings.hasOwnProperty("numericalFields")
+            && searchSettings.numericalFields.length > 0) {
+            var numericalFields = searchSettings["numericalFields"];
+            for (var i=0; i < numericalFields.length; i++) {
+                var numericalField = numericalFields[i];
+                if (numericalField.selectedMinimum != numericalField.minimum
+                    || numericalField.selectedMaximum != numericalField.maximum) {
+                    searchDescription += numericalField.displayName + "-Range:";
+                    searchDescription += "Minimum=" + numericalField.selectedMinimum + ",";
+                    searchDescription += "Maxmimum=" + numericalField.selectedMaximum + ";";
+                }
+
+            }
+        }
+        searchDescription += "\n";
+        lines.unshift(searchDescription);
         var blob = new Blob(lines, {type: "text/plain;charset=utf-8"});
         saveAs(blob, "metagenomics_" + searchSettings.type.toLowerCase() + ".tsv");
     };
