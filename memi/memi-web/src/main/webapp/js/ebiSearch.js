@@ -77,6 +77,7 @@ var SettingsManager = function() {
         SEARCH_BOX_SMALL_ID: "local-searchbox-xs",
         SEARCH_RESULTS_ID: "searchTabs",
         SPINNER_ID: "spinner",
+        SPINNER_PERCENTAGE_ID: "search-percentage",
         SPINNER_OVERLAY_ID: "search-overlay",
 
         HOMEPAGE_STATS_ID: "stat-public"
@@ -1746,6 +1747,7 @@ var SearchManager = function(settingsManager, pageManager) {
             //console.log("Downloaded " + (data.length-1) + " of " + response.hitCount);
             var percentage = (data.length-1)/response.hitCount;
             self.pageManager.drawPercentageCircle(self.context, percentage);
+            self.pageManager.writePercentageText(percentage);
 
             if (data.length <= response.hitCount) {
                 var remainingEntries = (response.hitCount - data.length) + 1;
@@ -2093,6 +2095,7 @@ var PageManager = function() {
                 this.drawBaseCircle(context);
                 if (determinate) {
                     this.drawPercentageCircle(context, 0.0);
+                    this.writePercentageText(0);
                 } else {
                     this.drawPercentageCircle(context, 0.4);
                 }
@@ -2127,6 +2130,16 @@ var PageManager = function() {
         context.strokeStyle = '#2B8A97';
         context.stroke();
         context.closePath();
+    };
+
+    this.writePercentageText = function(percentage) {
+        percentage = percentage * 100;
+        var percentageElement = document.getElementById(this.settingsManager.GLOBAL_SEARCH_SETTINGS.SPINNER_PERCENTAGE_ID);
+        if (percentageElement != null) {
+            percentageElement.innerHTML = percentage.toPrecision(2) + "%";
+        } else {
+            console.log("Error: Expected to find element with id '" + this.settingsManager.GLOBAL_SEARCH_SETTINGS.SPINNER_PERCENTAGE_ID + "'")
+        }
     };
 
     this.removeSpinner = function(searchSettings) {
