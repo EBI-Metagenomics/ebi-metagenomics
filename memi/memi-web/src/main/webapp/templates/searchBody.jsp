@@ -5,9 +5,9 @@
 <div class="grid_24 sample_ana" id="mainContainer">
     <div style="overflow: auto">
         <div class="searchTitle">Search EBI Metagenomics</div>
-        <span width="50" height="50" id="spinner-container" style="position: relative">
+        <span width="50" height="50" id="spinner-container" class="spinner-container" style="position: relative">
             <canvas id="spinner" class="spinner" width="50" height="50"></canvas>
-            <span id="search-percentage" style="z-index: 10; position: absolute; top:-35px;left: 13px"></span>
+            <span class="percentage-text" id="search-percentage" style="z-index: 10; position: absolute; top:-35px;left: 13px"></span>
         </span>
 
     </div>
