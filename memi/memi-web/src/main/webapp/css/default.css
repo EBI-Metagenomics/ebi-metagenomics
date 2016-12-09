@@ -2099,10 +2099,19 @@ div#local-masthead ul li.logout {display:none;}
     display: none;
 }
 
+.spinner-container {
+    opacity: 0;
+    transition: opacity 0.2s  ease-in-out 0.1s;
+}
+
 .spinner {
-    animation: spin 0.8s linear infinite;
+    animation: spin 1.2s linear infinite;
     margin-top: 15px;
     transform-origin: center;
+}
+
+.spinner-container-loaded {
+    opacity: 1;
 }
 
 @keyframes spin {

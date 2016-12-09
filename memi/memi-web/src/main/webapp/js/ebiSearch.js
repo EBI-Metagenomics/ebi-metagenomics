@@ -76,9 +76,14 @@ var SettingsManager = function() {
         SEARCH_BOX_ID: "local-searchbox",
         SEARCH_BOX_SMALL_ID: "local-searchbox-xs",
         SEARCH_RESULTS_ID: "searchTabs",
+
         SPINNER_ID: "spinner",
-        SPINNER_PERCENTAGE_ID: "search-percentage",
+        SPINNER_PERCENTAGE_ID: "spinner-percentage",
         SPINNER_OVERLAY_ID: "search-overlay",
+        SPINNER_CONTAINER_ID: "spinner-container",
+        SPINNER_CONTAINER_CLASS: "spinner-container",
+        SPINNER_CONTAINER_TRANSITION_CLASS: "spinner-container-loaded",
+        SPINNER_CLASS: "spinner",
 
         HOMEPAGE_STATS_ID: "stat-public"
     };
@@ -2086,22 +2091,29 @@ var PageManager = function() {
         var global = this.settingsManager.GLOBAL_SEARCH_SETTINGS;
         var overlay = document.getElementById(global.SPINNER_OVERLAY_ID);
         if (overlay != null) {
-            overlay.style.display = "block";
-            var spinnerCanvas = document.getElementById(global.SPINNER_ID);
-            if (spinnerCanvas != null) {
-                spinnerCanvas.classList.add("spinner");
-                spinnerCanvas.style.display = "block";
-                var context = spinnerCanvas.getContext("2d");
-                this.drawBaseCircle(context);
-                if (determinate) {
-                    this.drawPercentageCircle(context, 0.0);
-                    this.writePercentageText(0);
+            //MAQ overlay.style.display = "block";
+            var spinnerContainer = document.getElementById(global.SPINNER_CONTAINER_ID);
+            if (spinnerContainer != null) {
+                spinnerContainer.classList.add(global.SPINNER_CONTAINER_CLASS);
+                spinnerContainer.classList.add(global.SPINNER_CONTAINER_TRANSITION_CLASS);
+                var spinnerCanvas = document.getElementById(global.SPINNER_ID);
+                if (spinnerCanvas != null) {
+                    spinnerCanvas.classList.add(global.SPINNER_CLASS);
+                    spinnerCanvas.style.display = "block";
+                    var context = spinnerCanvas.getContext("2d");
+                    this.drawBaseCircle(context);
+                    if (determinate) {
+                        this.drawPercentageCircle(context, 0.0);
+                        this.writePercentageText(0);
+                    } else {
+                        this.drawPercentageCircle(context, 0.4);
+                    }
+                    return context;
                 } else {
-                    this.drawPercentageCircle(context, 0.4);
+                    console.log("Error: Expected to find div with id '" + global.SPINNER_ID+ "'");
                 }
-                return context;
             } else {
-                console.log("Error: Expected to find div with id '" + global.SPINNER_ID+ "'");
+                console.log("Error: expected to find element with id: '" + global.SPINNER_CONTAINER_ID + "'");
             }
         } else {
             console.log("Error: Expected to find element with id " + global.SPINNER_OVERLAY_ID);
@@ -2148,12 +2160,19 @@ var PageManager = function() {
         var overlay = document.getElementById(global.SPINNER_OVERLAY_ID);
         if (overlay != null) {
             overlay.style.display = "none";
-            var spinnerCanvas = document.getElementById("spinner");
-            if (spinnerCanvas != null) {
-                spinnerCanvas.classList.remove("spinner");
-                spinnerCanvas.style.display = "none";
+            var spinnerContainer = document.getElementById(global.SPINNER_CONTAINER_ID);
+            if (spinnerContainer != null) {
+                spinnerContainer.classList.remove(global.SPINNER_CONTAINER_CLASS);
+                spinnerContainer.classList.remove(global.SPINNER_CONTAINER_TRANSITION_CLASS);
+                var spinnerCanvas = document.getElementById(global.SPINNER_ID);
+                if (spinnerCanvas != null) {
+                    spinnerCanvas.classList.remove("spinner");
+                    spinnerCanvas.style.display = "none";
+                } else {
+                    console.log("Error: Expected to find div with id '" + global.SPINNER_ID+ "'");
+                }
             } else {
-                console.log("Error: Expected to find div with id '" + global.SPINNER_ID+ "'");
+                console.log("Error: expected to find element with id '" + global.SPINNER_CONTAINER_ID + "'");
             }
         } else {
             console.log("Error: Expected to find element with id " + global.SPINNER_OVERLAY_ID);
