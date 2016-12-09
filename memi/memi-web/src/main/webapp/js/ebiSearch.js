@@ -2091,7 +2091,7 @@ var PageManager = function() {
         var global = this.settingsManager.GLOBAL_SEARCH_SETTINGS;
         var overlay = document.getElementById(global.SPINNER_OVERLAY_ID);
         if (overlay != null) {
-            //MAQ overlay.style.display = "block";
+            overlay.style.display = "block";
             var spinnerContainer = document.getElementById(global.SPINNER_CONTAINER_ID);
             if (spinnerContainer != null) {
                 spinnerContainer.classList.add(global.SPINNER_CONTAINER_CLASS);
@@ -2131,7 +2131,7 @@ var PageManager = function() {
 
     this.drawPercentageCircle = function(context, percentage) {
         context.beginPath();
-        var degrees = 360.0 * percentage
+        var degrees = 360.0 * percentage.toPrecision(2);
         var radians = (degrees * Math.PI)/180
         context.arc(25, 25, 20, 0, radians, false);
         context.fillStyle = "rgba(0,0,200,0)";
