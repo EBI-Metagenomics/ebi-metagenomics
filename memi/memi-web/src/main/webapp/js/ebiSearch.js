@@ -1841,7 +1841,8 @@ var SearchManager = function(settingsManager, pageManager) {
         }
 
         if (searchSettings.hasOwnProperty("numericalFields")
-            && searchSettings.numericalFields.length > 0) {
+                && searchSettings.numericalFields != null
+                && searchSettings.numericalFields.length > 0) {
             var numericalFields = searchSettings["numericalFields"];
             for (var i=0; i < numericalFields.length; i++) {
                 var numericalField = numericalFields[i];
