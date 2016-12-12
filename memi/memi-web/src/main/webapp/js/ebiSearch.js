@@ -2152,9 +2152,21 @@ var PageManager = function() {
 
     this.writePercentageText = function(percentage) {
         percentage = percentage * 100;
-        var percentageElement = document.getElementById(this.settingsManager.GLOBAL_SEARCH_SETTINGS.SPINNER_PERCENTAGE_ID);
+        var percentageElement = document.getElementById(
+            this.settingsManager.GLOBAL_SEARCH_SETTINGS.SPINNER_PERCENTAGE_ID);
         if (percentageElement != null) {
-            percentageElement.innerHTML = percentage.toPrecision(2) + "%";
+            percentageElement.style.display = "block";
+            percentageElement.innerHTML = percentage.toFixed(0) + "%";
+        } else {
+            console.log("Error: Expected to find element with id '" + this.settingsManager.GLOBAL_SEARCH_SETTINGS.SPINNER_PERCENTAGE_ID + "'")
+        }
+    };
+
+    this.removePercentageText = function() {
+        var percentageElement = document.getElementById(
+            this.settingsManager.GLOBAL_SEARCH_SETTINGS.SPINNER_PERCENTAGE_ID);
+        if (percentageElement != null) {
+            percentageElement.style.display = "none";
         } else {
             console.log("Error: Expected to find element with id '" + this.settingsManager.GLOBAL_SEARCH_SETTINGS.SPINNER_PERCENTAGE_ID + "'")
         }
@@ -2170,6 +2182,7 @@ var PageManager = function() {
             if (spinnerContainer != null) {
                 spinnerContainer.classList.remove(global.SPINNER_CONTAINER_CLASS);
                 spinnerContainer.classList.remove(global.SPINNER_CONTAINER_TRANSITION_CLASS);
+                this.removePercentageText();
                 var spinnerCanvas = document.getElementById(global.SPINNER_ID);
                 if (spinnerCanvas != null) {
                     spinnerCanvas.classList.remove("spinner");

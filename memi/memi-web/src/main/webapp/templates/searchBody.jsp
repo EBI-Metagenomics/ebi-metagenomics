@@ -5,10 +5,10 @@
 <div class="grid_24 sample_ana" id="mainContainer">
     <div style="overflow: auto">
         <div class="searchTitle">Search EBI Metagenomics</div>
-        <span width="50" height="50" id="spinner-container" class="spinner-container" style="position: relative">
+        <div id="spinner-container">
             <canvas id="spinner" class="spinner" width="50" height="50"></canvas>
-            <span class="percentage-text" id="spinner-percentage" style="z-index: 10; position: absolute; top:-35px;left: 12px"></span>
-        </span>
+            <div id="spinner-percentage" class="spinner-percentage"></div>
+        </div>
 
     </div>
 

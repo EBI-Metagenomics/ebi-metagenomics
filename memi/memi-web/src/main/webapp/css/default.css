@@ -2101,17 +2101,29 @@ div#local-masthead ul li.logout {display:none;}
 
 .spinner-container {
     opacity: 0;
+    margin-top: 15px;
     transition: opacity 0.2s  ease-in-out 0.1s;
+    position: relative;
+    float: left;
 }
 
 .spinner {
     animation: spin 1.2s linear infinite;
-    margin-top: 15px;
     transform-origin: center;
+    width: 50px;
+    height: 50px;
+    position: absolute;
 }
 
 .spinner-container-loaded {
     opacity: 1;
+    z-index: 10;
+}
+
+.spinner-percentage {
+    top: 16px;
+    left: 12px;
+    position: absolute;
 }
 
 @keyframes spin {
