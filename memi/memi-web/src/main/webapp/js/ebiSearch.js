@@ -1735,7 +1735,9 @@ var SearchManager = function(settingsManager, pageManager) {
             var searchSettings = JSON.parse(JSON.stringify(searchSettings));
             searchSettings.resultsNum = 100;
             searchSettings.page = 0;
-            self.context = self.pageManager.showSpinner(searchSettings, true);
+            var canvasData = self.pageManager.showSpinner(searchSettings, true);
+            self.context = canvasData.context;
+            self.canvas = canvasData.canvas;
         }
 
         if (results != null) {
@@ -1751,7 +1753,7 @@ var SearchManager = function(settingsManager, pageManager) {
         var successCallback = function(response) {
             //console.log("Downloaded " + (data.length-1) + " of " + response.hitCount);
             var percentage = (data.length-1)/response.hitCount;
-            self.pageManager.drawPercentageCircle(self.context, percentage);
+            self.pageManager.drawPercentageCircle(self.context, self.canvas, percentage);
             self.pageManager.writePercentageText(percentage);
 
             if (data.length <= response.hitCount) {
@@ -2101,14 +2103,16 @@ var PageManager = function() {
                     spinnerCanvas.classList.add(global.SPINNER_CLASS);
                     spinnerCanvas.style.display = "block";
                     var context = spinnerCanvas.getContext("2d");
-                    this.drawBaseCircle(context);
                     if (determinate) {
-                        this.drawPercentageCircle(context, 0.0);
+                        this.drawPercentageCircle(context, spinnerCanvas, 0.0);
                         this.writePercentageText(0);
                     } else {
-                        this.drawPercentageCircle(context, 0.4);
+                        this.drawPercentageCircle(context, spinnerCanvas, 0.4);
                     }
-                    return context;
+                    return {
+                        context: context,
+                        canvas: spinnerCanvas
+                    };
                 } else {
                     console.log("Error: Expected to find div with id '" + global.SPINNER_ID+ "'");
                 }
@@ -2129,7 +2133,9 @@ var PageManager = function() {
         context.closePath();
     };
 
-    this.drawPercentageCircle = function(context, percentage) {
+    this.drawPercentageCircle = function(context, canvas, percentage) {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        this.drawBaseCircle(context);
         context.beginPath();
         var degrees = 360.0 * percentage.toPrecision(2);
         var radians = (degrees * Math.PI)/180
@@ -2248,8 +2254,7 @@ var PageManager = function() {
                     var settings = this.settingsManager.getSearchSettings(dataType);
                     settings.searchText = searchBoxText;
                     if (resetSearch) {
-                        settings.facets = {};
-                        settings.page = 0;
+                        this.resetSearchSettings(settings);
                     }
                     this.searchManager.runDomainSearch(settings);
                 }
@@ -2259,8 +2264,7 @@ var PageManager = function() {
                     var settings = this.settingsManager.getSearchSettings(dataType);
                     settings.searchText = searchBoxText;
                     if (resetSearch) {
-                        settings.facets = {};
-                        settings.page = 0;
+                        this.resetSearchSettings(settings);
                     }
                     this.settingsManager.setSearchSettings(dataType, settings);
                 }
@@ -2275,6 +2279,18 @@ var PageManager = function() {
         }
 
     }
+
+    this.resetSearchSettings = function(settings) {
+        settings.facets = {};
+        settings.page = 0;
+        if (settings.numericalFields != null && settings.numericalFields.length > 0) {
+            for (var i=0; i < settings.numericalFields.length; i++) {
+                var numericalField = settings.numericalFields[i];
+                numericalField.selectedMinimum = numericalField.minimum;
+                numericalField.selectedMaximum = numericalField.maximum;
+            }
+        }
+    };
 
     this.updateHomepageStats = function() {
         if (!this.settingsManager.areSettingsInitialisted()) {
