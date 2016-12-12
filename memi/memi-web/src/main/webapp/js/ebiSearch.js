@@ -73,6 +73,8 @@ var SettingsManager = function() {
         HIERARCHICAL_FACET_CLASS: "hierarchical-facet-list",
         HOMEPAGE_LINK_CLASS: "homepage-search-link",
 
+        DOWNLOAD_BUTTON_CLASS: "download-button",
+
         SEARCH_BOX_ID: "local-searchbox",
         SEARCH_BOX_SMALL_ID: "local-searchbox-xs",
         SEARCH_RESULTS_ID: "searchTabs",
@@ -543,7 +545,9 @@ var TableManager = function(searchManager, settingsManager) {
                             downloadButton = document.createElement("input");
                             downloadButton.type = "button";
                             downloadButton.id = element + "-" + downloadID;
-                            downloadButton.value = "Download";
+                            downloadButton.value = "Download results table";
+                            downloadButton.classList
+                                .add(this.settingsManager.GLOBAL_SEARCH_SETTINGS.DOWNLOAD_BUTTON_CLASS);
                             downloadContainer.appendChild(downloadButton);
                             downloadButton.addEventListener("click", function (event) {
                                 self.downloadSearchResults(results, searchSettings);
