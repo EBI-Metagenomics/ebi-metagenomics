@@ -239,7 +239,7 @@ var TableManager = function(searchManager, settingsManager) {
      * @param container
      */
     this.displayProjectTable = function(results, container) {
-        console.log("Showing project data");
+        //console.log("Showing project data");
         table = document.createElement("table");
         table.border = 1;
         table.classList.add("table-light");
@@ -294,7 +294,7 @@ var TableManager = function(searchManager, settingsManager) {
      * @param container
      */
     this.displaySampleTable = function(results, container) {
-        console.log("Showing sample data");
+        //console.log("Showing sample data");
         table = document.createElement("table");
         table.border = 1;
         table.classList.add("table-light");
@@ -353,7 +353,7 @@ var TableManager = function(searchManager, settingsManager) {
      * @param container
      */
     this.displayRunTable = function(results, container) {
-        console.log("Showing run data");
+        //console.log("Showing run data");
         table = document.createElement("table");
         table.border = 1;
         table.classList.add("table-light");
@@ -532,7 +532,7 @@ var TableManager = function(searchManager, settingsManager) {
             var isFileSaverSupported = !!new Blob;
             if (isFileSaverSupported) {
                 var dataType = searchSettings.type;
-                console.log("displayDownloadButton: " + dataType);
+                //console.log("displayDownloadButton: " + dataType);
 
                 var pageElements = ["header", "footer"];
                 for (var i=0; i < pageElements.length; i++) {
@@ -627,7 +627,7 @@ var FacetManager = function(settingsManager, searchManager) {
                     console.log("Error - expected to find facet type: " + facetType);
                 }
             }
-            console.log("Facet clicked " + facetInput.value + " Setting: " + Object.keys(searchSettings.facets));
+            //console.log("Facet clicked " + facetInput.value + " Setting: " + Object.keys(searchSettings.facets));
             self.searchManager.runDomainSearch(searchSettings);
         });
     };
@@ -652,7 +652,7 @@ var FacetManager = function(settingsManager, searchManager) {
             if (facetCount > 1000) {
                 facetCount = 1000;
             }
-            console.log("Fetching " + facetCount + " more facets");
+            //console.log("Fetching " + facetCount + " more facets");
             var parameters = {
                 "query": encodeURIComponent("domain_source:" + searchSettings.domain),
                 "format": "json",
@@ -668,7 +668,7 @@ var FacetManager = function(settingsManager, searchManager) {
             document.body.appendChild(modalOverlay);
             var paramFragment = self.searchManager.parametersToString(parameters);
             var url = self.settingsManager.getEBISearchURL() + searchSettings.domain + paramFragment;
-            console.log("Getting more facets from: " + url);
+            //console.log("Getting more facets from: " + url);
             self.searchManager.runAjax("GET", "json", url, null, function(response) {
                 //success
                 var results = response;
@@ -802,7 +802,7 @@ var FacetManager = function(settingsManager, searchManager) {
         if (contentDivs != null && contentDivs.length == 1) {
             contentDiv = contentDivs[0];
         } else {
-            console.log("Expect to find exactly one child div with class " +
+            console.log("Error: Expect to find exactly one child div with class " +
                 self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_CONTENT_CLASS);
         }
 
@@ -813,7 +813,7 @@ var FacetManager = function(settingsManager, searchManager) {
             var textInput = textFilter[0];
             textInput.style.display = "none";
         } else {
-            console.log("Expect to find exactly one child div with class " +
+            console.log("Error: Expect to find exactly one child div with class " +
                 self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_TEXT_FILTER_CLASS);
         }
 
@@ -824,7 +824,7 @@ var FacetManager = function(settingsManager, searchManager) {
         list.id = treeId;
         self.addMoreHierarchicalFacetsToList(searchSettings, facets.facetValues, facets.id, null, list);
         contentDiv.appendChild(list);
-        console.log("Converting more facet list to bonsai tree");
+        //console.log("Converting more facet list to bonsai tree");
 
         $("#"+treeId).bonsai({
             checkboxes: true,
@@ -886,7 +886,7 @@ var FacetManager = function(settingsManager, searchManager) {
         if (contentDivs != null && contentDivs.length == 1) {
             contentDiv = contentDivs[0];
         } else {
-            console.log("Expect to find exactly one child div with class "
+            console.log("Error: Expect to find exactly one child div with class "
                 + self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_CONTENT_CLASS);
         }
 
@@ -945,7 +945,7 @@ var FacetManager = function(settingsManager, searchManager) {
             }
 
             if (checkbox.checked) {
-                console.log("Checkbox: " + checkbox.value + " checked " + facetType + " = " + facetValue);
+                //console.log("Checkbox: " + checkbox.value + " checked " + facetType + " = " + facetValue);
                 if (searchSettings.facets[facetType].indexOf(facetValue) == -1) {
                     searchSettings.facets[facetType].push(facetValue);
                 }
@@ -1046,7 +1046,7 @@ var FacetManager = function(settingsManager, searchManager) {
         var facetGroupList = document.createElement("ul");
         facetGroupList.id = groupContainerId;
         facetGroupContainer.appendChild(facetGroupList);
-        console.log("Converting facet list to bonsai tree");
+        //console.log("Converting facet list to bonsai tree");
         $("#"+groupContainerId).bonsai({
             checkboxes: true,
             handleDuplicateCheckboxes: true
@@ -1118,7 +1118,7 @@ var FacetManager = function(settingsManager, searchManager) {
     this.displayHierarchicalChildren = function(container, facet, facetGroup, parentPath, searchSettings, bonsaiTreeID) {
         var dataType = searchSettings.type;
         var children = facet.children;
-        console.log("Facet with children: " + children.length);
+        //console.log("Facet with children: " + children.length);
         for (var i = 0; i < children.length; i++) {
             var childFacet = children[i];
             //console.log("Child facet: " + facetGroup.id + " name: " + childFacet.label);
@@ -1329,7 +1329,7 @@ var FacetManager = function(settingsManager, searchManager) {
         numericalField.selectedMinimum = tokens[0];
         numericalField.selectedMaximum = tokens[1];
 
-        console.log(numericalField.displayName + " range: " + tokens);
+        //console.log(numericalField.displayName + " range: " + tokens);
 
         //update text inputs
         if (numericalField.selectedMinimum != numericalField.minimum) {
@@ -1436,11 +1436,11 @@ var TabManager = function() {
 
                 this.setupJQueryTabs(settingsManager, tabContainer, disabledList);
             } else {
-                console.log("Tabs already exist");
+                console.log("Error: Tabs already exist");
             }
 
         } else {
-            console.log("Expected to find div with id 'searchTabs'");
+            console.log("Error: Expected to find div with id 'searchTabs'");
         }
         return tabContainer;
     };
@@ -1491,7 +1491,7 @@ var ResultsManager = function() {
                                       tabManager,
                                       tableManager,
                                       facetManager) {
-        console.log("displayDomain: " + searchSettings.type);
+        //console.log("displayDomain: " + searchSettings.type);
 
         var searchElementID = "local-searchbox";
         var searchElement = document.getElementById(searchElementID);
@@ -1503,12 +1503,13 @@ var ResultsManager = function() {
         }
 
         var results = response;
+        /*
         console.log(
             "Search returned "
             + results.hitCount + " "
             + searchSettings.type + " results"
         );
-
+        */
         tabManager.setTabText(results.hitCount, searchSettings.type);
         this.displayData(results, searchSettings.type, tableManager, settingsManager);
         facetManager.displayFacets(results.facets, searchSettings);
@@ -1544,7 +1545,7 @@ var SearchManager = function(settingsManager, pageManager) {
         self = this;
         this.runAjax("GET", "document", "/metagenomics/search", null, function(response) {
             var response = response;
-            console.log("Loading search template");
+            //console.log("Loading search template");
 
             document.innerHTML = response;
             self.pageManager.loadCss();
@@ -1581,7 +1582,7 @@ var SearchManager = function(settingsManager, pageManager) {
                 if (timeoutCallback) {
                     timeoutCallback(httpReq);
                 } else {
-                    console.log("Timeout occurred");
+                    console.log("Error: Timeout occurred");
                 }
             };
         }
@@ -1603,7 +1604,7 @@ var SearchManager = function(settingsManager, pageManager) {
             if (errCallback) {
                 self.fixInternetExplorerBug(httpReq, errCallback);
             } else {
-                console.log("Ajax error");
+                console.log("Error: Ajax error");
             }
         };
     };
@@ -1700,11 +1701,11 @@ var SearchManager = function(settingsManager, pageManager) {
 
     this.runDomainSearch = function(searchSettings) {
         var self = this;
-        console.log("Searchtext = " + searchSettings.searchText);
+        //console.log("Searchtext = " + searchSettings.searchText);
         this.settingsManager.setSearchText(searchSettings.searchText);
         this.settingsManager.setSearchSettings(searchSettings.type, searchSettings);
 
-        console.log("about to push state");
+        //console.log("about to push state");
         //history.pushState(JSON.stringify(searchSettings), "search", "/metagenomics/search");
 
         self.pageManager.clearDomainResults(searchSettings);
@@ -1952,7 +1953,7 @@ var HomePageManager = function(settingsManager, searchManager) {
         return function(response) {
             var hitCount = response.hitCount;
 
-            console.log(settingsCopy.type + " stats success: " + hitCount);
+            //console.log(settingsCopy.type + " stats success: " + hitCount);
 
             if (hitCount != null) {
                 var statsLink = document.createElement("a");
@@ -2094,7 +2095,7 @@ var PageManager = function() {
     };
 
     this.showSpinner = function(searchSettings, determinate) {
-        console.log("showSpinner()");
+        //console.log("showSpinner()");
         var global = this.settingsManager.GLOBAL_SEARCH_SETTINGS;
         var overlay = document.getElementById(global.SPINNER_OVERLAY_ID);
         if (overlay != null) {
@@ -2178,7 +2179,7 @@ var PageManager = function() {
     };
 
     this.removeSpinner = function(searchSettings) {
-        console.log("removeSpinner()");
+        //console.log("removeSpinner()");
         var global = this.settingsManager.GLOBAL_SEARCH_SETTINGS;
         var overlay = document.getElementById(global.SPINNER_OVERLAY_ID);
         if (overlay != null) {
@@ -2261,7 +2262,7 @@ var PageManager = function() {
             searchBoxText = searchBox.value;
             var storedSearchText = this.settingsManager.getSearchText();
             var resetSearch = false;
-            console.log("running search");
+            //console.log("running search");
             if (searchBoxText != storedSearchText) {
                 resetSearch = true;
             }
