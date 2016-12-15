@@ -2156,3 +2156,11 @@ div#local-masthead ul li.logout {display:none;}
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+.download-button {
+    cursor: pointer;
+}
+
+.homepage-search-link {
+    cursor: pointer;
+}
