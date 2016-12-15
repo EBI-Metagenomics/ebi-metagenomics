@@ -365,13 +365,14 @@
     <c:when test="${not empty model.submitter}"> <!-- private-->
         <section class="hlight_item">
             <div class="grid_24">
-                <div class="grid_12 alpha hlight-info">
+                <div class="grid_12 alpha hlight-info hlight-spot">
                     <div class="hlight_title_cont">
                         <div class="hlight_maintitle"><h1>Tracking data submission</h1></div>
                         <div class="hlight_subtitle" style="margin-top:0;"><h2 class="icon icon-generic"
                                                                                data-icon="i"></h2></div>
                     </div>
                     <div class="home_box alpha">
+                        <div class="hlight-text-scroll">
                         <p><img src="${pageContext.request.contextPath}/img/ico_sub_big.png" alt="Tracking submission"/>
                             EBI Metagenomics offers a manually-assisted submission route, with help available to ensure data
                             and metadata formatting comply with the European Nucleotide Archive (ENA) data schema and the
@@ -387,15 +388,17 @@
                         <p>If you have been waiting for more than a month for your results, please <a
                                 href="mailto:metagenomics-help@ebi.ac.uk?subject=EBI Metagenomics private area: submission status">
                             contact us</a> to check the status of the submission/analysis.</p>
+                        </div>
                     </div>
                 </div>
-                <div class="grid_12 alpha hlight-info">
+                <div class="grid_12 omega hlight-info hlight-spot">
                     <div class="hlight_title_cont">
                         <div class="hlight_maintitle"><h1>Data confidentiality</h1></div>
                         <div class="hlight_subtitle" style="margin-top:0;"><h2 class="icon icon-generic"
                                                                                data-icon="i"></h2></div>
                     </div>
-                    <div class="home_box alpha">
+                    <div class="home_box omega">
+                        <div class="hlight-text-scroll">
                         <p><img src="${pageContext.request.contextPath}/img/ico_conf_big.png" alt="Data archiving"/>
                             Data submitted to us can be kept confidential (accessible only via secure user login) to allow data
                             producers time to publish their findings. It should be noted that all submitted data must eventually be
@@ -404,166 +407,123 @@
                             Should you wish to make your confidential data publicly available before the confidential hold period expires,
                             you can reset the release date using the Webin tool.
                         </p>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
     </c:when>
-    <c:otherwise>
-
-
-        <section class="hlight_item">
-            <div class="grid_24">
-                <div class="hlight-spot grid_12 alpha">
-                    <div class="hlight_title_cont">
-                        <div class="hlight_maintitle"><h1>Spotlight</h1></div>
-                        <div class="hlight_subtitle"><h2>American Gut project</h2></div>
-                    </div>
-                    <div class="home_box alpha">
-                        <div class="hlight-text-scroll">
-                        <img alt="American Gut Study Logo"
-                             src="<c:url value="${baseURL}/img/pict_home_american_gut_sm.jpg"/>" style="max-width:50%;float:left;margin:18px;"/>
-                        <p/>The microbial population (or microbiome) of the human gut is involved in a wide range of important processes, such as digestion, production of vitamins and other nutrients, detoxification, protection from pathogens, and helping to shape the host immune system. Gut microbial communities represent substantial reservoirs of genetic and metabolic diversity: different people have different types of microorganisms in their gut, and community composition can change over time or with diet.
-
-                        <p/>The importance of the gut microbiota in health and disease is becoming increasingly recognised. Microbiome composition seems to be vital in maintaining a healthy gut, and community perturbance has been associated with a wide range of diseases, including obesity, diabetes, IBS and cancer. In order to better understand such associations, and to work out what constitutes normal or unhealthy gut populations, it is important to analyse samples from a broad range of people, with a variety of ages, diets and lifestyles.
-
-                        <p/>American Gut (<a href="http://americangut.org">americangut.org</a>) is an extensive crowd-sourced citizen science project, aiming to shed light on the connections between human microbiome and health. For a small monetary contribution (covering sample processing, sequencing and analysis costs), the organisers mail volunteers a dietary and lifestyle questionnaire and sample collection kit. Samples and questionnaires are then sent back for analysis. The project also contains samples and data from a related project in the UK, "The British Gut" (<a href="http://britishgut.org/">britishgut.org</a>).
-
-                        <p/>Once received by the laboratory, samples are anonymised, DNA is extracted and microbial 16S rRNA genes are amplified, sequenced and analysed to help reveal gut community composition. The analysis results can be accessed via the American Gut website, and the anonymised sequence sets are also submitted to public sequence data archives, such as the European Nucleotide Archive (ENA), for reuse and re-analysis by the scientific community.
-
-                        <p/>EBI Metagenomics has analysed the 16S rRNA gene amplicon sequence data for over 8,000 samples from the American Gut project (ERP012803) that have been deposited with the ENA to date. The taxonomic analysis for each sequencing run can be visualised on (or downloaded from) the EBI Metagenomics web site (for example, <a href="${baseURL}/metagenomics/projects/ERP012803/samples/ERS915520/runs/ERR1073439/results/versions/2.0">ERR1073439</a>). Users can also download the whole data set, summarised at both the phylum and full taxonomic classification level, as results matrix files (<a href="${baseURL}/metagenomics/projects/ERP012803">ERP012803</a>).
-
-                        </div>
-                        <a href="<c:url value="${baseURL}/projects/ERP012803"/>"
-                                                   title="View American Gut project" class="all">Look at the data</a>
-                    </div>
-                    <!--
-                    <div class="hlight_title_cont">
-                        <div class="hlight_maintitle"><h1>Spotlight</h1></div>
-                        <div class="hlight_subtitle"><h2>TARA ocean project</h2></div>
-                    </div>
-                    <div class="home_box alpha">
-                        <img alt="Tara Oceans expedition map"
-                             src="<c:url value="${baseURL}/img/pict_home_taramap_590.png"/>" style="max-width:590px;"/>
-                        <p>Plankton ecosystems contain a phenomenal reservoir of life: more than 10 billion organisms
-                            inhabit every litre of oceanic water, including viruses, prokaryotes, unicellular eukaryotes
-                            (protists), and metazoans.
-
-                            Plankton&#39;s importance for the earth&#39;s climate is at least equivalent to that of the
-                            rainforest. Yet only a small fraction of organisms that compose it have been classified and
-                            analysed.</p>
-
-                        <p>Tara Oceans expedition, led by EMBL senior scientist Eric Karsenti, has been travelling
-                            around the world (2009-13) collecting over 35,000 ocean samples containing millions of small
-                            organism collected in more than 210 ocean stations. <a
-                                    href="http://www.embl.de/tara-oceans/start/" class="ext"> More about Tara</a></p>
-
-                        <a href="<c:url value="${baseURL}/projects/ERP001736"/>"
-                           title="View Tara project" class="all">Look at the data</a>
-                    </div>
-                    -->
-                </div>
-                <div class="hlight-spot grid_12 omega">
-                    <div class="hlight_title_cont">
-                        <div class="hlight_maintitle"><h1>Tools</h1></div>
-                        <div class="hlight_subtitle"><h2>Functional sample comparison</h2></div>
-                    </div>
-                    <div class="home_box omega">
-                        <div class="hlight-text-scroll">
-                        <img alt="Example of Go terms analysis result page"
-                             src="<c:url value="${baseURL}/img/pict_home_comparison_566.png"/>"
-                             style="max-width: 566px;"/>
-                        <p>Interested in comparing the functional profile of sequencing runs within a project? Now it is
-                            possible, using our comparison tool, which provides analysis based on a slimmed-down subset
-                            of Gene Ontology (GO) terms, specially developed to describe metagenomic data. </p>
-                        <p>You can visualise the results using a range of interactive charts (bar charts, stacked
-                            columns, Principal Component Analysis and heatmaps).
-                            The different charts can be exported in PNG, PDF and SVG formats, so that they can easily be
-                            included in presentations and publications.
-                        </p>
-                        </div>
-                        <a href="<c:url value="${baseURL}/compare"/>" title="Compare samples" class="all">Compare
-                                                  samples</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="jumbo-citation">
-            <div class="grid_24">
-                <div class="hlight-spot alpha">
-                    <div class="hlight_title_cont">
-                        <div class="hlight_maintitle"><h1>How to cite</h1></div>
-                    </div>
-                    <div class="home_box alpha omega" style="min-height: auto;">
-
-                            <img
-                                    alt="Cover of the Nucleic Acids Research journal"
-                                    src="<c:url value="${baseURL}/img/nucleic_acids_research_D1_cover.gif"/>"
-                                    style="width: auto; float: left; margin-right: 18px;"
-                            />
-                            <p>
-                                To cite EBI Metagenomics, please refer to the following publication:
-                            </p>
-                            <p>
-                                Alex Mitchell, Francois Bucchini, Guy Cochrane, Hubert Denise, Petra ten Hoopen, Matthew Fraser, Sebastien Pesseat, Simon Potter, Maxim Scheremetjew, Peter Sterk and Robert D. Finn (2015).
-                                <br />
-                                <strong>
-                                    EBI metagenomics in 2016 - an expanding and evolving resource for the analysis and archiving of metagenomic data.
-                                </strong>
-                                Nucleic Acids Research (2015) doi:
-                                <a
-                                        title="EBI metagenomics in 2016 - an expanding and evolving resource for the analysis and archiving of metagenomic data"
-                                        href="http://nar.oxfordjournals.org/content/44/D1/D595.full"
-                                        class="ext"
-                                >
-                                    10.1093/nar/gkv1195
-                                </a>
-                            </p>
-
-                        <a href="<c:url value="${baseURL}/about#h_cite"/>" title="About page - How to cite" class="all">
-                            More citations
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="jumbo-news">
-            <div class="grid_24 jumbo-news-container">
-                <div class="jumbo-news-centred">
-
-                    <h3 class="icon icon-socialmedia icon-s2" data-icon="T"></h3>
-                        <%--<div class="flexslider">Learn to run a design the box workshop and how it helped us overhaul our training academy: <a href="#">webcredible.com/blog-reports/</a></div>--%>
-                    <a class="twitter-timeline" height="100" data-dnt="true" href="https://twitter.com/EBImetagenomics"
-                       data-widget-id="345516657369837568"
-                       data-chrome="nofooter noborders noheader noscrollbar transparent" data-tweet-limit="1">Tweets by
-                        @EBImetagenomics</a>
-
-                    <p class="jumbo-news-contact"><strong><a href="http://twitter.com/EBImetagenomics"
-                                                             alt="Follow us on Twitter">@EBImetagenomics</a></strong>
-                    </p>
-                    <script>
-                        !function (d, s, id) {
-                            var
-                                    js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
-                            if (!d.getElementById(id)) {
-                                js = d.createElement(s);
-                                js.id = id;
-                                js.src = p + "://platform.twitter.com/widgets.js";
-                                fjs.parentNode.insertBefore(js, fjs);
-                            }
-                        }(document, "script", "twitter-wjs");</script>
-
-
-                </div>
-            </div>
-        </section>
-
-    </c:otherwise>
 </c:choose>
 
+
+<section class="hlight_item" id="blog">
+    <div class="grid_24">
+        <div class="hlight-spot grid_12 alpha" id="blog-spotlight">
+            <div class="hlight_title_cont">
+                <div class="hlight_maintitle"><h1>Spotlight</h1></div>
+                <div class="hlight_subtitle"><h2></h2></div>
+            </div>
+            <div class="home_box alpha">
+                <div>
+                    <c:forEach var="i" begin="1" end="<%= (int) (Math.random() * 5 + 5) %>">
+                       <p class="placeholder" style="width: <%= (int) (Math.random() * 50 + 50) %>%;"></p>
+                    </c:forEach>
+                </div>
+                <a href="https://proteinswebteam.github.io/ebi-metagenomics-blog/" title="Read more on the blog" class="all left">Read more</a>
+                <a href="" title="" class="all">Look at the data</a>
+            </div>
+        </div>
+        <div class="hlight-spot grid_12 omega" id="blog-tools">
+            <div class="hlight_title_cont">
+                <div class="hlight_maintitle"><h1>Tools</h1></div>
+                <div class="hlight_subtitle"><h2></h2></div>
+            </div>
+            <div class="home_box omega">
+                <div>
+                    <c:forEach var="i" begin="1" end="<%= (int) (Math.random() * 5 + 5) %>">
+                       <p class="placeholder" style="width: <%= (int) (Math.random() * 50 + 50) %>%;"></p>
+                    </c:forEach>
+                </div>
+                <a href="https://proteinswebteam.github.io/ebi-metagenomics-blog/" title="Read more on the blog" class="all left">Read more</a>
+                <a href="" class="all">Compare samples</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="jumbo-citation">
+    <div class="grid_24">
+        <div class="hlight-spot alpha">
+            <div class="hlight_title_cont">
+                <div class="hlight_maintitle"><h1>How to cite</h1></div>
+            </div>
+            <div class="home_box alpha omega" style="min-height: auto;">
+
+                    <img
+                            alt="Cover of the Nucleic Acids Research journal"
+                            src="<c:url value="${baseURL}/img/nucleic_acids_research_D1_cover.gif"/>"
+                            style="width: auto; float: left; margin-right: 18px;"
+                    />
+                    <p>
+                        To cite EBI Metagenomics, please refer to the following publication:
+                    </p>
+                    <p>
+                        Alex Mitchell, Francois Bucchini, Guy Cochrane, Hubert Denise, Petra ten Hoopen, Matthew Fraser, Sebastien Pesseat, Simon Potter, Maxim Scheremetjew, Peter Sterk and Robert D. Finn (2015).
+                        <br />
+                        <strong>
+                            EBI metagenomics in 2016 - an expanding and evolving resource for the analysis and archiving of metagenomic data.
+                        </strong>
+                        Nucleic Acids Research (2015) doi:
+                        <a
+                                title="EBI metagenomics in 2016 - an expanding and evolving resource for the analysis and archiving of metagenomic data"
+                                href="http://nar.oxfordjournals.org/content/44/D1/D595.full"
+                                class="ext"
+                        >
+                            10.1093/nar/gkv1195
+                        </a>
+                    </p>
+
+                <a href="<c:url value="${baseURL}/about#h_cite"/>" title="About page - How to cite" class="all">
+                    More citations
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="jumbo-news">
+    <div class="grid_24 jumbo-news-container">
+        <div class="jumbo-news-centred">
+
+            <h3 class="icon icon-socialmedia icon-s2" data-icon="T"></h3>
+                <%--<div class="flexslider">Learn to run a design the box workshop and how it helped us overhaul our training academy: <a href="#">webcredible.com/blog-reports/</a></div>--%>
+            <a class="twitter-timeline" height="100" data-dnt="true" href="https://twitter.com/EBImetagenomics"
+               data-widget-id="345516657369837568"
+               data-chrome="nofooter noborders noheader noscrollbar transparent" data-tweet-limit="1">Tweets by
+                @EBImetagenomics</a>
+
+            <p class="jumbo-news-contact"><strong><a href="http://twitter.com/EBImetagenomics"
+                                                     alt="Follow us on Twitter">@EBImetagenomics</a></strong>
+            </p>
+            <script>
+                !function (d, s, id) {
+                    var
+                            js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
+                    if (!d.getElementById(id)) {
+                        js = d.createElement(s);
+                        js.id = id;
+                        js.src = p + "://platform.twitter.com/widgets.js";
+                        fjs.parentNode.insertBefore(js, fjs);
+                    }
+                }(document, "script", "twitter-wjs");</script>
+
+
+        </div>
+    </div>
+</section>
+
 <%--Client-side twitter news feed - http://tweet.seaofclouds.com/ - only homepage--%>
+<script src="${pageContext.request.contextPath}/js/blog.js" type="text/javascript" defer></script>
 <script src="${pageContext.request.contextPath}/js/tweet/jquery.tweet.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/js/tweet/tweet.instance.js" type="text/javascript"></script>
 <script type="text/javascript">
