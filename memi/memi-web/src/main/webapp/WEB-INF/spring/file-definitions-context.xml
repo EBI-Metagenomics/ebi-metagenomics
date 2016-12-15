@@ -581,5 +581,4 @@
         <property name="order" value="10"/>
         <property name="releaseVersion" value="3.0"/>
     </bean>
-
 </beans>

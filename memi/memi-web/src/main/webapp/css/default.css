@@ -465,8 +465,15 @@ text-align:left;
 #fragment-download .pipeline_table .filesize {color: #8E8E8E; font-size:90%;}
 
 /*SEARCH TABLE*/
-.table-pagination {margin: 9px 0 18px 9px;}
+.table-pagination {
+    margin: 9px 0 18px 9px;
+    float: left;
+}
 .table-pagination input[type="button"]{cursor: pointer;}
+.table-download {
+    margin: 9px 0 18px 9px;
+    float: right;
+}
 
 /**************************** END TABLE ***********************************/
 
@@ -860,7 +867,7 @@ div#headerdiv a:link, div#headerdiv a:visited { border-bottom-width: 0;   border
 /*/top banner search*/
 
 /*Small screens search form*/
-.local-search-xs {display: none; margin: 0 9px;}/*shown only for small screens*/
+.local-search-xs {display: none; margin: 0 9px; overflow: auto}/*shown only for small screens*/
 .local-search-xs input[type=search]{width:100%;}
 .local-search-xs input[type=submit]{width:100%;}
 @media (max-width: 768px) {
@@ -1497,7 +1504,7 @@ img.ui-datepicker-trigger {float:left; /*solve a bug with chromium*/}
     background-image: -webkit-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));  border-radius: 0px;outline:0;}
 .ui-button:hover {color:black; border: 1px #d0d0d0 solid;}
 .ui-button.icon-functional:before {color:#777; }
-.ui-button.icon-functional:hover:before {color:tomat;}
+.ui-button.icon-functional:hover:before {color:tomato;}
 
 /*EXPORT BUTTON - ANALYSIS PAGE*/
 ul.export_list {z-index: 1;display: none;border: 1px solid #949494; padding: 5px;background-color: #FFF;font-size: 1em;list-style: none;outline: none;margin:0;}
@@ -1913,6 +1920,9 @@ ul.sample_list li {list-style: none; display: inline;}
 .jumbo-stats {margin-top: 18px;/*used when section collapse*/}
 
 a.all {float:right; display: block; background: url(../img/arrow_link_small.jpg) no-repeat right top; margin-top:9px; padding:4px 36px 0 0; height: 23px; border: 0px solid red;}
+a.all.left {
+  float: left;
+}
 a.all:hover, a.all:focus { background: url(../img/arrow_link_over_small.jpg) no-repeat  right top;}
 a.all:active  { background: url(../img/arrow_link_click_small.jpg) no-repeat right top;}
 
@@ -1932,6 +1942,28 @@ a.all:active  { background: url(../img/arrow_link_click_small.jpg) no-repeat rig
 .list-project-l, .list-sample-l {height: 264px;}
 .hlight-text-scroll {height: 394px;}
 .list-contain-box .list-project-l .icon-functional:before, .list-contain-box .list-sample-l .icon-functional:before, table.result .icon-functional:before,  #sample_ov .icon-functional:before {color: #777;}
+/*HOMEPAGE - blog*/
+@keyframes glow {
+  from { opacity: 1; }
+  to { opacity: 0.35; }
+}
+
+#blog .placeholder {
+  width: 100%;
+  height: 1em;
+  border-radius: 0.3em;
+  background-color: #EEE;
+  opacity: 1;
+  animation: 2s ease-in-out glow alternate infinite;
+}
+
+#blog img {
+  float: left;
+  margin: 1em;
+  max-width: 50%;
+  max-width: calc(50% - 2em);/* half width, minus twice the margin */
+}
+
 /*END HOMEPAGE*/
 
 
@@ -2069,3 +2101,66 @@ div#local-masthead ul li.logout {display:none;}
 }
 
 .hierarchical-facet-list ul {font-size: 1rem}
+
+
+/* search page spinner and overlay */
+.searchTitle {
+    padding: 0 9px;
+    font-size: 190%;
+    font-family: helvetica, "trebuchet MS", arial, sans-serif;
+    color: #0F6D99;
+    margin: 0.83em 0;
+    font-weight: normal;
+    float: left;
+}
+
+.overlay {
+    z-index: 99;
+    display: block;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    right: 0;
+    top: 0;
+    display: none;
+}
+
+.spinner-container {
+    opacity: 0;
+    margin-top: 15px;
+    transition: opacity 0.2s  ease-in-out 0.1s;
+    position: relative;
+    float: left;
+}
+
+.spinner {
+    animation: spin 1.2s linear infinite;
+    transform-origin: center;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+}
+
+.spinner-container-loaded {
+    opacity: 1;
+    z-index: 10;
+}
+
+.spinner-percentage {
+    top: 15px;
+    left: 12px;
+    position: absolute;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.download-button {
+    cursor: pointer;
+}
+
+.homepage-search-link {
+    cursor: pointer;
+}
