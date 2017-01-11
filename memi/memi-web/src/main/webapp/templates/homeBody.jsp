@@ -450,7 +450,7 @@
             </div>
         </div>
     </div>
-    <h2><a href="https://proteinswebteam.github.io/ebi-metagenomics-blog/">See all articles</a></h2>
+    <h2><a href="https://proteinswebteam.github.io/ebi-metagenomics-blog/">See all blog articles</a></h2>
 </section>
 
 <section class="jumbo-citation">
