@@ -112,7 +112,7 @@
                     buttons: {
                         contextButton: {
 //                            symbol: 'url(https://cdn3.iconfinder.com/data/icons/essential-icon/512/Download-128.png)',
-                            symbol: 'url(http://sermons.barvas.freechurch.org/assets/images/icons/download-icon-32.png)',//temp download img icon
+                            symbol: 'url(${pageContext.request.contextPath}/img/ico_download.png)',//temp download img icon
 //                            symbolSize: 24,
 //                            symbolStrokeWidth: 0,
 //                            symbolFill: '#a4edba',
@@ -231,7 +231,7 @@
                 exporting: {
                     buttons: {
                         contextButton: {
-                            symbol: 'url(http://sermons.barvas.freechurch.org/assets/images/icons/download-icon-32.png)',//temp download img icon
+                            symbol: 'url(${pageContext.request.contextPath}/img/ico_download.png)',//temp download img icon
                         }
                     }
                 },
