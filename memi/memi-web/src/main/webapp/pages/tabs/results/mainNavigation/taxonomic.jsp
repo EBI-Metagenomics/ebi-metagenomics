@@ -60,13 +60,9 @@
     $("#tabs-taxchart").tabs({${model.analysisStatus.taxonomicAnalysisTab.tabsOptions}});
 </script>
 
-<%--Remove the filter field for taxonomy table when the total number of phylum is less than 10--%>
+<%--Remove the filter box for taxonomy table when the total number of phylum is less than 10--%>
 <c:if test="${fn:length(model.taxonomyAnalysisResult.taxonomyDataSet)<10}">
-    <style>#tax_table_filter, #tax_table_col_filter, #tax_table_bar_filter{
+    <style>#tax_table_filter, #tax_table_col_filter, #tax_table_bar_filter {
         display: none;
     }</style>
-</c:if>
-<%--Remove the sort number field + navigation for taxonomy table when the total number of phylum is less than 25--%>
-<c:if test="${fn:length(model.taxonomyAnalysisResult.taxonomyDataSet)<25}">
-    <style>#tax_table_bar_length, #tax_table_length, #tax_table_paginate,#tax_table_bar_paginate {display: none;}</style>
 </c:if>
