@@ -40,17 +40,17 @@
             <div id="tax_chart_pie_phy"></div>
         </div>
 
-            <div id="tax_dashboard" class="col-1-3">
-                <div id="tax_table_filter"></div>
-                <div id="tax_table_pie"></div>
-                <%--<div id="table_div"></div>--%>
-                <div class="msg_help blue_h phylum_help">
-                    <p><span class="icon icon-generic" data-icon="i"></span>This view aggregates the taxonomy
-                        information at the domain and phylum level. To download the full detailed taxonomy distribution
-                        (TSV format),
-                        <a href="#ui-id-6" class="open-tab" data-tab-index="4"> please follow this link</a>.</p>
-                </div>
+        <div id="tax_dashboard" class="col-1-3">
+            <div id="tax_table_filter"></div>
+            <div id="tax_table_pie"></div>
+            <%--<div id="table_div"></div>--%>
+            <div class="msg_help blue_h phylum_help">
+                <p><span class="icon icon-generic" data-icon="i"></span>This view aggregates the taxonomy
+                    information at the domain and phylum level. To download the full detailed taxonomy distribution
+                    (TSV format),
+                    <a href="#ui-id-6" class="open-tab" data-tab-index="4"> please follow this link</a>.</p>
             </div>
+        </div>
 
     </div>
 </div>
@@ -104,14 +104,14 @@
         var taxMatchesDataPieChart = new google.visualization.DataTable();
         taxMatchesDataPieChart.addColumn('string', 'Phylum');
         taxMatchesDataPieChart.addColumn('string', 'Domain');
-    <c:choose>
+        <c:choose>
         <c:when test="${model.run.releaseVersion == '1.0'}">taxMatchesDataPieChart.addColumn('number', 'Unique OTUs');
         taxMatchesDataPieChart.addColumn('number', '%');
-    </c:when>
+        </c:when>
         <c:otherwise>taxMatchesDataPieChart.addColumn('number', 'Number of reads');
         taxMatchesDataPieChart.addColumn('number', '%');
-    </c:otherwise>
-    </c:choose>
+        </c:otherwise>
+        </c:choose>
         taxMatchesDataPieChart.addRows([
             <c:set var="addComma" value="false"/><c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResult.taxonomyDataSet}" varStatus="status"><c:choose><c:when test="${addComma}">,
             </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>
@@ -134,10 +134,10 @@
 
 // Draw the Dashboard for the pie chart
         new google.visualization.Dashboard(document.getElementById('tax_dashboard')).
-// Configure the string filter to affect the table contents
-                bind(taxStringFilter, taxTableOptions).
-// Draw the dashboard
-                draw(taxMatchesDataPieChart);
+        // Configure the string filter to affect the table contents
+        bind(taxStringFilter, taxTableOptions).
+        // Draw the dashboard
+        draw(taxMatchesDataPieChart);
     }  //END function drawPhylumTable()
 
     function drawPhylumPieChart() {
@@ -146,14 +146,14 @@
         var taxMatchesData2 = new google.visualization.DataTable();
         taxMatchesData2.addColumn('string', 'Phylum');
         taxMatchesData2.addColumn('string', 'Domain');
-    <c:choose>
+        <c:choose>
         <c:when test="${model.run.releaseVersion == '1.0'}">taxMatchesData2.addColumn('number', 'Unique OTUs');
         taxMatchesData2.addColumn('number', '%');
-    </c:when>
+        </c:when>
         <c:otherwise>taxMatchesData2.addColumn('number', 'Number of reads');
         taxMatchesData2.addColumn('number', '%');
-    </c:otherwise>
-    </c:choose>
+        </c:otherwise>
+        </c:choose>
         taxMatchesData2.addRows([
             <c:set var="addComma" value="false"/><c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResult.taxonomyDataSet}" varStatus="status"><c:choose><c:when test="${addComma}">,
             </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>
@@ -195,11 +195,11 @@
 //        table.setSelection(phylumPieChart.getSelection());
 //    });
     }
-   //make the charts responsive
-       $(window).resize(function(){
-           drawDomainCompositionPieChartView();
-           drawPhylumPieChart();
-           drawPhylumTablePieChartView();
-       });
+    //make the charts responsive
+    $(window).resize(function(){
+        drawDomainCompositionPieChartView();
+        drawPhylumPieChart();
+        drawPhylumTablePieChartView();
+    });
 </script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/export-button-menu.js"></script>

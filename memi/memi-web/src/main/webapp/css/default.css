@@ -15,8 +15,8 @@ body {
     letter-spacing: 0em;
     word-spacing: 0em;
     line-height: 1.59;
-     /* background: url(../img/bgd_main_grey.jpg); removed to make it EBI compliant*/
-    }
+    /* background: url(../img/bgd_main_grey.jpg); removed to make it EBI compliant*/
+}
 
 body.grey #wrapper, body.green #wrapper, body.ebigreen #wrapper, body.ebigrey #wrapper, body.blue #wrapper, body.greyblue #wrapper { background: #b5b5b5; /*#909FA8*/}
 body div.but_top  { background: #6b7380;}
@@ -34,7 +34,7 @@ body.orange #wrapper  { background: url(../img/bgd_main_orange.jpg) #ff8400;}
 body.pink #wrapper { background: url(../img/bgd_main_pink.jpg) #e80767;}
 */
 h1, h2, h3, h4, h5, h6, p, table {
-padding: 0 9px;
+    padding: 0 9px;
 }
 
 p { display: block; margin: 0 0 14px 0; clear:none;}
@@ -42,8 +42,8 @@ p { display: block; margin: 0 0 14px 0; clear:none;}
 strong, th {font-weight:bold;}
 
 ul, ol {
-list-style: disc;
-display: block;
+    list-style: disc;
+    display: block;
 
 }
 
@@ -79,12 +79,12 @@ div#local-masthead ul li.active, div#local-masthead ul li.active-trail {backgrou
 
 /*imported from ebi-visual.css*/
 @font-face {font-family: 'EBI-Generic';
-src:url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.eot'); /*was linked to ../../../fonts/EBI-Generic/fonts/EBI-Generic.eot*/
-src:url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.eot?#iefix') format('embedded-opentype'),
-url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.woff') format('woff'),
-url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.svg#EBI-Generic') format('svg'),
-url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.ttf') format('truetype');
-font-weight: normal;font-style: normal;}
+    src:url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.eot'); /*was linked to ../../../fonts/EBI-Generic/fonts/EBI-Generic.eot*/
+    src:url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.eot?#iefix') format('embedded-opentype'),
+    url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.woff') format('woff'),
+    url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.svg#EBI-Generic') format('svg'),
+    url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.ttf') format('truetype');
+    font-weight: normal;font-style: normal;}
 
 @font-face{font-family:'EBI-Functional';src:url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.eot');
     src:url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.eot?#iefix') format('embedded-opentype'),
@@ -120,10 +120,10 @@ url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-Social
 img {border: none;}
 
 a {
-/*color:#188960;*/
-color: #2B8A97;/*better for table*/
-/*color: #158DEB;*/
-text-decoration: none;
+    /*color:#188960;*/
+    color: #2B8A97;/*better for table*/
+    /*color: #158DEB;*/
+    text-decoration: none;
 }
 
 /*a:hover,  a:focus { color: red; text-decoration:underline;}*/
@@ -133,35 +133,35 @@ a:active { color: #647685;}
 /*a:active {color: #3D809B;}   new */
 
 #wrapper {
-/*overflow:auto;   To contain floated elements, apply overflow:auto; to the parent element, or place something to clear the floats at the bottom of the container, such as: <div style="clear:both;"></div>*/
-/*width: 958px;  was too much left aligned so removed 14px margin from 972px */
-/* removed to make it EBI compliant
-box-shadow: 0px 0px 70px #696969;
-margin: 0px auto;    */
-/*margin-left:14px; was too much left aligned - defined by added class grid 24*/
-padding:14px;
-z-index:20;
-/*position:relative; to make z-index work */
-/* background: transparent url(../img/bgd_earth.gif) no-repeat -180px -120px; artistic */
-border:0px #dddddd solid;
+    /*overflow:auto;   To contain floated elements, apply overflow:auto; to the parent element, or place something to clear the floats at the bottom of the container, such as: <div style="clear:both;"></div>*/
+    /*width: 958px;  was too much left aligned so removed 14px margin from 972px */
+    /* removed to make it EBI compliant
+    box-shadow: 0px 0px 70px #696969;
+    margin: 0px auto;    */
+    /*margin-left:14px; was too much left aligned - defined by added class grid 24*/
+    padding:14px;
+    z-index:20;
+    /*position:relative; to make z-index work */
+    /* background: transparent url(../img/bgd_earth.gif) no-repeat -180px -120px; artistic */
+    border:0px #dddddd solid;
 }
 
 #extra_beta {
-background: transparent url(../img/ico_beta_8.png) no-repeat left bottom;
-position: absolute;
-left:420px;/* added to make it EBI compliant*/
-/* removed to make it EBI compliant
-right:50%;*/
-top:84px;  /* was 36px - temporarly changed becasue of the BETA */
-width: 60px;
-height:  62px;
-z-index:90;
-border:0px #dddddd solid;
-cursor:pointer; /* for IE7 */
+    background: transparent url(../img/ico_beta_8.png) no-repeat left bottom;
+    position: absolute;
+    left:420px;/* added to make it EBI compliant*/
+    /* removed to make it EBI compliant
+    right:50%;*/
+    top:84px;  /* was 36px - temporarly changed becasue of the BETA */
+    width: 60px;
+    height:  62px;
+    z-index:90;
+    border:0px #dddddd solid;
+    cursor:pointer; /* for IE7 */
 }
 
 #extra_beta:hover {
-height:  68px;
+    height:  68px;
 }
 
 .icon_beta_menu, .icon_beta_title {color:white; border-radius: 4px; background-color:#EB6868;font-weight: bold; margin-left: 2px}
@@ -171,32 +171,32 @@ height:  68px;
 #extra_feedback {z-index:92;position:relative;}
 
 #extra_feedback h1 a{
-float: left;
-overflow: hidden;
-text-indent: -9999px;
-background: transparent url(../img/button_feedback_off_r.gif) no-repeat 2px;
-position: fixed;
-_position: absolute;  /* position fixed is not recognise on IE6 */
-right: 0;
-/* removed to make it EBI compliant
-background: transparent url(../img/button_feedback_off.gif) no-repeat -2px;
-left: 0;  */
-top:222px;
-width: 35px;
-height:  102px;
-border:0px #dddddd solid;
+    float: left;
+    overflow: hidden;
+    text-indent: -9999px;
+    background: transparent url(../img/button_feedback_off_r.gif) no-repeat 2px;
+    position: fixed;
+    _position: absolute;  /* position fixed is not recognise on IE6 */
+    right: 0;
+    /* removed to make it EBI compliant
+    background: transparent url(../img/button_feedback_off.gif) no-repeat -2px;
+    left: 0;  */
+    top:222px;
+    width: 35px;
+    height:  102px;
+    border:0px #dddddd solid;
 }
 
 #extra_feedback h1 a:hover {
-background: transparent url(../img/button_feedback_over_r.gif) no-repeat;
-/* removed to make it EBI compliant
-background: transparent url(../img/button_feedback_over.gif) no-repeat; */
+    background: transparent url(../img/button_feedback_over_r.gif) no-repeat;
+    /* removed to make it EBI compliant
+    background: transparent url(../img/button_feedback_over.gif) no-repeat; */
 }
 
 #extra_feedback h1 a:active {
-background: transparent url(../img/button_feedback_active_r.gif) no-repeat;
-/* removed to make it EBI compliant
-background: transparent url(../img/button_feedback_active.gif) no-repeat;*/
+    background: transparent url(../img/button_feedback_active_r.gif) no-repeat;
+    /* removed to make it EBI compliant
+    background: transparent url(../img/button_feedback_active.gif) no-repeat;*/
 }
 
 header, .banner  {background-color: white;}
@@ -216,48 +216,48 @@ footer {
 /*footer #lined  {width: 100%; height:8px;  background: url(../img/bgd_black_op40_8.png); }*/
 
 div.banner {
-width: 100%;
-height:100px;
-border:0px black solid;
+    width: 100%;
+    height:100px;
+    border:0px black solid;
 }
 
 div.banner-logo  {float: left; border:0px black solid; margin-left:20px; margin-top:10px;}
 
 div.banner-photo {
-margin:20px 14px 0 0;
-float: right;
-background: url(../img/pict_metagenomics_8.png) no-repeat 0 0;
-width: 385px;
-height: 56px;
+    margin:20px 14px 0 0;
+    float: right;
+    background: url(../img/pict_metagenomics_8.png) no-repeat 0 0;
+    width: 385px;
+    height: 56px;
 }
 
 div.banner-logo h1 a {
-float: left;
-overflow: hidden;
-background: url(../img/logo_metagenomics.jpg) no-repeat 0 0;
-width: 378px;
-height: 81px;
-text-indent: -9999px;
+    float: left;
+    overflow: hidden;
+    background: url(../img/logo_metagenomics.jpg) no-repeat 0 0;
+    width: 378px;
+    height: 81px;
+    text-indent: -9999px;
 }
 
 .ebi_menu {
-width: 144px;
-display: block; float:left; border:0px solid #c3c3c3;
+    width: 144px;
+    display: block; float:left; border:0px solid #c3c3c3;
 }
 .ebi_menu ul {margin:4px;}
 .ebi_menu ul li {background: url(http://www.ebi.ac.uk/inc/images/leftmenu/level1_link.gif) no-repeat; padding:2px 0 0 11px;}
 
 div.top-nav {
-border:0px green solid;
-overflow:hidden;/*solve a bug on firefox, onclick scrollbar*/
-width:100%;
+    border:0px green solid;
+    overflow:hidden;/*solve a bug on firefox, onclick scrollbar*/
+    width:100%;
 }
 
 div.top-login {
-border:0px black solid;
-float:right;
-margin:6px 28px 0 0;
-color:#666;
+    border:0px black solid;
+    float:right;
+    margin:6px 28px 0 0;
+    color:#666;
 }
 
 div#headerdiv .logout, div#headerdiv .login_name {float:right; margin-right: 9px; margin-top:4px; font-size: 90%;}
@@ -269,25 +269,25 @@ div#headerdiv .logout {font-weight: bold;}
 #local-nav {z-index: 90; position: relative;}/*to make the banner img private section not overlap*/
 
 .separator {margin:9px; display:block; /*to replace the image solution*/ /*background: url(../img/bgd_sep_dot.gif) repeat-x 0 -5px;*/
-background-image: linear-gradient(to right, #949494 16%, rgba(255, 255, 255, 0) 0%);
-background-position: center;
-background-size: 4px 1px;
-background-repeat: repeat-x;
-padding-bottom: 5px;
+    background-image: linear-gradient(to right, #949494 16%, rgba(255, 255, 255, 0) 0%);
+    background-position: center;
+    background-size: 4px 1px;
+    background-repeat: repeat-x;
+    padding-bottom: 5px;
 }
 /************************* LINKS ************************************/
 #login {display:block;color:#7E7E7E;}
 
 #login a, #login a:link, #login a:focus {
-font-weight:bold;
-color: #006af6;
-background:url(../img/login_off_8.jpg) no-repeat center right;
-padding-right:20px;
-font-size:110%;
+    font-weight:bold;
+    color: #006af6;
+    background:url(../img/login_off_8.jpg) no-repeat center right;
+    padding-right:20px;
+    font-size:110%;
 }
 
 #login a:hover {
-text-decoration:underline;
+    text-decoration:underline;
 }
 
 a.ext, a.ext:link {padding-left: 12px;background: url(../img/ico_ext_link.png) no-repeat 0 3px;}
@@ -299,35 +299,35 @@ a.signup:hover {text-shadow: #fff685 -1px -1px 0px;color:#171717; background:url
 a.signup:active {background:url(../img/backgrounds/bgd_button_sign_active.gif) repeat-x; border: 1px solid #ccc;}
 
 a.twitter {
-display:block;
-height:30px;
-background: url(../img/icon_twitter.gif) no-repeat  left top;
-padding-left:34px;
-float:right;
-margin-left: 9px;
+    display:block;
+    height:30px;
+    background: url(../img/icon_twitter.gif) no-repeat  left top;
+    padding-left:34px;
+    float:right;
+    margin-left: 9px;
 }
 a.twitter .external {display: none;}
 div.but_top {
-border:0px green solid;
-width:40px;
-text-align:center;
-margin:26px 0 9px 9px;
-display:block;
+    border:0px green solid;
+    width:40px;
+    text-align:center;
+    margin:26px 0 9px 9px;
+    display:block;
 }
 
 div.but_top a   {
-color:white;
-display:block;
-position:relative;
-border: 1px solid #c3c3c3;
-padding:2px;
+    color:white;
+    display:block;
+    position:relative;
+    border: 1px solid #c3c3c3;
+    padding:2px;
 
 }
 
 div.but_top a:hover {
-border: 1px solid #aeaeae;
-text-decoration:none;
-background:url(../img/bgd_black_op20_8.png);
+    border: 1px solid #aeaeae;
+    text-decoration:none;
+    background:url(../img/bgd_black_op20_8.png);
 }
 
 /*citation - about us*/
@@ -432,14 +432,14 @@ table.dataTable .highlight {background-color: #ffffa3;}
 #small {width:70%;} /*table in analysis result changed in % for mitigation*/
 
 #feedback_form table tbody td, #feedback_form_no table tbody td{
-text-align:left;
+    text-align:left;
 }
 #feedback_form table.result { margin-bottom: 0;}
 
 .simple_table  {padding: 0;}
 .simple_table td {vertical-align: top;}
 
- /*Table used in the pipeline page*/
+/*Table used in the pipeline page*/
 .pipeline_table {margin:9px; border: 0px #E4E8ED solid; border-collapse: collapse; color: #333;}
 .pipeline_table th {padding: 9px 18px;text-align: left;}
 .pipeline_table td {padding: 9px;}
@@ -490,24 +490,24 @@ small {font-size:83%;}
 p, ul {font-size: 110%;color:#333; /*border:1px red solid; box-sizing: border-box;*/}
 
 .form_row h3 {
-color:#605f5f;
-font-size:200%;
-margin:0px 0 7px 0;
+    color:#605f5f;
+    font-size:200%;
+    margin:0px 0 7px 0;
 }
 
 .intro {font-size:144%; color:#445668;}/*intro text*/
 
 #sidebar h2, #sidebar-related h2, #sidebar-steps h2 {
-color:#333333;
-font-size:150%;
+    color:#333333;
+    font-size:150%;
 }
 h2.pipeline_title {margin-bottom: 0;}
 h2.pipeline_title span {color: #7c8c99;}/*date*/
 .sidebar-allrel h2 {margin:18px 0 9px 0;}
 
 .step_breadcrumbs {
-margin-bottom:28px;
-border:0px solid #7C8C99;
+    margin-bottom:28px;
+    border:0px solid #7C8C99;
 }
 
 /*.fls_uppercase {text-transform: capitalize;} *//*transform first letter words in uppercase letter - floating elements*/
@@ -533,24 +533,24 @@ border:0px solid #7C8C99;
 /****************** END TITLE + TEXT *************************/
 
 #submit-data {
-border: solid 0px black;
- /*height:300px; /* was 288 for IE6*/
-display:block;
-margin-top: 20px;
-/*overflow:auto;*/
+    border: solid 0px black;
+    /*height:300px; /* was 288 for IE6*/
+    display:block;
+    margin-top: 20px;
+    /*overflow:auto;*/
 }
 
 #submit-data-display,#submit-data-description  {display:block; float:left;}
 
 #submit-data-display h1 a {
-height:220px; /*not too big for zoom in/out pbm */
-width:200px;
-margin-right:14px;
-float: left;
-background: url(../img/button_submit_off.gif) white no-repeat center center;
-border: solid 0px red;
-overflow: hidden;
-text-indent: -9999px;
+    height:220px; /*not too big for zoom in/out pbm */
+    width:200px;
+    margin-right:14px;
+    float: left;
+    background: url(../img/button_submit_off.gif) white no-repeat center center;
+    border: solid 0px red;
+    overflow: hidden;
+    text-indent: -9999px;
 }
 
 /*style hand move
@@ -561,31 +561,31 @@ background: url(../img/button_submit_over.gif) white no-repeat center center;
 #submit-data-description {margin-left:28px;}
 
 #submit-data-description p  {
-border: solid 0px red;
-font-size:110%;
-color:#445668;  /*was  #7c8c99*/
-padding:0 24px 0 14px;
-display: block;
-overflow:auto;
+    border: solid 0px red;
+    font-size:110%;
+    color:#445668;  /*was  #7c8c99*/
+    padding:0 24px 0 14px;
+    display: block;
+    overflow:auto;
 }
 
 
 #submit-data-description  a {
-float:right;
-padding-top:10px;
-width: 164px;
-height: 41px;
-border: 0px solid black;
-display: block;
-background: url(../img/arrow_link.jpg) no-repeat right center;
+    float:right;
+    padding-top:10px;
+    width: 164px;
+    height: 41px;
+    border: 0px solid black;
+    display: block;
+    background: url(../img/arrow_link.jpg) no-repeat right center;
 }
 
 #submit-data-description a:hover,#submit-data-description  a:focus {
-background: url(../img/arrow_link_over.jpg) no-repeat  right center;
+    background: url(../img/arrow_link_over.jpg) no-repeat  right center;
 }
 
 #submit-data-description a:active  {
-background: url(../img/arrow_link_click.jpg) no-repeat right center;
+    background: url(../img/arrow_link_click.jpg) no-repeat right center;
 }
 
 section {border: solid 0px black;display:block;}
@@ -596,14 +596,14 @@ section section { margin:0;}
 #content-full #sidebar {background: none;width:222px; border: solid 0px black;}
 
 #sidebar {
-float:right; /* since this element is floated, a width must be given */
-width:256px;
-overflow:hidden; /*to shrunk the URL when too long  */
-border: solid 0px black;
-margin-top:0;
-background: url(../img/bgd_white_op45_8.png);
-color:#666;
-height:auto;
+    float:right; /* since this element is floated, a width must be given */
+    width:256px;
+    overflow:hidden; /*to shrunk the URL when too long  */
+    border: solid 0px black;
+    margin-top:0;
+    background: url(../img/bgd_white_op45_8.png);
+    color:#666;
+    height:auto;
 }
 
 .sidebar-allrel, #sidebar-download, #sidebar-analysis {width: 28%;float: right; border: solid 0px black; padding: 9px;background-color: white; clear: right;/*added for second ENA box*/}
@@ -618,13 +618,13 @@ height:auto;
 .pipeline_step li {list-style-type: none;}
 
 #sidebar-steps  ol {
-padding:9px; margin:0;
-counter-reset: section;
-list-style-type: none;
+    padding:9px; margin:0;
+    counter-reset: section;
+    list-style-type: none;
 }
 
 #sidebar-steps ol li { margin-top:7px;
- counter-increment: section; }
+    counter-increment: section; }
 
 /*right side box*/
 #sidebar-nav, #sidebar-steps, #sidebar-related {float:right; width: auto;font-weight:normal; border: 1px solid #E5E5E5;border-radius: 0 0 20px 0;background:  #F4F4F8;}
@@ -637,18 +637,18 @@ list-style-type: none;
 .box-export ul li {list-style-image:url(../img/arrow_menu_exp.gif); margin-left:7px; /*list-style-type:square; color:#c3c3c3;*/}
 
 #sidebar-export  {
-float:right;
-font-weight:normal;
+    float:right;
+    font-weight:normal;
 }
 
 #sidebar-export a { color:#445668;}
 
 #sidebar-export ul li {
-list-style-image:url(../img/arrow_menu_exp.gif);
-display:inline;
-margin-left:7px;
-list-style-type:square;
-color:#c3c3c3;}
+    list-style-image:url(../img/arrow_menu_exp.gif);
+    display:inline;
+    margin-left:7px;
+    list-style-type:square;
+    color:#c3c3c3;}
 
 #sidebar-steps {color:#3E3E3E; margin:18px 9px 0 0 ;padding:0;}
 
@@ -660,37 +660,37 @@ color:#c3c3c3;}
 #sidebar-nav ul{padding:9px; margin:9px 0;font-weight:bold; font-size:110%;}
 
 #sidebar-nav ul  li {
-list-style: none;
-border: 0px solid black;
-line-height:1.8;
+    list-style: none;
+    border: 0px solid black;
+    line-height:1.8;
 }
 
 #sidebar-nav ul  li a {
-display:block;
-text-decoration:none;
-color:#445668;
+    display:block;
+    text-decoration:none;
+    color:#445668;
 }
 
 #sidebar-nav ul  li ul { margin: 0; font-weight:normal;font-size:90%;}
 
 #sidebar-nav ul  li a:hover {
-color:#2b3743;
-background: url(../img/bgd_black_op05_8.png);
+    color:#2b3743;
+    background: url(../img/bgd_black_op05_8.png);
 }
 
 #sidebar-nav ul  li ul li {
-list-style: square;
-margin-left:14px;
-color:#c3c3c3;
-/*background-color:green;*/
+    list-style: square;
+    margin-left:14px;
+    color:#c3c3c3;
+    /*background-color:green;*/
 }
 
 #footer a{color:#3e3e3e;}
 #footer a:hover {color:#222222; text-decoration:underline;}
 
 /*a.rss {*/
-    /*padding-left: 22px;*/
-    /*background: url(../img/rss.gif) no-repeat;*/
+/*padding-left: 22px;*/
+/*background: url(../img/rss.gif) no-repeat;*/
 /*}*/
 
 a.list_more {color:#3e3e3e;/* could be 565656 */  font-weight:bold;}
@@ -701,12 +701,12 @@ a.list_more:hover{color:#222222 ; text-decoration:underline;}
 .sample_ana .ui-widget-content a.list_more:hover{color:#222222 ; text-decoration:underline;}
 
 a.list_sample {
-color:#725093;
+    color:#725093;
 }
 
 a.list_sample:hover{
-color:#62388b;
-text-decoration:underline;
+    color:#62388b;
+    text-decoration:underline;
 }
 .list_note {color:#D4A346;}
 .list_warn {color:#CC4E4E;}
@@ -843,9 +843,9 @@ text-decoration:underline;
 
 .center {margin: 0px auto; width:400px;}
 .center_972 {
-/* removed to make it EBI compliant
-margin: 0px auto;*/
-width: 972px; text-align: left;}
+    /* removed to make it EBI compliant
+    margin: 0px auto;*/
+    width: 972px; text-align: left;}
 
 .study_desc {margin-top:20px;}
 .study_desc_text {font-size:110%;}
@@ -876,47 +876,47 @@ div#headerdiv a:link, div#headerdiv a:visited { border-bottom-width: 0;   border
 /*/Small screens search form*/
 
 form legend {
-background-color: #e5e5e5;
-color: #455872;
-padding: 2px 7px;
-font-variant: small-caps;
-font-size: 130%;
-border: 1px solid #ABADB3;
+    background-color: #e5e5e5;
+    color: #455872;
+    padding: 2px 7px;
+    font-variant: small-caps;
+    font-size: 130%;
+    border: 1px solid #ABADB3;
 }
 
 form#sub_form fieldset {
-border: 1px solid #e5e5e5;
-padding:7px 14px;
+    border: 1px solid #e5e5e5;
+    padding:7px 14px;
 }
 
 #filter {
--moz-border-radius: 0 0 20px 0;
--khtml-border-radius: 0 0 20px 0;
--webkit-border-radius: 0 0 20px 0;
-border-radius: 0 0 20px 0;
-padding:14px;
-border:1px solid #e5e5e5;
-width:400px;
-margin:7px 0;
+    -moz-border-radius: 0 0 20px 0;
+    -khtml-border-radius: 0 0 20px 0;
+    -webkit-border-radius: 0 0 20px 0;
+    border-radius: 0 0 20px 0;
+    padding:14px;
+    border:1px solid #e5e5e5;
+    width:400px;
+    margin:7px 0;
 }
 
 #filter label {
-float: left;
-clear: left;
-margin: 10px 20px 0 0;
-width: 120px;
-text-align: right;
-font-size: 110%;
-color: #445668;
-text-shadow: 0px 1px 0px #f2f2f2;
-border: 0px solid #556f8c;
+    float: left;
+    clear: left;
+    margin: 10px 20px 0 0;
+    width: 120px;
+    text-align: right;
+    font-size: 110%;
+    color: #445668;
+    text-shadow: 0px 1px 0px #f2f2f2;
+    border: 0px solid #556f8c;
 }
 
 input, textarea, select {
-font-family: helvetica, "trebuchet MS", arial, sans-serif;
-padding:4px;
-border:1px solid #abadb3;
-color: #445668;}
+    font-family: helvetica, "trebuchet MS", arial, sans-serif;
+    padding:4px;
+    border:1px solid #abadb3;
+    color: #445668;}
 
 /*comparaison tool select*/
 #projects, #analysisJobIds {padding:0px;font-size: 109%;}
@@ -926,16 +926,16 @@ color: #445668;}
 
 
 input[type=text] {
-width: 150px;
-/*background: -webkit-gradient(linear, left top, left 6, from(#FFFFFF), color-stop(4%, #EEEEEE), to(#FFFFFF));*/
-/*background: -moz-linear-gradient(top, #FFFFFF, #EEEEEE 1px, #FFFFFF 6px);*/
+    width: 150px;
+    /*background: -webkit-gradient(linear, left top, left 6, from(#FFFFFF), color-stop(4%, #EEEEEE), to(#FFFFFF));*/
+    /*background: -moz-linear-gradient(top, #FFFFFF, #EEEEEE 1px, #FFFFFF 6px);*/
 }
 
 #feedback_form input, #feedback_form_no input {
-width: 360px;
-/*-moz-box-shadow:inset 0 0 7px #ccc;*/
-/*-webkit-box-shadow:inset 0 0 7px #ccc;*/
-/*box-shadow:inset 0 0 7px #ccc;*/
+    width: 360px;
+    /*-moz-box-shadow:inset 0 0 7px #ccc;*/
+    /*-webkit-box-shadow:inset 0 0 7px #ccc;*/
+    /*box-shadow:inset 0 0 7px #ccc;*/
 }
 
 /*SUBMIT PAGE FORM*/
@@ -960,18 +960,18 @@ width: 360px;
 #sub_form input[type=checkbox]  {width: 20px; margin-top: 3px;}
 
 input.main_button, #feedback_form input.main_button, #feedback_form_no input.main_button, #sub_form input.main_button {
-width: auto;
+    width: auto;
 }
 
 #filter input, #filter select { margin: 10px 20px 0 0; color: #445668;}
 
 #filter input:focus  {
-	background: #F4F4F8;
+    background: #F4F4F8;
 }
 
 #filter input[type=submit] {
     color:white;
-	float: left; margin: 28px 10px 0 0;
+    float: left; margin: 28px 10px 0 0;
 }
 /*Search button project and sample page*/
 input.main_button {font-weight:bold;font-size:120%;color:white;background:url(../img/backgrounds/bgd_button_login_off.gif) repeat-x; border: 0px solid #1f54bc; border-radius: 4px; box-shadow:0px 2px 2px #adadad; padding:4px 8px; cursor: pointer;margin:4px 0;}
@@ -990,25 +990,25 @@ textarea {
     background: -webkit-gradient(linear, left top, left 25, from(#FFFFFF), color-stop(4%, #EEEEEE), to(#FFFFFF));
     background: -moz-linear-gradient(top, #FFFFFF, #EEEEEE 1px, #FFFFFF 25px);
     overflow: auto; /* important remove scrollbar shown by default on IE*/
-    }
+}
 
 textarea:hover, textarea:focus {
     border-color: #C9C9C9;
     -webkit-box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 8px;
-    }
+}
 
 .form label {
     margin-left: 10px;
     color: #999999;
-    }
+}
 
 .form_row {
-margin: 4px 0px;
-clear:both;/* added for IE6*/
-padding: 4px 0px;
-position: relative;
-border: 0px solid #ffaa22;
-overflow:auto;
+    margin: 4px 0px;
+    clear:both;/* added for IE6*/
+    padding: 4px 0px;
+    position: relative;
+    border: 0px solid #ffaa22;
+    overflow:auto;
 }
 
 .form_row_log {margin: 4px 0px; clear:both;/* added for IE6*/ padding: 14px 0px; position: relative; border: 0px solid #ffaa22;overflow:auto;}
@@ -1034,16 +1034,16 @@ overflow:auto;
 /* EXPORT OPTIONS */
 .export {float:right;}
 .export a {
-float:left; /*for multiple export */
-display:block;
-padding-right:36px;padding-top:8px;padding-bottom:4px;
-font-size:90%;
-margin-right:14px;
-border:0px solid red;
+    float:left; /*for multiple export */
+    display:block;
+    padding-right:36px;padding-top:8px;padding-bottom:4px;
+    font-size:90%;
+    margin-right:14px;
+    border:0px solid red;
 }
 
 .table_opt a#csv:hover {
-color:#333;
+    color:#333;
 }
 .export a#csv {background: url(../img/icon_csv.gif) no-repeat right top;}
 .export a#csv_plus {background: url(../img/icon_csv_plus.gif) no-repeat right top;}
@@ -1058,42 +1058,42 @@ figure.fl {float: left;}
 figure.fr {float: right;}
 
 figcaption {position: absolute; left: 0; bottom: 0; width: 100%; color: #fff; background-color: rgba(0,0,0,.7);
-  opacity: 0;
-  -webkit-transition: opacity .5s ease-in-out;
-  -moz-transition: opacity .5s ease-in-out;
-  -o-transition: opacity .5s ease-in-out;
-  transition: opacity .5s ease-in-out;
+    opacity: 0;
+    -webkit-transition: opacity .5s ease-in-out;
+    -moz-transition: opacity .5s ease-in-out;
+    -o-transition: opacity .5s ease-in-out;
+    transition: opacity .5s ease-in-out;
 }
 
 figure:hover figcaption { opacity: 1;}
 
 figcaption * {
-  padding: 0 10px;
-  margin: 0;
- color: #fff;
+    padding: 0 10px;
+    margin: 0;
+    color: #fff;
 }
 
 figcaption *:first-child {
-  padding-top: 5px;
+    padding-top: 5px;
 }
 figcaption *:last-child {
-  padding-bottom: 5px;
+    padding-bottom: 5px;
 }
 
 /* Give captions and headings their own font */
 
 figcaption {
-  filter: alpha(opacity=0);
+    filter: alpha(opacity=0);
 }
 
 figure:hover figcaption {
-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#aa000000,endColorstr=#aa000000);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#aa000000,endColorstr=#aa000000);
 }
 
 figcaption h3 {
-color:white;
-font-weight:bold;
-font-size: 140%;
+    color:white;
+    font-weight:bold;
+    font-size: 140%;
 }
 /* END CAPTION for IMAGES */
 
@@ -1102,10 +1102,10 @@ font-size: 140%;
 
 
 .warning {
-background:url(../img/ico_warning_8.png) no-repeat 0 4px;
-color: #ff0000;
-clear:left;
-display:block;
+    background:url(../img/ico_warning_8.png) no-repeat 0 4px;
+    color: #ff0000;
+    clear:left;
+    display:block;
 }
 
 #feedback_form label,  #feedback_form_no label {font-weight:bold;font-size:110%;color:#445668;}
@@ -1116,14 +1116,14 @@ display:block;
 .required {background: url(../img/ico_form_required.png) no-repeat right center; padding-right:14px; border: 0px red solid; zoom:1; /* for IE7 and IE6 to visualise the span and background without content*/}
 
 label.error, span.error, #feedback_form label.error, #feedback_form_no label.error, #login_form label.error {
-font-weight:normal;
-color: #ff0000;
-font-size:100%;
-padding-left:0px;
-background:none;
-margin:7px 2px;
-clear:left;
-display: block;
+    font-weight:normal;
+    color: #ff0000;
+    font-size:100%;
+    padding-left:0px;
+    background:none;
+    margin:7px 2px;
+    clear:left;
+    display: block;
 }
 
 label.error  {border:none; display:block;}
@@ -1131,10 +1131,10 @@ label.error  {border:none; display:block;}
 input.error, textarea.error {background: #FFEAEA url(../img/ico_form_cancel.png) no-repeat right top;color: #8C302C;  border:1px #F9B7B5 solid;margin:0;}
 
 input.error, textarea.error {
-background: #FFCFCF url(../img/ico_form_cancel.png) no-repeat right top;
-color: #8C302C;
-border:1px #ff918e solid;
-margin:0;
+    background: #FFCFCF url(../img/ico_form_cancel.png) no-repeat right top;
+    color: #8C302C;
+    border:1px #ff918e solid;
+    margin:0;
 }
 
 .msg_error {background-color: #FFCFCF; color: #8C302C;border:1px #ff918e solid; margin: 0px auto;font-size: 118%; margin-top:18px; margin-bottom:18px; padding: 9px 18px;width: 60%;border-radius: 7px;}
@@ -1160,7 +1160,7 @@ margin:0;
 /*.ebi_contents { border:0px solid red; position:absolute; top:55px;margin:0;padding:0;width:100%;clear: both;z-index: 2;  }*//*added because of the EBI header */
 
 .menu_bgd {
-background: url(../img/bgd_contentfull_menu.gif) -14px;
+    background: url(../img/bgd_contentfull_menu.gif) -14px;
 }
 
 #samples_id {margin-bottom:0;}
@@ -1177,8 +1177,8 @@ background: url(../img/bgd_contentfull_menu.gif) -14px;
 .output_form h4 {padding-left:0;}
 
 .output_form  span, .filter_form span {
-border: 0px solid #556f8c;
-margin-left:9px;
+    border: 0px solid #556f8c;
+    margin-left:9px;
 }
 .filter_form label.study_search {
     width: 35%;
@@ -1226,15 +1226,15 @@ span.form_help ul{
     padding:0 0 0 7px;
 }
 span.form_help ul li{
- list-style-type:disc;
- margin-left:14px;
+    list-style-type:disc;
+    margin-left:14px;
 }
 
 .about_img_l {float:left;margin:0px 14px 0 9px;}
 .about_img_r {float:right;margin:0px 9px 9px 18px;}
 .about_img_r img {vertical-align: top;}
 
- /*EBI Bread Crumbs */
+/*EBI Bread Crumbs */
 #breadcrumb {display:block;padding:9px; color:#999;font-size:90%;margin-bottom:0;}
 #breadcrumb a {color:#999; text-decoration: none;}
 #breadcrumb a:hover,#breadcrumb a:active {color:#999;text-decoration: underline;}
@@ -1244,13 +1244,13 @@ div.center-wrap{/*overflow:hidden; remove because of bug in Firefox*/ clear:both
 div.center-wrap div{border:0px solid red;margin:2px 0; display:block; }
 div.center-wrap p{border:0;margin:0;}
 div.center-wrap a{
-font-size:40%;
-margin:0 2px;
-padding:0px 2px;
-border:1px solid #aaaaaa;
-background:#dedede;
-color:#dedede;
-cursor:pointer;-moz-border-radius:12px;webkit-border-radius:12px;border-radius:12px;} /*keep the round prefix as main feature*/
+    font-size:40%;
+    margin:0 2px;
+    padding:0px 2px;
+    border:1px solid #aaaaaa;
+    background:#dedede;
+    color:#dedede;
+    cursor:pointer;-moz-border-radius:12px;webkit-border-radius:12px;border-radius:12px;} /*keep the round prefix as main feature*/
 div.center-wrap a.active{background:#9e9e9e;color:#9e9e9e;/*font-weight:bold;color:#525044;*/}
 
 /*table pagination*/
@@ -1314,38 +1314,38 @@ div.center-wrap a.active{background:#9e9e9e;color:#9e9e9e;/*font-weight:bold;col
 }
 
 .feedbackform_tab_o  {
-background: transparent url(../img/button_feedback_oriz.gif) no-repeat ;
-border:0px solid #E5E5E5; width:102px; height:35px;
-margin-left:7px;
+    background: transparent url(../img/button_feedback_oriz.gif) no-repeat ;
+    border:0px solid #E5E5E5; width:102px; height:35px;
+    margin-left:7px;
 }
 
 .feedbackform_tab_v  {
-float:left;
-border:0px solid red;
+    float:left;
+    border:0px solid red;
 }
 
 .feedbackform_tab_v a {
-background: transparent url(../img/button_feedback_off_r.gif) no-repeat;
-width: 35px;
-height:  102px;
-float:left;margin-top: 126px;
- box-shadow:0px 2px 7px #cecece;
--moz-box-shadow:0px 2px 7px #cecece ;
--khtml-box-shadow:0px 2px 7px #cecece ;
--webkit-box-shadow:0px 2px 7px #cecece ;
-border:0px solid green;
+    background: transparent url(../img/button_feedback_off_r.gif) no-repeat;
+    width: 35px;
+    height:  102px;
+    float:left;margin-top: 126px;
+    box-shadow:0px 2px 7px #cecece;
+    -moz-box-shadow:0px 2px 7px #cecece ;
+    -khtml-box-shadow:0px 2px 7px #cecece ;
+    -webkit-box-shadow:0px 2px 7px #cecece ;
+    border:0px solid green;
 }
 
 .feedbackform_tab_v a:hover {
-background: white url(../img/button_feedback_over_r.gif) no-repeat -1px;
- box-shadow:0px 1px 5px #cecece;
--moz-box-shadow:0px 1px 5px #cecece ;
--khtml-box-shadow:0px 1px 5px #cecece ;
--webkit-box-shadow:0px 1px 5px #cecece ;
+    background: white url(../img/button_feedback_over_r.gif) no-repeat -1px;
+    box-shadow:0px 1px 5px #cecece;
+    -moz-box-shadow:0px 1px 5px #cecece ;
+    -khtml-box-shadow:0px 1px 5px #cecece ;
+    -webkit-box-shadow:0px 1px 5px #cecece ;
 }
 
 .feedbackform_tab_v a:active  {
-background: transparent url(../img/button_feedback_active_r.gif) no-repeat;
+    background: transparent url(../img/button_feedback_active_r.gif) no-repeat;
 }
 /*BOX feedback*/
 .cont_feedback_form {float:left; width:440px;box-shadow:0px 2px 7px #adadad;-moz-box-shadow:0px 2px 7px #adadad ;-khtml-box-shadow:0px 2px 7px #adadad ;-webkit-box-shadow:0px 2px 7px #adadad ; -moz-border-radius:4px; -khtml-border-radius:4px; -webkit-border-radius:4px; background-color:white;}/*keep the prefix for round box*/
@@ -1526,11 +1526,11 @@ ul.export_list {z-index: 1;display: none;border: 1px solid #949494; padding: 5px
 .sample_ana .chart-block .ui-button:hover .ui-icon {background-image: url(../img/jquery/overcast/ui-icons_3383bb_256x240.png);}
 
 .sample_comp_result #bars .ui-button, .sample_ana .chart-block .ui-button {margin:0 9px; border: 1px solid rgba(0,0,0,0.1);
-background-image: linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));
-background-image: -moz-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));
-background-image: -o-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));
-background-image: -webkit-gradient(linear,left top,left bottom,from(rgba(255,255,255,.85)),to(rgba(247,247,247,.85)));
-background-image: -webkit-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));  border-radius: 0px;}
+    background-image: linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));
+    background-image: -moz-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));
+    background-image: -o-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));
+    background-image: -webkit-gradient(linear,left top,left bottom,from(rgba(255,255,255,.85)),to(rgba(247,247,247,.85)));
+    background-image: -webkit-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));  border-radius: 0px;}
 .sample_comp_result #bars .ui-state-hover {color:red;}
 .sample_comp_result .chart-block .ui-button .ui-button-text, .sample_ana .chart-block .ui-button .ui-button-text {color: #525252;}
 
@@ -1541,10 +1541,10 @@ background-image: -webkit-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247
 .sample_ana #tabs-chart .ui-tabs-nav, .sample_ana #interpro-chart .ui-tabs-nav, .sample_ana #tabs-taxchart .ui-tabs-nav { margin: 0px 0 9px 9px; padding:0;}
 .sample_ana #tabs-taxchart .ui-helper-clearfix, .sample_ana #interpro-chart .ui-helper-clearfix  {display: inline-block;}
 .sample_comp_result #tabs-chart .ui-tabs-nav li a, .sample_ana #tabs-chart .ui-tabs-nav li a, .sample_ana #interpro-chart .ui-tabs-nav li a, .sample_ana #tabs-taxchart .ui-tabs-nav li a {border: 1px solid rgba(0,0,0,0.1);padding: .2em .2em;
-background-image: -moz-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));
-background-image: -o-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));
-background-image: -webkit-gradient(linear,left top,left bottom,from(rgba(255,255,255,.85)),to(rgba(247,247,247,.85)));
-background-image: -webkit-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85)); }
+    background-image: -moz-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));
+    background-image: -o-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));
+    background-image: -webkit-gradient(linear,left top,left bottom,from(rgba(255,255,255,.85)),to(rgba(247,247,247,.85)));
+    background-image: -webkit-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85)); }
 .sample_ana #tabs-chart .ui-tabs-nav li.ui-state-hover a, .sample_ana #interpro-chart .ui-tabs-nav li.ui-state-hover a, .sample_ana #tabs-taxchart .ui-tabs-nav li.ui-state-hover a  {text-decoration: none;}
 .sample_ana #tabs-chart .ui-tabs-nav li a:hover, .sample_ana #interpro-chart .ui-tabs-nav li a:hover, .sample_ana #tabs-taxchart .ui-tabs-nav li a:hover  {border: 1px solid #c6c6c6;box-shadow:1px 1px 1px rgba(0, 0, 0, 0.3);-moz-box-shadow:1px 1px 1px rgba(0, 0, 0, 0.3); -khtml-box-shadow:1px 1px 1px rgba(0, 0, 0, 0.3); -webkit-box-shadow:0px 0px 3px rgba(0, 0, 0, 0.3) ; text-decoration:none;}
 
@@ -1597,11 +1597,11 @@ li.ui-tabs-active .ico-krona {background: url(../img/ico_graph_krona_on.png) no-
 
 .ico-download { float:left; }
 .ico-download a {font-size: 164%; border: 1px solid rgba(0,0,0,0.1); margin-top: 1px;padding: 0px 1px 0px 6px; float:left; margin-left: 9px;
-background-image: linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));
-background-image: -moz-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));
-background-image: -o-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));
-background-image: -webkit-gradient(linear,left top,left bottom,from(rgba(255,255,255,.85)),to(rgba(247,247,247,.85)));
-background-image: -webkit-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85)); }
+    background-image: linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));
+    background-image: -moz-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));
+    background-image: -o-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));
+    background-image: -webkit-gradient(linear,left top,left bottom,from(rgba(255,255,255,.85)),to(rgba(247,247,247,.85)));
+    background-image: -webkit-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85)); }
 .ico-download a:before {color: #3b4043;width: 20px;}
 .ico-download a:hover {border: 1px solid #c6c6c6; box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3); -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);-khtml-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);-webkit-box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);text-decoration: none;  }
 /*#expanderhead {cursor:pointer;}*/
@@ -1856,7 +1856,7 @@ ul.sample_list li {list-style: none; display: inline;}
     100%  {top: 200px;}
 }
 
- /*/ pipeline chart *******************************/
+/*/ pipeline chart *******************************/
 /*tooltip*/
 .icon-generic.show_tooltip:before {color: #888888;} /*darker than default*/
 
@@ -1899,13 +1899,12 @@ ul.sample_list li {list-style: none; display: inline;}
 .hlight_subtitle h2  {margin:0;padding:0;}
 .hlight_subtitle .icon-generic:before {font-size:152%; color:#1a5286;}
 
-.home_box {border:1px #cbcbcb solid; overflow:hidden /*when resizing*/; padding: 18px 9px; min-height: 322px; }
+.home_box {border:1px #cbcbcb solid; overflow:hidden /*when resizing*/; padding: 18px 9px; min-height: 272px; }
 .home_box h2 {margin:0 0 9px 0; padding:0;font-size: 168%;}
 .home_box p {color: #606a73;}
 .hlight-spot.alpha .hlight_title_cont {margin-left: 18px;} /*important to keep to align titles*/
 .hlight-spot.omega .hlight_title_cont {margin-right: 18px;}
 .hlight-spot .home_box p, .hlight-info .home_box p  {margin-left:0;  margin-right:0; padding-left:0;padding-right:0;font-size:120%;}
-.hlight-spot .home_box img {margin-bottom: 9px; width: 100%;/*resize img with screen*/}
 .hlight-info .home_box img {margin: 0 9px 9px 0; float:left; width:17%;}
 .home_box.alpha {margin: 0 0 18px 18px;}
 .home_box.omega {margin: 0 18px 18px 0;}
@@ -1921,7 +1920,7 @@ ul.sample_list li {list-style: none; display: inline;}
 
 a.all {float:right; display: block; background: url(../img/arrow_link_small.jpg) no-repeat right top; margin-top:9px; padding:4px 36px 0 0; height: 23px; border: 0px solid red;}
 a.all.left {
-  float: left;
+    float: left;
 }
 a.all:hover, a.all:focus { background: url(../img/arrow_link_over_small.jpg) no-repeat  right top;}
 a.all:active  { background: url(../img/arrow_link_click_small.jpg) no-repeat right top;}
@@ -1944,43 +1943,41 @@ a.all:active  { background: url(../img/arrow_link_click_small.jpg) no-repeat rig
 .list-contain-box .list-project-l .icon-functional:before, .list-contain-box .list-sample-l .icon-functional:before, table.result .icon-functional:before,  #sample_ov .icon-functional:before {color: #777;}
 /*HOMEPAGE - blog*/
 @keyframes glow {
-  from { opacity: 1; }
-  to { opacity: 0.35; }
+    from { opacity: 1; }
+    to { opacity: 0.35; }
 }
 
 #blog .placeholder {
-  width: 100%;
-  height: 1em;
-  border-radius: 0.3em;
-  background-color: #EEE;
-  opacity: 1;
-  animation: 2s ease-in-out glow alternate infinite;
+    width: 100%;
+    height: 1em;
+    border-radius: 0.3em;
+    background-color: #EEE;
+    opacity: 1;
+    animation: 2s ease-in-out glow alternate infinite;
 }
 
 #blog img {
-  float: left;
-  margin: 1em;
-  max-width: 50%;
-  max-width: calc(50% - 2em);/* half width, minus twice the margin */
+    float: left;
+    margin-right: 9px;
 }
 
 /*END HOMEPAGE*/
 
 
 @media (max-width: 768px) {
-/*Homepage*/
-.jumbo-header  {background: url(../img/backgrounds/bgd_header_microbes_big_10p.png) -100px center no-repeat; background-color: #5b7790;}
-.jumbo-header .button {margin-top: 0px;}
-.jumbo-header .lead, .jumbo-stats   {display: none;}
-.jumbo-header .button a {border-radius:0px; box-shadow:none;padding: 12px 66px;}
-.jumbo-header .mega-lock {display: none;}/*remove lock shape private*/
-.jumbo-news-centred {width: 66%;}
-.hlight_subtitle {margin-right:18px;}
-.hlight-spot.omega .hlight_title_cont {margin-left:18px;}
-.hlight-spot.omega .hlight_subtitle {margin-right:0;}
-.list-biomes .grid_24 a {height:inherit; width:32%;/*3x3*/}
-.grid_12.list-biomes, .grid_12.list-contain-box, .grid_12.hlight-spot {width:100%;margin-left: 0;margin-right: 0;}
-.list-biomes .home_box , .list-contain-box .home_box, .hlight-spot .home_box {margin:9px 18px;}
+    /*Homepage*/
+    .jumbo-header  {background: url(../img/backgrounds/bgd_header_microbes_big_10p.png) -100px center no-repeat; background-color: #5b7790;}
+    .jumbo-header .button {margin-top: 0px;}
+    .jumbo-header .lead, .jumbo-stats   {display: none;}
+    .jumbo-header .button a {border-radius:0px; box-shadow:none;padding: 12px 66px;}
+    .jumbo-header .mega-lock {display: none;}/*remove lock shape private*/
+    .jumbo-news-centred {width: 66%;}
+    .hlight_subtitle {margin-right:18px;}
+    .hlight-spot.omega .hlight_title_cont {margin-left:18px;}
+    .hlight-spot.omega .hlight_subtitle {margin-right:0;}
+    .list-biomes .grid_24 a {height:inherit; width:32%;/*3x3*/}
+    .grid_12.list-biomes, .grid_12.list-contain-box, .grid_12.hlight-spot {width:100%;margin-left: 0;margin-right: 0;}
+    .list-biomes .home_box , .list-contain-box .home_box, .hlight-spot .home_box {margin:9px 18px;}
 }
 
 /*Submit data - registration check*/
@@ -2022,13 +2019,13 @@ a.box-registration-link  {text-decoration: none; cursor: pointer;}
 
 /* Chrome, Safari, Opera */
 @-webkit-keyframes ico-spin {
-  0% {-webkit-transform: rotate(0deg); transform: rotate(0deg);}
-  100% {-webkit-transform: rotate(359deg); transform: rotate(359deg);}
+    0% {-webkit-transform: rotate(0deg); transform: rotate(0deg);}
+    100% {-webkit-transform: rotate(359deg); transform: rotate(359deg);}
 }
 /* Standard syntax */
 @keyframes ico-spin {
     0% {-webkit-transform: rotate(0deg); transform: rotate(0deg);}
-      100% {-webkit-transform: rotate(359deg); transform: rotate(359deg);}
+    100% {-webkit-transform: rotate(359deg); transform: rotate(359deg);}
 }
 .ico-spin {-webkit-animation: ico-spin 1s infinite linear; animation: ico-spin 1s infinite linear;}
 /*create gal class for hidden elements on the page - to move on top*/
@@ -2044,45 +2041,45 @@ div#local-masthead div.navbar-header {float:none;}
 
 /*bootstrap menu responsive*/
 @media (max-width: 768px){
-.navbar-toggle {display: block;}
-div#headerdiv nav ul {font-size: 126%;}
-div#headerdiv nav ul li, ul#local-nav li.functional {background-color: #578696;}
-div.masthead ul li {float: none;} /*make the menu vertical*/
-.navbar-collapse.collapse {display:none;}
-div.masthead ul#local-nav li.functional, div#headerdiv .logout {float: none;}
-div#headerdiv .logout {margin-left:9px;}
-div#local-masthead ul li.active-trail, div#local-masthead ul li.active-trail a:link, div#local-masthead ul li.active-trail a:visited{background-color: rgba(0, 0, 0, 0.3);}
-div#local-masthead ul li.active-trail a:link, div#local-masthead ul li.active-trail a:visited {border-bottom:0px;}
-div#headerdiv .logout {margin:0; padding-left:9px;}
+    .navbar-toggle {display: block;}
+    div#headerdiv nav ul {font-size: 126%;}
+    div#headerdiv nav ul li, ul#local-nav li.functional {background-color: #578696;}
+    div.masthead ul li {float: none;} /*make the menu vertical*/
+    .navbar-collapse.collapse {display:none;}
+    div.masthead ul#local-nav li.functional, div#headerdiv .logout {float: none;}
+    div#headerdiv .logout {margin-left:9px;}
+    div#local-masthead ul li.active-trail, div#local-masthead ul li.active-trail a:link, div#local-masthead ul li.active-trail a:visited{background-color: rgba(0, 0, 0, 0.3);}
+    div#local-masthead ul li.active-trail a:link, div#local-masthead ul li.active-trail a:visited {border-bottom:0px;}
+    div#headerdiv .logout {margin:0; padding-left:9px;}
 }
 
 /***************************************** responsive  gal *******************************/
 @media (max-width: 768px) {  /*remove carousel, feedback, ebi search and sidebar nav for the about us for small screens*/
-.carousel, #feedback_div, #sidebar-nav {display: none;}
-/*div#local-title.logo-title img {margin:0; padding: 18px 9px;} */
-/*EBI template*/
-div#local-title.logo-title img {margin-top: 0.5em; margin-bottom: 0.5em;}/*reduce margin for logo*/
-div#local-title.logo-title.grid_12.alpha {width:84%;}/*increase logo box width to increase size logo on small screens*/
-#local-search {display:none;}  /*top banner search*/
-#global-footer .grid_4:nth-child(1) {display:none;}/*remove one item of the EBI bottom menu - logo -  to avoid scrolling effect*/
-#global-nav,#global-search {display: none;} /*remove search and menu - wait for EBI to implement a collapsed version of the menu*/
-/*END EBI template*/
-.sidebar-rel-help {display:none;}/*remove right hand side help box*/
-.icon_pipeline_v, .export, .sample_comp_result .tab-text {display:none;} /*remove pipeline ico and export button for table and text in comparison result tabs */
-.table_xs_text {word-break: break-all; /*break long character chains on small screen*/}
-[class*='col-'] {width:100%; margin-bottom: 9px;}
-#bars .rChart {width:100%;}
-#pca .rChart {width:100%;}
-.sample_comp_result .ui-tabs .ui-tabs-nav .ui-tabs-anchor, .sample_ana .ui-tabs .ui-tabs-nav .ui-tabs-anchor {padding: 2px 6px;}/*comp. tool - reduce space around tabs icon*/
-.xs_hide {display:none;} /*set a global class to hide elements for small screens - easier than adding individual class*/
-.list-biomes .grid_24 a.xs_hide {display:none;} /*hide the last tow icons to avoid big scrol on small screens*/
-/*datatable - comparison tool */
-#table th:nth-child(2), #table td:nth-child(2) {display: none;}/*remove Go category column */
-#table th:nth-child(3), #table td:nth-child(3) {display: none;} /*remove Go ID column in the table */
-.xs-navtabs {display:block;}
-.xl-navtabs {display:none;}
-#fragment-download .pipeline_table thead th:first-child {width: 50%;} /*increase size first column download table*/
-H2 {margin: 0.43em 0;}/*reduce margin for titles on small device*/
+    .carousel, #feedback_div, #sidebar-nav {display: none;}
+    /*div#local-title.logo-title img {margin:0; padding: 18px 9px;} */
+    /*EBI template*/
+    div#local-title.logo-title img {margin-top: 0.5em; margin-bottom: 0.5em;}/*reduce margin for logo*/
+    div#local-title.logo-title.grid_12.alpha {width:84%;}/*increase logo box width to increase size logo on small screens*/
+    #local-search {display:none;}  /*top banner search*/
+    #global-footer .grid_4:nth-child(1) {display:none;}/*remove one item of the EBI bottom menu - logo -  to avoid scrolling effect*/
+    #global-nav,#global-search {display: none;} /*remove search and menu - wait for EBI to implement a collapsed version of the menu*/
+    /*END EBI template*/
+    .sidebar-rel-help {display:none;}/*remove right hand side help box*/
+    .icon_pipeline_v, .export, .sample_comp_result .tab-text {display:none;} /*remove pipeline ico and export button for table and text in comparison result tabs */
+    .table_xs_text {word-break: break-all; /*break long character chains on small screen*/}
+    [class*='col-'] {width:100%; margin-bottom: 9px;}
+    #bars .rChart {width:100%;}
+    #pca .rChart {width:100%;}
+    .sample_comp_result .ui-tabs .ui-tabs-nav .ui-tabs-anchor, .sample_ana .ui-tabs .ui-tabs-nav .ui-tabs-anchor {padding: 2px 6px;}/*comp. tool - reduce space around tabs icon*/
+    .xs_hide {display:none;} /*set a global class to hide elements for small screens - easier than adding individual class*/
+    .list-biomes .grid_24 a.xs_hide {display:none;} /*hide the last tow icons to avoid big scrol on small screens*/
+    /*datatable - comparison tool */
+    #table th:nth-child(2), #table td:nth-child(2) {display: none;}/*remove Go category column */
+    #table th:nth-child(3), #table td:nth-child(3) {display: none;} /*remove Go ID column in the table */
+    .xs-navtabs {display:block;}
+    .xl-navtabs {display:none;}
+    #fragment-download .pipeline_table thead th:first-child {width: 50%;} /*increase size first column download table*/
+    H2 {margin: 0.43em 0;}/*reduce margin for titles on small device*/
 }
 
 /*quality control tab*/
@@ -2090,14 +2087,14 @@ H2 {margin: 0.43em 0;}/*reduce margin for titles on small device*/
 
 /*login window only*/
 @media (max-width: 1000px) {
-.sub .sub_sign {display:none;}
-.sub .sub_log {width:82%; padding: 0 9px;margin: 0; border: none; box-sizing: border-box;}}
+    .sub .sub_sign {display:none;}
+    .sub .sub_log {width:82%; padding: 0 9px;margin: 0; border: none; box-sizing: border-box;}}
 
 /*not logged in info not to fall on two lines*/
 @media (max-width: 900px) {
-div#local-masthead ul li.logout {display:none;}
-.xm_hide {display:none;}
-.xm-navtabs {display:block;}
+    div#local-masthead ul li.logout {display:none;}
+    .xm_hide {display:none;}
+    .xm-navtabs {display:block;}
 }
 
 .hierarchical-facet-list ul {font-size: 1rem}

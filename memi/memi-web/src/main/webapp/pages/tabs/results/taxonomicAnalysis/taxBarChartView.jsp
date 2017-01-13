@@ -61,7 +61,7 @@
 </c:choose>
 
 <script type="text/javascript">
-     // script to make the tab download link work
+    // script to make the tab download link work
     $('.open-tab').click(function (event) {
         $('#navtabs').tabs("option", "active", $(this).data("tab-index"));
     });
@@ -75,14 +75,14 @@
         var taxMatchesDataBarChart = new google.visualization.DataTable();
         taxMatchesDataBarChart.addColumn('string', 'Phylum');
         taxMatchesDataBarChart.addColumn('string', 'Domain');
-    <c:choose>
+        <c:choose>
         <c:when test="${model.run.releaseVersion == '1.0'}">taxMatchesDataBarChart.addColumn('number', 'Unique OTUs');
         taxMatchesDataBarChart.addColumn('number', '%');
-    </c:when>
+        </c:when>
         <c:otherwise>taxMatchesDataBarChart.addColumn('number', 'Number of reads');
         taxMatchesDataBarChart.addColumn('number', '%');
-    </c:otherwise>
-    </c:choose>
+        </c:otherwise>
+        </c:choose>
         taxMatchesDataBarChart.addRows([
             <c:set var="addComma" value="false"/><c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResult.taxonomyDataSet}" varStatus="status"><c:choose><c:when test="${addComma}">,
             </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>
@@ -106,10 +106,10 @@
 
         // Draw the Dashboard for the Bar chart
         new google.visualization.Dashboard(document.getElementById('tax_dashboard_bar')).
-            // Configure the string filter to affect the table contents
-                bind(taxbarStringFilter, taxbarTableOptions).
-            // Draw the dashboard
-                draw(taxMatchesDataBarChart);
+        // Configure the string filter to affect the table contents
+        bind(taxbarStringFilter, taxbarTableOptions).
+        // Draw the dashboard
+        draw(taxMatchesDataBarChart);
 
     }  //END function drawPhylumTable()
 
@@ -146,11 +146,11 @@
         var domainBarChart = new google.visualization.BarChart(document.getElementById('tax_chart_bar_dom'));
         domainBarChart.draw(domainBarChartPieChartData, options);
     }
-   //make the charts responsive
-       $(window).resize(function(){
-           drawDomainCompositionBarChart();
-           drawPhylumBarChart();
-           drawPhylumTable();
-       });
+    //make the charts responsive
+    $(window).resize(function(){
+        drawDomainCompositionBarChart();
+        drawPhylumBarChart();
+        drawPhylumTable();
+    });
 </script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/export-button-menu.js"></script>
