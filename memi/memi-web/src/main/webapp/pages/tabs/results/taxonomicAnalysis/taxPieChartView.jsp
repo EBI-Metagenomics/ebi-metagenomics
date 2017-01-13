@@ -192,10 +192,9 @@
             //calculating the threshold: changing for each chart (OR use 20/100 fix treshold) + use round value to be the same as value rounded for slices
             var thresOld=((${model.taxonomyAnalysisResult.sliceVisibilityThresholdNumerator / model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator}*100).toFixed(2));
 
-            var other=0.0;
-
+            var other=0.0
             for (var slice in data) {
-                //thresold 0.1
+                //thresold variable
                 if (data[slice][2] < thresOld) {
                     other += data[slice][1];
                 } else {
@@ -203,7 +202,7 @@
                 }
             }
 
-            //IMPORTANT remove "other" empty slice other show empty slice
+            //IMPORTANT remove "other" empty slice
             if (other == 0.0) {
             newData.push();}
             else {
