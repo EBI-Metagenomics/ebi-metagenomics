@@ -207,7 +207,13 @@
                     newData.push(data[slice]);
                 }
             }
-            newData.push({name:'Other', y:other, color:'#ccc'});
+
+            //IMPORTANT remove "other" empty bar
+            if (other == 0.0) {
+                newData.push();}
+            else {
+                newData.push({name:'Other', y:other, color:'#ccc'});
+            }
 
             //BAR CHART PHYLUM
             $('#tax_chart_bar_phy').highcharts({
