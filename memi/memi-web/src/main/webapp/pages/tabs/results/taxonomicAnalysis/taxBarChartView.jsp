@@ -111,7 +111,7 @@
                 exporting: {
                     buttons: {
                         contextButton: {
-                            symbol: 'url(http://sermons.barvas.freechurch.org/assets/images/icons/download-icon-32.png)',//TEMP download img icon
+                            symbol: 'url(${pageContext.request.contextPath}/img/ico_download.png)',//TEMP download img icon
                         }
                     }
                 },
@@ -238,7 +238,7 @@
                 exporting: {
                     buttons: {
                         contextButton: {
-                            symbol: 'url(http://sermons.barvas.freechurch.org/assets/images/icons/download-icon-32.png)',//temp download img icon
+                            symbol: 'url(${pageContext.request.contextPath}/img/ico_download.png)',//temp download img icon
                         }
                     }
                 },
