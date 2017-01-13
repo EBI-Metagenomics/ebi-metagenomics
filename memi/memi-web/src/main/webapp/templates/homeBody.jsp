@@ -452,7 +452,7 @@
     </div>
     <p>
         <a href="https://proteinswebteam.github.io/ebi-metagenomics-blog/" class="all">
-            See alls
+            See all articles
         </a>
     </p>
 </section>
