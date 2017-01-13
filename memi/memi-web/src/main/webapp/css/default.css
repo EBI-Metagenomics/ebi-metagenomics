@@ -1899,13 +1899,12 @@ ul.sample_list li {list-style: none; display: inline;}
 .hlight_subtitle h2  {margin:0;padding:0;}
 .hlight_subtitle .icon-generic:before {font-size:152%; color:#1a5286;}
 
-.home_box {border:1px #cbcbcb solid; overflow:hidden /*when resizing*/; padding: 18px 9px; min-height: 322px; }
+.home_box {border:1px #cbcbcb solid; overflow:hidden /*when resizing*/; padding: 18px 9px; min-height: 272px; }
 .home_box h2 {margin:0 0 9px 0; padding:0;font-size: 168%;}
 .home_box p {color: #606a73;}
 .hlight-spot.alpha .hlight_title_cont {margin-left: 18px;} /*important to keep to align titles*/
 .hlight-spot.omega .hlight_title_cont {margin-right: 18px;}
 .hlight-spot .home_box p, .hlight-info .home_box p  {margin-left:0;  margin-right:0; padding-left:0;padding-right:0;font-size:120%;}
-.hlight-spot .home_box img {margin-bottom: 9px; width: 100%;/*resize img with screen*/}
 .hlight-info .home_box img {margin: 0 9px 9px 0; float:left; width:17%;}
 .home_box.alpha {margin: 0 0 18px 18px;}
 .home_box.omega {margin: 0 18px 18px 0;}
@@ -1959,9 +1958,7 @@ a.all:active  { background: url(../img/arrow_link_click_small.jpg) no-repeat rig
 
 #blog img {
     float: left;
-    margin: 1em;
-    max-width: 50%;
-    max-width: calc(50% - 2em);/* half width, minus twice the margin */
+    margin-right: 9px;
 }
 
 /*END HOMEPAGE*/
