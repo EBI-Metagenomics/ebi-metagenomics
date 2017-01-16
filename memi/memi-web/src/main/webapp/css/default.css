@@ -1513,7 +1513,7 @@ img.ui-datepicker-trigger {float:left; /*solve a bug with chromium*/}
 .col-1-4 {width: 25%;}
 .col-1-8 { width: 12.5%;}
 .grid:last-of-type {padding-right: 0;}
-#func_chart_pie_go_mf, #func_chart_pie_go_cc, #func_chart_pie_go_bp, #func_chart_bar_go_bp, #func_chart_bar_go_cc, #func_chart_bar_go_mf, #func_chart_pie_ipro, #tax_chart_col, #tax_chart_pie_phy, #tax_chart_pie_dom {width:100%;}
+#func_chart_pie_go_mf, #func_chart_pie_go_cc, #func_chart_pie_go_bp, #func_chart_bar_go_bp, #func_chart_bar_go_cc, #func_chart_bar_go_mf, #func_chart_pie_ipro, #tax_chart_pie_phy, #tax_chart_pie_dom {width:100%;}
 
 /*UI BUTTON - MAP*/
 .ui-button {padding: .4em 2.1em .4em 1em;line-height: 1.4;color: #525252; margin:0 9px; border: 1px solid rgba(0,0,0,0.1);
@@ -1640,7 +1640,7 @@ background-image: -webkit-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247
 #sample_list a.list_sample:hover, #project_ov a.list_sample:hover {color:#62388b;}
 
 /*GOOGLE CHART - ANALYSIS PAGE*/
-#tax_chart_pie_domain, #tax_chart_bar_dom, #tax_chart_pie_phylum, #tax_chart_bar_phy {margin:9px 0;}/*space between chart and switch view buttons*/
+#tax_chart_pie_domain, #tax_chart_bar_dom, #tax_chart_pie_phylum, #tax_chart_bar_phy, #tax_chart_col {margin:9px 0;}/*space between chart and switch view buttons*/
 /*#func_chart_bar_go_bp, #func_chart_bar_go_cc, #func_chart_pie_go_bp, #func_chart_pie_go_mf, #func_chart_pie_go_cc, #func_chart_pie_ipro,*/ #func_table_pie_interpro, #func_table_div1 {float:left;}
  #tax_chart_pie_dom, #func_chart_bar_go_mf, #func_chart_bar_go_cc, #func_chart_pie_go_mf, #func_chart_pie_go_cc {margin-top:30px;} /*to align when export function is inserted*/
 #tax_table_pie, #tax_table_bar, #func_table_pie_ipro, #tax_table_col {margin-top:4px;} /*space with filter on top*/
