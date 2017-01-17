@@ -233,6 +233,7 @@
                         width: 40,
                         symbolX: 20,
                         symbolY: 20,
+                        y: -10
                     }
                 },
                 exporting: {
