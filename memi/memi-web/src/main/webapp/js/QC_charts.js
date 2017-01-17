@@ -1,7 +1,7 @@
 
 Highcharts.setOptions({
     lang: {
-        downloadData: "Download Data File"
+        downloadData: "Download data file"
     }
 });
 
@@ -71,7 +71,7 @@ var drawNumberOfReadsChart = function (rawdata, numberOfLines, sequenceCount, ur
     if (typeof rawdata == "undefined" || rawdata == null) return;
     var data = [],
         categories = [
-            "Initial Reads",
+            "Initial reads",
             "Trimming",
             "Length filtering",
             "Ambiguous base filtering",
@@ -111,7 +111,7 @@ var drawNumberOfReadsChart = function (rawdata, numberOfLines, sequenceCount, ur
     categories = categories.filter(function(value){ return value!=null});
     var length = data[0],
         series = [{
-            name : "Reads Filtered out",
+            name : "Reads filtered out",
             data : data.map(function(n){
                 var current = length- n.y;
                 length = n.y;
@@ -120,7 +120,7 @@ var drawNumberOfReadsChart = function (rawdata, numberOfLines, sequenceCount, ur
             color: "#ccccdd",
             pointPadding: -0.1
         },{
-            name : "Reads Remaining ",
+            name : "Reads remaining",
             data : data,
             color: "#058dc7",
             pointPadding: -0.1
@@ -133,7 +133,7 @@ var drawNumberOfReadsChart = function (rawdata, numberOfLines, sequenceCount, ur
 
     $('#qc_overview').highcharts({
         chart: { type: 'bar', height: 250 },
-        title: { text: 'Number of Sequence Reads per QC Step'},
+        title: { text: 'Number of sequence reads per QC step'},
         xAxis: {
             categories: categories,
             title: { enabled: false }
@@ -173,10 +173,10 @@ var drawSequenceLengthHistogram = function (rawdata, isFromSubset, stats,urlToFi
         chart: { type: 'areaspline',
             marginLeft: 100 // Keep all charts left aligned
         },
-        title: { text: 'Reads Length Histogram'},
+        title: {text: 'Reads length histogram'},
         subtitle: { text: (isFromSubset)?'A subset of the sequences was used to generate this chart':undefined},
         yAxis: {
-            title: { text: "Number of Reads" }
+            title: { text: "Number of reads" }
         },
         xAxis: {
             min: 0,
@@ -335,10 +335,10 @@ var drawSequenceGCDistribution = function (rawdata,isFromSubset, stats, urlToFil
             marginLeft: 100, // Keep all charts left aligned
             type: 'areaspline'
         },
-        title: { text: 'Reads GC Distribution' },
+        title: { text: 'Reads GC distribution' },
         subtitle: { text: (isFromSubset)?'A subset of the sequences was used to generate this chart':undefined},
         yAxis: {
-            title: { text: "Number of Reads" }
+            title: { text: "Number of reads" }
         },
         xAxis:{
             min: 0,
@@ -396,7 +396,7 @@ var drawNucleotidePositionHistogram = function (rawdata,isFromSubset,urlToFile) 
     // Create the chart
     $('#nucleotide').highcharts({
         chart: { type: 'area' },
-        title: { text: 'Nucleotide Position Histogram ' },
+        title: { text: 'Nucleotide position histogram ' },
         subtitle: { text: (isFromSubset)?'A subset of the sequences was used to generate this chart':undefined},
         xAxis: {
             categories: data["pos"],
