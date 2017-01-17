@@ -105,7 +105,7 @@
                         symbolSize: 24,
                         symbolX: 23,
                         symbolY: 21,
-                        symbolStrokeWidth: 2
+                        y: -10
                     }
                 },
                 exporting: {
