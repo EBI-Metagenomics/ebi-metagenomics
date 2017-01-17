@@ -9,6 +9,7 @@ var getExportingStructure = function (urlToFile,content) {
     return {
         buttons: {
             contextButton: {
+                symbol: 'url(/metagenomics/img/ico_download.png)',
                 menuItems: [{
                     textKey: 'downloadData',
                     onclick: function () {
@@ -151,6 +152,15 @@ var drawNumberOfReadsChart = function (rawdata, numberOfLines, sequenceCount, ur
         },
         series: series,
         credits: false,
+        navigation: {
+            buttonOptions: {
+                height: 40,
+                width: 40,
+                symbolX: 20,
+                symbolY: 20,
+                y: -10
+            }
+        },
         exporting: getExportingStructure(urlToFile+".tsv",
             categories.map(function(e,i){
                 return e + "\t"+ data[i].y;
@@ -202,6 +212,15 @@ var drawSequenceLengthHistogram = function (rawdata, isFromSubset, stats,urlToFi
         ],
         legend: { enabled: false},
         credits: false,
+        navigation: {
+            buttonOptions: {
+                height: 40,
+                width: 40,
+                symbolX: 20,
+                symbolY: 20,
+                y: -10
+            }
+        },
         exporting: getExportingStructure(urlToFile)
     });
 };
@@ -254,6 +273,15 @@ var drawSequncesLength = function(data) {
         ],
         legend: { enabled: false},
         credits: false,
+        navigation: {
+            buttonOptions: {
+                height: 40,
+                width: 40,
+                symbolX: 20,
+                symbolY: 20,
+                y: -10
+            }
+        },
         exporting: { enabled: false }
     });
 };
@@ -319,6 +347,15 @@ var drawGCContent = function(data) {
             }
         ],
         credits: false,
+        navigation: {
+            buttonOptions: {
+                height: 40,
+                width: 40,
+                symbolX: 20,
+                symbolY: 20,
+                y: -10
+            }
+        },
         exporting: { enabled: false }
     });
 };
@@ -366,6 +403,15 @@ var drawSequenceGCDistribution = function (rawdata,isFromSubset, stats, urlToFil
         }],
         legend: { enabled: false },
         credits: false,
+        navigation: {
+            buttonOptions: {
+                height: 40,
+                width: 40,
+                symbolX: 20,
+                symbolY: 20,
+                y: -10
+            }
+        },
         exporting: getExportingStructure(urlToFile)
     });
     $('#seq_gc').parent().parent().before(
@@ -428,6 +474,15 @@ var drawNucleotidePositionHistogram = function (rawdata,isFromSubset,urlToFile) 
             }
         }),
         credits: false,
+        navigation: {
+            buttonOptions: {
+                height: 40,
+                width: 40,
+                symbolX: 20,
+                symbolY: 20,
+                y: -10
+            }
+        },
         exporting: getExportingStructure(urlToFile)
     });
     $('#nucleotide').before(
