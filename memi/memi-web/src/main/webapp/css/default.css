@@ -1527,6 +1527,7 @@ img.ui-datepicker-trigger {float:left; /*solve a bug with chromium*/}
 .ui-button.icon-functional:hover:before {color:tomato;}
 
 /*EXPORT BUTTON - ANALYSIS PAGE*/
+.highcharts-contextmenu hr {margin: 18px 0 9px 0;} /*otherwise bar offset*/
 ul.export_list {z-index: 1;display: none;border: 1px solid #949494; padding: 5px;background-color: #FFF;font-size: 1em;list-style: none;outline: none;margin:0;}
 .sample_comp_result .chart-block .ui-buttonset, .sample_ana .chart-block .ui-buttonset {/*text-align: right;*/ }
 .sample_ana .chart-block .ui-widget-content {border:1px solid #949494; /*width: 128px;*/ /*remove width - why defining a width for the export menu?*/ position: absolute; top: 20px;left: 88px; background-color:rgba(255, 255, 255, 1);border-radius: 0px;}
