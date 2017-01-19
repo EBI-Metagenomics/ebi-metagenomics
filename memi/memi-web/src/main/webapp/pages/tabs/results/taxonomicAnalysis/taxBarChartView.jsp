@@ -1,7 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <div id="tax-bar">
-
     <div  class="chart_container" >
         <div class="grid_8"><div id="tax_chart_bar_dom" style="height: 360px;"></div></div>
         <div class="grid_16">  <div id="tax_chart_bar_phy" style="height: 360px;"></div></div>
@@ -23,6 +22,7 @@
 
     // Create the Datatable
     $(document).ready(function() {
+
         //table data
         var rowData = [
             <c:set var="addComma" value="false"/>
@@ -64,6 +64,28 @@
             } );
         } ).draw();
 
+        // ADD INTERACTION BETWEEN TABLE ROW AND BAR CHART
+        var hideToggle = true;
+        $("#tax_table_bar tbody tr").click(function() {
+            var no = $(this).index();
+//            console.log(no)
+            var chart = $('#tax_chart_bar_phy').highcharts()
+            var point = chart.series[0].data[no];
+            if (hideToggle) {
+                point.graphic.hide();
+               // $('#button').html('Show data');
+            } else {
+                point.graphic.show();
+            }
+            hideToggle = !hideToggle;
+        });
+
+
+//        $("#tax_table_bar tbody tr").click(function(){
+//            var no = $(this).index();
+//            var point = $('#tax_chart_bar_phy').highcharts().series[0].data[no];
+//            point.setVisible(!point.visible);
+//        })
         //HIGHLIGHT TERMS IN DATATABLE
 
         $("#tax_table_bar_filter input").addClass("filter_sp");
