@@ -29,11 +29,11 @@ public abstract class AbstractResultViewModel extends ViewModel {
         colorCodeList.add("058dc7");
         colorCodeList.add("50b432");
         colorCodeList.add("ed561b");
-        colorCodeList.add("edef00");
+        colorCodeList.add("fbe300");
         colorCodeList.add("24cbe5");
-        colorCodeList.add("64e572");
+        colorCodeList.add("c49ecc");
         colorCodeList.add("ff9655");
-        colorCodeList.add("fff263");
+        colorCodeList.add("708090");
         colorCodeList.add("6af9c4");
         colorCodeList.add("dabe88");
     }
