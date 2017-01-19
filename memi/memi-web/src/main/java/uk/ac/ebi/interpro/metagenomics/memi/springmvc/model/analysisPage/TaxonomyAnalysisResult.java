@@ -68,7 +68,7 @@ public class TaxonomyAnalysisResult {
      * Used to set the colors option for the pie chart.
      */
     public String getColorCodeForPieChart() {
-        StringBuilder sb = new StringBuilder("'#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ff9655', '#fff263', '#6af9c4', '#dabe88'");
+        StringBuilder sb = new StringBuilder("'#058dc7', '#50b432', '#ed561b', '#fbe300', '#24cbe5', '#c49ecc', '#ff9655', '#708090', '#6af9c4', '#dabe88'");
         if (taxonomyDataSet.size() > 10) {
             for (int i = 0; i < taxonomyDataSet.size() - 10; i++) {
                 sb.append(",'#ccc'");
