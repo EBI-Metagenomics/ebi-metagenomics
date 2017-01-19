@@ -64,6 +64,17 @@
             } );
         } ).draw();
 
+        // ADD INTERACTION BETWEEN TABLE ROW AND STACKED COLUMN CHART
+        $("#tax_table_col tr").click(function() {
+            var no = $(this).index();
+            var chart = $('#tax_chart_col').highcharts();
+            if(chart.series[no].visible) {
+                chart.series[no].hide();
+            } else {
+                chart.series[no].show();
+            }
+        });
+
         //HIGHLIGHT TERMS IN DATATABLE
 
         $("#tax_table_col_filter input").addClass("filter_sp");
