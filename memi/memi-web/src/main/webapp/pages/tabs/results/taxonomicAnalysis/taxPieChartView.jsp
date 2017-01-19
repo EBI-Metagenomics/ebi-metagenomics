@@ -65,10 +65,18 @@
             } );
         } ).draw();
 
+        // ADD INTERACTION BETWEEN TABLE ROW CLICK AND PIE CHART - only work when legend is shown
+//        $("#tax_table tr").click(function(){
+//            $(".highcharts-legend-item").eq($(this).index()).trigger("click");
+//        })
+        // ADD INTERACTION BETWEEN TABLE ROW AND CHART
+        $("#tax_table tbody tr").click(function(){
+            var index = $(this).index();
+            var point = $('#tax_chart_pie_phylum').highcharts().series[0].points[index];
+            point.setVisible(!point.visible);
+      })
         //HIGHLIGHT TERMS IN DATATABLE
-
         $("#tax_table_filter input").addClass("filter_sp");
-
         // Highlight the search term in the table using the filter input, using jQuery Highlight plugin
         $('.filter_sp').keyup(function () {
             $("#tax_table tr td").highlight($(this).val());
