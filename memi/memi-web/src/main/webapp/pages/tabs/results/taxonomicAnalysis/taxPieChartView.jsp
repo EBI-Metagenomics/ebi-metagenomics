@@ -36,7 +36,7 @@
         var t = $('#tax_table').DataTable( {
             order: [[ 3, "desc" ]],
             columnDefs: [ //add responsive style as direct css doesn't work
-                {className: "xs_hide", "targets": [2]},//domain
+                {className: "xs_hide", "targets": [0,2]},//hide number + domain columns
                 {className: "table-align-right", "targets": [3,4]}//numbers easier to compare
             ],
             oLanguage: {
