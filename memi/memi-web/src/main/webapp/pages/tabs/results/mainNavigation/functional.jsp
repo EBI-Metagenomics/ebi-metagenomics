@@ -125,4 +125,3 @@
 </script>
 
 <%@ include file="../functionalAnalysis/interproMatchesView.jsp" %>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/export-button-menu.js"></script>
