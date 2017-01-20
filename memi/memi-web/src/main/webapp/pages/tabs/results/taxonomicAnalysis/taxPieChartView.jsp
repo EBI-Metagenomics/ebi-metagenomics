@@ -246,7 +246,7 @@
                     }
                 },
                 credits: {text: null },//remove credit line bottom
-                colors: [ ${model.taxonomyAnalysisResult.colorCodeForPieChart} ],//color palette
+                colors: [ ${model.taxonomyAnalysisResult.colorCodeForChart} ],//color palette
                 legend: {
                     title: {
                         text: '<span style="font-size: 12px; color: #666; font-weight: normal">Click to hide</span>',
