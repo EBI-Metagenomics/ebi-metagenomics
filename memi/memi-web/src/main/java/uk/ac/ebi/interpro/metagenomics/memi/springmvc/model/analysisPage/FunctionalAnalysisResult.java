@@ -36,6 +36,11 @@ public class FunctionalAnalysisResult {
         return goTermSection;
     }
 
+    public String getColorCodeForChart() {
+        StringBuilder sb = new StringBuilder("'#058dc7', '#50b432', '#ed561b', '#fbe300', '#24cbe5', '#c49ecc', '#ff9655', '#708090', '#6af9c4', '#dabe88'");
+       return sb.toString();
+    }
+
     public void setGoTermSection(GoTermSection goTermSection) {
         this.goTermSection = goTermSection;
     }
