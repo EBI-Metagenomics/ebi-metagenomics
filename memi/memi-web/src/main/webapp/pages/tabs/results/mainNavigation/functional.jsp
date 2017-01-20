@@ -47,8 +47,8 @@
                     <c:when test="${!model.analysisStatus.functionalAnalysisTab.interProMatchSectionDisabled}">
                         <div id="interpro-match-pie">
                             <div  class="chart_container" >
-                                <div class="grid_10"><div id="func_chart_pie_ipro"></div></div>
-                                <div class="grid_14"> <table id="func_table_ipro" class="table-glight"></table></div>
+                                <div class="grid_8"><div id="func_chart_pie_ipro"></div></div>
+                                <div class="grid_16"> <table id="func_table_ipro" class="table-glight"></table></div>
                             </div>
                         </div>
                     </c:when>
