@@ -266,7 +266,7 @@
                     }
                 },
                 credits: {text: null },//remove credit line bottom
-                colors: [${model.taxonomyAnalysisResult.colorCodeForPieChart} ],//color palette
+                colors: [${model.taxonomyAnalysisResult.colorCodeForChart} ],//color palette
                 legend: {enabled: false},//remove legend
                 title: {
                     <c:choose>
