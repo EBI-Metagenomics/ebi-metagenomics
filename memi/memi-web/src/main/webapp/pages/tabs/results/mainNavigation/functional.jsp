@@ -42,71 +42,14 @@
                     </c:otherwise>
                 </c:choose>
                 <h3>InterPro match summary</h3>
-                <%--<div>
-                  <div>
-                    <button id="rerun" ><span class="icon icon-functional" data-icon="=" ></span></button>
-                    <button id="select">Select what to download</button>
-                  </div>
-                  <ul>
-                    <li><a href="#">Save chart image</a></li>
-                    <li><a href="<c:url value="${baseURL}/sample/${model.sample.sampleId}/doExportIPRFile"/>"   title="<spring:message code="analysisStatsView.label.download.i5.table.view"/>">Save table</a></li>
-                    <li><a href="#">Save raw data</a></li>
-                  </ul>
-                </div>--%>
+
                 <c:choose>
                     <c:when test="${!model.analysisStatus.functionalAnalysisTab.interProMatchSectionDisabled}">
-
                         <div id="interpro-match-pie">
-
-                                <%--<div class="chart_container">--%>
-
-                                <%--<div class="chart-block">--%>
-                            <div class="chart_container">
-                                <div class="chart-block col-1-2">
-                                    <div class="but_chart_export ui-buttonset">
-                                            <%--<button id="func-ip-pie" style="display: none;"></button>--%>
-                                        <button id="select"
-                                                class="ui-button ui-widget ui-state-default ui-button-text-icon-secondary ui-corner-right">
-                                            <span class="ui-button-text">Export</span><span
-                                                class="ui-button-icon-secondary ui-icon ui-icon-triangle-1-s"></span>
-                                        </button>
-                                    </div>
-
-                                    <ul class="export_list">
-                                        <li><strong>InterPro Match</strong></li>
-                                        <li class="chart_exp png" id="pie_ipro_png"><a
-                                                onclick="saveAsImg(document.getElementById('func_chart_pie_ipro'),'
-                                                    <spring:message
-                                                            code="file.name.func.ip.pie.chart.png"/>',1);">PNG</a></li>
-                                        <li class="chart_exp png" id="pie_ipro_png_h"><a
-                                                onclick="saveAsImg(document.getElementById('func_chart_pie_ipro'),'
-                                                    <spring:message
-                                                            code="file.name.func.ip.pie.chart.high.png"/>',300/72);">PNG
-                                            (Higher quality)</a></li>
-                                        <li class="chart_exp" id='pie_ipro_svg'><a
-                                                onclick="saveAsSVG(document.getElementById('func_chart_pie_ipro'),'
-                                                    <spring:message code="file.name.func.ip.pie.chart.svg"/>');">SVG</a>
-                                        </li>
-                                    </ul>
-
-                                    <div id="func_chart_pie_ipro"></div>
-                                        <%-- Not necessary anymore - has been implemented by google since then
-                                        <div class="func_chart_caption"><div class="puce_chart"></div>Other matches</div>--%>
-                                </div>
-
-                                    <%-- BEGIN Toolbar - to export chart in CSV- not used for the moment ---%>
-                                <div class="ico-download" id="toolbar_div" style="display:none;"><a
-                                        class="icon icon-functional" data-icon="=" id="csv" href="#" title=""></a></div>
-                                    <%-- END Toolbar--%>
-
-                                <div id="func_dashboard" class="col-1-2">
-                                    <div id="func_table_filter"></div>
-                                    <div id="func_table_pie_ipro"></div>
-                                </div>
-
-
+                            <div  class="chart_container" >
+                                <div class="grid_10"><div id="func_chart_pie_ipro"></div></div>
+                                <div class="grid_14"> <table id="func_table_ipro" class="table-glight"></table></div>
                             </div>
-
                         </div>
                     </c:when>
                     <c:otherwise>
@@ -114,6 +57,7 @@
                         </div>
                     </c:otherwise>
                 </c:choose>
+
                 <h3>GO Terms annotation</h3>
 
                 <p>A summary of Gene Ontology (GO) terms derived from InterPro matches to your sample is provided in the
