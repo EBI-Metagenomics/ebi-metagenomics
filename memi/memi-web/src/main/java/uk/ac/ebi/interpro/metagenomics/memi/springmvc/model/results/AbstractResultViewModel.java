@@ -28,14 +28,14 @@ public abstract class AbstractResultViewModel extends ViewModel {
         //init color code list
         colorCodeList.add("058dc7");
         colorCodeList.add("50b432");
-        colorCodeList.add("ed561b");
+        colorCodeList.add("e26736");
         colorCodeList.add("fbe300");
         colorCodeList.add("24cbe5");
         colorCodeList.add("c49ecc");
-        colorCodeList.add("ff9655");
+        colorCodeList.add("ffc08a");
         colorCodeList.add("708090");
         colorCodeList.add("6af9c4");
-        colorCodeList.add("dabe88");
+        colorCodeList.add("caae74");
     }
 
     public List<String> getColorCodeList() {
