@@ -206,12 +206,12 @@
                     // <c:choose>
                     <c:when test="${model.run.releaseVersion == '1.0'}">
                     formatter:function(){
-                        return '<span style="color:'+this.series.color+'">&#9632;</span> <span style="font-size:88%">'+this.series.name+':</span><br/><strong><small>'+Highcharts.numberFormat((this.y/100*${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator}),0,'.')+'</small></strong> OTUs (<strong>'+Highcharts.numberFormat((this.percentage),2,'.')+'</strong>%)';
+                        return '<span style="color:'+this.series.color+'">&#9632;</span> '+this.series.name+':<br/><strong>'+Highcharts.numberFormat((this.y/100*${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator}),0,'.')+'</strong> OTUs ('+Highcharts.numberFormat((this.percentage),2,'.')+'%)';
                     },
                     </c:when>
                     <c:otherwise>
                     formatter:function(){
-                        return '<span style="color:'+this.series.color+'">&#9632;</span> <span style="font-size:88%">'+this.series.name+':</span><br/><strong><small>'+Highcharts.numberFormat((this.y/100*${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator}),0,'.')+'</small></strong> reads (<strong>'+Highcharts.numberFormat((this.percentage),2,'.')+'</strong>%)';
+                        return '<span style="color:'+this.series.color+'">&#9632;</span> '+this.series.name+':<br/><strong>'+Highcharts.numberFormat((this.y/100*${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator}),0,'.')+'</strong> reads ('+Highcharts.numberFormat((this.percentage),2,'.')+'%)';
                     },
                     </c:otherwise>
                     </c:choose>
