@@ -293,10 +293,10 @@
                     headerFormat: '',
                     <c:choose>
                     <c:when test="${model.run.releaseVersion == '1.0'}">
-                    pointFormat: '<span style=\'color:{point.color}\'>&#9632;</span> <span style=\'font-size:88%;\'>{point.name}: </span><br/><strong><small>{point.y}</small></strong> OTUs',
+                    pointFormat: '<span style=\'color:{point.color}\'>&#9632;</span> {point.name}: <br/><strong>{point.y}</strong> OTUs',
                     </c:when>
                     <c:otherwise>
-                    pointFormat: '<span style=\'color:{point.color}\'>&#9632;</span> <span style=\'font-size:88%;\'>{point.name}: </span><br/><strong><small>{point.y}</small></strong> reads',
+                    pointFormat: '<span style=\'color:{point.color}\'>&#9632;</span> {point.name}: <br/><strong>{point.y}</strong> reads',
                     </c:otherwise>
                     </c:choose>
                     useHTML: true
