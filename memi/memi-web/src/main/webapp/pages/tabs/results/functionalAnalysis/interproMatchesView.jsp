@@ -150,7 +150,6 @@
                     text: 'Total: ${fn:length(model.functionalAnalysisResult.interProMatchesSection.interProEntryList)} InterPro entries',
                     style: {
                         fontSize:11,
-                        fontWeight: "italic"
                     }},
                 tooltip: {
                     backgroundColor: 'white',
