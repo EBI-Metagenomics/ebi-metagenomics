@@ -78,9 +78,6 @@
                 </c:forEach>
             ]
 
-            //console.log (${model.functionalAnalysisResult.interProMatchesSection.totalReadsCount})
-            //console.log (${model.functionalAnalysisResult.interProMatchesSection.sliceVisibilityThresholdValue})
-
             //IMPORTANT - regroup small values under thresold into "Others" to improve pie chart readability
             var newData=[];
             //calculating the threshold: changing for each chart (OR use 20/100 fix treshold) + use round value to be the same as value rounded for slices
@@ -143,13 +140,18 @@
                     y: 60
                 },
                 title: {
-                    text: 'InterPro matches summary <br/><span style="font-size:80%;">(Total: ${fn:length(model.functionalAnalysisResult.interProMatchesSection.interProEntryList)} InterPro entries)</span>',
-
+                    text: 'InterPro matches summary',
                     style: {
                         fontSize:16,
                         fontWeight: "bold"
                     }
                 },
+                subtitle: {
+                    text: 'Total: ${fn:length(model.functionalAnalysisResult.interProMatchesSection.interProEntryList)} InterPro entries',
+                    style: {
+                        fontSize:11,
+                        fontWeight: "italic"
+                    }},
                 tooltip: {
                     backgroundColor: 'white',
                     headerFormat: '',
