@@ -154,7 +154,7 @@
                 tooltip: {
                     backgroundColor: 'white',
                     headerFormat: '',
-                    pointFormat: '<span style=\'color:{point.color}\'>&#9632;</span> <span style=\'font-size:88%;\'>{point.name}: </span><br/><strong><small>{point.y}</small></strong> pCDS matched (<strong>{point.percentage:.2f}</strong>%)',
+                    pointFormat: '<span style=\'color:{point.color}\'>&#9632;</span> {point.name}: <br/><strong>{point.y}</strong> pCDS matched ({point.percentage:.2f}%)',
                     useHTML: true
                 },
 
