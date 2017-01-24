@@ -259,7 +259,8 @@
                     verticalAlign: 'top',
                     //     itemWidth: 140 //align items in column same size for legend
                     x: 0,
-                    y: 60
+                    y: 60,
+                    itemStyle: {fontWeight: "regular"}
                 },
                 title: {
                     <c:choose>
