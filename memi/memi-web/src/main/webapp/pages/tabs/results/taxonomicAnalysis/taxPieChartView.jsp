@@ -129,7 +129,7 @@
                         }
                     }
                 },
-                credits: {text: null },//remove credit line bottom
+                credits: {enabled: false},//remove credit line
                 colors: [${model.taxonomyAnalysisResult.domainComposition.colorCode}],//color palette
                 title: {
                     text: 'Domain composition',
