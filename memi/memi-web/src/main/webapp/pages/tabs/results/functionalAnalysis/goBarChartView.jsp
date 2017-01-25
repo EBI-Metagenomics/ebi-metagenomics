@@ -62,7 +62,7 @@
                         }
                     }
                 },
-                credits: {text: null },//remove credit line bottom
+                credits: {enabled: false},//remove credit line
                 colors: [ '#058dc7' ],// only one color for all PB
                 legend: {
                     enabled:false,
@@ -169,7 +169,7 @@
                         }
                     }
                 },
-                credits: {text: null },//remove credit line bottom
+                credits: {enabled: false},//remove credit line
                 colors: [ '#50b432' ],// only one color for all MF #ed561b
                 legend: {
                     enabled:false,
@@ -276,7 +276,7 @@
                         }
                     }
                 },
-                credits: {text: null },//remove credit line bottom
+                credits: {enabled: false},//remove credit line
                 colors: [ '#ed561b' ],// only one color for all MF
                 legend: {
                     enabled:false,
