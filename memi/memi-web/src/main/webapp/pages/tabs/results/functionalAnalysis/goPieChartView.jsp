@@ -86,7 +86,7 @@
                         }
                     }
                 },
-                credits: {text: null },//remove credit line bottom
+                credits: {enabled: false},//remove credit line
                 colors: [<c:set var="addComma" value="false"/><c:forEach begin="0" end="10" varStatus="status"><c:choose><c:when test="${addComma}">, </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose><c:choose><c:when test="${status.index>9}">'#ccc'</c:when><c:otherwise>'#<c:out value="${model.colorCodeList[status.index]}"/>'</c:otherwise></c:choose></c:forEach>],//color palette
                 legend: {
                     title: {
