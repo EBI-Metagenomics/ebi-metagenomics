@@ -265,7 +265,7 @@
                         }
                     }
                 },
-                credits: {text: null },//remove credit line bottom
+                credits: {enabled: false},//remove credit line
                 colors: [${model.taxonomyAnalysisResult.colorCodeForChart} ],//color palette
                 legend: {enabled: false},//remove legend
                 title: {
