@@ -25,15 +25,31 @@
                 <c:choose>
                     <c:when test="${!model.analysisStatus.functionalAnalysisTab.sequenceFeatureSectionDisabled}">
 
-                        <div style="display:block; overflow: auto;">
-                            <c:url var="sequenceFeatureImage" value="/getImage" scope="request">
-                                <c:param name="imageName" value="/charts/seq-feat.png"/>
-                                <c:param name="imageType" value="PNG"/>
-                                <c:param name="dir" value="${model.analysisJob.resultDirectory}"/>
-                            </c:url>
-                            <p><img
-                                    src="<c:out value="${sequenceFeatureImage}"/>"/></p>
-                        </div>
+                        <div id="sq_sum"></div>
+                        <%--<div style="display:block; overflow: auto;" >--%>
+                            <%--<c:url var="sequenceFeatureImage" value="/getImage" scope="request">--%>
+                                <%--<c:param name="imageName" value="/charts/seq-feat.png"/>--%>
+                                <%--<c:param name="imageType" value="PNG"/>--%>
+                                <%--<c:param name="dir" value="${model.analysisJob.resultDirectory}"/>--%>
+                            <%--</c:url>--%>
+                            <%--<p><img--%>
+                                    <%--src="<c:out value="${sequenceFeatureImage}"/>"/></p>--%>
+                        <%--</div>--%>
+
+
+                        <script type="text/javascript">
+                            $(function () {
+                                var common_path = "/metagenomics/projects/${projectId}/samples/${sampleId}/runs/${runId}/results/versions/${releaseVersion}/qc-stats/",
+                                        file_summary = common_path + 'summary',
+                                        numberOfLines = 5;
+                              //  debugger;
+                                var stats_data =null;
+                                    $.ajax(file_summary).done(function(d){
+                                        testNumberOfReadsChart(d,numberOfLines,stats_data==null?null:stats_data["sequence_count"],file_summary);
+                                    });
+                            });
+                        </script>
+
                     </c:when>
                     <c:otherwise>
                         <%-- message when section if empty - shouldn't happen --%>
@@ -41,6 +57,7 @@
                         </div>
                     </c:otherwise>
                 </c:choose>
+
                 <h3>InterPro match summary</h3>
 
                 <c:choose>
