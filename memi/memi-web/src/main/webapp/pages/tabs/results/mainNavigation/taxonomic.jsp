@@ -60,11 +60,11 @@
     $("#tabs-taxchart").tabs({${model.analysisStatus.taxonomicAnalysisTab.tabsOptions}});
 </script>
 
-<%--Remove the filter field for taxonomy table when the total number of phylum is less than 10--%>
+<%--Remove the filter field for taxonomy table when the total number of phylum is less than 10 - note can't one single table id + ID needed or it affects the interpro match datatable--%>
 <c:if test="${fn:length(model.taxonomyAnalysisResult.taxonomyDataSet)<10}">
-    <style>.dataTables_filter{display: none;}</style>
+    <style>#tax_table_wrapper .dataTables_filter, #tax_table_bar_wrapper .dataTables_filter, #tax_table_col_wrapper .dataTables_filter {display: none;}</style>
 </c:if>
 <%--Remove the sort number field + navigation for taxonomy table when the total number of phylum is less than 25--%>
 <c:if test="${fn:length(model.taxonomyAnalysisResult.taxonomyDataSet)<25}">
-    <style>.dataTables_length, .dataTables_paginate  {display: none;}</style>
+    <style> #tax_table_wrapper .dataTables_length, #tax_table_wrapper .dataTables_paginate,  #tax_table_bar_wrapper .dataTables_length, #tax_table_bar_wrapper .dataTables_paginate,   #tax_table_col_wrapper .dataTables_length, #tax_table_col_wrapper .dataTables_paginate  {display: none;}</style>
 </c:if>
