@@ -59,6 +59,55 @@
                     buttons: {
                         contextButton: {
                             symbol: 'url(<c:url value="${baseURL}/img/ico_download.png"/>)',
+                            menuItems: [
+                                {
+                                    textKey: 'printChart',
+                                    onclick: function () {
+                                        this.print();
+                                    }
+                                }, {
+                                    separator: true
+                                },
+                                {
+                                    //text: 'Export to PNG',
+                                    textKey: 'downloadPNG',
+                                    onclick: function () {
+                                        this.exportChart({
+                                            width: 1200,
+                                            filename:'<spring:message code="file.name.func.go.bar.chart.bp"/>',// externalRunId need to be added to the model
+                                        });
+                                    }
+                                },
+                                {
+                                    textKey: 'downloadJPEG',
+                                    onclick: function () {
+                                        this.exportChart({
+                                            width: 1200,
+                                            filename:'<spring:message code="file.name.func.go.bar.chart.bp"/>',// externalRunId need to be added to the model
+                                            type: 'image/jpeg'
+                                        });
+                                    }
+                                },
+                                {
+                                    textKey: 'downloadPDF',
+                                    onclick: function () {
+                                        this.exportChart({
+                                            filename:'<spring:message code="file.name.func.go.bar.chart.bp"/>',// externalRunId need to be added to the model
+                                            type: 'application/pdf'
+                                        });
+                                    }
+                                },
+                                {
+                                    textKey: 'downloadSVG',
+                                    onclick: function () {
+                                        this.exportChart({
+                                            filename:'<spring:message code="file.name.func.go.bar.chart.bp"/>',// externalRunId need to be added to the model
+                                            type: 'image/svg+xml'
+                                        });
+                                    }
+                                },
+                            ],
+
                         }
                     }
                 },
@@ -166,6 +215,55 @@
                     buttons: {
                         contextButton: {
                             symbol: 'url(<c:url value="${baseURL}/img/ico_download.png"/>)',
+                            menuItems: [
+                                {
+                                    textKey: 'printChart',
+                                    onclick: function () {
+                                        this.print();
+                                    }
+                                }, {
+                                    separator: true
+                                },
+                                {
+                                    //text: 'Export to PNG',
+                                    textKey: 'downloadPNG',
+                                    onclick: function () {
+                                        this.exportChart({
+                                            width: 1200,
+                                            filename:'<spring:message code="file.name.func.go.bar.chart.mf"/>',// externalRunId need to be added to the model
+                                        });
+                                    }
+                                },
+                                {
+                                    textKey: 'downloadJPEG',
+                                    onclick: function () {
+                                        this.exportChart({
+                                            width: 1200,
+                                            filename:'<spring:message code="file.name.func.go.bar.chart.mf"/>',// externalRunId need to be added to the model
+                                            type: 'image/jpeg'
+                                        });
+                                    }
+                                },
+                                {
+                                    textKey: 'downloadPDF',
+                                    onclick: function () {
+                                        this.exportChart({
+                                            filename:'<spring:message code="file.name.func.go.bar.chart.mf"/>',// externalRunId need to be added to the model
+                                            type: 'application/pdf'
+                                        });
+                                    }
+                                },
+                                {
+                                    textKey: 'downloadSVG',
+                                    onclick: function () {
+                                        this.exportChart({
+                                            filename:'<spring:message code="file.name.func.go.bar.chart.mf"/>',// externalRunId need to be added to the model
+                                            type: 'image/svg+xml'
+                                        });
+                                    }
+                                },
+                            ],
+
                         }
                     }
                 },
@@ -273,6 +371,55 @@
                     buttons: {
                         contextButton: {
                             symbol: 'url(<c:url value="${baseURL}/img/ico_download.png"/>)',
+                            menuItems: [
+                                {
+                                    textKey: 'printChart',
+                                    onclick: function () {
+                                        this.print();
+                                    }
+                                }, {
+                                    separator: true
+                                },
+                                {
+                                    //text: 'Export to PNG',
+                                    textKey: 'downloadPNG',
+                                    onclick: function () {
+                                        this.exportChart({
+                                            width: 1200,
+                                            filename:'<spring:message code="file.name.func.go.bar.chart.cc"/>',// externalRunId need to be added to the model
+                                        });
+                                    }
+                                },
+                                {
+                                    textKey: 'downloadJPEG',
+                                    onclick: function () {
+                                        this.exportChart({
+                                            width: 1200,
+                                            filename:'<spring:message code="file.name.func.go.bar.chart.cc"/>',// externalRunId need to be added to the model
+                                            type: 'image/jpeg'
+                                        });
+                                    }
+                                },
+                                {
+                                    textKey: 'downloadPDF',
+                                    onclick: function () {
+                                        this.exportChart({
+                                            filename:'<spring:message code="file.name.func.go.bar.chart.cc"/>',// externalRunId need to be added to the model
+                                            type: 'application/pdf'
+                                        });
+                                    }
+                                },
+                                {
+                                    textKey: 'downloadSVG',
+                                    onclick: function () {
+                                        this.exportChart({
+                                            filename:'<spring:message code="file.name.func.go.bar.chart.cc"/>',// externalRunId need to be added to the model
+                                            type: 'image/svg+xml'
+                                        });
+                                    }
+                                },
+                            ],
+
                         }
                     }
                 },
