@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-<div id="tax-pie">
+<div id="tax-bar">
 
     <div  class="chart_container" >
         <div class="grid_8"><div id="tax_chart_bar_dom" style="height: 360px;"></div></div>
@@ -135,7 +135,57 @@
                 exporting: {
                     buttons: {
                         contextButton: {
-                            symbol: 'url(${pageContext.request.contextPath}/img/ico_download.png)',//TEMP download img icon
+                            symbol: 'url(${pageContext.request.contextPath}/img/ico_download.png)',// img icon export
+                            menuItems: [
+                                {
+                                    textKey: 'printChart',
+                                    onclick: function () {
+                                        this.print();
+                                    }
+                                }, {
+                                    separator: true
+                                },
+                                {
+                                    //text: 'Export to PNG',
+                                    textKey: 'downloadPNG',
+                                    onclick: function () {
+                                        this.exportChart({
+                                            width: 1200,
+                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.bar.chart.domain.png"/>',
+                                        });
+                                    }
+                                },
+                                {
+                                    textKey: 'downloadJPEG',
+                                    onclick: function () {
+                                        this.exportChart({
+                                            width: 1200,
+                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.bar.chart.domain.jpeg"/>',
+                                            type: 'image/jpeg'
+                                        });
+                                    }
+                                },
+                                {
+                                    textKey: 'downloadPDF',
+                                    onclick: function () {
+                                        this.exportChart({
+                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.bar.chart.domain.pdf"/>',
+                                            type: 'application/pdf'
+                                        });
+                                    }
+                                },
+                                {
+                                    textKey: 'downloadSVG',
+                                    onclick: function () {
+                                        this.exportChart({
+                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.bar.chart.domain.svg"/>',
+                                            type: 'image/svg+xml'
+                                        });
+                                    }
+                                },
+                            ],
+
+
                         }
                     }
                 },
@@ -210,7 +260,7 @@
                 }]
             });
 
-            //PIE CHART - PHYLUM COMPOSITION
+            //BAR CHART - PHYLUM COMPOSITION
 
             // Phylum data
             var data = [
@@ -263,7 +313,57 @@
                 exporting: {
                     buttons: {
                         contextButton: {
-                            symbol: 'url(${pageContext.request.contextPath}/img/ico_download.png)',//temp download img icon
+                            symbol: 'url(${pageContext.request.contextPath}/img/ico_download.png)',// img icon export
+                            menuItems: [
+                                {
+                                    textKey: 'printChart',
+                                    onclick: function () {
+                                        this.print();
+                                    }
+                                }, {
+                                    separator: true
+                                },
+                                {
+                                    //text: 'Export to PNG',
+                                    textKey: 'downloadPNG',
+                                    onclick: function () {
+                                        this.exportChart({
+                                            width: 1200,
+                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.bar.chart.phylum.png"/>',
+                                        });
+                                    }
+                                },
+                                {
+                                    textKey: 'downloadJPEG',
+                                    onclick: function () {
+                                        this.exportChart({
+                                            width: 1200,
+                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.bar.chart.phylum.jpeg"/>',
+                                            type: 'image/jpeg'
+                                        });
+                                    }
+                                },
+                                {
+                                    textKey: 'downloadPDF',
+                                    onclick: function () {
+                                        this.exportChart({
+                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.bar.chart.phylum.pdf"/>',
+                                            type: 'application/pdf'
+                                        });
+                                    }
+                                },
+                                {
+                                    textKey: 'downloadSVG',
+                                    onclick: function () {
+                                        this.exportChart({
+                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.bar.chart.phylum.svg"/>',
+                                            type: 'image/svg+xml'
+                                        });
+                                    }
+                                },
+                            ],
+
+
                         }
                     }
                 },
