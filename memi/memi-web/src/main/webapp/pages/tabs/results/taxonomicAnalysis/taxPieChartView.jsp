@@ -133,7 +133,7 @@
                                     onclick: function () {
                                         this.exportChart({
                                             width: 1200,
-                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.pie.chart.domain.png"/>',
+                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.pie.chart.domain"/>',
                                         });
                                     }
                                 },
@@ -142,7 +142,7 @@
                                     onclick: function () {
                                         this.exportChart({
                                             width: 1200,
-                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.pie.chart.domain.jpeg"/>',
+                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.pie.chart.domain"/>',
                                             type: 'image/jpeg'
                                         });
                                     }
@@ -151,7 +151,7 @@
                                     textKey: 'downloadPDF',
                                     onclick: function () {
                                         this.exportChart({
-                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.pie.chart.domain.pdf"/>',
+                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.pie.chart.domain"/>',
                                             type: 'application/pdf'
                                         });
                                     }
@@ -160,13 +160,12 @@
                                     textKey: 'downloadSVG',
                                     onclick: function () {
                                         this.exportChart({
-                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.pie.chart.domain.svg"/>',
+                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.pie.chart.domain"/>',
                                             type: 'image/svg+xml'
                                         });
                                     }
                                 },
                             ],
-
 
                         }
                     }
@@ -299,7 +298,7 @@
                                 onclick: function () {
                                     this.exportChart({
                                         width: 1200,
-                                        filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.pie.chart.phylum.png"/>',
+                                        filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.pie.chart.phylum"/>',
                                     });
                                 }
                             },
@@ -308,7 +307,7 @@
                                     onclick: function () {
                                         this.exportChart({
                                             width: 1200,
-                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.pie.chart.phylum.jpeg"/>',
+                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.pie.chart.phylum"/>',
                                             type: 'image/jpeg'
                                         });
                                     }
@@ -317,7 +316,7 @@
                                     textKey: 'downloadPDF',
                                     onclick: function () {
                                         this.exportChart({
-                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.pie.chart.phylum.pdf"/>',
+                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.pie.chart.phylum"/>',
                                             type: 'application/pdf'
                                         });
                                     }
@@ -326,7 +325,7 @@
                                     textKey: 'downloadSVG',
                                     onclick: function () {
                                         this.exportChart({
-                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.pie.chart.phylum.svg"/>',
+                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.pie.chart.phylum"/>',
                                             type: 'image/svg+xml'
                                         });
                                     }
