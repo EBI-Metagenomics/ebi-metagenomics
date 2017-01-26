@@ -137,21 +137,19 @@ var sumNumberOfReadsChart = function (rawdata, numberOfLines, sequenceCount, url
 
     $('#sq_sum').highcharts({
         chart: { type: 'bar', height: 250 },
-        title: { text: ''},
-        // tooltip: {
-        //     backgroundColor: 'white',
-        //     headerFormat: '',
-        //     useHTML: true,
-        //     pointFormatter: function () {
-        //         return '<span style="color:'+this.color+'">&#9632;</span> '+this.category+': <br/><strong>'+(this.y)+'</strong> reads';
-        //     }
-        //
-        // },
+        title: { text: 'Sequence feature summary'},
+         tooltip: {
+           backgroundColor: 'white',
+           headerFormat: '',
+           useHTML: true,
+            pointFormatter: function () {
+            return '<span style="color:'+this.color+'">&#9632;</span> '+this.category+': <br/><strong>'+(this.y)+'</strong>';
+             }
         // tooltip: {
         //
         //     pointFormat: '<span style=\'color:{point.color}\'>&#9632;</span> <span style=\'font-size:88%;\'>{point.name}: </span><br/><strong><small>{point.y}</small></strong> reads ',
         //
-        // },
+         },
         legend: {
             enabled:false,
             itemStyle: {fontWeight: "regular"}
@@ -275,9 +273,11 @@ var drawNumberOfReadsChart = function (rawdata, numberOfLines, sequenceCount, ur
     $('#qc_overview').highcharts({
         chart: { type: 'bar', height: 250 },
         title: { text: 'Number of sequence reads per QC step'},
+
         xAxis: {
-            categories: categories,
-            title: { enabled: false }
+                categories: categories,
+                lineColor: "#595959",
+                tickColor: ""
         },
         yAxis: {
             title: { text: "Count" }
