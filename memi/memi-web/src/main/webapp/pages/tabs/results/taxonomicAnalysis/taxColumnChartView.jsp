@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<div id="tax-colr">
+<div id="tax-col">
 
     <div  class="chart_container" >
         <div class="grid_24"><div id="tax_chart_col" style="height: 360px;"></div></div>
@@ -23,6 +23,7 @@
 
     // Create the Datatable
     $(document).ready(function() {
+
         //table data
         var rowData = [
             <c:set var="addComma" value="false"/>
@@ -92,6 +93,7 @@
     } );
 
 </script>
+
 <script type="text/javascript">
     $(function () {
 
