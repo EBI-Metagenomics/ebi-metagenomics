@@ -117,12 +117,57 @@
                 exporting: {
                     buttons: {
                         contextButton: {
-//                            symbol: 'url(https://cdn3.iconfinder.com/data/icons/essential-icon/512/Download-128.png)',
-                            symbol: 'url(${pageContext.request.contextPath}/img/ico_download.png)',//temp download img icon
-//                            symbolSize: 24,
-//                            symbolStrokeWidth: 0,
-//                            symbolFill: '#a4edba',
-//                            symbolStroke: '#330033'
+                            symbol: 'url(${pageContext.request.contextPath}/img/ico_download.png)',// img icon export
+                            menuItems: [
+                                {
+                                    textKey: 'printChart',
+                                    onclick: function () {
+                                        this.print();
+                                    }
+                                }, {
+                                    separator: true
+                                },
+                                {
+                                    //text: 'Export to PNG',
+                                    textKey: 'downloadPNG',
+                                    onclick: function () {
+                                        this.exportChart({
+                                            width: 1200,
+                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.pie.chart.domain.png"/>',
+                                        });
+                                    }
+                                },
+                                {
+                                    textKey: 'downloadJPEG',
+                                    onclick: function () {
+                                        this.exportChart({
+                                            width: 1200,
+                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.pie.chart.domain.jpeg"/>',
+                                            type: 'image/jpeg'
+                                        });
+                                    }
+                                },
+                                {
+                                    textKey: 'downloadPDF',
+                                    onclick: function () {
+                                        this.exportChart({
+                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.pie.chart.domain.pdf"/>',
+                                            type: 'application/pdf'
+                                        });
+                                    }
+                                },
+                                {
+                                    textKey: 'downloadSVG',
+                                    onclick: function () {
+                                        this.exportChart({
+                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.pie.chart.domain.svg"/>',
+                                            type: 'image/svg+xml'
+                                        });
+                                    }
+                                },
+                            ],
+
+
                         }
                     }
                 },
@@ -238,7 +283,56 @@
                 exporting: {
                     buttons: {
                         contextButton: {
-                            symbol: 'url(${pageContext.request.contextPath}/img/ico_download.png)',//temp download img icon
+                            symbol: 'url(${pageContext.request.contextPath}/img/ico_download.png)',// img icon export
+                            menuItems: [
+                                {
+                                    textKey: 'printChart',
+                                    onclick: function () {
+                                        this.print();
+                                    }
+                                }, {
+                                    separator: true
+                                },
+                                {
+                                //text: 'Export to PNG',
+                                textKey: 'downloadPNG',
+                                onclick: function () {
+                                    this.exportChart({
+                                        width: 1200,
+                                        filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.pie.chart.phylum.png"/>',
+                                    });
+                                }
+                            },
+                                {
+                                    textKey: 'downloadJPEG',
+                                    onclick: function () {
+                                        this.exportChart({
+                                            width: 1200,
+                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.pie.chart.phylum.jpeg"/>',
+                                            type: 'image/jpeg'
+                                        });
+                                    }
+                                },
+                                {
+                                    textKey: 'downloadPDF',
+                                    onclick: function () {
+                                        this.exportChart({
+                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.pie.chart.phylum.pdf"/>',
+                                            type: 'application/pdf'
+                                        });
+                                    }
+                                },
+                                {
+                                    textKey: 'downloadSVG',
+                                    onclick: function () {
+                                        this.exportChart({
+                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.pie.chart.phylum.svg"/>',
+                                            type: 'image/svg+xml'
+                                        });
+                                    }
+                                },
+                            ],
+
                         }
                     }
                 },
