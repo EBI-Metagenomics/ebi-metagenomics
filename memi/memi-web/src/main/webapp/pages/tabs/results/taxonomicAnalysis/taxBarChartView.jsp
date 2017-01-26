@@ -1,6 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<div id="tax-bar">
+
+<div id="tax-pie">
+
     <div  class="chart_container" >
         <div class="grid_8"><div id="tax_chart_bar_dom" style="height: 360px;"></div></div>
         <div class="grid_16">  <div id="tax_chart_bar_phy" style="height: 360px;"></div></div>
@@ -93,7 +95,6 @@
         // Highlight the search term in the table using the filter input, using jQuery Highlight plugin
         $('.filter_sp').keyup(function () {
             $("#tax_table_bar tr td").highlight($(this).val());
-            // console.log($(this).val());
             $('#tax_table_bar tr td').unhighlight();// highlight more than just first character entered in the text box and reiterate the span to highlight
             $('#tax_table_bar tr td').highlight($(this).val());
         });
@@ -104,6 +105,7 @@
     } );
 
 </script>
+
 <script type="text/javascript">
     $(function () {
 
