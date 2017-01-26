@@ -151,7 +151,7 @@
                                     onclick: function () {
                                         this.exportChart({
                                             width: 1200,
-                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.bar.chart.domain.png"/>',
+                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.bar.chart.domain"/>',
                                         });
                                     }
                                 },
@@ -160,7 +160,7 @@
                                     onclick: function () {
                                         this.exportChart({
                                             width: 1200,
-                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.bar.chart.domain.jpeg"/>',
+                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.bar.chart.domain"/>',
                                             type: 'image/jpeg'
                                         });
                                     }
@@ -169,7 +169,7 @@
                                     textKey: 'downloadPDF',
                                     onclick: function () {
                                         this.exportChart({
-                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.bar.chart.domain.pdf"/>',
+                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.bar.chart.domain"/>',
                                             type: 'application/pdf'
                                         });
                                     }
@@ -178,7 +178,7 @@
                                     textKey: 'downloadSVG',
                                     onclick: function () {
                                         this.exportChart({
-                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.bar.chart.domain.svg"/>',
+                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.bar.chart.domain"/>',
                                             type: 'image/svg+xml'
                                         });
                                     }
@@ -329,7 +329,7 @@
                                     onclick: function () {
                                         this.exportChart({
                                             width: 1200,
-                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.bar.chart.phylum.png"/>',
+                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.bar.chart.phylum"/>',
                                         });
                                     }
                                 },
@@ -338,7 +338,7 @@
                                     onclick: function () {
                                         this.exportChart({
                                             width: 1200,
-                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.bar.chart.phylum.jpeg"/>',
+                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.bar.chart.phylum"/>',
                                             type: 'image/jpeg'
                                         });
                                     }
@@ -347,7 +347,7 @@
                                     textKey: 'downloadPDF',
                                     onclick: function () {
                                         this.exportChart({
-                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.bar.chart.phylum.pdf"/>',
+                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.bar.chart.phylum"/>',
                                             type: 'application/pdf'
                                         });
                                     }
@@ -356,7 +356,7 @@
                                     textKey: 'downloadSVG',
                                     onclick: function () {
                                         this.exportChart({
-                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.bar.chart.phylum.svg"/>',
+                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.bar.chart.phylum"/>',
                                             type: 'image/svg+xml'
                                         });
                                     }
