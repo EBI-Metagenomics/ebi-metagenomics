@@ -151,7 +151,7 @@
                                     onclick: function () {
                                         this.exportChart({
                                             width: 1200,
-                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.col.chart.phylum.png"/>',
+                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.col.chart.phylum"/>',
                                         });
                                     }
                                 },
@@ -160,7 +160,7 @@
                                     onclick: function () {
                                         this.exportChart({
                                             width: 1200,
-                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.col.chart.phylum.jpeg"/>',
+                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.col.chart.phylum"/>',
                                             type: 'image/jpeg'
                                         });
                                     }
@@ -169,7 +169,7 @@
                                     textKey: 'downloadPDF',
                                     onclick: function () {
                                         this.exportChart({
-                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.col.chart.phylum.pdf"/>',
+                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.col.chart.phylum"/>',
                                             type: 'application/pdf'
                                         });
                                     }
@@ -178,7 +178,7 @@
                                     textKey: 'downloadSVG',
                                     onclick: function () {
                                         this.exportChart({
-                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.col.chart.phylum.svg"/>',
+                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.col.chart.phylum"/>',
                                             type: 'image/svg+xml'
                                         });
                                     }
