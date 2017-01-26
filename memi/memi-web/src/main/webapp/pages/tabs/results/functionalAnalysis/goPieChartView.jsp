@@ -83,6 +83,55 @@
                     buttons: {
                         contextButton: {
                             symbol: 'url(<c:url value="${baseURL}/img/ico_download.png"/>)',
+                            menuItems: [
+                                {
+                                    textKey: 'printChart',
+                                    onclick: function () {
+                                        this.print();
+                                    }
+                                }, {
+                                    separator: true
+                                },
+                                {
+                                    //text: 'Export to PNG',
+                                    textKey: 'downloadPNG',
+                                    onclick: function () {
+                                        this.exportChart({
+                                            width: 1200,
+                                            filename:'<spring:message code="file.name.func.go.pie.chart.bp"/>',// externalRunId need to be added to the model
+                                        });
+                                    }
+                                },
+                                {
+                                    textKey: 'downloadJPEG',
+                                    onclick: function () {
+                                        this.exportChart({
+                                            width: 1200,
+                                            filename:'<spring:message code="file.name.func.go.pie.chart.bp"/>',// externalRunId need to be added to the model
+                                            type: 'image/jpeg'
+                                        });
+                                    }
+                                },
+                                {
+                                    textKey: 'downloadPDF',
+                                    onclick: function () {
+                                        this.exportChart({
+                                            filename:'<spring:message code="file.name.func.go.pie.chart.bp"/>',// externalRunId need to be added to the model
+                                            type: 'application/pdf'
+                                        });
+                                    }
+                                },
+                                {
+                                    textKey: 'downloadSVG',
+                                    onclick: function () {
+                                        this.exportChart({
+                                            filename:'<spring:message code="file.name.func.go.pie.chart.bp"/>',// externalRunId need to be added to the model
+                                            type: 'image/svg+xml'
+                                        });
+                                    }
+                                },
+                            ],
+
                         }
                     }
                 },
@@ -176,7 +225,7 @@
                 newData.push({name:'Other', y:other, color:'#ccc'});
             }
 
-            //BP PIE CHART
+            //MF PIE CHART
             $('#func_chart_pie_go_mf').highcharts({
                 chart: {
                     plotBackgroundColor: null,
@@ -200,6 +249,55 @@
                     buttons: {
                         contextButton: {
                             symbol: 'url(<c:url value="${baseURL}/img/ico_download.png"/>)',
+                            menuItems: [
+                                {
+                                    textKey: 'printChart',
+                                    onclick: function () {
+                                        this.print();
+                                    }
+                                }, {
+                                    separator: true
+                                },
+                                {
+                                    //text: 'Export to PNG',
+                                    textKey: 'downloadPNG',
+                                    onclick: function () {
+                                        this.exportChart({
+                                            width: 1200,
+                                            filename:'<spring:message code="file.name.func.go.pie.chart.mf"/>',// externalRunId need to be added to the model
+                                        });
+                                    }
+                                },
+                                {
+                                    textKey: 'downloadJPEG',
+                                    onclick: function () {
+                                        this.exportChart({
+                                            width: 1200,
+                                            filename:'<spring:message code="file.name.func.go.pie.chart.mf"/>',// externalRunId need to be added to the model
+                                            type: 'image/jpeg'
+                                        });
+                                    }
+                                },
+                                {
+                                    textKey: 'downloadPDF',
+                                    onclick: function () {
+                                        this.exportChart({
+                                            filename:'<spring:message code="file.name.func.go.pie.chart.mf"/>',// externalRunId need to be added to the model
+                                            type: 'application/pdf'
+                                        });
+                                    }
+                                },
+                                {
+                                    textKey: 'downloadSVG',
+                                    onclick: function () {
+                                        this.exportChart({
+                                            filename:'<spring:message code="file.name.func.go.pie.chart.mf"/>',// externalRunId need to be added to the model
+                                            type: 'image/svg+xml'
+                                        });
+                                    }
+                                },
+                            ],
+
                         }
                     }
                 },
@@ -291,7 +389,7 @@
                 newData.push({name:'Other', y:other, color:'#ccc'});
             }
 
-            //BP PIE CHART
+            //CC PIE CHART
             $('#func_chart_pie_go_cc').highcharts({
                 chart: {
                     plotBackgroundColor: null,
@@ -315,6 +413,55 @@
                     buttons: {
                         contextButton: {
                             symbol: 'url(<c:url value="${baseURL}/img/ico_download.png"/>)',
+                            menuItems: [
+                                {
+                                    textKey: 'printChart',
+                                    onclick: function () {
+                                        this.print();
+                                    }
+                                }, {
+                                    separator: true
+                                },
+                                {
+                                    //text: 'Export to PNG',
+                                    textKey: 'downloadPNG',
+                                    onclick: function () {
+                                        this.exportChart({
+                                            width: 1200,
+                                            filename:'<spring:message code="file.name.func.go.pie.chart.cc"/>',// externalRunId need to be added to the model
+                                        });
+                                    }
+                                },
+                                {
+                                    textKey: 'downloadJPEG',
+                                    onclick: function () {
+                                        this.exportChart({
+                                            width: 1200,
+                                            filename:'<spring:message code="file.name.func.go.pie.chart.cc"/>',// externalRunId need to be added to the model
+                                            type: 'image/jpeg'
+                                        });
+                                    }
+                                },
+                                {
+                                    textKey: 'downloadPDF',
+                                    onclick: function () {
+                                        this.exportChart({
+                                            filename:'<spring:message code="file.name.func.go.pie.chart.cc"/>',// externalRunId need to be added to the model
+                                            type: 'application/pdf'
+                                        });
+                                    }
+                                },
+                                {
+                                    textKey: 'downloadSVG',
+                                    onclick: function () {
+                                        this.exportChart({
+                                            filename:'<spring:message code="file.name.func.go.pie.chart.cc"/>',// externalRunId need to be added to the model
+                                            type: 'image/svg+xml'
+                                        });
+                                    }
+                                },
+                            ],
+
                         }
                     }
                 },
