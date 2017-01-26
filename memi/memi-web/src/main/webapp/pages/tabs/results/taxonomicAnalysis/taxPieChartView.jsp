@@ -24,6 +24,7 @@
 
     // Create the Datatable
     $(document).ready(function() {
+
         //table data
         var rowData = [
             <c:set var="addComma" value="false"/>
@@ -40,8 +41,8 @@
                 {className: "table-align-right", "targets": [3,4]}//numbers easier to compare
             ],
             oLanguage: {
-                    "sSearch": "Filter table: "
-                },
+                "sSearch": "Filter table: "
+            },
             lengthMenu: [[25, 50, 100, -1], [25, 50, 100, "All"]],
             data: rowData,
             columns: [
@@ -52,7 +53,7 @@
                 <c:when test="${model.run.releaseVersion == '1.0'}">
                 { title: "Unique OTUs" },
                 </c:when>
-                <c:otherwise>{title: "Reads"},
+                    <c:otherwise>{title: "Reads"},
                 </c:otherwise>
                 </c:choose>
                 { title: "%" },
@@ -65,10 +66,6 @@
             } );
         } ).draw();
 
-        // ADD INTERACTION BETWEEN TABLE ROW CLICK AND PIE CHART - only work when legend is shown
-//        $("#tax_table tr").click(function(){
-//            $(".highcharts-legend-item").eq($(this).index()).trigger("click");
-//        })
         // ADD INTERACTION BETWEEN TABLE ROW AND CHART
         $("#tax_table tbody tr").click(function(){
             var index = $(this).index();
@@ -80,7 +77,6 @@
         // Highlight the search term in the table using the filter input, using jQuery Highlight plugin
         $('.filter_sp').keyup(function () {
             $("#tax_table tr td").highlight($(this).val());
-            // console.log($(this).val());
             $('#tax_table tr td').unhighlight();// highlight more than just first character entered in the text box and reiterate the span to highlight
             $('#tax_table tr td').highlight($(this).val());
 
@@ -92,6 +88,7 @@
     } );
 
 </script>
+
 <script type="text/javascript">
     $(function () {
 
