@@ -124,7 +124,57 @@
                 exporting: {
                     buttons: {
                         contextButton: {
-                            symbol: 'url(<c:url value="${baseURL}/img/ico_download.png"/>)',//temp - change to relative
+                            symbol: 'url(${pageContext.request.contextPath}/img/ico_download.png)',// img icon export
+                            menuItems: [
+                                {
+                                    textKey: 'printChart',
+                                    onclick: function () {
+                                        this.print();
+                                    }
+                                }, {
+                                    separator: true
+                                },
+                                {
+                                    //text: 'Export to PNG',
+                                    textKey: 'downloadPNG',
+                                    onclick: function () {
+                                        this.exportChart({
+                                            width: 1200,
+                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.func.ip.pie.chart"/>',
+                                        });
+                                    }
+                                },
+                                {
+                                    textKey: 'downloadJPEG',
+                                    onclick: function () {
+                                        this.exportChart({
+                                            width: 1200,
+                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.func.ip.pie.chart"/>',
+                                            type: 'image/jpeg'
+                                        });
+                                    }
+                                },
+                                {
+                                    textKey: 'downloadPDF',
+                                    onclick: function () {
+                                        this.exportChart({
+                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.func.ip.pie.chart"/>',
+                                            type: 'application/pdf'
+                                        });
+                                    }
+                                },
+                                {
+                                    textKey: 'downloadSVG',
+                                    onclick: function () {
+                                        this.exportChart({
+                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.func.ip.pie.chart"/>',
+                                            type: 'image/svg+xml'
+                                        });
+                                    }
+                                },
+                            ],
+
+
                         }
                     }
                 },
