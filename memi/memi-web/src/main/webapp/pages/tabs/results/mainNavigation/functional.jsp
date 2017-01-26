@@ -21,7 +21,7 @@
             </c:when>
             <%--If Analysis completed completed and functional results have been associated--%>
             <c:otherwise>
-                <h3>Sequence feature summary</h3>
+                <%--<h3>Sequence feature summary</h3>--%>
                 <c:choose>
                     <c:when test="${!model.analysisStatus.functionalAnalysisTab.sequenceFeatureSectionDisabled}">
 
