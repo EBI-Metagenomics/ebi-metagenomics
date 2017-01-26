@@ -137,50 +137,55 @@
                         contextButton: {
                             symbol: 'url(${pageContext.request.contextPath}/img/ico_download.png)',// img icon export
                             menuItems: [
-
-                               //{
-                                // textKey: 'downloadData',
-                                //onclick: function () {
-                             <%--window.location = "<c:url value="${baseURL}/projects/${study.studyId}/samples/${model.run.externalSampleId}/runs/${model.run.externalRunIds}/results/versions/${model.run.releaseVersion}/taxonomy/OTU-TSV"/>";--%>
-                            // }
-                                //  },
-                                //  {
-                            //  separator: true
-                                //},
                                 {
-                                textKey: 'printChart',
-                                onclick: function () {
-                                    this.print();
-                                }
-                            }, {
-                                separator: true
-                            }, {
-                                textKey: 'downloadPNG',
-                                onclick: function () {
-                                    this.exportChart();
-                                }
-                            }, {
-                                textKey: 'downloadJPEG',
-                                onclick: function () {
-                                    this.exportChart({
-                                        type: 'image/jpeg'
-                                    });
-                                }
-                            }, {
-                                textKey: 'downloadPDF',
-                                onclick: function () {
-                                    this.exportChart({
-                                        type: 'application/pdf'
-                                    });
-                                }
-                            }, {
-                                textKey: 'downloadSVG',
-                                onclick: function () {
-                                    this.exportChart({
-                                        type: 'image/svg+xml'
-                                    });
-                                }
-                            }]
+                                    textKey: 'printChart',
+                                    onclick: function () {
+                                        this.print();
+                                    }
+                                }, {
+                                    separator: true
+                                },
+                                {
+                                    //text: 'Export to PNG',
+                                    textKey: 'downloadPNG',
+                                    onclick: function () {
+                                        this.exportChart({
+                                            width: 1200,
+                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.col.chart.phylum.png"/>',
+                                        });
+                                    }
+                                },
+                                {
+                                    textKey: 'downloadJPEG',
+                                    onclick: function () {
+                                        this.exportChart({
+                                            width: 1200,
+                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.col.chart.phylum.jpeg"/>',
+                                            type: 'image/jpeg'
+                                        });
+                                    }
+                                },
+                                {
+                                    textKey: 'downloadPDF',
+                                    onclick: function () {
+                                        this.exportChart({
+                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.col.chart.phylum.pdf"/>',
+                                            type: 'application/pdf'
+                                        });
+                                    }
+                                },
+                                {
+                                    textKey: 'downloadSVG',
+                                    onclick: function () {
+                                        this.exportChart({
+                                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.col.chart.phylum.svg"/>',
+                                            type: 'image/svg+xml'
+                                        });
+                                    }
+                                },
+                            ],
+
+
                         }
                     }
                 },
