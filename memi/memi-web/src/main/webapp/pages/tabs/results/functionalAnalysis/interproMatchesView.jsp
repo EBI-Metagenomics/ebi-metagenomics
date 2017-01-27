@@ -104,9 +104,6 @@
             //PIE CHART PHYLUM
             $('#func_chart_pie_ipro').highcharts({
                 chart: {
-                    plotBackgroundColor: null,
-                    plotBorderWidth: null,
-                    plotShadow: false,
                     type: 'pie',
                     style: {
                         fontFamily: 'Helvetica'
