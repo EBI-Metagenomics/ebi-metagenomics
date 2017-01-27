@@ -97,9 +97,6 @@
             //PIE CHART DOMAIN
             $('#tax_chart_pie_domain').highcharts({
                 chart: {
-                    plotBackgroundColor: null,
-                    plotBorderWidth: null,
-                    plotShadow: false,
                     type: 'pie',
                     style: {
                         fontFamily: 'Helvetica'
@@ -197,6 +194,7 @@
                     pie: {
                         allowPointSelect: true,
                         cursor: 'pointer',
+//                        borderColor: 'rgba(0, 0, 0, 0.1)',
                         dataLabels: {
 //                            distance:-30, //inside labels as it used to be in Google chart
                             enabled: true
@@ -214,7 +212,7 @@
                 series: [{
                     name: 'Phylumn',
                     //colorByPoint: true,
-                    borderColor: false,
+                    borderColor: false,// to hide white default border on slice
                     data:   [
                         <c:set var="addComma" value="false"/>
                         <c:forEach var="domainEntry" items="${model.taxonomyAnalysisResult.domainComposition.domainMap}"><c:choose><c:when test="${addComma}">,</c:when>
@@ -262,9 +260,6 @@
             //PIE CHART PHYLUM
             $('#tax_chart_pie_phylum').highcharts({
                 chart: {
-                    plotBackgroundColor: null,
-                    plotBorderWidth: null,
-                    plotShadow: false,
                     type: 'pie',
                     style: {
                         fontFamily: 'Helvetica'
@@ -347,7 +342,6 @@
                     layout: 'vertical',
                     align: 'right',
                     verticalAlign: 'top',
-                    //     itemWidth: 140 //align items in column same size for legend
                     x: 0,
                     y: 60,
                     itemStyle: {fontWeight: "regular"}
@@ -382,6 +376,7 @@
 
                 plotOptions: {
                     pie: {
+//                        borderColor: 'rgba(0, 0, 0, 0.18)',
                         allowPointSelect: true,
                         cursor: 'pointer',
                         dataLabels: {
@@ -406,7 +401,7 @@
                 series: [{
                     name: 'Phylumn',
                     //colorByPoint: true,
-                    borderColor: false,
+                    borderColor: false,// to hide white default border on slice
                     data: newData
                 }]
             });
