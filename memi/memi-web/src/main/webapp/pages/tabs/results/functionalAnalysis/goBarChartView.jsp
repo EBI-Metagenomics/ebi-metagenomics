@@ -36,11 +36,8 @@
             //BP PIE
             $('#func_chart_bar_go_bp').highcharts({
                 chart: {
-                    height:            940,
+                    height: 940,
                     zoomType: 'x',// add zoom options - useful when very small values
-                    plotBackgroundColor: null,
-                    plotBorderWidth: null,
-                    plotShadow: false,
                     type: 'bar',
                     style: {
                         fontFamily: 'Helvetica'
@@ -194,9 +191,6 @@
                 chart: {
                     height: 940,
                     zoomType: 'x',// add zoom options - useful when very small values
-                    plotBackgroundColor: null,
-                    plotBorderWidth: null,
-                    plotShadow: false,
                     type: 'bar',
                     style: {
                         fontFamily: 'Helvetica'
@@ -350,9 +344,6 @@
                 chart: {
                     height: 940,
                     zoomType: 'x',// add zoom options - useful when very small values
-                    plotBackgroundColor: null,
-                    plotBorderWidth: null,
-                    plotShadow: false,
                     type: 'bar',
                     style: {
                         fontFamily: 'Helvetica'
