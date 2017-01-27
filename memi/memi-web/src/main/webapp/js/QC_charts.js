@@ -40,12 +40,17 @@ var getExportingStructure = function (urlToFile,content) {
                 }, {
                     textKey: 'downloadPNG',
                     onclick: function () {
-                        this.exportChart();
+                        this.exportChart({
+                            width: 1200,
+                            filename:'sq_sum_bar_chart'// externalRunId need to be added to the model - NOTE the name is common between QC and Functional
+                        });
                     }
                 }, {
                     textKey: 'downloadJPEG',
                     onclick: function () {
                         this.exportChart({
+                            width: 1200,
+                            filename:'sq_sum_bar_chart',// externalRunId need to be added to the model - NOTE the name is common between QC and Functional
                             type: 'image/jpeg'
                         });
                     }
@@ -53,6 +58,7 @@ var getExportingStructure = function (urlToFile,content) {
                     textKey: 'downloadPDF',
                     onclick: function () {
                         this.exportChart({
+                            filename:'sq_sum_bar_chart',// externalRunId need to be added to the model - NOTE the name is common between QC and Functional
                             type: 'application/pdf'
                         });
                     }
@@ -60,6 +66,7 @@ var getExportingStructure = function (urlToFile,content) {
                     textKey: 'downloadSVG',
                     onclick: function () {
                         this.exportChart({
+                            filename:'sq_sum_bar_chart',// externalRunId need to be added to the model - NOTE the name is common between QC and Functional
                             type: 'image/svg+xml'
                         });
                     }
