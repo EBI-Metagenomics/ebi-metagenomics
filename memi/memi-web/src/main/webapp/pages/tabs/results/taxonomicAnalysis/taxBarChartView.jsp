@@ -114,9 +114,6 @@
             //BAR CHART - DOMAIN COMPOSITION
             $('#tax_chart_bar_dom').highcharts({
                 chart: {
-                    plotBackgroundColor: null,
-                    plotBorderWidth: null,
-                    plotShadow: false,
                     type: 'column',
                     style: {
                         fontFamily: 'Helvetica'
@@ -249,6 +246,7 @@
                 series: [{
                     name: 'Domain',
                     colorByPoint: true,//one color for each category
+                    borderColor: '#686868',
                     data:   [
                         <c:set var="addComma" value="false"/>
                         <c:forEach var="domainEntry" items="${model.taxonomyAnalysisResult.domainComposition.domainMap}"><c:choose><c:when test="${addComma}">,</c:when>
@@ -293,9 +291,6 @@
             $('#tax_chart_bar_phy').highcharts({
                 chart: {
                     zoomType: 'x',// add zoom options -useful when very small values
-                    plotBackgroundColor: null,
-                    plotBorderWidth: null,
-                    plotShadow: false,
                     type: 'column',
                     style: {
                         fontFamily: 'Helvetica'
@@ -440,8 +435,7 @@
                 series: [{
                     name: 'Phylumn',
                     colorByPoint: true,
-//                    borderWidth: 1,
-//                    borderColor: 'rgba(0,0,0,0.3)',
+                    borderColor: 'rgba(0, 0, 0, 0.1)',
                     pointPadding: 0,
                     groupPadding: 0.1,
                     data: newData
