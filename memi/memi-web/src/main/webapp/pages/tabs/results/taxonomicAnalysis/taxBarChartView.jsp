@@ -246,7 +246,7 @@
                 series: [{
                     name: 'Domain',
                     colorByPoint: true,//one color for each category
-                    borderColor: '#686868',
+//                    borderColor: '#686868',
                     data:   [
                         <c:set var="addComma" value="false"/>
                         <c:forEach var="domainEntry" items="${model.taxonomyAnalysisResult.domainComposition.domainMap}"><c:choose><c:when test="${addComma}">,</c:when>
