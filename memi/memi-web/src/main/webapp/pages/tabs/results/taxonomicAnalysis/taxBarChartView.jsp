@@ -435,7 +435,7 @@
                 series: [{
                     name: 'Phylumn',
                     colorByPoint: true,
-                    borderColor: 'rgba(0, 0, 0, 0.1)',
+//                    borderColor: 'rgba(0, 0, 0, 0.1)',
                     pointPadding: 0,
                     groupPadding: 0.1,
                     data: newData
