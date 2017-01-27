@@ -25,7 +25,7 @@ public abstract class AbstractResultViewModel extends ViewModel {
     }
 
     static {
-        //init color code list
+        //init color code list - Google type
         colorCodeList.add("058dc7");
         colorCodeList.add("50b432");
         colorCodeList.add("e26736");
@@ -38,6 +38,19 @@ public abstract class AbstractResultViewModel extends ViewModel {
         colorCodeList.add("caae74");
     }
 
+//    static {
+//        //init color code list - Krona type
+//        colorCodeList.add("d17575");
+//        colorCodeList.add("d1b175");
+//        colorCodeList.add("b7d175");
+//        colorCodeList.add("7fd175");
+//        colorCodeList.add("75cfd1");
+//        colorCodeList.add("6594cc");
+//        colorCodeList.add("d072d0");
+//        colorCodeList.add("708090");
+//        colorCodeList.add("6af9c4");
+//        colorCodeList.add("ffab35");
+//    }
     public List<String> getColorCodeList() {
         return colorCodeList;
     }
