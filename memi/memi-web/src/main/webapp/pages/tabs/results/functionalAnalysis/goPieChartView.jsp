@@ -62,9 +62,6 @@
             //BP PIE CHART
             $('#func_chart_pie_go_bp').highcharts({
                 chart: {
-                    plotBackgroundColor: null,
-                    plotBorderWidth: null,
-                    plotShadow: false,
                     type: 'pie',
                     style: {
                         fontFamily: 'Helvetica'
@@ -228,9 +225,6 @@
             //MF PIE CHART
             $('#func_chart_pie_go_mf').highcharts({
                 chart: {
-                    plotBackgroundColor: null,
-                    plotBorderWidth: null,
-                    plotShadow: false,
                     type: 'pie',
                     style: {
                         fontFamily: 'Helvetica'
@@ -392,9 +386,6 @@
             //CC PIE CHART
             $('#func_chart_pie_go_cc').highcharts({
                 chart: {
-                    plotBackgroundColor: null,
-                    plotBorderWidth: null,
-                    plotShadow: false,
                     type: 'pie',
                     style: {
                         fontFamily: 'Helvetica'
