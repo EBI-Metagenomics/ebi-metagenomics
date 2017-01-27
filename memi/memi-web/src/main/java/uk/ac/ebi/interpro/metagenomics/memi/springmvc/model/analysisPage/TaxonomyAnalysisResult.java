@@ -69,6 +69,7 @@ public class TaxonomyAnalysisResult {
      */
     public String getColorCodeForChart() {
         StringBuilder sb = new StringBuilder("'#058dc7', '#50b432', '#e26736', '#fbe300', '#24cbe5', '#c49ecc', '#f4a460', '#708090', '#6af9c4', '#caae74'");
+//        StringBuilder sb = new StringBuilder("'#d17575', '#d1b175', '#b7d175', '#7fd175', '#75cfd1', '#6594cc', '#d072d0', '#708090', '#6af9c4', '#ffab35'"); Krona type palettte
         if (taxonomyDataSet.size() > 10) {
             for (int i = 0; i < taxonomyDataSet.size() - 10; i++) {
                 sb.append(",'#ccc'");
