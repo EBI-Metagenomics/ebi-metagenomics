@@ -115,9 +115,6 @@
             //BAR CHART PHYLUM
             $('#tax_chart_col').highcharts({
                 chart: {
-                    plotBackgroundColor: null,
-                    plotBorderWidth: null,
-                    plotShadow: false,
                     type: 'column',
                     style: {
                         fontFamily: 'Helvetica'
