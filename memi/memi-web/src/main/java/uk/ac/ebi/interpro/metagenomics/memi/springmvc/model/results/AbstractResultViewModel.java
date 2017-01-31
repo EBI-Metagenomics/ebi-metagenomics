@@ -25,7 +25,7 @@ public abstract class AbstractResultViewModel extends ViewModel {
     }
 
     static {
-        //init color code list - Google type
+        //init color code list for table - Google type
         colorCodeList.add("058dc7");
         colorCodeList.add("50b432");
         colorCodeList.add("e26736");
