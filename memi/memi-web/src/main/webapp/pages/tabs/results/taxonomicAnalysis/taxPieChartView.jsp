@@ -25,7 +25,7 @@
     // Create the Datatable
     $(document).ready(function() {
 
-        //table data
+        //table data - note: array element added to filter on taxonomy name for "Unassigned"
         var rowData = [
             <c:set var="addComma" value="false"/>
             <c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResult.taxonomyDataSet}" varStatus="status"><c:choose><c:when test="${addComma}">,
@@ -33,6 +33,11 @@
             ['${row.index}','<div title="${taxonomyData.phylum}" class="puce-square-legend" style="background-color: #${taxonomyData.colorCode};"></div> ${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}]
             </c:forEach>
         ];
+        // Remove the unassigned from displaying on the chart
+        var irowData = []
+        // Remove the unassigned from displaying on the chart
+        var irowData = rowData.filter(function(item){ return item[5] != "Unassigned" })
+        console.log (irowData)
 
         var t = $('#tax_table').DataTable( {
             order: [[ 3, "desc" ]],
@@ -44,7 +49,7 @@
                 "sSearch": "Filter table: "
             },
             lengthMenu: [[25, 50, 100, -1], [25, 50, 100, "All"]],
-            data: rowData,
+            data: irowData,
             columns: [
                 { title: "" },
                 { title: "Phylum" },
@@ -95,6 +100,26 @@
         $(document).ready(function () {
 
             //PIE CHART DOMAIN
+            // Domain data
+            var data =  [
+                <c:set var="addComma" value="false"/>
+                <c:forEach var="domainEntry" items="${model.taxonomyAnalysisResult.domainComposition.domainMap}"><c:choose><c:when test="${addComma}">,</c:when>
+                <c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>
+                ['${domainEntry.key}', ${domainEntry.value}]
+                </c:forEach>
+            ]
+
+            // Remove the unassigned from displaying on the chart
+            var iData = data.filter(function(item){ return item[0] != "Unassigned" })
+
+            // Get a value for unassigned reads/OTUs
+            var totalUnassigned=[];
+            for (var slice in data) {
+                if (data[slice][0] == "Unassigned") {
+                    totalUnassigned += data[slice][1];
+                }
+            }
+
             $('#tax_chart_pie_domain').highcharts({
                 chart: {
                     type: 'pie',
@@ -210,17 +235,10 @@
                 },
 
                 series: [{
-                    name: 'Phylumn',
+                    name: 'Domain composition',
                     //colorByPoint: true,
                     borderColor: false,// to hide white default border on slice
-                    data:   [
-                        <c:set var="addComma" value="false"/>
-                        <c:forEach var="domainEntry" items="${model.taxonomyAnalysisResult.domainComposition.domainMap}"><c:choose><c:when test="${addComma}">,</c:when>
-                        <c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>
-                        ['${domainEntry.key}', ${domainEntry.value}]
-                        </c:forEach>
-                    ]
-
+                    data:  iData
                 }]
             });
 
@@ -235,18 +253,21 @@
                 </c:forEach>
             ]
 
+            // Remove the unassigned from displaying on the chart
+            var iData = data.filter(function(item){ return item[0] != "Unassigned" })
+
             //IMPORTANT - regroup small values under thresold into "Others" to improve pie chart readability
             var newData=[];
             //calculating the threshold: changing for each chart (OR use 20/100 fix treshold) + use round value to be the same as value rounded for slices
             var thresOld=((${model.taxonomyAnalysisResult.sliceVisibilityThresholdNumerator / model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator}*100).toFixed(2));
 
             var other=0.0
-            for (var slice in data) {
+            for (var slice in iData) {
                 //thresold variable
-                if (data[slice][2] < thresOld) {
-                    other += data[slice][1];
+                if (iData[slice][2] < thresOld) {
+                    other += iData[slice][1];
                 } else {
-                    newData.push(data[slice]);
+                    newData.push(iData[slice]);
                 }
             }
 
@@ -347,19 +368,24 @@
                     itemStyle: {fontWeight: "regular"}
                 },
                 title: {
-                    <c:choose>
-                    <c:when test="${model.run.releaseVersion == '1.0'}">
-                    text: '${phylumCompositionTitle} <span style="font-size:80%;">(Total: ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator} OTUs)</span>',
-                    </c:when>
-                    <c:otherwise>
-                    text: '${phylumCompositionTitle} <span style="font-size:80%;">(Total: ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator} reads)</span>',
-                    </c:otherwise>
-                    </c:choose>
+                    text: '${phylumCompositionTitle}',
                     style: {
                         fontSize:16,
                         fontWeight: "bold"
                     }
                 },
+                subtitle: {
+                    <c:choose>
+                    <c:when test="${model.run.releaseVersion == '1.0'}">
+                    text: 'Total: ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator} OTUs including '+totalUnassigned+' unassigned',
+                    </c:when>
+                    <c:otherwise>
+                    text: 'Total: ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator} reads including '+totalUnassigned+' unassigned',
+                    </c:otherwise>
+                    </c:choose>
+                    style: {
+                        fontSize:11,
+                    }},
                 tooltip: {
                     backgroundColor: 'white',
                     headerFormat: '',
