@@ -25,14 +25,18 @@
     // Create the Datatable
     $(document).ready(function() {
 
-        //table data
+        //table data - note: array element added to filter on taxonomy name for "Unassigned"
         var rowData = [
             <c:set var="addComma" value="false"/>
             <c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResult.taxonomyDataSet}" varStatus="status"><c:choose><c:when test="${addComma}">,
             </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>
-            ['${row.index}','<div title="${taxonomyData.phylum}" class="puce-square-legend" style="background-color: #${taxonomyData.colorCode};"></div> ${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}]
+            ['${row.index}','<div title="${taxonomyData.phylum}" class="puce-square-legend" style="background-color: #${taxonomyData.colorCode};"></div> ${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage},'${taxonomyData.phylum}']
             </c:forEach>
         ];
+        // Remove the unassigned from displaying on the chart
+        var irowData = []
+        // Remove the unassigned from displaying on the chart
+        var irowData = rowData.filter(function(item){ return item[5] != "Unassigned" })
 
         var t = $('#tax_table_bar').DataTable( {
             order: [[ 3, "desc" ]],
@@ -44,7 +48,7 @@
                 "sSearch": "Filter table: "
             },
             lengthMenu: [[25, 50, 100, -1], [25, 50, 100, "All"]],
-            data: rowData,
+            data: irowData,
             columns: [
                 { title: "" },
                 { title: "Phylum" },
@@ -110,6 +114,23 @@
     $(function () {
 
         $(document).ready(function () {
+            var data = [
+                <c:set var="addComma" value="false"/>
+                <c:forEach var="domainEntry" items="${model.taxonomyAnalysisResult.domainComposition.domainMap}"><c:choose><c:when test="${addComma}">,</c:when>
+                <c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>
+                ['${domainEntry.key}', ${domainEntry.value}]
+                </c:forEach>
+            ]
+            // Remove the unassigned from displaying on the chart
+            var iData = data.filter(function(item){ return item[0] != "Unassigned" })
+
+            // Get a value for unassigned reads/OTUs
+            var totalUnassigned=[];
+            for (var slice in data) {
+                if (data[slice][0] == "Unassigned") {
+                    totalUnassigned += data[slice][1];
+                }
+            }
 
             //BAR CHART - DOMAIN COMPOSITION
             $('#tax_chart_bar_dom').highcharts({
@@ -247,14 +268,7 @@
                     name: 'Domain',
                     colorByPoint: true,//one color for each category
 //                    borderColor: '#686868',
-                    data:   [
-                        <c:set var="addComma" value="false"/>
-                        <c:forEach var="domainEntry" items="${model.taxonomyAnalysisResult.domainComposition.domainMap}"><c:choose><c:when test="${addComma}">,</c:when>
-                        <c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>
-                        ['${domainEntry.key}', ${domainEntry.value}]
-                        </c:forEach>
-                    ]
-
+                    data:iData
                 }]
             });
 
@@ -268,15 +282,22 @@
                 ['${taxonomyData.phylum}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}]
                 </c:forEach>
             ]
+
+            // Remove the unassigned from displaying on the chart
+            var iData = data.filter(function(item){ return item[0] != "Unassigned" })
+
             //IMPORTANT - regroup small values <0.1 into "Others" to improve bar chart readability
             var newData=[];
+            //calculating the threshold: changing for each chart
+            var thresOld=((${model.taxonomyAnalysisResult.sliceVisibilityThresholdNumerator / model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator}*100).toFixed(2));
+
             var other=0.0;
-            for (var slice in data) {
+            for (var slice in iData) {
             //thresold 0.1
-                if (data[slice][2] < 10/100) {
-                    other += data[slice][1];
+                if (iData[slice][2] < thresOld) {
+                    other += iData[slice][1];
                 } else {
-                    newData.push(data[slice]);
+                    newData.push(iData[slice]);
                 }
             }
 
@@ -366,25 +387,24 @@
                 colors: [${model.taxonomyAnalysisResult.colorCodeForChart} ],//color palette
                 legend: {enabled: false},//remove legend
                 title: {
-                    <c:choose>
-                    <c:when test="${model.run.releaseVersion == '1.0'}">
-                    text: '${phylumCompositionTitle} <span style="font-size:80%;">(Total: ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator} OTUs)</span>',
-                    </c:when>
-                    <c:otherwise>
-                    text: '${phylumCompositionTitle} <span style="font-size:80%;">(Total: ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator} reads)</span>',
-                    </c:otherwise>
-                    </c:choose>
+                    text: '${phylumCompositionTitle}',
                     style: {
                         fontSize:16,
                         fontWeight: "bold"
                     }
                 },
                 subtitle: {
-                    text: 'Drag to zoom in/out',
+                    <c:choose>
+                    <c:when test="${model.run.releaseVersion == '1.0'}">
+                    text: 'Total: ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator} OTUs including '+totalUnassigned+' unassigned - Drag to zoom in/out',
+                    </c:when>
+                    <c:otherwise>
+                    text: 'Total: ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator} reads including '+totalUnassigned+' unassigned - Drag to zoom in/out',
+                    </c:otherwise>
+                    </c:choose>
                     style: {
                         fontSize:11,
-                        fontWeight: "italic"
-                }},
+                    }},
                 tooltip: {
                     backgroundColor: 'white',
                     headerFormat: '',
