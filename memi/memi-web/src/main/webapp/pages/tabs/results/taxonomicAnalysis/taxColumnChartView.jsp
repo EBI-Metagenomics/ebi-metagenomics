@@ -24,14 +24,18 @@
     // Create the Datatable
     $(document).ready(function() {
 
-        //table data
+        //table data - note: array element added to filter on taxonomy name for "Unassigned"
         var rowData = [
             <c:set var="addComma" value="false"/>
             <c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResult.taxonomyDataSet}" varStatus="status"><c:choose><c:when test="${addComma}">,
             </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>
-            ['${row.index}','<div title="${taxonomyData.phylum}" class="puce-square-legend" style="background-color: #${taxonomyData.colorCode};"></div> ${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}]
+            ['${row.index}','<div title="${taxonomyData.phylum}" class="puce-square-legend" style="background-color: #${taxonomyData.colorCode};"></div> ${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage},'${taxonomyData.phylum}']
             </c:forEach>
         ];
+        // Remove the unassigned from displaying on the chart
+        var irowData = []
+        // Remove the unassigned from displaying on the chart
+        var irowData = rowData.filter(function(item){ return item[5] != "Unassigned" })
 
         var t = $('#tax_table_col').DataTable( {
             order: [[ 3, "desc" ]],
@@ -43,7 +47,7 @@
                 "sSearch": "Filter table: "
             },
             lengthMenu: [[25, 50, 100, -1], [25, 50, 100, "All"]],
-            data: rowData,
+            data: irowData,
             columns: [
                 { title: "" },
                 { title: "Phylum" },
@@ -108,9 +112,16 @@
                 },
                 </c:forEach>
             ]
-           // var result = data.map(function(a) {return a.testnb;});
-            //console.log(result);
 
+            // Remove the unassigned from displaying on the chart
+            var iData = data.filter(function(item){ return item.name != "Unassigned" })
+
+            // Get a value for unassigned reads/OTUs
+            var UnData = []
+            for(var i=0, l = data.length; i<l; i++) {
+                if(data[i].name == "Unassigned") UnData.push(data[i]);
+            }
+            var totalUnassigned = UnData[0].testnb;
 
             //BAR CHART PHYLUM
             $('#tax_chart_col').highcharts({
@@ -190,19 +201,24 @@
                 colors: [${model.taxonomyAnalysisResult.colorCodeForChart} ],//color palette
                 legend: {enabled: false},//remove legend
                 title: {
-                    <c:choose>
-                    <c:when test="${model.run.releaseVersion == '1.0'}">
-                    text: '${phylumCompositionTitle} <span style="font-size:80%;">(Total: ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator} OTUs)</span>',
-                    </c:when>
-                    <c:otherwise>
-                    text: '${phylumCompositionTitle} <span style="font-size:80%;">(Total: ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator} reads)</span>',
-                    </c:otherwise>
-                    </c:choose>
+                    text: '${phylumCompositionTitle}',
                     style: {
                         fontSize:16,
                         fontWeight: "bold"
                     }
                 },
+                subtitle: {
+                <c:choose>
+                 <c:when test="${model.run.releaseVersion == '1.0'}">
+                    text: 'Total: ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator} OTUs including '+totalUnassigned+' unassigned',
+                 </c:when>
+                    <c:otherwise>
+                    text: 'Total: ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator} reads including '+totalUnassigned+' unassigned',
+                    </c:otherwise>
+                    </c:choose>
+                    style: {
+                        fontSize:11,
+                    }},
                 tooltip: {
                     backgroundColor: 'white',
                     headerFormat: '',
@@ -263,7 +279,7 @@
 //                        }
                     }
                 },
-                series: data
+                series: iData
             });
         });
     });
