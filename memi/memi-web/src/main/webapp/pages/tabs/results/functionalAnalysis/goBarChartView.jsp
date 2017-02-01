@@ -26,10 +26,10 @@
 
             // BP data
             var data = [
-                <c:set var="addComma" value="false"/>
-                <c:forEach var="goTerm" items="${model.biologicalProcessGOTerms}" varStatus="status"><c:choose><c:when test="${addComma}">,
-                </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>
-                ['${goTerm.synonym}', ${goTerm.numberOfMatches}, <fmt:formatNumber type="number" maxFractionDigits="2" value="${goTerm.numberOfMatches*100 / model.functionalAnalysisResult.goTermSection.biologicalProcessGoTerms.totalHitsCount}" />]
+                <%--<c:set var="addComma" value="false"/>--%>
+                <c:forEach var="goTerm" items="${model.biologicalProcessGOTerms}" varStatus="status">
+                <%--<c:choose><c:when test="${addComma}">,</c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>--%>
+                ['${goTerm.synonym}', ${goTerm.numberOfMatches}, <fmt:formatNumber type="number" maxFractionDigits="2" value="${goTerm.numberOfMatches*100 / model.functionalAnalysisResult.goTermSection.biologicalProcessGoTerms.totalHitsCount}" />],
                 </c:forEach>
             ]
 
@@ -179,10 +179,10 @@
 
             // MF data
             var data = [
-                <c:set var="addComma" value="false"/>
-                <c:forEach var="goTerm" items="${model.molecularFunctionGOTerms}" varStatus="status"><c:choose><c:when test="${addComma}">,
-                </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>
-                ['${goTerm.synonym}', ${goTerm.numberOfMatches}, <fmt:formatNumber type="number" maxFractionDigits="2" value="${goTerm.numberOfMatches*100 / model.functionalAnalysisResult.goTermSection.molecularFunctionGoTerms.totalHitsCount}" />]
+                <%--<c:set var="addComma" value="false"/>--%>
+                <c:forEach var="goTerm" items="${model.molecularFunctionGOTerms}" varStatus="status">
+                <%--<c:choose><c:when test="${addComma}">,</c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>--%>
+                ['${goTerm.synonym}', ${goTerm.numberOfMatches}, <fmt:formatNumber type="number" maxFractionDigits="2" value="${goTerm.numberOfMatches*100 / model.functionalAnalysisResult.goTermSection.molecularFunctionGoTerms.totalHitsCount}" />],
                 </c:forEach>
             ]
 
@@ -332,10 +332,10 @@
 
             // CC data
             var data = [
-                <c:set var="addComma" value="false"/>
-                <c:forEach var="goTerm" items="${model.cellularComponentGOTerms}" varStatus="status"><c:choose><c:when test="${addComma}">,
-                </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>
-                ['${goTerm.synonym}', ${goTerm.numberOfMatches}, <fmt:formatNumber type="number" maxFractionDigits="2" value="${goTerm.numberOfMatches*100 / model.functionalAnalysisResult.goTermSection.cellularComponentGoTerms.totalHitsCount}" />]
+                <%--<c:set var="addComma" value="false"/>--%>
+                <c:forEach var="goTerm" items="${model.cellularComponentGOTerms}" varStatus="status">
+                <%--<c:choose><c:when test="${addComma}">,</c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>--%>
+                ['${goTerm.synonym}', ${goTerm.numberOfMatches}, <fmt:formatNumber type="number" maxFractionDigits="2" value="${goTerm.numberOfMatches*100 / model.functionalAnalysisResult.goTermSection.cellularComponentGoTerms.totalHitsCount}" />],
                 </c:forEach>
             ]
 
