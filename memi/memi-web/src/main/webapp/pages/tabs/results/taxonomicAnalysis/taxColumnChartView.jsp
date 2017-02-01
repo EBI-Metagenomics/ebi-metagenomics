@@ -84,11 +84,11 @@
 
         $("#tax_table_col_filter input").addClass("filter_sp");
 
-        // Highlight the search term in the table using the filter input, using jQuery Highlight plugin
+        // Highlight the search term in the table (all except first number column) using the filter input, using jQuery Highlight plugin
         $('.filter_sp').keyup(function () {
-            $("#tax_table_col tr td").highlight($(this).val());
-            $('#tax_table_col tr td').unhighlight();// highlight more than just first character entered in the text box and reiterate the span to highlight
-            $('#tax_table_col tr td').highlight($(this).val());
+            $("#tax_table_col tr td:nth-child(n+2)").highlight($(this).val());
+            $('#tax_table_col tr td:nth-child(n+2)').unhighlight();// highlight more than just first character entered in the text box and reiterate the span to highlight
+            $('#tax_table_col tr td:nth-child(n+2)').highlight($(this).val());
         });
         // remove highlight when click on X (clear button)
         $('input[type=search]').on('search', function () {
