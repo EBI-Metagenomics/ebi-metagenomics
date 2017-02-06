@@ -20,79 +20,7 @@
 
 <c:set var="phylumCompositionTitle" scope="request" value="Phylum composition"/>
 
-<script type="text/javascript">
 
-    // Create the Datatable
-    $(document).ready(function() {
-
-        //table data - note: array element added to filter on taxonomy name for "Unassigned"
-        var rowData = [
-            <c:set var="addComma" value="false"/>
-            <c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResult.taxonomyDataSet}" varStatus="status"><c:choose><c:when test="${addComma}">,
-            </c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>
-            ['${row.index}','<div title="${taxonomyData.phylum}" class="puce-square-legend" style="background-color: #${taxonomyData.colorCode};"></div> ${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}]
-            </c:forEach>
-        ];
-        // Remove the unassigned from displaying on the chart
-        var irowData = []
-        // Remove the unassigned from displaying on the chart
-        var irowData = rowData.filter(function(item){ return item[5] != "Unassigned" })
-        console.log (irowData)
-
-        var t = $('#tax_table').DataTable( {
-            order: [[ 3, "desc" ]],
-            columnDefs: [ //add responsive style as direct css doesn't work
-                {className: "xs_hide", "targets": [0,2]},//hide number + domain columns
-                {className: "table-align-right", "targets": [3,4]}//numbers easier to compare
-            ],
-            oLanguage: {
-                "sSearch": "Filter table: "
-            },
-            lengthMenu: [[25, 50, 100, -1], [25, 50, 100, "All"]],
-            data: irowData,
-            columns: [
-                { title: "" },
-                { title: "Phylum" },
-                { title: "Domain" },
-                <c:choose>
-                <c:when test="${model.run.releaseVersion == '1.0'}">
-                { title: "Unique OTUs" },
-                </c:when>
-                    <c:otherwise>{title: "Reads"},
-                </c:otherwise>
-                </c:choose>
-                { title: "%" },
-            ]
-        } );
-        // insert number for lines as  first column and make it not sortable nor searchable
-        t.on( 'order.dt search.dt', function () {
-            t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
-                cell.innerHTML = i+1;
-            } );
-        } ).draw();
-
-        // ADD INTERACTION BETWEEN TABLE ROW AND CHART
-        $("#tax_table tbody tr").click(function(){
-            var index = $(this).index();
-            var point = $('#tax_chart_pie_phylum').highcharts().series[0].points[index];
-            point.setVisible(!point.visible);
-      })
-        //HIGHLIGHT TERMS IN DATATABLE
-        $("#tax_table_filter input").addClass("filter_sp");
-        // Highlight the search term in the table using the filter input, using jQuery Highlight plugin
-        $('.filter_sp').keyup(function () {
-            $("#tax_table tr td").highlight($(this).val());
-            $('#tax_table tr td').unhighlight();// highlight more than just first character entered in the text box and reiterate the span to highlight
-            $('#tax_table tr td').highlight($(this).val());
-
-        });
-        // remove highlight when click on X (clear button)
-        $('input[type=search]').on('search', function () {
-            $('#tax_table tr td').unhighlight();
-        });
-    } );
-
-</script>
 
 <script type="text/javascript">
     $(function () {
@@ -102,10 +30,10 @@
             //PIE CHART DOMAIN
             // Domain data
             var data =  [
-                <c:set var="addComma" value="false"/>
-                <c:forEach var="domainEntry" items="${model.taxonomyAnalysisResult.domainComposition.domainMap}"><c:choose><c:when test="${addComma}">,</c:when>
-                <c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>
-                ['${domainEntry.key}', ${domainEntry.value}]
+                <%--<c:set var="addComma" value="false"/>--%>
+                <c:forEach var="domainEntry" items="${model.taxonomyAnalysisResult.domainComposition.domainMap}">
+                <%--<c:choose><c:when test="${addComma}">,</c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>--%>
+                ['${domainEntry.key}', ${domainEntry.value}],
                 </c:forEach>
             ]
 
@@ -246,10 +174,10 @@
 
             // Phylum data
             var data = [
-                <c:set var="addComma" value="false"/>
-                <c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResult.taxonomyDataSet}" varStatus="status"><c:choose><c:when test="${addComma}">,</c:when>
-                <c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>
-                ['${taxonomyData.phylum}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}]
+                <%--<c:set var="addComma" value="false"/>--%>
+                <c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResult.taxonomyDataSet}" varStatus="status">
+                <%--<c:choose><c:when test="${addComma}">,</c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>--%>
+                ['${taxonomyData.phylum}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}],
                 </c:forEach>
             ]
 
@@ -431,10 +359,98 @@
                     data: newData
                 }]
             });
+
         });
     });
 </script>
+<script type="text/javascript">
 
+    // Create the Datatable
+    $(document).ready(function() {
+
+        // TEMP - to duplicate legend out of the chart
+//        for(i = 0; i < 10; i++) {
+//            var chartout = $('#tax_chart_pie_phylum').highcharts().series[0].points[i];
+//            $(chartout).each(function (i, point) {
+//                $('<tr><td><li style="list-style-type: none;"><div title="'+ point.name +'" class="puce-square-legend" style="background: ' + point.color + '"></div><div style="display:inline-block; ">' + point.name + '</div></li></td></tr>').click(function () {
+//                    point.setVisible(!point.visible);
+//                }).appendTo('#legend');
+//            });
+//        }
+
+        //table data
+        var rowData = [
+            <c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResult.taxonomyDataSet}" varStatus="status">
+            <c:choose>
+            <c:when test="${taxonomyData.phylum=='Unassigned'}">
+                //remove unassigned data
+            </c:when>
+            <c:otherwise>
+            <%--['${row.index}','<div title="${taxonomyData.phylum}" class="puce-square-legend" style="background-color: #${taxonomyData.colorCode}; "></div> ${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage},'${taxonomyData.phylum}'],--%>
+            ['${row.index}','${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}],
+            </c:otherwise>
+            </c:choose>
+            </c:forEach>
+                ];
+        // TEMP - OTHER POSSIBILITY TO REMOVE UNASSIGNED
+        //        // Remove the unassigned from displaying on the chart
+        //        var irowData = []
+        //        // Remove the unassigned from displaying on the chart
+        //        var irowData = rowData.filter(function(item){ return item[5] != "Unassigned" })
+
+        var t = $('#tax_table').DataTable( {
+            order: [[ 3, "desc" ]],
+            columnDefs: [ //add responsive style as direct css doesn't work
+                {className: "xs_hide", "targets": [0,2]},//hide number + domain columns
+                {className: "table-align-right", "targets": [3,4]}//numbers easier to compare
+            ],
+            oLanguage: {
+                "sSearch": "Filter table: "
+            },
+            lengthMenu: [[25, 50, 100, -1], [25, 50, 100, "All"]],
+            data: rowData,
+            columns: [
+                { title: "" },
+                { title: "Phylum" },
+                { title: "Domain" },
+                <c:choose>
+                <c:when test="${model.run.releaseVersion == '1.0'}">
+                { title: "Unique OTUs" },
+                </c:when>
+                    <c:otherwise>{title: "Reads"},
+                </c:otherwise>
+                </c:choose>
+                { title: "%" },
+            ]
+        } );
+         //insert a "fixed" number for lines as first column and make it not sortable nor searchable
+        t.on( 'order.dt search.dt', function () {
+            t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+                cell.innerHTML = i+1;
+            } );
+        } ).draw();
+
+        // ADD INTERACTION BETWEEN TABLE ROW AND CHART
+        $("#tax_table tbody tr").click(function(){
+            var index = $(this).index();
+            var point = $('#tax_chart_pie_phylum').highcharts().series[0].points[index];
+            point.setVisible(!point.visible);
+        })
+        //HIGHLIGHT TERMS IN DATATABLE
+        $("#tax_table_filter input").addClass("filter_sp");
+        // Highlight the search term in the table (all except first number column) using the filter input, using jQuery Highlight plugin
+        $('.filter_sp').keyup(function () {
+            $("#tax_table tr td:nth-child(n+2)").highlight($(this).val());
+            $('#tax_table tr td:nth-child(n+2)').unhighlight();// highlight more than just first character entered in the text box and reiterate the span to highlight
+            $('#tax_table tr td:nth-child(n+2)').highlight($(this).val());
+        });
+        // remove highlight when click on X (clear button)
+        $('input[type=search]').on('search', function () {
+            $('#tax_table tr td').unhighlight();
+        });
+    } );
+
+</script>
 <script type="text/javascript">
     // script to make the tab download link work
     $('.open-tab').click(function (event) {
