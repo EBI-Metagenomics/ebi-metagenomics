@@ -29,13 +29,16 @@
             <%--<c:set var="addComma" value="false"/>--%>
             <c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResult.taxonomyDataSet}" varStatus="status">
             <%--<c:choose><c:when test="${addComma}">,</c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>--%>
-            ['${row.index}','<div title="${taxonomyData.phylum}" class="puce-square-legend" style="background-color: #${taxonomyData.colorCode};"></div> ${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage},'${taxonomyData.phylum}'],
+            <c:choose>
+            <c:when test="${taxonomyData.phylum=='Unassigned'}">
+            //remove unassigned data
+            </c:when>
+            <c:otherwise>
+            ['${row.index}','${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}],
+            </c:otherwise>
+            </c:choose>
             </c:forEach>
         ];
-        // Remove the unassigned from displaying on the chart
-        var irowData = []
-        // Remove the unassigned from displaying on the chart
-        var irowData = rowData.filter(function(item){ return item[5] != "Unassigned" })
 
         var t = $('#tax_table_col').DataTable( {
             order: [[ 3, "desc" ]],
@@ -47,7 +50,7 @@
                 "sSearch": "Filter table: "
             },
             lengthMenu: [[25, 50, 100, -1], [25, 50, 100, "All"]],
-            data: irowData,
+            data: rowData,
             columns: [
                 { title: "" },
                 { title: "Phylum" },
