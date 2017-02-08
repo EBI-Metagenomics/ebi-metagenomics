@@ -34,11 +34,13 @@ public enum FileDefinitionId {
     QC_SUMMARY,
     QC_STATS,
     QC_GC_BIN,
+    QC_LENGTH,
     QC_LENGTH_BIN,
     QC_BASE,
     QC_GC_BIN_SUBSET,
+    QC_LENGTH_SUBSET,
     QC_LENGTH_BIN_SUBSET,
     QC_BASE_SUBSET,
     NC_RNA_T_RNA_FILE,
-    DEFAULT;
+    DEFAULT
 }

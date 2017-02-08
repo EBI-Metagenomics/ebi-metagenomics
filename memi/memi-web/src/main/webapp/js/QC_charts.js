@@ -170,7 +170,7 @@ var drawSequenceLengthHistogram = function (rawdata, isFromSubset, stats,urlToFi
     var init_point = data[0][0] - 1;
 
     $('#seq_len').highcharts({
-        chart: { type: 'areaspline',
+        chart: {
             marginLeft: 100 // Keep all charts left aligned
         },
         title: { text: 'Reads Length Histogram'},
@@ -196,7 +196,7 @@ var drawSequenceLengthHistogram = function (rawdata, isFromSubset, stats,urlToFi
         },
         series : [
             { name : 'Reads',
-                data : [[init_point,0]].concat(data),
+                data : data,
                 color: (isFromSubset)?"#8dc7c7":"#058dc7"
             }
         ],

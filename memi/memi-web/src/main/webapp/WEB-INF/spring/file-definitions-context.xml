@@ -406,6 +406,29 @@
         <property name="downloadName" value="_qc_length_bin"/>
         <property name="order" value="20"/>
     </bean>
+    <bean id="qualityControlSequenceLengthFile" autowire-candidate="false"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.QCFileDefinition">
+        <property name="identifier" value="QUALITY_CONTROL_SEQUENCE_LENGTH_FILE"/>
+        <property name="relativePath" value="/qc-statistics/seq-length.out.full"/>
+        <property name="description" value="Quality control file with the length of the sequences."/>
+        <property name="linkTitle" value=""/>
+        <property name="linkURL" value=""/>
+        <property name="linkText" value=""/>
+        <property name="downloadName" value="_qc_length"/>
+        <property name="order" value="20"/>
+    </bean>
+
+    <bean id="qualityControlSequenceLengthFileSubset" autowire-candidate="false"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.QCFileDefinition">
+        <property name="identifier" value="QUALITY_CONTROL_SEQUENCE_LENGTH_FILE_SUBSET"/>
+        <property name="relativePath" value="/qc-statistics/seq-length.out.sub-set"/>
+        <property name="description" value="Quality control file with the length of the sequences. (subset)"/>
+        <property name="linkTitle" value=""/>
+        <property name="linkURL" value=""/>
+        <property name="linkText" value=""/>
+        <property name="downloadName" value="_qc_length"/>
+        <property name="order" value="20"/>
+    </bean>
 
     <bean id="qualityControlSummary" autowire-candidate="false"
           class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.QCFileDefinition">
