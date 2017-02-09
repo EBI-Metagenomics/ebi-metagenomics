@@ -1,7 +1,7 @@
 
 Highcharts.setOptions({
     lang: {
-        downloadData: "Download Data File"
+        downloadData: "Download data file"
     }
 });
 
@@ -9,6 +9,7 @@ var getExportingStructure = function (urlToFile,content) {
     return {
         buttons: {
             contextButton: {
+                symbol: 'url(/metagenomics/img/ico_download.png)',
                 menuItems: [{
                     textKey: 'downloadData',
                     onclick: function () {
@@ -39,12 +40,17 @@ var getExportingStructure = function (urlToFile,content) {
                 }, {
                     textKey: 'downloadPNG',
                     onclick: function () {
-                        this.exportChart();
+                        this.exportChart({
+                            width: 1200,
+                            filename:'sq_sum_bar_chart'// externalRunId need to be added to the model - NOTE the name is common between QC and Functional
+                        });
                     }
                 }, {
                     textKey: 'downloadJPEG',
                     onclick: function () {
                         this.exportChart({
+                            width: 1200,
+                            filename:'sq_sum_bar_chart',// externalRunId need to be added to the model - NOTE the name is common between QC and Functional
                             type: 'image/jpeg'
                         });
                     }
@@ -52,6 +58,7 @@ var getExportingStructure = function (urlToFile,content) {
                     textKey: 'downloadPDF',
                     onclick: function () {
                         this.exportChart({
+                            filename:'sq_sum_bar_chart',// externalRunId need to be added to the model - NOTE the name is common between QC and Functional
                             type: 'application/pdf'
                         });
                     }
@@ -59,6 +66,7 @@ var getExportingStructure = function (urlToFile,content) {
                     textKey: 'downloadSVG',
                     onclick: function () {
                         this.exportChart({
+                            filename:'sq_sum_bar_chart',// externalRunId need to be added to the model - NOTE the name is common between QC and Functional
                             type: 'image/svg+xml'
                         });
                     }
@@ -67,11 +75,149 @@ var getExportingStructure = function (urlToFile,content) {
         }
     };
 }
+var sumNumberOfReadsChart = function (rawdata, numberOfLines, sequenceCount, urlToFile) {
+    if (typeof rawdata == "undefined" || rawdata == null) return;
+    var data = [],
+        categories = [
+            "Reads with predicted CDS",
+            "Reads with predicted RNA",
+            "Reads with InterPro match",
+            "Predicted CDS",
+            "Predicted CDS with InterPro match",
+        ].splice(0, numberOfLines),
+        remainders = 0;
+
+    rawdata.split('\n')
+        .splice(6, numberOfLines)//important - start at position 6 as we don't need the first lines
+        .forEach(function(line,i){
+            var line = line.split("\t"),
+                value =Number(line[1]);
+            //categories.push(line[0]);
+            if (value>-1)
+                data.push({
+                    y: value,
+                    x: data.length,
+                    color: "#058dc7"
+                });
+            else
+                categories[i] = null;
+
+            if (i==3) remainders = value;
+        });
+
+    if (sequenceCount!= null && remainders > sequenceCount) {
+        categories.push("Reads subsampled for QC analysis");
+        data.push({
+            x: data.length,
+            y: sequenceCount,
+            color: "#8dc7c7"
+        });
+    }
+    if (data.length<2){
+        $('#sq_sum').html("<div class='msg_error'>There is no sequence summary data available for this run.</div>");//shouldn't happen
+        return;
+    }
+    categories = categories.filter(function(value){ return value!=null});
+    var length = data[0],
+        series = [
+        //     {
+        //     name : "Reads filtered out",
+        //     data : data.map(function(n){
+        //         var current = length- n.y;
+        //         length = n.y;
+        //         return current;
+        //     }),
+        //     color: "#ccccdd",
+        //     pointPadding: 0
+        // },
+            {
+            name : "Reads",
+            data : data,
+            color: "#058dc7",
+            pointPadding: 0
+        }];
+    if (sequenceCount!= null && remainders > sequenceCount)
+        series.push({
+            name: "Reads after sampling",
+            color: "#8dc7c7"
+        });
+
+    $('#sq_sum').highcharts({
+        chart: { type: 'bar', height: 250 },
+        title: { text: 'Sequence feature summary'},
+         tooltip: {
+           backgroundColor: 'white',
+           headerFormat: '',
+           useHTML: true,
+            pointFormatter: function () {
+            return '<span style="color:'+this.color+'">&#9632;</span> '+this.category+': <br/><strong>'+(this.y)+'</strong>';
+             }
+        // tooltip: {
+        //
+        //     pointFormat: '<span style=\'color:{point.color}\'>&#9632;</span> <span style=\'font-size:88%;\'>{point.name}: </span><br/><strong><small>{point.y}</small></strong> reads ',
+        //
+         },
+        legend: {
+            enabled:false,
+            itemStyle: {fontWeight: "regular"}
+        },
+        xAxis: {
+            categories: categories,
+            labels: {
+                step:1,
+            },
+            lineColor: "#595959",
+            tickColor: ""
+        },
+        yAxis: {
+            title: {
+                text: "Count",
+                style: {
+                    color: "#a0a0a0"
+                }
+            },
+            opposite: true,
+            endOnTick: false,//  no end on a tick
+            maxPadding: 0, // get last value on chart closer to edge of chart
+            labels: {
+                y:-6,
+                style:{
+                    color: '#bbb'
+                }
+            },
+        },
+        plotOptions: {
+            series: {
+                grouping: false,
+                shadow: false,
+                borderWidth: 0,
+                stacking: 'normal'
+            }
+        },
+        series: series,
+        credits: false,
+        navigation: {
+            buttonOptions: {
+                height: 40,
+                width: 40,
+                symbolX: 20,
+                symbolY: 20,
+                y: -10
+            }
+        },
+        exporting: getExportingStructure(urlToFile+".tsv",
+            categories.map(function(e,i){
+                return e + "\t"+ data[i].y;
+            }).join("\n")
+        )
+    });
+};
+
 var drawNumberOfReadsChart = function (rawdata, numberOfLines, sequenceCount, urlToFile) {
     if (typeof rawdata == "undefined" || rawdata == null) return;
     var data = [],
         categories = [
-            "Initial Reads",
+            "Initial reads",
             "Trimming",
             "Length filtering",
             "Ambiguous base filtering",
@@ -111,7 +257,7 @@ var drawNumberOfReadsChart = function (rawdata, numberOfLines, sequenceCount, ur
     categories = categories.filter(function(value){ return value!=null});
     var length = data[0],
         series = [{
-            name : "Reads Filtered out",
+            name : "Reads filtered out",
             data : data.map(function(n){
                 var current = length- n.y;
                 length = n.y;
@@ -120,7 +266,7 @@ var drawNumberOfReadsChart = function (rawdata, numberOfLines, sequenceCount, ur
             color: "#ccccdd",
             pointPadding: -0.1
         },{
-            name : "Reads Remaining ",
+            name : "Reads remaining",
             data : data,
             color: "#058dc7",
             pointPadding: -0.1
@@ -133,10 +279,12 @@ var drawNumberOfReadsChart = function (rawdata, numberOfLines, sequenceCount, ur
 
     $('#qc_overview').highcharts({
         chart: { type: 'bar', height: 250 },
-        title: { text: 'Number of Sequence Reads per QC Step'},
+        title: { text: 'Number of sequence reads per QC step'},
+
         xAxis: {
-            categories: categories,
-            title: { enabled: false }
+                categories: categories,
+                lineColor: "#595959",
+                tickColor: ""
         },
         yAxis: {
             title: { text: "Count" }
@@ -151,6 +299,15 @@ var drawNumberOfReadsChart = function (rawdata, numberOfLines, sequenceCount, ur
         },
         series: series,
         credits: false,
+        navigation: {
+            buttonOptions: {
+                height: 40,
+                width: 40,
+                symbolX: 20,
+                symbolY: 20,
+                y: -10
+            }
+        },
         exporting: getExportingStructure(urlToFile+".tsv",
             categories.map(function(e,i){
                 return e + "\t"+ data[i].y;
@@ -173,10 +330,10 @@ var drawSequenceLengthHistogram = function (rawdata, isFromSubset, stats,urlToFi
         chart: {
             marginLeft: 100 // Keep all charts left aligned
         },
-        title: { text: 'Reads Length Histogram'},
+        title: {text: 'Reads length histogram'},
         subtitle: { text: (isFromSubset)?'A subset of the sequences was used to generate this chart':undefined},
         yAxis: {
-            title: { text: "Number of Reads" }
+            title: { text: "Number of reads" }
         },
         xAxis: {
             min: 0,
@@ -202,6 +359,15 @@ var drawSequenceLengthHistogram = function (rawdata, isFromSubset, stats,urlToFi
         ],
         legend: { enabled: false},
         credits: false,
+        navigation: {
+            buttonOptions: {
+                height: 40,
+                width: 40,
+                symbolX: 20,
+                symbolY: 20,
+                y: -10
+            }
+        },
         exporting: getExportingStructure(urlToFile)
     });
 };
@@ -254,6 +420,15 @@ var drawSequncesLength = function(data) {
         ],
         legend: { enabled: false},
         credits: false,
+        navigation: {
+            buttonOptions: {
+                height: 40,
+                width: 40,
+                symbolX: 20,
+                symbolY: 20,
+                y: -10
+            }
+        },
         exporting: { enabled: false }
     });
 };
@@ -319,6 +494,15 @@ var drawGCContent = function(data) {
             }
         ],
         credits: false,
+        navigation: {
+            buttonOptions: {
+                height: 40,
+                width: 40,
+                symbolX: 20,
+                symbolY: 20,
+                y: -10
+            }
+        },
         exporting: { enabled: false }
     });
 };
@@ -335,10 +519,10 @@ var drawSequenceGCDistribution = function (rawdata,isFromSubset, stats, urlToFil
             marginLeft: 100, // Keep all charts left aligned
             type: 'areaspline'
         },
-        title: { text: 'Reads GC Distribution' },
+        title: { text: 'Reads GC distribution' },
         subtitle: { text: (isFromSubset)?'A subset of the sequences was used to generate this chart':undefined},
         yAxis: {
-            title: { text: "Number of Reads" }
+            title: { text: "Number of reads" }
         },
         xAxis:{
             min: 0,
@@ -366,6 +550,15 @@ var drawSequenceGCDistribution = function (rawdata,isFromSubset, stats, urlToFil
         }],
         legend: { enabled: false },
         credits: false,
+        navigation: {
+            buttonOptions: {
+                height: 40,
+                width: 40,
+                symbolX: 20,
+                symbolY: 20,
+                y: -10
+            }
+        },
         exporting: getExportingStructure(urlToFile)
     });
     $('#seq_gc').parent().parent().before(
@@ -396,7 +589,7 @@ var drawNucleotidePositionHistogram = function (rawdata,isFromSubset,urlToFile) 
     // Create the chart
     $('#nucleotide').highcharts({
         chart: { type: 'area' },
-        title: { text: 'Nucleotide Position Histogram ' },
+        title: { text: 'Nucleotide position histogram ' },
         subtitle: { text: (isFromSubset)?'A subset of the sequences was used to generate this chart':undefined},
         xAxis: {
             categories: data["pos"],
@@ -428,6 +621,15 @@ var drawNucleotidePositionHistogram = function (rawdata,isFromSubset,urlToFile) 
             }
         }),
         credits: false,
+        navigation: {
+            buttonOptions: {
+                height: 40,
+                width: 40,
+                symbolX: 20,
+                symbolY: 20,
+                y: -10
+            }
+        },
         exporting: getExportingStructure(urlToFile)
     });
     $('#nucleotide').before(
