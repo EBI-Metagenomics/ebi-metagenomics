@@ -302,7 +302,7 @@
 <script>
     var pageManager = new PageManager();
     if (pageManager.settingsManager.areCssVariablesSupported()) {
-        document.write('<script type="text/javascript" src="js/multirange.js"><\/script>');
+        document.write('<script type="text/javascript" src="/metagenomics/js/multirange.js"><\/script>');
     }
 
 </script>
