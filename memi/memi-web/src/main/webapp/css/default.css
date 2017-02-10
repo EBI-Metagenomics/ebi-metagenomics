@@ -1851,7 +1851,7 @@ ul.sample_list li {list-style: none; display: inline;}
 .rotate_t {-ms-transform: rotate(45deg); /* IE 9 */-webkit-transform: rotate(45deg); /* Chrome, Safari, Opera */transform: rotate(45deg);margin-bottom: 12px;}
 .rotate_f {-ms-transform: rotate(-45deg); /* IE 9 */ -webkit-transform: rotate(-45deg); /* Chrome, Safari, Opera */ transform: rotate(-45deg);/*margin-left: -22px;*/margin-bottom: -12px;margin-right: 6px;/*for alignment*/}
 
-/*******animation - Tryout - temp******/
+/*******animation - Tryout - temp*******/
 .animation { position: absolute;
     -webkit-animation: mymove 3s 0s forwards, mymove_second 3s 0s forwards; /* Chrome, Safari, Opera */
     animation: mymove 3s 0s forwards, mymove_second 10s 2s forwards; /*forwards to keep the animation state*/
