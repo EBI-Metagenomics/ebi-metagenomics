@@ -116,8 +116,12 @@ public class QualityCheckViewController extends AbstractResultViewController {
         }else if (resultType.equalsIgnoreCase("base.sub-set")) {
             fileDefinitionId = FileDefinitionId.QC_BASE_SUBSET;
         }else if (resultType.equalsIgnoreCase("length")) {
-            fileDefinitionId = FileDefinitionId.QC_LENGTH_BIN;
+            fileDefinitionId = FileDefinitionId.QC_LENGTH;
         }else if (resultType.equalsIgnoreCase("length.sub-set")) {
+            fileDefinitionId = FileDefinitionId.QC_LENGTH_SUBSET;
+        }else if (resultType.equalsIgnoreCase("length.bin")) {
+            fileDefinitionId = FileDefinitionId.QC_LENGTH_BIN;
+        }else if (resultType.equalsIgnoreCase("length.bin.sub-set")) {
             fileDefinitionId = FileDefinitionId.QC_LENGTH_BIN_SUBSET;
         }else if (resultType.equalsIgnoreCase("gc_bin")) {
             fileDefinitionId = FileDefinitionId.QC_GC_BIN;
