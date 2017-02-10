@@ -104,7 +104,7 @@
           href="${pageContext.request.contextPath}/img/icon/apple-touch-icon-114x114.png"/>
 
     <%--?v1.1 will trigger browsers to refresh the source--%>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/default.css?v1.4" type="text/css" media="all"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/default.css?v1.5" type="text/css" media="all"/>
     <%--css for image zooming--%>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/jquery.fancybox.css" type="text/css"
           media="screen"/>
