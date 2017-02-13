@@ -208,10 +208,10 @@ var sumNumberOfReadsChart = function (rawdata, numberOfLines, sequenceCount, url
         credits: false,
         navigation: {
             buttonOptions: {
-                height: 40,
-                width: 40,
-                symbolX: 20,
-                symbolY: 20,
+                height: 32,
+                width: 32,
+                symbolX: 16,
+                symbolY: 16,
                 y: -10
             }
         },
@@ -320,10 +320,10 @@ var drawNumberOfReadsChart = function (rawdata, numberOfLines, sequenceCount, ur
         credits: false,
         navigation: {
             buttonOptions: {
-                height: 40,
-                width: 40,
-                symbolX: 20,
-                symbolY: 20,
+                height: 32,
+                width: 32,
+                symbolX: 16,
+                symbolY: 16,
                 y: -10
             }
         },
@@ -389,10 +389,10 @@ var drawSequenceLengthHistogram = function (rawdata, isFromSubset, stats,urlToFi
         credits: false,
         navigation: {
             buttonOptions: {
-                height: 40,
-                width: 40,
-                symbolX: 20,
-                symbolY: 20,
+                height: 32,
+                width: 32,
+                symbolX: 16,
+                symbolY: 16,
                 y: -10
             }
         },
@@ -451,10 +451,10 @@ var drawSequncesLength = function(data) {
         credits: false,
         navigation: {
             buttonOptions: {
-                height: 40,
-                width: 40,
-                symbolX: 20,
-                symbolY: 20,
+                height: 32,
+                width: 32,
+                symbolX: 16,
+                symbolY: 16,
                 y: -10
             }
         },
@@ -526,10 +526,10 @@ var drawGCContent = function(data) {
         credits: false,
         navigation: {
             buttonOptions: {
-                height: 40,
-                width: 40,
-                symbolX: 20,
-                symbolY: 20,
+                height: 32,
+                width: 32,
+                symbolX: 16,
+                symbolY: 16,
                 y: -10
             }
         },
@@ -590,10 +590,10 @@ var drawSequenceGCDistribution = function (rawdata,isFromSubset, stats, urlToFil
         credits: false,
         navigation: {
             buttonOptions: {
-                height: 40,
-                width: 40,
-                symbolX: 20,
-                symbolY: 20,
+                height: 32,
+                width: 32,
+                symbolX: 16,
+                symbolY: 16,
                 y: -10
             }
         },
@@ -671,10 +671,10 @@ var drawNucleotidePositionHistogram = function (rawdata,isFromSubset,urlToFile) 
         credits: false,
         navigation: {
             buttonOptions: {
-                height: 40,
-                width: 40,
-                symbolX: 20,
-                symbolY: 20,
+                height: 32,
+                width: 32,
+                symbolX: 16,
+                symbolY: 16,
                 y: -10
             }
         },
