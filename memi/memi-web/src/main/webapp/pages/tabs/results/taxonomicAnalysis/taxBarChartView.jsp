@@ -146,11 +146,10 @@
                 },
                 navigation: {
                     buttonOptions: {
-                        height: 40,
-                        width: 48,
-                        symbolSize: 24,
-                        symbolX: 23,
-                        symbolY: 21,
+                        height: 32,
+                        width: 32,
+                        symbolX: 16,
+                        symbolY: 16,
                         y: -10
                     }
                 },
@@ -323,10 +322,10 @@
                 },
                 navigation: {
                     buttonOptions: {
-                        height: 40,
-                        width: 40,
-                        symbolX: 20,
-                        symbolY: 20,
+                        height: 32,
+                        width: 32,
+                        symbolX: 16,
+                        symbolY: 16,
                         y: -10
                     }
                 },
