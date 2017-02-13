@@ -69,8 +69,8 @@
                 ${model.analysisStatus.disabledOption}
             });
 
-            //  Load the Visualization API and the chart package.
-            google.load('visualization', '1.0', {'packages':['corechart', 'table', 'controls'] });
+            //  Load the Visualization API and the chart package. - NO NEEDED ANYMORE?
+//            google.load('visualization', '1.0', {'packages':['corechart', 'table', 'controls'] });
         </script>
 
     </c:when>
