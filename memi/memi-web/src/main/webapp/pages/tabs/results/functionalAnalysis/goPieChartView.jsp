@@ -156,14 +156,14 @@
                     }
                 },
                 subtitle: {
-                    text: 'Total: ${model.functionalAnalysisResult.goTermSection.biologicalProcessGoTerms.totalHitsCount} matches',
+                    text: 'Total: ${model.functionalAnalysisResult.goTermSection.biologicalProcessGoTerms.totalHitsCount} annotations',
                     style: {
                         fontSize:11,
                     }},
                 tooltip: {
                     backgroundColor: 'white',
                     headerFormat: '',
-                    pointFormat: '<span style=\'color:{point.color}\'>&#9632;</span> {point.name}: <br/><strong>{point.y}</strong> matches ({point.percentage:.2f}%)',
+                    pointFormat: '<span style=\'color:{point.color}\'>&#9632;</span> {point.name}: <br/><strong>{point.y}</strong> annotations ({point.percentage:.2f}%)',
                     useHTML: true
                 },
 
@@ -319,14 +319,14 @@
                     }
                 },
                 subtitle: {
-                    text: 'Total: ${model.functionalAnalysisResult.goTermSection.molecularFunctionGoTerms.totalHitsCount} matches',
+                    text: 'Total: ${model.functionalAnalysisResult.goTermSection.molecularFunctionGoTerms.totalHitsCount} annotations',
                     style: {
                         fontSize:11,
                     }},
                 tooltip: {
                     backgroundColor: 'white',
                     headerFormat: '',
-                    pointFormat: '<span style=\'color:{point.color}\'>&#9632;</span> {point.name}: <br/><strong>{point.y}</strong> matches ({point.percentage:.2f}%)',
+                    pointFormat: '<span style=\'color:{point.color}\'>&#9632;</span> {point.name}: <br/><strong>{point.y}</strong> annotations ({point.percentage:.2f}%)',
                     useHTML: true
                 },
 
@@ -480,14 +480,14 @@
                     }
                 },
                 subtitle: {
-                    text: 'Total: ${model.functionalAnalysisResult.goTermSection.cellularComponentGoTerms.totalHitsCount} matches',
+                    text: 'Total: ${model.functionalAnalysisResult.goTermSection.cellularComponentGoTerms.totalHitsCount} annotations',
                     style: {
                         fontSize:11,
                     }},
                 tooltip: {
                     backgroundColor: 'white',
                     headerFormat: '',
-                    pointFormat: '<span style=\'color:{point.color}\'>&#9632;</span> {point.name}: <br/><strong>{point.y}</strong> matches ({point.percentage:.2f}%)',
+                    pointFormat: '<span style=\'color:{point.color}\'>&#9632;</span> {point.name}: <br/><strong>{point.y}</strong> annotations ({point.percentage:.2f}%)',
                     useHTML: true
                 },
 
