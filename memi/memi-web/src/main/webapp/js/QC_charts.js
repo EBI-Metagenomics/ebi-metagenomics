@@ -144,7 +144,13 @@ var sumNumberOfReadsChart = function (rawdata, numberOfLines, sequenceCount, url
 
     $('#sq_sum').highcharts({
         chart: { type: 'bar', height: 250 },
-        title: { text: 'Sequence feature summary'},
+        title: {
+            text: 'Sequence feature summary',
+            style: {
+                fontSize:16,
+                fontWeight: "bold"
+            }
+        },
          tooltip: {
            backgroundColor: 'white',
            headerFormat: '',
@@ -279,8 +285,13 @@ var drawNumberOfReadsChart = function (rawdata, numberOfLines, sequenceCount, ur
 
     $('#qc_overview').highcharts({
         chart: { type: 'bar', height: 250 },
-        title: { text: 'Number of sequence reads per QC step'},
-
+        title: {
+            text: 'Number of sequence reads per QC step',
+            style: {
+                fontSize:16,
+                fontWeight: "bold"
+            }
+        },
         xAxis: {
                 categories: categories,
                 lineColor: "#595959",
@@ -330,7 +341,13 @@ var drawSequenceLengthHistogram = function (rawdata, isFromSubset, stats,urlToFi
         chart: {
             marginLeft: 100 // Keep all charts left aligned
         },
-        title: {text: 'Reads length histogram'},
+        title: {
+            text: 'Reads length histogram',
+            style: {
+                fontSize:16,
+                fontWeight: "bold"
+            }
+        },
         subtitle: { text: (isFromSubset)?'A subset of the sequences was used to generate this chart':undefined},
         yAxis: {
             title: { text: "Number of reads" }
@@ -519,7 +536,13 @@ var drawSequenceGCDistribution = function (rawdata,isFromSubset, stats, urlToFil
             marginLeft: 100, // Keep all charts left aligned
             type: 'areaspline'
         },
-        title: { text: 'Reads GC distribution' },
+        title: {
+            text: 'Reads GC distribution',
+            style: {
+                fontSize:16,
+                fontWeight: "bold"
+            }
+        },
         subtitle: { text: (isFromSubset)?'A subset of the sequences was used to generate this chart':undefined},
         yAxis: {
             title: { text: "Number of reads" }
@@ -589,7 +612,13 @@ var drawNucleotidePositionHistogram = function (rawdata,isFromSubset,urlToFile) 
     // Create the chart
     $('#nucleotide').highcharts({
         chart: { type: 'area' },
-        title: { text: 'Nucleotide position histogram ' },
+        title: {
+            text: 'Nucleotide position histogram',
+            style: {
+                fontSize:16,
+                fontWeight: "bold"
+            }
+        },
         subtitle: { text: (isFromSubset)?'A subset of the sequences was used to generate this chart':undefined},
         xAxis: {
             categories: data["pos"],
