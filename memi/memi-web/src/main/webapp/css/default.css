@@ -1989,9 +1989,7 @@ a.all:active  { background: url(../img/arrow_link_click_small.jpg) no-repeat rig
 
 #blog img {
   float: left;
-  margin: 1em;
-  max-width: 50%;
-  max-width: calc(50% - 2em);/* half width, minus twice the margin */
+  margin-right: 9px;
 }
 
 /*END HOMEPAGE*/
