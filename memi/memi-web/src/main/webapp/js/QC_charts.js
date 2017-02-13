@@ -143,7 +143,11 @@ var sumNumberOfReadsChart = function (rawdata, numberOfLines, sequenceCount, url
         });
 
     $('#sq_sum').highcharts({
-        chart: { type: 'bar', height: 250 },
+        chart: { type: 'bar', height: 250,
+            style: {
+            fontFamily: 'Helvetica'
+         }
+        },
         title: {
             text: 'Sequence feature summary',
             style: {
@@ -284,7 +288,11 @@ var drawNumberOfReadsChart = function (rawdata, numberOfLines, sequenceCount, ur
         });
 
     $('#qc_overview').highcharts({
-        chart: { type: 'bar', height: 250 },
+        chart: { type: 'bar', height: 250,
+            style: {
+            fontFamily: 'Helvetica'
+        }
+        },
         title: {
             text: 'Number of sequence reads per QC step',
             style: {
@@ -339,7 +347,10 @@ var drawSequenceLengthHistogram = function (rawdata, isFromSubset, stats,urlToFi
 
     $('#seq_len').highcharts({
         chart: {
-            marginLeft: 100 // Keep all charts left aligned
+            marginLeft: 78, // Keep both charts - lenght histogram & bar chart - left aligned
+            style: {
+                fontFamily: 'Helvetica'
+            }
         },
         title: {
             text: 'Reads length histogram',
@@ -394,14 +405,15 @@ var drawSequncesLength = function(data) {
     $('#seq_stats').highcharts({
         chart: {
             type: 'bar',
-            marginLeft: 100, // Keep all charts left aligned
             marginTop: 0, // Keep all charts left aligned
             height: 120
         },
         title: false,
         xAxis: {
             categories: ['Minimum', 'Average', 'Maximum'],
-            title: { enabled: false }
+            title: { enabled: false },
+                lineColor: "#595959",
+                tickColor: ""
         },
             yAxis: {
             min: 0,
@@ -455,14 +467,15 @@ var drawGCContent = function(data) {
     $('#seq_gc_stats').highcharts({
         chart: {
             type: 'bar',
-            marginLeft: 100, // Keep all charts left aligned
             marginTop: 0, // Keep all charts left aligned
             height: 150
         },
         title: false,
         xAxis: {
             categories: ['Content'],
-            title: { enabled: false }
+            title: { enabled: false },
+            lineColor: "#595959",
+            tickColor: ""
         },
         yAxis: {
             min: 0,
@@ -533,8 +546,10 @@ var drawSequenceGCDistribution = function (rawdata,isFromSubset, stats, urlToFil
     // Create the chart
     $('#seq_gc').highcharts({
         chart: {
-            marginLeft: 100, // Keep all charts left aligned
-            type: 'areaspline'
+            type: 'areaspline',
+            style: {
+                fontFamily: 'Helvetica'
+            }
         },
         title: {
             text: 'Reads GC distribution',
@@ -611,7 +626,11 @@ var drawNucleotidePositionHistogram = function (rawdata,isFromSubset,urlToFile) 
     });
     // Create the chart
     $('#nucleotide').highcharts({
-        chart: { type: 'area' },
+        chart: { type: 'area',
+            style: {
+            fontFamily: 'Helvetica'
+        }
+        },
         title: {
             text: 'Nucleotide position histogram',
             style: {
