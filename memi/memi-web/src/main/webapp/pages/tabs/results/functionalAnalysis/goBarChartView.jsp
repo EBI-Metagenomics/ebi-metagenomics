@@ -121,14 +121,14 @@
                     }
                 },
                 subtitle: {
-                    text: 'Total: ${model.functionalAnalysisResult.goTermSection.biologicalProcessGoTerms.totalHitsCount} matches - Drag to zoom in/out',
+                    text: 'Total: ${model.functionalAnalysisResult.goTermSection.biologicalProcessGoTerms.totalHitsCount} annotations - Drag to zoom in/out',
                     style: {
                         fontSize:11,
                     }},
                 tooltip: {
                     backgroundColor: 'white',
                     headerFormat: '',
-                    pointFormat: '<span style=\'color:{point.color}\'>&#9632;</span> {point.name}:<br/><strong>{point.y}</strong> matches ',
+                    pointFormat: '<span style=\'color:{point.color}\'>&#9632;</span> {point.name}:<br/><strong>{point.y}</strong> annotations ',
                     useHTML: true
                 },
                 xAxis: {
@@ -141,7 +141,7 @@
                     },
                 yAxis: {
                     title: {
-                        text: "Matches",
+                        text: "Annotations",
                         style: {
                             color: "#a0a0a0"
                         }
@@ -274,13 +274,14 @@
                     }
                 },
                 subtitle: {
-                    text: 'Total: ${model.functionalAnalysisResult.goTermSection.molecularFunctionGoTerms.totalHitsCount} matches - Drag to zoom in/out',
+                    text: 'Total: ${model.functionalAnalysisResult.goTermSection.molecularFunctionGoTerms.totalHitsCount} annotations - Drag to zoom in/out',
                     style: {
+                        fontSize:11,
                     }},
                 tooltip: {
                     backgroundColor: 'white',
                     headerFormat: '',
-                    pointFormat: '<span style=\'color:{point.color}\'>&#9632;</span> {point.name}:<br/><strong>{point.y}</strong> matches ',
+                    pointFormat: '<span style=\'color:{point.color}\'>&#9632;</span> {point.name}:<br/><strong>{point.y}</strong> annotations ',
                     useHTML: true
                 },
                 xAxis: {
@@ -293,7 +294,7 @@
                 },
                 yAxis: {
                     title: {
-                        text: "Matches",
+                        text: "Annotations",
                         style: {
                             color: "#a0a0a0"
                         }
@@ -427,15 +428,14 @@
                     }
                 },
                 subtitle: {
-                    text: 'Total: ${model.functionalAnalysisResult.goTermSection.cellularComponentGoTerms.totalHitsCount} matches - Drag to zoom in/out',
+                    text: 'Total: ${model.functionalAnalysisResult.goTermSection.cellularComponentGoTerms.totalHitsCount} annotations - Drag to zoom in/out',
                     style: {
                         fontSize:11,
-                        fontWeight: "italic"
                     }},
                 tooltip: {
                     backgroundColor: 'white',
                     headerFormat: '',
-                    pointFormat: '<span style=\'color:{point.color}\'>&#9632;</span> {point.name}:<br/><strong>{point.y}</strong> matches ',
+                    pointFormat: '<span style=\'color:{point.color}\'>&#9632;</span> {point.name}:<br/><strong>{point.y}</strong> annotations ',
                     useHTML: true
                 },
                 xAxis: {
@@ -448,7 +448,7 @@
                 },
                 yAxis: {
                     title: {
-                        text: "Matches",
+                        text: "Annotations",
                         style: {
                             color: "#a0a0a0"
                         }
