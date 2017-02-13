@@ -355,9 +355,11 @@ background:url(../img/bgd_black_op20_8.png);
 .result {line-height: 1.2em; border-collapse:separate; width:100%; border-spacing:4px; padding-left:7px;/*9px is too much as we have already padding 2px in the table*/ margin-bottom: 9px;}
 .result thead th:empty{background:transparent;border:none;}
 .result thead th {font-size:120%; padding:10px; color:#fff; background-color:#708A95 /*was #006666*/; border-radius:5px 5px 0 0; box-shadow:0px 1px 1px #adadad;}
-.result tbody tr:hover {background: url(../img/bgd_black_op05_8.png);}
-.result tbody tr:nth-child(even) {background-color:#F4F4F8;}
+/*.result tbody tr:hover {!*background: url(../img/bgd_black_op05_8.png);*!  background: rgba(0,0,0,0.05);}*/
+.result tbody tr:nth-child(even) {background-color:#f4f4f8;}
+.result tbody tr:nth-child(even):hover {background-color:#e5e5e9;}
 .result tbody tr:nth-child(odd) {background-color:#e9e9e9;}
+.result tbody tr:nth-child(odd):hover {background-color:#dbdbdb;}
 .result tbody td {padding:7px; vertical-align: middle; border: 1px solid #e5e5e5; border-radius:2px; color:#424242; /*text-shadow:1px 1px 1px #fff;*/}
 .result tbody td a:hover{text-decoration:underline;/*color:red;*/}
 .table-margin-r {margin-right:9px;}  /*need extra margin for 100%width table for EBI Template*/
@@ -369,7 +371,10 @@ background:url(../img/bgd_black_op20_8.png);
 .table-light tr:nth-child(odd) {background-color: #f9f9f9;}
 .table-light tr:first-child td {border-top: 0 solid #ddd;}
 .table-light tr:last-child td {border-bottom: 1px solid #ddd;}
-.table-light tr:hover {background: url(../img/bgd_black_op05_8.png);}
+.table-light tr:nth-child(even):hover, .table-light tr:nth-child(odd):hover {
+  /*background: url(../img/bgd_black_op05_8.png);*/
+    background: rgba(0,0,0,0.05);
+}
 /* END  LIGHT TABLE*/
 
 
@@ -695,7 +700,8 @@ color:#445668;
 
 #sidebar-nav ul  li a:hover {
 color:#2b3743;
-background: url(../img/bgd_black_op05_8.png);
+/*background: url(../img/bgd_black_op05_8.png);*/
+    background: rgba(0,0,0,0.05);
 }
 
 #sidebar-nav ul  li ul li {
