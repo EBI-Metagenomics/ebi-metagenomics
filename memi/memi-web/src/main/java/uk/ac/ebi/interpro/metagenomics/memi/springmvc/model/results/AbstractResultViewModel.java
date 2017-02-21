@@ -27,7 +27,7 @@ public abstract class AbstractResultViewModel extends ViewModel {
     static {
         //init color code list for table - Google type
         colorCodeList.add("058dc7");
-        colorCodeList.add("50b432");
+        colorCodeList.add("82d23d");/*was 50b432*/
         colorCodeList.add("e26736");
         colorCodeList.add("fbe300");
         colorCodeList.add("24cbe5");
@@ -39,7 +39,7 @@ public abstract class AbstractResultViewModel extends ViewModel {
     }
 
 //    static {
-//        //init color code list - Krona type
+//        //init color code - Krona type
 //        colorCodeList.add("d17575");
 //        colorCodeList.add("d1b175");
 //        colorCodeList.add("b7d175");
