@@ -262,7 +262,7 @@
                     }
                 },
                 credits: {enabled: false},//remove credit line
-                colors: [ '#50b432' ],// only one color for all MF #ed561b
+                colors: ['#82d23d'],// only one color for all MF #ed561b
                 legend: {
                     enabled:false,
                 },
