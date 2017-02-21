@@ -69,7 +69,7 @@
 
         $(document).ready(function () {
 
-            // Phylum data
+            // InterPro match data
             var data = [
                 <%--<c:set var="addComma" value="false"/>--%>
                 <c:forEach var="entry" items="${model.functionalAnalysisResult.interProMatchesSection.interProEntryList}" varStatus="status">
@@ -101,7 +101,7 @@
                 newData.push({name:'Other', y:other, color:'#ccc'});
             }
 
-            //PIE CHART PHYLUM
+            //PIE CHART INTERPRO MATCHES
             $('#func_chart_pie_ipro').highcharts({
                 chart: {
                     type: 'pie',
