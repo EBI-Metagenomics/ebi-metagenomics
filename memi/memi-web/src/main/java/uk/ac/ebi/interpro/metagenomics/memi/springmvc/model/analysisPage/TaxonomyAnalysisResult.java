@@ -53,7 +53,7 @@ public class TaxonomyAnalysisResult {
      * Used to set the colors option for the stack chart
      */
     public String getColorCodeForStackChart() {
-        StringBuilder result = new StringBuilder("'#058dc7', '#50b432', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ffc08a', '#fff263', '#6af9c4', '#dabe88'");
+        StringBuilder result = new StringBuilder("'#058dc7', '#82d23d', '#ed561b', '#edef00', '#24cbe5', '#64e572', '#ffc08a', '#fff263', '#6af9c4', '#dabe88'");
         if (taxonomyDataSet.size() > 10) {
             for (int i = 0; i < taxonomyDataSet.size() - 10; i++) {
                 result.append(",'#ccc'");
@@ -68,7 +68,7 @@ public class TaxonomyAnalysisResult {
      * Used to set the colors option for the pie chart.
      */
     public String getColorCodeForChart() {
-        StringBuilder sb = new StringBuilder("'#058dc7', '#50b432', '#e26736', '#fbe300', '#24cbe5', '#c49ecc', '#f4a460', '#708090', '#6af9c4', '#caae74'");
+        StringBuilder sb = new StringBuilder("'#058dc7', '#82d23d', '#e26736', '#fbe300', '#24cbe5', '#c49ecc', '#f4a460', '#708090', '#6af9c4', '#caae74'");
 //        StringBuilder sb = new StringBuilder("'#d17575', '#d1b175', '#b7d175', '#7fd175', '#75cfd1', '#6594cc', '#d072d0', '#708090', '#6af9c4', '#ffab35'"); Krona type palettte
         if (taxonomyDataSet.size() > 10) {
             for (int i = 0; i < taxonomyDataSet.size() - 10; i++) {
