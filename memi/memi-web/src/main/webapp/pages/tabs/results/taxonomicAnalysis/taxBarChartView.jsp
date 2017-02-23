@@ -25,7 +25,7 @@
     // Create the Datatable
     $(document).ready(function() {
 
-        //table data - note: array element added to filter on taxonomy name for "Unassigned"
+        //table data
         var rowData = [
             <%--<c:set var="addComma" value="false"/>--%>
             <c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResult.taxonomyDataSet}" varStatus="status">
@@ -35,7 +35,7 @@
             //remove unassigned data
             </c:when>
             <c:otherwise>
-            ['${row.index}','${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}],
+            ['${status.index}','${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}],
             <%--['${row.index}','<div title="${taxonomyData.phylum}" class="puce-square-legend" style="background-color: #${taxonomyData.colorCode};"></div> ${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage},'${taxonomyData.phylum}'],--%>
             </c:otherwise>
             </c:choose>
@@ -48,23 +48,27 @@
                 {className: "xs_hide", "targets": [0,2]},//hide number + domain columns
                 {className: "table-align-right", "targets": [3,4]}//numbers easier to compare
             ],
+            //adding ID numbers for each row - used for interaction with chart
+            createdRow: function (row, rowData) {
+                    $(row).addClass(""+rowData[0]);
+            },
             oLanguage: {
                 "sSearch": "Filter table: "
             },
             lengthMenu: [[25, 50, 100, -1], [25, 50, 100, "All"]],
             data: rowData,
             columns: [
-                { title: "" },
-                { title: "Phylum" },
-                { title: "Domain" },
+                {title: "" },
+                {title: "Phylum" },
+                {title: "Domain" },
                 <c:choose>
                 <c:when test="${model.run.releaseVersion == '1.0'}">
-                { title: "Unique OTUs" },
+                {title: "Unique OTUs" },
                 </c:when>
                     <c:otherwise>{title: "Reads"},
                 </c:otherwise>
                 </c:choose>
-                { title: "%" },
+                {title: "%" }
             ]
         } );
         // insert number for lines as  first column and make it not sortable nor searchable
@@ -75,27 +79,58 @@
         } ).draw();
 
         // ADD INTERACTION BETWEEN TABLE ROW AND BAR CHART
-        var hideToggle = true;
+
         $("#tax_table_bar tbody tr").click(function() {
-            var no = $(this).index();
-//            console.log(no)
-            var chart = $('#tax_chart_bar_phy').highcharts()
-            var point = chart.series[0].data[no];
-            if (hideToggle) {
-                point.graphic.hide();
-               // $('#button').html('Show data');
-            } else {
-                point.graphic.show();
-            }
-            hideToggle = !hideToggle;
+            //important - use row Id for interaction otherwise table sorting was messsing the use of $(this).index()
+            var legInd = (this).className.split(' ')[0]-1;
+            var chart = $('#tax_chart_bar_phy').highcharts();
+            var point = chart.series[0].data[legInd];
+                // if value for point like for results between 1-10
+                if (point) {
+                  point.select(null, true);// toggled and multi-selection - "fake" but working show/hide effect
+//                alert(point.category)
+//                alert(point.visible)//true or not
+//                point.remove(); //kills the index but resize well
+//                point.graphic.hide();//can't find a way to do working if statement working like: if (point.graphic).
+                }
+                else
+                //show/hide whole "other" slice
+                {
+                  var point = chart.series[0].data[9];
+                  point.select(null, true);
+                }
+                $(this).toggleClass("disabled");
+
         });
 
 
-//        $("#tax_table_bar tbody tr").click(function(){
-//            var no = $(this).index();
-//            var point = $('#tax_chart_bar_phy').highcharts().series[0].data[no];
-//            point.setVisible(!point.visible);
-//        })
+        $("#tax_table_bar tbody tr").hover(function() {
+            var legInd = (this).className.split(' ')[0];
+            var chart = $('#tax_chart_bar_phy').highcharts();
+            var point = chart.series[0].data[legInd];
+            if (point) {
+                point.setState('hover');
+                //show tooltip
+                chart.tooltip.refresh(point);
+            } else
+            //highlight other
+            {var point = $('#tax_chart_bar_phy').highcharts().series[0].points[9];
+                point.setState('hover');
+                chart.tooltip.refresh(point);}
+        });
+
+        $("#tax_table_bar tbody tr").mouseout(function() {
+            var legInd = (this).className.split(' ')[0];
+            var chart = $('#tax_chart_bar_phy').highcharts();
+            var point = chart.series[0].data[legInd];
+            if (point) {
+                point.setState('');}
+            else
+            //unselect other slice
+            {var point = $('#tax_chart_bar_phy').highcharts().series[0].points[9];
+                point.setState('');}
+        });
+
         //HIGHLIGHT TERMS IN DATATABLE
 
         $("#tax_table_bar_filter input").addClass("filter_sp");
@@ -119,9 +154,7 @@
 
         $(document).ready(function () {
             var data = [
-                <%--<c:set var="addComma" value="false"/>--%>
                 <c:forEach var="domainEntry" items="${model.taxonomyAnalysisResult.domainComposition.domainMap}">
-                <%--<c:choose><c:when test="${addComma}">,</c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>--%>
                 ['${domainEntry.key}', ${domainEntry.value}],
                 </c:forEach>
             ]
@@ -279,9 +312,7 @@
 
             // Phylum data
             var data = [
-                <%--<c:set var="addComma" value="false"/>--%>
                 <c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResult.taxonomyDataSet}" varStatus="status">
-                <%--<c:choose><c:when test="${addComma}">,</c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>--%>
                 ['${taxonomyData.phylum}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}],
                 </c:forEach>
             ]
@@ -304,7 +335,7 @@
                 }
             }
 
-            //IMPORTANT remove "other" empty bar
+            //IMPORTANT create "other"  bar
             if (other == 0.0) {
                 newData.push();}
             else {
@@ -426,7 +457,6 @@
                 },
                 yAxis: {
                     maxPadding: 0, // get last value on chart closer to edge of chart
-//                  gridLineColor: '#e0e0e0', // now default
                     endOnTick: false,//  no end on a tick
                     labels: {
                         style:{
@@ -452,6 +482,13 @@
                         dataLabels: {
                             enabled: false,
                             format: '{point.name}',
+                        },
+                        states: {//used for interaction with table
+                            select: {
+                                borderWidth:0,
+                                borderColor:'white',
+                                color: 'transparent'
+                            }
                         }
                     }
                 },
@@ -466,6 +503,51 @@
             });
         });
     });
+    //      TO GET THE LEGEND OUT OF CHART - TEMP
+    <%--<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>--%>
+//    <div id="legend"></div>
+    // Retrieving number of reads - removing 1 for hidden unassigned
+    <%--var readNum = "${fn:length(model.taxonomyAnalysisResult.taxonomyDataSet)-1}";--%>
+    <%--console.log(readNum);--%>
+
+    <%--// Creation of the legend items for each phylum--%>
+    <%--for (var i = 0; i < readNum; i++)--%>
+
+    <%--{      // Retrieving charts and charts series as JS vars--%>
+        <%--var chart = $('#tax_chart_bar_phy').highcharts();--%>
+        <%--var currentColor = chart.series[0].data[i].color;--%>
+        <%--var currentName =  chart.series[0].data[i].name;--%>
+        <%--$('<div/>', {--%>
+            <%--'id': 'legend_' + i,--%>
+            <%--'class': 'legend-item',--%>
+            <%--'html': '<div class="legend-rectangle" style="background-color:'+ currentColor + ';"></div><span> '+currentName+'</span>',--%>
+            <%--'click': function () {--%>
+                <%--var legInd = this.id.split('_')[1]; // Gives the series index to hide / show when clicking on the legend item--%>
+                <%--//legend off -> On--%>
+
+                <%--if ($(".legend-item-off")[legInd]) {--%>
+                    <%--$(this).children('.legend-rectangle').css('background-color', chart.series[0].data[legInd].color);//bring color--%>
+                <%--}--%>
+                 <%--else--%>
+                <%--//legend on--%>
+                 <%--{--%>
+                     <%--$(this).children('.legend-rectangle').css('background-color', '#D1D1D1');//have to keep that to force the color as style is defined inline--%>
+                 <%--}--%>
+                <%--$(this).toggleClass('legend-item-off');--%>
+            <%--}, // Adding legend item to legend div--%>
+            <%--'mouseover': function () {--%>
+                <%--var legInd = this.id.split('_')[1];--%>
+                <%--chart.series[0].data[legInd].setState('hover');--%>
+                <%--chart.tooltip.refresh(chart.series[0].data[legInd]);--%>
+                <%--// }--%>
+            <%--},--%>
+            <%--'mouseleave': function () {--%>
+                <%--var legInd = this.id.split('_')[1];--%>
+                <%--chart.series[0].data[legInd].setState();--%>
+                <%--// }--%>
+            <%--},--%>
+        <%--}).appendTo('#legend'); //where the color puce are--%>
+   <%--}--%>
 </script>
 
 <script type="text/javascript">
