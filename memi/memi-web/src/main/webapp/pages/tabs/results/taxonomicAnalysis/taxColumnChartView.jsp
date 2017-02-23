@@ -46,8 +46,8 @@
                 {className: "table-align-right", "targets": [3,4]}//numbers easier to compare
             ],
             //adding ID numbers for each row - used for interaction with chart
-            createdRow: function (row, rowData) {
-                $(row).addClass(""+rowData[0]);
+            createdRow: function (row, rowData, dataIndex) {
+                $(row).addClass(""+dataIndex);
             },
             oLanguage: {
                 "sSearch": "Filter table: "
@@ -80,7 +80,7 @@
 
         $("#tax_table_col tbody tr").click(function() {
             //important - use row Id for interaction otherwise table sorting was messsing the use of $(this).index()
-            var legInd = (this).className.split(' ')[0]-1;
+            var legInd = (this).className.split(' ')[0];
 //            var index = $(this).index();
             var chart = $('#tax_chart_col').highcharts();
             if(chart.series[legInd].visible) {
@@ -92,7 +92,7 @@
         });
 
         $("#tax_table_col tbody tr").hover(function() {
-            var legInd = (this).className.split(' ')[0]-1;
+            var legInd = (this).className.split(' ')[0];
             var chart = $('#tax_chart_col').highcharts();
             var point = chart.series[legInd].points[0];
             point.setState('hover');
@@ -100,7 +100,7 @@
         });
 
         $("#tax_table_col tbody tr").mouseout(function() {
-            var legInd = (this).className.split(' ')[0]-1;
+            var legInd = (this).className.split(' ')[0];
             var chart = $('#tax_chart_col').highcharts();
             var point = chart.series[legInd].points[0];
             point.setState('');
