@@ -208,7 +208,7 @@
 
         //ADD INTERACTION BETWEEN TABLE ROW AND PIE CHART
 
-        $("#func_table_ipro tbody tr").click(function(){
+        $("#func_table_ipro tbody").on('click', 'tr', function(){
             //important - use row Id for interaction otherwise table sorting was messing the use of $(this).index()
             var legInd = (this).className.split(' ')[0];
             console.log (legInd)
@@ -230,7 +230,8 @@
             //                $(this).find('div').css('background-color', 'black');//bring color
             //            }
         })
-        $("#func_table_ipro tbody tr").hover(function() {
+
+        $("#func_table_ipro tbody").on('mouseenter', 'tr', function(){
             var legInd = (this).className.split(' ')[0];
             var chart = $('#func_chart_pie_ipro').highcharts();
             var point = chart.series[0].points[legInd];
@@ -244,7 +245,7 @@
                 chart.tooltip.refresh(point);}
         });
 
-        $("#func_table_ipro tbody tr").mouseout(function() {
+        $("#func_table_ipro tbody").on('mouseleave', 'tr', function(){
             var legInd = (this).className.split(' ')[0];
             var chart = $('#func_chart_pie_ipro').highcharts();
             var point = chart.series[0].points[legInd];
