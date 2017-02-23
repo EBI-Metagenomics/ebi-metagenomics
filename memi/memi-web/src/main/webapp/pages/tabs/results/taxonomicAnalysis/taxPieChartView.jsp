@@ -368,16 +368,6 @@
     // Create the Datatable
     $(document).ready(function() {
 
-        // TEMP - to duplicate legend out of the chart
-//        for(i = 0; i < 10; i++) {
-//            var chartout = $('#tax_chart_pie_phylum').highcharts().series[0].points[i];
-//            $(chartout).each(function (i, point) {
-//                $('<tr><td><li style="list-style-type: none;"><div title="'+ point.name +'" class="puce-square-legend" style="background: ' + point.color + '"></div><div style="display:inline-block; ">' + point.name + '</div></li></td></tr>').click(function () {
-//                    point.setVisible(!point.visible);
-//                }).appendTo('#legend');
-//            });
-//        }
-
         //table data
         var rowData = [
             <c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResult.taxonomyDataSet}" varStatus="status">
@@ -387,7 +377,7 @@
             </c:when>
             <c:otherwise>
             <%--['${row.index}','<div title="${taxonomyData.phylum}" class="puce-square-legend" style="background-color: #${taxonomyData.colorCode}; "></div> ${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage},'${taxonomyData.phylum}'],--%>
-            ['${row.index}','${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}],
+            ['${status.index}','${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}],
             </c:otherwise>
             </c:choose>
             </c:forEach>
@@ -404,6 +394,10 @@
                 {className: "xs_hide", "targets": [0,2]},//hide number + domain columns
                 {className: "table-align-right", "targets": [3,4]}//numbers easier to compare
             ],
+            //adding ID numbers for each row - used for interaction with chart
+            createdRow: function (row, rowData) {
+                $(row).addClass(""+rowData[0]);
+            },
             oLanguage: {
                 "sSearch": "Filter table: "
             },
@@ -430,12 +424,51 @@
             } );
         } ).draw();
 
-        // ADD INTERACTION BETWEEN TABLE ROW AND CHART
+        // ADD INTERACTION BETWEEN TABLE ROW AND PIE CHART
+
         $("#tax_table tbody tr").click(function(){
-            var index = $(this).index();
-            var point = $('#tax_chart_pie_phylum').highcharts().series[0].points[index];
+            //important - use row Id for interaction otherwise table sorting was messsing the use of $(this).index()
+            var legInd = (this).className.split(' ')[0]-1;
+//          var index = $(this).index();
+            var point = $('#tax_chart_pie_phylum').highcharts().series[0].points[legInd];
+            if (point) {
             point.setVisible(!point.visible);
-        })
+            }
+            else
+            //show/hide whole "other" slice
+            { var point = $('#tax_chart_pie_phylum').highcharts().series[0].points[9];
+              point.setVisible(!point.visible);
+             }
+            $(this).toggleClass("disabled");
+        });
+
+        $("#tax_table tbody tr").hover(function() {
+            var legInd = (this).className.split(' ')[0]-1;
+            var chart = $('#tax_chart_pie_phylum').highcharts();
+            var point = chart.series[0].points[legInd];
+            if (point) {
+            point.setState('hover');
+            chart.tooltip.refresh(point);
+            } else
+             //highlight other
+            {var point = $('#tax_chart_pie_phylum').highcharts().series[0].points[9];
+             point.setState('hover');
+             chart.tooltip.refresh(point);}
+        });
+
+        $("#tax_table tbody tr").mouseout(function() {
+            var legInd = (this).className.split(' ')[0]-1;
+            var chart = $('#tax_chart_pie_phylum').highcharts();
+            var point = chart.series[0].points[legInd];
+
+            if (point) {
+            point.setState('');}
+            else
+            //unselect other slice
+            {var point = $('#tax_chart_pie_phylum').highcharts().series[0].points[9];
+                point.setState('');}
+        });
+
         //HIGHLIGHT TERMS IN DATATABLE
         $("#tax_table_filter input").addClass("filter_sp");
         // Highlight the search term in the table (all except first number column) using the filter input, using jQuery Highlight plugin
