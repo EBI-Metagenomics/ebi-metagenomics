@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
 <div id="tax-col">
 
     <div  class="chart_container" >
@@ -24,17 +25,15 @@
     // Create the Datatable
     $(document).ready(function() {
 
-        //table data - note: array element added to filter on taxonomy name for "Unassigned"
+        //table data
         var rowData = [
-            <%--<c:set var="addComma" value="false"/>--%>
             <c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResult.taxonomyDataSet}" varStatus="status">
-            <%--<c:choose><c:when test="${addComma}">,</c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>--%>
             <c:choose>
             <c:when test="${taxonomyData.phylum=='Unassigned'}">
             //remove unassigned data
             </c:when>
             <c:otherwise>
-            ['${row.index}','${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}],
+            ['${status.index}','${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}],
             </c:otherwise>
             </c:choose>
             </c:forEach>
@@ -46,6 +45,10 @@
                 {className: "xs_hide", "targets": [0,2]},//hide number + domain columns
                 {className: "table-align-right", "targets": [3,4]}//numbers easier to compare
             ],
+            //adding ID numbers for each row - used for interaction with chart
+            createdRow: function (row, rowData) {
+                $(row).addClass(""+rowData[0]);
+            },
             oLanguage: {
                 "sSearch": "Filter table: "
             },
@@ -65,6 +68,7 @@
                 { title: "%" },
             ]
         } );
+
         // insert number for lines as  first column and make it not sortable nor searchable
         t.on( 'order.dt search.dt', function () {
             t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
@@ -73,14 +77,33 @@
         } ).draw();
 
         // ADD INTERACTION BETWEEN TABLE ROW AND STACKED COLUMN CHART
-        $("#tax_table_col tr").click(function() {
-            var no = $(this).index();
+
+        $("#tax_table_col tbody tr").click(function() {
+            //important - use row Id for interaction otherwise table sorting was messsing the use of $(this).index()
+            var legInd = (this).className.split(' ')[0]-1;
+//            var index = $(this).index();
             var chart = $('#tax_chart_col').highcharts();
-            if(chart.series[no].visible) {
-                chart.series[no].hide();
+            if(chart.series[legInd].visible) {
+                chart.series[legInd].hide();
             } else {
-                chart.series[no].show();
+                chart.series[legInd].show();
             }
+            $(this).toggleClass("disabled");
+        });
+
+        $("#tax_table_col tbody tr").hover(function() {
+            var legInd = (this).className.split(' ')[0]-1;
+            var chart = $('#tax_chart_col').highcharts();
+            var point = chart.series[legInd].points[0];
+            point.setState('hover');
+            chart.tooltip.refresh(point);
+        });
+
+        $("#tax_table_col tbody tr").mouseout(function() {
+            var legInd = (this).className.split(' ')[0]-1;
+            var chart = $('#tax_chart_col').highcharts();
+            var point = chart.series[legInd].points[0];
+            point.setState('');
         });
 
         //HIGHLIGHT TERMS IN DATATABLE
@@ -249,7 +272,6 @@
                     },
                 yAxis: {
                     reversedStacks: false,//reverse data order - high value to bottom
-
                     labels: {
                         style:{
                             color: '#bbb'
