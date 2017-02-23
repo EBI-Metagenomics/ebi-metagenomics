@@ -424,11 +424,13 @@
             } );
         } ).draw();
 
+
         // ADD INTERACTION BETWEEN TABLE ROW AND PIE CHART
 
-        $("#tax_table tbody tr").click(function(){
+        $("#tax_table tbody").on('click', 'tr', function(){
             //important - use row Id for interaction otherwise table sorting was messsing the use of $(this).index()
             var legInd = (this).className.split(' ')[0];
+            console.log(legInd)
 //          var index = $(this).index();
             var point = $('#tax_chart_pie_phylum').highcharts().series[0].points[legInd];
             if (point) {
@@ -442,7 +444,7 @@
             $(this).toggleClass("disabled");
         });
 
-        $("#tax_table tbody tr").hover(function() {
+        $("#tax_table tbody").on('mouseenter', 'tr', function(){
             var legInd = (this).className.split(' ')[0];
             var chart = $('#tax_chart_pie_phylum').highcharts();
             var point = chart.series[0].points[legInd];
@@ -456,7 +458,7 @@
              chart.tooltip.refresh(point);}
         });
 
-        $("#tax_table tbody tr").mouseout(function() {
+        $("#tax_table tbody").on('mouseleave', 'tr', function(){
             var legInd = (this).className.split(' ')[0];
             var chart = $('#tax_chart_pie_phylum').highcharts();
             var point = chart.series[0].points[legInd];
