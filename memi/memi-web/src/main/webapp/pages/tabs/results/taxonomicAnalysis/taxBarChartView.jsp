@@ -105,7 +105,7 @@
 
 
         $("#tax_table_bar tbody tr").hover(function() {
-            var legInd = (this).className.split(' ')[0];
+            var legInd = (this).className.split(' ')[0]-1;
             var chart = $('#tax_chart_bar_phy').highcharts();
             var point = chart.series[0].data[legInd];
             if (point) {
@@ -120,7 +120,7 @@
         });
 
         $("#tax_table_bar tbody tr").mouseout(function() {
-            var legInd = (this).className.split(' ')[0];
+            var legInd = (this).className.split(' ')[0]-1;
             var chart = $('#tax_chart_bar_phy').highcharts();
             var point = chart.series[0].data[legInd];
             if (point) {
