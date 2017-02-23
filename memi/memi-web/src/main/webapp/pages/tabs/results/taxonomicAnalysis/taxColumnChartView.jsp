@@ -78,7 +78,7 @@
 
         // ADD INTERACTION BETWEEN TABLE ROW AND STACKED COLUMN CHART
 
-        $("#tax_table_col tbody tr").click(function() {
+        $("#tax_table_col tbody").on('click', 'tr', function(){
             //important - use row Id for interaction otherwise table sorting was messsing the use of $(this).index()
             var legInd = (this).className.split(' ')[0];
 //            var index = $(this).index();
@@ -91,7 +91,7 @@
             $(this).toggleClass("disabled");
         });
 
-        $("#tax_table_col tbody tr").hover(function() {
+        $("#tax_table_col tbody").on('mouseenter', 'tr', function(){
             var legInd = (this).className.split(' ')[0];
             var chart = $('#tax_chart_col').highcharts();
             var point = chart.series[legInd].points[0];
@@ -99,7 +99,7 @@
             chart.tooltip.refresh(point);
         });
 
-        $("#tax_table_col tbody tr").mouseout(function() {
+        $("#tax_table_col tbody").on('mouseleave', 'tr', function(){
             var legInd = (this).className.split(' ')[0];
             var chart = $('#tax_chart_col').highcharts();
             var point = chart.series[legInd].points[0];
