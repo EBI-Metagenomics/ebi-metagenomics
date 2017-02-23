@@ -387,6 +387,10 @@ background:url(../img/bgd_black_op20_8.png);
 .dataTable.table-glight td {border-top: 1px solid #eee; border-left: 0 solid #eee; border-right: 1px solid #eee;  border-bottom: 0 solid #eee; padding: 2px .35em; border-radius: 0;}
 .dataTable.table-glight .sorting_1 {background-color: rgba(214, 233, 248, 0.2);}
 .dataTable.table-glight tbody tr:hover {background-color:#e7e9f9;}
+.dataTable.table-glight tbody tr.disabled {background-color:#eaeaea; color:darkgrey;}
+.dataTable.table-glight tbody tr.disabled td a, .dataTable.table-glight tbody tr.disabled td a:link, .dataTable.table-glight tbody tr.disabled td a:visited {color:darkgrey;}
+.dataTable.table-glight tbody tr.disabled td.sorting_1 {color:darkgrey;}
+.dataTable.table-glight tbody tr.disabled .puce-square-legend {background-color:darkgrey;}
 /*/Google Light table version*/
 
 
@@ -1779,9 +1783,11 @@ ul.sample_list li {list-style: none; display: inline;}
 #bars #barcharts_legend_list_items, #pca #pca_legend_list_items  {margin-left: 9px; width: 85%;border:0px solid olive;}/*reduce width not to overlap with export button*/
 #bars #barcharts_legend .barcharts_legend_info, #pca #pca_legend .pca_legend_info {color:#666; font-style: italic; font-size: 84%;}
 #bars #barcharts_legend .legend-item {padding: 0px 6px 0 0;  display:inline-block; cursor:pointer; color: #606068; font-size: 90%;}
-#bars #barcharts_legend .legend-item-off {color:#D1D1D1;}
-#bars #barcharts_legend .legend-item:hover {color: #000 !important;}
-#bars #barcharts_legend .legend-item .legend-rectangle {margin: 4px;width: 12px; height: 12px;float: left;}
+#bars #barcharts_legend .legend-item-off, #legend .legend-item-off  {color:#D1D1D1;}
+#bars #barcharts_legend .legend-item:hover,  #legend .legend-item:hover {color: #000 !important;}
+#bars #barcharts_legend .legend-item .legend-rectangle, #legend .legend-item .legend-rectangle {margin: 4px;width: 12px; height: 12px;float: left;}
+#legend .legend-item {cursor:pointer;}
+#legend .legend-item-off .legend-rectangle {background-color:red;}
 
 /*CAPTION pca - sample comparison tool*/
 #pca #pca_legend .barcharts_legend_info {color:#666; font-style: italic;}
