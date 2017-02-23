@@ -3,77 +3,13 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <script type="text/javascript">
-
-    // Create the Datatable
-    $(document).ready(function() {
-        //table data
-        var rowData = [
-            <%--<c:set var="addComma" value="false"/>--%>
-            <c:forEach var="entry" items="${model.functionalAnalysisResult.interProMatchesSection.interProEntryList}" varStatus="status">
-            <%--<c:choose><c:when test="${addComma}">,</c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>--%>
-            ['${row.index}','<div title="${entry.entryDescription}" class="_cc puce-square-legend" style="background-color: <c:choose><c:when test="${status.index>9}">#b9b9b9</c:when><c:otherwise>#<c:out value="${model.functionalAnalysisResult.interProMatchesSection.colorCodeList[status.index]}"/></c:otherwise></c:choose>;"></div> <a title="${entry.entryDescription}" href="http://www.ebi.ac.uk/interpro/entry/${entry.entryID}" >${entry.entryDescription}</a>', '${entry.entryID}', ${entry.numOfEntryHits}, <fmt:formatNumber type="number" maxFractionDigits="2" value="${entry.numOfEntryHits*100 / model.functionalAnalysisResult.interProMatchesSection.totalReadsCount}" />],
-            </c:forEach>
-        ];
-
-        var t = $('#func_table_ipro').DataTable( {
-            order: [[ 3, "desc" ]],
-            columnDefs: [ //add responsive style as direct css doesn't work
-                {className: "xs_hide table-align-center col_xs", "targets": [0,2]},//number + id  centered + reduce width col
-                {className: "table-align-right col_xs", "targets": [3,4]}//numbers easier to compare align on right + reduce width col
-            ],
-            oLanguage: {
-                "sSearch": "Filter table: "
-            },
-            lengthMenu: [[10, 50, 100, -1], [10, 50, 100, "All"]],
-            data: rowData,
-            columns: [
-                {title: "" },
-                {title: "Entry name"},//use all table space to display entry name
-                {title: "ID" },
-                {title: "pCDS matched"},
-                {title: "%" },
-            ]
-        } );
-        // insert number for lines as  first column and make it not sortable nor searchable
-        t.on( 'order.dt search.dt', function () {
-            t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
-                cell.innerHTML = i+1;
-            } );
-        } ).draw();
-
-         //ADD INTERACTION BETWEEN TABLE ROW AND CHART
-        $("#func_table_ipro tbody tr").click(function(){
-            var index = $(this).index();
-            var point = $('#func_chart_pie_ipro').highcharts().series[0].points[index];
-            point.setVisible(!point.visible);
-        })
-
-        //HIGHLIGHT TERMS IN DATATABLE
-        $("#func_table_ipro_filter input").addClass("filter_sp");
-        // Highlight the search term in the table (all except first number column) using the filter input, using jQuery Highlight plugin
-        $('.filter_sp').keyup(function () {
-            $("#func_table_ipro tr td:nth-child(n+2)").highlight($(this).val());
-            $('#func_table_ipro tr td:nth-child(n+2)').unhighlight();// highlight more than just first character entered in the text box and reiterate the span to highlight
-            $('#func_table_ipro tr td:nth-child(n+2)').highlight($(this).val());
-
-        });
-        // remove highlight when click on X (clear button)
-        $('input[type=search]').on('search', function () {
-            $('#func_table_ipro tr td').unhighlight();
-        });
-    } );
-
-</script>
-<script type="text/javascript">
     $(function () {
 
         $(document).ready(function () {
 
             // InterPro match data
             var data = [
-                <%--<c:set var="addComma" value="false"/>--%>
                 <c:forEach var="entry" items="${model.functionalAnalysisResult.interProMatchesSection.interProEntryList}" varStatus="status">
-                <%--<c:choose><c:when test="${addComma}">,</c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>--%>
                 ['${entry.entryDescription}', ${entry.numOfEntryHits}, <fmt:formatNumber type="number" maxFractionDigits="2" value="${entry.numOfEntryHits*100 / model.functionalAnalysisResult.interProMatchesSection.totalReadsCount}" />],
                 </c:forEach>
             ]
@@ -226,4 +162,114 @@
             });
         });
     });
+</script>
+<script type="text/javascript">
+
+    // Create the Datatable
+    $(document).ready(function() {
+
+        //table data
+        var rowData = [
+            <c:forEach var="entry" items="${model.functionalAnalysisResult.interProMatchesSection.interProEntryList}" varStatus="status">
+            ['${status.index}','<div title="${entry.entryDescription}" class="_cc puce-square-legend" style="background-color: <c:choose><c:when test="${status.index>9}">#b9b9b9</c:when><c:otherwise>#<c:out value="${model.functionalAnalysisResult.interProMatchesSection.colorCodeList[status.index]}"/></c:otherwise></c:choose>;"></div> <a title="${entry.entryDescription}" href="http://www.ebi.ac.uk/interpro/entry/${entry.entryID}" >${entry.entryDescription}</a>', '${entry.entryID}', ${entry.numOfEntryHits}, <fmt:formatNumber type="number" maxFractionDigits="2" value="${entry.numOfEntryHits*100 / model.functionalAnalysisResult.interProMatchesSection.totalReadsCount}" />],
+            </c:forEach>
+        ];
+
+        var t = $('#func_table_ipro').DataTable( {
+            order: [[ 3, "desc" ]],
+            columnDefs: [ //add responsive style as direct css doesn't work
+                {className: "xs_hide table-align-center col_xs", "targets": [0,2]},//number + id  centered + reduce width col
+                {className: "table-align-right col_xs", "targets": [3,4]}//numbers easier to compare align on right + reduce width col
+            ],
+            //adding ID numbers for each row - used for interaction with chart
+            createdRow: function (row, rowData, dataIndex) {
+                $(row).addClass(""+dataIndex);
+            },
+            oLanguage: {
+                "sSearch": "Filter table: "
+            },
+            lengthMenu: [[10, 50, 100, -1], [10, 50, 100, "All"]],
+            data: rowData,
+            columns: [
+                {title: "" },
+                {title: "Entry name"},//use all table space to display entry name
+                {title: "ID" },
+                {title: "pCDS matched"},
+                {title: "%" },
+            ]
+        } );
+
+        // insert number for lines as  first column and make it not sortable nor searchable
+        t.on( 'order.dt search.dt', function () {
+            t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+                cell.innerHTML = i+1;
+            } );
+        } ).draw();
+
+        //ADD INTERACTION BETWEEN TABLE ROW AND PIE CHART
+
+        $("#func_table_ipro tbody tr").click(function(){
+            //important - use row Id for interaction otherwise table sorting was messing the use of $(this).index()
+            var legInd = (this).className.split(' ')[0];
+            console.log (legInd)
+//            var index = $(this).index();
+            var point = $('#func_chart_pie_ipro').highcharts().series[0].points[legInd];
+            if (point) {
+                point.setVisible(!point.visible);
+            }
+            else
+
+            //show/hide whole "other" slice
+            {
+                var point = $('#func_chart_pie_ipro').highcharts().series[0].points[10];
+                point.setVisible(!point.visible);
+            }
+            $(this).toggleClass("disabled");
+            //          switch color doesn't work
+            // if ($(".disabled")[index]) {
+            //                $(this).find('div').css('background-color', 'black');//bring color
+            //            }
+        })
+        $("#func_table_ipro tbody tr").hover(function() {
+            var legInd = (this).className.split(' ')[0];
+            var chart = $('#func_chart_pie_ipro').highcharts();
+            var point = chart.series[0].points[legInd];
+            if (point) {
+                point.setState('hover');
+                chart.tooltip.refresh(point);
+            } else
+            //highlight other
+            {var point = $('#func_chart_pie_ipro').highcharts().series[0].points[10];
+                point.setState('hover');
+                chart.tooltip.refresh(point);}
+        });
+
+        $("#func_table_ipro tbody tr").mouseout(function() {
+            var legInd = (this).className.split(' ')[0];
+            var chart = $('#func_chart_pie_ipro').highcharts();
+            var point = chart.series[0].points[legInd];
+            if (point) {
+                point.setState('');}
+            else
+            //unselect other slice
+            {var point = $('#func_chart_pie_ipro').highcharts().series[0].points[10];
+                point.setState('');}
+        });
+
+
+        //HIGHLIGHT TERMS IN DATATABLE
+        $("#func_table_ipro_filter input").addClass("filter_sp");
+        // Highlight the search term in the table (all except first number column) using the filter input, using jQuery Highlight plugin
+        $('.filter_sp').keyup(function () {
+            $("#func_table_ipro tr td:nth-child(n+2)").highlight($(this).val());
+            $('#func_table_ipro tr td:nth-child(n+2)').unhighlight();// highlight more than just first character entered in the text box and reiterate the span to highlight
+            $('#func_table_ipro tr td:nth-child(n+2)').highlight($(this).val());
+
+        });
+        // remove highlight when click on X (clear button)
+        $('input[type=search]').on('search', function () {
+            $('#func_table_ipro tr td').unhighlight();
+        });
+    } );
+
 </script>
