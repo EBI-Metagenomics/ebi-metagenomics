@@ -211,7 +211,6 @@
         $("#func_table_ipro tbody").on('click', 'tr', function(){
             //important - use row Id for interaction otherwise table sorting was messing the use of $(this).index()
             var legInd = (this).className.split(' ')[0];
-            console.log (legInd)
 //            var index = $(this).index();
             var point = $('#func_chart_pie_ipro').highcharts().series[0].points[legInd];
             if (point) {
@@ -220,8 +219,10 @@
             else
 
             //show/hide whole "other" slice
-            {
-                var point = $('#func_chart_pie_ipro').highcharts().series[0].points[10];
+            { var l = $('#func_chart_pie_ipro').highcharts().series[0].points.length;
+              var point = $('#func_chart_pie_ipro').highcharts().series[0].points [l - 1];
+
+//                var point = $('#func_chart_pie_ipro').highcharts().series[0].points[10];
                 point.setVisible(!point.visible);
             }
             $(this).toggleClass("disabled");
@@ -240,7 +241,8 @@
                 chart.tooltip.refresh(point);
             } else
             //highlight other
-            {var point = $('#func_chart_pie_ipro').highcharts().series[0].points[10];
+            {var l = $('#func_chart_pie_ipro').highcharts().series[0].points.length;
+                var point = $('#func_chart_pie_ipro').highcharts().series[0].points [l - 1];
                 point.setState('hover');
                 chart.tooltip.refresh(point);}
         });
@@ -253,7 +255,8 @@
                 point.setState('');}
             else
             //unselect other slice
-            {var point = $('#func_chart_pie_ipro').highcharts().series[0].points[10];
+            {var l = $('#func_chart_pie_ipro').highcharts().series[0].points.length;
+                var point = $('#func_chart_pie_ipro').highcharts().series[0].points [l - 1];
                 point.setState('');}
         });
 
