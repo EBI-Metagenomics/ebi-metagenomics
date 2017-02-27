@@ -218,7 +218,7 @@
             }
             else
 
-            //show/hide whole "other" slice
+            //show/hide whole "other" slice - doesn't disabled the whole table rows as there are too many of them
             { var l = $('#func_chart_pie_ipro').highcharts().series[0].points.length;
               var point = $('#func_chart_pie_ipro').highcharts().series[0].points [l - 1];
 
