@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <div id="tax-pie">
 
@@ -293,7 +294,13 @@
                     verticalAlign: 'top',
                     x: 0,
                     y: 60,
-                    itemStyle: {fontWeight: "regular"}
+                    itemStyle: {fontWeight: "regular"},
+                    onclick: function () {
+                        this.exportChart({
+                            filename:'${model.run.externalRunId}_<spring:message code="file.name.tax.pie.chart.phylum"/>',
+                            type: 'image/svg+xml'
+                        });
+                    }
                 },
                 title: {
                     text: '${phylumCompositionTitle}',
@@ -337,6 +344,32 @@
 //                            distance:-30, //inside labels as it used to be in Google chart
                             enabled: true,
                         },
+                        point:{
+                            events: {
+                                legendItemClick: function () {
+                                    //interaction between chart legend -> table
+                                    var visibility = this.visible ? 'visible' : 'hidden';
+                                    var index = this.index +1;
+
+                                    var l = $('#tax_chart_pie_phylum').highcharts().series[0].points.length;
+
+                                    if (index<l) {$("#tax_table tbody tr:nth-child("+index+")").toggleClass("disabled");}
+                                    if (index==l) {
+                                        //hide all together other rows
+                                        var n=l;
+                                        var readNum = data.length;//total number of rows
+                                        for (n = l; n < readNum ; n++) {
+                                          $("#tax_table tbody tr:nth-child("+n+")").toggleClass("disabled");
+                                        }
+                                    }
+//                                    if (!confirm('This '+ index +' series on '+l+' is currently ' +
+//                                                    visibility + '. Do you want to change that?')) {
+//                                        return false;
+//                                    }
+
+                                }
+                            }//end events
+                        },//end point
                         showInLegend: true
                     },
                     series: {
@@ -348,10 +381,9 @@
                                 textShadow: false,
 //                                color:'white' //inside labels as it used to be in Google chart
                             }
-
-                        }
+                        },
                     }
-                },
+                    },
                 series: [{
                     name: 'Phylumn',
                     //colorByPoint: true,
@@ -433,16 +465,35 @@
 //            console.log(legInd)
 //          var index = $(this).index();
             var point = $('#tax_chart_pie_phylum').highcharts().series[0].points[legInd];
-            if (point) {
-            point.setVisible(!point.visible);
+//            console.log(point)
+
+            if (point) {//there is one point
+                if (point.name!="Other"){
+                    point.setVisible(!point.visible);
+                    $(this).toggleClass("disabled");
+                } else
+                {//alert("Other"); point defined as other
+                    var l = $('#tax_chart_pie_phylum').highcharts().series[0].points.length;
+                    var point = $('#tax_chart_pie_phylum').highcharts().series[0].points [l - 1];
+                    point.setVisible(!point.visible);
+
+                    var readNum = ${fn:length(model.taxonomyAnalysisResult.taxonomyDataSet)};//total number of records
+                    for (n = l; n < readNum ; n++) {
+                        $("#tax_table tbody tr:nth-child("+n+")").toggleClass("disabled");}
+                }
             }
             else
-            //show/hide whole "other" slice
-            {   var l = $('#tax_chart_pie_phylum').highcharts().series[0].points.length;
-                var point = $('#tax_chart_pie_phylum').highcharts().series[0].points [l - 1];
+            // point undefined - show/hide whole "other" slice
+            { var l = $('#tax_chart_pie_phylum').highcharts().series[0].points.length;
+               var point = $('#tax_chart_pie_phylum').highcharts().series[0].points [l - 1];
               point.setVisible(!point.visible);
+
+                var readNum = ${fn:length(model.taxonomyAnalysisResult.taxonomyDataSet)};//total number of records
+                for (n = l; n < readNum ; n++) {
+                    $("#tax_table tbody tr:nth-child("+n+")").toggleClass("disabled");
+                }
              }
-            $(this).toggleClass("disabled");
+
         });
 
         $("#tax_table tbody").on('mouseenter', 'tr', function(){
