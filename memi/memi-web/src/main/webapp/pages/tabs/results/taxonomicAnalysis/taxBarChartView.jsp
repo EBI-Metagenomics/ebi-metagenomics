@@ -94,8 +94,8 @@
                 }
                 else
                 //show/hide whole "other" slice
-                {
-                  var point = chart.series[0].data[9];
+                { var l = $('#tax_chart_bar_phy').highcharts().series[0].data.length;
+                  var point = chart.series[0].data[l - 1];
                   point.select(null, true);
                 }
                 $(this).toggleClass("disabled");
@@ -112,7 +112,8 @@
                 chart.tooltip.refresh(point);
             } else
             //highlight other
-            {var point = $('#tax_chart_bar_phy').highcharts().series[0].points[9];
+            { var l = $('#tax_chart_bar_phy').highcharts().series[0].data.length;
+                var point = chart.series[0].data[l - 1];
                 point.setState('hover');
                 chart.tooltip.refresh(point);}
         });
@@ -125,7 +126,8 @@
                 point.setState('');}
             else
             //unselect other slice
-            {var point = $('#tax_chart_bar_phy').highcharts().series[0].points[9];
+            {var l = $('#tax_chart_bar_phy').highcharts().series[0].data.length;
+                var point = chart.series[0].data[l - 1];
                 point.setState('');}
         });
 
