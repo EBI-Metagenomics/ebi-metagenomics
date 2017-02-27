@@ -430,7 +430,7 @@
         $("#tax_table tbody").on('click', 'tr', function(){
             //important - use row Id for interaction otherwise table sorting was messsing the use of $(this).index()
             var legInd = (this).className.split(' ')[0];
-            console.log(legInd)
+//            console.log(legInd)
 //          var index = $(this).index();
             var point = $('#tax_chart_pie_phylum').highcharts().series[0].points[legInd];
             if (point) {
@@ -438,7 +438,8 @@
             }
             else
             //show/hide whole "other" slice
-            { var point = $('#tax_chart_pie_phylum').highcharts().series[0].points[9];
+            {   var l = $('#tax_chart_pie_phylum').highcharts().series[0].points.length;
+                var point = $('#tax_chart_pie_phylum').highcharts().series[0].points [l - 1];
               point.setVisible(!point.visible);
              }
             $(this).toggleClass("disabled");
@@ -453,7 +454,8 @@
             chart.tooltip.refresh(point);
             } else
              //highlight other
-            {var point = $('#tax_chart_pie_phylum').highcharts().series[0].points[9];
+            { var l = $('#tax_chart_pie_phylum').highcharts().series[0].points.length;
+              var point = $('#tax_chart_pie_phylum').highcharts().series[0].points [l - 1];
              point.setState('hover');
              chart.tooltip.refresh(point);}
         });
@@ -467,7 +469,8 @@
             point.setState('');}
             else
             //unselect other slice
-            {var point = $('#tax_chart_pie_phylum').highcharts().series[0].points[9];
+            {var l = $('#tax_chart_pie_phylum').highcharts().series[0].points.length;
+                var point = $('#tax_chart_pie_phylum').highcharts().series[0].points [l - 1];
                 point.setState('');}
         });
 
