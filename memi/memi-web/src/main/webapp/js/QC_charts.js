@@ -143,7 +143,7 @@ var sumNumberOfReadsChart = function (rawdata, numberOfLines, sequenceCount, url
         });
 
     $('#sq_sum').highcharts({
-        chart: { type: 'bar', height: 250,
+        chart: { type: 'bar', height: 220,
             style: {
             fontFamily: 'Helvetica'
          }
