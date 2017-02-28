@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <div id="tax-bar">
 
@@ -85,21 +86,25 @@
             var chart = $('#tax_chart_bar_phy').highcharts();
             var point = chart.series[0].data[legInd];
                 // if value for point like for results between 1-10
-                if (point) {
-                  point.select(null, true);// toggled and multi-selection - "fake" but working show/hide effect
+                if (point && point.name!="Other") {
+                        point.select(null, true);// toggled and multi-selection - "fake" but working show/hide effect
 //                alert(point.category)
 //                alert(point.visible)//true or not
 //                point.remove(); //kills the index but resize well
 //                point.graphic.hide();//can't find a way to do working if statement working like: if (point.graphic).
+                        $(this).toggleClass("disabled");
                 }
                 else
                 //show/hide whole "other" slice
                 { var l = $('#tax_chart_bar_phy').highcharts().series[0].data.length;
                   var point = chart.series[0].data[l - 1];
                   point.select(null, true);
-                }
-                $(this).toggleClass("disabled");
 
+                    var readNum = ${fn:length(model.taxonomyAnalysisResult.taxonomyDataSet)};//total number of records
+                    for (n = l; n < readNum ; n++) {
+                        $("#tax_table_bar tbody tr:nth-child("+n+")").toggleClass("disabled");
+                    }
+                }
         });
 
         $("#tax_table_bar tbody").on('mouseenter', 'tr', function(){
