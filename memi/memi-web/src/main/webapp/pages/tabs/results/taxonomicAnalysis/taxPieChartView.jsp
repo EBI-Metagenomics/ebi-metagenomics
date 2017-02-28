@@ -467,20 +467,9 @@
             var point = $('#tax_chart_pie_phylum').highcharts().series[0].points[legInd];
 //            console.log(point)
 
-            if (point) {//there is one point
-                if (point.name!="Other"){
+            if (point && point.name!="Other") {
                     point.setVisible(!point.visible);
                     $(this).toggleClass("disabled");
-                } else
-                {//alert("Other"); point defined as other
-                    var l = $('#tax_chart_pie_phylum').highcharts().series[0].points.length;
-                    var point = $('#tax_chart_pie_phylum').highcharts().series[0].points [l - 1];
-                    point.setVisible(!point.visible);
-
-                    var readNum = ${fn:length(model.taxonomyAnalysisResult.taxonomyDataSet)};//total number of records
-                    for (n = l; n < readNum ; n++) {
-                        $("#tax_table tbody tr:nth-child("+n+")").toggleClass("disabled");}
-                }
             }
             else
             // point undefined - show/hide whole "other" slice
