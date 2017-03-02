@@ -350,7 +350,8 @@ var drawSequenceLengthHistogram = function (rawdata, isFromSubset, stats,urlToFi
             marginLeft: 78, // Keep both charts - lenght histogram & bar chart - left aligned
             style: {
                 fontFamily: 'Helvetica'
-            }
+            },
+            zoomType: 'x'
         },
         title: {
             text: 'Reads length histogram',
