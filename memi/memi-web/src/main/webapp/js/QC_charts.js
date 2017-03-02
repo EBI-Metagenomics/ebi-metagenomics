@@ -359,7 +359,7 @@ var drawSequenceLengthHistogram = function (rawdata, isFromSubset, stats,urlToFi
                 fontWeight: "bold"
             }
         },
-        subtitle: { text: ((isFromSubset)?'A subset of the sequences was used to generate this chart':'')+zoom_msg},
+        subtitle: { text: ((isFromSubset)?'A subset of the sequences was used to generate this chart - ':'')+zoom_msg},
         yAxis: {
             title: { text: "Number of reads" }
         },
