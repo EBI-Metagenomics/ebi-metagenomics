@@ -13,7 +13,7 @@ var getExportingStructure = function (urlToFile,content) {
                 menuItems: [{
                     textKey: 'downloadData',
                     onclick: function () {
-                        if (typeof content == "undefined") {
+                        if (typeof content === "undefined") {
                             window.location = urlToFile;
                         }else{
                             var element = document.createElement('a');
@@ -76,7 +76,7 @@ var getExportingStructure = function (urlToFile,content) {
     };
 }
 var sumNumberOfReadsChart = function (rawdata, numberOfLines, sequenceCount, urlToFile) {
-    if (typeof rawdata == "undefined" || rawdata == null) return;
+    if (typeof rawdata === "undefined" || rawdata === null) return;
     var data = [],
         categories = [
             "Reads with predicted CDS",
@@ -89,8 +89,8 @@ var sumNumberOfReadsChart = function (rawdata, numberOfLines, sequenceCount, url
 
     rawdata.split('\n')
         .splice(6, numberOfLines)//important - start at position 6 as we don't need the first lines
-        .forEach(function(line,i){
-            var line = line.split("\t"),
+        .forEach(function(l ,i){
+            var line = l.split("\t"),
                 value =Number(line[1]);
             //categories.push(line[0]);
             if (value>-1)
@@ -236,8 +236,8 @@ var drawNumberOfReadsChart = function (rawdata, numberOfLines, sequenceCount, ur
 
     rawdata.split('\n')
         .splice(0, numberOfLines)
-        .forEach(function(line,i){
-            var line = line.split("\t"),
+        .forEach(function(l,i){
+            var line = l.split("\t"),
                 value =Number(line[1]);
             //categories.push(line[0]);
             if (value>-1)
@@ -342,8 +342,7 @@ var drawSequenceLengthHistogram = function (rawdata, isFromSubset, stats,urlToFi
             return line.split("\t").map(function(v){ return 1*v; });
     });
     var length_max=Math.max.apply(null,data.map(function(e){ if (e) {return e[0];} }));
-
-    var init_point = data[0][0] - 1;
+    var zoom_msg = "Drag to zoom in/out";
 
     $('#seq_len').highcharts({
         chart: {
@@ -360,7 +359,7 @@ var drawSequenceLengthHistogram = function (rawdata, isFromSubset, stats,urlToFi
                 fontWeight: "bold"
             }
         },
-        subtitle: { text: (isFromSubset)?'A subset of the sequences was used to generate this chart':undefined},
+        subtitle: { text: ((isFromSubset)?'A subset of the sequences was used to generate this chart':'')+zoom_msg},
         yAxis: {
             title: { text: "Number of reads" }
         },
