@@ -342,7 +342,7 @@ var drawSequenceLengthHistogram = function (rawdata, isFromSubset, stats,urlToFi
             return line.split("\t").map(function(v){ return 1*v; });
     });
     var length_max=Math.max.apply(null,data.map(function(e){ if (e) {return e[0];} }));
-    var zoom_msg = "Drag to zoom in/out";
+    var zoom_msg = "Click and drag in the plot area to zoom in";
 
     $('#seq_len').highcharts({
         chart: {
@@ -359,7 +359,7 @@ var drawSequenceLengthHistogram = function (rawdata, isFromSubset, stats,urlToFi
                 fontWeight: "bold"
             }
         },
-        subtitle: { text: ((isFromSubset)?'A subset of the sequences was used to generate this chart - ':'')+zoom_msg},
+        subtitle: { text: ((isFromSubset)?'A subset of the sequences was used to generate this chart -':'')+zoom_msg},
         yAxis: {
             title: { text: "Number of reads" }
         },
