@@ -1050,7 +1050,7 @@ var FacetManager = function(settingsManager, searchManager) {
 
         for (var i=0; i < facetGroup.facetValues.length; i++) {
             var facet = facetGroup.facetValues[i];
-            this.addHierachicalElement(facet, facetGroupList, facet, facetGroup, null, searchSettings, groupContainerId, false);
+            this.addHierachicalElement(facet, facetGroupList, facet, facetGroup, null, searchSettings, groupContainerId);
         }
 
         $("#"+groupContainerId).bonsai({
@@ -1107,7 +1107,7 @@ var FacetManager = function(settingsManager, searchManager) {
             value = facet.value;
         }
         var facetSeparator = this.settingsManager.FACET_SEPARATOR;
-        var identifier = dataType + facetSeparator + facetGroup.idd + facetSeparator + value;
+        var identifier = dataType + facetSeparator + facetGroup.id + facetSeparator + value;
 
         var facetItem = document.createElement("li");
         facetItem.id = identifier;
