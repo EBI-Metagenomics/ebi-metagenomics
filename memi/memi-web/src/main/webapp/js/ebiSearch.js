@@ -823,55 +823,58 @@ var FacetManager = function(settingsManager, searchManager) {
         contentDiv.classList.add(self.settingsManager.GLOBAL_SEARCH_SETTINGS.HIERARCHICAL_FACET_CLASS)
         var list = document.createElement("ul");
         list.id = treeId;
-        self.addMoreHierarchicalFacetsToList(searchSettings, facets.facetValues, facets.id, null, list);
+        self.addMoreHierarchicalFacetsToList(searchSettings, facets.facetValues, facets.id, null, list, false);
         contentDiv.appendChild(list);
         //console.log("Converting more facet list to bonsai tree");
 
         $("#"+treeId).bonsai({
             checkboxes: true,
             expandAll: true,
-            handleDuplicateCheckboxes: true
+            handleDuplicateCheckboxes: true,
+            createInputs: 'checkbox'
         });
 
     };
 
-    this.addMoreHierarchicalFacetsToList = function(searchSettings, facets, facetGroupId, facetValuePrefix, list) {
+    this.addMoreHierarchicalFacetsToList = function(searchSettings, facets, facetGroupId, facetValuePrefix, list, parentChecked) {
         var dataType = searchSettings.type;
         var GLOBAL_SEARCH_SETTINGS = this.settingsManager.GLOBAL_SEARCH_SETTINGS;
         var FACET_SEPARATOR = this.settingsManager.FACET_SEPARATOR;
         for(var i=0; i < facets.length; i++) {
             var facet = facets[i];
-            var listItem = document.createElement("li");
+            var facetItem = document.createElement("li");
 
             var facetValue = facet.value;
             if (facetValuePrefix != null) {
                 facetValue = facetValuePrefix + "/" + facet.value;
             }
 
-            var facetInput = document.createElement("input");
-            facetInput.type = "checkbox";
-            facetInput.classList.add(GLOBAL_SEARCH_SETTINGS.MORE_FACET_INPUT_CLASS);
-            facetInput.value = facetValue;
+            var identifier = "morefacets" + FACET_SEPARATOR + dataType + FACET_SEPARATOR + facetGroupId + FACET_SEPARATOR + facetValue;
+
+            facetItem.id = identifier;
+            facetItem.setAttribute(["data-name"], GLOBAL_SEARCH_SETTINGS.MORE_FACET_INPUT_CLASS);
+            facetItem.setAttribute(["data-value"], facetValue);
+            facetItem.appendChild(document.createTextNode(facet.label + " (" + facet.count + ")"));
+
+            //initialise checkbox state
             if (searchSettings.facets != null
                 && searchSettings.facets.hasOwnProperty(facetGroupId)
-                && searchSettings.facets[facetGroupId].indexOf(facetInput.value) >= 0) {
-                facetInput.checked = true;
-            }
-            facetInput.id = "morefacets" + FACET_SEPARATOR + dataType + FACET_SEPARATOR + facetGroupId + FACET_SEPARATOR + facetValue;
+                && searchSettings.facets[facetGroupId].indexOf(facetValue) > -1
+                || parentChecked === true) {
+                facetItem.setAttribute("data-checked", 1);
+                parentChecked = true;
+                console.log("Matched " + searchSettings.type + " Child facet: " + facetGroupId + " name: "
+                    + searchSettings.facets[facetGroupId] + " contains " + facetValue);
 
-            var facetLabel = document.createElement("label");
-            facetLabel.htmlFor = facetInput.id;
-            facetLabel.innerHTML = facet.label + " (" + facet.count + ")";
-            listItem.appendChild(facetInput);
-            listItem.appendChild(facetLabel);
-            list.appendChild(listItem);
+            }
+            list.appendChild(facetItem);
 
             if (facet.hasOwnProperty("children")
                 && facet.children != null
                 && facet.children.length > 0) {
                 var subList = document.createElement("ul");
-                listItem.appendChild(subList);
-                this.addMoreHierarchicalFacetsToList(searchSettings, facet.children, facetGroupId, facetValue, subList);
+                facetItem.appendChild(subList);
+                this.addMoreHierarchicalFacetsToList(searchSettings, facet.children, facetGroupId, facetValue, subList, parentChecked);
             }
         }
     };
@@ -1050,7 +1053,7 @@ var FacetManager = function(settingsManager, searchManager) {
 
         for (var i=0; i < facetGroup.facetValues.length; i++) {
             var facet = facetGroup.facetValues[i];
-            this.addHierachicalElement(facet, facetGroupList, facet, facetGroup, null, searchSettings, groupContainerId);
+            this.addHierachicalElement(facet, facetGroupList, facet, facetGroup, null, searchSettings, groupContainerId, false);
         }
 
         $("#"+groupContainerId).bonsai({
