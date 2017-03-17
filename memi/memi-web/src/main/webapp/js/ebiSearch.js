@@ -595,6 +595,13 @@ var FacetManager = function(settingsManager, searchManager) {
     this.searchManager = searchManager;
     this.settingsManager = settingsManager;
 
+    this.escapeEBISearchSpecialChars = function(value) {
+        //need to escape the following special characters in facet values: + - & | ! ( ) { } [ ] ^ " ~ * ? : \ /
+        var escaped = value.replace(/[+&|!(){}[\]^"~*?:-]/g, '\\$&');
+        console.log("ESCAPED VALUE = " + escaped);
+        return escaped;
+    };
+
     this.isFacetGroupHierarchical = function(facetGroup) {
         var isHierarchical = false;
         for (var i=0; i < facetGroup.facetValues.length; i++) {
@@ -844,9 +851,10 @@ var FacetManager = function(settingsManager, searchManager) {
             var facet = facets[i];
             var facetItem = document.createElement("li");
 
-            var facetValue = facet.value;
+            var value = this.escapeEBISearchSpecialChars(facet.value);
+            var facetValue = value;
             if (facetValuePrefix != null) {
-                facetValue = facetValuePrefix + "/" + facet.value;
+                facetValue = facetValuePrefix + "/" + facetValue;
             }
 
             var identifier = "morefacets" + FACET_SEPARATOR + dataType + FACET_SEPARATOR + facetGroupId + FACET_SEPARATOR + facetValue;
@@ -902,7 +910,8 @@ var FacetManager = function(settingsManager, searchManager) {
         for(var i=0; i < facets.facetValues.length; i++) {
             var facet = facets.facetValues[i];
             //prefixing id with 'morefacets' to ensure input id is unique
-            var identifier = "morefacets" + FACET_SEPARATOR + dataType + FACET_SEPARATOR + facets.id + FACET_SEPARATOR + facet.value;
+            var value = this.escapeEBISearchSpecialChars(facet.value);
+            var identifier = "morefacets" + FACET_SEPARATOR + dataType + FACET_SEPARATOR + facets.id + FACET_SEPARATOR + value;
 
             var listItem = document.createElement("li");
             listItem.style.display = "inline-block";
@@ -981,15 +990,16 @@ var FacetManager = function(settingsManager, searchManager) {
         facetGroupContainer.appendChild(facetGroupTitle);
         for (var i=0; i < facetGroup.facetValues.length; i++) {
             var facet = facetGroup.facetValues[i];
+            var value = this.escapeEBISearchSpecialChars(facet.value);
             var identifier = dataType + this.settingsManager.FACET_SEPARATOR
-                + facetGroup.id + this.settingsManager.FACET_SEPARATOR + facet.value;
+                + facetGroup.id + this.settingsManager.FACET_SEPARATOR + value;
             var facetItem = document.createElement("div");
             var facetInput = document.createElement("input");
             facetInput.id = identifier;
             facetInput.name = facetGroup.id;
             facetInput.form = "local-search";
             facetInput.type = "checkbox";
-            facetInput.value = facet.value;
+            facetInput.value = value;
             if (searchSettings.facets != null
                 && searchSettings.facets.hasOwnProperty(facetGroup.id)
                 && searchSettings.facets[facetGroup.id].indexOf(facetInput.value) >= 0) {
@@ -1108,12 +1118,11 @@ var FacetManager = function(settingsManager, searchManager) {
 
     this.addHierachicalElement = function(facet, container, parent, facetGroup, parentPath, searchSettings, bonsaiTreeID, parentChecked) {
         var dataType = searchSettings.type;
-        var value;
+        var value = this.escapeEBISearchSpecialChars(facet.value);
         if (parentPath != null) {
-            value = parentPath + "/" + facet.value;
-        } else {
-            value = facet.value;
+            value = parentPath + "/" + value;
         }
+
         var facetSeparator = this.settingsManager.FACET_SEPARATOR;
         var identifier = dataType + facetSeparator + facetGroup.id + facetSeparator + value;
 
