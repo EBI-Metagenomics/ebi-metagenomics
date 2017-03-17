@@ -129,18 +129,39 @@ var SettingsManager = function() {
     };
 
     this.initialiseSettings = function(fullReset) {
+        this.resetProjectSettings(fullReset);
+        this.resetSampleSettings(fullReset);
+        this.resetRunSettings(fullReset);
+
+        var searchText = this.getSearchText();
+        if (searchText == null) {
+            searchText = "";
+        }
+        for(var i = 0; i < this.DatatypeSettings.DATA_TYPES.length; i++) {
+            var dataType = this.DatatypeSettings.DATA_TYPES[i];
+            var settings = this.DatatypeSettings[dataType];
+            this.resetSearchSettings(dataType, fullReset);
+            settings["searchText"] = searchText;
+            this.setSearchText(searchText);
+            this.setSearchSettings(this.DatatypeSettings.DATA_TYPES[i], settings);
+        }
+        return this.DatatypeSettings;
+    };
+
+    this.resetSearchSettings = function(dataType, fullReset) {
+        if (dataType == this.GLOBAL_SEARCH_SETTINGS.PROJECT) {
+            return this.resetProjectSettings(fullReset);
+        } else if (dataType == this.GLOBAL_SEARCH_SETTINGS.SAMPLE) {
+            return this.resetSampleSettings(fullReset);
+        } else if (dataType == this.GLOBAL_SEARCH_SETTINGS.RUN ) {
+            return this.resetRunSettings(fullReset);
+        } else {
+            console.log("Error Datatype '" + dataType + "' not recognised");
+        }
+    };
+
+    this.resetProjectSettings = function(fullReset) {
         var projectSettings = this.getSearchSettings(this.GLOBAL_SEARCH_SETTINGS.PROJECT);
-        var sampleSettings = this.getSearchSettings(this.GLOBAL_SEARCH_SETTINGS.SAMPLE);
-        var runSettings = this.getSearchSettings(this.GLOBAL_SEARCH_SETTINGS.RUN);
-
-        var sampleTemperature = new NumericalRangeField("temperature", "Temperature", "°C", -20, 110, -20, 110);
-        var sampleDepth = new NumericalRangeField("depth", "Depth", "Metres", 0, 2000, 0, 2000);
-        var samplePH = new NumericalRangeField("pH", "pH", null, 0, 14, 0, 14);
-
-        var runTemperature = new NumericalRangeField("temperature", "Temperature", "°C", -20, 110, -20, 110);
-        var runDepth = new NumericalRangeField("depth", "Depth", "Metres", 0, 2000, 0, 2000);
-        var runPH = new NumericalRangeField("pH", "pH", null, 0, 14, 0, 14);
-
         if (fullReset || projectSettings == null) {
             projectSettings = new SearchSettings(
                 this.GLOBAL_SEARCH_SETTINGS.PROJECT,
@@ -153,7 +174,16 @@ var SettingsManager = function() {
                 null
             );
         }
+        this.DatatypeSettings[this.GLOBAL_SEARCH_SETTINGS.PROJECT] = projectSettings;
+        return projectSettings;
+    };
 
+    this.resetSampleSettings = function(fullReset) {
+        var sampleTemperature = new NumericalRangeField("temperature", "Temperature", "°C", -20, 110, -20, 110);
+        var sampleDepth = new NumericalRangeField("depth", "Depth", "Metres", 0, 2000, 0, 2000);
+        var samplePH = new NumericalRangeField("pH", "pH", null, 0, 14, 0, 14);
+
+        var sampleSettings = this.getSearchSettings(this.GLOBAL_SEARCH_SETTINGS.SAMPLE);
         if (fullReset || sampleSettings == null) {
             sampleSettings = new SearchSettings(
                 this.GLOBAL_SEARCH_SETTINGS.SAMPLE,
@@ -166,7 +196,16 @@ var SettingsManager = function() {
                 [sampleTemperature, sampleDepth]
             );
         }
+        this.DatatypeSettings[this.GLOBAL_SEARCH_SETTINGS.SAMPLE] = sampleSettings;
+        return sampleSettings;
+    };
 
+    this.resetRunSettings = function(fullReset) {
+        var runTemperature = new NumericalRangeField("temperature", "Temperature", "°C", -20, 110, -20, 110);
+        var runDepth = new NumericalRangeField("depth", "Depth", "Metres", 0, 2000, 0, 2000);
+        var runPH = new NumericalRangeField("pH", "pH", null, 0, 14, 0, 14);
+
+        var runSettings = this.getSearchSettings(this.GLOBAL_SEARCH_SETTINGS.RUN);
         if (fullReset || runSettings == null) {
             runSettings = new SearchSettings(
                 this.GLOBAL_SEARCH_SETTINGS.RUN,
@@ -179,22 +218,8 @@ var SettingsManager = function() {
                 [runTemperature, runDepth]
             );
         }
-
-        this.DatatypeSettings[this.GLOBAL_SEARCH_SETTINGS.PROJECT] = projectSettings;
-        this.DatatypeSettings[this.GLOBAL_SEARCH_SETTINGS.SAMPLE] = sampleSettings;
         this.DatatypeSettings[this.GLOBAL_SEARCH_SETTINGS.RUN] = runSettings;
-        var searchText = this.getSearchText();
-        if (searchText == null) {
-            searchText = "";
-        }
-        for(var i = 0; i < this.DatatypeSettings.DATA_TYPES.length; i++) {
-            var settings = this.DatatypeSettings[this.DatatypeSettings.DATA_TYPES[i]];
-            settings["searchText"] = searchText;
-            this.setSearchText(searchText);
-            this.setSearchSettings(this.DatatypeSettings.DATA_TYPES[i], settings);
-        }
-
-        return this.DatatypeSettings;
+        return runSettings;
     };
 
     this.getSearchText = function() {
@@ -598,7 +623,7 @@ var FacetManager = function(settingsManager, searchManager) {
     this.escapeEBISearchSpecialChars = function(value) {
         //need to escape the following special characters in facet values: + - & | ! ( ) { } [ ] ^ " ~ * ? : \ /
         var escaped = value.replace(/[+&|!(){}[\]^"~*?:-]/g, '\\$&');
-        console.log("ESCAPED VALUE = " + escaped);
+        //console.log("ESCAPED VALUE = " + escaped);
         return escaped;
     };
 
@@ -1519,8 +1544,11 @@ var ResultsManager = function() {
         tableManager.displayDownloadButton(results, searchSettings);
     };
 
-    this.displaySearchError = function (httpReq, searchSettings, tabManager) {
+    this.displaySearchError = function (httpReq, searchSettings, tabManager, settingsManager) {
+        console.log("Error: Error during search");
         var dataType = searchSettings.type;
+        searchSettings = settingsManager.resetSearchSettings(dataType, true);
+        settingsManager.setSearchSettings(dataType, searchSettings);
         tabManager.setTabText("Error", dataType);
         resultsContainer = document.getElementById(dataType + "-searchData");
         if (resultsContainer != null) {
@@ -1594,6 +1622,8 @@ var SearchManager = function(settingsManager, pageManager) {
         //handle response
         httpReq.onload = function(event) {
             var readyState = httpReq.readyState;
+            //console.log("OnLoad status " + httpReq.status);
+
             if (httpReq.status == 200) {
                 self.fixInternetExplorerBug(httpReq, callback);
             } else {
@@ -1603,6 +1633,8 @@ var SearchManager = function(settingsManager, pageManager) {
 
         //error handling
         httpReq.onerror = function (event) {
+            //console.log("OnError status " + httpReq.status);
+
             if (errCallback) {
                 self.fixInternetExplorerBug(httpReq, errCallback);
             } else {
@@ -1718,7 +1750,7 @@ var SearchManager = function(settingsManager, pageManager) {
         };
         var errorCallback = function(httpReq) {
             self.pageManager.removeSpinner(searchSettings);
-            self.pageManager.displaySearchError(httpReq, searchSettings);
+            self.pageManager.displaySearchError(httpReq, searchSettings, this.settingsManager);
         };
 
         var url = self.settingsToURL(searchSettings);
@@ -2207,7 +2239,7 @@ var PageManager = function() {
     };
 
     this.displaySearchError = function (httpReq, searchSettings) {
-        this.resultsManager.displaySearchError(httpReq, searchSettings, this.tabManager);
+        this.resultsManager.displaySearchError(httpReq, searchSettings, this.tabManager, this.settingsManager);
     };
 
     this.displayDomainData = function (httpReq, searchSettings) {
