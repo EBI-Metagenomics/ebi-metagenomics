@@ -622,7 +622,8 @@ var FacetManager = function(settingsManager, searchManager) {
 
     this.escapeEBISearchSpecialChars = function(value) {
         //need to escape the following special characters in facet values: + - & | ! ( ) { } [ ] ^ " ~ * ? : \ /
-        var escaped = value.replace(/[+&|!(){}[\]^"~*?:-]/g, '\\$&');
+        //var escaped = value.replace(/[+&|!(){}[\]^"~*?:-]/g, '\\$&');
+        var escaped = value.replace(/[()]/g, '\\$&');
         //console.log("ESCAPED VALUE = " + escaped);
         return escaped;
     };
