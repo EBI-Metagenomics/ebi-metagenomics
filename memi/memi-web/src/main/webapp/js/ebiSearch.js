@@ -908,12 +908,13 @@ var FacetManager = function(settingsManager, searchManager) {
             listItem.style.display = "inline-block";
             listItem.style.width = "350px";
             listItem.style.padding = "5px";
+            listItem.id = identifier;
 
             list.appendChild(listItem);
             var facetInput = document.createElement("input");
-            facetInput.id = identifier;
+            facetInput.id = identifier + "-checkbox";
             facetInput.type = "checkbox";
-            facetInput.classList.add(self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_INPUT_CLASS);
+            facetInput.setAttribute("name", self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_INPUT_CLASS);
             facetInput.value = facet.label;
             if (searchSettings.facets != null
                 && searchSettings.facets.hasOwnProperty(facets.id)
@@ -936,15 +937,18 @@ var FacetManager = function(settingsManager, searchManager) {
     };
 
     this.runMoreFacetsSearch = function(searchSettings, container) {
-        var facetInputs = document.getElementsByClassName(
+        var facetInputs = document.getElementsByName(
             this.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_INPUT_CLASS
         );
+        var facetTypeSetInDialog = {};
         for (var i=0; i < facetInputs.length; i++) {
             var checkbox = facetInputs[i];
-            var tokens = checkbox.id.split(this.settingsManager.FACET_SEPARATOR);
+            var parent = checkbox.parentElement;
+            var tokens = parent.id.split(this.settingsManager.FACET_SEPARATOR);
             var facetType = tokens[2];
             var facetValue = tokens[3];
-            if (!searchSettings.facets.hasOwnProperty(facetType)) {
+            if (!searchSettings.facets.hasOwnProperty(facetType)
+                || !facetTypeSetInDialog.hasOwnProperty(facetType)) {
                 searchSettings.facets[facetType] = [];
             }
 
@@ -952,6 +956,7 @@ var FacetManager = function(settingsManager, searchManager) {
                 //console.log("Checkbox: " + checkbox.value + " checked " + facetType + " = " + facetValue);
                 if (searchSettings.facets[facetType].indexOf(facetValue) == -1) {
                     searchSettings.facets[facetType].push(facetValue);
+                    facetTypeSetInDialog[facetType] = true;
                 }
             } else {
                 var facetValueIndex = searchSettings.facets[facetType].indexOf(facetValue);
