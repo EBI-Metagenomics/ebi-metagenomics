@@ -936,7 +936,7 @@ var FacetManager = function(settingsManager, searchManager) {
         for(var i=0; i < facets.facetValues.length; i++) {
             var facet = facets.facetValues[i];
             //prefixing id with 'morefacets' to ensure input id is unique
-            var value = this.escapeEBISearchSpecialChars(facet.value);
+            var value = self.escapeEBISearchSpecialChars(facet.value);
             var identifier = "morefacets" + FACET_SEPARATOR + dataType + FACET_SEPARATOR + facets.id + FACET_SEPARATOR + value;
 
             var listItem = document.createElement("li");
