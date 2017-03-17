@@ -891,24 +891,26 @@ var FacetManager = function(settingsManager, searchManager) {
             facetItem.appendChild(document.createTextNode(facet.label + " (" + facet.count + ")"));
 
             //initialise checkbox state
+            var isChecked = false;
             if (searchSettings.facets != null
                 && searchSettings.facets.hasOwnProperty(facetGroupId)
                 && searchSettings.facets[facetGroupId].indexOf(facetValue) > -1
                 || parentChecked === true) {
                 facetItem.setAttribute("data-checked", 1);
-                parentChecked = true;
+                isChecked = true;
                 console.log("Matched " + searchSettings.type + " Child facet: " + facetGroupId + " name: "
                     + searchSettings.facets[facetGroupId] + " contains " + facetValue);
 
             }
             list.appendChild(facetItem);
 
+            console.log("MAQ " +  facetValuePrefix + " => " + value + " = " + parentChecked);
             if (facet.hasOwnProperty("children")
                 && facet.children != null
                 && facet.children.length > 0) {
                 var subList = document.createElement("ul");
                 facetItem.appendChild(subList);
-                this.addMoreHierarchicalFacetsToList(searchSettings, facet.children, facetGroupId, facetValue, subList, parentChecked);
+                this.addMoreHierarchicalFacetsToList(searchSettings, facet.children, facetGroupId, facetValue, subList, isChecked);
             }
         }
     };
