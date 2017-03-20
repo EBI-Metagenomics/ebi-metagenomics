@@ -620,14 +620,6 @@ var FacetManager = function(settingsManager, searchManager) {
     this.searchManager = searchManager;
     this.settingsManager = settingsManager;
 
-    this.escapeEBISearchSpecialChars = function(value) {
-        //need to escape the following special characters in facet values: + - & | ! ( ) { } [ ] ^ " ~ * ? : \ /
-        //var escaped = value.replace(/[+&|!(){}[\]^"~*?:-]/g, '\\$&');
-        var escaped = value.replace(/[()]/g, '\\$&');
-        //console.log("ESCAPED VALUE = " + escaped);
-        return escaped;
-    };
-
     this.isFacetGroupHierarchical = function(facetGroup) {
         var isHierarchical = false;
         for (var i=0; i < facetGroup.facetValues.length; i++) {
@@ -877,7 +869,7 @@ var FacetManager = function(settingsManager, searchManager) {
             var facet = facets[i];
             var facetItem = document.createElement("li");
 
-            var value = this.escapeEBISearchSpecialChars(facet.value);
+            var value = facet.value;
             var facetValue = value;
             if (facetValuePrefix != null) {
                 facetValue = facetValuePrefix + "/" + facetValue;
@@ -938,7 +930,7 @@ var FacetManager = function(settingsManager, searchManager) {
         for(var i=0; i < facets.facetValues.length; i++) {
             var facet = facets.facetValues[i];
             //prefixing id with 'morefacets' to ensure input id is unique
-            var value = self.escapeEBISearchSpecialChars(facet.value);
+            var value = facet.value;
             var identifier = "morefacets" + FACET_SEPARATOR + dataType + FACET_SEPARATOR + facets.id + FACET_SEPARATOR + value;
 
             var listItem = document.createElement("li");
@@ -970,7 +962,7 @@ var FacetManager = function(settingsManager, searchManager) {
     };
 
     this.showMoreFacetsError = function(container) {
-
+        console.log("Error: Error fetching more facets");
     };
 
     this.runMoreFacetsSearch = function(searchSettings, container) {
@@ -1018,7 +1010,7 @@ var FacetManager = function(settingsManager, searchManager) {
         facetGroupContainer.appendChild(facetGroupTitle);
         for (var i=0; i < facetGroup.facetValues.length; i++) {
             var facet = facetGroup.facetValues[i];
-            var value = this.escapeEBISearchSpecialChars(facet.value);
+            var value = facet.value;
             var identifier = dataType + this.settingsManager.FACET_SEPARATOR
                 + facetGroup.id + this.settingsManager.FACET_SEPARATOR + value;
             var facetItem = document.createElement("div");
@@ -1146,7 +1138,7 @@ var FacetManager = function(settingsManager, searchManager) {
 
     this.addHierachicalElement = function(facet, container, parent, facetGroup, parentPath, searchSettings, bonsaiTreeID, parentChecked) {
         var dataType = searchSettings.type;
-        var value = this.escapeEBISearchSpecialChars(facet.value);
+        var value = facet.value;
         if (parentPath != null) {
             value = parentPath + "/" + value;
         }
@@ -1188,13 +1180,28 @@ var FacetManager = function(settingsManager, searchManager) {
 
     this.displayFacets = function(facetGroups, searchSettings) {
         var dataType = searchSettings.type;
+        var self = this;
         var facetContainer = document.getElementById(dataType + "-searchFacets");
         if (facetContainer != null) {
             facetContainer.innerHTML = ""; //clear out old facets
             var facetContainerTitle = document.createElement("h3");
             facetContainerTitle.innerHTML = "Filter your results";
-
             facetContainer.appendChild(facetContainerTitle);
+
+            var resetSearchLink = document.createElement("a");
+            resetSearchLink.innerHTML = "Reset all filters";
+            resetSearchLink.id = dataType + "-search-reset-filter";
+            resetSearchLink.classList.add("search-reset-filters");
+            facetContainer.appendChild(resetSearchLink);
+            resetSearchLink.addEventListener("click", function(event){
+                if (searchSettings.facets != null) {
+                    searchSettings.facets = {};
+                    searchSettings.bonsaiState = {};
+                    self.settingsManager.setSearchSettings(dataType, searchSettings);
+                    self.searchManager.runDomainSearch(searchSettings);
+                }
+            });
+
             if (searchSettings.hasOwnProperty("numericalFields")
                 && searchSettings.numericalFields != null) {
                 this.displayNumericalInputs(facetContainer, searchSettings);
