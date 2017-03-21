@@ -39,7 +39,7 @@
             ]
 
             // Remove the unassigned from displaying on the chart
-            var iData = data.filter(function(item){ return item[0] != "Unassigned" })
+            //var iData = data.filter(function(item){ return item[0] != "Unassigned" })
 
             // Get a value for unassigned reads/OTUs
             var totalUnassigned=[];
@@ -167,7 +167,7 @@
                     name: 'Domain composition',
                     //colorByPoint: true,
                     borderColor: false,// to hide white default border on slice
-                    data:  iData
+                    data:  data
                 }]
             });
 
@@ -183,20 +183,20 @@
             ]
 
             // Remove the unassigned from displaying on the chart
-            var iData = data.filter(function(item){ return item[0] != "Unassigned" })
+            //var iData = data.filter(function(item){ return item[0] != "Unassigned" })
 
             //IMPORTANT - regroup small values under thresold into "Others" to improve pie chart readability
             var newData=[];
             //calculating the threshold: changing for each chart (OR use 20/100 fix treshold) + use round value to be the same as value rounded for slices
             var thresOld=((${model.taxonomyAnalysisResult.sliceVisibilityThresholdNumerator / model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator}*100).toFixed(2));
-
+            //console.log (thresOld)
             var other=0.0
-            for (var slice in iData) {
+            for (var slice in data) {
                 //thresold variable
-                if (iData[slice][2] < thresOld) {
-                    other += iData[slice][1];
+                if (data[slice][2] < thresOld) {
+                    other += data[slice][1];
                 } else {
-                    newData.push(iData[slice]);
+                    newData.push(data[slice]);
                 }
             }
 
@@ -312,10 +312,10 @@
                 subtitle: {
                     <c:choose>
                     <c:when test="${model.run.releaseVersion == '1.0'}">
-                    text: 'Total: ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator} OTUs including '+totalUnassigned+' unassigned',
+                    text: 'Total: ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator} OTUs',
                     </c:when>
                     <c:otherwise>
-                    text: 'Total: ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator} reads including '+totalUnassigned+' unassigned',
+                    text: 'Total: ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator} reads',
                     </c:otherwise>
                     </c:choose>
                     style: {
@@ -358,7 +358,7 @@
                                         //hide all together other rows
                                         var n=l;
                                         var readNum = data.length;//total number of rows
-                                        for (n = l; n < readNum ; n++) {
+                                        for (n = l; n <= readNum ; n++) {
                                           $("#tax_table tbody tr:nth-child("+n+")").toggleClass("disabled");
                                         }
                                     }
@@ -403,136 +403,137 @@
         //table data
         var rowData = [
             <c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResult.taxonomyDataSet}" varStatus="status">
+            <%--//remove unassigned data
             <c:choose>
             <c:when test="${taxonomyData.phylum=='Unassigned'}">
-                //remove unassigned data
+                //leave empty
             </c:when>
-            <c:otherwise>
+            <c:otherwise>--%>
             <%--['${row.index}','<div title="${taxonomyData.phylum}" class="puce-square-legend" style="background-color: #${taxonomyData.colorCode}; "></div> ${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage},'${taxonomyData.phylum}'],--%>
-            ['${status.index}','${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}],
-            </c:otherwise>
-            </c:choose>
-            </c:forEach>
-                ];
-        // TEMP - OTHER POSSIBILITY TO REMOVE UNASSIGNED
-        //        // Remove the unassigned from displaying on the chart
-        //        var irowData = []
-        //        // Remove the unassigned from displaying on the chart
-        //        var irowData = rowData.filter(function(item){ return item[5] != "Unassigned" })
+            ['${status.index}','<div title="${taxonomyData.phylum}" class="puce-square-legend" style="background-color: #${taxonomyData.colorCode}; "></div> ${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}],
+                <%-- </c:otherwise>
+                 </c:choose>--%>
+                 </c:forEach>
+                     ];
+             // TEMP - OTHER POSSIBILITY TO REMOVE UNASSIGNED
+             //        // Remove the unassigned from displaying on the chart
+             //        var irowData = []
+             //        // Remove the unassigned from displaying on the chart
+             //        var irowData = rowData.filter(function(item){ return item[5] != "Unassigned" })
 
-        var t = $('#tax_table').DataTable( {
-            order: [[ 3, "desc" ]],
-            columnDefs: [ //add responsive style as direct css doesn't work
-                {className: "xs_hide", "targets": [0,2]},//hide number + domain columns
-                {className: "table-align-right", "targets": [3,4]}//numbers easier to compare
-            ],
-            //adding ID numbers for each row - used for interaction with chart
-            createdRow: function (row, rowData, dataIndex) {
-                $(row).addClass(""+dataIndex);
-            },
-            oLanguage: {
-                "sSearch": "Filter table: "
-            },
-            lengthMenu: [[25, 50, 100, -1], [25, 50, 100, "All"]],
-            data: rowData,
-            columns: [
-                { title: "" },
-                { title: "Phylum" },
-                { title: "Domain" },
-                <c:choose>
-                <c:when test="${model.run.releaseVersion == '1.0'}">
-                { title: "Unique OTUs" },
-                </c:when>
-                    <c:otherwise>{title: "Reads"},
-                </c:otherwise>
-                </c:choose>
-                { title: "%" },
-            ]
-        } );
-         //insert a "fixed" number for lines as first column and make it not sortable nor searchable
-        t.on( 'order.dt search.dt', function () {
-            t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
-                cell.innerHTML = i+1;
-            } );
-        } ).draw();
+             var t = $('#tax_table').DataTable( {
+                 order: [[ 3, "desc" ]],
+                 columnDefs: [ //add responsive style as direct css doesn't work
+                     {className: "xs_hide", "targets": [0,2]},//hide number + domain columns
+                     {className: "table-align-right", "targets": [3,4]}//numbers easier to compare
+                 ],
+                 //adding ID numbers for each row - used for interaction with chart
+                 createdRow: function (row, rowData, dataIndex) {
+                     $(row).addClass(""+dataIndex);
+                 },
+                 oLanguage: {
+                     "sSearch": "Filter table: "
+                 },
+                 lengthMenu: [[25, 50, 100, -1], [25, 50, 100, "All"]],
+                 data: rowData,
+                 columns: [
+                     { title: "" },
+                     { title: "Phylum" },
+                     { title: "Domain" },
+                     <c:choose>
+                     <c:when test="${model.run.releaseVersion == '1.0'}">
+                     { title: "Unique OTUs" },
+                     </c:when>
+                         <c:otherwise>{title: "Reads"},
+                     </c:otherwise>
+                     </c:choose>
+                     { title: "%" },
+                 ]
+             } );
+              //insert a "fixed" number for lines as first column and make it not sortable nor searchable
+             t.on( 'order.dt search.dt', function () {
+                 t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+                     cell.innerHTML = i+1;
+                 } );
+             } ).draw();
 
 
-        // ADD INTERACTION BETWEEN TABLE ROW AND PIE CHART
+             // ADD INTERACTION BETWEEN TABLE ROW AND PIE CHART
 
-        $("#tax_table tbody").on('click', 'tr', function(){
-            //important - use row Id for interaction otherwise table sorting was messsing the use of $(this).index()
-            var legInd = (this).className.split(' ')[0];
-//            console.log(legInd)
-//          var index = $(this).index();
-            var point = $('#tax_chart_pie_phylum').highcharts().series[0].points[legInd];
-//            console.log(point)
+             $("#tax_table tbody").on('click', 'tr', function(){
+                 //important - use row Id for interaction otherwise table sorting was messsing the use of $(this).index()
+                 var legInd = (this).className.split(' ')[0];
+     //            console.log(legInd)
+     //          var index = $(this).index();
+                 var point = $('#tax_chart_pie_phylum').highcharts().series[0].points[legInd];
+     //            console.log(point)
 
-            if (point && point.name!="Other") {
-                    point.setVisible(!point.visible);
-                    $(this).toggleClass("disabled");
-            }
-            else
-            // point undefined - show/hide whole "other" slice
-            { var l = $('#tax_chart_pie_phylum').highcharts().series[0].points.length;
-               var point = $('#tax_chart_pie_phylum').highcharts().series[0].points [l - 1];
-              point.setVisible(!point.visible);
+                 if (point && point.name!="Other") {
+                         point.setVisible(!point.visible);
+                         $(this).toggleClass("disabled");
+                 }
+                 else
+                 // point undefined - show/hide whole "other" slice
+                 { var l = $('#tax_chart_pie_phylum').highcharts().series[0].points.length;
+                    var point = $('#tax_chart_pie_phylum').highcharts().series[0].points [l - 1];
+                   point.setVisible(!point.visible);
 
-                var readNum = ${fn:length(model.taxonomyAnalysisResult.taxonomyDataSet)};//total number of records
-                for (n = l; n < readNum ; n++) {
-                    $("#tax_table tbody tr:nth-child("+n+")").toggleClass("disabled");
-                }
-             }
+                     var readNum = ${fn:length(model.taxonomyAnalysisResult.taxonomyDataSet)};//total number of records
+                     for (n = l; n <= readNum ; n++) {
+                         $("#tax_table tbody tr:nth-child("+n+")").toggleClass("disabled");
+                     }
+                  }
 
-        });
+             });
 
-        $("#tax_table tbody").on('mouseenter', 'tr', function(){
-            var legInd = (this).className.split(' ')[0];
-            var chart = $('#tax_chart_pie_phylum').highcharts();
-            var point = chart.series[0].points[legInd];
-            if (point) {
-            point.setState('hover');
-            chart.tooltip.refresh(point);
-            } else
-             //highlight other
-            { var l = $('#tax_chart_pie_phylum').highcharts().series[0].points.length;
-              var point = $('#tax_chart_pie_phylum').highcharts().series[0].points [l - 1];
-             point.setState('hover');
-             chart.tooltip.refresh(point);}
-        });
+             $("#tax_table tbody").on('mouseenter', 'tr', function(){
+                 var legInd = (this).className.split(' ')[0];
+                 var chart = $('#tax_chart_pie_phylum').highcharts();
+                 var point = chart.series[0].points[legInd];
+                 if (point) {
+                 point.setState('hover');
+                 chart.tooltip.refresh(point);
+                 } else
+                  //highlight other
+                 { var l = $('#tax_chart_pie_phylum').highcharts().series[0].points.length;
+                   var point = $('#tax_chart_pie_phylum').highcharts().series[0].points [l - 1];
+                  point.setState('hover');
+                  chart.tooltip.refresh(point);}
+             });
 
-        $("#tax_table tbody").on('mouseleave', 'tr', function(){
-            var legInd = (this).className.split(' ')[0];
-            var chart = $('#tax_chart_pie_phylum').highcharts();
-            var point = chart.series[0].points[legInd];
+             $("#tax_table tbody").on('mouseleave', 'tr', function(){
+                 var legInd = (this).className.split(' ')[0];
+                 var chart = $('#tax_chart_pie_phylum').highcharts();
+                 var point = chart.series[0].points[legInd];
 
-            if (point) {
-            point.setState('');}
-            else
-            //unselect other slice
-            {var l = $('#tax_chart_pie_phylum').highcharts().series[0].points.length;
-                var point = $('#tax_chart_pie_phylum').highcharts().series[0].points [l - 1];
-                point.setState('');}
-        });
+                 if (point) {
+                 point.setState('');}
+                 else
+                 //unselect other slice
+                 {var l = $('#tax_chart_pie_phylum').highcharts().series[0].points.length;
+                     var point = $('#tax_chart_pie_phylum').highcharts().series[0].points [l - 1];
+                     point.setState('');}
+             });
 
-        //HIGHLIGHT TERMS IN DATATABLE
-        $("#tax_table_filter input").addClass("filter_sp");
-        // Highlight the search term in the table (all except first number column) using the filter input, using jQuery Highlight plugin
-        $('.filter_sp').keyup(function () {
-            $("#tax_table tr td:nth-child(n+2)").highlight($(this).val());
-            $('#tax_table tr td:nth-child(n+2)').unhighlight();// highlight more than just first character entered in the text box and reiterate the span to highlight
-            $('#tax_table tr td:nth-child(n+2)').highlight($(this).val());
-        });
-        // remove highlight when click on X (clear button)
-        $('input[type=search]').on('search', function () {
-            $('#tax_table tr td').unhighlight();
-        });
-    } );
+             //HIGHLIGHT TERMS IN DATATABLE
+             $("#tax_table_filter input").addClass("filter_sp");
+             // Highlight the search term in the table (all except first number column) using the filter input, using jQuery Highlight plugin
+             $('.filter_sp').keyup(function () {
+                 $("#tax_table tr td:nth-child(n+2)").highlight($(this).val());
+                 $('#tax_table tr td:nth-child(n+2)').unhighlight();// highlight more than just first character entered in the text box and reiterate the span to highlight
+                 $('#tax_table tr td:nth-child(n+2)').highlight($(this).val());
+             });
+             // remove highlight when click on X (clear button)
+             $('input[type=search]').on('search', function () {
+                 $('#tax_table tr td').unhighlight();
+             });
+         } );
 
-</script>
-<script type="text/javascript">
-    // script to make the tab download link work
-    $('.open-tab').click(function (event) {
-        $('#navtabs').tabs("option", "active", $(this).data("tab-index"));
-    });
-</script>
+     </script>
+     <script type="text/javascript">
+         // script to make the tab download link work
+         $('.open-tab').click(function (event) {
+             $('#navtabs').tabs("option", "active", $(this).data("tab-index"));
+         });
+     </script>
 
