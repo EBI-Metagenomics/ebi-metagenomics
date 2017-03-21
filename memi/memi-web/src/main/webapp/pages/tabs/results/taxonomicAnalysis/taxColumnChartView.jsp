@@ -28,14 +28,7 @@
         //table data
         var rowData = [
             <c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResult.taxonomyDataSet}" varStatus="status">
-            <c:choose>
-            <c:when test="${taxonomyData.phylum=='Unassigned'}">
-            //remove unassigned data
-            </c:when>
-            <c:otherwise>
-            ['${status.index}','${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}],
-            </c:otherwise>
-            </c:choose>
+            ['${status.index}','<div title="${taxonomyData.phylum}" class="puce-square-legend" style="background-color: #${taxonomyData.colorCode};"></div> ${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}],
             </c:forEach>
         ];
 
@@ -140,7 +133,7 @@
             ]
 
             // Remove the unassigned from displaying on the chart
-            var iData = data.filter(function(item){ return item.name != "Unassigned" })
+            //var iData = data.filter(function(item){ return item.name != "Unassigned" })
 
             // Get a value for unassigned reads/OTUs
             var UnData = []
@@ -236,10 +229,10 @@
                 subtitle: {
                 <c:choose>
                  <c:when test="${model.run.releaseVersion == '1.0'}">
-                    text: 'Total: ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator} OTUs including '+totalUnassigned+' unassigned',
+                    text: 'Total: ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator} OTUs',
                  </c:when>
                     <c:otherwise>
-                    text: 'Total: ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator} reads including '+totalUnassigned+' unassigned',
+                    text: 'Total: ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator} reads',
                     </c:otherwise>
                     </c:choose>
                     style: {
@@ -304,7 +297,7 @@
 //                        }
                     }
                 },
-                series: iData
+                series: data
             });
         });
     });
