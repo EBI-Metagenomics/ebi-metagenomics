@@ -390,7 +390,7 @@ background:url(../img/bgd_black_op20_8.png);
 .dataTable.table-glight tbody tr.disabled {background-color:#eaeaea; color:darkgrey;}
 .dataTable.table-glight tbody tr.disabled td a, .dataTable.table-glight tbody tr.disabled td a:link, .dataTable.table-glight tbody tr.disabled td a:visited {color:darkgrey;}
 .dataTable.table-glight tbody tr.disabled td.sorting_1 {color:darkgrey;}
-.dataTable.table-glight tbody tr.disabled .puce-square-legend {background-color:darkgrey;}
+.dataTable.table-glight tbody tr.disabled .puce-square-legend {opacity: 0.5;}
 /*/Google Light table version*/
 
 
