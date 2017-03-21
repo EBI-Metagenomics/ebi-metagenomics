@@ -1587,32 +1587,37 @@ background-image: -webkit-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247
 .ui-tabs .ui-tabs-nav li .icon-functional:before {color:#3b4043;font-size: 164%; width: 20px; font-weight: normal;  padding-left: 3px; }
 .sample_ana .ui-tabs .ui-tabs-nav li .icon-functional:before {color:#2B8A97;font-size: 111%; padding-left: 0px; }
 
+/*.ico-krona {background: url(../img/ico_chart_krona.png) no-repeat 50%;}*/
+/*li.ui-tabs-active .ico-krona {background: url(../img/ico_chart_krona_on.png) no-repeat 50%;}*/
+
+/*.ico-pie {background: url(../img/ico_chart_pie.png) no-repeat 50% 50%;}*/
+/*li.ui-tabs-active .ico-pie {background: url(../img/ico_chart_pie_on.png) no-repeat 50% ;}*/
+
+/*.ico-barh {background: url(../img/ico_chart_bar.png) no-repeat  50%;}*/
+/*li.ui-tabs-active .ico-barh {background: url(../img/ico_chart_bar_on.png) no-repeat 50%;}*/
+
+/*.ico-col {background: url(../img/ico_chart_col.png) no-repeat 50%;}*/
+/*li.ui-tabs-active .ico-col {background: url(../img/ico_chart_col_on.png) no-repeat 50%;}*/
+
 .ico-krona {background: url(../img/ico_graph_krona.png) no-repeat 50%;}
-li.ui-tabs-selected .ico-krona {background: url(../img/ico_graph_krona_on.png) no-repeat 50%;} /*not used anymore - old tab?*/
 li.ui-tabs-active .ico-krona {background: url(../img/ico_graph_krona_on.png) no-repeat 50%;}
 
 .ico-pie {background: url(../img/ico_graph_pie.png) no-repeat 50% 50%;}
-li.ui-tabs-selected .ico-pie {background: url(../img/ico_graph_pie_on.png) no-repeat 50%; }
 li.ui-tabs-active .ico-pie {background: url(../img/ico_graph_pie_on.png) no-repeat 50% ;}
 
 .ico-barh {background: url(../img/ico_graph_barh.png) no-repeat  50%;}
-li.ui-tabs-selected .ico-barh {background: url(../img/ico_graph_barh_on.png) no-repeat 50%;}/*not used anymore - old tab?*/
 li.ui-tabs-active .ico-barh {background: url(../img/ico_graph_barh_on.png) no-repeat 50%;}
 
 .ico-col {background: url(../img/ico_graph_col.png) no-repeat 50%;}
-li.ui-tabs-selected .ico-col {background: url(../img/ico_graph_col_on.png) no-repeat 50%;}/*not used anymore - old tab?*/
 li.ui-tabs-active .ico-col {background: url(../img/ico_graph_col_on.png) no-repeat 50%;}
 
 .ico-heatmap {background: url(../img/ico_graph_heatmap.png) no-repeat 50%;}
-li.ui-tabs-selected .ico-heatmap {background: url(../img/ico_graph_heatmap_on.png) no-repeat 50%;}/*not used anymore - old tab?*/
 li.ui-tabs-active .ico-heatmap {background: url(../img/ico_graph_heatmap_on.png) no-repeat 50%;}
 
 .ico-pca {background: url(../img/ico_graph_pca.png) no-repeat 50%;}
-li.ui-tabs-selected .ico-pca {background: url(../img/ico_graph_pca_on.png) no-repeat 50%;}/*not used anymore - old tab?*/
 li.ui-tabs-active .ico-pca {background: url(../img/ico_graph_pca_on.png) no-repeat 50%;}
 
 .ico-table {background: url(../img/ico_graph_table.png) no-repeat 50%;}
-li.ui-tabs-selected .ico-table {background: url(../img/ico_graph_table_on.png) no-repeat 50%;}  /*not used anymore - old tab?*/
 li.ui-tabs-active .ico-table {background: url(../img/ico_graph_table_on.png) no-repeat 50%;}
 
 .ico-krona, .ico-pie, .ico-barh, .ico-col, .ico-heatmap, .ico-pca, .ico-table {width:36px; height:36px; display:block;}
