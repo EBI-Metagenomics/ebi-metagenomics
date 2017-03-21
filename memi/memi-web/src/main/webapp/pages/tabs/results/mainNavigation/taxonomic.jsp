@@ -18,7 +18,7 @@
 
                 <div id="tabs-taxchart">
                     <ul>
-                        <li class="selector_tab">Switch view:</li>
+                        <li class="selector_tab xs_hide">Switch view:</li>
                             <%--<li><a href="#tax-table" title="Table view"><span class="ico-table"></span></a></li>--%>
                         <li class="but_krona"><a class="show_tooltip" title="Krona chart view"
                                                  href="<c:url value="${baseURL}/projects/${model.run.externalProjectId}/samples/${model.run.externalSampleId}/runs/${model.run.externalRunId}/results/kronaChartView/versions/${model.analysisJob.pipelineRelease.releaseVersion}"/>"><span
