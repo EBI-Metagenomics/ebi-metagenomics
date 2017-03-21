@@ -2173,3 +2173,8 @@ div#local-masthead div.navbar-header {float:none;}
 .homepage-search-link {
     cursor: pointer;
 }
+
+.search-clickable-link {
+    cursor: pointer;
+    color: #2B8A97;
+}

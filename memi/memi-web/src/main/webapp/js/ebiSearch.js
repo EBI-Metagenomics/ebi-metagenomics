@@ -1045,8 +1045,9 @@ var FacetManager = function(settingsManager, searchManager) {
         extraControlsDiv.classList.add("extra-pad");
 
         if (facetGroup.total > 10) {
-            var moreFacetsLink = document.createElement("a");
+            var moreFacetsLink = document.createElement("span");
             moreFacetsLink.innerHTML = "More...";
+            moreFacetsLink.classList.add("search-clickable-link");
             extraControlsDiv.appendChild(moreFacetsLink);
             this.addMoreFacetsListener(searchSettings, facetGroup, moreFacetsLink,
                 facetGroupContainer, this.showMoreFacetsInDialog);
@@ -1060,8 +1061,9 @@ var FacetManager = function(settingsManager, searchManager) {
                 extraControlsDiv.appendChild(textNode);
             }
 
-            var clearFacetsLink = document.createElement("a");
+            var clearFacetsLink = document.createElement("span");
             clearFacetsLink.innerHTML = "Clear Selection";
+            clearFacetsLink.classList.add("search-clickable-link");
             extraControlsDiv.appendChild(clearFacetsLink);
             this.addClearFacetListener(searchSettings, facetGroup, clearFacetsLink);
         }
@@ -1115,8 +1117,9 @@ var FacetManager = function(settingsManager, searchManager) {
 
         var extraControlsDiv = document.createElement("div");
         extraControlsDiv.classList.add("extra-pad");
-        var moreFacetsLink = document.createElement("a");
+        var moreFacetsLink = document.createElement("span");
         moreFacetsLink.innerHTML = "More...";
+        moreFacetsLink.classList.add("search-clickable-link");
         extraControlsDiv.appendChild(moreFacetsLink);
         facetGroupContainer.appendChild(extraControlsDiv);
 
@@ -1129,8 +1132,9 @@ var FacetManager = function(settingsManager, searchManager) {
             var textNode = document.createTextNode(" | ");
             extraControlsDiv.appendChild(textNode);
 
-            var clearFacetsLink = document.createElement("a");
+            var clearFacetsLink = document.createElement("span");
             clearFacetsLink.innerHTML = "Clear Selection";
+            clearFacetsLink.classList.add("search-clickable-link");
             extraControlsDiv.appendChild(clearFacetsLink);
             this.addClearFacetListener(searchSettings, facetGroup, clearFacetsLink);
         }
@@ -1188,19 +1192,22 @@ var FacetManager = function(settingsManager, searchManager) {
             facetContainerTitle.innerHTML = "Filter your results";
             facetContainer.appendChild(facetContainerTitle);
 
-            var resetSearchLink = document.createElement("a");
-            resetSearchLink.innerHTML = "Reset all filters";
-            resetSearchLink.id = dataType + "-search-reset-filter";
-            resetSearchLink.classList.add("search-reset-filters");
-            facetContainer.appendChild(resetSearchLink);
-            resetSearchLink.addEventListener("click", function(event){
-                if (searchSettings.facets != null) {
-                    searchSettings.facets = {};
-                    searchSettings.bonsaiState = {};
-                    self.settingsManager.setSearchSettings(dataType, searchSettings);
-                    self.searchManager.runDomainSearch(searchSettings);
-                }
-            });
+            if (searchSettings.facets != null
+                && Object.keys(searchSettings.facets).length > 0) {
+                var resetSearchLink = document.createElement("span");
+                resetSearchLink.innerHTML = "Reset all filters";
+                resetSearchLink.id = dataType + "-search-reset-filter";
+                resetSearchLink.classList.add("search-clickable-link");
+                facetContainer.appendChild(resetSearchLink);
+                resetSearchLink.addEventListener("click", function(event){
+                    if (searchSettings.facets != null) {
+                        searchSettings.facets = {};
+                        searchSettings.bonsaiState = {};
+                        self.settingsManager.setSearchSettings(dataType, searchSettings);
+                        self.searchManager.runDomainSearch(searchSettings);
+                    }
+                });
+            }
 
             if (searchSettings.hasOwnProperty("numericalFields")
                 && searchSettings.numericalFields != null) {
