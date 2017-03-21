@@ -438,7 +438,7 @@ a.next:hover, a.next:active {height:100%;}/*clash with EBI style so I have to fo
 table.dataTable.no-footer {border-bottom: 1px solid #D5D5D5;}
 
 .dataTables_wrapper .dataTables_length, .dataTables_wrapper .dataTables_filter, .dataTables_wrapper .dataTables_info, .dataTables_wrapper .dataTables_processing, .dataTables_wrapper .dataTables_paginate {color: #333333;padding-left: 9px;padding-right: 9px;}
-.dataTables_wrapper .dataTables_filter {padding-right: 15px;}/*little extra to align filter to the table*/
+.dataTables_wrapper .dataTables_filter {padding-right: 10px;}/*little extra to align filter to the table*/
 .dataTables_wrapper {position: relative;clear: both;*zoom: 1; zoom: 1;}
 .dataTables_wrapper .dataTables_length {float: left;}/*show X number of entries*/
 .dataTables_wrapper .dataTables_filter { text-align: right; } /*float: right;*/
