@@ -350,16 +350,14 @@
                                     //interaction between chart legend -> table
                                     var visibility = this.visible ? 'visible' : 'hidden';
                                     var index = this.index +1;
-
                                     var l = $('#tax_chart_pie_phylum').highcharts().series[0].points.length;
-
-                                    if (index<l) {$("#tax_table tbody tr:nth-child("+index+")").toggleClass("disabled");}
+                                    if (index<l) {$("#tax_table tbody tr."+this.index+"").toggleClass("disabled");}//"invisible" effect as datatable is replaced
                                     if (index==l) {
                                         //hide all together other rows
                                         var n=l;
                                         var readNum = data.length;//total number of rows
                                         for (n = l; n <= readNum ; n++) {
-                                          $("#tax_table tbody tr:nth-child("+n+")").toggleClass("disabled");
+                                          $("#tax_table tbody tr."+n+"").toggleClass("disabled");
                                         }
                                     }
 //                                    if (!confirm('This '+ index +' series on '+l+' is currently ' +
@@ -459,7 +457,7 @@
 
 
              // ADD INTERACTION BETWEEN TABLE ROW AND PIE CHART
-
+             // Note - some interaction improvement to do across pages (e.g. row select Other not maintained)
              $("#tax_table tbody").on('click', 'tr', function(){
                  //important - use row Id for interaction otherwise table sorting was messsing the use of $(this).index()
                  var legInd = (this).className.split(' ')[0];
@@ -479,8 +477,9 @@
                    point.setVisible(!point.visible);
 
                      var readNum = ${fn:length(model.taxonomyAnalysisResult.taxonomyDataSet)};//total number of records
-                     for (n = l; n <= readNum ; n++) {
-                         $("#tax_table tbody tr:nth-child("+n+")").toggleClass("disabled");
+//                     console.log(readNum)
+                     for (n = l-1; n <= readNum ; n++) {
+                         $("#tax_table tbody tr."+n+"").toggleClass("disabled");
                      }
                   }
 
