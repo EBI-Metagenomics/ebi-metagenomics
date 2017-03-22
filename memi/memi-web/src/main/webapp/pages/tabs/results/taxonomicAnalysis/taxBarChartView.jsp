@@ -70,6 +70,7 @@
         } ).draw();
 
         // ADD INTERACTION BETWEEN TABLE ROW AND BAR CHART
+        // Note - some interaction improvement to do across pages (e.g. row select Other not maintained)
         $("#tax_table_bar tbody").on('click', 'tr', function(){
             //important - use row Id for interaction otherwise table sorting was messsing the use of $(this).index()
             var legInd = (this).className.split(' ')[0];
@@ -91,8 +92,8 @@
                   point.select(null, true);
 
                     var readNum = ${fn:length(model.taxonomyAnalysisResult.taxonomyDataSet)};//total number of records
-                    for (n = l; n <= readNum ; n++) {
-                        $("#tax_table_bar tbody tr:nth-child("+n+")").toggleClass("disabled");
+                    for (n = l-1; n <= readNum ; n++) {
+                        $("#tax_table_bar tbody tr."+n+"").toggleClass("disabled");
                     }
                 }
         });
