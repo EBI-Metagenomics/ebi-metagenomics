@@ -9,7 +9,7 @@ var getExportingStructure = function (urlToFile,content) {
     return {
         buttons: {
             contextButton: {
-                symbol: 'url(/metagenomics/img/ico_download.png)',
+                symbol: 'url(/metagenomics/img/ico_download_custom.svg)',
                 menuItems: [{
                     textKey: 'downloadData',
                     onclick: function () {
