@@ -185,7 +185,7 @@
                 exporting: {
                     buttons: {
                         contextButton: {
-                            symbol: 'url(${pageContext.request.contextPath}/img/ico_download.png)',// img icon export
+                            symbol: 'url(${pageContext.request.contextPath}/img/ico_download_custom.svg)',// img icon export
                             menuItems: [
                                 {
                                     textKey: 'printChart',
@@ -359,7 +359,7 @@
                 exporting: {
                     buttons: {
                         contextButton: {
-                            symbol: 'url(${pageContext.request.contextPath}/img/ico_download.png)',// img icon export
+                            symbol: 'url(${pageContext.request.contextPath}/img/ico_download_custom.svg)',// img icon export
                             menuItems: [
                                 {
                                     textKey: 'printChart',
