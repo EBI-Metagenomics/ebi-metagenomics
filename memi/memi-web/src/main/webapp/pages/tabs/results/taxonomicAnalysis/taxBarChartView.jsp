@@ -83,7 +83,7 @@
 //                alert(point.visible)//true or not
 //                point.remove(); //kills the index but resize well
 //                point.graphic.hide();//can't find a way to do working if statement working like: if (point.graphic).
-                        $(this).toggleClass("disabled");
+                        $(this).toggleClass("disabled");//no need to select all other slice on stacked column as we show all individual slices
                 }
                 else
                 //show/hide whole "other" slice
