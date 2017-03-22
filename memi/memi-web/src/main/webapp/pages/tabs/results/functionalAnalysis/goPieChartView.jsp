@@ -78,7 +78,7 @@
                 exporting: {
                     buttons: {
                         contextButton: {
-                            symbol: 'url(<c:url value="${baseURL}/img/ico_download.png"/>)',
+                            symbol: 'url(<c:url value="${baseURL}/img/ico_download_custom.svg"/>)',
                             menuItems: [
                                 {
                                     textKey: 'printChart',
@@ -241,7 +241,7 @@
                 exporting: {
                     buttons: {
                         contextButton: {
-                            symbol: 'url(<c:url value="${baseURL}/img/ico_download.png"/>)',
+                            symbol: 'url(<c:url value="${baseURL}/img/ico_download_custom.svg"/>)',
                             menuItems: [
                                 {
                                     textKey: 'printChart',
@@ -402,7 +402,7 @@
                 exporting: {
                     buttons: {
                         contextButton: {
-                            symbol: 'url(<c:url value="${baseURL}/img/ico_download.png"/>)',
+                            symbol: 'url(<c:url value="${baseURL}/img/ico_download_custom.svg"/>)',
                             menuItems: [
                                 {
                                     textKey: 'printChart',
