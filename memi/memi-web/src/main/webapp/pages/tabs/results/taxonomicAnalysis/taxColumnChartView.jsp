@@ -5,7 +5,7 @@
 <div id="tax-col">
 
     <div  class="chart_container" >
-        <div class="grid_24"><div id="tax_chart_col" style="height: 360px;"></div></div>
+        <div class="grid_24"><div id="tax_chart_col" style="height: 360px; width:70%; margin:0 auto;"></div></div>
         <div class="grid_24"> <table id="tax_table_col" class="table-glight"></table></div>
     </div>
 
