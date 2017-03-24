@@ -359,6 +359,30 @@
         <property name="order" value="20"/>
     </bean>
 
+    <bean id="qualityControlGCFile" autowire-candidate="false"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.QCFileDefinition">
+        <property name="identifier" value="QUALITY_CONTROL_GC_FILE"/>
+        <property name="relativePath" value="/qc-statistics/GC-distribution.out.full"/>
+        <property name="description" value="Quality control file with the GC content."/>
+        <property name="linkTitle" value=""/>
+        <property name="linkURL" value=""/>
+        <property name="linkText" value=""/>
+        <property name="downloadName" value="_qc_GC"/>
+        <property name="order" value="20"/>
+    </bean>
+
+    <bean id="qualityControlGCFileSubset" autowire-candidate="false"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.QCFileDefinition">
+        <property name="identifier" value="QUALITY_CONTROL_GC_FILE_SUBSET"/>
+        <property name="relativePath" value="/qc-statistics/GC-distribution.out.sub-set"/>
+        <property name="description" value="Quality control file with the GC content (subset)."/>
+        <property name="linkTitle" value=""/>
+        <property name="linkURL" value=""/>
+        <property name="linkText" value=""/>
+        <property name="downloadName" value="_qc_GC"/>
+        <property name="order" value="20"/>
+    </bean>
+
     <bean id="qualityControlNucleotideHistogramFile" autowire-candidate="false"
           class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.QCFileDefinition">
         <property name="identifier" value="QUALITY_CONTROL_NUCLEOTIDE_HISTOGRAM_FILE"/>

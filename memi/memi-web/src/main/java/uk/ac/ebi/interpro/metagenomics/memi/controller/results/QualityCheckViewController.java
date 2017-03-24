@@ -127,6 +127,10 @@ public class QualityCheckViewController extends AbstractResultViewController {
             fileDefinitionId = FileDefinitionId.QC_GC_BIN;
         }else if (resultType.equalsIgnoreCase("gc_bin.sub-set")) {
             fileDefinitionId = FileDefinitionId.QC_GC_BIN_SUBSET;
+        }else if (resultType.equalsIgnoreCase("gc")) {
+            fileDefinitionId = FileDefinitionId.QC_GC;
+        }else if (resultType.equalsIgnoreCase("gc.sub-set")) {
+            fileDefinitionId = FileDefinitionId.QC_GC_SUBSET;
         }else {
             log.warn("Result type: " + resultType + " not found!");
         }

@@ -4,6 +4,7 @@ Highcharts.setOptions({
         downloadData: "Download data file"
     }
 });
+var zoom_msg = "Click and drag in the plot area to zoom in";
 
 var getExportingStructure = function (urlToFile,content) {
     return {
@@ -342,7 +343,6 @@ var drawSequenceLengthHistogram = function (rawdata, isFromSubset, stats,urlToFi
             return line.split("\t").map(function(v){ return 1*v; });
     });
     var length_max=Math.max.apply(null,data.map(function(e){ if (e) {return e[0];} }));
-    var zoom_msg = "Click and drag in the plot area to zoom in";
 
     $('#seq_len').highcharts({
         chart: {
@@ -546,10 +546,10 @@ var drawSequenceGCDistribution = function (rawdata,isFromSubset, stats, urlToFil
     // Create the chart
     $('#seq_gc').highcharts({
         chart: {
-            type: 'areaspline',
             style: {
                 fontFamily: 'Helvetica'
-            }
+            },
+            zoomType: 'x'
         },
         title: {
             text: 'Reads GC distribution',
@@ -558,7 +558,7 @@ var drawSequenceGCDistribution = function (rawdata,isFromSubset, stats, urlToFil
                 fontWeight: "bold"
             }
         },
-        subtitle: { text: (isFromSubset)?'A subset of the sequences was used to generate this chart':undefined},
+        subtitle: { text: ((isFromSubset)?'A subset of the sequences was used to generate this chart -':'')+zoom_msg},
         yAxis: {
             title: { text: "Number of reads" }
         },

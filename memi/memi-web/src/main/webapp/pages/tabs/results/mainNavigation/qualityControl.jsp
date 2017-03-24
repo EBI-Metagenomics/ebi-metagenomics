@@ -31,7 +31,7 @@
                         file_summary = common_path + 'summary',
                         file_length  = common_path + 'length',
                         file_stats   = common_path + 'stats',
-                        file_gc      = common_path + 'gc_bin',
+                        file_gc      = common_path + 'gc',
                         file_base    = common_path + 'base',
                         numberOfLines = 4;
 
