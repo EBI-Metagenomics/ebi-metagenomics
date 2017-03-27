@@ -17,7 +17,8 @@ public class InterProEntry {
 
     public InterProEntry(String entryID, String entryDescription, int numOfEntryHits) {
         this.entryID = entryID;
-        this.entryDescription = entryDescription;
+        // replace all interpro entries with prime symbol in their name e.g.Primosomal protein N' where the ' is translated into \ in highchart
+        this.entryDescription = entryDescription.replace("\\", "\\u2032");
         this.numOfEntryHits = numOfEntryHits;
     }
 
