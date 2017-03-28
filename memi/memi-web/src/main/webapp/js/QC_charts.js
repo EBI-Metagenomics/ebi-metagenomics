@@ -76,73 +76,72 @@ var getExportingStructure = function (urlToFile,content) {
         }
     };
 }
-var sumNumberOfReadsChart = function (rawdata, numberOfLines, sequenceCount, urlToFile) {
+var sumNumberOfReadsChart = function (rawdata, numberOfLines, sequenceCount, urlToFile, release_version) {
     if (typeof rawdata === "undefined" || rawdata === null) return;
-    var data = [],
-        categories = [
-            "Reads with predicted CDS",
-            "Reads with predicted RNA",
-            "Reads with InterPro match",
-            "Predicted CDS",
-            "Predicted CDS with InterPro match",
-        ].splice(0, numberOfLines),
-        remainders = 0;
+    var data = [];
 
-    rawdata.split('\n')
-        .splice(6, numberOfLines)//important - start at position 6 as we don't need the first lines
-        .forEach(function(l ,i){
-            var line = l.split("\t"),
-                value =Number(line[1]);
-            //categories.push(line[0]);
-            if (value>-1)
-                data.push({
-                    y: value,
-                    x: data.length,
-                    color: "#058dc7"
-                });
-            else
-                categories[i] = null;
-
-            if (i==3) remainders = value;
-        });
-
-    if (sequenceCount!= null && remainders > sequenceCount) {
-        categories.push("Reads subsampled for QC analysis");
-        data.push({
-            x: data.length,
-            y: sequenceCount,
-            color: "#8dc7c7"
-        });
-    }
-    if (data.length<2){
-        $('#sq_sum').html("<div class='msg_error'>There is no sequence summary data available for this run.</div>");//shouldn't happen
+    //Preparing the right labels for the charts. That is depending on the pipeline version.
+    var second_category = null;
+    if (release_version == "1.0" || release_version == "2.0") {
+        second_category = "Reads with predicted rRNA"
+    } else if (release_version == "3.0") {
+        second_category = "Reads with predicted RNA"
+    } else{
+        $('#sq_sum').html("<div class='msg_error'>This pipeline version does not supported the sequence summary feature yet.</div>");//shouldn't happen
         return;
     }
+    var categories = [
+        "Reads with predicted CDS",
+        second_category,
+        "Reads with InterPro match",
+        "Predicted CDS",
+        "Predicted CDS with InterPro match",
+    ].splice(0, numberOfLines);
+
+    //Parse values from text file and store key values in a map
+    var feature_counts = [];
+    rawdata.split('\n')
+        //.splice(4, numberOfLines)//important - start at position 6 as we don't need the first lines
+        .forEach(function (l ,i) {
+
+            var line = l.split("\t");
+            var key = String(line[0]).trim();
+            var value = Number(line[1]);
+            if (key == "Nucleotide sequences with predicted CDS") {
+                feature_counts[0] = value;
+            } else if (key == "Nucleotide sequences with InterProScan match") {
+                feature_counts[2] = value;
+            } else if (key == "Predicted CDS") {
+                feature_counts[3] = value;
+            } else if (key == "Predicted CDS with InterProScan match") {
+                feature_counts[4] = value;
+            } else if (key.endsWith("RNA")) {
+                feature_counts[1] = value;
+            }
+        });
+    for (var i = 0; i < feature_counts.length; i++) {
+        data.push({
+            y: feature_counts[i],
+            x: data.length,
+            color: "#058dc7"
+        });
+    }
+
+
+    if (data.length < 2){
+        $('#sq_sum').html("<div class='msg_error'>There is no sequence summary data available for this run.</div>");//shouldn't happen
+        return;
+    } else if (feature_counts.length != 5) {
+        $('#sq_sum').html("<div class='msg_error'>Could not parse all sequence summary counts for this run.</div>");
+    }
+
     categories = categories.filter(function(value){ return value!=null});
-    var length = data[0],
-        series = [
-        //     {
-        //     name : "Reads filtered out",
-        //     data : data.map(function(n){
-        //         var current = length- n.y;
-        //         length = n.y;
-        //         return current;
-        //     }),
-        //     color: "#ccccdd",
-        //     pointPadding: 0
-        // },
-            {
+    var series = [{
             name : "Reads",
             data : data,
             color: "#058dc7",
             pointPadding: 0
         }];
-    if (sequenceCount!= null && remainders > sequenceCount)
-        series.push({
-            name: "Reads after sampling",
-            color: "#8dc7c7"
-        });
-
     $('#sq_sum').highcharts({
         chart: { type: 'bar', height: 220,
             style: {
@@ -163,10 +162,6 @@ var sumNumberOfReadsChart = function (rawdata, numberOfLines, sequenceCount, url
             pointFormatter: function () {
             return '<span style="color:'+this.color+'">&#9632;</span> '+this.category+': <br/><strong>'+(this.y)+'</strong>';
              }
-        // tooltip: {
-        //
-        //     pointFormat: '<span style=\'color:{point.color}\'>&#9632;</span> <span style=\'font-size:88%;\'>{point.name}: </span><br/><strong><small>{point.y}</small></strong> reads ',
-        //
          },
         legend: {
             enabled:false,

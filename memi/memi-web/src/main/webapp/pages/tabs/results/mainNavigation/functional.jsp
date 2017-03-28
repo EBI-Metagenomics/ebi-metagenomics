@@ -44,8 +44,9 @@
                                         numberOfLines = 5;
                               //  debugger;
                                 var stats_data =null;
+                                var release_version = "${releaseVersion}";
                                     $.ajax(file_summary).done(function(d){
-                                        sumNumberOfReadsChart(d,numberOfLines,stats_data==null?null:stats_data["sequence_count"],file_summary);
+                                        sumNumberOfReadsChart(d,numberOfLines,stats_data==null?null:stats_data["sequence_count"],file_summary, release_version);
                                     });
                             });
                         </script>
