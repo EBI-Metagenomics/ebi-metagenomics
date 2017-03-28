@@ -51,7 +51,7 @@ var SettingsManager = function() {
         RUN_RESULTS_NUM: 20,
         DEFAULT_SEARCH_START: 0,
         FACET_NUM: 10,
-        DEFAULT_FACET_DEPTH: 2,
+        DEFAULT_FACET_DEPTH: 5,
         DEFAULT_MORE_FACETS_DEPTH: 10,
 
         PROJECT: "Projects",
@@ -71,6 +71,7 @@ var SettingsManager = function() {
         MORE_FACET_TEXT_FILTER_CLASS: "more-facet-text-filter",
         MORE_FACET_CONTENT_CLASS: "more-facet-content",
         HIERARCHICAL_FACET_CLASS: "hierarchical-facet-list",
+        HIERARCHICAL_FACET_CHECKBOX: "hierarchical-facet-checkbox",
         HOMEPAGE_LINK_CLASS: "homepage-search-link",
 
         DOWNLOAD_BUTTON_CLASS: "download-button",
@@ -128,18 +129,39 @@ var SettingsManager = function() {
     };
 
     this.initialiseSettings = function(fullReset) {
+        this.resetProjectSettings(fullReset);
+        this.resetSampleSettings(fullReset);
+        this.resetRunSettings(fullReset);
+
+        var searchText = this.getSearchText();
+        if (searchText == null) {
+            searchText = "";
+        }
+        for(var i = 0; i < this.DatatypeSettings.DATA_TYPES.length; i++) {
+            var dataType = this.DatatypeSettings.DATA_TYPES[i];
+            var settings = this.DatatypeSettings[dataType];
+            this.resetSearchSettings(dataType, fullReset);
+            settings["searchText"] = searchText;
+            this.setSearchText(searchText);
+            this.setSearchSettings(this.DatatypeSettings.DATA_TYPES[i], settings);
+        }
+        return this.DatatypeSettings;
+    };
+
+    this.resetSearchSettings = function(dataType, fullReset) {
+        if (dataType == this.GLOBAL_SEARCH_SETTINGS.PROJECT) {
+            return this.resetProjectSettings(fullReset);
+        } else if (dataType == this.GLOBAL_SEARCH_SETTINGS.SAMPLE) {
+            return this.resetSampleSettings(fullReset);
+        } else if (dataType == this.GLOBAL_SEARCH_SETTINGS.RUN ) {
+            return this.resetRunSettings(fullReset);
+        } else {
+            console.log("Error Datatype '" + dataType + "' not recognised");
+        }
+    };
+
+    this.resetProjectSettings = function(fullReset) {
         var projectSettings = this.getSearchSettings(this.GLOBAL_SEARCH_SETTINGS.PROJECT);
-        var sampleSettings = this.getSearchSettings(this.GLOBAL_SEARCH_SETTINGS.SAMPLE);
-        var runSettings = this.getSearchSettings(this.GLOBAL_SEARCH_SETTINGS.RUN);
-
-        var sampleTemperature = new NumericalRangeField("temperature", "Temperature", "°C", -20, 110, -20, 110);
-        var sampleDepth = new NumericalRangeField("depth", "Depth", "Metres", 0, 2000, 0, 2000);
-        var samplePH = new NumericalRangeField("pH", "pH", null, 0, 14, 0, 14);
-
-        var runTemperature = new NumericalRangeField("temperature", "Temperature", "°C", -20, 110, -20, 110);
-        var runDepth = new NumericalRangeField("depth", "Depth", "Metres", 0, 2000, 0, 2000);
-        var runPH = new NumericalRangeField("pH", "pH", null, 0, 14, 0, 14);
-
         if (fullReset || projectSettings == null) {
             projectSettings = new SearchSettings(
                 this.GLOBAL_SEARCH_SETTINGS.PROJECT,
@@ -152,7 +174,16 @@ var SettingsManager = function() {
                 null
             );
         }
+        this.DatatypeSettings[this.GLOBAL_SEARCH_SETTINGS.PROJECT] = projectSettings;
+        return projectSettings;
+    };
 
+    this.resetSampleSettings = function(fullReset) {
+        var sampleTemperature = new NumericalRangeField("temperature", "Temperature", "°C", -20, 110, -20, 110);
+        var sampleDepth = new NumericalRangeField("depth", "Depth", "Metres", 0, 2000, 0, 2000);
+        var samplePH = new NumericalRangeField("pH", "pH", null, 0, 14, 0, 14);
+
+        var sampleSettings = this.getSearchSettings(this.GLOBAL_SEARCH_SETTINGS.SAMPLE);
         if (fullReset || sampleSettings == null) {
             sampleSettings = new SearchSettings(
                 this.GLOBAL_SEARCH_SETTINGS.SAMPLE,
@@ -165,7 +196,16 @@ var SettingsManager = function() {
                 [sampleTemperature, sampleDepth]
             );
         }
+        this.DatatypeSettings[this.GLOBAL_SEARCH_SETTINGS.SAMPLE] = sampleSettings;
+        return sampleSettings;
+    };
 
+    this.resetRunSettings = function(fullReset) {
+        var runTemperature = new NumericalRangeField("temperature", "Temperature", "°C", -20, 110, -20, 110);
+        var runDepth = new NumericalRangeField("depth", "Depth", "Metres", 0, 2000, 0, 2000);
+        var runPH = new NumericalRangeField("pH", "pH", null, 0, 14, 0, 14);
+
+        var runSettings = this.getSearchSettings(this.GLOBAL_SEARCH_SETTINGS.RUN);
         if (fullReset || runSettings == null) {
             runSettings = new SearchSettings(
                 this.GLOBAL_SEARCH_SETTINGS.RUN,
@@ -178,22 +218,8 @@ var SettingsManager = function() {
                 [runTemperature, runDepth]
             );
         }
-
-        this.DatatypeSettings[this.GLOBAL_SEARCH_SETTINGS.PROJECT] = projectSettings;
-        this.DatatypeSettings[this.GLOBAL_SEARCH_SETTINGS.SAMPLE] = sampleSettings;
         this.DatatypeSettings[this.GLOBAL_SEARCH_SETTINGS.RUN] = runSettings;
-        var searchText = this.getSearchText();
-        if (searchText == null) {
-            searchText = "";
-        }
-        for(var i = 0; i < this.DatatypeSettings.DATA_TYPES.length; i++) {
-            var settings = this.DatatypeSettings[this.DatatypeSettings.DATA_TYPES[i]];
-            settings["searchText"] = searchText;
-            this.setSearchText(searchText);
-            this.setSearchSettings(this.DatatypeSettings.DATA_TYPES[i], settings);
-        }
-
-        return this.DatatypeSettings;
+        return runSettings;
     };
 
     this.getSearchText = function() {
@@ -605,7 +631,7 @@ var FacetManager = function(settingsManager, searchManager) {
         return isHierarchical;
     };
 
-    this.addFacetValueChangeListener = function (facetInput, facetType, facet, searchSettings, bonsaiTreeID) {
+    this.addFacetValueChangeListener = function (facetInput, facetType, searchSettings, bonsaiTreeID) {
         var self = this;
         facetInput.addEventListener("change", function(event) {
             if (bonsaiTreeID != null) {
@@ -822,55 +848,61 @@ var FacetManager = function(settingsManager, searchManager) {
         contentDiv.classList.add(self.settingsManager.GLOBAL_SEARCH_SETTINGS.HIERARCHICAL_FACET_CLASS)
         var list = document.createElement("ul");
         list.id = treeId;
-        self.addMoreHierarchicalFacetsToList(searchSettings, facets.facetValues, facets.id, null, list);
+        self.addMoreHierarchicalFacetsToList(searchSettings, facets.facetValues, facets.id, null, list, false);
         contentDiv.appendChild(list);
         //console.log("Converting more facet list to bonsai tree");
 
         $("#"+treeId).bonsai({
             checkboxes: true,
             expandAll: true,
-            handleDuplicateCheckboxes: true
+            handleDuplicateCheckboxes: true,
+            createInputs: 'checkbox'
         });
 
     };
 
-    this.addMoreHierarchicalFacetsToList = function(searchSettings, facets, facetGroupId, facetValuePrefix, list) {
+    this.addMoreHierarchicalFacetsToList = function(searchSettings, facets, facetGroupId, facetValuePrefix, list, parentChecked) {
         var dataType = searchSettings.type;
         var GLOBAL_SEARCH_SETTINGS = this.settingsManager.GLOBAL_SEARCH_SETTINGS;
         var FACET_SEPARATOR = this.settingsManager.FACET_SEPARATOR;
         for(var i=0; i < facets.length; i++) {
             var facet = facets[i];
-            var listItem = document.createElement("li");
+            var facetItem = document.createElement("li");
 
-            var facetValue = facet.value;
+            var value = facet.value;
+            var facetValue = value;
             if (facetValuePrefix != null) {
-                facetValue = facetValuePrefix + "/" + facet.value;
+                facetValue = facetValuePrefix + "/" + facetValue;
             }
 
-            var facetInput = document.createElement("input");
-            facetInput.type = "checkbox";
-            facetInput.classList.add(GLOBAL_SEARCH_SETTINGS.MORE_FACET_INPUT_CLASS);
-            facetInput.value = facetValue;
+            var identifier = "morefacets" + FACET_SEPARATOR + dataType + FACET_SEPARATOR + facetGroupId + FACET_SEPARATOR + facetValue;
+
+            facetItem.id = identifier;
+            facetItem.setAttribute(["data-name"], GLOBAL_SEARCH_SETTINGS.MORE_FACET_INPUT_CLASS);
+            facetItem.setAttribute(["data-value"], facetValue);
+            facetItem.appendChild(document.createTextNode(facet.label + " (" + facet.count + ")"));
+
+            //initialise checkbox state
+            var isChecked = false;
             if (searchSettings.facets != null
                 && searchSettings.facets.hasOwnProperty(facetGroupId)
-                && searchSettings.facets[facetGroupId].indexOf(facetInput.value) >= 0) {
-                facetInput.checked = true;
+                && searchSettings.facets[facetGroupId].indexOf(facetValue) > -1
+                || parentChecked === true) {
+                facetItem.setAttribute("data-checked", 1);
+                isChecked = true;
+                console.log("Matched " + searchSettings.type + " Child facet: " + facetGroupId + " name: "
+                    + searchSettings.facets[facetGroupId] + " contains " + facetValue);
+
             }
-            facetInput.id = "morefacets" + FACET_SEPARATOR + dataType + FACET_SEPARATOR + facetGroupId + FACET_SEPARATOR + facetValue;
+            list.appendChild(facetItem);
 
-            var facetLabel = document.createElement("label");
-            facetLabel.htmlFor = facetInput.id;
-            facetLabel.innerHTML = facet.label + " (" + facet.count + ")";
-            listItem.appendChild(facetInput);
-            listItem.appendChild(facetLabel);
-            list.appendChild(listItem);
-
+            console.log("MAQ " +  facetValuePrefix + " => " + value + " = " + parentChecked);
             if (facet.hasOwnProperty("children")
                 && facet.children != null
                 && facet.children.length > 0) {
                 var subList = document.createElement("ul");
-                listItem.appendChild(subList);
-                this.addMoreHierarchicalFacetsToList(searchSettings, facet.children, facetGroupId, facetValue, subList);
+                facetItem.appendChild(subList);
+                this.addMoreHierarchicalFacetsToList(searchSettings, facet.children, facetGroupId, facetValue, subList, isChecked);
             }
         }
     };
@@ -898,18 +930,20 @@ var FacetManager = function(settingsManager, searchManager) {
         for(var i=0; i < facets.facetValues.length; i++) {
             var facet = facets.facetValues[i];
             //prefixing id with 'morefacets' to ensure input id is unique
-            var identifier = "morefacets" + FACET_SEPARATOR + dataType + FACET_SEPARATOR + facets.id + FACET_SEPARATOR + facet.value;
+            var value = facet.value;
+            var identifier = "morefacets" + FACET_SEPARATOR + dataType + FACET_SEPARATOR + facets.id + FACET_SEPARATOR + value;
 
             var listItem = document.createElement("li");
             listItem.style.display = "inline-block";
             listItem.style.width = "350px";
             listItem.style.padding = "5px";
+            listItem.id = identifier;
 
             list.appendChild(listItem);
             var facetInput = document.createElement("input");
-            facetInput.id = identifier;
+            facetInput.id = identifier + "-checkbox";
             facetInput.type = "checkbox";
-            facetInput.classList.add(self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_INPUT_CLASS);
+            facetInput.setAttribute("name", self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_INPUT_CLASS);
             facetInput.value = facet.label;
             if (searchSettings.facets != null
                 && searchSettings.facets.hasOwnProperty(facets.id)
@@ -928,19 +962,22 @@ var FacetManager = function(settingsManager, searchManager) {
     };
 
     this.showMoreFacetsError = function(container) {
-
+        console.log("Error: Error fetching more facets");
     };
 
     this.runMoreFacetsSearch = function(searchSettings, container) {
-        var facetInputs = document.getElementsByClassName(
+        var facetInputs = document.getElementsByName(
             this.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_INPUT_CLASS
         );
+        var facetTypeSetInDialog = {};
         for (var i=0; i < facetInputs.length; i++) {
             var checkbox = facetInputs[i];
-            var tokens = checkbox.id.split(this.settingsManager.FACET_SEPARATOR);
+            var parent = checkbox.parentElement;
+            var tokens = parent.id.split(this.settingsManager.FACET_SEPARATOR);
             var facetType = tokens[2];
             var facetValue = tokens[3];
-            if (!searchSettings.facets.hasOwnProperty(facetType)) {
+            if (!searchSettings.facets.hasOwnProperty(facetType)
+                || !facetTypeSetInDialog.hasOwnProperty(facetType)) {
                 searchSettings.facets[facetType] = [];
             }
 
@@ -948,6 +985,7 @@ var FacetManager = function(settingsManager, searchManager) {
                 //console.log("Checkbox: " + checkbox.value + " checked " + facetType + " = " + facetValue);
                 if (searchSettings.facets[facetType].indexOf(facetValue) == -1) {
                     searchSettings.facets[facetType].push(facetValue);
+                    facetTypeSetInDialog[facetType] = true;
                 }
             } else {
                 var facetValueIndex = searchSettings.facets[facetType].indexOf(facetValue);
@@ -972,22 +1010,23 @@ var FacetManager = function(settingsManager, searchManager) {
         facetGroupContainer.appendChild(facetGroupTitle);
         for (var i=0; i < facetGroup.facetValues.length; i++) {
             var facet = facetGroup.facetValues[i];
+            var value = facet.value;
             var identifier = dataType + this.settingsManager.FACET_SEPARATOR
-                + facetGroup.id + this.settingsManager.FACET_SEPARATOR + facet.value;
+                + facetGroup.id + this.settingsManager.FACET_SEPARATOR + value;
             var facetItem = document.createElement("div");
             var facetInput = document.createElement("input");
             facetInput.id = identifier;
             facetInput.name = facetGroup.id;
             facetInput.form = "local-search";
             facetInput.type = "checkbox";
-            facetInput.value = facet.value;
+            facetInput.value = value;
             if (searchSettings.facets != null
                 && searchSettings.facets.hasOwnProperty(facetGroup.id)
                 && searchSettings.facets[facetGroup.id].indexOf(facetInput.value) >= 0) {
                 facetInput.checked = true;
             }
 
-            this.addFacetValueChangeListener(facetInput, facetGroup.id, facet, searchSettings, null);
+            this.addFacetValueChangeListener(facetInput, facetGroup.id, searchSettings, null);
 
             var facetLabel = document.createElement("label");
             facetLabel.htmlFor = facetInput.id;
@@ -1046,49 +1085,32 @@ var FacetManager = function(settingsManager, searchManager) {
         var facetGroupList = document.createElement("ul");
         facetGroupList.id = groupContainerId;
         facetGroupContainer.appendChild(facetGroupList);
-        //console.log("Converting facet list to bonsai tree");
-        $("#"+groupContainerId).bonsai({
-            checkboxes: true,
-            handleDuplicateCheckboxes: true
-        });
+
         for (var i=0; i < facetGroup.facetValues.length; i++) {
             var facet = facetGroup.facetValues[i];
-            var identifier = dataType + this.settingsManager.FACET_SEPARATOR
-                + facetGroup.id + this.settingsManager.FACET_SEPARATOR + facet.value;
-            var facetItem = document.createElement("li");
-            var facetInput = document.createElement("input");
-            facetInput.id = identifier;
-            facetInput.name = facetGroup.id;
-            facetInput.form = "local-search";
-            facetInput.type = "checkbox";
-            facetInput.value = facet.value;
-
-            if (searchSettings.facets != null
-                && searchSettings.facets.hasOwnProperty(facetGroup.id)
-                && searchSettings.facets[facetGroup.id].indexOf(facetInput.value) > -1) {
-                facetInput.checked = true;
-                facetInput.setAttribute("data-checked", "");
-            }
-
-            this.addFacetValueChangeListener(facetInput, facetGroup.id, facet, searchSettings, groupContainerId);
-
-            facetItem.appendChild(facetInput);
-            facetItem.appendChild(document.createTextNode(facet.label + " (" + facet.count + ")"));
-
-            if (facet.children != null) {
-                var facetChildList = document.createElement("ul");
-                this.displayHierarchicalChildren(facetChildList, facet, facetGroup, facetInput.value, searchSettings, groupContainerId);
-                facetItem.appendChild(facetChildList);
-                facetGroupList.appendChild(facetItem);
-            }
+            this.addHierachicalElement(facet, facetGroupList, facet, facetGroup, null, searchSettings, groupContainerId, false);
         }
+
+        $("#"+groupContainerId).bonsai({
+            checkboxes: true,
+            handleDuplicateCheckboxes: true,
+            createInputs: 'checkbox'
+        });
 
         var bonsaiTree = $("#"+groupContainerId).data('bonsai');
         bonsaiTree.update();
         if ( searchSettings.bonsaiState.hasOwnProperty(facetGroup.id)
             && searchSettings.bonsaiState[facetGroup.id] != null) {
             bonsaiTree.restore(searchSettings.bonsaiState[facetGroup.id]);
-            //$("#"+groupContainerId).bonsai('restore', searchSettings.bonsaiState[facetGroup.id]);
+        }
+
+        //add change listeners
+        var facetInputs = document.getElementsByName(dataType
+            + this.settingsManager.FACET_SEPARATOR
+            + this.settingsManager.GLOBAL_SEARCH_SETTINGS.HIERARCHICAL_FACET_CHECKBOX);
+        for (var i=0; i < facetInputs.length; i++) {
+            var facetInput = facetInputs[i];
+            this.addFacetValueChangeListener(facetInput, facetGroup.id, searchSettings, groupContainerId);
         }
 
         var extraControlsDiv = document.createElement("div");
@@ -1100,7 +1122,6 @@ var FacetManager = function(settingsManager, searchManager) {
 
         this.addMoreFacetsListener(searchSettings, facetGroup, moreFacetsLink,
             facetGroupContainer, this.showMoreHierarchicalFacetsInDialog);
-
 
         if (searchSettings.facets.hasOwnProperty(facetGroup.id)
             && searchSettings.facets[facetGroup.id] != null
@@ -1115,56 +1136,72 @@ var FacetManager = function(settingsManager, searchManager) {
         }
     };
 
-    this.displayHierarchicalChildren = function(container, facet, facetGroup, parentPath, searchSettings, bonsaiTreeID) {
+    this.addHierachicalElement = function(facet, container, parent, facetGroup, parentPath, searchSettings, bonsaiTreeID, parentChecked) {
         var dataType = searchSettings.type;
-        var children = facet.children;
-        //console.log("Facet with children: " + children.length);
-        for (var i = 0; i < children.length; i++) {
-            var childFacet = children[i];
-            //console.log("Child facet: " + facetGroup.id + " name: " + childFacet.label);
+        var value = facet.value;
+        if (parentPath != null) {
+            value = parentPath + "/" + value;
+        }
 
-            var value = parentPath + "/" + childFacet.value;
-            var identifier = dataType + this.settingsManager.FACET_SEPARATOR
-                + facetGroup.id + this.settingsManager.FACET_SEPARATOR + value;
+        var facetSeparator = this.settingsManager.FACET_SEPARATOR;
+        var identifier = dataType + facetSeparator + facetGroup.id + facetSeparator + value;
 
-            var facetItem = document.createElement("li");
-            var facetInput = document.createElement("input");
-            facetInput.id = identifier;
-            facetInput.name = facetGroup.id;
-            facetInput.form = "local-search";
-            facetInput.type = "checkbox";
-            facetInput.value = value;
+        var facetItem = document.createElement("li");
+        facetItem.id = identifier;
+        facetItem.setAttribute(["data-name"], dataType + facetSeparator
+            + this.settingsManager.GLOBAL_SEARCH_SETTINGS.HIERARCHICAL_FACET_CHECKBOX);
+        facetItem.setAttribute(["data-value"], value);
 
-            if (searchSettings.facets != null
-                && searchSettings.facets.hasOwnProperty(facetGroup.id)
-                && searchSettings.facets[facetGroup.id].indexOf(facetInput.value) > -1) {
-                facetInput.checked = true;
-                facetInput.setAttribute("data-checked", "");
-            }
+        //initialise checkbox state
+        if (searchSettings.facets != null
+            && searchSettings.facets.hasOwnProperty(facetGroup.id)
+            && searchSettings.facets[facetGroup.id].indexOf(value) > -1
+            || parentChecked === true) {
+            facetItem.setAttribute("data-checked", '1');
+            parentChecked = true;
+            //console.log("Matched " + searchSettings.type + " Child facet: " + facetGroup.id + " name: "
+            //    + searchSettings.facets[facetGroup.id] + " contains " + value);
 
-            this.addFacetValueChangeListener(facetInput, facetGroup.id, facet, searchSettings, bonsaiTreeID);
+        }
 
-            facetItem.appendChild(facetInput);
-            facetItem.appendChild(document.createTextNode(childFacet.label + " (" + childFacet.count + ")"));
-            container.appendChild(facetItem);
+        facetItem.appendChild(document.createTextNode(facet.label + " (" + facet.count + ")"));
+        container.appendChild(facetItem);
 
-            if (childFacet.children != null) {
-                var facetChildList = document.createElement("ul");
-                this.displayHierarchicalChildren(facetChildList, childFacet, facetGroup, facetInput.value, searchSettings, bonsaiTreeID);
-                facetItem.appendChild(facetChildList);
+        if (facet.children != null) {
+            var facetChildList = document.createElement("ul");
+            facetItem.appendChild(facetChildList);
+            var children = facet.children;
+            for (var i = 0; i < children.length; i++) {
+                var childFacet = children[i];
+                this.addHierachicalElement(childFacet, facetChildList, facet, facetGroup, value, searchSettings, bonsaiTreeID, parentChecked);
             }
         }
     };
 
     this.displayFacets = function(facetGroups, searchSettings) {
         var dataType = searchSettings.type;
+        var self = this;
         var facetContainer = document.getElementById(dataType + "-searchFacets");
         if (facetContainer != null) {
             facetContainer.innerHTML = ""; //clear out old facets
             var facetContainerTitle = document.createElement("h3");
             facetContainerTitle.innerHTML = "Filter your results";
-
             facetContainer.appendChild(facetContainerTitle);
+
+            var resetSearchLink = document.createElement("a");
+            resetSearchLink.innerHTML = "Reset all filters";
+            resetSearchLink.id = dataType + "-search-reset-filter";
+            resetSearchLink.classList.add("search-reset-filters");
+            facetContainer.appendChild(resetSearchLink);
+            resetSearchLink.addEventListener("click", function(event){
+                if (searchSettings.facets != null) {
+                    searchSettings.facets = {};
+                    searchSettings.bonsaiState = {};
+                    self.settingsManager.setSearchSettings(dataType, searchSettings);
+                    self.searchManager.runDomainSearch(searchSettings);
+                }
+            });
+
             if (searchSettings.hasOwnProperty("numericalFields")
                 && searchSettings.numericalFields != null) {
                 this.displayNumericalInputs(facetContainer, searchSettings);
@@ -1517,8 +1554,11 @@ var ResultsManager = function() {
         tableManager.displayDownloadButton(results, searchSettings);
     };
 
-    this.displaySearchError = function (httpReq, searchSettings, tabManager) {
+    this.displaySearchError = function (httpReq, searchSettings, tabManager, settingsManager) {
+        console.log("Error: Error during search");
         var dataType = searchSettings.type;
+        searchSettings = settingsManager.resetSearchSettings(dataType, true);
+        settingsManager.setSearchSettings(dataType, searchSettings);
         tabManager.setTabText("Error", dataType);
         resultsContainer = document.getElementById(dataType + "-searchData");
         if (resultsContainer != null) {
@@ -1592,6 +1632,8 @@ var SearchManager = function(settingsManager, pageManager) {
         //handle response
         httpReq.onload = function(event) {
             var readyState = httpReq.readyState;
+            //console.log("OnLoad status " + httpReq.status);
+
             if (httpReq.status == 200) {
                 self.fixInternetExplorerBug(httpReq, callback);
             } else {
@@ -1601,6 +1643,8 @@ var SearchManager = function(settingsManager, pageManager) {
 
         //error handling
         httpReq.onerror = function (event) {
+            //console.log("OnError status " + httpReq.status);
+
             if (errCallback) {
                 self.fixInternetExplorerBug(httpReq, errCallback);
             } else {
@@ -1716,7 +1760,7 @@ var SearchManager = function(settingsManager, pageManager) {
         };
         var errorCallback = function(httpReq) {
             self.pageManager.removeSpinner(searchSettings);
-            self.pageManager.displaySearchError(httpReq, searchSettings);
+            self.pageManager.displaySearchError(httpReq, searchSettings, this.settingsManager);
         };
 
         var url = self.settingsToURL(searchSettings);
@@ -2205,7 +2249,7 @@ var PageManager = function() {
     };
 
     this.displaySearchError = function (httpReq, searchSettings) {
-        this.resultsManager.displaySearchError(httpReq, searchSettings, this.tabManager);
+        this.resultsManager.displaySearchError(httpReq, searchSettings, this.tabManager, this.settingsManager);
     };
 
     this.displayDomainData = function (httpReq, searchSettings) {

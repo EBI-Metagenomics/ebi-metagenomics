@@ -168,8 +168,8 @@
     <script src="${pageContext.request.contextPath}/js/feedback_script.js" type="text/javascript"></script>
 
     <!--Load the Google Visualization API-->
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/js/tablequerywrapper.js"></script>
+    <%--<script type="text/javascript" src="https://www.google.com/jsapi"></script>--%>
+    <%--<script type="text/javascript" src="${pageContext.request.contextPath}/js/tablequerywrapper.js"></script>--%>
 
     <%--bonsai jquery tree plugin --%>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.bonsai.js"></script>
@@ -296,13 +296,13 @@
 
 <!-- javascript for handling search box in header and search page elements -->
 <script src="${pageContext.request.contextPath}/js/FileSaver.min.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/js/ebiSearch.js?v1.2" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/js/ebiSearch.js?v1.3" type="text/javascript"></script>
 <%--multirange input plugin --%>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/multirange.css" type="text/css"/>
 <script>
     var pageManager = new PageManager();
     if (pageManager.settingsManager.areCssVariablesSupported()) {
-        document.write('<script type="text/javascript" src="js/multirange.js"><\/script>');
+        document.write('<script type="text/javascript" src="/metagenomics/js/multirange.js"><\/script>');
     }
 
 </script>

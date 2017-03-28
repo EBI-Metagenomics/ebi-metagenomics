@@ -3,7 +3,7 @@
 <script src='${pageContext.request.contextPath}/js/highcharts-4.1.10/highcharts.js' type='text/javascript'></script>
 <script src='${pageContext.request.contextPath}/js/highcharts-4.1.10/highcharts-more.js' type='text/javascript'></script>
 <script src='${pageContext.request.contextPath}/js/highcharts-4.1.10/exporting.js' type='text/javascript'></script>
-<script src='${pageContext.request.contextPath}/js/QC_charts.js' type='text/javascript'></script>
+<script src='${pageContext.request.contextPath}/js/QC_charts.js?v1.1' type='text/javascript'></script>
 
 <c:choose>
     <c:when test="${not empty model.sample}">
@@ -69,8 +69,8 @@
                 ${model.analysisStatus.disabledOption}
             });
 
-            //  Load the Visualization API and the chart package.
-            google.load('visualization', '1.0', {'packages':['corechart', 'table', 'controls'] });
+            //  Load the Visualization API and the chart package. - NO NEEDED ANYMORE?
+//            google.load('visualization', '1.0', {'packages':['corechart', 'table', 'controls'] });
         </script>
 
     </c:when>
