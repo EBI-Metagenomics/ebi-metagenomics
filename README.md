@@ -1,3 +1,6 @@
+
+[![Build Status](https://travis-ci.org/ProteinsWebTeam/ebi-metagenomics.svg?branch=master)](https://travis-ci.org/ProteinsWebTeam/ebi-metagenomics)
+
 # ebi-metagenomics
 <img src='http://www.ebi.ac.uk/inc/images/ebilogohelp.gif' align='right' />
 
