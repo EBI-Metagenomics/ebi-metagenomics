@@ -3,3 +3,6 @@ jdk:
   - oraclejdk8
 sudo: false
 script: cd memi && mvn clean test
+notifications:
+  email:
+    - pf-developers@ebi.ac.uk
