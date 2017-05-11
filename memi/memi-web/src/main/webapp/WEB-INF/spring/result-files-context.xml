@@ -14,10 +14,14 @@
                 <ref bean="qualityControlNewSummaryFile"/>
                 <ref bean="qualityControlNucleotideHistogramFile"/>
                 <ref bean="qualityControlGCBinFile"/>
+                <ref bean="qualityControlGCFile"/>
+                <ref bean="qualityControlSequenceLengthFile"/>
+                <ref bean="qualityControlSequenceLengthFileSubset"/>
                 <ref bean="qualityControlSequenceLengthBinFile"/>
+                <ref bean="qualityControlSequenceLengthBinFileSubset"/>
                 <ref bean="qualityControlNucleotideHistogramFileSubset"/>
                 <ref bean="qualityControlGCBinFileSubset"/>
-                <ref bean="qualityControlSequenceLengthBinFileSubset"/>
+                <ref bean="qualityControlGCFileSubset"/>
                 <ref bean="qualityControlSummary"/>
             </list>
         </constructor-arg>

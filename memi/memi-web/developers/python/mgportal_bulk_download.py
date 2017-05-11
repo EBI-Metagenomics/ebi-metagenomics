@@ -9,6 +9,7 @@ import argparse
 import csv
 import os
 import urllib
+import urllib2
 from urllib2 import URLError
 
 
@@ -42,7 +43,7 @@ def _get_number_of_chunks(url_template, study_id, sample_id, run_id, version, do
         study_id, sample_id, run_id, version, domain, file_type)
     print url_get_number_of_chunks
     try:
-        file_stream_handler = urllib.urlopen(url_get_number_of_chunks)
+        file_stream_handler = urllib2.urlopen(url_get_number_of_chunks)
         result = int(file_stream_handler.read())
         print "Retrieved " + str(result) + " chunks."
         return result
@@ -66,7 +67,8 @@ def _get_file_stream_handler(url_template, study_id):
     print "Getting the list of project runs..."
     url_get_project_runs = url_template % (study_id)
     try:
-        return urllib.urlopen(url_get_project_runs)
+        req = urllib2.Request(url=url_get_project_runs, headers={'Content-Type': 'text/plain'})
+        return urllib2.urlopen(req)
     except URLError as url_error:
         print(url_error)
         raise

@@ -48,6 +48,10 @@
         <entry key="QC_BASE_SUBSET" value-ref="qualityControlNucleotideHistogramFileSubset"/>
         <entry key="QC_GC_BIN" value-ref="qualityControlGCBinFile"/>
         <entry key="QC_GC_BIN_SUBSET" value-ref="qualityControlGCBinFileSubset"/>
+        <entry key="QC_GC" value-ref="qualityControlGCFile"/>
+        <entry key="QC_GC_SUBSET" value-ref="qualityControlGCFileSubset"/>
+        <entry key="QC_LENGTH" value-ref="qualityControlSequenceLengthFile"/>
+        <entry key="QC_LENGTH_SUBSET" value-ref="qualityControlSequenceLengthFileSubset"/>
         <entry key="QC_LENGTH_BIN" value-ref="qualityControlSequenceLengthBinFile"/>
         <entry key="QC_LENGTH_BIN_SUBSET" value-ref="qualityControlSequenceLengthBinFileSubset"/>
 

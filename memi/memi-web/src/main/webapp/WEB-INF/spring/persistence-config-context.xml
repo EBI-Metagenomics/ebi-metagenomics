@@ -80,6 +80,10 @@
 
     <bean id="sampleDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAOImpl"/>
 
+    <bean id="healthCheckDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.HealthCheckDAOImpl">
+        <property name="dataSource" ref="memiDataSource"/>
+    </bean>
+
     <bean id="pipelineReleaseDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.PipelineReleaseDAOImpl"/>
 
     <bean id="analysisJobDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.AnalysisJobDAOImpl"/>
