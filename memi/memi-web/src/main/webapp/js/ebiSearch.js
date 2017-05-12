@@ -636,7 +636,12 @@ var FacetManager = function(settingsManager, searchManager) {
         facetInput.addEventListener("change", function(event) {
             if (bonsaiTreeID != null) {
                 var bonsaiTree = $("#"+bonsaiTreeID).data('bonsai');
-                searchSettings.bonsaiState[facetType] = bonsaiTree.serialize();
+                if (bonsaiTree == null) {
+                    //console.log("Facet " + facetInput.value);
+                    searchSettings.bonsaiState[facetType] = [];
+                } else {
+                    searchSettings.bonsaiState[facetType] = bonsaiTree.serialize();
+                }
             }
             if (facetInput.checked) {
                 if (!searchSettings.facets.hasOwnProperty(facetType)) {
@@ -674,10 +679,13 @@ var FacetManager = function(settingsManager, searchManager) {
     this.addMoreFacetsListener = function (searchSettings, facetGroup, element, container, moreFacetsCallback) {
         var self = this;
         element.addEventListener("click", function(event){
+            /*
             var facetCount = facetGroup.total;
             if (facetCount > 1000) {
                 facetCount = 1000;
             }
+            */
+            var facetCount = 1000;
             //console.log("Fetching " + facetCount + " more facets");
             var parameters = {
                 "query": encodeURIComponent("domain_source:" + searchSettings.domain),
@@ -890,13 +898,12 @@ var FacetManager = function(settingsManager, searchManager) {
                 || parentChecked === true) {
                 facetItem.setAttribute("data-checked", 1);
                 isChecked = true;
-                console.log("Matched " + searchSettings.type + " Child facet: " + facetGroupId + " name: "
-                    + searchSettings.facets[facetGroupId] + " contains " + facetValue);
+                //console.log("Matched " + searchSettings.type + " Child facet: " + facetGroupId + " name: "
+                //    + searchSettings.facets[facetGroupId] + " contains " + facetValue);
 
             }
             list.appendChild(facetItem);
 
-            console.log("MAQ " +  facetValuePrefix + " => " + value + " = " + parentChecked);
             if (facet.hasOwnProperty("children")
                 && facet.children != null
                 && facet.children.length > 0) {
@@ -1045,8 +1052,9 @@ var FacetManager = function(settingsManager, searchManager) {
         extraControlsDiv.classList.add("extra-pad");
 
         if (facetGroup.total > 10) {
-            var moreFacetsLink = document.createElement("a");
+            var moreFacetsLink = document.createElement("span");
             moreFacetsLink.innerHTML = "More...";
+            moreFacetsLink.classList.add("search-clickable-link");
             extraControlsDiv.appendChild(moreFacetsLink);
             this.addMoreFacetsListener(searchSettings, facetGroup, moreFacetsLink,
                 facetGroupContainer, this.showMoreFacetsInDialog);
@@ -1060,8 +1068,9 @@ var FacetManager = function(settingsManager, searchManager) {
                 extraControlsDiv.appendChild(textNode);
             }
 
-            var clearFacetsLink = document.createElement("a");
+            var clearFacetsLink = document.createElement("span");
             clearFacetsLink.innerHTML = "Clear Selection";
+            clearFacetsLink.classList.add("search-clickable-link");
             extraControlsDiv.appendChild(clearFacetsLink);
             this.addClearFacetListener(searchSettings, facetGroup, clearFacetsLink);
         }
@@ -1107,6 +1116,8 @@ var FacetManager = function(settingsManager, searchManager) {
         //add change listeners
         var facetInputs = document.getElementsByName(dataType
             + this.settingsManager.FACET_SEPARATOR
+            + facetGroup.id
+            + this.settingsManager.FACET_SEPARATOR
             + this.settingsManager.GLOBAL_SEARCH_SETTINGS.HIERARCHICAL_FACET_CHECKBOX);
         for (var i=0; i < facetInputs.length; i++) {
             var facetInput = facetInputs[i];
@@ -1115,8 +1126,9 @@ var FacetManager = function(settingsManager, searchManager) {
 
         var extraControlsDiv = document.createElement("div");
         extraControlsDiv.classList.add("extra-pad");
-        var moreFacetsLink = document.createElement("a");
+        var moreFacetsLink = document.createElement("span");
         moreFacetsLink.innerHTML = "More...";
+        moreFacetsLink.classList.add("search-clickable-link");
         extraControlsDiv.appendChild(moreFacetsLink);
         facetGroupContainer.appendChild(extraControlsDiv);
 
@@ -1129,8 +1141,9 @@ var FacetManager = function(settingsManager, searchManager) {
             var textNode = document.createTextNode(" | ");
             extraControlsDiv.appendChild(textNode);
 
-            var clearFacetsLink = document.createElement("a");
+            var clearFacetsLink = document.createElement("span");
             clearFacetsLink.innerHTML = "Clear Selection";
+            clearFacetsLink.classList.add("search-clickable-link");
             extraControlsDiv.appendChild(clearFacetsLink);
             this.addClearFacetListener(searchSettings, facetGroup, clearFacetsLink);
         }
@@ -1148,7 +1161,10 @@ var FacetManager = function(settingsManager, searchManager) {
 
         var facetItem = document.createElement("li");
         facetItem.id = identifier;
-        facetItem.setAttribute(["data-name"], dataType + facetSeparator
+        facetItem.setAttribute(["data-name"], dataType
+            + facetSeparator
+            + facetGroup.id
+            + facetSeparator
             + this.settingsManager.GLOBAL_SEARCH_SETTINGS.HIERARCHICAL_FACET_CHECKBOX);
         facetItem.setAttribute(["data-value"], value);
 
@@ -1188,19 +1204,22 @@ var FacetManager = function(settingsManager, searchManager) {
             facetContainerTitle.innerHTML = "Filter your results";
             facetContainer.appendChild(facetContainerTitle);
 
-            var resetSearchLink = document.createElement("a");
-            resetSearchLink.innerHTML = "Reset all filters";
-            resetSearchLink.id = dataType + "-search-reset-filter";
-            resetSearchLink.classList.add("search-reset-filters");
-            facetContainer.appendChild(resetSearchLink);
-            resetSearchLink.addEventListener("click", function(event){
-                if (searchSettings.facets != null) {
-                    searchSettings.facets = {};
-                    searchSettings.bonsaiState = {};
-                    self.settingsManager.setSearchSettings(dataType, searchSettings);
-                    self.searchManager.runDomainSearch(searchSettings);
-                }
-            });
+            if (searchSettings.facets != null
+                && Object.keys(searchSettings.facets).length > 0) {
+                var resetSearchLink = document.createElement("span");
+                resetSearchLink.innerHTML = "Reset all filters";
+                resetSearchLink.id = dataType + "-search-reset-filter";
+                resetSearchLink.classList.add("search-clickable-link");
+                facetContainer.appendChild(resetSearchLink);
+                resetSearchLink.addEventListener("click", function(event){
+                    if (searchSettings.facets != null) {
+                        searchSettings.facets = {};
+                        searchSettings.bonsaiState = {};
+                        self.settingsManager.setSearchSettings(dataType, searchSettings);
+                        self.searchManager.runDomainSearch(searchSettings);
+                    }
+                });
+            }
 
             if (searchSettings.hasOwnProperty("numericalFields")
                 && searchSettings.numericalFields != null) {
@@ -1607,6 +1626,7 @@ var SearchManager = function(settingsManager, pageManager) {
                             timeout,
                             timeoutCallback) {
         var self = this;
+        //console.log("Ajax url = " + url);
         var httpReq = new XMLHttpRequest();
 
         httpReq.open(method, url);
@@ -1764,7 +1784,7 @@ var SearchManager = function(settingsManager, pageManager) {
         };
 
         var url = self.settingsToURL(searchSettings);
-        console.log("Running domain search = " + url);
+        //console.log("Running domain search = " + url);
 
         self.runAjax("GET", "json", url, null, successCallback, errorCallback);
     };
