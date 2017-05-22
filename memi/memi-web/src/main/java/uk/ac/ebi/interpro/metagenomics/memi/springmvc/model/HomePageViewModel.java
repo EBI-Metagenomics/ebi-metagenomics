@@ -58,6 +58,8 @@ public final class HomePageViewModel extends ViewModel {
 
     private DataStatistics dataStatistics;
 
+    private List<String> nonAmpliconStudies;
+
     public HomePageViewModel(final Submitter submitter,
                              final EBISearchForm ebiSearchForm,
                              final String pageTitle,
@@ -70,7 +72,8 @@ public final class HomePageViewModel extends ViewModel {
                              final Long numOfDataSets,
                              final Map<String, Long> studyToSampleCountMap,
                              final Map<String, Long> studyToRunCountMap,
-                             final DataStatistics dataStatistics) {
+                             final DataStatistics dataStatistics,
+                             final List<String> nonAmpliconStudies) {
         super(submitter, ebiSearchForm, pageTitle, breadcrumbs, propertyContainer);
 //        this.publicSamples = publicSamples;
         this.myStudiesMap = new TreeMap<Study, Long>();
@@ -83,7 +86,7 @@ public final class HomePageViewModel extends ViewModel {
         this.studyToSampleCountMap = studyToSampleCountMap;
         this.studyToRunCountMap = studyToRunCountMap;
         this.dataStatistics = dataStatistics;
-
+        this.nonAmpliconStudies = nonAmpliconStudies;
     }
 
     public HomePageViewModel(final Submitter submitter,
@@ -99,9 +102,10 @@ public final class HomePageViewModel extends ViewModel {
                              final Long myStudiesCount,
                              final Map<String, Long> studyToSampleCountMap,
                              final Map<String, Long> studyToRunCountMap,
-                             final DataStatistics dataStatistics) {
+                             final DataStatistics dataStatistics,
+                             final List<String> nonAmpliconStudies) {
         this(submitter, ebiSearchForm, pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems,
-                studies, null, null, null, studyToSampleCountMap, studyToRunCountMap, dataStatistics);
+                studies, null, null, null, studyToSampleCountMap, studyToRunCountMap, dataStatistics, nonAmpliconStudies);
 //        this.myStudiesMap = myStudiesMap;
         this.mySamples = mySamples;
         this.mySamplesCount = mySamplesCount;
@@ -175,5 +179,9 @@ public final class HomePageViewModel extends ViewModel {
 
     public DataStatistics getDataStatistics() {
         return dataStatistics;
+    }
+
+    public List<String> getNonAmpliconStudies() {
+        return nonAmpliconStudies;
     }
 }

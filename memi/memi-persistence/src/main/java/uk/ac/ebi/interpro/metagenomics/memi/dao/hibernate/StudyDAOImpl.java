@@ -1,5 +1,6 @@
 package uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate;
 
+import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.*;
@@ -12,6 +13,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
+import uk.ac.ebi.interpro.metagenomics.memi.model.valueObjects.CompareToolStudyVO;
 import uk.ac.ebi.interpro.metagenomics.memi.model.valueObjects.StudyStatisticsVO;
 
 import java.util.*;
@@ -330,6 +332,49 @@ public class StudyDAOImpl implements StudyDAO {
     }
 
     @Transactional(readOnly = true)
+    public List<CompareToolStudyVO> retrieveNonAmpliconStudies(String submissionAccountId) {
+        Session session = sessionFactory.getCurrentSession();
+        if (session != null) {
+            try {
+                Query query = null;
+                if (submissionAccountId == null) {
+                    query = session.createQuery("SELECT t1.id, t1.studyId, t1.studyName, t1.isPublic FROM Study as t1 INNER JOIN t1.samples as t2 INNER JOIN t2.analysisJobs as t3 where t1.isPublic=1 and t3.experimentType.experimentTypeId != 3 and t3.analysisStatus.analysisStatusId = 3 group by t1.studyName");
+                } else {
+                    query = session.createQuery("SELECT t1.id, t1.studyId, t1.studyName, t1.isPublic FROM Study as t1 INNER JOIN t1.samples as t2 INNER JOIN t2.analysisJobs as t3 where t1.submissionAccountId = :submissionAccountId and t3.experimentType.experimentTypeId != 3 and t3.analysisStatus.analysisStatusId = 3 group by t1.studyName");
+                    query.setParameter("submissionAccountId", submissionAccountId);
+                }
+                List results = query.list();
+                return parseNonAmpliconStudiesResult(results);
+            } catch (HibernateException e) {
+                throw new HibernateException("Couldn't retrieve grouped run counts.", e);
+            }
+        }
+        return null;
+    }
+
+    private List<CompareToolStudyVO> parseNonAmpliconStudiesResult(List<Object[]> results) {
+        List<CompareToolStudyVO> result = new ArrayList<>();
+        for (Object[] resultItem : results) {
+            long studyId = (long) resultItem[0];
+            String externalStudyId = (String) resultItem[1];
+            String studyName = (String) resultItem[2];
+            int isPublic = (int) resultItem[3];
+
+            result.add(new CompareToolStudyVO(studyId, externalStudyId, studyName, isPublic));
+        }
+        return result;
+    }
+
+    private List<String> parseNonAmpliconStudiesResultHomePage(List<Object> results) {
+        List<String> result = new ArrayList<>();
+        for (Object resultItem : results) {
+            String externalStudyId = (String) resultItem;
+            result.add(externalStudyId);
+        }
+        return result;
+    }
+
+    @Transactional(readOnly = true)
     public List<Study> retrieveFilteredStudies(final List<Criterion> crits,
                                                final Boolean isDescendingOrder,
                                                final String propertyName) {
@@ -417,38 +462,61 @@ public class StudyDAOImpl implements StudyDAO {
 
     @Transactional(readOnly = true)
     public Map<String, Long> retrieveRunCountsGroupedByExternalStudyId(Collection<String> externalStudyIds) {
-        Session session = sessionFactory.getCurrentSession();
-        if (session != null) {
-            try {
-                //Distinct count, which means multiple analysis versions of the same run will not take into account
-                Query query = session.createQuery("select p.studyId, count(distinct aj.externalRunIDs) as count FROM Study p inner join p.samples sample left join sample.analysisJobs as aj  where p.studyId in (:studyIds) group by p.studyId");
-                query.setParameterList("studyIds", externalStudyIds);
-                List results = query.list();
-                Map<String, Long> transformedResults = transformResultsToMap(results);
-                return transformedResults;
-            } catch (HibernateException e) {
-                throw new HibernateException("Couldn't retrieve grouped run counts.", e);
+        if (externalStudyIds != null && externalStudyIds.size() > 0) {
+            Session session = sessionFactory.getCurrentSession();
+            if (session != null) {
+                try {
+                    //Distinct count, which means multiple analysis versions of the same run will not take into account
+                    Query query = session.createQuery("select p.studyId, count(distinct aj.externalRunIDs) as count FROM Study p inner join p.samples sample left join sample.analysisJobs as aj  where p.studyId in (:studyIds) group by p.studyId");
+                    query.setParameterList("studyIds", externalStudyIds);
+                    List results = query.list();
+                    Map<String, Long> transformedResults = transformResultsToMap(results);
+                    return transformedResults;
+                } catch (HibernateException e) {
+                    throw new HibernateException("Couldn't retrieve grouped run counts.", e);
+                }
             }
         }
-        return null;
+        return new HashMap<>();
+    }
+
+
+    @Transactional(readOnly = true)
+    public List<String> retrieveNonAmpliconStudies(Collection<String> externalStudyIds) {
+        if (externalStudyIds != null && externalStudyIds.size() > 0) {
+            Session session = sessionFactory.getCurrentSession();
+            if (session != null) {
+                try {
+                    Query query = session.createQuery("SELECT t1.studyId FROM Study as t1 INNER JOIN t1.samples as t2 INNER JOIN t2.analysisJobs as t3 where t1.studyId in (:studyIds) and t3.experimentType.experimentTypeId != 3 group by t1.studyName");
+                    query.setParameterList("studyIds", externalStudyIds);
+                    List results = query.list();
+                    return parseNonAmpliconStudiesResultHomePage(results);
+                } catch (HibernateException e) {
+                    throw new HibernateException("Couldn't non amplicon studies.", e);
+                }
+            }
+        }
+        return new ArrayList<>();
     }
 
     @Transactional(readOnly = true)
     public Map<String, Long> retrieveSampleCountsGroupedByExternalStudyId(Collection<String> externalStudyIds) {
-        Session session = sessionFactory.getCurrentSession();
-        if (session != null) {
-            try {
-                //Distinct count, which means multiple analysis versions of the same run will not take into account
-                Query query = session.createQuery("select p.studyId, count(distinct sample.sampleId) as count FROM Study p inner join p.samples sample where p.studyId in (:studyIds) group by p.studyId");
-                query.setParameterList("studyIds", externalStudyIds);
-                List results = query.list();
-                Map<String, Long> transformedResults = transformResultsToMap(results);
-                return transformedResults;
-            } catch (HibernateException e) {
-                throw new HibernateException("Couldn't retrieve grouped sample counts.", e);
+        if (externalStudyIds != null && externalStudyIds.size() > 0) {
+            Session session = sessionFactory.getCurrentSession();
+            if (session != null) {
+                try {
+                    //Distinct count, which means multiple analysis versions of the same run will not take into account
+                    Query query = session.createQuery("select p.studyId, count(distinct sample.sampleId) as count FROM Study p inner join p.samples sample where p.studyId in (:studyIds) group by p.studyId");
+                    query.setParameterList("studyIds", externalStudyIds);
+                    List results = query.list();
+                    Map<String, Long> transformedResults = transformResultsToMap(results);
+                    return transformedResults;
+                } catch (HibernateException e) {
+                    throw new HibernateException("Couldn't retrieve grouped sample counts.", e);
+                }
             }
         }
-        return null;
+        return new HashMap<>();
     }
 
     private Map<String, Long> transformResultsToMap(List<Object[]> results) {
