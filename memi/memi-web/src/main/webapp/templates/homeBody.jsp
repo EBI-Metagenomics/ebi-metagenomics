@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <c:choose>
     <c:when test="${not empty model.submitter}">
@@ -74,12 +75,6 @@
     </c:otherwise>
 </c:choose>
 
-<%--<c:forEach var="experimentCountEntry"--%>
-<%--items="${model.experimentCountMap}">--%>
-<%--${experimentCountEntry.key}: --%>
-<%--${experimentCountEntry.value}--%>
-<%--</br>--%>
-<%--</c:forEach>--%>
 <c:choose>
     <c:when test="${not empty model.submitter}">
         <!-- no stats for private area unless someone makes it work-->
@@ -197,7 +192,7 @@
                                                           title="Private data"></span>
                                                 </c:otherwise>
                                             </c:choose>
-                                            <c:if test='${model.studyToRunCountMap[study.studyId] > 1}'>- <a
+                                            <c:if test="${(fn:contains(model.nonAmpliconStudies, study.studyId)) and (model.studyToRunCountMap[study.studyId] > 1)}">- <a
                                                     href="<c:url value="${baseURL}/compare&#35${study.studyId}"/>"
                                                     title="Compare samples in this project" class="list_sample"> <span
                                                     class="icon icon-functional" data-icon="O"></span>
@@ -221,17 +216,12 @@
 
                 <div class="list-contain-box grid_12 omega">
                     <div class="home_box omega">
-                        <h2>My latest Samples <span class="badge"><a
+                        <h2>My latest samples <span class="badge"><a
                                 href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleType=&sampleVisibility=MY_SAMPLES&search=Search&startPosition=0"/>"
                                 title="View all ${model.mySamplesCount} my samples">${model.mySamplesCount}</a></span>
                         </h2>
 
                         <div class="list-sample-l">
-                                <%--<h3>My latest samples (Total: <a--%>
-                                <%--href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleType=&sampleVisibility=MY_SAMPLES&search=Search&startPosition=0"/>"--%>
-                                <%--title="View all ${model.mySamplesCount} my samples">${model.mySamplesCount}</a>)</h3>--%>
-                                <%--The count starts at 0, that is why we subtract 1 from the end value--%>
-
                             <c:forEach var="sample" items="${model.mySamples}" varStatus="status" begin="0"
                                        end="${model.maxRowNumberOfLatestItems-1}">
 
@@ -258,8 +248,6 @@
                             </c:forEach>
                         </div>
 
-                            <%--<a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search&startPosition=0"/>"--%>
-                            <%--title="View all public samples" class="all">All public samples</a>--%>
                         <c:if test="${not empty model.mySamples}">
                             <p>
                                 <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=MY_SAMPLES&search=Search&startPosition=0"/>"
@@ -334,7 +322,7 @@
                                                 class="list_sample"><c:out
                                                 value="${model.studyToSampleCountMap[study.studyId]} sample"/><c:if
                                                 test='${model.studyToSampleCountMap[study.studyId] > 1}'>s</c:if></a>
-                                            <c:if test='${model.studyToRunCountMap[study.studyId] > 1}'>- <a
+                                            <c:if test="${(fn:contains(model.nonAmpliconStudies, study.studyId)) and (model.studyToRunCountMap[study.studyId] > 1)}">- <a
                                                     href="<c:url value="${baseURL}/compare&#35${study.studyId}"/>"
                                                     title="Compare samples in this project" class="list_sample"> <span
                                                     class="icon icon-functional" data-icon="O"></span>

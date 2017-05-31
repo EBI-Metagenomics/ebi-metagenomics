@@ -76,7 +76,9 @@
 
     <!-- Specification of version of control elements like e.g. data access objects -->
     <!-- List of data access objects -->
-    <!--<bean id="studyDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.StudyDAOImpl"/>-->
+    <bean id="studyDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.StudyDAOImpl">
+        <property name="dataSource" ref="memiDataSource"/>
+    </bean>
 
     <bean id="sampleDAO" class="uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAOImpl"/>
 

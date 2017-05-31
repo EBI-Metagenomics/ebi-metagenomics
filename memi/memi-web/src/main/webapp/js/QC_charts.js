@@ -537,7 +537,16 @@ var drawSequenceGCDistribution = function (rawdata,isFromSubset, stats, urlToFil
     var data = rawdata.split('\n').map(function(line){
         if (line.trim()!="")
             return line.split("\t").map(function(v){ return 1*v; });
-    });
+    }).reduce(
+        function(acc, v) {
+            if (v) {
+                var key = Math.min(100, Math.max(0, Math.round(v[0])));
+                acc[key][1] += v[1];
+            }
+            return acc;
+        },
+        Array.apply(null, {length: 101}).map(function (d, i) {return [i,0]})
+    );
     // Create the chart
     $('#seq_gc').highcharts({
         chart: {

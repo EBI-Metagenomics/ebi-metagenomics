@@ -2,6 +2,7 @@ package uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate;
 
 import org.hibernate.criterion.Criterion;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
+import uk.ac.ebi.interpro.metagenomics.memi.model.valueObjects.CompareToolStudyVO;
 import uk.ac.ebi.interpro.metagenomics.memi.model.valueObjects.StudyStatisticsVO;
 
 import java.util.Collection;
@@ -67,6 +68,10 @@ public interface StudyDAO extends ISecureEntityDAO<Study> {
      */
     List<Study> retrieveFilteredStudies(List<Criterion> crits);
 
+    /**
+     * Returns a list of filtered studies for the comparison tool.
+     */
+    List<CompareToolStudyVO> retrieveNonAmpliconStudies(String submissionAccountId);
 
     /**
      * Returns a list of asc ordered studies by the specified criteria.
@@ -109,9 +114,9 @@ public interface StudyDAO extends ISecureEntityDAO<Study> {
 
     /**
      * Retrieves the number of runs for each study.
-     * <p/>
+     * <p>
      * Example result:
-     * <p/>
+     * <p>
      * ERP005249	2
      * ERP010153	3
      *
@@ -120,11 +125,13 @@ public interface StudyDAO extends ISecureEntityDAO<Study> {
      */
     Map<String, Long> retrieveRunCountsGroupedByExternalStudyId(Collection<String> externalStudyIds);
 
+    List<String> retrieveNonAmpliconStudies(Collection<String> externalStudyIds);
+
     /**
      * Retrieves the number of samples for each study.
-     * <p/>
+     * <p>
      * Example result:
-     * <p/>
+     * <p>
      * ERP005249	1
      * ERP010153	1
      *
