@@ -216,7 +216,7 @@
 
                 <div class="list-contain-box grid_12 omega">
                     <div class="home_box omega">
-                        <h2>My latest Samples <span class="badge"><a
+                        <h2>My latest samples <span class="badge"><a
                                 href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleType=&sampleVisibility=MY_SAMPLES&search=Search&startPosition=0"/>"
                                 title="View all ${model.mySamplesCount} my samples">${model.mySamplesCount}</a></span>
                         </h2>

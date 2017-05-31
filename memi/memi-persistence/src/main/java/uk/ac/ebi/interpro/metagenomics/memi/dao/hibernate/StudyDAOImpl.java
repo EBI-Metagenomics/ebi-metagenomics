@@ -1,6 +1,5 @@
 package uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate;
 
-import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.*;
@@ -10,12 +9,16 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.model.valueObjects.CompareToolStudyVO;
 import uk.ac.ebi.interpro.metagenomics.memi.model.valueObjects.StudyStatisticsVO;
 
+import javax.sql.DataSource;
 import java.util.*;
 
 /**
@@ -32,6 +35,13 @@ public class StudyDAOImpl implements StudyDAO {
 
     @Autowired
     private SessionFactory sessionFactory;
+
+    private JdbcTemplate jdbcTemplate;
+
+    @Autowired(required = true)
+    public void setDataSource(DataSource dataSource) {
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
+    }
 
 
     public StudyDAOImpl() {
@@ -331,38 +341,38 @@ public class StudyDAOImpl implements StudyDAO {
         return getFilteredStudies(crits, null, null, null, null);
     }
 
+    @Override
     @Transactional(readOnly = true)
     public List<CompareToolStudyVO> retrieveNonAmpliconStudies(String submissionAccountId) {
-        Session session = sessionFactory.getCurrentSession();
-        if (session != null) {
-            try {
-                Query query = null;
-                if (submissionAccountId == null) {
-                    query = session.createQuery("SELECT t1.id, t1.studyId, t1.studyName, t1.isPublic FROM Study as t1 INNER JOIN t1.samples as t2 INNER JOIN t2.analysisJobs as t3 where t1.isPublic=1 and t3.experimentType.experimentTypeId != 3 and t3.analysisStatus.analysisStatusId = 3 group by t1.studyName");
-                } else {
-                    query = session.createQuery("SELECT t1.id, t1.studyId, t1.studyName, t1.isPublic FROM Study as t1 INNER JOIN t1.samples as t2 INNER JOIN t2.analysisJobs as t3 where t1.submissionAccountId = :submissionAccountId and t3.experimentType.experimentTypeId != 3 and t3.analysisStatus.analysisStatusId = 3 group by t1.studyName");
-                    query.setParameter("submissionAccountId", submissionAccountId);
-                }
-                List results = query.list();
-                return parseNonAmpliconStudiesResult(results);
-            } catch (HibernateException e) {
-                throw new HibernateException("Couldn't retrieve grouped run counts.", e);
+        try {
+            StringBuilder sb = new StringBuilder();
+            if (submissionAccountId == null) {
+                sb.append("select st.STUDY_ID as study_id, st.EXT_STUDY_ID as external_study_id, st.STUDY_NAME as study_name, st.IS_PUBLIC as is_public, tmp.run_count as run_count ")
+                        .append("FROM ")
+                        .append("STUDY st, ")
+                        .append("SAMPLE sa, ")
+                        .append("ANALYSIS_JOB aj, ")
+                        .append("(select st.EXT_STUDY_ID, count(aj.EXTERNAL_RUN_IDS) as run_count FROM STUDY st, SAMPLE sa, ANALYSIS_JOB aj where st.STUDY_ID=sa.STUDY_ID and sa.sample_id = aj.sample_id and st.IS_PUBLIC=1 and aj.EXPERIMENT_TYPE_ID<>3 and aj.ANALYSIS_STATUS_ID=3 GROUP BY st.EXT_STUDY_ID) tmp ")
+                        .append("where st.STUDY_ID=sa.STUDY_ID and sa.SAMPLE_ID=aj.SAMPLE_ID and tmp.EXT_STUDY_ID = st.EXT_STUDY_ID and st.IS_PUBLIC=1 and aj.EXPERIMENT_TYPE_ID<>3 and aj.ANALYSIS_STATUS_ID=3 and tmp.run_count > 1 group by st.EXT_STUDY_ID order by st.STUDY_NAME");
+            } else {
+                sb.append("select st.STUDY_ID as study_id, st.EXT_STUDY_ID as external_study_id, st.STUDY_NAME as study_name, st.IS_PUBLIC as is_public, tmp.run_count as run_count ")
+                        .append("FROM ")
+                        .append("STUDY st, ")
+                        .append("SAMPLE sa, ")
+                        .append("ANALYSIS_JOB aj, ")
+                        .append("(select st.EXT_STUDY_ID, count(aj.EXTERNAL_RUN_IDS) as run_count FROM STUDY st, SAMPLE sa, ANALYSIS_JOB aj where st.STUDY_ID=sa.STUDY_ID and sa.sample_id = aj.sample_id and st.IS_PUBLIC=1 and aj.EXPERIMENT_TYPE_ID<>3 and aj.ANALYSIS_STATUS_ID=3 GROUP BY st.EXT_STUDY_ID) tmp ")
+                        .append("where st.STUDY_ID=sa.STUDY_ID and sa.SAMPLE_ID=aj.SAMPLE_ID and tmp.EXT_STUDY_ID = st.EXT_STUDY_ID and aj.EXPERIMENT_TYPE_ID<>3 and aj.ANALYSIS_STATUS_ID=3 and tmp.run_count > 1 and st.SUBMISSION_ACCOUNT_ID = '" + submissionAccountId + "' group by st.EXT_STUDY_ID order by st.STUDY_NAME");
             }
-        }
-        return null;
-    }
+            final String sql = sb.toString();
 
-    private List<CompareToolStudyVO> parseNonAmpliconStudiesResult(List<Object[]> results) {
-        List<CompareToolStudyVO> result = new ArrayList<>();
-        for (Object[] resultItem : results) {
-            long studyId = (long) resultItem[0];
-            String externalStudyId = (String) resultItem[1];
-            String studyName = (String) resultItem[2];
-            int isPublic = (int) resultItem[3];
+//            List<Map<String, Object>> result = jdbcTemplate.queryForList(sql);
 
-            result.add(new CompareToolStudyVO(studyId, externalStudyId, studyName, isPublic));
+            List<CompareToolStudyVO> results = jdbcTemplate.query(sql, new BeanPropertyRowMapper<CompareToolStudyVO>(CompareToolStudyVO.class));
+            return results;
+
+        } catch (EmptyResultDataAccessException exception) {
+            throw new EmptyResultDataAccessException(1);
         }
-        return result;
     }
 
     private List<String> parseNonAmpliconStudiesResultHomePage(List<Object> results) {

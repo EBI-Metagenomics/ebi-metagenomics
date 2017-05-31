@@ -25,7 +25,16 @@
     <bean name="emailNotificationServiceRegistration"
           class="uk.ac.ebi.interpro.metagenomics.memi.services.EmailNotificationService">
         <constructor-arg ref="mailSender"/>
-        <property name="receiver" value="${emailService.emg.registration.receiver}"/>
+        <property name="receiverCCList">
+            <list value-type="java.lang.String">
+                <value>${emailService.emg.registration.ccreceiver}</value>
+            </list>
+        </property>
+        <property name="receiverBccList">
+            <list value-type="java.lang.String">
+                <value>${emailService.emg.registration.bccreceiver}</value>
+            </list>
+        </property>
         <property name="sender" value="${emailService.emg.registration.sender}"/>
         <property name="emailSubject" value="EMBL-EBI Metagenomics: Registration confirmation"/>
     </bean>

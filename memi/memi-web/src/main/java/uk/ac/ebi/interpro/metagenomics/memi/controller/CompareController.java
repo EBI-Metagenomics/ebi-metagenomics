@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.AnalysisJobDAO;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.StudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.ComparisonForm;
 import uk.ac.ebi.interpro.metagenomics.memi.model.ExperimentTypeE;
@@ -53,9 +52,6 @@ public class CompareController extends AbstractController implements IController
      */
     public static final String VIEW_NAME = "compare";
 
-
-    @Resource
-    private SampleDAO sampleDAO;
 
     @Resource
     private StudyDAO studyDAO;
