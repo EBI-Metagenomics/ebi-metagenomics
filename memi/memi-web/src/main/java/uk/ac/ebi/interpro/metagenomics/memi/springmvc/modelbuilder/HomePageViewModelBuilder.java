@@ -114,26 +114,30 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
         List<String> studyIdentifiers = getListOfStudyIdentifiers(studies);
         Map<String, Long> studyToSampleCountMap = new HashMap<String, Long>(0);
         Map<String, Long> studyToRunCountMap = new HashMap<String, Long>(0);
+        List<String> nonAmpliconStudies = new ArrayList<String>();
         if (studyIdentifiers.size() > 0) {
             // Get study to sample count map
             studyToSampleCountMap = studyDAO.retrieveSampleCountsGroupedByExternalStudyId(studyIdentifiers);
             // Get study to run count map
             studyToRunCountMap = studyDAO.retrieveRunCountsGroupedByExternalStudyId(studyIdentifiers);
+            nonAmpliconStudies = studyDAO.retrieveNonAmpliconStudies(studyIdentifiers);
         }
+
         // If case: if nobody is logged in
         if (submitter == null) {
             List<BiomeLogoModel> biomeCountMap = buildBiomeCountMap();
-            return new HomePageViewModel(submitter, ebiSearchForm, pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems,
+            return new HomePageViewModel(null, ebiSearchForm, pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems,
                     studies, biomeCountMap, transformedExperimentCountMap, numOfDataSets, studyToSampleCountMap, studyToRunCountMap,
-                    dataStatistics);
+                    dataStatistics, nonAmpliconStudies);
         }
-        //  Else case: if somebody is logged in
+//        //  Else case: if somebody is logged in
         else {
             final String submitterAccountId = submitter.getSubmissionAccountId();
-            //Retrieve submitter details for the private area section
+//            //Retrieve submitter details for the private area section
             Submitter submitterDetails = submissionContactDAO.getSubmitterBySubmissionAccountId(submitterAccountId);
-
-//            Map<Study, Long> myStudiesMap = getStudySampleSizeMap(myStudies, sampleDAO, new HomePageStudiesComparator());
+            if (submitterDetails == null) {
+                submitterDetails = submitter;
+            }
 
             //retrieve private samples and order them last meta data received
             List<Sample> mySamples = getSamplesBySubmitter(submitter.getSubmissionAccountId(), sampleDAO);
@@ -141,10 +145,9 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
             mySamples = mySamples.subList(0, getToIndex(mySamples));
 
             final Long mySamplesCount = (mySamples != null ? new Long(mySamples.size()) : new Long(0));
-//            final Long myStudiesCount = (myStudies != null ? new Long(myStudies.size()) : new Long(0));
 
             return new HomePageViewModel(submitterDetails, ebiSearchForm, studies, mySamples, pageTitle, breadcrumbs, propertyContainer, maxRowNumberOfLatestItems,
-                    mySamplesCount, new Long(studies.size()), studyToSampleCountMap, studyToRunCountMap, dataStatistics);
+                    mySamplesCount, new Long(studies.size()), studyToSampleCountMap, studyToRunCountMap, dataStatistics, nonAmpliconStudies);
         }
     }
 
@@ -313,5 +316,4 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
         }
         return samples;
     }
-
 }

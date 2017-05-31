@@ -10,6 +10,9 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * Represents an email notification service.
@@ -28,7 +31,9 @@ public class EmailNotificationService implements INotificationService {
 
     private String receiverCC;
 
-    private String[] receiverCCList;
+    private List<String> receiverCCList;
+
+    private List<String> receiverBccList;
 
     private String sender;
 
@@ -56,7 +61,12 @@ public class EmailNotificationService implements INotificationService {
                 helper.setCc(receiverCC);
             }
             if (receiverCCList != null) {
-                helper.setCc(receiverCCList);
+                String [] convert = receiverCCList.toArray(new String[receiverCCList.size()]);
+                helper.setCc(convert);
+            }
+            if (receiverBccList != null) {
+                String [] convert = receiverBccList.toArray(new String[receiverBccList.size()]);
+                helper.setBcc(convert);
             }
             if (sender != null) {
                 helper.setFrom(sender);
@@ -136,14 +146,6 @@ public class EmailNotificationService implements INotificationService {
         this.receiverCC = receiverCC;
     }
 
-    public String[] getReceiverCCList() {
-        return receiverCCList;
-    }
-
-    public void setReceiverCCList(String[] receiverCCList) {
-        this.receiverCCList = receiverCCList;
-    }
-
     public String getSender() {
         return sender;
     }
@@ -158,5 +160,28 @@ public class EmailNotificationService implements INotificationService {
 
     public void setEmailSubject(String emailSubject) {
         this.emailSubject = emailSubject;
+    }
+
+    public List<String> getReceiverCCList() {
+        return receiverCCList;
+    }
+
+    public void setReceiverCCList(List<String> receiverCCList) {
+        this.receiverCCList = receiverCCList;
+    }
+
+    public void addReceiverCCL(String receiverCC) {
+        if (this.receiverCCList == null) {
+            this.receiverCCList = new ArrayList<>();
+        }
+        this.receiverCCList.add(receiverCC);
+    }
+
+    public List<String> getReceiverBccList() {
+        return receiverBccList;
+    }
+
+    public void setReceiverBccList(List<String> receiverBccList) {
+        this.receiverBccList = receiverBccList;
     }
 }
