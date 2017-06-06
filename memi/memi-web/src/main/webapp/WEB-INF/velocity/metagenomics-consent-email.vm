@@ -9,12 +9,24 @@
         Metagenomics. We are now able to analyse publicly available data and data held privately for pre-publication
         associated with this account.
     </p>
+    <p>
+        The next stage of the process requires your account to be manually updated in ENA, which may involve a short
+        delay. In the meantime, you can submit your data directly to the ENA via Webin
+        (https://www.ebi.ac.uk/ena/submit/sra/#home), but your account may not yet appear activated on EBI Metagenomics
+        resource.
+    </p>
     #{else}
     <p>
         Thank you for registering your Webin account $submitter.submissionAccountId with EBI Metagenomics. We are now
         able to analyse publicly available data submitted via this account. Please note that in order for us to analyse
         any data held privately for pre-publication, we need your explicit consent, which you can provide <a
             href="https://www.ebi.ac.uk/metagenomics/registration">here</a>.
+    </p>
+    <p>
+        The next stage of the process requires your account to be manually updated in ENA, which may involve a short
+        delay. In the meantime, you can submit your data directly to the ENA via Webin
+        (https://www.ebi.ac.uk/ena/submit/sra/#home), but your account may not yet appear activated on EBI Metagenomics
+        resource.
     </p>
     #end
 <p>

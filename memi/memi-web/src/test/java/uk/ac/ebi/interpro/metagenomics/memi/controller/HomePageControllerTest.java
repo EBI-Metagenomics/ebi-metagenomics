@@ -9,12 +9,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.ui.ModelMap;
 import uk.ac.ebi.interpro.metagenomics.memi.basic.StudyDAOTestImpl;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.EmgStudyDAO;
-import uk.ac.ebi.interpro.metagenomics.memi.dao.NewsDAO;
-import uk.ac.ebi.interpro.metagenomics.memi.model.News;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -41,14 +37,6 @@ public class HomePageControllerTest {
         studyDaoField.setAccessible(true);
         EmgStudyDAO newStudyDAO = new StudyDAOTestImpl();
         studyDaoField.set(controller, newStudyDAO);
-        //Replace news DAO
-        Field newsDaoField = HomePageController.class.
-                getDeclaredField("newsDAO");
-        newsDaoField.setAccessible(true);
-        NewsDAO newNewsDAO = new NewsDAOTestImpl();
-        newsDaoField.set(controller, newNewsDAO);
-
-
     }
 
     @Test
@@ -79,28 +67,4 @@ public class HomePageControllerTest {
 //        assertEquals("message", newsList.get(0).getNewsMsg());
 //    }
 
-    /**
-     * This DAO implementation should only be used for JUnit test.
-     */
-    class NewsDAOTestImpl implements NewsDAO {
-
-        public NewsDAOTestImpl() {
-        }
-
-        @Override
-        public List<News> getLatestNews() {
-            List<News> result = new ArrayList<News>();
-            result.add(new News("Headline 1", "message"));
-            result.add(new News("Headline 2", "message"));
-            result.add(new News("Headline 3", "message"));
-            result.add(new News("Headline 4", "message"));
-            result.add(new News("Headline 5", "message"));
-            result.add(new News("Headline 6", "message"));
-            result.add(new News("Headline 7", "message"));
-            result.add(new News("Headline 8", "message"));
-            result.add(new News("Headline 9", "message"));
-            result.add(new News("Headline 10", "message"));
-            return result;
-        }
-    }
 }

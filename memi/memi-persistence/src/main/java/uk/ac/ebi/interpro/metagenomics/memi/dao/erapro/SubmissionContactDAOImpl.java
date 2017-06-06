@@ -67,28 +67,40 @@ public class SubmissionContactDAOImpl implements SubmissionContactDAO {
     }
 
     public Submitter getSubmitterBySubmissionAccountId(final String submissionAccountId) {
-        if (submissionAccountId == null)
-            return null;
-        try {
-            List<Map<String, Object>> rows = this.jdbcTemplate.queryForList("select co.first_name, co.surname, sa.submission_account_id, co.email_address, sa.center_name, sa.role_metagenome_submitter, sa.role_metagenome_analysis FROM submission_account sa, submission_contact co WHERE sa.submission_account_id=co.submission_account_id and UPPER(sa.submission_account_id) = UPPER(?)",
-                    new String[]{submissionAccountId});
-            if (rows.size() > 1) {
-                log.warn("Found more then one submission accounts for account id: " + submissionAccountId);
+        if (submissionAccountId != null) {
+            try {
+                boolean joinedQueryFlag = true;
+                List<Map<String, Object>> rows = this.jdbcTemplate.queryForList("select co.first_name, co.surname, sa.submission_account_id, co.email_address, sa.center_name, sa.role_metagenome_submitter, sa.role_metagenome_analysis FROM submission_account sa, submission_contact co WHERE sa.submission_account_id=co.submission_account_id and UPPER(sa.submission_account_id) = UPPER(?)",
+                        new String[]{submissionAccountId});
+//            First check if the joined query produced any results; if not perform a non joined query to retrieve minimal information
+                if (rows.size() == 0) {
+                    joinedQueryFlag = false;
+                    rows = this.jdbcTemplate.queryForList("select sa.submission_account_id, sa.center_name, sa.role_metagenome_submitter, sa.role_metagenome_analysis FROM submission_account sa WHERE UPPER(sa.submission_account_id) = UPPER(?)",
+                            new String[]{submissionAccountId});
+                }
+//            Simple sanity check to see if we got more than 1 result back
+                if (rows.size() > 1) {
+                    log.warn("Found more then one submission accounts for account id: " + submissionAccountId);
+                }
+
+                if (rows.size() > 0) {
+                    Map row = rows.get(0);
+                    Submitter submitter = new Submitter();
+                    if (joinedQueryFlag) {
+                        submitter.setFirstName((String) row.get("first_name"));
+                        submitter.setSurname((String) row.get("surname"));
+                        submitter.setEmailAddress((String) row.get("email_address"));
+                    }
+                    submitter.setLoginName((String) row.get("submission_account_id"));
+                    submitter.setCentreName((String) row.get("center_name"));
+                    submitter.setRegistered(((String) row.get("role_metagenome_submitter")).equalsIgnoreCase("Y") ? true : false);
+                    submitter.setConsentGiven(((String) row.get("role_metagenome_analysis")).equalsIgnoreCase("Y") ? true : false);
+                    return submitter;
+                }
+            } catch (Exception e) {
+                log.warn("Could not perform database query. It might be that the JDBC connection could not build" +
+                        " or is wrong configured. For more info take a look at the stack trace!", e);
             }
-            for (Map row : rows) {
-                Submitter submitter = new Submitter();
-                submitter.setFirstName((String) row.get("first_name"));
-                submitter.setSurname((String) row.get("surname"));
-                submitter.setLoginName((String) row.get("submission_account_id"));
-                submitter.setEmailAddress((String) row.get("email_address"));
-                submitter.setCentreName((String) row.get("center_name"));
-                submitter.setRegistered(((String) row.get("role_metagenome_submitter")).equalsIgnoreCase("Y") ? true : false);
-                submitter.setConsentGiven(((String) row.get("role_metagenome_analysis")).equalsIgnoreCase("Y") ? true : false);
-                return submitter;
-            }
-        } catch (Exception e) {
-            log.warn("Could not perform database query. It might be that the JDBC connection could not build" +
-                    " or is wrong configured. For more info take a look at the stack trace!", e);
         }
         return null;
     }

@@ -8,14 +8,15 @@
         <c:when test="${not empty model.sample.analysisCompleted && !model.analysisStatus.qualityControlTabDisabled}">
 
             <p>The chart below shows the number of reads which pass the quality control steps we have implemented in our pipeline. Sequence merging may have occurred with paired-end data, so the initial number of reads may differ from the number given by ENA.</p>
+
             <div id="qc_overview"></div>
 
-            <div>
-                <div style="float:left;width:50%">
+            <div class="grid_24">
+                <div class="grid_12">
                     <div id="seq_len"></div>
                     <div id="seq_stats"></div>
                 </div>
-                <div style="float:left;width:50%">
+                <div class="grid_12">
                     <div id="seq_gc"></div>
                     <div id="seq_gc_stats"></div>
                 </div>
@@ -30,7 +31,7 @@
                         file_summary = common_path + 'summary',
                         file_length  = common_path + 'length',
                         file_stats   = common_path + 'stats',
-                        file_gc      = common_path + 'gc_bin',
+                        file_gc      = common_path + 'gc',
                         file_base    = common_path + 'base',
                         numberOfLines = 4;
 

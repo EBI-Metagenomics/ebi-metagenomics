@@ -4,7 +4,7 @@
 
 <div class="sample_comp">
 <h2>Comparison tool </h2>
-<p>The comparison is currently based on a summary of Gene Ontology (GO) terms derived from InterPro matches to the selected runs.</p>
+<p>The comparison is currently based on a summary of Gene Ontology (GO) terms derived from InterPro matches to the selected runs. It is therefore not possible to select studies that contain only amplicon data at present.</p>
 <!-- BETA flag - Temp
 <span class="icon_beta_title">beta</span>
 This comparison tool is in <strong>beta version</strong> and undergoing testing. We welcome your feedback and suggestions during this period to improve it.
@@ -18,7 +18,7 @@ Please <a id="script_feedbackLink" href="javascript:slideFeedbackForm()" title="
                 <%--<form:option value="-" label="--Select project"/>--%>
                 <form:select path="study" size="13" id="projects" style="width:100%;">
                     <c:forEach var="study" items="${model.filteredStudies}">
-                        <form:option id="${study.id}" value="${study.studyId}" title="Project ${study.studyId} | ${study.studyName}">${study.studyName}</form:option>
+                        <form:option id="${study.studyId}" value="${study.externalStudyId}" title="Project ${study.externalStudyId} | ${study.studyName}">${study.studyName}</form:option>
                     </c:forEach>
                 </form:select>
 
