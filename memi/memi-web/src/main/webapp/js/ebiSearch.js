@@ -1975,7 +1975,7 @@ var HomePageManager = function(settingsManager, searchManager) {
                 this.searchManager.runAjax("GET", "json", url, null,
                     this.updateStatsElement(settingsCopy, experimentStatElement, facet, previousValue),
                     this.onStatsUpdateError(settingsCopy, experimentStatElement, previousValue),
-                    1000,
+                    50000,
                     this.onStatsTimeout(settingsCopy, experimentStatElement, previousValue)
                 );
             } else {
