@@ -53,6 +53,7 @@ var SettingsManager = function() {
         FACET_NUM: 10,
         DEFAULT_FACET_DEPTH: 5,
         DEFAULT_MORE_FACETS_DEPTH: 10,
+        AJAX_TIMEOUT: 10000,
 
         PROJECT: "Projects",
         PROJECT_DOMAIN: "metagenomics_projects",
@@ -1931,41 +1932,49 @@ var HomePageManager = function(settingsManager, searchManager) {
 
     this.settingsManager = settingsManager;
     this.searchManager = searchManager;
+    this.experimentTypes = [
+        {
+            display: "amplicons",
+            search: "amplicon"
+        },
+        {
+            display: "assemblies",
+            search: "assembly"
+        },
+        {
+            display: "metabarcoding",
+            search: "metabarcoding"
+        },
+        {
+            display: "metagenomes",
+            search: "metagenomic"
+        },
+        {
+            display: "metatranscriptomes",
+            search: "metatranscriptomic"
+        }
+    ];
+
+    this.statisticsData = {};
+
+    this.resetStatisticsData = function(){
+        var dataTypes = this.settingsManager.DatatypeSettings.DATA_TYPES;
+        this.statisticsData = {
+            numElements: this.experimentTypes.length + dataTypes.length,
+            elements: []
+        };
+    };
 
     this.updateExperimentStats = function() {
-        var experimentTypes = [
-            {
-                display: "amplicons",
-                search: "amplicon"
-            },
-            {
-                display: "assemblies",
-                search: "assembly"
-            },
-            {
-                display: "metabarcoding",
-                search: "metabarcoding"
-            },
-            {
-                display: "metagenomes",
-                search: "metagenomic"
-            },
-            {
-                display: "metatranscriptomes",
-                search: "metatranscriptomic"
-            }
-        ];
-
         var settings = this.settingsManager.getSearchSettings(this.settingsManager.GLOBAL_SEARCH_SETTINGS.RUN);
         var settingsCopy = JSON.parse(JSON.stringify(settings)); //make a shallow copy of settings
 
-        for (var i = 0; i < experimentTypes.length; i++) {
-            var experimentType = experimentTypes[i];
+        for (var i = 0; i < this.experimentTypes.length; i++) {
+            var experimentType = this.experimentTypes[i];
             var experimentStatElement = document.getElementById(experimentType.display + "-statistics");
             if (experimentStatElement != null) {
                 var previousValue = experimentStatElement.innerHTML;
                 var facet = {experiment_type:[experimentType.search]};
-                experimentStatElement.innerHTML = "";
                 settingsCopy.searchText = "";
                 settingsCopy.facets = facet;
                 settingsCopy.facetNum = 0;
@@ -1973,9 +1982,9 @@ var HomePageManager = function(settingsManager, searchManager) {
                 settingsCopy.resultsNum = 0;
                 var url = this.searchManager.settingsToURL(settingsCopy);
                 this.searchManager.runAjax("GET", "json", url, null,
-                    this.updateStatsElement(settingsCopy, experimentStatElement, facet, previousValue),
+                    this.syncStatsUpdate(settingsCopy, experimentStatElement, facet, previousValue),
                     this.onStatsUpdateError(settingsCopy, experimentStatElement, previousValue),
-                    50000,
+                    this.settingsManager.AJAX_TIMEOUT,
                     this.onStatsTimeout(settingsCopy, experimentStatElement, previousValue)
                 );
             } else {
@@ -1991,7 +2000,6 @@ var HomePageManager = function(settingsManager, searchManager) {
             var typeStatElement = document.getElementById(dataType + "-statistics");
             if (typeStatElement != null) {
                 var previousValue = typeStatElement.innerHTML;
-                typeStatElement.innerHTML = "";
                 var settings = this.settingsManager.getSearchSettings(dataType);
                 var settingsCopy = JSON.parse(JSON.stringify(settings)); //make a shallow copy of settings
                 settingsCopy.searchText = "";
@@ -2001,9 +2009,9 @@ var HomePageManager = function(settingsManager, searchManager) {
                 settingsCopy.resultsNum = 0;
                 var url = this.searchManager.settingsToURL(settingsCopy);
                 this.searchManager.runAjax("GET", "json", url, null,
-                    this.updateStatsElement(settingsCopy, typeStatElement),
+                    this.syncStatsUpdate(settingsCopy, typeStatElement),
                     this.onStatsUpdateError(settingsCopy, typeStatElement, previousValue),
-                    1000,
+                    this.settingsManager.AJAX_TIMEOUT,
                     this.onStatsTimeout(settingsCopy, typeStatElement, previousValue)
                 );
             } else {
@@ -2012,41 +2020,79 @@ var HomePageManager = function(settingsManager, searchManager) {
         }
     };
 
-    this.updateStatsElement = function(settingsCopy, typeStatElement, runFacet, previousValue) {
+    /**
+     * This method ensures that all homepage elements are updated together or not at all
+     * @param settingsCopy
+     * @param typeStatElement
+     * @param runFacet
+     * @param previousValue
+     * @returns {Function}
+     */
+    this.syncStatsUpdate = function(settingsCopy, typeStatElement, runFacet, previousValue) {
         var self = this;
+
         return function(response) {
             var hitCount = response.hitCount;
 
-            //console.log(settingsCopy.type + " stats success: " + hitCount);
-
             if (hitCount != null) {
-                var statsLink = document.createElement("a");
-                statsLink.classList.add(self.settingsManager.GLOBAL_SEARCH_SETTINGS.HOMEPAGE_LINK_CLASS);
-                statsLink.innerHTML = hitCount;
-                typeStatElement.appendChild(statsLink);
-                typeStatElement.onclick = function(event) {
-                    var selectedTabNum = self.settingsManager.DatatypeSettings.DATA_TYPES.indexOf(settingsCopy.type);
-                    //reset search settings
-                    var allSettings = self.settingsManager.initialiseSettings(true);
-                    allSettings.searchText = "";
-                    self.settingsManager.setSearchText("");
-                    for (var i = 0; i < self.settingsManager.DatatypeSettings.DATA_TYPES.length; i++) {
-                        var dataType = self.settingsManager.DatatypeSettings.DATA_TYPES[i];
-                        var settings = allSettings[dataType];
-                        self.settingsManager.setSearchSettings(dataType, settings);
-                    }
-                    self.settingsManager.setSelectedTab(selectedTabNum);
-                    if (runFacet != null) {
-                        var settings = allSettings[self.settingsManager.GLOBAL_SEARCH_SETTINGS.RUN];
-                        settings.facets = runFacet;
-                        self.settingsManager.setSearchSettings(settings.type, settings);
-                    }
-                    window.location = "/metagenomics/search";
-                };
-            } else {
-                statsLink.innerHTML = previousValue;
+                element = {}
+                element.hitCount = hitCount;
+                element.settingsCopy = settingsCopy;
+                element.typeStatElement = typeStatElement;
+                element.runFacet = runFacet;
+                element.previousValue = previousValue;
+                self.statisticsData.elements.push(element);
+                //console.log("Update for " + element.settingsCopy.type + " = " + element.hitCount);
             }
 
+            //only update page elements if all data for all elements has been collected
+            if (self.statisticsData.elements.length == self.statisticsData.numElements) {
+                for (var i = 0; i < self.statisticsData.elements.length; i++) {
+                    var element = self.statisticsData.elements[i];
+                    self.updateStatsElement(
+                        element.hitCount,
+                        element.settingsCopy,
+                        element.typeStatElement,
+                        element.runFacet,
+                        element.previousValue
+                    );
+                }
+            }
+        };
+    };
+
+    this.updateStatsElement = function(hitCount, settingsCopy, typeStatElement, runFacet, previousValue) {
+        var self = this;
+
+        //console.log(settingsCopy.type + " stats success: " + hitCount);
+
+        if (hitCount != null) {
+            var statsLink = document.createElement("a");
+            statsLink.classList.add(self.settingsManager.GLOBAL_SEARCH_SETTINGS.HOMEPAGE_LINK_CLASS);
+            statsLink.innerHTML = hitCount;
+            typeStatElement.innerHTML = "";
+            typeStatElement.appendChild(statsLink);
+            typeStatElement.onclick = function(event) {
+                var selectedTabNum = self.settingsManager.DatatypeSettings.DATA_TYPES.indexOf(settingsCopy.type);
+                //reset search settings
+                var allSettings = self.settingsManager.initialiseSettings(true);
+                allSettings.searchText = "";
+                self.settingsManager.setSearchText("");
+                for (var i = 0; i < self.settingsManager.DatatypeSettings.DATA_TYPES.length; i++) {
+                    var dataType = self.settingsManager.DatatypeSettings.DATA_TYPES[i];
+                    var settings = allSettings[dataType];
+                    self.settingsManager.setSearchSettings(dataType, settings);
+                }
+                self.settingsManager.setSelectedTab(selectedTabNum);
+                if (runFacet != null) {
+                    var settings = allSettings[self.settingsManager.GLOBAL_SEARCH_SETTINGS.RUN];
+                    settings.facets = runFacet;
+                    self.settingsManager.setSearchSettings(settings.type, settings);
+                }
+                window.location = "/metagenomics/search";
+            };
+        } else {
+            statsLink.innerHTML = previousValue;
         }
     };
 
@@ -2379,9 +2425,10 @@ var PageManager = function() {
         if (!this.settingsManager.areSettingsInitialisted()) {
             this.settingsManager.initialiseSettings();
         }
+        this.homePageManager.resetStatisticsData();
         this.homePageManager.updatePublicStats();
         this.homePageManager.updateExperimentStats();
-    }
+    };
 };
 
 var pageManager = new PageManager();
