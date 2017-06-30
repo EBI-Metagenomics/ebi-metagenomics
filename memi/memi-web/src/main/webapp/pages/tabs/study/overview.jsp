@@ -61,16 +61,6 @@
                        href="https://www.ebi.ac.uk/ena/data/view/${study.studyId}"
                        class="list_more">ENA website (${study.studyId})</a>
                 </li>
-                <!--NCBI links -->
-                <c:choose>
-                    <c:when test="${not empty study.ncbiProjectId && study.ncbiProjectId>0}">
-                        <li>
-                            <a title="Click to view entry on NCBI website"
-                               href="http://www.ncbi.nlm.nih.gov/bioproject/?term=${study.ncbiProjectId}"
-                               class="list_more">BioProject (${study.ncbiProjectId})</a>
-                        </li>
-                    </c:when>
-                </c:choose>
             </ul>
         </div>
     </div>

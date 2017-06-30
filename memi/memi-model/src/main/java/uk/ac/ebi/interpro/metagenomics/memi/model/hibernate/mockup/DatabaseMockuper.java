@@ -260,7 +260,6 @@ public class DatabaseMockuper {
                     for (String[] row : rows) {
                         Study s = new Study();
                         s.setStudyId(row[0]);
-                        s.setNcbiProjectId(Long.parseLong(row[1]));
                         s.setStudyName(row[2]);
                         s.setCentreName(row[5]);
 //                        setStudyType(row[6], s);

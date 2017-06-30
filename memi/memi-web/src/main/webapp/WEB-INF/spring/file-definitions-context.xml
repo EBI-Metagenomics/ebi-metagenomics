@@ -316,13 +316,6 @@
 
     <!--Other-->
 
-    <bean id="qualityControlSummaryFile" autowire-candidate="false"
-          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.ResultFileDefinitionImpl">
-        <property name="identifier" value="QUALITY_CONTROL_SUMMARY_FILE"/>
-        <property name="relativePath" value="/charts/qc.png"/>
-        <property name="description" value="Quality control image produced with Google Charts API."/>
-    </bean>
-
     <bean id="qualityControlNewSummaryFile" autowire-candidate="false"
           class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.QCFileDefinition">
         <property name="identifier" value="QUALITY_CONTROL_NEW_SUMMARY_FILE"/>
@@ -469,8 +462,8 @@
     <bean id="sequenceFeatureSummaryFile" autowire-candidate="false"
           class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.FunctionalAnalysisFileDefinition">
         <property name="identifier" value="SEQUENCE_FEATURE_SUMMARY_FILE"/>
-        <property name="relativePath" value="/charts/seq-feat.png"/>
-        <property name="description" value="Sequence feature image produced with Google Charts API."/>
+        <property name="relativePath" value="/charts/new.summary"/>
+        <property name="description" value="Sequence feature summary file"/>
         <property name="linkText" value=""/>
         <property name="order" value="0"/>
         <property name="downloadName" value=""/>
