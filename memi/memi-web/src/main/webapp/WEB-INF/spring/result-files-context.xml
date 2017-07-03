@@ -10,7 +10,6 @@
     <bean name="qualityControlFileDefinitions" class="java.util.ArrayList">
         <constructor-arg>
             <list>
-                <ref bean="qualityControlSummaryFile"/>
                 <ref bean="qualityControlNewSummaryFile"/>
                 <ref bean="qualityControlNucleotideHistogramFile"/>
                 <ref bean="qualityControlGCBinFile"/>

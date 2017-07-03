@@ -25,14 +25,11 @@ public class Study implements SecureEntity, BiomeEntity {
     @Column(name = "EXT_STUDY_ID", length = 18, nullable = false)
     private String studyId;
 
+    @Column(name = "PROJECT_ID", length = 18, nullable = true)
+    private String projectId;
+
     @Column(name = "STUDY_NAME", length = 255)
     private String studyName;
-
-    /**
-     * NCBI BioProject ID
-     */
-    @Column(name = "NCBI_PROJECT_ID",  columnDefinition = "INT(11)")
-    private Long ncbiProjectId;
 
     @Column(name = "SUBMISSION_ACCOUNT_ID", length = 15)
     private String submissionAccountId;
@@ -165,12 +162,12 @@ public class Study implements SecureEntity, BiomeEntity {
         this.studyName = studyName;
     }
 
-    public Long getNcbiProjectId() {
-        return ncbiProjectId;
+    public String getProjectId() {
+        return projectId;
     }
 
-    public void setNcbiProjectId(Long ncbiProjectId) {
-        this.ncbiProjectId = ncbiProjectId;
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
     }
 
     public String getSubmissionAccountId() {
@@ -405,7 +402,7 @@ public class Study implements SecureEntity, BiomeEntity {
 
         if (id != study.id) return false;
         if (isPublic != study.isPublic) return false;
-        if (ncbiProjectId.equals(study.ncbiProjectId)) return false;
+        if (projectId.equals(study.projectId)) return false;
         if (submissionAccountId.equals(study.submissionAccountId)) return false;
         if (!centreName.equals(study.centreName)) return false;
         if (!experimentalFactor.equals(study.experimentalFactor)) return false;
@@ -429,7 +426,7 @@ public class Study implements SecureEntity, BiomeEntity {
         int result = (int) (id ^ (id >>> 32));
         result = 31 * result + (studyId == null ? 0 : studyId.hashCode());
         result = 31 * result + (studyName == null ? 0 : studyName.hashCode());
-        result = 31 * result + (ncbiProjectId == null ? 0 : ncbiProjectId.hashCode());
+        result = 31 * result + (projectId == null ? 0 : projectId.hashCode());
         result = 31 * result + (submissionAccountId == null ? 0 : submissionAccountId.hashCode());
         result = 31 * result + (studyStatus == null ? 0 : studyStatus.hashCode());
         result = 31 * result + (publicReleaseDate == null ? 0 : publicReleaseDate.hashCode());

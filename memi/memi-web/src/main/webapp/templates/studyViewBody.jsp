@@ -10,7 +10,8 @@
     <div class="biome_project"><span class="biome_icon icon_sm show_tooltip ${study.biomeIconCSSClass}"
                                      title="${study.biomeIconTitle} biome"></span></div>
 
-    <span class="subtitle">Project  <span>(${study.studyId})</span></span>
+    <span class="subtitle">Project ${study.studyId} <c:if
+            test="${not empty study.projectId}"><span>(${study.projectId})</span></c:if></span>
 
     <h2 class="fl_uppercase_title">${study.studyName}</h2>
 </div>
@@ -50,7 +51,9 @@
 <%--Only add the scripts for the Google map if the JSON data file is available--%>
 <c:if test="${model.googleMapDataAvailable}">
 
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAivAQNT-w_7wzIJ9nf7E9GTOzn1mkDGzE" type="text/javascript"></script>    <script type="text/javascript" src="${pageContext.request.contextPath}/projects/${study.studyId}/map-data"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAivAQNT-w_7wzIJ9nf7E9GTOzn1mkDGzE"
+            type="text/javascript"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/projects/${study.studyId}/map-data"></script>
     <%--Javascript for Marker Clusterer – A Google Maps JavaScript API utility library--%>
     <%--https://github.com/googlemaps/js-marker-clusterer/blob/gh-pages/README.md--%>
     <script type="text/javascript"
@@ -67,26 +70,26 @@
 
     $(document).ready(function () {
         $("#navtabs").tabs({
-            cache:true,
-            ajaxOptions:{
-                error:function (xhr, status, index, anchor) {
+            cache: true,
+            ajaxOptions: {
+                error: function (xhr, status, index, anchor) {
                     $(anchor.hash).html("<div class='msg_error'>Couldn't load this tab. We'll try to fix this as soon as possible.</div>");
                 }
             },
             //Change the Hashtag on Select
             //Described here: http://imdev.in/jquery-ui-tabs-with-hashtags/
-            select:function (event, ui) {
+            select: function (event, ui) {
                 window.location.hash = ui.tab.hash;
             },
             //Set the tab disable option
             ${model.disabledOption}
         }).bind('tabsload', function (event, ui) {
-                    <c:if test="${model.googleMapDataAvailable}">
-                    var contextPath = '${pageContext.request.contextPath}';
-                    var biomeIconCSSClass = '${study.biomeIconCSSClass}';
-                    var biomeIconTitle = '${study.biomeIconTitle}';
-                    google.maps.event.addDomListener(window, 'load', initialize(contextPath, biomeIconCSSClass, biomeIconTitle));
-                    </c:if>
-                });
+            <c:if test="${model.googleMapDataAvailable}">
+            var contextPath = '${pageContext.request.contextPath}';
+            var biomeIconCSSClass = '${study.biomeIconCSSClass}';
+            var biomeIconTitle = '${study.biomeIconTitle}';
+            google.maps.event.addDomListener(window, 'load', initialize(contextPath, biomeIconCSSClass, biomeIconTitle));
+            </c:if>
+        });
     });
 </script>
