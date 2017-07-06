@@ -148,7 +148,7 @@ public class ViewStudiesController extends AbstractController implements IContro
             // TODO Not a good idea to hold all file content text in a big string - this could get very large! OK for now with not much data...
             // TODO Refactor Study and Sample table CSV exports and detailed exports to use common method!
             //StringBuffer fileContent = new StringBuffer("STUDY_ID,PROJECT_NAME,NUMBER_OF_SAMPLES,SUBMITTED_DATE,ANALYSIS,NCBI_PROJECT_ID,PUBLIC_RELEASE_DATE,CENTRE_NAME,EXPERIMENTAL_FACTOR,IS_PUBLIC,STUDY_LINKOUT,STUDY_ABSTRACT");
-            StringBuffer fileContent = new StringBuffer("Study ID,Project Name,Number Of Samples,Submitted Date,Analysis,NCBI Project ID,Public Release Date,Centre Name,Experimental Factor,Is Public,Study Linkout,Study Abstract");
+            StringBuffer fileContent = new StringBuffer("Study ID,Study Name,Number Of Samples,Submitted Date,Analysis,NCBI Project ID,Public Release Date,Centre Name,Experimental Factor,Is Public,Study Abstract");
             fileContent.append("\n");
 
             for (Study study : studies) {
@@ -182,7 +182,9 @@ public class ViewStudiesController extends AbstractController implements IContro
 
                 fileContent.append(study.isPublic()).append(',');
 
-                fileContent.append("\"").append(study.getStudyAbstract()).append("\",");
+                // Escape double quotes
+                String studyAbstract = study.getStudyAbstract().replaceAll("\"", "\'");
+                fileContent.append("\"").append(studyAbstract).append("\",");
 
                 fileContent.append("\n");
             }
@@ -223,8 +225,9 @@ public class ViewStudiesController extends AbstractController implements IContro
 
     private void processRequestParams(StudyFilter filter, String searchTerm, StudyFilter.StudyVisibility studyVisibility,
                                       Study.StudyStatus studyStatus) {
-        processRequestParams(filter,searchTerm, studyVisibility, studyStatus,"",false);
+        processRequestParams(filter, searchTerm, studyVisibility, studyStatus, "", false);
     }
+
     private void processRequestParams(StudyFilter filter, String searchTerm, StudyFilter.StudyVisibility studyVisibility,
                                       Study.StudyStatus studyStatus, String biomeLineage, boolean includingChildren) {
         //Set filter parameters
