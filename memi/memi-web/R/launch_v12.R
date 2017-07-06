@@ -65,7 +65,8 @@ scriptList <- list(
 availablePackages = rownames(installed.packages())
 if(FALSE %in% (usedPackages %in% availablePackages)) {
   missingPackages <- usedPackages[! usedPackages %in% availablePackages]
-  print(paste(Sys.time(), "[R - Error] Check over. Missing package(s):"), paste(missingPackages))
+  print(paste(Sys.time(), "[R - Error] Check over. Missing package(s):"))
+  print(paste(missingPackages))
   stop()
   }
   print(paste(Sys.time(), "[R - Initial checks] Check over. All packages are installed."))

@@ -20,6 +20,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.springmvc.session.UserManager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Model builder class for StudiesViewModel. See {@link uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder} for more information of how to use.
@@ -96,11 +97,10 @@ public class StudiesViewModelBuilder extends AbstractBiomeViewModelBuilder<Studi
     }
 
     private void attachSampleSize(List<Study> filteredStudies) {
+        Map<Long, Long> studyToSampleCounts = sampleDAO.retrieveSampleCountsPerStudy();
         for (Study study : filteredStudies) {
-            if (sampleDAO != null) {
-                long sampleSize = sampleDAO.retrieveSampleSizeByStudyId(study.getId());
-                study.setSampleCount(new Long(sampleSize));
-            }
+            Long sampleCount = studyToSampleCounts.get(study.getId());
+            study.setSampleCount(sampleCount);
         }
     }
 
@@ -141,13 +141,13 @@ public class StudiesViewModelBuilder extends AbstractBiomeViewModelBuilder<Studi
 //            List<Integer> biomeIds = new ArrayList<Integer>();
 //            biomeIds.addAll(super.getBiomeIdsByLineage(biomeDAO, biomeLineage));
             uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Biome biome = biomeDAO.readByLineage(biomeLineage);
-            if(filter.isIncludingChildren()) {
+            if (filter.isIncludingChildren()) {
                 DetachedCriteria biomeIds = DetachedCriteria.forClass(uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Biome.class)
                         .setProjection(Projections.projectionList()
                                 .add(Projections.property("biomeId"), "biomeId"))
-                        .add(Restrictions.between("left",  biome.getLeft(), biome.getRight()));
+                        .add(Restrictions.between("left", biome.getLeft(), biome.getRight()));
                 crits.add(Subqueries.propertyIn("biome", biomeIds));
-            }else
+            } else
                 crits.add(Restrictions.eq("biome.biomeId", biome.getBiomeId()));
         }
         //add study status criterion
