@@ -3,6 +3,7 @@ package uk.ac.ebi.interpro.metagenomics.memi.controller;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.velocity.app.VelocityEngine;
+import org.hibernate.criterion.Criterion;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.WebDataBinder;
@@ -18,12 +19,14 @@ import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.StudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.files.MemiFileWriter;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.LoginForm;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.StudyFilter;
+import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.StudiesViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
+import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.StudiesViewHelper;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.StudiesViewModelBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder;
 
@@ -137,12 +140,16 @@ public class ViewStudiesController extends AbstractController implements IContro
                                                @RequestParam(required = false) final StudyFilter.StudyVisibility studyVisibility,
                                                @RequestParam(required = false) final Study.StudyStatus studyStatus) {
         log.info("Requesting exportStudies (GET method)...");
-        ModelMap model = new ModelMap();
         processRequestParams(filter, searchTerm, studyVisibility, studyStatus);
-        populateModel(model, filter, false);
-        Collection<Study> studies = ((StudiesViewModel) model.get(ViewModel.MODEL_ATTR_NAME)).getStudies();
 
-        if (studies != null && studies.size() > 0) {
+        Submitter submitter = getSessionSubmitter();
+        String submissionAccountId = (submitter != null ? submitter.getSubmissionAccountId() : null);
+
+        List<Criterion> filterCriteria = StudiesViewHelper.buildFilterCriteria(filter, submissionAccountId, biomeDAO);
+        List<Study> filteredStudies = studyDAO.retrieveFilteredStudies(filterCriteria, false, "studyName");
+        StudiesViewHelper.attachSampleSize(filteredStudies, sampleDAO);
+
+        if (filteredStudies != null && filteredStudies.size() > 0) {
             //Create export CSV text
 
             // TODO Not a good idea to hold all file content text in a big string - this could get very large! OK for now with not much data...
@@ -151,7 +158,7 @@ public class ViewStudiesController extends AbstractController implements IContro
             StringBuffer fileContent = new StringBuffer("Study ID,Study Name,Number Of Samples,Submitted Date,Analysis,NCBI Project ID,Public Release Date,Centre Name,Experimental Factor,Is Public,Study Abstract");
             fileContent.append("\n");
 
-            for (Study study : studies) {
+            for (Study study : filteredStudies) {
                 fileContent.append(study.getStudyId()).append(',');
                 fileContent.append("\"").append(study.getStudyName()).append("\",");
                 fileContent.append(study.getSampleCount()).append(',');
