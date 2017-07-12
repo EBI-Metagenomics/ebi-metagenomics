@@ -71,6 +71,7 @@ var SettingsManager = function() {
         MORE_FACET_INPUT_CLASS: "more-facet-input",
         MORE_FACET_TEXT_FILTER_CLASS: "more-facet-text-filter",
         MORE_FACET_CONTENT_CLASS: "more-facet-content",
+        MORE_FACET_HEADER_CLASS: "more-facet-header",
         HIERARCHICAL_FACET_CLASS: "hierarchical-facet-list",
         HIERARCHICAL_FACET_CHECKBOX: "hierarchical-facet-checkbox",
         HOMEPAGE_LINK_CLASS: "homepage-search-link",
@@ -760,16 +761,11 @@ var FacetManager = function(settingsManager, searchManager) {
 
         var headerDiv = document.createElement("div");
         headerDiv.style.width = "100%";
+        headerDiv.classList.add(self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_HEADER_CLASS);
 
         var title = document.createElement("h3");
         title.innerHTML = facetGroup.label;
         headerDiv.appendChild(title);
-
-        var textFilter = document.createElement("input");
-        textFilter.type = "text";
-        textFilter.style.margin = "10px";
-        textFilter.classList.add(self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_TEXT_FILTER_CLASS);
-        headerDiv.appendChild(textFilter);
 
         var facetsDiv = document.createElement("div");
         facetsDiv.classList.add(self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_CONTENT_CLASS);
@@ -778,23 +774,6 @@ var FacetManager = function(settingsManager, searchManager) {
         facetsDiv.style.width = "100%";
         facetsDiv.style.height = "80%";
         facetsDiv.appendChild(document.createTextNode("Loading facets"));
-
-        textFilter.addEventListener("keyup", function(event){
-            var listItems = facetsDiv.getElementsByTagName("li");
-            for(var i=0; i < listItems.length; i++) {
-                var listItem = listItems[i];
-                var input = listItem.getElementsByTagName("input")[0];
-                var filterText = textFilter.value;
-                if (filterText != null && filterText != "") {
-                    var listItemText = input.value;
-                    if (listItemText.toLowerCase().indexOf(filterText.toLowerCase()) == -1) {
-                        listItem.style.display = "none";
-                    }
-                } else {
-                    listItem.style.display = "inline-block";
-                }
-            }
-        });
 
         var footerDiv = document.createElement("div");
         footerDiv.height = "20%";
@@ -929,6 +908,43 @@ var FacetManager = function(settingsManager, searchManager) {
             console.log("Error: Expect to find exactly one child div with class "
                 + self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_CONTENT_CLASS);
         }
+
+        var headerDivs = container.getElementsByClassName(
+            self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_HEADER_CLASS
+        );
+        var headerDiv = null;
+
+        if (headerDivs != null && headerDivs.length == 1) {
+            headerDiv = headerDivs[0];
+        } else {
+            console.log("Error: Expect to find exactly one child div with class "
+                + self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_CONTENT_CLASS);
+        }
+
+        textFilter = document.createElement("input");
+        textFilter.type = "text";
+        textFilter.style.margin = "10px";
+        textFilter.classList.add(self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_TEXT_FILTER_CLASS);
+        headerDiv.appendChild(textFilter);
+
+        textFilter.addEventListener("input", function(event){
+            var listItems = contentDiv.getElementsByTagName("li");
+            for(var i=0; i < listItems.length; i++) {
+                var listItem = listItems[i];
+                var input = listItem.getElementsByTagName("input")[0];
+                var filterText = textFilter.value;
+                if (filterText != null && filterText != "") {
+                    var listItemText = input.value;
+                    if (listItemText.toLowerCase().indexOf(filterText.toLowerCase()) == -1) {
+                        listItem.style.display = "none";
+                    } else {
+                        listItem.style.display = "inline-block";
+                    }
+                } else {
+                    listItem.style.display = "inline-block";
+                }
+            }
+        });
 
         contentDiv.innerHTML = "";
         var list = document.createElement("ul");
