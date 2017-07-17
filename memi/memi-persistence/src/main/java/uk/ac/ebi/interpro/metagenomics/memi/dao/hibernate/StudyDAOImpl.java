@@ -360,7 +360,7 @@ public class StudyDAOImpl implements StudyDAO {
                         .append("STUDY st, ")
                         .append("SAMPLE sa, ")
                         .append("ANALYSIS_JOB aj, ")
-                        .append("(select st.EXT_STUDY_ID, count(aj.EXTERNAL_RUN_IDS) as run_count FROM STUDY st, SAMPLE sa, ANALYSIS_JOB aj where st.STUDY_ID=sa.STUDY_ID and sa.sample_id = aj.sample_id and st.IS_PUBLIC=1 and aj.EXPERIMENT_TYPE_ID<>3 and aj.ANALYSIS_STATUS_ID=3 GROUP BY st.EXT_STUDY_ID) tmp ")
+                        .append("(select st.EXT_STUDY_ID, count(aj.EXTERNAL_RUN_IDS) as run_count FROM STUDY st, SAMPLE sa, ANALYSIS_JOB aj where st.STUDY_ID=sa.STUDY_ID and sa.sample_id = aj.sample_id and st.IS_PUBLIC<>5 and aj.EXPERIMENT_TYPE_ID<>3 and aj.ANALYSIS_STATUS_ID=3 GROUP BY st.EXT_STUDY_ID) tmp ")
                         .append("where st.STUDY_ID=sa.STUDY_ID and sa.SAMPLE_ID=aj.SAMPLE_ID and tmp.EXT_STUDY_ID = st.EXT_STUDY_ID and aj.EXPERIMENT_TYPE_ID<>3 and aj.ANALYSIS_STATUS_ID=3 and tmp.run_count > 1 and st.SUBMISSION_ACCOUNT_ID = '" + submissionAccountId + "' group by st.EXT_STUDY_ID order by st.STUDY_NAME");
             }
             final String sql = sb.toString();
