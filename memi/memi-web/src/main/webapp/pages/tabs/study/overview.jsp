@@ -120,38 +120,6 @@
             </c:otherwise>
         </c:choose>
 
-        <c:set var="contactName" value="${study.authorName}" scope="page"/>
-        <c:set var="contactMail" value="${study.authorEmailAddress}" scope="page"/>
-
-        <c:choose>
-            <c:when test="${not empty contactName}">
-                <div class="result_row">
-                    <div class="result_row_label">Name:</div>
-                    <div class="result_row_data">${contactName}</div>
-                </div>
-            </c:when>
-            <c:otherwise>
-                <div class="result_row">
-                    <div class="result_row_label">Name:</div>
-                    <div class="result_row_data">not available</div>
-                </div>
-            </c:otherwise>
-        </c:choose>
-        <c:choose>
-            <c:when test="${not empty contactMail}">
-                <div class="result_row">
-                    <div class="result_row_label">Email:</div>
-                    <div class="result_row_data">${contactMail}</div>
-                </div>
-            </c:when>
-            <c:otherwise>
-                <div class="result_row">
-                    <div class="result_row_label">Email:</div>
-                    <div class="result_row_data lowercase">not available</div>
-                </div>
-            </c:otherwise>
-        </c:choose>
-
     </div>
 
     <%--<h3>Other information</h3>--%>
