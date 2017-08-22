@@ -50,20 +50,22 @@
     <tags:publications publications="${study.publications}" relatedPublications="${model.relatedPublications}"
                        relatedLinks="${model.relatedLinks}"/>
     <!-- Related publication, resources, links -->
-    <div class="sidebar-allrel">
-        <div id="sidebar-related">
-            <h2>Related links</h2>
-            <%--<span class="separator"></span>--%>
-            <ul>
-                <!--ENA links -->
-                <li>
-                    <a title="Click to view entry on European Nucleotide Archive"
-                       href="https://www.ebi.ac.uk/ena/data/view/${study.studyId}"
-                       class="list_more">ENA website (${study.studyId})</a>
-                </li>
-            </ul>
+    <c:if test="${study['public']}">
+        <div class="sidebar-allrel">
+            <div id="sidebar-related">
+                <h2>Related links</h2>
+                <%--<span class="separator"></span>--%>
+                <ul>
+                    <!--ENA links -->
+                    <li>
+                        <a title="Click to view entry on European Nucleotide Archive"
+                           href="https://www.ebi.ac.uk/ena/data/view/${study.studyId}"
+                           class="list_more">ENA website (${study.studyId})</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
+    </c:if>
     <!--/ Related publication, resources, links -->
 
 
