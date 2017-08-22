@@ -191,7 +191,7 @@ public class ViewStudiesController extends AbstractController implements IContro
 
                 // Escape double quotes
                 String studyAbstract = study.getStudyAbstract().replaceAll("\"", "\'");
-                fileContent.append("\"").append(studyAbstract).append("\",");
+                fileContent.append("\"").append(studyAbstract).append("\"");
 
                 fileContent.append("\n");
             }
