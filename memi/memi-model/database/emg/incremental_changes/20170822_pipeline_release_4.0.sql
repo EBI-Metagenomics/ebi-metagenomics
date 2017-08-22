@@ -24,7 +24,7 @@ INSERT INTO emg.PIPELINE_RELEASE_TOOL (pipeline_id, tool_id, tool_group_id, how_
 -- Biopython
 INSERT INTO emg.PIPELINE_RELEASE_TOOL (pipeline_id, tool_id, tool_group_id, how_tool_used_desc) values (4,11,1.2,'Sequences < 100 nucleotides in length removed.');
 -- Infernal
-INSERT INTO emg.PIPELINE_RELEASE_TOOL (pipeline_id, tool_id, tool_group_id, how_tool_used_desc) values (4,21,2,'Identification and masking of ncRNAs.');
+INSERT INTO emg.PIPELINE_RELEASE_TOOL (pipeline_id, tool_id, tool_group_id, how_tool_used_desc) values (4,21,2,'Identification of ncRNAs.');
 -- cmsearch deoverlap
 INSERT INTO emg.PIPELINE_RELEASE_TOOL (pipeline_id, tool_id, tool_group_id, how_tool_used_desc) values (4,23,2,'Removes lower scoring overlaps from cmsearch --tblout files.');
 -- FragGeneScan
