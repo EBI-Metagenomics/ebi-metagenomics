@@ -51,7 +51,12 @@ public class KronaChartsController extends AbstractResultViewController {
                 log.debug("Building file path to the Krona HTML file...");
                 AnalysisJob analysisJob = analysisJobDAO.readByRunIdAndVersionDeep(run.getExternalRunId(), releaseVersion, "completed");
                 if (taxonomy && analysisJob != null) {
-                    File fileToStream = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, propertyContainer.getResultFileDefinition(FileDefinitionId.KRONA_HTML_FILE));
+                    File fileToStream = null;
+                    if (releaseVersion.equalsIgnoreCase("4.0")) {
+                        fileToStream = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, propertyContainer.getResultFileDefinition(FileDefinitionId.KRONA_HTML_FILE_SSU));
+                    } else {
+                        fileToStream = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, propertyContainer.getResultFileDefinition(FileDefinitionId.KRONA_HTML_FILE));
+                    }
                     log.debug("Checking if Krona result file does exit before streaming it...");
                     if (fileToStream == null || !fileToStream.exists()) {
                         log.warn(fileToStream.getAbsolutePath() + " doesn't exist!");

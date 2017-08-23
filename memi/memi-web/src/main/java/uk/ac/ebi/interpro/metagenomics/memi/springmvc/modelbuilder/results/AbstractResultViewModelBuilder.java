@@ -130,7 +130,14 @@ public abstract class AbstractResultViewModelBuilder<E extends AbstractResultVie
             if (doesExist) {
                 if (fileDefinition.getIdentifier().equalsIgnoreCase(FileDefinitionId.KRONA_HTML_FILE.toString())) {
                     isKronaTabDisabled = false;
+                } else if (fileDefinition.getIdentifier().equalsIgnoreCase(FileDefinitionId.KRONA_HTML_FILE_SSU.toString())) {
+                    isKronaTabDisabled = false;
                 } else if (fileDefinition.getIdentifier().equalsIgnoreCase(FileDefinitionId.KINGDOM_COUNTS_FILE.toString())) {
+                    isPieChartTabDisabled = false;
+                    isBarChartTabDisabled = false;
+                    isStackChartTabDisabled = false;
+                }//From v4 on SSUs and LSUs have been introduced
+                else if (fileDefinition.getIdentifier().equalsIgnoreCase(FileDefinitionId.KINGDOM_COUNTS_FILE_SSU.toString())) {
                     isPieChartTabDisabled = false;
                     isBarChartTabDisabled = false;
                     isStackChartTabDisabled = false;

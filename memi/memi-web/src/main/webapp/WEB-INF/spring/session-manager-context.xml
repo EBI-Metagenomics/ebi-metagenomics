@@ -40,9 +40,11 @@
             <map>
                 <!--Maps FileDefinitionIds to result file definitions -->
                 <entry key="KINGDOM_COUNTS_FILE" value-ref="kingdomCountsFile"/>
+                <entry key="KINGDOM_COUNTS_FILE_SSU" value-ref="kingdomCountsFileSSU"/>
                 <entry key="INTERPRO_MATCHES_SUMMARY_FILE" value-ref="interProMatchesSummaryFile"/>
                 <entry key="GO_SLIM_FILE" value-ref="goSlimAnnotationFile"/>
                 <entry key="KRONA_HTML_FILE" value-ref="kronaHtmlFile"/>
+                <entry key="KRONA_HTML_FILE_SSU" value-ref="kronaHtmlFileSSU"/>
             </map>
         </property>
         <property name="RInstallationLocation" value="${r.installation.location}"/>

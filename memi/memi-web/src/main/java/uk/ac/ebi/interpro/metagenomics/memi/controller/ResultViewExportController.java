@@ -441,9 +441,15 @@ public class ResultViewExportController extends AbstractResultViewController {
             fileDefinitionId = FileDefinitionId.R_RNA_16S_FASTA_FILE;
         } else if (resultType.equalsIgnoreCase("23S-rRNA-FASTA")) {
             fileDefinitionId = FileDefinitionId.R_RNA_23S_FASTA_FILE;
+        } else if (resultType.equalsIgnoreCase("SSU-rRNA-FASTA")) {
+            fileDefinitionId = FileDefinitionId.R_RNA_SSU_FASTA_FILE;
+        } else if (resultType.equalsIgnoreCase("LSU-rRNA-FASTA")) {
+            fileDefinitionId = FileDefinitionId.R_RNA_LSU_FASTA_FILE;
         } else if (resultType.equalsIgnoreCase("OTU-TSV")) {
             if (releaseVersion.equalsIgnoreCase("1.0")) {
                 fileDefinitionId = FileDefinitionId.TAX_ANALYSIS_TSV_FILE;
+            } else if (releaseVersion.equalsIgnoreCase("4.0")) {
+                fileDefinitionId = FileDefinitionId.OTU_TABLE_SSU_FILE;
             } else {// releases version greater 2.0
                 fileDefinitionId = FileDefinitionId.OTU_TABLE_FILE;
             }

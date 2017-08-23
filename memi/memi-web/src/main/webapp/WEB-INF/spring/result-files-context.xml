@@ -40,7 +40,9 @@
         <constructor-arg>
             <list>
                 <ref bean="kingdomCountsFile"/>
+                <ref bean="kingdomCountsFileSSU"/>
                 <ref bean="kronaHtmlFile"/>
+                <ref bean="kronaHtmlFileSSU"/>
             </list>
         </constructor-arg>
     </bean>
