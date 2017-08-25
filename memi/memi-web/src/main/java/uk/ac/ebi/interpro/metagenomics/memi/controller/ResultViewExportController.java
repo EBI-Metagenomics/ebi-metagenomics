@@ -448,17 +448,23 @@ public class ResultViewExportController extends AbstractResultViewController {
         } else if (resultType.equalsIgnoreCase("OTU-TSV")) {
             if (releaseVersion.equalsIgnoreCase("1.0")) {
                 fileDefinitionId = FileDefinitionId.TAX_ANALYSIS_TSV_FILE;
-            } else if (releaseVersion.equalsIgnoreCase("4.0")) {
-                fileDefinitionId = FileDefinitionId.OTU_TABLE_SSU_FILE;
             } else {// releases version greater 2.0
                 fileDefinitionId = FileDefinitionId.OTU_TABLE_FILE;
             }
+        } else if (resultType.equalsIgnoreCase("SSU-OTU-TSV")) {
+            fileDefinitionId = FileDefinitionId.SSU_OTU_TABLE_FILE;
+        } else if (resultType.equalsIgnoreCase("LSU-OTU-TSV")) {
+            fileDefinitionId = FileDefinitionId.LSU_OTU_TABLE_FILE;
         } else if (resultType.equalsIgnoreCase("OTU-BIOM")) {
             fileDefinitionId = FileDefinitionId.OTUS_BIOM_FORMAT_FILE;
         } else if (resultType.equalsIgnoreCase("OTU-table-HDF5-BIOM")) {
             fileDefinitionId = FileDefinitionId.HDF5_BIOM_FILE;
         } else if (resultType.equalsIgnoreCase("OTU-table-JSON-BIOM")) {
             fileDefinitionId = FileDefinitionId.JSON_BIOM_FILE;
+        } else if (resultType.equalsIgnoreCase("SSU-OTU-table-JSON-BIOM")) {
+            fileDefinitionId = FileDefinitionId.SSU_JSON_BIOM_FILE;
+        } else if (resultType.equalsIgnoreCase("LSU-OTU-table-JSON-BIOM")) {
+            fileDefinitionId = FileDefinitionId.LSU_JSON_BIOM_FILE;
         } else if (resultType.equalsIgnoreCase("NewickTree")) {
             fileDefinitionId = FileDefinitionId.TAX_ANALYSIS_TREE_FILE;
         } else if (resultType.equalsIgnoreCase("NewickPrunedTree")) {

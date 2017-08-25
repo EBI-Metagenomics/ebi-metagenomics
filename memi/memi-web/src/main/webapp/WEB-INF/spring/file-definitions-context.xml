@@ -136,30 +136,6 @@
     <!-- Reads encoding SSU rRNA                            | SSU.fasta.gz -->
     <!-- Reads encoding LSU rRNA                            | LSU.fasta.gz -->
 
-    <bean id="rRNASSUFile" autowire-candidate="false"
-          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.TaxonomicAnalysisFileDefinition">
-        <property name="relativePath" value="/sequence-categorisation/SSU.fasta.gz"/>
-        <property name="description" value="All reads encoding SSU rRNA."/>
-        <property name="downloadName" value="_SSU.fasta.gz"/>
-        <property name="linkText" value="Reads encoding SSU rRNA"/>
-        <property name="order" value="1"/>
-        <property name="linkTitle" value="Click to download reads encoding SSU rRNA (FASTA)"/>
-        <property name="linkURL" value="SSU-rRNA-FASTA"/>
-        <!--All versions-->
-    </bean>
-
-    <bean id="rRNALSUFile" autowire-candidate="false"
-          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.TaxonomicAnalysisFileDefinition">
-        <property name="relativePath" value="/sequence-categorisation/LSU.fasta.gz"/>
-        <property name="description" value="All reads encoding LSU rRNA."/>
-        <property name="downloadName" value="_LSU.fasta.gz"/>
-        <property name="linkText" value="Reads encoding LSU rRNA"/>
-        <property name="order" value="1"/>
-        <property name="linkTitle" value="Click to download reads encoding LSU rRNA (FASTA)"/>
-        <property name="linkURL" value="LSU-rRNA-FASTA"/>
-        <!--All versions-->
-    </bean>
-
     <bean id="rRNA5sFile" autowire-candidate="false"
           class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.TaxonomicAnalysisFileDefinition">
         <property name="relativePath" value="/sequence-categorisation/5S.fasta"/>
@@ -196,6 +172,19 @@
         <!--All versions-->
     </bean>
 
+    <bean id="otuTsvFile" autowire-candidate="false"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.TaxonomicAnalysisFileDefinition">
+        <property name="fileNameEnding" value="_rRNAFiltered.fasta_rep_set_tax_assignments.txt"/>
+        <property name="relativePath" value="/otus/rdp_assigned_taxonomy/"/>
+        <property name="description" value="OTUs and taxonomic assignments (TSV)."/>
+        <property name="downloadName" value="_otu.tsv"/>
+        <property name="linkText" value="OTUs, reads and taxonomic assignments"/>
+        <property name="order" value="4"/>
+        <property name="linkTitle" value="Click to download the OTU table in TSV format"/>
+        <property name="linkURL" value="OTU-TSV"/>
+        <property name="releaseVersion" value="1.0"/>
+    </bean>
+
     <bean id="otuBiomFile" autowire-candidate="false"
           class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.TaxonomicAnalysisFileDefinition">
         <property name="relativePath" value="/otus/otu_table.biom"/>
@@ -220,19 +209,6 @@
         <property name="releaseVersion" value="1.0"/>
     </bean>
 
-    <bean id="otuTsvFile" autowire-candidate="false"
-          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.TaxonomicAnalysisFileDefinition">
-        <property name="fileNameEnding" value="_rRNAFiltered.fasta_rep_set_tax_assignments.txt"/>
-        <property name="relativePath" value="/otus/rdp_assigned_taxonomy/"/>
-        <property name="description" value="OTUs and taxonomic assignments (TSV)."/>
-        <property name="downloadName" value="_otu.tsv"/>
-        <property name="linkText" value="OTUs, reads and taxonomic assignments"/>
-        <property name="order" value="4"/>
-        <property name="linkTitle" value="Click to download the OTU table in TSV format"/>
-        <property name="linkURL" value="OTU-TSV"/>
-        <property name="releaseVersion" value="1.0"/>
-    </bean>
-
     <bean id="otuTableFile" autowire-candidate="false"
           class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.TaxonomicAnalysisFileDefinition">
         <property name="relativePath" value="/cr_otus/"/>
@@ -244,19 +220,6 @@
         <property name="linkTitle" value="Click to download the OTU table in TSV format"/>
         <property name="linkURL" value="OTU-TSV"/>
         <property name="releaseVersion" value="2.0"/>
-    </bean>
-
-    <bean id="otuTableSSUFile" autowire-candidate="false"
-          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.TaxonomicAnalysisFileDefinition">
-        <property name="relativePath" value="/taxonomy-summary/SSU/"/>
-        <property name="fileNameEnding" value="_SSU.fasta.mseq.tsv"/>
-        <property name="description" value="N/A"/>
-        <property name="downloadName" value="_otu_ssu.tsv"/>
-        <property name="linkText" value="OTUs, reads and taxonomic assignments for SSU rRNA"/>
-        <property name="order" value="7"/>
-        <property name="linkTitle" value="Click to download the OTU table for SSU rRNA in TSV format"/>
-        <property name="linkURL" value="OTU-TSV"/>
-        <property name="releaseVersion" value="4.0"/>
     </bean>
 
     <bean id="hdf5BiomFile" autowire-candidate="false"
@@ -297,6 +260,90 @@
         <property name="linkURL" value="NewickPrunedTree"/>
         <property name="releaseVersion" value="2.0"/>
     </bean>
+
+    <!-- SSU files from version 4 -->
+
+    <bean id="rRNASSUFile" autowire-candidate="false"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.TaxonomicAnalysisFileDefinition">
+        <property name="relativePath" value="/sequence-categorisation/SSU.fasta.gz"/>
+        <property name="description" value="All reads encoding SSU rRNA."/>
+        <property name="downloadName" value="_SSU.fasta.gz"/>
+        <property name="linkText" value="Reads encoding SSU rRNA"/>
+        <property name="order" value="1"/>
+        <property name="linkTitle" value="Click to download reads encoding SSU rRNA (FASTA)"/>
+        <property name="linkURL" value="SSU-rRNA-FASTA"/>
+        <!-- version 4 -->
+    </bean>
+
+    <bean id="otuTableSSUFile" autowire-candidate="false"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.TaxonomicAnalysisFileDefinition">
+        <property name="relativePath" value="/taxonomy-summary/SSU/"/>
+        <property name="fileNameEnding" value="_SSU.fasta.mseq.tsv"/>
+        <property name="description" value="N/A"/>
+        <property name="downloadName" value="_SSU_OTU.tsv"/>
+        <property name="linkText" value="OTUs, reads and taxonomic assignments for SSU rRNA"/>
+        <property name="order" value="2"/>
+        <property name="linkTitle" value="Click to download the OTU table in TSV format for SSU rRNA"/>
+        <property name="linkURL" value="SSU-OTU-TSV"/>
+        <property name="releaseVersion" value="4.0"/>
+    </bean>
+
+    <bean id="JSONBiomSSUFile" autowire-candidate="false"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.TaxonomicAnalysisFileDefinition">
+        <property name="relativePath" value="/taxonomy-summary/SSU/"/>
+        <property name="fileNameEnding" value="_SSU.fasta.mseq_json.biom"/>
+        <property name="description" value="N/A"/>
+        <property name="downloadName" value="_SSU_OTU_TABLE_JSON.biom"/>
+        <property name="linkText" value="OTUs, reads and taxonomic assignments for SSU rRNA"/>
+        <property name="order" value="3"/>
+        <property name="linkTitle" value="Click to download the converted OTU table in JSON biom format for SSU rRNA"/>
+        <property name="linkURL" value="SSU-OTU-table-JSON-BIOM"/>
+        <property name="releaseVersion" value="4.0"/>
+    </bean>
+
+    <!-- END SSU section -->
+
+    <!-- LSU files from version 4 -->
+
+    <bean id="rRNALSUFile" autowire-candidate="false"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.TaxonomicAnalysisFileDefinition">
+        <property name="relativePath" value="/sequence-categorisation/LSU.fasta.gz"/>
+        <property name="description" value="All reads encoding LSU rRNA."/>
+        <property name="downloadName" value="_LSU.fasta.gz"/>
+        <property name="linkText" value="Reads encoding LSU rRNA"/>
+        <property name="order" value="4"/>
+        <property name="linkTitle" value="Click to download reads encoding LSU rRNA (FASTA)"/>
+        <property name="linkURL" value="LSU-rRNA-FASTA"/>
+        <!-- version 4 -->
+    </bean>
+
+    <bean id="otuTableLSUFile" autowire-candidate="false"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.TaxonomicAnalysisFileDefinition">
+        <property name="relativePath" value="/taxonomy-summary/LSU/"/>
+        <property name="fileNameEnding" value="_LSU.fasta.mseq.tsv"/>
+        <property name="description" value="N/A"/>
+        <property name="downloadName" value="_LSU_OTU.tsv"/>
+        <property name="linkText" value="OTUs, reads and taxonomic assignments for LSU rRNA"/>
+        <property name="order" value="5"/>
+        <property name="linkTitle" value="Click to download the OTU table in TSV format for LSU rRNA"/>
+        <property name="linkURL" value="LSU-OTU-TSV"/>
+        <property name="releaseVersion" value="4.0"/>
+    </bean>
+
+    <bean id="JSONBiomLSUFile" autowire-candidate="false"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.TaxonomicAnalysisFileDefinition">
+        <property name="relativePath" value="/taxonomy-summary/LSU/"/>
+        <property name="fileNameEnding" value="_LSU.fasta.mseq_json.biom"/>
+        <property name="description" value="N/A"/>
+        <property name="downloadName" value="_LSU_OTU_TABLE_JSON"/>
+        <property name="linkText" value="OTUs, reads and taxonomic assignments for LSU rRNA"/>
+        <property name="order" value="6"/>
+        <property name="linkTitle" value="Click to download the converted OTU table in JSON biom format for LSU rRNA"/>
+        <property name="linkURL" value="LSU-OTU-table-JSON-BIOM"/>
+        <property name="releaseVersion" value="4.0"/>
+    </bean>
+
+    <!-- END LSU section -->
 
     <!--Taxonomy summary files (since version 2)-->
 

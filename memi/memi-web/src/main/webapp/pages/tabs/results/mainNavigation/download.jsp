@@ -440,7 +440,7 @@
                                     <td class="col_xs xs_hide">
                                             <%--while implemented in file-definition-context--%>
                                         <c:choose>
-                                            <c:when test="${downloadLink.linkPrefix == 'InterPro matches' || downloadLink.linkText ==  'Phylogenetic tree' || downloadLink.linkText == 'OTUs, reads and taxonomic assignments'}">
+                                            <c:when test="${downloadLink.linkPrefix == 'InterPro matches' || downloadLink.linkText ==  'Phylogenetic tree' || fn:startsWith(downloadLink.linkText, 'OTUs, reads and taxonomic assignments')}">
                                 <span class="show_tooltip icon  icon-generic big" data-icon="g"
                                       title="Chart data type"></span>
                                             </c:when>
@@ -456,11 +456,18 @@
                                         </c:choose>
 
                                     </td>
-                                    <td class="col_sm xs_hide">-</td>
+                                    <td class="col_sm xs_hide">
+                                        <c:choose>
+                                            <c:when test="${fn:startsWith(downloadLink.linkText, 'Reads encoding')}">
+                                                GZIP
+                                            </c:when>
+                                            <c:otherwise>-</c:otherwise>
+                                        </c:choose>
+                                    </td>
                                     <td class="col_sm">
                                             <%--file format--%>
                                         <c:choose>
-                                            <c:when test="${downloadLink.linkTitle == 'Click to download the OTU table in TSV format'}">
+                                            <c:when test="${fn:startsWith(downloadLink.linkTitle, 'Click to download the OTU table in TSV format')}">
                                                 TSV
                                             </c:when>
                                             <c:when test="${downloadLink.linkTitle == 'Click to download the converted OTU table in biom format'}">
@@ -471,7 +478,7 @@
                                                 HDF5 Biom <span class="icon icon-generic show_tooltip" data-icon="i"
                                                                 title="BIOM is a standard format (http://biom-format.org/) for representing taxonomy distribution (OTUs and their occurence in each sample). BIOM files could be directly imported in diverse analysis packages such as MEGAN (http://ab.inf.uni-tuebingen.de/software/megan5/)."></span>
                                             </c:when>
-                                            <c:when test="${downloadLink.linkTitle == 'Click to download the converted OTU table in JSON biom format'}">
+                                            <c:when test="${fn:startsWith(downloadLink.linkTitle, 'Click to download the converted OTU table in JSON biom format')}">
                                                 JSON Biom <span class="icon icon-generic show_tooltip" data-icon="i"
                                                                 title="BIOM is a standard format (http://biom-format.org/) for representing taxonomy distribution (OTUs and their occurence in each sample). BIOM files could be directly imported in diverse analysis packages such as MEGAN (http://ab.inf.uni-tuebingen.de/software/megan5/)."></span>
                                             </c:when>
