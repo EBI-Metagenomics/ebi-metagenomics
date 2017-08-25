@@ -24,19 +24,14 @@ INSERT INTO emg.PIPELINE_RELEASE_TOOL (pipeline_id, tool_id, tool_group_id, how_
 -- Biopython
 INSERT INTO emg.PIPELINE_RELEASE_TOOL (pipeline_id, tool_id, tool_group_id, how_tool_used_desc) values (4,11,1.2,'Sequences < 100 nucleotides in length removed.');
 -- Infernal
-INSERT INTO emg.PIPELINE_RELEASE_TOOL (pipeline_id, tool_id, tool_group_id, how_tool_used_desc) values (4,21,2,'Identification of ncRNAs.');
+INSERT INTO emg.PIPELINE_RELEASE_TOOL (pipeline_id, tool_id, tool_group_id, how_tool_used_desc) values (4,21,2.1,'Identification of ncRNAs.');
 -- cmsearch deoverlap
-INSERT INTO emg.PIPELINE_RELEASE_TOOL (pipeline_id, tool_id, tool_group_id, how_tool_used_desc) values (4,23,2,'Removes lower scoring overlaps from cmsearch --tblout files.');
+INSERT INTO emg.PIPELINE_RELEASE_TOOL (pipeline_id, tool_id, tool_group_id, how_tool_used_desc) values (4,23,2.2,'Removes lower scoring overlaps from cmsearch --tblout files.');
 -- FragGeneScan
-INSERT INTO emg.PIPELINE_RELEASE_TOOL (pipeline_id, tool_id, tool_group_id, how_tool_used_desc) values (4,16,3,'Reads with predicted coding sequences (pCDS) above 60 nucleotides in length.');
+INSERT INTO emg.PIPELINE_RELEASE_TOOL (pipeline_id, tool_id, tool_group_id, how_tool_used_desc) values (4,16,3.1,'Reads with predicted coding sequences (pCDS) above 60 nucleotides in length.');
 -- Prodigal
-INSERT INTO emg.PIPELINE_RELEASE_TOOL (pipeline_id, tool_id, tool_group_id, how_tool_used_desc) values (4,20,3,'??');
+INSERT INTO emg.PIPELINE_RELEASE_TOOL (pipeline_id, tool_id, tool_group_id, how_tool_used_desc) values (4,20,3.2,'??');
 -- InterProScan
 INSERT INTO emg.PIPELINE_RELEASE_TOOL (pipeline_id, tool_id, tool_group_id, how_tool_used_desc) values (4,19,4,'Matches are generated against predicted CDS, using a sub set of databases (Pfam, TIGRFAM, PRINTS, PROSITE patterns, Gene3d) from InterPro release 64.0. A summary of Gene Ontology (GO) terms derived from InterPro matches to your sample is provided. It is generated using a reduced list of GO terms called GO slim (version <a href="http://www.geneontology.org/ontology/subsets/goslim_metagenomics.obo" class="ext">goslim_goa</a>).');
 -- MAPseq
 INSERT INTO emg.PIPELINE_RELEASE_TOOL (pipeline_id, tool_id, tool_group_id, how_tool_used_desc) values (4,22,5,'SSU and LSU rRNA are annotated using SILVAs SSU/LSU version 128 reference database, enabling classification of eukaryotes, remapped to a 7-level taxonomy.');
-
-
-update emg.PIPELINE_RELEASE_TOOL set HOW_TOOL_USED_DESC='Matches are generated against predicted CDS, using a sub set of databases (Pfam, TIGRFAM, PRINTS, PROSITE patterns, Gene3d) from InterPro release 58.0. A summary of Gene Ontology (GO) terms derived from InterPro matches to your sample is provided. It is generated using a reduced list of GO terms called GO slim (version <a href="http://www.geneontology.org/ontology/subsets/goslim_metagenomics.obo" class="ext">goslim_goa</a>).' where PIPELINE_ID=3 and TOOL_ID=14;
-
-update emg.PIPELINE_TOOL set WEB_LINK='https://sourceforge.net/projects/fraggenescan/' where TOOL_ID=16;
