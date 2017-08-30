@@ -4,4 +4,4 @@
   Desc: Represents the Metagenomics portal help page.
 --%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
-<tiles:insertDefinition name="contact"/>
+<tiles:insertDefinition name="help"/>
