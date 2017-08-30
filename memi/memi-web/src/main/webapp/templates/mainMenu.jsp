@@ -54,10 +54,10 @@
     <li class="${model.tabClasses["tabClassAboutView"]}"><a href="<c:url value="${baseURL}/about"/>"
                                                             title="About EBI Metagenomics">About</a>
     </li>
-c
 
-    <li class="${model.tabClasses["tabClassContactView"]} last"><a href="<c:url value="${baseURL}/help"/>"
-                                                                   title="You need help?">Help</a></li>
+
+    <li class="${model.tabClasses["tabClassContactView"]} last"><a href="<c:url value="${baseURL}/contact"/>"
+                                                                   title="Contact us">Contact</a></li>
 
     <c:choose>
         <c:when test="${empty model.submitter}">
