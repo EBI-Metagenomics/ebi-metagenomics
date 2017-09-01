@@ -3,7 +3,7 @@
 <script src='${pageContext.request.contextPath}/js/highcharts-4.1.10/highcharts.js' type='text/javascript'></script>
 <script src='${pageContext.request.contextPath}/js/highcharts-4.1.10/highcharts-more.js' type='text/javascript'></script>
 <script src='${pageContext.request.contextPath}/js/highcharts-4.1.10/exporting.js' type='text/javascript'></script>
-<script src='${pageContext.request.contextPath}/js/QC_charts.js?v1.1' type='text/javascript'></script>
+<script src='${pageContext.request.contextPath}/js/QC_charts.js?v1.2' type='text/javascript'></script>
 
 <c:choose>
     <c:when test="${not empty model.sample}">
