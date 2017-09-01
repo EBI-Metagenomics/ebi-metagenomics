@@ -69,8 +69,16 @@ public class TaxonomicViewModelBuilder extends AbstractResultViewModelBuilder<Ta
     private TaxonomyAnalysisResult loadTaxonomyDataFromCSV() {
         final List<TaxonomyData> taxonomyDataSet = new ArrayList<TaxonomyData>();
 
-        File phylumFile = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, propertyContainer.getResultFileDefinition(FileDefinitionId.KINGDOM_COUNTS_FILE));
-        if (!phylumFile.exists()) {
+//        Get pipeline release version
+        String releaseVersion = analysisJob.getPipelineRelease().getReleaseVersion();
+        File phylumFile = null;
+        if (releaseVersion.equalsIgnoreCase("4.0")) {
+            phylumFile = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, propertyContainer.getResultFileDefinition(FileDefinitionId.KINGDOM_COUNTS_FILE_SSU));
+        } else {
+            phylumFile = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, propertyContainer.getResultFileDefinition(FileDefinitionId.KINGDOM_COUNTS_FILE));
+        }
+        if (phylumFile == null || !phylumFile.exists()) {
+
             log.warn("Deactivating taxonomy result tab, because file " + phylumFile.getAbsolutePath() + " doesn't exist!");
         } else {
             //Get the data

@@ -31,9 +31,15 @@
         <entry key="TAX_ANALYSIS_TSV_FILE" value-ref="otuTsvFile"/>
         <entry key="TAX_ANALYSIS_TREE_FILE" value-ref="newickFile"/>
         <entry key="OTU_TABLE_FILE" value-ref="otuTableFile"/>
+        <entry key="SSU_OTU_TABLE_FILE" value-ref="otuTableSSUFile"/>
+        <entry key="LSU_OTU_TABLE_FILE" value-ref="otuTableLSUFile"/>
         <entry key="HDF5_BIOM_FILE" value-ref="hdf5BiomFile"/>
         <entry key="JSON_BIOM_FILE" value-ref="JSONBiomFile"/>
+        <entry key="SSU_JSON_BIOM_FILE" value-ref="JSONBiomSSUFile"/>
+        <entry key="LSU_JSON_BIOM_FILE" value-ref="JSONBiomLSUFile"/>
         <entry key="PRUNED_TREE_FILE" value-ref="prunedTreeFile"/>
+        <entry key="R_RNA_SSU_FASTA_FILE" value-ref="rRNASSUFile"/>
+        <entry key="R_RNA_LSU_FASTA_FILE" value-ref="rRNALSUFile"/>
 
         <!--functional data-->
         <entry key="INTERPROSCAN_RESULT_FILE" value-ref="interProScanResultFile"/>
@@ -85,7 +91,31 @@
         <entry key="v1" value-ref="downloadableFileListV1"/>
         <entry key="v2" value-ref="downloadableFileListV2"/>
         <entry key="v3" value-ref="downloadableFileListV3"/>
+        <entry key="v4" value-ref="downloadableFileListV4"/>
     </util:map>
+
+    <util:list id="downloadableFileListV4" value-type="java.lang.String">
+        <!--sequence data files-->
+        <value>PROCESSED_READS</value>
+        <value>READS_WITH_PREDICTED_CDS_FILE</value>
+        <value>READS_WITH_MATCHES_FASTA_FILE</value>
+        <value>READS_WITHOUT_MATCHES_FASTA_FILE</value>
+        <value>PREDICTED_CDS_WITH_ANNOTATION_FILE</value>
+        <value>PREDICTED_CDS_WITHOUT_ANNOTATION_FILE</value>
+        <value>PREDICTED_ORF_WITHOUT_ANNOTATION_FILE</value>
+        <!--functional result files-->
+        <value>INTERPROSCAN_RESULT_FILE</value>
+        <value>GO_COMPLETE_FILE</value>
+        <value>GO_SLIM_FILE</value>
+        <!--taxonomy result files-->
+        <value>R_RNA_SSU_FASTA_FILE</value>
+        <value>R_RNA_LSU_FASTA_FILE</value>
+        <value>SSU_OTU_TABLE_FILE</value>
+        <value>LSU_OTU_TABLE_FILE</value>
+        <value>SSU_JSON_BIOM_FILE</value>
+        <value>LSU_JSON_BIOM_FILE</value>
+
+    </util:list>
 
     <util:list id="downloadableFileListV3" value-type="java.lang.String">
         <!--sequence data files-->

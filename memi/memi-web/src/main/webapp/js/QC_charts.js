@@ -84,7 +84,7 @@ var sumNumberOfReadsChart = function (rawdata, numberOfLines, sequenceCount, url
     var second_category = null;
     if (release_version == "1.0" || release_version == "2.0") {
         second_category = "Reads with predicted rRNA"
-    } else if (release_version == "3.0") {
+    } else if (release_version == "3.0" || release_version == "4.0") {
         second_category = "Reads with predicted RNA"
     } else{
         $('#sq_sum').html("<div class='msg_error'>This pipeline version does not supported the sequence summary feature yet.</div>");//shouldn't happen

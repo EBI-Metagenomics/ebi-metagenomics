@@ -78,7 +78,7 @@ The ENA only accepts data that is intended for public release. However, any data
 <h3 id="analysis">How we analyse the data</h3>
 <p>The latest version of the pipeline includes the following steps:</p>
 <!-- Pipeline chart for version 2.0-->
-<a title="EBI metagenomics - latest pipeline release" href="<c:url value="${baseURL}/pipelines/3.0"/>">
+<a title="EBI metagenomics - latest pipeline release" href="<c:url value="${baseURL}/pipelines/4.0"/>">
     <div class="block_wrapper">
 
         <div class="block_container pipe_v3">
@@ -95,7 +95,7 @@ The ENA only accepts data that is intended for public release. However, any data
 
             <div class="lowbranch">
                 <div class="lowbranch_func">
-                    <div class="arrow_pip rotate_f"></div><div class="block-lb" >Reads with rRNA &amp; tRNA masked</div><div class="arrow_pip"></div>
+                    <div class="arrow_pip rotate_f"></div><div class="block-lb" >Reads with ncRNA reads filtered out</div><div class="arrow_pip"></div>
                     <div class="block step3 function" ><div class="children_l">ORF predictions</div></div><div class="arrow_pip"></div>
                     <div class="block-lb">Predicted CDS</div><div class="arrow_pip"></div>
                     <div class="block step4 function"><div class="children_l">Functional analysis</div></div>
@@ -106,7 +106,7 @@ The ENA only accepts data that is intended for public release. However, any data
                 <div class="lowbranch_tax">  <div class="arrow_pip rotate_t"></div>
                     <div class="block-lb">Reads with rRNA</div>
                     <div class="arrow_pip"></div>
-                    <div class="block-lb">16s rRNA</div>
+                    <div class="block-lb">SSU/LSU rRNA</div>
                     <div class="arrow_pip"></div>
                     <div class="block step5 taxon"><div class="children_l">Taxonomic analysis</div></div>
                     <div class="arrow_pip"></div>
