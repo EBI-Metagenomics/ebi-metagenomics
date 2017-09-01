@@ -3,6 +3,52 @@
 <h2 class="pipeline_title">Pipeline version ${releaseVersion}  <span>- ${releaseDate}</span></h2>
 
 <c:choose>
+    <c:when test="${releaseVersion == '4.0'}">
+        <!-- Pipeline chart for version 4.0 v1-->
+        <div class="block_wrapper">
+
+            <div class="block_container pipe_v3">
+
+                <div class="mainbranch">
+                    <div class="block-lb">Raw reads</div><div class="arrow_pip "></div>
+                    <div class="block small step0"><div class="children">SeqPrep</div></div><div class="arrow_pip "></div>
+                    <div class="block-lb">Initial reads</div><div class="arrow_pip"></div>
+                    <div class="block step1"><div class="children">QC</div>
+                    </div><div class="arrow_pip"></div>
+                    <div class="block-lb" >Processed reads</div><div class="arrow_pip"></div>
+                    <div class="block step2"><div class="children_l">ncRNA selection</div></div>
+                </div>
+
+                <div class="lowbranch">
+                    <div class="lowbranch_func">
+                        <div class="arrow_pip rotate_f"></div><div class="block-lb" >Reads with ncRNA reads filtered out</div><div class="arrow_pip"></div>
+                        <div class="block step3 function" ><div class="children_l">ORF predictions</div></div><div class="arrow_pip"></div>
+                        <div class="block-lb">Predicted CDS</div><div class="arrow_pip"></div>
+                        <div class="block step4 function"><div class="children_l">Functional analysis</div></div>
+                        <div class="arrow_pip"></div>
+                        <div class="block-lb">IPR matches &amp; GO terms</div>
+                    </div> <!-- /lowbranch_func -->
+
+                    <div class="lowbranch_tax">  <div class="arrow_pip rotate_t"></div>
+                        <div class="block-lb">Reads with rRNA</div>
+                        <div class="arrow_pip"></div>
+                        <div class="block-lb">SSU/LSU rRNA</div>
+                        <div class="arrow_pip"></div>
+                        <div class="block step5 taxon"><div class="children_l">Taxonomic analysis</div></div>
+                        <div class="arrow_pip"></div>
+                        <div class="block-lb">OTUs &amp; taxonomic lineage</div>
+                    </div><!-- /lowbranch_tax -->
+
+                    <div class="lowbranch_trna">
+                        <div class="arrow_pip rotate_t"></div>
+                        <div class="block-lb">Reads with tRNA</div>
+                    </div><!-- /lowbranch_trna -->
+                </div><!-- /lowbranch -->
+            </div> <!-- /block_container -->
+        </div>   <!-- /block_wrapper -->
+        <!-- /pipeline chart version 4.0 v1 -->
+
+    </c:when>
     <c:when test="${releaseVersion == '3.0'}">
         <!-- Pipeline chart for version 3.0 v2-->
 
@@ -289,6 +335,61 @@
 <h3>Pipeline tools & steps</h3>
 
 <c:choose>
+    <c:when test="${releaseVersion == '4.0'}">
+        <!-- Table version 3.0 -->
+        <table class="pipeline_table">
+            <thead>
+            <tr>
+                <th width="4px"></th>
+                <th>Tools</th>
+                <th >Version</th>
+                <th>Description</th>
+                <th>How we use it</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <!-- Change table row class for each tool -->
+            <c:forEach var="pipelineReleaseTool" items="${pipelineReleaseTools}" varStatus="status">
+                <c:set var="pipelineTool" value="${pipelineReleaseTool.pk.pipelineTool}"/>
+                <c:set var="tool" value="${pipelineTool.toolName}"/>
+                <c:set var="toolGroupMajorId" value="${pipelineReleaseTool.toolGroupMajorId}"/>
+                <c:choose>
+                    <c:when test="${tool == 'InterProScan' || tool == 'FragGeneScan' || tool == 'Prodigal'}">
+                        <tr class="step${toolGroupMajorId} row-function">
+                    </c:when>
+                    <c:when test="${tool == 'SeqPrep' ||tool == 'Trimmomatic' || tool == 'Biopython' || tool == 'Infernal' || tool == 'cmsearch deoverlap script'}">
+                        <tr class="step${toolGroupMajorId} row-cb">
+                    </c:when>
+                    <c:when test="${tool == 'MAPseq' }">
+                        <tr class="step${toolGroupMajorId} row-taxon">
+                    </c:when>
+
+                    <c:otherwise>
+                        <tr class="step row-cb">
+                        <script>
+                            //alert("tool not defined");
+                        </script>
+                    </c:otherwise>
+                </c:choose>
+                <fmt:formatNumber var="toolGroupId"
+                                  type="number"
+                                  value="${pipelineReleaseTool.toolGroupId+ 1.0}"
+                                  maxFractionDigits="1"/>
+                <td>
+                    <!-- Showing a step number, add one as the first step is not a tool in the database -->
+                        ${toolGroupId}
+                </td>
+                <td ><a class="ext" href="${pipelineTool.webLink}">${pipelineTool.toolName}</a></td>
+                <td>${pipelineTool.toolVersion}</td>
+                <td>${pipelineTool.description}</td>
+                <td>${pipelineReleaseTool.howToolUsedDesc}</td>
+                </tr>
+
+            </c:forEach>
+            </tbody>
+        </table>
+    </c:when>
     <c:when test="${releaseVersion == '3.0'}">
         <!-- Table version 3.0 -->
         <table class="pipeline_table">

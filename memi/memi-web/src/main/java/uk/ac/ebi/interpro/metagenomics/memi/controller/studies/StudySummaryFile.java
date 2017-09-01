@@ -14,7 +14,11 @@ public enum StudySummaryFile {
     GO("GO_abundances", "Complete GO annotation (TSV)", "func", 8),
     GO_SLIM("GO-slim_abundances", "GO slim annotation (TSV)", "func", 9),
     PHYLUM_TAXONOMY("phylum_taxonomy_abundances", "Phylum level taxonomies (TSV)", "taxa", 10),
-    TAXONOMY("taxonomy_abundances", "Taxonomic assignments (TSV)", "taxa", 11);
+    TAXONOMY("taxonomy_abundances", "Taxonomic assignments (TSV)", "taxa", 11),
+    PHYLUM_TAXONOMY_SSU("phylum_taxonomy_abundances_SSU", "Phylum level taxonomies SSU (TSV)", "taxa", 12),
+    PHYLUM_TAXONOMY_LSU("phylum_taxonomy_abundances_LSU", "Phylum level taxonomies LSU (TSV)", "taxa", 13),
+    TAXONOMY_SSU("taxonomy_abundances_SSU", "Taxonomic assignments SSU (TSV)", "taxa", 14),
+    TAXONOMY_LSU("taxonomy_abundances_LSU", "Taxonomic assignments LSU (TSV)", "taxa", 15);
 
     private String filename;
     private String description;
@@ -71,7 +75,9 @@ public enum StudySummaryFile {
         }
 
         for (StudySummaryFile file : StudySummaryFile.values()) {
-            if (filename.startsWith(file.getFilename())) {
+            // Add underscore version to the file name and compare
+            final String summaryFileName = file.getFilename()+"_v";
+            if (filename.startsWith(summaryFileName)) {
                 // E.g. "GO_abundances_v1.0.tsv" starts with "GO_abundances"
                 return file;
             }
