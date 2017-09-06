@@ -38,11 +38,6 @@
     <!--Google map with sample locations - add the Google map if the JSON data file is available-->
     <c:if test="${model.googleMapDataAvailable}">
         <div id="map-container">
-            <div class="btn-full-screen" style="text-align: right">
-                <button id="btn-enter-full-screen" class="ui-button icon icon-functional" data-icon="Y">Full Screen
-                </button>
-                <button id="btn-exit-full-screen" class="ui-button" style="display: none">Exit full Screen</button>
-            </div>
             <div id="map_project"></div>
         </div>
     </c:if>
