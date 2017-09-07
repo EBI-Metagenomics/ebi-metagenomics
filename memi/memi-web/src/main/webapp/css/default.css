@@ -1491,7 +1491,7 @@ img.ui-datepicker-trigger {float:left; /*solve a bug with chromium*/}
 .xs-navtabs {display: none;}/*alternative menu for small screens*/
 .xm-navtabs {display: none;}/*alternative menu for medium screens*/
 
-/*.sample_comp_result .ui-corner-top,*/ .sample_ana .ui-corner-top {border-top-right-radius: 0px;border-top-left-radius: 0px;}
+/*.sample_ana .ui-corner-top {border-top-right-radius: 0px;border-top-left-radius: 0px;}*/
 .sample_ana .ui-widget-content a {color:#2B8A97;}  /*links under jquery tabs*/
 .sample_ana .ui-widget-content {border: 0px solid #aaa;background: none;color: #333333;margin: 0 9px;}  /*margin for navigation tab*/
 /*.sample_comp .ui-widget-content .ui-widget-content, .sample_ana .ui-widget-content .ui-widget-content {margin: 0;} *//*non margin for graph tab*/
@@ -1502,12 +1502,23 @@ img.ui-datepicker-trigger {float:left; /*solve a bug with chromium*/}
 .sample_ana li.ui-tabs-active {height: 30px; background: #fff; border-top: 1px solid rgb(213, 213, 213); border-right: 1px solid rgb(213, 213, 213); border-bottom: 0; border-left: 1px solid rgb(213, 213, 213);}
 .sample_ana .tabs-chart li.ui-tabs-active {border: 0px solid rgb(213, 213, 213);} /* remove duplicate border on switch view button - tax and interpro chart*/
 .sample_ana li.ui-tabs-active a:link, .sample_ana li.ui-tabs-active a:visited {color: black;text-decoration: none;} /*works for overview*/
+.sample_ana .ui-tabs-panel { margin: 0 0 0 -4px; position: relative;/*z-index: 400;*/ /*background: url(images/epmc-ui-tabs-background-gradient.gif) 0 0 no-repeat;*/ border: 1px solid rgb(213, 213, 213);border-bottom-left-radius: 0px; border-bottom-right-radius: 0px; padding: 18px 4px;}
+
+/*sub-tabs*/
+.sample_ana .sub-tabs > ul.ui-tabs-nav {padding-bottom: 1rem;} /*normal*/
+.sample_ana .sub-tabs > ul li  {margin-right: 0.5rem;}
+.sample_ana .sub-tabs > ul li a.ui-tabs-anchor {padding: 0.7rem 1rem; border: 1px solid #9E9E9E;  color: #676767; font-weight: normal; font-size: 90%;}
+.sample_ana .sub-tabs > ul li.ui-tabs-active {margin-bottom: 0;  padding-bottom: 0; border:none;}
+.sample_ana .sub-tabs > ul li.ui-tabs-active a::after {content: ""; position: absolute;  margin: auto;  top: 0;  left: 0;  bottom: -58px;   right: 0;  width: 0; height: 0;border-color: #2B8A97 transparent transparent;border-style: solid;border-width: 10px 10px 0;}
+.sample_ana .sub-tabs > ul li.ui-tabs-active a:link,.sample_ana .sub-tabs > ul li.ui-tabs-active a:visited  {font-weight: bold; color: white;  background:#2B8A97; border:1px solid #2B8A97;} /*remove borders for subtabs*/
+.sample_ana .sub-tabs .ui-tabs-panel {border:none;}
+/*/sub-tabs*/
+
 .sample_ana .ui-state-disabled   a {color: grey;}
 .sample_ana .ui-state-default {background:none;}
 .sample_ana .ui-state-hover a:link {text-decoration: underline;}
 .sample_comp_result .ui-state-hover .tab-text {text-decoration: underline;}  /*add underline for span - not a href*/
 .sample_comp_result .ui-tabs-active .tab-text  {text-decoration: none;}/*remove decoration for selected tab*/
-.sample_ana .ui-tabs-panel { margin: 0 0 0 -4px; position: relative;/*z-index: 400;*/ /*background: url(images/epmc-ui-tabs-background-gradient.gif) 0 0 no-repeat;*/ border: 1px solid rgb(213, 213, 213);border-bottom-left-radius: 0px; border-bottom-right-radius: 0px; padding: 18px 4px;}
 .sample_ana .tabs-chart .ui-tabs-panel {padding:0px;}
 .sample_ana .ui-state-disabled {opacity: .5;}
 /*IMAGE ANALYSIS PAGE*/
@@ -1731,7 +1742,7 @@ ul.sample_list  {list-style: disc; padding-left:18px;}
 ul.sample_list li {list-style: none; display: inline;}
 
 /* TABS - sample comparison tool */
-.sample_comp_result .ui-corner-top {border-top-right-radius: 0px;border-top-left-radius: 0px;}
+/*.sample_comp_result .ui-corner-top {border-top-right-radius: 0px;border-top-left-radius: 0px;}*/
 .sample_comp_result .ui-widget-content a {color:#188960;}
 .sample_comp_result .ui-widget-content {border: 0px solid #aaaaaa;background: none;color: #333333;margin: 0 9px;}  /*margin for navigation tab*/
 .sample_comp_result .ui-widget-content .ui-widget-content {margin: 0;} /*non margin for graph tab*/
