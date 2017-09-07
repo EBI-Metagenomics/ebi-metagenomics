@@ -180,7 +180,7 @@
     <noscript>
         <style type="text/css">
            /*remove the Krona box  and all charts tabs when no javascript*/
-            #tax-Krona, #tabs-chart, #interpro-chart, #tabs-taxchart {
+            #tax-Krona, #tabs-chart, #tabs-taxchart {
                 display: none;
             }
 
