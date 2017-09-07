@@ -83,7 +83,7 @@
                     below.</p>
                 <c:choose>
                     <c:when test="${!model.analysisStatus.functionalAnalysisTab.goSectionDisabled}">
-                        <div id="tabs-chart">
+                        <div class="tabs-chart" id="tabs-chart">
 
                                 <%--Tabs--%>
                             <ul>
@@ -113,8 +113,6 @@
 </div>
 <%--end div fragment functional--%>
 <script type="text/javascript">
-    //Ajax function for InterPro matches JQuery tabs
-    //$("#interpro-chart").tabs();
     //Ajax function for GO annotation JQuery tabs (switch from pie to bar chart)
     //Ajax load approach as described here: http://jqueryui.com/tabs/#ajax
     $("#tabs-chart").tabs({
