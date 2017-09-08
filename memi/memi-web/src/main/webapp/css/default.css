@@ -1497,20 +1497,21 @@ img.ui-datepicker-trigger {float:left; /*solve a bug with chromium*/}
 /*.sample_comp .ui-widget-content .ui-widget-content, .sample_ana .ui-widget-content .ui-widget-content {margin: 0;} *//*non margin for graph tab*/
 .sample_ana .ui-tabs-nav { margin: 0px 0 -1px 9px;position: relative; z-index: 1;}
 .sample_ana .ui-tabs-nav li {border-color: transparent /*was #e5e5e5*/;/*top:0px;*/ /*not needed anymore?*/}
-.sample_ana li.ui-tabs-selected {height: 30px; background: #fff; border-top: 1px solid rgb(213, 213, 213); border-right: 1px solid rgb(213, 213, 213); border-bottom: 0; border-left: 1px solid rgb(213, 213, 213);}
+.sample_ana li.ui-tabs-selected {background: #fff; border-top: 1px solid rgb(213, 213, 213); border-right: 1px solid rgb(213, 213, 213); border-bottom: 0; border-left: 1px solid rgb(213, 213, 213);}
 .sample_ana li.ui-tabs-selected a:link, .sample_ana li.ui-tabs-selected a:visited {color: black;text-decoration: none;} /*works for overview*/
-.sample_ana li.ui-tabs-active {height: 30px; background: #fff; border-top: 1px solid rgb(213, 213, 213); border-right: 1px solid rgb(213, 213, 213); border-bottom: 0; border-left: 1px solid rgb(213, 213, 213);}
+.sample_ana li.ui-tabs-active {background: #fff; border-top: 1px solid rgb(213, 213, 213); border-right: 1px solid rgb(213, 213, 213); border-bottom: 0; border-left: 1px solid rgb(213, 213, 213);}
 .sample_ana .tabs-chart li.ui-tabs-active {border: 0px solid rgb(213, 213, 213);} /* remove duplicate border on switch view button - tax and interpro chart*/
 .sample_ana li.ui-tabs-active a:link, .sample_ana li.ui-tabs-active a:visited {color: black;text-decoration: none;} /*works for overview*/
 .sample_ana .ui-tabs-panel { margin: 0 0 0 -4px; position: relative;/*z-index: 400;*/ /*background: url(images/epmc-ui-tabs-background-gradient.gif) 0 0 no-repeat;*/ border: 1px solid rgb(213, 213, 213);border-bottom-left-radius: 0px; border-bottom-right-radius: 0px; padding: 18px 4px;}
 
 /*sub-tabs*/
-.sample_ana .sub-tabs > ul.ui-tabs-nav {padding-bottom: 1rem;} /*normal*/
-.sample_ana .sub-tabs > ul li  {margin-right: 0.5rem;}
-.sample_ana .sub-tabs > ul li a.ui-tabs-anchor {padding: 0.7rem 1rem; border: 1px solid #9E9E9E;  color: #676767; font-weight: normal; font-size: 90%;}
+.sample_ana .sub-tabs > ul.ui-tabs-nav {margin: 0 0 0 9px;} /*normal*/
+.sample_ana .sub-tabs > ul li  {margin-top: 0; margin-right: 0.5rem;}
+.sample_ana .sub-tabs > ul li:hover  {background:#aae5ed;}
+.sample_ana .sub-tabs > ul li a.ui-tabs-anchor {padding: 1.2rem 1rem;  color: #789aa5; font-weight: normal; font-size: 90%; text-decoration: none;}
 .sample_ana .sub-tabs > ul li.ui-tabs-active {margin-bottom: 0;  padding-bottom: 0; border:none;}
-.sample_ana .sub-tabs > ul li.ui-tabs-active a::after {content: ""; position: absolute;  margin: auto;  top: 0;  left: 0;  bottom: -58px;   right: 0;  width: 0; height: 0;border-color: #2B8A97 transparent transparent;border-style: solid;border-width: 10px 10px 0;}
-.sample_ana .sub-tabs > ul li.ui-tabs-active a:link,.sample_ana .sub-tabs > ul li.ui-tabs-active a:visited  {font-weight: bold; color: white;  background:#2B8A97; border:1px solid #2B8A97;} /*remove borders for subtabs*/
+/*.sample_ana .sub-tabs > ul li.ui-tabs-active a::after {content: ""; position: absolute;  margin: auto;  top: 0;  left: 0;  bottom: -58px;   right: 0;  width: 0; height: 0;border-color: #2B8A97 transparent transparent;border-style: solid;border-width: 10px 10px 0;}*/
+.sample_ana .sub-tabs > ul li.ui-tabs-active a:link,.sample_ana .sub-tabs > ul li.ui-tabs-active a:visited  {font-weight: bold; color: white;  background:#789aa5;} /*remove borders for subtabs*/
 .sample_ana .sub-tabs .ui-tabs-panel {border:none;}
 /*/sub-tabs*/
 
@@ -1580,11 +1581,11 @@ background-image: -webkit-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247
 
 .sample_ana .tabs-chart .ui-tabs-nav {margin: 0 0 9px 0; padding:0;}
 .sample_ana .tabs-chart .ui-helper-clearfix {display: inline-block;}
-.sample_ana .tabs-chart .ui-tabs-nav li a {border: 1px solid rgba(0,0,0,0.1);padding: .2em .2em;
-background-image: -moz-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));
-background-image: -o-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));
-background-image: -webkit-gradient(linear,left top,left bottom,from(rgba(255,255,255,.85)),to(rgba(247,247,247,.85)));
-background-image: -webkit-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85)); }
+.sample_ana .tabs-chart .ui-tabs-nav li a {border: 1px solid #d2d2d2; padding: .2em .2em;
+background-image: -moz-linear-gradient(top,rgba(255,255,255,.85),rgba(230,230,230,.85));
+background-image: -o-linear-gradient(top,rgba(255,255,255,.85),rgba(230,230,230,.85));
+background-image: -webkit-gradient(linear,left top,left bottom,from(rgba(255,255,255,.85)),to(rgba(230,230,230,.85)));
+background-image: -webkit-linear-gradient(top,rgba(255,255,255,.85),rgba(230,230,230,.85)); }
 .sample_ana .tabs-chart .ui-tabs-nav li.ui-state-hover a  {text-decoration: none;}
 .sample_ana .tabs-chart .ui-tabs-nav li a:hover {border: 1px solid #c6c6c6; box-shadow:1px 1px 1px rgba(0, 0, 0, 0.3); text-decoration:none;}
 
