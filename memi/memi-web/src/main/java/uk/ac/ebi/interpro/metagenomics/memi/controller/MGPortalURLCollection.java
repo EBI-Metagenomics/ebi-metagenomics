@@ -32,6 +32,12 @@ public final class MGPortalURLCollection {
     //Analysis result page - Taxonomy tab
     public final static String PROJECT_SAMPLE_RUN_RESULTS_TAXONOMIC = PROJECT_SAMPLE_RUN_RESULTS + "/taxonomic" + PROJECT_SAMPLE_RUN_RESULTS_VERSION;
 
+    //Analysis result page - Taxonomy tab ssu
+    public final static String PROJECT_SAMPLE_RUN_RESULTS_TAXONOMIC_SSU = PROJECT_SAMPLE_RUN_RESULTS + "/taxonomic/ssu/" + PROJECT_SAMPLE_RUN_RESULTS_VERSION;
+
+    //Analysis result page - Taxonomy tab lsu
+    public final static String PROJECT_SAMPLE_RUN_RESULTS_TAXONOMIC_LSU = PROJECT_SAMPLE_RUN_RESULTS + "/taxonomic/lsu/" + PROJECT_SAMPLE_RUN_RESULTS_VERSION;
+
     //Set of URLs to allow Ajax request to render the different charts of the taxonomy results
     //START
     public final static String PROJECT_SAMPLE_RUN_RESULTS_TAXONOMIC_PIE_CHART = PROJECT_SAMPLE_RUN_RESULTS + "/taxPieChartView" + PROJECT_SAMPLE_RUN_RESULTS_VERSION;

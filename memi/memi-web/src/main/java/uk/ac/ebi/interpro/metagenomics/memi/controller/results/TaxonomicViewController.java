@@ -47,6 +47,25 @@ public class TaxonomicViewController extends AbstractResultViewController {
      *
      * @throws java.io.IOException
      */
+
+    @RequestMapping(value = MGPortalURLCollection.PROJECT_SAMPLE_RUN_RESULTS_TAXONOMIC_LSU)
+    public ModelAndView ajaxLoadTaxonomyLSUTab(@PathVariable final String projectId,
+                                               @PathVariable final String sampleId,
+                                               @PathVariable final String runId,
+                                               @PathVariable final String releaseVersion,
+                                               final ModelMap model) {
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, getSecuredEntity(projectId, sampleId, runId, releaseVersion), "tabs/results/mainNavigation/taxonomiclsu");
+    }
+
+    @RequestMapping(value = MGPortalURLCollection.PROJECT_SAMPLE_RUN_RESULTS_TAXONOMIC_SSU)
+    public ModelAndView ajaxLoadTaxonomySSUTab(@PathVariable final String projectId,
+                                            @PathVariable final String sampleId,
+                                            @PathVariable final String runId,
+                                            @PathVariable final String releaseVersion,
+                                            final ModelMap model) {
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, getSecuredEntity(projectId, sampleId, runId, releaseVersion), "tabs/results/mainNavigation/taxonomicssu");
+    }
+
     @RequestMapping(value = MGPortalURLCollection.PROJECT_SAMPLE_RUN_RESULTS_TAXONOMIC)
     public ModelAndView ajaxLoadTaxonomyTab(@PathVariable final String projectId,
                                             @PathVariable final String sampleId,
@@ -55,7 +74,6 @@ public class TaxonomicViewController extends AbstractResultViewController {
                                             final ModelMap model) {
         return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, getSecuredEntity(projectId, sampleId, runId, releaseVersion), "tabs/results/mainNavigation/taxonomic");
     }
-
     @RequestMapping(value = MGPortalURLCollection.PROJECT_SAMPLE_RUN_RESULTS_TAXONOMIC_PIE_CHART)
     public ModelAndView ajaxLoadTaxPieChartView(@PathVariable final String projectId,
                                                 @PathVariable final String sampleId,
