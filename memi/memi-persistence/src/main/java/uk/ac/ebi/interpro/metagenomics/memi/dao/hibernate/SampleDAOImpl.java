@@ -1,6 +1,5 @@
 package uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate;
 
-import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.*;
@@ -12,11 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.model.valueObjects.SampleStatisticsVO;
-import uk.ac.ebi.interpro.metagenomics.memi.model.valueObjects.StudyStatisticsVO;
 
 import java.util.*;
 
@@ -46,9 +43,9 @@ public class SampleDAOImpl implements SampleDAO {
             criteria.add(Restrictions.eq("sampleId", externalSampleId));
             Sample sample = (Sample) criteria.uniqueResult();
             if (sample != null) {
-                Study sampleStudy = sample.getStudy();
-                if (sampleStudy != null) {
-                    return sampleStudy.getStudyId();
+                Set<Study> sampleStudies = sample.getStudies();
+                if (sampleStudies != null && sampleStudies.size() > 0) {
+                    return sampleStudies.iterator().next().getStudyId();
                 }
             }
             return null;

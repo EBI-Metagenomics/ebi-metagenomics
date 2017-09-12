@@ -42,6 +42,7 @@ public class RunDAOImpl implements RunDAO {
     }
 
 
+    //    TODO: Adjust join query between Study and Samples
     public Run readByRunIdDeep(String projectId, String sampleId, String runId, String version) {
         try {
 //            String sql = "SELECT * FROM " + schemaName + "." + "log_file_info l, SAMPLE sa, study st WHERE st.ext_study_id = ? AND sa.ext_SAMPLE_id = ? AND l.sra_run_ids = ?";
@@ -93,6 +94,7 @@ public class RunDAOImpl implements RunDAO {
      * @param projectId
      * @return Mapping between project, sample and run accessions.
      */
+    //    TODO: Adjust join query between Study and Samples
     public List<ProjectSampleRunMappingVO> retrieveListOfRunAccessionsByProjectId(long projectId) {
         try {
             StringBuilder sb = new StringBuilder()
@@ -118,6 +120,7 @@ public class RunDAOImpl implements RunDAO {
      * @param projectId
      * @return
      */
+//    TODO: Adjust join query between Study and Samples
     public List<QueryRunsForProjectResult> retrieveRunsByProjectId(long projectId, boolean publicOnly) {
         try {
             // Example...
@@ -130,11 +133,13 @@ public class RunDAOImpl implements RunDAO {
                     .append("ANALYSIS_STATUS st, ")
                     .append("ANALYSIS_JOB aj, ")
                     .append("PIPELINE_RELEASE r, ")
+                    .append("STUDY_SAMPLE stsa, ")
                     .append("SAMPLE sa, ")
                     .append("SAMPLE_ANN an, ")
                     .append("EXPERIMENT_TYPE et, ")
-                    .append("(SELECT aj.sample_id, count(aj.sample_id) as run_count FROM SAMPLE sa, ANALYSIS_JOB aj where sa.sample_id = aj.sample_id AND sa.study_id = ? AND aj.analysis_status_id <> 5 GROUP BY aj.sample_id) tmp ")
-                    .append("WHERE aj.experiment_type_id=et.experiment_type_id AND aj.pipeline_id=r.pipeline_id AND sa.sample_id = aj.sample_id AND sa.sample_id = an.sample_id AND aj.ANALYSIS_STATUS_ID=st.ANALYSIS_STATUS_ID AND an.VAR_ID = 352 AND tmp.sample_id = aj.sample_id AND sa.study_id = ? ");
+                    .append("(SELECT aj.sample_id, count(aj.sample_id) as run_count FROM STUDY_SAMPLE stsa, SAMPLE sa, ANALYSIS_JOB aj where stsa.SAMPLE_ID=sa.SAMPLE_ID and sa.sample_id = aj.sample_id \n" +
+                            "AND stsa.study_id = ? AND aj.analysis_status_id <> 5 GROUP BY aj.sample_id) tmp ")
+                    .append("WHERE aj.experiment_type_id=et.experiment_type_id AND aj.pipeline_id=r.pipeline_id AND sa.sample_id = aj.sample_id AND stsa.sample_id = sa.sample_id AND sa.sample_id = an.sample_id AND aj.ANALYSIS_STATUS_ID=st.ANALYSIS_STATUS_ID AND an.VAR_ID = 352 AND tmp.sample_id = aj.sample_id AND sa.study_id = ? ");
             if (publicOnly) {
                 sb.append("AND sa.is_public = 1 ");
             }
@@ -146,6 +151,8 @@ public class RunDAOImpl implements RunDAO {
             sb.append("order by sa.ext_sample_id, aj.external_run_ids");
 
             final String sql = sb.toString();
+//            TODO: Change level to debug
+            log.info("Running the following SQL query now:\n" + sql);
 
             List<QueryRunsForProjectResult> results = jdbcTemplate.query(sql, new Object[]{projectId, projectId}, new BeanPropertyRowMapper<QueryRunsForProjectResult>(QueryRunsForProjectResult.class));
             return results;
@@ -153,26 +160,5 @@ public class RunDAOImpl implements RunDAO {
         } catch (EmptyResultDataAccessException exception) {
             throw new EmptyResultDataAccessException(1);
         }
-    }
-
-
-    public int countAllPublic() {
-        return getAnalysisJobCount(1);
-    }
-
-    public int countAllPrivate() {
-        return getPrivateAnalysisJobCount(1);
-    }
-
-    private int getAnalysisJobCount(int isPublic) {
-        String sql = "SELECT count(distinct aj.external_run_ids) FROM ANALYSIS_JOB aj, SAMPLE s WHERE aj.sample_id=s.sample_id and s.is_public = ? and aj.analysis_status_id = ?";
-        int analysisStatusId = 3;
-        return jdbcTemplate.queryForInt(sql, isPublic, analysisStatusId);
-    }
-
-    private int getPrivateAnalysisJobCount(int isPublic) {
-        String sql = "SELECT count(distinct aj.external_run_ids) FROM ANALYSIS_JOB aj, SAMPLE s WHERE aj.sample_id=s.sample_id and s.is_public <> ? and aj.analysis_status_id =?";
-        int analysisStatusId = 3;
-        return jdbcTemplate.queryForInt(sql, isPublic, analysisStatusId);
     }
 }

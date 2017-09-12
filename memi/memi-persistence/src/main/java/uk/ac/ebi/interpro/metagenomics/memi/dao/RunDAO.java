@@ -18,10 +18,6 @@ public interface RunDAO {
 
     public Run readByRunIdDeep(String projectId, String sampleId, String runId, String version);
 
-    public int countAllPublic();
-
-    public int countAllPrivate();
-
     public Map<String, Long> retrieveRunCountsGroupedByExperimentType(int analysisStatusI);
 
     public RunStatisticsVO retrieveStatistics();

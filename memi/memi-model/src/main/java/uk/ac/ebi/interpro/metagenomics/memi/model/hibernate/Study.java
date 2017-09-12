@@ -68,8 +68,15 @@ public class Study implements SecureEntity, BiomeEntity {
     )
     private Set<Publication> publications;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "study")
-    @Column(name = "Study_ID")
+    /**
+     * Associated samples.
+     */
+    @ManyToMany
+    @JoinTable(
+            name = "STUDY_SAMPLE",
+            joinColumns = {@JoinColumn(name = "STUDY_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "SAMPLE_ID")}
+    )
     private Set<Sample> samples;
 
     @Column(name = "CENTRE_NAME", length = 255)
