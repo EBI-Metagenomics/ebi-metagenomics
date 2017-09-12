@@ -59,10 +59,10 @@ public class TaxonomicViewController extends AbstractResultViewController {
 
     @RequestMapping(value = MGPortalURLCollection.PROJECT_SAMPLE_RUN_RESULTS_TAXONOMIC_SSU)
     public ModelAndView ajaxLoadTaxonomySSUTab(@PathVariable final String projectId,
-                                            @PathVariable final String sampleId,
-                                            @PathVariable final String runId,
-                                            @PathVariable final String releaseVersion,
-                                            final ModelMap model) {
+                                               @PathVariable final String sampleId,
+                                               @PathVariable final String runId,
+                                               @PathVariable final String releaseVersion,
+                                               final ModelMap model) {
         return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, getSecuredEntity(projectId, sampleId, runId, releaseVersion), "tabs/results/mainNavigation/taxonomicssu");
     }
 
@@ -74,13 +74,19 @@ public class TaxonomicViewController extends AbstractResultViewController {
                                             final ModelMap model) {
         return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, getSecuredEntity(projectId, sampleId, runId, releaseVersion), "tabs/results/mainNavigation/taxonomic");
     }
+
     @RequestMapping(value = MGPortalURLCollection.PROJECT_SAMPLE_RUN_RESULTS_TAXONOMIC_PIE_CHART)
     public ModelAndView ajaxLoadTaxPieChartView(@PathVariable final String projectId,
                                                 @PathVariable final String sampleId,
                                                 @PathVariable final String runId,
                                                 @PathVariable final String releaseVersion,
+                                                @PathVariable final String rRNAType,
                                                 final ModelMap model) {
-        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, getSecuredEntity(projectId, sampleId, runId, releaseVersion), "tabs/results/taxonomicAnalysis/taxPieChartView");
+        String viewName = "tabs/results/taxonomicAnalysis/ssu/taxPieChartView";
+        if (rRNAType.equalsIgnoreCase("LSU")) {
+            viewName = "tabs/results/taxonomicAnalysis/lsu/taxPieChartView";
+        }
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, getSecuredEntity(projectId, sampleId, runId, releaseVersion), viewName);
     }
 
     @RequestMapping(value = MGPortalURLCollection.PROJECT_SAMPLE_RUN_RESULTS_TAXONOMIC_KRONA_VIEW)
@@ -88,8 +94,13 @@ public class TaxonomicViewController extends AbstractResultViewController {
                                                @PathVariable final String sampleId,
                                                @PathVariable final String runId,
                                                @PathVariable final String releaseVersion,
+                                               @PathVariable final String rRNAType,
                                                final ModelMap model) {
-        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, getSecuredEntity(projectId, sampleId, runId, releaseVersion), "tabs/results/taxonomicAnalysis/kronaChartView");
+        String viewName = "tabs/results/taxonomicAnalysis/ssu/kronaChartView";
+        if (rRNAType.equalsIgnoreCase("LSU")) {
+            viewName = "tabs/results/taxonomicAnalysis/lsu/kronaChartView";
+        }
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, getSecuredEntity(projectId, sampleId, runId, releaseVersion), viewName);
     }
 
     @RequestMapping(value = MGPortalURLCollection.PROJECT_SAMPLE_RUN_RESULTS_TAXONOMIC_BAR_CHART)
@@ -97,8 +108,13 @@ public class TaxonomicViewController extends AbstractResultViewController {
                                                 @PathVariable final String sampleId,
                                                 @PathVariable final String runId,
                                                 @PathVariable final String releaseVersion,
+                                                @PathVariable final String rRNAType,
                                                 final ModelMap model) {
-        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, getSecuredEntity(projectId, sampleId, runId, releaseVersion), "tabs/results/taxonomicAnalysis/taxBarChartView");
+        String viewName = "tabs/results/taxonomicAnalysis/ssu/taxBarChartView";
+        if (rRNAType.equalsIgnoreCase("LSU")) {
+            viewName = "tabs/results/taxonomicAnalysis/lsu/taxBarChartView";
+        }
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, getSecuredEntity(projectId, sampleId, runId, releaseVersion), viewName);
     }
 
     @RequestMapping(value = MGPortalURLCollection.PROJECT_SAMPLE_RUN_RESULTS_TAXONOMIC_COLUMN_CHART)
@@ -106,8 +122,13 @@ public class TaxonomicViewController extends AbstractResultViewController {
                                                    @PathVariable final String sampleId,
                                                    @PathVariable final String runId,
                                                    @PathVariable final String releaseVersion,
+                                                   @PathVariable final String rRNAType,
                                                    final ModelMap model) {
-        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, getSecuredEntity(projectId, sampleId, runId, releaseVersion), "tabs/results/taxonomicAnalysis/taxColumnChartView");
+        String viewName = "tabs/results/taxonomicAnalysis/ssu/taxColumnChartView";
+        if (rRNAType.equalsIgnoreCase("LSU")) {
+            viewName = "tabs/results/taxonomicAnalysis/lsu/taxColumnChartView";
+        }
+        return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, getSecuredEntity(projectId, sampleId, runId, releaseVersion), viewName);
     }
 
     /**

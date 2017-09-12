@@ -27,7 +27,7 @@
 
         //table data
         var rowData = [
-            <c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResult.taxonomyDataSet}" varStatus="status">
+            <c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResultSSU.taxonomyDataSet}" varStatus="status">
             ['${status.index}','<div title="${taxonomyData.phylum}" class="puce-square-legend" style="background-color: #${taxonomyData.colorCode};"></div> ${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}],
             </c:forEach>
         ];
@@ -124,9 +124,9 @@
 
             //STACKED COLUMN CHART - PHYLUM COMPOSITION
             var data = [
-                <c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResult.taxonomyDataSet}" varStatus="status">
+                <c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResultSSU.taxonomyDataSet}" varStatus="status">
                 { name: '${taxonomyData.phylum}',
-                  data: [<fmt:formatNumber type="number" maxFractionDigits="3" value="${taxonomyData.numberOfHits *100/ model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator}" />],
+                  data: [<fmt:formatNumber type="number" maxFractionDigits="3" value="${taxonomyData.numberOfHits *100/ model.taxonomyAnalysisResultSSU.sliceVisibilityThresholdDenominator}" />],
                   testnb: '${taxonomyData.numberOfHits}'
                 },
                 </c:forEach>
@@ -217,7 +217,7 @@
                     }
                 },
                 credits: {enabled: false},//remove credit line
-                colors: [${model.taxonomyAnalysisResult.colorCodeForChart} ],//color palette
+                colors: [${model.taxonomyAnalysisResultSSU.colorCodeForChart} ],//color palette
                 legend: {enabled: false},//remove legend
                 title: {
                     text: '${phylumCompositionTitle}',
@@ -229,10 +229,10 @@
                 subtitle: {
                 <c:choose>
                  <c:when test="${model.run.releaseVersion == '1.0'}">
-                    text: 'Total: ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator} OTUs',
+                    text: 'Total: ${model.taxonomyAnalysisResultSSU.sliceVisibilityThresholdDenominator} OTUs',
                  </c:when>
                     <c:otherwise>
-                    text: 'Total: ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator} reads',
+                    text: 'Total: ${model.taxonomyAnalysisResultSSU.sliceVisibilityThresholdDenominator} reads',
                     </c:otherwise>
                     </c:choose>
                     style: {
@@ -245,12 +245,12 @@
                     // <c:choose>
                     <c:when test="${model.run.releaseVersion == '1.0'}">
                     formatter:function(){
-                        return '<span style="color:'+this.series.color+'">&#9632;</span> '+this.series.name+':<br/><strong>'+Highcharts.numberFormat((this.y/100*${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator}),0,'.')+'</strong> OTUs ('+Highcharts.numberFormat((this.percentage),2,'.')+'%)';
+                        return '<span style="color:'+this.series.color+'">&#9632;</span> '+this.series.name+':<br/><strong>'+Highcharts.numberFormat((this.y/100*${model.taxonomyAnalysisResultSSU.sliceVisibilityThresholdDenominator}),0,'.')+'</strong> OTUs ('+Highcharts.numberFormat((this.percentage),2,'.')+'%)';
                     },
                     </c:when>
                     <c:otherwise>
                     formatter:function(){
-                        return '<span style="color:'+this.series.color+'">&#9632;</span> '+this.series.name+':<br/><strong>'+Highcharts.numberFormat((this.y/100*${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator}),0,'.')+'</strong> reads ('+Highcharts.numberFormat((this.percentage),2,'.')+'%)';
+                        return '<span style="color:'+this.series.color+'">&#9632;</span> '+this.series.name+':<br/><strong>'+Highcharts.numberFormat((this.y/100*${model.taxonomyAnalysisResultSSU.sliceVisibilityThresholdDenominator}),0,'.')+'</strong> reads ('+Highcharts.numberFormat((this.percentage),2,'.')+'%)';
                     },
                     </c:otherwise>
                     </c:choose>

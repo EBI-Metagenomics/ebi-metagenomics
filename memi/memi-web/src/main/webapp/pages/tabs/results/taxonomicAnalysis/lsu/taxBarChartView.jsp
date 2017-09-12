@@ -5,9 +5,9 @@
 <div id="tax-bar">
 
     <div  class="chart_container" >
-        <div class="grid_8"><div id="tax_chart_bar_dom" style="height: 360px;"></div></div>
+        <div class="grid_8"><div id="tax_lsu_chart_bar_dom" style="height: 360px;"></div></div>
         <div class="grid_16">  <div id="tax_chart_bar_phy" style="height: 360px;"></div></div>
-        <div class="grid_24"> <table id="tax_table_bar" class="table-glight"></table></div>
+        <div class="grid_24"> <table id="tax_table_lsu_bar" class="table-glight"></table></div>
     </div>
 
     <div class="msg_help blue_h phylum_help">
@@ -28,12 +28,12 @@
 
         //table data
         var rowData = [
-            <c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResult.taxonomyDataSet}" varStatus="status">
+            <c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResultLSU.taxonomyDataSet}" varStatus="status">
             ['${status.index}','<div title="${taxonomyData.phylum}" class="puce-square-legend" style="background-color: #${taxonomyData.colorCode};"></div> ${taxonomyData.phylum}', '${taxonomyData.superKingdom}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}],
             </c:forEach>
         ];
 
-        var t = $('#tax_table_bar').DataTable( {
+        var t = $('#tax_table_lsu_bar').DataTable( {
             order: [[ 3, "desc" ]],
             columnDefs: [ //add responsive style as direct css doesn't work
                 {className: "xs_hide", "targets": [0,2]},//hide number + domain columns
@@ -71,7 +71,7 @@
 
         // ADD INTERACTION BETWEEN TABLE ROW AND BAR CHART
         // Note - some interaction improvement to do across pages (e.g. row select Other not maintained)
-        $("#tax_table_bar tbody").on('click', 'tr', function(){
+        $("#tax_table_lsu_bar tbody").on('click', 'tr', function(){
             //important - use row Id for interaction otherwise table sorting was messsing the use of $(this).index()
             var legInd = (this).className.split(' ')[0];
             var chart = $('#tax_chart_bar_phy').highcharts();
@@ -91,14 +91,14 @@
                   var point = chart.series[0].data[l - 1];
                   point.select(null, true);
 
-                    var readNum = ${fn:length(model.taxonomyAnalysisResult.taxonomyDataSet)};//total number of records
+                    var readNum = ${fn:length(model.taxonomyAnalysisResultLSU.taxonomyDataSet)};//total number of records
                     for (n = l-1; n <= readNum ; n++) {
-                        $("#tax_table_bar tbody tr."+n+"").toggleClass("disabled");
+                        $("#tax_table_lsu_bar tbody tr."+n+"").toggleClass("disabled");
                     }
                 }
         });
 
-        $("#tax_table_bar tbody").on('mouseenter', 'tr', function(){
+        $("#tax_table_lsu_bar tbody").on('mouseenter', 'tr', function(){
             var legInd = (this).className.split(' ')[0];
             var chart = $('#tax_chart_bar_phy').highcharts();
             var point = chart.series[0].data[legInd];
@@ -114,7 +114,7 @@
                 chart.tooltip.refresh(point);}
         });
 
-        $("#tax_table_bar tbody").on('mouseleave', 'tr', function(){
+        $("#tax_table_lsu_bar tbody").on('mouseleave', 'tr', function(){
             var legInd = (this).className.split(' ')[0];
             var chart = $('#tax_chart_bar_phy').highcharts();
             var point = chart.series[0].data[legInd];
@@ -129,17 +129,17 @@
 
         //HIGHLIGHT TERMS IN DATATABLE
 
-        $("#tax_table_bar_filter input").addClass("filter_sp");
+        $("#tax_table_lsu_bar_filter input").addClass("filter_sp");
 
         // Highlight the search term in the table (all except first number column) using the filter input, using jQuery Highlight plugin
         $('.filter_sp').keyup(function () {
-            $("#tax_table_bar tr td:nth-child(n+2)").highlight($(this).val());
-            $('#tax_table_bar tr td:nth-child(n+2)').unhighlight();// highlight more than just first character entered in the text box and reiterate the span to highlight
-            $('#tax_table_bar tr td:nth-child(n+2)').highlight($(this).val());
+            $("#tax_table_lsu_bar tr td:nth-child(n+2)").highlight($(this).val());
+            $('#tax_table_lsu_bar tr td:nth-child(n+2)').unhighlight();// highlight more than just first character entered in the text box and reiterate the span to highlight
+            $('#tax_table_lsu_bar tr td:nth-child(n+2)').highlight($(this).val());
         });
         // remove highlight when click on X (clear button)
         $('input[type=search]').on('search', function () {
-            $('#tax_table_bar tr td').unhighlight();
+            $('#tax_table_lsu_bar tr td').unhighlight();
         });
     } );
 
@@ -150,7 +150,7 @@
 
         $(document).ready(function () {
             var data = [
-                <c:forEach var="domainEntry" items="${model.taxonomyAnalysisResult.domainComposition.domainMap}">
+                <c:forEach var="domainEntry" items="${model.taxonomyAnalysisResultLSU.domainComposition.domainMap}">
                 ['${domainEntry.key}', ${domainEntry.value}],
                 </c:forEach>
             ]
@@ -166,7 +166,7 @@
             }
 
             //BAR CHART - DOMAIN COMPOSITION
-            $('#tax_chart_bar_dom').highcharts({
+            $('#tax_lsu_chart_bar_dom').highcharts({
                 chart: {
                     type: 'column',
                     style: {
@@ -240,7 +240,7 @@
                     }
                 },
                 credits: {text: null},//remove credit line
-                colors: [${model.taxonomyAnalysisResult.domainComposition.colorCode}],//color palette
+                colors: [${model.taxonomyAnalysisResultLSU.domainComposition.colorCode}],//color palette
                 title: {
                     text: 'Domain composition',
                     style: {
@@ -308,7 +308,7 @@
 
             // Phylum data
             var data = [
-                <c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResult.taxonomyDataSet}" varStatus="status">
+                <c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResultLSU.taxonomyDataSet}" varStatus="status">
                 ['${taxonomyData.phylum}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}],
                 </c:forEach>
             ]
@@ -319,7 +319,7 @@
             //IMPORTANT - regroup small values <0.1 into "Others" to improve bar chart readability
             var newData=[];
             //calculating the threshold: changing for each chart
-            var thresOld=((${model.taxonomyAnalysisResult.sliceVisibilityThresholdNumerator / model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator}*100).toFixed(2));
+            var thresOld=((${model.taxonomyAnalysisResultLSU.sliceVisibilityThresholdNumerator / model.taxonomyAnalysisResultLSU.sliceVisibilityThresholdDenominator}*100).toFixed(2));
 
             var other=0.0;
             for (var slice in data) {
@@ -414,7 +414,7 @@
                     }
                 },
                 credits: {enabled: false},//remove credit line
-                colors: [${model.taxonomyAnalysisResult.colorCodeForChart} ],//color palette
+                colors: [${model.taxonomyAnalysisResultLSU.colorCodeForChart} ],//color palette
                 legend: {enabled: false},//remove legend
                 title: {
                     text: '${phylumCompositionTitle}',
@@ -426,10 +426,10 @@
                 subtitle: {
                     <c:choose>
                     <c:when test="${model.run.releaseVersion == '1.0'}">
-                    text: 'Total: ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator} OTUs - Drag to zoom in/out',
+                    text: 'Total: ${model.taxonomyAnalysisResultLSU.sliceVisibilityThresholdDenominator} OTUs - Drag to zoom in/out',
                     </c:when>
                     <c:otherwise>
-                    text: 'Total: ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator} reads - Drag to zoom in/out',
+                    text: 'Total: ${model.taxonomyAnalysisResultLSU.sliceVisibilityThresholdDenominator} reads - Drag to zoom in/out',
                     </c:otherwise>
                     </c:choose>
                     style: {
@@ -503,7 +503,7 @@
     <%--<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>--%>
 //    <div id="legend"></div>
     // Retrieving number of reads - removing 1 for hidden unassigned
-    <%--var readNum = "${fn:length(model.taxonomyAnalysisResult.taxonomyDataSet)-1}";--%>
+    <%--var readNum = "${fn:length(model.taxonomyAnalysisResultLSU.taxonomyDataSet)-1}";--%>
     <%--console.log(readNum);--%>
 
     <%--// Creation of the legend items for each phylum--%>
