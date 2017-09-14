@@ -6,12 +6,9 @@ html, body {height: 100%;}
 
 body {
     padding: 0; /*specified in EBI template.css */
-    /*font-family: 'Droid Sans', arial, serif;  link to GOOGLE  font  BUG with the no-Cleartype (standard) config on the PC */
-    /*font-family: 'DroidSansRegular', Arial, sans-serif; @font-face TEMP not working with IE and firefox, use Arial by default*/
     font-family: helvetica, "trebuchet MS", arial, sans-serif;
-    /*font-family: Arial, Helvetica, sans-serif; *//*decided not to use Google or @font-face because feeling that lot's of users are still using their PC without Cleartype*/
     font-size: 80%;
-    font-weight: 400; /*for Droid Sans Regular*/
+    font-weight: 400;
     letter-spacing: 0em;
     word-spacing: 0em;
     line-height: 1.59;
@@ -409,10 +406,10 @@ table.dataTable thead .sorting_desc {background: url(../img/ico_sort_desc.png) n
 table.dataTable.table-heading thead .sorting_desc {background: #368395 url(../img/ico_sort_desc_white.png) no-repeat center right;}
 
 /*Light datatable and table version*/
-.dataTable.table-light, .table-light  {border-collapse: collapse;}
+.dataTable.table-light, .table-light  {border-collapse: collapse; border:none;}
 .dataTable.table-light thead .sorting_asc, .table-light thead .sorting_asc {background: #fff  url(../img/ico_sort_asc_black.png) no-repeat center right;}
 .dataTable.table-light thead .sorting_desc, .table-light thead .sorting_desc {background: #fff  url(../img/ico_sort_desc_black.png) no-repeat center right;}
-.dataTable.table-light thead th, .table-light thead th   {border-bottom: 1px solid #8A8A8A; color:#333; border-radius:0;  box-shadow:none; background-color: #fff; }
+.dataTable.table-light thead th, .table-light thead th   {border-top-width: 0; border-left-width: 0; border-right-width: 0; border-bottom: 1px solid #8A8A8A; color:#333; border-radius:0;  box-shadow:none; background-color: #fff; }
 .dataTable.table-light tr:nth-child(even), .table-light tr:nth-child(even) {background-color: #FFF;}
 .dataTable.table-light td, .table-light td  {border-top: 1px solid #ddd; border-left: 0 solid #ddd; border-right: 0 solid #ddd;  border-bottom: 0 solid #ddd; padding:7px; border-radius: 0;}
 .dataTable.table-light .sorting_1, .table-light .sorting_1  {background-color:rgba(100, 176, 197, 0.11);}
