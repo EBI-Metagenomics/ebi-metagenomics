@@ -136,7 +136,7 @@
             </div>
             <%--End of item pagination pattern--%>
             </div>
-            <table border="1" class="result">
+            <table class="result">
                 <thead>
                 <tr>
                     <c:forEach var="headerName" items="${model.tableHeaderNames}">
