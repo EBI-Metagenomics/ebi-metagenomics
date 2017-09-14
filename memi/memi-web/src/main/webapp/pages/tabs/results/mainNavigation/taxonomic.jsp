@@ -9,13 +9,13 @@
             <li>
                 <a class="show_tooltip" title="SSU rRNA"
                    href="<c:url value="${baseURL}/projects/${model.run.externalProjectId}/samples/${model.run.externalSampleId}/runs/${model.run.externalRunId}/results/taxonomic/ssu/versions/${model.analysisJob.pipelineRelease.releaseVersion}"/>">
-                    <span style="font-size:125%;"><small>Small subunit rRNA </small>16S - SSU</span>
+                    <span style="font-size:125%;"><small>Small subunit rRNA </small>- SSU</span>
                 </a>
             </li>
             <li>
                 <a class="show_tooltip" title="LSU rRNA"
                    href="<c:url value="${baseURL}/projects/${model.run.externalProjectId}/samples/${model.run.externalSampleId}/runs/${model.run.externalRunId}/results/taxonomic/lsu/versions/${model.analysisJob.pipelineRelease.releaseVersion}"/>">
-                    <span style="font-size:125%;"><small>Large subunit rRNA </small> 18S - LSU</span>
+                    <span style="font-size:125%;"><small>Large subunit rRNA </small>- LSU</span>
                 </a>
             </li>
 

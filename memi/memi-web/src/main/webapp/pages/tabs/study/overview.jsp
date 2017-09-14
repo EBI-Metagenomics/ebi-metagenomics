@@ -99,7 +99,7 @@
         </c:if>
     </div>
 
-    <h3>Contact details</h3>
+    <h3>Submitter details</h3>
 
     <div class="output_form">
         <c:set var="centreName" value="${study.centreName}"/>
