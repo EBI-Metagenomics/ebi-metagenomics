@@ -5,7 +5,7 @@
 <div id="fragment-taxonomy">
 
     <div class="main_tab_full_content">
-        <p>These are the results from the taxonomic analysis steps of our pipeline, based on the analysis of the large subunit rRNA - LSU. You can switch between different
+        <p>These are the results from the taxonomic analysis steps of our pipeline, based on the analysis of the large subunit (LSU) rRNA. You can switch between different
             views of the data using the menu of icons below (interactive krona, static pie, bar and stacked charts). The data
             used to build these charts can be found under the "Download" tab.</p>
 
