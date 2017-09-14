@@ -1520,7 +1520,7 @@ img.ui-datepicker-trigger {float:left; /*solve a bug with chromium*/}
 .sample_ana .tabs-chart .ui-tabs-panel {padding:0px;}
 .sample_ana .ui-state-disabled {opacity: .5;}
 /*IMAGE ANALYSIS PAGE*/
-.go-chart {display:block; border:0px red solid; /*overflow:auto;*/}
+.go-chart {display:block; border:0px red solid; overflow:auto;/*need the overflow for tabs to contain the charts*/}
 .go-chart h2 {margin:0 0 18px 0; font-size:138%; padding:0;}
 .chart-block {float: left; }
 
