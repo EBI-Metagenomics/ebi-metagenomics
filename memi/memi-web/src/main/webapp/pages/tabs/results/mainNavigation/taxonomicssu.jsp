@@ -5,7 +5,7 @@
 <div id="fragment-taxonomy">
 
     <div class="main_tab_full_content">
-        <p>These are the results from the taxonomic analysis steps of our pipeline, based on the analysis of the small subunit of the ribosome RNA 18S. . You can switch between different
+        <p>These are the results from the taxonomic analysis steps of our pipeline, based on the analysis of the small subunit rRNA - SSU. You can switch between different
             views of the data using the menu of icons below (interactive krona, static pie, bar and stacked charts). The data
             used to build these charts can be found under the "Download" tab.</p>
 
