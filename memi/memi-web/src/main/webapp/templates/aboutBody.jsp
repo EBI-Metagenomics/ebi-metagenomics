@@ -17,8 +17,6 @@
     </ul>
 </div>
 
-<figure class="fr"><img src="${pageContext.request.contextPath}/img/pict_metagenomics_01.png" alt="Metagenomics"/>
-<figcaption><p>Metagenomics is the study of all genomes present in any given environment...</p></figcaption></figure>
 <p>Metagenomics is the study of all genomes present in any given environment without the need for prior individual identification or amplification. For example, in its simplest form, a metagenomic study might be the direct sequence results of DNA extracted from a bucket of sea water.</p>
 <p>The EBI Metagenomics service is an automated pipeline for the analysis and archiving of metagenomic data that aims to provide insights into the phylogenetic diversity as well as the functional and metabolic potential of a sample. You can freely browse all the public data in the repository.
 </p>
@@ -42,34 +40,27 @@ Alex Mitchell, Francois Bucchini, Guy Cochrane, Hubert Denise, Petra ten Hoopen,
 </div>
 
 <h3 id="funding">Funding</h3>
-<div class="about_img_r"><img src="${pageContext.request.contextPath}/img/funding/FP7.jpg" alt="FP7" width="122" height="94"/>
-<img src="${pageContext.request.contextPath}/img/funding/BBSRC.png" alt="BBSRC" /></div>
+
+<h4 id="funding_present">Present</h4>
+
+<div class="about_img_r"><img src="${pageContext.request.contextPath}/img/funding/embl_logo.png" alt="EMBL" />
+    <img src="${pageContext.request.contextPath}/img/funding/BBSRC.png" alt="BBSRC" /></div>
+<p>The EBI metagenomics resource is supported by the Biotechnology and Biological Sciences Research Council (BBSRC) [grant references BB/M011755/1 and BB/N018354/1]],
+    the European Commission within the Research Infrastructures programme of Horizon 2020 [grant agreement number 676559]  (ELIXIR-EXCELERATE)
+    and InnovateUK (project reference 102513). Funding for open access charge: Research Councils UK (RCUK).
+</p>
+<div class="about_img_r"><img src="${pageContext.request.contextPath}/img/funding/excelerate_whitebackground.png" alt="Excelerate" />
+    <img src="${pageContext.request.contextPath}/img/funding/innovate-uk-logo.png" alt="InnovateUK" /></div>
+
+<h4 id="funding_past">Past</h4>
+
+<%--<div class="about_img_r"><img src="${pageContext.request.contextPath}/img/funding/FP7.jpg" alt="FP7" width="122" height="94"/>--%>
+<%--<img src="${pageContext.request.contextPath}/img/funding/BBSRC.png" alt="BBSRC" /></div>--%>
 <p>The EBI metagenomics resource was initiated by funding from EMBL. It continues to be developed with support from EMBL and additional
     funding has been gratefully received from the Biotechnology and Biological Sciences Research Council
 (BBSRC grant BB/I02612X/1 and BB/M011755/1) and the EU's Seventh Framework Programme for Research (FP7 grant MICROB3).
 </p>
 
-<h4 id="credits_2">Photos</h4>
-
-<p>We would like to thank the following authors for their contribution related to the pictures used on the website:</p>
-<ul>
-    <li>Image: A Blue Starfish (Linckia laevigata) resting on hard Acropora coral. Lighthouse, Ribbon Reefs, Great
-        Barrier Reef, by Richard Ling [<a href="http://www.rling.com" class="ext" rel="nofollow">Copyright (c)
-            [2004] Richard Ling</a> - <a href="http://commons.wikimedia.org/wiki/File:Blue_Linckia_Starfish.JPG"
-                                         class="ext" rel="nofollow"> Wikipedia</a>]
-    </li>
-    <li>Image: Coli Bacteria, by renjith krishnan [<a
-            href="http://www.freedigitalphotos.net/images/view_photog.php?photogid=721" class="ext">FreeDigitalPhotos.net</a>]
-    </li>
-    <li>Image: Honeycomb, by Apple's Eyes Studio [<a
-            href="http://www.freedigitalphotos.net/images/view_photog.php?photogid=2000" class="ext">FreeDigitalPhotos.net</a>]
-    </li>
-    <li>Image: Oupeye (Belgium) biological sewage treatment, by User:Xofc [<a
-            href="http://www.gnu.org/copyleft/fdl.html" class="ext" rel="nofollow">GFDL</a> - <a
-            href="http://commons.wikimedia.org/wiki/File:090913-EpurationOupeye_0020.jpeg" class="ext"
-            rel="nofollow"> Wikipedia</a>]
-    </li>
-</ul>
 
 <script type="javascript">$(function () { $("[data-toggle='tooltip']").tooltip(); });</script>
 <script type="text/javascript">
