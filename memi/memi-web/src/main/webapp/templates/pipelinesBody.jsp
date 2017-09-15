@@ -11,7 +11,7 @@
             <ul><li>Updated tools: InterProScan</li>
                 <li>rRNASelector (used to identify 16S rRNA genes) was replaced with Infernal for SSU and LSU gene identification</li>
                 <li>The QIIME taxonomic classification component was replaced with MAPseq</li>
-                <li>The Greengenes reference database was replaced with SILVA SSU / LSU version 128, enabling classification of eukaryotes, remapped to a 7-level taxonomy</li>
+                <li>The Greengenes reference database was replaced with SILVA SSU / LSU version 128, enabling classification of eukaryotes, remapped to a 8-level taxonomy</li>
                 <li>Prodigal was added to run alongside FragGeneScan as part of a combined gene caller when processing assembled sequences</li>
             </ul>
         </c:when>
