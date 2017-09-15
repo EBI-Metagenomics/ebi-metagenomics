@@ -132,12 +132,18 @@ public abstract class AbstractResultViewModelBuilder<E extends AbstractResultVie
                     isKronaTabDisabled = false;
                 } else if (fileDefinition.getIdentifier().equalsIgnoreCase(FileDefinitionId.KRONA_HTML_FILE_SSU.toString())) {
                     isKronaTabDisabled = false;
+                } else if (fileDefinition.getIdentifier().equalsIgnoreCase(FileDefinitionId.KRONA_HTML_FILE_LSU.toString())) {
+                    isKronaTabDisabled = false;
                 } else if (fileDefinition.getIdentifier().equalsIgnoreCase(FileDefinitionId.KINGDOM_COUNTS_FILE.toString())) {
                     isPieChartTabDisabled = false;
                     isBarChartTabDisabled = false;
                     isStackChartTabDisabled = false;
                 }//From v4 on SSUs and LSUs have been introduced
                 else if (fileDefinition.getIdentifier().equalsIgnoreCase(FileDefinitionId.KINGDOM_COUNTS_FILE_SSU.toString())) {
+                    isPieChartTabDisabled = false;
+                    isBarChartTabDisabled = false;
+                    isStackChartTabDisabled = false;
+                } else if (fileDefinition.getIdentifier().equalsIgnoreCase(FileDefinitionId.KINGDOM_COUNTS_FILE_LSU.toString())) {
                     isPieChartTabDisabled = false;
                     isBarChartTabDisabled = false;
                     isStackChartTabDisabled = false;

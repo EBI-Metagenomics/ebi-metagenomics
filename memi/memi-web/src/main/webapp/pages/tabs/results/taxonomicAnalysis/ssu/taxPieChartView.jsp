@@ -32,7 +32,7 @@
             // Domain data
             var data =  [
                 <%--<c:set var="addComma" value="false"/>--%>
-                <c:forEach var="domainEntry" items="${model.taxonomyAnalysisResult.domainComposition.domainMap}">
+                <c:forEach var="domainEntry" items="${model.taxonomyAnalysisResultSSU.domainComposition.domainMap}">
                 <%--<c:choose><c:when test="${addComma}">,</c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>--%>
                 ['${domainEntry.key}', ${domainEntry.value}],
                 </c:forEach>
@@ -122,7 +122,7 @@
                     }
                 },
                 credits: {enabled: false},//remove credit line
-                colors: [${model.taxonomyAnalysisResult.domainComposition.colorCode}],//color palette
+                colors: [${model.taxonomyAnalysisResultSSU.domainComposition.colorCode}],//color palette
                 title: {
                     text: 'Domain composition',
                     style: {
@@ -176,7 +176,7 @@
             // Phylum data
             var data = [
                 <%--<c:set var="addComma" value="false"/>--%>
-                <c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResult.taxonomyDataSet}" varStatus="status">
+                <c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResultSSU.taxonomyDataSet}" varStatus="status">
                 <%--<c:choose><c:when test="${addComma}">,</c:when><c:otherwise><c:set var="addComma" value="true"/></c:otherwise></c:choose>--%>
                 ['${taxonomyData.phylum}', ${taxonomyData.numberOfHits}, ${taxonomyData.percentage}],
                 </c:forEach>
@@ -188,7 +188,7 @@
             //IMPORTANT - regroup small values under thresold into "Others" to improve pie chart readability
             var newData=[];
             //calculating the threshold: changing for each chart (OR use 20/100 fix treshold) + use round value to be the same as value rounded for slices
-            var thresOld=((${model.taxonomyAnalysisResult.sliceVisibilityThresholdNumerator / model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator}*100).toFixed(2));
+            var thresOld=((${model.taxonomyAnalysisResultSSU.sliceVisibilityThresholdNumerator / model.taxonomyAnalysisResultSSU.sliceVisibilityThresholdDenominator}*100).toFixed(2));
             //console.log (thresOld)
             var other=0.0
             for (var slice in data) {
@@ -281,7 +281,7 @@
                     }
                 },
                 credits: {text: null },//remove credit line bottom
-                colors: [ ${model.taxonomyAnalysisResult.colorCodeForChart} ],//color palette
+                colors: [ ${model.taxonomyAnalysisResultSSU.colorCodeForChart} ],//color palette
                 legend: {
                     title: {
                         text: '<span style="font-size: 12px; color: #666; font-weight: normal">Click to hide</span>',
@@ -312,10 +312,10 @@
                 subtitle: {
                     <c:choose>
                     <c:when test="${model.run.releaseVersion == '1.0'}">
-                    text: 'Total: ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator} OTUs',
+                    text: 'Total: ${model.taxonomyAnalysisResultSSU.sliceVisibilityThresholdDenominator} OTUs',
                     </c:when>
                     <c:otherwise>
-                    text: 'Total: ${model.taxonomyAnalysisResult.sliceVisibilityThresholdDenominator} reads',
+                    text: 'Total: ${model.taxonomyAnalysisResultSSU.sliceVisibilityThresholdDenominator} reads',
                     </c:otherwise>
                     </c:choose>
                     style: {
@@ -400,7 +400,7 @@
 
         //table data
         var rowData = [
-            <c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResult.taxonomyDataSet}" varStatus="status">
+            <c:forEach var="taxonomyData" items="${model.taxonomyAnalysisResultSSU.taxonomyDataSet}" varStatus="status">
             <%--//remove unassigned data
             <c:choose>
             <c:when test="${taxonomyData.phylum=='Unassigned'}">
@@ -476,7 +476,7 @@
                     var point = $('#tax_chart_pie_phylum').highcharts().series[0].points [l - 1];
                    point.setVisible(!point.visible);
 
-                     var readNum = ${fn:length(model.taxonomyAnalysisResult.taxonomyDataSet)};//total number of records
+                     var readNum = ${fn:length(model.taxonomyAnalysisResultSSU.taxonomyDataSet)};//total number of records
 //                     console.log(readNum)
                      for (n = l-1; n <= readNum ; n++) {
                          $("#tax_table tbody tr."+n+"").toggleClass("disabled");

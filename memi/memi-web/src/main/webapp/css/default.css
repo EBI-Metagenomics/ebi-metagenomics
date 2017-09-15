@@ -1,17 +1,14 @@
 /* reset.css  */
-html,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article, aside, canvas,  details, embed, figure, figcaption, header, hgroup, menu, nav, output, ruby, section, summary,time, mark, audio, video{margin:0;padding:0;border:0;outline:0;font-size:100%;background:transparent;font: inherit; vertical-align: baseline;}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+html,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,fieldset,form,label,legend,caption,article, aside, canvas,  details, embed, figure, figcaption, header, hgroup, menu, nav, output, ruby, section, summary,time, mark, audio, video{margin:0;padding:0;border:0;outline:0;font-size:100%;background:transparent;font: inherit; vertical-align: baseline;}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 /* END reset.css  */
 
 html, body {height: 100%;}
 
 body {
     padding: 0; /*specified in EBI template.css */
-    /*font-family: 'Droid Sans', arial, serif;  link to GOOGLE  font  BUG with the no-Cleartype (standard) config on the PC */
-    /*font-family: 'DroidSansRegular', Arial, sans-serif; @font-face TEMP not working with IE and firefox, use Arial by default*/
     font-family: helvetica, "trebuchet MS", arial, sans-serif;
-    /*font-family: Arial, Helvetica, sans-serif; *//*decided not to use Google or @font-face because feeling that lot's of users are still using their PC without Cleartype*/
     font-size: 80%;
-    font-weight: 400; /*for Droid Sans Regular*/
+    font-weight: 400;
     letter-spacing: 0em;
     word-spacing: 0em;
     line-height: 1.59;
@@ -409,10 +406,10 @@ table.dataTable thead .sorting_desc {background: url(../img/ico_sort_desc.png) n
 table.dataTable.table-heading thead .sorting_desc {background: #368395 url(../img/ico_sort_desc_white.png) no-repeat center right;}
 
 /*Light datatable and table version*/
-.dataTable.table-light, .table-light  {border-collapse: collapse;}
+.dataTable.table-light, .table-light  {border-collapse: collapse; border:none;}
 .dataTable.table-light thead .sorting_asc, .table-light thead .sorting_asc {background: #fff  url(../img/ico_sort_asc_black.png) no-repeat center right;}
 .dataTable.table-light thead .sorting_desc, .table-light thead .sorting_desc {background: #fff  url(../img/ico_sort_desc_black.png) no-repeat center right;}
-.dataTable.table-light thead th, .table-light thead th   {border-bottom: 1px solid #8A8A8A; color:#333; border-radius:0;  box-shadow:none; background-color: #fff; }
+.dataTable.table-light thead th, .table-light thead th   {border-top-width: 0; border-left-width: 0; border-right-width: 0; border-bottom: 1px solid #8A8A8A; color:#333; border-radius:0;  box-shadow:none; background-color: #fff; }
 .dataTable.table-light tr:nth-child(even), .table-light tr:nth-child(even) {background-color: #FFF;}
 .dataTable.table-light td, .table-light td  {border-top: 1px solid #ddd; border-left: 0 solid #ddd; border-right: 0 solid #ddd;  border-bottom: 0 solid #ddd; padding:7px; border-radius: 0;}
 .dataTable.table-light .sorting_1, .table-light .sorting_1  {background-color:rgba(100, 176, 197, 0.11);}
@@ -1523,7 +1520,7 @@ img.ui-datepicker-trigger {float:left; /*solve a bug with chromium*/}
 .sample_ana .tabs-chart .ui-tabs-panel {padding:0px;}
 .sample_ana .ui-state-disabled {opacity: .5;}
 /*IMAGE ANALYSIS PAGE*/
-.go-chart {display:block; border:0px red solid; /*overflow:auto;*/}
+.go-chart {display:block; border:0px red solid; overflow:auto;/*need the overflow for tabs to contain the charts*/}
 .go-chart h2 {margin:0 0 18px 0; font-size:138%; padding:0;}
 .chart-block {float: left; }
 
@@ -1561,7 +1558,6 @@ ul.export_list {z-index: 1;display: none;border: 1px solid #949494; padding: 5px
 .sample_ana .chart-block ul li.chart_exp:hover {cursor:pointer; border: 0px solid #d6e9f8; color:#525252; background-color: #d6e9f8;background-image: none;border-radius: 0px;} /*only export items*/
 .sample_ana .chart-block .ui-widget-content .ui-state-focus {cursor:default; border: 0px solid #d6e9f8; color:#525252; background-color: #d6e9f8;background-image: none;border-radius: 0px;}
 .sample_ana .chart-block .ui-menu .ui-state-focus {margin: 0px;}
-
 .sample_ana .chart-block .ui-button:hover {border: 1px #d0d0d0 solid;}
 .sample_ana .chart-block .ui-button:hover .ui-button-text {color:black;}
 .sample_ana .chart-block .ui-button:hover .ui-icon {background-image: url(../img/jquery/overcast/ui-icons_3383bb_256x240.png);}
