@@ -23,9 +23,6 @@
     <!-- Mobile viewport optimized-->
     <meta name="viewport" content="width=device-width,initial-scale=1">
 
-    <!-- import Lato - temp?-->
-    <link href='https://fonts.googleapis.com/css?family=Lato:400,300,700,900,100' rel='stylesheet' type='text/css'>
-
     <!-- EBI style and code - update to https-->
     <link rel="stylesheet" href="https://www.ebi.ac.uk/inc/css/contents.css" type="text/css"/>
     <link rel="stylesheet" href="https://www.ebi.ac.uk/inc/css/userstyles.css" type="text/css"/>
@@ -180,7 +177,7 @@
     <noscript>
         <style type="text/css">
            /*remove the Krona box  and all charts tabs when no javascript*/
-            #tax-Krona, #tabs-chart, #interpro-chart, #tabs-taxchart {
+            #tax-Krona, #tabs-chart, #tabs-taxchart {
                 display: none;
             }
 

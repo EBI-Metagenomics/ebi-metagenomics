@@ -292,7 +292,7 @@ var displayProjectTable = function(results, container) {
     console.log("Showing project data");
 
     table = document.createElement("table");
-    table.border = 1;
+    // table.border = 1;
     table.className = "table-light";
 
     var headerData = [
@@ -328,7 +328,7 @@ var displayProjectTable = function(results, container) {
 var displaySampleTable = function(results, container) {
     console.log("Showing sample data");
     table = document.createElement("table");
-    table.border = 1;
+    // table.border = 1;
     table.className = "table-light";
 
     var headerData = [
@@ -367,7 +367,7 @@ var displaySampleTable = function(results, container) {
 var displayRunTable = function(results, container) {
     console.log("Showing run data");
     table = document.createElement("table");
-    table.border = 1;
+    // table.border = 1;
     table.className = "table-light";
 
     var headerData = [

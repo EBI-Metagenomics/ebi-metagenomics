@@ -1,17 +1,14 @@
 /* reset.css  */
-html,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article, aside, canvas,  details, embed, figure, figcaption, header, hgroup, menu, nav, output, ruby, section, summary,time, mark, audio, video{margin:0;padding:0;border:0;outline:0;font-size:100%;background:transparent;font: inherit; vertical-align: baseline;}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+html,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,fieldset,form,label,legend,caption,article, aside, canvas,  details, embed, figure, figcaption, header, hgroup, menu, nav, output, ruby, section, summary,time, mark, audio, video{margin:0;padding:0;border:0;outline:0;font-size:100%;background:transparent;font: inherit; vertical-align: baseline;}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 /* END reset.css  */
 
 html, body {height: 100%;}
 
 body {
     padding: 0; /*specified in EBI template.css */
-    /*font-family: 'Droid Sans', arial, serif;  link to GOOGLE  font  BUG with the no-Cleartype (standard) config on the PC */
-    /*font-family: 'DroidSansRegular', Arial, sans-serif; @font-face TEMP not working with IE and firefox, use Arial by default*/
     font-family: helvetica, "trebuchet MS", arial, sans-serif;
-    /*font-family: Arial, Helvetica, sans-serif; *//*decided not to use Google or @font-face because feeling that lot's of users are still using their PC without Cleartype*/
     font-size: 80%;
-    font-weight: 400; /*for Droid Sans Regular*/
+    font-weight: 400;
     letter-spacing: 0em;
     word-spacing: 0em;
     line-height: 1.59;
@@ -409,10 +406,10 @@ table.dataTable thead .sorting_desc {background: url(../img/ico_sort_desc.png) n
 table.dataTable.table-heading thead .sorting_desc {background: #368395 url(../img/ico_sort_desc_white.png) no-repeat center right;}
 
 /*Light datatable and table version*/
-.dataTable.table-light, .table-light  {border-collapse: collapse;}
+.dataTable.table-light, .table-light  {border-collapse: collapse; border:none;}
 .dataTable.table-light thead .sorting_asc, .table-light thead .sorting_asc {background: #fff  url(../img/ico_sort_asc_black.png) no-repeat center right;}
 .dataTable.table-light thead .sorting_desc, .table-light thead .sorting_desc {background: #fff  url(../img/ico_sort_desc_black.png) no-repeat center right;}
-.dataTable.table-light thead th, .table-light thead th   {border-bottom: 1px solid #8A8A8A; color:#333; border-radius:0;  box-shadow:none; background-color: #fff; }
+.dataTable.table-light thead th, .table-light thead th   {border-top-width: 0; border-left-width: 0; border-right-width: 0; border-bottom: 1px solid #8A8A8A; color:#333; border-radius:0;  box-shadow:none; background-color: #fff; }
 .dataTable.table-light tr:nth-child(even), .table-light tr:nth-child(even) {background-color: #FFF;}
 .dataTable.table-light td, .table-light td  {border-top: 1px solid #ddd; border-left: 0 solid #ddd; border-right: 0 solid #ddd;  border-bottom: 0 solid #ddd; padding:7px; border-radius: 0;}
 .dataTable.table-light .sorting_1, .table-light .sorting_1  {background-color:rgba(100, 176, 197, 0.11);}
@@ -1491,28 +1488,39 @@ img.ui-datepicker-trigger {float:left; /*solve a bug with chromium*/}
 .xs-navtabs {display: none;}/*alternative menu for small screens*/
 .xm-navtabs {display: none;}/*alternative menu for medium screens*/
 
-/*.sample_comp_result .ui-corner-top,*/ .sample_ana .ui-corner-top {border-top-right-radius: 0px;border-top-left-radius: 0px;}
+/*.sample_ana .ui-corner-top {border-top-right-radius: 0px;border-top-left-radius: 0px;}*/
 .sample_ana .ui-widget-content a {color:#2B8A97;}  /*links under jquery tabs*/
 .sample_ana .ui-widget-content {border: 0px solid #aaa;background: none;color: #333333;margin: 0 9px;}  /*margin for navigation tab*/
 /*.sample_comp .ui-widget-content .ui-widget-content, .sample_ana .ui-widget-content .ui-widget-content {margin: 0;} *//*non margin for graph tab*/
 .sample_ana .ui-tabs-nav { margin: 0px 0 -1px 9px;position: relative; z-index: 1;}
 .sample_ana .ui-tabs-nav li {border-color: transparent /*was #e5e5e5*/;/*top:0px;*/ /*not needed anymore?*/}
-.sample_ana li.ui-tabs-selected {height: 30px; background: #fff; border-top: 1px solid rgb(213, 213, 213); border-right: 1px solid rgb(213, 213, 213); border-bottom: 0; border-left: 1px solid rgb(213, 213, 213);}
+.sample_ana li.ui-tabs-selected {background: #fff; border-top: 1px solid rgb(213, 213, 213); border-right: 1px solid rgb(213, 213, 213); border-bottom: 0; border-left: 1px solid rgb(213, 213, 213);}
 .sample_ana li.ui-tabs-selected a:link, .sample_ana li.ui-tabs-selected a:visited {color: black;text-decoration: none;} /*works for overview*/
-.sample_ana li.ui-tabs-active {height: 30px; background: #fff; border-top: 1px solid rgb(213, 213, 213); border-right: 1px solid rgb(213, 213, 213); border-bottom: 0; border-left: 1px solid rgb(213, 213, 213);}
-.sample_ana #tabs-taxchart li.ui-tabs-active {border: 0px solid rgb(213, 213, 213);} /* remove duplicate border on switch view button - tax chart*/
-.sample_ana #tabs-chart li.ui-tabs-active {border: 0px solid rgb(213, 213, 213);}/*remove duplicate border on switch view button - interpro chart*/
+.sample_ana li.ui-tabs-active {background: #fff; border-top: 1px solid rgb(213, 213, 213); border-right: 1px solid rgb(213, 213, 213); border-bottom: 0; border-left: 1px solid rgb(213, 213, 213);}
+.sample_ana .tabs-chart li.ui-tabs-active {border: 0px solid rgb(213, 213, 213);} /* remove duplicate border on switch view button - tax and interpro chart*/
 .sample_ana li.ui-tabs-active a:link, .sample_ana li.ui-tabs-active a:visited {color: black;text-decoration: none;} /*works for overview*/
+.sample_ana .ui-tabs-panel { margin: 0 0 0 -4px; position: relative;/*z-index: 400;*/ /*background: url(images/epmc-ui-tabs-background-gradient.gif) 0 0 no-repeat;*/ border: 1px solid rgb(213, 213, 213);border-bottom-left-radius: 0px; border-bottom-right-radius: 0px; padding: 18px 4px;}
+
+/*sub-tabs*/
+.sample_ana .sub-tabs > ul.ui-tabs-nav {margin: 0 0 0 9px;} /*normal*/
+.sample_ana .sub-tabs > ul li  {margin-top: 0; margin-right: 0.5rem;}
+.sample_ana .sub-tabs > ul li:hover  {background:#aae5ed;}
+.sample_ana .sub-tabs > ul li a.ui-tabs-anchor {padding: 1.2rem 1rem;  color: #789aa5; font-weight: normal; font-size: 90%; text-decoration: none;}
+.sample_ana .sub-tabs > ul li.ui-tabs-active {margin-bottom: 0;  padding-bottom: 0; border:none;}
+/*.sample_ana .sub-tabs > ul li.ui-tabs-active a::after {content: ""; position: absolute;  margin: auto;  top: 0;  left: 0;  bottom: -58px;   right: 0;  width: 0; height: 0;border-color: #2B8A97 transparent transparent;border-style: solid;border-width: 10px 10px 0;}*/
+.sample_ana .sub-tabs > ul li.ui-tabs-active a:link,.sample_ana .sub-tabs > ul li.ui-tabs-active a:visited  {font-weight: bold; color: white;  background:#789aa5;} /*remove borders for subtabs*/
+.sample_ana .sub-tabs .ui-tabs-panel {border:none;}
+/*/sub-tabs*/
+
 .sample_ana .ui-state-disabled   a {color: grey;}
 .sample_ana .ui-state-default {background:none;}
 .sample_ana .ui-state-hover a:link {text-decoration: underline;}
 .sample_comp_result .ui-state-hover .tab-text {text-decoration: underline;}  /*add underline for span - not a href*/
 .sample_comp_result .ui-tabs-active .tab-text  {text-decoration: none;}/*remove decoration for selected tab*/
-.sample_ana .ui-tabs-panel { margin: 0 0 0 -4px; position: relative;/*z-index: 400;*/ /*background: url(images/epmc-ui-tabs-background-gradient.gif) 0 0 no-repeat;*/ border: 1px solid rgb(213, 213, 213);border-bottom-left-radius: 0px; border-bottom-right-radius: 0px; padding: 18px 4px;}
-.sample_ana #tabs-taxchart .ui-tabs-panel {padding:0px;}
+.sample_ana .tabs-chart .ui-tabs-panel {padding:0px;}
 .sample_ana .ui-state-disabled {opacity: .5;}
 /*IMAGE ANALYSIS PAGE*/
-.go-chart {display:block; border:0px red solid; /*overflow:auto;*/}
+.go-chart {display:block; border:0px red solid; overflow:auto;/*need the overflow for tabs to contain the charts*/}
 .go-chart h2 {margin:0 0 18px 0; font-size:138%; padding:0;}
 .chart-block {float: left; }
 
@@ -1550,7 +1558,6 @@ ul.export_list {z-index: 1;display: none;border: 1px solid #949494; padding: 5px
 .sample_ana .chart-block ul li.chart_exp:hover {cursor:pointer; border: 0px solid #d6e9f8; color:#525252; background-color: #d6e9f8;background-image: none;border-radius: 0px;} /*only export items*/
 .sample_ana .chart-block .ui-widget-content .ui-state-focus {cursor:default; border: 0px solid #d6e9f8; color:#525252; background-color: #d6e9f8;background-image: none;border-radius: 0px;}
 .sample_ana .chart-block .ui-menu .ui-state-focus {margin: 0px;}
-
 .sample_ana .chart-block .ui-button:hover {border: 1px #d0d0d0 solid;}
 .sample_ana .chart-block .ui-button:hover .ui-button-text {color:black;}
 .sample_ana .chart-block .ui-button:hover .ui-icon {background-image: url(../img/jquery/overcast/ui-icons_3383bb_256x240.png);}
@@ -1566,21 +1573,20 @@ background-image: -webkit-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247
 
 /*.go_rotate {-moz-transform:rotate(270deg); transform:rotate(270deg); -webkit-transform:rotate(270deg);-ms-transform:rotate(270deg); -o-transform: rotate(270deg); filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1); z-index:inherit;float:left; clear:left;height:300px; zoom:1;}*/
 
-.sample_ana #tabs-chart .ui-state-disabled, .sample_ana #interpro-chart .ui-state-disabled, .sample_ana #tabs-taxchart .ui-state-disabled {opacity:0.1;}
+.sample_ana .tabs-chart .ui-state-disabled {opacity:0.1;}
 
-.sample_ana #tabs-chart .ui-tabs-nav, .sample_ana #interpro-chart .ui-tabs-nav, .sample_ana #tabs-taxchart .ui-tabs-nav {margin: 0 0 9px 0; padding:0;}
-.sample_ana #tabs-taxchart .ui-helper-clearfix, .sample_ana #interpro-chart .ui-helper-clearfix  {display: inline-block;}
-.sample_comp_result #tabs-chart .ui-tabs-nav li a, .sample_ana #tabs-chart .ui-tabs-nav li a, .sample_ana #interpro-chart .ui-tabs-nav li a, .sample_ana #tabs-taxchart .ui-tabs-nav li a {border: 1px solid rgba(0,0,0,0.1);padding: .2em .2em;
-background-image: -moz-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));
-background-image: -o-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85));
-background-image: -webkit-gradient(linear,left top,left bottom,from(rgba(255,255,255,.85)),to(rgba(247,247,247,.85)));
-background-image: -webkit-linear-gradient(top,rgba(255,255,255,.85),rgba(247,247,247,.85)); }
-.sample_ana #tabs-chart .ui-tabs-nav li.ui-state-hover a, .sample_ana #interpro-chart .ui-tabs-nav li.ui-state-hover a, .sample_ana #tabs-taxchart .ui-tabs-nav li.ui-state-hover a  {text-decoration: none;}
-.sample_ana #tabs-chart .ui-tabs-nav li a:hover, .sample_ana #interpro-chart .ui-tabs-nav li a:hover, .sample_ana #tabs-taxchart .ui-tabs-nav li a:hover  {border: 1px solid #c6c6c6;box-shadow:1px 1px 1px rgba(0, 0, 0, 0.3);-moz-box-shadow:1px 1px 1px rgba(0, 0, 0, 0.3); -khtml-box-shadow:1px 1px 1px rgba(0, 0, 0, 0.3); -webkit-box-shadow:0px 0px 3px rgba(0, 0, 0, 0.3) ; text-decoration:none;}
+.sample_ana .tabs-chart .ui-tabs-nav {margin: 0 0 9px 0; padding:0;}
+.sample_ana .tabs-chart .ui-helper-clearfix {display: inline-block;}
+.sample_ana .tabs-chart .ui-tabs-nav li a {border: 1px solid #d2d2d2; padding: .2em .2em;
+background-image: -moz-linear-gradient(top,rgba(255,255,255,.85),rgba(230,230,230,.85));
+background-image: -o-linear-gradient(top,rgba(255,255,255,.85),rgba(230,230,230,.85));
+background-image: -webkit-gradient(linear,left top,left bottom,from(rgba(255,255,255,.85)),to(rgba(230,230,230,.85)));
+background-image: -webkit-linear-gradient(top,rgba(255,255,255,.85),rgba(230,230,230,.85)); }
+.sample_ana .tabs-chart .ui-tabs-nav li.ui-state-hover a  {text-decoration: none;}
+.sample_ana .tabs-chart .ui-tabs-nav li a:hover {border: 1px solid #c6c6c6; box-shadow:1px 1px 1px rgba(0, 0, 0, 0.3); text-decoration:none;}
 
-.sample_ana #tabs-chart li.ui-tabs-selected, .sample_ana #interpro-chart li.ui-tabs-selected, .sample_ana #tabs-taxchart li.ui-tabs-selected {/*height: 37px;*/height: 28px;background: #fff; border: none; top:1px;}
-.sample_ana #tabs-chart .ui-tabs-panel, .sample_ana #interpro-chart .ui-tabs-panel {margin: 0; padding:0; position: relative; border: 0px solid rgb(213, 213, 213); border-bottom-left-radius: 0px;border-bottom-right-radius: 0px; overflow:hidden;/*to solve a scrolling issue*/}
-.sample_ana #tabs-taxchart .ui-tabs-panel {margin: 0;  position: relative; border: 0px solid rgb(213, 213, 213); border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;} /*don't use overflow:auto with Krona*/
+.sample_ana .tabs-chart li.ui-tabs-selected {/*height: 37px;*/height: 28px;background: #fff; border: none; top:1px;}
+.sample_ana .tabs-chart .ui-tabs-panel {margin: 0;  position: relative; border: 0px solid rgb(213, 213, 213); border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;} /*don't use overflow:auto with Krona*/
 .sample_ana .ui-widget-header .selector_tab {font-weight:normal;padding-top: 9px;}
 
 .ui-tabs .ui-tabs-nav li.ico-downl {margin-left:16px;}
@@ -1624,10 +1630,6 @@ li.ui-tabs-active .ico-table {background: url(../img/ico_graph_table_on.png) no-
 .sample_comp_result .ico-table, .sample_comp_result .ico-col, .sample_comp_result .ico-barh, .sample_comp_result .ico-heatmap, .sample_comp_result .ico-pca {margin-right: 4px; width:26px; height:26px; display:block;float:left; border:0px red solid;}/*icon used in tabs on the comparison result page*/
 .sample_comp_result .tab-text {float: left; padding-top: 6px; display: block;}
 .sample_comp option:disabled {color: #b6b6b6;}
-
-/*icon to download table, raw data or image*/
-.sample_ana #interpro-chart li.ico-downl.ui-tabs-selected {border:1px red solid; cursor:pointer;} /*keep click available for download*/
-.sample_ana #interpro-chart li.ico-downl.ui-tabs-selected a {cursor:pointer;} /*keep click available for download*/
 
 .ico-download { float:left; }
 .ico-download a {font-size: 164%; border: 1px solid rgba(0,0,0,0.1); margin-top: 1px;padding: 0px 1px 0px 6px; float:left; margin-left: 9px;
@@ -1737,7 +1739,7 @@ ul.sample_list  {list-style: disc; padding-left:18px;}
 ul.sample_list li {list-style: none; display: inline;}
 
 /* TABS - sample comparison tool */
-.sample_comp_result .ui-corner-top {border-top-right-radius: 0px;border-top-left-radius: 0px;}
+/*.sample_comp_result .ui-corner-top {border-top-right-radius: 0px;border-top-left-radius: 0px;}*/
 .sample_comp_result .ui-widget-content a {color:#188960;}
 .sample_comp_result .ui-widget-content {border: 0px solid #aaaaaa;background: none;color: #333333;margin: 0 9px;}  /*margin for navigation tab*/
 .sample_comp_result .ui-widget-content .ui-widget-content {margin: 0;} /*non margin for graph tab*/
