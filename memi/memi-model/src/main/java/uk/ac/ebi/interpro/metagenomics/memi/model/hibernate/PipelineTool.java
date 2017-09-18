@@ -27,7 +27,7 @@ public class PipelineTool implements Comparator<PipelineTool> {
     @Column(name = "TOOL_NAME", length = 30, nullable = false)
     private String toolName;
 
-    @Column(name = "DESCRIPTION", columnDefinition = "TEXT", nullable = false)
+    @Column(name = "DESCRIPTION", columnDefinition = "LONGTEXT", nullable = false)
     private String description;
 
     @Column(name = "WEB_LINK", length = 500)
