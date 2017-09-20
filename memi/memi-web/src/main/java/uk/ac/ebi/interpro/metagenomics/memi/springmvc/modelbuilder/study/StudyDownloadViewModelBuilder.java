@@ -90,6 +90,7 @@ public class StudyDownloadViewModelBuilder extends AbstractViewModelBuilder<Down
         for (PipelineRelease pipeline : pipelines) {
             String releaseVersion = pipeline.getReleaseVersion();
             final File results = new File(resultDirectoryAbsolute + File.separator + "version_" + releaseVersion + File.separator + "project-summary");
+            //Check if project summary file exists
             if (FileExistenceChecker.checkFileExistence(results)) {
                 final DownloadSection downloadLinks = getDownloadLinks(rootDir, study.getStudyId(), releaseVersion);
                 if (downloadLinks != null && (downloadLinks.getFuncAnalysisDownloadLinks().size() > 0 || downloadLinks.getTaxaAnalysisDownloadLinks().size() > 0)) {
@@ -128,8 +129,7 @@ public class StudyDownloadViewModelBuilder extends AbstractViewModelBuilder<Down
             final List<DownloadLink> taxaDownloadLinks = new ArrayList<DownloadLink>();
 
             File[] files = summaryFilesDir.listFiles(new StudySummaryFileFilter());
-            for (int i = 0; i < files.length; i++) {
-                File file = files[i];
+            for (File file : files) {
                 if (!file.isFile()) {
                     throw new IllegalStateException("Does not exist or is not a file: " + file.getAbsolutePath());
                 }

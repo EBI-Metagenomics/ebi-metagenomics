@@ -1,7 +1,12 @@
 package uk.ac.ebi.interpro.metagenomics.memi.controller.studies;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,12 +27,17 @@ import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuil
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.study.StudyDownloadViewModelBuilder;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Locale;
 import java.util.Map;
+
+e;
 
 /**
  * Download tab on the project page.
@@ -48,6 +58,9 @@ public class DownloadStudyController extends AbstractStudyViewController {
 
     @Resource
     protected Map<String, DownloadableFileDefinition> fileDefinitionsMap;
+
+    @Autowired
+    ServletContext servletContext;
 
 
     protected String getModelViewName() {
@@ -109,10 +122,10 @@ public class DownloadStudyController extends AbstractStudyViewController {
      */
     @RequestMapping(value = MGPortalURLCollection.PROJECT_SUMMARY_EXPORT)
     public void doHandleSummaryExports(@PathVariable final String studyId,
-                                        @PathVariable final String releaseVersion,
-                                        @RequestParam(required = true, value = "exportValue") final String exportValue,
-                                        final HttpServletResponse response,
-                                        final HttpServletRequest request) throws IOException {
+                                       @PathVariable final String releaseVersion,
+                                       @RequestParam(required = true, value = "exportValue") final String exportValue,
+                                       final HttpServletResponse response,
+                                       final HttpServletRequest request) throws IOException {
         response.setContentType("text/html;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_OK);
         response.setLocale(Locale.ENGLISH);
@@ -124,7 +137,7 @@ public class DownloadStudyController extends AbstractStudyViewController {
                 File file = getDownloadFile(study, releaseVersion, exportValue);
                 if (file != null) {
                     final String filename = studyId + "_" + exportValue + "_v" + releaseVersion + ".tsv";
-                    downloadService.openDownloadDialog(response, request, file, filename ,false);
+                    downloadService.openDownloadDialog(response, request, file, filename, false);
                 } else {//analysis job is NULL
                     response.setStatus(HttpServletResponse.SC_NO_CONTENT);
                 }
@@ -138,12 +151,28 @@ public class DownloadStudyController extends AbstractStudyViewController {
     }
 
     private File getDownloadFile(final Study study, final String version, final String exportValue) {
-        final String rootPath = propertyContainer.getPathToAnalysisDirectory();
-        final String resultDirectoryAbsolute = rootPath + study.getResultDirectory();
+        String filename = getAbsResultDirPath(study) + File.separator + "version_" + version + File.separator + "project-summary" + File.separator + exportValue;
+        if (!exportValue.equals("diversity")) {
+            filename += "_v" + version;
+        }
+        filename += ".tsv";
+        return new File(filename);
+    }
 
-        final String filename = resultDirectoryAbsolute + File.separator + "version_" + version + File.separator + "project-summary" + File.separator + exportValue + "_v" + version + ".tsv";
-        final File file = new File(filename);
-        return file;
+    private String getAbsResultDirPath(final Study study) {
+        final String rootPath = propertyContainer.getPathToAnalysisDirectory();
+        return rootPath + study.getResultDirectory();
+    }
+
+    @RequestMapping(value = MGPortalURLCollection.PROJECT_DOWNLOAD + "/{releaseVersion}/pca")
+    public ResponseEntity<byte[]> pcaImage(@PathVariable final String studyId,
+                                           @PathVariable final String releaseVersion) throws IOException {
+        final Study study = getSecuredEntity(studyId);
+        final String filename = getAbsResultDirPath(study) + File.separator + "version_" + releaseVersion + File.separator + "project-summary" + File.separator + "pca.svg";
+        InputStream input = new FileInputStream(filename);
+
+        final HttpHeaders headers = new HttpHeaders();
+        return new ResponseEntity<byte[]>(IOUtils.toByteArray(input), headers, HttpStatus.CREATED);
     }
 
 

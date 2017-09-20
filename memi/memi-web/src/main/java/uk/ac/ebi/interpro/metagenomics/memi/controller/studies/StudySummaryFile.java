@@ -4,7 +4,7 @@ package uk.ac.ebi.interpro.metagenomics.memi.controller.studies;
  * Expected file names that help to summary a studies details.
  */
 public enum StudySummaryFile {
-//    BP_GO_SLIM("BP_GO-slim_abundances", "Biological Process GO-slim terms found in the samples from a study.", "func", 1),
+    //    BP_GO_SLIM("BP_GO-slim_abundances", "Biological Process GO-slim terms found in the samples from a study.", "func", 1),
 //    BP_GO("BP_GO_abundances", "Biological Process GO terms found in the samples from a study", "func", 2),
 //    CC_GO_SLIM("CC_GO-slim_abundances", "Cellular Component GO-slim terms found in the samples from a study.", "func", 3),
 //    CC_GO("CC_GO_abundances", "Cellular Component GO terms found in the samples from a study.", "func", 4),
@@ -18,7 +18,8 @@ public enum StudySummaryFile {
     PHYLUM_TAXONOMY_SSU("phylum_taxonomy_abundances_SSU", "Phylum level taxonomies SSU (TSV)", "taxa", 12),
     PHYLUM_TAXONOMY_LSU("phylum_taxonomy_abundances_LSU", "Phylum level taxonomies LSU (TSV)", "taxa", 13),
     TAXONOMY_SSU("taxonomy_abundances_SSU", "Taxonomic assignments SSU (TSV)", "taxa", 14),
-    TAXONOMY_LSU("taxonomy_abundances_LSU", "Taxonomic assignments LSU (TSV)", "taxa", 15);
+    TAXONOMY_LSU("taxonomy_abundances_LSU", "Taxonomic assignments LSU (TSV)", "taxa", 15),
+    TAXONOMY_DIVERSITY("diversity", "Taxonomic diversity stats (TSV)", "taxa", 16);
 
     private String filename;
     private String description;
@@ -50,6 +51,7 @@ public enum StudySummaryFile {
 
     /**
      * Does the supplied filename match one of the expected filenames in this enum?
+     *
      * @param filename Filename including file extension, but without the file path, e.g. "GO_abundances_v1.0.tsv"
      * @return
      */
@@ -66,6 +68,7 @@ public enum StudySummaryFile {
 
     /**
      * Return {@link StudySummaryFile} from filename.
+     *
      * @param filename
      * @return
      */
@@ -76,7 +79,12 @@ public enum StudySummaryFile {
 
         for (StudySummaryFile file : StudySummaryFile.values()) {
             // Add underscore version to the file name and compare
-            final String summaryFileName = file.getFilename()+"_v";
+            String summaryFileName = file.getFilename();
+            if (summaryFileName.equals(TAXONOMY_DIVERSITY.getFilename())) {
+                summaryFileName += ".tsv";
+            } else {
+                summaryFileName += "_v";
+            }
             if (filename.startsWith(summaryFileName)) {
                 // E.g. "GO_abundances_v1.0.tsv" starts with "GO_abundances"
                 return file;

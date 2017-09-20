@@ -9,6 +9,6 @@ import java.io.FileFilter;
 public class StudySummaryFileFilter implements FileFilter {
     public boolean accept(File file) {
         String filename = file.getName();
-        return StudySummaryFile.contains(filename);
+        return !filename.equals("diversity-sample.tsv") && StudySummaryFile.contains(filename);
     }
 }
