@@ -37,7 +37,6 @@ import java.io.InputStream;
 import java.util.Locale;
 import java.util.Map;
 
-e;
 
 /**
  * Download tab on the project page.

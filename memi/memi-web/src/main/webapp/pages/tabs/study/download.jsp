@@ -25,19 +25,22 @@
             <c:if test="${not empty downloadSection.value.taxaAnalysisDownloadLinks}">
                 <h4>Taxonomic analysis for the project</h4>
 
-                <a target="_blank"
-                   href="${pageContext.request.contextPath}/projects/${model.study.studyId}/download/${downloadSection.key}/pca"
-                   title="Click to view principal component analysis (PCA) for all study runs">
-                    <img src="${pageContext.request.contextPath}/img/ico_graph_pca_on.png" width="60" height="60"
-                         alt="pca">
-                </a>
-
                 <ul>
                     <c:forEach var="downloadLink" items="${downloadSection.value.taxaAnalysisDownloadLinks}">
                         <li>
-                            <a href="<c:url value="${baseURL}/${downloadLink.linkURL}"/>"
-                               title="${downloadLink.linkTitle}">${downloadLink.linkTitle}</a>
-                            <span class="list_date"> - ${downloadLink.fileSize}</span>
+                            <c:choose>
+                                <c:when test="${downloadLink.linkText == 'pca.svg'}">
+                                    <a target="_blank" href="<c:url value="${baseURL}/${downloadLink.linkURL}"/>"
+                                       title="${downloadLink.linkTitle}">${downloadLink.linkTitle}</a>
+                                </c:when>
+                                <c:otherwise>
+                                    <a href="<c:url value="${baseURL}/${downloadLink.linkURL}"/>"
+                                       title="${downloadLink.linkTitle}">${downloadLink.linkTitle}</a>
+                                </c:otherwise>
+                            </c:choose>
+                            <c:if test="${not empty downloadLink.fileSize}">
+                                <span class="list_date"> - ${downloadLink.fileSize}</span>
+                            </c:if>
                         </li>
                     </c:forEach>
                 </ul>

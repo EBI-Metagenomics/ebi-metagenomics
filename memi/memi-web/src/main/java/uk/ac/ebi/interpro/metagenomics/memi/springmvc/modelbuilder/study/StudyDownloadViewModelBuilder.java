@@ -148,12 +148,21 @@ public class StudyDownloadViewModelBuilder extends AbstractViewModelBuilder<Down
                             studySummaryFile.getFileOrder(),
                             getFileSize(file)));
                 } else if (studySummaryFile.getCategory().equalsIgnoreCase("taxa")) {
-                    taxaDownloadLinks.add(new DownloadLink(filename,
-                            studySummaryFile.getDescription(),
-                            "projects/" + studyId + "/download/" + version + "/export?contentType=text&amp;exportValue=" + studySummaryFile.getFilename(),
-                            true,
-                            studySummaryFile.getFileOrder(),
-                            getFileSize(file)));
+                    if (studySummaryFile.getFilename().equalsIgnoreCase("pca")) {
+                        taxaDownloadLinks.add(new DownloadLink(filename,
+                                studySummaryFile.getDescription(),
+                                "projects/" + studyId + "/download/" + version + "/pca",
+                                true,
+                                studySummaryFile.getFileOrder(),
+                                null));
+                    } else {
+                        taxaDownloadLinks.add(new DownloadLink(filename,
+                                studySummaryFile.getDescription(),
+                                "projects/" + studyId + "/download/" + version + "/export?contentType=text&amp;exportValue=" + studySummaryFile.getFilename(),
+                                true,
+                                studySummaryFile.getFileOrder(),
+                                getFileSize(file)));
+                    }
                 } else {
                     log.warn("Project summary file did not have an expected category, it had: " + studySummaryFile.getCategory());
                 }
