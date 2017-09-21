@@ -102,6 +102,8 @@ public class DownloadViewModelBuilder extends AbstractResultViewModelBuilder<Dow
             downloadableFileList = downloadableFileLists.get("v2");
         } else if (analysisJobReleaseVersion.equalsIgnoreCase("3.0")) {
             downloadableFileList = downloadableFileLists.get("v3");
+        } else if (analysisJobReleaseVersion.equalsIgnoreCase("4.0")) {
+            downloadableFileList = downloadableFileLists.get("v4");
         } else {
             downloadableFileList = new ArrayList<String>();
         }

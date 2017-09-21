@@ -38,11 +38,6 @@
     <!--Google map with sample locations - add the Google map if the JSON data file is available-->
     <c:if test="${model.googleMapDataAvailable}">
         <div id="map-container">
-            <div class="btn-full-screen" style="text-align: right">
-                <button id="btn-enter-full-screen" class="ui-button icon icon-functional" data-icon="Y">Full Screen
-                </button>
-                <button id="btn-exit-full-screen" class="ui-button" style="display: none">Exit full Screen</button>
-            </div>
             <div id="map_project"></div>
         </div>
     </c:if>
@@ -50,30 +45,22 @@
     <tags:publications publications="${study.publications}" relatedPublications="${model.relatedPublications}"
                        relatedLinks="${model.relatedLinks}"/>
     <!-- Related publication, resources, links -->
-    <div class="sidebar-allrel">
-        <div id="sidebar-related">
-            <h2>Related links</h2>
-            <%--<span class="separator"></span>--%>
-            <ul>
-                <!--ENA links -->
-                <li>
-                    <a title="Click to view entry on European Nucleotide Archive"
-                       href="https://www.ebi.ac.uk/ena/data/view/${study.studyId}"
-                       class="list_more">ENA website (${study.studyId})</a>
-                </li>
-                <!--NCBI links -->
-                <c:choose>
-                    <c:when test="${not empty study.ncbiProjectId && study.ncbiProjectId>0}">
-                        <li>
-                            <a title="Click to view entry on NCBI website"
-                               href="http://www.ncbi.nlm.nih.gov/bioproject/?term=${study.ncbiProjectId}"
-                               class="list_more">BioProject (${study.ncbiProjectId})</a>
-                        </li>
-                    </c:when>
-                </c:choose>
-            </ul>
+    <c:if test="${study['public']}">
+        <div class="sidebar-allrel">
+            <div id="sidebar-related">
+                <h2>Related links</h2>
+                <%--<span class="separator"></span>--%>
+                <ul>
+                    <!--ENA links -->
+                    <li>
+                        <a title="Click to view entry on European Nucleotide Archive"
+                           href="https://www.ebi.ac.uk/ena/data/view/${study.studyId}"
+                           class="list_more">ENA website (${study.studyId})</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
+    </c:if>
     <!--/ Related publication, resources, links -->
 
 
@@ -112,7 +99,7 @@
         </c:if>
     </div>
 
-    <h3>Contact details</h3>
+    <h3>Submitter details</h3>
 
     <div class="output_form">
         <c:set var="centreName" value="${study.centreName}"/>
@@ -127,38 +114,6 @@
                 <div class="result_row">
                     <div class="result_row_label">Institute:</div>
                     <c:set var="centreName" value="${notGivenId}"/></div>
-            </c:otherwise>
-        </c:choose>
-
-        <c:set var="contactName" value="${study.authorName}" scope="page"/>
-        <c:set var="contactMail" value="${study.authorEmailAddress}" scope="page"/>
-
-        <c:choose>
-            <c:when test="${not empty contactName}">
-                <div class="result_row">
-                    <div class="result_row_label">Name:</div>
-                    <div class="result_row_data">${contactName}</div>
-                </div>
-            </c:when>
-            <c:otherwise>
-                <div class="result_row">
-                    <div class="result_row_label">Name:</div>
-                    <div class="result_row_data">not available</div>
-                </div>
-            </c:otherwise>
-        </c:choose>
-        <c:choose>
-            <c:when test="${not empty contactMail}">
-                <div class="result_row">
-                    <div class="result_row_label">Email:</div>
-                    <div class="result_row_data">${contactMail}</div>
-                </div>
-            </c:when>
-            <c:otherwise>
-                <div class="result_row">
-                    <div class="result_row_label">Email:</div>
-                    <div class="result_row_data lowercase">not available</div>
-                </div>
             </c:otherwise>
         </c:choose>
 

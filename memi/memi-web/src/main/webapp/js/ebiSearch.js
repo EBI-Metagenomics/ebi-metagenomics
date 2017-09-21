@@ -269,7 +269,7 @@ var TableManager = function(searchManager, settingsManager) {
     this.displayProjectTable = function(results, container) {
         //console.log("Showing project data");
         table = document.createElement("table");
-        table.border = 1;
+        // table.border = 1;
         table.classList.add("table-light");
 
         var headerData = this.getProjectHeader();
@@ -324,7 +324,7 @@ var TableManager = function(searchManager, settingsManager) {
     this.displaySampleTable = function(results, container) {
         //console.log("Showing sample data");
         table = document.createElement("table");
-        table.border = 1;
+        // table.border = 1;
         table.classList.add("table-light");
 
         var headerData = this.getSampleHeader();
@@ -383,7 +383,7 @@ var TableManager = function(searchManager, settingsManager) {
     this.displayRunTable = function(results, container) {
         //console.log("Showing run data");
         table = document.createElement("table");
-        table.border = 1;
+        // table.border = 1;
         table.classList.add("table-light");
 
         var headerData = this.getRunHeader();

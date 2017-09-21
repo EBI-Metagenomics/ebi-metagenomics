@@ -6,6 +6,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.valueObjects.SampleStatisticsV
 import uk.ac.ebi.interpro.metagenomics.memi.model.valueObjects.StudyStatisticsVO;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Represents the data access object interface for EMG samples.
@@ -104,5 +105,7 @@ public interface SampleDAO extends ISecureEntityDAO<Sample> {
 
     long retrieveSampleSizeByStudyId(long studyId);
 
-    public SampleStatisticsVO retrieveStatistics();
+    SampleStatisticsVO retrieveStatistics();
+
+    Map<Long, Long> retrieveSampleCountsPerStudy();
 }

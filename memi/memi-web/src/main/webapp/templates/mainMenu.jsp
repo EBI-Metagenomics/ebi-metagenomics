@@ -55,9 +55,8 @@
                                                             title="About EBI Metagenomics">About</a>
     </li>
 
-
-    <li class="${model.tabClasses["tabClassContactView"]} last"><a href="<c:url value="${baseURL}/contact"/>"
-                                                                   title="Contact us">Contact</a></li>
+    <li class="${model.tabClasses["tabClassContactView"]} last"><a href="<c:url value="${baseURL}/help"/>"
+                                                                   title="You need help?">Help</a></li>
 
     <c:choose>
         <c:when test="${empty model.submitter}">

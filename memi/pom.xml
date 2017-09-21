@@ -49,16 +49,6 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
-        <!--<repository>-->
-        <!--<id>oracleReleases</id>-->
-        <!--<name>Oracle Released Java Packages</name>-->
-        <!--<url>http://download.oracle.com/maven</url>-->
-        <!--<layout>default</layout>-->
-        <!--</repository>-->
-        <!--<repository>-->
-        <!--<id>Sourcesense repository</id>-->
-        <!--<url>https://nexus.sourcesense.com/nexus/content/repositories/public/</url>-->
-        <!--</repository>-->
     </repositories>
 
     <properties>

@@ -8,7 +8,6 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.AnalysisStatus;
-import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.FunctionalAnalysisResult;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.TaxonomyAnalysisResult;
 
 import java.util.List;
@@ -29,7 +28,9 @@ public class TaxonomicViewModel extends AbstractResultViewModel {
 
     private AnalysisStatus analysisStatus;
 
-    private TaxonomyAnalysisResult taxonomyAnalysisResult;
+    private TaxonomyAnalysisResult taxonomyAnalysisResultSSU;
+
+    private TaxonomyAnalysisResult taxonomyAnalysisResultLSU;
 
 
     public TaxonomicViewModel(Submitter submitter,
@@ -41,13 +42,15 @@ public class TaxonomicViewModel extends AbstractResultViewModel {
                               Run run,
                               AnalysisJob analysisJob,
                               AnalysisStatus analysisStatus,
-                              TaxonomyAnalysisResult taxonomyAnalysisResult) {
+                              TaxonomyAnalysisResult taxonomyAnalysisResultSSU,
+                              TaxonomyAnalysisResult taxonomyAnalysisResultLSU) {
         super(submitter, ebiSearchForm, pageTitle, breadcrumbs, propertyContainer);
         this.sample = sample;
         this.run = run;
         this.analysisJob = analysisJob;
         this.analysisStatus = analysisStatus;
-        this.taxonomyAnalysisResult = taxonomyAnalysisResult;
+        this.taxonomyAnalysisResultSSU = taxonomyAnalysisResultSSU;
+        this.taxonomyAnalysisResultLSU = taxonomyAnalysisResultLSU;
     }
 
     public Sample getSample() {
@@ -66,7 +69,11 @@ public class TaxonomicViewModel extends AbstractResultViewModel {
         return analysisStatus;
     }
 
-    public TaxonomyAnalysisResult getTaxonomyAnalysisResult() {
-        return taxonomyAnalysisResult;
+    public TaxonomyAnalysisResult getTaxonomyAnalysisResultSSU() {
+        return taxonomyAnalysisResultSSU;
+    }
+
+    public TaxonomyAnalysisResult getTaxonomyAnalysisResultLSU() {
+        return taxonomyAnalysisResultLSU;
     }
 }

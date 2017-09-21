@@ -55,9 +55,24 @@ public class TaxonomicViewModelBuilder extends AbstractResultViewModelBuilder<Ta
         final Sample sample = analysisJob.getSample();
         //Get analysis status
         final AnalysisStatus analysisStatus = getAnalysisStatus((sample.getAnalysisCompleted() == null ? false : true));
-        final TaxonomyAnalysisResult taxonomyAnalysisResult = loadTaxonomyDataFromCSV();
+        final TaxonomyAnalysisResult taxonomyAnalysisResultSSU = loadTaxonomyDataSSUFromCSV();
+        final TaxonomyAnalysisResult taxonomyAnalysisResultLSU = loadTaxonomyDataLSUFromCSV();
 
-        return new TaxonomicViewModel(getSessionSubmitter(sessionMgr), getEbiSearchForm(), pageTitle, breadcrumbs, propertyContainer, analysisJob.getSample(), run, analysisJob, analysisStatus, taxonomyAnalysisResult);
+        return new TaxonomicViewModel(getSessionSubmitter(sessionMgr), getEbiSearchForm(), pageTitle, breadcrumbs, propertyContainer, analysisJob.getSample(), run, analysisJob, analysisStatus, taxonomyAnalysisResultSSU, taxonomyAnalysisResultLSU);
+    }
+
+    private TaxonomyAnalysisResult loadTaxonomyDataLSUFromCSV() {
+        // Get pipeline release version
+        String releaseVersion = analysisJob.getPipelineRelease().getReleaseVersion();
+        // Parsing 18S/LSU results
+        if (releaseVersion.equalsIgnoreCase("4.0")) {
+            final List<TaxonomyData> taxonomyDataSetLSU = parsingResults(FileDefinitionId.KINGDOM_COUNTS_FILE_LSU);
+            if (taxonomyDataSetLSU != null) {
+                Collections.sort(taxonomyDataSetLSU, TaxonomyAnalysisResult.TaxonomyDataComparator);
+                return new TaxonomyAnalysisResult(taxonomyDataSetLSU);
+            }
+        }
+        return new TaxonomyAnalysisResult();
     }
 
     /**
@@ -65,39 +80,54 @@ public class TaxonomicViewModelBuilder extends AbstractResultViewModelBuilder<Ta
      *
      * @return TaxonomyAnalysisResult.
      */
-
-    private TaxonomyAnalysisResult loadTaxonomyDataFromCSV() {
-        final List<TaxonomyData> taxonomyDataSet = new ArrayList<TaxonomyData>();
-
-        File phylumFile = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, propertyContainer.getResultFileDefinition(FileDefinitionId.KINGDOM_COUNTS_FILE));
-        if (!phylumFile.exists()) {
-            log.warn("Deactivating taxonomy result tab, because file " + phylumFile.getAbsolutePath() + " doesn't exist!");
-        } else {
-            //Get the data
-            List<String[]> data = getRawData(phylumFile, '\t');
-            for (String[] row : data) {
-                try {
-                    String superKingdom = row[0];
-                    String phylum = row[1];
-                    if (phylum.equalsIgnoreCase("Unassigned")) {
-                        if (superKingdom.equalsIgnoreCase("Bacteria")) {
-                            phylum = "Unassigned Bacteria";
-                        } else if (superKingdom.equalsIgnoreCase("Archaea")) {
-                            phylum = "Unassigned Archaea";
-                        }
-                    }
-                    TaxonomyData taxonomyData = new TaxonomyData(superKingdom, phylum, Integer.parseInt(row[2]), row[3]);
-                    if (taxonomyData != null && taxonomyData.getPhylum() != null) {
-                        taxonomyDataSet.add(taxonomyData);
-                    }
-                } catch (NumberFormatException e) {
-                    log.warn("Cannot parse string '" + row[2] + "' into an integer!");
-                }
-            }
-
-            Collections.sort(taxonomyDataSet, TaxonomyAnalysisResult.TaxonomyDataComparator);
-            return new TaxonomyAnalysisResult(taxonomyDataSet);
+    private TaxonomyAnalysisResult loadTaxonomyDataSSUFromCSV() {
+        // Get pipeline release version
+        String releaseVersion = analysisJob.getPipelineRelease().getReleaseVersion();
+        // Parsing 18S/LSU results
+        FileDefinitionId fileDefinitionId = FileDefinitionId.KINGDOM_COUNTS_FILE;
+        if (releaseVersion.equalsIgnoreCase("4.0")) {
+            fileDefinitionId = FileDefinitionId.KINGDOM_COUNTS_FILE_SSU;
+        }
+        final List<TaxonomyData> taxonomyDataSetLSU = parsingResults(fileDefinitionId);
+        if (taxonomyDataSetLSU != null) {
+            Collections.sort(taxonomyDataSetLSU, TaxonomyAnalysisResult.TaxonomyDataComparator);
+            return new TaxonomyAnalysisResult(taxonomyDataSetLSU);
         }
         return new TaxonomyAnalysisResult();
+    }
+
+
+    private List<TaxonomyData> parsingResults(FileDefinitionId fileDefinitionId) {
+        File phylumFileLSU = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, propertyContainer.getResultFileDefinition(fileDefinitionId));
+        if (phylumFileLSU != null && phylumFileLSU.exists()) {
+            //Get the data
+            return parseTaxonomyData(phylumFileLSU);
+        }
+        return null;
+    }
+
+    private List<TaxonomyData> parseTaxonomyData(final File phylumFile) {
+        final List<TaxonomyData> taxonomyDataSet = new ArrayList<TaxonomyData>();
+        List<String[]> data = getRawData(phylumFile, '\t');
+        for (String[] row : data) {
+            try {
+                String superKingdom = row[0];
+                String phylum = row[1];
+                if (phylum.equalsIgnoreCase("Unassigned")) {
+                    if (superKingdom.equalsIgnoreCase("Bacteria")) {
+                        phylum = "Unassigned Bacteria";
+                    } else if (superKingdom.equalsIgnoreCase("Archaea")) {
+                        phylum = "Unassigned Archaea";
+                    }
+                }
+                TaxonomyData taxonomyData = new TaxonomyData(superKingdom, phylum, Integer.parseInt(row[2]), row[3]);
+                if (taxonomyData.getPhylum() != null) {
+                    taxonomyDataSet.add(taxonomyData);
+                }
+            } catch (NumberFormatException e) {
+                log.warn("Cannot parse string '" + row[2] + "' into an integer!");
+            }
+        }
+        return taxonomyDataSet;
     }
 }

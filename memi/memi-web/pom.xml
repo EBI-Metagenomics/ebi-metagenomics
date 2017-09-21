@@ -26,12 +26,6 @@
     <!--</licenses>-->
 
     <repositories>
-        <!--ENA repository-->
-        <repository>
-            <id>ena-artifactory-libs-release</id>
-            <name>ENA's library release repository</name>
-            <url>http://ena-dev.ebi.ac.uk:8081/artifactory/all/</url>
-        </repository>
         <!-- repository for ebi-search jar -->
         <repository>
             <id>repository</id>
