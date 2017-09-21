@@ -4,14 +4,12 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.controller.MGPortalURLCollection;
 import uk.ac.ebi.interpro.metagenomics.memi.controller.ModelProcessingStrategy;
@@ -163,16 +161,23 @@ public class DownloadStudyController extends AbstractStudyViewController {
         return rootPath + study.getResultDirectory();
     }
 
-    @RequestMapping(value = MGPortalURLCollection.PROJECT_DOWNLOAD + "/{releaseVersion}/pca")
-    public ResponseEntity<byte[]> pcaImage(@PathVariable final String studyId,
-                                           @PathVariable final String releaseVersion) throws IOException {
+    @RequestMapping(value = MGPortalURLCollection.PROJECT_DOWNLOAD_PCA,
+            produces = "image/svg+xml")
+    public
+    @ResponseBody
+    byte[] pcaImage(@PathVariable final String studyId,
+                    @PathVariable final String releaseVersion,
+                    final HttpServletResponse response) throws IOException {
         final Study study = getSecuredEntity(studyId);
-        final String filename = getAbsResultDirPath(study) + File.separator + "version_" + releaseVersion + File.separator + "project-summary" + File.separator + "pca.svg";
-        InputStream input = new FileInputStream(filename);
+        if (isAccessible(study)) {
+            final String filename = getAbsResultDirPath(study) + File.separator + "version_" + releaseVersion + File.separator + "project-summary" + File.separator + "pca.svg";
+            InputStream input = new FileInputStream(filename);
 
-        final HttpHeaders headers = new HttpHeaders();
-        return new ResponseEntity<byte[]>(IOUtils.toByteArray(input), headers, HttpStatus.CREATED);
+            return IOUtils.toByteArray(input);
+        } else {//access denied
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            response.sendRedirect("/metagenomics/accessDenied");
+            return new byte[0];
+        }
     }
-
-
 }

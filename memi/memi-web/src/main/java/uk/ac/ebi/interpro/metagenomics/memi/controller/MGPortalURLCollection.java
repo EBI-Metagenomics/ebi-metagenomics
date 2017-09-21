@@ -29,6 +29,9 @@ public final class MGPortalURLCollection {
     //Analysis result page - Quality control tab
     public final static String PROJECT_SAMPLE_RUN_RESULTS_QUALITY_CONTROL = PROJECT_SAMPLE_RUN_RESULTS + "/qualityControl" + PROJECT_SAMPLE_RUN_RESULTS_VERSION;
 
+    //Analysis result page - Stats tab
+    public final static String PROJECT_SAMPLE_RUN_RESULTS_STATS = PROJECT_SAMPLE_RUN_RESULTS + "/stats" + PROJECT_SAMPLE_RUN_RESULTS_VERSION;
+
     //Analysis result page - Taxonomy tab
     public final static String PROJECT_SAMPLE_RUN_RESULTS_TAXONOMIC = PROJECT_SAMPLE_RUN_RESULTS + "/taxonomic" + PROJECT_SAMPLE_RUN_RESULTS_VERSION;
 
@@ -60,6 +63,11 @@ public final class MGPortalURLCollection {
 
     public final static String PROJECT_SAMPLE_RUN_RESULTS_FUNCTIONAL_GO_PIE_CHART = PROJECT_SAMPLE_RUN_RESULTS + "/goPieChartView" + PROJECT_SAMPLE_RUN_RESULTS_VERSION;
     //END functional results
+
+    //Analysis result page - stats tab
+    //START
+    public final static String PROJECT_SAMPLE_RUN_RESULTS_STATS_FILES = PROJECT_SAMPLE_RUN_RESULTS + PROJECT_SAMPLE_RUN_RESULTS_VERSION + "/stats/{svgFile}";
+    //END stats tab
 
     //Set of URLs for download/export functionality
     //START
@@ -101,6 +109,9 @@ public final class MGPortalURLCollection {
 
     //Project page, download tab
     public final static String PROJECT_DOWNLOAD = PROJECT + "/download";
+
+    //Project page, download tab
+    public final static String PROJECT_DOWNLOAD_PCA = PROJECT_DOWNLOAD + "/{releaseVersion}/pca";
 
     //Google map data
     public final static String PROJECT_MAP_DATA = PROJECT + "/map-data";

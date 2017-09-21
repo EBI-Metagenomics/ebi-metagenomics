@@ -26,17 +26,6 @@
                     <c:when test="${!model.analysisStatus.functionalAnalysisTab.sequenceFeatureSectionDisabled}">
 
                         <div id="sq_sum"></div>
-                        <%--<div style="display:block; overflow: auto;" >--%>
-                            <%--<c:url var="sequenceFeatureImage" value="/getImage" scope="request">--%>
-                                <%--<c:param name="imageName" value="/charts/seq-feat.png"/>--%>
-                                <%--<c:param name="imageType" value="PNG"/>--%>
-                                <%--<c:param name="dir" value="${model.analysisJob.resultDirectory}"/>--%>
-                            <%--</c:url>--%>
-                            <%--<p><img--%>
-                                    <%--src="<c:out value="${sequenceFeatureImage}"/>"/></p>--%>
-                        <%--</div>--%>
-
-
                         <script type="text/javascript">
                             $(function () {
                                 var common_path = "/metagenomics/projects/${projectId}/samples/${sampleId}/runs/${runId}/results/versions/${releaseVersion}/qc-stats/",

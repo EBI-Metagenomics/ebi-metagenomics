@@ -43,7 +43,7 @@
     </li>
 
     </ul>
-        <p>or <a href="http://www.ebi.ac.uk/support/metagenomics">contact us</a> directly with your question. </p>
+        <p>or <a href="https://www.ebi.ac.uk/support/metagenomics">contact us</a> directly with your question. </p>
     </div>
     </div>
     <!--/ Related links -->
