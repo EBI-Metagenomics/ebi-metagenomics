@@ -1,12 +1,12 @@
 <h2>EBI Metagenomics Help</h2>
 
 <p>All <a title="EMG-docs"
-          href="http://emg-docs.readthedocs.io"
+          href="https://emg-docs.readthedocs.io"
           class="ext">documentation</a> relating to the use of the EBI metagenomics has been moved to
     <a title="Read the Docs" href="https://readthedocs.org/" class="ext">Read the Docs</a>.
     This allows us to provide a rich, searchable and downloadable document, as well as enables us to store different
     versions corresponding to the different pipelines (accessed via the bottom left corner of the <a title="EMG-docs"
-                                                                                                     href="http://emg-docs.readthedocs.io"
+                                                                                                     href="https://emg-docs.readthedocs.io"
                                                                                                      class="ext">EMG
         Read the Docs site</a>). Answers to many of the most commonly asked questions can be found under the FAQ
     section. Furthermore, there are also the following training materials as part of the <a
@@ -26,6 +26,6 @@
 <p>
     However, if neither the documentation nor online materials answer your question, please <a
         title="EBI's support & feedback form"
-        href="http://www.ebi.ac.uk/support/metagenomics"
+        href="https://www.ebi.ac.uk/support/metagenomics"
         class="ext">contact us</a>.
 </p>

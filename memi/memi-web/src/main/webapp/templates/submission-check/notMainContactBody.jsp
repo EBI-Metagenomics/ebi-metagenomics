@@ -10,6 +10,6 @@
 
     <p class="intro">The email you have provided does not belong to the main account holder. Only the main account
         holder has permission to change account settings. Therefore, we cannot proceed with the procedure. Please
-        <a title="EBI's support & feedback form" href="http://www.ebi.ac.uk/support/metagenomics" class="ext">contact
+        <a title="EBI's support & feedback form" href="https://www.ebi.ac.uk/support/metagenomics" class="ext">contact
             us</a> if you have any questions.</p>
 </div>
