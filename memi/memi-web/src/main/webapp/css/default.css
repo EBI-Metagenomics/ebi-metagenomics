@@ -2217,3 +2217,7 @@ div#local-masthead ul li.logout {display:none;}
     cursor: pointer;
     color: #2B8A97;
 }
+
+.fragment-stats img {
+    width: 100%;
+}

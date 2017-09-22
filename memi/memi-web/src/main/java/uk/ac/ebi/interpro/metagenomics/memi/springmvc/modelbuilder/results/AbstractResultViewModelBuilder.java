@@ -24,6 +24,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -82,7 +83,7 @@ public abstract class AbstractResultViewModelBuilder<E extends AbstractResultVie
         if (!isAnalysisCompleted) {
             return new AnalysisStatus(
                     new TaxonomicAnalysisTab(true, true, true, true),
-                    true,
+                    true, true,
                     new FunctionalAnalysisTab(true, true, true));
         }
         //Set qualityControlTab value
@@ -96,6 +97,9 @@ public abstract class AbstractResultViewModelBuilder<E extends AbstractResultVie
                 break;
             }
         }
+        //Set abundance/stats Tab value
+        //If one of the abundance files does NOT exist the tab gets deactivated
+        boolean abundanceTabDisabled = checkForExistenceOfAbundanceFiles(analysisJob);
         //
         //Set functional analysis tab object
         boolean isInterProMatchSectionDisabled = true;
@@ -153,7 +157,29 @@ public abstract class AbstractResultViewModelBuilder<E extends AbstractResultVie
         return new AnalysisStatus(
                 new TaxonomicAnalysisTab(isPieChartTabDisabled, isBarChartTabDisabled, isStackChartTabDisabled, isKronaTabDisabled),
                 qualityControlTabDisabled,
+                abundanceTabDisabled,
                 new FunctionalAnalysisTab(isInterProMatchSectionDisabled, isGoSectionDisabled, isSequenceFeatureSectionDisabled));
+    }
+
+    private boolean checkForExistenceOfAbundanceFiles(AnalysisJob analysisJob) {
+        List<String> abundanceFiles = new ArrayList<String>();
+        abundanceFiles.add("charts/tad-plots.svg");
+        abundanceFiles.add("charts/fold-change.svg");
+        final String resultDirectory = analysisJob.getResultDirectory();
+        final String rootPath = propertyContainer.getPathToAnalysisDirectory();
+        final String resultDirectoryAbsolute = rootPath + resultDirectory;
+        String filename = resultDirectoryAbsolute + File.separator;
+        for (String abundanceFile : abundanceFiles) {
+            filename += abundanceFile;
+            File fileObject = new File(filename);
+            boolean doesExist = FileExistenceChecker.checkFileExistence(fileObject);
+            if (!doesExist) {
+                // disable tab
+                return true;
+            }
+        }
+        // activate tab
+        return false;
     }
 
 
