@@ -127,6 +127,7 @@ public class StudyDownloadViewModelBuilder extends AbstractViewModelBuilder<Down
             // Build list of download links (only include files with one of the expected names)
             final List<DownloadLink> funcDownloadLinks = new ArrayList<DownloadLink>();
             final List<DownloadLink> taxaDownloadLinks = new ArrayList<DownloadLink>();
+            final List<DownloadLink> statsDownloadLinks = new ArrayList<DownloadLink>();
 
             File[] files = summaryFilesDir.listFiles(new StudySummaryFileFilter());
             for (File file : files) {
@@ -149,19 +150,24 @@ public class StudyDownloadViewModelBuilder extends AbstractViewModelBuilder<Down
                             getFileSize(file)));
                 } else if (studySummaryFile.getCategory().equalsIgnoreCase("taxa")) {
                     if (studySummaryFile.getFilename().equalsIgnoreCase("pca")) {
-                        taxaDownloadLinks.add(new DownloadLink(filename,
+                        statsDownloadLinks.add(new DownloadLink(filename,
                                 studySummaryFile.getDescription(),
                                 "projects/" + studyId + "/download/" + version + "/pca",
                                 true,
                                 studySummaryFile.getFileOrder(),
                                 null));
                     } else {
-                        taxaDownloadLinks.add(new DownloadLink(filename,
+                        DownloadLink downloadLink = new DownloadLink(filename,
                                 studySummaryFile.getDescription(),
                                 "projects/" + studyId + "/download/" + version + "/export?contentType=text&amp;exportValue=" + studySummaryFile.getFilename(),
                                 true,
                                 studySummaryFile.getFileOrder(),
-                                getFileSize(file)));
+                                getFileSize(file));
+                        if (studySummaryFile.getFilename().equalsIgnoreCase("diversity")) {
+                            statsDownloadLinks.add(downloadLink);
+                        } else {
+                            taxaDownloadLinks.add(downloadLink);
+                        }
                     }
                 } else {
                     log.warn("Project summary file did not have an expected category, it had: " + studySummaryFile.getCategory());
@@ -169,7 +175,8 @@ public class StudyDownloadViewModelBuilder extends AbstractViewModelBuilder<Down
             }
             Collections.sort(funcDownloadLinks, DownloadLink.DownloadLinkComparator);
             Collections.sort(taxaDownloadLinks, DownloadLink.DownloadLinkComparator);
-            return new DownloadSection(funcDownloadLinks, taxaDownloadLinks);
+            Collections.sort(statsDownloadLinks, DownloadLink.DownloadLinkComparator);
+            return new DownloadSection(funcDownloadLinks, taxaDownloadLinks,statsDownloadLinks);
         }
         return null;
     }

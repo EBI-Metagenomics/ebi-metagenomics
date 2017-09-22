@@ -20,7 +20,7 @@ public enum StudySummaryFile {
     TAXONOMY_SSU("taxonomy_abundances_SSU", "Taxonomic assignments SSU (TSV)", "taxa", 14),
     TAXONOMY_LSU("taxonomy_abundances_LSU", "Taxonomic assignments LSU (TSV)", "taxa", 15),
     TAXONOMY_DIVERSITY("diversity", "Taxonomic diversity stats (TSV)", "taxa", 16),
-    TAXONOMY_PCA("pca", "Click here to view the PCA for all study runs", "taxa", 9);
+    TAXONOMY_PCA("pca", "Click here to view the PCA for all study runs", "taxa", 17);
 
     private String filename;
     private String description;

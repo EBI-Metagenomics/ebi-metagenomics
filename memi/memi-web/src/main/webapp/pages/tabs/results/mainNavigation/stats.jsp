@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div id="fragment-quality">
+<div class="fragment-stats">
     <%--BEGIN READS SECTION   --%>
 
     <%--<h3>Submitted nucleotide data</h3>--%>
@@ -15,13 +15,7 @@
         <c:when test="${not empty model.sample.analysisCompleted && !model.analysisStatus.qualityControlTabDisabled}">
             <p>This page gives you information regarding metagenomic community diversity estimation and information
                 which allow comparisons between all study runs. The following plots illustrate the taxa abundance
-                distribution, and use OTU counts to compute diversity indices, including several estimates of the total
-                diversity of the community sampled.
-                Additionally, estimates are provided for the number of individuals that would need to be sequenced in
-                order to see a given fraction of the total population diversity (based on the assumption of an
-                underlying Poisson-log-normal taxa abundance distribution). These provide guidance for the sequencing
-                effort likely to be required for a more complete characterisation of the microbial community of
-                interest.</p>
+                distribution.</p>
             <div style="display:block; overflow: auto;">
                 <c:url var="tadplotsFile"
                        value="${baseURL}/projects/${projectId}/samples/${sampleId}/runs/${runId}/results/versions/${versionId}/stats/tad-plots"

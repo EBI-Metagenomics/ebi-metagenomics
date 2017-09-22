@@ -30,8 +30,8 @@
                             <a title="Functional analysis"
                                href="<c:url value="${baseURL}/projects/${model.run.externalProjectId}/samples/${model.run.externalSampleId}/runs/${model.run.externalRunId}/results/functional/versions/${model.analysisJob.pipelineRelease.releaseVersion}"/>"><span class="xl-navtabs">Functional analysis</span><span class="xs-navtabs">Function</span></a>
                         </li>
-                        <li><a title="Stats"
-                               href="<c:url value="${baseURL}/projects/${model.run.externalProjectId}/samples/${model.run.externalSampleId}/runs/${model.run.externalRunId}/results/stats/versions/${model.analysisJob.pipelineRelease.releaseVersion}"/>"><span class="xl-navtabs">Stats</span><span class="xs-navtabs">Stats</span></a>
+                        <li><a title="Abundance & Comparison"
+                               href="<c:url value="${baseURL}/projects/${model.run.externalProjectId}/samples/${model.run.externalSampleId}/runs/${model.run.externalRunId}/results/stats/versions/${model.analysisJob.pipelineRelease.releaseVersion}"/>"><span class="xl-navtabs">Abundance & Comparison</span><span class="xs-navtabs">Abundance</span></a>
                         </li>
                         <li>
                             <a title="Download"
