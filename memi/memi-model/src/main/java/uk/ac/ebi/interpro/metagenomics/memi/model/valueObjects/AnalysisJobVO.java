@@ -4,7 +4,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.IAnalysisJob;
 
 /**
  * Simple value object class.
- *
+ * <p>
  * Created by maxim on 21/01/16.
  */
 public class AnalysisJobVO implements IAnalysisJob {
@@ -22,6 +22,8 @@ public class AnalysisJobVO implements IAnalysisJob {
     private String sampleAlias;
 
     private String experimentType;
+
+    private String releaseVersion;
 
     public String getResultDirectory() {
         return resultDirectory;
@@ -77,5 +79,13 @@ public class AnalysisJobVO implements IAnalysisJob {
 
     public void setExperimentType(String experimentType) {
         this.experimentType = experimentType;
+    }
+
+    public String getReleaseVersion() {
+        return releaseVersion;
+    }
+
+    public void setReleaseVersion(String releaseVersion) {
+        this.releaseVersion = releaseVersion;
     }
 }

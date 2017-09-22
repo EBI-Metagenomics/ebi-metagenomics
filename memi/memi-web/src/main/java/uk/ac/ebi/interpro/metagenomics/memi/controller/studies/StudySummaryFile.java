@@ -19,8 +19,8 @@ public enum StudySummaryFile {
     PHYLUM_TAXONOMY_LSU("phylum_taxonomy_abundances_LSU", "Phylum level taxonomies LSU (TSV)", "taxa", 13),
     TAXONOMY_SSU("taxonomy_abundances_SSU", "Taxonomic assignments SSU (TSV)", "taxa", 14),
     TAXONOMY_LSU("taxonomy_abundances_LSU", "Taxonomic assignments LSU (TSV)", "taxa", 15),
-    TAXONOMY_DIVERSITY("diversity", "Taxonomic diversity stats (TSV)", "taxa", 16),
-    TAXONOMY_PCA("pca", "Click here to view the PCA for all study runs", "taxa", 17);
+    TAXONOMY_DIVERSITY("diversity", "Taxonomic diversity metrics (TSV)", "taxa", 16),
+    TAXONOMY_PCA("pca", "PCA for runs (based on phylum proportions)", "taxa", 17);
 
     private String filename;
     private String description;
