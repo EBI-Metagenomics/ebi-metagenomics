@@ -168,9 +168,8 @@ public abstract class AbstractResultViewModelBuilder<E extends AbstractResultVie
         final String resultDirectory = analysisJob.getResultDirectory();
         final String rootPath = propertyContainer.getPathToAnalysisDirectory();
         final String resultDirectoryAbsolute = rootPath + resultDirectory;
-        String filename = resultDirectoryAbsolute + File.separator;
         for (String abundanceFile : abundanceFiles) {
-            filename += abundanceFile;
+            String filename = resultDirectoryAbsolute + File.separator + abundanceFile;
             File fileObject = new File(filename);
             boolean doesExist = FileExistenceChecker.checkFileExistence(fileObject);
             if (!doesExist) {
