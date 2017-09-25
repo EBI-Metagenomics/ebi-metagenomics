@@ -64,7 +64,7 @@ public class AnalysisStatus {
     public String getDisabledOption() {
         Boolean isTaxonomicAnalysisTabDisabled = new Boolean(isTaxonomicAnalysisTabDisabled());
         Boolean isFunctionalAnalysisTabDisabled = new Boolean(isFunctionalAnalysisTabDisabled());
-        if (!qualityControlTabDisabled && !isFunctionalAnalysisTabDisabled && !isTaxonomicAnalysisTabDisabled) {
+        if (!qualityControlTabDisabled && !abundanceTabDisabled && !isFunctionalAnalysisTabDisabled && !isTaxonomicAnalysisTabDisabled) {
             return "";
         }
         StringBuilder indexes = new StringBuilder();

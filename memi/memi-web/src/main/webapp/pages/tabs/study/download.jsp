@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <div id="fragment-download">
 
@@ -41,8 +42,9 @@
                         </li>
                     </c:forEach>
                 </ul>
-
-                <h3>Statistics</h3>
+                <c:if test="${fn:length(downloadSection.value.statsDownloadLinks)>0}">
+                    <h3>Statistics</h3>
+                </c:if>
                 <ul>
                     <c:forEach var="downloadLink" items="${downloadSection.value.statsDownloadLinks}">
                         <li>
