@@ -4,7 +4,7 @@
 
 <%-- Creates HTML select option for each sample of selected project that have data (sample selection - comparison tool submission page) --%>
 <c:forEach var="analysisJob" items="${analysisJobs}">
-        <option value="${analysisJob.jobId}" title="Run ${analysisJob.externalRunIDs} | ${analysisJob.sampleName} | ${analysisJob.sampleAlias}">${analysisJob.sampleName} - ${analysisJob.externalRunIDs}</option>
+        <option value="${analysisJob.jobId}" title="Run ${analysisJob.externalRunIDs} | ${analysisJob.sampleName} | ${analysisJob.sampleAlias} (v${analysisJob.releaseVersion})">${analysisJob.sampleName} - ${analysisJob.externalRunIDs} (v${analysisJob.releaseVersion})</option>
     </c:forEach>
 
 <%-- Creates HTML select option for each sample of selected project that have no data (sample selection - comparison tool submission page) --%>

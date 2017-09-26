@@ -16,10 +16,14 @@ public class DownloadSection {
 
     private List<DownloadLink> taxaAnalysisDownloadLinks;
 
+    private List<DownloadLink> statsDownloadLinks;
+
     public DownloadSection(List<DownloadLink> funcAnalysisDownloadLinks,
-                           List<DownloadLink> taxaAnalysisDownloadLinks) {
+                           List<DownloadLink> taxaAnalysisDownloadLinks,
+                           List<DownloadLink> statsDownloadLinks) {
         this.funcAnalysisDownloadLinks = funcAnalysisDownloadLinks;
         this.taxaAnalysisDownloadLinks = taxaAnalysisDownloadLinks;
+        this.statsDownloadLinks = statsDownloadLinks;
     }
 
     public List<DownloadLink> getFuncAnalysisDownloadLinks() {
@@ -28,5 +32,9 @@ public class DownloadSection {
 
     public List<DownloadLink> getTaxaAnalysisDownloadLinks() {
         return taxaAnalysisDownloadLinks;
+    }
+
+    public List<DownloadLink> getStatsDownloadLinks() {
+        return statsDownloadLinks;
     }
 }

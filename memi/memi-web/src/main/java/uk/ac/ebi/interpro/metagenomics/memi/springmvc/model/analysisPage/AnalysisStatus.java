@@ -19,15 +19,22 @@ public class AnalysisStatus {
 
     private final boolean qualityControlTabDisabled;
 
+    private final boolean abundanceTabDisabled;
 
-    public AnalysisStatus(TaxonomicAnalysisTab taxonomicAnalysisTab, boolean qualityControlTabDisabled, FunctionalAnalysisTab functionalAnalysisTab) {
+
+    public AnalysisStatus(TaxonomicAnalysisTab taxonomicAnalysisTab, boolean qualityControlTabDisabled, boolean abundanceTabDisabled, FunctionalAnalysisTab functionalAnalysisTab) {
         this.taxonomicAnalysisTab = taxonomicAnalysisTab;
         this.qualityControlTabDisabled = qualityControlTabDisabled;
+        this.abundanceTabDisabled = abundanceTabDisabled;
         this.functionalAnalysisTab = functionalAnalysisTab;
     }
 
     public boolean isQualityControlTabDisabled() {
         return qualityControlTabDisabled;
+    }
+
+    public boolean isAbundanceTabDisabled() {
+        return abundanceTabDisabled;
     }
 
     public boolean isTaxonomicAnalysisTabDisabled() {
@@ -57,7 +64,7 @@ public class AnalysisStatus {
     public String getDisabledOption() {
         Boolean isTaxonomicAnalysisTabDisabled = new Boolean(isTaxonomicAnalysisTabDisabled());
         Boolean isFunctionalAnalysisTabDisabled = new Boolean(isFunctionalAnalysisTabDisabled());
-        if (!qualityControlTabDisabled && !isFunctionalAnalysisTabDisabled && !isTaxonomicAnalysisTabDisabled) {
+        if (!qualityControlTabDisabled && !abundanceTabDisabled && !isFunctionalAnalysisTabDisabled && !isTaxonomicAnalysisTabDisabled) {
             return "";
         }
         StringBuilder indexes = new StringBuilder();
@@ -69,6 +76,9 @@ public class AnalysisStatus {
         }
         if (isFunctionalAnalysisTabDisabled) {
             MemiTools.addIndex(indexes, 3);
+        }
+        if (abundanceTabDisabled) {
+            MemiTools.addIndex(indexes, 4);
         }
         StringBuilder result = new StringBuilder("disabled: [");
         return result.append(indexes).append("]").toString();

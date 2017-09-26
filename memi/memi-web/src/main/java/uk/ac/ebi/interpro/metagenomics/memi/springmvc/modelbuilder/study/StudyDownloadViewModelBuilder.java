@@ -90,6 +90,7 @@ public class StudyDownloadViewModelBuilder extends AbstractViewModelBuilder<Down
         for (PipelineRelease pipeline : pipelines) {
             String releaseVersion = pipeline.getReleaseVersion();
             final File results = new File(resultDirectoryAbsolute + File.separator + "version_" + releaseVersion + File.separator + "project-summary");
+            //Check if project summary file exists
             if (FileExistenceChecker.checkFileExistence(results)) {
                 final DownloadSection downloadLinks = getDownloadLinks(rootDir, study.getStudyId(), releaseVersion);
                 if (downloadLinks != null && (downloadLinks.getFuncAnalysisDownloadLinks().size() > 0 || downloadLinks.getTaxaAnalysisDownloadLinks().size() > 0)) {
@@ -126,10 +127,10 @@ public class StudyDownloadViewModelBuilder extends AbstractViewModelBuilder<Down
             // Build list of download links (only include files with one of the expected names)
             final List<DownloadLink> funcDownloadLinks = new ArrayList<DownloadLink>();
             final List<DownloadLink> taxaDownloadLinks = new ArrayList<DownloadLink>();
+            final List<DownloadLink> statsDownloadLinks = new ArrayList<DownloadLink>();
 
             File[] files = summaryFilesDir.listFiles(new StudySummaryFileFilter());
-            for (int i = 0; i < files.length; i++) {
-                File file = files[i];
+            for (File file : files) {
                 if (!file.isFile()) {
                     throw new IllegalStateException("Does not exist or is not a file: " + file.getAbsolutePath());
                 }
@@ -148,19 +149,34 @@ public class StudyDownloadViewModelBuilder extends AbstractViewModelBuilder<Down
                             studySummaryFile.getFileOrder(),
                             getFileSize(file)));
                 } else if (studySummaryFile.getCategory().equalsIgnoreCase("taxa")) {
-                    taxaDownloadLinks.add(new DownloadLink(filename,
-                            studySummaryFile.getDescription(),
-                            "projects/" + studyId + "/download/" + version + "/export?contentType=text&amp;exportValue=" + studySummaryFile.getFilename(),
-                            true,
-                            studySummaryFile.getFileOrder(),
-                            getFileSize(file)));
+                    if (studySummaryFile.getFilename().equalsIgnoreCase("pca")) {
+                        statsDownloadLinks.add(new DownloadLink(filename,
+                                studySummaryFile.getDescription(),
+                                "projects/" + studyId + "/download/" + version + "/pca",
+                                true,
+                                studySummaryFile.getFileOrder(),
+                                null));
+                    } else {
+                        DownloadLink downloadLink = new DownloadLink(filename,
+                                studySummaryFile.getDescription(),
+                                "projects/" + studyId + "/download/" + version + "/export?contentType=text&amp;exportValue=" + studySummaryFile.getFilename(),
+                                true,
+                                studySummaryFile.getFileOrder(),
+                                getFileSize(file));
+                        if (studySummaryFile.getFilename().equalsIgnoreCase("diversity")) {
+                            statsDownloadLinks.add(downloadLink);
+                        } else {
+                            taxaDownloadLinks.add(downloadLink);
+                        }
+                    }
                 } else {
                     log.warn("Project summary file did not have an expected category, it had: " + studySummaryFile.getCategory());
                 }
             }
             Collections.sort(funcDownloadLinks, DownloadLink.DownloadLinkComparator);
             Collections.sort(taxaDownloadLinks, DownloadLink.DownloadLinkComparator);
-            return new DownloadSection(funcDownloadLinks, taxaDownloadLinks);
+            Collections.sort(statsDownloadLinks, DownloadLink.DownloadLinkComparator);
+            return new DownloadSection(funcDownloadLinks, taxaDownloadLinks,statsDownloadLinks);
         }
         return null;
     }
