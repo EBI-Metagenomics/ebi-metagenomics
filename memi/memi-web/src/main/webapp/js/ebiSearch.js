@@ -72,6 +72,9 @@ var SettingsManager = function() {
         MORE_FACET_TEXT_FILTER_CLASS: "more-facet-text-filter",
         MORE_FACET_CONTENT_CLASS: "more-facet-content",
         MORE_FACET_HEADER_CLASS: "more-facet-header",
+        MORE_FACET_FOOTER_CLASS: "more-facet-footer",
+        MORE_FACET_ACTIVE_BUTTON_CLASS: "more-facet-active-button",
+        MORE_FACET_CANCEL_BUTTON_CLASS: "more-facet-cancel-button",
         HIERARCHICAL_FACET_CLASS: "hierarchical-facet-list",
         HIERARCHICAL_FACET_CHECKBOX: "hierarchical-facet-checkbox",
         HOMEPAGE_LINK_CLASS: "homepage-search-link",
@@ -704,7 +707,7 @@ var FacetManager = function(settingsManager, searchManager) {
             document.body.appendChild(modalOverlay);
             var paramFragment = self.searchManager.parametersToString(parameters);
             var url = self.settingsManager.getEBISearchURL() + searchSettings.domain + paramFragment;
-            //console.log("Getting more facets from: " + url);
+            console.log("Getting more facets from: " + url);
             self.searchManager.runAjax("GET", "json", url, null, function(response) {
                 //success
                 var results = response;
@@ -776,11 +779,13 @@ var FacetManager = function(settingsManager, searchManager) {
         facetsDiv.appendChild(document.createTextNode("Loading facets"));
 
         var footerDiv = document.createElement("div");
+        footerDiv.classList.add(self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_FOOTER_CLASS)
         footerDiv.height = "20%";
         var applyButton = document.createElement("input");
         applyButton.type = "button";
         applyButton.value = "Filter";
         applyButton.style.margin = "10px";
+        applyButton.classList.add(self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_ACTIVE_BUTTON_CLASS);
         applyButton.addEventListener("click", function(event){
             self.runMoreFacetsSearch(searchSettings, facetsDiv);
         });
@@ -789,6 +794,7 @@ var FacetManager = function(settingsManager, searchManager) {
         cancelButton.type = "button";
         cancelButton.value = "Cancel";
         cancelButton.style.marginBottom = "10px";
+        cancelButton.classList.add(self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_CANCEL_BUTTON_CLASS);
         cancelButton.addEventListener(
             "click", function(event) {
                 self.removeModalOverlay();
@@ -1093,6 +1099,52 @@ var FacetManager = function(settingsManager, searchManager) {
 
     this.showMoreFacetsError = function(container) {
         console.log("Error: Error fetching more facets");
+        var contentDivs = container.getElementsByClassName(
+            self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_CONTENT_CLASS
+        );
+        if (contentDivs != null && contentDivs.length == 1) {
+            var contentDiv = contentDivs[0];
+            contentDiv.innerHTML = "An error was encountered whilst fetching facet data." +
+                "Please retry the search. If the problem persists please " +
+                "<a href=\"//www.ebi.ac.uk/support/metagenomics\">report the problem</a>";
+        } else {
+            console.log("Error: Expect to find exactly one child div with class " +
+                self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_CONTENT_CLASS);
+        }
+
+        var headerDivs = container.getElementsByClassName(
+            self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_HEADER_CLASS
+        );
+        if (headerDivs != null && headerDivs.length == 1) {
+            var headerDiv = headerDivs[0];
+            headerDiv.innerHTML = "";
+            var heading = document.createElement("h3");
+            heading.innerHTML = "Error encountered";
+            headerDiv.appendChild(heading);
+
+        } else {
+            console.log("Error: Expect to find exactly one child div with class "
+                + self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_CONTENT_CLASS);
+        }
+
+        var footerDivs = container.getElementsByClassName(
+            self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_FOOTER_CLASS
+        );
+        if (footerDivs != null && footerDivs.length == 1) {
+            var footerDiv = footerDivs[0];
+            var buttonList = footerDiv.getElementsByClassName(
+                self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_ACTIVE_BUTTON_CLASS
+            );
+            var buttons = Array.prototype.slice.call(buttonList);
+            buttons.forEach(function(button) {
+                button.style.display = "none";
+
+            });
+        } else {
+            console.log("Error: Expect to find exactly one child div with class "
+                + self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_FOOTER_CLASS);
+        }
+
     };
 
     this.runMoreFacetsSearch = function(searchSettings, container) {
