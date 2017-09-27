@@ -707,7 +707,7 @@ var FacetManager = function(settingsManager, searchManager) {
             document.body.appendChild(modalOverlay);
             var paramFragment = self.searchManager.parametersToString(parameters);
             var url = self.settingsManager.getEBISearchURL() + searchSettings.domain + paramFragment;
-            console.log("Getting more facets from: " + url);
+            //console.log("Getting more facets from: " + url);
             self.searchManager.runAjax("GET", "json", url, null, function(response) {
                 //success
                 var results = response;
@@ -2565,6 +2565,10 @@ var PageManager = function() {
                 for(var i = 0; i < this.settingsManager.DatatypeSettings.DATA_TYPES.length; i++) {
                     var dataType = this.settingsManager.DatatypeSettings.DATA_TYPES[i];
                     var settings = this.settingsManager.getSearchSettings(dataType);
+                    if (settings == null) {
+                        this.settingsManager.initialiseSettings();
+                        settings = this.settingsManager.getSearchSettings(dataType);
+                    }
                     settings.searchText = searchBoxText;
                     if (resetSearch) {
                         this.resetSearchSettings(settings);
