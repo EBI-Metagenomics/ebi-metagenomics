@@ -129,7 +129,12 @@ public class StatsViewController extends AbstractResultViewController {
             } else {
                 throw new EntryNotFoundException();
             }
-            return IOUtils.toByteArray(new FileInputStream(filename));
+            File file = new File(filename);
+            if (file.exists()) {
+                return IOUtils.toByteArray(new FileInputStream(filename));
+            } else {
+                throw new EntryNotFoundException();
+            }
 
         } else {//access denied
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
