@@ -23,9 +23,6 @@
     <!-- Mobile viewport optimized-->
     <meta name="viewport" content="width=device-width,initial-scale=1">
 
-    <!-- import Lato - temp?-->
-    <link href='https://fonts.googleapis.com/css?family=Lato:400,300,700,900,100' rel='stylesheet' type='text/css'>
-
     <!-- EBI style and code - update to https-->
     <link rel="stylesheet" href="https://www.ebi.ac.uk/inc/css/contents.css" type="text/css"/>
     <link rel="stylesheet" href="https://www.ebi.ac.uk/inc/css/userstyles.css" type="text/css"/>
@@ -104,7 +101,7 @@
           href="${pageContext.request.contextPath}/img/icon/apple-touch-icon-114x114.png"/>
 
     <%--?v1.1 will trigger browsers to refresh the source--%>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/default.css?v1.5" type="text/css" media="all"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/default.css?v1.6" type="text/css" media="all"/>
     <%--css for image zooming--%>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/jquery.fancybox.css" type="text/css"
           media="screen"/>

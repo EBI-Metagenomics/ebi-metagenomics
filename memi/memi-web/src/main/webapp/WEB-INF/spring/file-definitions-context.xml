@@ -370,10 +370,25 @@
                   value="Input file for the generation of the phylum pie/bar/column chart and table (TSV)"/>
     </bean>
 
+    <bean id="kingdomCountsFileLSU" autowire-candidate="false"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.ResultFileDefinitionImpl">
+        <property name="identifier" value="KINGDOM_COUNTS_FILE_LSU"/>
+        <property name="relativePath" value="/taxonomy-summary/LSU/kingdom-counts.txt"/>
+        <property name="description"
+                  value="Input file for the generation of the phylum pie/bar/column chart and table (TSV)"/>
+    </bean>
+
     <bean id="kronaHtmlFileSSU" autowire-candidate="false"
           class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.ResultFileDefinitionImpl">
         <property name="identifier" value="KRONA_HTML_FILE_SSU"/>
         <property name="relativePath" value="/taxonomy-summary/SSU/krona.html"/>
+        <property name="description" value="Input file for the Krona interactive chart (HTML)."/>
+    </bean>
+
+    <bean id="kronaHtmlFileLSU" autowire-candidate="false"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.ResultFileDefinitionImpl">
+        <property name="identifier" value="KRONA_HTML_FILE_LSU"/>
+        <property name="relativePath" value="/taxonomy-summary/LSU/krona.html"/>
         <property name="description" value="Input file for the Krona interactive chart (HTML)."/>
     </bean>
 

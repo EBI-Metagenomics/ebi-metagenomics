@@ -29,18 +29,27 @@ public final class MGPortalURLCollection {
     //Analysis result page - Quality control tab
     public final static String PROJECT_SAMPLE_RUN_RESULTS_QUALITY_CONTROL = PROJECT_SAMPLE_RUN_RESULTS + "/qualityControl" + PROJECT_SAMPLE_RUN_RESULTS_VERSION;
 
+    //Analysis result page - Stats tab
+    public final static String PROJECT_SAMPLE_RUN_RESULTS_STATS = PROJECT_SAMPLE_RUN_RESULTS + "/stats" + PROJECT_SAMPLE_RUN_RESULTS_VERSION;
+
     //Analysis result page - Taxonomy tab
     public final static String PROJECT_SAMPLE_RUN_RESULTS_TAXONOMIC = PROJECT_SAMPLE_RUN_RESULTS + "/taxonomic" + PROJECT_SAMPLE_RUN_RESULTS_VERSION;
 
+    //Analysis result page - Taxonomy tab ssu
+    public final static String PROJECT_SAMPLE_RUN_RESULTS_TAXONOMIC_SSU = PROJECT_SAMPLE_RUN_RESULTS + "/taxonomic/ssu/" + PROJECT_SAMPLE_RUN_RESULTS_VERSION;
+
+    //Analysis result page - Taxonomy tab lsu
+    public final static String PROJECT_SAMPLE_RUN_RESULTS_TAXONOMIC_LSU = PROJECT_SAMPLE_RUN_RESULTS + "/taxonomic/lsu/" + PROJECT_SAMPLE_RUN_RESULTS_VERSION;
+
     //Set of URLs to allow Ajax request to render the different charts of the taxonomy results
     //START
-    public final static String PROJECT_SAMPLE_RUN_RESULTS_TAXONOMIC_PIE_CHART = PROJECT_SAMPLE_RUN_RESULTS + "/taxPieChartView" + PROJECT_SAMPLE_RUN_RESULTS_VERSION;
+    public final static String PROJECT_SAMPLE_RUN_RESULTS_TAXONOMIC_PIE_CHART = PROJECT_SAMPLE_RUN_RESULTS + "/taxPieChartView/{rRNAType}" + PROJECT_SAMPLE_RUN_RESULTS_VERSION;
 
-    public final static String PROJECT_SAMPLE_RUN_RESULTS_TAXONOMIC_BAR_CHART = PROJECT_SAMPLE_RUN_RESULTS + "/taxBarChartView" + PROJECT_SAMPLE_RUN_RESULTS_VERSION;
+    public final static String PROJECT_SAMPLE_RUN_RESULTS_TAXONOMIC_BAR_CHART = PROJECT_SAMPLE_RUN_RESULTS + "/taxBarChartView/{rRNAType}" + PROJECT_SAMPLE_RUN_RESULTS_VERSION;
 
-    public final static String PROJECT_SAMPLE_RUN_RESULTS_TAXONOMIC_COLUMN_CHART = PROJECT_SAMPLE_RUN_RESULTS + "/taxColumnChartView" + PROJECT_SAMPLE_RUN_RESULTS_VERSION;
+    public final static String PROJECT_SAMPLE_RUN_RESULTS_TAXONOMIC_COLUMN_CHART = PROJECT_SAMPLE_RUN_RESULTS + "/taxColumnChartView/{rRNAType}" + PROJECT_SAMPLE_RUN_RESULTS_VERSION;
 
-    public final static String PROJECT_SAMPLE_RUN_RESULTS_TAXONOMIC_KRONA_VIEW = PROJECT_SAMPLE_RUN_RESULTS + "/kronaChartView" + PROJECT_SAMPLE_RUN_RESULTS_VERSION;
+    public final static String PROJECT_SAMPLE_RUN_RESULTS_TAXONOMIC_KRONA_VIEW = PROJECT_SAMPLE_RUN_RESULTS + "/kronaChartView/{rRNAType}" + PROJECT_SAMPLE_RUN_RESULTS_VERSION;
 
     public final static String PROJECT_SAMPLE_RUN_RESULTS_TAXONOMIC_KRONA_CHART = PROJECT_SAMPLE_RUN_RESULTS + "/krona" + PROJECT_SAMPLE_RUN_RESULTS_VERSION;
     //END taxonomy results
@@ -54,6 +63,11 @@ public final class MGPortalURLCollection {
 
     public final static String PROJECT_SAMPLE_RUN_RESULTS_FUNCTIONAL_GO_PIE_CHART = PROJECT_SAMPLE_RUN_RESULTS + "/goPieChartView" + PROJECT_SAMPLE_RUN_RESULTS_VERSION;
     //END functional results
+
+    //Analysis result page - stats tab
+    //START
+    public final static String PROJECT_SAMPLE_RUN_RESULTS_STATS_FILES = PROJECT_SAMPLE_RUN_RESULTS + PROJECT_SAMPLE_RUN_RESULTS_VERSION + "/stats/{svgFile}";
+    //END stats tab
 
     //Set of URLs for download/export functionality
     //START
@@ -95,6 +109,9 @@ public final class MGPortalURLCollection {
 
     //Project page, download tab
     public final static String PROJECT_DOWNLOAD = PROJECT + "/download";
+
+    //Project page, download tab
+    public final static String PROJECT_DOWNLOAD_PCA = PROJECT_DOWNLOAD + "/{releaseVersion}/pca";
 
     //Google map data
     public final static String PROJECT_MAP_DATA = PROJECT + "/map-data";

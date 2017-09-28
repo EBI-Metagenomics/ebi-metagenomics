@@ -20,13 +20,13 @@ import java.util.List;
  * @since 1.0-SNAPSHOT
  */
 @Controller(value = "contactPageController")
-@RequestMapping('/' + ContactPageController.VIEW_NAME)
-public class ContactPageController extends AbstractController implements IController {
+@RequestMapping('/' + HelpPageController.VIEW_NAME)
+public class HelpPageController extends AbstractController implements IController {
 
     /**
      * View name of this controller which is used several times.
      */
-    public static final String VIEW_NAME = "contact";
+    public static final String VIEW_NAME = "help";
 
     @Override
     public ModelAndView doGet(ModelMap model) {
@@ -37,7 +37,7 @@ public class ContactPageController extends AbstractController implements IContro
                     @Override
                     public void populateModel(ModelMap model) {
                         final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(userManager,
-                                getEbiSearchForm(), "Contact us", getBreadcrumbs(null), propertyContainer);
+                                getEbiSearchForm(), "Help", getBreadcrumbs(null), propertyContainer);
                         final ViewModel defaultViewModel = builder.getModel();
                         defaultViewModel.changeToHighlightedClass(ViewModel.TAB_CLASS_CONTACT_VIEW);
                         model.addAttribute(ViewModel.MODEL_ATTR_NAME, defaultViewModel);

@@ -37,6 +37,7 @@ public class KronaChartsController extends AbstractResultViewController {
                                 @PathVariable final String runId,
                                 @PathVariable final String releaseVersion,
                                 @RequestParam(required = false, value = "taxonomy", defaultValue = "false") final boolean taxonomy,
+                                @RequestParam(required = false, value = "rrnatype", defaultValue = "ssu") final String rRNAType,
                                 final ModelMap model,
                                 final HttpServletResponse response) throws IOException {
         response.setContentType("text/html;charset=utf-8");
@@ -51,12 +52,15 @@ public class KronaChartsController extends AbstractResultViewController {
                 log.debug("Building file path to the Krona HTML file...");
                 AnalysisJob analysisJob = analysisJobDAO.readByRunIdAndVersionDeep(run.getExternalRunId(), releaseVersion, "completed");
                 if (taxonomy && analysisJob != null) {
-                    File fileToStream = null;
+                    FileDefinitionId fileDefinitionIdKronaHTMLFile = FileDefinitionId.KRONA_HTML_FILE;
                     if (releaseVersion.equalsIgnoreCase("4.0")) {
-                        fileToStream = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, propertyContainer.getResultFileDefinition(FileDefinitionId.KRONA_HTML_FILE_SSU));
-                    } else {
-                        fileToStream = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, propertyContainer.getResultFileDefinition(FileDefinitionId.KRONA_HTML_FILE));
+                        if (rRNAType.equalsIgnoreCase("ssu")) {
+                            fileDefinitionIdKronaHTMLFile = FileDefinitionId.KRONA_HTML_FILE_SSU;
+                        } else {//LSU
+                            fileDefinitionIdKronaHTMLFile = FileDefinitionId.KRONA_HTML_FILE_LSU;
+                        }
                     }
+                    File fileToStream = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, propertyContainer.getResultFileDefinition(fileDefinitionIdKronaHTMLFile));
                     log.debug("Checking if Krona result file does exit before streaming it...");
                     if (fileToStream == null || !fileToStream.exists()) {
                         log.warn(fileToStream.getAbsolutePath() + " doesn't exist!");

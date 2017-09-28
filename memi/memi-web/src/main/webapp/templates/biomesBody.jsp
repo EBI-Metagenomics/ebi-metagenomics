@@ -7,7 +7,7 @@
 <c:choose>
     <c:when test="${not empty biome_counter}">
 
-        <table border="1" class="table-heading result" id="list-biomes">
+        <table class="table-heading result" id="list-biomes">
             <thead>
                 <tr>
                     <th>Biome</th>

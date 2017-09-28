@@ -3,19 +3,23 @@
 
 <div class="navbar-header">
     <ul>
-     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-         <span class="icon-bar"></span>
-         <span class="icon-bar"></span>
-         <span class="icon-bar"></span>
-       </button>
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
     </ul>
-</div><!-- /navbar-header -->
+</div>
+<!-- /navbar-header -->
 
 <ul id="local-nav" class="collapse navbar-collapse nav navbar-nav">
     <li class="${model.tabClasses["tabClassHomeView"]} first"><a href="<c:url value="${baseURL}/"/>"
                                                                  title="Home">Home</a></li>
     <li class="${model.tabClasses["tabClassSearchView"]} first"><a href="javascript:pageManager.runSearch();"
-                                                                 title="Search">Search</a></li>
+                                                                   title="Search">Search</a></li>
+    <li class="${model.tabClasses["tabClassSequenceSearchView"]}"><a target="_blank"
+                                                             href="https://www.ebi.ac.uk/metagenomics/sequence-search"
+                                                             title="Sequence search">Sequence search</a></li>
     <li class="${model.tabClasses["tabClassSubmitView"]}"><a href="<c:url value="${baseURL}/submission"/>"
                                                              class="more_desc" title="Submit data">Submit
         data</a></li>
@@ -55,15 +59,14 @@
                                                             title="About EBI Metagenomics">About</a>
     </li>
 
-
-    <li class="${model.tabClasses["tabClassContactView"]} last"><a href="<c:url value="${baseURL}/contact"/>"
-                                                                   title="Contact us">Contact</a></li>
+    <li class="${model.tabClasses["tabClassContactView"]} last"><a href="<c:url value="${baseURL}/help"/>"
+                                                                   title="You need help?">Help</a></li>
 
     <c:choose>
         <c:when test="${empty model.submitter}">
             <%--<li class="functional last"><a href="#" class="icon icon-static" data-icon="\">Feedback</a></li>--%>
             <li class="functional last">
-                        <a id="LoginBlockUI" href="" title="Login">Login</a>
+                <a id="LoginBlockUI" href="" title="Login">Login</a>
 
                 <a class="icon icon-functional" data-icon="l" id="noscript_loginLink"
                    href="<c:url value="${baseURL}/login?display=false"/>" title="Login">Login</a>
@@ -77,9 +80,9 @@
                 <a href="<c:url value="${baseURL}/logout"/>" title="logout">logout</a>
             </li>
             <%--<li class="login_name"><c:out value="${model.submitter.loginName}"/>--%>
-                <%--<c:url var="editPrefsUrl" value="${model.propertyContainer.enaSubmissionURL.editPrefsLink}"><c:param--%>
-                        <%--name="url" value="${enaUrlParam}"/></c:url>--%>
-                <%--&nbsp;<a href="<c:out value="${editPrefsUrl}"/>" title="Edit preferences">(edit)</a></li>--%>
+            <%--<c:url var="editPrefsUrl" value="${model.propertyContainer.enaSubmissionURL.editPrefsLink}"><c:param--%>
+            <%--name="url" value="${enaUrlParam}"/></c:url>--%>
+            <%--&nbsp;<a href="<c:out value="${editPrefsUrl}"/>" title="Edit preferences">(edit)</a></li>--%>
 
             <li class="login_name"><c:out value="${model.submitter.loginName}"/>
                 &nbsp;<a href="https://www.ebi.ac.uk/ena/submit/sra/#home" title="Edit preferences">(edit)</a></li>
@@ -90,11 +93,11 @@
 </ul>
 
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function () {
         //show the menu when click on the button
-        $('.navbar-toggle').click(function() {
-          $( "#local-nav" ).slideToggle( "fast", function() {
-          });
+        $('.navbar-toggle').click(function () {
+            $("#local-nav").slideToggle("fast", function () {
+            });
         });
     });
 </script>
