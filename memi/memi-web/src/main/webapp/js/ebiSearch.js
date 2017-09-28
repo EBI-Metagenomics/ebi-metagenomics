@@ -838,110 +838,110 @@ var FacetManager = function(settingsManager, searchManager) {
                 + self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_CONTENT_CLASS);
         }
 
-        textFilter = document.createElement("input");
-        textFilter.type = "text";
-        textFilter.style.margin = "10px";
-        textFilter.classList.add(self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_TEXT_FILTER_CLASS);
-        headerDiv.appendChild(textFilter);
-
-        var _heirarchicalTextFilter = function(container, filterText, depth) {
-            var filterMatched = false;
-            for(var i=0; i < container.children.length; i++) {
-                child = container.children[i];
-                var childMatched = false;
-
-                if (child.nodeName.toUpperCase() == "LI") {
-                    var grandChildren = child.children;
-                    var input;
-                    var subList;
-                    for (j=0; j < grandChildren.length; j++) {
-                       var grandchild = grandChildren[j];
-                       if (grandchild.nodeName.toUpperCase() == "INPUT") {
-                           input = grandchild;
-                       } else if (grandchild.nodeName.toUpperCase() == "UL") {
-                           subList = grandchild;
-                       }
-                    }
-
-                    //depth-first tree traversal wetlan
-                    if (subList != undefined) {
-                        childMatched = _heirarchicalTextFilter(subList, filterText, depth+1);
-                        if (childMatched) {
-                            console.log("Child match = " + childMatched);
-                        } else {
-                            console.log("Child match = " + childMatched);
-                        }
-                    }
-
-                    var listItemText = input.value;
-                    var tokens = listItemText.split("/");
-                    var leafText = tokens[tokens.length -1];
-
-                    if (!childMatched && leafText.toLowerCase().indexOf(filterText.toLowerCase()) == -1) {
-                        console.log("Hiding: [" + listItemText + "] " + leafText + " != " + filterText + " child: " + childMatched + " Depth = " + depth);
-                        child.style.display = "none";
-                    } else {
-                        console.log("Showing: [" + listItemText + "] " + leafText + " == " + filterText + " child: " + childMatched + " Depth = " + depth);
-                        child.style.display = "block";
-                        filterMatched = true;
-                    }
-                }
-            }
-            console.log("Processed children " + filterMatched + " Depth = " + depth);
-            if (!filterMatched) {
-                container.style.display = "none";
-
-            } else {
-                container.style.display = "list-item";
-            }
-            return filterMatched;
-        };
-
-        textFilter.addEventListener("input", function(event){
-            var filterText = textFilter.value;
-            var children = contentDiv.children;
-            for(var i=0; i < children.length; i++) {
-                child = children[i];
-                if (child.nodeName.toUpperCase() == "UL") {
-                    console.log("FIRST CALL UL");
-                    _heirarchicalTextFilter(child, filterText, 1);
-                }
-            }
-            /*
-            for(var i=0; i < listItems.length; i++) {
-                var listItem = listItems[i];
-                var input = listItem.getElementsByTagName("input")[0];
-                var filterText = textFilter.value;
-                if (filterText != null && filterText != "") {
-                    var listItemText = input.value;
-                    var tokens = listItemText.split("/");
-                    var leafText = tokens[tokens.length -1];
-
-                    if (leafText.toLowerCase().indexOf(filterText.toLowerCase()) == -1) {
-                        //console.log(listItemText + " != " + filterText);
-                        listItem.style.display = "none";
-                    } else {
-                        listItem.style.display = "list-item";
-                        console.log(listItemText + " == " + filterText);
-                        parent = listItem.parentElement;
-                        while(parent.nodeName.toUpperCase() != 'DIV') {
-                            var displayState = "list-item";
-                            if (parent.nodeName.toUpperCase() == "UL") {
-                                displayState = "block";
-                            }
-                            if (parent.style.display == "none") {
-                                parent.style.display = displayState;
-                            }
-                            console.log("Parent " + parent.nodeName + " text = " + parent.getElementsByTagName("input")[0].value);
-                            parent = parent.parentElement;
-                        }
-                    }
-                } else {
-                    listItem.style.display = "list-item";
-                }
-            }
-            */
-        });
+        // textFilter = document.createElement("input");
+        // textFilter.type = "text";
+        // textFilter.style.margin = "10px";
+        // textFilter.classList.add(self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_TEXT_FILTER_CLASS);
+        // headerDiv.appendChild(textFilter);
+        //
+        // var _heirarchicalTextFilter = function(container, filterText, depth) {
+        //     var filterMatched = false;
+        //     for(var i=0; i < container.children.length; i++) {
+        //         child = container.children[i];
+        //         var childMatched = false;
+        //
+        //         if (child.nodeName.toUpperCase() == "LI") {
+        //             var grandChildren = child.children;
+        //             var input;
+        //             var subList;
+        //             for (j=0; j < grandChildren.length; j++) {
+        //                var grandchild = grandChildren[j];
+        //                if (grandchild.nodeName.toUpperCase() == "INPUT") {
+        //                    input = grandchild;
+        //                } else if (grandchild.nodeName.toUpperCase() == "UL") {
+        //                    subList = grandchild;
+        //                }
+        //             }
+        //
+        //             //depth-first tree traversal wetlan
+        //             if (subList != undefined) {
+        //                 childMatched = _heirarchicalTextFilter(subList, filterText, depth+1);
+        //                 if (childMatched) {
+        //                     console.log("Child match = " + childMatched);
+        //                 } else {
+        //                     console.log("Child match = " + childMatched);
+        //                 }
+        //             }
+        //
+        //             var listItemText = input.value;
+        //             var tokens = listItemText.split("/");
+        //             var leafText = tokens[tokens.length -1];
+        //
+        //             if (!childMatched && leafText.toLowerCase().indexOf(filterText.toLowerCase()) == -1) {
+        //                 console.log("Hiding: [" + listItemText + "] " + leafText + " != " + filterText + " child: " + childMatched + " Depth = " + depth);
+        //                 child.style.display = "none";
+        //             } else {
+        //                 console.log("Showing: [" + listItemText + "] " + leafText + " == " + filterText + " child: " + childMatched + " Depth = " + depth);
+        //                 child.style.display = "block";
+        //                 filterMatched = true;
+        //             }
+        //         }
+        //     }
+        //     console.log("Processed children " + filterMatched + " Depth = " + depth);
+        //     if (!filterMatched) {
+        //         container.style.display = "none";
+        //
+        //     } else {
+        //         container.style.display = "list-item";
+        //     }
+        //     return filterMatched;
+        // };
+        //
+        // textFilter.addEventListener("input", function(event){
+        //     var filterText = textFilter.value;
+        //     var children = contentDiv.children;
+        //     for(var i=0; i < children.length; i++) {
+        //         child = children[i];
+        //         if (child.nodeName.toUpperCase() == "UL") {
+        //             console.log("FIRST CALL UL");
+        //             _heirarchicalTextFilter(child, filterText, 1);
+        //         }
+        //     }
+        //     /*
+        //     for(var i=0; i < listItems.length; i++) {
+        //         var listItem = listItems[i];
+        //         var input = listItem.getElementsByTagName("input")[0];
+        //         var filterText = textFilter.value;
+        //         if (filterText != null && filterText != "") {
+        //             var listItemText = input.value;
+        //             var tokens = listItemText.split("/");
+        //             var leafText = tokens[tokens.length -1];
+        //
+        //             if (leafText.toLowerCase().indexOf(filterText.toLowerCase()) == -1) {
+        //                 //console.log(listItemText + " != " + filterText);
+        //                 listItem.style.display = "none";
+        //             } else {
+        //                 listItem.style.display = "list-item";
+        //                 console.log(listItemText + " == " + filterText);
+        //                 parent = listItem.parentElement;
+        //                 while(parent.nodeName.toUpperCase() != 'DIV') {
+        //                     var displayState = "list-item";
+        //                     if (parent.nodeName.toUpperCase() == "UL") {
+        //                         displayState = "block";
+        //                     }
+        //                     if (parent.style.display == "none") {
+        //                         parent.style.display = displayState;
+        //                     }
+        //                     console.log("Parent " + parent.nodeName + " text = " + parent.getElementsByTagName("input")[0].value);
+        //                     parent = parent.parentElement;
+        //                 }
+        //             }
+        //         } else {
+        //             listItem.style.display = "list-item";
+        //         }
+        //     }
+        //     */
+        // });
 
         var treeId = "more-hierarchical-facets-" + facets.id;
         contentDiv.innerHTML = "";
@@ -1148,10 +1148,16 @@ var FacetManager = function(settingsManager, searchManager) {
     };
 
     this.runMoreFacetsSearch = function(searchSettings, container) {
+        /*
+        The logic of this method has to handle normal checkbox facets (these end up in searchSettings.facets[facetType]
+        but also bonsai checkboxes. The number of these can be artificially inflated due to all child nodes of a given
+        facet becoming automatically checked. These automatically checked facets are removed from the final list to
+        avoid creating very long request parameter strings.
+         */
         var facetInputs = document.getElementsByName(
             this.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_INPUT_CLASS
         );
-        var facetTypeSetInDialog = {};
+        var facetTypeSetInDialog = {}; //used to track checked facet-types and hierarchical facet values
         for (var i=0; i < facetInputs.length; i++) {
             var checkbox = facetInputs[i];
             var parent = checkbox.parentElement;
@@ -1166,8 +1172,19 @@ var FacetManager = function(settingsManager, searchManager) {
             if (checkbox.checked) {
                 //console.log("Checkbox: " + checkbox.value + " checked " + facetType + " = " + facetValue);
                 if (searchSettings.facets[facetType].indexOf(facetValue) == -1) {
-                    searchSettings.facets[facetType].push(facetValue);
-                    facetTypeSetInDialog[facetType] = true;
+                    if (!facetTypeSetInDialog.hasOwnProperty(facetType)) {
+                        facetTypeSetInDialog[facetType] = [];
+                    }
+
+                    if (checkbox.id.startsWith("bonsai-checkbox")) {
+                        if (! this._isFacetValueChildOfSelectedFacets(facetValue, facetTypeSetInDialog[facetType])){
+                            facetTypeSetInDialog[facetType].push(facetValue);
+                            facetTypeSetInDialog[facetType].sort();
+                        }
+                    } else {
+                        searchSettings.facets[facetType].push(facetValue);
+                    }
+
                 }
             } else {
                 var facetValueIndex = searchSettings.facets[facetType].indexOf(facetValue);
@@ -1176,9 +1193,34 @@ var FacetManager = function(settingsManager, searchManager) {
                 }
             }
         }
+        Object.keys(facetTypeSetInDialog).forEach(function(facetType){
+            if (facetTypeSetInDialog[facetType].length > 0) {
+                searchSettings.facets[facetType] = searchSettings.facets[facetType].concat(facetTypeSetInDialog[facetType]);
+            }
+        });
         this.removeModalOverlay();
         this.searchManager.runDomainSearch(searchSettings);
     };
+
+    this._isFacetValueChildOfSelectedFacets = function(facetValue, selectedFacets) {
+        var facetTokens = facetValue.split('/');
+        for (var i=0; i < selectedFacets.length; i++) {
+            var selectedFacet = selectedFacets[i];
+            var selectedFacetTokens = selectedFacet.split('/');
+            if (facetTokens.length > selectedFacetTokens.length) {
+                var everyTokenMatches = true;
+                for(var j=0; j < selectedFacetTokens.length; j++) {
+                    if (selectedFacetTokens[j] != facetTokens[j]) {
+                        everyTokenMatches = false;
+                    }
+                }
+                if (everyTokenMatches) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
     this.displayFacetGroup = function(facetGroup, container, searchSettings) {
         var dataType = searchSettings.type;
@@ -1801,7 +1843,7 @@ var SearchManager = function(settingsManager, pageManager) {
                             timeout,
                             timeoutCallback) {
         var self = this;
-        //console.log("Ajax url = " + url);
+        console.log("Ajax url = " + url);
         var httpReq = new XMLHttpRequest();
 
         httpReq.open(method, url);
