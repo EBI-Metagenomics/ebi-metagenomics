@@ -45,6 +45,8 @@ var SettingsManager = function() {
 
     this.FACET_SOURCE = "Source";
 
+
+
     this.GLOBAL_SEARCH_SETTINGS = {
         PROJECT_RESULTS_NUM: 10,
         SAMPLE_RESULTS_NUM: 10,
@@ -54,6 +56,8 @@ var SettingsManager = function() {
         DEFAULT_FACET_DEPTH: 5,
         DEFAULT_MORE_FACETS_DEPTH: 10,
         AJAX_TIMEOUT: 10000,
+        DEFAULT_PROTOCOL: location.protocol,
+        SECURE_PROTOCOL: "https:",
 
         PROJECT: "Projects",
         PROJECT_DOMAIN: "metagenomics_projects",
@@ -63,7 +67,7 @@ var SettingsManager = function() {
         SAMPLE_FIELDS: "id,name,description,experiment_type,METAGENOMICS_PROJECTS",
         RUN: "Runs",
         RUN_DOMAIN: "metagenomics_runs",
-        RUN_FIELDS: "id,experiment_type,pipeline_version,METAGENOMICS_SAMPLES,METAGENOMICS_PROJECTS",
+        RUN_FIELDS: "id,name,experiment_type,pipeline_version,METAGENOMICS_SAMPLES,METAGENOMICS_PROJECTS",
         METAGENOMICS_SEARCH_TEXT : "www.ebi.ac.uk.metagenomics.searchsettings",
         METAGENOMICS_SEARCH_SETTINGS : "www.ebi.ac.uk.metagenomics.searchsettings",
         METAGENOMICS_SEARCH_SETTINGS_SELECTED_TAB: "www.ebi.ac.uk.metagenomics.selectedFacet",
@@ -124,12 +128,12 @@ var SettingsManager = function() {
         var EBISEARCH_PATH = "ebisearch/ws/rest/";
         var host = window.location.hostname;
         var port = window.location.port;
-        var protocol = "https";
+        var protocol = this.GLOBAL_SEARCH_SETTINGS.SECURE_PROTOCOL;
 
         if (host === "localhost" && port == 8000) {
             host = "wwwdev.ebi.ac.uk";
         }
-        var searchURL = protocol + "://" + host + "/" + EBISEARCH_PATH;
+        var searchURL = protocol + "//" + host + "/" + EBISEARCH_PATH;
         return searchURL;
     };
 
@@ -310,7 +314,7 @@ var TableManager = function(searchManager, settingsManager) {
         var rowData = [
             {
                 name: entry["id"],
-                url: "http://" + window.location.host + "/metagenomics/projects/" + entry["id"]
+                url: this.settingsManager.GLOBAL_SEARCH_SETTINGS.DEFAULT_PROTOCOL + "//" + window.location.host + "/metagenomics/projects/" + entry["id"]
             },
             {name: entry.fields.name[0]},
             {name: entry.fields.biome_name[0], className: "xs_hide"},
@@ -365,11 +369,11 @@ var TableManager = function(searchManager, settingsManager) {
         var rowData = [
             {
                 name: entry["id"],
-                url: "http://" + window.location.host + "/metagenomics/projects/" + entry["fields"]["METAGENOMICS_PROJECTS"][0] + "/samples/" +  entry["id"]
+                url: this.settingsManager.GLOBAL_SEARCH_SETTINGS.DEFAULT_PROTOCOL + "//" + window.location.host + "/metagenomics/projects/" + entry["fields"]["METAGENOMICS_PROJECTS"][0] + "/samples/" +  entry["id"]
             },
             {
                 name: entry["fields"]["METAGENOMICS_PROJECTS"][0],
-                url: "http://" + window.location.host + "/metagenomics/projects/" + entry["fields"]["METAGENOMICS_PROJECTS"][0]
+                url: this.settingsManager.GLOBAL_SEARCH_SETTINGS.DEFAULT_PROTOCOL + "//" + window.location.host + "/metagenomics/projects/" + entry["fields"]["METAGENOMICS_PROJECTS"][0]
             },
             {name: entry.fields.name[0]},
             {name: entry.fields.description[0], className: "xs_hide"}
@@ -425,17 +429,17 @@ var TableManager = function(searchManager, settingsManager) {
     this.getRunRow = function(entry) {
         var rowData = [
             {
-                name: entry.name,
-                url: "http://" + window.location.host + "/metagenomics/projects/"
+                name: entry.fields.name,
+                url: this.settingsManager.GLOBAL_SEARCH_SETTINGS.DEFAULT_PROTOCOL + "//" + window.location.host + "/metagenomics/projects/"
                 + entry.fields.METAGENOMICS_PROJECTS[0] + "/samples/"
                 + entry.fields.METAGENOMICS_SAMPLES[0] + "/runs/"
-                + entry.id + "/results/versions/"
+                + entry.fields.name + "/results/versions/"
                 + entry.fields.pipeline_version[0]
             },
             {
                 name: entry.fields.METAGENOMICS_SAMPLES[0],
                 className: "xs_hide",
-                url: "http://" + window.location.host + "/metagenomics/projects/"
+                url: this.settingsManager.GLOBAL_SEARCH_SETTINGS.DEFAULT_PROTOCOL + "//" + window.location.host + "/metagenomics/projects/"
                 + entry.fields.METAGENOMICS_PROJECTS[0] + "/samples/"
                 + entry.fields.METAGENOMICS_SAMPLES[0],
 
@@ -443,7 +447,7 @@ var TableManager = function(searchManager, settingsManager) {
             {
                 name: entry.fields.METAGENOMICS_PROJECTS[0],
                 className: "xs_hide",
-                url: "http://" + window.location.host + "/metagenomics/projects/" + entry.fields.METAGENOMICS_PROJECTS[0],
+                url: this.settingsManager.GLOBAL_SEARCH_SETTINGS.DEFAULT_PROTOCOL + "//" + window.location.host + "/metagenomics/projects/" + entry.fields.METAGENOMICS_PROJECTS[0],
             },
             {
                 name: entry.fields.experiment_type[0]
@@ -451,7 +455,7 @@ var TableManager = function(searchManager, settingsManager) {
             {
                 name: entry.fields.pipeline_version[0],
                 className: "xs_hide",
-                url: "http://" + window.location.host + "/metagenomics/pipelines/" + entry.fields.pipeline_version[0],
+                url: this.settingsManager.GLOBAL_SEARCH_SETTINGS.DEFAULT_PROTOCOL + "//" + window.location.host + "/metagenomics/pipelines/" + entry.fields.pipeline_version[0],
             },
         ];
         return rowData;
@@ -1454,7 +1458,7 @@ var FacetManager = function(settingsManager, searchManager) {
             var searchInfoSmall = document.createElement("small");
             searchInfoSmall.classList.add("text-muted");
             searchInfoSmall.innerHTML = "Powered by ";
-            searchInfoSmall.innerHTML += '<a href="http://www.ebi.ac.uk/ebisearch/" class="ext" target="_blank">EBI Search</a>';
+            searchInfoSmall.innerHTML += '<a href=' + this.settingsManager.GLOBAL_SEARCH_SETTINGS.SECURE_PROTOCOL + '//www.ebi.ac.uk/ebisearch/" class="ext" target="_blank">EBI Search</a>';
             searchInfoP.appendChild(searchInfoSmall);
             facetContainer.appendChild(document.createElement("hr"));
             facetContainer.appendChild(searchInfoP);
