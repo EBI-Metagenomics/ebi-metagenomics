@@ -293,7 +293,7 @@
 
 <!-- javascript for handling search box in header and search page elements -->
 <script src="${pageContext.request.contextPath}/js/FileSaver.min.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/js/ebiSearch.js?v1.52" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/js/ebiSearch.js?v1.6" type="text/javascript"></script>
 <%--multirange input plugin --%>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/multirange.css" type="text/css"/>
 <script>

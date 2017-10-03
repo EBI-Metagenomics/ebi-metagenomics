@@ -83,6 +83,10 @@ var SettingsManager = function() {
         HIERARCHICAL_FACET_CHECKBOX: "hierarchical-facet-checkbox",
         HOMEPAGE_LINK_CLASS: "homepage-search-link",
 
+        RESULTS_HITNUM_TEXT_DIV_SUFFIX: "-hitnum-text",
+        RESULTS_SEARCH_TERMS_DIV_SUFFIX: "-search-terms",
+        RESULTS_SEARCH_DATA_SUFFIX: "-searchData",
+
         DOWNLOAD_BUTTON_CLASS: "download-button",
 
         SEARCH_BOX_ID: "local-searchbox",
@@ -1721,7 +1725,8 @@ var TabManager = function() {
 
 var ResultsManager = function() {
     this.displayData = function(results, dataType, tableManager, settingsManager) {
-        var hitNumText = document.getElementById(dataType + "-hitnum-text");
+        var hitNumText = document.getElementById(dataType +
+            settingsManager.GLOBAL_SEARCH_SETTINGS.RESULTS_HITNUM_TEXT_DIV_SUFFIX);
         if (hitNumText != null) {
             hitNumText.innerHTML = "";
             var resultsTitle = document.createElement("h3");
@@ -1731,10 +1736,42 @@ var ResultsManager = function() {
                 hitNumText.appendChild(resultsTitle);
             }
         } else {
-            console.log("Error: Expected to find div with id '" + dataType + "-hitnum-text'");
+            console.log("Error: Expected to find div with id '" + dataType
+                + settingsManager.GLOBAL_SEARCH_SETTINGS.RESULTS_HITNUM_TEXT_DIV_SUFFIX + "'");
         }
 
-        var resultsContainer = document.getElementById(dataType + "-searchData");
+        var searchTermsContainer = document.getElementById(dataType
+            + settingsManager.GLOBAL_SEARCH_SETTINGS.RESULTS_SEARCH_TERMS_DIV_SUFFIX);
+        if (searchTermsContainer != null) {
+            searchTermsContainer.innerHTML = "";
+            var settings = settingsManager.getSearchSettings(dataType);
+            var searchTermsTitle = document.createElement("h4");
+            var searchTermText = "";
+            if (settingsManager.getSearchText().length > 0) {
+                searchTermText += "'" + settingsManager.getSearchText() + "'";
+            }
+
+            for (var type in settings.facets) {
+                console.log("Facet " + type);
+                var facet = settings.facets[type];
+                for(var i=0; i < facet.length; i++) {
+                    var value = facet[i];
+                    console.log("Value: " + value);
+                    if (searchTermText.length > 0) {
+                        searchTermText += " AND ";
+                    }
+                    searchTermText += type + ": " + value;
+                }
+            }
+            searchTermsTitle.innerHTML = "You searched for: " + searchTermText;
+            searchTermsContainer.appendChild(searchTermsTitle);
+        } else {
+            console.log("Error: Expected to find div with id '" + dataType
+                + settingsManager.GLOBAL_SEARCH_SETTINGS.RESULTS_SEARCH_TERMS_DIV_SUFFIX + "'");
+        }
+
+        var resultsContainer = document.getElementById(dataType
+            + settingsManager.GLOBAL_SEARCH_SETTINGS.RESULTS_SEARCH_DATA_SUFFIX);
         if (resultsContainer != null) {
             resultsContainer.innerHTML = ""; //clear results div
             if (results.hasOwnProperty("entries") && results.entries != null) {
@@ -1752,7 +1789,8 @@ var ResultsManager = function() {
             }
 
         } else {
-            console.log("Error: Expected to find div with id '" + dataType + "-searchData'");
+            console.log("Error: Expected to find div with id '" + dataType
+                + settingsManager.GLOBAL_SEARCH_SETTINGS.RESULTS_SEARCH_DATA_SUFFIX + "'");
         }
     };
 
