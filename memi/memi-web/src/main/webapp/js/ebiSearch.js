@@ -1763,8 +1763,10 @@ var ResultsManager = function() {
                     searchTermText += type + ": " + value;
                 }
             }
-            searchTermsTitle.innerHTML = "You searched for: " + searchTermText;
-            searchTermsContainer.appendChild(searchTermsTitle);
+            if (searchTermText.length > 0) {
+                searchTermsTitle.innerHTML = "You searched for: " + searchTermText;
+                searchTermsContainer.appendChild(searchTermsTitle);
+            }
         } else {
             console.log("Error: Expected to find div with id '" + dataType
                 + settingsManager.GLOBAL_SEARCH_SETTINGS.RESULTS_SEARCH_TERMS_DIV_SUFFIX + "'");
@@ -2453,11 +2455,21 @@ var PageManager = function() {
             } else {
                 console.log("Error: Expected to find div with id '" + dataType + "-" + element + "-download'");
             }
-            var hitNumContainer = document.getElementById(dataType + "-hitnum-text");
+            var hitNumContainer = document.getElementById(dataType
+                + this.settingsManager.GLOBAL_SEARCH_SETTINGS.RESULTS_HITNUM_TEXT_DIV_SUFFIX);
             if (hitNumContainer != null) {
                 hitNumContainer.innerHTML = "";
             } else {
-                console.log("Error: Expected to find div with id '" + dataType + "-hitNum-text'");
+                console.log("Error: Expected to find div with id '" + dataType
+                    + this.settingsManager.GLOBAL_SEARCH_SETTINGS.RESULTS_HITNUM_TEXT_DIV_SUFFIX + "'");
+            }
+            var searchTermContainer = document.getElementById(dataType
+                + this.settingsManager.GLOBAL_SEARCH_SETTINGS.RESULTS_SEARCH_TERMS_DIV_SUFFIX);
+            if (searchTermContainer != null) {
+                searchTermContainer.innerHTML = "";
+            } else {
+                console.log("Error: Expected to find div with id '" + dataType
+                    + this.settingsManager.GLOBAL_SEARCH_SETTINGS.RESULTS_SEARCH_TERMS_DIV_SUFFIX + "'");
             }
         }
 
