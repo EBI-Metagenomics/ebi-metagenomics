@@ -1841,7 +1841,7 @@ var SearchManager = function(settingsManager, pageManager) {
                             timeout,
                             timeoutCallback) {
         var self = this;
-        console.log("Ajax url = " + url);
+        //console.log("Ajax url = " + url);
         var httpReq = new XMLHttpRequest();
 
         httpReq.open(method, url);
@@ -2347,6 +2347,7 @@ var PageManager = function() {
 
     this.populateSearchInputs = function() {
         //copy search text to search boxes
+        var self = this;
         var searchText = this.settingsManager.getSearchText();
 
         var searchInputID = this.settingsManager.GLOBAL_SEARCH_SETTINGS.SEARCH_BOX_ID;
@@ -2354,6 +2355,10 @@ var PageManager = function() {
         if (searchInput != null) {
             if (searchText != null) {
                 searchInput.value = searchText;
+                searchInput.addEventListener("search", function(item){
+                    console.log("Search clicked");
+                    self.runSearch();
+                });
             }
         } else {
             console.log("Error: expected input with id = " + searchInputID);
@@ -2362,9 +2367,12 @@ var PageManager = function() {
         var searchInputSmallID = this.settingsManager.GLOBAL_SEARCH_SETTINGS.SEARCH_BOX_SMALL_ID
         var searchInputSmall = document.getElementById(searchInputSmallID);
         if (searchInputSmall != null) {
-            var searchInputSmall = this.settingsManager.getSearchText();
-            if (searchInputSmall != null) {
+            if (searchText != null) {
                 searchInputSmall.value = searchText;
+                searchInputSmall.addEventListener("search", function(item){
+                    console.log("Search clicked");
+                    self.runSmallSearch();
+                });
             }
         }
     };
