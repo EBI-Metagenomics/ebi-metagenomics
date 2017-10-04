@@ -289,7 +289,7 @@ var TableManager = function(searchManager, settingsManager) {
 
         for (var i=0; i < results.entries.length; i++) {
             var entry = results.entries[i];
-            var rowData = this.getProjectRow(entry);
+            var rowData = this.getProjectRow(entry, this.settingsManager);
             this.addTableRow(rowData, table);
         }
         container.appendChild(table);
@@ -314,11 +314,11 @@ var TableManager = function(searchManager, settingsManager) {
      * @param entry
      * @returns {[*,*,*,*]}
      */
-    this.getProjectRow = function(entry) {
+    this.getProjectRow = function(entry, settingsManager) {
         var rowData = [
             {
                 name: entry["id"],
-                url: this.settingsManager.GLOBAL_SEARCH_SETTINGS.DEFAULT_PROTOCOL + "//" + window.location.host + "/metagenomics/projects/" + entry["id"]
+                url: settingsManager.GLOBAL_SEARCH_SETTINGS.DEFAULT_PROTOCOL + "//" + window.location.host + "/metagenomics/projects/" + entry["id"]
             },
             {name: entry.fields.name[0]},
             {name: entry.fields.biome_name[0], className: "xs_hide"},
@@ -344,7 +344,7 @@ var TableManager = function(searchManager, settingsManager) {
 
         for (var i=0; i < results.entries.length; i++) {
             var entry = results.entries[i];
-            var rowData = this.getSampleRow(entry);
+            var rowData = this.getSampleRow(entry, this.settingsManager);
             this.addTableRow(rowData, table);
         }
         container.appendChild(table);
@@ -369,15 +369,15 @@ var TableManager = function(searchManager, settingsManager) {
      * @param entry
      * @returns {[*,*,*,*]}
      */
-    this.getSampleRow = function(entry) {
+    this.getSampleRow = function(entry, settingsManager) {
         var rowData = [
             {
                 name: entry["id"],
-                url: this.settingsManager.GLOBAL_SEARCH_SETTINGS.DEFAULT_PROTOCOL + "//" + window.location.host + "/metagenomics/projects/" + entry["fields"]["METAGENOMICS_PROJECTS"][0] + "/samples/" +  entry["id"]
+                url: settingsManager.GLOBAL_SEARCH_SETTINGS.DEFAULT_PROTOCOL + "//" + window.location.host + "/metagenomics/projects/" + entry["fields"]["METAGENOMICS_PROJECTS"][0] + "/samples/" +  entry["id"]
             },
             {
                 name: entry["fields"]["METAGENOMICS_PROJECTS"][0],
-                url: this.settingsManager.GLOBAL_SEARCH_SETTINGS.DEFAULT_PROTOCOL + "//" + window.location.host + "/metagenomics/projects/" + entry["fields"]["METAGENOMICS_PROJECTS"][0]
+                url: settingsManager.GLOBAL_SEARCH_SETTINGS.DEFAULT_PROTOCOL + "//" + window.location.host + "/metagenomics/projects/" + entry["fields"]["METAGENOMICS_PROJECTS"][0]
             },
             {name: entry.fields.name[0]},
             {name: entry.fields.description[0], className: "xs_hide"}
@@ -403,7 +403,7 @@ var TableManager = function(searchManager, settingsManager) {
 
         for (var i=0; i < results.entries.length; i++) {
             var entry = results.entries[i];
-            var rowData = this.getRunRow(entry);
+            var rowData = this.getRunRow(entry, this.settingsManager);
             this.addTableRow(rowData, table);
         }
 
@@ -430,11 +430,11 @@ var TableManager = function(searchManager, settingsManager) {
      * @param entry
      * @returns {[*,*,*,*]}
      */
-    this.getRunRow = function(entry) {
+    this.getRunRow = function(entry, settingsManager) {
         var rowData = [
             {
                 name: entry.fields.name,
-                url: this.settingsManager.GLOBAL_SEARCH_SETTINGS.DEFAULT_PROTOCOL + "//" + window.location.host + "/metagenomics/projects/"
+                url: settingsManager.GLOBAL_SEARCH_SETTINGS.DEFAULT_PROTOCOL + "//" + window.location.host + "/metagenomics/projects/"
                 + entry.fields.METAGENOMICS_PROJECTS[0] + "/samples/"
                 + entry.fields.METAGENOMICS_SAMPLES[0] + "/runs/"
                 + entry.fields.name + "/results/versions/"
@@ -443,7 +443,7 @@ var TableManager = function(searchManager, settingsManager) {
             {
                 name: entry.fields.METAGENOMICS_SAMPLES[0],
                 className: "xs_hide",
-                url: this.settingsManager.GLOBAL_SEARCH_SETTINGS.DEFAULT_PROTOCOL + "//" + window.location.host + "/metagenomics/projects/"
+                url: settingsManager.GLOBAL_SEARCH_SETTINGS.DEFAULT_PROTOCOL + "//" + window.location.host + "/metagenomics/projects/"
                 + entry.fields.METAGENOMICS_PROJECTS[0] + "/samples/"
                 + entry.fields.METAGENOMICS_SAMPLES[0],
 
@@ -451,7 +451,7 @@ var TableManager = function(searchManager, settingsManager) {
             {
                 name: entry.fields.METAGENOMICS_PROJECTS[0],
                 className: "xs_hide",
-                url: this.settingsManager.GLOBAL_SEARCH_SETTINGS.DEFAULT_PROTOCOL + "//" + window.location.host + "/metagenomics/projects/" + entry.fields.METAGENOMICS_PROJECTS[0],
+                url: settingsManager.GLOBAL_SEARCH_SETTINGS.DEFAULT_PROTOCOL + "//" + window.location.host + "/metagenomics/projects/" + entry.fields.METAGENOMICS_PROJECTS[0],
             },
             {
                 name: entry.fields.experiment_type[0]
@@ -459,7 +459,7 @@ var TableManager = function(searchManager, settingsManager) {
             {
                 name: entry.fields.pipeline_version[0],
                 className: "xs_hide",
-                url: this.settingsManager.GLOBAL_SEARCH_SETTINGS.DEFAULT_PROTOCOL + "//" + window.location.host + "/metagenomics/pipelines/" + entry.fields.pipeline_version[0],
+                url: settingsManager.GLOBAL_SEARCH_SETTINGS.DEFAULT_PROTOCOL + "//" + window.location.host + "/metagenomics/pipelines/" + entry.fields.pipeline_version[0],
             },
         ];
         return rowData;
@@ -1724,7 +1724,7 @@ var TabManager = function() {
 };
 
 var ResultsManager = function() {
-    this.displayData = function(results, dataType, tableManager, settingsManager) {
+    this.displayData = function(results, dataType, tableManager, settingsManager, searchManager) {
         var hitNumText = document.getElementById(dataType +
             settingsManager.GLOBAL_SEARCH_SETTINGS.RESULTS_HITNUM_TEXT_DIV_SUFFIX);
         if (hitNumText != null) {
@@ -1744,11 +1744,12 @@ var ResultsManager = function() {
             + settingsManager.GLOBAL_SEARCH_SETTINGS.RESULTS_SEARCH_TERMS_DIV_SUFFIX);
         if (searchTermsContainer != null) {
             searchTermsContainer.innerHTML = "";
+            var searchTags = [];
             var settings = settingsManager.getSearchSettings(dataType);
-            var searchTermsTitle = document.createElement("h4");
-            var searchTermText = "";
+
             if (settingsManager.getSearchText().length > 0) {
-                searchTermText += "'" + settingsManager.getSearchText() + "'";
+                var tag = this.createSearchTermTag(settingsManager.getSearchText(), settingsManager, searchManager)
+                searchTags.push(tag);
             }
 
             for (var type in settings.facets) {
@@ -1757,15 +1758,17 @@ var ResultsManager = function() {
                 for(var i=0; i < facet.length; i++) {
                     var value = facet[i];
                     console.log("Value: " + value);
-                    if (searchTermText.length > 0) {
-                        searchTermText += " AND ";
-                    }
-                    searchTermText += type + ": " + value;
+                    var facetTag = this.createFacetTag(type, value, dataType, settingsManager, searchManager);
+                    searchTags.push(facetTag);
                 }
             }
-            if (searchTermText.length > 0) {
-                searchTermsTitle.innerHTML = "You searched for: " + searchTermText;
-                searchTermsContainer.appendChild(searchTermsTitle);
+            if (searchTags.length > 0) {
+                var searchPrefix = document.createElement("span");
+                searchPrefix.innerHTML = "Search terms: ";
+                searchTermsContainer.appendChild(searchPrefix);
+                for(let tag of searchTags) {
+                    searchTermsContainer.appendChild(tag);
+                }
             }
         } else {
             console.log("Error: Expected to find div with id '" + dataType
@@ -1796,12 +1799,72 @@ var ResultsManager = function() {
         }
     };
 
+    this.createSearchTermTag = function(text, settingsManager, searchManager){
+        var self = this;
+        var tag = document.createElement("span");
+        tag.classList.add("search-tag");
+        tag.classList.add("search-text-tag");
+        var tagText = document.createElement("span");
+        tagText.classList.add("search-term-tag");
+        tagText.innerHTML = text + " ";
+        var closeButton = document.createElement("button");
+        closeButton.classList.add("search-close-button-tag");
+        closeButton.innerHTML = "x";
+        closeButton.addEventListener("click", function(){
+            settingsManager.setSearchText("");
+
+            for (var dataType of settingsManager.DatatypeSettings.DATA_TYPES) {
+                var settings = settingsManager.getSearchSettings(dataType);
+                settings.searchText = "";
+                settingsManager.setSearchSettings(dataType, settings);
+                searchManager.runDomainSearch(settings);
+            }
+
+        });
+
+        tag.appendChild(tagText);
+        tag.appendChild(closeButton);
+        return tag;
+    };
+    
+    this.createFacetTag = function(type, value, dataType, settingsManager, searchManager) {
+        var self = this;
+        var tag = document.createElement("span");
+        tag.classList.add("search-tag");
+        tag.classList.add("search-facet-tag");
+        var tagText = document.createElement("span");
+        tagText.classList.add("search-term-tag");
+        var tokens = value.split("/");
+        tagText.innerHTML = type + ": " + tokens[tokens.length-1] + " ";
+        var closeButton = document.createElement("button");
+        closeButton.classList.add("search-close-button-tag");
+        closeButton.innerHTML = "x";
+        closeButton.addEventListener("click", function(){
+            settingsManager.setSearchText("");
+            var settings = settingsManager.getSearchSettings(dataType);
+            settings.facets[type] = settings.facets[type].filter(function(item){
+               return item != value;
+            });
+            if (settings.facets[type].length == 0){
+                delete settings.facets[type];
+            }
+            settingsManager.setSearchSettings(dataType, settings);
+            searchManager.runDomainSearch(settings);
+        });
+
+        tag.appendChild(tagText);
+        tag.appendChild(closeButton);
+        return tag;
+
+    };
+
     this.displayDomainData = function(response,
                                       searchSettings,
                                       settingsManager,
                                       tabManager,
                                       tableManager,
-                                      facetManager) {
+                                      facetManager,
+                                      searchManager) {
         //console.log("displayDomain: " + searchSettings.type);
 
         var searchElementID = "local-searchbox";
@@ -1822,7 +1885,7 @@ var ResultsManager = function() {
         );
         */
         tabManager.setTabText(results.hitCount, searchSettings.type);
-        this.displayData(results, searchSettings.type, tableManager, settingsManager);
+        this.displayData(results, searchSettings.type, tableManager, settingsManager, searchManager);
         facetManager.displayFacets(results.facets, searchSettings);
         tableManager.displayPagination(results, searchSettings);
         tableManager.displayDownloadButton(results, searchSettings);
@@ -2066,7 +2129,7 @@ var SearchManager = function(settingsManager, pageManager) {
 
         if (results != null) {
             for(var i = 0; i < results.length; i++) {
-                var entry = rowFunction(results[i]);
+                var entry = rowFunction(results[i], this.settingsManager);
                 data.push(entry);
             }
 
@@ -2106,7 +2169,7 @@ var SearchManager = function(settingsManager, pageManager) {
                 if (item != null) {
                     var value = item.name;
                     if (value != null) {
-                        value = value.replace(/\"/g, '\\"');
+                        //value = value.replace(/\"/g, '\\"'); //escape double quotes
                         //value = value.replace(/\s+/g, ' '); //removing newlines etc
                         value = '"' + value + '"';
                         return value;
@@ -2396,7 +2459,6 @@ var PageManager = function() {
             if (searchText != null) {
                 searchInput.value = searchText;
                 searchInput.addEventListener("search", function(item){
-                    console.log("Search clicked");
                     self.runSearch();
                 });
             }
@@ -2596,7 +2658,8 @@ var PageManager = function() {
             this.settingsManager,
             this.tabManager,
             this.tableManager,
-            this.facetManager
+            this.facetManager,
+            this.searchManager
         );
     };
 
