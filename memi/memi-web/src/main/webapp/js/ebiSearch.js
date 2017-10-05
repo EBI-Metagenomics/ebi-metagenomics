@@ -1753,12 +1753,19 @@ var ResultsManager = function() {
             }
 
             for (var type in settings.facets) {
-                console.log("Facet " + type);
+                //console.log("Facet " + type);
+                var facetData = results.facets.filter(function(item) {
+                    return item.id === type;
+                });
+                var label = type;
+                if (facetData.length > 0) {
+                    label = facetData[0].label;
+                }
                 var facet = settings.facets[type];
                 for(var i=0; i < facet.length; i++) {
                     var value = facet[i];
                     console.log("Value: " + value);
-                    var facetTag = this.createFacetTag(type, value, dataType, settingsManager, searchManager);
+                    var facetTag = this.createFacetTag(label, type, value, dataType, settingsManager, searchManager);
                     searchTags.push(facetTag);
                 }
             }
@@ -1827,7 +1834,7 @@ var ResultsManager = function() {
         return tag;
     };
     
-    this.createFacetTag = function(type, value, dataType, settingsManager, searchManager) {
+    this.createFacetTag = function(label, type, value, dataType, settingsManager, searchManager) {
         var self = this;
         var tag = document.createElement("span");
         tag.classList.add("search-tag");
@@ -1835,7 +1842,7 @@ var ResultsManager = function() {
         var tagText = document.createElement("span");
         tagText.classList.add("search-term-tag");
         var tokens = value.split("/");
-        tagText.innerHTML = type + ": " + tokens[tokens.length-1] + " ";
+        tagText.innerHTML = label + ": " + tokens[tokens.length-1] + " ";
         var closeButton = document.createElement("button");
         closeButton.classList.add("search-close-button-tag");
         closeButton.innerHTML = "x";
