@@ -83,6 +83,7 @@ public class AnalysisJobDAOImpl extends GenericDAOImpl<AnalysisJob, Long> implem
         try {
             Criteria criteria = getSession().createCriteria(AnalysisJob.class)
                     .createAlias("sample", "sa")
+                    .createAlias("sa.studies", "studies")
                     .createAlias("experimentType", "et")
                     .createAlias("analysisStatus", "status")
                     .createAlias("pipelineRelease", "p")
@@ -97,7 +98,7 @@ public class AnalysisJobDAOImpl extends GenericDAOImpl<AnalysisJob, Long> implem
                             .add(Projections.property("et.experimentType"), "experimentType")
                             .add(Projections.property("p.releaseVersion"), "releaseVersion")
                     )
-                    .add(Restrictions.eq("sa.study.id", studyId))
+                    .add(Restrictions.eq("studies.id", studyId))
                     .add(Restrictions.eq("status.analysisStatus", analysisStatus))
                     .setResultTransformer(new AliasToBeanResultTransformer(AnalysisJobVO.class));
             return (List<AnalysisJobVO>) criteria.list();
