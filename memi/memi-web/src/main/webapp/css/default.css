@@ -2239,7 +2239,7 @@ div#local-masthead ul li.logout {display:none;}
 
 .search-tag:hover {
     padding: 5px;
-    padding-right: 15px;
+    padding-right: 20px;
     background: #fec2c2;
     transition: all .3s;
 }
