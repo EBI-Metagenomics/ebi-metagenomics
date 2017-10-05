@@ -86,9 +86,9 @@
 
         <div class="result_row">
             <div class="result_row_label">Project name:</div>
-            <div class="result_row_data"><a title="${sample.study.studyName}"
-                                            href="<c:url value="${baseURL}/projects/${sample.study.studyId}"/>">${sample.study.studyName}
-                (${sample.study.studyId})</a></div>
+            <div class="result_row_data"><a title="${study.studyName}"
+                                            href="<c:url value="${baseURL}/projects/${study.studyId}"/>">${study.studyName}
+                (${study.studyId})</a></div>
         </div>
 
     </div>
@@ -289,7 +289,7 @@
                             <c:choose>
                                 <c:when test="${analysisJob.analysisStatus.analysisStatus == 'completed'}">
                                     <a title="Overview"
-                                       href="<c:url value="${baseURL}/projects/${sample.study.studyId}/samples/${sample.sampleId}/runs/${analysisJob.externalRunIDs}/results/versions/${analysisJob.pipelineRelease.releaseVersion}"/>">${analysisJob.externalRunIDs}</a>
+                                       href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${sample.sampleId}/runs/${analysisJob.externalRunIDs}/results/versions/${analysisJob.pipelineRelease.releaseVersion}"/>">${analysisJob.externalRunIDs}</a>
                                 </c:when>
                                 <c:otherwise>
                                     ${analysisJob.externalRunIDs}
@@ -305,14 +305,14 @@
                             <c:choose>
                                 <c:when test="${analysisStatus == 'completed'}">
                                     <a title="Taxonomic analysis" class="list_sample"
-                                       href="<c:url value="${baseURL}/projects/${sample.study.studyId}/samples/${sample.sampleId}/runs/${analysisJob.externalRunIDs}/results/versions/${analysisJob.pipelineRelease.releaseVersion}#ui-id-6"/>">Taxonomy </a>|
+                                       href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${sample.sampleId}/runs/${analysisJob.externalRunIDs}/results/versions/${analysisJob.pipelineRelease.releaseVersion}#ui-id-6"/>">Taxonomy </a>|
                                     <c:if test="${analysisJob.experimentType.experimentType != 'amplicon'}">
                                         <a title="Function analysis" class="list_sample"
-                                           href="<c:url value="${baseURL}/projects/${sample.study.studyId}/samples/${sample.sampleId}/runs/${analysisJob.externalRunIDs}/results/versions/${analysisJob.pipelineRelease.releaseVersion}#ui-id-8"/>">Function </a>|
+                                           href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${sample.sampleId}/runs/${analysisJob.externalRunIDs}/results/versions/${analysisJob.pipelineRelease.releaseVersion}#ui-id-8"/>">Function </a>|
                                     </c:if>
                                     <a title="download results"
                                        class="icon icon-functional list_sample" data-icon="="
-                                       href="<c:url value="${baseURL}/projects/${sample.study.studyId}/samples/${sample.sampleId}/runs/${analysisJob.externalRunIDs}/results/versions/${analysisJob.pipelineRelease.releaseVersion}#ui-id-10"/>"></a>
+                                       href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${sample.sampleId}/runs/${analysisJob.externalRunIDs}/results/versions/${analysisJob.pipelineRelease.releaseVersion}#ui-id-10"/>"></a>
                                 </c:when>
                                 <c:otherwise>
                                     ${analysisStatus}

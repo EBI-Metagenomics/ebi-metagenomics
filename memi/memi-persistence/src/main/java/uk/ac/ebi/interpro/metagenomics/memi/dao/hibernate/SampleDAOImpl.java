@@ -59,7 +59,8 @@ public class SampleDAOImpl implements SampleDAO {
             Session session = sessionFactory.getCurrentSession();
             Criteria criteria = session.createCriteria(Sample.class);
             criteria.add(Restrictions.eq("sampleId", externalSampleId));
-            criteria.createAlias("study", "project").add(Restrictions.eq("project.studyId", externalStudyId));
+            criteria.createAlias("studies", "studies");
+            criteria.add(Restrictions.eq("studies.studyId", externalStudyId));
             Sample result = (Sample) criteria.uniqueResult();
             return result;
         } catch (HibernateException e) {

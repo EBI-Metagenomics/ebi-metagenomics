@@ -7,10 +7,7 @@ import org.springframework.ui.ModelMap;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.AnalysisJobDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.temp.SampleAnnotationDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgSampleAnnotation;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Biome;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.*;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.DefaultViewModelBuilder;
@@ -19,6 +16,7 @@ import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuil
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * This class extends {@link SampleViewController}, {@link KronaChartsController} and {@link ResultViewExportController}.
@@ -37,10 +35,15 @@ public abstract class AbstractSampleViewController extends SecuredAbstractContro
         List<Breadcrumb> result = new ArrayList<Breadcrumb>();
         if (entity != null && entity instanceof Sample) {
             Sample sample = (Sample) entity;
-            String sampleURL = "projects/" + sample.getStudy().getStudyId() + "/samples/" + sample.getSampleId();
-            String projectURL = "projects/" + sample.getStudy().getStudyId();
-            result.add(new Breadcrumb("Project: " + sample.getStudy().getStudyName(), "View project " + sample.getStudy().getStudyName(), projectURL));
-            result.add(new Breadcrumb("Sample: " + sample.getSampleName(), "View sample " + sample.getSampleName(), sampleURL));
+            Set<Study> studySamples = sample.getStudies();
+            if (!studySamples.isEmpty()) {
+                // Get first study
+                Study firstStudy = studySamples.iterator().next();
+                String sampleURL = "projects/" + firstStudy.getStudyId() + "/samples/" + sample.getSampleId();
+                String projectURL = "projects/" + firstStudy.getStudyId();
+                result.add(new Breadcrumb("Project: " + firstStudy.getStudyName(), "View project " + firstStudy.getStudyName(), projectURL));
+                result.add(new Breadcrumb("Sample: " + sample.getSampleName(), "View sample " + sample.getSampleName(), sampleURL));
+            }
         }
         return result;
     }

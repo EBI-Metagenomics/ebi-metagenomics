@@ -63,7 +63,6 @@
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Publication</value>
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study</value>
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample</value>
-                <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.StudySample</value>
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.PipelineRelease</value>
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.PipelineTool</value>
                 <value>uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.PipelineReleaseTool</value>

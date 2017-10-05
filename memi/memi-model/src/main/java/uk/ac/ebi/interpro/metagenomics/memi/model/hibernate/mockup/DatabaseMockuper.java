@@ -131,7 +131,7 @@ public class DatabaseMockuper {
         for (Study study : publicStudies) {
             Set<Sample> samples = sampleMap.get(study.getStudyId());
             for (Sample sample : samples) {
-                sample.addStudy(study);
+//                sample.addStudy(study);
                 if (study.getStudyId().equals("ERP000118")) {
                     sample.addPublication(p6);
                     sample.addPublication(p7);

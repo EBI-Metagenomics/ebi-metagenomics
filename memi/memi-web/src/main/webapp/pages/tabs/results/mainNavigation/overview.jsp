@@ -34,12 +34,12 @@
         <div class="output_form">
             <div class="result_row">
                 <div class="result_row_label">Sample name:</div>
-                <div class="result_row_data"><a title="${model.sample.sampleName}" href="<c:url value="${baseURL}/projects/${model.sample.study.studyId}/samples/${model.sample.sampleId}"/>">${model.sample.sampleName} (${model.sample.sampleId})</a></div>
+                <div class="result_row_data"><a title="${model.sample.sampleName}" href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${model.sample.sampleId}"/>">${model.sample.sampleName} (${model.sample.sampleId})</a></div>
             </div>
 
             <div class="result_row">
                 <div class="result_row_label">Project name:</div>
-                <div class="result_row_data"><a title="${model.sample.study.studyName}" href="<c:url value="${baseURL}/projects/${model.sample.study.studyId}"/>">${model.sample.study.studyName} (${model.sample.study.studyId})</a></div>
+                <div class="result_row_data"><a title="${study.studyName}" href="<c:url value="${baseURL}/projects/${study.studyId}"/>">${study.studyName} (${study.studyId})</a></div>
             </div>
         </div>
         <!--/ Description -->

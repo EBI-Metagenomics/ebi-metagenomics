@@ -20,8 +20,13 @@ public class Sample implements SecureEntity, BiomeEntity {
     @Column(name = "SAMPLE_ID", columnDefinition = "INT(11)")
     private long id;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.sample")
-    private Set<Study> studies;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "STUDY_SAMPLE",
+            joinColumns = {@JoinColumn(name = "SAMPLE_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "STUDY_ID")}
+    )
+    private Set<Study> studies = new HashSet<Study>(0);
 
     @Column(name = "EXT_SAMPLE_ID", nullable = false, length = 15)
     private String sampleId;
@@ -127,10 +132,8 @@ public class Sample implements SecureEntity, BiomeEntity {
     )
     private Set<Publication> publications;
 
+
     public Sample() {
-        this.isPublic = 0;
-        this.publications = new HashSet<Publication>();
-        this.studies = new HashSet<Study>();
     }
 
     public long getId() {
@@ -148,14 +151,6 @@ public class Sample implements SecureEntity, BiomeEntity {
     public void setStudies(Set<Study> studies) {
         this.studies = studies;
     }
-
-    public void addStudy(Study study) {
-        if (this.studies == null) {
-            this.studies = new HashSet<Study>();
-        }
-        this.studies.add(study);
-    }
-
 
     public String getSampleId() {
         return sampleId;
