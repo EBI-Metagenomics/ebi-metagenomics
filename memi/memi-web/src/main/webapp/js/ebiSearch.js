@@ -2459,6 +2459,7 @@ var PageManager = function() {
             if (searchText != null) {
                 searchInput.value = searchText;
                 searchInput.addEventListener("search", function(item){
+                    //console.log("Search cancel clicked");
                     self.runSearch();
                 });
             }
@@ -2472,7 +2473,7 @@ var PageManager = function() {
             if (searchText != null) {
                 searchInputSmall.value = searchText;
                 searchInputSmall.addEventListener("search", function(item){
-                    console.log("Search clicked");
+                    //console.log("Search cancel clicked");
                     self.runSmallSearch();
                 });
             }
