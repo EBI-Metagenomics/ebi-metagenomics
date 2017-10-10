@@ -713,10 +713,6 @@ var FacetManager = function(settingsManager, searchManager) {
             self.searchManager.runAjax("GET", "json", url, null, function(response) {
                 //success
                 var results = response;
-                //<MAQ
-                var facets = '[{"id":"biome","label":"Biome","total":4,"facetValues":[{"label":"Host-associated","value":"Host-associated","count":67909,"children":[{"label":"Human","value":"Human","count":44971,"children":[{"label":"Digestive system","value":"Digestive system","count":27202,"children":[{"label":"Large intestine","value":"Large intestine","count":21876,"children":[{"label":"Fecal","value":"Fecal","count":15954}]},{"label":"Oral","value":"Oral","count":537,"children":[{"label":"Subgingival plaque","value":"Subgingival plaque","count":14},{"label":"Tongue dorsum","value":"tongue dorsum","count":2}]},{"label":"Hindgut","value":"Hindgut","count":82,"children":[{"label":"Rectum","value":"Rectum","count":82}]}]},{"label":"Skin","value":"Skin","count":4902},{"label":"Reproductive system","value":"Reproductive system","count":3250,"children":[{"label":"Vagina","value":"Vagina","count":3178},{"label":"Female","value":"Female","count":72}]},{"label":"Respiratory system","value":"Respiratory system","count":133,"children":[{"label":"Pulmonary system","value":"Pulmonary system","count":133,"children":[{"label":"Lung","value":"Lung","count":56},{"label":"Sputum","value":"Sputum","count":21}]}]},{"label":"Circulatory system","value":"Circulatory system","count":28},{"label":"Milk","value":"Milk","count":10}]},{"label":"Mammals","value":"Mammals","count":6212,"children":[{"label":"Digestive system","value":"Digestive system","count":5917,"children":[{"label":"Large intestine","value":"Large intestine","count":2815,"children":[{"label":"Fecal","value":"Fecal","count":2252},{"label":"Cecum","value":"Cecum","count":342}]},{"label":"Fecal","value":"Fecal","count":2235},{"label":"Stomach","value":"Stomach","count":668,"children":[{"label":"Rumen","value":"Rumen","count":668}]},{"label":"Foregut","value":"Foregut","count":42,"children":[{"label":"Rumen","value":"Rumen","count":42}]},{"label":"Oral cavity","value":"Oral cavity","count":22,"children":[{"label":"Buccal mucosa","value":"Buccal mucosa","count":22}]}]},{"label":"Milk","value":"Milk","count":72},{"label":"Gastrointestinal tract","value":"Gastrointestinal tract","count":16,"children":[{"label":"Intestine","value":"Intestine","count":16,"children":[{"label":"Fecal","value":"Fecal","count":16}]}]},{"label":"Nervous system","value":"Nervous system","count":14,"children":[{"label":"Brain","value":"Brain","count":14}]},{"label":"Excretory system","value":"Excretory system","count":12}]}]},{"label":"Control","value":"Control","count":3}]}]';
-                results.facets = JSON.parse(facets);
-                //MAQ>
                 moreFacetsCallback(self, searchSettings, results, moreFacetsDiv, modalOverlay);
             }, function(event) {
                 self.showMoreFacetsError(moreFacetsDiv);
@@ -852,48 +848,41 @@ var FacetManager = function(settingsManager, searchManager) {
 
         var _heirarchicalTextFilter = function(container, filterText, depth) {
             var filterMatched = false;
-            for(var i=0; i < container.children.length; i++) {
-                child = container.children[i];
+            for(var child of container.childNodes) {
                 var childMatched = false;
 
                 if (child.nodeName.toUpperCase() == "LI") {
-                    var grandChildren = child.children;
-                    var input;
-                    var subList;
-                    for (j=0; j < grandChildren.length; j++) {
-                       var grandchild = grandChildren[j];
-                       if (grandchild.nodeName.toUpperCase() == "INPUT") {
-                           input = grandchild;
-                       } else if (grandchild.nodeName.toUpperCase() == "UL") {
-                           subList = grandchild;
-                       }
+                    var input = null;
+                    var subList = null;
+                    //get the input node and check if node has children
+                    for (var grandchild of child.childNodes) {
+                        if (grandchild.nodeName.toUpperCase() == "INPUT") {
+                            input = grandchild;
+                        } else if (grandchild.nodeName.toUpperCase() == "UL") {
+                            subList = grandchild;
+                        }
                     }
 
-                    //depth-first tree traversal wetlan
+                    //depth-first tree traversal
                     if (subList != undefined) {
-                        childMatched = _heirarchicalTextFilter(subList, filterText, depth+1);
-                        if (childMatched) {
-                            console.log("Child match = " + childMatched);
-                        } else {
-                            console.log("Child match = " + childMatched);
-                        }
+                        childMatched = _heirarchicalTextFilter(subList, filterText, depth + 1);
                     }
 
                     var listItemText = input.value;
                     var tokens = listItemText.split("/");
-                    var leafText = tokens[tokens.length -1];
+                    var leafText = tokens[tokens.length - 1];
 
                     if (!childMatched && leafText.toLowerCase().indexOf(filterText.toLowerCase()) == -1) {
-                        console.log("Hiding: [" + listItemText + "] " + leafText + " != " + filterText + " child: " + childMatched + " Depth = " + depth);
+                        //console.log("Hiding: [" + listItemText + "] " + leafText + " != " + filterText + " child: " + childMatched + " Depth = " + depth);
                         child.style.display = "none";
                     } else {
-                        console.log("Showing: [" + listItemText + "] " + leafText + " == " + filterText + " child: " + childMatched + " Depth = " + depth);
+                        //console.log("Showing: [" + listItemText + "] " + leafText + " == " + filterText + " child: " + childMatched + " Depth = " + depth);
                         child.style.display = "block";
                         filterMatched = true;
                     }
                 }
             }
-            console.log("Processed children " + filterMatched + " Depth = " + depth);
+            //console.log("Processed children " + filterMatched + " Depth = " + depth);
             if (!filterMatched) {
                 container.style.display = "none";
 
@@ -905,48 +894,12 @@ var FacetManager = function(settingsManager, searchManager) {
 
         textFilter.addEventListener("input", function(event){
             var filterText = textFilter.value;
-            var children = contentDiv.children;
-            for(var i=0; i < children.length; i++) {
-                child = children[i];
+            var children = contentDiv.childNodes;
+            for(var child of children) {
                 if (child.nodeName.toUpperCase() == "UL") {
-                    console.log("FIRST CALL UL");
                     _heirarchicalTextFilter(child, filterText, 1);
                 }
             }
-            /*
-            for(var i=0; i < listItems.length; i++) {
-                var listItem = listItems[i];
-                var input = listItem.getElementsByTagName("input")[0];
-                var filterText = textFilter.value;
-                if (filterText != null && filterText != "") {
-                    var listItemText = input.value;
-                    var tokens = listItemText.split("/");
-                    var leafText = tokens[tokens.length -1];
-
-                    if (leafText.toLowerCase().indexOf(filterText.toLowerCase()) == -1) {
-                        //console.log(listItemText + " != " + filterText);
-                        listItem.style.display = "none";
-                    } else {
-                        listItem.style.display = "list-item";
-                        console.log(listItemText + " == " + filterText);
-                        parent = listItem.parentElement;
-                        while(parent.nodeName.toUpperCase() != 'DIV') {
-                            var displayState = "list-item";
-                            if (parent.nodeName.toUpperCase() == "UL") {
-                                displayState = "block";
-                            }
-                            if (parent.style.display == "none") {
-                                parent.style.display = displayState;
-                            }
-                            console.log("Parent " + parent.nodeName + " text = " + parent.getElementsByTagName("input")[0].value);
-                            parent = parent.parentElement;
-                        }
-                    }
-                } else {
-                    listItem.style.display = "list-item";
-                }
-            }
-            */
         });
 
         var treeId = "more-hierarchical-facets-" + facets.id;
