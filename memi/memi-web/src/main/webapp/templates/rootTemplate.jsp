@@ -101,7 +101,7 @@
           href="${pageContext.request.contextPath}/img/icon/apple-touch-icon-114x114.png"/>
 
     <%--?v1.1 will trigger browsers to refresh the source--%>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/default.css?v1.7" type="text/css" media="all"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/default.css?v1.81" type="text/css" media="all"/>
     <%--css for image zooming--%>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/jquery.fancybox.css" type="text/css"
           media="screen"/>
@@ -293,7 +293,7 @@
 
 <!-- javascript for handling search box in header and search page elements -->
 <script src="${pageContext.request.contextPath}/js/FileSaver.min.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/js/ebiSearch.js?v1.8 type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/js/ebiSearch.js?v1.81 type="text/javascript"></script>
 <%--multirange input plugin --%>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/multirange.css" type="text/css"/>
 <script>

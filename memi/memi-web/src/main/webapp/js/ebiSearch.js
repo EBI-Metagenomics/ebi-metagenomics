@@ -56,6 +56,7 @@ var SettingsManager = function() {
         DEFAULT_FACET_DEPTH: 5,
         DEFAULT_MORE_FACETS_DEPTH: 10,
         AJAX_TIMEOUT: 10000,
+        AJAX_STATS_TIMEOUT: 3000,
         DEFAULT_PROTOCOL: location.protocol,
         SECURE_PROTOCOL: "https:",
 
@@ -101,7 +102,9 @@ var SettingsManager = function() {
         SPINNER_CONTAINER_TRANSITION_CLASS: "spinner-container-loaded",
         SPINNER_CLASS: "spinner",
 
-        HOMEPAGE_STATS_ID: "stat-public"
+        HOMEPAGE_STATS_ID: "stat-public",
+        HOMEPAGE_STATS_CONTAINER_CLASS: "jumbo-stats",
+        HOMEPAGE_STATS_VISIBLE_CONTAINER_CLASS: "jumbo-stats-visible"
     };
 
     this.DatatypeSettings = {};
@@ -1721,7 +1724,7 @@ var ResultsManager = function() {
                 var facet = settings.facets[type];
                 for(var i=0; i < facet.length; i++) {
                     var value = facet[i];
-                    console.log("Value: " + value);
+                    //console.log("Value: " + value);
                     var facetTag = this.createFacetTag(label, type, value, dataType, settingsManager, searchManager);
                     searchTags.push(facetTag);
                 }
@@ -2238,6 +2241,13 @@ var HomePageManager = function(settingsManager, searchManager) {
 
     this.statisticsData = {};
 
+    this.updateStats = function() {
+        this.resetStatisticsData();
+        var containers = document.getElementsByClassName(this.settingsManager.GLOBAL_SEARCH_SETTINGS.HOMEPAGE_STATS_CONTAINER_CLASS);
+        this.updatePublicStats(containers);
+        this.updateExperimentStats(containers);
+    };
+
     this.resetStatisticsData = function(){
         var dataTypes = this.settingsManager.DatatypeSettings.DATA_TYPES;
         this.statisticsData = {
@@ -2246,7 +2256,7 @@ var HomePageManager = function(settingsManager, searchManager) {
         };
     };
 
-    this.updateExperimentStats = function() {
+    this.updateExperimentStats = function(containers) {
         var settings = this.settingsManager.getSearchSettings(this.settingsManager.GLOBAL_SEARCH_SETTINGS.RUN);
         var settingsCopy = JSON.parse(JSON.stringify(settings)); //make a shallow copy of settings
 
@@ -2263,10 +2273,10 @@ var HomePageManager = function(settingsManager, searchManager) {
                 settingsCopy.resultsNum = 0;
                 var url = this.searchManager.settingsToURL(settingsCopy);
                 this.searchManager.runAjax("GET", "json", url, null,
-                    this.syncStatsUpdate(settingsCopy, experimentStatElement, facet, previousValue),
-                    this.onStatsUpdateError(settingsCopy, experimentStatElement, previousValue),
-                    this.settingsManager.AJAX_TIMEOUT,
-                    this.onStatsTimeout(settingsCopy, experimentStatElement, previousValue)
+                    this.syncStatsUpdate(settingsCopy, experimentStatElement, facet, previousValue, containers),
+                    this.onStatsUpdateError(settingsCopy, experimentStatElement, previousValue, containers),
+                    this.settingsManager.AJAX_STATS_TIMEOUT,
+                    this.onStatsTimeout(settingsCopy, experimentStatElement, previousValue, containers)
                 );
             } else {
                 console.log("Error: Expected to find element with id '" + experimentType + "-statistics'");
@@ -2274,7 +2284,7 @@ var HomePageManager = function(settingsManager, searchManager) {
         }
     };
 
-    this.updatePublicStats = function() {
+    this.updatePublicStats = function(containers) {
         var dataTypes = this.settingsManager.DatatypeSettings.DATA_TYPES;
         for (var i = 0; i < dataTypes.length; i++) {
             var dataType = dataTypes[i];
@@ -2290,10 +2300,10 @@ var HomePageManager = function(settingsManager, searchManager) {
                 settingsCopy.resultsNum = 0;
                 var url = this.searchManager.settingsToURL(settingsCopy);
                 this.searchManager.runAjax("GET", "json", url, null,
-                    this.syncStatsUpdate(settingsCopy, typeStatElement),
-                    this.onStatsUpdateError(settingsCopy, typeStatElement, previousValue),
-                    this.settingsManager.AJAX_TIMEOUT,
-                    this.onStatsTimeout(settingsCopy, typeStatElement, previousValue)
+                    this.syncStatsUpdate(settingsCopy, typeStatElement, containers),
+                    this.onStatsUpdateError(settingsCopy, typeStatElement, previousValue, containers),
+                    this.settingsManager.AJAX_STATS_TIMEOUT,
+                    this.onStatsTimeout(settingsCopy, typeStatElement, previousValue, containers)
                 );
             } else {
                 console.log("Error: Expected to find element with id '" + settingsCopy.type + "-statistics'");
@@ -2309,7 +2319,7 @@ var HomePageManager = function(settingsManager, searchManager) {
      * @param previousValue
      * @returns {Function}
      */
-    this.syncStatsUpdate = function(settingsCopy, typeStatElement, runFacet, previousValue) {
+    this.syncStatsUpdate = function(settingsCopy, typeStatElement, runFacet, previousValue, containers) {
         var self = this;
 
         return function(response) {
@@ -2337,6 +2347,10 @@ var HomePageManager = function(settingsManager, searchManager) {
                         element.runFacet,
                         element.previousValue
                     );
+                }
+                for (var container of containers) {
+                    container.classList.toggle(self.settingsManager.GLOBAL_SEARCH_SETTINGS.HOMEPAGE_STATS_VISIBLE_CONTAINER_CLASS);
+                    container.style.visibility = "visible";
                 }
             }
         };
@@ -2377,17 +2391,27 @@ var HomePageManager = function(settingsManager, searchManager) {
         }
     };
 
-    this.onStatsUpdateError = function(settingsCopy, typeStatElement, previousValue) {
+    this.onStatsUpdateError = function(settingsCopy, typeStatElement, previousValue, containers) {
+        var self = this;
         return function(httpRes) {
             console.log("Error fetching " + settingsCopy.type + " counts for homepage");
             typeStatElement.innerHTML = previousValue;
+            for (var container of containers) {
+                container.classList.add(self.settingsManager.GLOBAL_SEARCH_SETTINGS.HOMEPAGE_STATS_VISIBLE_CONTAINER_CLASS);
+                container.style.visibility = "visible";
+            }
         };
     };
 
-    this.onStatsTimeout = function(settingsCopy, typeStatElement, previousValue) {
+    this.onStatsTimeout = function(settingsCopy, typeStatElement, previousValue, containers) {
+        var self = this;
         return function(httpRes) {
-            console.log("Error: Time fetching " + settingsCopy.type + " counts for homepage");
+            console.log("Error: Timeout fetching " + settingsCopy.type + " counts for homepage");
             typeStatElement.innerHTML = previousValue;
+            for (var container of containers) {
+                container.classList.add(self.settingsManager.GLOBAL_SEARCH_SETTINGS.HOMEPAGE_STATS_VISIBLE_CONTAINER_CLASS);
+                container.style.visibility = "visible";
+            }
         };
     };
 
@@ -2729,9 +2753,7 @@ var PageManager = function() {
         if (!this.settingsManager.areSettingsInitialisted()) {
             this.settingsManager.initialiseSettings();
         }
-        this.homePageManager.resetStatisticsData();
-        this.homePageManager.updatePublicStats();
-        this.homePageManager.updateExperimentStats();
+        this.homePageManager.updateStats();
     };
 };
 

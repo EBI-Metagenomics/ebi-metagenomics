@@ -80,7 +80,7 @@
         <!-- no stats for private area unless someone makes it work-->
     </c:when>
     <c:otherwise>
-        <section class="jumbo-stats">
+        <section class="jumbo-stats" style="visibility:hidden">
             <div class="grid_24 jumbo-stats-container">
                 <div class="grid_6 alpha jumbo-stats-box" id="stat-submissions">
                     <!-- <span class="icon icon-functional" data-icon="D"></span>--><span class="icon icon-generic"
