@@ -312,7 +312,7 @@
                                     </c:if>
                                     <a title="download results"
                                        class="icon icon-functional list_sample" data-icon="="
-                                       href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${sample.sampleId}/runs/${analysisJob.externalRunIDs}/results/versions/${analysisJob.pipelineRelease.releaseVersion}#ui-id-10"/>"></a>
+                                       href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${sample.sampleId}/runs/${analysisJob.externalRunIDs}/results/versions/${analysisJob.pipelineRelease.releaseVersion}#ui-id-12"/>"></a>
                                 </c:when>
                                 <c:otherwise>
                                     ${analysisStatus}

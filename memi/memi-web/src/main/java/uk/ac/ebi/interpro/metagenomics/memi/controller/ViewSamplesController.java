@@ -242,7 +242,7 @@ public class ViewSamplesController extends AbstractController implements IContro
         result.add("Biome");
         result.add("Sample ID");
         result.add("Sample name");
-        result.add("Project name");
+        result.add("Projects included");
         return result;
     }
 
