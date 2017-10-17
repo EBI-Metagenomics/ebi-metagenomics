@@ -165,8 +165,10 @@
                         <span class="biome_icon icon_xs ${sample.biomeIconCSSClass}" title="${sample.biomeIconTitle} biome"></span>
                         </td>
                         <td width="8%" class="table_xs_text">${sample.sampleId}</td>
-                        <td width="30%" class="h_left table_xs_text" id="ordered">${sample.sampleName}
-
+                        <td width="30%" class="h_left table_xs_text" id="ordered">
+                            <c:forEach var="study" items="${sample.studies}" varStatus="status">
+                                <a href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${sample.sampleId}"/>" class="fl_uppercase_title">${sample.sampleName}</a>
+                            </c:forEach>
                             <%--<a href="<c:url value="${baseURL}/projects/${sample.study.studyId}/samples/${sample.sampleId}"/>" class="fl_uppercase_title">${sample.sampleName}</a>--%>
 
                            <%-- Show icon only for people are are logged in--%>
@@ -183,7 +185,7 @@
                         </td>
                         <td class="h_left" width="62%">
                             <c:forEach var="study" items="${sample.studies}" varStatus="status">
-                                <a href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${sample.sampleId}"/>" class="fl_uppercase_title">${study.studyId} - ${sample.sampleId}</a>
+                                <a href="<c:url value="${baseURL}/projects/${study.studyId}"/>" class="fl_uppercase_title">${study.studyId}</a>
                             </c:forEach>
                         </td>
                     </tr>
