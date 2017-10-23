@@ -71,7 +71,7 @@ public abstract class AbstractResultViewController extends SecuredAbstractContro
                                    final String sampleId,
                                    final String runId,
                                    String version) {
-//        TODO: Implement
+//        TODO: Continue implementation
         return runDAO.readByRunIdDeep(projectId, sampleId, runId, version);
     }
 
