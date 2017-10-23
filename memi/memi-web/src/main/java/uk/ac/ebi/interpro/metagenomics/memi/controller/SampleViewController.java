@@ -63,7 +63,7 @@ public class SampleViewController extends AbstractSampleViewController {
     }
 
     private Sample getSecuredEntity(final String projectId,
-                                    final String sampleId) {
+                                          final String sampleId) {
         return sampleDAO.readBySampleIdAndStudyId(projectId, sampleId);
     }
 

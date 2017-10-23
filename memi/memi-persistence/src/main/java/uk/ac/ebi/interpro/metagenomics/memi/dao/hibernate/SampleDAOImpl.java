@@ -61,8 +61,9 @@ public class SampleDAOImpl implements SampleDAO {
             criteria.add(Restrictions.eq("sampleId", externalSampleId));
             criteria.createAlias("studies", "studies");
             criteria.add(Restrictions.eq("studies.studyId", externalStudyId));
-            Sample result = (Sample) criteria.uniqueResult();
-            return result;
+            Sample sample = (Sample) criteria.uniqueResult();
+            sample.setExternalProjectId(externalStudyId);
+            return sample;
         } catch (HibernateException e) {
             throw new HibernateException("Couldn't retrieve sample object by the following external IDs " + externalStudyId + "/" + externalSampleId, e);
         }

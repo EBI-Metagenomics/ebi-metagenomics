@@ -42,10 +42,11 @@ public class AnalysisJobDAOImpl extends GenericDAOImpl<AnalysisJob, Long> implem
     }
 
     @Transactional(readOnly = true)
-    public List<AnalysisJob> readNonSuppressedBySampleId(Long sampleId) {
+    public List<AnalysisJob> readNonSuppressedBySampleId(Long sampleId, Long studyId) {
         try {
             Criteria criteria = getSession().createCriteria(AnalysisJob.class);
             criteria.add(Restrictions.eq("sample.id", sampleId));
+            criteria.add(Restrictions.eq("studyId", studyId));
             // Filter out all suppressed runs
             criteria.createAlias("analysisStatus", "status").add(Restrictions.ne("status.analysisStatusId", 5));
             return criteria.list();

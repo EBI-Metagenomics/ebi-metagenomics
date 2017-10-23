@@ -11,6 +11,7 @@
     <tags:publications publications="${model.sample.publications}" relatedPublications="${model.relatedPublications}"
                        relatedLinks="${model.relatedLinks}"/>
 
+
     <!-- Related publication, resources, links -->
     <div class="sidebar-allrel">
     <div id="sidebar-related">
@@ -19,7 +20,7 @@
     <ul>
     <li>
         <a title="Click to view entry on European Nucleotide Archive" href="https://www.ebi.ac.uk/ena/data/view/${model.analysisJob.externalRunIDs}"
-                                                      class="list_more">ENA website (${model.analysisJob.externalRunIDs})</a>
+                                                      class="list_more">ENA website (${model.analysisJob.secondaryAccession})</a>
     </li>
     </ul>
     </div>

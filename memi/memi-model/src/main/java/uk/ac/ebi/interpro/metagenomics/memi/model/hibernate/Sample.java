@@ -117,6 +117,9 @@ public class Sample implements SecureEntity, BiomeEntity {
     @Transient
     private String biomeIconTitle;
 
+    @Transient
+    private String externalProjectId;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "sample")
     @Column(name = "SAMPLE_ID")
     private Set<AnalysisJob> analysisJobs;
@@ -384,5 +387,13 @@ public class Sample implements SecureEntity, BiomeEntity {
     @Transient
     public String getSecureEntityId() {
         return getSampleId();
+    }
+
+    public String getExternalProjectId() {
+        return externalProjectId;
+    }
+
+    public void setExternalProjectId(String externalProjectId) {
+        this.externalProjectId = externalProjectId;
     }
 }

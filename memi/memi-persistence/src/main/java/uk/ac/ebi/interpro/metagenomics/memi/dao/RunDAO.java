@@ -16,7 +16,7 @@ import java.util.Map;
  */
 public interface RunDAO {
 
-    public Run readByRunIdDeep(String projectId, String sampleId, String runId, String version);
+    public Run readByRunIdDeep(Long studyId, String sampleId, String runId, String version);
 
     public Map<String, Long> retrieveRunCountsGroupedByExperimentType(int analysisStatusI);
 

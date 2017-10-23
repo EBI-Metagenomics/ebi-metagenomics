@@ -3,7 +3,6 @@ package uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate;
 import org.hibernate.criterion.Criterion;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.valueObjects.SampleStatisticsVO;
-import uk.ac.ebi.interpro.metagenomics.memi.model.valueObjects.StudyStatisticsVO;
 
 import java.util.List;
 import java.util.Map;
