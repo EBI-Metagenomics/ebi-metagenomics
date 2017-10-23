@@ -137,9 +137,9 @@ public class RunDAOImpl implements RunDAO {
                     .append("SAMPLE sa, ")
                     .append("SAMPLE_ANN an, ")
                     .append("EXPERIMENT_TYPE et, ")
-                    .append("(SELECT aj.sample_id, count(aj.sample_id) as run_count FROM STUDY_SAMPLE stsa, SAMPLE sa, ANALYSIS_JOB aj where stsa.SAMPLE_ID=sa.SAMPLE_ID and sa.sample_id = aj.sample_id \n" +
-                            "AND stsa.study_id = ? AND aj.analysis_status_id <> 5 GROUP BY aj.sample_id) tmp ")
-                    .append("WHERE aj.experiment_type_id=et.experiment_type_id AND aj.pipeline_id=r.pipeline_id AND sa.sample_id = aj.sample_id AND stsa.sample_id = sa.sample_id AND sa.sample_id = an.sample_id AND aj.ANALYSIS_STATUS_ID=st.ANALYSIS_STATUS_ID AND an.VAR_ID = 352 AND tmp.sample_id = aj.sample_id AND sa.study_id = ? ");
+                    .append("(SELECT aj.sample_id, count(aj.sample_id) as run_count FROM STUDY_SAMPLE stsa, SAMPLE sa, ANALYSIS_JOB aj where stsa.SAMPLE_ID=sa.SAMPLE_ID AND sa.sample_id = aj.sample_id \n" +
+                            "AND stsa.study_id = ? AND aj.study_id = ? AND aj.analysis_status_id <> 5 GROUP BY aj.sample_id) tmp ")
+                    .append("WHERE aj.experiment_type_id=et.experiment_type_id AND aj.pipeline_id=r.pipeline_id AND sa.sample_id = aj.sample_id AND stsa.sample_id = sa.sample_id AND sa.sample_id = an.sample_id AND aj.ANALYSIS_STATUS_ID=st.ANALYSIS_STATUS_ID AND an.VAR_ID = 352 AND tmp.sample_id = aj.sample_id AND stsa.study_id = ? AND aj.study_id = ? ");
             if (publicOnly) {
                 sb.append("AND sa.is_public = 1 ");
             }
@@ -154,7 +154,7 @@ public class RunDAOImpl implements RunDAO {
 //            TODO: Change level to debug
             log.info("Running the following SQL query now:\n" + sql);
 
-            List<QueryRunsForProjectResult> results = jdbcTemplate.query(sql, new Object[]{projectId, projectId}, new BeanPropertyRowMapper<QueryRunsForProjectResult>(QueryRunsForProjectResult.class));
+            List<QueryRunsForProjectResult> results = jdbcTemplate.query(sql, new Object[]{projectId, projectId, projectId, projectId}, new BeanPropertyRowMapper<QueryRunsForProjectResult>(QueryRunsForProjectResult.class));
             return results;
 
         } catch (EmptyResultDataAccessException exception) {

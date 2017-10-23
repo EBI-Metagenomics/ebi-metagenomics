@@ -140,7 +140,7 @@
     <div class="grid_24 jumbo-list-data-container">
 
         <c:choose>
-        <c:when test="${not empty model.submitter && empty model.myStudiesMap && empty model.mySamples}">
+        <c:when test="${not empty model.submitter && empty model.studies && empty model.mySamples}">
             <!-- No project or sample have been analysed -->
             <p class="msg_error">
                 No projects or samples processed - If you have already submitted your data to ENA, then there is a small
