@@ -39,6 +39,7 @@
 
             <div class="search-page grid_19 omega">
                 <div id="Projects-hitnum-text"></div>
+                <div id="Projects-search-terms"></div>
 
                 <div id="Projects-table-header">
                     <div id="Projects-header-searchPagination" class="table-pagination"></div>
@@ -63,6 +64,7 @@
 
             <div class="search-page grid_19 omega">
                 <div id="Samples-hitnum-text"></div>
+                <div id="Samples-search-terms"></div>
 
                 <div id="Samples-table-header">
                     <div id="Samples-header-searchPagination" class="table-pagination"></div>
@@ -85,6 +87,7 @@
 
             <div class="search-page grid_19 omega">
                 <div id="Runs-hitnum-text"></div>
+                <div id="Runs-search-terms"></div>
 
                 <div id="Runs-table-header">
                     <div id="Runs-header-searchPagination" class="table-pagination"></div>

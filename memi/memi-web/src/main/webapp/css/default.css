@@ -2221,3 +2221,58 @@ div#local-masthead ul li.logout {display:none;}
 .fragment-stats img {
     width: 100%;
 }
+
+.search-tag {
+    margin-right: 8px;
+    line-height: 1.2;
+    background: #e2e0df;
+    padding: 5px 10px;
+    border-radius: 3px;
+    position: relative;
+    cursor: pointer;
+    transition: all .3s;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+.search-tag:hover {
+    padding: 5px;
+    padding-right: 20px;
+    background: #fec2c2;
+    transition: all .3s;
+}
+
+.search-term-tag {
+}
+
+.search-text-tag {
+    background: #ccf2cf;
+}
+
+.search-facet-tag {
+    background: #E2E1DF;
+}
+
+.search-close-button-tag {
+    font-size: 1.1rem;
+    position: absolute;
+    top: 5px;
+    right: 3px;
+    text-decoration: none;
+    padding-left: 2px;
+    padding-top: 3px;
+    line-height: 0.5;
+    color: #ccc;
+    color: rgba(0, 0, 0, 0.2);
+    padding-bottom: 4px;
+    display: none;
+    border: 0;
+    background: none;
+    cursor: pointer;
+}
+
+.search-tag:hover > .search-close-button-tag {
+    display: block;
+}

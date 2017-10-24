@@ -45,6 +45,8 @@ var SettingsManager = function() {
 
     this.FACET_SOURCE = "Source";
 
+
+
     this.GLOBAL_SEARCH_SETTINGS = {
         PROJECT_RESULTS_NUM: 10,
         SAMPLE_RESULTS_NUM: 10,
@@ -53,6 +55,9 @@ var SettingsManager = function() {
         FACET_NUM: 10,
         DEFAULT_FACET_DEPTH: 5,
         DEFAULT_MORE_FACETS_DEPTH: 10,
+        AJAX_TIMEOUT: 10000,
+        DEFAULT_PROTOCOL: location.protocol,
+        SECURE_PROTOCOL: "https:",
 
         PROJECT: "Projects",
         PROJECT_DOMAIN: "metagenomics_projects",
@@ -62,7 +67,7 @@ var SettingsManager = function() {
         SAMPLE_FIELDS: "id,name,description,experiment_type,METAGENOMICS_PROJECTS",
         RUN: "Runs",
         RUN_DOMAIN: "metagenomics_runs",
-        RUN_FIELDS: "id,experiment_type,pipeline_version,METAGENOMICS_SAMPLES,METAGENOMICS_PROJECTS",
+        RUN_FIELDS: "id,name,experiment_type,pipeline_version,METAGENOMICS_SAMPLES,METAGENOMICS_PROJECTS",
         METAGENOMICS_SEARCH_TEXT : "www.ebi.ac.uk.metagenomics.searchsettings",
         METAGENOMICS_SEARCH_SETTINGS : "www.ebi.ac.uk.metagenomics.searchsettings",
         METAGENOMICS_SEARCH_SETTINGS_SELECTED_TAB: "www.ebi.ac.uk.metagenomics.selectedFacet",
@@ -70,9 +75,17 @@ var SettingsManager = function() {
         MORE_FACET_INPUT_CLASS: "more-facet-input",
         MORE_FACET_TEXT_FILTER_CLASS: "more-facet-text-filter",
         MORE_FACET_CONTENT_CLASS: "more-facet-content",
+        MORE_FACET_HEADER_CLASS: "more-facet-header",
+        MORE_FACET_FOOTER_CLASS: "more-facet-footer",
+        MORE_FACET_ACTIVE_BUTTON_CLASS: "more-facet-active-button",
+        MORE_FACET_CANCEL_BUTTON_CLASS: "more-facet-cancel-button",
         HIERARCHICAL_FACET_CLASS: "hierarchical-facet-list",
         HIERARCHICAL_FACET_CHECKBOX: "hierarchical-facet-checkbox",
         HOMEPAGE_LINK_CLASS: "homepage-search-link",
+
+        RESULTS_HITNUM_TEXT_DIV_SUFFIX: "-hitnum-text",
+        RESULTS_SEARCH_TERMS_DIV_SUFFIX: "-search-terms",
+        RESULTS_SEARCH_DATA_SUFFIX: "-searchData",
 
         DOWNLOAD_BUTTON_CLASS: "download-button",
 
@@ -119,12 +132,12 @@ var SettingsManager = function() {
         var EBISEARCH_PATH = "ebisearch/ws/rest/";
         var host = window.location.hostname;
         var port = window.location.port;
-        var protocol = "https";
+        var protocol = this.GLOBAL_SEARCH_SETTINGS.SECURE_PROTOCOL;
 
         if (host === "localhost" && port == 8000) {
             host = "wwwdev.ebi.ac.uk";
         }
-        var searchURL = protocol + "://" + host + "/" + EBISEARCH_PATH;
+        var searchURL = protocol + "//" + host + "/" + EBISEARCH_PATH;
         return searchURL;
     };
 
@@ -276,7 +289,7 @@ var TableManager = function(searchManager, settingsManager) {
 
         for (var i=0; i < results.entries.length; i++) {
             var entry = results.entries[i];
-            var rowData = this.getProjectRow(entry);
+            var rowData = this.getProjectRow(entry, this.settingsManager);
             this.addTableRow(rowData, table);
         }
         container.appendChild(table);
@@ -301,11 +314,11 @@ var TableManager = function(searchManager, settingsManager) {
      * @param entry
      * @returns {[*,*,*,*]}
      */
-    this.getProjectRow = function(entry) {
+    this.getProjectRow = function(entry, settingsManager) {
         var rowData = [
             {
                 name: entry["id"],
-                url: "http://" + window.location.host + "/metagenomics/projects/" + entry["id"]
+                url: settingsManager.GLOBAL_SEARCH_SETTINGS.DEFAULT_PROTOCOL + "//" + window.location.host + "/metagenomics/projects/" + entry["id"]
             },
             {name: entry.fields.name[0]},
             {name: entry.fields.biome_name[0], className: "xs_hide"},
@@ -331,7 +344,7 @@ var TableManager = function(searchManager, settingsManager) {
 
         for (var i=0; i < results.entries.length; i++) {
             var entry = results.entries[i];
-            var rowData = this.getSampleRow(entry);
+            var rowData = this.getSampleRow(entry, this.settingsManager);
             this.addTableRow(rowData, table);
         }
         container.appendChild(table);
@@ -356,15 +369,15 @@ var TableManager = function(searchManager, settingsManager) {
      * @param entry
      * @returns {[*,*,*,*]}
      */
-    this.getSampleRow = function(entry) {
+    this.getSampleRow = function(entry, settingsManager) {
         var rowData = [
             {
                 name: entry["id"],
-                url: "http://" + window.location.host + "/metagenomics/projects/" + entry["fields"]["METAGENOMICS_PROJECTS"][0] + "/samples/" +  entry["id"]
+                url: settingsManager.GLOBAL_SEARCH_SETTINGS.DEFAULT_PROTOCOL + "//" + window.location.host + "/metagenomics/projects/" + entry["fields"]["METAGENOMICS_PROJECTS"][0] + "/samples/" +  entry["id"]
             },
             {
                 name: entry["fields"]["METAGENOMICS_PROJECTS"][0],
-                url: "http://" + window.location.host + "/metagenomics/projects/" + entry["fields"]["METAGENOMICS_PROJECTS"][0]
+                url: settingsManager.GLOBAL_SEARCH_SETTINGS.DEFAULT_PROTOCOL + "//" + window.location.host + "/metagenomics/projects/" + entry["fields"]["METAGENOMICS_PROJECTS"][0]
             },
             {name: entry.fields.name[0]},
             {name: entry.fields.description[0], className: "xs_hide"}
@@ -390,7 +403,7 @@ var TableManager = function(searchManager, settingsManager) {
 
         for (var i=0; i < results.entries.length; i++) {
             var entry = results.entries[i];
-            var rowData = this.getRunRow(entry);
+            var rowData = this.getRunRow(entry, this.settingsManager);
             this.addTableRow(rowData, table);
         }
 
@@ -417,20 +430,20 @@ var TableManager = function(searchManager, settingsManager) {
      * @param entry
      * @returns {[*,*,*,*]}
      */
-    this.getRunRow = function(entry) {
+    this.getRunRow = function(entry, settingsManager) {
         var rowData = [
             {
-                name: entry.id,
-                url: "http://" + window.location.host + "/metagenomics/projects/"
+                name: entry.fields.name,
+                url: settingsManager.GLOBAL_SEARCH_SETTINGS.DEFAULT_PROTOCOL + "//" + window.location.host + "/metagenomics/projects/"
                 + entry.fields.METAGENOMICS_PROJECTS[0] + "/samples/"
                 + entry.fields.METAGENOMICS_SAMPLES[0] + "/runs/"
-                + entry.id + "/results/versions/"
+                + entry.fields.name + "/results/versions/"
                 + entry.fields.pipeline_version[0]
             },
             {
                 name: entry.fields.METAGENOMICS_SAMPLES[0],
                 className: "xs_hide",
-                url: "http://" + window.location.host + "/metagenomics/projects/"
+                url: settingsManager.GLOBAL_SEARCH_SETTINGS.DEFAULT_PROTOCOL + "//" + window.location.host + "/metagenomics/projects/"
                 + entry.fields.METAGENOMICS_PROJECTS[0] + "/samples/"
                 + entry.fields.METAGENOMICS_SAMPLES[0],
 
@@ -438,7 +451,7 @@ var TableManager = function(searchManager, settingsManager) {
             {
                 name: entry.fields.METAGENOMICS_PROJECTS[0],
                 className: "xs_hide",
-                url: "http://" + window.location.host + "/metagenomics/projects/" + entry.fields.METAGENOMICS_PROJECTS[0],
+                url: settingsManager.GLOBAL_SEARCH_SETTINGS.DEFAULT_PROTOCOL + "//" + window.location.host + "/metagenomics/projects/" + entry.fields.METAGENOMICS_PROJECTS[0],
             },
             {
                 name: entry.fields.experiment_type[0]
@@ -446,7 +459,7 @@ var TableManager = function(searchManager, settingsManager) {
             {
                 name: entry.fields.pipeline_version[0],
                 className: "xs_hide",
-                url: "http://" + window.location.host + "/metagenomics/pipelines/" + entry.fields.pipeline_version[0],
+                url: settingsManager.GLOBAL_SEARCH_SETTINGS.DEFAULT_PROTOCOL + "//" + window.location.host + "/metagenomics/pipelines/" + entry.fields.pipeline_version[0],
             },
         ];
         return rowData;
@@ -679,12 +692,6 @@ var FacetManager = function(settingsManager, searchManager) {
     this.addMoreFacetsListener = function (searchSettings, facetGroup, element, container, moreFacetsCallback) {
         var self = this;
         element.addEventListener("click", function(event){
-            /*
-            var facetCount = facetGroup.total;
-            if (facetCount > 1000) {
-                facetCount = 1000;
-            }
-            */
             var facetCount = 1000;
             //console.log("Fetching " + facetCount + " more facets");
             var parameters = {
@@ -759,16 +766,11 @@ var FacetManager = function(settingsManager, searchManager) {
 
         var headerDiv = document.createElement("div");
         headerDiv.style.width = "100%";
+        headerDiv.classList.add(self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_HEADER_CLASS);
 
         var title = document.createElement("h3");
         title.innerHTML = facetGroup.label;
         headerDiv.appendChild(title);
-
-        var textFilter = document.createElement("input");
-        textFilter.type = "text";
-        textFilter.style.margin = "10px";
-        textFilter.classList.add(self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_TEXT_FILTER_CLASS);
-        headerDiv.appendChild(textFilter);
 
         var facetsDiv = document.createElement("div");
         facetsDiv.classList.add(self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_CONTENT_CLASS);
@@ -778,29 +780,14 @@ var FacetManager = function(settingsManager, searchManager) {
         facetsDiv.style.height = "80%";
         facetsDiv.appendChild(document.createTextNode("Loading facets"));
 
-        textFilter.addEventListener("keyup", function(event){
-            var listItems = facetsDiv.getElementsByTagName("li");
-            for(var i=0; i < listItems.length; i++) {
-                var listItem = listItems[i];
-                var input = listItem.getElementsByTagName("input")[0];
-                var filterText = textFilter.value;
-                if (filterText != null && filterText != "") {
-                    var listItemText = input.value;
-                    if (listItemText.toLowerCase().indexOf(filterText.toLowerCase()) == -1) {
-                        listItem.style.display = "none";
-                    }
-                } else {
-                    listItem.style.display = "inline-block";
-                }
-            }
-        });
-
         var footerDiv = document.createElement("div");
+        footerDiv.classList.add(self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_FOOTER_CLASS)
         footerDiv.height = "20%";
         var applyButton = document.createElement("input");
         applyButton.type = "button";
         applyButton.value = "Filter";
         applyButton.style.margin = "10px";
+        applyButton.classList.add(self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_ACTIVE_BUTTON_CLASS);
         applyButton.addEventListener("click", function(event){
             self.runMoreFacetsSearch(searchSettings, facetsDiv);
         });
@@ -809,6 +796,7 @@ var FacetManager = function(settingsManager, searchManager) {
         cancelButton.type = "button";
         cancelButton.value = "Cancel";
         cancelButton.style.marginBottom = "10px";
+        cancelButton.classList.add(self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_CANCEL_BUTTON_CLASS);
         cancelButton.addEventListener(
             "click", function(event) {
                 self.removeModalOverlay();
@@ -840,16 +828,79 @@ var FacetManager = function(settingsManager, searchManager) {
                 self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_CONTENT_CLASS);
         }
 
-        var textFilter = container.getElementsByClassName(
-            self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_TEXT_FILTER_CLASS
+        var headerDivs = container.getElementsByClassName(
+            self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_HEADER_CLASS
         );
-        if (textFilter != null && textFilter.length == 1) {
-            var textInput = textFilter[0];
-            textInput.style.display = "none";
+        var headerDiv = null;
+
+        if (headerDivs != null && headerDivs.length == 1) {
+            headerDiv = headerDivs[0];
         } else {
-            console.log("Error: Expect to find exactly one child div with class " +
-                self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_TEXT_FILTER_CLASS);
+            console.log("Error: Expect to find exactly one child div with class "
+                + self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_CONTENT_CLASS);
         }
+
+        textFilter = document.createElement("input");
+        textFilter.type = "text";
+        textFilter.style.margin = "10px";
+        textFilter.classList.add(self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_TEXT_FILTER_CLASS);
+        headerDiv.appendChild(textFilter);
+
+        var _heirarchicalTextFilter = function(container, filterText, depth) {
+            var filterMatched = false;
+            for(var child of container.childNodes) {
+                var childMatched = false;
+
+                if (child.nodeName.toUpperCase() == "LI") {
+                    var input = null;
+                    var subList = null;
+                    //get the input node and check if node has children
+                    for (var grandchild of child.childNodes) {
+                        if (grandchild.nodeName.toUpperCase() == "INPUT") {
+                            input = grandchild;
+                        } else if (grandchild.nodeName.toUpperCase() == "UL") {
+                            subList = grandchild;
+                        }
+                    }
+
+                    //depth-first tree traversal
+                    if (subList != undefined) {
+                        childMatched = _heirarchicalTextFilter(subList, filterText, depth + 1);
+                    }
+
+                    var listItemText = input.value;
+                    var tokens = listItemText.split("/");
+                    var leafText = tokens[tokens.length - 1];
+
+                    if (!childMatched && leafText.toLowerCase().indexOf(filterText.toLowerCase()) == -1) {
+                        //console.log("Hiding: [" + listItemText + "] " + leafText + " != " + filterText + " child: " + childMatched + " Depth = " + depth);
+                        child.style.display = "none";
+                    } else {
+                        //console.log("Showing: [" + listItemText + "] " + leafText + " == " + filterText + " child: " + childMatched + " Depth = " + depth);
+                        child.style.display = "block";
+                        filterMatched = true;
+                    }
+                }
+            }
+            //console.log("Processed children " + filterMatched + " Depth = " + depth);
+            if (!filterMatched) {
+                container.style.display = "none";
+
+            } else {
+                container.style.display = "list-item";
+            }
+            return filterMatched;
+        };
+
+        textFilter.addEventListener("input", function(event){
+            var filterText = textFilter.value;
+            var children = contentDiv.childNodes;
+            for(var child of children) {
+                if (child.nodeName.toUpperCase() == "UL") {
+                    _heirarchicalTextFilter(child, filterText, 1);
+                }
+            }
+        });
 
         var treeId = "more-hierarchical-facets-" + facets.id;
         contentDiv.innerHTML = "";
@@ -929,6 +980,43 @@ var FacetManager = function(settingsManager, searchManager) {
                 + self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_CONTENT_CLASS);
         }
 
+        var headerDivs = container.getElementsByClassName(
+            self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_HEADER_CLASS
+        );
+        var headerDiv = null;
+
+        if (headerDivs != null && headerDivs.length == 1) {
+            headerDiv = headerDivs[0];
+        } else {
+            console.log("Error: Expect to find exactly one child div with class "
+                + self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_CONTENT_CLASS);
+        }
+
+        textFilter = document.createElement("input");
+        textFilter.type = "text";
+        textFilter.style.margin = "10px";
+        textFilter.classList.add(self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_TEXT_FILTER_CLASS);
+        headerDiv.appendChild(textFilter);
+
+        textFilter.addEventListener("input", function(event){
+            var listItems = contentDiv.getElementsByTagName("li");
+            for(var i=0; i < listItems.length; i++) {
+                var listItem = listItems[i];
+                var input = listItem.getElementsByTagName("input")[0];
+                var filterText = textFilter.value;
+                if (filterText != null && filterText != "") {
+                    var listItemText = input.value;
+                    if (listItemText.toLowerCase().indexOf(filterText.toLowerCase()) == -1) {
+                        listItem.style.display = "none";
+                    } else {
+                        listItem.style.display = "inline-block";
+                    }
+                } else {
+                    listItem.style.display = "inline-block";
+                }
+            }
+        });
+
         contentDiv.innerHTML = "";
         var list = document.createElement("ul");
         list.style.listStyle = "None";
@@ -970,13 +1058,65 @@ var FacetManager = function(settingsManager, searchManager) {
 
     this.showMoreFacetsError = function(container) {
         console.log("Error: Error fetching more facets");
+        var contentDivs = container.getElementsByClassName(
+            self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_CONTENT_CLASS
+        );
+        if (contentDivs != null && contentDivs.length == 1) {
+            var contentDiv = contentDivs[0];
+            contentDiv.innerHTML = "An error was encountered whilst fetching facet data." +
+                "Please retry the search. If the problem persists please " +
+                "<a href=\"//www.ebi.ac.uk/support/metagenomics\">report the problem</a>";
+        } else {
+            console.log("Error: Expect to find exactly one child div with class " +
+                self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_CONTENT_CLASS);
+        }
+
+        var headerDivs = container.getElementsByClassName(
+            self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_HEADER_CLASS
+        );
+        if (headerDivs != null && headerDivs.length == 1) {
+            var headerDiv = headerDivs[0];
+            headerDiv.innerHTML = "";
+            var heading = document.createElement("h3");
+            heading.innerHTML = "Error encountered";
+            headerDiv.appendChild(heading);
+
+        } else {
+            console.log("Error: Expect to find exactly one child div with class "
+                + self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_CONTENT_CLASS);
+        }
+
+        var footerDivs = container.getElementsByClassName(
+            self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_FOOTER_CLASS
+        );
+        if (footerDivs != null && footerDivs.length == 1) {
+            var footerDiv = footerDivs[0];
+            var buttonList = footerDiv.getElementsByClassName(
+                self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_ACTIVE_BUTTON_CLASS
+            );
+            var buttons = Array.prototype.slice.call(buttonList);
+            buttons.forEach(function(button) {
+                button.style.display = "none";
+
+            });
+        } else {
+            console.log("Error: Expect to find exactly one child div with class "
+                + self.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_FOOTER_CLASS);
+        }
+
     };
 
     this.runMoreFacetsSearch = function(searchSettings, container) {
+        /*
+        The logic of this method has to handle normal checkbox facets (these end up in searchSettings.facets[facetType]
+        but also bonsai checkboxes. The number of these can be artificially inflated due to all child nodes of a given
+        facet becoming automatically checked. These automatically checked facets are removed from the final list to
+        avoid creating very long request parameter strings.
+         */
         var facetInputs = document.getElementsByName(
             this.settingsManager.GLOBAL_SEARCH_SETTINGS.MORE_FACET_INPUT_CLASS
         );
-        var facetTypeSetInDialog = {};
+        var facetTypeSetInDialog = {}; //used to track checked facet-types and hierarchical facet values
         for (var i=0; i < facetInputs.length; i++) {
             var checkbox = facetInputs[i];
             var parent = checkbox.parentElement;
@@ -991,8 +1131,19 @@ var FacetManager = function(settingsManager, searchManager) {
             if (checkbox.checked) {
                 //console.log("Checkbox: " + checkbox.value + " checked " + facetType + " = " + facetValue);
                 if (searchSettings.facets[facetType].indexOf(facetValue) == -1) {
-                    searchSettings.facets[facetType].push(facetValue);
-                    facetTypeSetInDialog[facetType] = true;
+                    if (!facetTypeSetInDialog.hasOwnProperty(facetType)) {
+                        facetTypeSetInDialog[facetType] = [];
+                    }
+
+                    if (checkbox.id.startsWith("bonsai-checkbox")) {
+                        if (! this._isFacetValueChildOfSelectedFacets(facetValue, facetTypeSetInDialog[facetType])){
+                            facetTypeSetInDialog[facetType].push(facetValue);
+                            facetTypeSetInDialog[facetType].sort();
+                        }
+                    } else {
+                        searchSettings.facets[facetType].push(facetValue);
+                    }
+
                 }
             } else {
                 var facetValueIndex = searchSettings.facets[facetType].indexOf(facetValue);
@@ -1001,9 +1152,34 @@ var FacetManager = function(settingsManager, searchManager) {
                 }
             }
         }
+        Object.keys(facetTypeSetInDialog).forEach(function(facetType){
+            if (facetTypeSetInDialog[facetType].length > 0) {
+                searchSettings.facets[facetType] = searchSettings.facets[facetType].concat(facetTypeSetInDialog[facetType]);
+            }
+        });
         this.removeModalOverlay();
         this.searchManager.runDomainSearch(searchSettings);
     };
+
+    this._isFacetValueChildOfSelectedFacets = function(facetValue, selectedFacets) {
+        var facetTokens = facetValue.split('/');
+        for (var i=0; i < selectedFacets.length; i++) {
+            var selectedFacet = selectedFacets[i];
+            var selectedFacetTokens = selectedFacet.split('/');
+            if (facetTokens.length > selectedFacetTokens.length) {
+                var everyTokenMatches = true;
+                for(var j=0; j < selectedFacetTokens.length; j++) {
+                    if (selectedFacetTokens[j] != facetTokens[j]) {
+                        everyTokenMatches = false;
+                    }
+                }
+                if (everyTokenMatches) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
     this.displayFacetGroup = function(facetGroup, container, searchSettings) {
         var dataType = searchSettings.type;
@@ -1243,7 +1419,7 @@ var FacetManager = function(settingsManager, searchManager) {
             var searchInfoSmall = document.createElement("small");
             searchInfoSmall.classList.add("text-muted");
             searchInfoSmall.innerHTML = "Powered by ";
-            searchInfoSmall.innerHTML += '<a href="http://www.ebi.ac.uk/ebisearch/" class="ext" target="_blank">EBI Search</a>';
+            searchInfoSmall.innerHTML += '<a href=' + this.settingsManager.GLOBAL_SEARCH_SETTINGS.SECURE_PROTOCOL + '//www.ebi.ac.uk/ebisearch/" class="ext" target="_blank">EBI Search</a>';
             searchInfoP.appendChild(searchInfoSmall);
             facetContainer.appendChild(document.createElement("hr"));
             facetContainer.appendChild(searchInfoP);
@@ -1505,8 +1681,9 @@ var TabManager = function() {
 };
 
 var ResultsManager = function() {
-    this.displayData = function(results, dataType, tableManager, settingsManager) {
-        var hitNumText = document.getElementById(dataType + "-hitnum-text");
+    this.displayData = function(results, dataType, tableManager, settingsManager, searchManager) {
+        var hitNumText = document.getElementById(dataType +
+            settingsManager.GLOBAL_SEARCH_SETTINGS.RESULTS_HITNUM_TEXT_DIV_SUFFIX);
         if (hitNumText != null) {
             hitNumText.innerHTML = "";
             var resultsTitle = document.createElement("h3");
@@ -1516,10 +1693,54 @@ var ResultsManager = function() {
                 hitNumText.appendChild(resultsTitle);
             }
         } else {
-            console.log("Error: Expected to find div with id '" + dataType + "-hitnum-text'");
+            console.log("Error: Expected to find div with id '" + dataType
+                + settingsManager.GLOBAL_SEARCH_SETTINGS.RESULTS_HITNUM_TEXT_DIV_SUFFIX + "'");
         }
 
-        var resultsContainer = document.getElementById(dataType + "-searchData");
+        var searchTermsContainer = document.getElementById(dataType
+            + settingsManager.GLOBAL_SEARCH_SETTINGS.RESULTS_SEARCH_TERMS_DIV_SUFFIX);
+        if (searchTermsContainer != null) {
+            searchTermsContainer.innerHTML = "";
+            var searchTags = [];
+            var settings = settingsManager.getSearchSettings(dataType);
+
+            if (settingsManager.getSearchText().length > 0) {
+                var tag = this.createSearchTermTag(settingsManager.getSearchText(), settingsManager, searchManager)
+                searchTags.push(tag);
+            }
+
+            for (var type in settings.facets) {
+                //console.log("Facet " + type);
+                var facetData = results.facets.filter(function(item) {
+                    return item.id === type;
+                });
+                var label = type;
+                if (facetData.length > 0) {
+                    label = facetData[0].label;
+                }
+                var facet = settings.facets[type];
+                for(var i=0; i < facet.length; i++) {
+                    var value = facet[i];
+                    console.log("Value: " + value);
+                    var facetTag = this.createFacetTag(label, type, value, dataType, settingsManager, searchManager);
+                    searchTags.push(facetTag);
+                }
+            }
+            if (searchTags.length > 0) {
+                var searchPrefix = document.createElement("span");
+                searchPrefix.innerHTML = "Search terms: ";
+                searchTermsContainer.appendChild(searchPrefix);
+                for(let tag of searchTags) {
+                    searchTermsContainer.appendChild(tag);
+                }
+            }
+        } else {
+            console.log("Error: Expected to find div with id '" + dataType
+                + settingsManager.GLOBAL_SEARCH_SETTINGS.RESULTS_SEARCH_TERMS_DIV_SUFFIX + "'");
+        }
+
+        var resultsContainer = document.getElementById(dataType
+            + settingsManager.GLOBAL_SEARCH_SETTINGS.RESULTS_SEARCH_DATA_SUFFIX);
         if (resultsContainer != null) {
             resultsContainer.innerHTML = ""; //clear results div
             if (results.hasOwnProperty("entries") && results.entries != null) {
@@ -1537,8 +1758,68 @@ var ResultsManager = function() {
             }
 
         } else {
-            console.log("Error: Expected to find div with id '" + dataType + "-searchData'");
+            console.log("Error: Expected to find div with id '" + dataType
+                + settingsManager.GLOBAL_SEARCH_SETTINGS.RESULTS_SEARCH_DATA_SUFFIX + "'");
         }
+    };
+
+    this.createSearchTermTag = function(text, settingsManager, searchManager){
+        var self = this;
+        var tag = document.createElement("span");
+        tag.classList.add("search-tag");
+        tag.classList.add("search-text-tag");
+        var tagText = document.createElement("span");
+        tagText.classList.add("search-term-tag");
+        tagText.innerHTML = text + " ";
+        var closeButton = document.createElement("button");
+        closeButton.classList.add("search-close-button-tag");
+        closeButton.innerHTML = "x";
+        closeButton.addEventListener("click", function(){
+            settingsManager.setSearchText("");
+
+            for (var dataType of settingsManager.DatatypeSettings.DATA_TYPES) {
+                var settings = settingsManager.getSearchSettings(dataType);
+                settings.searchText = "";
+                settingsManager.setSearchSettings(dataType, settings);
+                searchManager.runDomainSearch(settings);
+            }
+
+        });
+
+        tag.appendChild(tagText);
+        tag.appendChild(closeButton);
+        return tag;
+    };
+    
+    this.createFacetTag = function(label, type, value, dataType, settingsManager, searchManager) {
+        var self = this;
+        var tag = document.createElement("span");
+        tag.classList.add("search-tag");
+        tag.classList.add("search-facet-tag");
+        var tagText = document.createElement("span");
+        tagText.classList.add("search-term-tag");
+        var tokens = value.split("/");
+        tagText.innerHTML = label + ": " + tokens[tokens.length-1] + " ";
+        var closeButton = document.createElement("button");
+        closeButton.classList.add("search-close-button-tag");
+        closeButton.innerHTML = "x";
+        closeButton.addEventListener("click", function(){
+            settingsManager.setSearchText("");
+            var settings = settingsManager.getSearchSettings(dataType);
+            settings.facets[type] = settings.facets[type].filter(function(item){
+               return item != value;
+            });
+            if (settings.facets[type].length == 0){
+                delete settings.facets[type];
+            }
+            settingsManager.setSearchSettings(dataType, settings);
+            searchManager.runDomainSearch(settings);
+        });
+
+        tag.appendChild(tagText);
+        tag.appendChild(closeButton);
+        return tag;
+
     };
 
     this.displayDomainData = function(response,
@@ -1546,7 +1827,8 @@ var ResultsManager = function() {
                                       settingsManager,
                                       tabManager,
                                       tableManager,
-                                      facetManager) {
+                                      facetManager,
+                                      searchManager) {
         //console.log("displayDomain: " + searchSettings.type);
 
         var searchElementID = "local-searchbox";
@@ -1567,7 +1849,7 @@ var ResultsManager = function() {
         );
         */
         tabManager.setTabText(results.hitCount, searchSettings.type);
-        this.displayData(results, searchSettings.type, tableManager, settingsManager);
+        this.displayData(results, searchSettings.type, tableManager, settingsManager, searchManager);
         facetManager.displayFacets(results.facets, searchSettings);
         tableManager.displayPagination(results, searchSettings);
         tableManager.displayDownloadButton(results, searchSettings);
@@ -1811,7 +2093,7 @@ var SearchManager = function(settingsManager, pageManager) {
 
         if (results != null) {
             for(var i = 0; i < results.length; i++) {
-                var entry = rowFunction(results[i]);
+                var entry = rowFunction(results[i], this.settingsManager);
                 data.push(entry);
             }
 
@@ -1851,7 +2133,7 @@ var SearchManager = function(settingsManager, pageManager) {
                 if (item != null) {
                     var value = item.name;
                     if (value != null) {
-                        value = value.replace(/\"/g, '\\"');
+                        //value = value.replace(/\"/g, '\\"'); //escape double quotes
                         //value = value.replace(/\s+/g, ' '); //removing newlines etc
                         value = '"' + value + '"';
                         return value;
@@ -1931,41 +2213,49 @@ var HomePageManager = function(settingsManager, searchManager) {
 
     this.settingsManager = settingsManager;
     this.searchManager = searchManager;
+    this.experimentTypes = [
+        {
+            display: "amplicons",
+            search: "amplicon"
+        },
+        {
+            display: "assemblies",
+            search: "assembly"
+        },
+        {
+            display: "metabarcoding",
+            search: "metabarcoding"
+        },
+        {
+            display: "metagenomes",
+            search: "metagenomic"
+        },
+        {
+            display: "metatranscriptomes",
+            search: "metatranscriptomic"
+        }
+    ];
+
+    this.statisticsData = {};
+
+    this.resetStatisticsData = function(){
+        var dataTypes = this.settingsManager.DatatypeSettings.DATA_TYPES;
+        this.statisticsData = {
+            numElements: this.experimentTypes.length + dataTypes.length,
+            elements: []
+        };
+    };
 
     this.updateExperimentStats = function() {
-        var experimentTypes = [
-            {
-                display: "amplicons",
-                search: "amplicon"
-            },
-            {
-                display: "assemblies",
-                search: "assembly"
-            },
-            {
-                display: "metabarcoding",
-                search: "metabarcoding"
-            },
-            {
-                display: "metagenomes",
-                search: "metagenomic"
-            },
-            {
-                display: "metatranscriptomes",
-                search: "metatranscriptomic"
-            }
-        ];
-
         var settings = this.settingsManager.getSearchSettings(this.settingsManager.GLOBAL_SEARCH_SETTINGS.RUN);
         var settingsCopy = JSON.parse(JSON.stringify(settings)); //make a shallow copy of settings
 
-        for (var i = 0; i < experimentTypes.length; i++) {
-            var experimentType = experimentTypes[i];
+        for (var i = 0; i < this.experimentTypes.length; i++) {
+            var experimentType = this.experimentTypes[i];
             var experimentStatElement = document.getElementById(experimentType.display + "-statistics");
             if (experimentStatElement != null) {
                 var previousValue = experimentStatElement.innerHTML;
                 var facet = {experiment_type:[experimentType.search]};
-                experimentStatElement.innerHTML = "";
                 settingsCopy.searchText = "";
                 settingsCopy.facets = facet;
                 settingsCopy.facetNum = 0;
@@ -1973,9 +2263,9 @@ var HomePageManager = function(settingsManager, searchManager) {
                 settingsCopy.resultsNum = 0;
                 var url = this.searchManager.settingsToURL(settingsCopy);
                 this.searchManager.runAjax("GET", "json", url, null,
-                    this.updateStatsElement(settingsCopy, experimentStatElement, facet, previousValue),
+                    this.syncStatsUpdate(settingsCopy, experimentStatElement, facet, previousValue),
                     this.onStatsUpdateError(settingsCopy, experimentStatElement, previousValue),
-                    1000,
+                    this.settingsManager.AJAX_TIMEOUT,
                     this.onStatsTimeout(settingsCopy, experimentStatElement, previousValue)
                 );
             } else {
@@ -1991,7 +2281,6 @@ var HomePageManager = function(settingsManager, searchManager) {
             var typeStatElement = document.getElementById(dataType + "-statistics");
             if (typeStatElement != null) {
                 var previousValue = typeStatElement.innerHTML;
-                typeStatElement.innerHTML = "";
                 var settings = this.settingsManager.getSearchSettings(dataType);
                 var settingsCopy = JSON.parse(JSON.stringify(settings)); //make a shallow copy of settings
                 settingsCopy.searchText = "";
@@ -2001,9 +2290,9 @@ var HomePageManager = function(settingsManager, searchManager) {
                 settingsCopy.resultsNum = 0;
                 var url = this.searchManager.settingsToURL(settingsCopy);
                 this.searchManager.runAjax("GET", "json", url, null,
-                    this.updateStatsElement(settingsCopy, typeStatElement),
+                    this.syncStatsUpdate(settingsCopy, typeStatElement),
                     this.onStatsUpdateError(settingsCopy, typeStatElement, previousValue),
-                    1000,
+                    this.settingsManager.AJAX_TIMEOUT,
                     this.onStatsTimeout(settingsCopy, typeStatElement, previousValue)
                 );
             } else {
@@ -2012,41 +2301,79 @@ var HomePageManager = function(settingsManager, searchManager) {
         }
     };
 
-    this.updateStatsElement = function(settingsCopy, typeStatElement, runFacet, previousValue) {
+    /**
+     * This method ensures that all homepage elements are updated together or not at all
+     * @param settingsCopy
+     * @param typeStatElement
+     * @param runFacet
+     * @param previousValue
+     * @returns {Function}
+     */
+    this.syncStatsUpdate = function(settingsCopy, typeStatElement, runFacet, previousValue) {
         var self = this;
+
         return function(response) {
             var hitCount = response.hitCount;
 
-            //console.log(settingsCopy.type + " stats success: " + hitCount);
-
             if (hitCount != null) {
-                var statsLink = document.createElement("a");
-                statsLink.classList.add(self.settingsManager.GLOBAL_SEARCH_SETTINGS.HOMEPAGE_LINK_CLASS);
-                statsLink.innerHTML = hitCount;
-                typeStatElement.appendChild(statsLink);
-                typeStatElement.onclick = function(event) {
-                    var selectedTabNum = self.settingsManager.DatatypeSettings.DATA_TYPES.indexOf(settingsCopy.type);
-                    //reset search settings
-                    var allSettings = self.settingsManager.initialiseSettings(true);
-                    allSettings.searchText = "";
-                    self.settingsManager.setSearchText("");
-                    for (var i = 0; i < self.settingsManager.DatatypeSettings.DATA_TYPES.length; i++) {
-                        var dataType = self.settingsManager.DatatypeSettings.DATA_TYPES[i];
-                        var settings = allSettings[dataType];
-                        self.settingsManager.setSearchSettings(dataType, settings);
-                    }
-                    self.settingsManager.setSelectedTab(selectedTabNum);
-                    if (runFacet != null) {
-                        var settings = allSettings[self.settingsManager.GLOBAL_SEARCH_SETTINGS.RUN];
-                        settings.facets = runFacet;
-                        self.settingsManager.setSearchSettings(settings.type, settings);
-                    }
-                    window.location = "/metagenomics/search";
-                };
-            } else {
-                statsLink.innerHTML = previousValue;
+                element = {}
+                element.hitCount = hitCount;
+                element.settingsCopy = settingsCopy;
+                element.typeStatElement = typeStatElement;
+                element.runFacet = runFacet;
+                element.previousValue = previousValue;
+                self.statisticsData.elements.push(element);
+                //console.log("Update for " + element.settingsCopy.type + " = " + element.hitCount);
             }
 
+            //only update page elements if all data for all elements has been collected
+            if (self.statisticsData.elements.length == self.statisticsData.numElements) {
+                for (var i = 0; i < self.statisticsData.elements.length; i++) {
+                    var element = self.statisticsData.elements[i];
+                    self.updateStatsElement(
+                        element.hitCount,
+                        element.settingsCopy,
+                        element.typeStatElement,
+                        element.runFacet,
+                        element.previousValue
+                    );
+                }
+            }
+        };
+    };
+
+    this.updateStatsElement = function(hitCount, settingsCopy, typeStatElement, runFacet, previousValue) {
+        var self = this;
+
+        //console.log(settingsCopy.type + " stats success: " + hitCount);
+
+        if (hitCount != null) {
+            var statsLink = document.createElement("a");
+            statsLink.classList.add(self.settingsManager.GLOBAL_SEARCH_SETTINGS.HOMEPAGE_LINK_CLASS);
+            statsLink.innerHTML = hitCount;
+            typeStatElement.innerHTML = "";
+            typeStatElement.appendChild(statsLink);
+            typeStatElement.onclick = function(event) {
+                var selectedTabNum = self.settingsManager.DatatypeSettings.DATA_TYPES.indexOf(settingsCopy.type);
+                //reset search settings
+                var allSettings = self.settingsManager.initialiseSettings(true);
+                allSettings.searchText = "";
+                self.settingsManager.setSearchText("");
+                for (var i = 0; i < self.settingsManager.DatatypeSettings.DATA_TYPES.length; i++) {
+                    var dataType = self.settingsManager.DatatypeSettings.DATA_TYPES[i];
+                    var settings = allSettings[dataType];
+                    self.settingsManager.setSearchSettings(dataType, settings);
+                }
+                self.settingsManager.setSelectedTab(selectedTabNum);
+                if (runFacet != null) {
+                    var settings = allSettings[self.settingsManager.GLOBAL_SEARCH_SETTINGS.RUN];
+                    settings.facets = runFacet;
+                    self.settingsManager.setSearchSettings(settings.type, settings);
+                }
+                window.location = "/metagenomics/search";
+            };
+        } else {
+            statsLink.innerHTML = previousValue;
         }
     };
 
@@ -2087,6 +2414,7 @@ var PageManager = function() {
 
     this.populateSearchInputs = function() {
         //copy search text to search boxes
+        var self = this;
         var searchText = this.settingsManager.getSearchText();
 
         var searchInputID = this.settingsManager.GLOBAL_SEARCH_SETTINGS.SEARCH_BOX_ID;
@@ -2094,6 +2422,10 @@ var PageManager = function() {
         if (searchInput != null) {
             if (searchText != null) {
                 searchInput.value = searchText;
+                searchInput.addEventListener("search", function(item){
+                    //console.log("Search cancel clicked");
+                    self.runSearch();
+                });
             }
         } else {
             console.log("Error: expected input with id = " + searchInputID);
@@ -2102,9 +2434,12 @@ var PageManager = function() {
         var searchInputSmallID = this.settingsManager.GLOBAL_SEARCH_SETTINGS.SEARCH_BOX_SMALL_ID
         var searchInputSmall = document.getElementById(searchInputSmallID);
         if (searchInputSmall != null) {
-            var searchInputSmall = this.settingsManager.getSearchText();
-            if (searchInputSmall != null) {
+            if (searchText != null) {
                 searchInputSmall.value = searchText;
+                searchInputSmall.addEventListener("search", function(item){
+                    //console.log("Search cancel clicked");
+                    self.runSmallSearch();
+                });
             }
         }
     };
@@ -2147,11 +2482,21 @@ var PageManager = function() {
             } else {
                 console.log("Error: Expected to find div with id '" + dataType + "-" + element + "-download'");
             }
-            var hitNumContainer = document.getElementById(dataType + "-hitnum-text");
+            var hitNumContainer = document.getElementById(dataType
+                + this.settingsManager.GLOBAL_SEARCH_SETTINGS.RESULTS_HITNUM_TEXT_DIV_SUFFIX);
             if (hitNumContainer != null) {
                 hitNumContainer.innerHTML = "";
             } else {
-                console.log("Error: Expected to find div with id '" + dataType + "-hitNum-text'");
+                console.log("Error: Expected to find div with id '" + dataType
+                    + this.settingsManager.GLOBAL_SEARCH_SETTINGS.RESULTS_HITNUM_TEXT_DIV_SUFFIX + "'");
+            }
+            var searchTermContainer = document.getElementById(dataType
+                + this.settingsManager.GLOBAL_SEARCH_SETTINGS.RESULTS_SEARCH_TERMS_DIV_SUFFIX);
+            if (searchTermContainer != null) {
+                searchTermContainer.innerHTML = "";
+            } else {
+                console.log("Error: Expected to find div with id '" + dataType
+                    + this.settingsManager.GLOBAL_SEARCH_SETTINGS.RESULTS_SEARCH_TERMS_DIV_SUFFIX + "'");
             }
         }
 
@@ -2278,7 +2623,8 @@ var PageManager = function() {
             this.settingsManager,
             this.tabManager,
             this.tableManager,
-            this.facetManager
+            this.facetManager,
+            this.searchManager
         );
     };
 
@@ -2345,6 +2691,10 @@ var PageManager = function() {
                 for(var i = 0; i < this.settingsManager.DatatypeSettings.DATA_TYPES.length; i++) {
                     var dataType = this.settingsManager.DatatypeSettings.DATA_TYPES[i];
                     var settings = this.settingsManager.getSearchSettings(dataType);
+                    if (settings == null) {
+                        this.settingsManager.initialiseSettings();
+                        settings = this.settingsManager.getSearchSettings(dataType);
+                    }
                     settings.searchText = searchBoxText;
                     if (resetSearch) {
                         this.resetSearchSettings(settings);
@@ -2379,9 +2729,10 @@ var PageManager = function() {
         if (!this.settingsManager.areSettingsInitialisted()) {
             this.settingsManager.initialiseSettings();
         }
+        this.homePageManager.resetStatisticsData();
         this.homePageManager.updatePublicStats();
         this.homePageManager.updateExperimentStats();
-    }
+    };
 };
 
 var pageManager = new PageManager();
