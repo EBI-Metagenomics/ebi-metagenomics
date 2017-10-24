@@ -53,17 +53,8 @@ public class SampleViewController extends AbstractSampleViewController {
         return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, getSecuredEntity(projectId, sampleId), getModelViewName());
     }
 
-    /**
-     * Temporary re-directions.
-     */
-    @RequestMapping(value = {"/samples/{sampleId}", "/sample/{sampleId}"})
-    public String doGetSample(@PathVariable final String sampleId) {
-        String projectId = sampleDAO.retrieveExternalStudyId(sampleId);
-        return "redirect:/projects/" + projectId + "/samples/" + sampleId;
-    }
-
     private Sample getSecuredEntity(final String projectId,
-                                          final String sampleId) {
+                                    final String sampleId) {
         return sampleDAO.readBySampleIdAndStudyId(projectId, sampleId);
     }
 

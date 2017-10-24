@@ -35,25 +35,6 @@ public class SampleDAOImpl implements SampleDAO {
     public SampleDAOImpl() {
     }
 
-    @Override
-    public String retrieveExternalStudyId(String externalSampleId) {
-        try {
-            Session session = sessionFactory.getCurrentSession();
-            Criteria criteria = session.createCriteria(Sample.class);
-            criteria.add(Restrictions.eq("sampleId", externalSampleId));
-            Sample sample = (Sample) criteria.uniqueResult();
-            if (sample != null) {
-                Set<Study> sampleStudies = sample.getStudies();
-                if (sampleStudies != null && sampleStudies.size() > 0) {
-                    return sampleStudies.iterator().next().getStudyId();
-                }
-            }
-            return null;
-        } catch (HibernateException e) {
-            throw new HibernateException("Couldn't retrieve sample object by the following external IDs " + externalSampleId, e);
-        }
-    }
-
     public Sample readBySampleIdAndStudyId(String externalStudyId, String externalSampleId) {
         try {
             Session session = sessionFactory.getCurrentSession();
