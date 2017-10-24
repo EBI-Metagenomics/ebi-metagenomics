@@ -45,9 +45,8 @@ public class RunDAOImpl implements RunDAO {
     //    TODO: Adjust join query between Study and Samples
     public Run readByRunIdDeep(Long studyId, String sampleId, String runId, String version) {
         try {
-//            String sql = "SELECT * FROM " + schemaName + "." + "log_file_info l, SAMPLE sa, study st WHERE st.ext_study_id = ? AND sa.ext_SAMPLE_id = ? AND l.sra_run_ids = ?";
-            String sql = "SELECT * FROM emg.STUDY st, emg.STUDY_SAMPLE stsa, emg.SAMPLE sa, emg.ANALYSIS_JOB aj, PIPELINE_RELEASE r where st.STUDY_ID=stsa.STUDY_ID and stsa.SAMPLE_ID=sa.SAMPLE_ID and sa.SAMPLE_ID=aj.SAMPLE_ID and aj.study_id=1973 and stsa.study_id=1973 and aj.pipeline_id=r.pipeline_id AND sa.ext_sample_id = ? AND aj.external_run_ids = ? AND r.release_version = ?";
-            return jdbcTemplate.queryForObject(sql, new Object[]{studyId, sampleId, runId, version}, new RunDeepRowMapper());
+            String sql = "SELECT aj.external_run_ids,sa.ext_sample_id,st.ext_study_id,st.submission_account_id,aj.RUN_STATUS_ID,aj.sample_id, r.release_version FROM emg.STUDY st, emg.STUDY_SAMPLE stsa, emg.SAMPLE sa, emg.ANALYSIS_JOB aj, PIPELINE_RELEASE r where st.STUDY_ID=stsa.STUDY_ID and stsa.SAMPLE_ID=sa.SAMPLE_ID and sa.SAMPLE_ID=aj.SAMPLE_ID and aj.study_id = ? and stsa.study_id = ? and aj.pipeline_id=r.pipeline_id AND sa.ext_sample_id = ? AND aj.external_run_ids = ? AND r.release_version = ?";
+            return jdbcTemplate.queryForObject(sql, new Object[]{studyId, studyId, sampleId, runId, version}, new RunDeepRowMapper());
         } catch (EmptyResultDataAccessException exception) {
             throw new EmptyResultDataAccessException(1);
         }
