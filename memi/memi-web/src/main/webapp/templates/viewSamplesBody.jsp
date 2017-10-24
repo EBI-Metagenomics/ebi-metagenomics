@@ -2,7 +2,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
- <div id="sample_list">
+<div id="sample_list">
 
     <h2>Samples list</h2>
 
@@ -61,12 +61,14 @@
                             <input type="submit" name="search" value="Search" class="main_button"/>
                             <c:choose>
                                 <c:when test="${empty model.submitter}">
-                                    | <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search&startPosition=0"/>"
-                                        >Clear</a>
+                                    | <a
+                                        href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_PUBLISHED_SAMPLES&search=Search&startPosition=0"/>"
+                                >Clear</a>
                                 </c:when>
                                 <c:otherwise>
-                                    | <a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_SAMPLES&search=Search&startPosition=0"/>"
-                                       >Clear</a>
+                                    | <a
+                                        href="<c:url value="${baseURL}/samples/doSearch?searchTerm=&sampleVisibility=ALL_SAMPLES&search=Search&startPosition=0"/>"
+                                >Clear</a>
                                 </c:otherwise>
                             </c:choose>
                         </div>
@@ -89,52 +91,63 @@
 
             <div class="table_opt">
 
-            <div class="export">
-                    <%--Don't show link to export full sample details here - just provide it on the individual sample page --%>
-                    <%--<c:if test="${not empty sampleFilter.sampleType}">--%>
-                    <%--<a href="<c:url value="${baseURL}/samples/doExportDetails?${queryString}"/>"  id="csv_plus" title="Export more detailed information about the samples below in CSV format">Export detailed info (CSV)</a>--%>
-                    <%--</c:if>--%>
-                <a href="<c:url value="${baseURL}/samples/doExportTable?${queryString}"/>" id="csv"
-                   title="<spring:message code="viewSamples.download.anchor.title"/>">
-                    <spring:message code="viewSamples.download.anchor.label"/></a>
-            </div>
-
-            <div class="table_opt_pag">
-
-            <%--Start of item pagination pattern--%>
-            <c:set var="prevId" value="< Prev"/>
-            <c:set var="nextId" value="Next >"/>
-            <c:set var="firstId" value="First"/>
-            <c:set var="lastId" value="Last"/>
-
-                <div class="table_opt_pag_num"><c:out value="${model.pagination.displayedItemRange}"/> of <c:out value="${model.pagination.totalItems}"/>
+                <div class="export">
+                        <%--Don't show link to export full sample details here - just provide it on the individual sample page --%>
+                        <%--<c:if test="${not empty sampleFilter.sampleType}">--%>
+                        <%--<a href="<c:url value="${baseURL}/samples/doExportDetails?${queryString}"/>"  id="csv_plus" title="Export more detailed information about the samples below in CSV format">Export detailed info (CSV)</a>--%>
+                        <%--</c:if>--%>
+                    <a href="<c:url value="${baseURL}/samples/doExportTable?${queryString}"/>" id="csv"
+                       title="<spring:message code="viewSamples.download.anchor.title"/>">
+                        <spring:message code="viewSamples.download.anchor.label"/></a>
                 </div>
-                <div class="table_opt_pag_arr">
-                <c:if test="${model.pagination.totalItems > model.pagination.pageSize}">
-                    <c:choose>
-                        <c:when test="${model.pagination.existPreviousStartPos}">
 
-                             <div class="pag-first"><a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=${model.sampleFilter.searchTerm}&sampleVisibility=${model.sampleFilter.sampleVisibility.upperCaseString}&search=Search&startPosition=${model.pagination.start}&biome=${model.sampleFilter.biome}"/>"
-                               id="csv" title="<c:out value="${firstId}"/>"></a></div>
-                            <div class="pag-prev"><a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=${model.sampleFilter.searchTerm}&sampleVisibility=${model.sampleFilter.sampleVisibility.upperCaseString}&search=Search&startPosition=${model.pagination.previousStartPos}&biome=${model.sampleFilter.biome}"/>"
-                               id="csv" title="<c:out value="${prevId}"/>"></a></div>
-                        </c:when>
-                        <c:otherwise><div class="pag-first-off"></div>  <div class="pag-prev-off"></div></c:otherwise>
-                    </c:choose>
-                    <%--<span style="float:left;padding:0 4px; color:#ABADB3;">prev | next</span>--%>
-                    <c:choose>
-                        <c:when test="${model.pagination.existNextStartPos}">
-                           <div class="pag-next"><a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=${model.sampleFilter.searchTerm}&sampleVisibility=${model.sampleFilter.sampleVisibility.upperCaseString}&search=Search&startPosition=${model.pagination.nextStartPos}&biome=${model.sampleFilter.biome}"/>"
-                               id="csv" title="<c:out value="${nextId}"/>"></a></div>
-                             <div class="pag-last"><a href="<c:url value="${baseURL}/samples/doSearch?searchTerm=${model.sampleFilter.searchTerm}&sampleVisibility=${model.sampleFilter.sampleVisibility.upperCaseString}&search=Search&startPosition=${model.pagination.lastLinkPosition}&biome=${model.sampleFilter.biome}"/>"
-                               id="csv" title="<c:out value="${lastId}"/>"></a></div>
-                        </c:when>
-                        <c:otherwise><div class="pag-next-off"></div> <div class="pag-last-off"></div></c:otherwise>
-                    </c:choose>
-                </c:if>
+                <div class="table_opt_pag">
+
+                        <%--Start of item pagination pattern--%>
+                    <c:set var="prevId" value="< Prev"/>
+                    <c:set var="nextId" value="Next >"/>
+                    <c:set var="firstId" value="First"/>
+                    <c:set var="lastId" value="Last"/>
+
+                    <div class="table_opt_pag_num"><c:out value="${model.pagination.displayedItemRange}"/> of <c:out
+                            value="${model.pagination.totalItems}"/>
+                    </div>
+                    <div class="table_opt_pag_arr">
+                        <c:if test="${model.pagination.totalItems > model.pagination.pageSize}">
+                            <c:choose>
+                                <c:when test="${model.pagination.existPreviousStartPos}">
+
+                                    <div class="pag-first"><a
+                                            href="<c:url value="${baseURL}/samples/doSearch?searchTerm=${model.sampleFilter.searchTerm}&sampleVisibility=${model.sampleFilter.sampleVisibility.upperCaseString}&search=Search&startPosition=${model.pagination.start}&biome=${model.sampleFilter.biome}"/>"
+                                            id="csv" title="<c:out value="${firstId}"/>"></a></div>
+                                    <div class="pag-prev"><a
+                                            href="<c:url value="${baseURL}/samples/doSearch?searchTerm=${model.sampleFilter.searchTerm}&sampleVisibility=${model.sampleFilter.sampleVisibility.upperCaseString}&search=Search&startPosition=${model.pagination.previousStartPos}&biome=${model.sampleFilter.biome}"/>"
+                                            id="csv" title="<c:out value="${prevId}"/>"></a></div>
+                                </c:when>
+                                <c:otherwise>
+                                    <div class="pag-first-off"></div>
+                                    <div class="pag-prev-off"></div>
+                                </c:otherwise>
+                            </c:choose>
+                            <%--<span style="float:left;padding:0 4px; color:#ABADB3;">prev | next</span>--%>
+                            <c:choose>
+                                <c:when test="${model.pagination.existNextStartPos}">
+                                    <div class="pag-next"><a
+                                            href="<c:url value="${baseURL}/samples/doSearch?searchTerm=${model.sampleFilter.searchTerm}&sampleVisibility=${model.sampleFilter.sampleVisibility.upperCaseString}&search=Search&startPosition=${model.pagination.nextStartPos}&biome=${model.sampleFilter.biome}"/>"
+                                            id="csv" title="<c:out value="${nextId}"/>"></a></div>
+                                    <div class="pag-last"><a
+                                            href="<c:url value="${baseURL}/samples/doSearch?searchTerm=${model.sampleFilter.searchTerm}&sampleVisibility=${model.sampleFilter.sampleVisibility.upperCaseString}&search=Search&startPosition=${model.pagination.lastLinkPosition}&biome=${model.sampleFilter.biome}"/>"
+                                            id="csv" title="<c:out value="${lastId}"/>"></a></div>
+                                </c:when>
+                                <c:otherwise>
+                                    <div class="pag-next-off"></div>
+                                    <div class="pag-last-off"></div>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:if>
+                    </div>
                 </div>
-            </div>
-            <%--End of item pagination pattern--%>
+                    <%--End of item pagination pattern--%>
             </div>
             <table class="result">
                 <thead>
@@ -154,7 +167,8 @@
                                 <c:set var="headerWidth" scope="page"/>
                             </c:otherwise>
                         </c:choose>
-                        <th class="${headerId}" abbr="${headerName}" width="${headerWidth}" scope="col">${headerName}</th>
+                        <th class="${headerId}" abbr="${headerName}" width="${headerWidth}"
+                            scope="col">${headerName}</th>
                     </c:forEach>
                 </tr>
                 </thead>
@@ -162,32 +176,45 @@
                 <c:forEach var="sample" items="${model.samples}" varStatus="status">
                     <tr>
                         <td>
-                        <span class="biome_icon icon_xs ${sample.biomeIconCSSClass}" title="${sample.biomeIconTitle} biome"></span>
+                            <span class="biome_icon icon_xs ${sample.biomeIconCSSClass}"
+                                  title="${sample.biomeIconTitle} biome"></span>
                         </td>
-                        <td width="8%" class="table_xs_text">${sample.sampleId}</td>
-                        <td width="30%" class="h_left table_xs_text" id="ordered">
+                        <td align="center" class="h_left table_xs_text" width="25%">
                             <c:forEach var="study" items="${sample.studies}" varStatus="status">
-                                <a href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${sample.sampleId}"/>" class="fl_uppercase_title">${sample.sampleName}</a>
-                            </c:forEach>
-                            <%--<a href="<c:url value="${baseURL}/projects/${sample.study.studyId}/samples/${sample.sampleId}"/>" class="fl_uppercase_title">${sample.sampleName}</a>--%>
-
-                           <%-- Show icon only for people are are logged in--%>
-                           <c:if test="${not empty model.submitter}">
-                            <!-- Private icon-->
-                           <c:if test="${!sample['public']}">
-                               <span class="show_tooltip icon icon-functional" data-icon="L" title="Private data"></span>
-                           </c:if>
-                           <c:if test="${sample['public']}">
-                           <span class="show_tooltip icon icon-functional" data-icon="U" title="Public data"></span>
-                           </c:if>
-                           </c:if>
-
-                        </td>
-                        <td class="h_left" width="62%">
-                            <c:forEach var="study" items="${sample.studies}" varStatus="status">
-                                <a href="<c:url value="${baseURL}/projects/${study.studyId}"/>" class="fl_uppercase_title">${study.studyId}</a>
+                                <c:choose>
+                                    <c:when test="${study.public || (!study.public && study.submissionAccountId==model.submissionAccountId)}">
+                                        <a href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${sample.sampleId}"/>"
+                                           class="fl_uppercase_title">${sample.sampleId}</a>
+                                        -
+                                        <a href="<c:url value="${baseURL}/projects/${study.studyId}"/>"
+                                           class="fl_uppercase_title">${study.studyId}</a></br>
+                                    </c:when>
+                                </c:choose>
                             </c:forEach>
                         </td>
+                            <%--<td width="8%" class="table_xs_text">--%>
+                            <%--<c:forEach var="study" items="${sample.studies}" varStatus="status">--%>
+                            <%--<a href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${sample.sampleId}"/>"--%>
+                            <%--class="fl_uppercase_title">${sample.sampleId}</a></br>--%>
+                            <%--</c:forEach>--%>
+                            <%--</td>--%>
+
+                        <td align="center" width="75%" class="h_left table_xs_text" id="ordered">${sample.sampleName}
+                                <%-- Show icon only for people are are logged in--%>
+                            <c:if test="${not empty model.submitter}">
+                                <!-- Private icon-->
+                                <c:if test="${!sample['public']}">
+                                    <span class="show_tooltip icon icon-functional" data-icon="L"
+                                          title="Private data"></span>
+                                </c:if>
+                                <c:if test="${sample['public']}">
+                                    <span class="show_tooltip icon icon-functional" data-icon="U"
+                                          title="Public data"></span>
+                                </c:if>
+                            </c:if>
+
+                        </td>
+
                     </tr>
                 </c:forEach>
                 </tbody>
