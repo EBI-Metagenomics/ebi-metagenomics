@@ -83,13 +83,14 @@
             <div class="result_row_label">Classification:</div>
             <div class="result_row_data"><c:out value="${sampleClassification}"/></div>
         </div>
-
-        <div class="result_row">
-            <div class="result_row_label">Project name:</div>
-            <div class="result_row_data"><a title="${study.studyName}"
-                                            href="<c:url value="${baseURL}/projects/${study.studyId}"/>">${study.studyName}
-                (${study.studyId})</a></div>
-        </div>
+        <c:if test="${isStudyAccessible}">
+            <div class="result_row">
+                <div class="result_row_label">Project name:</div>
+                <div class="result_row_data"><a title="${study.studyName}"
+                                                href="<c:url value="${baseURL}/projects/${study.studyId}"/>">${study.studyName}
+                    (${study.studyId})</a></div>
+            </div>
+        </c:if>
 
     </div>
     <!--/ Description -->
@@ -263,68 +264,70 @@
     </c:if>
     <!--/ Other info box -->
 
-    <h3 id="samples_id">Associated runs</h3>
+    <c:if test="${isStudyAccessible}">
+        <h3 id="samples_id">Associated runs</h3>
 
-    <c:choose>
-        <c:when test="${empty analysisJobs}">
-            <p>
-                No runs/results available yet.
-            </p>
-        </c:when>
-        <c:otherwise>
-            <table class="table-heading result" id="associated-run-sample">
-                <thead>
-                <tr>
-                    <th>Run id</th>
-                    <th>Pipeline version</th>
-                    <th>Experiment type</th>
-                    <th>Analysis date</th>
-                    <th width="170px">Analysis results</th>
-                </tr>
-                </thead>
-                <tbody>
-                <c:forEach var="analysisJob" items="${analysisJobs}" varStatus="status">
+        <c:choose>
+            <c:when test="${empty analysisJobs}">
+                <p>
+                    No runs/results available yet.
+                </p>
+            </c:when>
+            <c:otherwise>
+                <table class="table-heading result" id="associated-run-sample">
+                    <thead>
                     <tr>
-                        <td>
-                            <c:choose>
-                                <c:when test="${analysisJob.analysisStatus.analysisStatus == 'completed'}">
-                                    <a title="Overview"
-                                       href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${sample.sampleId}/runs/${analysisJob.externalRunIDs}/results/versions/${analysisJob.pipelineRelease.releaseVersion}"/>">${analysisJob.externalRunIDs}</a>
-                                </c:when>
-                                <c:otherwise>
-                                    ${analysisJob.externalRunIDs}
-                                </c:otherwise>
-                            </c:choose>
-                        </td>
-                        <td>${analysisJob.pipelineRelease.releaseVersion}</td>
-                        <td>${analysisJob.experimentType.experimentType}</td>
-                        <td>${analysisJob.completeTime}</td>
-                        <td>
-                            <c:set var="analysisStatus" value="${analysisJob.analysisStatus.analysisStatus}"
-                                   scope="page"/>
-                            <c:choose>
-                                <c:when test="${analysisStatus == 'completed'}">
-                                    <a title="Taxonomic analysis" class="list_sample"
-                                       href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${sample.sampleId}/runs/${analysisJob.externalRunIDs}/results/versions/${analysisJob.pipelineRelease.releaseVersion}#ui-id-6"/>">Taxonomy </a>|
-                                    <c:if test="${analysisJob.experimentType.experimentType != 'amplicon'}">
-                                        <a title="Function analysis" class="list_sample"
-                                           href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${sample.sampleId}/runs/${analysisJob.externalRunIDs}/results/versions/${analysisJob.pipelineRelease.releaseVersion}#ui-id-8"/>">Function </a>|
-                                    </c:if>
-                                    <a title="download results"
-                                       class="icon icon-functional list_sample" data-icon="="
-                                       href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${sample.sampleId}/runs/${analysisJob.externalRunIDs}/results/versions/${analysisJob.pipelineRelease.releaseVersion}#ui-id-12"/>"></a>
-                                </c:when>
-                                <c:otherwise>
-                                    ${analysisStatus}
-                                </c:otherwise>
-                            </c:choose>
-                        </td>
+                        <th>Run id</th>
+                        <th>Pipeline version</th>
+                        <th>Experiment type</th>
+                        <th>Analysis date</th>
+                        <th width="170px">Analysis results</th>
                     </tr>
-                </c:forEach>
-                </tbody>
-            </table>
-        </c:otherwise>
-    </c:choose>
+                    </thead>
+                    <tbody>
+                    <c:forEach var="analysisJob" items="${analysisJobs}" varStatus="status">
+                        <tr>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${analysisJob.analysisStatus.analysisStatus == 'completed'}">
+                                        <a title="Overview"
+                                           href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${sample.sampleId}/runs/${analysisJob.externalRunIDs}/results/versions/${analysisJob.pipelineRelease.releaseVersion}"/>">${analysisJob.externalRunIDs}</a>
+                                    </c:when>
+                                    <c:otherwise>
+                                        ${analysisJob.externalRunIDs}
+                                    </c:otherwise>
+                                </c:choose>
+                            </td>
+                            <td>${analysisJob.pipelineRelease.releaseVersion}</td>
+                            <td>${analysisJob.experimentType.experimentType}</td>
+                            <td>${analysisJob.completeTime}</td>
+                            <td>
+                                <c:set var="analysisStatus" value="${analysisJob.analysisStatus.analysisStatus}"
+                                       scope="page"/>
+                                <c:choose>
+                                    <c:when test="${analysisStatus == 'completed'}">
+                                        <a title="Taxonomic analysis" class="list_sample"
+                                           href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${sample.sampleId}/runs/${analysisJob.externalRunIDs}/results/versions/${analysisJob.pipelineRelease.releaseVersion}#ui-id-6"/>">Taxonomy </a>|
+                                        <c:if test="${analysisJob.experimentType.experimentType != 'amplicon'}">
+                                            <a title="Function analysis" class="list_sample"
+                                               href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${sample.sampleId}/runs/${analysisJob.externalRunIDs}/results/versions/${analysisJob.pipelineRelease.releaseVersion}#ui-id-8"/>">Function </a>|
+                                        </c:if>
+                                        <a title="download results"
+                                           class="icon icon-functional list_sample" data-icon="="
+                                           href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${sample.sampleId}/runs/${analysisJob.externalRunIDs}/results/versions/${analysisJob.pipelineRelease.releaseVersion}#ui-id-12"/>"></a>
+                                    </c:when>
+                                    <c:otherwise>
+                                        ${analysisStatus}
+                                    </c:otherwise>
+                                </c:choose>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </c:otherwise>
+        </c:choose>
+    </c:if>
 </div>
 
 <script type="text/javascript">

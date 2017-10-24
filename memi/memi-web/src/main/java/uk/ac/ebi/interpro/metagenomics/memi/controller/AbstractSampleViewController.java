@@ -18,7 +18,6 @@ import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuil
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * This class extends {@link SampleViewController}, {@link KronaChartsController} and {@link ResultViewExportController}.
@@ -44,9 +43,8 @@ public abstract class AbstractSampleViewController extends SecuredAbstractContro
             Study study = studyDAO.readByStringId(projectId);
             if (study != null) {
                 // If private study, check if it belongs to the right user
-                if (study.isPublic() || (!study.isPublic() && studyIsAccessible(study))) {
-                    String studyName = projectId;
-                    studyName = study.getStudyName();
+                if (isStudyAccessible(study)) {
+                    String studyName = study.getStudyName();
                     String sampleURL = "projects/" + sample.getExternalProjectId() + "/samples/" + sample.getSampleId();
                     String projectURL = "projects/" + sample.getExternalProjectId();
                     result.add(new Breadcrumb("Project: " + studyName, "View project " + studyName, projectURL));
@@ -57,7 +55,10 @@ public abstract class AbstractSampleViewController extends SecuredAbstractContro
         return result;
     }
 
-    private boolean studyIsAccessible(final Study study) {
+    protected boolean isStudyAccessible(final Study study) {
+        if (study.isPublic()) {
+            return true;
+        }
         Submitter submitter = super.getSessionSubmitter();
         String accountId = null;
         if (submitter != null) {
@@ -95,6 +96,7 @@ public abstract class AbstractSampleViewController extends SecuredAbstractContro
         model.addAttribute("sample", sample);
         model.addAttribute("hostAssociated", isHostAssociated);
         model.addAttribute("sampleAnnotations", sampleAnnotations);
+        model.addAttribute("isStudyAccessible", isStudyAccessible(study));
     }
 
     private boolean isHostAssociated(Sample sample) {
