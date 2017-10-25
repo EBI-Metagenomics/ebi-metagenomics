@@ -350,18 +350,20 @@ public class StudyDAOImpl implements StudyDAO {
                 sb.append("select st.STUDY_ID as study_id, st.EXT_STUDY_ID as external_study_id, st.STUDY_NAME as study_name, st.IS_PUBLIC as is_public, tmp.run_count as run_count ")
                         .append("FROM ")
                         .append("STUDY st, ")
+                        .append("STUDY_SAMPLE stsa, ")
                         .append("SAMPLE sa, ")
                         .append("ANALYSIS_JOB aj, ")
-                        .append("(select st.EXT_STUDY_ID, count(aj.EXTERNAL_RUN_IDS) as run_count FROM STUDY st, SAMPLE sa, ANALYSIS_JOB aj where st.STUDY_ID=sa.STUDY_ID and sa.sample_id = aj.sample_id and st.IS_PUBLIC=1 and aj.EXPERIMENT_TYPE_ID<>3 and aj.ANALYSIS_STATUS_ID=3 GROUP BY st.EXT_STUDY_ID) tmp ")
-                        .append("where st.STUDY_ID=sa.STUDY_ID and sa.SAMPLE_ID=aj.SAMPLE_ID and tmp.EXT_STUDY_ID = st.EXT_STUDY_ID and st.IS_PUBLIC=1 and aj.EXPERIMENT_TYPE_ID<>3 and aj.ANALYSIS_STATUS_ID=3 and tmp.run_count > 1 group by st.EXT_STUDY_ID order by st.STUDY_NAME");
+                        .append("(select st.EXT_STUDY_ID, count(aj.EXTERNAL_RUN_IDS) as run_count FROM STUDY st, STUDY_SAMPLE stsa, SAMPLE sa, ANALYSIS_JOB aj where st.STUDY_ID=stsa.STUDY_ID AND stsa.SAMPLE_ID=sa.SAMPLE_ID and sa.sample_id = aj.sample_id and st.IS_PUBLIC=1 and aj.EXPERIMENT_TYPE_ID<>3 and aj.ANALYSIS_STATUS_ID=3 GROUP BY st.EXT_STUDY_ID) tmp ")
+                        .append("where st.STUDY_ID=stsa.STUDY_ID AND stsa.SAMPLE_ID=sa.SAMPLE_ID AND sa.SAMPLE_ID=aj.SAMPLE_ID and tmp.EXT_STUDY_ID = st.EXT_STUDY_ID and st.IS_PUBLIC=1 and aj.EXPERIMENT_TYPE_ID<>3 and aj.ANALYSIS_STATUS_ID=3 and tmp.run_count > 1 group by st.EXT_STUDY_ID order by st.STUDY_NAME");
             } else {
                 sb.append("select st.STUDY_ID as study_id, st.EXT_STUDY_ID as external_study_id, st.STUDY_NAME as study_name, st.IS_PUBLIC as is_public, tmp.run_count as run_count ")
                         .append("FROM ")
                         .append("STUDY st, ")
+                        .append("STUDY_SAMPLE stsa, ")
                         .append("SAMPLE sa, ")
                         .append("ANALYSIS_JOB aj, ")
-                        .append("(select st.EXT_STUDY_ID, count(aj.EXTERNAL_RUN_IDS) as run_count FROM STUDY st, SAMPLE sa, ANALYSIS_JOB aj where st.STUDY_ID=sa.STUDY_ID and sa.sample_id = aj.sample_id and st.IS_PUBLIC<>5 and aj.EXPERIMENT_TYPE_ID<>3 and aj.ANALYSIS_STATUS_ID=3 GROUP BY st.EXT_STUDY_ID) tmp ")
-                        .append("where st.STUDY_ID=sa.STUDY_ID and sa.SAMPLE_ID=aj.SAMPLE_ID and tmp.EXT_STUDY_ID = st.EXT_STUDY_ID and aj.EXPERIMENT_TYPE_ID<>3 and aj.ANALYSIS_STATUS_ID=3 and tmp.run_count > 1 and st.SUBMISSION_ACCOUNT_ID = '" + submissionAccountId + "' group by st.EXT_STUDY_ID order by st.STUDY_NAME");
+                        .append("(select st.EXT_STUDY_ID, count(aj.EXTERNAL_RUN_IDS) as run_count FROM STUDY st, STUDY_SAMPLE stsa, SAMPLE sa, ANALYSIS_JOB aj where st.STUDY_ID=stsa.STUDY_ID AND stsa.SAMPLE_ID=sa.SAMPLE_ID and sa.sample_id = aj.sample_id and st.IS_PUBLIC<>5 and aj.EXPERIMENT_TYPE_ID<>3 and aj.ANALYSIS_STATUS_ID=3 GROUP BY st.EXT_STUDY_ID) tmp ")
+                        .append("where st.STUDY_ID=stsa.STUDY_ID AND stsa.SAMPLE_ID=sa.SAMPLE_ID AND sa.SAMPLE_ID=aj.SAMPLE_ID and tmp.EXT_STUDY_ID = st.EXT_STUDY_ID and aj.EXPERIMENT_TYPE_ID<>3 and aj.ANALYSIS_STATUS_ID=3 and tmp.run_count > 1 and st.SUBMISSION_ACCOUNT_ID = '" + submissionAccountId + "' group by st.EXT_STUDY_ID order by st.STUDY_NAME");
             }
             final String sql = sb.toString();
 

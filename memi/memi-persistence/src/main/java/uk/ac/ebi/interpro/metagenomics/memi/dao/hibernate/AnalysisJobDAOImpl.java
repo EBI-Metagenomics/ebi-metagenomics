@@ -99,6 +99,7 @@ public class AnalysisJobDAOImpl extends GenericDAOImpl<AnalysisJob, Long> implem
                             .add(Projections.property("et.experimentType"), "experimentType")
                             .add(Projections.property("p.releaseVersion"), "releaseVersion")
                     )
+                    .add(Restrictions.eq("studyId", studyId))
                     .add(Restrictions.eq("studies.id", studyId))
                     .add(Restrictions.eq("status.analysisStatus", analysisStatus))
                     .setResultTransformer(new AliasToBeanResultTransformer(AnalysisJobVO.class));
