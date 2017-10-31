@@ -101,11 +101,12 @@ public class RunDAOImpl implements RunDAO {
                     .append("FROM ")
                     .append("ANALYSIS_JOB aj, ")
                     .append("SAMPLE sa, ")
+                    .append("STUDY_SAMPLE stsa, ")
                     .append("STUDY st ")
-                    .append("WHERE st.study_id = sa.study_id AND sa.sample_id = aj.sample_id AND st.study_id = ? ");
+                    .append("WHERE st.study_id = stsa.study_id AND stsa.sample_id = sa.sample_id and sa.sample_id = aj.sample_id AND st.study_id = ? and aj.study_id = ? group by aj.external_run_ids ");
 
             final String sql = sb.toString();
-            List<ProjectSampleRunMappingVO> results = jdbcTemplate.query(sql, new Object[]{projectId}, new BeanPropertyRowMapper<ProjectSampleRunMappingVO>(ProjectSampleRunMappingVO.class));
+            List<ProjectSampleRunMappingVO> results = jdbcTemplate.query(sql, new Object[]{projectId, projectId}, new BeanPropertyRowMapper<ProjectSampleRunMappingVO>(ProjectSampleRunMappingVO.class));
             return results;
 
         } catch (EmptyResultDataAccessException exception) {
