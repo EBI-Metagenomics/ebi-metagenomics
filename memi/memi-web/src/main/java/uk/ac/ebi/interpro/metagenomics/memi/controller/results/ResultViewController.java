@@ -46,7 +46,7 @@ public class ResultViewController extends AbstractResultViewController {
      * @param runId     External run identifier (e.g. in ENA, for instance ERR000001)
      */
     @RequestMapping(value = MGPortalURLCollection.PROJECT_SAMPLE_RUN_RESULTS_ENTRY)
-    public ModelAndView doGetSample(@PathVariable final String projectId,
+    public ModelAndView doGetRun(@PathVariable final String projectId,
                                     @PathVariable final String sampleId,
                                     @PathVariable final String runId,
                                     @PathVariable final String releaseVersion,

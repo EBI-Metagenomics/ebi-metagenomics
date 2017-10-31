@@ -34,6 +34,8 @@ public class SamplesViewModel extends ViewModel {
 
     private List<Biome> studyBiomes;
 
+    private String submissionAccountId;
+
     /**
      * Specifies a list of table header names for the table on samples view page (the list of names should be in the order you like to show within the web
      * application).
@@ -44,13 +46,13 @@ public class SamplesViewModel extends ViewModel {
 
 
     public SamplesViewModel(Submitter submitter, EBISearchForm ebiSearchForm, Collection<Sample> samples, Collection<Sample> downloadableSamples, String pageTitle, List<Breadcrumb> breadcrumbs,
-                            MemiPropertyContainer propertyContainer, List<String> tableHeaderNames, ViewPagination pagination, SampleFilter filter) {
-        this(submitter, ebiSearchForm, samples, downloadableSamples, filter, pageTitle, breadcrumbs, propertyContainer, tableHeaderNames, pagination);
+                            MemiPropertyContainer propertyContainer, List<String> tableHeaderNames, ViewPagination pagination, SampleFilter filter, String submissionAccountId) {
+        this(submitter, ebiSearchForm, samples, downloadableSamples, filter, pageTitle, breadcrumbs, propertyContainer, tableHeaderNames, pagination, submissionAccountId);
     }
 
     SamplesViewModel(Submitter submitter, EBISearchForm ebiSearchForm, Collection<Sample> samples, Collection<Sample> downloadableSamples, SampleFilter filter, String pageTitle,
                      List<Breadcrumb> breadcrumbs, MemiPropertyContainer propertyContainer, List<String> tableHeaderNames,
-                     ViewPagination pagination) {
+                     ViewPagination pagination, String submissionAccountId) {
         super(submitter, ebiSearchForm, pageTitle, breadcrumbs, propertyContainer);
         this.sampleFilter = filter;
         this.samples = samples;
@@ -59,6 +61,7 @@ public class SamplesViewModel extends ViewModel {
         this.studyBiomes = getDefaultSampleBiomeList();
         this.tableHeaderNames = tableHeaderNames;
         this.pagination = pagination;
+        this.submissionAccountId = submissionAccountId;
     }
 
     public List<String> getTableHeaderNames() {
@@ -107,5 +110,9 @@ public class SamplesViewModel extends ViewModel {
 
     private List<Biome> getDefaultSampleBiomeList() {
         return Arrays.asList(Biome.values());
+    }
+
+    public String getSubmissionAccountId() {
+        return submissionAccountId;
     }
 }

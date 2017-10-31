@@ -9,13 +9,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.interpro.metagenomics.memi.controller.MGPortalURLCollection;
 import uk.ac.ebi.interpro.metagenomics.memi.controller.ModelProcessingStrategy;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.StudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.exceptionHandling.EntryNotFoundException;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Run;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.results.MetaDataViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.ViewModelBuilder;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.results.MetaDataViewModelBuilder;
+
+import javax.annotation.Resource;
 
 /**
  * The controller for the overview tab on the analysis results page.
@@ -26,6 +30,9 @@ import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.results.MetaD
 @Controller
 public class MetaDataViewController extends AbstractResultViewController {
     private static final Log log = LogFactory.getLog(MetaDataViewController.class);
+
+    @Resource
+    private StudyDAO studyDAO;
 
     protected String getModelViewName() {
         return "tabs/results/mainNavigation/overview";
@@ -54,6 +61,8 @@ public class MetaDataViewController extends AbstractResultViewController {
                                             @PathVariable final String runId,
                                             @PathVariable final String releaseVersion,
                                             final ModelMap model) {
+        Study study = studyDAO.readByStringId(projectId);
+        model.addAttribute("study", study);
         return checkAccessAndBuildModel(createNewModelProcessingStrategy(), model, getSecuredEntity(projectId, sampleId, runId, releaseVersion), getModelViewName());
     }
 

@@ -1917,7 +1917,33 @@ sans-serif; /*use systems fonts*/ font-size: 239%; color:#fff; line-height: 1.3;
 .jumbo-user-box .output_form {background-color: #FFF6E3 /*blue #E3F2FF*/;border-radius: 4px; text-align: center;}
 .jumbo-user-box .icon-functional:before {color:#C34533; font-size: 137%;}
 /*HOMEPAGE - stats*/
-.jumbo-stats {text-align: center; color:#606a73;font-size: 120%;line-height: 1.4;}
+.jumbo-stats {
+    text-align: center;
+    color:#606a73;
+    font-size: 120%;
+    line-height: 1.4;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.jumbo-stats-visible {
+    animation-iteration-count: 1;
+    animation-name: jumbo-stats;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-in;
+    visibility: visible;
+    opacity: 1;
+}
+
+@keyframes jumbo-stats {
+    from{
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
 /*.jumbo-stats  .grid_24 {border:1px solid blue; box-sizing:border-box;}*/
 .jumbo-stats .jumbo-stats-box {overflow: hidden;/*small screens -remove overlap*/}
 .jumbo-stats .jumbo-stats-box .grid_6.alpha {max-width: 41px;}

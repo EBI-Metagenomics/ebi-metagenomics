@@ -80,7 +80,7 @@ public class SamplesViewModelBuilder extends AbstractBiomeViewModelBuilder<Sampl
         //Get downloadable samples
 //        List<Sample> downloadableSamples = sampleDAO.retrieveFilteredSamples(filterCriteria, "sampleName");
 
-        return new SamplesViewModel(submitter, ebiSearchForm, filteredSamples, null, pageTitle, breadcrumbs, propertyContainer, tableHeaderNames, pagination, filter);
+        return new SamplesViewModel(submitter, ebiSearchForm, filteredSamples, null, pageTitle, breadcrumbs, propertyContainer, tableHeaderNames, pagination, filter, submissionAccountId);
     }
 
     private List<Sample> getFilteredSamples(SampleDAO sampleDAO, List<Criterion> filterCriteria) {

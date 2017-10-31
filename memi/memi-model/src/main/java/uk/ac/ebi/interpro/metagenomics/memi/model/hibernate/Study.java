@@ -66,11 +66,18 @@ public class Study implements SecureEntity, BiomeEntity {
             joinColumns = {@JoinColumn(name = "STUDY_ID")},
             inverseJoinColumns = {@JoinColumn(name = "PUB_ID")}
     )
-    private Set<Publication> publications;
+    private Set<Publication> publications = new HashSet<Publication>();
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "study")
-    @Column(name = "Study_ID")
-    private Set<Sample> samples;
+    /**
+     * Associated samples.
+     */
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "STUDY_SAMPLE",
+            joinColumns = {@JoinColumn(name = "STUDY_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "SAMPLE_ID")}
+    )
+    private Set<Sample> samples = new HashSet<Sample>(0);
 
     @Column(name = "CENTRE_NAME", length = 255)
     private String centreName;
@@ -85,8 +92,8 @@ public class Study implements SecureEntity, BiomeEntity {
     /**
      * Default value is private.
      */
-    @Column(name = "IS_PUBLIC",  columnDefinition = "TINYINT(4)")
-    private Integer isPublic;
+    @Column(name = "IS_PUBLIC", columnDefinition = "TINYINT(4)")
+    private Integer isPublic = 0;
 
     /**
      * Specifies the origination of the study.<br>
@@ -122,9 +129,9 @@ public class Study implements SecureEntity, BiomeEntity {
 
     /**
      * Submitted - Directly submitted to us (EBI Metagenomics).
-     * <p/>
+     * <p>
      * Harvested - Study already existed in ENA/SRA.
-     * <p/>
+     * <p>
      * Mirrored - External source e.g. MGRast.
      */
     public enum DataOrigination {
@@ -132,11 +139,7 @@ public class Study implements SecureEntity, BiomeEntity {
     }
 
     public Study() {
-        publications = new HashSet<Publication>();
-        samples = new HashSet<Sample>();
-        this.isPublic = 0;
     }
-
 
     public long getId() {
         return id;

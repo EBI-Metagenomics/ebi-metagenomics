@@ -11,6 +11,7 @@
     <tags:publications publications="${model.sample.publications}" relatedPublications="${model.relatedPublications}"
                        relatedLinks="${model.relatedLinks}"/>
 
+
     <!-- Related publication, resources, links -->
     <div class="sidebar-allrel">
     <div id="sidebar-related">
@@ -18,8 +19,8 @@
     <%--<span class="separator"></span>--%>
     <ul>
     <li>
-        <a title="Click to view entry on European Nucleotide Archive" href="https://www.ebi.ac.uk/ena/data/view/${model.analysisJob.externalRunIDs}"
-                                                      class="list_more">ENA website (${model.analysisJob.externalRunIDs})</a>
+        <a title="Click to view entry on European Nucleotide Archive" href="https://www.ebi.ac.uk/ena/data/view/${model.analysisJob.secondaryAccession}"
+                                                      class="list_more">ENA website (${model.analysisJob.secondaryAccession})</a>
     </li>
     </ul>
     </div>
@@ -34,12 +35,12 @@
         <div class="output_form">
             <div class="result_row">
                 <div class="result_row_label">Sample name:</div>
-                <div class="result_row_data"><a title="${model.sample.sampleName}" href="<c:url value="${baseURL}/projects/${model.sample.study.studyId}/samples/${model.sample.sampleId}"/>">${model.sample.sampleName} (${model.sample.sampleId})</a></div>
+                <div class="result_row_data"><a title="${model.sample.sampleName}" href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${model.sample.sampleId}"/>">${model.sample.sampleName} (${model.sample.sampleId})</a></div>
             </div>
 
             <div class="result_row">
                 <div class="result_row_label">Project name:</div>
-                <div class="result_row_data"><a title="${model.sample.study.studyName}" href="<c:url value="${baseURL}/projects/${model.sample.study.studyId}"/>">${model.sample.study.studyName} (${model.sample.study.studyId})</a></div>
+                <div class="result_row_data"><a title="${study.studyName}" href="<c:url value="${baseURL}/projects/${study.studyId}"/>">${study.studyName} (${study.studyId})</a></div>
             </div>
         </div>
         <!--/ Description -->

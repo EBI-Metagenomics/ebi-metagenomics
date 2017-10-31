@@ -18,7 +18,7 @@ public interface AnalysisJobDAO {
 
     public AnalysisJob readByRunIdAndVersionDeep(String externalRunIDs, String releaseVersion, String analysisStatus);
 
-    public List<AnalysisJob> readNonSuppressedBySampleId(Long sampleId);
+    public List<AnalysisJob> readNonSuppressedBySampleId(Long sampleId, Long studyId);
 
     public List<AnalysisJob> readBySampleIds(List<Long> sampleIds, String analysisStatus);
 
