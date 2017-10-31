@@ -182,7 +182,7 @@
                         <td align="center" class="h_left table_xs_text" width="25%">
                             <c:forEach var="study" items="${sample.studies}" varStatus="status">
                                 <c:choose>
-                                    <c:when test="${study.public}">
+                                    <c:when test="${study['public']}">
                                         <a href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${sample.sampleId}"/>"
                                            class="fl_uppercase_title">${sample.sampleId}</a>
                                         -
