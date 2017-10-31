@@ -18,7 +18,9 @@ public class RunDeepRowMapper implements RowMapper<Run> {
         run.setExternalSampleId(rs.getString("EXT_SAMPLE_ID"));
         run.setExternalProjectId(rs.getString("EXT_STUDY_ID"));
         run.setSubmissionAccountId(rs.getString("SUBMISSION_ACCOUNT_ID"));
-        run.setPublic(rs.getInt("IS_PUBLIC"));
+        // Determine privacy
+        int runStatusId = rs.getInt("RUN_STATUS_ID");
+        run.setPublic(runStatusId == 4 ? 1 : 0);
         run.setSampleId(rs.getLong("SAMPLE_ID"));
         run.setReleaseVersion(rs.getString("RELEASE_VERSION"));
         return run;

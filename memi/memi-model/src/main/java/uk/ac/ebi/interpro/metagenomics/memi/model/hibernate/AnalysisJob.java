@@ -2,7 +2,6 @@ package uk.ac.ebi.interpro.metagenomics.memi.model.hibernate;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.hibernate.annotations.Type;
 import uk.ac.ebi.interpro.metagenomics.memi.model.IAnalysisJob;
 
 import javax.persistence.*;
@@ -69,6 +68,16 @@ public class AnalysisJob implements Comparator<AnalysisJob>, SecureEntity, IAnal
 
     @Column(name = "IS_PRODUCTION_RUN")
     private boolean isProductionRun;
+
+    @Column(name = "SECONDARY_ACCESSION", columnDefinition = "VARCHAR(20)")
+    private String secondaryAccession;
+
+    @Column(name = "STUDY_ID", columnDefinition = "INT(11)", nullable = false)
+    private Long studyId;
+
+    @Column(name = "RUN_STATUS_ID", columnDefinition = "TINYINT(4)")
+    private int runStatusId;
+
 
     public AnalysisJob() {
     }
@@ -194,6 +203,31 @@ public class AnalysisJob implements Comparator<AnalysisJob>, SecureEntity, IAnal
         isProductionRun = productionRun;
     }
 
+    public Long getStudyId() {
+        return studyId;
+    }
+
+    public void setStudyId(Long studyId) {
+        this.studyId = studyId;
+    }
+
+    public String getSecondaryAccession() {
+        return secondaryAccession;
+    }
+
+    public void setSecondaryAccession(String secondaryAccession) {
+        this.secondaryAccession = secondaryAccession;
+    }
+
+
+    public int getRunStatusId() {
+        return runStatusId;
+    }
+
+    public void setRunStatusId(int runStatusId) {
+        this.runStatusId = runStatusId;
+    }
+
     @Override
     public int hashCode() {
         int result = (int) (jobId ^ (jobId >>> 32));
@@ -208,7 +242,10 @@ public class AnalysisJob implements Comparator<AnalysisJob>, SecureEntity, IAnal
         result = 31 * result + (externalRunIDs != null ? externalRunIDs.hashCode() : 0);
         result = 31 * result + experimentType.hashCode();
         result = 31 * result + (sample != null ? sample.hashCode() : 0);
-        //TODO: Implement isProductionRun
+        result = 31 * result + Long.hashCode(studyId);
+        result = 31 * result + (secondaryAccession != null ? secondaryAccession.hashCode() : 0);
+        result = 31 * result + Integer.hashCode(runStatusId);
+
 //        result = 31 * result + Boolean.isProductionRun;
         return result;
     }
@@ -244,6 +281,9 @@ public class AnalysisJob implements Comparator<AnalysisJob>, SecureEntity, IAnal
                 .append(getExperimentType(), aj.getExperimentType())
                 .append(getSample(), aj.getSample())
                 .append(isProductionRun(), aj.isProductionRun())
+                .append(getSecondaryAccession(), aj.getSecondaryAccession())
+                .append(getStudyId(), aj.getStudyId())
+                .append(getRunStatusId(), aj.getRunStatusId())
                 .isEquals();
     }
 

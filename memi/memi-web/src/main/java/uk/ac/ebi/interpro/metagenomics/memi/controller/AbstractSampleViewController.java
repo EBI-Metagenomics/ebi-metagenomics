@@ -5,12 +5,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.ui.ModelMap;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.AnalysisJobDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.StudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.temp.SampleAnnotationDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.model.EmgSampleAnnotation;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Biome;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
+import uk.ac.ebi.interpro.metagenomics.memi.model.apro.Submitter;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.*;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder.DefaultViewModelBuilder;
@@ -31,18 +30,41 @@ public abstract class AbstractSampleViewController extends SecuredAbstractContro
     private AnalysisJobDAO analysisJobDAO;
 
     @Resource
+    private StudyDAO studyDAO;
+
+    @Resource
     protected SampleAnnotationDAO sampleAnnotationDAO;
 
     protected List<Breadcrumb> getBreadcrumbs(SecureEntity entity) {
         List<Breadcrumb> result = new ArrayList<Breadcrumb>();
         if (entity != null && entity instanceof Sample) {
             Sample sample = (Sample) entity;
-            String sampleURL = "projects/" + sample.getStudy().getStudyId() + "/samples/" + sample.getSampleId();
-            String projectURL = "projects/" + sample.getStudy().getStudyId();
-            result.add(new Breadcrumb("Project: " + sample.getStudy().getStudyName(), "View project " + sample.getStudy().getStudyName(), projectURL));
-            result.add(new Breadcrumb("Sample: " + sample.getSampleName(), "View sample " + sample.getSampleName(), sampleURL));
+            String projectId = sample.getExternalProjectId();
+            Study study = studyDAO.readByStringId(projectId);
+            if (study != null) {
+                // If private study, check if it belongs to the right user
+                if (isStudyAccessible(study)) {
+                    String studyName = study.getStudyName();
+                    String sampleURL = "projects/" + sample.getExternalProjectId() + "/samples/" + sample.getSampleId();
+                    String projectURL = "projects/" + sample.getExternalProjectId();
+                    result.add(new Breadcrumb("Project: " + studyName, "View project " + studyName, projectURL));
+                    result.add(new Breadcrumb("Sample: " + sample.getSampleName(), "View sample " + sample.getSampleName(), sampleURL));
+                }
+            }
         }
         return result;
+    }
+
+    protected boolean isStudyAccessible(final Study study) {
+        if (study.isPublic()) {
+            return true;
+        }
+        Submitter submitter = super.getSessionSubmitter();
+        String accountId = null;
+        if (submitter != null) {
+            accountId = submitter.getSubmissionAccountId();
+        }
+        return study.getSubmissionAccountId().equalsIgnoreCase(accountId);
     }
 
     /**
@@ -58,8 +80,10 @@ public abstract class AbstractSampleViewController extends SecuredAbstractContro
      * Creates the home page model and adds it to the specified model map.
      */
     protected void populateModel(final ModelMap model, final Sample sample, final String pageTitle) {
+        String projectId = sample.getExternalProjectId();
+        Study study = studyDAO.readByStringId(projectId);
 
-        List<AnalysisJob> analysisJobs = analysisJobDAO.readNonSuppressedBySampleId(sample.getId());
+        List<AnalysisJob> analysisJobs = analysisJobDAO.readNonSuppressedBySampleId(sample.getId(), study.getId());
         final List<EmgSampleAnnotation> sampleAnnotations = (List<EmgSampleAnnotation>) sampleAnnotationDAO.getSampleAnnotations(sample.getId());
 
         final ViewModelBuilder<ViewModel> builder = new DefaultViewModelBuilder(userManager, getEbiSearchForm(),
@@ -72,6 +96,7 @@ public abstract class AbstractSampleViewController extends SecuredAbstractContro
         model.addAttribute("sample", sample);
         model.addAttribute("hostAssociated", isHostAssociated);
         model.addAttribute("sampleAnnotations", sampleAnnotations);
+        model.addAttribute("isStudyAccessible", isStudyAccessible(study));
     }
 
     private boolean isHostAssociated(Sample sample) {

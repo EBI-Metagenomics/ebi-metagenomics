@@ -158,7 +158,7 @@
                 </c:if>
                 <a title="Download results"
                    class="icon icon-functional list_sample" data-icon="="
-                   href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${run.externalSampleId}/runs/${run.externalRunIds}/results/versions/${run.releaseVersion}#ui-id-10"/>"></a>
+                   href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${run.externalSampleId}/runs/${run.externalRunIds}/results/versions/${run.releaseVersion}#ui-id-12"/>"></a>
             </c:when>
             <c:otherwise>
                 ${run.analysisStatus}
@@ -232,7 +232,7 @@
                             if (data.experimentType != 'amplicon') {
                                 outputStr += '<a title="Function analysis" class="list_sample" href="' + '<c:url value="${baseURL}/projects/${study.studyId}/samples/"/>' + data.externalSampleId + '/runs/' + data.externalRunIds + '/results/versions/' + data.releaseVersion + '#ui-id-8"> Function </a>|';
                             }
-                            outputStr += ' <a title="Download results" class="icon icon-functional list_sample" data-icon="=" href="' + '<c:url value="${baseURL}/projects/${study.studyId}/samples/"/>' + data.externalSampleId + '/runs/' + data.externalRunIds + '/results/versions/' + data.releaseVersion + '#ui-id-10"></a>';
+                            outputStr += ' <a title="Download results" class="icon icon-functional list_sample" data-icon="=" href="' + '<c:url value="${baseURL}/projects/${study.studyId}/samples/"/>' + data.externalSampleId + '/runs/' + data.externalRunIds + '/results/versions/' + data.releaseVersion + '#ui-id-12"></a>';
                             return outputStr;
                         } else {
                             return data.analysisStatus;

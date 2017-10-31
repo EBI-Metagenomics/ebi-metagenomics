@@ -1,6 +1,5 @@
 package uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate;
 
-import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.*;
@@ -12,11 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.model.valueObjects.SampleStatisticsVO;
-import uk.ac.ebi.interpro.metagenomics.memi.model.valueObjects.StudyStatisticsVO;
 
 import java.util.*;
 
@@ -38,33 +35,16 @@ public class SampleDAOImpl implements SampleDAO {
     public SampleDAOImpl() {
     }
 
-    @Override
-    public String retrieveExternalStudyId(String externalSampleId) {
-        try {
-            Session session = sessionFactory.getCurrentSession();
-            Criteria criteria = session.createCriteria(Sample.class);
-            criteria.add(Restrictions.eq("sampleId", externalSampleId));
-            Sample sample = (Sample) criteria.uniqueResult();
-            if (sample != null) {
-                Study sampleStudy = sample.getStudy();
-                if (sampleStudy != null) {
-                    return sampleStudy.getStudyId();
-                }
-            }
-            return null;
-        } catch (HibernateException e) {
-            throw new HibernateException("Couldn't retrieve sample object by the following external IDs " + externalSampleId, e);
-        }
-    }
-
     public Sample readBySampleIdAndStudyId(String externalStudyId, String externalSampleId) {
         try {
             Session session = sessionFactory.getCurrentSession();
             Criteria criteria = session.createCriteria(Sample.class);
             criteria.add(Restrictions.eq("sampleId", externalSampleId));
-            criteria.createAlias("study", "project").add(Restrictions.eq("project.studyId", externalStudyId));
-            Sample result = (Sample) criteria.uniqueResult();
-            return result;
+            criteria.createAlias("studies", "studies");
+            criteria.add(Restrictions.eq("studies.studyId", externalStudyId));
+            Sample sample = (Sample) criteria.uniqueResult();
+            sample.setExternalProjectId(externalStudyId);
+            return sample;
         } catch (HibernateException e) {
             throw new HibernateException("Couldn't retrieve sample object by the following external IDs " + externalStudyId + "/" + externalSampleId, e);
         }
@@ -497,7 +477,7 @@ public class SampleDAOImpl implements SampleDAO {
                 Map<Long, Long> result = new HashMap<Long, Long>();
 //                Query query = session.createQuery("select sa.isPublic, count(distinct sa.sampleId) as num_of_samples from Sample sa where sa.isPublic in (0,1) group by sa.isPublic");
 
-                Query query = session.createQuery("select st.id, count(distinct sa.sampleId) as sample_count from Study as st INNER JOIN st.samples as sa group by sa.study");
+                Query query = session.createQuery("select st.id, count(distinct sa.sampleId) as sample_count from Study as st INNER JOIN st.samples as sa group by st.studyId");
 
                 List<Object[]> results = query.list();
                 for (Object[] rowFields : results) {

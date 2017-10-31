@@ -20,9 +20,13 @@ public class Sample implements SecureEntity, BiomeEntity {
     @Column(name = "SAMPLE_ID", columnDefinition = "INT(11)")
     private long id;
 
-    @ManyToOne
-    @JoinColumn(name = "STUDY_ID", nullable = true)
-    private Study study;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "STUDY_SAMPLE",
+            joinColumns = {@JoinColumn(name = "SAMPLE_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "STUDY_ID")}
+    )
+    private Set<Study> studies = new HashSet<Study>(0);
 
     @Column(name = "EXT_SAMPLE_ID", nullable = false, length = 15)
     private String sampleId;
@@ -113,6 +117,9 @@ public class Sample implements SecureEntity, BiomeEntity {
     @Transient
     private String biomeIconTitle;
 
+    @Transient
+    private String externalProjectId;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "sample")
     @Column(name = "SAMPLE_ID")
     private Set<AnalysisJob> analysisJobs;
@@ -128,9 +135,8 @@ public class Sample implements SecureEntity, BiomeEntity {
     )
     private Set<Publication> publications;
 
+
     public Sample() {
-        isPublic = 0;
-        publications = new HashSet<Publication>();
     }
 
     public long getId() {
@@ -141,12 +147,12 @@ public class Sample implements SecureEntity, BiomeEntity {
         this.id = id;
     }
 
-    public Study getStudy() {
-        return study;
+    public Set<Study> getStudies() {
+        return studies;
     }
 
-    public void setStudy(Study study) {
-        this.study = study;
+    public void setStudies(Set<Study> studies) {
+        this.studies = studies;
     }
 
     public String getSampleId() {
@@ -381,5 +387,13 @@ public class Sample implements SecureEntity, BiomeEntity {
     @Transient
     public String getSecureEntityId() {
         return getSampleId();
+    }
+
+    public String getExternalProjectId() {
+        return externalProjectId;
+    }
+
+    public void setExternalProjectId(String externalProjectId) {
+        this.externalProjectId = externalProjectId;
     }
 }

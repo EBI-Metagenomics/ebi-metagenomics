@@ -93,7 +93,8 @@
                         <div class="grid_6">
                             <c:forEach var="experimentCountEntry"
                                        items="${model.experimentCountMap}">
-                                <span class="high_nb" id="${experimentCountEntry.key}-statistics">${experimentCountEntry.value}</span><br/>
+                                <span class="high_nb"
+                                      id="${experimentCountEntry.key}-statistics">${experimentCountEntry.value}</span><br/>
                             </c:forEach>
                         </div>
                         <div class="grid_12 omega">
@@ -115,9 +116,13 @@
                         <div class="grid_6 alpha"><span class="icon icon-functional" data-icon="U"></span><br/><span
                                 class="stat-lock-title">Public</span></div>
                         <div class="grid_6">
-                            <span id="Runs-statistics" class="high_nb">${model.dataStatistics.runStatistics.numOfPublicRuns}</span><br/>
-                            <span id="Samples-statistics" class="high_nb">${model.dataStatistics.sampleStatistics.numOfPublicSamples}</span><br/>
-                            <span id="Projects-statistics" class="high_nb">${model.dataStatistics.studyStatistics.numOfPublicStudies}</span></div>
+                            <span id="Runs-statistics"
+                                  class="high_nb">${model.dataStatistics.runStatistics.numOfPublicRuns}</span><br/>
+                            <span id="Samples-statistics"
+                                  class="high_nb">${model.dataStatistics.sampleStatistics.numOfPublicSamples}</span><br/>
+                            <span id="Projects-statistics"
+                                  class="high_nb">${model.dataStatistics.studyStatistics.numOfPublicStudies}</span>
+                        </div>
                         <div class="grid_12 omega"> runs <br/> samples <br/> projects</div>
                     </div>
                 </div>
@@ -125,7 +130,8 @@
                     <div class="grid_24">
                         <div class="grid_6 alpha"><span class="icon icon-functional" data-icon="L"></span><br/><span
                                 class="stat-lock-title">Private</span></div>
-                        <div class="grid_6"><span class="high_nb">${model.dataStatistics.runStatistics.numOfPrivateRuns}</span><br/><span
+                        <div class="grid_6"><span
+                                class="high_nb">${model.dataStatistics.runStatistics.numOfPrivateRuns}</span><br/><span
                                 class="high_nb">${model.dataStatistics.sampleStatistics.numOfPrivateSamples}</span><br/><span
                                 class="high_nb">${model.dataStatistics.studyStatistics.numOfPrivateStudies}</span></div>
                         <div class="grid_12 omega"> runs <br/> samples <br/> projects</div>
@@ -140,7 +146,7 @@
     <div class="grid_24 jumbo-list-data-container">
 
         <c:choose>
-        <c:when test="${not empty model.submitter && empty model.myStudiesMap && empty model.mySamples}">
+        <c:when test="${not empty model.submitter && empty model.studies && empty model.mySamples}">
             <!-- No project or sample have been analysed -->
             <p class="msg_error">
                 No projects or samples processed - If you have already submitted your data to ENA, then there is a small
@@ -192,11 +198,13 @@
                                                           title="Private data"></span>
                                                 </c:otherwise>
                                             </c:choose>
-                                            <c:if test="${(fn:contains(model.nonAmpliconStudies, study.studyId)) and (model.studyToRunCountMap[study.studyId] > 1)}">- <a
-                                                    href="<c:url value="${baseURL}/compare&#35${study.studyId}"/>"
-                                                    title="Compare samples in this project" class="list_sample"> <span
-                                                    class="icon icon-functional" data-icon="O"></span>
-                                                compare</a></c:if>
+                                            <c:if test="${(fn:contains(model.nonAmpliconStudies, study.studyId)) and (model.studyToRunCountMap[study.studyId] > 1)}">-
+                                                <a
+                                                        href="<c:url value="${baseURL}/compare&#35${study.studyId}"/>"
+                                                        title="Compare samples in this project"
+                                                        class="list_sample"> <span
+                                                        class="icon icon-functional" data-icon="O"></span>
+                                                    compare</a></c:if>
                                         </p>
                                     </div>
                                 </div>
@@ -227,22 +235,30 @@
 
                                 <div class="list-item">
                                     <div class="list-title">
-                                            <%--<span class="list_date">${sample.metadataReceived}:</span>--%>
-                                        <a href="<c:url value="${baseURL}/projects/${sample.study.studyId}/samples/${sample.sampleId}"/>"
-                                           class="list_more fl_uppercase_title">${sample.sampleName}
-                                            <c:if test="${!sample['public']}"><span
-                                                    class="show_tooltip icon icon-functional" data-icon="L"
-                                                    title="Private data"></span></c:if>
-                                            <c:if test="${sample['public']}"><span
-                                                    class="show_tooltip icon icon-functional" data-icon="U"
-                                                    title="Public data"></span></c:if>
-                                        </a>
+                                        <c:forEach var="study" items="${sample.studies}">
+                                            <c:if test="${fn:contains(model.studies, study)}">
+                                                <a href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${sample.sampleId}"/>"
+                                                   class="list_more fl_uppercase_title">${sample.sampleName}
+                                                    <c:if test="${!sample['public']}"><span
+                                                            class="show_tooltip icon icon-functional" data-icon="L"
+                                                            title="Private data"></span></c:if>
+                                                    <c:if test="${sample['public']}"><span
+                                                            class="show_tooltip icon icon-functional" data-icon="U"
+                                                            title="Public data"></span></c:if>
+                                                </a>
+                                            </c:if>
+                                        </c:forEach>
                                     </div>
                                     <div class="list-body">
                                         <p class="list-desc"><c:out value="${sample.shortSampleDescription} ..."/></p>
-                                        <p class="list-more"><a
-                                                href="<c:url value="${baseURL}/projects/${sample.study.studyId}/samples/${sample.sampleId}"/>"
-                                                class="more_view">View more</a></p>
+                                        <p class="list-more">
+                                            <c:forEach var="study" items="${sample.studies}">
+                                                <c:if test="${fn:contains(model.studies, study)}">
+                                                    <a href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${sample.sampleId}"/>"
+                                                       class="more_view">View more</a>
+                                                </c:if>
+                                            </c:forEach>
+                                        </p>
                                     </div>
                                 </div>
                             </c:forEach>
@@ -283,7 +299,9 @@
                                             <img class="sprite ${biome.css}"
                                                  src="<c:url value="${baseURL}/img/ico_biome_sprite.png"/>">
                                         </div>
-                                        <div class="biome_text">${biome.label} (<c:out value="${biome.numberOfProjects}"/>)</div>
+                                        <div class="biome_text">${biome.label} (<c:out
+                                                value="${biome.numberOfProjects}"/>)
+                                        </div>
                                     </div>
                                 </a>
                             </c:forEach>
@@ -322,11 +340,13 @@
                                                 class="list_sample"><c:out
                                                 value="${model.studyToSampleCountMap[study.studyId]} sample"/><c:if
                                                 test='${model.studyToSampleCountMap[study.studyId] > 1}'>s</c:if></a>
-                                            <c:if test="${(fn:contains(model.nonAmpliconStudies, study.studyId)) and (model.studyToRunCountMap[study.studyId] > 1)}">- <a
-                                                    href="<c:url value="${baseURL}/compare&#35${study.studyId}"/>"
-                                                    title="Compare samples in this project" class="list_sample"> <span
-                                                    class="icon icon-functional" data-icon="O"></span>
-                                                compare</a></c:if>
+                                            <c:if test="${(fn:contains(model.nonAmpliconStudies, study.studyId)) and (model.studyToRunCountMap[study.studyId] > 1)}">-
+                                                <a
+                                                        href="<c:url value="${baseURL}/compare&#35${study.studyId}"/>"
+                                                        title="Compare samples in this project"
+                                                        class="list_sample"> <span
+                                                        class="icon icon-functional" data-icon="O"></span>
+                                                    compare</a></c:if>
                                         </p>
                                     </div>
                                 </div>
@@ -362,21 +382,27 @@
                     </div>
                     <div class="home_box alpha">
                         <div class="hlight-text-scroll">
-                        <p><img src="${pageContext.request.contextPath}/img/ico_sub_big.png" alt="Tracking submission"/>
-                            EBI Metagenomics offers a manually-assisted submission route, with help available to ensure data
-                            and metadata formatting comply with the European Nucleotide Archive (ENA) data schema and the
-                            Genomic Standards Consortium (GSC) sample metadata guidelines. If you have problems with your submission,
-                            please contact <a
-                                href="mailto:datasubs@ebi.ac.uk?subject=EBI Metagenomics private area: data submission status">
-                            datasubs@ebi.ac.uk</a> (for submission related queries) or <a
-                                href="mailto:metagenomics-help@ebi.ac.uk?subject=EBI Metagenomics private area: general query">
-                            metagenomics-help@ebi.ac.uk</a> (for more general queries).</p>
-                        <p>Once your data is submitted to ENA, it will be archived and then analysed by the EBI Metagenomics pipeline.
-                            This may take some time (typically 1-2 weeks, depending on the data size). You will receive an email when
-                            the analysis is complete, and the results will appear in this section of the site.</p>
-                        <p>If you have been waiting for more than a month for your results, please <a
-                                href="mailto:metagenomics-help@ebi.ac.uk?subject=EBI Metagenomics private area: submission status">
-                            contact us</a> to check the status of the submission/analysis.</p>
+                            <p><img src="${pageContext.request.contextPath}/img/ico_sub_big.png"
+                                    alt="Tracking submission"/>
+                                EBI Metagenomics offers a manually-assisted submission route, with help available to
+                                ensure data
+                                and metadata formatting comply with the European Nucleotide Archive (ENA) data schema
+                                and the
+                                Genomic Standards Consortium (GSC) sample metadata guidelines. If you have problems with
+                                your submission,
+                                please contact <a
+                                        href="mailto:datasubs@ebi.ac.uk?subject=EBI Metagenomics private area: data submission status">
+                                    datasubs@ebi.ac.uk</a> (for submission related queries) or <a
+                                        href="mailto:metagenomics-help@ebi.ac.uk?subject=EBI Metagenomics private area: general query">
+                                    metagenomics-help@ebi.ac.uk</a> (for more general queries).</p>
+                            <p>Once your data is submitted to ENA, it will be archived and then analysed by the EBI
+                                Metagenomics pipeline.
+                                This may take some time (typically 1-2 weeks, depending on the data size). You will
+                                receive an email when
+                                the analysis is complete, and the results will appear in this section of the site.</p>
+                            <p>If you have been waiting for more than a month for your results, please <a
+                                    href="mailto:metagenomics-help@ebi.ac.uk?subject=EBI Metagenomics private area: submission status">
+                                contact us</a> to check the status of the submission/analysis.</p>
                         </div>
                     </div>
                 </div>
@@ -388,14 +414,18 @@
                     </div>
                     <div class="home_box omega">
                         <div class="hlight-text-scroll">
-                        <p><img src="${pageContext.request.contextPath}/img/ico_conf_big.png" alt="Data archiving"/>
-                            Data submitted to us can be kept confidential (accessible only via secure user login) to allow data
-                            producers time to publish their findings. It should be noted that all submitted data must eventually be
-                            suitable for public release.</p>
-                        <p>The default confidential hold period is two years, but this can be changed using the ENA Webin submission tool.
-                            Should you wish to make your confidential data publicly available before the confidential hold period expires,
-                            you can reset the release date using the Webin tool.
-                        </p>
+                            <p><img src="${pageContext.request.contextPath}/img/ico_conf_big.png" alt="Data archiving"/>
+                                Data submitted to us can be kept confidential (accessible only via secure user login) to
+                                allow data
+                                producers time to publish their findings. It should be noted that all submitted data
+                                must eventually be
+                                suitable for public release.</p>
+                            <p>The default confidential hold period is two years, but this can be changed using the ENA
+                                Webin submission tool.
+                                Should you wish to make your confidential data publicly available before the
+                                confidential hold period expires,
+                                you can reset the release date using the Webin tool.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -415,10 +445,11 @@
             <div class="home_box alpha">
                 <div>
                     <c:forEach var="i" begin="1" end="<%= (int) (Math.random() * 5 + 5) %>">
-                       <p class="placeholder" style="width: <%= (int) (Math.random() * 50 + 50) %>%;"></p>
+                        <p class="placeholder" style="width: <%= (int) (Math.random() * 50 + 50) %>%;"></p>
                     </c:forEach>
                 </div>
-                <a href="https://proteinswebteam.github.io/ebi-metagenomics-blog/" title="Read more on the blog" class="all left">Read more</a>
+                <a href="https://proteinswebteam.github.io/ebi-metagenomics-blog/" title="Read more on the blog"
+                   class="all left">Read more</a>
                 <a href="" title="" class="all">Look at the data</a>
             </div>
         </div>
@@ -430,10 +461,11 @@
             <div class="home_box omega">
                 <div>
                     <c:forEach var="i" begin="1" end="<%= (int) (Math.random() * 5 + 5) %>">
-                       <p class="placeholder" style="width: <%= (int) (Math.random() * 50 + 50) %>%;"></p>
+                        <p class="placeholder" style="width: <%= (int) (Math.random() * 50 + 50) %>%;"></p>
                     </c:forEach>
                 </div>
-                <a href="https://proteinswebteam.github.io/ebi-metagenomics-blog/" title="Read more on the blog" class="all left">Read more</a>
+                <a href="https://proteinswebteam.github.io/ebi-metagenomics-blog/" title="Read more on the blog"
+                   class="all left">Read more</a>
                 <a href="" class="all">Compare samples</a>
             </div>
         </div>
@@ -453,29 +485,31 @@
             </div>
             <div class="home_box alpha omega" style="min-height: auto;">
 
-                    <img
-                            alt="Cover of the Nucleic Acids Research journal"
-                            src="<c:url value="${baseURL}/img/nucleic_acids_research_D1_cover.gif"/>"
-                            style="width: auto; float: left; margin-right: 18px;"
-                    />
-                    <p>
-                        To cite EBI Metagenomics, please refer to the following publication:
-                    </p>
-                    <p>
-                        Alex Mitchell, Francois Bucchini, Guy Cochrane, Hubert Denise, Petra ten Hoopen, Matthew Fraser, Sebastien Pesseat, Simon Potter, Maxim Scheremetjew, Peter Sterk and Robert D. Finn (2015).
-                        <br />
-                        <strong>
-                            EBI metagenomics in 2016 - an expanding and evolving resource for the analysis and archiving of metagenomic data.
-                        </strong>
-                        Nucleic Acids Research (2015) doi:
-                        <a
-                                title="EBI metagenomics in 2016 - an expanding and evolving resource for the analysis and archiving of metagenomic data"
-                                href="http://nar.oxfordjournals.org/content/44/D1/D595.full"
-                                class="ext"
-                        >
-                            10.1093/nar/gkv1195
-                        </a>
-                    </p>
+                <img
+                        alt="Cover of the Nucleic Acids Research journal"
+                        src="<c:url value="${baseURL}/img/nucleic_acids_research_D1_cover.gif"/>"
+                        style="width: auto; float: left; margin-right: 18px;"
+                />
+                <p>
+                    To cite EBI Metagenomics, please refer to the following publication:
+                </p>
+                <p>
+                    Alex Mitchell, Francois Bucchini, Guy Cochrane, Hubert Denise, Petra ten Hoopen, Matthew Fraser,
+                    Sebastien Pesseat, Simon Potter, Maxim Scheremetjew, Peter Sterk and Robert D. Finn (2015).
+                    <br/>
+                    <strong>
+                        EBI metagenomics in 2016 - an expanding and evolving resource for the analysis and archiving of
+                        metagenomic data.
+                    </strong>
+                    Nucleic Acids Research (2015) doi:
+                    <a
+                            title="EBI metagenomics in 2016 - an expanding and evolving resource for the analysis and archiving of metagenomic data"
+                            href="http://nar.oxfordjournals.org/content/44/D1/D595.full"
+                            class="ext"
+                    >
+                        10.1093/nar/gkv1195
+                    </a>
+                </p>
 
                 <a href="<c:url value="${baseURL}/about#h_cite"/>" title="About page - How to cite" class="all">
                     More citations
@@ -490,7 +524,7 @@
         <div class="jumbo-news-centred">
 
             <h3 class="icon icon-socialmedia icon-s2" data-icon="T"></h3>
-                <%--<div class="flexslider">Learn to run a design the box workshop and how it helped us overhaul our training academy: <a href="#">webcredible.com/blog-reports/</a></div>--%>
+            <%--<div class="flexslider">Learn to run a design the box workshop and how it helped us overhaul our training academy: <a href="#">webcredible.com/blog-reports/</a></div>--%>
             <a class="twitter-timeline" height="100" data-dnt="true" href="https://twitter.com/EBImetagenomics"
                data-widget-id="345516657369837568"
                data-chrome="nofooter noborders noheader noscrollbar transparent" data-tweet-limit="1">Tweets by
@@ -527,14 +561,17 @@
             if ($($("iframe").contents()).find(".avatar").length > 0) {
                 $($("iframe").contents()).find(".avatar, .timeline-Tweet-author, .timeline-Tweet-media").css({display: "none"});
 //                $($("iframe").contents()).find(".permalink").css({float: "none"});
-                $($("iframe").contents()).find(".timeline-Tweet-retweetCredit").css({'text-align': "center"});/*style retweet info text*/
+                $($("iframe").contents()).find(".timeline-Tweet-retweetCredit").css({'text-align': "center"});
+                /*style retweet info text*/
 //                $($("iframe").contents()).find("li").css({'padding': "0 0 0 0"});
                 $($("iframe").contents()).find(".timeline-Tweet-text").css({
                     'text-align': "center",
                     'font-size': '157%',
                     'line-height': '1.4'
-                });/*style tweet main text*/
-                $($("iframe").contents()).find("img.autosized-media").css({'max-height': '175px'});/*don't know if this is relevant anymore*/
+                });
+                /*style tweet main text*/
+                $($("iframe").contents()).find("img.autosized-media").css({'max-height': '175px'});
+                /*don't know if this is relevant anymore*/
                 clearInterval(timer);
             }
         }, 100);

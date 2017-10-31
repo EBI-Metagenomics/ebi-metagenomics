@@ -113,9 +113,10 @@ public class ViewSamplesController extends AbstractController implements IContro
         if (downloadableSamples != null && downloadableSamples.size() > 0) {
             //Create velocity spring_model
             Map<String, Object> velocityModel = new HashMap<String, Object>();
-            velocityModel.put("sampleProperties", getTableHeaderNames());
+            velocityModel.put("sampleProperties", Arrays.asList("Biome", "Sample ID", "Sample name", "Project ID"));
             velocityModel.put("samples", downloadableSamples);
             velocityModel.put("columnLength", MAX_CHARS_PER_COLUMN);
+            velocityModel.put("submissionAccountId", submissionAccountId);
             //Create file content
             String fileContent = VelocityTemplateWriter.createFileContent(velocityEngine, VELOCITY_TEMPLATE_LOCATION_PATH, velocityModel);
             File file = MemiFileWriter.writeCSVFile(fileContent);
@@ -240,9 +241,8 @@ public class ViewSamplesController extends AbstractController implements IContro
     private List<String> getTableHeaderNames() {
         List<String> result = new ArrayList<String>();
         result.add("Biome");
-        result.add("Sample ID");
+        result.add("Sample ID - Project ID");
         result.add("Sample name");
-        result.add("Project name");
         return result;
     }
 

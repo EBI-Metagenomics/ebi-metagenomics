@@ -6,11 +6,13 @@ import uk.ac.ebi.interpro.metagenomics.memi.controller.SecuredAbstractController
 import uk.ac.ebi.interpro.metagenomics.memi.dao.RunDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.AnalysisJobDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.StudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.temp.SampleAnnotationDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.exceptionHandling.EntryNotFoundException;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Run;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.AnalysisJob;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.SecureEntity;
+import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.services.MemiDownloadService;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.Breadcrumb;
 import uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.ViewModel;
@@ -50,6 +52,9 @@ public abstract class AbstractResultViewController extends SecuredAbstractContro
     protected RunDAO runDAO;
 
     @Resource
+    protected StudyDAO studyDAO;
+
+    @Resource
     private MemiDownloadService downloadService;
 
     @Resource(name = "qualityControlFileDefinitions")
@@ -71,7 +76,11 @@ public abstract class AbstractResultViewController extends SecuredAbstractContro
                                    final String sampleId,
                                    final String runId,
                                    String version) {
-        return runDAO.readByRunIdDeep(projectId, sampleId, runId, version);
+        Study study = studyDAO.readByStringId(projectId);
+        if (study != null) {
+            return runDAO.readByRunIdDeep(study.getId(), sampleId, runId, version);
+        }
+        return null;
     }
 
 

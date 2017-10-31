@@ -10,7 +10,5 @@
 "$sample.sampleId",#{else}"",#end
 #if($sample.sampleName)
 "$sample.sampleName",#{else}"",#end
-#if($sample.study.studyName)
-"$sample.study.studyName",#{else}"",#end
-
+"#foreach( $study in $sample.studies )#if($study.public || $study.submissionAccountId == $submissionAccountId)$study.studyId#if($sample.studies.size() > 1)|#end#end#end"
 #end
