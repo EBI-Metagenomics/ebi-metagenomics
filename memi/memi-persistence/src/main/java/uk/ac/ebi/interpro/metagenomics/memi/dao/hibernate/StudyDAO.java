@@ -127,18 +127,7 @@ public interface StudyDAO extends ISecureEntityDAO<Study> {
 
     List<String> retrieveNonAmpliconStudies(Collection<String> externalStudyIds);
 
-    /**
-     * Retrieves the number of samples for each study.
-     * <p>
-     * Example result:
-     * <p>
-     * ERP005249	1
-     * ERP010153	1
-     *
-     * @param externalStudyIds List of external study identifiers.
-     * @return
-     */
-    Map<String, Long> retrieveSampleCountsGroupedByExternalStudyId(Collection<String> externalStudyIds);
+    StudyStatisticsVO retrieveStatistics();
 
-    public StudyStatisticsVO retrieveStatistics();
+    Map<Long, Long> retrieveSampleCountsPerStudy();
 }

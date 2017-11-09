@@ -56,8 +56,24 @@ public class RunDAOImpl implements RunDAO {
     public Map<String, Long> retrieveRunCountsGroupedByExperimentType(final int analysisStatusId) {
         try {
             Map<String, Long> result = new HashMap<String, Long>();
-            String sql = "select et.experiment_type, count(distinct j.external_run_ids) as count from ANALYSIS_JOB j,  EXPERIMENT_TYPE et where et.experiment_type_id = j.experiment_type_id AND j.analysis_status_id = ? group by et.experiment_type";
-            List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql, new Object[]{analysisStatusId});
+            StringBuilder sql = new StringBuilder("select exp.experiment_type, count(distinct job.external_run_ids) as count ");
+            sql.append("from ANALYSIS_JOB job,");
+            sql.append("EXPERIMENT_TYPE exp,");
+            sql.append("ANALYSIS_STATUS status,");
+            sql.append("PIPELINE_RELEASE pipeline,");
+            sql.append("SAMPLE sample,");
+            sql.append("STUDY project ");
+            sql.append("where  job.EXPERIMENT_TYPE_ID = exp.EXPERIMENT_TYPE_ID ");
+            sql.append("and job.ANALYSIS_STATUS_ID = status.ANALYSIS_STATUS_ID ");
+            sql.append("and job.PIPELINE_ID = pipeline.PIPELINE_ID ");
+            sql.append("and job.STUDY_ID = project.STUDY_ID ");
+            sql.append("and job.ANALYSIS_STATUS_ID = ? ");
+            sql.append("AND job.RUN_STATUS_ID = 4 ");
+            sql.append("and project.IS_PUBLIC = 1 ");
+            sql.append("and job.SAMPLE_ID = sample.SAMPLE_ID ");
+            sql.append("and sample.IS_PUBLIC = 1 ");
+            sql.append("group by exp.experiment_type");
+            List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql.toString(), new Object[]{analysisStatusId});
             for (Map<String, Object> row : rows) {
                 result.put((String) (row.get("EXPERIMENT_TYPE")), (Long) row.get("COUNT"));
             }
@@ -70,12 +86,12 @@ public class RunDAOImpl implements RunDAO {
     public RunStatisticsVO retrieveStatistics() {
         try {
             RunStatisticsVO stats = new RunStatisticsVO();
-            String sql = "select s.is_public, count(distinct j.EXTERNAL_RUN_IDS) as num_of_runs from ANALYSIS_JOB j, SAMPLE s where j.sample_id = s.sample_id and s.IS_PUBLIC in (0,1) and j.ANALYSIS_STATUS_ID = 3 group by s.IS_PUBLIC";
+            String sql = "select j.RUN_STATUS_ID as is_public, count(distinct j.EXTERNAL_RUN_IDS) as num_of_runs from ANALYSIS_JOB j where j.RUN_STATUS_ID in (2,4) and j.ANALYSIS_STATUS_ID = 3 group by j.RUN_STATUS_ID";
             List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
             for (Map<String, Object> row : rows) {
                 int isPublic = (Integer) row.get("IS_PUBLIC");
                 long numOfRuns = (Long) row.get("num_of_runs");
-                if (isPublic == 1) {
+                if (isPublic == 4) {
                     stats.setNumOfPublicRuns(numOfRuns);
                 } else {
                     stats.setNumOfPrivateRuns(numOfRuns);
@@ -145,7 +161,7 @@ public class RunDAOImpl implements RunDAO {
             }
             // Allow private and public runs but no suppressed
             else {
-                sb.append("AND (aj.run_status_id = 4 OR aj.run_status_id = 2)");
+                sb.append("AND aj.run_status_id in (2, 4) ");
             }
             sb.append("AND st.analysis_status_id <> 5 ");
             sb.append("order by sa.ext_sample_id, aj.external_run_ids");

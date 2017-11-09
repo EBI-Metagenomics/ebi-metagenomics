@@ -87,7 +87,7 @@ public class StudiesViewModelBuilder extends AbstractBiomeViewModelBuilder<Studi
         long filteredStudiesCount = studyDAO.countByCriteria(filterCriteria);
         ViewPagination pagination = new ViewPagination(startPosition, filteredStudiesCount, PAGE_SIZE);
 
-        StudiesViewHelper.attachSampleSize(filteredStudies, sampleDAO);
+        StudiesViewHelper.attachSampleSize(filteredStudies, studyDAO);
         return new StudiesViewModel(submitter, ebiSearchForm, filteredStudies, null, pageTitle, breadcrumbs, propertyContainer, tableHeaderNames, pagination, filter);
     }
 

@@ -186,8 +186,8 @@
                                                class="more_view">View more</a> - <a
                                                 href="<c:url value="${baseURL}/projects/${study.studyId}"/>#samples_id"
                                                 class="list_sample"><c:out
-                                                value="${model.studyToSampleCountMap[study.studyId]} sample"/><c:if
-                                                test='${model.studyToSampleCountMap[study.studyId] > 1}'>s</c:if></a>
+                                                value="${model.studyToSampleCountMap[study.id]} sample"/><c:if
+                                                test='${model.studyToSampleCountMap[study.id] > 1}'>s</c:if></a>
                                             <c:choose>
                                                 <c:when test="${study['public']}">
                                                     <span class="show_tooltip icon icon-functional" data-icon="U"
@@ -338,8 +338,8 @@
                                                class="more_view">View more</a> - <a
                                                 href="<c:url value="${baseURL}/projects/${study.studyId}"/>#samples_id"
                                                 class="list_sample"><c:out
-                                                value="${model.studyToSampleCountMap[study.studyId]} sample"/><c:if
-                                                test='${model.studyToSampleCountMap[study.studyId] > 1}'>s</c:if></a>
+                                                value="${model.studyToSampleCountMap[study.id]} sample"/><c:if
+                                                test='${model.studyToSampleCountMap[study.id] > 1}'>s</c:if></a>
                                             <c:if test="${(fn:contains(model.nonAmpliconStudies, study.studyId)) and (model.studyToRunCountMap[study.studyId] > 1)}">-
                                                 <a
                                                         href="<c:url value="${baseURL}/compare&#35${study.studyId}"/>"
