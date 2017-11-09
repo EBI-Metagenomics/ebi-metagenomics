@@ -49,7 +49,7 @@
         <div class="sidebar-allrel">
             <div id="sidebar-related">
                 <h2>Related links</h2>
-                <%--<span class="separator"></span>--%>
+                    <%--<span class="separator"></span>--%>
                 <ul>
                     <!--ENA links -->
                     <li>
@@ -130,11 +130,11 @@
         <a href="<c:url value="${baseURL}/project/${study.studyId}/doExport/"/>">Export more detailed sample info to CSV</a>
     </div>--%>
 
-            <div class="export">
-                <a href="<c:url value="${baseURL}/projects/${study.studyId}/overview/doExport"/>" id="csv_plus"
-                   title="<spring:message code="studyView.download.anchor.title"/>">
-                    <spring:message code="download.anchor.label.detailed"/></a>
-            </div>
+    <div class="export">
+        <a href="<c:url value="${baseURL}/projects/${study.studyId}/overview/doExport"/>" id="csv_plus"
+           title="<spring:message code="studyView.download.anchor.title"/>">
+            <spring:message code="download.anchor.label.detailed"/></a>
+    </div>
 
     <table class="table-heading result" id="associated-run">
         <thead>
@@ -214,7 +214,11 @@
 //                {"data": "externalRunIds"},
                 { // render external run id with hyperlink
                     "data": function (data, type, row, meta) {
-                        return '<a title="Run ' + data.externalSampleId + '" href="' + '<c:url value="${baseURL}/projects/${study.studyId}/samples/"/>' + data.externalSampleId + '/runs/' + data.externalRunIds + '/results/versions/' + data.releaseVersion + '">' + data.externalRunIds + '</a>';
+                        var secondaryAcc = '';
+                        if (data.externalRunIds.startsWith("GCA")) {
+                            secondaryAcc = ' / ' + data.secondaryAccession;
+                        }
+                        return '<a title="Run ' + data.externalSampleId + '" href="' + '<c:url value="${baseURL}/projects/${study.studyId}/samples/"/>' + data.externalSampleId + '/runs/' + data.externalRunIds + '/results/versions/' + data.releaseVersion + '">' + data.externalRunIds + secondaryAcc + '</a>';
                     }
                 },
                 {"data": "experimentType"}, // render experiment type

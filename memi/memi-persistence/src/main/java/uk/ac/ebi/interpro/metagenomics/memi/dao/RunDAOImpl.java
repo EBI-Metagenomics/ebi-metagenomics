@@ -128,7 +128,7 @@ public class RunDAOImpl implements RunDAO {
             // SELECT aj.sample_id, sa.ext_sample_id, sa.sample_name, tmp.ct, aj.external_run_ids, aj.experiment_type, sa.submission_account_id, sa.is_public, r.release_version FROM ANALYSIS_JOB aj, PIPELINE_RELEASE r, sample sa, (select aj.sample_id, count(aj.sample_id) as ct from sample sa, ANALYSIS_JOB aj where sa.sample_id = aj.sample_id AND sa.study_id = 434 GROUP BY aj.sample_id) tmp WHERE aj.pipeline_id=r.pipeline_id AND sa.sample_id = aj.sample_id AND tmp.sample_id = aj.sample_id AND sa.study_id = 434 order by sa.ext_sample_id, aj.external_run_ids;
 
             StringBuilder sb = new StringBuilder()
-                    .append("SELECT aj.sample_id, sa.ext_sample_id as external_sample_id, sa.sample_name, sa.sample_desc as sample_description, tmp.run_count, aj.external_run_ids, et.experiment_type, sa.submission_account_id, sa.is_public, r.release_version, st.ANALYSIS_STATUS, an.VAR_VAL_UCV as instrumentModel ")
+                    .append("SELECT aj.sample_id, sa.ext_sample_id as external_sample_id, sa.sample_name, sa.sample_desc as sample_description, tmp.run_count, aj.external_run_ids, aj.secondary_accession, et.experiment_type, sa.submission_account_id, sa.is_public, r.release_version, st.ANALYSIS_STATUS, an.VAR_VAL_UCV as instrumentModel ")
                     .append("FROM ")
                     .append("ANALYSIS_STATUS st, ")
                     .append("ANALYSIS_JOB aj, ")
@@ -141,11 +141,11 @@ public class RunDAOImpl implements RunDAO {
                             "AND stsa.study_id = ? AND aj.study_id = ? AND aj.analysis_status_id <> 5 GROUP BY aj.sample_id) tmp ")
                     .append("WHERE aj.experiment_type_id=et.experiment_type_id AND aj.pipeline_id=r.pipeline_id AND sa.sample_id = aj.sample_id AND stsa.sample_id = sa.sample_id AND sa.sample_id = an.sample_id AND aj.ANALYSIS_STATUS_ID=st.ANALYSIS_STATUS_ID AND an.VAR_ID = 352 AND tmp.sample_id = aj.sample_id AND stsa.study_id = ? AND aj.study_id = ? ");
             if (publicOnly) {
-                sb.append("AND sa.is_public = 1 ");
+                sb.append("AND aj.run_status_id = 4 ");
             }
-            // Allow private and public samples but no suppressed
+            // Allow private and public runs but no suppressed
             else {
-                sb.append("AND sa.is_public <> 5 ");
+                sb.append("AND (aj.run_status_id = 4 OR aj.run_status_id = 2)");
             }
             sb.append("AND st.analysis_status_id <> 5 ");
             sb.append("order by sa.ext_sample_id, aj.external_run_ids");

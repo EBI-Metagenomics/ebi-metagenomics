@@ -13,6 +13,7 @@ public class QueryRunsForProjectResult {
     private String sampleDescription;
     private int runCount;
     private String externalRunIds;
+    private String secondaryAccession;
     private String experimentType;
     private String submissionAccountId;
     private int isPublic;
@@ -66,6 +67,14 @@ public class QueryRunsForProjectResult {
 
     public void setExternalRunIds(String externalRunIds) {
         this.externalRunIds = externalRunIds;
+    }
+
+    public String getSecondaryAccession() {
+        return secondaryAccession;
+    }
+
+    public void setSecondaryAccession(String secondaryAccession) {
+        this.secondaryAccession = secondaryAccession;
     }
 
     public String getExperimentType() {
