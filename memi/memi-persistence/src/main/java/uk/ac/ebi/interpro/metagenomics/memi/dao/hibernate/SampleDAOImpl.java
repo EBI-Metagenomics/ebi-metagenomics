@@ -12,7 +12,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
-import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
 import uk.ac.ebi.interpro.metagenomics.memi.model.valueObjects.SampleStatisticsVO;
 
 import java.util.*;
@@ -43,7 +42,9 @@ public class SampleDAOImpl implements SampleDAO {
             criteria.createAlias("studies", "studies");
             criteria.add(Restrictions.eq("studies.studyId", externalStudyId));
             Sample sample = (Sample) criteria.uniqueResult();
-            sample.setExternalProjectId(externalStudyId);
+            if (sample != null) {
+                sample.setExternalProjectId(externalStudyId);
+            }
             return sample;
         } catch (HibernateException e) {
             throw new HibernateException("Couldn't retrieve sample object by the following external IDs " + externalStudyId + "/" + externalSampleId, e);
@@ -463,29 +464,6 @@ public class SampleDAOImpl implements SampleDAO {
                     }
                 }
                 return stats;
-            } catch (DataAccessException exception) {
-                throw exception;
-            }
-        }
-        return null;
-    }
-
-    public Map<Long, Long> retrieveSampleCountsPerStudy() {
-        Session session = sessionFactory.getCurrentSession();
-        if (session != null) {
-            try {
-                Map<Long, Long> result = new HashMap<Long, Long>();
-//                Query query = session.createQuery("select sa.isPublic, count(distinct sa.sampleId) as num_of_samples from Sample sa where sa.isPublic in (0,1) group by sa.isPublic");
-
-                Query query = session.createQuery("select st.id, count(distinct sa.sampleId) as sample_count from Study as st INNER JOIN st.samples as sa group by st.studyId");
-
-                List<Object[]> results = query.list();
-                for (Object[] rowFields : results) {
-                    long studyId = (Long) rowFields[0];
-                    long numOfSamples = (Long) rowFields[1];
-                    result.put(studyId, numOfSamples);
-                }
-                return result;
             } catch (DataAccessException exception) {
                 throw exception;
             }
