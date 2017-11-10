@@ -10,11 +10,15 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.extensions.QueryRunsForProjectResult;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Run;
-import uk.ac.ebi.interpro.metagenomics.memi.model.valueObjects.RunStatisticsVO;
 import uk.ac.ebi.interpro.metagenomics.memi.model.valueObjects.ProjectSampleRunMappingVO;
+import uk.ac.ebi.interpro.metagenomics.memi.model.valueObjects.RunStatisticsVO;
 
 import javax.sql.DataSource;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+s.collections.map.HashedMap;
 
 /**
  * This data access object is mainly used to query the analysis job table in EMG.
@@ -176,5 +180,19 @@ public class RunDAOImpl implements RunDAO {
         } catch (EmptyResultDataAccessException exception) {
             throw new EmptyResultDataAccessException(1);
         }
+    }
+
+    public Map<String, Object> retrieveStudyAndSampleAccessions(String runId) {
+        Map<String, Object> result = new HashMap<String, Object>();
+        String sql = "select st.EXT_STUDY_ID as study_id,sa.EXT_SAMPLE_ID as sample_id, pr.RELEASE_VERSION from ANALYSIS_JOB aj, SAMPLE sa, STUDY st, PIPELINE_RELEASE pr where aj.SAMPLE_ID=sa.SAMPLE_ID and st.STUDY_ID=aj.STUDY_ID and aj.PIPELINE_ID = pr.PIPELINE_ID and aj.EXTERNAL_RUN_IDS = ? order by aj.PIPELINE_ID desc";
+        List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql, new Object[]{runId});
+        // Just pick the result with the highest pipeline version
+        if (rows.size() > 0) {
+            Map<String, Object> firstRow = rows.get(0);
+            result.put("studyId", firstRow.get("STUDY_ID"));
+            result.put("sampleId", firstRow.get("SAMPLE_ID"));
+            result.put("pipelineId", firstRow.get("RELEASE_VERSION"));
+        }
+        return result;
     }
 }

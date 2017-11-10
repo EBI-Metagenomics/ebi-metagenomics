@@ -25,4 +25,6 @@ public interface RunDAO {
     public List<QueryRunsForProjectResult> retrieveRunsByProjectId(long projectId, boolean publicOnly);
 
     public List<ProjectSampleRunMappingVO> retrieveListOfRunAccessionsByProjectId(long projectId);
+
+    Map<String, Object> retrieveStudyAndSampleAccessions(String runId);
 }
