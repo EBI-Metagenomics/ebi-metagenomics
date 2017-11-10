@@ -18,8 +18,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-s.collections.map.HashedMap;
-
 /**
  * This data access object is mainly used to query the analysis job table in EMG.
  *
