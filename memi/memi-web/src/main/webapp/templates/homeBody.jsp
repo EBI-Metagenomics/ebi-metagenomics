@@ -494,20 +494,19 @@
                     To cite EBI Metagenomics, please refer to the following publication:
                 </p>
                 <p>
-                    Alex Mitchell, Francois Bucchini, Guy Cochrane, Hubert Denise, Petra ten Hoopen, Matthew Fraser,
-                    Sebastien Pesseat, Simon Potter, Maxim Scheremetjew, Peter Sterk and Robert D. Finn (2015).
+                    Alex L. Mitchell, Maxim Scheremetjew, Hubert Denise, Simon Potter, Aleksandra Tarkowska, Matloob Qureshi, Gustavo A. Salazar, Sebastien Pesseat, Miguel A. Boland, Fiona M. I. Hunter, Petra ten Hoopen, Blaise Alako, Clara Amid, Darren J. Wilkinson, Thomas P. Curtis, Guy Cochrane, Robert D. Finn (2017).
                     <br/>
                     <strong>
-                        EBI metagenomics in 2016 - an expanding and evolving resource for the analysis and archiving of
-                        metagenomic data.
+                        EBI Metagenomics in 2017: enriching the analysis of microbial communities, from sequence
+                        reads to assemblies.
                     </strong>
-                    Nucleic Acids Research (2015) doi:
+                    Nucleic Acids Research (2017) doi:
                     <a
-                            title="EBI metagenomics in 2016 - an expanding and evolving resource for the analysis and archiving of metagenomic data"
-                            href="http://nar.oxfordjournals.org/content/44/D1/D595.full"
+                            title="EBI Metagenomics in 2017: enriching the analysis of microbial communities, from sequence reads to assemblies"
+                            href="https://doi.org/10.1093/nar/gkx967"
                             class="ext"
                     >
-                        10.1093/nar/gkv1195
+                        10.1093/nar/gkx967
                     </a>
                 </p>
 
