@@ -3,6 +3,7 @@ package uk.ac.ebi.interpro.metagenomics.memi.springmvc.modelbuilder;
 import org.hibernate.criterion.*;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.BiomeDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.SampleDAO;
+import uk.ac.ebi.interpro.metagenomics.memi.dao.hibernate.StudyDAO;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.Biome;
 import uk.ac.ebi.interpro.metagenomics.memi.forms.StudyFilter;
 import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Study;
@@ -153,11 +154,16 @@ public class StudiesViewHelper {
         return biomeIdList;
     }
 
-    public static void attachSampleSize(final List<Study> filteredStudies, final SampleDAO sampleDAO) {
-        Map<Long, Long> studyToSampleCounts = sampleDAO.retrieveSampleCountsPerStudy();
+    public static void attachSampleSize(final List<Study> filteredStudies, final StudyDAO studyDAO) {
+        Map<Long, Long> studyToSampleCounts = studyDAO.retrieveSampleCountsPerStudy();
         for (Study study : filteredStudies) {
-            Long sampleCount = studyToSampleCounts.get(study.getId());
-            study.setSampleCount(sampleCount);
+            long studyId = study.getId();
+            if (studyToSampleCounts.containsKey(studyId)) {
+                Long sampleCount = studyToSampleCounts.get(study.getId());
+                study.setSampleCount(sampleCount);
+            } else {
+                study.setSampleCount(0L);
+            }
         }
     }
 }

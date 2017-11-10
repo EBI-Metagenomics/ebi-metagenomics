@@ -511,26 +511,6 @@ public class StudyDAOImpl implements StudyDAO {
         return new ArrayList<>();
     }
 
-    @Transactional(readOnly = true)
-    public Map<String, Long> retrieveSampleCountsGroupedByExternalStudyId(Collection<String> externalStudyIds) {
-        if (externalStudyIds != null && externalStudyIds.size() > 0) {
-            Session session = sessionFactory.getCurrentSession();
-            if (session != null) {
-                try {
-                    //Distinct count, which means multiple analysis versions of the same run will not take into account
-                    Query query = session.createQuery("select p.studyId, count(distinct sample.sampleId) as count FROM Study p inner join p.samples sample where p.studyId in (:studyIds) group by p.studyId");
-                    query.setParameterList("studyIds", externalStudyIds);
-                    List results = query.list();
-                    Map<String, Long> transformedResults = transformResultsToMap(results);
-                    return transformedResults;
-                } catch (HibernateException e) {
-                    throw new HibernateException("Couldn't retrieve grouped sample counts.", e);
-                }
-            }
-        }
-        return new HashMap<>();
-    }
-
     private Map<String, Long> transformResultsToMap(List<Object[]> results) {
         Map<String, Long> result = new HashMap<String, Long>();
         for (Object[] resultItem : results) {
@@ -556,6 +536,27 @@ public class StudyDAOImpl implements StudyDAO {
                     }
                 }
                 return stats;
+            } catch (DataAccessException exception) {
+                throw exception;
+            }
+        }
+        return null;
+    }
+
+    public Map<Long, Long> retrieveSampleCountsPerStudy() {
+        Session session = sessionFactory.getCurrentSession();
+        if (session != null) {
+            try {
+                Map<Long, Long> result = new HashMap<Long, Long>();
+
+                StringBuilder sql = new StringBuilder("SELECT stsa.study_id as study_id, count(sa.sample_id) as sample_count ");
+                sql.append("FROM STUDY_SAMPLE stsa left outer join SAMPLE sa on stsa.sample_id = sa.sample_id ");
+                sql.append("where (sa.is_public = 1 OR sa.is_public = 0) group by stsa.study_id");
+                List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql.toString());
+                for (Map<String, Object> row : rows) {
+                    result.put(new Long((int) row.get("STUDY_ID")), (Long) row.get("SAMPLE_COUNT"));
+                }
+                return result;
             } catch (DataAccessException exception) {
                 throw exception;
             }

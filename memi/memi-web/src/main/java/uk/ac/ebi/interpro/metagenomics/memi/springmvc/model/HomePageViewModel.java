@@ -52,7 +52,7 @@ public final class HomePageViewModel extends ViewModel {
 
     private Long numOfDataSets;
 
-    private Map<String, Long> studyToSampleCountMap;
+    private Map<Long, Long> studyToSampleCountMap;
 
     private Map<String, Long> studyToRunCountMap;
 
@@ -70,7 +70,7 @@ public final class HomePageViewModel extends ViewModel {
                              final List<BiomeLogoModel> biomeCountMap,
                              final Map<String, Long> experimentCountMap,
                              final Long numOfDataSets,
-                             final Map<String, Long> studyToSampleCountMap,
+                             final Map<Long, Long> studyToSampleCountMap,
                              final Map<String, Long> studyToRunCountMap,
                              final DataStatistics dataStatistics,
                              final List<String> nonAmpliconStudies) {
@@ -100,7 +100,7 @@ public final class HomePageViewModel extends ViewModel {
                              final int maxRowNumberOfLatestItems,
                              final Long mySamplesCount,
                              final Long myStudiesCount,
-                             final Map<String, Long> studyToSampleCountMap,
+                             final Map<Long, Long> studyToSampleCountMap,
                              final Map<String, Long> studyToRunCountMap,
                              final DataStatistics dataStatistics,
                              final List<String> nonAmpliconStudies) {
@@ -169,7 +169,7 @@ public final class HomePageViewModel extends ViewModel {
         return numOfDataSets;
     }
 
-    public Map<String, Long> getStudyToSampleCountMap() {
+    public Map<Long, Long> getStudyToSampleCountMap() {
         return studyToSampleCountMap;
     }
 

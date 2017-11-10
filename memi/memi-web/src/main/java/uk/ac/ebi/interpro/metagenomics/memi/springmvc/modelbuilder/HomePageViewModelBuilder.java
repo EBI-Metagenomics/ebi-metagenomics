@@ -112,12 +112,12 @@ public class HomePageViewModelBuilder extends AbstractBiomeViewModelBuilder<Home
 
         // Get list of study identifiers
         List<String> studyIdentifiers = getListOfStudyIdentifiers(studies);
-        Map<String, Long> studyToSampleCountMap = new HashMap<String, Long>(0);
+        Map<Long, Long> studyToSampleCountMap = new HashMap<Long, Long>(0);
         Map<String, Long> studyToRunCountMap = new HashMap<String, Long>(0);
         List<String> nonAmpliconStudies = new ArrayList<String>();
         if (studyIdentifiers.size() > 0) {
             // Get study to sample count map
-            studyToSampleCountMap = studyDAO.retrieveSampleCountsGroupedByExternalStudyId(studyIdentifiers);
+            studyToSampleCountMap = studyDAO.retrieveSampleCountsPerStudy();
             // Get study to run count map
             studyToRunCountMap = studyDAO.retrieveRunCountsGroupedByExternalStudyId(studyIdentifiers);
             nonAmpliconStudies = studyDAO.retrieveNonAmpliconStudies(studyIdentifiers);
