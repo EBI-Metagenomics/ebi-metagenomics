@@ -103,6 +103,4 @@ public interface SampleDAO extends ISecureEntityDAO<Sample> {
     long retrieveSampleSizeByStudyId(long studyId);
 
     SampleStatisticsVO retrieveStatistics();
-
-    Map<Long, Long> retrieveSampleCountsPerStudy();
 }

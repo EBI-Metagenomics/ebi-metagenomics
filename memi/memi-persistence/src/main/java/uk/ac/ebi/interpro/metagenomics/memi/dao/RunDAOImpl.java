@@ -10,11 +10,13 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import uk.ac.ebi.interpro.metagenomics.memi.dao.extensions.QueryRunsForProjectResult;
 import uk.ac.ebi.interpro.metagenomics.memi.model.Run;
-import uk.ac.ebi.interpro.metagenomics.memi.model.valueObjects.RunStatisticsVO;
 import uk.ac.ebi.interpro.metagenomics.memi.model.valueObjects.ProjectSampleRunMappingVO;
+import uk.ac.ebi.interpro.metagenomics.memi.model.valueObjects.RunStatisticsVO;
 
 import javax.sql.DataSource;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * This data access object is mainly used to query the analysis job table in EMG.
@@ -56,8 +58,24 @@ public class RunDAOImpl implements RunDAO {
     public Map<String, Long> retrieveRunCountsGroupedByExperimentType(final int analysisStatusId) {
         try {
             Map<String, Long> result = new HashMap<String, Long>();
-            String sql = "select et.experiment_type, count(distinct j.external_run_ids) as count from ANALYSIS_JOB j,  EXPERIMENT_TYPE et where et.experiment_type_id = j.experiment_type_id AND j.analysis_status_id = ? group by et.experiment_type";
-            List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql, new Object[]{analysisStatusId});
+            StringBuilder sql = new StringBuilder("select exp.experiment_type, count(distinct job.external_run_ids) as count ");
+            sql.append("from ANALYSIS_JOB job,");
+            sql.append("EXPERIMENT_TYPE exp,");
+            sql.append("ANALYSIS_STATUS status,");
+            sql.append("PIPELINE_RELEASE pipeline,");
+            sql.append("SAMPLE sample,");
+            sql.append("STUDY project ");
+            sql.append("where  job.EXPERIMENT_TYPE_ID = exp.EXPERIMENT_TYPE_ID ");
+            sql.append("and job.ANALYSIS_STATUS_ID = status.ANALYSIS_STATUS_ID ");
+            sql.append("and job.PIPELINE_ID = pipeline.PIPELINE_ID ");
+            sql.append("and job.STUDY_ID = project.STUDY_ID ");
+            sql.append("and job.ANALYSIS_STATUS_ID = ? ");
+            sql.append("AND job.RUN_STATUS_ID = 4 ");
+            sql.append("and project.IS_PUBLIC = 1 ");
+            sql.append("and job.SAMPLE_ID = sample.SAMPLE_ID ");
+            sql.append("and sample.IS_PUBLIC = 1 ");
+            sql.append("group by exp.experiment_type");
+            List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql.toString(), new Object[]{analysisStatusId});
             for (Map<String, Object> row : rows) {
                 result.put((String) (row.get("EXPERIMENT_TYPE")), (Long) row.get("COUNT"));
             }
@@ -70,12 +88,12 @@ public class RunDAOImpl implements RunDAO {
     public RunStatisticsVO retrieveStatistics() {
         try {
             RunStatisticsVO stats = new RunStatisticsVO();
-            String sql = "select s.is_public, count(distinct j.EXTERNAL_RUN_IDS) as num_of_runs from ANALYSIS_JOB j, SAMPLE s where j.sample_id = s.sample_id and s.IS_PUBLIC in (0,1) and j.ANALYSIS_STATUS_ID = 3 group by s.IS_PUBLIC";
+            String sql = "select j.RUN_STATUS_ID as is_public, count(distinct j.EXTERNAL_RUN_IDS) as num_of_runs from ANALYSIS_JOB j where j.RUN_STATUS_ID in (2,4) and j.ANALYSIS_STATUS_ID = 3 group by j.RUN_STATUS_ID";
             List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
             for (Map<String, Object> row : rows) {
                 int isPublic = (Integer) row.get("IS_PUBLIC");
                 long numOfRuns = (Long) row.get("num_of_runs");
-                if (isPublic == 1) {
+                if (isPublic == 4) {
                     stats.setNumOfPublicRuns(numOfRuns);
                 } else {
                     stats.setNumOfPrivateRuns(numOfRuns);
@@ -128,7 +146,7 @@ public class RunDAOImpl implements RunDAO {
             // SELECT aj.sample_id, sa.ext_sample_id, sa.sample_name, tmp.ct, aj.external_run_ids, aj.experiment_type, sa.submission_account_id, sa.is_public, r.release_version FROM ANALYSIS_JOB aj, PIPELINE_RELEASE r, sample sa, (select aj.sample_id, count(aj.sample_id) as ct from sample sa, ANALYSIS_JOB aj where sa.sample_id = aj.sample_id AND sa.study_id = 434 GROUP BY aj.sample_id) tmp WHERE aj.pipeline_id=r.pipeline_id AND sa.sample_id = aj.sample_id AND tmp.sample_id = aj.sample_id AND sa.study_id = 434 order by sa.ext_sample_id, aj.external_run_ids;
 
             StringBuilder sb = new StringBuilder()
-                    .append("SELECT aj.sample_id, sa.ext_sample_id as external_sample_id, sa.sample_name, sa.sample_desc as sample_description, tmp.run_count, aj.external_run_ids, et.experiment_type, sa.submission_account_id, sa.is_public, r.release_version, st.ANALYSIS_STATUS, an.VAR_VAL_UCV as instrumentModel ")
+                    .append("SELECT aj.sample_id, sa.ext_sample_id as external_sample_id, sa.sample_name, sa.sample_desc as sample_description, tmp.run_count, aj.external_run_ids, aj.secondary_accession, et.experiment_type, sa.submission_account_id, sa.is_public, r.release_version, st.ANALYSIS_STATUS, an.VAR_VAL_UCV as instrumentModel ")
                     .append("FROM ")
                     .append("ANALYSIS_STATUS st, ")
                     .append("ANALYSIS_JOB aj, ")
@@ -141,11 +159,11 @@ public class RunDAOImpl implements RunDAO {
                             "AND stsa.study_id = ? AND aj.study_id = ? AND aj.analysis_status_id <> 5 GROUP BY aj.sample_id) tmp ")
                     .append("WHERE aj.experiment_type_id=et.experiment_type_id AND aj.pipeline_id=r.pipeline_id AND sa.sample_id = aj.sample_id AND stsa.sample_id = sa.sample_id AND sa.sample_id = an.sample_id AND aj.ANALYSIS_STATUS_ID=st.ANALYSIS_STATUS_ID AND an.VAR_ID = 352 AND tmp.sample_id = aj.sample_id AND stsa.study_id = ? AND aj.study_id = ? ");
             if (publicOnly) {
-                sb.append("AND sa.is_public = 1 ");
+                sb.append("AND aj.run_status_id = 4 ");
             }
-            // Allow private and public samples but no suppressed
+            // Allow private and public runs but no suppressed
             else {
-                sb.append("AND sa.is_public <> 5 ");
+                sb.append("AND aj.run_status_id in (2, 4) ");
             }
             sb.append("AND st.analysis_status_id <> 5 ");
             sb.append("order by sa.ext_sample_id, aj.external_run_ids");
@@ -160,5 +178,19 @@ public class RunDAOImpl implements RunDAO {
         } catch (EmptyResultDataAccessException exception) {
             throw new EmptyResultDataAccessException(1);
         }
+    }
+
+    public Map<String, Object> retrieveStudyAndSampleAccessions(String runId) {
+        Map<String, Object> result = new HashMap<String, Object>();
+        String sql = "select st.EXT_STUDY_ID as study_id,sa.EXT_SAMPLE_ID as sample_id, pr.RELEASE_VERSION from ANALYSIS_JOB aj, SAMPLE sa, STUDY st, PIPELINE_RELEASE pr where aj.SAMPLE_ID=sa.SAMPLE_ID and st.STUDY_ID=aj.STUDY_ID and aj.PIPELINE_ID = pr.PIPELINE_ID and aj.EXTERNAL_RUN_IDS = ? order by aj.PIPELINE_ID desc";
+        List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql, new Object[]{runId});
+        // Just pick the result with the highest pipeline version
+        if (rows.size() > 0) {
+            Map<String, Object> firstRow = rows.get(0);
+            result.put("studyId", firstRow.get("STUDY_ID"));
+            result.put("sampleId", firstRow.get("SAMPLE_ID"));
+            result.put("pipelineId", firstRow.get("RELEASE_VERSION"));
+        }
+        return result;
     }
 }

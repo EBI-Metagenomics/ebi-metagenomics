@@ -147,7 +147,7 @@ public class ViewStudiesController extends AbstractController implements IContro
 
         List<Criterion> filterCriteria = StudiesViewHelper.buildFilterCriteria(filter, submissionAccountId, biomeDAO);
         List<Study> filteredStudies = studyDAO.retrieveFilteredStudies(filterCriteria, false, "studyName");
-        StudiesViewHelper.attachSampleSize(filteredStudies, sampleDAO);
+        StudiesViewHelper.attachSampleSize(filteredStudies, studyDAO);
 
         if (filteredStudies != null && filteredStudies.size() > 0) {
             //Create export CSV text

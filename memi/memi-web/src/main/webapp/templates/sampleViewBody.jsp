@@ -288,13 +288,24 @@
                     <c:forEach var="analysisJob" items="${analysisJobs}" varStatus="status">
                         <tr>
                             <td>
+                                <c:set var="runAccession" value=""/>
+                                <c:choose>
+                                    <c:when test="${fn:startsWith(analysisJob.externalRunIDs, 'GCA')}">
+                                        <c:set var="runAccession"
+                                               value="${analysisJob.externalRunIDs} / ${analysisJob.secondaryAccession}"/>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:set var="runAccession" value="${analysisJob.externalRunIDs}"/>
+                                    </c:otherwise>
+                                </c:choose>
                                 <c:choose>
                                     <c:when test="${analysisJob.analysisStatus.analysisStatus == 'completed'}">
                                         <a title="Overview"
-                                           href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${sample.sampleId}/runs/${analysisJob.externalRunIDs}/results/versions/${analysisJob.pipelineRelease.releaseVersion}"/>">${analysisJob.externalRunIDs}</a>
+                                           href="<c:url value="${baseURL}/projects/${study.studyId}/samples/${sample.sampleId}/runs/${analysisJob.externalRunIDs}/results/versions/${analysisJob.pipelineRelease.releaseVersion}"/>"><c:out
+                                                value="${runAccession}"/></a>
                                     </c:when>
                                     <c:otherwise>
-                                        ${analysisJob.externalRunIDs}
+                                        <c:out value="${runAccession}"/>
                                     </c:otherwise>
                                 </c:choose>
                             </td>

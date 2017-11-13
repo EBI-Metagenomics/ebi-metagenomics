@@ -19,8 +19,8 @@
     <%--<span class="separator"></span>--%>
     <ul>
     <li>
-        <a title="Click to view entry on European Nucleotide Archive" href="https://www.ebi.ac.uk/ena/data/view/${model.analysisJob.secondaryAccession}"
-                                                      class="list_more">ENA website (${model.analysisJob.secondaryAccession})</a>
+        <a title="Click to view entry on European Nucleotide Archive" href="https://www.ebi.ac.uk/ena/data/view/${model.analysisJob.externalRunIDs}"
+                                                      class="list_more">ENA website (${model.analysisJob.externalRunIDs})</a>
     </li>
     </ul>
     </div>
