@@ -30,7 +30,7 @@
 
 <p>To cite EBI Metagenomics, please refer to the following publication:<br/><br/>
     Alex L. Mitchell, Maxim Scheremetjew, Hubert Denise, Simon Potter, Aleksandra Tarkowska, Matloob Qureshi, Gustavo A. Salazar, Sebastien Pesseat, Miguel A. Boland, Fiona M. I. Hunter, Petra ten Hoopen, Blaise Alako, Clara Amid, Darren J. Wilkinson, Thomas P. Curtis, Guy Cochrane, Robert D. Finn (2017).<br/>
-<strong>EBI Metagenomics in 2017: enriching the analysis of microbial communities, from sequence reads to assemblies.</strong> Nucleic Acids Research (2017) doi: <a title="EBI Metagenomics in 2017: enriching the analysis of microbial communities, from sequence reads to assemblies" href=https://doi.org/10.1093/nar/gkx967" class="ext">10.1093/nar/gkx967</a>
+<strong>EBI Metagenomics in 2017: enriching the analysis of microbial communities, from sequence reads to assemblies.</strong> Nucleic Acids Research (2017) doi: <a title="EBI Metagenomics in 2017: enriching the analysis of microbial communities, from sequence reads to assemblies" href="https://doi.org/10.1093/nar/gkx967" class="ext">10.1093/nar/gkx967</a>
 </p>
 <p id="expand_button">View previous citations</p>
 <div class="more_citations">
