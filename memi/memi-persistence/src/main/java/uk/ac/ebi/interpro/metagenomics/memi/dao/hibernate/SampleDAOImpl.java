@@ -452,17 +452,17 @@ public class SampleDAOImpl implements SampleDAO {
         if (session != null) {
             try {
                 SampleStatisticsVO stats = new SampleStatisticsVO();
-                Query query = session.createQuery("select sa.isPublic, count(distinct sa.sampleId) as num_of_samples from Sample sa where sa.isPublic in (0,1) group by sa.isPublic");
-                List<Object[]> results = query.list();
-                for (Object[] rowFields : results) {
-                    int isPublic = (Integer) rowFields[0];
-                    long numOfSamples = (Long) rowFields[1];
-                    if (isPublic == 1) {
-                        stats.setNumOfPublicSamples(numOfSamples);
-                    } else {
-                        stats.setNumOfPrivateSamples(numOfSamples);
-                    }
-                }
+                String query = "select count(distinct sa.sampleId) from Study st join st.samples sa where st.isPublic=:isPublic and sa.isPublic=:isPublic";
+                // Get public count
+                Query publicCount = session.createQuery(query).setParameter("isPublic", 1);
+                List<Long> results = publicCount.list();
+                stats.setNumOfPublicSamples(results.get(0));
+
+                // Get private count
+                Query privateCount = session.createQuery(query).setParameter("isPublic", 0);
+                results = privateCount.list();
+                stats.setNumOfPrivateSamples(results.get(0));
+
                 return stats;
             } catch (DataAccessException exception) {
                 throw exception;

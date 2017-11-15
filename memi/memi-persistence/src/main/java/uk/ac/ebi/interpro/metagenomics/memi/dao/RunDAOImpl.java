@@ -58,7 +58,7 @@ public class RunDAOImpl implements RunDAO {
     public Map<String, Long> retrieveRunCountsGroupedByExperimentType(final int analysisStatusId) {
         try {
             Map<String, Long> result = new HashMap<String, Long>();
-            StringBuilder sql = new StringBuilder("select exp.experiment_type, count(distinct job.external_run_ids) as count ");
+            StringBuilder sql = new StringBuilder("select exp.experiment_type, count(distinct job.external_run_ids, job.pipeline_id) as count ");
             sql.append("from ANALYSIS_JOB job,");
             sql.append("EXPERIMENT_TYPE exp,");
             sql.append("ANALYSIS_STATUS status,");
@@ -88,7 +88,7 @@ public class RunDAOImpl implements RunDAO {
     public RunStatisticsVO retrieveStatistics() {
         try {
             RunStatisticsVO stats = new RunStatisticsVO();
-            String sql = "select j.RUN_STATUS_ID as is_public, count(distinct j.EXTERNAL_RUN_IDS) as num_of_runs from ANALYSIS_JOB j where j.RUN_STATUS_ID in (2,4) and j.ANALYSIS_STATUS_ID = 3 group by j.RUN_STATUS_ID";
+            String sql = "select j.RUN_STATUS_ID as is_public, count(distinct j.EXTERNAL_RUN_IDS, j.PIPELINE_ID) as num_of_runs from ANALYSIS_JOB j, SAMPLE sample where j.SAMPLE_ID = sample.SAMPLE_ID and sample.IS_PUBLIC in (0, 1) and j.RUN_STATUS_ID in (2, 4) and j.ANALYSIS_STATUS_ID = 3 group by j.RUN_STATUS_ID";
             List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
             for (Map<String, Object> row : rows) {
                 int isPublic = (Integer) row.get("IS_PUBLIC");
