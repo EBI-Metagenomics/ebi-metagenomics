@@ -63,6 +63,7 @@
 
         <!--non coding RNAs-->
         <entry key="NC_RNA_T_RNA_FILE" value-ref="ncRNA_tRNAFile"/>
+        <entry key="NC_RNA_T_RNA_FILE_V4" value-ref="ncRNA_tRNAFilev4"/>
 
     </util:map>
 
@@ -114,6 +115,9 @@
         <value>LSU_OTU_TABLE_FILE</value>
         <value>SSU_JSON_BIOM_FILE</value>
         <value>LSU_JSON_BIOM_FILE</value>
+
+        <!--non-coding RNA-->
+        <value>NC_RNA_T_RNA_FILE_V4</value>
 
     </util:list>
 

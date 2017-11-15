@@ -265,6 +265,13 @@ public class DownloadViewModelBuilder extends AbstractResultViewModelBuilder<Dow
             fileDefinitionClone.setRelativePath(newRelativePath);
         }
 
+        if (fileDefinitionId != null && fileDefinitionClone.getIdentifier().equalsIgnoreCase("NC_RNA_T_RNA_FILE_V4")) {
+            String inputFileName = analysisJob.getInputFileName();
+            String relativePath = fileDefinitionClone.getRelativePath();
+            String newRelativePath = relativePath.replace("*", externalRunId);
+            fileDefinitionClone.setRelativePath(newRelativePath);
+        }
+
         File fileObject = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, fileDefinitionClone);
         boolean doesExist = FileExistenceChecker.checkFileExistence(fileObject);
         if (doesExist && fileObject.length() > 0) {
