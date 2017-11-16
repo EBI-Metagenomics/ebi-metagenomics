@@ -38,8 +38,10 @@ public class AnalysisStatus {
     }
 
     public boolean isTaxonomicAnalysisTabDisabled() {
-        if (taxonomicAnalysisTab.isBarChartTabDisabled() && taxonomicAnalysisTab.isKronaTabDisabled()
-                && taxonomicAnalysisTab.isPieChartTabDisabled() && taxonomicAnalysisTab.isStackChartTabDisabled()) {
+        if (taxonomicAnalysisTab.isBarChartTabDisabledSSU() && taxonomicAnalysisTab.isKronaTabDisabledSSU()
+                && taxonomicAnalysisTab.isPieChartTabDisabledSSU() && taxonomicAnalysisTab.isStackChartTabDisabledSSU()
+                && taxonomicAnalysisTab.isBarChartTabDisabledLSU() && taxonomicAnalysisTab.isKronaTabDisabledLSU()
+                && taxonomicAnalysisTab.isPieChartTabDisabledLSU() && taxonomicAnalysisTab.isStackChartTabDisabledLSU()) {
             return true;
         }
         return false;

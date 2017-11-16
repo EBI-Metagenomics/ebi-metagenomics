@@ -58,7 +58,7 @@
     });
 
     //Default functionality
-    $("#tabs-taxchart").tabs({${model.analysisStatus.taxonomicAnalysisTab.tabsOptions}});
+    $("#tabs-taxchart").tabs({${model.analysisStatus.taxonomicAnalysisTab.tabsOptionsSSU}});
 </script>
 
 <%--Remove the filter field for taxonomy table when the total number of phylum is less than 10 - note can't one single table id + ID needed or it affects the interpro match datatable--%>

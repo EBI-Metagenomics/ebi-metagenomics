@@ -104,6 +104,12 @@ public class ResultViewExportController extends AbstractResultViewController {
                             String newRelativePath = relativePath.replace("*", inputFileName);
                             fileDefinitionClone.setRelativePath(newRelativePath);
                         }
+                        if (fileDefinitionClone.getIdentifier() != null && fileDefinitionClone.getIdentifier().equalsIgnoreCase("NC_RNA_T_RNA_FILE_V4")) {
+                            String inputFileName = analysisJob.getInputFileName();
+                            String relativePath = fileDefinitionClone.getRelativePath();
+                            String newRelativePath = relativePath.replace("*", runId);
+                            fileDefinitionClone.setRelativePath(newRelativePath);
+                        }
                         File fileObject = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, fileDefinitionClone);
                         try {
                             openDownloadDialog(response, request, analysisJob, fileDefinitionClone.getDownloadName(), fileObject);
@@ -471,6 +477,8 @@ public class ResultViewExportController extends AbstractResultViewController {
             fileDefinitionId = FileDefinitionId.PRUNED_TREE_FILE;
         } else if (resultType.equalsIgnoreCase("ncRNA-tRNA-FASTA")) {
             fileDefinitionId = FileDefinitionId.NC_RNA_T_RNA_FILE;
+        } else if (resultType.equalsIgnoreCase("ncRNA-tRNA-FASTA-V4")) {
+            fileDefinitionId = FileDefinitionId.NC_RNA_T_RNA_FILE_V4;
         } else {
             log.warn("Result type: " + resultType + " not found!");
         }

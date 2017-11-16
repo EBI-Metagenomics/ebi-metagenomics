@@ -84,8 +84,14 @@
         spinner: false
 
     });
-
-    $("#subtabs").tabs();
+<c:choose>
+    <c:when test="${pipelineVersion == '1.0' || pipelineVersion == '2.0' || pipelineVersion == '3.0'}">
+    $("#subtabs").tabs({${model.analysisStatus.taxonomicAnalysisTab.tabsOptionsSSU}});
+        </c:when>
+    <c:otherwise>
+    $("#subtabs").tabs({${model.analysisStatus.taxonomicAnalysisTab.tabsOptionsTaxa}});
+    </c:otherwise>
+    </c:choose>
 </script>
 
 <%--Remove the filter field for taxonomy table when the total number of phylum is less than 10 - note can't one single table id + ID needed or it affects the interpro match datatable--%>

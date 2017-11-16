@@ -41,8 +41,10 @@
             <list>
                 <ref bean="kingdomCountsFile"/>
                 <ref bean="kingdomCountsFileSSU"/>
+                <ref bean="kingdomCountsFileLSU"/>
                 <ref bean="kronaHtmlFile"/>
                 <ref bean="kronaHtmlFileSSU"/>
+                <ref bean="kronaHtmlFileLSU"/>
             </list>
         </constructor-arg>
     </bean>

@@ -11,47 +11,110 @@ import uk.ac.ebi.interpro.metagenomics.memi.core.tools.MemiTools;
  */
 public class TaxonomicAnalysisTab {
 
-    boolean isKronaTabDisabled;
+    boolean isKronaTabDisabledSSU;
 
-    boolean isStackChartTabDisabled;
+    boolean isStackChartTabDisabledSSU;
 
-    boolean isBarChartTabDisabled;
+    boolean isBarChartTabDisabledSSU;
 
-    boolean isPieChartTabDisabled;
+    boolean isPieChartTabDisabledSSU;
 
-    public TaxonomicAnalysisTab(boolean pieChartTabDisabled, boolean barChartTabDisabled, boolean stackChartTabDisabled, boolean kronaTabDisabled) {
-        isKronaTabDisabled = kronaTabDisabled;
-        isStackChartTabDisabled = stackChartTabDisabled;
-        isBarChartTabDisabled = barChartTabDisabled;
-        isPieChartTabDisabled = pieChartTabDisabled;
+    boolean isKronaTabDisabledLSU;
+
+    boolean isStackChartTabDisabledLSU;
+
+    boolean isBarChartTabDisabledLSU;
+
+    boolean isPieChartTabDisabledLSU;
+
+    public TaxonomicAnalysisTab(boolean pieChartTabDisabledSSU, boolean barChartTabDisabledSSU, boolean stackChartTabDisabledSSU, boolean kronaTabDisabledSSU,
+                                boolean pieChartTabDisabledLSU, boolean barChartTabDisabledLSU, boolean stackChartTabDisabledLSU, boolean kronaTabDisabledLSU) {
+        isKronaTabDisabledSSU = kronaTabDisabledSSU;
+        isStackChartTabDisabledSSU = stackChartTabDisabledSSU;
+        isBarChartTabDisabledSSU = barChartTabDisabledSSU;
+        isPieChartTabDisabledSSU = pieChartTabDisabledSSU;
+        isKronaTabDisabledLSU = kronaTabDisabledLSU;
+        isStackChartTabDisabledLSU = stackChartTabDisabledLSU;
+        isBarChartTabDisabledLSU = barChartTabDisabledLSU;
+        isPieChartTabDisabledLSU = pieChartTabDisabledLSU;
     }
 
-    public boolean isKronaTabDisabled() {
-        return isKronaTabDisabled;
+    public boolean isKronaTabDisabledSSU() {
+        return isKronaTabDisabledSSU;
     }
 
-    public boolean isStackChartTabDisabled() {
-        return isStackChartTabDisabled;
+    public boolean isStackChartTabDisabledSSU() {
+        return isStackChartTabDisabledSSU;
     }
 
-    public boolean isBarChartTabDisabled() {
-        return isBarChartTabDisabled;
+    public boolean isBarChartTabDisabledSSU() {
+        return isBarChartTabDisabledSSU;
     }
 
-    public boolean isPieChartTabDisabled() {
-        return isPieChartTabDisabled;
+    public boolean isPieChartTabDisabledSSU() {
+        return isPieChartTabDisabledSSU;
     }
 
-    public String getTabsOptions() {
+    public boolean isKronaTabDisabledLSU() {
+        return isKronaTabDisabledLSU;
+    }
+
+    public boolean isStackChartTabDisabledLSU() {
+        return isStackChartTabDisabledLSU;
+    }
+
+    public boolean isBarChartTabDisabledLSU() {
+        return isBarChartTabDisabledLSU;
+    }
+
+    public boolean isPieChartTabDisabledLSU() {
+        return isPieChartTabDisabledLSU;
+    }
+
+    public String getTabsOptionsSSU() {
+        return getTabsOptions(isPieChartTabDisabledSSU, isBarChartTabDisabledSSU, isStackChartTabDisabledSSU, isKronaTabDisabledSSU);
+    }
+
+    public String getTabsOptionsLSU() {
+        return getTabsOptions(isPieChartTabDisabledLSU, isBarChartTabDisabledLSU, isStackChartTabDisabledLSU, isKronaTabDisabledLSU);
+    }
+
+    public String getTabsOptionsTaxa() {
+        StringBuilder result = new StringBuilder("disabled: [");
+        StringBuilder active = new StringBuilder();
+        int initialLength = result.length();
+        if (isPieChartTabDisabledSSU && isBarChartTabDisabledSSU && isStackChartTabDisabledSSU && isKronaTabDisabledSSU) {
+            result.append("0");
+            active.append(",active:1");
+        }
+        if (isPieChartTabDisabledLSU && isBarChartTabDisabledLSU && isStackChartTabDisabledLSU && isKronaTabDisabledLSU) {
+            if (result.length() > initialLength) {
+                result.append(",");
+            }
+            result.append("1");
+        }
+
+        return result.append("]").append(active.toString()).toString();
+    }
+
+    private String getTabsOptions(boolean isPieChartTabDisabled, boolean isBarChartTabDisabled, boolean isStackChartTabDisabled,
+                                  boolean isKronaTabDisabled) {
         if (!isPieChartTabDisabled && !isBarChartTabDisabled && !isStackChartTabDisabled && !isKronaTabDisabled) {
             return "";
         }
-        int pieChartTabIndex = 0;
-        int barChartTabIndex = 1;
-        int stackChartTabIndex = 2;
-        int kronaChartTabIndex = 3;
+        int kronaChartTabIndex = 0;
+        int pieChartTabIndex = 1;
+        int barChartTabIndex = 2;
+        int stackChartTabIndex = 3;
         int selectIndex = -1;
         StringBuilder indexes = new StringBuilder();
+        if (isKronaTabDisabled) {
+            MemiTools.addIndex(indexes, kronaChartTabIndex);
+        } else {
+            if (selectIndex == -1) {
+                selectIndex = kronaChartTabIndex;
+            }
+        }
         if (isPieChartTabDisabled) {
             MemiTools.addIndex(indexes, pieChartTabIndex);
         } else {
@@ -73,16 +136,9 @@ public class TaxonomicAnalysisTab {
                 selectIndex = stackChartTabIndex;
             }
         }
-        if (isKronaTabDisabled) {
-            MemiTools.addIndex(indexes, kronaChartTabIndex);
-        } else {
-            if (selectIndex == -1) {
-                selectIndex = kronaChartTabIndex;
-            }
-        }
         StringBuilder result = new StringBuilder("disabled: [");
         result.append(indexes).append("]");
-        result.append(",selected:").append(selectIndex);
+        result.append(",active:").append(selectIndex);
         return result.toString();
     }
 }

@@ -54,5 +54,6 @@ public enum FileDefinitionId {
     QC_LENGTH_BIN_SUBSET,
     QC_BASE_SUBSET,
     NC_RNA_T_RNA_FILE,
+    NC_RNA_T_RNA_FILE_V4,
     DEFAULT
 }

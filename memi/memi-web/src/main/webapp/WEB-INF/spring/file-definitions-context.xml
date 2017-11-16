@@ -737,4 +737,17 @@
         <property name="order" value="10"/>
         <property name="releaseVersion" value="3.0"/>
     </bean>
+
+    <bean id="ncRNA_tRNAFilev4" autowire-candidate="false"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.SequenceFileDefinition">
+        <property name="identifier" value="NC_RNA_T_RNA_FILE_V4"/>
+        <property name="relativePath" value="/RNASelection/*.tRNA.RF00005.fa"/>
+        <property name="description" value="tRNAs predicted using HMMER tools."/>
+        <property name="linkTitle" value="Click to download all predicted tRNAs (FASTA)"/>
+        <property name="linkURL" value="ncRNA-tRNA-FASTA-V4"/>
+        <property name="linkText" value="Predicted tRNAs"/>
+        <property name="downloadName" value="_tRNA.fasta"/>
+        <property name="order" value="10"/>
+        <property name="releaseVersion" value="4.0"/>
+    </bean>
 </beans>

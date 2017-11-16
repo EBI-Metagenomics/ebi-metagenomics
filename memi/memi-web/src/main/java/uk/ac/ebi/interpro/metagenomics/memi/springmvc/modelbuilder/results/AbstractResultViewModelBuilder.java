@@ -82,7 +82,7 @@ public abstract class AbstractResultViewModelBuilder<E extends AbstractResultVie
     protected AnalysisStatus getAnalysisStatus(boolean isAnalysisCompleted) {
         if (!isAnalysisCompleted) {
             return new AnalysisStatus(
-                    new TaxonomicAnalysisTab(true, true, true, true),
+                    new TaxonomicAnalysisTab(true, true, true, true, true, true, true, true),
                     true, true,
                     new FunctionalAnalysisTab(true, true, true));
         }
@@ -124,38 +124,43 @@ public abstract class AbstractResultViewModelBuilder<E extends AbstractResultVie
         }
         //
         //Set taxonomic analysis tab object
-        boolean isPieChartTabDisabled = true;
-        boolean isBarChartTabDisabled = true;
-        boolean isStackChartTabDisabled = true;
-        boolean isKronaTabDisabled = true;
+        boolean isPieChartTabDisabledSSU = true;
+        boolean isBarChartTabDisabledSSU = true;
+        boolean isStackChartTabDisabledSSU = true;
+        boolean isKronaTabDisabledSSU = true;
+        boolean isPieChartTabDisabledLSU = true;
+        boolean isBarChartTabDisabledLSU = true;
+        boolean isStackChartTabDisabledLSU = true;
+        boolean isKronaTabDisabledLSU = true;
         for (ResultFileDefinitionImpl fileDefinition : taxonomicAnalysisFileDefinitions) {
             File fileObject = FileObjectBuilder.createFileObject(analysisJob, propertyContainer, fileDefinition);
             boolean doesExist = FileExistenceChecker.checkFileExistence(fileObject);
             if (doesExist) {
                 if (fileDefinition.getIdentifier().equalsIgnoreCase(FileDefinitionId.KRONA_HTML_FILE.toString())) {
-                    isKronaTabDisabled = false;
+                    isKronaTabDisabledSSU = false;
                 } else if (fileDefinition.getIdentifier().equalsIgnoreCase(FileDefinitionId.KRONA_HTML_FILE_SSU.toString())) {
-                    isKronaTabDisabled = false;
+                    isKronaTabDisabledSSU = false;
                 } else if (fileDefinition.getIdentifier().equalsIgnoreCase(FileDefinitionId.KRONA_HTML_FILE_LSU.toString())) {
-                    isKronaTabDisabled = false;
+                    isKronaTabDisabledLSU = false;
                 } else if (fileDefinition.getIdentifier().equalsIgnoreCase(FileDefinitionId.KINGDOM_COUNTS_FILE.toString())) {
-                    isPieChartTabDisabled = false;
-                    isBarChartTabDisabled = false;
-                    isStackChartTabDisabled = false;
+                    isPieChartTabDisabledSSU = false;
+                    isBarChartTabDisabledSSU = false;
+                    isStackChartTabDisabledSSU = false;
                 }//From v4 on SSUs and LSUs have been introduced
                 else if (fileDefinition.getIdentifier().equalsIgnoreCase(FileDefinitionId.KINGDOM_COUNTS_FILE_SSU.toString())) {
-                    isPieChartTabDisabled = false;
-                    isBarChartTabDisabled = false;
-                    isStackChartTabDisabled = false;
+                    isPieChartTabDisabledSSU = false;
+                    isBarChartTabDisabledSSU = false;
+                    isStackChartTabDisabledSSU = false;
                 } else if (fileDefinition.getIdentifier().equalsIgnoreCase(FileDefinitionId.KINGDOM_COUNTS_FILE_LSU.toString())) {
-                    isPieChartTabDisabled = false;
-                    isBarChartTabDisabled = false;
-                    isStackChartTabDisabled = false;
+                    isPieChartTabDisabledLSU = false;
+                    isBarChartTabDisabledLSU = false;
+                    isStackChartTabDisabledLSU = false;
                 }
             }
         }
         return new AnalysisStatus(
-                new TaxonomicAnalysisTab(isPieChartTabDisabled, isBarChartTabDisabled, isStackChartTabDisabled, isKronaTabDisabled),
+                new TaxonomicAnalysisTab(isPieChartTabDisabledSSU, isBarChartTabDisabledSSU, isStackChartTabDisabledSSU, isKronaTabDisabledSSU,
+                        isPieChartTabDisabledLSU, isBarChartTabDisabledLSU, isStackChartTabDisabledLSU, isKronaTabDisabledLSU),
                 qualityControlTabDisabled,
                 abundanceTabDisabled,
                 new FunctionalAnalysisTab(isInterProMatchSectionDisabled, isGoSectionDisabled, isSequenceFeatureSectionDisabled));
