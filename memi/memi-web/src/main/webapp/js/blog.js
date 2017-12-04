@@ -1,6 +1,6 @@
 (function(document, getJSON) {
   var dummyElement = document.createElement('p');
-  var blogURL = 'https://proteinswebteam.github.io/ebi-metagenomics-blog/';
+  var blogURL = 'https://ebi-metagenomics.github.io/ebi-metagenomics-blog/';
 
   var processPost = function(data, source) {
     var dest = source.cloneNode(true);
