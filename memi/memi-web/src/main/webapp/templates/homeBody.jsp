@@ -448,7 +448,7 @@
                         <p class="placeholder" style="width: <%= (int) (Math.random() * 50 + 50) %>%;"></p>
                     </c:forEach>
                 </div>
-                <a href="https://proteinswebteam.github.io/ebi-metagenomics-blog/" title="Read more on the blog"
+                <a href="https://ebi-metagenomics.github.io/ebi-metagenomics-blog/" title="Read more on the blog"
                    class="all left">Read more</a>
                 <a href="" title="" class="all">Look at the data</a>
             </div>
@@ -464,14 +464,14 @@
                         <p class="placeholder" style="width: <%= (int) (Math.random() * 50 + 50) %>%;"></p>
                     </c:forEach>
                 </div>
-                <a href="https://proteinswebteam.github.io/ebi-metagenomics-blog/" title="Read more on the blog"
+                <a href="https://ebi-metagenomics.github.io/ebi-metagenomics-blog/" title="Read more on the blog"
                    class="all left">Read more</a>
                 <a href="" class="all">Compare samples</a>
             </div>
         </div>
     </div>
     <p>
-        <a href="https://proteinswebteam.github.io/ebi-metagenomics-blog/" class="all">
+        <a href="https://ebi-metagenomics.github.io/ebi-metagenomics-blog/" class="all">
             See all articles
         </a>
     </p>
