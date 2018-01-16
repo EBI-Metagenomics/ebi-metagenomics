@@ -471,6 +471,10 @@ public class ResultViewExportController extends AbstractResultViewController {
             fileDefinitionId = FileDefinitionId.SSU_JSON_BIOM_FILE;
         } else if (resultType.equalsIgnoreCase("LSU-OTU-table-JSON-BIOM")) {
             fileDefinitionId = FileDefinitionId.LSU_JSON_BIOM_FILE;
+        } else if (resultType.equalsIgnoreCase("LSU-OTU-table-HDF5-BIOM")) {
+            fileDefinitionId = FileDefinitionId.LSU_HDF5_BIOM_FILE;
+        } else if (resultType.equalsIgnoreCase("SSU-OTU-table-HDF5-BIOM")) {
+            fileDefinitionId = FileDefinitionId.SSU_HDF5_BIOM_FILE;
         } else if (resultType.equalsIgnoreCase("NewickTree")) {
             fileDefinitionId = FileDefinitionId.TAX_ANALYSIS_TREE_FILE;
         } else if (resultType.equalsIgnoreCase("NewickPrunedTree")) {
