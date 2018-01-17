@@ -53,7 +53,7 @@ public class KronaChartsController extends AbstractResultViewController {
                 AnalysisJob analysisJob = analysisJobDAO.readByRunIdAndVersionDeep(run.getExternalRunId(), releaseVersion, "completed");
                 if (taxonomy && analysisJob != null) {
                     FileDefinitionId fileDefinitionIdKronaHTMLFile = FileDefinitionId.KRONA_HTML_FILE;
-                    if (releaseVersion.equalsIgnoreCase("4.0")) {
+                    if (releaseVersion.equalsIgnoreCase("4.0") || releaseVersion.equalsIgnoreCase("4.1")) {
                         if (rRNAType.equalsIgnoreCase("ssu")) {
                             fileDefinitionIdKronaHTMLFile = FileDefinitionId.KRONA_HTML_FILE_SSU;
                         } else {//LSU

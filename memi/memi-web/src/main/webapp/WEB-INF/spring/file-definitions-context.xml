@@ -301,6 +301,19 @@
         <property name="releaseVersion" value="4.0"/>
     </bean>
 
+    <bean id="HDF5BiomSSUFile" autowire-candidate="false"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.TaxonomicAnalysisFileDefinition">
+        <property name="relativePath" value="/taxonomy-summary/SSU/"/>
+        <property name="fileNameEnding" value="_SSU.fasta.mseq_hdf5.biom"/>
+        <property name="description" value="N/A"/>
+        <property name="downloadName" value="_SSU_OTU_TABLE_HDF5.biom"/>
+        <property name="linkText" value="OTUs, reads and taxonomic assignments for SSU rRNA"/>
+        <property name="order" value="4"/>
+        <property name="linkTitle" value="Click to download the converted OTU table in HDF5 biom format for SSU rRNA"/>
+        <property name="linkURL" value="SSU-OTU-table-HDF5-BIOM"/>
+        <property name="releaseVersion" value="4.0"/>
+    </bean>
+
     <!-- END SSU section -->
 
     <!-- LSU files from version 4 -->
@@ -311,7 +324,7 @@
         <property name="description" value="All reads encoding LSU rRNA."/>
         <property name="downloadName" value="_LSU.fasta.gz"/>
         <property name="linkText" value="Reads encoding LSU rRNA"/>
-        <property name="order" value="4"/>
+        <property name="order" value="5"/>
         <property name="linkTitle" value="Click to download reads encoding LSU rRNA (FASTA)"/>
         <property name="linkURL" value="LSU-rRNA-FASTA"/>
         <!-- version 4 -->
@@ -324,7 +337,7 @@
         <property name="description" value="N/A"/>
         <property name="downloadName" value="_LSU_OTU.tsv"/>
         <property name="linkText" value="OTUs, reads and taxonomic assignments for LSU rRNA"/>
-        <property name="order" value="5"/>
+        <property name="order" value="6"/>
         <property name="linkTitle" value="Click to download the OTU table in TSV format for LSU rRNA"/>
         <property name="linkURL" value="LSU-OTU-TSV"/>
         <property name="releaseVersion" value="4.0"/>
@@ -337,9 +350,22 @@
         <property name="description" value="N/A"/>
         <property name="downloadName" value="_LSU_OTU_TABLE_JSON"/>
         <property name="linkText" value="OTUs, reads and taxonomic assignments for LSU rRNA"/>
-        <property name="order" value="6"/>
+        <property name="order" value="7"/>
         <property name="linkTitle" value="Click to download the converted OTU table in JSON biom format for LSU rRNA"/>
         <property name="linkURL" value="LSU-OTU-table-JSON-BIOM"/>
+        <property name="releaseVersion" value="4.0"/>
+    </bean>
+
+    <bean id="HDF5BiomLSUFile" autowire-candidate="false"
+          class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.TaxonomicAnalysisFileDefinition">
+        <property name="relativePath" value="/taxonomy-summary/LSU/"/>
+        <property name="fileNameEnding" value="_LSU.fasta.mseq_hdf5.biom"/>
+        <property name="description" value="N/A"/>
+        <property name="downloadName" value="_LSU_OTU_TABLE_HDF5"/>
+        <property name="linkText" value="OTUs, reads and taxonomic assignments for LSU rRNA"/>
+        <property name="order" value="8"/>
+        <property name="linkTitle" value="Click to download the converted OTU table in HDF5 biom format for LSU rRNA"/>
+        <property name="linkURL" value="LSU-OTU-table-HDF5-BIOM"/>
         <property name="releaseVersion" value="4.0"/>
     </bean>
 

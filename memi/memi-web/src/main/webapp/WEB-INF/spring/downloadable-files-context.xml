@@ -37,6 +37,8 @@
         <entry key="JSON_BIOM_FILE" value-ref="JSONBiomFile"/>
         <entry key="SSU_JSON_BIOM_FILE" value-ref="JSONBiomSSUFile"/>
         <entry key="LSU_JSON_BIOM_FILE" value-ref="JSONBiomLSUFile"/>
+        <entry key="SSU_HDF5_BIOM_FILE" value-ref="HDF5BiomSSUFile"/>
+        <entry key="LSU_HDF5_BIOM_FILE" value-ref="HDF5BiomLSUFile"/>
         <entry key="PRUNED_TREE_FILE" value-ref="prunedTreeFile"/>
         <entry key="R_RNA_SSU_FASTA_FILE" value-ref="rRNASSUFile"/>
         <entry key="R_RNA_LSU_FASTA_FILE" value-ref="rRNALSUFile"/>
@@ -115,6 +117,8 @@
         <value>LSU_OTU_TABLE_FILE</value>
         <value>SSU_JSON_BIOM_FILE</value>
         <value>LSU_JSON_BIOM_FILE</value>
+        <value>SSU_HDF5_BIOM_FILE</value>
+        <value>LSU_HDF5_BIOM_FILE</value>
 
         <!--non-coding RNA-->
         <value>NC_RNA_T_RNA_FILE_V4</value>

@@ -65,7 +65,7 @@ public class TaxonomicViewModelBuilder extends AbstractResultViewModelBuilder<Ta
         // Get pipeline release version
         String releaseVersion = analysisJob.getPipelineRelease().getReleaseVersion();
         // Parsing 18S/LSU results
-        if (releaseVersion.equalsIgnoreCase("4.0")) {
+        if (releaseVersion.equalsIgnoreCase("4.0") || releaseVersion.equalsIgnoreCase("4.1")) {
             final List<TaxonomyData> taxonomyDataSetLSU = parsingResults(FileDefinitionId.KINGDOM_COUNTS_FILE_LSU);
             if (taxonomyDataSetLSU != null) {
                 Collections.sort(taxonomyDataSetLSU, TaxonomyAnalysisResult.TaxonomyDataComparator);
@@ -85,7 +85,7 @@ public class TaxonomicViewModelBuilder extends AbstractResultViewModelBuilder<Ta
         String releaseVersion = analysisJob.getPipelineRelease().getReleaseVersion();
         // Parsing 18S/LSU results
         FileDefinitionId fileDefinitionId = FileDefinitionId.KINGDOM_COUNTS_FILE;
-        if (releaseVersion.equalsIgnoreCase("4.0")) {
+        if (releaseVersion.equalsIgnoreCase("4.0") || releaseVersion.equalsIgnoreCase("4.0")) {
             fileDefinitionId = FileDefinitionId.KINGDOM_COUNTS_FILE_SSU;
         }
         final List<TaxonomyData> taxonomyDataSetLSU = parsingResults(fileDefinitionId);

@@ -7,6 +7,14 @@
 
 <p class="pi_arch_title"><span><a href="<c:url value="${baseURL}/pipelines/${pipelineRelease.releaseVersion}"/>">Pipeline v.${pipelineRelease.releaseVersion}</a></span> (${pipelineRelease.releaseDate})</p>
     <c:choose>
+        <c:when test="${pipelineRelease.releaseVersion == '4.1'}">
+            <ul><li>Upgraded SeqPrep to v1.2 with increased sequence length parameter to deal with longer reads</li>
+                <li>Upgraded MAPseq to v1.2.2</li>
+                <li>Rebuilt taxonomic reference database based on SILVA v132</li>
+                <li>Taxonomic assignments now also available in HDF5 format</li>
+                <li>Applied fix to the coding sequence prediction step</li>
+            </ul>
+        </c:when>
         <c:when test="${pipelineRelease.releaseVersion == '4.0'}">
             <ul><li>Updated tools: InterProScan</li>
                 <li>rRNASelector (used to identify 16S rRNA genes) was replaced with Infernal for SSU and LSU gene identification</li>
