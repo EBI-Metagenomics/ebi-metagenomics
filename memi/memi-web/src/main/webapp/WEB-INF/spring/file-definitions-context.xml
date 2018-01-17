@@ -303,7 +303,7 @@
 
     <bean id="HDF5BiomSSUFile" autowire-candidate="false"
           class="uk.ac.ebi.interpro.metagenomics.memi.springmvc.model.analysisPage.TaxonomicAnalysisFileDefinition">
-        <property name="relativePath" value="/taxonomy-summary/LSU/"/>
+        <property name="relativePath" value="/taxonomy-summary/SSU/"/>
         <property name="fileNameEnding" value="_SSU.fasta.mseq_hdf5.biom"/>
         <property name="description" value="N/A"/>
         <property name="downloadName" value="_SSU_OTU_TABLE_HDF5.biom"/>
