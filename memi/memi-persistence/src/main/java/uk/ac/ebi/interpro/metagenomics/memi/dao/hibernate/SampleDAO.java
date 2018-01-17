@@ -5,7 +5,6 @@ import uk.ac.ebi.interpro.metagenomics.memi.model.hibernate.Sample;
 import uk.ac.ebi.interpro.metagenomics.memi.model.valueObjects.SampleStatisticsVO;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Represents the data access object interface for EMG samples.
@@ -15,6 +14,8 @@ import java.util.Map;
  * @since 1.0-SNAPSHOT
  */
 public interface SampleDAO extends ISecureEntityDAO<Sample> {
+
+    String retrieveExternalStudyId(String externalSampleId);
 
     Sample readBySampleIdAndStudyId(String externalStudyId, String externalSampleId);
 
