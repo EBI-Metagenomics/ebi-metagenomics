@@ -85,7 +85,7 @@ public class TaxonomicViewModelBuilder extends AbstractResultViewModelBuilder<Ta
         String releaseVersion = analysisJob.getPipelineRelease().getReleaseVersion();
         // Parsing 18S/LSU results
         FileDefinitionId fileDefinitionId = FileDefinitionId.KINGDOM_COUNTS_FILE;
-        if (releaseVersion.equalsIgnoreCase("4.0") || releaseVersion.equalsIgnoreCase("4.0")) {
+        if (releaseVersion.equalsIgnoreCase("4.0") || releaseVersion.equalsIgnoreCase("4.1")) {
             fileDefinitionId = FileDefinitionId.KINGDOM_COUNTS_FILE_SSU;
         }
         final List<TaxonomyData> taxonomyDataSetLSU = parsingResults(fileDefinitionId);
