@@ -283,27 +283,9 @@
 
     <footer>
         <div id="elixir-banner" data-color="none" data-name="This service"
+             data-description="EBI Metagenomics is an ELIXIR Core Data Resource"
              data-more-information-link="https://www.elixir-europe.org/about-us/who-we-are/nodes/embl-ebi"
-             data-use-basic-styles="true">
-            <div id="elixir-ribbon" class="elixir-ribbon">
-                <div class="row">
-                    <div class="column">
-                        <a href="https://www.elixir-europe.org/about-us/who-we-are/nodes/embl-ebi">
-                            <div class="elixir-logo-kite"></div>
-                            <h5>
-                                <span class="elixir-banner-name">This service</span> is part of the ELIXIR
-                                infrastructure
-                            </h5>
-                            <div id="elixir-banner-info">
-                                <small>
-                                    <span class="readmore">EBI Metagenomics is an ELIXIR Core Data Resource</span>
-                                </small>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
+             data-use-basic-styles="true"></div>
         <script defer="defer"
                 src="${pageContext.request.contextPath}/js/elixirBanner.js"></script>
         <%--<div id="global-footer-container"></div>--%>
