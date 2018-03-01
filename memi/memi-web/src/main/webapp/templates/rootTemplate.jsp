@@ -176,7 +176,7 @@
 
     <noscript>
         <style type="text/css">
-           /*remove the Krona box  and all charts tabs when no javascript*/
+            /*remove the Krona box  and all charts tabs when no javascript*/
             #tax-Krona, #tabs-chart, #tabs-taxchart {
                 display: none;
             }
@@ -192,7 +192,6 @@
             }
         </style>
     </noscript>
-
 </head>
 
 <%@ include file="scriptlets/_getActivePage.jsp" %>
@@ -245,8 +244,9 @@
 
                         <div class="left">
                             <label>
-                                <input type="search" id="local-searchbox" />
-                                <span class="examples">&nbsp; &nbsp;&nbsp;<a href="#">&nbsp;</a>&nbsp; <a href="#">&nbsp;</a>&nbsp; <a
+                                <input type="search" id="local-searchbox"/>
+                                <span class="examples">&nbsp; &nbsp;&nbsp;<a href="#">&nbsp;</a>&nbsp; <a href="#">
+                                    &nbsp;</a>&nbsp; <a
                                         href="#">&nbsp;</a></span>
                             </label>
                         </div>
@@ -282,6 +282,30 @@
     </div>
 
     <footer>
+        <div id="elixir-banner" data-color="none" data-name="This service"
+             data-more-information-link="https://www.elixir-europe.org/about-us/who-we-are/nodes/embl-ebi"
+             data-use-basic-styles="true">
+            <div id="elixir-ribbon" class="elixir-ribbon">
+                <div class="row">
+                    <div class="column">
+                        <a href="https://www.elixir-europe.org/about-us/who-we-are/nodes/embl-ebi">
+                            <div class="elixir-logo-kite"></div>
+                            <h5>
+                                <span class="elixir-banner-name">This service</span> is part of the ELIXIR
+                                infrastructure
+                            </h5>
+                            <div id="elixir-banner-info">
+                                <small>
+                                    <span class="readmore">EBI Metagenomics is an ELIXIR Core Data Resource</span>
+                                </small>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script defer="defer"
+                src="${pageContext.request.contextPath}/js/elixirBanner.js"></script>
         <%--<div id="global-footer-container"></div>--%>
         <tiles:insertAttribute name="footer"/>
     </footer>
@@ -293,7 +317,7 @@
 
 <!-- javascript for handling search box in header and search page elements -->
 <script src="${pageContext.request.contextPath}/js/FileSaver.min.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/js/ebiSearch.js?v1.81 type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/js/ebiSearch.js?v1.81" type="text/javascript"></script>
 <%--multirange input plugin --%>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/multirange.css" type="text/css"/>
 <script>
@@ -301,7 +325,6 @@
     if (pageManager.settingsManager.areCssVariablesSupported()) {
         document.write('<script type="text/javascript" src="/metagenomics/js/multirange.js"><\/script>');
     }
-
 </script>
 
 <!-- JQuery datatable-->
@@ -312,7 +335,8 @@
 <%@ include file="feedback/script/feedbackDiv.jsp" %>
 <!--END Feedback slider functionality block -->
 <!--Back top option-->
-<div id="toTop" class="anim"><img src="${pageContext.request.contextPath}/img/ico_scroll_top.png" alt="Scroll to top"><span class="scroll anim">To top </span></div>
+<div id="toTop" class="anim"><img src="${pageContext.request.contextPath}/img/ico_scroll_top.png"
+                                  alt="Scroll to top"><span class="scroll anim">To top </span></div>
 <script type="text/javascript">
     $(document).ready(function () {
         $(window).scroll(function () {
