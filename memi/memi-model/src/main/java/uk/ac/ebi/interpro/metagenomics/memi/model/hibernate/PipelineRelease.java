@@ -21,8 +21,8 @@ import java.util.*;
 public class PipelineRelease implements Comparator<PipelineRelease> {
 
     @Id
-    @Column(name = "PIPELINE_ID", columnDefinition = "smallint(6)")
-//    @Column(name = "PIPELINE_ID", columnDefinition = "TINYINT(4)")
+//    @Column(name = "PIPELINE_ID", columnDefinition = "smallint(6)")
+    @Column(name = "PIPELINE_ID", columnDefinition = "TINYINT(4)")
     private int pipelineId;
 
     @Column(name = "DESCRIPTION", columnDefinition = "TEXT")
