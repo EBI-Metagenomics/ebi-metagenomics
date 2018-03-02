@@ -283,8 +283,8 @@
 
     <footer>
         <hr>
-        <div id="elixir-banner" data-color="grey" data-name="This service"
-             data-description="EBI Metagenomics is an ELIXIR Core Data Resource"
+        <div id="elixir-banner" data-color="grey" data-name="EBI metagenomics"
+             data-description=""
              data-more-information-link="https://www.elixir-europe.org/about-us/who-we-are/nodes/embl-ebi"
              data-use-basic-styles="true"></div>
         <script defer="defer"
