@@ -1,0 +1,30 @@
+--EMG schema extension to support the storage of submitter data
+
+--Author: Maxim Scheremetjew, EMBL-EBI, ProteinFamilies
+
+--Table Drop statements
+DROP TABLE SUBMITTER cascade constraints;
+
+-- Drop index statement
+DROP INDEX STUDY_SUBMITTER_ID_IDX;
+
+--Alter table statements
+ALTER TABLE STUDY DROP COLUMN SUBMITTER_ID;
+
+-- submitter table
+CREATE TABLE `SUBMITTER` (
+    `SUBMITTER_ID` BIGINT AUTO_INCREMENT,
+    `WEBIN_ID` VARCHAR(15) NOT NULL,
+    `REGISTERED` BIT NOT NULL,
+    `CONSENT_GIVEN` BIT NOT NULL,
+    `EMAIL_ADDRESS` VARCHAR(200) NOT NULL,
+    `FIRST_NAME` VARCHAR(30) NOT NULL,
+    `SURNAME` VARCHAR(50) NOT NULL,
+    `FIRST_CREATED` DATETIME DEFAULT NOW(),
+    PRIMARY KEY (`SUBMITTER_ID`)
+);
+
+-- alter study table
+ALTER TABLE STUDY ADD SUBMITTER_ID BIGINT CONSTRAINT submitter_id_fk4 REFERENCES `SUBMITTER` (`SUBMITTER_ID`);
+
+CREATE INDEX `STUDY_SUBMITTER_ID_IDX` ON `STUDY` (`SUBMITTER_ID`);
