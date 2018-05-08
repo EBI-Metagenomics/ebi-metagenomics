@@ -17,7 +17,7 @@ import javax.persistence.Table;
 public class ExperimentType {
 
     @Id
-    @Column(name = "EXPERIMENT_TYPE_ID", columnDefinition = "TINYINT(4)")
+    @Column(name = "EXPERIMENT_TYPE_ID", columnDefinition = "SMALLINT(6)")
     private int experimentTypeId;
 
     @Column(name = "EXPERIMENT_TYPE", length = 30, nullable = false)
