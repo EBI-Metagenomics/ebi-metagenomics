@@ -39,16 +39,13 @@ public class SampleAnnotationDAOImpl implements SampleAnnotationDAO {
     @Transactional(readOnly = true)
     public Collection<EmgSampleAnnotation> getSampleAnnotations(Long sampleId) {
         log.info("Querying sample annotations from sample: " + sampleId + "...");
-        final String oracleSql = "select vn.var_name, sa.var_val_cv, sa.var_val_ucv,sa.units from SAMPLE_ANN sa join VARIABLE_NAMES vn on (sa.var_id=vn.var_id) where sa.sample_id=?";
+        final String oracleSql = "select vn.var_name, sa.var_val_ucv,sa.units from SAMPLE_ANN sa join VARIABLE_NAMES vn on (sa.var_id=vn.var_id) where sa.sample_id=?";
         List<EmgSampleAnnotation> result = new ArrayList<EmgSampleAnnotation>();
         try {
-//            List<Map<String, Object>> rows = this.jdbcTemplate.queryForList("select var_name, var_val_cv, var_val_ucv, units from sample_ann where sample_id=?", new Long[]{sampleId});
             List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(oracleSql, new Long[]{sampleId});
             for (Map row : rows) {
-                String varValCV = (String) row.get("var_val_cv");
                 String varValUCV = (String) row.get("var_val_ucv");
-                String value = (varValCV != null && varValCV.trim().length() > 0 ? varValCV : varValUCV);
-                result.add(new EmgSampleAnnotation((String) row.get("var_name"), value, (String) row.get("units")));
+                result.add(new EmgSampleAnnotation((String) row.get("var_name"), varValUCV, (String) row.get("units")));
             }
         } catch (Exception e) {
             log.warn("Could not query file IDs!", e);
