@@ -34,8 +34,7 @@
           href="//www.ebi.ac.uk/web_guidelines/css/mitigation/develop/ebi-mitigation.css"/>
     <link type="text/css" rel="stylesheet"
           href="//www.ebi.ac.uk/web_guidelines/css/mitigation/develop/embl-petrol-colours.css"/>
-    <script defer="defer" src="//www.ebi.ac.uk/web_guidelines/js/cookiebanner.js"></script>
-    <script defer="defer" src="//www.ebi.ac.uk/web_guidelines/js/foot.js"></script>
+    <script defer="defer" src="${pageContext.request.contextPath}/js/foot.js"></script>
 
     <style type="text/css" media="screen, projection">
 
@@ -174,6 +173,10 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/svg-icons.css" type="text/css"/>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.qubit.js"></script>
 
+    <%--<link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/libraries/foundation-6/css/foundation.css" type="text/css" media="all"/>--%>
+    <%--<link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/css/ebi-global.css" type="text/css" media="all"/>--%>
+    <%--<link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/EBI-Icon-fonts/v1.1/fonts.css" type="text/css" media="all"/>--%>
+
     <noscript>
         <style type="text/css">
             /*remove the Krona box  and all charts tabs when no javascript*/
@@ -287,13 +290,14 @@
              data-description=""
              data-more-information-link="https://www.elixir-europe.org/about-us/who-we-are/nodes/embl-ebi"
              data-use-basic-styles="true"></div>
-        <script defer="defer"
-                src="${pageContext.request.contextPath}/js/elixirBanner.js"></script>
-        <%--<div id="global-footer-container"></div>--%>
         <tiles:insertAttribute name="footer"/>
     </footer>
 </div>
 <%-- END div contents --%>
+
+<!-- ELIXIR banner -->
+<script defer="defer" src="${pageContext.request.contextPath}/js/elixirBanner.js"></script>
+<!-- End: ELIXIR banner -->
 
 <%--little beta flag--%>
 <%--<a href="<c:url value="${baseURL}/about#intro"/>" title="About us"><div id="extra_beta" class="anim"></div></a>--%>
@@ -336,6 +340,23 @@
     });
 </script>
 <!-- End Back top option-->
-
+<div id="data-protection-message-configuration"
+     data-message="This website requires cookies, and the limited processing of your personal data in order to function. By using the site you are agreeing to this as outlined in our <a target='_blank' href='https://www.ebi.ac.uk/data-protection/privacy-notice/embl-ebi-public-website'>Privacy Notice</a> and <a target='_blank' href='https://www.ebi.ac.uk/about/terms-of-use'>Terms of Use</a>."
+     data-service-id="myService"
+     data-data-protection-version="0.1"></div>
+<script defer="defer" type="text/javascript">
+    $(document).ready(function () {
+        var localFrameworkVersion = '1.1'; // 1.1 or 1.2 or compliance or other
+        // if you select compliance or other we will add some helpful
+        // CSS styling, but you may need to add some CSS yourself
+        var newDataProtectionNotificationBanner = document.createElement('script');
+        newDataProtectionNotificationBanner.src =
+                'https://ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.3/js/ebi-global-includes/script/5_ebiFrameworkNotificationBanner.js?legacyRequest=' + localFrameworkVersion;
+        document.head.appendChild(newDataProtectionNotificationBanner);
+        newDataProtectionNotificationBanner.onload = function () {
+            ebiFrameworkRunDataProtectionBanner(); // invoke the banner
+        };
+    });
+</script>
 </body>
 </html>
