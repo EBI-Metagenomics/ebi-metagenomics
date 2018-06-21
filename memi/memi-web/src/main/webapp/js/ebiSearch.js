@@ -321,7 +321,7 @@ var TableManager = function(searchManager, settingsManager) {
         var rowData = [
             {
                 name: entry["id"],
-                url: settingsManager.GLOBAL_SEARCH_SETTINGS.DEFAULT_PROTOCOL + "//" + window.location.host + "/metagenomics/projects/" + entry["id"]
+                url: settingsManager.GLOBAL_SEARCH_SETTINGS.DEFAULT_PROTOCOL + "//" + window.location.host + "/metagenomics/beta/studies/" + entry["id"]
             },
             {name: entry.fields.name[0]},
             {name: entry.fields.biome_name[0], className: "xs_hide"},
@@ -376,11 +376,11 @@ var TableManager = function(searchManager, settingsManager) {
         var rowData = [
             {
                 name: entry["id"],
-                url: settingsManager.GLOBAL_SEARCH_SETTINGS.DEFAULT_PROTOCOL + "//" + window.location.host + "/metagenomics/projects/" + entry["fields"]["METAGENOMICS_PROJECTS"][0] + "/samples/" +  entry["id"]
+                url: settingsManager.GLOBAL_SEARCH_SETTINGS.DEFAULT_PROTOCOL + "//" + window.location.host + "/metagenomics/beta/samples/"  +  entry["id"]
             },
             {
                 name: entry["fields"]["METAGENOMICS_PROJECTS"][0],
-                url: settingsManager.GLOBAL_SEARCH_SETTINGS.DEFAULT_PROTOCOL + "//" + window.location.host + "/metagenomics/projects/" + entry["fields"]["METAGENOMICS_PROJECTS"][0]
+                url: settingsManager.GLOBAL_SEARCH_SETTINGS.DEFAULT_PROTOCOL + "//" + window.location.host + "/metagenomics/beta/studies/" + entry["fields"]["METAGENOMICS_PROJECTS"][0]
             },
             {name: entry.fields.name[0]},
             {name: entry.fields.description[0], className: "xs_hide"}
@@ -437,24 +437,18 @@ var TableManager = function(searchManager, settingsManager) {
         var rowData = [
             {
                 name: entry.fields.name,
-                url: settingsManager.GLOBAL_SEARCH_SETTINGS.DEFAULT_PROTOCOL + "//" + window.location.host + "/metagenomics/projects/"
-                + entry.fields.METAGENOMICS_PROJECTS[0] + "/samples/"
-                + entry.fields.METAGENOMICS_SAMPLES[0] + "/runs/"
-                + entry.fields.name + "/results/versions/"
-                + entry.fields.pipeline_version[0]
+                url: settingsManager.GLOBAL_SEARCH_SETTINGS.DEFAULT_PROTOCOL + "//" + window.location.host + "/metagenomics/beta/analyses/" + entry.fields.name
             },
             {
                 name: entry.fields.METAGENOMICS_SAMPLES[0],
                 className: "xs_hide",
-                url: settingsManager.GLOBAL_SEARCH_SETTINGS.DEFAULT_PROTOCOL + "//" + window.location.host + "/metagenomics/projects/"
-                + entry.fields.METAGENOMICS_PROJECTS[0] + "/samples/"
-                + entry.fields.METAGENOMICS_SAMPLES[0],
+                url: settingsManager.GLOBAL_SEARCH_SETTINGS.DEFAULT_PROTOCOL + "//" + window.location.host + "/metagenomics/beta/samples/" + entry.fields.METAGENOMICS_SAMPLES[0]
 
             },
             {
                 name: entry.fields.METAGENOMICS_PROJECTS[0],
                 className: "xs_hide",
-                url: settingsManager.GLOBAL_SEARCH_SETTINGS.DEFAULT_PROTOCOL + "//" + window.location.host + "/metagenomics/projects/" + entry.fields.METAGENOMICS_PROJECTS[0],
+                url: settingsManager.GLOBAL_SEARCH_SETTINGS.DEFAULT_PROTOCOL + "//" + window.location.host + "/metagenomics/beta/studies/" + entry.fields.METAGENOMICS_PROJECTS[0],
             },
             {
                 name: entry.fields.experiment_type[0]
@@ -462,7 +456,7 @@ var TableManager = function(searchManager, settingsManager) {
             {
                 name: entry.fields.pipeline_version[0],
                 className: "xs_hide",
-                url: settingsManager.GLOBAL_SEARCH_SETTINGS.DEFAULT_PROTOCOL + "//" + window.location.host + "/metagenomics/pipelines/" + entry.fields.pipeline_version[0],
+                url: settingsManager.GLOBAL_SEARCH_SETTINGS.DEFAULT_PROTOCOL + "//" + window.location.host + "/metagenomics/beta/pipelines/" + entry.fields.pipeline_version[0],
             },
         ];
         return rowData;
