@@ -1911,6 +1911,11 @@ sans-serif; /*use systems fonts*/ font-size: 239%; color:#fff; line-height: 1.3;
 .jumbo-header.private-area .mega-lock .icon-functional:before {font-size: 1800%; color:white; opacity: 0.3;position: absolute; left: 28px; top: -37px; z-index: 1; /*important to avoid overlap with menu*/}
 /*HOMEPAGE - user info - private area*/
 
+
+.beta-header {
+	background: url(../img/backgrounds/beta_site_banner.png)
+}
+
 .jumbo-user-box {margin:0 9px; color:#C34533 /*blue #2B8A97*/;}
 .jumbo-user-box .result_row {display: inline-block; float:none;padding:0; margin-right: 18px;}
 .jumbo-user-box .result_row .result_row_label {width:inherit;}

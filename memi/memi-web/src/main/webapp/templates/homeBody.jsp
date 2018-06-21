@@ -66,11 +66,9 @@
     </c:when>
     <c:otherwise>
 
-        <section class="jumbo-header" style="position: relative;">
-            <div class="close_section anim"><span class="show_tooltip" title="Close this section" id="this_close">&#10006;</span>
-            </div>
-            <p class="lead">Submit, analyse, visualize and compare your data.</p>
-            <div class="button"><a href="<c:url value="${baseURL}/submission"/>"> Submit data</a></div>
+        <section class="jumbo-header beta-header" style="position: relative;">
+            <p class="lead">We are working on a new website!</p>
+            <div class="button"><a href="<c:url value="${baseURL}/beta/"/>">Click here to try it out!</a></div>
         </section>
     </c:otherwise>
 </c:choose>
