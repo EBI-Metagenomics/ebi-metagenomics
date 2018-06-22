@@ -67,7 +67,7 @@
     <c:otherwise>
 
         <section class="jumbo-header beta-header" style="position: relative;">
-            <p class="lead">We have launched a new website!</p>
+            <p class="lead">We have launched a new version of the website!</p>
             <div class="button"><a href="<c:url value="${baseURL}/beta/"/>">Click here to try it out!</a></div>
         </section>
     </c:otherwise>
