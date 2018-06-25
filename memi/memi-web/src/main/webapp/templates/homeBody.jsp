@@ -4,14 +4,9 @@
 
 <c:choose>
     <c:when test="${not empty model.submitter}">
-        <section class="jumbo-header private-area" style="position: relative;">
-            <div class="close_section anim"><span class="show_tooltip" title="Close this section" id="this_close">&#10006;</span>
-            </div>
-                <%--<div class="close_section anim"><span class="icon icon-functional" data-icon="x" title="Close this section" id="this_close"></span></div>--%>
-            <div class="mega-lock"><span class="icon icon-functional" data-icon="L"></span></div>
-            <p class="lead">Welcome to your private area.<br/>You can track here data you submitted to us <br/>and
-                visualize the corresponding results </p>
-            <div class="button"><a href="<c:url value="${baseURL}/submission"/>"> Submit data</a></div>
+        <section class="jumbo-header beta-header" style="position: relative;">
+            <p class="lead">We have launched a new version of the website!</p>
+            <div class="button"><a href="<c:url value="${baseURL}/beta/"/>">Click here to try it out!</a></div>
         </section>
 
         <section class="jumbo-user">
@@ -452,7 +447,7 @@
             </div>
         </div>
         <div class="hlight-spot grid_12 omega" id="blog-tools">
-            <div class="hlight_title_cont">
+            <div class="hlight_title_cont">h
                 <div class="hlight_maintitle"><h1>Tools</h1></div>
                 <div class="hlight_subtitle"><h2></h2></div>
             </div>
