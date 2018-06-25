@@ -24,7 +24,7 @@
 
 <h3 id="mail">Staying informed</h3>
 
-<p>Follow us on Twitter using <a href="http://twitter.com/EBImetagenomics">@EBImetagenomics</a></p>
+<p>Follow us on Twitter using <a href="http://twitter.com/MGnifyDB">@MGnifyDB</a></p>
 
 <h3 id="h_cite">Citing us</h3>
 

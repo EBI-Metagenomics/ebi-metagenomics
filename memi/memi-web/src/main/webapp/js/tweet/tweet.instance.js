@@ -11,7 +11,7 @@ jQuery(function ($) {
             return !/^@\w+/.test(t.tweet_raw_text);
         },
 //      Twitter screen names
-        username:"EBImetagenomics",
+        username:"MGnifyDB",
 //      The following template attribute eliminate the date stamps and avatars
         template:"{text}",
         loading_text:"loading tweets..."

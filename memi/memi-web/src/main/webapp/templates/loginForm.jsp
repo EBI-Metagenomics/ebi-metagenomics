@@ -63,7 +63,7 @@
     <%--<a href="${model.rssUrl}" class="rss" rel="alternate" type="application/rss+xml">RSS feed</a>--%>
     <%--</div>        --%>
 
-    <p><a href="http://twitter.com/EBImetagenomics" class="twitter">Follow us on Twitter</a></p>
+    <p><a href="http://twitter.com/MGnifyDB" class="twitter">Follow us on Twitter</a></p>
 </div>
 
 <div id="sidebar-mailing">

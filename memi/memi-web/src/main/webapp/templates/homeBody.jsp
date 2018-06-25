@@ -446,7 +446,7 @@
                         <p class="placeholder" style="width: <%= (int) (Math.random() * 50 + 50) %>%;"></p>
                     </c:forEach>
                 </div>
-                <a href="https://ebi-metagenomics.github.io/ebi-metagenomics-blog/" title="Read more on the blog"
+                <a href="https://ebi-metagenomics.github.io/blog/" title="Read more on the blog"
                    class="all left">Read more</a>
                 <a href="" title="" class="all">Look at the data</a>
             </div>
@@ -462,14 +462,14 @@
                         <p class="placeholder" style="width: <%= (int) (Math.random() * 50 + 50) %>%;"></p>
                     </c:forEach>
                 </div>
-                <a href="https://ebi-metagenomics.github.io/ebi-metagenomics-blog/" title="Read more on the blog"
+                <a href="https://ebi-metagenomics.github.io/blog/" title="Read more on the blog"
                    class="all left">Read more</a>
                 <a href="" class="all">Compare samples</a>
             </div>
         </div>
     </div>
     <p>
-        <a href="https://ebi-metagenomics.github.io/ebi-metagenomics-blog/" class="all">
+        <a href="https://ebi-metagenomics.github.io/blog/" class="all">
             See all articles
         </a>
     </p>
@@ -522,13 +522,13 @@
 
             <h3 class="icon icon-socialmedia icon-s2" data-icon="T"></h3>
             <%--<div class="flexslider">Learn to run a design the box workshop and how it helped us overhaul our training academy: <a href="#">webcredible.com/blog-reports/</a></div>--%>
-            <a class="twitter-timeline" height="100" data-dnt="true" href="https://twitter.com/EBImetagenomics"
+            <a class="twitter-timeline" height="100" data-dnt="true" href="https://twitter.com/MGnifyDB"
                data-widget-id="345516657369837568"
                data-chrome="nofooter noborders noheader noscrollbar transparent" data-tweet-limit="1">Tweets by
-                @EBImetagenomics</a>
+                @MGnifyDB</a>
 
-            <p class="jumbo-news-contact"><strong><a href="http://twitter.com/EBImetagenomics"
-                                                     alt="Follow us on Twitter">@EBImetagenomics</a></strong>
+            <p class="jumbo-news-contact"><strong><a href="https://twitter.com/MGnifyDB"
+                                                     alt="Follow us on Twitter">@MGnifyDB</a></strong>
             </p>
             <script>
                 !function (d, s, id) {
